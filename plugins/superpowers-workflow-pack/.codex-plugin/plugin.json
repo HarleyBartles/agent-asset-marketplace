@@ -1,0 +1,61 @@
+{
+  "name": "superpowers-workflow-pack",
+  "version": "0.1.0",
+  "description": "A private Codex marketplace projection for applying disciplined planning, implementation, debugging, review, and verification workflows without mirroring upstream Superpowers content.",
+  "author": {
+    "name": "Harley Private Agent Asset Marketplace"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "Private local projection; upstream proof source declares MIT",
+  "keywords": [
+    "MARK-2",
+    "superpowers",
+    "planning",
+    "tdd",
+    "debugging",
+    "code-review",
+    "verification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Superpowers Workflow Pack",
+    "shortDescription": "Local workflow adapter for disciplined Codex engineering work.",
+    "longDescription": "Install this to guide Codex through a local, provenance-aware workflow inspired by the Superpowers family: clarify intent, plan, implement carefully, verify, review, and finish with evidence. This projection does not bundle upstream skill text.",
+    "developerName": "Harley Private Agent Asset Marketplace",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use the Superpowers Workflow Pack to plan and verify this change.",
+      "Help me debug this systematically with evidence."
+    ],
+    "websiteURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "privacyPolicyURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "termsOfServiceURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "brandColor": "#F59E0B",
+    "composerIcon": "./assets/README.md",
+    "logo": "./assets/README.md",
+    "screenshots": []
+  },
+  "provenance": {
+    "projectionId": "projection.superpowers.workflow-pack.v1",
+    "sourceRecord": "../../sources/obra-superpowers/intake.json",
+    "licenseRecord": "../../provenance/obra-superpowers.md",
+    "mirroredThirdPartyContent": false
+  },
+  "quality": {
+    "status": "projected-asset",
+    "productionReadiness": "early-private-marketplace-baseline",
+    "validation": "python3 tools/validate_marketplace.py",
+    "reviewRequiredBeforeExternalDistribution": true
+  },
+  "localization": {
+    "sourceLanguage": "en",
+    "translationNeeded": false,
+    "posture": "English-source/no-translation-needed."
+  }
+}

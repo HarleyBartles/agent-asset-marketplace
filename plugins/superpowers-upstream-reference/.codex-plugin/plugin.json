@@ -1,0 +1,52 @@
+{
+  "name": "superpowers-upstream-reference",
+  "version": "0.1.0",
+  "description": "Metadata-only reference projection for the obra/superpowers upstream aggregate.",
+  "author": {
+    "name": "Harley Private Agent Asset Marketplace"
+  },
+  "homepage": "https://github.com/obra/superpowers",
+  "repository": "https://github.com/obra/superpowers",
+  "license": "MIT declared upstream; metadata-only local projection",
+  "keywords": [
+    "MARK-2",
+    "superpowers",
+    "reference-only",
+    "provenance"
+  ],
+  "interface": {
+    "displayName": "Superpowers Upstream Reference",
+    "shortDescription": "Reference-only upstream aggregate record; not installable.",
+    "longDescription": "Use this marketplace entry to preserve provenance, license posture, and future-horizon metadata for obra/superpowers without bundling the aggregate as a giant curated plugin.",
+    "developerName": "Harley Private Agent Asset Marketplace",
+    "category": "Reference",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [],
+    "websiteURL": "https://github.com/obra/superpowers",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "brandColor": "#6B7280",
+    "composerIcon": "./assets/README.md",
+    "logo": "./assets/README.md",
+    "screenshots": []
+  },
+  "provenance": {
+    "projectionId": "projection.superpowers.upstream-reference.v1",
+    "sourceRecord": "../../sources/obra-superpowers/intake.json",
+    "licenseRecord": "../../provenance/obra-superpowers.md",
+    "mirroredThirdPartyContent": false
+  },
+  "quality": {
+    "status": "metadata-only-reference",
+    "productionReadiness": "not-installable",
+    "validation": "python3 tools/validate_marketplace.py",
+    "reviewRequiredBeforeExternalDistribution": true
+  },
+  "localization": {
+    "sourceLanguage": "en",
+    "translationNeeded": false,
+    "posture": "English-source/no-translation-needed unless future mirrored content inspection proves otherwise."
+  }
+}
