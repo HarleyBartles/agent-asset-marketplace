@@ -1,5 +1,11 @@
 # tools
 
-Small helper scripts belong here if we need them later.
+Small helper scripts belong here.
 
-Keep tooling minimal and focused on validation or lightweight asset handling.
+Current validation:
+
+```sh
+python3 tools/validate_marketplace.py
+```
+
+The validator checks the MARK-2 Codex marketplace JSON, local plugin source paths, plugin manifests, declared skills paths, license/provenance metadata, quality metadata, localization posture, and audit artifact presence.

@@ -44,8 +44,11 @@ Expected flow:
 2. Store plugin and agent metadata in the marketplace source directories.
 3. Derive any publishable or installed form from these sources.
 
-The initial manifest is a placeholder only. No third-party plugin content is
-included yet.
+MARK-2 adds the first living private Codex-style marketplace at the
+repo-root Codex-facing paths (`.agents/plugins/marketplace.json` and
+`plugins/<plugin-name>/`). Third-party upstreams are represented with explicit
+provenance, license, quality, and localization posture before any content is
+bundled.
 
 ## Repo Overlay Role
 
@@ -88,12 +91,14 @@ Policy:
 ## Directory Map
 
 - `gpt-skills/` - GPT-native skill sources and supporting notes
-- `codex-marketplace/.agents/plugins/` - Codex-native agent/plugin source shape
-- `codex-marketplace/plugins/` - marketplace plugin source shape
+- `.agents/plugins/marketplace.json` - Codex-facing private marketplace index
+- `plugins/` - Codex-facing plugin source projections
+- `codex-marketplace/` - legacy/source-layout notes retained for compatibility
 - `repo-overlays/` - destination-specific overlays
 - `sources/` - upstream references and source snapshots
-- `tools/` - small helper scripts only, if needed
-- `generated/reports/` - derived reports and validation output
+- `tools/` - small helper scripts and validation
+- `reports/` - committed audit and validation report artifacts
+- `generated/reports/` - derived/generated report output, ignored by default
 - `provenance/` - license, attribution, and trust records
 
 ## Initialization Boundary

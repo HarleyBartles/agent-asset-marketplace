@@ -1,0 +1,60 @@
+{
+  "catalogId": "catalog.mark-2.asset-identity",
+  "issue": "MARK-2",
+  "principle": "Asset identity is separate from plugin projection so future regrouping is normal maintenance.",
+  "assets": [
+    {
+      "assetId": "upstream.obra-superpowers.aggregate",
+      "assetType": "upstream-aggregate",
+      "name": "obra/superpowers",
+      "origin": "https://github.com/obra/superpowers",
+      "license": "MIT",
+      "retention": "metadata-only-reference",
+      "quality": {
+        "status": "retained-source-record",
+        "productionGradeMetadata": true,
+        "reviewState": "listed-not-bundled"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      }
+    },
+    {
+      "assetId": "local.mark-2.superpowers-workflow-pack",
+      "assetType": "local-plugin-projection",
+      "name": "Superpowers Workflow Pack",
+      "origin": "MARK-2 local authored projection informed by obra/superpowers metadata",
+      "license": "Repository-private local text; upstream inspiration and metadata record MIT provenance.",
+      "retention": "installable-projection",
+      "quality": {
+        "status": "projected-asset",
+        "productionGradeMetadata": true,
+        "reviewState": "private-marketplace-ready"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      }
+    }
+  ],
+  "projections": [
+    {
+      "projectionId": "projection.superpowers.workflow-pack.v1",
+      "pluginName": "superpowers-workflow-pack",
+      "assetIds": [
+        "upstream.obra-superpowers.aggregate",
+        "local.mark-2.superpowers-workflow-pack"
+      ],
+      "installable": true
+    },
+    {
+      "projectionId": "projection.superpowers.upstream-reference.v1",
+      "pluginName": "superpowers-upstream-reference",
+      "assetIds": [
+        "upstream.obra-superpowers.aggregate"
+      ],
+      "installable": false
+    }
+  ]
+}

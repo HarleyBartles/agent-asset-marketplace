@@ -1,0 +1,58 @@
+{
+  "sourceId": "upstream.obra-superpowers.aggregate",
+  "issue": "MARK-2",
+  "upstream": {
+    "owner": "obra",
+    "repo": "superpowers",
+    "homepage": "https://github.com/obra/superpowers",
+    "manifestUrl": "https://raw.githubusercontent.com/obra/superpowers/main/.codex-plugin/plugin.json",
+    "licenseUrl": "https://raw.githubusercontent.com/obra/superpowers/main/LICENSE",
+    "skillsApiUrl": "https://api.github.com/repos/obra/superpowers/contents/skills?ref=main",
+    "observedManifestVersion": "5.1.0",
+    "observedLicense": "MIT",
+    "observedAuthor": "Jesse Vincent"
+  },
+  "intakePosture": {
+    "role": "first-upstream-proof-source",
+    "aggregate": true,
+    "mirroredContent": false,
+    "safeToList": true,
+    "safeToBundle": false,
+    "bundleDecision": "Do not mirror the upstream aggregate as one giant curated plugin in MARK-2. Create bounded projections with asset identity separated from installable plugin projection.",
+    "licenseUnsafeOrUnclearSources": [],
+    "blockedOrMetadataOnlySources": [
+      {
+        "name": "superpowers-upstream-reference",
+        "reason": "Upstream aggregate is retained as reference-only metadata until a future import intentionally selects specific skills and carries notices for mirrored content."
+      }
+    ]
+  },
+  "futureHorizon": {
+    "nonUseIsNotExclusion": true,
+    "toolFrameworkRuntimeNotes": [
+      "Current local projection does not require upstream installation tooling, package managers, hooks, or runtime scripts.",
+      "Future projections may add selected upstream skills, hooks, scripts, or runtime adapters after explicit license and quality review."
+    ]
+  },
+  "localization": {
+    "sourceLanguage": "en",
+    "translationNeeded": false,
+    "posture": "Superpowers inspection source is English and the MARK-2 projection is English; no translation is needed now."
+  },
+  "observedSkillAssets": [
+    { "assetId": "upstream.obra-superpowers.skill.brainstorming", "path": "skills/brainstorming", "sha": "f260c775073816860fef8a37c032ac77e2ff5821", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.dispatching-parallel-agents", "path": "skills/dispatching-parallel-agents", "sha": "ebd0490e6b0bccfdb9f9c0cc9dd6a066036c8d89", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.executing-plans", "path": "skills/executing-plans", "sha": "7c20d2bd7ff7b166ea3064e21b1e5f0455750878", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.finishing-a-development-branch", "path": "skills/finishing-a-development-branch", "sha": "782e09faa5dcf7e9a7a173bd14b5622e35b80169", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.receiving-code-review", "path": "skills/receiving-code-review", "sha": "7750c56fddb8b2f1cbdb1550a6e3e40d2eeac5f1", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.requesting-code-review", "path": "skills/requesting-code-review", "sha": "ff419ec159bdf5ff2f2d83c7e544c586bcde69bb", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.subagent-driven-development", "path": "skills/subagent-driven-development", "sha": "73b43347c1bdc10f6ab81a5cdb036dd1c8098cc0", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.systematic-debugging", "path": "skills/systematic-debugging", "sha": "e96f5f2620c17069d668be1880d5492e34c84ceb", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.test-driven-development", "path": "skills/test-driven-development", "sha": "98904a7d8e0e04b9bd46220b9b17298f45fe0b72", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.using-git-worktrees", "path": "skills/using-git-worktrees", "sha": "13a9643fb9e4b236173f7d4b56b15dac10394f1b", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.using-superpowers", "path": "skills/using-superpowers", "sha": "225dd70596c396940ff158335a954a64d93ece40", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.verification-before-completion", "path": "skills/verification-before-completion", "sha": "ceb2f1f67f4cadb29b32a06e54d3d0be832071f5", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.writing-plans", "path": "skills/writing-plans", "sha": "8fe8e8b6ee9e5cbe53cb172a36f0dc31f9875847", "retention": "reference-only" },
+    { "assetId": "upstream.obra-superpowers.skill.writing-skills", "path": "skills/writing-skills", "sha": "80e8c7d3be99d55d5d76c9516cc45a1e7f48f281", "retention": "reference-only" }
+  ]
+}

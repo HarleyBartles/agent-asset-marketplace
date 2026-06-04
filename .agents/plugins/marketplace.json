@@ -1,0 +1,95 @@
+{
+  "name": "agent-asset-marketplace",
+  "interface": {
+    "displayName": "Harley Private Agent Asset Marketplace"
+  },
+  "schemaVersion": 1,
+  "issue": "MARK-2",
+  "assetCatalog": "./sources/obra-superpowers/assets.json",
+  "plugins": [
+    {
+      "name": "superpowers-workflow-pack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/superpowers-workflow-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding",
+      "projection": {
+        "projectionId": "projection.superpowers.workflow-pack.v1",
+        "assetIds": [
+          "upstream.obra-superpowers.aggregate",
+          "local.mark-2.superpowers-workflow-pack"
+        ],
+        "installToDo": "Install this to guide Codex through disciplined planning, implementation, debugging, review, and verification workflows using a local, provenance-aware projection of the Superpowers workflow family.",
+        "projectionType": "installable-local-adapter",
+        "mirroringPosture": "No upstream third-party content is mirrored in the installable skill; upstream Superpowers is referenced as MIT-licensed proof source and future import candidate."
+      },
+      "license": {
+        "declared": "MIT-compatible projection metadata; local adapter text authored in this repository.",
+        "upstreamDeclared": "MIT",
+        "clearance": "installable-without-mirrored-upstream-content",
+        "notice": "If future changes mirror Superpowers text, include the upstream MIT notice and source provenance for copied portions."
+      },
+      "provenance": {
+        "sourceRecord": "./sources/obra-superpowers/intake.json",
+        "licenseRecord": "./provenance/obra-superpowers.md"
+      },
+      "quality": {
+        "status": "retained-projection",
+        "productionReadiness": "early-private-marketplace-baseline",
+        "reviewRequiredBeforeExternalDistribution": true,
+        "validationRequired": "python3 tools/validate_marketplace.py"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false,
+        "posture": "English-source/no-translation-needed for the current projection."
+      }
+    },
+    {
+      "name": "superpowers-upstream-reference",
+      "source": {
+        "source": "local",
+        "path": "./plugins/superpowers-upstream-reference"
+      },
+      "policy": {
+        "installation": "NOT_AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Reference",
+      "projection": {
+        "projectionId": "projection.superpowers.upstream-reference.v1",
+        "assetIds": [
+          "upstream.obra-superpowers.aggregate"
+        ],
+        "installToDo": null,
+        "projectionType": "metadata-only-reference",
+        "mirroringPosture": "Reference-only projection for the upstream aggregate; not installable and not bundled as a giant curated plugin."
+      },
+      "license": {
+        "declared": "MIT declared upstream; metadata-only projection does not copy protected skill text or binary assets.",
+        "upstreamDeclared": "MIT",
+        "clearance": "safe-to-list-not-bundled"
+      },
+      "provenance": {
+        "sourceRecord": "./sources/obra-superpowers/intake.json",
+        "licenseRecord": "./provenance/obra-superpowers.md"
+      },
+      "quality": {
+        "status": "metadata-only-reference",
+        "productionReadiness": "not-installable",
+        "reviewRequiredBeforeExternalDistribution": true,
+        "validationRequired": "python3 tools/validate_marketplace.py"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false,
+        "posture": "English-source/no-translation-needed unless future mirrored content inspection proves otherwise."
+      }
+    }
+  ]
+}
