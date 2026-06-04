@@ -1,0 +1,10 @@
+{
+  "kind": "codex-marketplace-manifest",
+  "version": 1,
+  "agents": [],
+  "plugins": [],
+  "notes": [
+    "Placeholder manifest for future Codex-native marketplace content.",
+    "Keep this empty until real assets are added."
+  ]
+}

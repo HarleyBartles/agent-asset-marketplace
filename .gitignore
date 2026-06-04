@@ -1,0 +1,38 @@
+# Generated outputs
+generated/*
+!generated/.gitignore
+!generated/reports/
+!generated/reports/.gitignore
+
+# Temporary and local tooling artifacts
+.cache/
+.eslintcache
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
+coverage/
+tmp/
+temp/
+
+# Package and archive noise
+*.tgz
+*.tar
+*.tar.gz
+*.zip
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
