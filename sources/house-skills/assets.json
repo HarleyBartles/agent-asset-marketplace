@@ -1,6 +1,6 @@
 {
   "catalogId": "catalog.mark-14.house-skills.asset-identity",
-  "issue": "MARK-13/MARK-14/MARK-16",
+  "issue": "MARK-13/MARK-14/MARK-16/MARK-17",
   "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
   "assets": [
     {
@@ -114,6 +114,66 @@
       "paths": {
         "source": "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md"
       }
+    },
+    {
+      "assetId": "first-party.house-skills.gpt-base-doctrine-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "gpt-base-doctrine-v1",
+      "origin": "MARK-17 reviewed import from versioned gpt-base-doctrine source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.work-mode-router-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "work-mode-router-v1",
+      "origin": "MARK-17 reviewed import from renamed/reframed gpt-bootstrap source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/work-mode-router-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.worker-readiness-prep-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "worker-readiness-prep-v1",
+      "origin": "MARK-17 reviewed import of worker readiness prep with folded worker-readiness-gate behavior",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md"
+      }
     }
   ],
   "projections": [
@@ -138,6 +198,16 @@
         "first-party.house-skills.worker-dispatch-linear-v1"
       ],
       "pluginProjection": "not-included-in-mark-16"
+    },
+    {
+      "issue": "MARK-17",
+      "assetIds": [
+        "first-party.house-skills.gpt-base-doctrine-v1",
+        "first-party.house-skills.work-mode-router-v1",
+        "first-party.house-skills.worker-readiness-prep-v1"
+      ],
+      "pluginProjection": "not-included-in-mark-17",
+      "standaloneGateImport": "worker-readiness-gate-v1 not imported; folded into worker-readiness-prep-v1"
     }
   ]
 }

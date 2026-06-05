@@ -1,11 +1,12 @@
 # House Skills Decision Manifest Summary
 
-Issue: MARK-14/MARK-15
+Issue: MARK-14/MARK-15/MARK-16/MARK-17
 
 `decisions.json` is the repo-backed decision/import manifest for the House
 Skills source set. It records MARK-9 sanity-rollup decisions after the MARK-13
 plugin skeleton. MARK-15 extends that metadata with the observed Linear/Codex
-delegation mechanics, still without importing full `SKILL.md` content.
+delegation mechanics. MARK-16 and MARK-17 then import the first reviewed
+canonical `SKILL.md` source records while leaving plugin projection for later.
 
 ## Manifest Path
 
@@ -23,19 +24,19 @@ and project one or more sensible bundles afterward.
 The JSON manifest uses these top-level fields:
 
 - `manifestVersion` and `manifestId` identify the manifest format and record.
-- `issue` names the slice that created the original manifest.
+- `issue` names the slices that created and extended the manifest.
 - `sourceSet` points to the House Skills source root, intake record, asset
   catalog, and provenance record.
-- `issueLineage` records MARK-9, MARK-13, MARK-14, and MARK-15 roles.
+- `issueLineage` records MARK-9, MARK-13, MARK-14, MARK-15, MARK-16, and MARK-17 roles.
 - `statusVocabulary` defines the accepted decision statuses.
 - `pluginPosture` records the first-party bundle/provenance posture, cheap
-  bundle-space assumption, and no-full-import boundary.
+  bundle-space assumption, and current source-import boundary.
 - `globalDecisions` captures cross-skill decisions that later import slices must
   preserve.
 - `skillDecisions` captures row-level decisions for active, provisional,
   folded, retired, reference-only, and deferred skill surfaces.
 - `todoNextSlices` lists known follow-up work that should not be pretended done
-  by this slice.
+  by the current bounded source-import slice.
 
 ## Status Vocabulary
 
@@ -87,6 +88,27 @@ metadata-only projection in this slice; no `SKILL.md` files are copied into
 
 No other House Skill source text is imported in MARK-16.
 
+## MARK-17 Source Import
+
+MARK-17 imports the next three reviewed base/work-mode House Skills source
+records under the canonical source root:
+
+- `gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md` is the versioned
+  GPT-wide base doctrine source. It carries the cross-project boring-first
+  mantra: “We make exciting things possible by adopting a boring-first
+  posture.”
+- `gpt-skills/house-skills/work-mode-router-v1/SKILL.md` is the
+  renamed/reframed successor to old `gpt-bootstrap`. It owns first
+  classification and routes normal coding work away from legacy chat/YAML
+  dispatch habits.
+- `gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md` owns executable
+  worker handoff shaping and the internal readiness gate.
+
+`worker-readiness-gate-v1` is not imported as a standalone top-level skill. Its
+valuable checks are folded into `worker-readiness-prep-v1`. No TPS, busters,
+skill maintenance, Adventures, Rooms, deck/PPTX/receipt, unrelated source
+imports, or Codex plugin bundle projections are imported in MARK-17.
+
 ## Linear/Codex Delegation Mechanics
 
 MARK-15 records the live MARK-13/MARK-14 delegation lesson as metadata for
@@ -131,6 +153,7 @@ including:
 - `skill-market`
 - `github-issue-management`
 - `github-operations`
+- `work-mode-router-v1`
 - `worker-readiness-prep-v1`
 - `worker-readiness-gate-v1`
 - `worker-dispatch-linear-v1`
@@ -145,17 +168,21 @@ including:
 
 Rows with `importAction: "todo-later"` or
 `importAction: "todo-later-with-modification"` intentionally do not claim that
-source content has already been imported.
+source content has already been imported. Rows with `importAction` values such
+as `imported-source-mark-16` or `imported-source-mark-17` point to canonical
+source records under `gpt-skills/house-skills/`.
 
 ## Non-Import Confirmation
 
-MARK-14/MARK-15 add decision/provenance metadata only. It does not project actual House
-Skill source content into `plugins/house-skills/skills/`, package ChatGPT skill
-ZIPs, or revive retired skills as installable entries.
+MARK-17 imports only the base doctrine/work-mode/worker-readiness source slice.
+It does not project actual House Skill source content into
+`plugins/house-skills/skills/`, package ChatGPT skill ZIPs, import
+`worker-readiness-gate-v1` as a standalone top-level skill, or revive retired
+skills as installable entries.
 
 ## TODOs for Later Import Slices
 
-- Import reviewed `SKILL.md` content only in bounded later slices.
+- Import remaining reviewed `SKILL.md` content only in bounded later slices.
 - Reconcile linked MARK-9 ledgers into repo-backed source records before using
   this manifest as complete source truth for every chunk.
 - Add per-skill provenance/license details when each active v1 or v0.1 skill is
@@ -164,6 +191,5 @@ ZIPs, or revive retired skills as installable entries.
   retiring those checks.
 - Prove whether generic/base source partitioning has residue outside TPS during
   implementation.
-- Import `linear-v1` / `worker-dispatch-linear-v1` source later, preserving the
-  recorded human-assignee plus Codex-delegate verification mechanics without
-  turning MARK-15 into the full skill source import slice.
+- Project imported source records into installable Codex plugin bundles only in
+  a later explicit projection slice, if desired.

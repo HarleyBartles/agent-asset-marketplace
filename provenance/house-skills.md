@@ -1,6 +1,6 @@
 # House Skills Provenance And Trust Posture
 
-Issue: MARK-13/MARK-14/MARK-15
+Issue: MARK-13/MARK-14/MARK-15/MARK-16/MARK-17
 
 ## Source Identity
 
@@ -71,6 +71,28 @@ The import is source-only. The Codex plugin projection remains metadata-only and
 does not bundle these skill files in this slice. No other House Skills are
 imported by MARK-16.
 
+## MARK-17 Base Doctrine And Work-Mode Source Import
+
+MARK-17 imports the next bounded House Skills source-content slice. The imported
+canonical sources are:
+
+- `gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md` — versioned successor
+  to the old installed `gpt-base-doctrine`, updated to carry the cross-project
+  boring-first operating mantra as first-class GPT-wide doctrine.
+- `gpt-skills/house-skills/work-mode-router-v1/SKILL.md` — renamed/reframed
+  successor to old `gpt-bootstrap`, updated so work-mode routing replaces old
+  bootstrap confusion and normal coding work routes through Linear/Codex rather
+  than chat/YAML dispatch habits.
+- `gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md` — source import
+  for executable worker handoff preparation, including the folded internal gate
+  behavior from the candidate `worker-readiness-gate-v1`.
+
+The import is source-only. The Codex plugin projection remains metadata-only and
+does not bundle these skill files in this slice. `worker-readiness-gate-v1` is
+not imported as a standalone top-level skill. No TPS, busters, skill
+maintenance, Adventures, Rooms, deck/PPTX/receipt, or unrelated House Skills are
+imported by MARK-17.
+
 ## Trust And License Posture
 
 - House Skills are first-party/private local assets unless later content import
@@ -78,7 +100,9 @@ imported by MARK-16.
 - This slice does not mirror third-party content.
 - This slice does not package ChatGPT skill ZIPs or generated deployment output.
 - Future imports must update this record when they add actual skill content,
-  scripts, hooks, assets, or non-first-party material.
+  scripts, hooks, assets, or non-first-party material. MARK-17 adds only
+  first-party Markdown source records and no scripts, hooks, assets, or
+  non-first-party material.
 
 ## Active, Provisional, Retired, And Reference-Only Posture
 

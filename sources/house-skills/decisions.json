@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "manifestId": "manifest.mark-14.house-skills.decisions",
-  "issue": "MARK-14/MARK-15/MARK-16",
+  "issue": "MARK-14/MARK-15/MARK-16/MARK-17",
   "sourceSet": {
     "id": "first-party.house-skills.aggregate",
     "name": "House Skills",
@@ -41,6 +41,12 @@
       "role": "current-slice",
       "title": "Import Linear and Codex dispatch House Skills",
       "statusInManifest": "linear-v1-and-worker-dispatch-linear-v1-source-imported"
+    },
+    {
+      "issue": "MARK-17",
+      "role": "current-slice",
+      "title": "Import base doctrine and work-mode House Skills",
+      "statusInManifest": "base-work-mode-source-imported"
     }
   ],
   "statusVocabulary": {
@@ -58,7 +64,7 @@
     "relatedSkillsMayAppearInMultipleSensiblePluginBundles": true,
     "projectionPolicy": "House Skills source decisions live under sources/gpt-skills provenance first. Codex plugin projections may later bundle reviewed skills without forcing one permanent bundle boundary.",
     "noFullSkillImportInThisSlice": false,
-    "currentSourceImportBoundary": "MARK-16 imports only canonical source SKILL.md records for linear-v1 and worker-dispatch-linear-v1 under gpt-skills/house-skills; the Codex plugin projection remains metadata-only until a later projection slice."
+    "currentSourceImportBoundary": "MARK-17 imports exactly three additional reviewed base/work-mode source records: gpt-base-doctrine-v1, work-mode-router-v1, and worker-readiness-prep-v1. No plugin projection is added in this slice."
   },
   "globalDecisions": [
     {
@@ -157,6 +163,16 @@
       "importedSourcePaths": [
         "./gpt-skills/house-skills/linear-v1/SKILL.md",
         "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md"
+      ]
+    },
+    {
+      "id": "global.mark-17.source-import-boundary",
+      "status": "v1",
+      "decision": "MARK-17 imports exactly three reviewed base/work-mode House Skills source records: gpt-base-doctrine-v1, work-mode-router-v1, and worker-readiness-prep-v1. Worker-readiness-gate-v1 remains folded into worker-readiness-prep-v1 and is not imported as a standalone top-level skill. No unrelated House Skills and no Codex plugin bundle projections are imported in this slice.",
+      "importedSourcePaths": [
+        "./gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md",
+        "./gpt-skills/house-skills/work-mode-router-v1/SKILL.md",
+        "./gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md"
       ]
     }
   ],
@@ -258,21 +274,37 @@
       "fullSkillTextImported": false
     },
     {
+      "name": "work-mode-router-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-17",
+      "sourceChunk": "chunk 01 \u2014 core control plane",
+      "sourcePath": "./gpt-skills/house-skills/work-mode-router-v1/SKILL.md",
+      "successorTo": "gpt-bootstrap",
+      "decisionSummary": "Imported as the GPT-wide work-mode router that replaces old bootstrap confusion, classifies requests into the smallest sufficient mode, and routes normal coding work through worker-readiness-prep-v1 and worker-dispatch-linear-v1 instead of legacy chat/YAML dispatch stacks.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-17"
+    },
+    {
       "name": "worker-readiness-prep-v1",
       "status": "v1",
-      "importAction": "todo-later",
-      "decisionSummary": "Preferred replacement for old broad dispatch-prep language; prepares executable worker handoff through durable lawful lanes.",
+      "importAction": "imported-source-mark-17",
+      "decisionSummary": "Imported as the replacement for old broad dispatch-prep language. It prepares executable worker handoffs through durable lawful lanes and owns the folded worker-readiness-gate behavior internally.",
       "containsGate": "worker-readiness-gate-v1 behavior is folded inside this prep workflow rather than imported as a standalone top-level skill here.",
       "activeSkillCandidate": true,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": true,
+      "sourceChunk": "chunk 01 core-control-plane / chunk 07 dispatch-taxonomy residue",
+      "sourcePath": "./gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md",
+      "pluginProjection": "not-projected-in-mark-17"
     },
     {
       "name": "worker-readiness-gate-v1",
       "status": "fold",
-      "importAction": "fold-into-worker-readiness-prep-v1",
-      "decisionSummary": "Valuable gate behavior is preserved inside worker-readiness-prep-v1, not as a standalone top-level House Skill in this manifest.",
+      "importAction": "folded-into-imported-worker-readiness-prep-v1",
+      "decisionSummary": "Valuable gate behavior is preserved inside imported worker-readiness-prep-v1, not as a standalone top-level House Skill.",
       "activeSkillCandidate": false,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": false,
+      "foldedInto": "worker-readiness-prep-v1"
     },
     {
       "name": "linear-v1",
@@ -396,10 +428,14 @@
     {
       "name": "gpt-base-doctrine-v1",
       "status": "v1",
-      "importAction": "todo-later-with-modification",
-      "decisionSummary": "Must carry the cross-project boring-first posture as base doctrine rather than hiding it only in project doctrine or issue comments.",
+      "importAction": "imported-source-mark-17",
+      "decisionSummary": "Imported as GPT-wide base doctrine carrying the cross-project boring-first mantra plus durable source, evidence, Linear/Codex boundary, output-shape, cleanup/entropy, and evidence-grounded doctrine-capture guardrails.",
       "activeSkillCandidate": true,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": true,
+      "sourceChunk": "chunk 01 \u2014 core control plane",
+      "sourcePath": "./gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md",
+      "successorTo": "gpt-base-doctrine",
+      "pluginProjection": "not-projected-in-mark-17"
     },
     {
       "name": "pig-stack",
@@ -437,8 +473,8 @@
     }
   ],
   "todoNextSlices": [
-    "Project imported linear-v1 and worker-dispatch-linear-v1 source into an installable Codex plugin bundle only in a later explicit projection slice, if desired.",
-    "Import reviewed SKILL.md content only in later bounded slices.",
+    "Project imported source records into installable Codex plugin bundles only in a later explicit projection slice, if desired.",
+    "Import remaining reviewed House Skills content only in later bounded slices; MARK-17 has imported only the base/work-mode slice.",
     "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
     "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
     "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",
