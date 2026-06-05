@@ -1,0 +1,318 @@
+{
+  "manifestVersion": 1,
+  "manifestId": "manifest.mark-14.house-skills.decisions",
+  "issue": "MARK-14",
+  "sourceSet": {
+    "id": "first-party.house-skills.aggregate",
+    "name": "House Skills",
+    "sourceRoot": "./gpt-skills/house-skills",
+    "sourceRecord": "./sources/house-skills/intake.json",
+    "assetCatalog": "./sources/house-skills/assets.json",
+    "provenanceRecord": "./provenance/house-skills.md",
+    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. This manifest is decision metadata only; it does not import full skill source text."
+  },
+  "issueLineage": [
+    {
+      "issue": "MARK-9",
+      "role": "parent-assessment",
+      "title": "Import first-party GPT custom skills into the asset marketplace",
+      "statusInManifest": "source-decision-context"
+    },
+    {
+      "issue": "MARK-13",
+      "role": "previous-slice",
+      "title": "Add House Skills plugin marketplace skeleton",
+      "statusInManifest": "skeleton-created"
+    },
+    {
+      "issue": "MARK-14",
+      "role": "current-slice",
+      "title": "Add House Skills decision manifest",
+      "statusInManifest": "decision-manifest-created"
+    }
+  ],
+  "statusVocabulary": {
+    "v1": "Accepted as a stable versioned House Skill candidate for later source import, subject to the recorded modification notes and normal validation.",
+    "v0.1": "Accepted as useful and bundleable but provisional; later import must preserve the known caveats instead of presenting it as v1-ready.",
+    "fold": "Do not import as a standalone skill; move the surviving value into the named destination doctrine, workflow, skill, or project surface.",
+    "retire": "Do not import or revive as active installable skill content; keep only provenance/history or explicitly named residue.",
+    "reference-only": "Keep as evidence or system/context reference only; do not import into House Skills as active skill content.",
+    "defer": "Out of the current House Skills import slice; preserve the parked question or future owner without claiming active import readiness."
+  },
+  "pluginPosture": {
+    "bundleRole": "first-party-bundle-and-provenance-group",
+    "sourceIdentitySeparateFromProjection": true,
+    "bundleSpaceIsCheap": true,
+    "relatedSkillsMayAppearInMultipleSensiblePluginBundles": true,
+    "projectionPolicy": "House Skills source decisions live under sources/gpt-skills provenance first. Codex plugin projections may later bundle reviewed skills without forcing one permanent bundle boundary.",
+    "noFullSkillImportInThisSlice": true
+  },
+  "globalDecisions": [
+    {
+      "id": "global.skill-creator.reference-only",
+      "status": "reference-only",
+      "decision": "skill-creator is system-built-in/reference-only and is not imported as a House Skill."
+    },
+    {
+      "id": "global.skill-market.retire",
+      "status": "retire",
+      "decision": "skill-market retires because MARK replaces the old marketplace route; useful installability/candidate-review residue folds into MARK source-intake and marketplace doctrine.",
+      "foldsInto": [
+        "MARK source-intake doctrine",
+        "MARK marketplace doctrine"
+      ]
+    },
+    {
+      "id": "global.github.retire-standalone",
+      "status": "retire",
+      "decision": "Standalone GitHub issue-management and GitHub operations skills retire. Linear is the issue/control-plane surface; GitHub is ordinary evidence/tool surface only."
+    },
+    {
+      "id": "global.worker-readiness-gate.inside-prep",
+      "status": "fold",
+      "decision": "worker-readiness-gate is a gate inside worker-readiness-prep, not a standalone top-level House Skill in this manifest."
+    },
+    {
+      "id": "global.source-partitioning.tps-default",
+      "status": "fold",
+      "decision": "Generic/base source partitioning probably belongs in TPS unless implementation proves residue."
+    },
+    {
+      "id": "global.deck-pptx-receipt.out-of-house-import",
+      "status": "defer",
+      "decision": "Deck, PPTX, and receipt surfaces are outside this House Skills import; bin/defer them rather than carrying them as active House Skills."
+    },
+    {
+      "id": "global.cleanup-custody.rename",
+      "status": "v0.1",
+      "decision": "cleanup-custody-v0.1 is the accepted public House Skills rename for the installed profanity-bearing cleanup skill. The original name remains provenance/history only and the public name must not imply a pure buster."
+    },
+    {
+      "id": "global.pr-workflow.normal-worker-packet",
+      "status": "v1",
+      "decision": "For repo/code work, PRs are the normal worker work packet. Readiness, dispatch, validation, and GitHub proof doctrine should not preserve old direct-main/prove-on-main assumptions."
+    },
+    {
+      "id": "global.boring-first.base-doctrine",
+      "status": "v1",
+      "decision": "Cross-project base doctrine must carry the boring-first posture: exciting things are made possible by boring-first workflows, evidence, repeatability, validation, and risk reduction."
+    }
+  ],
+  "skillDecisions": [
+    {
+      "name": "skill-validator-v1",
+      "status": "v1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 03 — skill stack",
+      "decisionSummary": "Accepted as a first skill-stack import row required for later slices; exact source content is not yet imported into this repo.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "skill-packager-v1",
+      "status": "v1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 03 — skill stack",
+      "decisionSummary": "Accepted as a first skill-stack import row required for later slices; exact source content is not yet imported into this repo.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "skill-buster-v0.1",
+      "status": "v0.1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 02 — busters",
+      "decisionSummary": "Remains v0.1 because the current recommended/default batch lane is unreliable while the secondary one-at-a-time lane is the reliable boring path.",
+      "futureV1Requirement": "Reverse the lanes: one-at-a-time becomes default and up-to-five is clearly marked experimental in behaviorally effective language.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "canon-buster-v1",
+      "status": "v1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 10-12 — Rooms-derived buster residue",
+      "decisionSummary": "Accepted as its own House Skill, with the generic use case extracted out of the Rooms use.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "cleanup-custody-v0.1",
+      "status": "v0.1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 02 — busters",
+      "decisionSummary": "Accepted safer public rename for the installed profanity-bearing cleanup skill; the original name is provenance/history only and not a pure buster.",
+      "needsSecondLook": [
+        "scope",
+        "No Shit policy coupling",
+        "provenance"
+      ],
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "rooms-image-sidecars-v0.1",
+      "status": "v0.1",
+      "importAction": "todo-later",
+      "sourceChunk": "chunk 10-12 — Rooms",
+      "decisionSummary": "Belongs in House Skills as a provisional v0.1 candidate.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "skill-creator",
+      "status": "reference-only",
+      "importAction": "do-not-import",
+      "decisionSummary": "System-built-in/reference-only surface, not imported into House Skills.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "skill-market",
+      "status": "retire",
+      "importAction": "do-not-import",
+      "decisionSummary": "Retires because MARK replaces it.",
+      "foldsInto": [
+        "MARK source-intake doctrine",
+        "MARK marketplace doctrine"
+      ],
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "github-issue-management",
+      "status": "retire",
+      "importAction": "do-not-import",
+      "decisionSummary": "Retires as a standalone skill because Linear is the issue/control-plane surface.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "github-operations",
+      "status": "retire",
+      "importAction": "do-not-import",
+      "decisionSummary": "Retires as a standalone skill in this House Skills import; GitHub remains ordinary evidence/tool surface only.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "worker-readiness-prep-v1",
+      "status": "v1",
+      "importAction": "todo-later",
+      "decisionSummary": "Preferred replacement for old broad dispatch-prep language; prepares executable worker handoff through durable lawful lanes.",
+      "containsGate": "worker-readiness-gate-v1 behavior is folded inside this prep workflow rather than imported as a standalone top-level skill here.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "worker-readiness-gate-v1",
+      "status": "fold",
+      "importAction": "fold-into-worker-readiness-prep-v1",
+      "decisionSummary": "Valuable gate behavior is preserved inside worker-readiness-prep-v1, not as a standalone top-level House Skill in this manifest.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "worker-dispatch-linear-v1",
+      "status": "v1",
+      "importAction": "todo-later",
+      "decisionSummary": "Preferred narrow Linear-based worker dispatch/control-plane skill name; owns Linear handoff, Codex worker routing through Linear, worker status, PR gate, PR iteration, and merge-readiness routing.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "generic-base-source-partitioning",
+      "status": "fold",
+      "importAction": "fold-into-tps-unless-residue-proven",
+      "decisionSummary": "Generic/base source partitioning probably belongs in TPS unless implementation proves a distinct residue.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "deck-pptx-receipt-surfaces",
+      "status": "defer",
+      "importAction": "do-not-import-in-house-skills-slice",
+      "decisionSummary": "Deck, PPTX, receipt, and end-goal package surfaces are outside this House Skills import; future deck/toolchain work may own parked fragments.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "adventures-presentation-qa",
+      "status": "defer",
+      "importAction": "park-retirement-fragments",
+      "decisionSummary": "Likely retire/do-not-import because it is a rare end-goal presentation/package QA surface, but retirement fragments remain parked until homes are confirmed.",
+      "parkedQuestions": [
+        "accepted/rejected/unreviewed image evidence checks",
+        "operator-context bleed checks for audience-facing artifacts",
+        "proof/final mode downgrade checks",
+        "notes, sidecar, receipt, and finished package gates",
+        "issue acceptance criteria versus finished artifact checks"
+      ],
+      "candidateHomes": [
+        "adventures-image-qa-v1",
+        "adventures-reporting-hygiene-v1 or successor residue",
+        "future deck assembler/toolchain QA",
+        "generic/project issue closeout doctrine"
+      ],
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "adventures-project-doctrine-v1",
+      "status": "v1",
+      "importAction": "todo-later-with-modification",
+      "decisionSummary": "Must carry the Adventures-specific boring posture while removing retired PSA/PIG routes, image-credit scarcity doctrine, visual-intent/image-preflight tool gating, and contact-sheet zip defaults.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "gpt-base-doctrine-v1",
+      "status": "v1",
+      "importAction": "todo-later-with-modification",
+      "decisionSummary": "Must carry the cross-project boring-first posture as base doctrine rather than hiding it only in project doctrine or issue comments.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "pig-stack",
+      "status": "retire",
+      "importAction": "do-not-import",
+      "sourceChunk": "chunk 05 — PIG",
+      "decisionSummary": "PIG is a retired actor route. The whole PIG-specific stack should not receive versioned v1 replacements.",
+      "members": [
+        "pig-bootstrap",
+        "pig-image-production-doctrine",
+        "pig-brief-expander",
+        "pig-planning-surface-selector",
+        "pig-generation-execution",
+        "pig-self-qa-regeneration",
+        "pig-return-contract"
+      ],
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "adventures-github-overlay",
+      "status": "fold",
+      "importAction": "fold-or-retire-after-github-mechanics-drained",
+      "decisionSummary": "If it is GitHub usage in disguise, bin it. Any real Adventures residue must be repo-proof/project-specific with GitHub mechanics drained out.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    },
+    {
+      "name": "rooms-github-proof-residue",
+      "status": "fold",
+      "importAction": "fold-into-proof-posture-and-rooms-doctrine",
+      "decisionSummary": "Fold into Linear/Codex/TPS proof posture and Rooms doctrine/source partitioning without preserving a GitHub operations skill dependency.",
+      "activeSkillCandidate": false,
+      "fullSkillTextImported": false
+    }
+  ],
+  "todoNextSlices": [
+    "Import reviewed SKILL.md content only in later bounded slices.",
+    "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
+    "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
+    "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",
+    "Prove whether generic/base source partitioning has residue outside TPS during implementation."
+  ]
+}

@@ -1,6 +1,6 @@
 # House Skills Source Root
 
-Issue: MARK-13
+Issue: MARK-13/MARK-14
 
 This directory is the canonical source-root marker for House Skills: Harley's
 first-party GPT-native custom skill set after the MARK-9 sanity rollup.
@@ -25,3 +25,11 @@ sources here before projecting them into one or more Codex plugin bundles.
 - No revival of `skill-market`.
 - No standalone GitHub operations or GitHub issue-management skills.
 - No deck, PPTX, or receipt surfaces.
+
+## Decision Manifest
+
+MARK-14 adds the repo-backed House Skills decision/import manifest at
+`sources/house-skills/decisions.json` and a human-readable summary at
+`sources/house-skills/decisions.md`. Later import slices should use that
+manifest to decide which skills to import as v1, keep as v0.1, fold, retire,
+treat as reference-only, or defer.

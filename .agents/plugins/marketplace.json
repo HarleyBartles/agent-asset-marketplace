@@ -4,7 +4,7 @@
     "displayName": "Harley Private Agent Asset Marketplace"
   },
   "schemaVersion": 1,
-  "issue": "MARK-2/MARK-13",
+  "issue": "MARK-2/MARK-13/MARK-14",
   "assetCatalog": "./sources/obra-superpowers/assets.json",
   "plugins": [
     {
@@ -107,11 +107,13 @@
         "assetIds": [
           "first-party.house-skills.aggregate",
           "local.mark-13.house-skills-skeleton",
-          "first-party.house-skills.retired-and-reference-ledger"
+          "first-party.house-skills.retired-and-reference-ledger",
+          "first-party.house-skills.decision-manifest"
         ],
         "installToDo": "Install this early private skeleton to expose House Skills provenance, bundle boundaries, and future import posture without claiming full House Skill content is already bundled.",
         "projectionType": "installable-local-skeleton",
-        "mirroringPosture": "First-party House Skills source text is not imported in MARK-13; the projection carries placeholders plus provenance and asset identity metadata only."
+        "mirroringPosture": "First-party House Skills source text is not imported in MARK-13 or MARK-14; the projection carries placeholders plus provenance, asset identity, and the decision manifest only.",
+        "decisionManifest": "./sources/house-skills/decisions.json"
       },
       "license": {
         "declared": "Private first-party local metadata; no full skill text imported.",
@@ -121,10 +123,11 @@
       },
       "provenance": {
         "sourceRecord": "./sources/house-skills/intake.json",
-        "licenseRecord": "./provenance/house-skills.md"
+        "licenseRecord": "./provenance/house-skills.md",
+        "decisionManifest": "./sources/house-skills/decisions.json"
       },
       "quality": {
-        "status": "skeleton-projection",
+        "status": "skeleton-projection-with-decision-manifest",
         "productionReadiness": "early-private-marketplace-skeleton",
         "reviewRequiredBeforeExternalDistribution": true,
         "validationRequired": "python3 tools/validate_marketplace.py"

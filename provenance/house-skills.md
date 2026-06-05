@@ -1,6 +1,6 @@
 # House Skills Provenance And Trust Posture
 
-Issue: MARK-13
+Issue: MARK-13/MARK-14
 
 ## Source Identity
 
@@ -11,6 +11,8 @@ custom GPT-native skills after the MARK-9 sanity rollup.
 - Codex plugin projection: `plugins/house-skills/`
 - Asset catalog: `sources/house-skills/assets.json`
 - Intake/source posture record: `sources/house-skills/intake.json`
+- Decision/import manifest: `sources/house-skills/decisions.json`
+- Readable decision summary: `sources/house-skills/decisions.md`
 
 ## MARK-13 Decision
 
@@ -21,6 +23,18 @@ source text into the repository.
 The installable projection is intentionally thin: it proves the marketplace
 entry, plugin manifest, placeholder bundle directories, asset catalog, and
 provenance records can validate together.
+
+
+## MARK-14 Decision Manifest
+
+MARK-14 adds a machine-readable and human-readable decision/import manifest for
+the MARK-9 sanity-rollup decisions. The manifest distinguishes v1, v0.1, fold,
+retire, reference-only, and defer outcomes so later import slices know what to
+import, keep provisional, fold into other surfaces, retire, preserve as
+reference-only, or park for future work.
+
+MARK-14 remains metadata-only: it does not import full `SKILL.md` content,
+package skill ZIPs, or make retired skills installable.
 
 ## Trust And License Posture
 

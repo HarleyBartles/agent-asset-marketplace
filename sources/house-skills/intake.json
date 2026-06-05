@@ -1,6 +1,6 @@
 {
   "sourceId": "first-party.house-skills.aggregate",
-  "issue": "MARK-13",
+  "issue": "MARK-13/MARK-14",
   "sourceRoot": "./gpt-skills/house-skills",
   "upstream": {
     "owner": "HarleyBartles",
@@ -17,7 +17,7 @@
     "fullSkillTextImported": false,
     "safeToList": true,
     "safeToBundle": true,
-    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
+    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton and MARK-14 decision manifest only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
     "blockedOrMetadataOnlySources": [
       {
         "name": "skill-creator",
@@ -42,7 +42,7 @@
       {
         "name": "deck-pptx-receipt-surfaces",
         "retention": "out-of-scope/deferred",
-        "reason": "Deck, PPTX, and receipt surfaces are explicitly outside the MARK-13 House Skills skeleton slice."
+        "reason": "Deck, PPTX, and receipt surfaces are explicitly outside the House Skills import manifest and MARK-14 scope."
       }
     ]
   },
@@ -92,5 +92,20 @@
     "sourceLanguage": "en",
     "translationNeeded": false,
     "posture": "Current skeleton metadata is English-source. Reassess during actual skill content import."
+  },
+  "decisionManifest": {
+    "issue": "MARK-14",
+    "path": "./sources/house-skills/decisions.json",
+    "summary": "./sources/house-skills/decisions.md",
+    "manifestId": "manifest.mark-14.house-skills.decisions",
+    "statusVocabulary": [
+      "v1",
+      "v0.1",
+      "fold",
+      "retire",
+      "reference-only",
+      "defer"
+    ],
+    "fullSkillTextImported": false
   }
 }
