@@ -24,7 +24,6 @@ The installable projection is intentionally thin: it proves the marketplace
 entry, plugin manifest, placeholder bundle directories, asset catalog, and
 provenance records can validate together.
 
-
 ## MARK-14 Decision Manifest
 
 MARK-14 adds a machine-readable and human-readable decision/import manifest for
@@ -35,7 +34,6 @@ reference-only, or park for future work.
 
 MARK-14 remains metadata-only: it does not import full `SKILL.md` content,
 package skill ZIPs, or make retired skills installable.
-
 
 ## MARK-15 Linear/Codex Delegation Mechanics
 
@@ -56,6 +54,22 @@ Recorded workspace identities:
   (`0f41920d-8499-4555-993d-066c003cf580`)
 - Codex delegate: Codex
   (`a1b0a6a6-48b3-4af6-9a99-744f5ae357d1`)
+
+## MARK-16 Linear And Worker Dispatch Source Import
+
+MARK-16 imports the first actual House Skills source-content slice. The imported
+canonical sources are:
+
+- `gpt-skills/house-skills/linear-v1/SKILL.md` — successor to the old installed
+  `linear-control-plane` skill, updated for the MARK-9/MARK-15 Linear-first and
+  Codex-delegation decisions.
+- `gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md` — successor to
+  the old installed `linear-codex-dispatch` skill, updated for the preferred
+  Linear-based dispatch taxonomy and MARK-15 delegation verification rule.
+
+The import is source-only. The Codex plugin projection remains metadata-only and
+does not bundle these skill files in this slice. No other House Skills are
+imported by MARK-16.
 
 ## Trust And License Posture
 

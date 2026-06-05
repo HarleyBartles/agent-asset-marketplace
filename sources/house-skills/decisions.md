@@ -65,6 +65,27 @@ The JSON manifest uses these top-level fields:
   distinct Codex delegate; coding work must not be delegated to the Linear
   agent.
 
+## MARK-16 Source Import
+
+MARK-16 imports the first two reviewed House Skills source records under the
+canonical source root:
+
+- `gpt-skills/house-skills/linear-v1/SKILL.md` is the renamed/reframed successor
+  to old `linear-control-plane`. It owns Linear connector mechanics, Linear
+  object operations, and durable Linear working-state surfaces.
+- `gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md` is the
+  renamed/reframed successor to old `linear-codex-dispatch`. It owns
+  Linear-based Codex worker dispatch, worker status checks, PR-gate routing, PR
+  verification routing, and merge-readiness routing.
+
+Both imported source records preserve the MARK-15 delegation mechanics: a
+responsible human assignee plus a distinct Codex delegate, no coding delegation
+to the Linear agent, and no success claim until the issue is re-fetched and
+observable Linear state verifies delegation. The Codex plugin bundle remains a
+metadata-only projection in this slice; no `SKILL.md` files are copied into
+`plugins/house-skills/skills/`.
+
+No other House Skill source text is imported in MARK-16.
 
 ## Linear/Codex Delegation Mechanics
 

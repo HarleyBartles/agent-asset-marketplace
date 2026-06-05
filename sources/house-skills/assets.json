@@ -1,6 +1,6 @@
 {
   "catalogId": "catalog.mark-14.house-skills.asset-identity",
-  "issue": "MARK-13/MARK-14",
+  "issue": "MARK-13/MARK-14/MARK-16",
   "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
   "assets": [
     {
@@ -74,6 +74,46 @@
         "manifest": "./sources/house-skills/decisions.json",
         "summary": "./sources/house-skills/decisions.md"
       }
+    },
+    {
+      "assetId": "first-party.house-skills.linear-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "linear-v1",
+      "origin": "MARK-16 reviewed import from renamed/reframed linear-control-plane source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/linear-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.worker-dispatch-linear-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "worker-dispatch-linear-v1",
+      "origin": "MARK-16 reviewed import from renamed/reframed linear-codex-dispatch source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md"
+      }
     }
   ],
   "projections": [
@@ -88,6 +128,16 @@
       ],
       "installable": true,
       "decisionManifest": "./sources/house-skills/decisions.json"
+    }
+  ],
+  "sourceImports": [
+    {
+      "issue": "MARK-16",
+      "assetIds": [
+        "first-party.house-skills.linear-v1",
+        "first-party.house-skills.worker-dispatch-linear-v1"
+      ],
+      "pluginProjection": "not-included-in-mark-16"
     }
   ]
 }

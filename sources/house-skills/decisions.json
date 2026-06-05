@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "manifestId": "manifest.mark-14.house-skills.decisions",
-  "issue": "MARK-14",
+  "issue": "MARK-14/MARK-15/MARK-16",
   "sourceSet": {
     "id": "first-party.house-skills.aggregate",
     "name": "House Skills",
@@ -9,7 +9,7 @@
     "sourceRecord": "./sources/house-skills/intake.json",
     "assetCatalog": "./sources/house-skills/assets.json",
     "provenanceRecord": "./provenance/house-skills.md",
-    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. This manifest is decision metadata only; it does not import full skill source text."
+    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. MARK-16 imports the first two reviewed full skill source records while leaving the wider manifest as decision metadata for later slices."
   },
   "issueLineage": [
     {
@@ -35,6 +35,12 @@
       "role": "current-slice",
       "title": "Codify Linear Codex delegation mechanics",
       "statusInManifest": "linear-codex-delegation-mechanics-recorded"
+    },
+    {
+      "issue": "MARK-16",
+      "role": "current-slice",
+      "title": "Import Linear and Codex dispatch House Skills",
+      "statusInManifest": "linear-v1-and-worker-dispatch-linear-v1-source-imported"
     }
   ],
   "statusVocabulary": {
@@ -51,7 +57,8 @@
     "bundleSpaceIsCheap": true,
     "relatedSkillsMayAppearInMultipleSensiblePluginBundles": true,
     "projectionPolicy": "House Skills source decisions live under sources/gpt-skills provenance first. Codex plugin projections may later bundle reviewed skills without forcing one permanent bundle boundary.",
-    "noFullSkillImportInThisSlice": true
+    "noFullSkillImportInThisSlice": false,
+    "currentSourceImportBoundary": "MARK-16 imports only canonical source SKILL.md records for linear-v1 and worker-dispatch-linear-v1 under gpt-skills/house-skills; the Codex plugin projection remains metadata-only until a later projection slice."
   },
   "globalDecisions": [
     {
@@ -142,6 +149,15 @@
       "id": "global.boring-first.base-doctrine",
       "status": "v1",
       "decision": "Cross-project base doctrine must carry the boring-first posture: exciting things are made possible by boring-first workflows, evidence, repeatability, validation, and risk reduction."
+    },
+    {
+      "id": "global.mark-16.source-import-boundary",
+      "status": "v1",
+      "decision": "MARK-16 imports exactly two reviewed House Skills source records: linear-v1 and worker-dispatch-linear-v1. No other House Skill source text is imported and no Codex plugin bundle skill projection is added in this slice.",
+      "importedSourcePaths": [
+        "./gpt-skills/house-skills/linear-v1/SKILL.md",
+        "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md"
+      ]
     }
   ],
   "skillDecisions": [
@@ -149,7 +165,7 @@
       "name": "skill-validator-v1",
       "status": "v1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 03 — skill stack",
+      "sourceChunk": "chunk 03 \u2014 skill stack",
       "decisionSummary": "Accepted as a first skill-stack import row required for later slices; exact source content is not yet imported into this repo.",
       "activeSkillCandidate": true,
       "fullSkillTextImported": false
@@ -158,7 +174,7 @@
       "name": "skill-packager-v1",
       "status": "v1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 03 — skill stack",
+      "sourceChunk": "chunk 03 \u2014 skill stack",
       "decisionSummary": "Accepted as a first skill-stack import row required for later slices; exact source content is not yet imported into this repo.",
       "activeSkillCandidate": true,
       "fullSkillTextImported": false
@@ -167,7 +183,7 @@
       "name": "skill-buster-v0.1",
       "status": "v0.1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 02 — busters",
+      "sourceChunk": "chunk 02 \u2014 busters",
       "decisionSummary": "Remains v0.1 because the current recommended/default batch lane is unreliable while the secondary one-at-a-time lane is the reliable boring path.",
       "futureV1Requirement": "Reverse the lanes: one-at-a-time becomes default and up-to-five is clearly marked experimental in behaviorally effective language.",
       "activeSkillCandidate": true,
@@ -177,7 +193,7 @@
       "name": "canon-buster-v1",
       "status": "v1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 10-12 — Rooms-derived buster residue",
+      "sourceChunk": "chunk 10-12 \u2014 Rooms-derived buster residue",
       "decisionSummary": "Accepted as its own House Skill, with the generic use case extracted out of the Rooms use.",
       "activeSkillCandidate": true,
       "fullSkillTextImported": false
@@ -186,7 +202,7 @@
       "name": "cleanup-custody-v0.1",
       "status": "v0.1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 02 — busters",
+      "sourceChunk": "chunk 02 \u2014 busters",
       "decisionSummary": "Accepted safer public rename for the installed profanity-bearing cleanup skill; the original name is provenance/history only and not a pure buster.",
       "needsSecondLook": [
         "scope",
@@ -200,7 +216,7 @@
       "name": "rooms-image-sidecars-v0.1",
       "status": "v0.1",
       "importAction": "todo-later",
-      "sourceChunk": "chunk 10-12 — Rooms",
+      "sourceChunk": "chunk 10-12 \u2014 Rooms",
       "decisionSummary": "Belongs in House Skills as a provisional v0.1 candidate.",
       "activeSkillCandidate": true,
       "fullSkillTextImported": false
@@ -259,12 +275,16 @@
       "fullSkillTextImported": false
     },
     {
-      "name": "worker-dispatch-linear-v1",
+      "name": "linear-v1",
       "status": "v1",
-      "importAction": "todo-later",
-      "decisionSummary": "Preferred narrow Linear-based worker dispatch/control-plane skill name; owns Linear handoff, Codex worker routing through Linear, worker status, PR gate, PR iteration, merge-readiness routing, and the verified human-assignee plus Codex-delegate mechanics.",
+      "importAction": "imported-source-mark-16",
+      "sourceChunk": "chunk 01 \u2014 core control plane",
+      "sourcePath": "./gpt-skills/house-skills/linear-v1/SKILL.md",
+      "decisionSummary": "Renamed/reframed successor to old linear-control-plane. Imported as the Linear connector-mechanics and durable working-state skill, with coding dispatch routed to worker-dispatch-linear-v1 and MARK-15 human-assignee plus Codex-delegate mechanics preserved.",
       "activeSkillCandidate": true,
-      "fullSkillTextImported": false,
+      "fullSkillTextImported": true,
+      "successorTo": "linear-control-plane",
+      "pluginProjection": "not-projected-in-mark-16",
       "delegationMechanics": {
         "humanAssigneeRequired": true,
         "codexDelegateRequired": true,
@@ -290,6 +310,43 @@
         ],
         "retryPosture": "If mixed GitHub/Linear connector context is unstable, switch to a Linear-only connector/tool context before retrying instead of blind retrying."
       }
+    },
+    {
+      "name": "worker-dispatch-linear-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-16",
+      "decisionSummary": "Renamed/reframed successor to old linear-codex-dispatch. Imported as the narrow Linear-based worker dispatch/control-plane skill for Linear handoff, Codex worker routing through Linear, worker status, PR gate, PR iteration, merge-readiness routing, and verified human-assignee plus Codex-delegate mechanics.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "delegationMechanics": {
+        "humanAssigneeRequired": true,
+        "codexDelegateRequired": true,
+        "humanRemainsResponsible": true,
+        "codexAgentDistinctFromLinearAgent": true,
+        "doNotDelegateCodingWorkToLinearAgent": true,
+        "observedDelegate": {
+          "name": "Codex",
+          "id": "a1b0a6a6-48b3-4af6-9a99-744f5ae357d1"
+        },
+        "observedHumanAssignee": {
+          "name": "Harley Bartles",
+          "id": "0f41920d-8499-4555-993d-066c003cf580"
+        },
+        "mustRefetchIssueAfterMutation": true,
+        "connectorMutationIsNotProof": true,
+        "successEvidence": [
+          "delegate: Codex",
+          "expected human assignee",
+          "Todo/In Progress status as appropriate",
+          "Codex activity",
+          "PR attachment"
+        ],
+        "retryPosture": "If mixed GitHub/Linear connector context is unstable, switch to a Linear-only connector/tool context before retrying instead of blind retrying."
+      },
+      "sourceChunk": "chunk 07 dispatch taxonomy / Linear-Codex delegation successor",
+      "sourcePath": "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md",
+      "successorTo": "linear-codex-dispatch",
+      "pluginProjection": "not-projected-in-mark-16"
     },
     {
       "name": "generic-base-source-partitioning",
@@ -348,7 +405,7 @@
       "name": "pig-stack",
       "status": "retire",
       "importAction": "do-not-import",
-      "sourceChunk": "chunk 05 — PIG",
+      "sourceChunk": "chunk 05 \u2014 PIG",
       "decisionSummary": "PIG is a retired actor route. The whole PIG-specific stack should not receive versioned v1 replacements.",
       "members": [
         "pig-bootstrap",
@@ -380,11 +437,11 @@
     }
   ],
   "todoNextSlices": [
+    "Project imported linear-v1 and worker-dispatch-linear-v1 source into an installable Codex plugin bundle only in a later explicit projection slice, if desired.",
     "Import reviewed SKILL.md content only in later bounded slices.",
     "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
     "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
     "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",
-    "Prove whether generic/base source partitioning has residue outside TPS during implementation.",
-    "When importing linear-v1 / worker-dispatch-linear-v1, implement these recorded Linear/Codex delegation mechanics without changing this metadata-only slice into a full skill source import."
+    "Prove whether generic/base source partitioning has residue outside TPS during implementation."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "sourceId": "first-party.house-skills.aggregate",
-  "issue": "MARK-13/MARK-14/MARK-15",
+  "issue": "MARK-13/MARK-14/MARK-15/MARK-16",
   "sourceRoot": "./gpt-skills/house-skills",
   "upstream": {
     "owner": "HarleyBartles",
@@ -17,7 +17,7 @@
     "fullSkillTextImported": false,
     "safeToList": true,
     "safeToBundle": true,
-    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton, MARK-14 decision manifest, and MARK-15 Linear/Codex delegation metadata only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
+    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton, decision manifest, delegation metadata, and MARK-16 canonical source imports for linear-v1 and worker-dispatch-linear-v1. Other reviewed skill sources and plugin projections remain later bounded slices.",
     "blockedOrMetadataOnlySources": [
       {
         "name": "skill-creator",
@@ -46,8 +46,24 @@
       },
       {
         "name": "linear-codex-delegation-mechanics",
-        "retention": "metadata-only-decision-guidance",
-        "reason": "MARK-15 records observed Linear/Codex assignment, delegation, verification, and retry mechanics for later linear-v1 / worker-dispatch-linear-v1 import; it does not import full skill source."
+        "retention": "preserved-in-imported-linear-and-worker-dispatch-sources",
+        "reason": "MARK-16 imports linear-v1 and worker-dispatch-linear-v1 with the MARK-15 assignment, delegation, verification, and retry mechanics preserved."
+      }
+    ],
+    "importedSkillSources": [
+      {
+        "name": "linear-v1",
+        "sourcePath": "./gpt-skills/house-skills/linear-v1/SKILL.md",
+        "successorTo": "linear-control-plane",
+        "issue": "MARK-16",
+        "pluginProjection": "not-projected-in-mark-16"
+      },
+      {
+        "name": "worker-dispatch-linear-v1",
+        "sourcePath": "./gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md",
+        "successorTo": "linear-codex-dispatch",
+        "issue": "MARK-16",
+        "pluginProjection": "not-projected-in-mark-16"
       }
     ]
   },
@@ -79,8 +95,13 @@
     },
     {
       "name": "worker-dispatch-linear-v1",
-      "retention": "house-skill-candidate",
-      "status": "preferred-dispatch-taxonomy-and-delegation-mechanics-recorded/content-not-imported"
+      "retention": "house-skill-source",
+      "status": "source-imported-mark-16"
+    },
+    {
+      "name": "linear-v1",
+      "retention": "house-skill-source",
+      "status": "source-imported-mark-16"
     }
   ],
   "futureHorizon": {
@@ -99,7 +120,7 @@
     "posture": "Current skeleton metadata is English-source. Reassess during actual skill content import."
   },
   "decisionManifest": {
-    "issue": "MARK-14/MARK-15",
+    "issue": "MARK-14/MARK-15/MARK-16",
     "path": "./sources/house-skills/decisions.json",
     "summary": "./sources/house-skills/decisions.md",
     "manifestId": "manifest.mark-14.house-skills.decisions",
@@ -111,6 +132,6 @@
       "reference-only",
       "defer"
     ],
-    "fullSkillTextImported": false
+    "fullSkillTextImported": "partial: linear-v1 and worker-dispatch-linear-v1 only"
   }
 }
