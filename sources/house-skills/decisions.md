@@ -165,19 +165,43 @@ including:
 - `pig-stack`
 - `adventures-github-overlay`
 - `rooms-github-proof-residue`
+- `tps-reporting-v1`
+- `tps-ingress-v1`
 
 Rows with `importAction: "todo-later"` or
 `importAction: "todo-later-with-modification"` intentionally do not claim that
 source content has already been imported. Rows with `importAction` values such
-as `imported-source-mark-16` or `imported-source-mark-17` point to canonical
-source records under `gpt-skills/house-skills/`.
+as `imported-source-mark-16`, `imported-source-mark-17`, or
+`imported-source-mark-18` point to canonical source records under
+`gpt-skills/house-skills/`.
+
+## MARK-18 Source Import
+
+MARK-18 imports exactly two TPS protocol House Skills source records under the
+canonical source root:
+
+- `gpt-skills/house-skills/tps-reporting-v1/SKILL.md` is the producer-side TPS
+  report protocol. It requires a cover sheet, keeps domain-specific report
+  bodies owned by the reporting domain, partitions verified source from claims,
+  inferences, assumptions, and out-of-scope material, and treats tests as
+  evidence rather than automatic issue-goal conformance.
+- `gpt-skills/house-skills/tps-ingress-v1/SKILL.md` is the consumer-side TPS
+  ingress protocol. It gates incoming reports on cover sheet presence, reviews
+  and falsifies material claims against durable source surfaces, and routes
+  accept, repair, falsified, or blocked outcomes.
+
+Generic/base source partitioning is folded into TPS in this slice; no distinct
+standalone residue was imported. No busters, cleanup custody, skill maintenance,
+Adventures, Rooms, plugin projections, standalone GitHub operations, deck/PPTX,
+receipt surfaces, or ChatGPT skill ZIPs are imported by MARK-18.
 
 ## Non-Import Confirmation
 
-MARK-17 imports only the base doctrine/work-mode/worker-readiness source slice.
-It does not project actual House Skill source content into
-`plugins/house-skills/skills/`, package ChatGPT skill ZIPs, import
-`worker-readiness-gate-v1` as a standalone top-level skill, or revive retired
+MARK-18 imports only the TPS/reporting-ingress source slice after the earlier
+MARK-16 and MARK-17 source imports. It does not project actual House Skill
+source content into `plugins/house-skills/skills/`, package ChatGPT skill ZIPs,
+import busters, cleanup custody, skill maintenance, Adventures, Rooms,
+standalone GitHub operations, deck/PPTX/receipt surfaces, or revive retired
 skills as installable entries.
 
 ## TODOs for Later Import Slices
@@ -189,7 +213,7 @@ skills as installable entries.
   imported.
 - Resolve parked Adventures presentation/package QA fragments before silently
   retiring those checks.
-- Prove whether generic/base source partitioning has residue outside TPS during
-  implementation.
+- Watch for future evidence of generic/base source partitioning residue outside
+  TPS; MARK-18 found no distinct standalone residue.
 - Project imported source records into installable Codex plugin bundles only in
   a later explicit projection slice, if desired.

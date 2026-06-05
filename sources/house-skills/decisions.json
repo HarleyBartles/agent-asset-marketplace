@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "manifestId": "manifest.mark-14.house-skills.decisions",
-  "issue": "MARK-14/MARK-15/MARK-16/MARK-17",
+  "issue": "MARK-14/MARK-15/MARK-16/MARK-17/MARK-18",
   "sourceSet": {
     "id": "first-party.house-skills.aggregate",
     "name": "House Skills",
@@ -9,7 +9,7 @@
     "sourceRecord": "./sources/house-skills/intake.json",
     "assetCatalog": "./sources/house-skills/assets.json",
     "provenanceRecord": "./provenance/house-skills.md",
-    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. MARK-16 imports the first two reviewed full skill source records while leaving the wider manifest as decision metadata for later slices."
+    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. MARK-18 imports the TPS reporting/ingress protocol split while leaving unrelated House Skills for later slices."
   },
   "issueLineage": [
     {
@@ -47,6 +47,12 @@
       "role": "current-slice",
       "title": "Import base doctrine and work-mode House Skills",
       "statusInManifest": "base-work-mode-source-imported"
+    },
+    {
+      "issue": "MARK-18",
+      "role": "current-slice",
+      "title": "Import TPS reporting and ingress House Skills",
+      "statusInManifest": "tps-reporting-v1-and-tps-ingress-v1-source-imported"
     }
   ],
   "statusVocabulary": {
@@ -64,7 +70,7 @@
     "relatedSkillsMayAppearInMultipleSensiblePluginBundles": true,
     "projectionPolicy": "House Skills source decisions live under sources/gpt-skills provenance first. Codex plugin projections may later bundle reviewed skills without forcing one permanent bundle boundary.",
     "noFullSkillImportInThisSlice": false,
-    "currentSourceImportBoundary": "MARK-17 imports exactly three additional reviewed base/work-mode source records: gpt-base-doctrine-v1, work-mode-router-v1, and worker-readiness-prep-v1. No plugin projection is added in this slice."
+    "currentSourceImportBoundary": "MARK-18 imports exactly two reviewed TPS protocol source records: tps-reporting-v1 and tps-ingress-v1. No plugin projection is added in this slice."
   },
   "globalDecisions": [
     {
@@ -174,6 +180,11 @@
         "./gpt-skills/house-skills/work-mode-router-v1/SKILL.md",
         "./gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md"
       ]
+    },
+    {
+      "id": "global.mark-18.source-import-boundary",
+      "status": "v1",
+      "decision": "MARK-18 imports only TPS/reporting-ingress source content: tps-reporting-v1 and tps-ingress-v1. It does not import busters, cleanup custody, skill maintenance, Adventures, Rooms, plugin projections, standalone GitHub operations, or ChatGPT skill ZIPs."
     }
   ],
   "skillDecisions": [
@@ -383,10 +394,14 @@
     {
       "name": "generic-base-source-partitioning",
       "status": "fold",
-      "importAction": "fold-into-tps-unless-residue-proven",
-      "decisionSummary": "Generic/base source partitioning probably belongs in TPS unless implementation proves a distinct residue.",
+      "importAction": "folded-into-imported-tps-protocol-mark-18",
+      "decisionSummary": "Generic/base source partitioning is folded into the imported TPS reporting and ingress protocol unless later implementation proves a distinct residue.",
       "activeSkillCandidate": false,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": false,
+      "foldedInto": [
+        "tps-reporting-v1",
+        "tps-ingress-v1"
+      ]
     },
     {
       "name": "deck-pptx-receipt-surfaces",
@@ -470,6 +485,34 @@
       "decisionSummary": "Fold into Linear/Codex/TPS proof posture and Rooms doctrine/source partitioning without preserving a GitHub operations skill dependency.",
       "activeSkillCandidate": false,
       "fullSkillTextImported": false
+    },
+    {
+      "name": "tps-reporting-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-18",
+      "sourceChunk": "MARK-18 source payload \u2014 TPS reporting/ingress protocol split",
+      "sourcePath": "./gpt-skills/house-skills/tps-reporting-v1/SKILL.md",
+      "decisionSummary": "Imported as the producer-side TPS report protocol. It requires a cover sheet, separates source-backed facts from claims/inferences/assumptions, preserves domain-owned report bodies, and treats passing tests as evidence rather than issue-goal conformance by itself.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "protocolRole": "producer-side-reporting",
+      "requiresCoverSheet": true,
+      "domainBodyOwnedByReporterDomain": true,
+      "pluginProjection": "not-projected-in-mark-18"
+    },
+    {
+      "name": "tps-ingress-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-18",
+      "sourceChunk": "MARK-18 source payload \u2014 TPS reporting/ingress protocol split",
+      "sourcePath": "./gpt-skills/house-skills/tps-ingress-v1/SKILL.md",
+      "decisionSummary": "Imported as the consumer-side TPS ingress protocol. It gates incoming reports on cover sheet presence, partitions worker/report claims from durable evidence, validates or falsifies material claims, and routes accept/repair/falsified/blocked outcomes.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "protocolRole": "consumer-side-ingress",
+      "requiresCoverSheet": true,
+      "workerReportsAreClaimsUntilVerified": true,
+      "pluginProjection": "not-projected-in-mark-18"
     }
   ],
   "todoNextSlices": [
@@ -478,6 +521,6 @@
     "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
     "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
     "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",
-    "Prove whether generic/base source partitioning has residue outside TPS during implementation."
+    "Watch for future evidence of generic/base source partitioning residue outside TPS; MARK-18 found no distinct standalone residue."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "catalogId": "catalog.mark-14.house-skills.asset-identity",
-  "issue": "MARK-13/MARK-14/MARK-16/MARK-17",
+  "issue": "MARK-13/MARK-14/MARK-16/MARK-17/MARK-18",
   "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
   "assets": [
     {
@@ -174,6 +174,46 @@
       "paths": {
         "source": "./gpt-skills/house-skills/worker-readiness-prep-v1/SKILL.md"
       }
+    },
+    {
+      "assetId": "first-party.house-skills.tps-reporting-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "tps-reporting-v1",
+      "origin": "MARK-18 reviewed import from TPS producer-side reporting source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/tps-reporting-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.tps-ingress-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "tps-ingress-v1",
+      "origin": "MARK-18 reviewed import from TPS consumer-side ingress source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/tps-ingress-v1/SKILL.md"
+      }
     }
   ],
   "projections": [
@@ -208,6 +248,15 @@
       ],
       "pluginProjection": "not-included-in-mark-17",
       "standaloneGateImport": "worker-readiness-gate-v1 not imported; folded into worker-readiness-prep-v1"
+    },
+    {
+      "issue": "MARK-18",
+      "assetIds": [
+        "first-party.house-skills.tps-reporting-v1",
+        "first-party.house-skills.tps-ingress-v1"
+      ],
+      "pluginProjection": "not-included-in-mark-18",
+      "scopeConfirmation": "Only TPS/reporting-ingress skills were imported in this source slice."
     }
   ]
 }

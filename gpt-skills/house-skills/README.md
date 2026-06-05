@@ -67,3 +67,13 @@ MARK-17 imports exactly three additional canonical House Skills source records:
 `worker-readiness-gate-v1` is intentionally not imported as a standalone
 top-level skill. No unrelated House Skills and no plugin bundle projections are
 imported by MARK-17.
+
+MARK-18 imports exactly two TPS protocol source records:
+
+- `tps-reporting-v1/SKILL.md` — producer-side report protocol requiring a TPS
+  cover sheet before a domain-owned report body.
+- `tps-ingress-v1/SKILL.md` — consumer-side report ingestion, review,
+  validation, and falsification route.
+
+Generic/base source partitioning folds into TPS in this slice. No unrelated
+House Skills or plugin bundle projections are imported by MARK-18.
