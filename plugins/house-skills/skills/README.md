@@ -9,3 +9,10 @@ Future imports may add reviewed, versioned House Skill bundles here. Retired,
 folded, and reference-only historical skills should remain represented in
 provenance/source metadata unless a later decision makes them active in a
 specific bundle.
+
+## Decision Manifest
+
+MARK-14 records the House Skills decision/import manifest in
+`sources/house-skills/decisions.json`, with a readable summary at
+`sources/house-skills/decisions.md`. This plugin skills directory remains a
+placeholder until a later slice imports reviewed, versioned skill source text.

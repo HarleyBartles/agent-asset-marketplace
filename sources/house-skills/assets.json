@@ -1,6 +1,6 @@
 {
-  "catalogId": "catalog.mark-13.house-skills.asset-identity",
-  "issue": "MARK-13",
+  "catalogId": "catalog.mark-14.house-skills.asset-identity",
+  "issue": "MARK-13/MARK-14",
   "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
   "assets": [
     {
@@ -53,6 +53,27 @@
         "sourceLanguage": "en",
         "translationNeeded": false
       }
+    },
+    {
+      "assetId": "first-party.house-skills.decision-manifest",
+      "assetType": "decision-import-manifest",
+      "name": "House Skills decision manifest",
+      "origin": "MARK-14 repo-backed manifest for MARK-9 sanity-rollup decisions after MARK-13 skeleton",
+      "license": "Private first-party decision metadata; no skill text imported.",
+      "retention": "machine-readable-implementation-guide",
+      "quality": {
+        "status": "decision-manifest",
+        "productionGradeMetadata": true,
+        "reviewState": "metadata-only-no-full-skill-import"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "manifest": "./sources/house-skills/decisions.json",
+        "summary": "./sources/house-skills/decisions.md"
+      }
     }
   ],
   "projections": [
@@ -62,9 +83,11 @@
       "assetIds": [
         "first-party.house-skills.aggregate",
         "local.mark-13.house-skills-skeleton",
-        "first-party.house-skills.retired-and-reference-ledger"
+        "first-party.house-skills.retired-and-reference-ledger",
+        "first-party.house-skills.decision-manifest"
       ],
-      "installable": true
+      "installable": true,
+      "decisionManifest": "./sources/house-skills/decisions.json"
     }
   ]
 }
