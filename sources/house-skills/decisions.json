@@ -26,9 +26,15 @@
     },
     {
       "issue": "MARK-14",
-      "role": "current-slice",
+      "role": "previous-slice",
       "title": "Add House Skills decision manifest",
       "statusInManifest": "decision-manifest-created"
+    },
+    {
+      "issue": "MARK-15",
+      "role": "current-slice",
+      "title": "Codify Linear Codex delegation mechanics",
+      "statusInManifest": "linear-codex-delegation-mechanics-recorded"
     }
   ],
   "statusVocabulary": {
@@ -91,6 +97,46 @@
       "id": "global.pr-workflow.normal-worker-packet",
       "status": "v1",
       "decision": "For repo/code work, PRs are the normal worker work packet. Readiness, dispatch, validation, and GitHub proof doctrine should not preserve old direct-main/prove-on-main assumptions."
+    },
+    {
+      "id": "global.linear-codex-delegation.mechanics",
+      "status": "v1",
+      "decision": "Linear/Codex dispatch must preserve the observed working delegation mechanics: Codex Cloud work needs both the responsible human assignee and a distinct Codex delegate; the human remains accountable, and coding work must not be delegated to the Linear agent.",
+      "appliesTo": [
+        "worker-dispatch-linear-v1",
+        "linear-v1",
+        "worker-readiness-prep-v1"
+      ],
+      "observedWorkingIdentities": {
+        "delegate": {
+          "name": "Codex",
+          "id": "a1b0a6a6-48b3-4af6-9a99-744f5ae357d1",
+          "role": "Codex Cloud worker delegate"
+        },
+        "assignee": {
+          "name": "Harley Bartles",
+          "id": "0f41920d-8499-4555-993d-066c003cf580",
+          "role": "responsible human issue owner"
+        }
+      },
+      "agentDistinctions": [
+        "The Codex delegate is distinct from the Linear agent.",
+        "The Linear agent/tool context may mutate or read Linear state, but it is not the coding worker.",
+        "Do not delegate coding work to the Linear agent."
+      ],
+      "verificationRequirement": {
+        "connectorMutationIsNotProof": true,
+        "requiredAction": "After any assignment/delegation mutation, re-fetch the issue and verify observable Linear state before claiming dispatch.",
+        "successEvidence": [
+          "issue shows delegate: Codex",
+          "issue shows the expected human assignee",
+          "status moved to Todo or In Progress as appropriate",
+          "Codex activity appears on the issue",
+          "a PR attachment appears on the issue"
+        ]
+      },
+      "toolStabilityGuidance": "If GitHub connector binding causes Linear mutation or verification instability, prefer a Linear-only connector/tool context before retrying assignment/delegation; do not keep blind-retrying unstable mixed-tool calls.",
+      "source": "MARK-15 codifies the live MARK-13/MARK-14 Linear/Codex dispatch lesson as decision metadata only."
     },
     {
       "id": "global.boring-first.base-doctrine",
@@ -216,9 +262,34 @@
       "name": "worker-dispatch-linear-v1",
       "status": "v1",
       "importAction": "todo-later",
-      "decisionSummary": "Preferred narrow Linear-based worker dispatch/control-plane skill name; owns Linear handoff, Codex worker routing through Linear, worker status, PR gate, PR iteration, and merge-readiness routing.",
+      "decisionSummary": "Preferred narrow Linear-based worker dispatch/control-plane skill name; owns Linear handoff, Codex worker routing through Linear, worker status, PR gate, PR iteration, merge-readiness routing, and the verified human-assignee plus Codex-delegate mechanics.",
       "activeSkillCandidate": true,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": false,
+      "delegationMechanics": {
+        "humanAssigneeRequired": true,
+        "codexDelegateRequired": true,
+        "humanRemainsResponsible": true,
+        "codexAgentDistinctFromLinearAgent": true,
+        "doNotDelegateCodingWorkToLinearAgent": true,
+        "observedDelegate": {
+          "name": "Codex",
+          "id": "a1b0a6a6-48b3-4af6-9a99-744f5ae357d1"
+        },
+        "observedHumanAssignee": {
+          "name": "Harley Bartles",
+          "id": "0f41920d-8499-4555-993d-066c003cf580"
+        },
+        "mustRefetchIssueAfterMutation": true,
+        "connectorMutationIsNotProof": true,
+        "successEvidence": [
+          "delegate: Codex",
+          "expected human assignee",
+          "Todo/In Progress status as appropriate",
+          "Codex activity",
+          "PR attachment"
+        ],
+        "retryPosture": "If mixed GitHub/Linear connector context is unstable, switch to a Linear-only connector/tool context before retrying instead of blind retrying."
+      }
     },
     {
       "name": "generic-base-source-partitioning",
@@ -313,6 +384,7 @@
     "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
     "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
     "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",
-    "Prove whether generic/base source partitioning has residue outside TPS during implementation."
+    "Prove whether generic/base source partitioning has residue outside TPS during implementation.",
+    "When importing linear-v1 / worker-dispatch-linear-v1, implement these recorded Linear/Codex delegation mechanics without changing this metadata-only slice into a full skill source import."
   ]
 }

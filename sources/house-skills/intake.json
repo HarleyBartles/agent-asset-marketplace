@@ -1,6 +1,6 @@
 {
   "sourceId": "first-party.house-skills.aggregate",
-  "issue": "MARK-13/MARK-14",
+  "issue": "MARK-13/MARK-14/MARK-15",
   "sourceRoot": "./gpt-skills/house-skills",
   "upstream": {
     "owner": "HarleyBartles",
@@ -17,7 +17,7 @@
     "fullSkillTextImported": false,
     "safeToList": true,
     "safeToBundle": true,
-    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton and MARK-14 decision manifest only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
+    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton, MARK-14 decision manifest, and MARK-15 Linear/Codex delegation metadata only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
     "blockedOrMetadataOnlySources": [
       {
         "name": "skill-creator",
@@ -43,6 +43,11 @@
         "name": "deck-pptx-receipt-surfaces",
         "retention": "out-of-scope/deferred",
         "reason": "Deck, PPTX, and receipt surfaces are explicitly outside the House Skills import manifest and MARK-14 scope."
+      },
+      {
+        "name": "linear-codex-delegation-mechanics",
+        "retention": "metadata-only-decision-guidance",
+        "reason": "MARK-15 records observed Linear/Codex assignment, delegation, verification, and retry mechanics for later linear-v1 / worker-dispatch-linear-v1 import; it does not import full skill source."
       }
     ]
   },
@@ -75,7 +80,7 @@
     {
       "name": "worker-dispatch-linear-v1",
       "retention": "house-skill-candidate",
-      "status": "preferred-dispatch-taxonomy-recorded/content-not-imported"
+      "status": "preferred-dispatch-taxonomy-and-delegation-mechanics-recorded/content-not-imported"
     }
   ],
   "futureHorizon": {
@@ -94,7 +99,7 @@
     "posture": "Current skeleton metadata is English-source. Reassess during actual skill content import."
   },
   "decisionManifest": {
-    "issue": "MARK-14",
+    "issue": "MARK-14/MARK-15",
     "path": "./sources/house-skills/decisions.json",
     "summary": "./sources/house-skills/decisions.md",
     "manifestId": "manifest.mark-14.house-skills.decisions",

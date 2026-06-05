@@ -1,6 +1,6 @@
 # House Skills Provenance And Trust Posture
 
-Issue: MARK-13/MARK-14
+Issue: MARK-13/MARK-14/MARK-15
 
 ## Source Identity
 
@@ -35,6 +35,27 @@ reference-only, or park for future work.
 
 MARK-14 remains metadata-only: it does not import full `SKILL.md` content,
 package skill ZIPs, or make retired skills installable.
+
+
+## MARK-15 Linear/Codex Delegation Mechanics
+
+MARK-15 records the observed Linear/Codex delegation mechanics for later
+`linear-v1` and `worker-dispatch-linear-v1` import work. This is metadata and
+implementation guidance only; no full skill source is imported here.
+
+The preserved mechanics are that Codex Cloud work needs both a responsible human
+assignee and a distinct Codex delegate; the human remains accountable; coding
+work must not be delegated to the Linear agent; delegation claims must be
+verified by re-fetching the issue after mutation; and unstable mixed
+GitHub/Linear connector calls should be replaced with a Linear-only
+connector/tool context before retrying rather than blind-retried.
+
+Recorded workspace identities:
+
+- Human assignee: Harley Bartles
+  (`0f41920d-8499-4555-993d-066c003cf580`)
+- Codex delegate: Codex
+  (`a1b0a6a6-48b3-4af6-9a99-744f5ae357d1`)
 
 ## Trust And License Posture
 
