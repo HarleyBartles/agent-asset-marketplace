@@ -1,0 +1,12 @@
+{
+  "imports": [
+    {
+      "issue": "MARK-20",
+      "source_id": "cleanup-custody-v0.1",
+      "source_path": "gpt-skills/house-skills/cleanup-custody-v0.1/SKILL.md",
+      "public_name": "cleanup-custody-v0.1",
+      "provenance_name": "legacy profanity-bearing cleanup skill",
+      "scope": "cleanup-custody"
+    }
+  ]
+}
