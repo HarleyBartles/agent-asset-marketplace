@@ -148,3 +148,17 @@ projection still matches the canonical source under `gpt-skills/house-skills/`.
 The skeleton metadata is English-source. No translation is needed for MARK-13.
 Future imported skill content should revisit localization needs per skill or
 bundle.
+
+## MARK-18 TPS Reporting/Ingress Import
+
+MARK-18 imports the TPS protocol split as private first-party local source:
+`tps-reporting-v1` for producer-side reports and `tps-ingress-v1` for
+consumer-side report ingress. TPS is preserved as a protocol: reports require a
+cover sheet, domain-specific report bodies remain owned by their reporting
+domain, producer and consumer responsibilities remain distinct, worker reports
+remain claims until verified against durable source surfaces, and passing tests
+are not treated as issue-goal conformance by themselves.
+
+No busters, cleanup custody, skill maintenance, Adventures, Rooms, plugin
+projections, standalone GitHub operations, deck/PPTX/receipt surfaces, or
+ChatGPT skill ZIPs are imported in this slice.
