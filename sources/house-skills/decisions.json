@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "manifestId": "manifest.mark-14.house-skills.decisions",
-  "issue": "MARK-14/MARK-15/MARK-16/MARK-17/MARK-18",
+  "issue": "MARK-14/MARK-15/MARK-16/MARK-17/MARK-18/MARK-19",
   "sourceSet": {
     "id": "first-party.house-skills.aggregate",
     "name": "House Skills",
@@ -9,7 +9,7 @@
     "sourceRecord": "./sources/house-skills/intake.json",
     "assetCatalog": "./sources/house-skills/assets.json",
     "provenanceRecord": "./provenance/house-skills.md",
-    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. MARK-18 imports the TPS reporting/ingress protocol split while leaving unrelated House Skills for later slices."
+    "description": "Repo-backed decision/import manifest for Harley's first-party House Skills set after the MARK-9 sanity rollup. MARK-19 imports the core generic buster slice while preserving the landed MARK-18 TPS reporting/ingress rows and leaving unrelated House Skills for later slices."
   },
   "issueLineage": [
     {
@@ -53,6 +53,12 @@
       "role": "current-slice",
       "title": "Import TPS reporting and ingress House Skills",
       "statusInManifest": "tps-reporting-v1-and-tps-ingress-v1-source-imported"
+    },
+    {
+      "issue": "MARK-19",
+      "role": "current-slice",
+      "title": "Import core buster House Skills",
+      "statusInManifest": "core-generic-buster-source-imported"
     }
   ],
   "statusVocabulary": {
@@ -70,7 +76,7 @@
     "relatedSkillsMayAppearInMultipleSensiblePluginBundles": true,
     "projectionPolicy": "House Skills source decisions live under sources/gpt-skills provenance first. Codex plugin projections may later bundle reviewed skills without forcing one permanent bundle boundary.",
     "noFullSkillImportInThisSlice": false,
-    "currentSourceImportBoundary": "MARK-18 imports exactly two reviewed TPS protocol source records: tps-reporting-v1 and tps-ingress-v1. No plugin projection is added in this slice."
+    "currentSourceImportBoundary": "MARK-19 imports exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. No plugin projection is added in this slice."
   },
   "globalDecisions": [
     {
@@ -217,13 +223,70 @@
       "fullSkillTextImported": false
     },
     {
+      "name": "buster-framework-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-19",
+      "sourceChunk": "chunk 02 \u2014 busters",
+      "sourcePath": "./gpt-skills/house-skills/buster-framework-v1/SKILL.md",
+      "decisionSummary": "Imported as the GPT-wide control plane for true pre-action buster gates, including internal/interactive/blocked modes, queue mechanics, and output-surface boundaries.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-19"
+    },
+    {
+      "name": "ambiguity-buster-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-19",
+      "sourceChunk": "chunk 02 \u2014 busters",
+      "sourcePath": "./gpt-skills/house-skills/ambiguity-buster-v1/SKILL.md",
+      "decisionSummary": "Imported as the generic pre-action ambiguity gate for unresolved intent, referent, scope, source, authority, output, time, and vocabulary ambiguity.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-19"
+    },
+    {
+      "name": "boring-buster-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-19",
+      "sourceChunk": "chunk 02 \u2014 busters",
+      "sourcePath": "./gpt-skills/house-skills/boring-buster-v1/SKILL.md",
+      "decisionSummary": "Imported as the generic boring-readiness gate that checks whether work is small, dull, explicit, falsifiable, and ready for the intended execution lane.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-19"
+    },
+    {
+      "name": "invariant-buster-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-19",
+      "sourceChunk": "chunk 02 \u2014 busters",
+      "sourcePath": "./gpt-skills/house-skills/invariant-buster-v1/SKILL.md",
+      "decisionSummary": "Imported as the generic pre-action invariant gate for binding constraints, including authority, scope, source, workflow, data/schema, provenance, canon, and safety invariants.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-19"
+    },
+    {
+      "name": "analogy-buster-v1",
+      "status": "v1",
+      "importAction": "imported-source-mark-19",
+      "sourceChunk": "chunk 02 \u2014 busters",
+      "sourcePath": "./gpt-skills/house-skills/analogy-buster-v1/SKILL.md",
+      "decisionSummary": "Imported as the generic analogy gate that keeps comparisons useful without letting them become proof, authority, canon, literal mechanics, or total explanations.",
+      "activeSkillCandidate": true,
+      "fullSkillTextImported": true,
+      "pluginProjection": "not-projected-in-mark-19"
+    },
+    {
       "name": "canon-buster-v1",
       "status": "v1",
-      "importAction": "todo-later",
+      "importAction": "imported-source-mark-19",
       "sourceChunk": "chunk 10-12 \u2014 Rooms-derived buster residue",
-      "decisionSummary": "Accepted as its own House Skill, with the generic use case extracted out of the Rooms use.",
+      "decisionSummary": "Imported as a generic canon/source-truth drift gate, with Rooms-specific law drained out and retained only as provenance/residue for extraction.",
       "activeSkillCandidate": true,
-      "fullSkillTextImported": false
+      "fullSkillTextImported": true,
+      "sourcePath": "./gpt-skills/house-skills/canon-buster-v1/SKILL.md",
+      "pluginProjection": "not-projected-in-mark-19"
     },
     {
       "name": "cleanup-custody-v0.1",
@@ -517,7 +580,7 @@
   ],
   "todoNextSlices": [
     "Project imported source records into installable Codex plugin bundles only in a later explicit projection slice, if desired.",
-    "Import remaining reviewed House Skills content only in later bounded slices; MARK-17 has imported only the base/work-mode slice.",
+    "Import remaining reviewed House Skills content only in later bounded slices; MARK-19 has imported only the core generic buster slice on top of prior landed slices.",
     "Reconcile linked MARK-9 ledgers into repo-backed source records before treating this manifest as complete source truth for every chunk.",
     "Add per-skill provenance/license details when each active v1 or v0.1 skill source is imported.",
     "Resolve parked Adventures presentation/package QA fragments before silently retiring those checks.",

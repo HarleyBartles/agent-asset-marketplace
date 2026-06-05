@@ -1,6 +1,6 @@
 {
   "catalogId": "catalog.mark-14.house-skills.asset-identity",
-  "issue": "MARK-13/MARK-14/MARK-16/MARK-17/MARK-18",
+  "issue": "MARK-13/MARK-14/MARK-15/MARK-16/MARK-17/MARK-18/MARK-19",
   "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
   "assets": [
     {
@@ -214,6 +214,126 @@
       "paths": {
         "source": "./gpt-skills/house-skills/tps-ingress-v1/SKILL.md"
       }
+    },
+    {
+      "assetId": "first-party.house-skills.buster-framework-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "buster-framework-v1",
+      "origin": "MARK-19 reviewed import from chunk 02 \u2014 busters source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/buster-framework-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.ambiguity-buster-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "ambiguity-buster-v1",
+      "origin": "MARK-19 reviewed import from chunk 02 \u2014 busters source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/ambiguity-buster-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.boring-buster-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "boring-buster-v1",
+      "origin": "MARK-19 reviewed import from chunk 02 \u2014 busters source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/boring-buster-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.invariant-buster-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "invariant-buster-v1",
+      "origin": "MARK-19 reviewed import from chunk 02 \u2014 busters source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/invariant-buster-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.analogy-buster-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "analogy-buster-v1",
+      "origin": "MARK-19 reviewed import from chunk 02 \u2014 busters source payload",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/analogy-buster-v1/SKILL.md"
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.canon-buster-v1",
+      "assetType": "gpt-native-skill-source",
+      "name": "canon-buster-v1",
+      "origin": "MARK-19 reviewed generic extraction from Rooms-derived canon buster residue; Rooms-specific material retained only as provenance.",
+      "license": "Private first-party local source.",
+      "retention": "canonical-source-import",
+      "quality": {
+        "status": "reviewed-source-import",
+        "productionGradeMetadata": true,
+        "reviewState": "source-imported-not-plugin-projected"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      },
+      "paths": {
+        "source": "./gpt-skills/house-skills/canon-buster-v1/SKILL.md"
+      }
     }
   ],
   "projections": [
@@ -257,6 +377,19 @@
       ],
       "pluginProjection": "not-included-in-mark-18",
       "scopeConfirmation": "Only TPS/reporting-ingress skills were imported in this source slice."
+    },
+    {
+      "issue": "MARK-19",
+      "assetIds": [
+        "first-party.house-skills.buster-framework-v1",
+        "first-party.house-skills.ambiguity-buster-v1",
+        "first-party.house-skills.boring-buster-v1",
+        "first-party.house-skills.invariant-buster-v1",
+        "first-party.house-skills.analogy-buster-v1",
+        "first-party.house-skills.canon-buster-v1"
+      ],
+      "pluginProjection": "not-included-in-mark-19",
+      "scopeConfirmation": "Only the core generic buster slice was imported; TPS/reporting, cleanup custody, skill maintenance, Adventures, Rooms-specific overlays, plugin projections, and ChatGPT skill ZIPs remain out of scope."
     }
   ]
 }

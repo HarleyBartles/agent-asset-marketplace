@@ -1,11 +1,11 @@
 # House Skills Decision Manifest Summary
 
-Issue: MARK-14/MARK-15/MARK-16/MARK-17
+Issue: MARK-14/MARK-15/MARK-16/MARK-17/MARK-18/MARK-19
 
 `decisions.json` is the repo-backed decision/import manifest for the House
 Skills source set. It records MARK-9 sanity-rollup decisions after the MARK-13
 plugin skeleton. MARK-15 extends that metadata with the observed Linear/Codex
-delegation mechanics. MARK-16 and MARK-17 then import the first reviewed
+delegation mechanics. MARK-16 through MARK-19 then import reviewed
 canonical `SKILL.md` source records while leaving plugin projection for later.
 
 ## Manifest Path
@@ -27,7 +27,7 @@ The JSON manifest uses these top-level fields:
 - `issue` names the slices that created and extended the manifest.
 - `sourceSet` points to the House Skills source root, intake record, asset
   catalog, and provenance record.
-- `issueLineage` records MARK-9, MARK-13, MARK-14, MARK-15, MARK-16, and MARK-17 roles.
+- `issueLineage` records MARK-9, MARK-13, MARK-14, MARK-15, MARK-16, MARK-17, MARK-18, and MARK-19 roles.
 - `statusVocabulary` defines the accepted decision statuses.
 - `pluginPosture` records the first-party bundle/provenance posture, cheap
   bundle-space assumption, and current source-import boundary.
@@ -217,3 +217,25 @@ skills as installable entries.
   TPS; MARK-18 found no distinct standalone residue.
 - Project imported source records into installable Codex plugin bundles only in
   a later explicit projection slice, if desired.
+
+## MARK-18 TPS Reporting/Ingress Source Import
+
+MARK-18 imports the TPS protocol split as private first-party local source:
+
+- `gpt-skills/house-skills/tps-reporting-v1/SKILL.md` for producer-side reports.
+- `gpt-skills/house-skills/tps-ingress-v1/SKILL.md` for consumer-side report ingress.
+
+No busters, cleanup custody, skill maintenance, Adventures, Rooms-specific overlays, plugin projections, standalone GitHub operations, deck/PPTX/receipt surfaces, or ChatGPT skill ZIPs are imported in MARK-18.
+
+## MARK-19 Core Generic Buster Source Import
+
+MARK-19 imports the core generic buster slice as reviewed private first-party local source under the canonical House Skills root:
+
+- `gpt-skills/house-skills/buster-framework-v1/SKILL.md` — GPT-wide mechanics for true pre-action buster gates.
+- `gpt-skills/house-skills/ambiguity-buster-v1/SKILL.md` — unresolved ambiguity gate.
+- `gpt-skills/house-skills/boring-buster-v1/SKILL.md` — boring-readiness gate for small, explicit, falsifiable work.
+- `gpt-skills/house-skills/invariant-buster-v1/SKILL.md` — binding-constraint gate.
+- `gpt-skills/house-skills/analogy-buster-v1/SKILL.md` — analogy clarity/distortion gate.
+- `gpt-skills/house-skills/canon-buster-v1/SKILL.md` — generic canon/source-truth drift gate extracted from Rooms-derived residue without importing Rooms-specific law.
+
+The import is source-only. The Codex plugin projection remains metadata-only and does not bundle these skill files in this slice. MARK-19 does not import TPS/reporting-ingress, cleanup custody, skill maintenance, Adventures, Rooms-specific overlays, plugin projections, deck/PPTX/receipt surfaces, or ChatGPT skill ZIPs.

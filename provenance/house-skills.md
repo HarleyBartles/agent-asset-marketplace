@@ -93,6 +93,31 @@ not imported as a standalone top-level skill. No TPS, busters, skill
 maintenance, Adventures, Rooms, deck/PPTX/receipt, or unrelated House Skills are
 imported by MARK-17.
 
+## MARK-19 Core Generic Buster Source Import
+
+MARK-19 imports the core generic buster slice as private first-party local
+source. The imported canonical sources are:
+
+- `gpt-skills/house-skills/buster-framework-v1/SKILL.md` — GPT-wide
+  pre-action buster framework mechanics.
+- `gpt-skills/house-skills/ambiguity-buster-v1/SKILL.md` — generic
+  unresolved ambiguity gate.
+- `gpt-skills/house-skills/boring-buster-v1/SKILL.md` — generic boring
+  implementation-readiness gate.
+- `gpt-skills/house-skills/invariant-buster-v1/SKILL.md` — generic binding
+  constraint gate.
+- `gpt-skills/house-skills/analogy-buster-v1/SKILL.md` — generic analogy
+  clarity/distortion gate.
+- `gpt-skills/house-skills/canon-buster-v1/SKILL.md` — generic canon/source
+  truth drift gate extracted from Rooms-derived residue while leaving
+  Rooms-specific actor, path, and doctrine material out of this slice.
+
+The import is source-only. The Codex plugin projection remains metadata-only and
+does not bundle these skill files in this slice. No TPS/reporting-ingress,
+cleanup custody, skill maintenance, Adventures, Rooms-specific overlays, plugin
+projections, deck/PPTX/receipt surfaces, or ChatGPT skill ZIPs are imported by
+MARK-19.
+
 ## Trust And License Posture
 
 - House Skills are first-party/private local assets unless later content import
@@ -100,7 +125,7 @@ imported by MARK-17.
 - This slice does not mirror third-party content.
 - This slice does not package ChatGPT skill ZIPs or generated deployment output.
 - Future imports must update this record when they add actual skill content,
-  scripts, hooks, assets, or non-first-party material. MARK-17 adds only
+  scripts, hooks, assets, or non-first-party material. MARK-19 adds only
   first-party Markdown source records and no scripts, hooks, assets, or
   non-first-party material.
 
@@ -116,8 +141,9 @@ Known MARK-9 posture carried into this skeleton:
   cleanup custody workflow; the installed profanity-bearing source name remains
   provenance/history only.
 - `rooms-image-sidecars-v0.1` belongs in House Skills as a v0.1 candidate.
-- `canon-buster-v1` is a House Skill candidate with generic value extracted
-  from the Rooms-specific use.
+- `canon-buster-v1` is imported as a generic House Skill with generic value
+  extracted from the Rooms-specific use; Rooms-specific overlays remain out of
+  this slice.
 - `worker-readiness-gate` should live inside `worker-readiness-prep`, not as a
   standalone top-level installable skill in this skeleton.
 - `worker-dispatch-linear-v1` is the preferred narrow dispatch/control-plane
