@@ -1,0 +1,96 @@
+{
+  "sourceId": "first-party.house-skills.aggregate",
+  "issue": "MARK-13",
+  "sourceRoot": "./gpt-skills/house-skills",
+  "upstream": {
+    "owner": "HarleyBartles",
+    "repo": "agent-asset-marketplace",
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "sourceType": "first-party-gpt-native-skills",
+    "assessmentSource": "MARK-9 sanity rollup decisions",
+    "observedLicense": "Private first-party local source; explicit per-skill licensing deferred until content import"
+  },
+  "intakePosture": {
+    "role": "first-party-house-skills-source-custody",
+    "aggregate": true,
+    "mirroredContent": false,
+    "fullSkillTextImported": false,
+    "safeToList": true,
+    "safeToBundle": true,
+    "bundleDecision": "Create validation-compatible House Skills source/projection skeleton only. Later slices may import reviewed, versioned skill sources into gpt-skills/house-skills and project them into one or more plugin bundles.",
+    "blockedOrMetadataOnlySources": [
+      {
+        "name": "skill-creator",
+        "retention": "reference-only/system-built-in/not-imported",
+        "reason": "System-built-in skill; not a House Skills import target."
+      },
+      {
+        "name": "skill-market",
+        "retention": "retired/folded-into-MARK-doctrine",
+        "reason": "MARK replaces the old marketplace skill route."
+      },
+      {
+        "name": "github-issue-management",
+        "retention": "retired-standalone",
+        "reason": "Linear is the issue/control-plane surface; GitHub remains evidence/tool surface only."
+      },
+      {
+        "name": "github-operations",
+        "retention": "retired-standalone",
+        "reason": "No standalone GitHub operations skill is imported in this skeleton."
+      },
+      {
+        "name": "deck-pptx-receipt-surfaces",
+        "retention": "out-of-scope/deferred",
+        "reason": "Deck, PPTX, and receipt surfaces are explicitly outside the MARK-13 House Skills skeleton slice."
+      }
+    ]
+  },
+  "acceptedSkeletonSignals": [
+    {
+      "name": "House Skills",
+      "retention": "repo-backed-first-party-bundle-group",
+      "status": "skeleton-created"
+    },
+    {
+      "name": "cleanup-custody-v0.1",
+      "retention": "provisional-house-skill-candidate",
+      "status": "name-accepted/content-not-imported"
+    },
+    {
+      "name": "rooms-image-sidecars-v0.1",
+      "retention": "provisional-house-skill-candidate",
+      "status": "candidate-recorded/content-not-imported"
+    },
+    {
+      "name": "canon-buster-v1",
+      "retention": "house-skill-candidate",
+      "status": "candidate-recorded/content-not-imported"
+    },
+    {
+      "name": "worker-readiness-prep-v1",
+      "retention": "house-skill-candidate-with-gate-inside",
+      "status": "taxonomy-recorded/content-not-imported"
+    },
+    {
+      "name": "worker-dispatch-linear-v1",
+      "retention": "house-skill-candidate",
+      "status": "preferred-dispatch-taxonomy-recorded/content-not-imported"
+    }
+  ],
+  "futureHorizon": {
+    "nonUseIsNotExclusion": true,
+    "bundleSpaceIsCheap": true,
+    "relatedSkillsMayAppearInMultipleBundles": true,
+    "notes": [
+      "Import reviewed skill text only in later bounded slices.",
+      "Keep asset identity separate from plugin projection so future regrouping is normal maintenance.",
+      "Retired, folded, and reference-only skills stay in provenance/manifests rather than active installable entries."
+    ]
+  },
+  "localization": {
+    "sourceLanguage": "en",
+    "translationNeeded": false,
+    "posture": "Current skeleton metadata is English-source. Reassess during actual skill content import."
+  }
+}

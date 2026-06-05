@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the MARK-2 private Codex plugin marketplace baseline."""
+"""Validate the private Codex plugin marketplace baseline."""
 
 from __future__ import annotations
 
@@ -56,24 +56,46 @@ def validate_marketplace() -> list[str]:
     plugins = marketplace.get("plugins")
     require(isinstance(plugins, list) and plugins, "marketplace.plugins must be a non-empty list")
 
-    asset_catalog = marketplace.get("assetCatalog")
-    require(isinstance(asset_catalog, str), "marketplace missing assetCatalog")
-    asset_catalog_path = resolve_repo_relative(asset_catalog)
-    catalog = load_json(asset_catalog_path)
-    assets = catalog.get("assets")
-    projections = catalog.get("projections")
-    require(isinstance(assets, list) and assets, "asset catalog missing assets")
-    require(isinstance(projections, list) and projections, "asset catalog missing projections")
-    for asset in assets:
-        require(asset.get("assetId"), "catalog asset missing assetId")
-        require(asset.get("license"), f"catalog asset {asset.get('assetId')} missing license")
-        require(asset.get("quality", {}).get("productionGradeMetadata") is True, f"catalog asset {asset.get('assetId')} missing production-grade quality metadata")
-        require("translationNeeded" in asset.get("localization", {}), f"catalog asset {asset.get('assetId')} missing localization posture")
-    for projection in projections:
-        require(projection.get("projectionId"), "catalog projection missing projectionId")
-        require(projection.get("pluginName"), f"catalog projection {projection.get('projectionId')} missing pluginName")
-        require(isinstance(projection.get("assetIds"), list) and projection.get("assetIds"), f"catalog projection {projection.get('projectionId')} missing assetIds")
-    messages.append(f"parsed {asset_catalog_path.relative_to(ROOT)}")
+    asset_catalog_refs: list[str] = []
+    legacy_asset_catalog = marketplace.get("assetCatalog")
+    if legacy_asset_catalog is not None:
+        require(isinstance(legacy_asset_catalog, str), "marketplace assetCatalog must be a string when present")
+        asset_catalog_refs.append(legacy_asset_catalog)
+
+    asset_catalogs = marketplace.get("assetCatalogs", [])
+    require(isinstance(asset_catalogs, list), "marketplace assetCatalogs must be a list when present")
+    for asset_catalog in asset_catalogs:
+        require(isinstance(asset_catalog, str), "marketplace assetCatalogs entries must be strings")
+        if asset_catalog not in asset_catalog_refs:
+            asset_catalog_refs.append(asset_catalog)
+
+    require(asset_catalog_refs, "marketplace missing assetCatalog or assetCatalogs")
+
+    catalog_projection_ids: set[str] = set()
+    catalog_asset_ids: set[str] = set()
+    for asset_catalog in asset_catalog_refs:
+        asset_catalog_path = resolve_repo_relative(asset_catalog)
+        catalog = load_json(asset_catalog_path)
+        assets = catalog.get("assets")
+        projections = catalog.get("projections")
+        require(isinstance(assets, list) and assets, f"asset catalog {asset_catalog} missing assets")
+        require(isinstance(projections, list) and projections, f"asset catalog {asset_catalog} missing projections")
+        for asset in assets:
+            asset_id = asset.get("assetId")
+            require(asset_id, f"catalog {asset_catalog} asset missing assetId")
+            require(asset.get("license"), f"catalog asset {asset_id} missing license")
+            require(asset.get("quality", {}).get("productionGradeMetadata") is True, f"catalog asset {asset_id} missing production-grade quality metadata")
+            require("translationNeeded" in asset.get("localization", {}), f"catalog asset {asset_id} missing localization posture")
+            catalog_asset_ids.add(asset_id)
+        for projection in projections:
+            projection_id = projection.get("projectionId")
+            require(projection_id, f"catalog {asset_catalog} projection missing projectionId")
+            require(projection.get("pluginName"), f"catalog projection {projection_id} missing pluginName")
+            require(isinstance(projection.get("assetIds"), list) and projection.get("assetIds"), f"catalog projection {projection_id} missing assetIds")
+            for asset_id in projection.get("assetIds"):
+                require(asset_id in catalog_asset_ids, f"catalog projection {projection_id} references unknown assetId {asset_id}")
+            catalog_projection_ids.add(projection_id)
+        messages.append(f"parsed {asset_catalog_path.relative_to(ROOT)}")
 
     installable_seen = False
     for entry in plugins:
@@ -115,6 +137,9 @@ def validate_marketplace() -> list[str]:
         localization_meta = entry.get("localization")
         projection_meta = entry.get("projection")
         require(isinstance(projection_meta, dict) and projection_meta.get("projectionId"), f"{name} missing projection metadata")
+        require(projection_meta.get("projectionId") in catalog_projection_ids, f"{name} projectionId not found in asset catalogs")
+        for asset_id in projection_meta.get("assetIds", []):
+            require(asset_id in catalog_asset_ids, f"{name} projection references unknown assetId {asset_id}")
         require(isinstance(quality_meta, dict) and quality_meta.get("status"), f"{name} missing quality metadata")
         require(isinstance(localization_meta, dict) and "translationNeeded" in localization_meta, f"{name} missing localization metadata")
 
@@ -160,7 +185,7 @@ def main() -> int:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1
 
-    print("MARK-2 marketplace validation passed")
+    print("Marketplace validation passed")
     for message in messages:
         print(f"- {message}")
     return 0
