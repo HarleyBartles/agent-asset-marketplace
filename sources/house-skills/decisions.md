@@ -1,10 +1,11 @@
 # House Skills Decision Manifest Summary
 
-Issue: MARK-14
+Issue: MARK-14/MARK-15
 
 `decisions.json` is the repo-backed decision/import manifest for the House
 Skills source set. It records MARK-9 sanity-rollup decisions after the MARK-13
-plugin skeleton without importing full `SKILL.md` content.
+plugin skeleton. MARK-15 extends that metadata with the observed Linear/Codex
+delegation mechanics, still without importing full `SKILL.md` content.
 
 ## Manifest Path
 
@@ -22,10 +23,10 @@ and project one or more sensible bundles afterward.
 The JSON manifest uses these top-level fields:
 
 - `manifestVersion` and `manifestId` identify the manifest format and record.
-- `issue` names the slice that created the manifest.
+- `issue` names the slice that created the original manifest.
 - `sourceSet` points to the House Skills source root, intake record, asset
   catalog, and provenance record.
-- `issueLineage` records MARK-9, MARK-13, and MARK-14 roles.
+- `issueLineage` records MARK-9, MARK-13, MARK-14, and MARK-15 roles.
 - `statusVocabulary` defines the accepted decision statuses.
 - `pluginPosture` records the first-party bundle/provenance posture, cheap
   bundle-space assumption, and no-full-import boundary.
@@ -60,6 +61,39 @@ The JSON manifest uses these top-level fields:
 - `cleanup-custody-v0.1` is the accepted public rename for the installed
   profanity-bearing cleanup skill; the original name is provenance/history only.
 - PRs are the normal worker work packet for repo/code work.
+- Linear/Codex dispatch requires both the responsible human assignee and the
+  distinct Codex delegate; coding work must not be delegated to the Linear
+  agent.
+
+
+## Linear/Codex Delegation Mechanics
+
+MARK-15 records the live MARK-13/MARK-14 delegation lesson as metadata for
+later `linear-v1` and `worker-dispatch-linear-v1` implementation. The durable
+mechanics are:
+
+- Codex Cloud work needs both a human assignee and a Codex delegate.
+- The human assignee remains responsible for the issue. The observed working
+  human assignee in this workspace is `Harley Bartles`
+  (`0f41920d-8499-4555-993d-066c003cf580`).
+- The Codex agent is distinct from the Linear agent. Do not delegate coding work
+  to the Linear agent.
+- The observed working Codex delegate is `Codex`
+  (`a1b0a6a6-48b3-4af6-9a99-744f5ae357d1`).
+- A connector mutation is not proof of delegation. After assignment or
+  delegation mutation, re-fetch the issue and verify observable state before
+  claiming dispatch.
+- Success evidence includes `delegate: Codex`, the expected human assignee,
+  status moved to Todo or In Progress as appropriate, Codex activity, or a PR
+  attachment.
+- If GitHub connector binding causes Linear mutation or verification
+  instability, prefer a Linear-only connector/tool context before retrying
+  Linear assignment/delegation. Do not keep blind-retrying unstable mixed-tool
+  calls.
+
+These details are represented in `globalDecisions` under
+`global.linear-codex-delegation.mechanics` and on the
+`worker-dispatch-linear-v1` skill decision row.
 
 ## First Skill Decision Rows
 
@@ -94,7 +128,7 @@ source content has already been imported.
 
 ## Non-Import Confirmation
 
-MARK-14 adds decision/provenance metadata only. It does not project actual House
+MARK-14/MARK-15 add decision/provenance metadata only. It does not project actual House
 Skill source content into `plugins/house-skills/skills/`, package ChatGPT skill
 ZIPs, or revive retired skills as installable entries.
 
@@ -109,3 +143,6 @@ ZIPs, or revive retired skills as installable entries.
   retiring those checks.
 - Prove whether generic/base source partitioning has residue outside TPS during
   implementation.
+- Import `linear-v1` / `worker-dispatch-linear-v1` source later, preserving the
+  recorded human-assignee plus Codex-delegate verification mechanics without
+  turning MARK-15 into the full skill source import slice.
