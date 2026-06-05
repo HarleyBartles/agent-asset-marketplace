@@ -1,0 +1,70 @@
+{
+  "catalogId": "catalog.mark-13.house-skills.asset-identity",
+  "issue": "MARK-13",
+  "principle": "House Skills asset identity is separate from Codex plugin projection so future regrouping is normal maintenance.",
+  "assets": [
+    {
+      "assetId": "first-party.house-skills.aggregate",
+      "assetType": "first-party-gpt-skill-aggregate",
+      "name": "House Skills",
+      "origin": "MARK-9 sanity rollup and later repo-backed House Skills imports",
+      "license": "Private first-party local source; per-skill license posture deferred until content import.",
+      "retention": "source-custody-skeleton",
+      "quality": {
+        "status": "retained-source-record",
+        "productionGradeMetadata": true,
+        "reviewState": "skeleton-only-no-full-skill-import"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      }
+    },
+    {
+      "assetId": "local.mark-13.house-skills-skeleton",
+      "assetType": "local-plugin-projection",
+      "name": "House Skills Plugin Skeleton",
+      "origin": "MARK-13 local authored projection for first-party House Skills bundle/provenance shape",
+      "license": "Repository-private local metadata; no full skill text imported.",
+      "retention": "installable-skeleton-projection",
+      "quality": {
+        "status": "skeleton-projection",
+        "productionGradeMetadata": true,
+        "reviewState": "early-private-marketplace-skeleton"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      }
+    },
+    {
+      "assetId": "first-party.house-skills.retired-and-reference-ledger",
+      "assetType": "provenance-ledger",
+      "name": "House Skills retired/folded/reference-only ledger",
+      "origin": "MARK-9 sanity rollup decisions captured for future House Skills imports",
+      "license": "Private first-party decision metadata; no skill text imported.",
+      "retention": "metadata-only-reference",
+      "quality": {
+        "status": "retained-decision-record",
+        "productionGradeMetadata": true,
+        "reviewState": "not-installable"
+      },
+      "localization": {
+        "sourceLanguage": "en",
+        "translationNeeded": false
+      }
+    }
+  ],
+  "projections": [
+    {
+      "projectionId": "projection.house-skills.skeleton.v0.1",
+      "pluginName": "house-skills",
+      "assetIds": [
+        "first-party.house-skills.aggregate",
+        "local.mark-13.house-skills-skeleton",
+        "first-party.house-skills.retired-and-reference-ledger"
+      ],
+      "installable": true
+    }
+  ]
+}
