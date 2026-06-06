@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="House Skills">
+  <rect width="128" height="128" rx="24" fill="#0F766E"/>
+  <path d="M26 62L64 28l38 34v38H26z" fill="#E6FFFB" opacity="0.96"/>
+  <path d="M38 60l26-23 26 23v30H38z" fill="#0F766E"/>
+  <rect x="56" y="70" width="16" height="20" rx="2" fill="#E6FFFB"/>
+  <path d="M20 62l44-38 44 38" fill="none" stroke="#E6FFFB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
