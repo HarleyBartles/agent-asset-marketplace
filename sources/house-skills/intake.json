@@ -85,6 +85,14 @@
       "public_name": "skill-buster-v0.1",
       "provenance_name": "MARK-21 skill maintenance House Skills source slice",
       "scope": "skill maintenance breakdown and closure checks"
+    },
+    {
+      "issue": "MARK-23",
+      "source_id": "rooms-image-sidecars-v0.1",
+      "source_path": "gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md",
+      "public_name": "rooms-image-sidecars-v0.1",
+      "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
+      "scope": "Rooms image sidecar preparation"
     }
   ]
 }
