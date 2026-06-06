@@ -87,6 +87,14 @@
       "scope": "skill maintenance breakdown and closure checks"
     },
     {
+      "issue": "MARK-22",
+      "source_id": "adventures-project-doctrine-v1",
+      "source_path": "gpt-skills/house-skills/adventures-project-doctrine-v1/SKILL.md",
+      "public_name": "adventures-project-doctrine-v1",
+      "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
+      "scope": "Adventures project doctrine"
+    },
+    {
       "issue": "MARK-23",
       "source_id": "rooms-image-sidecars-v0.1",
       "source_path": "gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md",
