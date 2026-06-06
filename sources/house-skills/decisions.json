@@ -139,7 +139,7 @@
     "source_id": "don-logan-boundary-v1",
     "source_path": "gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md",
     "public_name": "don-logan-boundary-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "lawful worker boundary and finish-line enforcement",
     "notes": "Imported as the boundary call for workers that are already informed enough to act but keep circling instead of finishing."
@@ -149,7 +149,7 @@
     "source_id": "gpt-base-doctrine-v1",
     "source_path": "gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md",
     "public_name": "gpt-base-doctrine-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "GPT-wide shared doctrine",
     "notes": "Imported as the shared doctrine store for GPT-wide House Skills, including the boring-first posture, character-name responsibility compression, and provisional-identity guidance."
@@ -159,7 +159,7 @@
     "source_id": "work-mode-router-v1",
     "source_path": "gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md",
     "public_name": "work-mode-router-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "first-turn work mode routing",
     "notes": "Imported as the first-turn router that selects the correct House Skills lane before deeper work starts."
@@ -169,7 +169,7 @@
     "source_id": "worker-dispatch-linear-v1",
     "source_path": "gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md",
     "public_name": "worker-dispatch-linear-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "Linear issue dispatch and work packet control plane",
     "notes": "Imported as the narrow dispatch/control-plane skill that treats the Linear issue as the durable task contract and the branch/PR as the work packet."
@@ -179,7 +179,7 @@
     "source_id": "linear-v1",
     "source_path": "gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md",
     "public_name": "linear-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "Linear object mechanics and working-state surfaces",
     "notes": "Imported as the Linear-side skill for issues, documents, comments, labels, statuses, relationships, attachments, and other durable working-state surfaces."
@@ -189,7 +189,7 @@
     "source_id": "tps-reporting-v1",
     "source_path": "gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md",
     "public_name": "tps-reporting-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "producer-side TPS reporting",
     "notes": "Imported as the producer-side TPS report protocol with cover-sheet, evidence, provenance, route, falsification, and remediation expectations."
@@ -199,7 +199,7 @@
     "source_id": "tps-ingress-v1",
     "source_path": "gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md",
     "public_name": "tps-ingress-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "consumer-side TPS ingress",
     "notes": "Imported as the consumer-side TPS protocol that reads the cover sheet, partitions claims, and forwards or returns the packet through the lawful route."
@@ -209,7 +209,7 @@
     "source_id": "session-buster-v0.1",
     "source_path": "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
     "public_name": "session-buster-v0.1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "continuity fallback artifact",
     "notes": "Imported as a provisional continuity artifact that should defer to issue body, linked docs, comments, and repo truth whenever available."
@@ -219,7 +219,7 @@
     "source_id": "session-buster-ingress-v0.1",
     "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
     "public_name": "session-buster-ingress-v0.1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "continuity fallback ingress",
     "notes": "Imported as the ingress half of the continuity fallback, aligned to issue body and linked docs rather than chat memory."
@@ -229,7 +229,7 @@
     "source_id": "crew-v1",
     "source_path": "gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md",
     "public_name": "crew-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "Crew role-lens doctrine",
     "notes": "Imported as the Crew doctrine source that compresses responsibility and authority without becoming a worker identity or dispatch route."
@@ -239,7 +239,7 @@
     "source_id": "crew-buster-v1",
     "source_path": "gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md",
     "public_name": "crew-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” base and control plane",
+    "provenance_name": "MARK-9 chunk ledger — base and control plane",
     "import_state": "imported",
     "scope": "Crew planning and route interrogation",
     "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
@@ -249,7 +249,7 @@
     "source_id": "adventures-bootstrap-v1",
     "source_path": "gpt-skills/house-skills/adventures-bootstrap/v1/adventures-bootstrap-v1/SKILL.md",
     "public_name": "adventures-bootstrap-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures first-read router",
     "notes": "Imported as the compact Adventures router that hands off to project doctrine, PSA/PIG stack surfaces, or the repo playbook."
@@ -259,7 +259,7 @@
     "source_id": "adventures-github-operations-v1",
     "source_path": "gpt-skills/house-skills/adventures-github-operations/v1/adventures-github-operations-v1/SKILL.md",
     "public_name": "adventures-github-operations-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures GitHub proof overlay",
     "notes": "Imported as the narrow Adventures repo/artifact proof overlay after the generic GitHub surface."
@@ -269,7 +269,7 @@
     "source_id": "adventures-visual-preproduction-v1",
     "source_path": "gpt-skills/house-skills/adventures-visual-preproduction/v1/adventures-visual-preproduction-v1/SKILL.md",
     "public_name": "adventures-visual-preproduction-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures source-first visual planning",
     "notes": "Imported as the visual preproduction lane for planning, bible workflow, asset readiness, and QA routing."
@@ -279,7 +279,7 @@
     "source_id": "adventures-storyboard-preflight-v1",
     "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight/v1/adventures-storyboard-preflight-v1/SKILL.md",
     "public_name": "adventures-storyboard-preflight-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures deterministic storyboard preflight",
     "notes": "Imported as the preflight surface for storyboard, diagram, prompt-board, and reference-role artifact work."
@@ -289,7 +289,7 @@
     "source_id": "adventures-visual-bible-creator-v1",
     "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator/v1/adventures-visual-bible-creator-v1/SKILL.md",
     "public_name": "adventures-visual-bible-creator-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures visual bible authoring",
     "notes": "Imported as the bible author/update/lock surface with prompt, QA, repair, and extrapolation blocks."
@@ -299,7 +299,7 @@
     "source_id": "adventures-visual-bible-interpreter-v1",
     "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter/v1/adventures-visual-bible-interpreter-v1/SKILL.md",
     "public_name": "adventures-visual-bible-interpreter-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures visual bible interpretation",
     "notes": "Imported as the constraint-extraction surface for the visual bible and repair or preserve packets."
@@ -309,7 +309,7 @@
     "source_id": "adventures-image-qa-v1",
     "source_path": "gpt-skills/house-skills/adventures-image-qa/v1/adventures-image-qa-v1/SKILL.md",
     "public_name": "adventures-image-qa-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures image QA",
     "notes": "Imported as the visual QA lane for source images, compiled sheets, Patch identity checks, and bible-backed QA."
@@ -319,7 +319,7 @@
     "source_id": "adventures-asset-sheet-compiler-v1",
     "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler/v1/adventures-asset-sheet-compiler-v1/SKILL.md",
     "public_name": "adventures-asset-sheet-compiler-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures asset-sheet compilation",
     "notes": "Imported as the deterministic compile surface for accepted source images, templates, and manifest discipline."
@@ -329,7 +329,7 @@
     "source_id": "adventures-frame-buster-v1",
     "source_path": "gpt-skills/house-skills/adventures-frame-buster/v1/adventures-frame-buster-v1/SKILL.md",
     "public_name": "adventures-frame-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Adventures and PIG",
+    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
     "import_state": "imported",
     "scope": "Adventures frame-readiness surface",
     "notes": "Imported as the consolidated large-picture readiness gate that keeps the full frame visible before any subpiece is accepted."
@@ -339,7 +339,7 @@
     "source_id": "rooms-project-doctrine-v1",
     "source_path": "gpt-skills/house-skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md",
     "public_name": "rooms-project-doctrine-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms shared project doctrine",
     "notes": "Imported as the shared Rooms doctrine store for truth domains, actor boundaries, and repo posture."
@@ -349,7 +349,7 @@
     "source_id": "rooms-bootstrap-v1",
     "source_path": "gpt-skills/house-skills/rooms-bootstrap/v1/rooms-bootstrap-v1/SKILL.md",
     "public_name": "rooms-bootstrap-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms first-read router",
     "notes": "Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability."
@@ -359,7 +359,7 @@
     "source_id": "rooms-source-partitioning-v1",
     "source_path": "gpt-skills/house-skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md",
     "public_name": "rooms-source-partitioning-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms source-answering and evidence partitioning",
     "notes": "Imported as the grounded-answering lane for Rooms source, evidence, and report partitioning."
@@ -369,7 +369,7 @@
     "source_id": "rooms-ambiguity-buster-v1",
     "source_path": "gpt-skills/house-skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md",
     "public_name": "rooms-ambiguity-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms project-specific ambiguity overlay",
     "notes": "Imported as the Rooms override that preserves project-protected ambiguity after the generic ambiguity buster."
@@ -379,7 +379,7 @@
     "source_id": "rooms-analogy-buster-v1",
     "source_path": "gpt-skills/house-skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md",
     "public_name": "rooms-analogy-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms analogy overlay",
     "notes": "Imported as the Rooms-specific analogy pressure check that stays separate from evidence or canon."
@@ -389,7 +389,7 @@
     "source_id": "rooms-zoom-outs-buster-v1",
     "source_path": "gpt-skills/house-skills/rooms-zoom-outs-buster/v1/rooms-zoom-outs-buster-v1/SKILL.md",
     "public_name": "rooms-zoom-outs-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms zoom-out readiness check",
     "notes": "Imported as the Rooms-only large-picture readiness check that returns the work packet to the narrow surface after the wider constraint is visible."
@@ -399,7 +399,7 @@
     "source_id": "rooms-character-investigation-v1",
     "source_path": "gpt-skills/house-skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md",
     "public_name": "rooms-character-investigation-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms character investigation",
     "notes": "Imported as the durable investigation surface that separates character truth from later sheet creation."
@@ -409,7 +409,7 @@
     "source_id": "rooms-sheet-creator-v1",
     "source_path": "gpt-skills/house-skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md",
     "public_name": "rooms-sheet-creator-v1",
-    "provenance_name": "MARK-9 chunk ledger â€” Rooms",
+    "provenance_name": "MARK-9 chunk ledger — Rooms",
     "import_state": "imported",
     "scope": "Rooms sheet creation from durable packets",
     "notes": "Imported as the sheet creator that consumes the durable investigation packet, lane information, and Harley direction."
