@@ -1,0 +1,36 @@
+{
+  "bundle_name": "house-skills",
+  "bundle_version": "1.0.0",
+  "bundle_type": "codex-plugin-projection",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "plugins/house-skills",
+  "source_of_truth": [
+    "sources/house-skills/decisions.json",
+    "sources/house-skills/decisions.md",
+    "sources/house-skills/intake.json",
+    "provenance/house-skills.md"
+  ],
+  "projection_policy": "project all reviewed active House Skills records from the source ledger",
+  "lanes": [
+    {
+      "name": "Base and control plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+    },
+    {
+      "name": "Adventures and PIG",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+    },
+    {
+      "name": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+    }
+  ],
+  "version_selection_notes": [
+    "Install or upgrade the bundle by following the repo marketplace entry for this plugin.",
+    "Use the source ledger for the exact component inventory and component version strings.",
+    "Do not infer active installability from source folder names alone; use the source ledger plus this bundle manifest."
+  ]
+}

@@ -48,6 +48,18 @@
 - Scope: Rooms image sidecar preparation
 - Notes: Imported as the primary Rooms survivor. Provides GPT-side starter packet guidance for image evidence before Albert/Pit ingestion. No standalone GitHub mechanics, canon busters, or adjacent Rooms residue were imported.
 
+## House Skills plugin projection
+
+- Bundle name: `house-skills`
+- Bundle version: `1.0.0`
+- Marketplace source: `.agents/plugins/marketplace.json`
+- Plugin manifest: `plugins/house-skills/.codex-plugin/plugin.json`
+- Bundle skill: `plugins/house-skills/skills/house-skills/SKILL.md`
+- Bundle manifest: `plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
+- Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures and PIG, and Rooms
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries.
+
 ## MARK-30 active imports
 
 ### Base and control plane
