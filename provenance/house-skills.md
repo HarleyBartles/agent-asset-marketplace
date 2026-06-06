@@ -53,10 +53,14 @@
 - Bundle name: `house-skills`
 - Bundle version: `1.0.0`
 - Marketplace source: `.agents/plugins/marketplace.json`
+- Human registry source: `sources/house-skills/decisions.md`
+- Structured registry mirror: `sources/house-skills/decisions.json`
 - Plugin manifest: `plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle skill: `plugins/house-skills/skills/house-skills/SKILL.md`
 - Bundle manifest: `plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
 - Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
+- Generator: `tools/generate_marketplace.py`
+- Validator: `tools/validate_marketplace.py`
 - Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures and PIG, and Rooms
 - Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries.
 

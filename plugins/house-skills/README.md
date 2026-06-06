@@ -9,6 +9,10 @@ Bundle identity:
 - bundle version: `1.0.0`
 - marketplace source: `.agents/plugins/marketplace.json`
 - bundle root: `plugins/house-skills/`
+- human registry source: `sources/house-skills/decisions.md`
+- structured registry mirror: `sources/house-skills/decisions.json`
+- generator: `tools/generate_marketplace.py`
+- validator: `tools/validate_marketplace.py`
 
 What lives here:
 
@@ -16,5 +20,7 @@ What lives here:
 - `skills/house-skills/SKILL.md` explains the bundle control plane.
 - `skills/house-skills/references/bundle-manifest.json` captures the bundle-to-source mapping.
 - `provenance/house-skills.md` records the projection note alongside the source ledger.
+- `tools/generate_marketplace.py` regenerates the marketplace export from the local source ledger and bundle metadata.
+- `tools/validate_marketplace.py` checks the export, plugin manifest, bundle manifest, and local path references.
 
 The bundle is intentionally a projection, not the source of truth. The active House Skills inventory still lives under `gpt-skills/house-skills/` and the source ledger remains the authoritative map of which reviewed skills are imported.

@@ -19,6 +19,8 @@ Use it when you need to understand:
 - Bundle name: `house-skills`
 - Bundle version: `1.0.0`
 - Marketplace registry: `.agents/plugins/marketplace.json`
+- Human registry source: `sources/house-skills/decisions.md`
+- Structured registry mirror: `sources/house-skills/decisions.json`
 - Plugin manifest: `plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle manifest: `references/bundle-manifest.json`
 - Human source map: `references/source-map.md`
@@ -35,6 +37,13 @@ The authoritative source ledger remains:
 - `provenance/house-skills.md`
 
 The bundle does not replace those files. It only points at them and packages a local marketplace surface around them.
+
+Marketplace exports are generated, not hand-edited:
+
+- edit the House Skills registry in `sources/house-skills/decisions.md`;
+- keep `sources/house-skills/decisions.json` aligned as the structured mirror;
+- regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
+- verify the result with `tools/validate_marketplace.py`.
 
 ## Versioning rule
 

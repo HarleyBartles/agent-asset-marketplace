@@ -9,6 +9,13 @@ Authoritative source references:
 - `sources/house-skills/intake.json`
 - `provenance/house-skills.md`
 
+Registry edit flow:
+
+- edit the human registry in `sources/house-skills/decisions.md`;
+- keep `sources/house-skills/decisions.json` as the structured mirror;
+- regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
+- validate the registry with `tools/validate_marketplace.py`.
+
 Bundle references:
 
 - `.agents/plugins/marketplace.json`
