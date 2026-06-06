@@ -1,6 +1,60 @@
 {
   "imports": [
     {
+      "issue": "MARK-19",
+      "source_id": "buster-framework-v1",
+      "source_path": "gpt-skills/house-skills/buster-framework-v1/SKILL.md",
+      "public_name": "buster-framework-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "generic pre-action buster framework",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-19",
+      "source_id": "ambiguity-buster-v1",
+      "source_path": "gpt-skills/house-skills/ambiguity-buster-v1/SKILL.md",
+      "public_name": "ambiguity-buster-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "ambiguity pre-action review",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-19",
+      "source_id": "boring-buster-v1",
+      "source_path": "gpt-skills/house-skills/boring-buster-v1/SKILL.md",
+      "public_name": "boring-buster-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "boring-readiness pre-action review",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-19",
+      "source_id": "invariant-buster-v1",
+      "source_path": "gpt-skills/house-skills/invariant-buster-v1/SKILL.md",
+      "public_name": "invariant-buster-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "binding invariant pre-action review",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-19",
+      "source_id": "analogy-buster-v1",
+      "source_path": "gpt-skills/house-skills/analogy-buster-v1/SKILL.md",
+      "public_name": "analogy-buster-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "analogy pre-action review",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-19",
+      "source_id": "canon-buster-v1",
+      "source_path": "gpt-skills/house-skills/canon-buster-v1/SKILL.md",
+      "public_name": "canon-buster-v1",
+      "provenance_name": "MARK-19 core generic buster House Skills source slice",
+      "scope": "canon/source drift pre-action review",
+      "import_state": "imported"
+    },
+    {
       "issue": "MARK-20",
       "source_id": "cleanup-custody-v0.1",
       "source_path": "gpt-skills/house-skills/cleanup-custody-v0.1/SKILL.md",
