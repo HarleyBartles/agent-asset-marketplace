@@ -115,6 +115,16 @@
     "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
   },
   {
+    "issue": "MARK-22",
+    "source_id": "adventures-project-doctrine-v1",
+    "source_path": "gpt-skills/house-skills/adventures-project-doctrine-v1/SKILL.md",
+    "public_name": "adventures-project-doctrine-v1",
+    "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
+    "import_state": "imported",
+    "scope": "Adventures project doctrine",
+    "notes": "Imported as the primary Adventures survivor. Keeps the shared doctrine surface while stripping retired PSA/PIG, deck/PPTX, receipt, and standalone GitHub operations residue out of the active House Skills lane."
+  },
+  {
     "issue": "MARK-23",
     "source_id": "rooms-image-sidecars-v0.1",
     "source_path": "gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md",

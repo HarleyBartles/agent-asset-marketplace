@@ -32,6 +32,14 @@
 - Scope: skill maintenance breakdown and closure checks
 - Notes: Remains v0.1. One-at-a-time is the reliable boring path. Batch handoff remains unreliable and non-closure-critical.
 
+## adventures-project-doctrine-v1
+
+- Source path: `gpt-skills/house-skills/adventures-project-doctrine-v1/SKILL.md`
+- Public identity: `adventures-project-doctrine-v1`
+- Provenance/history only: MARK-22 prep payload for Adventures House Skills survivor import
+- Scope: Adventures project doctrine
+- Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired PSA/PIG, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
+
 ## rooms-image-sidecars-v0.1
 
 - Source path: `gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md`
