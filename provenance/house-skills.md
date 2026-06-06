@@ -31,3 +31,11 @@
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice
 - Scope: skill maintenance breakdown and closure checks
 - Notes: Remains v0.1. One-at-a-time is the reliable boring path. Batch handoff remains unreliable and non-closure-critical.
+
+## rooms-image-sidecars-v0.1
+
+- Source path: `gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md`
+- Public identity: `rooms-image-sidecars-v0.1`
+- Provenance/history only: MARK-23 prep payload for Rooms House Skills survivor import
+- Scope: Rooms image sidecar preparation
+- Notes: Imported as the primary Rooms survivor. Provides GPT-side starter packet guidance for image evidence before Albert/Pit ingestion. No standalone GitHub mechanics, canon busters, or adjacent Rooms residue were imported.

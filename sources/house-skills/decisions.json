@@ -38,5 +38,15 @@
     "import_state": "imported",
     "scope": "skill maintenance breakdown and closure checks",
     "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
+  },
+  {
+    "issue": "MARK-23",
+    "source_id": "rooms-image-sidecars-v0.1",
+    "source_path": "gpt-skills/house-skills/rooms-image-sidecars-v0.1/SKILL.md",
+    "public_name": "rooms-image-sidecars-v0.1",
+    "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
+    "import_state": "imported",
+    "scope": "Rooms image sidecar preparation",
+    "notes": "Imported as the primary Rooms survivor. Provides GPT-side starter packet guidance for image evidence before Albert/Pit ingestion. No standalone GitHub mechanics, canon busters, or adjacent Rooms residue were imported."
   }
 ]
