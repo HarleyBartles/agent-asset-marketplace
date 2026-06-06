@@ -1,0 +1,14 @@
+interface:
+  display_name: Review Feedback Verification
+  short_description: Verify review feedback before accepting or implementing it
+  default_prompt: Use tps-ingress-v1 to classify and verify review feedback
+    before acting on it.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -1,0 +1,14 @@
+interface:
+  display_name: Adventures Project Doctrine
+  short_description: Shared Adventures of Patch repo, Patch, source-package, proof-run,
+    and skill-routing doctrine.
+  icon: assets/icon.svg
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -1,64 +1,65 @@
+---
+name: skill-validator-v1
+description: >-
+  validate skill fitness after skill-creator and before skill-packager-v1. use for skill create, update, repair,
+  package-handoff, or no-op review when semantic discovery, compact control-plane design, progressive references,
+  mutation authorization gates, image-credit stewardship, deterministic execution contracts, script architecture and efficiency checks, protected targets,
+  fake-ledger resistance, broken skill.zip install-card prevention, exact skill.zip naming, wrong-surface package handoff prevention, no-op repackaging prevention, bounded skill-read anti-loop rules, project-wrapper compatibility, or locked stack-order proof
+  could affect whether a skill may be packaged or handed off.
+---
+
 # Skill Validator v1
 
-Use this skill to validate GPT-native House Skills before they are treated as ready for import, packaging, publication, or operational use.
+Use this skill to decide whether a skill source is good enough to package or hand off.
 
-This validator is an authority gate. Validator requirements are authoritative over creator output: if a creator, worker, or generator says a skill is done but this validator finds a mismatch, the validation result wins until the defect is corrected or explicitly routed.
+`skill-creator` is the authorship and spec source for good skills. This skill reviews the authored source after that step and before `skill-packager-v1`. It does not author skill content, package archives, control queue cadence, or replace project-specific doctrine.
 
-## Validation posture
+## Owned decision
 
-Validate the skill as source material, not as a sales pitch. Prefer boring, observable checks over intent claims.
+Return one structured validation decision for the same target skill and staged source path that `skill-creator` authored.
 
-Require these lanes:
+Decisions:
 
-1. `identity` — public name, version, source path, and intended scope are explicit and stable.
-2. `trigger` — the skill says when to use it and when not to use it.
-3. `authority` — the skill states what it can decide, what it cannot decide, and what upstream rules override it.
-4. `workflow` — the reliable path is ordered, repeatable, and does not depend on hidden chat context.
-5. `boundaries` — exclusions, protected surfaces, and escalation cases are explicit.
-6. `evidence` — validation, publication, or handoff claims can be checked from files, commands, or durable records.
-7. `residue` — packaging output, generated output, scratch files, and temporary handoffs are either absent or explicitly governed.
+- `pass`: packaging may proceed.
+- `repair_required`: GPT must repair ordinary quality defects and rerun validation.
+- `blocked_requires_harley`: an external input, authority, connector, or product choice is missing.
+- `reject_before_handoff`: the target or concept is invalid, unsafe, immutable, redundant, or incompatible.
 
-## Source checks
+## Required references
 
-For every candidate skill, inspect the actual `SKILL.md` and any declared metadata or provenance. Do not rely only on summaries.
+Read `references/skill-update-stack-contract.md` before validating any create, update, repair, packaging, or handoff path. The locked order is `skill-creator`, then `skill-validator-v1`, then `skill-packager-v1`, then `skill-buster-v0.1`. A validator pass is invalid without an `authored_by_skill_creator` token for the same skill name and staged source path.
 
-Check that the skill:
+Read `references/skill-quality-gate.md` before deciding. It owns the detailed review lenses: semantic discovery, compact `SKILL.md` control planes, progressive reference triggers, mutation-tool authorization, image-credit stewardship, deterministic execution recipes, fake-ledger resistance, broken install-card prevention, wrong-surface package handoff prevention, lifecycle poison, composition boundaries, and protected targets.
 
-- has a single public identity and version;
-- preserves issue-specific constraints and source-law constraints;
-- does not import retired, reference-only, or system-built-in skills as new source assets;
-- does not revive retired surfaces under a new label;
-- does not broaden its scope beyond the issue or source slice being validated;
-- does not claim packaging, publication, PR creation, or deployment without observable evidence;
-- does not hide required validation behind optional prose.
+## Hard stops
 
-## Creator-output override rule
+Do not validate from prose-only evidence. If the creator token is absent, stale, source-path mismatched, or only asserted in narrative text, return `blocked_requires_harley` with `hard_red_stack_incomplete` and require restart from `skill-creator`.
 
-Creator output is useful draft material, not the final authority. If creator output conflicts with validator requirements, preserve the validator requirement and require a correction.
+Do not package, unzip, lint archives, or inspect package identity. That belongs to `skill-packager-v1` after a structured pass.
 
-Examples that must fail validation until corrected:
+Do not manage multi-skill queue state, batch cadence, or one-link-per-message handoff. That belongs to `skill-buster-v0.1`.
 
-- a generated skill omits a required boundary because the creator template did not include it;
-- a creator says a package is ready before repo validation has run;
-- a worker imports an adjacent skill because the source bundle was nearby;
-- a skill claims closure based on batch handoff status instead of durable repo evidence.
+Do not validate immutable system skills as update targets. Use them as specification sources only and redirect enforcement into mutable adjacent skills.
 
-## Validation result states
+## Output contract
 
-Return one of:
+For create, update, repair, packaging, or handoff work, return this exact object shape:
 
-- `PASS` — all required lanes are satisfied and evidence is durable.
-- `AMBER` — usable with named risks, blockers, or missing external authority.
-- `FAIL` — the skill contradicts requirements, lacks required lanes, broadens scope, or makes unverifiable closure claims.
+```yaml
+target_skill: <skill-name>
+staged_source_path: <same source path reviewed>
+reviewed_skill_creator_contract: true
+reviewed_skill_quality_gate: true
+decision: pass | repair_required | blocked_requires_harley | reject_before_handoff
+handoff_allowed: true | false
+blocking_reasons:
+  - concrete reason, or [] only when decision is pass
+required_repairs:
+  - exact repair GPT should apply, or [] only when no repairs are required
+validator_summary: <short basis for the decision>
+next_required_step: skill-packager-v1
+```
 
-## Return format
+For `pass`, `handoff_allowed` must be `true`, both reviewed fields must be `true`, and both arrays must be empty. For every other decision, `handoff_allowed` must be `false`.
 
-Report:
-
-- skill path and public identity;
-- source materials inspected;
-- required lanes checked;
-- defects found;
-- validator-over-creator conflicts, if any;
-- result state;
-- exact follow-up required for AMBER or FAIL.
+For diagnostic-only reviews, add `diagnostic_only: true` and do not set `handoff_allowed: true`.

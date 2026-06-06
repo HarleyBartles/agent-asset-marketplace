@@ -1,8 +1,13 @@
+---
+name: rooms-image-sidecars-v0.1
+description: Prepare GPT-native semantic starter sidecars for Rooms image evidence batches before Albert/Pit ingestion. Use when a user supplies screenshots, image batches, or a zip/folder of images and wants GPT to inspect them visually, generate non-authoritative room/entity/message candidates, known-character hints, tags, DB query suggestions, and an Albert-ready sidecar packet without mutating repos or treating observations as canon.
+---
+
 # Rooms Image Sidecars v0.1
 
-Use this skill to create a GPT-side starter packet for image evidence before Albert/Pit ingestion.
+Use this Skill to create a GPT-side starter packet for image evidence before Albert/Pit ingestion.
 
-This skill does not ingest into Pit, mutate repositories, update DBs, or canonize World facts. It helps GPT inspect images directly, preserve order, identify visible room/entity/message clues, and produce sidecar guidance that reduces rediscovery work for Albert while keeping all claims source-partitioned and provisional.
+This Skill does not ingest into Pit, mutate repositories, update DBs, or canonize World facts. It helps GPT inspect images directly, preserve order, identify visible room/entity/message clues, and produce sidecar guidance that reduces rediscovery work for Albert while keeping all claims source-partitioned and provisional.
 
 ## Core rule
 
@@ -12,15 +17,15 @@ Treat the sidecar as `starter_guidance`, not truth. Every observation must remai
 
 For a supplied image batch, produce an Albert-ready packet containing:
 
-- `raw/` with images in stable sequence order when available to package;
-- `batch.intake.json` with operational intake metadata for Albert's image intake workflow;
-- `semantic_sidecar.json`;
-- `semantic_sidecar.md` as a readable summary of the same evidence;
-- optionally `image_observation_table.csv` for quick scanning;
-- when downstream work includes Pit/ProjectDB promotion, `db_promotion_companion/` CSVs;
+- `raw/` with images in stable sequence order when available to package.
+- `batch.intake.json` with operational intake metadata for Albert's image intake Skill.
+- `semantic_sidecar.json` using `references/semantic_sidecar_schema.md`.
+- `semantic_sidecar.md` as a readable summary of the same evidence.
+- optionally `image_observation_table.csv` for quick scanning.
+- when downstream work includes Pit/ProjectDB promotion, `db_promotion_companion/` CSVs using `references/db_mutation_proposal_csvs.md`.
 - `README_FOR_ALBERT.md` explaining source partition, sidecar status, and verification requirements.
 
-If files are not available to package, produce the sidecar text/JSON and state what files must be placed alongside it.
+If files are not available to package, produce the sidecar text/JSON and tell the user what files must be placed alongside it.
 
 ## Workflow
 
@@ -39,8 +44,8 @@ If files are not available to package, produce the sidecar text/JSON and state w
 5. Add entity-resolution hints only as hints. Use statuses like `likely_known_character`, `candidate_existing_entity`, `candidate_new_entity`, `unresolved_lead`, and `do_not_resolve`.
 6. Add room-lineage hints when images imply room inheritance, name changes, or membership transfer.
 7. Add `do_not_resolve` warnings for ambiguous names, cropped titles, identity uncertainty, and conversation-derived memory.
-8. If Harley has finished an identification pass and the next step is DB promotion, generate DB mutation proposal CSV companions before the worker continues; treat them as routing guidance, not executable DB truth.
-9. Generate the packet. If using a helper script, pass the source folder plus prepared sidecar JSON/Markdown files and any DB companion CSVs.
+8. If Harley has finished an identification pass and the next step is DB promotion, generate DB mutation proposal CSV companions before the worker continues. Use `references/db_mutation_proposal_csvs.md`; treat them as routing guidance, not executable DB truth.
+9. Generate the packet. If using the helper script, pass the source folder plus prepared sidecar JSON/Markdown files and any DB companion CSVs.
 
 ## Source partition labels
 
@@ -65,9 +70,11 @@ Never use `confirmed`, `canon`, or `true` for sidecar claims.
 
 ## DB-promotion companion rules
 
-When an image pack will feed Pit/ProjectDB mutation or promotion, produce a `db_promotion_companion/` folder with CSVs that say where extracted data should land. These CSVs propose target table families such as `account_entity`, `account_handle`, `identity_label`, `dm_conversation`, `dm_participant`, `dm_event`, and `social_graph_relationship_observation`, while leaving final schema verification and writes to Albert and the ProjectDB command/unit-of-work layer.
+When an image pack will feed Pit/ProjectDB mutation or promotion, produce a `db_promotion_companion/` folder with CSVs that say where the extracted data should land. This is required after Harley finishes identifying accounts or room relationships from memory/browser checks. The CSVs should propose target table families such as `account_entity`, `account_handle`, `identity_label`, `dm_conversation`, `dm_participant`, `dm_event`, and `social_graph_relationship_observation`, while leaving final schema verification and writes to Albert and the ProjectDB command/unit-of-work layer.
 
 Do not generate raw SQL as authority. Do not treat these CSVs as evidence. Every row must keep provenance clear: image-visible, Harley-context, repo-grounded, DB-grounded, or synthesis. Preserve observed display strings separately from resolved entities and handles.
+
+See `references/db_mutation_proposal_csvs.md` for required files and columns.
 
 ## Rooms-specific rules
 
@@ -78,3 +85,9 @@ Do not generate raw SQL as authority. Do not treat these CSVs as evidence. Every
 - Identity-assimilation/name-bit observations should be captured as system/insight leads, not flattened into mere aliases.
 - World handoff candidates are review prompts, not canon updates.
 - If Harley asks to regenerate a pack after identifying people/rooms, regenerate the sidecars and DB companion CSVs before any on-disk DB promotion worker is unpaused.
+
+## Helper script
+
+Use `scripts/build_sidecar_packet.py` when image files are available locally and you already have or can write the sidecar files. The script packages raw images, computes hashes, writes a starter manifest, copies optional sidecar/CSV companion files, and creates a zip packet. It does not perform semantic analysis or DB schema verification.
+
+See `references/workflow.md` and `references/semantic_sidecar_schema.md` for the full schema and output pattern.

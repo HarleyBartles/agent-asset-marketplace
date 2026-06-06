@@ -1,49 +1,69 @@
+---
+name: skill-packager-v1
+description: Package, validate, inspect, and repair installable ChatGPT skill bundles. Use after skill creation or validation when a complete skill folder must become a skill.zip, when package identity or loader safety must be checked, when package evidence receipts are needed, when a timeout or failed install card occurs, or when agents need the canonical no-improvisation packaging command.
+---
+
 # Skill Packager v1
 
-Use this skill to prepare a GPT-native skill for packaging or downstream export after the source skill has passed validation.
+Use this skill to package, validate, inspect, and repair ChatGPT skill bundles.
 
-Packaging is downstream from validation. Always validate before packaging. Do not use packaging to bypass validator defects, scope problems, provenance gaps, or missing source review.
+This skill owns archive shape, loader safety, package evidence, exact file identity, and the canonical packaging command. It does not design skill content, judge semantic quality, control queue cadence, or decide batch handoff presentation.
 
-## Non-goals
+Package evidence proves that an archive was built and verified from a stated source path. It does not prove that the source contains the intended skill update, that the issue goal is satisfied, or that the package remains presentation-safe after a handoff lifecycle break. Those are validation and queue-handoff concerns.
 
-This skill does not perform repo-import ZIP packaging. Do not add ChatGPT skill ZIPs, package archives, generated bundles, or deployment artifacts to the source repo as part of an import unless the issue explicitly asks for committed generated output.
+## Progressive reference triggers
 
-This skill does not replace source review, provenance review, marketplace validation, or PR evidence.
+- Read `references/skill-update-stack-contract.md` before packaging, package repair, or handoff.
+- Read `references/package-validation-contract.md` before normal packaging, timeout diagnosis, package identity checks, script architecture lint results, or failed handoff repair.
+- Read `references/frontmatter-loader-discipline.md` when repairing loader failures, auditing frontmatter, or preparing existing-skill updates.
+- Read `references/batch-packaging-workflow.md` when preparing more than one package or operating under `skill-buster-v0.1` batch mode.
+- Read `references/source-and-evidence-posture.md` only when packaging work depends on repository evidence, connector availability, source-route claims, external package evidence, or a failed source route.
 
-## Packaging gate
+## Stack-order contract
 
-Before packaging, require:
+Do not package update work unless there is a structured validator `pass` object for the same skill name and staged source path. Prose claims such as `validator passed`, checklist summaries, or ledger fields without the required object are not enough.
 
-1. the source `SKILL.md` exists in the intended source path;
-2. skill validation has passed or any AMBER state is explicitly accepted by the owning authority;
-3. provenance and intake records are current when the repo tracks them;
-4. no retired, reference-only, or adjacent skills were imported as packaging collateral;
-5. generated output destinations are downstream or temporary, not mistaken for source of truth.
+Before packaging, confirm the validator object includes `target_skill`, `staged_source_path`, `reviewed_skill_creator_contract: true`, `reviewed_skill_quality_gate: true`, `decision: pass`, `handoff_allowed: true`, and `next_required_step: skill-packager-v1`. If any field is absent or mismatched, stop with `hard_red_stack_incomplete`.
 
-If any gate fails, stop packaging and return the blocker.
+## Normal execution command
 
-## Packaging posture
+For ordinary packaging, run the wrapper. Do not hand-run the internal scripts or build an equivalent script unless debugging a wrapper failure.
 
-Package the smallest intended skill surface. Keep source identity stable and avoid adding compatibility wrappers, duplicate entrypoints, or invented metadata.
+```bash
+python /home/oai/skills/skill-packager-v1/scripts/package_and_verify_skill.py <skill-folder> <external-dist-dir>
+```
 
-Do not include:
+The wrapper runs frontmatter lint, editor-stability lint, quick validation, package creation, zip integrity, archive inspection, evidence reread, exact stat, and SHA-256 verification in one integrated single-target process. It writes `package-run-receipt.json` and `package-evidence.json` beside the external `skill.zip`, including `current_step` while a step is active and total elapsed timing on success.
 
-- unrelated House Skills;
-- local caches, scratch files, test output, or previous ZIPs;
-- repo-only provenance unless the package format explicitly requires it;
-- plugin projections or marketplace replacements unless separately authorized.
+If a substep times out or the wrapper budget is exceeded, the wrapper reports the active step and leaves a failure receipt when possible. Treat that receipt as diagnostic evidence, not handoff evidence. Reduce the preparation window, retry the same item in isolation, and repair the named step or source tree if it repeats; do not improvise a parallel packaging path.
 
-## Repo-import boundary
+## Handoff lifecycle scope
 
-For source imports, the correct outcome is usually committed source files plus validation evidence, not a ZIP. If the task is an import into this repository, keep packaging output out of the repo and report that no repo-import ZIP packaging was performed.
+Package evidence proves archive identity at packaging time. It does not by itself prove that an archive remains lawful to present after a skill-buster-v0.1 handoff lifecycle has been broken.
 
-## Return format
+`skill-buster-v0.1` owns queue state, handoff cadence, cursor-driver behavior, and whether a prepared package is still presentation-safe. This skill supplies identity facts: intended skill, staged source path, exact package path, top-level folder, frontmatter name, exact filename, final SHA-256, archive inspection result, external dist directory, and stale dist reuse check.
 
-Report:
+Do not let this skill forbid or require cursor-advance pulses. An inert cursor-advance pulse is not package evidence and does not change package validity. A package link still must be emitted through the skill-buster-v0.1-controlled assistant-message handoff surface.
 
-- source skill path;
-- validation evidence used;
-- package destination or explicit no-package decision;
-- files included or excluded;
-- generated residue created and cleaned;
-- blockers, if packaging did not proceed.
+## Broken installer card hard stop
+
+A package handoff is invalid unless the exact linked archive is named `skill.zip`, exists at the exact linked path, has nonzero size, and has passed checks on that exact path. A handoff also requires matching machine-written evidence; assistant-authored ledger text is not evidence.
+
+Never hand off a sandbox link, markdown link, or package path from memory, planned output, expected output, prior logs, or a manually typed ledger. Immediately before writing the user-facing link, verify that the file name is exactly `skill.zip`, the file exists, has nonzero size, and is the same archive that passed wrapper verification.
+
+## Batch preparation
+
+When used under `skill-buster-v0.1`, run the wrapper once per skill into an external, target-specific dist directory. Batch work is repeated single-target preparation, not one multi-skill packaging operation. Mark a package prepared only after the wrapper returns success and the receipt/evidence match the exact archive. If package preparation is slow or times out, reduce the preparation window and retry the same item in isolation rather than bypassing the wrapper or overloading the batch.
+
+After package identity facts are returned to `skill-buster-v0.1`, this skill is no longer in control of handoff cadence. Re-enter this skill only for a concrete package failure.
+
+## Script boundaries
+
+The bundled scripts are executable implementation. For normal execution, do not read them. Use the wrapper command above and the package validation contract. Inspect individual scripts only after wrapper failure, timeout diagnosis, package validation, or explicit script editing.
+
+Bundled scripts:
+
+- `scripts/package_and_verify_skill.py` is the canonical normal packaging wrapper. It is single-target and integrated to avoid duplicate subprocess/lint work.
+- `scripts/frontmatter_lint.py`, `scripts/editor_stability_lint.py`, `scripts/quick_validate.py`, `scripts/package_skill.py`, and `scripts/inspect_skill_zip.py` are wrapper substeps and targeted-debug tools.
+- `scripts/safe_skill_tree.py` provides bounded traversal and skip rules for the packaging scripts.
+- `scripts/init_skill.py` initializes a normal skill folder when needed.
