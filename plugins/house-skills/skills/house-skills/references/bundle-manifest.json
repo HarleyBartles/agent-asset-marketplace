@@ -11,6 +11,260 @@
     "provenance/house-skills.md"
   ],
   "projection_policy": "project all reviewed active House Skills records from the source ledger",
+  "components": [
+    {
+      "canonical_name": "don-logan-boundary",
+      "component_version": "v1",
+      "installed_source_skill_id": "don-logan-boundary-v1",
+      "source_path": "gpt-skills/house-skills/don-logan-boundary-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "gpt-base-doctrine",
+      "component_version": "v1",
+      "installed_source_skill_id": "gpt-base-doctrine-v1",
+      "source_path": "gpt-skills/house-skills/gpt-base-doctrine-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "work-mode-router",
+      "component_version": "v1",
+      "installed_source_skill_id": "work-mode-router-v1",
+      "source_path": "gpt-skills/house-skills/work-mode-router-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "worker-dispatch-linear",
+      "component_version": "v1",
+      "installed_source_skill_id": "worker-dispatch-linear-v1",
+      "source_path": "gpt-skills/house-skills/worker-dispatch-linear-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "linear",
+      "component_version": "v1",
+      "installed_source_skill_id": "linear-v1",
+      "source_path": "gpt-skills/house-skills/linear-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "tps-reporting",
+      "component_version": "v1",
+      "installed_source_skill_id": "tps-reporting-v1",
+      "source_path": "gpt-skills/house-skills/tps-reporting-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "tps-ingress",
+      "component_version": "v1",
+      "installed_source_skill_id": "tps-ingress-v1",
+      "source_path": "gpt-skills/house-skills/tps-ingress-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "session-buster",
+      "component_version": "v0.1",
+      "installed_source_skill_id": "session-buster-v0.1",
+      "source_path": "gpt-skills/house-skills/session-buster-v0.1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "session-buster-ingress",
+      "component_version": "v0.1",
+      "installed_source_skill_id": "session-buster-ingress-v0.1",
+      "source_path": "gpt-skills/house-skills/session-buster-ingress-v0.1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "crew",
+      "component_version": "v1",
+      "installed_source_skill_id": "crew-v1",
+      "source_path": "gpt-skills/house-skills/crew-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "crew-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "crew-buster-v1",
+      "source_path": "gpt-skills/house-skills/crew-buster-v1/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "MARK-30 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-bootstrap",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-bootstrap-v1",
+      "source_path": "gpt-skills/house-skills/adventures-bootstrap-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-github-operations",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-github-operations-v1",
+      "source_path": "gpt-skills/house-skills/adventures-github-operations-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-visual-preproduction",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-visual-preproduction-v1",
+      "source_path": "gpt-skills/house-skills/adventures-visual-preproduction-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-storyboard-preflight",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-storyboard-preflight-v1",
+      "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-creator",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-visual-bible-creator-v1",
+      "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-interpreter",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-visual-bible-interpreter-v1",
+      "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-image-qa",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-image-qa-v1",
+      "source_path": "gpt-skills/house-skills/adventures-image-qa-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-asset-sheet-compiler",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-asset-sheet-compiler-v1",
+      "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "adventures-frame-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "adventures-frame-buster-v1",
+      "source_path": "gpt-skills/house-skills/adventures-frame-buster-v1/SKILL.md",
+      "lane": "Adventures",
+      "source_group": "MARK-30 active imports / Adventures and PIG",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-project-doctrine",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-project-doctrine-v1",
+      "source_path": "gpt-skills/house-skills/rooms-project-doctrine-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-bootstrap",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-bootstrap-v1",
+      "source_path": "gpt-skills/house-skills/rooms-bootstrap-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-source-partitioning",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-source-partitioning-v1",
+      "source_path": "gpt-skills/house-skills/rooms-source-partitioning-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-ambiguity-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-ambiguity-buster-v1",
+      "source_path": "gpt-skills/house-skills/rooms-ambiguity-buster-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-analogy-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-analogy-buster-v1",
+      "source_path": "gpt-skills/house-skills/rooms-analogy-buster-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-zoom-outs-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-zoom-outs-buster-v1",
+      "source_path": "gpt-skills/house-skills/rooms-zoom-outs-buster-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-character-investigation",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-character-investigation-v1",
+      "source_path": "gpt-skills/house-skills/rooms-character-investigation-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-sheet-creator",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-sheet-creator-v1",
+      "source_path": "gpt-skills/house-skills/rooms-sheet-creator-v1/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-30 active imports / Rooms",
+      "import_status": "imported"
+    }
+  ],
   "lanes": [
     {
       "name": "Base and control plane",
