@@ -8,5 +8,35 @@
     "import_state": "imported",
     "scope": "cleanup-custody",
     "notes": "Imported as the neutral public source identity; legacy profanity-bearing naming is retained only in provenance/history."
+  },
+  {
+    "issue": "MARK-21",
+    "source_id": "skill-validator-v1",
+    "source_path": "gpt-skills/house-skills/skill-validator-v1/SKILL.md",
+    "public_name": "skill-validator-v1",
+    "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+    "import_state": "imported",
+    "scope": "skill validation",
+    "notes": "Imported as the validator authority gate for House Skills; validator requirements remain authoritative over creator output. skill-creator is reference-only/system-built-in and was not imported. skill-market remains retired and was not revived."
+  },
+  {
+    "issue": "MARK-21",
+    "source_id": "skill-packager-v1",
+    "source_path": "gpt-skills/house-skills/skill-packager-v1/SKILL.md",
+    "public_name": "skill-packager-v1",
+    "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+    "import_state": "imported",
+    "scope": "skill packaging",
+    "notes": "Imported as the validation-before-packaging posture for House Skills; no repo-import ZIP packaging is authorized by this source import."
+  },
+  {
+    "issue": "MARK-21",
+    "source_id": "skill-buster-v0.1",
+    "source_path": "gpt-skills/house-skills/skill-buster-v0.1/SKILL.md",
+    "public_name": "skill-buster-v0.1",
+    "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+    "import_state": "imported",
+    "scope": "skill maintenance breakdown and closure checks",
+    "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
   }
 ]

@@ -7,6 +7,30 @@
       "public_name": "cleanup-custody-v0.1",
       "provenance_name": "legacy profanity-bearing cleanup skill",
       "scope": "cleanup-custody"
+    },
+    {
+      "issue": "MARK-21",
+      "source_id": "skill-validator-v1",
+      "source_path": "gpt-skills/house-skills/skill-validator-v1/SKILL.md",
+      "public_name": "skill-validator-v1",
+      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+      "scope": "skill validation"
+    },
+    {
+      "issue": "MARK-21",
+      "source_id": "skill-packager-v1",
+      "source_path": "gpt-skills/house-skills/skill-packager-v1/SKILL.md",
+      "public_name": "skill-packager-v1",
+      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+      "scope": "skill packaging"
+    },
+    {
+      "issue": "MARK-21",
+      "source_id": "skill-buster-v0.1",
+      "source_path": "gpt-skills/house-skills/skill-buster-v0.1/SKILL.md",
+      "public_name": "skill-buster-v0.1",
+      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
+      "scope": "skill maintenance breakdown and closure checks"
     }
   ]
 }
