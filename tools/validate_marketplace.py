@@ -28,11 +28,11 @@ def check_text(path: Path) -> None:
 
 def main() -> int:
     required = [
-        ROOT / "gpt-skills/house-skills/cleanup-custody-v0.1/SKILL.md",
-        ROOT / "gpt-skills/house-skills/adventures-project-doctrine-v1/SKILL.md",
-        ROOT / "gpt-skills/house-skills/skill-validator-v1/SKILL.md",
-        ROOT / "gpt-skills/house-skills/skill-packager-v1/SKILL.md",
-        ROOT / "gpt-skills/house-skills/skill-buster-v0.1/SKILL.md",
+        ROOT / "gpt-skills/house-skills/cleanup-custody/v0.1/cleanup-custody-v0.1/SKILL.md",
+        ROOT / "gpt-skills/house-skills/adventures-project-doctrine/v1/adventures-project-doctrine-v1/SKILL.md",
+        ROOT / "gpt-skills/house-skills/skill-validator/v1/skill-validator-v1/SKILL.md",
+        ROOT / "gpt-skills/house-skills/skill-packager/v1/skill-packager-v1/SKILL.md",
+        ROOT / "gpt-skills/house-skills/skill-buster/v0.1/skill-buster-v0.1/SKILL.md",
         ROOT / "sources/house-skills/decisions.json",
         ROOT / "sources/house-skills/decisions.md",
         ROOT / "sources/house-skills/intake.json",
