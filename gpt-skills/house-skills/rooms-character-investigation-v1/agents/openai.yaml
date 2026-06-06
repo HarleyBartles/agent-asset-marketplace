@@ -1,0 +1,15 @@
+interface:
+  display_name: Rooms Character Investigation
+  short_description: Investigate Rooms characters and participants from repo/source
+    surfaces.
+  icon: assets/icon.svg
+  brand_color: '#5d4a8e'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
