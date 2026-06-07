@@ -19,7 +19,7 @@ Excludes `4xx` other than `429` — the integration's own auth bug returning `40
 ### Cloud API write success
 
 ```
-sli_write_success = 
+sli_write_success =
   sum(rate(http_requests_total{service="gw-client", method=~"POST|PATCH|PUT", status=~"2.."}[5m]))
   / sum(rate(http_requests_total{service="gw-client", method=~"POST|PATCH|PUT", status!~"4.."}[5m]))
 target: ≥ 0.995
@@ -30,7 +30,7 @@ target: ≥ 0.995
 ### Bind success rate (workflow SLI)
 
 ```
-sli_bind_success = 
+sli_bind_success =
   count_over_time(workflow_event{event="submission.bound"}[1h])
   / count_over_time(workflow_event{event="submission.quoted", referred=false}[1h])
 target: ≥ 0.98
@@ -41,7 +41,7 @@ Excludes referred submissions — those are a product outcome, not an integratio
 ### FNOL intake p99 latency
 
 ```
-sli_fnol_p99 = histogram_quantile(0.99, 
+sli_fnol_p99 = histogram_quantile(0.99,
   rate(fnol_intake_duration_seconds_bucket[5m])
 )
 target: ≤ 2.0

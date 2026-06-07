@@ -120,11 +120,11 @@ When a merge conflict occurs, use Chat for AI assistance:
 @src/api/users.ts
 
 I have a merge conflict in this file. The markers show:
-<<<<<<< HEAD (my changes)
+HEAD (my changes)
   Added email validation with Zod
-=======
+--- merge separator ---
   Added phone number field to user schema
->>>>>>> feature/phone-support
+feature/phone-support
 
 Help me resolve this to keep both changes:
 - Keep the Zod email validation from my branch
@@ -257,3 +257,4 @@ Cursor has built-in `Cursor Blame` that attributes code to the AI agent that gen
 - [Cursor @Git Documentation](https://docs.cursor.com/context/@-symbols/@-git)
 - [Git Documentation](https://git-scm.com/doc)
 - [Conventional Commits](https://www.conventionalcommits.org)
+

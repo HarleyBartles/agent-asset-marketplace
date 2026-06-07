@@ -51,8 +51,8 @@ Subscribe to only the events the downstream system actually needs; subscribing t
 
 ```xml
 <MessagingConfig>
-  <Destination ID="acme-claim-events" 
-               TransportClass="com.acme.messaging.SqsTransport" 
+  <Destination ID="acme-claim-events"
+               TransportClass="com.acme.messaging.SqsTransport"
                Suspendable="true">
     <Property Name="queueUrl" Value="https://sqs.us-east-1.amazonaws.com/123/gw-claim-events" />
     <Property Name="awsRegion" Value="us-east-1" />
@@ -89,7 +89,7 @@ CREATE TABLE deferred_events (
   escalate_after TIMESTAMPTZ NOT NULL DEFAULT (now() + interval '24 hours')
 );
 
-CREATE INDEX deferred_events_due ON deferred_events(escalate_after) 
+CREATE INDEX deferred_events_due ON deferred_events(escalate_after)
   WHERE attempt_count < 100;
 ```
 
@@ -135,8 +135,8 @@ The consumer should log unknown fields it does not yet handle, not error. Strict
 When the same Guidewire integration serves multiple tenants and downstream consumers, route events to per-tenant queues:
 
 ```xml
-<MessageEvent Type="claim.status.changed" 
-              Destination="claim-events-{Tenant}" 
+<MessageEvent Type="claim.status.changed"
+              Destination="claim-events-{Tenant}"
               ConditionExpression="claim.Policy.Tenant" />
 ```
 

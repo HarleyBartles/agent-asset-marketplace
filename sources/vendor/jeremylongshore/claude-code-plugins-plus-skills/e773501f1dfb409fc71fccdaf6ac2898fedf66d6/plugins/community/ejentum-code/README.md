@@ -27,7 +27,7 @@ Latency cost: ~1 second. Benefit: catches the kinds of behavioral changes and si
 
 ---
 
-**Author:** Ejentum  
+**Author:** Ejentum
 **Upstream:** [ejentum/ejentum-mcp](https://github.com/ejentum/ejentum-mcp)
-  
+
 **License:** MIT

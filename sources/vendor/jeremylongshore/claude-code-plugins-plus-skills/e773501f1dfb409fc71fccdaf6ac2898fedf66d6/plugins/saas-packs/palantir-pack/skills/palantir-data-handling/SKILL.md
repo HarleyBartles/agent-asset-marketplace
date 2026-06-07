@@ -109,7 +109,7 @@ def delete_user_data(client, user_id: str):
 # Define object type with restricted properties
 # In Ontology Manager:
 # - fullName: marking = CONFIDENTIAL
-# - email: marking = CONFIDENTIAL  
+# - email: marking = CONFIDENTIAL
 # - department: marking = INTERNAL
 # - employeeId: marking = INTERNAL
 

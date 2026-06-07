@@ -5,7 +5,7 @@
 ### Business & Consulting
 
 - "Business Growth Scorecard" - Marketing, Operations, Finance, Leadership
-- "Scale Ready Assessment" - Systems, Team, Revenue, Investment Readiness  
+- "Scale Ready Assessment" - Systems, Team, Revenue, Investment Readiness
 - "Pitch Ready Scorecard" - Deck, Financials, Team, Market, Traction
 - "Key Person of Influence Scorecard" - Pitch, Publish, Product, Profile, Partnerships
 
@@ -149,7 +149,7 @@
 ```
 Your [Area] Score: [X]%
 
-It looks like there's significant room for improvement in [area]. 
+It looks like there's significant room for improvement in [area].
 The good news? You've taken the first step by identifying where to focus.
 
 Key insight: [Specific observation based on their answers]
@@ -159,7 +159,7 @@ Your recommended next steps:
 2. [Resource to consume - video, guide, checklist]
 3. [Offer appropriate for beginners]
 
-Many of our most successful clients started exactly where you are now. 
+Many of our most successful clients started exactly where you are now.
 [Social proof: name/result from similar starting point]
 ```
 
@@ -170,7 +170,7 @@ Many of our most successful clients started exactly where you are now.
 ```
 Your [Area] Score: [X]%
 
-You've built solid foundations in [area]. Now it's about 
+You've built solid foundations in [area]. Now it's about
 taking things to the next level.
 
 Your strengths: [Category they scored highest]
@@ -195,7 +195,7 @@ Your [Area] Score: [X]%
 
 Congratulations! You're performing at an advanced level in [area].
 
-You've clearly put in the work. Your score puts you in 
+You've clearly put in the work. Your score puts you in
 the top [X]% of people who've taken this assessment.
 
 At this level, the focus shifts to:
@@ -220,7 +220,7 @@ Our team works with a select number of high-performers like yourself.
 ```
 Hi [Name],
 
-Thanks for taking the [Scorecard Name]. 
+Thanks for taking the [Scorecard Name].
 
 Your overall score: [X]% ([Tier Label])
 
@@ -248,10 +248,10 @@ Hi [Name],
 
 You started the [Scorecard Name] but didn't quite finish.
 
-I get it - life gets busy. But you were clearly curious about 
+I get it - life gets busy. But you were clearly curious about
 your [area] score for a reason.
 
-The good news: I saved your progress. 
+The good news: I saved your progress.
 You can pick up right where you left off:
 
 [Continue My Assessment →]

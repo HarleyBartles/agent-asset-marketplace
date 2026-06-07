@@ -17,7 +17,8 @@ copied here with provenance intact so the record is self-contained.
 
 Mirrored pools:
 
-- `plugins/saas-packs` (106)
+- `README.md`
+- `plugins/saas-packs` (107)
 - `plugins/business-tools` (21)
 - `plugins/community` (17 candidates, 1 support-only `.gitkeep`)
 - `plugins/crypto` (27)

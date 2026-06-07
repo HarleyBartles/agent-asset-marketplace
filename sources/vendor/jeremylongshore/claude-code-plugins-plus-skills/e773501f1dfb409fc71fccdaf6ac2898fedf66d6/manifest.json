@@ -22,7 +22,7 @@
       "plugins/community",
       "plugins/crypto"
     ],
-    "expected_candidate_count": 170,
+    "expected_candidate_count": 172,
     "excluded_support_paths": [
       "plugins/saas-packs/_templates",
       "plugins/saas-packs/scripts",
@@ -37,7 +37,7 @@
     {
       "name": "saas-packs",
       "source_path": "plugins/saas-packs",
-      "count": 106,
+      "count": 107,
       "outcome": "mirror/vendor custody",
       "reason": "Broad SaaS catalog with nested support scaffolding and many individually useful packs; mirrored as permissive vendor custody with support-only subpaths excluded from candidate totals.",
       "anchors": [
@@ -57,13 +57,14 @@
     {
       "name": "business-tools",
       "source_path": "plugins/business-tools",
-      "count": 20,
+      "count": 21,
       "outcome": "mirror/vendor custody",
       "reason": "Mixed business and productivity methodology packs are mirrored under MIT custody; `general-legal-assistant` is kept in the mirror but excluded from the candidate total as a support/helper surface.",
       "anchors": [
         "brand-strategy-framework",
         "excel-analyst-pro",
         "executive-assistant-skills",
+        "general-legal-assistant",
         "openbb-terminal",
         "promptbook",
         "wondelai-blue-ocean-strategy",
@@ -78,7 +79,7 @@
       "source_path": "plugins/community",
       "count": 17,
       "outcome": "mirror/vendor custody",
-      "reason": "Community bundles are heterogeneous but MIT-licensed, so the pack roots are mirrored; the `.gitkeep` support file stays out of the candidate total.",
+      "reason": "Community bundles are heterogeneous with mixed MIT and Apache-2.0 licensing, so the pack roots are mirrored; the `.gitkeep` support file stays out of the candidate total.",
       "anchors": [
         "claude-reflect",
         "claude-never-forgets",
@@ -111,8 +112,8 @@
     }
   ],
   "reconciliation": {
-    "expected_candidates": 170,
-    "classified_candidates": 170,
+    "expected_candidates": 172,
+    "classified_candidates": 172,
     "unclassified": 0,
     "mismatch": 0
   }

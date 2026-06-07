@@ -192,8 +192,8 @@ gh workflow disable gw-pipeline.yml
 curl -X POST "$GCC_API/slots/prod/deploy" -d '{"package": "configuration-abc0001.zip"}'  # previous SHA
 
 # 3. Identify affected policies
-psql -c "SELECT resource_id FROM integration_audit 
-         WHERE at BETWEEN '2026-04-15T14:00Z' AND '2026-04-15T14:45Z' 
+psql -c "SELECT resource_id FROM integration_audit
+         WHERE at BETWEEN '2026-04-15T14:00Z' AND '2026-04-15T14:45Z'
          AND api_path LIKE '%/bind' AND status_code = 200"
 
 # 4. Open finance-team ticket with the policy list and the corrective action

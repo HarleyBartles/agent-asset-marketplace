@@ -104,7 +104,7 @@ Agent: Promptbook Doctor
        ✓ Consent:   Granted during setup
        ✓ API Key:   Valid and verified (HTTP 200)
        ✗ Activity:  No recent sessions found
-       
+
        Everything looks good except no sessions have been tracked yet.
        Start a new Claude Code session to see your first build.
 ```

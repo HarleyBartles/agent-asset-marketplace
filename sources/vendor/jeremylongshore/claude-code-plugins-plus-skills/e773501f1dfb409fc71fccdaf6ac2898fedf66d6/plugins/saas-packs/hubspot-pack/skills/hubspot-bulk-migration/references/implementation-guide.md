@@ -152,7 +152,7 @@ Source CRM Record
                                     ┌──────────────────────────────┐
   HubSpot Contact ─────────────────▶│ salesforce_id: "003XXXXXX..." │
     hs_object_id: "12345"           └──────────────────────────────┘
-                                    
+
 migration_id_map.json
   "003XXXXXXXXXXXXXXXXX": "12345"   ← persisted per-batch for rollback
 ```
@@ -322,7 +322,7 @@ def convert_date(value: str, source_format: str = "auto") -> str:
     """
     if not value or str(value).strip() in ("", "None", "null", "N/A"):
         return ""
-    
+
     formats_to_try = [
         "%Y-%m-%d",           # ISO 8601 — already correct
         "%Y-%m-%dT%H:%M:%SZ", # ISO datetime
@@ -341,7 +341,7 @@ def convert_date(value: str, source_format: str = "auto") -> str:
             return dt.strftime("%Y-%m-%d")
         except ValueError:
             continue
-    
+
     # Try Unix timestamp (Copper uses these)
     try:
         ts = int(value)
@@ -349,7 +349,7 @@ def convert_date(value: str, source_format: str = "auto") -> str:
         return dt.strftime("%Y-%m-%d")
     except (ValueError, TypeError):
         pass
-    
+
     return ""  # Drop — log caller should record this field/value pair
 
 def convert_date_to_epoch_ms(value: str) -> int | None:
@@ -497,7 +497,7 @@ def export_associations(from_type: str, to_type: str) -> list[dict]:
     """Export all associations between two object types."""
     # Get all from-object IDs first
     from_ids = [r["id"] for r in export_all_records(from_type, ["hs_object_id"])]
-    
+
     # Batch association read: 100 IDs per call
     url = f"{BASE}/crm/v4/associations/{from_type}/{to_type}/batch/read"
     all_assocs = []

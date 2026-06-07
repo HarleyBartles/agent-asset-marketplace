@@ -66,7 +66,7 @@ app.post('/webhooks/quicknode', express.json(), async (req, res) => {
 function main(data) {
   const targetContract = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'; // USDC
   const transferTopic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-  
+
   return data.streamData.filter(tx => {
     return tx.logs?.some(log =>
       log.address.toLowerCase() === targetContract.toLowerCase() &&

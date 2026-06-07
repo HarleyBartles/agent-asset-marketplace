@@ -700,7 +700,7 @@ while IFS= read -r line; do
   if [ $batch_num -ge $BATCH_SIZE ]; then
     # Build payload
     payload=$(printf '%s\n' "${batch[@]}" | jq -s '[.[] | {idProperty: "email", id: .email, properties: (.properties | with_entries(.value |= tostring))}]')
-    
+
     response=$(curl -s -w "\n%{http_code}" -X POST \
       "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert" \
       -H "Authorization: Bearer $HUBSPOT_TOKEN" \

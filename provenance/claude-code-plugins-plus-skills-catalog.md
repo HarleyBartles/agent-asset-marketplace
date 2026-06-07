@@ -15,6 +15,7 @@ MARK-46 reference-pack pools from `jeremylongshore/claude-code-plugins-plus-skil
 
 The durable record lives in the vendor source surface:
 
+- `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/README.md`
 - `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/SOURCE.md`
 - `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/manifest.json`
 - `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/LICENSE`
@@ -23,15 +24,15 @@ The durable record lives in the vendor source surface:
 
 | Pool | Count | Outcome | Reason |
 | --- | ---: | --- | --- |
-| `saas-packs` | 106 | mirror/vendor custody | Broad SaaS catalog with nested support scaffolding and many individually useful packs; mirrored as permissive vendor custody with support-only subpaths excluded from candidate totals. |
-| `business-tools` | 20 | mirror/vendor custody | Mixed business and productivity methodology packs are mirrored under MIT custody; `general-legal-assistant` is kept in the mirror but excluded from the candidate total as a support/helper surface. |
+| `saas-packs` | 107 | mirror/vendor custody | Broad SaaS catalog with nested support scaffolding and many individually useful packs; mirrored as permissive vendor custody with support-only subpaths excluded from candidate totals. |
+| `business-tools` | 21 | mirror/vendor custody | Mixed business and productivity methodology packs are mirrored under MIT custody; `general-legal-assistant` is kept in the mirror but excluded from the candidate total as a support/helper surface. |
 | `community` | 17 | mirror/vendor custody | Community bundles are heterogeneous but MIT-licensed, so the pack roots are mirrored; the `.gitkeep` support file stays out of the candidate total. |
 | `crypto` | 27 | mirror/vendor custody | Crypto packs depend on live market-data and trading workflows, but the upstream source is MIT and the pack roots are mirrored as vendor custody rather than activated marketplace content. |
 
 ## Reconciliation
 
-- Expected candidates: `170`
-- Classified candidates: `170`
+- Expected candidates: `172`
+- Classified candidates: `172`
 - Unclassified: `0`
 - Mismatch: `0`
 

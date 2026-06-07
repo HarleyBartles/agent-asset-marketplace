@@ -62,7 +62,7 @@ Every Cloud API call should carry the originating `correlation_id` as a header (
 ```typescript
 const traceparent = ctx.traceparent ?? generateTraceparent();
 const res = await fetch(`${BASE}${path}`, {
-  headers: { 
+  headers: {
     Authorization: `Bearer ${await getToken()}`,
     "X-Correlation-Id": ctx.correlationId,
     traceparent,

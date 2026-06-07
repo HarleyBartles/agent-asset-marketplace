@@ -28,7 +28,7 @@ Latency cost: ~1 second. Benefit: reasoning quality the model cannot reliably re
 
 ---
 
-**Author:** Ejentum  
+**Author:** Ejentum
 **Upstream:** [ejentum/ejentum-mcp](https://github.com/ejentum/ejentum-mcp)
-  
+
 **License:** MIT

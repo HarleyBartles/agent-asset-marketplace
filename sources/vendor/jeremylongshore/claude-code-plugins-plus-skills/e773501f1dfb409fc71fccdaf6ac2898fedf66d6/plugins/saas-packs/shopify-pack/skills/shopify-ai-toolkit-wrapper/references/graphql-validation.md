@@ -49,7 +49,7 @@ This reveals the exact shape your store's API version expects.
 ### Field Not Found
 
 ```
-Error: Cannot query field "priceRange" on type "Product". 
+Error: Cannot query field "priceRange" on type "Product".
 Did you mean "priceRangeV2"?
 ```
 
@@ -58,7 +58,7 @@ Did you mean "priceRangeV2"?
 ### Wrong Input Type
 
 ```
-Error: Variable "$input" got invalid value. 
+Error: Variable "$input" got invalid value.
 In field "title": Expected type "String!", found null.
 ```
 

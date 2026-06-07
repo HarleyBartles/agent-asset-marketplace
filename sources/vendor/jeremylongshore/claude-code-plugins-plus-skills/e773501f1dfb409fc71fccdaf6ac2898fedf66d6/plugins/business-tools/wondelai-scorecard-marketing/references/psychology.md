@@ -41,7 +41,7 @@ All three must be present for a sale:
 - Emotional payoff visualized
 - Stories with heroes, struggles, triumphs
 
-### 2. Logic  
+### 2. Logic
 
 - Clear ROI calculation
 - Cost-benefit analysis understood
@@ -153,7 +153,7 @@ The scorecard earns the right to recommend.
 Key data points supporting this approach:
 
 - 91% of consumers more likely to buy from brands with relevant offers
-- 83% willing to share data for personalized experience  
+- 83% willing to share data for personalized experience
 - 72% only engage with personalized messaging
 - 71% frustrated when experience is impersonal
 - 67% expect automatic content adjustment

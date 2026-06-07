@@ -26,7 +26,7 @@ The approach extends the migration timeline but eliminates the cutover-night ris
 // Proxy that runs both systems and validates parity
 async function dualWrite(req: Request): Promise<Response> {
   const sourceRes = await fetch(`${SOURCE_BASE}${req.path}`, { method: req.method, body: req.body });
-  
+
   // Fire-and-forget against target; do not block source response
   fetch(`${TARGET_BASE}${req.path}`, { method: req.method, body: req.body })
     .then(async (targetRes) => {
@@ -34,7 +34,7 @@ async function dualWrite(req: Request): Promise<Response> {
       if (drift) await logDrift(req, drift);
     })
     .catch(err => log.warn("dual-write target failure", err));
-  
+
   return sourceRes;
 }
 ```

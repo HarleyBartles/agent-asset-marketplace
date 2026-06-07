@@ -29,7 +29,7 @@ Latency cost: ~1 second. Benefit: distinguishes real cross-turn signals from pro
 
 ---
 
-**Author:** Ejentum  
+**Author:** Ejentum
 **Upstream:** [ejentum/ejentum-mcp](https://github.com/ejentum/ejentum-mcp)
-  
+
 **License:** MIT

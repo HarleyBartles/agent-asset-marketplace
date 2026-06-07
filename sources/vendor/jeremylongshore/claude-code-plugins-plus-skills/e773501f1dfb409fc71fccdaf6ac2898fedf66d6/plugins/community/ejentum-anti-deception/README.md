@@ -27,7 +27,7 @@ Latency cost: ~1 second. Benefit: catches sycophantic collapse and authority-app
 
 ---
 
-**Author:** Ejentum  
+**Author:** Ejentum
 **Upstream:** [ejentum/ejentum-mcp](https://github.com/ejentum/ejentum-mcp)
-  
+
 **License:** MIT

@@ -80,7 +80,7 @@ from datetime import datetime, timedelta
 def incremental_sync(client, source_conn, dataset_rid, last_sync):
     """Sync only new/changed rows since last sync."""
     query = f"""
-        SELECT * FROM orders 
+        SELECT * FROM orders
         WHERE updated_at > '{last_sync.isoformat()}'
         ORDER BY updated_at
     """
