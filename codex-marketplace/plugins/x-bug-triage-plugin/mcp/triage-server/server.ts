@@ -618,9 +618,9 @@ server.tool(
       content: [{
         type: "text" as const,
         text: JSON.stringify({
-          filed: true,
+          filed: false,
+          reason: "Issue filing is not implemented in this plugin wrapper",
           draft,
-          issue_url: `https://github.com/${draft.repo}/issues/NEW`,
         }),
       }],
     };

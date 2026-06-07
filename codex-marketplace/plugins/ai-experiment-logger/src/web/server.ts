@@ -4,6 +4,7 @@
  */
 
 import express from 'express';
+import { z } from 'zod';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { ExperimentStorage } from '../storage.js';
@@ -13,6 +14,14 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ExperimentInputSchema = z.object({
+  date: z.string().optional(),
+  aiTool: z.string().min(1),
+  prompt: z.string().min(1),
+  result: z.string().min(1),
+  rating: z.number().int().min(1).max(5),
+  tags: z.array(z.string()).optional()
+});
 
 // Initialize storage
 const storage = new ExperimentStorage();
@@ -25,7 +34,7 @@ app.use(express.static(join(__dirname, 'public')));
 // API Routes
 app.post('/api/experiments', async (req, res) => {
   try {
-    const experiment = await storage.createExperiment(req.body);
+    const experiment = await storage.createExperiment(ExperimentInputSchema.parse(req.body));
     res.json({ success: true, experiment });
   } catch (error) {
     res.status(400).json({

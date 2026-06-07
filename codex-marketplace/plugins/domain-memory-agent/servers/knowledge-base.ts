@@ -335,6 +335,7 @@ async function storeDocument(args: z.infer<typeof StoreDocumentSchema>) {
  */
 async function semanticSearch(args: z.infer<typeof SemanticSearchSchema>) {
   const { query, limit, tags: filterTags, minScore } = args;
+  const effectiveMinScore = Math.max(minScore, Number.EPSILON);
 
   const queryTokens = tokenize(query);
   if (queryTokens.length === 0) {
@@ -353,7 +354,7 @@ async function semanticSearch(args: z.infer<typeof SemanticSearchSchema>) {
 
     const score = calculateTFIDF(queryTokens, docId);
 
-    if (score >= minScore) {
+    if (score >= effectiveMinScore) {
       const excerpts = extractRelevantExcerpts(doc.content, queryTokens);
       results.push({
         document: doc,

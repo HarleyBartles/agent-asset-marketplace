@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import type { DiffFile, DiffSource } from "./types.js";
 
 export interface LocalDiffOptions {
@@ -61,7 +61,7 @@ export function parseNameStatus(
 /** Get the current branch name */
 function getCurrentBranch(cwd: string): string {
 	try {
-		return execSync("git rev-parse --abbrev-ref HEAD", { cwd, encoding: "utf8" }).trim();
+		return runGit(cwd, ["rev-parse", "--abbrev-ref", "HEAD"]);
 	} catch {
 		return "HEAD";
 	}
@@ -70,7 +70,7 @@ function getCurrentBranch(cwd: string): string {
 /** Get current git user */
 function getGitUser(cwd: string): string {
 	try {
-		return execSync("git config user.name", { cwd, encoding: "utf8" }).trim();
+		return runGit(cwd, ["config", "user.name"]);
 	} catch {
 		return "local";
 	}
@@ -79,7 +79,7 @@ function getGitUser(cwd: string): string {
 /** Get number of commits between base and HEAD */
 function countCommits(base: string, cwd: string): number {
 	try {
-		const out = execSync(`git rev-list --count ${base}..HEAD`, { cwd, encoding: "utf8" }).trim();
+		const out = runGit(cwd, ["rev-list", "--count", `${base}..HEAD`]);
 		return Number.parseInt(out) || 0;
 	} catch {
 		return 0;
@@ -87,13 +87,17 @@ function countCommits(base: string, cwd: string): number {
 }
 
 /** Get patch for a file */
-function getPatch(diffArgs: string, filename: string, cwd: string): string | undefined {
+function getPatch(diffArgs: string[], filename: string, cwd: string): string | undefined {
 	try {
-		const patch = execSync(`git diff ${diffArgs} -- "${filename}"`, { cwd, encoding: "utf8" });
+		const patch = runGit(cwd, ["diff", ...diffArgs, "--", filename]);
 		return patch.trim() || undefined;
 	} catch {
 		return undefined;
 	}
+}
+
+function runGit(cwd: string, args: string[]): string {
+	return execFileSync("git", args, { cwd, encoding: "utf8" }).trim();
 }
 
 export function buildLocalDiffSource(opts: LocalDiffOptions = {}): DiffSource {
@@ -101,24 +105,24 @@ export function buildLocalDiffSource(opts: LocalDiffOptions = {}): DiffSource {
 	const author = getGitUser(cwd);
 	const currentBranch = getCurrentBranch(cwd);
 
-	let diffArgs: string;
+	let diffArgs: string[];
 	let baseRef: string;
 	let sourceType: DiffSource["source_type"];
 	let title: string;
 
 	if (opts.staged) {
-		diffArgs = "--cached";
+		diffArgs = ["--cached"];
 		baseRef = "HEAD";
 		sourceType = "local_staged";
 		title = "Staged changes";
 	} else if (opts.commits) {
-		diffArgs = `HEAD~${opts.commits}`;
+		diffArgs = [`HEAD~${opts.commits}`];
 		baseRef = `HEAD~${opts.commits}`;
 		sourceType = "local_commits";
 		title = `Last ${opts.commits} commit(s) on ${currentBranch}`;
 	} else {
 		baseRef = opts.base ?? "main";
-		diffArgs = `${baseRef}...HEAD`;
+		diffArgs = [`${baseRef}...HEAD`];
 		sourceType = "local_branch";
 		title = `Branch ${currentBranch} vs ${baseRef}`;
 	}
@@ -127,17 +131,17 @@ export function buildLocalDiffSource(opts: LocalDiffOptions = {}): DiffSource {
 	let nameStatus: string;
 	let diffStat: string;
 	try {
-		nameStatus = execSync(`git diff --name-status ${diffArgs}`, { cwd, encoding: "utf8" });
+		nameStatus = runGit(cwd, ["diff", "--name-status", ...diffArgs]);
 	} catch (err) {
-		throw mapGitError(err, `git diff --name-status ${diffArgs}`, cwd);
+		throw mapGitError(err, `git diff --name-status ${diffArgs.join(" ")}`, cwd);
 	}
 	const statuses = parseNameStatus(nameStatus);
 
 	// Get diff --stat for additions/deletions counts
 	try {
-		diffStat = execSync(`git diff --stat ${diffArgs}`, { cwd, encoding: "utf8" });
+		diffStat = runGit(cwd, ["diff", "--stat", ...diffArgs]);
 	} catch (err) {
-		throw mapGitError(err, `git diff --stat ${diffArgs}`, cwd);
+		throw mapGitError(err, `git diff --stat ${diffArgs.join(" ")}`, cwd);
 	}
 	const stats = parseDiffStat(diffStat);
 

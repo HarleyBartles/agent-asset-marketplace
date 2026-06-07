@@ -322,6 +322,10 @@ function tryParseJSON(text: string): any {
   }
 }
 
+function shellSingleQuote(value: string): string {
+  return `'${value.replace(/'/g, `'\"'\"'`)}'`;
+}
+
 // ============================================================================
 // Failure Analysis
 // ============================================================================
@@ -589,7 +593,7 @@ async function makeRepro(args: z.infer<typeof MakeReproSchema>) {
       const body = typeof log.requestBody === 'string'
         ? log.requestBody
         : JSON.stringify(log.requestBody);
-      parts.push(`-d '${body.replace(/'/g, "\\'")}'`);
+      parts.push(`-d ${shellSingleQuote(body)}`);
     }
 
     // Add URL (must be last)

@@ -7,6 +7,7 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
+import { readFile } from 'fs/promises';
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
@@ -62,17 +63,115 @@ function extractTypography(data: any): any[] {
 
 async function analyzeScreenshot(args: z.infer<typeof AnalyzeScreenshotSchema>) {
   const { imagePath, framework } = args;
+  const metadata = await readImageMetadata(imagePath);
+  const aspectRatio = metadata.width && metadata.height ? metadata.width / metadata.height : 1;
+  const isWide = aspectRatio > 1.2;
+  const isTall = aspectRatio < 0.85;
+
+  const layout = isWide
+    ? {
+        type: 'container',
+        children: [
+          { type: 'hero', content: 'Heading' },
+          { type: 'button', label: 'Primary Action' }
+        ]
+      }
+    : isTall
+      ? {
+          type: 'stack',
+          children: [
+            { type: 'heading', content: 'Heading' },
+            { type: 'button', label: 'Primary Action' }
+          ]
+        }
+      : {
+          type: 'card',
+          children: [
+            { type: 'text', content: 'Heading' },
+            { type: 'button', label: 'Primary Action' }
+          ]
+        };
 
   return {
     framework,
-    layout: {
-      type: 'container',
-      children: [
-        { type: 'text', content: 'Heading' },
-        { type: 'button', label: 'Click Me' }
-      ]
-    }
+    image: {
+      path: imagePath,
+      format: metadata.format,
+      width: metadata.width,
+      height: metadata.height,
+      sizeBytes: metadata.sizeBytes
+    },
+    layout
   };
+}
+
+async function readImageMetadata(imagePath: string): Promise<{ format: string; width?: number; height?: number; sizeBytes: number }> {
+  const bytes = await readFile(imagePath);
+  const sizeBytes = bytes.length;
+
+  if (sizeBytes >= 24 && bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) {
+    return {
+      format: 'png',
+      width: bytes.readUInt32BE(16),
+      height: bytes.readUInt32BE(20),
+      sizeBytes
+    };
+  }
+
+  if (sizeBytes >= 4 && bytes[0] === 0xff && bytes[1] === 0xd8) {
+    const jpegDims = readJpegDimensions(bytes);
+    return {
+      format: 'jpeg',
+      width: jpegDims?.width,
+      height: jpegDims?.height,
+      sizeBytes
+    };
+  }
+
+  return {
+    format: 'unknown',
+    sizeBytes
+  };
+}
+
+function readJpegDimensions(bytes: Buffer): { width: number; height: number } | undefined {
+  let offset = 2;
+  while (offset + 7 < bytes.length) {
+    if (bytes[offset] !== 0xff) {
+      offset++;
+      continue;
+    }
+
+    const marker = bytes[offset + 1];
+    offset += 2;
+
+    if (marker === 0xd9 || marker === 0xda) {
+      break;
+    }
+
+    const length = bytes.readUInt16BE(offset);
+    if (length < 2 || offset + length > bytes.length) {
+      break;
+    }
+
+    const isStartOfFrame =
+      marker >= 0xc0 &&
+      marker <= 0xcf &&
+      marker !== 0xc4 &&
+      marker !== 0xc8 &&
+      marker !== 0xcc;
+
+    if (isStartOfFrame && offset + 5 < bytes.length) {
+      return {
+        height: bytes.readUInt16BE(offset + 3),
+        width: bytes.readUInt16BE(offset + 5)
+      };
+    }
+
+    offset += length;
+  }
+
+  return undefined;
 }
 
 async function generateComponent(args: z.infer<typeof GenerateComponentSchema>) {

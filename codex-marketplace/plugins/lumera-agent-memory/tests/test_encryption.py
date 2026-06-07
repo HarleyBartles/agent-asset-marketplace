@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+import security.encrypt as encrypt_mod
 from security.encrypt import encrypt_data, decrypt_data
 
 
@@ -93,3 +94,24 @@ def test_different_keys_cant_decrypt():
     with pytest.raises(Exception):
         # Try to decrypt key2-encrypted data with key1
         decrypt_data(crypto_result2.ciphertext, key_id="key1")
+
+
+def test_keys_persist_across_restarts(tmp_path, monkeypatch):
+    """Persisted key material should survive a process restart."""
+    key_store_path = tmp_path / "keys.json"
+    monkeypatch.setenv("LUMERA_KEY_STORE_PATH", str(key_store_path))
+
+    encrypt_mod._KEY_STORE.clear()
+    encrypt_mod._KEY_STORE_LOADED = False
+
+    plaintext = "persisted secret"
+    crypto_result = encrypt_data(plaintext, key_id="persisted")
+
+    # Simulate a restart by clearing the in-memory key store only.
+    encrypt_mod._KEY_STORE.clear()
+    encrypt_mod._KEY_STORE_LOADED = False
+
+    decrypted = decrypt_data(crypto_result.ciphertext, key_id="persisted")
+
+    assert decrypted == plaintext
+    assert key_store_path.exists()

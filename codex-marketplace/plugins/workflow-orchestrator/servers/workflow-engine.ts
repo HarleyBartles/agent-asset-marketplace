@@ -7,8 +7,12 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
+import { exec as execCallback } from 'child_process';
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
+import { promisify } from 'util';
+
+const exec = promisify(execCallback);
 
 interface Task {
   id: string;
@@ -87,34 +91,64 @@ async function executeWorkflow(args: z.infer<typeof ExecuteWorkflowSchema>) {
 
   workflow.status = 'running';
 
-  // Execute tasks (simplified - real implementation would use child_process)
-  for (const task of workflow.tasks) {
-    const canRun = task.dependencies.every(depId => {
-      const dep = workflow.tasks.find(t => t.id === depId);
-      return dep?.status === 'completed';
-    });
+  const byId = new Map(workflow.tasks.map(task => [task.id, task]));
+  const pending = new Set(workflow.tasks.map(task => task.id));
+  const completed = new Set<string>();
 
-    if (canRun) {
+  while (pending.size > 0) {
+    const runnable = Array.from(pending)
+      .map(taskId => byId.get(taskId)!)
+      .filter(task => task.dependencies.every(depId => completed.has(depId)));
+
+    if (runnable.length === 0) {
+      for (const taskId of pending) {
+        const task = byId.get(taskId)!;
+        task.status = 'failed';
+        task.error = task.error ?? `Blocked by unresolved or failed dependencies: ${task.dependencies.join(', ') || 'none'}`;
+        task.endTime = task.endTime ?? new Date().toISOString();
+      }
+      break;
+    }
+
+    const executionQueue = parallel ? runnable : runnable.slice(0, 1);
+    for (const task of executionQueue) {
+      pending.delete(task.id);
       task.status = 'running';
       task.startTime = new Date().toISOString();
 
       try {
-        // Simulate task execution
-        task.result = { output: `Executed: ${task.command}` };
+        const { stdout, stderr } = await exec(task.command, { shell: true, windowsHide: true, maxBuffer: 10 * 1024 * 1024 });
+        task.result = {
+          command: task.command,
+          stdout: stdout.trim(),
+          stderr: stderr.trim(),
+          exitCode: 0
+        };
         task.status = 'completed';
+        completed.add(task.id);
       } catch (error) {
+        const execError = error as { stdout?: string; stderr?: string; code?: number | string };
         task.status = 'failed';
-        task.error = String(error);
+        task.error = (execError.stderr || execError.stdout || String(error)).trim();
+        task.result = {
+          command: task.command,
+          stdout: (execError.stdout || '').trim(),
+          stderr: (execError.stderr || '').trim(),
+          exitCode: typeof execError.code === 'number' ? execError.code : 1
+        };
       }
 
       task.endTime = new Date().toISOString();
+      if (task.status === 'completed') {
+        pending.delete(task.id);
+      }
     }
   }
 
   workflow.status = workflow.tasks.every(t => t.status === 'completed') ? 'completed' : 'failed';
   workflow.completedAt = new Date().toISOString();
 
-  runHistory.push({ ...workflow });
+  runHistory.push(JSON.parse(JSON.stringify(workflow)));
 
   return {
     workflowId,
