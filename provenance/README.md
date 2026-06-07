@@ -13,3 +13,6 @@ For the Awesome Codex Plugins marketplace custody slice, see
 
 For the Awesome Codex Plugins vendor-bundle custody slice, see
 `awesome-codex-plugins-vendor-bundles.md` and the `MARK-41 Activity Log`.
+
+For the checked-but-not-hostable upstream Claude Code index, see
+`awesome-claude-code-reference.md` and the `MARK-44 Activity Log`.
