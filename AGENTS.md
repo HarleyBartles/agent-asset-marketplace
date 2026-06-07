@@ -37,13 +37,24 @@ For ordinary worker execution, prefer a PR into `main`. The PR or direct-main co
 
 Upstream drains are not complete merely because an upstream was inventoried or classified.
 
+The goal of third-party upstream drains is to legally re-vendor usable assets into this repository when rights and source shape allow it. A discovery surface or provenance note is allowed only when full re-vendoring is blocked, not useful, or explicitly deferred for a concrete reason.
+
 If a drain identifies selected outcomes such as direct install/default or optional assets, first-party adaptation candidates, reference/catalog surfaces, overlap anchors, or high-signal source patterns, the worker must preserve the consequence in one of these ways:
 
-1. update the appropriate marketplace, source, provenance, catalog, playbook, or adaptation surface in the repo;
-2. create or link explicit Linear follow-up issues for bounded work that cannot fit in the current issue; or
-3. revise the outcome to a true final pass or final park with evidence.
+1. copy the legally re-vendorable asset into the appropriate repo asset/source surface with provenance and license evidence;
+2. update the appropriate marketplace, source, provenance, catalog, playbook, or adaptation surface in the repo;
+3. create or link explicit Linear follow-up issues only for work that is genuinely out of scope or blocked for the current issue; or
+4. revise the outcome to a true final pass or final park with evidence.
 
 A provenance note can support marketplace preservation. It does not substitute for marketplace assets unless the selected outcome is truly reference-only or final-parked with evidence.
+
+## No-dodge execution rule
+
+Do not return analysis, inventory, candidate ledgers, discovery records, or plans as a substitute for doing the repo work. These are support evidence, not completion.
+
+Do not use size, noise, breadth, repo-shape friction, or a request for smaller follow-up issues as a reason to avoid copying assets that can legally be re-vendored in the current issue.
+
+A worker may return zero copied assets only when every scoped asset has a concrete rights, source, utility, validation, or scope blocker recorded. Otherwise the issue must end with repo-held assets and publication proof.
 
 ## Before changing files
 
@@ -67,6 +78,8 @@ If a command is unavailable or the repo conventions have changed, record the act
 A valid return should report:
 
 - files changed;
+- assets copied or adapted into the repo, with paths;
+- discovery/provenance-only outcomes and the concrete reason each was not re-vendored;
 - the durable asset consequence preserved;
 - provenance or license notes when relevant;
 - validation output or a clear no-validation reason;
