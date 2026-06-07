@@ -32,6 +32,92 @@
       "plugins/mcp/x-bug-triage-plugin (alias of plugins/mcp/x-bug-triage)"
     ]
   },
+  "source_map": [
+    {
+      "source_path": "LICENSE",
+      "vendored_path": "LICENSE",
+      "outcome": "mirror/vendor custody",
+      "note": "Upstream repository license preserved at the vendor root.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/packages/fullstack-starter-pack",
+      "vendored_path": "plugins/packages/fullstack-starter-pack",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/ai-experiment-logger",
+      "vendored_path": "plugins/mcp/ai-experiment-logger",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/conversational-api-debugger",
+      "vendored_path": "plugins/mcp/conversational-api-debugger",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/design-to-code",
+      "vendored_path": "plugins/mcp/design-to-code",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/domain-memory-agent",
+      "vendored_path": "plugins/mcp/domain-memory-agent",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/lumera-agent-memory",
+      "vendored_path": "plugins/mcp/lumera-agent-memory",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/pr-to-spec",
+      "vendored_path": "plugins/mcp/pr-to-spec",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package. Nested AGENTS.md retained as vendored payload, not repo doctrine.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/project-health-auditor",
+      "vendored_path": "plugins/mcp/project-health-auditor",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/slack-channel",
+      "vendored_path": "plugins/mcp/slack-channel",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/workflow-orchestrator",
+      "vendored_path": "plugins/mcp/workflow-orchestrator",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/x-bug-triage",
+      "vendored_path": "plugins/mcp/x-bug-triage",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    }
+  ],
   "candidate_outcomes": [
     {
       "candidate": "ai-ml-engineering-pack",
