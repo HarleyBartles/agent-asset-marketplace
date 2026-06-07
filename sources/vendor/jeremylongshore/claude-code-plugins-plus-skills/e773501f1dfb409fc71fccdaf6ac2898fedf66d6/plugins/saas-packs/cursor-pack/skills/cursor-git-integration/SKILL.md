@@ -257,4 +257,3 @@ Cursor has built-in `Cursor Blame` that attributes code to the AI agent that gen
 - [Cursor @Git Documentation](https://docs.cursor.com/context/@-symbols/@-git)
 - [Git Documentation](https://git-scm.com/doc)
 - [Conventional Commits](https://www.conventionalcommits.org)
-
