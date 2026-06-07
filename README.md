@@ -34,6 +34,11 @@ Expected flow:
 
 No skill packaging is performed in this initialization.
 
+First-party worker playbooks and workflow habits live in `docs/worker-playbooks.md`.
+They adapt the reusable Superpowers workflow core from
+`sources/vendor/obra/superpowers/v5.1.0/` into repo-local guidance without
+copying the upstream harness prose wholesale.
+
 ## Codex Plugin Marketplace Flow
 
 Codex marketplace assets live under `codex-marketplace/`.
