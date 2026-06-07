@@ -9,35 +9,37 @@
     "license": "MIT"
   },
   "record": {
-    "type": "marketplace-catalog-record",
+    "type": "vendor-custody-record",
     "status": "preserved",
-    "description": "MARK-58 record for the MARK-46 reference packs. The record stays at catalog granularity and does not activate installable marketplace content."
+    "description": "MARK-58 vendor-custody mirror for the MARK-46 reference-pack pools. The upstream pool roots and upstream license are copied here with provenance intact; support-only surfaces remain mirrored but are excluded from the candidate count where they are not candidate entries."
   },
   "inventory": {
     "source_paths": [
-      "README.md",
       "LICENSE",
+      "README.md",
       "plugins/saas-packs",
       "plugins/business-tools",
       "plugins/community",
       "plugins/crypto"
     ],
-    "expected_candidate_count": 172,
+    "expected_candidate_count": 170,
     "excluded_support_paths": [
       "plugins/saas-packs/_templates",
       "plugins/saas-packs/scripts",
       "plugins/saas-packs/skill-databases",
-      "plugins/saas-packs/vendors"
+      "plugins/saas-packs/vendors",
+      "plugins/business-tools/general-legal-assistant",
+      "plugins/community/.gitkeep"
     ],
-    "uncertainty": "The four pools are preserved at catalog granularity only. The upstream surface is broad and mixed, so wholesale bundle mirroring was not justified for this issue."
+    "uncertainty": "The four pools are preserved as vendor-custody mirrors, but the source record keeps support-only surfaces out of the candidate total so the reconciliation reflects actual candidate entries rather than helper files."
   },
   "pools": [
     {
       "name": "saas-packs",
       "source_path": "plugins/saas-packs",
       "count": 106,
-      "outcome": "intentional final park",
-      "reason": "Broad SaaS catalog with nested support scaffolding and many individually useful packs; preserved as a catalog record only.",
+      "outcome": "mirror/vendor custody",
+      "reason": "Broad SaaS catalog with nested support scaffolding and many individually useful packs; mirrored as permissive vendor custody with support-only subpaths excluded from candidate totals.",
       "anchors": [
         "claude-pack",
         "linear-pack",
@@ -55,14 +57,13 @@
     {
       "name": "business-tools",
       "source_path": "plugins/business-tools",
-      "count": 21,
-      "outcome": "intentional final park",
-      "reason": "Mixed business and productivity methodology packs, including support/helper surfaces; preserved as a catalog record instead of wholesale custody.",
+      "count": 20,
+      "outcome": "mirror/vendor custody",
+      "reason": "Mixed business and productivity methodology packs are mirrored under MIT custody; `general-legal-assistant` is kept in the mirror but excluded from the candidate total as a support/helper surface.",
       "anchors": [
         "brand-strategy-framework",
         "excel-analyst-pro",
         "executive-assistant-skills",
-        "general-legal-assistant",
         "openbb-terminal",
         "promptbook",
         "wondelai-blue-ocean-strategy",
@@ -75,9 +76,9 @@
     {
       "name": "community",
       "source_path": "plugins/community",
-      "count": 18,
-      "outcome": "intentional final park",
-      "reason": "Community bundles are heterogeneous and include overlap/reference anchors already tracked as reusable patterns; preserved as catalog anchors only.",
+      "count": 17,
+      "outcome": "mirror/vendor custody",
+      "reason": "Community bundles are heterogeneous but MIT-licensed, so the pack roots are mirrored; the `.gitkeep` support file stays out of the candidate total.",
       "anchors": [
         "claude-reflect",
         "claude-never-forgets",
@@ -94,8 +95,8 @@
       "name": "crypto",
       "source_path": "plugins/crypto",
       "count": 27,
-      "outcome": "intentional final park",
-      "reason": "Crypto packs depend on live market-data and trading workflows; preserved as a catalog record rather than activated marketplace content.",
+      "outcome": "mirror/vendor custody",
+      "reason": "Crypto packs depend on live market-data and trading workflows, but the upstream source is MIT and the pack roots are mirrored as vendor custody rather than activated marketplace content.",
       "anchors": [
         "aomi",
         "crypto-portfolio-tracker",
@@ -110,8 +111,8 @@
     }
   ],
   "reconciliation": {
-    "expected_candidates": 172,
-    "classified_candidates": 172,
+    "expected_candidates": 170,
+    "classified_candidates": 170,
     "unclassified": 0,
     "mismatch": 0
   }
