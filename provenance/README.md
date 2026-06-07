@@ -20,3 +20,8 @@ For the checked-but-not-hostable upstream Claude Code index, see
 For the preserved MARK-46 outcome ledger for
 `jeremylongshore/claude-code-plugins-plus-skills`, see
 `claude-code-plugins-plus-skills-reference.md` and the `MARK-46 Activity Log`.
+
+For the preserved MARK-57 vendor custody slice that re-vendors the usable
+MARK-46 installable bundle surfaces, see
+`MARK-57-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
+addendum.
