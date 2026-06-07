@@ -34,9 +34,9 @@
       "bundles/sendbird/cc-plugin-codex"
     ],
     "excluded_material": [
-      "plugins/**",
-      "assets/**",
-      "binary screenshots and images"
+      "unselected upstream plugin bundle directories under plugins/**",
+      "top-level repository assets/** that are not mirrored under bundles/**",
+      "binary screenshots/images outside the mirrored bundle roots"
     ]
   },
   "source_map": [

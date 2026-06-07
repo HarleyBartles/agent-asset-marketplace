@@ -49,6 +49,21 @@ The following upstream material is not mirrored here:
 - binary assets and screenshots
 - any non-permissive or license-unclear upstream material
 
+## Runtime completeness notes
+
+The selected bundle trees are preserved as vendor custody material, not as
+declared install-ready activations. A few upstream entrypoints referenced by the
+bundle metadata are not present in the mirrored source trees and are therefore
+truthfully treated as incomplete runtime surfaces:
+
+- Registry Broker: `.mcp.json` points at `./dist/cli.cjs`, which is not
+  mirrored.
+- Sendbird: `hooks/hooks.json` points at `hooks/session-lifecycle-hook.mjs`,
+  `hooks/stop-review-gate-hook.mjs`, and `hooks/unread-result-hook.mjs`, which
+  are not mirrored.
+- Epic Harness: `.codex-plugin/hooks.json` points at
+  `registry/scripts/install.js`, which is not mirrored.
+
 ## Provenance note
 
 This mirror preserves upstream source paths and license provenance. It is not
