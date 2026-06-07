@@ -24,7 +24,7 @@
                      "llm",
                      "developer-tools"
                  ],
-    "skills":  "./skills/",
+    "skills":  "./.claude/skills/",
     "interface":  {
                       "type":  "cli",
                       "displayName":  "PR to Spec",

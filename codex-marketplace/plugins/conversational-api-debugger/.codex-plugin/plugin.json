@@ -22,7 +22,6 @@
                      "rest",
                      "troubleshooting"
                  ],
-    "skills":  "./skills/",
     "interface":  {
                       "type":  "cli",
                       "displayName":  "Conversational API Debugger",

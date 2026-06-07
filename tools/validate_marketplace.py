@@ -112,8 +112,6 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
 def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_root: str) -> None:
     if plugin_manifest.get("name") != plugin_name:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
-    if plugin_manifest.get("skills") != "./skills/":
-        raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json skills path mismatch")
     if plugin_manifest.get("interface", {}).get("category") != "Productivity":
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json category mismatch")
     for key in ("composerIcon", "logo"):
@@ -121,6 +119,11 @@ def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_roo
         if relative != "./assets/icon.svg":
             raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json {key} path mismatch")
     check_path_exists(ROOT / plugin_root / "assets/icon.svg")
+    skills_path = plugin_manifest.get("skills")
+    if skills_path:
+        if not isinstance(skills_path, str):
+            raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json skills path must be a string")
+        check_path_exists(ROOT / plugin_root / skills_path)
 
 
 def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
@@ -210,6 +213,9 @@ def main() -> int:
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
+    check_text(ROOT / "codex-marketplace/README.md")
+    check_text(ROOT / "codex-marketplace/plugins/README.md")
+    check_text(ROOT / "provenance/MARK-46-activity-log.md")
     check_text(PLUGIN_README_PATH)
     check_text(PLUGIN_SKILL_PATH)
     check_text(PROVENANCE_PATH)

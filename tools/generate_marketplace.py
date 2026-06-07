@@ -8,8 +8,7 @@ import json
 from marketplace_utils import (
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
-    PLUGIN_MANIFEST_PATH,
-    MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH,
+    MARKETPLACE_PLUGIN_SPECS,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_INTAKE_JSON_PATH,
     build_marketplace_manifest,
@@ -20,8 +19,7 @@ from marketplace_utils import (
 def main() -> int:
     decisions = load_json(SOURCE_DECISIONS_JSON_PATH)
     intake = load_json(SOURCE_INTAKE_JSON_PATH)
-    plugin_manifest = load_json(PLUGIN_MANIFEST_PATH)
-    marketplace_family_pack_manifest = load_json(MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH)
+    plugin_manifests = [load_json(spec["manifest_path"]) for spec in MARKETPLACE_PLUGIN_SPECS]
 
     imported_records = [
         record
@@ -34,7 +32,7 @@ def main() -> int:
     if not intake.get("imports"):
         raise ValueError("sources/house-skills/intake.json does not contain imports")
 
-    expected = build_marketplace_manifest([plugin_manifest, marketplace_family_pack_manifest])
+    expected = build_marketplace_manifest(plugin_manifests)
     if expected != EXPECTED_MARKETPLACE:
         raise ValueError("Unexpected marketplace manifest shape")
 
