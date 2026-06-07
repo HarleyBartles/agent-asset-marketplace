@@ -1,0 +1,45 @@
+{
+    "name":  "workflow-orchestrator",
+    "version":  "1.0.0",
+    "description":  "DAG-based workflow orchestration with parallel execution and run history",
+    "author":  {
+                   "name":  "Harley Bartles"
+               },
+    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license":  "MIT",
+    "rights":  "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+    "keywords":  [
+                     "codex",
+                     "marketplace",
+                     "upstream-drain",
+                     "wrapper",
+                     "mcp",
+                     "workflow",
+                     "orchestration",
+                     "dag",
+                     "automation",
+                     "tasks"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "type":  "cli",
+                      "displayName":  "Workflow Orchestrator",
+                      "shortDescription":  "DAG-based workflow orchestration with parallel execution and run history",
+                      "longDescription":  "Codex-compatible wrapper for the upstream bundle at plugins/mcp/workflow-orchestrator. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/workflow-orchestrator/.claude-plugin/plugin.json.",
+                      "developerName":  "Harley Bartles",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Inspect the wrapper source map for workflow-orchestrator.",
+                                            "Use this Codex wrapper rather than the upstream Claude manifest.",
+                                            "Preserve the upstream bundle boundary while working inside the marketplace asset."
+                                        ],
+                      "brandColor":  "#0F766E",
+                      "composerIcon":  "./assets/icon.svg",
+                      "logo":  "./assets/icon.svg"
+                  }
+}

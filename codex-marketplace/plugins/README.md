@@ -2,4 +2,5 @@
 
 Marketplace plugin source shape lives here.
 
-The first market-consumable bundle is `marketplace-family-pack/`.
+The marketplace now includes `marketplace-family-pack/` plus the Codex-wrapper
+bundles added for MARK-46 under this directory.

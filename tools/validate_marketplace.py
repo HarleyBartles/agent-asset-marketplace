@@ -8,16 +8,9 @@ import sys
 
 from marketplace_utils import (
     BUNDLE_MANIFEST_PATH,
-    EXPECTED_COMPONENT_LANE_ORDER,
     EXPECTED_MARKETPLACE,
-    EXPECTED_MARKETPLACE_ROOT,
-    EXPECTED_PLUGIN_NAME,
-    EXPECTED_PLUGIN_ROOT,
-    EXPECTED_PLUGIN_VERSION,
-    EXPECTED_SOURCE_OF_TRUTH,
     MARKETPLACE_PATH,
-    MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH,
-    PLUGIN_MANIFEST_PATH,
+    MARKETPLACE_PLUGIN_SPECS,
     PLUGIN_README_PATH,
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
@@ -99,10 +92,7 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
         raise ValueError("Marketplace registry display name mismatch")
 
     plugins_by_name = {plugin.get("name"): plugin for plugin in registry.get("plugins", [])}
-    expected_plugins = {
-        "house-skills": "./plugins/house-skills",
-        "marketplace-family-pack": "./codex-marketplace/plugins/marketplace-family-pack",
-    }
+    expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
     for name, path in expected_plugins.items():
         plugin = plugins_by_name.get(name)
         if not plugin:
@@ -122,8 +112,6 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
 def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_root: str) -> None:
     if plugin_manifest.get("name") != plugin_name:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
-    if plugin_manifest.get("version") != EXPECTED_PLUGIN_VERSION:
-        raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json version mismatch")
     if plugin_manifest.get("skills") != "./skills/":
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json skills path mismatch")
     if plugin_manifest.get("interface", {}).get("category") != "Productivity":
@@ -136,15 +124,20 @@ def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_roo
 
 
 def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
-    if bundle_manifest.get("bundle_name") != EXPECTED_PLUGIN_NAME:
+    if bundle_manifest.get("bundle_name") != "house-skills":
         raise ValueError("bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != EXPECTED_PLUGIN_VERSION:
+    if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("marketplace_root") != EXPECTED_MARKETPLACE_ROOT:
+    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != EXPECTED_PLUGIN_ROOT:
+    if bundle_manifest.get("plugin_root") != "plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("source_of_truth") != EXPECTED_SOURCE_OF_TRUTH:
+    if bundle_manifest.get("source_of_truth") != [
+        "sources/house-skills/decisions.json",
+        "sources/house-skills/decisions.md",
+        "sources/house-skills/intake.json",
+        "provenance/house-skills.md",
+    ]:
         raise ValueError("bundle manifest source_of_truth mismatch")
 
     imports = intake.get("imports", [])
@@ -201,21 +194,18 @@ def validate_source_map(text: str) -> None:
 def main() -> int:
     decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
+    plugin_manifests: list[dict] = []
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_manifest = check_json(spec["manifest_path"])
+        validate_plugin_manifest(plugin_manifest, spec["name"], spec["plugin_root"])
+        plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
-    plugin_manifest = check_json(PLUGIN_MANIFEST_PATH)
-    marketplace_family_pack_manifest = check_json(MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
     decisions_md_text = check_text(SOURCE_DECISIONS_MD_PATH)
     decision_rows = parse_top_markdown_table(SOURCE_DECISIONS_MD_PATH)
 
     validate_decisions(decisions, decision_rows, decisions_md_text)
-    validate_marketplace_registry(registry, [plugin_manifest, marketplace_family_pack_manifest])
-    validate_plugin_manifest(plugin_manifest, EXPECTED_PLUGIN_NAME, "plugins/house-skills")
-    validate_plugin_manifest(
-        marketplace_family_pack_manifest,
-        "marketplace-family-pack",
-        "codex-marketplace/plugins/marketplace-family-pack",
-    )
+    validate_marketplace_registry(registry, plugin_manifests)
     validate_bundle_manifest(bundle_manifest, intake)
 
     source_map = check_text(SOURCE_MAP_PATH)

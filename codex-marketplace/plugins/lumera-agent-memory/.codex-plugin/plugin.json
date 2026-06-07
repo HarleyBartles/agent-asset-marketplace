@@ -1,0 +1,44 @@
+{
+    "name":  "lumera-agent-memory",
+    "version":  "1.0.0",
+    "description":  "Durable agent memory with Cascade object storage and local FTS index",
+    "author":  {
+                   "name":  "Harley Bartles"
+               },
+    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license":  "MIT",
+    "rights":  "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+    "keywords":  [
+                     "codex",
+                     "marketplace",
+                     "upstream-drain",
+                     "wrapper",
+                     "mcp",
+                     "memory",
+                     "cascade",
+                     "agent",
+                     "storage"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "type":  "cli",
+                      "displayName":  "Lumera Agent Memory",
+                      "shortDescription":  "Durable agent memory with Cascade object storage and local FTS index",
+                      "longDescription":  "Codex-compatible wrapper for the upstream bundle at plugins/mcp/lumera-agent-memory. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/lumera-agent-memory/.claude-plugin/plugin.json.",
+                      "developerName":  "Harley Bartles",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Inspect the wrapper source map for lumera-agent-memory.",
+                                            "Use this Codex wrapper rather than the upstream Claude manifest.",
+                                            "Preserve the upstream bundle boundary while working inside the marketplace asset."
+                                        ],
+                      "brandColor":  "#0F766E",
+                      "composerIcon":  "./assets/icon.svg",
+                      "logo":  "./assets/icon.svg"
+                  }
+}

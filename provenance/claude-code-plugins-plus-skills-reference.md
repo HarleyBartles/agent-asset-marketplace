@@ -172,3 +172,42 @@ The MARK-46 family-level adaptation consequence is now also preserved as a
 first-party marketplace bundle:
 
 - `provenance/marketplace-family-pack.md`
+
+## MARK-46 Codex Wrapper Addendum
+
+The Codex-compatible upstream installable bundles are now preserved as actual
+marketplace wrappers under `codex-marketplace/plugins/`:
+
+- `codex-marketplace/plugins/fullstack-starter-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/packages/fullstack-starter-pack`
+- `codex-marketplace/plugins/ai-experiment-logger`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/ai-experiment-logger`
+- `codex-marketplace/plugins/conversational-api-debugger`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/conversational-api-debugger`
+- `codex-marketplace/plugins/design-to-code`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/design-to-code`
+- `codex-marketplace/plugins/domain-memory-agent`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/domain-memory-agent`
+- `codex-marketplace/plugins/lumera-agent-memory`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/lumera-agent-memory`
+- `codex-marketplace/plugins/pr-to-spec`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/pr-to-spec`
+- `codex-marketplace/plugins/project-health-auditor`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/project-health-auditor`
+- `codex-marketplace/plugins/slack-channel`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/slack-channel`
+- `codex-marketplace/plugins/workflow-orchestrator`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/workflow-orchestrator`
+- `codex-marketplace/plugins/x-bug-triage-plugin`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/x-bug-triage`
+
+Non-Codex-compatible package bundles remain out of the marketplace because no
+clean wrapper source root was present in the pinned tree during inspection:
+
+- `ai-ml-engineering-pack`
+- `creator-studio-pack`
+- `devops-automation-pack`
+- `security-pro-pack`
+
+The `x-bug-triage-plugin` alias is normalized to the `x-bug-triage` source root
+and is not duplicated as a second wrapper.

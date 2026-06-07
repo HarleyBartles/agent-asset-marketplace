@@ -1,0 +1,39 @@
+{
+    "name":  "x-bug-triage-plugin",
+    "version":  "0.6.1",
+    "description":  "Closed-loop bug triage: X complaints â†’ clusters â†’ repo evidence â†’ owner routing â†’ terminal review â†’ filed issues",
+    "author":  {
+                   "name":  "Harley Bartles"
+               },
+    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license":  "MIT",
+    "rights":  "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+    "keywords":  [
+                     "codex",
+                     "marketplace",
+                     "upstream-drain",
+                     "wrapper"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "type":  "cli",
+                      "displayName":  "X Bug Triage Plugin",
+                      "shortDescription":  "Closed-loop bug triage: X complaints â†’ clusters â†’ repo evidence â†’ owner routing â†’ terminal review â†’ filed issues",
+                      "longDescription":  "Codex-compatible wrapper for the upstream bundle at plugins/mcp/x-bug-triage. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/x-bug-triage/.claude-plugin/plugin.json.",
+                      "developerName":  "Harley Bartles",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Inspect the wrapper source map for x-bug-triage-plugin.",
+                                            "Use this Codex wrapper rather than the upstream Claude manifest.",
+                                            "Preserve the upstream bundle boundary while working inside the marketplace asset."
+                                        ],
+                      "brandColor":  "#0F766E",
+                      "composerIcon":  "./assets/icon.svg",
+                      "logo":  "./assets/icon.svg"
+                  }
+}

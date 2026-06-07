@@ -21,6 +21,10 @@ For the preserved MARK-46 outcome ledger for
 `jeremylongshore/claude-code-plugins-plus-skills`, see
 `claude-code-plugins-plus-skills-reference.md` and the `MARK-46 Activity Log`.
 
+For the Codex-wrapper preservation pass on the compatible MARK-46 bundles, see
+`MARK-46-activity-log.md` and the wrapper addendum in
+`claude-code-plugins-plus-skills-reference.md`.
+
 For the preserved MARK-57 vendor custody slice that re-vendors the usable
 MARK-46 installable bundle surfaces, see `MARK-57-activity-log.md` and the
 `claude-code-plugins-plus-skills-reference.md` addendum.

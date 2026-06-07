@@ -21,6 +21,92 @@ SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/house-skills/decisions.json"
 SOURCE_INTAKE_JSON_PATH = ROOT / "sources/house-skills/intake.json"
 PROVENANCE_PATH = ROOT / "provenance/house-skills.md"
 
+MARKETPLACE_NOTES = [
+    "Canonical Codex marketplace source layout.",
+    "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests.",
+]
+
+MARKETPLACE_PLUGIN_SPECS = [
+    {
+        "name": "house-skills",
+        "registry_path": "./plugins/house-skills",
+        "plugin_root": "plugins/house-skills",
+        "manifest_path": PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "marketplace-family-pack",
+        "registry_path": "./codex-marketplace/plugins/marketplace-family-pack",
+        "plugin_root": "codex-marketplace/plugins/marketplace-family-pack",
+        "manifest_path": MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "fullstack-starter-pack",
+        "registry_path": "./codex-marketplace/plugins/fullstack-starter-pack",
+        "plugin_root": "codex-marketplace/plugins/fullstack-starter-pack",
+        "manifest_path": ROOT / "codex-marketplace/plugins/fullstack-starter-pack/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "ai-experiment-logger",
+        "registry_path": "./codex-marketplace/plugins/ai-experiment-logger",
+        "plugin_root": "codex-marketplace/plugins/ai-experiment-logger",
+        "manifest_path": ROOT / "codex-marketplace/plugins/ai-experiment-logger/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "conversational-api-debugger",
+        "registry_path": "./codex-marketplace/plugins/conversational-api-debugger",
+        "plugin_root": "codex-marketplace/plugins/conversational-api-debugger",
+        "manifest_path": ROOT / "codex-marketplace/plugins/conversational-api-debugger/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "design-to-code",
+        "registry_path": "./codex-marketplace/plugins/design-to-code",
+        "plugin_root": "codex-marketplace/plugins/design-to-code",
+        "manifest_path": ROOT / "codex-marketplace/plugins/design-to-code/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "domain-memory-agent",
+        "registry_path": "./codex-marketplace/plugins/domain-memory-agent",
+        "plugin_root": "codex-marketplace/plugins/domain-memory-agent",
+        "manifest_path": ROOT / "codex-marketplace/plugins/domain-memory-agent/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "lumera-agent-memory",
+        "registry_path": "./codex-marketplace/plugins/lumera-agent-memory",
+        "plugin_root": "codex-marketplace/plugins/lumera-agent-memory",
+        "manifest_path": ROOT / "codex-marketplace/plugins/lumera-agent-memory/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "pr-to-spec",
+        "registry_path": "./codex-marketplace/plugins/pr-to-spec",
+        "plugin_root": "codex-marketplace/plugins/pr-to-spec",
+        "manifest_path": ROOT / "codex-marketplace/plugins/pr-to-spec/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "project-health-auditor",
+        "registry_path": "./codex-marketplace/plugins/project-health-auditor",
+        "plugin_root": "codex-marketplace/plugins/project-health-auditor",
+        "manifest_path": ROOT / "codex-marketplace/plugins/project-health-auditor/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "slack-channel",
+        "registry_path": "./codex-marketplace/plugins/slack-channel",
+        "plugin_root": "codex-marketplace/plugins/slack-channel",
+        "manifest_path": ROOT / "codex-marketplace/plugins/slack-channel/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "workflow-orchestrator",
+        "registry_path": "./codex-marketplace/plugins/workflow-orchestrator",
+        "plugin_root": "codex-marketplace/plugins/workflow-orchestrator",
+        "manifest_path": ROOT / "codex-marketplace/plugins/workflow-orchestrator/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "x-bug-triage-plugin",
+        "registry_path": "./codex-marketplace/plugins/x-bug-triage-plugin",
+        "plugin_root": "codex-marketplace/plugins/x-bug-triage-plugin",
+        "manifest_path": ROOT / "codex-marketplace/plugins/x-bug-triage-plugin/.codex-plugin/plugin.json",
+    },
+]
+
 EXPECTED_MARKETPLACE = {
     "name": "agent-asset-marketplace",
     "interface": {
@@ -28,22 +114,10 @@ EXPECTED_MARKETPLACE = {
     },
     "plugins": [
         {
-            "name": "house-skills",
+            "name": spec["name"],
             "source": {
                 "source": "local",
-                "path": "./plugins/house-skills",
-            },
-            "policy": {
-                "installation": "AVAILABLE",
-                "authentication": "ON_INSTALL",
-            },
-            "category": "Productivity",
-        },
-        {
-            "name": "marketplace-family-pack",
-            "source": {
-                "source": "local",
-                "path": "./codex-marketplace/plugins/marketplace-family-pack",
+                "path": spec["registry_path"],
             },
             "policy": {
                 "installation": "AVAILABLE",
@@ -51,7 +125,9 @@ EXPECTED_MARKETPLACE = {
             },
             "category": "Productivity",
         }
+        for spec in MARKETPLACE_PLUGIN_SPECS
     ],
+    "notes": MARKETPLACE_NOTES,
 }
 
 EXPECTED_PLUGIN_NAME = "house-skills"
@@ -182,13 +258,11 @@ def normalize_decision_row(row: dict[str, str]) -> dict[str, Any]:
 
 def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[str, Any]:
     plugins: list[dict[str, Any]] = []
+    registry_paths = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
     for plugin_manifest in plugin_manifests:
         plugin_name = plugin_manifest["name"]
-        if plugin_name == "house-skills":
-            plugin_path = "./plugins/house-skills"
-        elif plugin_name == "marketplace-family-pack":
-            plugin_path = "./codex-marketplace/plugins/marketplace-family-pack"
-        else:
+        plugin_path = registry_paths.get(plugin_name)
+        if not plugin_path:
             raise ValueError(f"Unsupported plugin manifest {plugin_name!r}")
 
         plugins.append(
@@ -212,4 +286,5 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
             "displayName": "Agent Asset Marketplace",
         },
         "plugins": plugins,
+        "notes": MARKETPLACE_NOTES,
     }
