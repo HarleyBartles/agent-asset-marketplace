@@ -7,3 +7,6 @@ promoted into deployment targets.
 
 For the Superpowers workflow adoption slice, see `superpowers-workflow-core.md`
 and the `MARK-35 Activity Log`.
+
+For the Awesome Codex Plugins marketplace custody slice, see
+`awesome-codex-plugins-marketplace-reference.md` and the `MARK-38 Activity Log`.
