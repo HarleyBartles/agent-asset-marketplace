@@ -16,3 +16,7 @@ For the Awesome Codex Plugins vendor-bundle custody slice, see
 
 For the checked-but-not-hostable upstream Claude Code index, see
 `awesome-claude-code-reference.md` and the `MARK-44 Activity Log`.
+
+For the preserved MARK-46 outcome ledger for
+`jeremylongshore/claude-code-plugins-plus-skills`, see
+`claude-code-plugins-plus-skills-reference.md` and the `MARK-46 Activity Log`.
