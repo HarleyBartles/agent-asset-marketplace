@@ -32,13 +32,37 @@ Mirrored surfaces:
 - `scripts/generate_plugins_json.py`
 - `scripts/validate-plugin-pr.py`
 
+Mirrored bundle custody:
+
+- `bundles/archcore-ai/plugin`
+- `bundles/epicsagas/epic-harness`
+- `bundles/hashgraph-online/hol-guard-plugin`
+- `bundles/hashgraph-online/registry-broker-codex-plugin`
+- `bundles/Kanevry/session-orchestrator`
+- `bundles/sendbird/cc-plugin-codex`
+
 ## Intentionally excluded
 
 The following upstream material is not mirrored here:
 
-- plugin bundle directories under `plugins/**`
+- unselected plugin bundle directories under `plugins/**`
 - binary assets and screenshots
 - any non-permissive or license-unclear upstream material
+
+## Runtime completeness notes
+
+The selected bundle trees are preserved as vendor custody material, not as
+declared install-ready activations. A few upstream entrypoints referenced by the
+bundle metadata are not present in the mirrored source trees and are therefore
+truthfully treated as incomplete runtime surfaces:
+
+- Registry Broker: `.mcp.json` points at `./dist/cli.cjs`, which is not
+  mirrored.
+- Sendbird: `hooks/hooks.json` points at `hooks/session-lifecycle-hook.mjs`,
+  `hooks/stop-review-gate-hook.mjs`, and `hooks/unread-result-hook.mjs`, which
+  are not mirrored.
+- Epic Harness: `.codex-plugin/hooks.json` points at
+  `registry/scripts/install.js`, which is not mirrored.
 
 ## Provenance note
 
