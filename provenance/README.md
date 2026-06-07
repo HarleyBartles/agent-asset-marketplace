@@ -22,6 +22,8 @@ For the preserved MARK-46 outcome ledger for
 `claude-code-plugins-plus-skills-reference.md` and the `MARK-46 Activity Log`.
 
 For the preserved MARK-57 vendor custody slice that re-vendors the usable
-MARK-46 installable bundle surfaces, see
-`MARK-57-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
-addendum.
+MARK-46 installable bundle surfaces, see `MARK-57-activity-log.md` and the
+`claude-code-plugins-plus-skills-reference.md` addendum.
+
+For the MARK-58 marketplace catalog record that preserves the MARK-46
+reference-pack pools, see `claude-code-plugins-plus-skills-catalog.md`.
