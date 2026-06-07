@@ -127,3 +127,36 @@ These are preserved here as final pass records with concrete reasons.
 MARK-46 is preserved as a durable in-repo reference record for the selected
 install, reference, adaptation, overlap, and pass consequences. The drain is
 closed on evidence, not on import volume.
+
+## MARK-57 Addendum
+
+The legally re-vendorable MARK-46 installable bundle surfaces are now also
+preserved as vendor custody material under:
+
+- `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/`
+
+Copied bundle roots:
+
+- `plugins/packages/fullstack-starter-pack`
+- `plugins/mcp/ai-experiment-logger`
+- `plugins/mcp/conversational-api-debugger`
+- `plugins/mcp/design-to-code`
+- `plugins/mcp/domain-memory-agent`
+- `plugins/mcp/lumera-agent-memory`
+- `plugins/mcp/pr-to-spec`
+- `plugins/mcp/project-health-auditor`
+- `plugins/mcp/slack-channel`
+- `plugins/mcp/workflow-orchestrator`
+- `plugins/mcp/x-bug-triage`
+
+Blocked package bundles:
+
+- `plugins/packages/ai-ml-engineering-pack`
+- `plugins/packages/creator-studio-pack`
+- `plugins/packages/devops-automation-pack`
+- `plugins/packages/security-pro-pack`
+
+Alias/overlap:
+
+- `plugins/mcp/x-bug-triage-plugin` is recorded only as an alias of
+  `plugins/mcp/x-bug-triage`

@@ -1,0 +1,219 @@
+{
+  "kind": "vendor-source-manifest",
+  "version": 1,
+  "vendor": {
+    "name": "jeremylongshore",
+    "repository": "claude-code-plugins-plus-skills",
+    "url": "https://github.com/jeremylongshore/claude-code-plugins-plus-skills.git",
+    "commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+    "license": "MIT"
+  },
+  "mirror_root": "sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "scope": {
+    "included_surfaces": [
+      "LICENSE",
+      "plugins/packages/fullstack-starter-pack",
+      "plugins/mcp/ai-experiment-logger",
+      "plugins/mcp/conversational-api-debugger",
+      "plugins/mcp/design-to-code",
+      "plugins/mcp/domain-memory-agent",
+      "plugins/mcp/lumera-agent-memory",
+      "plugins/mcp/pr-to-spec",
+      "plugins/mcp/project-health-auditor",
+      "plugins/mcp/slack-channel",
+      "plugins/mcp/workflow-orchestrator",
+      "plugins/mcp/x-bug-triage"
+    ],
+    "excluded_material": [
+      "plugins/packages/ai-ml-engineering-pack (local bundle LICENSE is EULA-restricted)",
+      "plugins/packages/creator-studio-pack (local bundle LICENSE is EULA-restricted)",
+      "plugins/packages/devops-automation-pack (local bundle LICENSE is EULA-restricted)",
+      "plugins/packages/security-pro-pack (local bundle LICENSE is EULA-restricted)",
+      "plugins/mcp/x-bug-triage-plugin (alias of plugins/mcp/x-bug-triage)"
+    ]
+  },
+  "source_map": [
+    {
+      "source_path": "LICENSE",
+      "vendored_path": "LICENSE",
+      "outcome": "mirror/vendor custody",
+      "note": "Upstream repository license preserved at the vendor root.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/packages/fullstack-starter-pack",
+      "vendored_path": "plugins/packages/fullstack-starter-pack",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/ai-experiment-logger",
+      "vendored_path": "plugins/mcp/ai-experiment-logger",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/conversational-api-debugger",
+      "vendored_path": "plugins/mcp/conversational-api-debugger",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/design-to-code",
+      "vendored_path": "plugins/mcp/design-to-code",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/domain-memory-agent",
+      "vendored_path": "plugins/mcp/domain-memory-agent",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/lumera-agent-memory",
+      "vendored_path": "plugins/mcp/lumera-agent-memory",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/pr-to-spec",
+      "vendored_path": "plugins/mcp/pr-to-spec",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package. Nested AGENTS.md retained as vendored payload, not repo doctrine.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/project-health-auditor",
+      "vendored_path": "plugins/mcp/project-health-auditor",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/slack-channel",
+      "vendored_path": "plugins/mcp/slack-channel",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/workflow-orchestrator",
+      "vendored_path": "plugins/mcp/workflow-orchestrator",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    },
+    {
+      "source_path": "plugins/mcp/x-bug-triage",
+      "vendored_path": "plugins/mcp/x-bug-triage",
+      "outcome": "mirror/vendor custody",
+      "note": "MIT bundle copied as a self-contained installable package.",
+      "license": "MIT"
+    }
+  ],
+  "candidate_outcomes": [
+    {
+      "candidate": "ai-ml-engineering-pack",
+      "scope": "plugins/packages/ai-ml-engineering-pack",
+      "outcome": "rights/provenance blocked",
+      "reason": "Bundle LICENSE text is a restrictive EULA that does not permit redistribution."
+    },
+    {
+      "candidate": "creator-studio-pack",
+      "scope": "plugins/packages/creator-studio-pack",
+      "outcome": "rights/provenance blocked",
+      "reason": "Bundle LICENSE text is a restrictive EULA that does not permit redistribution."
+    },
+    {
+      "candidate": "devops-automation-pack",
+      "scope": "plugins/packages/devops-automation-pack",
+      "outcome": "rights/provenance blocked",
+      "reason": "Bundle LICENSE text is a restrictive EULA that does not permit redistribution."
+    },
+    {
+      "candidate": "fullstack-starter-pack",
+      "scope": "plugins/packages/fullstack-starter-pack",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the bundle is self-contained, so it can be re-vendored."
+    },
+    {
+      "candidate": "security-pro-pack",
+      "scope": "plugins/packages/security-pro-pack",
+      "outcome": "rights/provenance blocked",
+      "reason": "Bundle LICENSE text is a restrictive EULA that does not permit redistribution."
+    },
+    {
+      "candidate": "ai-experiment-logger",
+      "scope": "plugins/mcp/ai-experiment-logger",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "conversational-api-debugger",
+      "scope": "plugins/mcp/conversational-api-debugger",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "design-to-code",
+      "scope": "plugins/mcp/design-to-code",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "domain-memory-agent",
+      "scope": "plugins/mcp/domain-memory-agent",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "lumera-agent-memory",
+      "scope": "plugins/mcp/lumera-agent-memory",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "pr-to-spec",
+      "scope": "plugins/mcp/pr-to-spec",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "project-health-auditor",
+      "scope": "plugins/mcp/project-health-auditor",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "slack-channel",
+      "scope": "plugins/mcp/slack-channel",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "workflow-orchestrator",
+      "scope": "plugins/mcp/workflow-orchestrator",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "x-bug-triage",
+      "scope": "plugins/mcp/x-bug-triage",
+      "outcome": "mirror/vendor custody",
+      "reason": "Bundle LICENSE is MIT and the installable surface is self-contained."
+    },
+    {
+      "candidate": "x-bug-triage-plugin",
+      "scope": "plugins/mcp/x-bug-triage-plugin",
+      "outcome": "duplicate/overlap with explicit canonical target",
+      "reason": "Upstream package.json names the mirrored x-bug-triage bundle as x-bug-triage-plugin; treat it as an alias of the canonical x-bug-triage directory."
+    }
+  ]
+}
