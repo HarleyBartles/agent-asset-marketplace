@@ -29,5 +29,5 @@ For the MARK-58 marketplace catalog record that preserves the MARK-46
 reference-pack pools, see `claude-code-plugins-plus-skills-catalog.md`.
 
 For the MARK-59 first-party doctrine capture that preserves the MARK-46
-family-level adaptation consequence, see `MARK-59-activity-log.md` and the
-`marketplace-family-doctrine` skill under `gpt-skills/`.
+family-level adaptation consequence, see `MARK-59-activity-log.md` and
+`marketplace-family-doctrine.md`.

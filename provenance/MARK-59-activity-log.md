@@ -20,11 +20,9 @@
 
 ## Outcome Summary
 
-Created the first-party doctrine skill surface:
+Created the first-party doctrine provenance surface:
 
-- `gpt-skills/house-skills/marketplace-family-doctrine/v1/marketplace-family-doctrine-v1/SKILL.md`
-- `gpt-skills/house-skills/marketplace-family-doctrine/v1/marketplace-family-doctrine-v1/references/source-basis.md`
-- `gpt-skills/house-skills/marketplace-family-doctrine/v1/marketplace-family-doctrine-v1/references/family-outcomes.md`
+- `provenance/marketplace-family-doctrine.md`
 
 Family outcomes:
 
@@ -50,5 +48,7 @@ Family outcomes:
 
 ## Validation
 
-Pending. Run the repo validation commands after the edits are finalized and
-before publication.
+Ran:
+
+- `py -3 tools/validate_marketplace.py` -> Marketplace validation passed.
+- `git diff --check` -> passed.
