@@ -47,4 +47,3 @@ The upstream `plugins/mcp/x-bug-triage-plugin` entry is treated as an alias of
 
 This mirror preserves upstream source paths and license provenance. It is not
 first-party Harley-owned doctrine or active marketplace content.
-

@@ -86,7 +86,7 @@ Example:
  src/services/auth.ts
 - Complexity: 45 (Target: <10)
 - Churn: 18 commits (4 authors)
-- Tests: None 
+- Tests: None
 - Health: 25 (Critical)
 
 Actions:
@@ -182,7 +182,7 @@ Found 156 source files with average health score of 68.
  URGENT - Technical Debt Hot Spots (3 files)
 
 1. src/services/payment-processor.ts
-   - Complexity: 38 (Severe) 
+   - Complexity: 38 (Severe)
    - Churn: 24 commits by 3 authors
    - Tests: None
    - Health Score: 18 (Critical)

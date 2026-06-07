@@ -44,9 +44,8 @@
   - expected candidates: `16`
   - classified candidates: `16`
   - unclassified: `0`
-  - mismatch: `0`
+- mismatch: `0`
 
 ## Validation
 
 Pending. Run the repo validation commands after the edits are finalized and before publication.
-

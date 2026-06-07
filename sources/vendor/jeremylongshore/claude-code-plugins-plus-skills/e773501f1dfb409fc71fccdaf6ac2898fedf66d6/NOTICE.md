@@ -38,4 +38,3 @@ Not mirrored:
 The excluded package bundles ship local EULA text that does not allow
 redistribution. The alias entry is recorded only as an overlap/canonical-target
 note.
-

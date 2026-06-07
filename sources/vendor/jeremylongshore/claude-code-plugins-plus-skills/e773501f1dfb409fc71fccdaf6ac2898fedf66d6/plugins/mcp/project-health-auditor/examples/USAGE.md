@@ -201,9 +201,9 @@ Running `/analyze examples/sample-repo/`:
  URGENT - Technical Debt Hot Spots
 
 1. src/auth.ts
-   - Complexity: 25 (Severe) 
+   - Complexity: 25 (Severe)
    - Health Score: 45 (Poor)
-   - Tests: None 
+   - Tests: None
 
    Actions:
    1. Add authentication flow tests TODAY

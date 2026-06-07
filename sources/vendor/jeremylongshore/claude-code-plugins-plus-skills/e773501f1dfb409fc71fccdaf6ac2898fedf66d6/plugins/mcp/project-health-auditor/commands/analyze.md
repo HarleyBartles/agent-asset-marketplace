@@ -116,7 +116,7 @@ Found 245 source files (TypeScript/JavaScript)
 
 [Use file_metrics on top files]
 Critical complexity issues:
-- src/services/auth.ts: Complexity 45, Health 30 
+- src/services/auth.ts: Complexity 45, Health 30
 - src/api/handler.ts: Complexity 28, Health 65 ️
 
 [Use git_churn on /home/user/my-project since "6 months ago"]
@@ -129,7 +129,7 @@ Test coverage: 62% (97 of 156 files tested)
 Missing tests: 59 files
 
 Critical files without tests:
-- src/services/auth.ts (high complexity + high churn) 
+- src/services/auth.ts (high complexity + high churn)
 - src/api/legacy.ts (high complexity)
 
 ## Recommendations:
