@@ -21,6 +21,18 @@ Linear remains the control plane for issue state, worker state, review posture, 
 
 Generated artifacts are downstream outputs unless the repo explicitly says otherwise.
 
+## Publication proof for repo work
+
+Local file changes are not repo completion. A worker must not return GREEN, claim repo work is done, or ask for issue closure from local paths, local commit hashes, local validation output, or an unpublished branch alone.
+
+If repo files changed, the worker must publish the changes to GitHub before claiming completion. A valid repo-work return must include one of:
+
+1. an open PR URL with branch name and full head SHA;
+2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
+3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
+
+For ordinary worker execution, prefer a PR into `main`. The PR or direct-main commit is the publication surface that lets GPT verify changed files, diffs, and final main state. Local validation supports the return, but it does not substitute for GitHub-visible publication.
+
 ## Upstream drain rule
 
 Upstream drains are not complete merely because an upstream was inventoried or classified.
@@ -58,6 +70,7 @@ A valid return should report:
 - the durable asset consequence preserved;
 - provenance or license notes when relevant;
 - validation output or a clear no-validation reason;
+- publication proof: PR URL and head SHA, verified direct-main commit SHA, or concrete publication blocker;
 - any explicit follow-up issues required to finish selected outcomes.
 
 Passing validation is not the same as issue-goal conformance. Compare the final repo state and follow-up issues against the issue goal before claiming completion.
