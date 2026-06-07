@@ -2,5 +2,5 @@
 
 Canonical source location for Codex marketplace assets.
 
-This repo only establishes the source layout here. No real plugins or agent
-content are included yet.
+This repo now includes a real Codex plugin bundle under
+`plugins/marketplace-family-pack/` plus the source manifest that exposes it.

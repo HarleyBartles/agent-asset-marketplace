@@ -28,6 +28,6 @@ MARK-46 installable bundle surfaces, see `MARK-57-activity-log.md` and the
 For the MARK-58 marketplace catalog record that preserves the MARK-46
 reference-pack pools, see `claude-code-plugins-plus-skills-catalog.md`.
 
-For the MARK-59 first-party doctrine capture that preserves the MARK-46
-family-level adaptation consequence, see `MARK-59-activity-log.md` and
-`marketplace-family-doctrine.md`.
+For the MARK-59 first-party marketplace bundle capture that preserves the
+MARK-46 family-level adaptation consequence, see `MARK-59-activity-log.md`
+and `marketplace-family-pack.md`.

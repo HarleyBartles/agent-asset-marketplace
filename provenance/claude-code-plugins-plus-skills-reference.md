@@ -169,6 +169,6 @@ record in `claude-code-plugins-plus-skills-catalog.md`.
 ## MARK-59 First-Party Doctrine Addendum
 
 The MARK-46 family-level adaptation consequence is now also preserved as a
-first-party marketplace doctrine note:
+first-party marketplace bundle:
 
-- `provenance/marketplace-family-doctrine.md`
+- `provenance/marketplace-family-pack.md`

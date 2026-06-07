@@ -46,12 +46,13 @@ Codex marketplace assets live under `codex-marketplace/`.
 Expected flow:
 
 1. Keep the canonical marketplace source layout in this repo.
-2. Treat `sources/house-skills/decisions.md` as the human registry source and `sources/house-skills/decisions.json` as its structured mirror.
-3. Store plugin and agent metadata in the marketplace source directories.
-4. Derive `.agents/plugins/marketplace.json` from the source ledger and bundle metadata.
+2. Store plugin and agent metadata in the marketplace source directories.
+3. Keep `codex-marketplace/manifest.json` and the bundle manifests aligned with
+   the actual plugin source tree.
+4. Preserve provenance alongside any adapted or vendored plugin asset.
 
-The initial manifest is still the generated local marketplace export. The repo
-does not include third-party plugin content here.
+The marketplace source tree now includes a real upstream-drain bundle under
+`codex-marketplace/plugins/marketplace-family-pack/`.
 
 ## Repo Overlay Role
 

@@ -2,9 +2,22 @@
   "kind": "codex-marketplace-manifest",
   "version": 1,
   "agents": [],
-  "plugins": [],
+  "plugins": [
+    {
+      "name": "marketplace-family-pack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/marketplace-family-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ],
   "notes": [
-    "Placeholder manifest for future Codex-native marketplace content.",
-    "Keep this empty until real assets are added."
+    "Canonical Codex marketplace source layout.",
+    "The marketplace-family-pack plugin is the first market-consumable upstream-drain asset."
   ]
 }

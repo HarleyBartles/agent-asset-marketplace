@@ -16,28 +16,29 @@
   - source paths used: `plugins/skill-enhancers`, `plugins/productivity`, `plugins/ai-agency`, `plugins/ai-ml`, `plugins/design`, `plugins/api-development`, `plugins/database`, `plugins/devops`, `plugins/performance`, `plugins/security`, `plugins/testing`, and the numbered `skills/01-devops-basics` through `skills/20-enterprise-workflows` curriculum surface
   - expected family count: `12`
   - uncertainty: none after direct inspection of the upstream category roots, sample skill roots, and the curriculum-oriented `skills/` references embedded in upstream source metadata
-- Work posture: repo-mutating first-party doctrine work
+- Work posture: repo-mutating marketplace bundle work
 
 ## Outcome Summary
 
-Created the first-party doctrine provenance surface:
+Created the first-party marketplace bundle and supporting provenance:
 
-- `provenance/marketplace-family-doctrine.md`
+- `codex-marketplace/plugins/marketplace-family-pack/`
+- `provenance/marketplace-family-pack.md`
 
 Family outcomes:
 
-- `skill-enhancers`: first-party concept adaptation
-- `productivity`: first-party concept adaptation
-- `ai-agency`: first-party concept adaptation
-- `ai-ml`: first-party concept adaptation
-- `design`: first-party concept adaptation
-- `api-development`: first-party concept adaptation
-- `database`: first-party concept adaptation
-- `devops`: first-party concept adaptation
-- `performance`: first-party concept adaptation
-- `security`: first-party concept adaptation
-- `testing`: first-party concept adaptation
-- `skills/01-devops-basics` through `skills/20-enterprise-workflows`: first-party concept adaptation
+- `skill-enhancers`: `codex-marketplace/plugins/marketplace-family-pack/skills/skill-enhancers/SKILL.md`
+- `productivity`: `codex-marketplace/plugins/marketplace-family-pack/skills/productivity/SKILL.md`
+- `ai-agency`: `codex-marketplace/plugins/marketplace-family-pack/skills/ai-agency/SKILL.md`
+- `ai-ml`: `codex-marketplace/plugins/marketplace-family-pack/skills/ai-ml/SKILL.md`
+- `design`: `codex-marketplace/plugins/marketplace-family-pack/skills/design/SKILL.md`
+- `api-development`: `codex-marketplace/plugins/marketplace-family-pack/skills/api-development/SKILL.md`
+- `database`: `codex-marketplace/plugins/marketplace-family-pack/skills/database/SKILL.md`
+- `devops`: `codex-marketplace/plugins/marketplace-family-pack/skills/devops/SKILL.md`
+- `performance`: `codex-marketplace/plugins/marketplace-family-pack/skills/performance/SKILL.md`
+- `security`: `codex-marketplace/plugins/marketplace-family-pack/skills/security/SKILL.md`
+- `testing`: `codex-marketplace/plugins/marketplace-family-pack/skills/testing/SKILL.md`
+- `skills/01-devops-basics` through `skills/20-enterprise-workflows`: `codex-marketplace/plugins/marketplace-family-pack/skills/enterprise-workflows-curriculum/SKILL.md`
 
 ## Reconciliation
 
