@@ -1,0 +1,174 @@
+{
+  "kind": "vendor-source-manifest",
+  "version": 1,
+  "vendor": {
+    "name": "obra",
+    "repository": "superpowers",
+    "url": "https://github.com/obra/superpowers.git",
+    "tag": "v5.1.0",
+    "commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2025 Jesse Vincent"
+  },
+  "mirror_root": "sources/vendor/obra/superpowers/v5.1.0",
+  "scope": {
+    "included_skills": [
+      "brainstorming",
+      "executing-plans",
+      "finishing-a-development-branch",
+      "receiving-code-review",
+      "requesting-code-review",
+      "systematic-debugging",
+      "test-driven-development",
+      "using-git-worktrees",
+      "verification-before-completion",
+      "writing-plans"
+    ],
+    "excluded_skills": [
+      "using-superpowers",
+      "dispatching-parallel-agents",
+      "subagent-driven-development"
+    ],
+    "excluded_material": [
+      "README.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      "CODE_OF_CONDUCT.md",
+      "RELEASE-NOTES.md",
+      "package.json",
+      "assets/**",
+      "docs/**",
+      "hooks/**",
+      "scripts/**",
+      "tests/**",
+      ".claude-plugin/**",
+      ".codex-plugin/**",
+      ".cursor-plugin/**",
+      ".github/**",
+      ".opencode/**"
+    ]
+  },
+  "source_map": [
+    {
+      "source_path": "skills/brainstorming/SKILL.md",
+      "vendored_path": "skills/brainstorming/SKILL.md"
+    },
+    {
+      "source_path": "skills/brainstorming/spec-document-reviewer-prompt.md",
+      "vendored_path": "skills/brainstorming/spec-document-reviewer-prompt.md"
+    },
+    {
+      "source_path": "skills/brainstorming/visual-companion.md",
+      "vendored_path": "skills/brainstorming/visual-companion.md"
+    },
+    {
+      "source_path": "skills/brainstorming/scripts/frame-template.html",
+      "vendored_path": "skills/brainstorming/scripts/frame-template.html"
+    },
+    {
+      "source_path": "skills/brainstorming/scripts/helper.js",
+      "vendored_path": "skills/brainstorming/scripts/helper.js"
+    },
+    {
+      "source_path": "skills/brainstorming/scripts/server.cjs",
+      "vendored_path": "skills/brainstorming/scripts/server.cjs"
+    },
+    {
+      "source_path": "skills/brainstorming/scripts/start-server.sh",
+      "vendored_path": "skills/brainstorming/scripts/start-server.sh"
+    },
+    {
+      "source_path": "skills/brainstorming/scripts/stop-server.sh",
+      "vendored_path": "skills/brainstorming/scripts/stop-server.sh"
+    },
+    {
+      "source_path": "skills/executing-plans/SKILL.md",
+      "vendored_path": "skills/executing-plans/SKILL.md"
+    },
+    {
+      "source_path": "skills/finishing-a-development-branch/SKILL.md",
+      "vendored_path": "skills/finishing-a-development-branch/SKILL.md"
+    },
+    {
+      "source_path": "skills/receiving-code-review/SKILL.md",
+      "vendored_path": "skills/receiving-code-review/SKILL.md"
+    },
+    {
+      "source_path": "skills/requesting-code-review/SKILL.md",
+      "vendored_path": "skills/requesting-code-review/SKILL.md"
+    },
+    {
+      "source_path": "skills/requesting-code-review/code-reviewer.md",
+      "vendored_path": "skills/requesting-code-review/code-reviewer.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/SKILL.md",
+      "vendored_path": "skills/systematic-debugging/SKILL.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/CREATION-LOG.md",
+      "vendored_path": "skills/systematic-debugging/CREATION-LOG.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/condition-based-waiting.md",
+      "vendored_path": "skills/systematic-debugging/condition-based-waiting.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/condition-based-waiting-example.ts",
+      "vendored_path": "skills/systematic-debugging/condition-based-waiting-example.ts"
+    },
+    {
+      "source_path": "skills/systematic-debugging/defense-in-depth.md",
+      "vendored_path": "skills/systematic-debugging/defense-in-depth.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/find-polluter.sh",
+      "vendored_path": "skills/systematic-debugging/find-polluter.sh"
+    },
+    {
+      "source_path": "skills/systematic-debugging/root-cause-tracing.md",
+      "vendored_path": "skills/systematic-debugging/root-cause-tracing.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/test-academic.md",
+      "vendored_path": "skills/systematic-debugging/test-academic.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/test-pressure-1.md",
+      "vendored_path": "skills/systematic-debugging/test-pressure-1.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/test-pressure-2.md",
+      "vendored_path": "skills/systematic-debugging/test-pressure-2.md"
+    },
+    {
+      "source_path": "skills/systematic-debugging/test-pressure-3.md",
+      "vendored_path": "skills/systematic-debugging/test-pressure-3.md"
+    },
+    {
+      "source_path": "skills/test-driven-development/SKILL.md",
+      "vendored_path": "skills/test-driven-development/SKILL.md"
+    },
+    {
+      "source_path": "skills/test-driven-development/testing-anti-patterns.md",
+      "vendored_path": "skills/test-driven-development/testing-anti-patterns.md"
+    },
+    {
+      "source_path": "skills/using-git-worktrees/SKILL.md",
+      "vendored_path": "skills/using-git-worktrees/SKILL.md"
+    },
+    {
+      "source_path": "skills/verification-before-completion/SKILL.md",
+      "vendored_path": "skills/verification-before-completion/SKILL.md"
+    },
+    {
+      "source_path": "skills/writing-plans/SKILL.md",
+      "vendored_path": "skills/writing-plans/SKILL.md"
+    },
+    {
+      "source_path": "skills/writing-plans/plan-document-reviewer-prompt.md",
+      "vendored_path": "skills/writing-plans/plan-document-reviewer-prompt.md"
+    }
+  ]
+}
