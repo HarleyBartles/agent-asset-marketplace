@@ -25,7 +25,13 @@
       ".github/workflows/validate-plugins.yml",
       "scripts/check-alphabetical.py",
       "scripts/generate_plugins_json.py",
-      "scripts/validate-plugin-pr.py"
+      "scripts/validate-plugin-pr.py",
+      "bundles/archcore-ai/plugin",
+      "bundles/epicsagas/epic-harness",
+      "bundles/hashgraph-online/hol-guard-plugin",
+      "bundles/hashgraph-online/registry-broker-codex-plugin",
+      "bundles/Kanevry/session-orchestrator",
+      "bundles/sendbird/cc-plugin-codex"
     ],
     "excluded_material": [
       "plugins/**",
@@ -93,6 +99,30 @@
     {
       "source_path": "scripts/validate-plugin-pr.py",
       "vendored_path": "scripts/validate-plugin-pr.py"
+    },
+    {
+      "source_path": "plugins/archcore-ai/plugin",
+      "vendored_path": "bundles/archcore-ai/plugin"
+    },
+    {
+      "source_path": "plugins/epicsagas/epic-harness",
+      "vendored_path": "bundles/epicsagas/epic-harness"
+    },
+    {
+      "source_path": "plugins/hashgraph-online/hol-guard-plugin",
+      "vendored_path": "bundles/hashgraph-online/hol-guard-plugin"
+    },
+    {
+      "source_path": "plugins/hashgraph-online/registry-broker-codex-plugin",
+      "vendored_path": "bundles/hashgraph-online/registry-broker-codex-plugin"
+    },
+    {
+      "source_path": "plugins/Kanevry/session-orchestrator",
+      "vendored_path": "bundles/Kanevry/session-orchestrator"
+    },
+    {
+      "source_path": "plugins/sendbird/cc-plugin-codex",
+      "vendored_path": "bundles/sendbird/cc-plugin-codex"
     }
   ]
 }

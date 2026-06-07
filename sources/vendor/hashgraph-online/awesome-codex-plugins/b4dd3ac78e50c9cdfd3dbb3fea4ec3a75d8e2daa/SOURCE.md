@@ -32,11 +32,20 @@ Mirrored surfaces:
 - `scripts/generate_plugins_json.py`
 - `scripts/validate-plugin-pr.py`
 
+Mirrored bundle custody:
+
+- `bundles/archcore-ai/plugin`
+- `bundles/epicsagas/epic-harness`
+- `bundles/hashgraph-online/hol-guard-plugin`
+- `bundles/hashgraph-online/registry-broker-codex-plugin`
+- `bundles/Kanevry/session-orchestrator`
+- `bundles/sendbird/cc-plugin-codex`
+
 ## Intentionally excluded
 
 The following upstream material is not mirrored here:
 
-- plugin bundle directories under `plugins/**`
+- unselected plugin bundle directories under `plugins/**`
 - binary assets and screenshots
 - any non-permissive or license-unclear upstream material
 

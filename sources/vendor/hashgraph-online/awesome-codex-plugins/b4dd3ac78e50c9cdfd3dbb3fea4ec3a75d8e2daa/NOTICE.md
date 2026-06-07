@@ -15,10 +15,11 @@ Preserved upstream source:
 Mirror scope:
 
 - Selected marketplace structure and reference surfaces for MARK-38.
+- Selected vendor-bundle custody surfaces for MARK-41.
 
 Not mirrored here:
 
-- plugin bundle directories under `plugins/**`
+- unselected plugin bundle directories under `plugins/**`
 - binary assets and screenshots
 - any non-permissive or license-unclear upstream material
 

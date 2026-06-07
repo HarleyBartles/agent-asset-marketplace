@@ -10,3 +10,6 @@ and the `MARK-35 Activity Log`.
 
 For the Awesome Codex Plugins marketplace custody slice, see
 `awesome-codex-plugins-marketplace-reference.md` and the `MARK-38 Activity Log`.
+
+For the Awesome Codex Plugins vendor-bundle custody slice, see
+`awesome-codex-plugins-vendor-bundles.md` and the `MARK-41 Activity Log`.
