@@ -21,7 +21,7 @@
     "type": "cli",
     "displayName": "Marketplace Family Pack",
     "shortDescription": "Market-consumable Codex skills adapted from the MARK-46 upstream families.",
-    "longDescription": "Marketplace Family Pack turns the upstream MARK-46 family set into 13 repo-held Codex skills that can be consumed directly by a plugin marketplace. The bundle preserves provenance and license evidence while exposing actual installable skill assets.",
+    "longDescription": "Marketplace Family Pack turns the upstream MARK-46 family set into 12 repo-held Codex skills that can be consumed directly by a plugin marketplace. The bundle preserves provenance and license evidence while exposing actual installable skill assets.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -30,7 +30,7 @@
     ],
     "defaultPrompt": [
       "Use the marketplace family pack to pick the right family skill for this work.",
-      "Review the upstream family asset and the bundled skill together.",
+      "Review SOURCE.md and the bundled skill together.",
       "Apply the family skill as the market-consumable surface, not the provenance note."
     ],
     "brandColor": "#0F766E",

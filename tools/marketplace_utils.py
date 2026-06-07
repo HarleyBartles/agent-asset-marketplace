@@ -11,6 +11,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
+MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
@@ -31,6 +32,18 @@ EXPECTED_MARKETPLACE = {
             "source": {
                 "source": "local",
                 "path": "./plugins/house-skills",
+            },
+            "policy": {
+                "installation": "AVAILABLE",
+                "authentication": "ON_INSTALL",
+            },
+            "category": "Productivity",
+        },
+        {
+            "name": "marketplace-family-pack",
+            "source": {
+                "source": "local",
+                "path": "./codex-marketplace/plugins/marketplace-family-pack",
             },
             "policy": {
                 "installation": "AVAILABLE",
@@ -167,18 +180,23 @@ def normalize_decision_row(row: dict[str, str]) -> dict[str, Any]:
     }
 
 
-def build_marketplace_manifest(plugin_manifest: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "name": "agent-asset-marketplace",
-        "interface": {
-            "displayName": "Agent Asset Marketplace",
-        },
-        "plugins": [
+def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[str, Any]:
+    plugins: list[dict[str, Any]] = []
+    for plugin_manifest in plugin_manifests:
+        plugin_name = plugin_manifest["name"]
+        if plugin_name == "house-skills":
+            plugin_path = "./plugins/house-skills"
+        elif plugin_name == "marketplace-family-pack":
+            plugin_path = "./codex-marketplace/plugins/marketplace-family-pack"
+        else:
+            raise ValueError(f"Unsupported plugin manifest {plugin_name!r}")
+
+        plugins.append(
             {
-                "name": plugin_manifest["name"],
+                "name": plugin_name,
                 "source": {
                     "source": "local",
-                    "path": "./plugins/house-skills",
+                    "path": plugin_path,
                 },
                 "policy": {
                     "installation": "AVAILABLE",
@@ -186,5 +204,12 @@ def build_marketplace_manifest(plugin_manifest: dict[str, Any]) -> dict[str, Any
                 },
                 "category": plugin_manifest["interface"]["category"],
             }
-        ],
+        )
+
+    return {
+        "name": "agent-asset-marketplace",
+        "interface": {
+            "displayName": "Agent Asset Marketplace",
+        },
+        "plugins": plugins,
     }
