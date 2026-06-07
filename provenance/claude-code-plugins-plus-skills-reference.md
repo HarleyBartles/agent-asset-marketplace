@@ -160,3 +160,8 @@ Alias/overlap:
 
 - `plugins/mcp/x-bug-triage-plugin` is recorded only as an alias of
   `plugins/mcp/x-bug-triage`
+
+## MARK-58 Companion Catalog Record
+
+The MARK-46 reference-pack pools are also preserved as a marketplace catalog
+record in `claude-code-plugins-plus-skills-catalog.md`.
