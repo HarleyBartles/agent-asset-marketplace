@@ -4,13 +4,15 @@
 
 This repository is the source of truth for agent-facing assets. It is an agent asset marketplace, not just a research ledger.
 
+The current market-facing route is `codex-marketplace/` and `.agents/plugins/` unless repo conventions explicitly change. Market work should land as vendored or adapted assets on those surfaces, with provenance attached as support evidence.
+
 Durable assets in this repo may include:
 
-- GPT-native skill sources under `gpt-skills/`;
-- Codex marketplace metadata and plugin source shape under `codex-marketplace/`;
+- GPT-native skill sources under `gpt-skills/`, but `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only;
+- Codex marketplace metadata and plugin source shape under `codex-marketplace/` and `.agents/plugins/`;
 - repo-specific overlays under `repo-overlays/`;
 - upstream source snapshots and references under `sources/`;
-- provenance, license, attribution, and trust records under `provenance/`;
+- provenance, license, attribution, and trust records under `provenance/` as evidence and traceability, not completion by itself;
 - worker playbooks, validation scripts, and other enablement assets where the repo conventions support them.
 
 ## Source-of-truth split
@@ -20,6 +22,8 @@ GitHub and the repository tree prove file state, landed assets, manifests, sourc
 Linear remains the control plane for issue state, worker state, review posture, and closeout decisions. Do not treat a Linear note, worker report, or chat summary as repo truth until the repository state or an explicit follow-up issue preserves the consequence.
 
 Generated artifacts are downstream outputs unless the repo explicitly says otherwise.
+
+`sources/vendor/**` is third-party source custody. Do not treat it as first-party repo-owned content.
 
 ## Publication proof for repo work
 
@@ -47,6 +51,8 @@ instruction files override repo worker rules or issue-specific constraints.
 Upstream drains are not complete merely because an upstream was inventoried or classified.
 
 The goal of third-party upstream drains is to legally re-vendor usable assets into this repository when rights and source shape allow it. A discovery surface or provenance note is allowed only when full re-vendoring is blocked, not useful, or explicitly deferred for a concrete reason.
+
+For upstream drains, the default outcome is vendored or adapted market assets. Documentation, doctrine, catalog, reference, provenance, or ledger-only output is valid only when the issue explicitly asks for that or every scoped asset has concrete blocker evidence.
 
 If a drain identifies selected outcomes such as direct install/default or optional assets, first-party adaptation candidates, reference/catalog surfaces, overlap anchors, or high-signal source patterns, the worker must preserve the consequence in one of these ways:
 

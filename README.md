@@ -1,16 +1,15 @@
 # agent-asset-marketplace
 
-Canonical source of truth for agent-facing assets:
+Canonical source of truth for an agent/plugin asset marketplace.
 
-- GPT-native skills
-- Codex plugins and marketplace metadata
-- repo overlays
-- provenance, licensing, and trust notes
-- worker-enablement assets and generated reports
+Primary deliverables are market-consumable assets, especially Codex plugin-market
+assets where applicable. Supporting surfaces such as provenance, catalogs,
+ledgers, reports, doctrine notes, and indexes exist to preserve source,
+traceability, and review context. They do not substitute for vendored marketplace
+assets.
 
-This repository is intentionally small and boring at first. It exists to define
-the repository shape and the conventions that future asset intake and
-publishing flows will follow.
+A repository-browser-discoverable markdown note is not a completed marketplace
+asset.
 
 ## Source Of Truth
 
@@ -51,8 +50,9 @@ Expected flow:
    the actual plugin source tree.
 4. Preserve provenance alongside any adapted or vendored plugin asset.
 
-The marketplace source tree now includes a real upstream-drain bundle under
-`codex-marketplace/plugins/marketplace-family-pack/`.
+The marketplace source tree includes real market-consumable plugin assets under
+`codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing the
+current plugin inventory.
 
 ## Repo Overlay Role
 
