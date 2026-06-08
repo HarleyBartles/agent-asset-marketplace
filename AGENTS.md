@@ -88,6 +88,16 @@ Inspect current repo conventions before choosing paths. At minimum, check the re
 
 Do not invent broad new structure when a small existing surface can carry the asset. Do not relabel upstream material as first-party. Preserve license, attribution, and source-map evidence for anything mirrored, adapted, or referenced.
 
+## Versioned House Skills updates
+
+- Imported House Skills versions are historical source records.
+- Normal semantic updates create a new version line such as `v1.1/<skill-name>-v1.1/` instead of overwriting the old imported version.
+- Do not infer active inventory from import-era reconstruction notes alone; check the current designated source surfaces and the generated projection.
+- A new folder is not complete by itself. The update is only done when the active bundle, projection, and registry point at the new version and the old version is historical or provenance-only.
+- Update the designated source, decision, and inventory surfaces used by current tooling, then regenerate derived projection files and run validation.
+- When multiple ledgers exist, treat them as mirrors unless the repo explicitly says otherwise. Update the designated source of truth first, then regenerate the mirrors.
+- Return search evidence that separates active-surface hits from historical or provenance-only residue.
+
 ## Shared local worker checkout start gate
 
 Workers must normalize the shared checkout before editing: fetch, switch to `main`, fast-forward pull `origin/main`, confirm clean status, then branch from fresh `main`. Workers must not assume the workspace is already on the correct branch. Dirty state must be reported, not overwritten.

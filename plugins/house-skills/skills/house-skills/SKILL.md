@@ -58,7 +58,7 @@ Bundle versioning is separate from component versioning.
 The bundle intentionally projects the reviewed House Skills in the same three boring lanes used by the source ledger:
 
 - Base and control plane
-- Adventures v1.1
+- Adventures
 - Rooms
 
 For the exact component list, open `references/bundle-manifest.json` or `references/source-map.md`.

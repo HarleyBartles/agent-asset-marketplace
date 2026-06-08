@@ -1,106 +1,7 @@
 {
   "imports": [
     {
-      "issue": "MARK-30",
-      "source_id": "don-logan-boundary-v1",
-      "source_path": "gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md",
-      "public_name": "don-logan-boundary-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "lawful worker boundary and finish-line enforcement",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "gpt-base-doctrine-v1",
-      "source_path": "gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md",
-      "public_name": "gpt-base-doctrine-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "GPT-wide shared doctrine",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "work-mode-router-v1",
-      "source_path": "gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md",
-      "public_name": "work-mode-router-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "first-turn work mode routing",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "worker-dispatch-linear-v1",
-      "source_path": "gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md",
-      "public_name": "worker-dispatch-linear-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "Linear issue dispatch and work packet control plane",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "linear-v1",
-      "source_path": "gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md",
-      "public_name": "linear-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "Linear object mechanics and working-state surfaces",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "tps-reporting-v1",
-      "source_path": "gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md",
-      "public_name": "tps-reporting-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "producer-side TPS reporting",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "tps-ingress-v1",
-      "source_path": "gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md",
-      "public_name": "tps-ingress-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "consumer-side TPS ingress",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "session-buster-v0.1",
-      "source_path": "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
-      "public_name": "session-buster-v0.1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "continuity fallback artifact",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "session-buster-ingress-v0.1",
-      "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
-      "public_name": "session-buster-ingress-v0.1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "continuity fallback ingress",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "crew-v1",
-      "source_path": "gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md",
-      "public_name": "crew-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "Crew role-lens doctrine",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "crew-buster-v1",
-      "source_path": "gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md",
-      "public_name": "crew-buster-v1",
-      "provenance_name": "MARK-9 chunk ledger — base and control plane",
-      "scope": "Crew planning and route interrogation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "buster-framework-v1",
       "source_path": "gpt-skills/house-skills/buster-framework/v1/buster-framework-v1/SKILL.md",
       "public_name": "buster-framework-v1",
@@ -109,7 +10,7 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "ambiguity-buster-v1",
       "source_path": "gpt-skills/house-skills/ambiguity-buster/v1/ambiguity-buster-v1/SKILL.md",
       "public_name": "ambiguity-buster-v1",
@@ -118,7 +19,7 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "boring-buster-v1",
       "source_path": "gpt-skills/house-skills/boring-buster/v1/boring-buster-v1/SKILL.md",
       "public_name": "boring-buster-v1",
@@ -127,7 +28,7 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "invariant-buster-v1",
       "source_path": "gpt-skills/house-skills/invariant-buster/v1/invariant-buster-v1/SKILL.md",
       "public_name": "invariant-buster-v1",
@@ -136,7 +37,7 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "analogy-buster-v1",
       "source_path": "gpt-skills/house-skills/analogy-buster/v1/analogy-buster-v1/SKILL.md",
       "public_name": "analogy-buster-v1",
@@ -145,7 +46,7 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-19",
       "source_id": "canon-buster-v1",
       "source_path": "gpt-skills/house-skills/canon-buster/v1/canon-buster-v1/SKILL.md",
       "public_name": "canon-buster-v1",
@@ -154,57 +55,150 @@
       "import_state": "imported"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-20",
       "source_id": "cleanup-custody-v0.1",
       "source_path": "gpt-skills/house-skills/cleanup-custody/v0.1/cleanup-custody-v0.1/SKILL.md",
       "public_name": "cleanup-custody-v0.1",
       "provenance_name": "legacy profanity-bearing cleanup skill",
-      "scope": "cleanup-custody",
-      "import_state": "imported"
+      "scope": "cleanup-custody"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-21",
       "source_id": "skill-validator-v1",
       "source_path": "gpt-skills/house-skills/skill-validator/v1/skill-validator-v1/SKILL.md",
       "public_name": "skill-validator-v1",
       "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill validation",
-      "import_state": "imported"
+      "scope": "skill validation"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-21",
       "source_id": "skill-packager-v1",
       "source_path": "gpt-skills/house-skills/skill-packager/v1/skill-packager-v1/SKILL.md",
       "public_name": "skill-packager-v1",
       "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill packaging",
-      "import_state": "imported"
+      "scope": "skill packaging"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-21",
       "source_id": "skill-buster-v0.1",
       "source_path": "gpt-skills/house-skills/skill-buster/v0.1/skill-buster-v0.1/SKILL.md",
       "public_name": "skill-buster-v0.1",
       "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill maintenance breakdown and closure checks",
-      "import_state": "imported"
+      "scope": "skill maintenance breakdown and closure checks"
     },
     {
-      "issue": "MARK-30",
+      "issue": "MARK-22",
+      "source_id": "adventures-project-doctrine-v1.1",
+      "source_path": "gpt-skills/house-skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md",
+      "public_name": "adventures-project-doctrine-v1.1",
+      "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
+      "scope": "Adventures project doctrine"
+    },
+    {
+      "issue": "MARK-23",
       "source_id": "rooms-image-sidecars-v0.1",
       "source_path": "gpt-skills/house-skills/rooms-image-sidecars/v0.1/rooms-image-sidecars-v0.1/SKILL.md",
       "public_name": "rooms-image-sidecars-v0.1",
       "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
-      "scope": "Rooms image sidecar preparation",
+      "scope": "Rooms image sidecar preparation"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "don-logan-boundary-v1",
+      "source_path": "gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md",
+      "public_name": "don-logan-boundary-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "lawful worker boundary and finish-line enforcement",
       "import_state": "imported"
     },
     {
       "issue": "MARK-30",
-      "source_id": "adventures-project-doctrine-v1.1",
-      "source_path": "gpt-skills/house-skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md",
-      "public_name": "adventures-project-doctrine-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures project doctrine",
-      "scope": "Adventures project doctrine",
+      "source_id": "gpt-base-doctrine-v1",
+      "source_path": "gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md",
+      "public_name": "gpt-base-doctrine-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "GPT-wide shared doctrine",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "work-mode-router-v1",
+      "source_path": "gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md",
+      "public_name": "work-mode-router-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "first-turn work mode routing",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "worker-dispatch-linear-v1",
+      "source_path": "gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md",
+      "public_name": "worker-dispatch-linear-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "Linear issue dispatch and work packet control plane",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "linear-v1",
+      "source_path": "gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md",
+      "public_name": "linear-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "Linear object mechanics and working-state surfaces",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "tps-reporting-v1",
+      "source_path": "gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md",
+      "public_name": "tps-reporting-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "producer-side TPS reporting",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "tps-ingress-v1",
+      "source_path": "gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md",
+      "public_name": "tps-ingress-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "consumer-side TPS ingress",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "session-buster-v0.1",
+      "source_path": "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
+      "public_name": "session-buster-v0.1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "continuity fallback artifact",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "session-buster-ingress-v0.1",
+      "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
+      "public_name": "session-buster-ingress-v0.1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "continuity fallback ingress",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "crew-v1",
+      "source_path": "gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md",
+      "public_name": "crew-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "Crew role-lens doctrine",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "crew-buster-v1",
+      "source_path": "gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md",
+      "public_name": "crew-buster-v1",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+      "scope": "Crew planning and route interrogation",
       "import_state": "imported"
     },
     {
@@ -212,7 +206,7 @@
       "source_id": "adventures-bootstrap-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md",
       "public_name": "adventures-bootstrap-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures first-read router",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures first-read router",
       "import_state": "imported"
     },
@@ -221,7 +215,7 @@
       "source_id": "adventures-github-operations-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md",
       "public_name": "adventures-github-operations-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures repo verification",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures GitHub proof overlay",
       "import_state": "imported"
     },
@@ -230,7 +224,7 @@
       "source_id": "adventures-visual-preproduction-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md",
       "public_name": "adventures-visual-preproduction-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures visual preproduction",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures source-first visual planning",
       "import_state": "imported"
     },
@@ -239,7 +233,7 @@
       "source_id": "adventures-storyboard-preflight-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md",
       "public_name": "adventures-storyboard-preflight-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures storyboard preflight",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures deterministic storyboard preflight",
       "import_state": "imported"
     },
@@ -248,7 +242,7 @@
       "source_id": "adventures-visual-bible-creator-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md",
       "public_name": "adventures-visual-bible-creator-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures visual bible authoring",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures visual bible authoring",
       "import_state": "imported"
     },
@@ -257,7 +251,7 @@
       "source_id": "adventures-visual-bible-interpreter-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md",
       "public_name": "adventures-visual-bible-interpreter-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures visual bible interpretation",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures visual bible interpretation",
       "import_state": "imported"
     },
@@ -266,7 +260,7 @@
       "source_id": "adventures-image-qa-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md",
       "public_name": "adventures-image-qa-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures image QA",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures image QA",
       "import_state": "imported"
     },
@@ -275,7 +269,7 @@
       "source_id": "adventures-asset-sheet-compiler-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md",
       "public_name": "adventures-asset-sheet-compiler-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures asset-sheet compilation",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures asset-sheet compilation",
       "import_state": "imported"
     },
@@ -284,7 +278,7 @@
       "source_id": "adventures-frame-buster-v1.1",
       "source_path": "gpt-skills/house-skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md",
       "public_name": "adventures-frame-buster-v1.1",
-      "provenance_name": "MARK-65 replacement line - Adventures frame readiness",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
       "scope": "Adventures frame-readiness surface",
       "import_state": "imported"
     },
@@ -293,7 +287,7 @@
       "source_id": "rooms-project-doctrine-v1",
       "source_path": "gpt-skills/house-skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md",
       "public_name": "rooms-project-doctrine-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms shared project doctrine",
       "import_state": "imported"
     },
@@ -302,7 +296,7 @@
       "source_id": "rooms-bootstrap-v1",
       "source_path": "gpt-skills/house-skills/rooms-bootstrap/v1/rooms-bootstrap-v1/SKILL.md",
       "public_name": "rooms-bootstrap-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms first-read router",
       "import_state": "imported"
     },
@@ -311,7 +305,7 @@
       "source_id": "rooms-source-partitioning-v1",
       "source_path": "gpt-skills/house-skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md",
       "public_name": "rooms-source-partitioning-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms source-answering and evidence partitioning",
       "import_state": "imported"
     },
@@ -320,7 +314,7 @@
       "source_id": "rooms-ambiguity-buster-v1",
       "source_path": "gpt-skills/house-skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md",
       "public_name": "rooms-ambiguity-buster-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms project-specific ambiguity overlay",
       "import_state": "imported"
     },
@@ -329,7 +323,7 @@
       "source_id": "rooms-analogy-buster-v1",
       "source_path": "gpt-skills/house-skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md",
       "public_name": "rooms-analogy-buster-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms analogy overlay",
       "import_state": "imported"
     },
@@ -338,7 +332,7 @@
       "source_id": "rooms-zoom-outs-buster-v1",
       "source_path": "gpt-skills/house-skills/rooms-zoom-outs-buster/v1/rooms-zoom-outs-buster-v1/SKILL.md",
       "public_name": "rooms-zoom-outs-buster-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms zoom-out readiness check",
       "import_state": "imported"
     },
@@ -347,7 +341,7 @@
       "source_id": "rooms-character-investigation-v1",
       "source_path": "gpt-skills/house-skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md",
       "public_name": "rooms-character-investigation-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms character investigation",
       "import_state": "imported"
     },
@@ -356,7 +350,7 @@
       "source_id": "rooms-sheet-creator-v1",
       "source_path": "gpt-skills/house-skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md",
       "public_name": "rooms-sheet-creator-v1",
-      "provenance_name": "MARK-9 chunk ledger — Rooms",
+      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
       "scope": "Rooms sheet creation from durable packets",
       "import_state": "imported"
     }
