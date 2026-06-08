@@ -1,0 +1,23 @@
+# AGENTS.md
+
+Scope: `codex-marketplace/plugins/`
+
+This scope covers the installable Codex plugin pack roots stored under the
+marketplace source tree.
+
+Defer to the repository root `AGENTS.md` for global doctrine, publication
+rules, and upstream-drain policy.
+
+## Review guidelines
+
+- Flag missing or broken `.codex-plugin/plugin.json` files, asset references,
+  or `skills/` paths before minor content issues.
+- Flag missing `SOURCE.md`, `LICENSE`, `references/bundle-manifest.json`, or
+  other support files when the plugin manifest or README claims they exist.
+- Flag false provenance claims, especially where a copied or adapted plugin
+  root is described as copied verbatim or first-party without evidence.
+- Flag registry mismatches when a plugin root changes but the marketplace
+  manifest, runtime registry, or repo index is not updated with it.
+- Flag unsupported changes to vendored plugin custody material unless the
+  change has an explicit adaptation reason and provenance trail.
+
