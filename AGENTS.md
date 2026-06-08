@@ -88,6 +88,26 @@ Inspect current repo conventions before choosing paths. At minimum, check the re
 
 Do not invent broad new structure when a small existing surface can carry the asset. Do not relabel upstream material as first-party. Preserve license, attribution, and source-map evidence for anything mirrored, adapted, or referenced.
 
+## Shared local worker checkout start gate
+
+Workers must normalize the shared checkout before editing: fetch, switch to `main`, fast-forward pull `origin/main`, confirm clean status, then branch from fresh `main`. Workers must not assume the workspace is already on the correct branch. Dirty state must be reported, not overwritten.
+
+## PR mergeability responsibility
+
+A worker returning a PR must make the PR mergeable against current `main` before claiming readiness. PR-created is not enough when GitHub reports `CONFLICTING`, `DIRTY`, `UNKNOWN` after settling, or otherwise not mergeable. If mergeability cannot be achieved, return the exact blocker and conflict files.
+
+## Review-thread closure responsibility
+
+Workers must close or resolve review threads they have actually fixed. If a thread is not fixed, they must leave it open and report why. A returned PR with unresolved actionable review threads is not market-ready.
+
+## Vendored asset review standard
+
+Vendored upstream assets exposed by this marketplace must pass code-review sanity. Actionable P1/P2 review findings in vendored code are our responsibility to fix, explicitly block, or remove from the market surface. Do not waive defects merely because the code came from upstream.
+
+## Python validation expectation
+
+Local workers should use the stable global Python command now available as `py -3` for marketplace generator and validator scripts. Do not prefer Codex runtime Python paths in normal validation returns.
+
 ## Validation
 
 After repo changes, run the repo's current validation where available. The usual baseline is:

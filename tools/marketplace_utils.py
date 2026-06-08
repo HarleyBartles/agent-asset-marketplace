@@ -14,8 +14,10 @@ CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
 MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
+SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 TESTING_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json"
+SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json"
 SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
@@ -47,6 +49,12 @@ MARKETPLACE_PLUGIN_SPECS = [
         "registry_path": "./codex-marketplace/plugins/testing-skill-pack",
         "plugin_root": "codex-marketplace/plugins/testing-skill-pack",
         "manifest_path": TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "supabase-platform-pack",
+        "registry_path": "./codex-marketplace/plugins/supabase-platform-pack",
+        "plugin_root": "codex-marketplace/plugins/supabase-platform-pack",
+        "manifest_path": SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH,
     },
     {
         "name": "fullstack-starter-pack",

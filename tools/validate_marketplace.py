@@ -15,6 +15,7 @@ from marketplace_utils import (
     PLUGIN_README_PATH,
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
+    SUPABASE_BUNDLE_MANIFEST_PATH,
     TESTING_BUNDLE_MANIFEST_PATH,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_DECISIONS_MD_PATH,
@@ -183,47 +184,58 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         check_path_exists(ROOT / source_path)
 
 
-def validate_testing_bundle_manifest(bundle_manifest: dict) -> None:
-    if bundle_manifest.get("bundle_name") != "testing-skill-pack":
-        raise ValueError("testing bundle manifest bundle_name mismatch")
+def validate_skill_bundle_manifest(
+    bundle_manifest: dict,
+    *,
+    bundle_name: str,
+    source_root: str,
+    plugin_root: str,
+) -> None:
+    if bundle_manifest.get("bundle_name") != bundle_name:
+        raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError("testing bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("source_root") != "plugins/saas-packs/skill-databases/replit":
-        raise ValueError("testing bundle manifest source_root mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
+    if bundle_manifest.get("source_root") != source_root:
+        raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
     if bundle_manifest.get("upstream_repo") != "jeremylongshore/claude-code-plugins-plus-skills":
-        raise ValueError("testing bundle manifest upstream_repo mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
+    if bundle_manifest.get("pinned_commit") != "e773501f1dfb409fc71fccdaf6ac2898fedf66d6":
+        raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
 
     entries = bundle_manifest.get("entries", [])
     if bundle_manifest.get("candidate_count") != len(entries):
-        raise ValueError("testing bundle manifest candidate count mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest candidate count mismatch")
 
     imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
-    skipped_entries = [entry for entry in entries if entry.get("import_status") != "imported"]
+    skipped_entries = [entry for entry in entries if entry.get("import_status") == "out_of_scope"]
+    blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
     if bundle_manifest.get("imported_count") != len(imported_entries):
-        raise ValueError("testing bundle manifest imported count mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest imported count mismatch")
     if bundle_manifest.get("skipped_count") != len(skipped_entries):
-        raise ValueError("testing bundle manifest skipped count mismatch")
-    if bundle_manifest.get("blocked_count") != 0:
-        raise ValueError("testing bundle manifest blocked count mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest skipped count mismatch")
+    if bundle_manifest.get("blocked_count") != len(blocked_entries):
+        raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
 
-    skill_dir = ROOT / "codex-marketplace/plugins/testing-skill-pack/skills"
+    skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
     if len(actual_skill_dirs) != len(imported_entries):
-        raise ValueError("testing bundle manifest imported skill directory count does not match copied skills")
+        raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
 
     for entry in imported_entries:
         local_path = entry.get("local_path")
         if not local_path or not isinstance(local_path, str):
-            raise ValueError("testing bundle manifest imported entry is missing a local_path")
-        check_path_exists(ROOT / "codex-marketplace/plugins/testing-skill-pack" / local_path)
+            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
+        check_path_exists(ROOT / plugin_root / local_path)
         if not entry.get("upstream_path"):
-            raise ValueError("testing bundle manifest imported entry is missing an upstream_path")
-
-    for entry in skipped_entries:
-        if entry.get("local_path") not in ("", None):
-            raise ValueError("testing bundle manifest skipped entry should not expose a local path")
+            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing an upstream_path")
         if not entry.get("adaptation_note"):
-            raise ValueError("testing bundle manifest skipped entry requires an adaptation note")
+            raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
+
+    for entry in skipped_entries + blocked_entries:
+        if entry.get("local_path") not in ("", None):
+            raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry should not expose a local path")
+        if not entry.get("adaptation_note"):
+            raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
 
 def validate_source_map(text: str) -> None:
@@ -259,7 +271,18 @@ def main() -> int:
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
     validate_bundle_manifest(bundle_manifest, intake)
-    validate_testing_bundle_manifest(testing_bundle_manifest)
+    validate_skill_bundle_manifest(
+        testing_bundle_manifest,
+        bundle_name="testing-skill-pack",
+        source_root="plugins/saas-packs/skill-databases/replit",
+        plugin_root="codex-marketplace/plugins/testing-skill-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(SUPABASE_BUNDLE_MANIFEST_PATH),
+        bundle_name="supabase-platform-pack",
+        source_root="plugins/saas-packs/skill-databases/supabase",
+        plugin_root="codex-marketplace/plugins/supabase-platform-pack",
+    )
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
