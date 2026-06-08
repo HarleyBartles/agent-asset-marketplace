@@ -1,10 +1,21 @@
 # agent-asset-marketplace
 
+Canonical source of truth for an agent/plugin asset marketplace.
+
 This repository represents an agent/plugin asset marketplace.
+
+Primary deliverables are market-consumable assets, especially Codex plugin-market
+assets where applicable. Supporting surfaces such as provenance, catalogs,
+ledgers, reports, doctrine notes, and indexes exist to preserve source,
+traceability, and review context. They do not substitute for vendored marketplace
+assets.
 
 The primary deliverable is market-consumable assets, especially Codex/plugin marketplace assets. Provenance, catalogs, ledgers, reports, doctrine notes, indexes, and discovery records are support evidence only. They do not substitute for vendored marketplace assets.
 
 The boring goal for upstream drains is simple: take useful upstream plugin-market assets and put them into this repo's plugin market when rights and source shape allow it. Preserve license, attribution, source mapping, and validation evidence alongside the assets.
+
+A repository-browser-discoverable markdown note is not a completed marketplace
+asset.
 
 ## Source of truth
 
@@ -33,6 +44,16 @@ GPT-native skills live under `gpt-skills/` as source assets and supporting metad
 `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only. Third-party-origin material, including material adapted from upstream plugins or skill repositories, does not belong in House Skills.
 
 ## Third-party source custody
+
+1. Keep the canonical marketplace source layout in this repo.
+2. Store plugin and agent metadata in the marketplace source directories.
+3. Keep `codex-marketplace/manifest.json` and the bundle manifests aligned with
+   the actual plugin source tree.
+4. Preserve provenance alongside any adapted or vendored plugin asset.
+
+The marketplace source tree includes real market-consumable plugin assets under
+`codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing the
+current plugin inventory.
 
 `sources/vendor/**` is for third-party source snapshots, references, and custody evidence.
 

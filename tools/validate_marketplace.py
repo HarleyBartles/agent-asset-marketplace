@@ -8,15 +8,9 @@ import sys
 
 from marketplace_utils import (
     BUNDLE_MANIFEST_PATH,
-    EXPECTED_COMPONENT_LANE_ORDER,
     EXPECTED_MARKETPLACE,
-    EXPECTED_MARKETPLACE_ROOT,
-    EXPECTED_PLUGIN_NAME,
-    EXPECTED_PLUGIN_ROOT,
-    EXPECTED_PLUGIN_VERSION,
-    EXPECTED_SOURCE_OF_TRUTH,
     MARKETPLACE_PATH,
-    PLUGIN_MANIFEST_PATH,
+    MARKETPLACE_PLUGIN_SPECS,
     PLUGIN_README_PATH,
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
@@ -87,8 +81,8 @@ def _decision_structure(record: dict[str, object]) -> dict[str, object]:
     return {key: record.get(key, "") for key in keys}
 
 
-def validate_marketplace_registry(registry: dict, plugin_manifest: dict) -> None:
-    expected = build_marketplace_manifest(plugin_manifest)
+def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
+    expected = build_marketplace_manifest(plugin_manifests)
     if registry != expected:
         raise ValueError(".agents/plugins/marketplace.json does not match the generated marketplace manifest")
 
@@ -97,49 +91,56 @@ def validate_marketplace_registry(registry: dict, plugin_manifest: dict) -> None
     if registry.get("interface", {}).get("displayName") != EXPECTED_MARKETPLACE["interface"]["displayName"]:
         raise ValueError("Marketplace registry display name mismatch")
 
-    plugin = registry.get("plugins", [None])[0]
-    if not plugin:
-        raise ValueError("Marketplace registry is missing the house-skills plugin entry")
-    if plugin.get("name") != EXPECTED_PLUGIN_NAME:
-        raise ValueError("Marketplace registry plugin name mismatch")
-    if plugin.get("source", {}).get("path") != "./plugins/house-skills":
-        raise ValueError("Marketplace registry plugin path mismatch")
-    if plugin.get("source", {}).get("source") != "local":
-        raise ValueError("Marketplace registry plugin source kind mismatch")
-    if plugin.get("policy", {}).get("installation") != "AVAILABLE":
-        raise ValueError("Marketplace registry installation policy mismatch")
-    if plugin.get("policy", {}).get("authentication") != "ON_INSTALL":
-        raise ValueError("Marketplace registry authentication policy mismatch")
-    if plugin.get("category") != "Productivity":
-        raise ValueError("Marketplace registry category mismatch")
+    plugins_by_name = {plugin.get("name"): plugin for plugin in registry.get("plugins", [])}
+    expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
+    for name, path in expected_plugins.items():
+        plugin = plugins_by_name.get(name)
+        if not plugin:
+            raise ValueError(f"Marketplace registry is missing the {name} plugin entry")
+        if plugin.get("source", {}).get("path") != path:
+            raise ValueError(f"Marketplace registry {name} plugin path mismatch")
+        if plugin.get("source", {}).get("source") != "local":
+            raise ValueError(f"Marketplace registry {name} plugin source kind mismatch")
+        if plugin.get("policy", {}).get("installation") != "AVAILABLE":
+            raise ValueError(f"Marketplace registry {name} installation policy mismatch")
+        if plugin.get("policy", {}).get("authentication") != "ON_INSTALL":
+            raise ValueError(f"Marketplace registry {name} authentication policy mismatch")
+        if plugin.get("category") != "Productivity":
+            raise ValueError(f"Marketplace registry {name} category mismatch")
 
 
-def validate_plugin_manifest(plugin_manifest: dict) -> None:
-    if plugin_manifest.get("name") != EXPECTED_PLUGIN_NAME:
-        raise ValueError("plugins/house-skills/.codex-plugin/plugin.json name mismatch")
-    if plugin_manifest.get("version") != EXPECTED_PLUGIN_VERSION:
-        raise ValueError("plugins/house-skills/.codex-plugin/plugin.json version mismatch")
-    if plugin_manifest.get("skills") != "./skills/":
-        raise ValueError("plugins/house-skills/.codex-plugin/plugin.json skills path mismatch")
+def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_root: str) -> None:
+    if plugin_manifest.get("name") != plugin_name:
+        raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
     if plugin_manifest.get("interface", {}).get("category") != "Productivity":
-        raise ValueError("plugins/house-skills/.codex-plugin/plugin.json category mismatch")
+        raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json category mismatch")
     for key in ("composerIcon", "logo"):
         relative = plugin_manifest.get("interface", {}).get(key)
         if relative != "./assets/icon.svg":
-            raise ValueError(f"plugins/house-skills/.codex-plugin/plugin.json {key} path mismatch")
-    check_path_exists(ROOT / "plugins/house-skills/assets/icon.svg")
+            raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json {key} path mismatch")
+    check_path_exists(ROOT / plugin_root / "assets/icon.svg")
+    skills_path = plugin_manifest.get("skills")
+    if skills_path:
+        if not isinstance(skills_path, str):
+            raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json skills path must be a string")
+        check_path_exists(ROOT / plugin_root / skills_path)
 
 
 def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
-    if bundle_manifest.get("bundle_name") != EXPECTED_PLUGIN_NAME:
+    if bundle_manifest.get("bundle_name") != "house-skills":
         raise ValueError("bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != EXPECTED_PLUGIN_VERSION:
+    if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("marketplace_root") != EXPECTED_MARKETPLACE_ROOT:
+    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != EXPECTED_PLUGIN_ROOT:
+    if bundle_manifest.get("plugin_root") != "plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("source_of_truth") != EXPECTED_SOURCE_OF_TRUTH:
+    if bundle_manifest.get("source_of_truth") != [
+        "sources/house-skills/decisions.json",
+        "sources/house-skills/decisions.md",
+        "sources/house-skills/intake.json",
+        "provenance/house-skills.md",
+    ]:
         raise ValueError("bundle manifest source_of_truth mismatch")
 
     imports = intake.get("imports", [])
@@ -196,19 +197,25 @@ def validate_source_map(text: str) -> None:
 def main() -> int:
     decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
+    plugin_manifests: list[dict] = []
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_manifest = check_json(spec["manifest_path"])
+        validate_plugin_manifest(plugin_manifest, spec["name"], spec["plugin_root"])
+        plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
-    plugin_manifest = check_json(PLUGIN_MANIFEST_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
     decisions_md_text = check_text(SOURCE_DECISIONS_MD_PATH)
     decision_rows = parse_top_markdown_table(SOURCE_DECISIONS_MD_PATH)
 
     validate_decisions(decisions, decision_rows, decisions_md_text)
-    validate_marketplace_registry(registry, plugin_manifest)
-    validate_plugin_manifest(plugin_manifest)
+    validate_marketplace_registry(registry, plugin_manifests)
     validate_bundle_manifest(bundle_manifest, intake)
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
+    check_text(ROOT / "codex-marketplace/README.md")
+    check_text(ROOT / "codex-marketplace/plugins/README.md")
+    check_text(ROOT / "provenance/MARK-46-activity-log.md")
     check_text(PLUGIN_README_PATH)
     check_text(PLUGIN_SKILL_PATH)
     check_text(PROVENANCE_PATH)

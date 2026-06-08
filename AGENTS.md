@@ -2,9 +2,20 @@
 
 ## Repository purpose
 
-This repository represents an agent/plugin asset marketplace.
+This repository is the source of truth for agent-facing assets. It is an agent asset marketplace, not just a research ledger.
 
 The primary durable output is market-consumable assets. Support surfaces such as provenance, catalogs, ledgers, reports, doctrine notes, indexes, and discovery records exist to support those assets. They do not substitute for them.
+
+The current market-facing route is `codex-marketplace/` and `.agents/plugins/` unless repo conventions explicitly change. Market work should land as vendored or adapted assets on those surfaces, with provenance attached as support evidence.
+
+Durable assets in this repo may include:
+
+- GPT-native skill sources under `gpt-skills/`, but `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only;
+- Codex marketplace metadata and plugin source shape under `codex-marketplace/` and `.agents/plugins/`;
+- repo-specific overlays under `repo-overlays/`;
+- upstream source snapshots and references under `sources/`;
+- provenance, license, attribution, and trust records under `provenance/` as evidence and traceability, not completion by itself;
+- worker playbooks, validation scripts, and other enablement assets where the repo conventions support them.
 
 ## Source-of-truth split
 
@@ -52,7 +63,14 @@ The goal of third-party upstream drains is to legally re-vendor usable upstream 
 
 For upstream plugin markets, preserve upstream plugin/package boundaries by default. Take the upstream plugins and put them into this repo's plugin market. Do not pull skills out of upstream plugins and repack them into a new synthetic plugin unless the issue explicitly asks for a curated derivative bundle and defines the transformation contract.
 
-Documentation, doctrine, catalog, reference, provenance, ledger, or index-only output is valid only when the issue explicitly asks for that or every scoped asset has concrete blocker evidence.
+For upstream drains, the default outcome is vendored or adapted market assets. Documentation, doctrine, catalog, reference, provenance, or ledger-only output is valid only when the issue explicitly asks for that or every scoped asset has concrete blocker evidence.
+
+If a drain identifies selected outcomes such as direct install/default or optional assets, first-party adaptation candidates, reference/catalog surfaces, overlap anchors, or high-signal source patterns, the worker must preserve the consequence in one of these ways:
+
+1. copy the legally re-vendorable asset into the appropriate repo asset/source surface with provenance and license evidence;
+2. update the appropriate marketplace, source, provenance, catalog, playbook, or adaptation surface in the repo;
+3. create or link explicit Linear follow-up issues only for work that is genuinely out of scope or blocked for the current issue; or
+4. revise the outcome to a true final pass or final park with evidence.
 
 A provenance note can support marketplace preservation. It does not substitute for marketplace assets.
 

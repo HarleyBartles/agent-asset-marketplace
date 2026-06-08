@@ -1,0 +1,45 @@
+{
+    "name":  "conversational-api-debugger",
+    "version":  "1.0.0",
+    "description":  "MCP server for debugging REST API failures using OpenAPI specs and HTTP logs",
+    "author":  {
+                   "name":  "Harley Bartles"
+               },
+    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license":  "MIT",
+    "rights":  "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+    "keywords":  [
+                     "codex",
+                     "marketplace",
+                     "upstream-drain",
+                     "wrapper",
+                     "mcp",
+                     "api",
+                     "debugging",
+                     "openapi",
+                     "http",
+                     "rest",
+                     "troubleshooting"
+                 ],
+    "interface":  {
+                      "type":  "cli",
+                      "displayName":  "Conversational API Debugger",
+                      "shortDescription":  "MCP server for debugging REST API failures using OpenAPI specs and HTTP logs",
+                      "longDescription":  "Codex-compatible wrapper for the upstream bundle at plugins/mcp/conversational-api-debugger. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/mcp/conversational-api-debugger/.claude-plugin/plugin.json.",
+                      "developerName":  "Harley Bartles",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Inspect the wrapper source map for conversational-api-debugger.",
+                                            "Use this Codex wrapper rather than the upstream Claude manifest.",
+                                            "Preserve the upstream bundle boundary while working inside the marketplace asset."
+                                        ],
+                      "brandColor":  "#0F766E",
+                      "composerIcon":  "./assets/icon.svg",
+                      "logo":  "./assets/icon.svg"
+                  }
+}
