@@ -37,5 +37,10 @@ and records the bundle ledger in the bundle manifest and source note:
 
 ## Validation
 
-Pending. Run the repo validation commands after the edits are finalized and
-before publication.
+Validation completed after the pack import and repo-index refresh:
+
+- `py -3 tools/generate_marketplace.py` wrote `.agents/plugins/marketplace.json`
+  and `codex-marketplace/manifest.json`
+- `py -3 tools/validate_repo_index.py` passed
+- `py -3 tools/validate_marketplace.py` passed
+- `git diff --check HEAD~1 HEAD` passed with no output
