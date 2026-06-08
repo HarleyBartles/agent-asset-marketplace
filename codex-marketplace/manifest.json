@@ -1541,6 +1541,66 @@
       "category": "Productivity"
     },
     {
+      "name": "wondelai-crossing-the-chasm",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-crossing-the-chasm"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-drive-motivation",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-drive-motivation"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-hundred-million-offers",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-hundred-million-offers"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-influence-psychology",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-influence-psychology"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-jobs-to-be-done",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-jobs-to-be-done"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "workflow-orchestrator",
       "source": {
         "source": "local",
