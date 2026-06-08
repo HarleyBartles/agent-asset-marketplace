@@ -2,47 +2,48 @@
 
 Canonical source of truth for an agent/plugin asset marketplace.
 
+This repository represents an agent/plugin asset marketplace.
+
 Primary deliverables are market-consumable assets, especially Codex plugin-market
 assets where applicable. Supporting surfaces such as provenance, catalogs,
 ledgers, reports, doctrine notes, and indexes exist to preserve source,
 traceability, and review context. They do not substitute for vendored marketplace
 assets.
 
+The primary deliverable is market-consumable assets, especially Codex/plugin marketplace assets. Provenance, catalogs, ledgers, reports, doctrine notes, indexes, and discovery records are support evidence only. They do not substitute for vendored marketplace assets.
+
+The boring goal for upstream drains is simple: take useful upstream plugin-market assets and put them into this repo's plugin market when rights and source shape allow it. Preserve license, attribution, source mapping, and validation evidence alongside the assets.
+
 A repository-browser-discoverable markdown note is not a completed marketplace
 asset.
 
-## Source Of Truth
+## Source of truth
 
-This repo is the authoring and review source of truth.
+This repo is the authoring and review source of truth for marketplace assets.
 
-Deployment targets, exports, and runtime packaging outputs are downstream
-artifacts. They should be derived from the tracked sources here, never edited as
-the primary copy.
+Deployment targets, exports, and runtime packaging outputs are downstream artifacts. They should be derived from the tracked sources here, never edited as the primary copy.
 
-## GPT-Native Skill Flow
+## Marketplace asset flow
 
-GPT-native skills live under `gpt-skills/` as source assets and supporting
-metadata.
+Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
 
 Expected flow:
 
-1. Author or update the skill in source form here.
-2. Record provenance and license notes in `provenance/` when needed.
-3. Generate any deployment-specific output into a downstream target, not back
-   into the source tree.
+1. Preserve upstream plugin/package boundaries by default.
+2. Copy legally re-vendorable third-party plugin assets into the marketplace/plugin route with provenance and license evidence.
+3. Update the marketplace/runtime registry or manifest required for the asset to be discoverable/installable.
+4. Use `provenance/` and `sources/vendor/` to prove origin, rights, and custody.
+5. Validate the repo and publish through GitHub before claiming completion.
 
-No skill packaging is performed in this initialization.
+Repacking upstream skills into a new synthetic plugin is not the default drain route. Do that only when an issue explicitly asks for a curated derivative bundle and defines the transformation contract.
 
-First-party worker playbooks and workflow habits live in `docs/worker-playbooks.md`.
-They adapt the reusable Superpowers workflow core from
-`sources/vendor/obra/superpowers/v5.1.0/` into repo-local guidance without
-copying the upstream harness prose wholesale.
+## GPT-native skill flow
 
-## Codex Plugin Marketplace Flow
+GPT-native skills live under `gpt-skills/` as source assets and supporting metadata.
 
-Codex marketplace assets live under `codex-marketplace/`.
+`gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only. Third-party-origin material, including material adapted from upstream plugins or skill repositories, does not belong in House Skills.
 
-Expected flow:
+## Third-party source custody
 
 1. Keep the canonical marketplace source layout in this repo.
 2. Store plugin and agent metadata in the marketplace source directories.
@@ -54,56 +55,51 @@ The marketplace source tree includes real market-consumable plugin assets under
 `codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing the
 current plugin inventory.
 
-## Repo Overlay Role
+`sources/vendor/**` is for third-party source snapshots, references, and custody evidence.
 
-`repo-overlays/` is for repository-specific adjustments that adapt a canonical
-asset to a destination repo without mutating the upstream source asset.
+Vendored package files are source evidence and package payload. Nested files from upstream packages should not be treated as this repo's worker doctrine unless this repo explicitly says so.
 
-Use overlays for small, explicit deltas:
+## Provenance, license, and trust
 
-- path mapping
-- naming adjustments
-- workspace-specific glue
-- deployment-time overrides
+`provenance/` tracks where assets came from, what license or usage constraints apply, what was copied or excluded, and what validation or trust assumptions apply.
 
-If an asset needs to change for everyone, change the source asset instead of
-adding a broad overlay.
-
-## Provenance, License, And Trust
-
-`provenance/` is where we track where an asset came from, what license or usage
-constraints apply, and what trust assumptions are acceptable.
+A provenance note can support marketplace preservation. It is not completion by itself unless the issue explicitly asks for provenance-only work or every scoped asset has a concrete blocker.
 
 Default posture:
 
-- prefer first-party or clearly attributable inputs
-- do not store secrets or credentials
-- do not assume an imported asset is safe without review
-- keep trust notes explicit and lightweight
+- preserve attribution and license evidence;
+- do not store secrets or credentials;
+- do not assume an imported asset is safe without review;
+- keep trust notes explicit and lightweight;
+- keep source maps strong enough that a reviewer can connect upstream paths to repo-held assets.
 
-## Generated Artifact Policy
+## Repo overlay role
+
+`repo-overlays/` is for repository-specific adjustments that adapt a canonical asset to a destination repo without mutating the upstream source asset.
+
+Use overlays for small, explicit deltas such as path mapping, naming adjustments, workspace-specific glue, and deployment-time overrides.
+
+If an asset needs to change for everyone, change the source asset instead of adding a broad overlay.
+
+## Generated artifact policy
 
 `generated/` is for derived outputs only.
 
 Policy:
 
-- generated files are not the source of truth
-- generated reports may be ignored by default
-- committed generated outputs should be rare and intentional
-- temporary packages, caches, and local tooling artifacts stay out of source
+- generated files are not the source of truth;
+- generated reports may be ignored by default;
+- committed generated outputs should be rare and intentional;
+- temporary packages, caches, and local tooling artifacts stay out of source.
 
-## Directory Map
+## Directory map
 
-- `gpt-skills/` - GPT-native skill sources and supporting notes
-- `codex-marketplace/.agents/plugins/` - Codex-native agent/plugin source shape
-- `codex-marketplace/plugins/` - marketplace plugin source shape
-- `repo-overlays/` - destination-specific overlays
-- `sources/` - upstream references and source snapshots
-- `tools/` - small helper scripts only, if needed
-- `generated/reports/` - derived reports and validation output
-- `provenance/` - license, attribution, and trust records
-
-## Initialization Boundary
-
-This commit only establishes the canonical repository shape and conventions.
-It does not ingest external assets, build a framework, or add runtime tooling.
+- `codex-marketplace/` - marketplace source layout and plugin source shape.
+- `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
+- `gpt-skills/` - GPT-native skill sources and supporting notes.
+- `gpt-skills/house-skills/` - Harley-authored first-party GPT skills only.
+- `sources/vendor/` - third-party source custody and source snapshots.
+- `provenance/` - license, attribution, source-map, reconciliation, and trust records.
+- `repo-overlays/` - destination-specific overlays.
+- `tools/` - helper scripts and validation tooling.
+- `generated/reports/` - derived reports and validation output.
