@@ -1,6 +1,6 @@
 ---
 name: adventures-bootstrap-v1
-description: Bootstrap Adventures of Patch sessions by classifying project work, handoffs, deck, asset, issue, dispatch, receipt, skill-update, visual-production, and repo-sensitive requests before routing to required doctrine or task skills.
+description: Bootstrap Adventures of Patch sessions by classifying project work, handoffs, image-credit, deck, asset, issue, dispatch, receipt, PSA pre-vis, PIG production, skill-update, and repo-sensitive requests before routing to required doctrine or task skills.
 ---
 
 # Adventures Bootstrap v1
@@ -13,7 +13,7 @@ Classify the latest Adventures request and route to the smallest sufficient doct
 
 ## Hard boundaries
 
-Bootstrap is an arrival and routing pointer. It does not inspect repositories, select tools by presence, mutate GitHub, generate images, build artifacts, create receipts, compile assets, post comments, close issues, or claim source-backed truth.
+Bootstrap is an arrival and routing pointer. It does not inspect repositories, select tools by presence, mutate GitHub, generate images, build artifacts, create receipts, compile assets, post comments, create dispatches, close issues, or claim source-backed truth.
 
 ## Progressive references
 
@@ -22,9 +22,9 @@ Read `references/source-and-repo-posture.md` only when the classified task actua
 ## Minimal workflow
 
 1. Confirm the request is active Adventures project work or a project handoff.
-2. Classify the request: ordinary chat, continuity, doctrine, repo/issue, visual, deterministic board/planning, asset, deck, frame, dispatch, skill, or artifact work.
+2. Classify the request: ordinary chat, continuity, doctrine, repo/issue, visual, PSA pre-vis handoff, PIG image production handoff, asset, deck, frame, dispatch, skill, or artifact work.
 3. Route to the smallest sufficient task capability.
-4. Keep visual-production stage boundaries clear: deterministic planning, source discovery, QA, image readiness, and deck/package work are different lanes.
+4. Preserve the visual-production warning when image credits or pixel mutation could be confused with deterministic work; route deterministic storyboard or prompt-board production to PSA-aware planning surfaces before PIG/image-production routing when the user wants pre-vis boards.
 5. Stop before doing the downstream task from bootstrap alone.
 
 ## Output behavior
