@@ -212,6 +212,39 @@ clean wrapper source root was present in the pinned tree during inspection:
 The `x-bug-triage-plugin` alias is normalized to the `x-bug-triage` source root
 and is not duplicated as a second wrapper.
 
+## MARK-67 Plugin-Package Addendum
+
+The next intact plugin-package tranche is now also preserved as marketplace
+wrappers:
+
+- `codex-marketplace/plugins/executive-assistant-skills`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/executive-assistant-skills`
+- `codex-marketplace/plugins/general-legal-assistant`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/general-legal-assistant`
+- `codex-marketplace/plugins/wondelai-blue-ocean-strategy`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-blue-ocean-strategy`
+- `codex-marketplace/plugins/wondelai-contagious`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-contagious`
+- `codex-marketplace/plugins/wondelai-cro-methodology`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-cro-methodology`
+
+Imported skill docs:
+
+- `5` imported for `executive-assistant-skills`
+- `12` imported for `general-legal-assistant`
+- `1` imported for each of the three Wondelai packs
+- `0` skipped for each imported pack
+- `0` blocked for each imported pack
+
+Blocked package root:
+
+- `plugins/business-tools/openbb-terminal`
+  - blocked because the pinned tree does not expose a functional `SKILL.md` or equivalent skill/package source shape that can be projected into the current Codex marketplace wrapper without synthesizing a new bundle boundary
+
+The bundle evidence lives in the respective
+`codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
+plugin manifests are constrained to paths that exist locally.
+
 ## MARK-66 Plugin-Package Proof Slice Addendum
 
 The next plugin-package tranche is now also preserved as marketplace wrappers:

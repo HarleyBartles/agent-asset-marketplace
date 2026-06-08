@@ -1,0 +1,85 @@
+{
+    "bundle_name":  "general-legal-assistant",
+    "bundle_version":  "1.0.0",
+    "upstream_repo":  "jeremylongshore/claude-code-plugins-plus-skills",
+    "pinned_commit":  "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+    "source_root":  "plugins/business-tools/general-legal-assistant/skills",
+    "candidate_count":  12,
+    "imported_count":  12,
+    "skipped_count":  0,
+    "blocked_count":  0,
+    "entries":  [
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/agreement-generator/SKILL.md",
+                        "local_path":  "skills/agreement-generator/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/compliance-audit/SKILL.md",
+                        "local_path":  "skills/compliance-audit/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/contract-compare/SKILL.md",
+                        "local_path":  "skills/contract-compare/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/contract-review/SKILL.md",
+                        "local_path":  "skills/contract-review/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/freelancer-review/SKILL.md",
+                        "local_path":  "skills/freelancer-review/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/missing-protections/SKILL.md",
+                        "local_path":  "skills/missing-protections/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/nda-generator/SKILL.md",
+                        "local_path":  "skills/nda-generator/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/negotiate/SKILL.md",
+                        "local_path":  "skills/negotiate/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/plain-english/SKILL.md",
+                        "local_path":  "skills/plain-english/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/privacy-generator/SKILL.md",
+                        "local_path":  "skills/privacy-generator/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/risk-analysis/SKILL.md",
+                        "local_path":  "skills/risk-analysis/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/general-legal-assistant/skills/terms-generator/SKILL.md",
+                        "local_path":  "skills/terms-generator/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    }
+                ]
+}

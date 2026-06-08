@@ -1,0 +1,47 @@
+{
+    "name":  "wondelai-cro-methodology",
+    "version":  "1.0.0",
+    "description":  "Claude Code skill pack for Wondelai CRO Methodology - 1 skills packaged for the Codex marketplace",
+    "author":  {
+                   "name":  "Harley Bartles"
+               },
+    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+                       "directory":  "codex-marketplace/plugins/wondelai-cro-methodology"
+                   },
+    "license":  "MIT",
+    "rights":  "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+    "keywords":  [
+                     "claude-code",
+                     "claude-code-plugin",
+                     "marketplace",
+                     "upstream-drain",
+                     "wrapper",
+                     "wondelai",
+                     "cro",
+                     "methodology"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "type":  "cli",
+                      "displayName":  "Wondelai CRO Methodology",
+                      "shortDescription":  "Conversion-rate-optimization guidance packaged as a Codex marketplace plugin.",
+                      "longDescription":  "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/wondelai-cro-methodology. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-cro-methodology/.claude-plugin/plugin.json.",
+                      "developerName":  "Harley Bartles",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Inspect SOURCE.md and the bundled skill content before changing anything.",
+                                            "Use this Codex wrapper rather than the upstream Claude manifest.",
+                                            "Preserve the upstream bundle boundary while working inside the marketplace asset."
+                                        ],
+                      "brandColor":  "#111111",
+                      "composerIcon":  "./assets/icon.svg",
+                      "logo":  "./assets/icon.svg"
+                  }
+}
