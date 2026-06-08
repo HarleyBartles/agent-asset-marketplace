@@ -233,3 +233,21 @@ Skipped upstream docs:
 The bundle evidence lives in
 `codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json`
 and the plugin manifest is constrained to paths that exist locally.
+
+## MARK-61 Supabase Platform Pack Addendum
+
+The upstream standalone Supabase skill family is now also preserved as a
+marketplace plugin pack:
+
+- `codex-marketplace/plugins/supabase-platform-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/skill-databases/supabase/`
+
+Imported skill docs:
+
+- `30` imported
+- `0` skipped
+- `0` blocked
+
+The bundle evidence lives in
+`codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json`
+and the plugin manifest is constrained to paths that exist locally.

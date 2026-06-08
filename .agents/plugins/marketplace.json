@@ -41,6 +41,18 @@
       "category": "Productivity"
     },
     {
+      "name": "supabase-platform-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/supabase-platform-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "fullstack-starter-pack",
       "source": {
         "source": "local",

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Supabase Platform Pack</title>
+  <desc id="desc">A simple green database glyph for the Supabase plugin bundle.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3ECF8E"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#081018"/>
+  <ellipse cx="32" cy="16" rx="17" ry="6" fill="url(#g)"/>
+  <path d="M15 16v28c0 3.3 7.6 6 17 6s17-2.7 17-6V16" fill="none" stroke="url(#g)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15 30c0 3.3 7.6 6 17 6s17-2.7 17-6" fill="none" stroke="#7EE8B5" stroke-width="3" stroke-linecap="round"/>
+  <path d="M15 42c0 3.3 7.6 6 17 6s17-2.7 17-6" fill="none" stroke="#7EE8B5" stroke-width="3" stroke-linecap="round"/>
+</svg>

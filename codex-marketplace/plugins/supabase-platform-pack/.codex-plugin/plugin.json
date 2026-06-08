@@ -1,0 +1,43 @@
+{
+  "name": "supabase-platform-pack",
+  "version": "1.0.0",
+  "description": "Codex plugin bundle for the upstream standalone Supabase skill family, wrapped as market-consumable skills.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "rights": "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "skills",
+    "upstream-drain",
+    "source-provenance",
+    "supabase",
+    "postgres",
+    "realtime"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Supabase Platform Pack",
+    "shortDescription": "Standalone Supabase skills packaged as a Codex marketplace plugin.",
+    "longDescription": "Codex-compatible wrapper for the upstream standalone Supabase skill family at plugins/saas-packs/supabase-pack/skills. The original upstream skill docs are preserved under codex-marketplace/plugins/supabase-platform-pack/skills/ with provenance and license evidence recorded in SOURCE.md.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Review SOURCE.md and the bundled skill you need before changing anything.",
+      "Use this Codex wrapper rather than the upstream markdown directly.",
+      "Preserve the upstream skill boundary while working inside the marketplace asset."
+    ],
+    "brandColor": "#3ECF8E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
