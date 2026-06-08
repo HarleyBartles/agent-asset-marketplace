@@ -1,168 +1,180 @@
 {
-    "name":  "agent-asset-marketplace",
-    "interface":  {
-                      "displayName":  "Agent Asset Marketplace"
-                  },
-    "plugins":  [
-                    {
-                        "name":  "house-skills",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./plugins/house-skills"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "marketplace-family-pack",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/marketplace-family-pack"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "fullstack-starter-pack",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/fullstack-starter-pack"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "ai-experiment-logger",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/ai-experiment-logger"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "conversational-api-debugger",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/conversational-api-debugger"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "design-to-code",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/design-to-code"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "domain-memory-agent",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/domain-memory-agent"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "lumera-agent-memory",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/lumera-agent-memory"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "pr-to-spec",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/pr-to-spec"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "project-health-auditor",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/project-health-auditor"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "slack-channel",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/slack-channel"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "workflow-orchestrator",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/workflow-orchestrator"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    },
-                    {
-                        "name":  "x-bug-triage-plugin",
-                        "source":  {
-                                       "source":  "local",
-                                       "path":  "./codex-marketplace/plugins/x-bug-triage-plugin"
-                                   },
-                        "policy":  {
-                                       "installation":  "AVAILABLE",
-                                       "authentication":  "ON_INSTALL"
-                                   },
-                        "category":  "Productivity"
-                    }
-                ],
-    "notes":  [
-                  "Canonical Codex marketplace source layout.",
-                  "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests."
-              ]
+  "name": "agent-asset-marketplace",
+  "interface": {
+    "displayName": "Agent Asset Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "house-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/house-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "marketplace-family-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/marketplace-family-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "testing-skill-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/testing-skill-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fullstack-starter-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/fullstack-starter-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ai-experiment-logger",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ai-experiment-logger"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "conversational-api-debugger",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/conversational-api-debugger"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "design-to-code",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/design-to-code"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "domain-memory-agent",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/domain-memory-agent"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "lumera-agent-memory",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/lumera-agent-memory"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "pr-to-spec",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/pr-to-spec"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "project-health-auditor",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/project-health-auditor"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "slack-channel",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/slack-channel"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "workflow-orchestrator",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/workflow-orchestrator"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "x-bug-triage-plugin",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/x-bug-triage-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ],
+  "notes": [
+    "Canonical Codex marketplace source layout.",
+    "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests."
+  ]
 }

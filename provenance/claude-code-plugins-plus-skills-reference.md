@@ -211,3 +211,25 @@ clean wrapper source root was present in the pinned tree during inspection:
 
 The `x-bug-triage-plugin` alias is normalized to the `x-bug-triage` source root
 and is not duplicated as a second wrapper.
+
+## MARK-60 Standalone Testing Skill Pack Addendum
+
+The upstream standalone Replit skill family is now also preserved as a
+marketplace plugin pack:
+
+- `codex-marketplace/plugins/testing-skill-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/skill-databases/replit/`
+
+Imported skill docs:
+
+- `28` imported
+- `2` skipped as out of scope
+
+Skipped upstream docs:
+
+- `plugins/saas-packs/skill-databases/replit/replit-bounty-hunting.md`
+- `plugins/saas-packs/skill-databases/replit/replit-edu-classroom.md`
+
+The bundle evidence lives in
+`codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json`
+and the plugin manifest is constrained to paths that exist locally.
