@@ -1,0 +1,121 @@
+{
+  "bundle_name": "serpapi-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/serpapi-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-ci-integration/SKILL.md",
+      "local_path": "skills/serpapi-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-common-errors/SKILL.md",
+      "local_path": "skills/serpapi-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-core-workflow-a/SKILL.md",
+      "local_path": "skills/serpapi-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-core-workflow-b/SKILL.md",
+      "local_path": "skills/serpapi-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-cost-tuning/SKILL.md",
+      "local_path": "skills/serpapi-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-debug-bundle/SKILL.md",
+      "local_path": "skills/serpapi-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-deploy-integration/SKILL.md",
+      "local_path": "skills/serpapi-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-hello-world/SKILL.md",
+      "local_path": "skills/serpapi-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-install-auth/SKILL.md",
+      "local_path": "skills/serpapi-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-local-dev-loop/SKILL.md",
+      "local_path": "skills/serpapi-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-performance-tuning/SKILL.md",
+      "local_path": "skills/serpapi-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-prod-checklist/SKILL.md",
+      "local_path": "skills/serpapi-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-rate-limits/SKILL.md",
+      "local_path": "skills/serpapi-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-reference-architecture/SKILL.md",
+      "local_path": "skills/serpapi-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-sdk-patterns/SKILL.md",
+      "local_path": "skills/serpapi-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-security-basics/SKILL.md",
+      "local_path": "skills/serpapi-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-upgrade-migration/SKILL.md",
+      "local_path": "skills/serpapi-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/serpapi-pack/skills/serpapi-webhooks-events/SKILL.md",
+      "local_path": "skills/serpapi-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

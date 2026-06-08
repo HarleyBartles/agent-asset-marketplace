@@ -13,6 +13,7 @@ MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
 REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
+UPSTREAM_VENDOR_ROOT = ROOT / "sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6"
 PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
 MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
@@ -48,140 +49,37 @@ MARKETPLACE_NOTES = [
     "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests.",
 ]
 
-MARKETPLACE_PLUGIN_SPECS = [
-    {
-        "name": "house-skills",
-        "registry_path": "./plugins/house-skills",
-        "plugin_root": "plugins/house-skills",
-        "manifest_path": PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "marketplace-family-pack",
-        "registry_path": "./codex-marketplace/plugins/marketplace-family-pack",
-        "plugin_root": "codex-marketplace/plugins/marketplace-family-pack",
-        "manifest_path": MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "testing-skill-pack",
-        "registry_path": "./codex-marketplace/plugins/testing-skill-pack",
-        "plugin_root": "codex-marketplace/plugins/testing-skill-pack",
-        "manifest_path": TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "supabase-platform-pack",
-        "registry_path": "./codex-marketplace/plugins/supabase-platform-pack",
-        "plugin_root": "codex-marketplace/plugins/supabase-platform-pack",
-        "manifest_path": SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "vercel-pack",
-        "registry_path": "./codex-marketplace/plugins/vercel-pack",
-        "plugin_root": "codex-marketplace/plugins/vercel-pack",
-        "manifest_path": VERCEL_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "sentry-pack",
-        "registry_path": "./codex-marketplace/plugins/sentry-pack",
-        "plugin_root": "codex-marketplace/plugins/sentry-pack",
-        "manifest_path": SENTRY_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "openrouter-pack",
-        "registry_path": "./codex-marketplace/plugins/openrouter-pack",
-        "plugin_root": "codex-marketplace/plugins/openrouter-pack",
-        "manifest_path": OPENROUTER_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "cursor-pack",
-        "registry_path": "./codex-marketplace/plugins/cursor-pack",
-        "plugin_root": "codex-marketplace/plugins/cursor-pack",
-        "manifest_path": CURSOR_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "cohere-pack",
-        "registry_path": "./codex-marketplace/plugins/cohere-pack",
-        "plugin_root": "codex-marketplace/plugins/cohere-pack",
-        "manifest_path": COHERE_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "databricks-pack",
-        "registry_path": "./codex-marketplace/plugins/databricks-pack",
-        "plugin_root": "codex-marketplace/plugins/databricks-pack",
-        "manifest_path": DATABRICKS_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "flyio-pack",
-        "registry_path": "./codex-marketplace/plugins/flyio-pack",
-        "plugin_root": "codex-marketplace/plugins/flyio-pack",
-        "manifest_path": FLYIO_PACK_PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "fullstack-starter-pack",
-        "registry_path": "./codex-marketplace/plugins/fullstack-starter-pack",
-        "plugin_root": "codex-marketplace/plugins/fullstack-starter-pack",
-        "manifest_path": ROOT / "codex-marketplace/plugins/fullstack-starter-pack/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "ai-experiment-logger",
-        "registry_path": "./codex-marketplace/plugins/ai-experiment-logger",
-        "plugin_root": "codex-marketplace/plugins/ai-experiment-logger",
-        "manifest_path": ROOT / "codex-marketplace/plugins/ai-experiment-logger/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "conversational-api-debugger",
-        "registry_path": "./codex-marketplace/plugins/conversational-api-debugger",
-        "plugin_root": "codex-marketplace/plugins/conversational-api-debugger",
-        "manifest_path": ROOT / "codex-marketplace/plugins/conversational-api-debugger/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "design-to-code",
-        "registry_path": "./codex-marketplace/plugins/design-to-code",
-        "plugin_root": "codex-marketplace/plugins/design-to-code",
-        "manifest_path": ROOT / "codex-marketplace/plugins/design-to-code/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "domain-memory-agent",
-        "registry_path": "./codex-marketplace/plugins/domain-memory-agent",
-        "plugin_root": "codex-marketplace/plugins/domain-memory-agent",
-        "manifest_path": ROOT / "codex-marketplace/plugins/domain-memory-agent/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "lumera-agent-memory",
-        "registry_path": "./codex-marketplace/plugins/lumera-agent-memory",
-        "plugin_root": "codex-marketplace/plugins/lumera-agent-memory",
-        "manifest_path": ROOT / "codex-marketplace/plugins/lumera-agent-memory/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "pr-to-spec",
-        "registry_path": "./codex-marketplace/plugins/pr-to-spec",
-        "plugin_root": "codex-marketplace/plugins/pr-to-spec",
-        "manifest_path": ROOT / "codex-marketplace/plugins/pr-to-spec/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "project-health-auditor",
-        "registry_path": "./codex-marketplace/plugins/project-health-auditor",
-        "plugin_root": "codex-marketplace/plugins/project-health-auditor",
-        "manifest_path": ROOT / "codex-marketplace/plugins/project-health-auditor/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "slack-channel",
-        "registry_path": "./codex-marketplace/plugins/slack-channel",
-        "plugin_root": "codex-marketplace/plugins/slack-channel",
-        "manifest_path": ROOT / "codex-marketplace/plugins/slack-channel/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "workflow-orchestrator",
-        "registry_path": "./codex-marketplace/plugins/workflow-orchestrator",
-        "plugin_root": "codex-marketplace/plugins/workflow-orchestrator",
-        "manifest_path": ROOT / "codex-marketplace/plugins/workflow-orchestrator/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "x-bug-triage-plugin",
-        "registry_path": "./codex-marketplace/plugins/x-bug-triage-plugin",
-        "plugin_root": "codex-marketplace/plugins/x-bug-triage-plugin",
-        "manifest_path": ROOT / "codex-marketplace/plugins/x-bug-triage-plugin/.codex-plugin/plugin.json",
-    },
-]
+def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
+    specs: list[dict[str, str | Path]] = [
+        {
+            "name": "house-skills",
+            "registry_path": "./plugins/house-skills",
+            "plugin_root": "plugins/house-skills",
+            "manifest_path": PLUGIN_MANIFEST_PATH,
+        },
+    ]
+
+    marketplace_plugins_root = ROOT / "codex-marketplace/plugins"
+    if marketplace_plugins_root.exists():
+        for plugin_dir in sorted(marketplace_plugins_root.iterdir(), key=lambda path: path.name):
+            if not plugin_dir.is_dir():
+                continue
+            manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
+            if not manifest_path.exists():
+                continue
+            specs.append(
+                {
+                    "name": plugin_dir.name,
+                    "registry_path": f"./codex-marketplace/plugins/{plugin_dir.name}",
+                    "plugin_root": f"codex-marketplace/plugins/{plugin_dir.name}",
+                    "manifest_path": manifest_path,
+                }
+            )
+
+    return specs
+
+
+MARKETPLACE_PLUGIN_SPECS = discover_marketplace_plugin_specs()
 
 EXPECTED_MARKETPLACE = {
     "name": "agent-asset-marketplace",

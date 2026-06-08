@@ -1,0 +1,157 @@
+{
+  "bundle_name": "klaviyo-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/klaviyo-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-ci-integration/SKILL.md",
+      "local_path": "skills/klaviyo-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-common-errors/SKILL.md",
+      "local_path": "skills/klaviyo-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-core-workflow-a/SKILL.md",
+      "local_path": "skills/klaviyo-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-core-workflow-b/SKILL.md",
+      "local_path": "skills/klaviyo-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-cost-tuning/SKILL.md",
+      "local_path": "skills/klaviyo-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-data-handling/SKILL.md",
+      "local_path": "skills/klaviyo-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-debug-bundle/SKILL.md",
+      "local_path": "skills/klaviyo-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-deploy-integration/SKILL.md",
+      "local_path": "skills/klaviyo-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-enterprise-rbac/SKILL.md",
+      "local_path": "skills/klaviyo-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-hello-world/SKILL.md",
+      "local_path": "skills/klaviyo-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-incident-runbook/SKILL.md",
+      "local_path": "skills/klaviyo-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-install-auth/SKILL.md",
+      "local_path": "skills/klaviyo-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-local-dev-loop/SKILL.md",
+      "local_path": "skills/klaviyo-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-migration-deep-dive/SKILL.md",
+      "local_path": "skills/klaviyo-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-multi-env-setup/SKILL.md",
+      "local_path": "skills/klaviyo-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-observability/SKILL.md",
+      "local_path": "skills/klaviyo-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-performance-tuning/SKILL.md",
+      "local_path": "skills/klaviyo-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-prod-checklist/SKILL.md",
+      "local_path": "skills/klaviyo-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-rate-limits/SKILL.md",
+      "local_path": "skills/klaviyo-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-reference-architecture/SKILL.md",
+      "local_path": "skills/klaviyo-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-sdk-patterns/SKILL.md",
+      "local_path": "skills/klaviyo-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-security-basics/SKILL.md",
+      "local_path": "skills/klaviyo-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-upgrade-migration/SKILL.md",
+      "local_path": "skills/klaviyo-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/klaviyo-pack/skills/klaviyo-webhooks-events/SKILL.md",
+      "local_path": "skills/klaviyo-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

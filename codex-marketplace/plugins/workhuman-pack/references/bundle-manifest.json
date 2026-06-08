@@ -1,0 +1,121 @@
+{
+  "bundle_name": "workhuman-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/workhuman-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-ci-integration/SKILL.md",
+      "local_path": "skills/workhuman-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-common-errors/SKILL.md",
+      "local_path": "skills/workhuman-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-core-workflow-a/SKILL.md",
+      "local_path": "skills/workhuman-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-core-workflow-b/SKILL.md",
+      "local_path": "skills/workhuman-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-cost-tuning/SKILL.md",
+      "local_path": "skills/workhuman-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-debug-bundle/SKILL.md",
+      "local_path": "skills/workhuman-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-deploy-integration/SKILL.md",
+      "local_path": "skills/workhuman-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-hello-world/SKILL.md",
+      "local_path": "skills/workhuman-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-install-auth/SKILL.md",
+      "local_path": "skills/workhuman-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-local-dev-loop/SKILL.md",
+      "local_path": "skills/workhuman-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-performance-tuning/SKILL.md",
+      "local_path": "skills/workhuman-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-prod-checklist/SKILL.md",
+      "local_path": "skills/workhuman-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-rate-limits/SKILL.md",
+      "local_path": "skills/workhuman-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-reference-architecture/SKILL.md",
+      "local_path": "skills/workhuman-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-sdk-patterns/SKILL.md",
+      "local_path": "skills/workhuman-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-security-basics/SKILL.md",
+      "local_path": "skills/workhuman-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-upgrade-migration/SKILL.md",
+      "local_path": "skills/workhuman-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/workhuman-pack/skills/workhuman-webhooks-events/SKILL.md",
+      "local_path": "skills/workhuman-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

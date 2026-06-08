@@ -1,0 +1,241 @@
+{
+  "bundle_name": "shopify-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/shopify-pack/skills",
+  "candidate_count": 38,
+  "imported_count": 38,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-advanced-troubleshooting/SKILL.md",
+      "local_path": "skills/shopify-advanced-troubleshooting/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-ai-toolkit-wrapper/SKILL.md",
+      "local_path": "skills/shopify-ai-toolkit-wrapper/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-architecture-variants/SKILL.md",
+      "local_path": "skills/shopify-architecture-variants/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-b2b-wholesale/SKILL.md",
+      "local_path": "skills/shopify-b2b-wholesale/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-checkout-extensions/SKILL.md",
+      "local_path": "skills/shopify-checkout-extensions/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-ci-integration/SKILL.md",
+      "local_path": "skills/shopify-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-common-errors/SKILL.md",
+      "local_path": "skills/shopify-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-core-workflow-a/SKILL.md",
+      "local_path": "skills/shopify-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-core-workflow-b/SKILL.md",
+      "local_path": "skills/shopify-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-cost-tuning/SKILL.md",
+      "local_path": "skills/shopify-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-data-handling/SKILL.md",
+      "local_path": "skills/shopify-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-debug-bundle/SKILL.md",
+      "local_path": "skills/shopify-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-deploy-integration/SKILL.md",
+      "local_path": "skills/shopify-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-enterprise-rbac/SKILL.md",
+      "local_path": "skills/shopify-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-functions/SKILL.md",
+      "local_path": "skills/shopify-functions/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-graphql-cost-optimizer/SKILL.md",
+      "local_path": "skills/shopify-graphql-cost-optimizer/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-hello-world/SKILL.md",
+      "local_path": "skills/shopify-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-incident-runbook/SKILL.md",
+      "local_path": "skills/shopify-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-install-auth/SKILL.md",
+      "local_path": "skills/shopify-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-known-pitfalls/SKILL.md",
+      "local_path": "skills/shopify-known-pitfalls/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-load-scale/SKILL.md",
+      "local_path": "skills/shopify-load-scale/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-local-dev-loop/SKILL.md",
+      "local_path": "skills/shopify-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-metafields-metaobjects/SKILL.md",
+      "local_path": "skills/shopify-metafields-metaobjects/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-migration-deep-dive/SKILL.md",
+      "local_path": "skills/shopify-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-multi-env-setup/SKILL.md",
+      "local_path": "skills/shopify-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-observability/SKILL.md",
+      "local_path": "skills/shopify-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-performance-tuning/SKILL.md",
+      "local_path": "skills/shopify-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-policy-guardrails/SKILL.md",
+      "local_path": "skills/shopify-policy-guardrails/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-prod-checklist/SKILL.md",
+      "local_path": "skills/shopify-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-rate-limits/SKILL.md",
+      "local_path": "skills/shopify-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-reference-architecture/SKILL.md",
+      "local_path": "skills/shopify-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-reliability-patterns/SKILL.md",
+      "local_path": "skills/shopify-reliability-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-sdk-patterns/SKILL.md",
+      "local_path": "skills/shopify-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-security-basics/SKILL.md",
+      "local_path": "skills/shopify-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-storefront-headless/SKILL.md",
+      "local_path": "skills/shopify-storefront-headless/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-theme-performance/SKILL.md",
+      "local_path": "skills/shopify-theme-performance/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-upgrade-migration/SKILL.md",
+      "local_path": "skills/shopify-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/shopify-pack/skills/shopify-webhooks-events/SKILL.md",
+      "local_path": "skills/shopify-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "bundle_name": "obsidian-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/obsidian-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-ci-integration/SKILL.md",
+      "local_path": "skills/obsidian-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-common-errors/SKILL.md",
+      "local_path": "skills/obsidian-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-core-workflow-a/SKILL.md",
+      "local_path": "skills/obsidian-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-core-workflow-b/SKILL.md",
+      "local_path": "skills/obsidian-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-cost-tuning/SKILL.md",
+      "local_path": "skills/obsidian-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-data-handling/SKILL.md",
+      "local_path": "skills/obsidian-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-debug-bundle/SKILL.md",
+      "local_path": "skills/obsidian-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-deploy-integration/SKILL.md",
+      "local_path": "skills/obsidian-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-enterprise-rbac/SKILL.md",
+      "local_path": "skills/obsidian-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-hello-world/SKILL.md",
+      "local_path": "skills/obsidian-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-incident-runbook/SKILL.md",
+      "local_path": "skills/obsidian-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-install-auth/SKILL.md",
+      "local_path": "skills/obsidian-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-local-dev-loop/SKILL.md",
+      "local_path": "skills/obsidian-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-migration-deep-dive/SKILL.md",
+      "local_path": "skills/obsidian-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-multi-env-setup/SKILL.md",
+      "local_path": "skills/obsidian-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-observability/SKILL.md",
+      "local_path": "skills/obsidian-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-performance-tuning/SKILL.md",
+      "local_path": "skills/obsidian-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-prod-checklist/SKILL.md",
+      "local_path": "skills/obsidian-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-rate-limits/SKILL.md",
+      "local_path": "skills/obsidian-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-reference-architecture/SKILL.md",
+      "local_path": "skills/obsidian-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-sdk-patterns/SKILL.md",
+      "local_path": "skills/obsidian-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-security-basics/SKILL.md",
+      "local_path": "skills/obsidian-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-upgrade-migration/SKILL.md",
+      "local_path": "skills/obsidian-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/obsidian-pack/skills/obsidian-webhooks-events/SKILL.md",
+      "local_path": "skills/obsidian-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "bundle_name": "assemblyai-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/assemblyai-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-ci-integration/SKILL.md",
+      "local_path": "skills/assemblyai-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-common-errors/SKILL.md",
+      "local_path": "skills/assemblyai-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-core-workflow-a/SKILL.md",
+      "local_path": "skills/assemblyai-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-core-workflow-b/SKILL.md",
+      "local_path": "skills/assemblyai-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-cost-tuning/SKILL.md",
+      "local_path": "skills/assemblyai-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-debug-bundle/SKILL.md",
+      "local_path": "skills/assemblyai-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-deploy-integration/SKILL.md",
+      "local_path": "skills/assemblyai-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-hello-world/SKILL.md",
+      "local_path": "skills/assemblyai-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-install-auth/SKILL.md",
+      "local_path": "skills/assemblyai-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-local-dev-loop/SKILL.md",
+      "local_path": "skills/assemblyai-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-performance-tuning/SKILL.md",
+      "local_path": "skills/assemblyai-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-prod-checklist/SKILL.md",
+      "local_path": "skills/assemblyai-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-rate-limits/SKILL.md",
+      "local_path": "skills/assemblyai-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-reference-architecture/SKILL.md",
+      "local_path": "skills/assemblyai-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-sdk-patterns/SKILL.md",
+      "local_path": "skills/assemblyai-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-security-basics/SKILL.md",
+      "local_path": "skills/assemblyai-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-upgrade-migration/SKILL.md",
+      "local_path": "skills/assemblyai-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/assemblyai-pack/skills/assemblyai-webhooks-events/SKILL.md",
+      "local_path": "skills/assemblyai-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

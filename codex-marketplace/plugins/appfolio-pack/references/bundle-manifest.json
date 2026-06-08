@@ -1,0 +1,121 @@
+{
+  "bundle_name": "appfolio-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/appfolio-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-ci-integration/SKILL.md",
+      "local_path": "skills/appfolio-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-common-errors/SKILL.md",
+      "local_path": "skills/appfolio-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-core-workflow-a/SKILL.md",
+      "local_path": "skills/appfolio-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-core-workflow-b/SKILL.md",
+      "local_path": "skills/appfolio-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-cost-tuning/SKILL.md",
+      "local_path": "skills/appfolio-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-debug-bundle/SKILL.md",
+      "local_path": "skills/appfolio-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-deploy-integration/SKILL.md",
+      "local_path": "skills/appfolio-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-hello-world/SKILL.md",
+      "local_path": "skills/appfolio-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-install-auth/SKILL.md",
+      "local_path": "skills/appfolio-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-local-dev-loop/SKILL.md",
+      "local_path": "skills/appfolio-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-performance-tuning/SKILL.md",
+      "local_path": "skills/appfolio-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-prod-checklist/SKILL.md",
+      "local_path": "skills/appfolio-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-rate-limits/SKILL.md",
+      "local_path": "skills/appfolio-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-reference-architecture/SKILL.md",
+      "local_path": "skills/appfolio-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-sdk-patterns/SKILL.md",
+      "local_path": "skills/appfolio-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-security-basics/SKILL.md",
+      "local_path": "skills/appfolio-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-upgrade-migration/SKILL.md",
+      "local_path": "skills/appfolio-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/appfolio-pack/skills/appfolio-webhooks-events/SKILL.md",
+      "local_path": "skills/appfolio-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

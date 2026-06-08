@@ -1,0 +1,211 @@
+{
+  "bundle_name": "langchain-py-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/langchain-py-pack/skills",
+  "candidate_count": 33,
+  "imported_count": 33,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-ci-integration/SKILL.md",
+      "local_path": "skills/langchain-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-common-errors/SKILL.md",
+      "local_path": "skills/langchain-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-content-blocks/SKILL.md",
+      "local_path": "skills/langchain-content-blocks/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-core-workflow/SKILL.md",
+      "local_path": "skills/langchain-core-workflow/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-cost-tuning/SKILL.md",
+      "local_path": "skills/langchain-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-data-handling/SKILL.md",
+      "local_path": "skills/langchain-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-debug-bundle/SKILL.md",
+      "local_path": "skills/langchain-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-deep-agents/SKILL.md",
+      "local_path": "skills/langchain-deep-agents/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-deploy-integration/SKILL.md",
+      "local_path": "skills/langchain-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-embeddings-search/SKILL.md",
+      "local_path": "skills/langchain-embeddings-search/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-enterprise-rbac/SKILL.md",
+      "local_path": "skills/langchain-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-eval-harness/SKILL.md",
+      "local_path": "skills/langchain-eval-harness/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-incident-runbook/SKILL.md",
+      "local_path": "skills/langchain-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-agents/SKILL.md",
+      "local_path": "skills/langchain-langgraph-agents/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-basics/SKILL.md",
+      "local_path": "skills/langchain-langgraph-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-checkpointing/SKILL.md",
+      "local_path": "skills/langchain-langgraph-checkpointing/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-human-in-loop/SKILL.md",
+      "local_path": "skills/langchain-langgraph-human-in-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-streaming/SKILL.md",
+      "local_path": "skills/langchain-langgraph-streaming/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-langgraph-subgraphs/SKILL.md",
+      "local_path": "skills/langchain-langgraph-subgraphs/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-local-dev-loop/SKILL.md",
+      "local_path": "skills/langchain-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-middleware-patterns/SKILL.md",
+      "local_path": "skills/langchain-middleware-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-model-inference/SKILL.md",
+      "local_path": "skills/langchain-model-inference/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-multi-env-setup/SKILL.md",
+      "local_path": "skills/langchain-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-observability/SKILL.md",
+      "local_path": "skills/langchain-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-otel-observability/SKILL.md",
+      "local_path": "skills/langchain-otel-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-performance-tuning/SKILL.md",
+      "local_path": "skills/langchain-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-prompt-engineering/SKILL.md",
+      "local_path": "skills/langchain-prompt-engineering/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-rate-limits/SKILL.md",
+      "local_path": "skills/langchain-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-reference-architecture/SKILL.md",
+      "local_path": "skills/langchain-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-sdk-patterns/SKILL.md",
+      "local_path": "skills/langchain-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-security-basics/SKILL.md",
+      "local_path": "skills/langchain-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-upgrade-migration/SKILL.md",
+      "local_path": "skills/langchain-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/langchain-py-pack/skills/langchain-webhooks-events/SKILL.md",
+      "local_path": "skills/langchain-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

@@ -178,3 +178,18 @@ operations proof slice.
 
 Pending. Run the repo validation commands after the edits are finalized and
 before publication.
+
+## MARK-63 Final Skill-Pack Drain Addendum
+
+The remaining upstream standalone skill-pack families are now also preserved as
+marketplace plugin packs:
+
+- imported: `100` remaining `plugins/saas-packs/*-pack` families
+- skipped: `0`
+- blocked: `0`
+
+Residual upstream skill-pack inventory after MARK-63:
+
+- `0`
+
+The next upstream drain step should move to plugin-package tranches only.

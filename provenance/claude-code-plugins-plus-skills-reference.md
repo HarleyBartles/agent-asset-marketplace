@@ -279,6 +279,19 @@ The bundle evidence lives in the respective
 `codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
 plugin manifests are constrained to paths that exist locally.
 
+## MARK-63 Final Skill-Pack Drain Addendum
+
+The remaining upstream standalone skill-pack families have now been preserved as
+Codex marketplace plugin packs under `codex-marketplace/plugins/`.
+
+- remaining skill-pack families imported: `100`
+- remaining skill-pack families skipped: `0`
+- remaining skill-pack families blocked: `0`
+- residual upstream skill-pack inventory: `0`
+
+The skill-pack phase is complete. Any further upstream drain should start from
+the remaining plugin-package surface only.
+
 ## MARK-62 Cursor, Cohere, Databricks, and Fly.io Pack Addendum
 
 The next upstream standalone skill pack families are now also preserved as

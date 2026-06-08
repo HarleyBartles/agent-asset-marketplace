@@ -1,0 +1,193 @@
+{
+  "bundle_name": "adobe-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/adobe-pack/skills",
+  "candidate_count": 30,
+  "imported_count": 30,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-advanced-troubleshooting/SKILL.md",
+      "local_path": "skills/adobe-advanced-troubleshooting/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-architecture-variants/SKILL.md",
+      "local_path": "skills/adobe-architecture-variants/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-ci-integration/SKILL.md",
+      "local_path": "skills/adobe-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-common-errors/SKILL.md",
+      "local_path": "skills/adobe-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-core-workflow-a/SKILL.md",
+      "local_path": "skills/adobe-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-core-workflow-b/SKILL.md",
+      "local_path": "skills/adobe-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-cost-tuning/SKILL.md",
+      "local_path": "skills/adobe-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-data-handling/SKILL.md",
+      "local_path": "skills/adobe-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-debug-bundle/SKILL.md",
+      "local_path": "skills/adobe-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-deploy-integration/SKILL.md",
+      "local_path": "skills/adobe-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-enterprise-rbac/SKILL.md",
+      "local_path": "skills/adobe-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-hello-world/SKILL.md",
+      "local_path": "skills/adobe-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-incident-runbook/SKILL.md",
+      "local_path": "skills/adobe-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-install-auth/SKILL.md",
+      "local_path": "skills/adobe-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-known-pitfalls/SKILL.md",
+      "local_path": "skills/adobe-known-pitfalls/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-load-scale/SKILL.md",
+      "local_path": "skills/adobe-load-scale/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-local-dev-loop/SKILL.md",
+      "local_path": "skills/adobe-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-migration-deep-dive/SKILL.md",
+      "local_path": "skills/adobe-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-multi-env-setup/SKILL.md",
+      "local_path": "skills/adobe-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-observability/SKILL.md",
+      "local_path": "skills/adobe-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-performance-tuning/SKILL.md",
+      "local_path": "skills/adobe-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-policy-guardrails/SKILL.md",
+      "local_path": "skills/adobe-policy-guardrails/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-prod-checklist/SKILL.md",
+      "local_path": "skills/adobe-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-rate-limits/SKILL.md",
+      "local_path": "skills/adobe-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-reference-architecture/SKILL.md",
+      "local_path": "skills/adobe-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-reliability-patterns/SKILL.md",
+      "local_path": "skills/adobe-reliability-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-sdk-patterns/SKILL.md",
+      "local_path": "skills/adobe-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-security-basics/SKILL.md",
+      "local_path": "skills/adobe-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-upgrade-migration/SKILL.md",
+      "local_path": "skills/adobe-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/adobe-pack/skills/adobe-webhooks-events/SKILL.md",
+      "local_path": "skills/adobe-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

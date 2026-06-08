@@ -17,10 +17,10 @@
       "category": "Productivity"
     },
     {
-      "name": "marketplace-family-pack",
+      "name": "abridge-pack",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/marketplace-family-pack"
+        "path": "./codex-marketplace/plugins/abridge-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -29,118 +29,10 @@
       "category": "Productivity"
     },
     {
-      "name": "testing-skill-pack",
+      "name": "adobe-pack",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/testing-skill-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "supabase-platform-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/supabase-platform-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "vercel-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/vercel-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "sentry-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/sentry-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "openrouter-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/openrouter-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "cursor-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/cursor-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "cohere-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/cohere-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "databricks-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/databricks-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "flyio-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/flyio-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "fullstack-starter-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/fullstack-starter-pack"
+        "path": "./codex-marketplace/plugins/adobe-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -161,10 +53,334 @@
       "category": "Productivity"
     },
     {
+      "name": "alchemy-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/alchemy-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "algolia-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/algolia-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "anima-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/anima-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "anthropic-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/anthropic-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "apify-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/apify-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "apollo-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/apollo-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "appfolio-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/appfolio-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "apple-notes-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/apple-notes-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "assemblyai-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/assemblyai-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "attio-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/attio-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "bamboohr-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/bamboohr-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "brightdata-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/brightdata-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "canva-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/canva-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "castai-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/castai-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "clari-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/clari-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "claude-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/claude-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "clay-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/clay-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "clerk-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/clerk-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "clickhouse-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/clickhouse-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "clickup-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/clickup-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "coderabbit-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/coderabbit-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "cohere-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/cohere-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "conversational-api-debugger",
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/conversational-api-debugger"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "coreweave-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/coreweave-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "cursor-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/cursor-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "customerio-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/customerio-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "databricks-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/databricks-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "deepgram-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/deepgram-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -185,10 +401,454 @@
       "category": "Productivity"
     },
     {
+      "name": "documenso-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/documenso-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "domain-memory-agent",
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/domain-memory-agent"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "elevenlabs-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/elevenlabs-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "evernote-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/evernote-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "exa-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/exa-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fathom-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/fathom-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "figma-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/figma-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "finta-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/finta-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "firecrawl-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/firecrawl-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fireflies-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/fireflies-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "flexport-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/flexport-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "flyio-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/flyio-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fondo-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/fondo-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "framer-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/framer-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fullstack-starter-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/fullstack-starter-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ga4-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ga4-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "gamma-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/gamma-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "glean-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/glean-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "grammarly-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/grammarly-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "granola-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/granola-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "groq-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/groq-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "guidewire-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/guidewire-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "hex-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/hex-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "hootsuite-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/hootsuite-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "hubspot-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/hubspot-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ideogram-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ideogram-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "instantly-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/instantly-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "intercom-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/intercom-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "juicebox-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/juicebox-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "klaviyo-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/klaviyo-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "klingai-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/klingai-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "langchain-py-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/langchain-py-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "langfuse-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/langfuse-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "lindy-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/lindy-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "linear-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/linear-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "linktree-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/linktree-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "lokalise-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/lokalise-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "lucidchart-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/lucidchart-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -209,10 +869,226 @@
       "category": "Productivity"
     },
     {
+      "name": "maintainx-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/maintainx-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "marketplace-family-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/marketplace-family-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "mindtickle-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/mindtickle-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "miro-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/miro-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "mistral-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/mistral-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "navan-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/navan-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "notion-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/notion-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "obsidian-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/obsidian-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "onenote-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/onenote-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "openevidence-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/openevidence-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "openrouter-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/openrouter-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "oraclecloud-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/oraclecloud-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "palantir-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/palantir-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "perplexity-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/perplexity-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "persona-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/persona-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "podium-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/podium-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "posthog-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/posthog-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "pr-to-spec",
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/pr-to-spec"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "procore-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/procore-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -233,6 +1109,138 @@
       "category": "Productivity"
     },
     {
+      "name": "quicknode-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/quicknode-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ramp-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ramp-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "remofirst-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/remofirst-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "replit-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/replit-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "retellai-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/retellai-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "runway-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/runway-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "salesforce-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/salesforce-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "salesloft-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/salesloft-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "sentry-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/sentry-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "serpapi-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/serpapi-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "shopify-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/shopify-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "slack-channel",
       "source": {
         "source": "local",
@@ -245,10 +1253,202 @@
       "category": "Productivity"
     },
     {
+      "name": "snowflake-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/snowflake-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "speak-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/speak-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "stackblitz-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/stackblitz-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "supabase-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/supabase-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "supabase-platform-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/supabase-platform-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "techsmith-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/techsmith-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "testing-skill-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/testing-skill-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "together-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/together-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "twinmind-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/twinmind-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "vastai-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/vastai-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "veeva-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/veeva-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "vercel-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/vercel-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "webflow-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/webflow-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "windsurf-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/windsurf-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wispr-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wispr-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "workflow-orchestrator",
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/workflow-orchestrator"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "workhuman-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/workhuman-pack"
       },
       "policy": {
         "installation": "AVAILABLE",

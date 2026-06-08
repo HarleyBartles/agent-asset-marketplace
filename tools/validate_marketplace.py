@@ -15,15 +15,7 @@ from marketplace_utils import (
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
     PLUGIN_BUNDLE_AGENTS_PATH,
-    SUPABASE_BUNDLE_MANIFEST_PATH,
-    TESTING_BUNDLE_MANIFEST_PATH,
-    VERCEL_BUNDLE_MANIFEST_PATH,
-    SENTRY_BUNDLE_MANIFEST_PATH,
-    OPENROUTER_BUNDLE_MANIFEST_PATH,
-    CURSOR_BUNDLE_MANIFEST_PATH,
-    COHERE_BUNDLE_MANIFEST_PATH,
-    DATABRICKS_BUNDLE_MANIFEST_PATH,
-    FLYIO_BUNDLE_MANIFEST_PATH,
+    UPSTREAM_VENDOR_ROOT,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_DECISIONS_MD_PATH,
     SOURCE_INTAKE_JSON_PATH,
@@ -198,19 +190,20 @@ def validate_skill_bundle_manifest(
     bundle_manifest: dict,
     *,
     bundle_name: str,
-    source_root: str,
     plugin_root: str,
 ) -> None:
     if bundle_manifest.get("bundle_name") != bundle_name:
         raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("source_root") != source_root:
-        raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
     if bundle_manifest.get("upstream_repo") != "jeremylongshore/claude-code-plugins-plus-skills":
         raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
     if bundle_manifest.get("pinned_commit") != "e773501f1dfb409fc71fccdaf6ac2898fedf66d6":
         raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
+    source_root = bundle_manifest.get("source_root")
+    if not source_root or not isinstance(source_root, str):
+        raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
+    check_path_exists(UPSTREAM_VENDOR_ROOT / source_root)
 
     entries = bundle_manifest.get("entries", [])
     if bundle_manifest.get("candidate_count") != len(entries):
@@ -243,8 +236,10 @@ def validate_skill_bundle_manifest(
         if not local_path or not isinstance(local_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
         check_path_exists(ROOT / plugin_root / local_path)
-        if not entry.get("upstream_path"):
+        upstream_path = entry.get("upstream_path")
+        if not upstream_path or not isinstance(upstream_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing an upstream_path")
+        check_path_exists(UPSTREAM_VENDOR_ROOT / upstream_path)
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
 
@@ -278,7 +273,6 @@ def main() -> int:
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
-    testing_bundle_manifest = check_json(TESTING_BUNDLE_MANIFEST_PATH)
     decisions_md_text = check_text(SOURCE_DECISIONS_MD_PATH)
     decision_rows = parse_top_markdown_table(SOURCE_DECISIONS_MD_PATH)
 
@@ -288,88 +282,23 @@ def main() -> int:
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
     validate_bundle_manifest(bundle_manifest, intake)
-    validate_skill_bundle_manifest(
-        testing_bundle_manifest,
-        bundle_name="testing-skill-pack",
-        source_root="plugins/saas-packs/skill-databases/replit",
-        plugin_root="codex-marketplace/plugins/testing-skill-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(SUPABASE_BUNDLE_MANIFEST_PATH),
-        bundle_name="supabase-platform-pack",
-        source_root="plugins/saas-packs/supabase-pack/skills",
-        plugin_root="codex-marketplace/plugins/supabase-platform-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(VERCEL_BUNDLE_MANIFEST_PATH),
-        bundle_name="vercel-pack",
-        source_root="plugins/saas-packs/vercel-pack/skills",
-        plugin_root="codex-marketplace/plugins/vercel-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(SENTRY_BUNDLE_MANIFEST_PATH),
-        bundle_name="sentry-pack",
-        source_root="plugins/saas-packs/sentry-pack/skills",
-        plugin_root="codex-marketplace/plugins/sentry-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(OPENROUTER_BUNDLE_MANIFEST_PATH),
-        bundle_name="openrouter-pack",
-        source_root="plugins/saas-packs/openrouter-pack/skills",
-        plugin_root="codex-marketplace/plugins/openrouter-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(CURSOR_BUNDLE_MANIFEST_PATH),
-        bundle_name="cursor-pack",
-        source_root="plugins/saas-packs/cursor-pack/skills",
-        plugin_root="codex-marketplace/plugins/cursor-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(COHERE_BUNDLE_MANIFEST_PATH),
-        bundle_name="cohere-pack",
-        source_root="plugins/saas-packs/cohere-pack/skills",
-        plugin_root="codex-marketplace/plugins/cohere-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(DATABRICKS_BUNDLE_MANIFEST_PATH),
-        bundle_name="databricks-pack",
-        source_root="plugins/saas-packs/databricks-pack/skills",
-        plugin_root="codex-marketplace/plugins/databricks-pack",
-    )
-    validate_skill_bundle_manifest(
-        check_json(FLYIO_BUNDLE_MANIFEST_PATH),
-        bundle_name="flyio-pack",
-        source_root="plugins/saas-packs/flyio-pack/skills",
-        plugin_root="codex-marketplace/plugins/flyio-pack",
-    )
-    for path in (
-        ROOT / "codex-marketplace/plugins/vercel-pack/package.json",
-        ROOT / "codex-marketplace/plugins/sentry-pack/package.json",
-        ROOT / "codex-marketplace/plugins/openrouter-pack/package.json",
-        ROOT / "codex-marketplace/plugins/cursor-pack/package.json",
-        ROOT / "codex-marketplace/plugins/cohere-pack/package.json",
-        ROOT / "codex-marketplace/plugins/databricks-pack/package.json",
-        ROOT / "codex-marketplace/plugins/flyio-pack/package.json",
-        ROOT / "codex-marketplace/plugins/vercel-pack/README.md",
-        ROOT / "codex-marketplace/plugins/sentry-pack/README.md",
-        ROOT / "codex-marketplace/plugins/openrouter-pack/README.md",
-        ROOT / "codex-marketplace/plugins/cursor-pack/README.md",
-        ROOT / "codex-marketplace/plugins/cohere-pack/README.md",
-        ROOT / "codex-marketplace/plugins/databricks-pack/README.md",
-        ROOT / "codex-marketplace/plugins/flyio-pack/README.md",
-        ROOT / "codex-marketplace/plugins/vercel-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/sentry-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/openrouter-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/cursor-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/cohere-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/databricks-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/flyio-pack/SOURCE.md",
-        ROOT / "codex-marketplace/plugins/openrouter-pack/skills/openrouter-compliance-review/references/openrouter-integration-security-questionnaire.md",
-    ):
-        if path.name == "package.json":
-            check_json(path)
-        else:
-            check_text(path)
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        if spec["name"] == "house-skills":
+            continue
+        plugin_root = ROOT / spec["plugin_root"]
+        for required in ("README.md", "SOURCE.md", "LICENSE"):
+            check_text(plugin_root / required)
+        if (plugin_root / "package.json").exists():
+            check_json(plugin_root / "package.json")
+        check_path_exists(plugin_root / "assets/icon.svg")
+
+        bundle_path = plugin_root / "references/bundle-manifest.json"
+        if bundle_path.exists():
+            validate_skill_bundle_manifest(
+                check_json(bundle_path),
+                bundle_name=spec["name"],
+                plugin_root=spec["plugin_root"],
+            )
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
