@@ -30,13 +30,21 @@
 
 Each selected package root was preserved intact as a Codex marketplace wrapper with local provenance, license evidence, bundle manifest, icon, and wrapper metadata.
 
+Anchor decision:
+
+- `plugins/packages/fullstack-starter-pack` was not re-drained in this proof slice because it is already wrapped in the marketplace at `codex-marketplace/plugins/fullstack-starter-pack`, so the proof slice moved to the next intact plugin-package roots instead of duplicating an existing wrapper.
+
 ## Validation
 
-Run after the wrapper updates:
+Validation completed after the wrapper updates:
 
 - `py -3 tools/generate_marketplace.py`
+- wrote `.agents/plugins/marketplace.json`
+- wrote `codex-marketplace/manifest.json`
 - `py -3 tools/validate_marketplace.py`
+- passed
 - `git diff --check HEAD~1 HEAD`
+- passed
 
 ## Follow-Up Shape
 

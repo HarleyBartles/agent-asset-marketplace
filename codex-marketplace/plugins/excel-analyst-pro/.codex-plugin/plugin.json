@@ -30,7 +30,7 @@
     "type": "cli",
     "displayName": "Excel Analyst Pro",
     "shortDescription": "Professional financial modeling toolkit for Claude Code with auto-invoked skills and Excel MCP integration.",
-    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/excel-analyst-pro. The original Claude plugin metadata is preserved in C:/WORK/agent-asset-marketplace/sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/excel-analyst-pro/.claude-plugin/plugin.json.",
+    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/excel-analyst-pro. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/excel-analyst-pro/.claude-plugin/plugin.json.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [

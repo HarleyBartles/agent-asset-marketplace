@@ -42,7 +42,7 @@
     "type": "cli",
     "displayName": "Promptbook",
     "shortDescription": "Opt-in Claude Code analytics and shareable build cards.",
-    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/promptbook. The original Claude plugin metadata is preserved in C:/WORK/agent-asset-marketplace/sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/promptbook/.claude-plugin/plugin.json.",
+    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/promptbook. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/promptbook/.claude-plugin/plugin.json.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
