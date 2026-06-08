@@ -35,3 +35,7 @@ reference-pack pools, see `claude-code-plugins-plus-skills-catalog.md`.
 For the MARK-59 first-party marketplace bundle capture that preserves the
 MARK-46 family-level adaptation consequence, see `MARK-59-activity-log.md`
 and `marketplace-family-pack.md`.
+
+For the MARK-61 Vercel, Sentry, and OpenRouter continuation tranche, see
+`MARK-46-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
+addendum.

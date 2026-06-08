@@ -88,6 +88,50 @@ and records the bundle ledger in the bundle manifest and source note:
 Pending. Run the repo validation commands after the edits are finalized and
 before publication.
 
+## MARK-61 Vercel, Sentry, and OpenRouter Pack Tranche
+
+## Start Posture
+
+- Date: 2026-06-08
+- Branch start: `mark-61-vercel-sentry-openrouter-pack-drain`
+- Starting main SHA: `cd5ee21db1663a910af45e2fcfc5effc7c9aebfe`
+- Branch created: `mark-61-vercel-sentry-openrouter-pack-drain`
+- Upstream inspected: `jeremylongshore/claude-code-plugins-plus-skills` at `e773501f1dfb409fc71fccdaf6ac2898fedf66d6`
+- Source guard: inspected `plugins/saas-packs/vercel-pack/`, `plugins/saas-packs/sentry-pack/`, and `plugins/saas-packs/openrouter-pack/` as the functional pack roots and used the corresponding `plugins/saas-packs/skill-databases/{vercel,sentry,openrouter}/` trees only as cross-check evidence
+- Marketplace route used: `codex-marketplace/plugins/vercel-pack/`, `codex-marketplace/plugins/sentry-pack/`, and `codex-marketplace/plugins/openrouter-pack/` plus `.agents/plugins/marketplace.json`
+
+## Outcome Summary
+
+Created three new Codex marketplace plugin packs:
+
+- `codex-marketplace/plugins/vercel-pack`
+- `codex-marketplace/plugins/sentry-pack`
+- `codex-marketplace/plugins/openrouter-pack`
+
+Each pack imports 30 standalone skill docs into per-skill directories and records
+the bundle ledger in the bundle manifest and source note:
+
+- imported: `30` each
+- skipped: `0` each
+- blocked: `0` each
+
+OpenRouter support-file correction:
+
+- `codex-marketplace/plugins/openrouter-pack/skills/openrouter-compliance-review/references/openrouter-integration-security-questionnaire.md`
+  - recreated locally because the pinned upstream tree referenced a missing support file path
+
+## Registry Updates
+
+- `codex-marketplace/manifest.json`
+- `.agents/plugins/marketplace.json`
+- `tools/marketplace_utils.py`
+- `tools/validate_marketplace.py`
+
+## Validation
+
+Pending. Run the repo validation commands after the edits are finalized and
+before publication.
+
 ## MARK-60 Standalone Testing Skill Pack
 
 ## Start Posture
