@@ -24,7 +24,7 @@
     "type": "cli",
     "displayName": "Supabase Platform Pack",
     "shortDescription": "Standalone Supabase skills packaged as a Codex marketplace plugin.",
-    "longDescription": "Codex-compatible wrapper for the upstream standalone Supabase skill family at plugins/saas-packs/skill-databases/supabase. The original upstream skill docs are preserved under codex-marketplace/plugins/supabase-platform-pack/skills/ with provenance and license evidence recorded in SOURCE.md.",
+    "longDescription": "Codex-compatible wrapper for the upstream standalone Supabase skill family at plugins/saas-packs/supabase-pack/skills. The original upstream skill docs are preserved under codex-marketplace/plugins/supabase-platform-pack/skills/ with provenance and license evidence recorded in SOURCE.md.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
