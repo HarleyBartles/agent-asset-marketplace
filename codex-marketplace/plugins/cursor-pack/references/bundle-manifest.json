@@ -1,0 +1,193 @@
+{
+  "bundle_name": "cursor-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/cursor-pack/skills",
+  "candidate_count": 30,
+  "imported_count": 30,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-advanced-composer/SKILL.md",
+      "local_path": "skills/cursor-advanced-composer/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-ai-chat/SKILL.md",
+      "local_path": "skills/cursor-ai-chat/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-api-key-management/SKILL.md",
+      "local_path": "skills/cursor-api-key-management/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-codebase-indexing/SKILL.md",
+      "local_path": "skills/cursor-codebase-indexing/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-common-errors/SKILL.md",
+      "local_path": "skills/cursor-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-compliance-audit/SKILL.md",
+      "local_path": "skills/cursor-compliance-audit/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-composer-workflows/SKILL.md",
+      "local_path": "skills/cursor-composer-workflows/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-context-management/SKILL.md",
+      "local_path": "skills/cursor-context-management/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-custom-prompts/SKILL.md",
+      "local_path": "skills/cursor-custom-prompts/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-debug-bundle/SKILL.md",
+      "local_path": "skills/cursor-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-extension-integration/SKILL.md",
+      "local_path": "skills/cursor-extension-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-git-integration/SKILL.md",
+      "local_path": "skills/cursor-git-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-hello-world/SKILL.md",
+      "local_path": "skills/cursor-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-indexing-issues/SKILL.md",
+      "local_path": "skills/cursor-indexing-issues/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-install-auth/SKILL.md",
+      "local_path": "skills/cursor-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-keybindings/SKILL.md",
+      "local_path": "skills/cursor-keybindings/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-known-pitfalls/SKILL.md",
+      "local_path": "skills/cursor-known-pitfalls/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-local-dev-loop/SKILL.md",
+      "local_path": "skills/cursor-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-model-selection/SKILL.md",
+      "local_path": "skills/cursor-model-selection/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-multi-repo/SKILL.md",
+      "local_path": "skills/cursor-multi-repo/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-performance-tuning/SKILL.md",
+      "local_path": "skills/cursor-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-privacy-settings/SKILL.md",
+      "local_path": "skills/cursor-privacy-settings/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-prod-checklist/SKILL.md",
+      "local_path": "skills/cursor-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-reference-architecture/SKILL.md",
+      "local_path": "skills/cursor-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-rules-config/SKILL.md",
+      "local_path": "skills/cursor-rules-config/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-sso-integration/SKILL.md",
+      "local_path": "skills/cursor-sso-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-tab-completion/SKILL.md",
+      "local_path": "skills/cursor-tab-completion/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-team-setup/SKILL.md",
+      "local_path": "skills/cursor-team-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-upgrade-migration/SKILL.md",
+      "local_path": "skills/cursor-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/cursor-pack/skills/cursor-usage-analytics/SKILL.md",
+      "local_path": "skills/cursor-usage-analytics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

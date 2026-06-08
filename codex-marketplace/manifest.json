@@ -89,6 +89,54 @@
       "category": "Productivity"
     },
     {
+      "name": "cursor-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/cursor-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "cohere-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/cohere-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "databricks-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/databricks-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "flyio-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/flyio-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "fullstack-starter-pack",
       "source": {
         "source": "local",

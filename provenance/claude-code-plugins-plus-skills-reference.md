@@ -278,3 +278,30 @@ OpenRouter support-file correction:
 The bundle evidence lives in the respective
 `codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
 plugin manifests are constrained to paths that exist locally.
+
+## MARK-62 Cursor, Cohere, Databricks, and Fly.io Pack Addendum
+
+The next upstream standalone skill pack families are now also preserved as
+marketplace plugin packs:
+
+- `codex-marketplace/plugins/cursor-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/cursor-pack/skills/`
+- `codex-marketplace/plugins/cohere-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/cohere-pack/skills/`
+- `codex-marketplace/plugins/databricks-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/databricks-pack/skills/`
+- `codex-marketplace/plugins/flyio-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/flyio-pack/skills/`
+
+Imported skill docs:
+
+- `30` imported for `cursor-pack`
+- `24` imported for `cohere-pack`
+- `24` imported for `databricks-pack`
+- `18` imported for `flyio-pack`
+- `0` skipped for each pack
+- `0` blocked for each pack
+
+The bundle evidence lives in the respective
+`codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
+plugin manifests are constrained to paths that exist locally.
