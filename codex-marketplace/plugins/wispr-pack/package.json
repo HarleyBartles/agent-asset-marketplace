@@ -1,0 +1,33 @@
+{
+  "name": "@intentsolutionsio/wispr-pack",
+  "version": "1.0.0",
+  "description": "Claude Code skill pack for Wispr Flow Pack - 18 skills packaged for the Codex marketplace",
+  "main": "README.md",
+  "type": "module",
+  "files": [
+    "README.md",
+    ".codex-plugin/",
+    "skills/"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "wispr",
+    "code-editor",
+    "ai-skills",
+    "saas-pack"
+  ],
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/wispr-pack"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "publishConfig": {
+    "access": "public"
+  }
+}

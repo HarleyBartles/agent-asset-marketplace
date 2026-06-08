@@ -1,0 +1,157 @@
+{
+  "bundle_name": "deepgram-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/deepgram-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-ci-integration/SKILL.md",
+      "local_path": "skills/deepgram-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-common-errors/SKILL.md",
+      "local_path": "skills/deepgram-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-core-workflow-a/SKILL.md",
+      "local_path": "skills/deepgram-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-core-workflow-b/SKILL.md",
+      "local_path": "skills/deepgram-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-cost-tuning/SKILL.md",
+      "local_path": "skills/deepgram-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-data-handling/SKILL.md",
+      "local_path": "skills/deepgram-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-debug-bundle/SKILL.md",
+      "local_path": "skills/deepgram-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-deploy-integration/SKILL.md",
+      "local_path": "skills/deepgram-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-enterprise-rbac/SKILL.md",
+      "local_path": "skills/deepgram-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-hello-world/SKILL.md",
+      "local_path": "skills/deepgram-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-incident-runbook/SKILL.md",
+      "local_path": "skills/deepgram-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-install-auth/SKILL.md",
+      "local_path": "skills/deepgram-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-local-dev-loop/SKILL.md",
+      "local_path": "skills/deepgram-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-migration-deep-dive/SKILL.md",
+      "local_path": "skills/deepgram-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-multi-env-setup/SKILL.md",
+      "local_path": "skills/deepgram-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-observability/SKILL.md",
+      "local_path": "skills/deepgram-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-performance-tuning/SKILL.md",
+      "local_path": "skills/deepgram-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-prod-checklist/SKILL.md",
+      "local_path": "skills/deepgram-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-rate-limits/SKILL.md",
+      "local_path": "skills/deepgram-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-reference-architecture/SKILL.md",
+      "local_path": "skills/deepgram-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-sdk-patterns/SKILL.md",
+      "local_path": "skills/deepgram-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-security-basics/SKILL.md",
+      "local_path": "skills/deepgram-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-upgrade-migration/SKILL.md",
+      "local_path": "skills/deepgram-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/deepgram-pack/skills/deepgram-webhooks-events/SKILL.md",
+      "local_path": "skills/deepgram-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

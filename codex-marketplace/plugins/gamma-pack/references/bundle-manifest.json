@@ -1,0 +1,157 @@
+{
+  "bundle_name": "gamma-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/gamma-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-ci-integration/SKILL.md",
+      "local_path": "skills/gamma-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-common-errors/SKILL.md",
+      "local_path": "skills/gamma-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-core-workflow-a/SKILL.md",
+      "local_path": "skills/gamma-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-core-workflow-b/SKILL.md",
+      "local_path": "skills/gamma-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-cost-tuning/SKILL.md",
+      "local_path": "skills/gamma-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-data-handling/SKILL.md",
+      "local_path": "skills/gamma-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-debug-bundle/SKILL.md",
+      "local_path": "skills/gamma-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-deploy-integration/SKILL.md",
+      "local_path": "skills/gamma-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-enterprise-rbac/SKILL.md",
+      "local_path": "skills/gamma-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-hello-world/SKILL.md",
+      "local_path": "skills/gamma-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-incident-runbook/SKILL.md",
+      "local_path": "skills/gamma-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-install-auth/SKILL.md",
+      "local_path": "skills/gamma-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-local-dev-loop/SKILL.md",
+      "local_path": "skills/gamma-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-migration-deep-dive/SKILL.md",
+      "local_path": "skills/gamma-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-multi-env-setup/SKILL.md",
+      "local_path": "skills/gamma-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-observability/SKILL.md",
+      "local_path": "skills/gamma-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-performance-tuning/SKILL.md",
+      "local_path": "skills/gamma-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-prod-checklist/SKILL.md",
+      "local_path": "skills/gamma-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-rate-limits/SKILL.md",
+      "local_path": "skills/gamma-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-reference-architecture/SKILL.md",
+      "local_path": "skills/gamma-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-sdk-patterns/SKILL.md",
+      "local_path": "skills/gamma-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-security-basics/SKILL.md",
+      "local_path": "skills/gamma-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-upgrade-migration/SKILL.md",
+      "local_path": "skills/gamma-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/gamma-pack/skills/gamma-webhooks-events/SKILL.md",
+      "local_path": "skills/gamma-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

@@ -154,134 +154,500 @@
       }
     },
     {
-      "name": "marketplace-family-pack",
-      "plugin_root": "codex-marketplace/plugins/marketplace-family-pack",
-      "plugin_manifest": "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/marketplace-family-pack/SOURCE.md",
+      "name": "abridge-pack",
+      "plugin_root": "codex-marketplace/plugins/abridge-pack",
+      "plugin_manifest": "codex-marketplace/plugins/abridge-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/abridge-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/marketplace-family-pack/LICENSE",
+      "license_path": "codex-marketplace/plugins/abridge-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/abridge-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/abridge-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/abridge-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "adobe-pack",
+      "plugin_root": "codex-marketplace/plugins/adobe-pack",
+      "plugin_manifest": "codex-marketplace/plugins/adobe-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/adobe-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/adobe-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/adobe-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/adobe-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/adobe-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "ai-experiment-logger",
+      "plugin_root": "codex-marketplace/plugins/ai-experiment-logger",
+      "plugin_manifest": "codex-marketplace/plugins/ai-experiment-logger/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/ai-experiment-logger/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/ai-experiment-logger/LICENSE",
       "bundle_manifest": null,
-      "skills_path": "codex-marketplace/plugins/marketplace-family-pack/skills",
-      "provenance_refs": [
-        "provenance/marketplace-family-pack.md",
-        "provenance/MARK-59-activity-log.md"
-      ],
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/marketplace-family-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "testing-skill-pack",
-      "plugin_root": "codex-marketplace/plugins/testing-skill-pack",
-      "plugin_manifest": "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/testing-skill-pack/SOURCE.md",
-      "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/testing-skill-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/testing-skill-pack/skills",
+      "skills_path": "codex-marketplace/plugins/ai-experiment-logger/skills",
       "provenance_refs": [],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/testing-skill-pack",
+      "registry_path": "./codex-marketplace/plugins/ai-experiment-logger",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "supabase-platform-pack",
-      "plugin_root": "codex-marketplace/plugins/supabase-platform-pack",
-      "plugin_manifest": "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/supabase-platform-pack/SOURCE.md",
+      "name": "alchemy-pack",
+      "plugin_root": "codex-marketplace/plugins/alchemy-pack",
+      "plugin_manifest": "codex-marketplace/plugins/alchemy-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/alchemy-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/supabase-platform-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/supabase-platform-pack/skills",
-      "provenance_refs": [],
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/supabase-platform-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "vercel-pack",
-      "plugin_root": "codex-marketplace/plugins/vercel-pack",
-      "plugin_manifest": "codex-marketplace/plugins/vercel-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/vercel-pack/SOURCE.md",
-      "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/vercel-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/vercel-pack/skills",
+      "license_path": "codex-marketplace/plugins/alchemy-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/alchemy-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/alchemy-pack/./skills/",
       "provenance_refs": [
-        "provenance/MARK-46-activity-log.md",
+        "provenance/MARK-63-activity-log.md",
         "provenance/claude-code-plugins-plus-skills-reference.md"
       ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/vercel-pack",
+      "registry_path": "./codex-marketplace/plugins/alchemy-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "sentry-pack",
-      "plugin_root": "codex-marketplace/plugins/sentry-pack",
-      "plugin_manifest": "codex-marketplace/plugins/sentry-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/sentry-pack/SOURCE.md",
+      "name": "algolia-pack",
+      "plugin_root": "codex-marketplace/plugins/algolia-pack",
+      "plugin_manifest": "codex-marketplace/plugins/algolia-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/algolia-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/sentry-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/sentry-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/sentry-pack/skills",
+      "license_path": "codex-marketplace/plugins/algolia-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/algolia-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/algolia-pack/./skills/",
       "provenance_refs": [
-        "provenance/MARK-46-activity-log.md",
+        "provenance/MARK-63-activity-log.md",
         "provenance/claude-code-plugins-plus-skills-reference.md"
       ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/sentry-pack",
+      "registry_path": "./codex-marketplace/plugins/algolia-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "openrouter-pack",
-      "plugin_root": "codex-marketplace/plugins/openrouter-pack",
-      "plugin_manifest": "codex-marketplace/plugins/openrouter-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/openrouter-pack/SOURCE.md",
+      "name": "anima-pack",
+      "plugin_root": "codex-marketplace/plugins/anima-pack",
+      "plugin_manifest": "codex-marketplace/plugins/anima-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/anima-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/openrouter-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/openrouter-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/openrouter-pack/skills",
+      "license_path": "codex-marketplace/plugins/anima-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/anima-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/anima-pack/./skills/",
       "provenance_refs": [
-        "provenance/MARK-46-activity-log.md",
+        "provenance/MARK-63-activity-log.md",
         "provenance/claude-code-plugins-plus-skills-reference.md"
       ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/openrouter-pack",
+      "registry_path": "./codex-marketplace/plugins/anima-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "cursor-pack",
-      "plugin_root": "codex-marketplace/plugins/cursor-pack",
-      "plugin_manifest": "codex-marketplace/plugins/cursor-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/cursor-pack/SOURCE.md",
+      "name": "anthropic-pack",
+      "plugin_root": "codex-marketplace/plugins/anthropic-pack",
+      "plugin_manifest": "codex-marketplace/plugins/anthropic-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/anthropic-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/cursor-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/cursor-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/cursor-pack/skills",
+      "license_path": "codex-marketplace/plugins/anthropic-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/anthropic-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/anthropic-pack/./skills/",
       "provenance_refs": [
-        "provenance/MARK-62-activity-log.md",
+        "provenance/MARK-63-activity-log.md",
         "provenance/claude-code-plugins-plus-skills-reference.md"
       ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/cursor-pack",
+      "registry_path": "./codex-marketplace/plugins/anthropic-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "apify-pack",
+      "plugin_root": "codex-marketplace/plugins/apify-pack",
+      "plugin_manifest": "codex-marketplace/plugins/apify-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/apify-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/apify-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/apify-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/apify-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/apify-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "apollo-pack",
+      "plugin_root": "codex-marketplace/plugins/apollo-pack",
+      "plugin_manifest": "codex-marketplace/plugins/apollo-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/apollo-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/apollo-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/apollo-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/apollo-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/apollo-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "appfolio-pack",
+      "plugin_root": "codex-marketplace/plugins/appfolio-pack",
+      "plugin_manifest": "codex-marketplace/plugins/appfolio-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/appfolio-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/appfolio-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/appfolio-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/appfolio-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/appfolio-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "apple-notes-pack",
+      "plugin_root": "codex-marketplace/plugins/apple-notes-pack",
+      "plugin_manifest": "codex-marketplace/plugins/apple-notes-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/apple-notes-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/apple-notes-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/apple-notes-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/apple-notes-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/apple-notes-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "assemblyai-pack",
+      "plugin_root": "codex-marketplace/plugins/assemblyai-pack",
+      "plugin_manifest": "codex-marketplace/plugins/assemblyai-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/assemblyai-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/assemblyai-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/assemblyai-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/assemblyai-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/assemblyai-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "attio-pack",
+      "plugin_root": "codex-marketplace/plugins/attio-pack",
+      "plugin_manifest": "codex-marketplace/plugins/attio-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/attio-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/attio-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/attio-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/attio-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/attio-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "bamboohr-pack",
+      "plugin_root": "codex-marketplace/plugins/bamboohr-pack",
+      "plugin_manifest": "codex-marketplace/plugins/bamboohr-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/bamboohr-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/bamboohr-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/bamboohr-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/bamboohr-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/bamboohr-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "brightdata-pack",
+      "plugin_root": "codex-marketplace/plugins/brightdata-pack",
+      "plugin_manifest": "codex-marketplace/plugins/brightdata-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/brightdata-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/brightdata-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/brightdata-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/brightdata-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/brightdata-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "canva-pack",
+      "plugin_root": "codex-marketplace/plugins/canva-pack",
+      "plugin_manifest": "codex-marketplace/plugins/canva-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/canva-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/canva-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/canva-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/canva-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/canva-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "castai-pack",
+      "plugin_root": "codex-marketplace/plugins/castai-pack",
+      "plugin_manifest": "codex-marketplace/plugins/castai-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/castai-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/castai-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/castai-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/castai-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/castai-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "clari-pack",
+      "plugin_root": "codex-marketplace/plugins/clari-pack",
+      "plugin_manifest": "codex-marketplace/plugins/clari-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/clari-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/clari-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/clari-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/clari-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/clari-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "claude-pack",
+      "plugin_root": "codex-marketplace/plugins/claude-pack",
+      "plugin_manifest": "codex-marketplace/plugins/claude-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/claude-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/claude-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/claude-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/claude-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/claude-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "clay-pack",
+      "plugin_root": "codex-marketplace/plugins/clay-pack",
+      "plugin_manifest": "codex-marketplace/plugins/clay-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/clay-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/clay-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/clay-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/clay-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/clay-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "clerk-pack",
+      "plugin_root": "codex-marketplace/plugins/clerk-pack",
+      "plugin_manifest": "codex-marketplace/plugins/clerk-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/clerk-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/clerk-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/clerk-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/clerk-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/clerk-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "clickhouse-pack",
+      "plugin_root": "codex-marketplace/plugins/clickhouse-pack",
+      "plugin_manifest": "codex-marketplace/plugins/clickhouse-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/clickhouse-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/clickhouse-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/clickhouse-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/clickhouse-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/clickhouse-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "clickup-pack",
+      "plugin_root": "codex-marketplace/plugins/clickup-pack",
+      "plugin_manifest": "codex-marketplace/plugins/clickup-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/clickup-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/clickup-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/clickup-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/clickup-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/clickup-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "coderabbit-pack",
+      "plugin_root": "codex-marketplace/plugins/coderabbit-pack",
+      "plugin_manifest": "codex-marketplace/plugins/coderabbit-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/coderabbit-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/coderabbit-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/coderabbit-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/coderabbit-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/coderabbit-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -308,6 +674,85 @@
       }
     },
     {
+      "name": "conversational-api-debugger",
+      "plugin_root": "codex-marketplace/plugins/conversational-api-debugger",
+      "plugin_manifest": "codex-marketplace/plugins/conversational-api-debugger/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/conversational-api-debugger/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/conversational-api-debugger/LICENSE",
+      "bundle_manifest": null,
+      "skills_path": null,
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/conversational-api-debugger",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "coreweave-pack",
+      "plugin_root": "codex-marketplace/plugins/coreweave-pack",
+      "plugin_manifest": "codex-marketplace/plugins/coreweave-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/coreweave-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/coreweave-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/coreweave-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/coreweave-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/coreweave-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "cursor-pack",
+      "plugin_root": "codex-marketplace/plugins/cursor-pack",
+      "plugin_manifest": "codex-marketplace/plugins/cursor-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/cursor-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/cursor-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/cursor-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/cursor-pack/skills",
+      "provenance_refs": [
+        "provenance/MARK-62-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/cursor-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "customerio-pack",
+      "plugin_root": "codex-marketplace/plugins/customerio-pack",
+      "plugin_manifest": "codex-marketplace/plugins/customerio-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/customerio-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/customerio-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/customerio-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/customerio-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/customerio-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "databricks-pack",
       "plugin_root": "codex-marketplace/plugins/databricks-pack",
       "plugin_manifest": "codex-marketplace/plugins/databricks-pack/.codex-plugin/plugin.json",
@@ -322,6 +767,271 @@
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/databricks-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "deepgram-pack",
+      "plugin_root": "codex-marketplace/plugins/deepgram-pack",
+      "plugin_manifest": "codex-marketplace/plugins/deepgram-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/deepgram-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/deepgram-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/deepgram-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/deepgram-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/deepgram-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "design-to-code",
+      "plugin_root": "codex-marketplace/plugins/design-to-code",
+      "plugin_manifest": "codex-marketplace/plugins/design-to-code/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/design-to-code/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/design-to-code/LICENSE",
+      "bundle_manifest": null,
+      "skills_path": "codex-marketplace/plugins/design-to-code/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/design-to-code",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "documenso-pack",
+      "plugin_root": "codex-marketplace/plugins/documenso-pack",
+      "plugin_manifest": "codex-marketplace/plugins/documenso-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/documenso-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/documenso-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/documenso-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/documenso-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/documenso-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "domain-memory-agent",
+      "plugin_root": "codex-marketplace/plugins/domain-memory-agent",
+      "plugin_manifest": "codex-marketplace/plugins/domain-memory-agent/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/domain-memory-agent/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/domain-memory-agent/LICENSE",
+      "bundle_manifest": null,
+      "skills_path": "codex-marketplace/plugins/domain-memory-agent/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/domain-memory-agent",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "elevenlabs-pack",
+      "plugin_root": "codex-marketplace/plugins/elevenlabs-pack",
+      "plugin_manifest": "codex-marketplace/plugins/elevenlabs-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/elevenlabs-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/elevenlabs-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/elevenlabs-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/elevenlabs-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/elevenlabs-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "evernote-pack",
+      "plugin_root": "codex-marketplace/plugins/evernote-pack",
+      "plugin_manifest": "codex-marketplace/plugins/evernote-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/evernote-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/evernote-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/evernote-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/evernote-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/evernote-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "exa-pack",
+      "plugin_root": "codex-marketplace/plugins/exa-pack",
+      "plugin_manifest": "codex-marketplace/plugins/exa-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/exa-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/exa-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/exa-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/exa-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/exa-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "fathom-pack",
+      "plugin_root": "codex-marketplace/plugins/fathom-pack",
+      "plugin_manifest": "codex-marketplace/plugins/fathom-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/fathom-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/fathom-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/fathom-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/fathom-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/fathom-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "figma-pack",
+      "plugin_root": "codex-marketplace/plugins/figma-pack",
+      "plugin_manifest": "codex-marketplace/plugins/figma-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/figma-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/figma-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/figma-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/figma-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/figma-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "finta-pack",
+      "plugin_root": "codex-marketplace/plugins/finta-pack",
+      "plugin_manifest": "codex-marketplace/plugins/finta-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/finta-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/finta-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/finta-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/finta-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/finta-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "firecrawl-pack",
+      "plugin_root": "codex-marketplace/plugins/firecrawl-pack",
+      "plugin_manifest": "codex-marketplace/plugins/firecrawl-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/firecrawl-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/firecrawl-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/firecrawl-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/firecrawl-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/firecrawl-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "fireflies-pack",
+      "plugin_root": "codex-marketplace/plugins/fireflies-pack",
+      "plugin_manifest": "codex-marketplace/plugins/fireflies-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/fireflies-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/fireflies-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/fireflies-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/fireflies-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/fireflies-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "flexport-pack",
+      "plugin_root": "codex-marketplace/plugins/flexport-pack",
+      "plugin_manifest": "codex-marketplace/plugins/flexport-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/flexport-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/flexport-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/flexport-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/flexport-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/flexport-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -348,6 +1058,48 @@
       }
     },
     {
+      "name": "fondo-pack",
+      "plugin_root": "codex-marketplace/plugins/fondo-pack",
+      "plugin_manifest": "codex-marketplace/plugins/fondo-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/fondo-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/fondo-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/fondo-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/fondo-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/fondo-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "framer-pack",
+      "plugin_root": "codex-marketplace/plugins/framer-pack",
+      "plugin_manifest": "codex-marketplace/plugins/framer-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/framer-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/framer-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/framer-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/framer-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/framer-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "fullstack-starter-pack",
       "plugin_root": "codex-marketplace/plugins/fullstack-starter-pack",
       "plugin_manifest": "codex-marketplace/plugins/fullstack-starter-pack/.codex-plugin/plugin.json",
@@ -365,68 +1117,483 @@
       }
     },
     {
-      "name": "ai-experiment-logger",
-      "plugin_root": "codex-marketplace/plugins/ai-experiment-logger",
-      "plugin_manifest": "codex-marketplace/plugins/ai-experiment-logger/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/ai-experiment-logger/SOURCE.md",
+      "name": "ga4-pack",
+      "plugin_root": "codex-marketplace/plugins/ga4-pack",
+      "plugin_manifest": "codex-marketplace/plugins/ga4-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/ga4-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/ai-experiment-logger/LICENSE",
-      "bundle_manifest": null,
-      "skills_path": "codex-marketplace/plugins/ai-experiment-logger/skills",
-      "provenance_refs": [],
+      "license_path": "codex-marketplace/plugins/ga4-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/ga4-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/ga4-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/ai-experiment-logger",
+      "registry_path": "./codex-marketplace/plugins/ga4-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "conversational-api-debugger",
-      "plugin_root": "codex-marketplace/plugins/conversational-api-debugger",
-      "plugin_manifest": "codex-marketplace/plugins/conversational-api-debugger/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/conversational-api-debugger/SOURCE.md",
+      "name": "gamma-pack",
+      "plugin_root": "codex-marketplace/plugins/gamma-pack",
+      "plugin_manifest": "codex-marketplace/plugins/gamma-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/gamma-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/conversational-api-debugger/LICENSE",
-      "bundle_manifest": null,
-      "skills_path": null,
-      "provenance_refs": [],
+      "license_path": "codex-marketplace/plugins/gamma-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/gamma-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/gamma-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/conversational-api-debugger",
+      "registry_path": "./codex-marketplace/plugins/gamma-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "design-to-code",
-      "plugin_root": "codex-marketplace/plugins/design-to-code",
-      "plugin_manifest": "codex-marketplace/plugins/design-to-code/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/design-to-code/SOURCE.md",
+      "name": "glean-pack",
+      "plugin_root": "codex-marketplace/plugins/glean-pack",
+      "plugin_manifest": "codex-marketplace/plugins/glean-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/glean-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/design-to-code/LICENSE",
-      "bundle_manifest": null,
-      "skills_path": "codex-marketplace/plugins/design-to-code/skills",
-      "provenance_refs": [],
+      "license_path": "codex-marketplace/plugins/glean-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/glean-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/glean-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/design-to-code",
+      "registry_path": "./codex-marketplace/plugins/glean-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "domain-memory-agent",
-      "plugin_root": "codex-marketplace/plugins/domain-memory-agent",
-      "plugin_manifest": "codex-marketplace/plugins/domain-memory-agent/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/domain-memory-agent/SOURCE.md",
+      "name": "grammarly-pack",
+      "plugin_root": "codex-marketplace/plugins/grammarly-pack",
+      "plugin_manifest": "codex-marketplace/plugins/grammarly-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/grammarly-pack/SOURCE.md",
       "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/domain-memory-agent/LICENSE",
-      "bundle_manifest": null,
-      "skills_path": "codex-marketplace/plugins/domain-memory-agent/skills",
-      "provenance_refs": [],
+      "license_path": "codex-marketplace/plugins/grammarly-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/grammarly-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/grammarly-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/domain-memory-agent",
+      "registry_path": "./codex-marketplace/plugins/grammarly-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "granola-pack",
+      "plugin_root": "codex-marketplace/plugins/granola-pack",
+      "plugin_manifest": "codex-marketplace/plugins/granola-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/granola-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/granola-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/granola-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/granola-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/granola-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "groq-pack",
+      "plugin_root": "codex-marketplace/plugins/groq-pack",
+      "plugin_manifest": "codex-marketplace/plugins/groq-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/groq-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/groq-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/groq-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/groq-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/groq-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "guidewire-pack",
+      "plugin_root": "codex-marketplace/plugins/guidewire-pack",
+      "plugin_manifest": "codex-marketplace/plugins/guidewire-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/guidewire-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/guidewire-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/guidewire-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/guidewire-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/guidewire-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "hex-pack",
+      "plugin_root": "codex-marketplace/plugins/hex-pack",
+      "plugin_manifest": "codex-marketplace/plugins/hex-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/hex-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/hex-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/hex-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/hex-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/hex-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "hootsuite-pack",
+      "plugin_root": "codex-marketplace/plugins/hootsuite-pack",
+      "plugin_manifest": "codex-marketplace/plugins/hootsuite-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/hootsuite-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/hootsuite-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/hootsuite-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/hootsuite-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/hootsuite-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "hubspot-pack",
+      "plugin_root": "codex-marketplace/plugins/hubspot-pack",
+      "plugin_manifest": "codex-marketplace/plugins/hubspot-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/hubspot-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/hubspot-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/hubspot-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/hubspot-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/hubspot-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "ideogram-pack",
+      "plugin_root": "codex-marketplace/plugins/ideogram-pack",
+      "plugin_manifest": "codex-marketplace/plugins/ideogram-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/ideogram-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/ideogram-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/ideogram-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/ideogram-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/ideogram-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "instantly-pack",
+      "plugin_root": "codex-marketplace/plugins/instantly-pack",
+      "plugin_manifest": "codex-marketplace/plugins/instantly-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/instantly-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/instantly-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/instantly-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/instantly-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/instantly-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "intercom-pack",
+      "plugin_root": "codex-marketplace/plugins/intercom-pack",
+      "plugin_manifest": "codex-marketplace/plugins/intercom-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/intercom-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/intercom-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/intercom-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/intercom-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/intercom-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "juicebox-pack",
+      "plugin_root": "codex-marketplace/plugins/juicebox-pack",
+      "plugin_manifest": "codex-marketplace/plugins/juicebox-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/juicebox-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/juicebox-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/juicebox-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/juicebox-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/juicebox-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "klaviyo-pack",
+      "plugin_root": "codex-marketplace/plugins/klaviyo-pack",
+      "plugin_manifest": "codex-marketplace/plugins/klaviyo-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/klaviyo-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/klaviyo-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/klaviyo-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/klaviyo-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/klaviyo-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "klingai-pack",
+      "plugin_root": "codex-marketplace/plugins/klingai-pack",
+      "plugin_manifest": "codex-marketplace/plugins/klingai-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/klingai-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/klingai-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/klingai-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/klingai-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/klingai-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "langchain-py-pack",
+      "plugin_root": "codex-marketplace/plugins/langchain-py-pack",
+      "plugin_manifest": "codex-marketplace/plugins/langchain-py-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/langchain-py-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/langchain-py-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/langchain-py-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/langchain-py-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/langchain-py-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "langfuse-pack",
+      "plugin_root": "codex-marketplace/plugins/langfuse-pack",
+      "plugin_manifest": "codex-marketplace/plugins/langfuse-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/langfuse-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/langfuse-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/langfuse-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/langfuse-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/langfuse-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "lindy-pack",
+      "plugin_root": "codex-marketplace/plugins/lindy-pack",
+      "plugin_manifest": "codex-marketplace/plugins/lindy-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/lindy-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/lindy-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/lindy-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/lindy-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/lindy-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "linear-pack",
+      "plugin_root": "codex-marketplace/plugins/linear-pack",
+      "plugin_manifest": "codex-marketplace/plugins/linear-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/linear-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/linear-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/linear-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/linear-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/linear-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "linktree-pack",
+      "plugin_root": "codex-marketplace/plugins/linktree-pack",
+      "plugin_manifest": "codex-marketplace/plugins/linktree-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/linktree-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/linktree-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/linktree-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/linktree-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/linktree-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "lokalise-pack",
+      "plugin_root": "codex-marketplace/plugins/lokalise-pack",
+      "plugin_manifest": "codex-marketplace/plugins/lokalise-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/lokalise-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/lokalise-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/lokalise-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/lokalise-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/lokalise-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "lucidchart-pack",
+      "plugin_root": "codex-marketplace/plugins/lucidchart-pack",
+      "plugin_manifest": "codex-marketplace/plugins/lucidchart-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/lucidchart-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/lucidchart-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/lucidchart-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/lucidchart-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/lucidchart-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -450,6 +1617,361 @@
       }
     },
     {
+      "name": "maintainx-pack",
+      "plugin_root": "codex-marketplace/plugins/maintainx-pack",
+      "plugin_manifest": "codex-marketplace/plugins/maintainx-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/maintainx-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/maintainx-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/maintainx-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/maintainx-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/maintainx-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "marketplace-family-pack",
+      "plugin_root": "codex-marketplace/plugins/marketplace-family-pack",
+      "plugin_manifest": "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/marketplace-family-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/marketplace-family-pack/LICENSE",
+      "bundle_manifest": null,
+      "skills_path": "codex-marketplace/plugins/marketplace-family-pack/skills",
+      "provenance_refs": [
+        "provenance/marketplace-family-pack.md",
+        "provenance/MARK-59-activity-log.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/marketplace-family-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "mindtickle-pack",
+      "plugin_root": "codex-marketplace/plugins/mindtickle-pack",
+      "plugin_manifest": "codex-marketplace/plugins/mindtickle-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/mindtickle-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/mindtickle-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/mindtickle-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/mindtickle-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/mindtickle-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "miro-pack",
+      "plugin_root": "codex-marketplace/plugins/miro-pack",
+      "plugin_manifest": "codex-marketplace/plugins/miro-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/miro-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/miro-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/miro-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/miro-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/miro-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "mistral-pack",
+      "plugin_root": "codex-marketplace/plugins/mistral-pack",
+      "plugin_manifest": "codex-marketplace/plugins/mistral-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/mistral-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/mistral-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/mistral-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/mistral-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/mistral-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "navan-pack",
+      "plugin_root": "codex-marketplace/plugins/navan-pack",
+      "plugin_manifest": "codex-marketplace/plugins/navan-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/navan-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/navan-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/navan-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/navan-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/navan-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "notion-pack",
+      "plugin_root": "codex-marketplace/plugins/notion-pack",
+      "plugin_manifest": "codex-marketplace/plugins/notion-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/notion-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/notion-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/notion-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/notion-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/notion-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "obsidian-pack",
+      "plugin_root": "codex-marketplace/plugins/obsidian-pack",
+      "plugin_manifest": "codex-marketplace/plugins/obsidian-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/obsidian-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/obsidian-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/obsidian-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/obsidian-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/obsidian-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "onenote-pack",
+      "plugin_root": "codex-marketplace/plugins/onenote-pack",
+      "plugin_manifest": "codex-marketplace/plugins/onenote-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/onenote-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/onenote-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/onenote-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/onenote-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/onenote-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "openevidence-pack",
+      "plugin_root": "codex-marketplace/plugins/openevidence-pack",
+      "plugin_manifest": "codex-marketplace/plugins/openevidence-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/openevidence-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/openevidence-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/openevidence-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/openevidence-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/openevidence-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "openrouter-pack",
+      "plugin_root": "codex-marketplace/plugins/openrouter-pack",
+      "plugin_manifest": "codex-marketplace/plugins/openrouter-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/openrouter-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/openrouter-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/openrouter-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/openrouter-pack/skills",
+      "provenance_refs": [
+        "provenance/MARK-46-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/openrouter-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "oraclecloud-pack",
+      "plugin_root": "codex-marketplace/plugins/oraclecloud-pack",
+      "plugin_manifest": "codex-marketplace/plugins/oraclecloud-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/oraclecloud-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/oraclecloud-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/oraclecloud-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/oraclecloud-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/oraclecloud-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "palantir-pack",
+      "plugin_root": "codex-marketplace/plugins/palantir-pack",
+      "plugin_manifest": "codex-marketplace/plugins/palantir-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/palantir-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/palantir-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/palantir-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/palantir-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/palantir-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "perplexity-pack",
+      "plugin_root": "codex-marketplace/plugins/perplexity-pack",
+      "plugin_manifest": "codex-marketplace/plugins/perplexity-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/perplexity-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/perplexity-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/perplexity-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/perplexity-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/perplexity-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "persona-pack",
+      "plugin_root": "codex-marketplace/plugins/persona-pack",
+      "plugin_manifest": "codex-marketplace/plugins/persona-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/persona-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/persona-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/persona-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/persona-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/persona-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "podium-pack",
+      "plugin_root": "codex-marketplace/plugins/podium-pack",
+      "plugin_manifest": "codex-marketplace/plugins/podium-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/podium-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/podium-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/podium-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/podium-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/podium-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "posthog-pack",
+      "plugin_root": "codex-marketplace/plugins/posthog-pack",
+      "plugin_manifest": "codex-marketplace/plugins/posthog-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/posthog-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/posthog-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/posthog-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/posthog-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/posthog-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "pr-to-spec",
       "plugin_root": "codex-marketplace/plugins/pr-to-spec",
       "plugin_manifest": "codex-marketplace/plugins/pr-to-spec/.codex-plugin/plugin.json",
@@ -461,6 +1983,27 @@
       "provenance_refs": [],
       "agents_md": "codex-marketplace/plugins/pr-to-spec/AGENTS.md",
       "registry_path": "./codex-marketplace/plugins/pr-to-spec",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "procore-pack",
+      "plugin_root": "codex-marketplace/plugins/procore-pack",
+      "plugin_manifest": "codex-marketplace/plugins/procore-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/procore-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/procore-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/procore-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/procore-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/procore-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -484,6 +2027,236 @@
       }
     },
     {
+      "name": "quicknode-pack",
+      "plugin_root": "codex-marketplace/plugins/quicknode-pack",
+      "plugin_manifest": "codex-marketplace/plugins/quicknode-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/quicknode-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/quicknode-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/quicknode-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/quicknode-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/quicknode-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "ramp-pack",
+      "plugin_root": "codex-marketplace/plugins/ramp-pack",
+      "plugin_manifest": "codex-marketplace/plugins/ramp-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/ramp-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/ramp-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/ramp-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/ramp-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/ramp-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "remofirst-pack",
+      "plugin_root": "codex-marketplace/plugins/remofirst-pack",
+      "plugin_manifest": "codex-marketplace/plugins/remofirst-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/remofirst-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/remofirst-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/remofirst-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/remofirst-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/remofirst-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "replit-pack",
+      "plugin_root": "codex-marketplace/plugins/replit-pack",
+      "plugin_manifest": "codex-marketplace/plugins/replit-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/replit-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/replit-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/replit-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/replit-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/replit-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "retellai-pack",
+      "plugin_root": "codex-marketplace/plugins/retellai-pack",
+      "plugin_manifest": "codex-marketplace/plugins/retellai-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/retellai-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/retellai-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/retellai-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/retellai-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/retellai-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "runway-pack",
+      "plugin_root": "codex-marketplace/plugins/runway-pack",
+      "plugin_manifest": "codex-marketplace/plugins/runway-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/runway-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/runway-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/runway-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/runway-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/runway-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "salesforce-pack",
+      "plugin_root": "codex-marketplace/plugins/salesforce-pack",
+      "plugin_manifest": "codex-marketplace/plugins/salesforce-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/salesforce-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/salesforce-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/salesforce-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/salesforce-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/salesforce-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "salesloft-pack",
+      "plugin_root": "codex-marketplace/plugins/salesloft-pack",
+      "plugin_manifest": "codex-marketplace/plugins/salesloft-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/salesloft-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/salesloft-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/salesloft-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/salesloft-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/salesloft-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "sentry-pack",
+      "plugin_root": "codex-marketplace/plugins/sentry-pack",
+      "plugin_manifest": "codex-marketplace/plugins/sentry-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/sentry-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/sentry-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/sentry-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/sentry-pack/skills",
+      "provenance_refs": [
+        "provenance/MARK-46-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/sentry-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "serpapi-pack",
+      "plugin_root": "codex-marketplace/plugins/serpapi-pack",
+      "plugin_manifest": "codex-marketplace/plugins/serpapi-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/serpapi-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/serpapi-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/serpapi-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/serpapi-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/serpapi-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "shopify-pack",
+      "plugin_root": "codex-marketplace/plugins/shopify-pack",
+      "plugin_manifest": "codex-marketplace/plugins/shopify-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/shopify-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/shopify-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/shopify-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/shopify-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/shopify-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "slack-channel",
       "plugin_root": "codex-marketplace/plugins/slack-channel",
       "plugin_manifest": "codex-marketplace/plugins/slack-channel/.codex-plugin/plugin.json",
@@ -501,6 +2274,312 @@
       }
     },
     {
+      "name": "snowflake-pack",
+      "plugin_root": "codex-marketplace/plugins/snowflake-pack",
+      "plugin_manifest": "codex-marketplace/plugins/snowflake-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/snowflake-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/snowflake-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/snowflake-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/snowflake-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/snowflake-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "speak-pack",
+      "plugin_root": "codex-marketplace/plugins/speak-pack",
+      "plugin_manifest": "codex-marketplace/plugins/speak-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/speak-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/speak-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/speak-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/speak-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/speak-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "stackblitz-pack",
+      "plugin_root": "codex-marketplace/plugins/stackblitz-pack",
+      "plugin_manifest": "codex-marketplace/plugins/stackblitz-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/stackblitz-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/stackblitz-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/stackblitz-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/stackblitz-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/stackblitz-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "supabase-pack",
+      "plugin_root": "codex-marketplace/plugins/supabase-pack",
+      "plugin_manifest": "codex-marketplace/plugins/supabase-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/supabase-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/supabase-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/supabase-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/supabase-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/supabase-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "supabase-platform-pack",
+      "plugin_root": "codex-marketplace/plugins/supabase-platform-pack",
+      "plugin_manifest": "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/supabase-platform-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/supabase-platform-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/supabase-platform-pack/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/supabase-platform-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "techsmith-pack",
+      "plugin_root": "codex-marketplace/plugins/techsmith-pack",
+      "plugin_manifest": "codex-marketplace/plugins/techsmith-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/techsmith-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/techsmith-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/techsmith-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/techsmith-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/techsmith-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "testing-skill-pack",
+      "plugin_root": "codex-marketplace/plugins/testing-skill-pack",
+      "plugin_manifest": "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/testing-skill-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/testing-skill-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/testing-skill-pack/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/testing-skill-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "together-pack",
+      "plugin_root": "codex-marketplace/plugins/together-pack",
+      "plugin_manifest": "codex-marketplace/plugins/together-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/together-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/together-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/together-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/together-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/together-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "twinmind-pack",
+      "plugin_root": "codex-marketplace/plugins/twinmind-pack",
+      "plugin_manifest": "codex-marketplace/plugins/twinmind-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/twinmind-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/twinmind-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/twinmind-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/twinmind-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/twinmind-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "vastai-pack",
+      "plugin_root": "codex-marketplace/plugins/vastai-pack",
+      "plugin_manifest": "codex-marketplace/plugins/vastai-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/vastai-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/vastai-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/vastai-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/vastai-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/vastai-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "veeva-pack",
+      "plugin_root": "codex-marketplace/plugins/veeva-pack",
+      "plugin_manifest": "codex-marketplace/plugins/veeva-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/veeva-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/veeva-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/veeva-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/veeva-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/veeva-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "vercel-pack",
+      "plugin_root": "codex-marketplace/plugins/vercel-pack",
+      "plugin_manifest": "codex-marketplace/plugins/vercel-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/vercel-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/vercel-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/vercel-pack/skills",
+      "provenance_refs": [
+        "provenance/MARK-46-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/vercel-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "webflow-pack",
+      "plugin_root": "codex-marketplace/plugins/webflow-pack",
+      "plugin_manifest": "codex-marketplace/plugins/webflow-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/webflow-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/webflow-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/webflow-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/webflow-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/webflow-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "windsurf-pack",
+      "plugin_root": "codex-marketplace/plugins/windsurf-pack",
+      "plugin_manifest": "codex-marketplace/plugins/windsurf-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/windsurf-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/windsurf-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/windsurf-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/windsurf-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/windsurf-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "wispr-pack",
+      "plugin_root": "codex-marketplace/plugins/wispr-pack",
+      "plugin_manifest": "codex-marketplace/plugins/wispr-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/wispr-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/wispr-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/wispr-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/wispr-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/wispr-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "workflow-orchestrator",
       "plugin_root": "codex-marketplace/plugins/workflow-orchestrator",
       "plugin_manifest": "codex-marketplace/plugins/workflow-orchestrator/.codex-plugin/plugin.json",
@@ -512,6 +2591,27 @@
       "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/workflow-orchestrator",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "workhuman-pack",
+      "plugin_root": "codex-marketplace/plugins/workhuman-pack",
+      "plugin_manifest": "codex-marketplace/plugins/workhuman-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/workhuman-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/workhuman-pack/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/workhuman-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/workhuman-pack/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-63-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/workhuman-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null

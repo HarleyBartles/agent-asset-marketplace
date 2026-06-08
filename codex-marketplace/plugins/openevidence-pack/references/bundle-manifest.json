@@ -1,0 +1,157 @@
+{
+  "bundle_name": "openevidence-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/openevidence-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-ci-integration/SKILL.md",
+      "local_path": "skills/openevidence-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-common-errors/SKILL.md",
+      "local_path": "skills/openevidence-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-core-workflow-a/SKILL.md",
+      "local_path": "skills/openevidence-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-core-workflow-b/SKILL.md",
+      "local_path": "skills/openevidence-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-cost-tuning/SKILL.md",
+      "local_path": "skills/openevidence-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-data-handling/SKILL.md",
+      "local_path": "skills/openevidence-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-debug-bundle/SKILL.md",
+      "local_path": "skills/openevidence-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-deploy-integration/SKILL.md",
+      "local_path": "skills/openevidence-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-enterprise-rbac/SKILL.md",
+      "local_path": "skills/openevidence-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-hello-world/SKILL.md",
+      "local_path": "skills/openevidence-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-incident-runbook/SKILL.md",
+      "local_path": "skills/openevidence-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-install-auth/SKILL.md",
+      "local_path": "skills/openevidence-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-local-dev-loop/SKILL.md",
+      "local_path": "skills/openevidence-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-migration-deep-dive/SKILL.md",
+      "local_path": "skills/openevidence-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-multi-env-setup/SKILL.md",
+      "local_path": "skills/openevidence-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-observability/SKILL.md",
+      "local_path": "skills/openevidence-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-performance-tuning/SKILL.md",
+      "local_path": "skills/openevidence-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-prod-checklist/SKILL.md",
+      "local_path": "skills/openevidence-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-rate-limits/SKILL.md",
+      "local_path": "skills/openevidence-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-reference-architecture/SKILL.md",
+      "local_path": "skills/openevidence-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-sdk-patterns/SKILL.md",
+      "local_path": "skills/openevidence-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-security-basics/SKILL.md",
+      "local_path": "skills/openevidence-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-upgrade-migration/SKILL.md",
+      "local_path": "skills/openevidence-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/openevidence-pack/skills/openevidence-webhooks-events/SKILL.md",
+      "local_path": "skills/openevidence-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

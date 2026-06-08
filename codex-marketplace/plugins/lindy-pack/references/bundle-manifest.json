@@ -1,0 +1,157 @@
+{
+  "bundle_name": "lindy-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/lindy-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-ci-integration/SKILL.md",
+      "local_path": "skills/lindy-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-common-errors/SKILL.md",
+      "local_path": "skills/lindy-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-core-workflow-a/SKILL.md",
+      "local_path": "skills/lindy-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-core-workflow-b/SKILL.md",
+      "local_path": "skills/lindy-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-cost-tuning/SKILL.md",
+      "local_path": "skills/lindy-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-data-handling/SKILL.md",
+      "local_path": "skills/lindy-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-debug-bundle/SKILL.md",
+      "local_path": "skills/lindy-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-deploy-integration/SKILL.md",
+      "local_path": "skills/lindy-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-enterprise-rbac/SKILL.md",
+      "local_path": "skills/lindy-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-hello-world/SKILL.md",
+      "local_path": "skills/lindy-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-incident-runbook/SKILL.md",
+      "local_path": "skills/lindy-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-install-auth/SKILL.md",
+      "local_path": "skills/lindy-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-local-dev-loop/SKILL.md",
+      "local_path": "skills/lindy-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-migration-deep-dive/SKILL.md",
+      "local_path": "skills/lindy-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-multi-env-setup/SKILL.md",
+      "local_path": "skills/lindy-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-observability/SKILL.md",
+      "local_path": "skills/lindy-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-performance-tuning/SKILL.md",
+      "local_path": "skills/lindy-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-prod-checklist/SKILL.md",
+      "local_path": "skills/lindy-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-rate-limits/SKILL.md",
+      "local_path": "skills/lindy-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-reference-architecture/SKILL.md",
+      "local_path": "skills/lindy-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-sdk-patterns/SKILL.md",
+      "local_path": "skills/lindy-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-security-basics/SKILL.md",
+      "local_path": "skills/lindy-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-upgrade-migration/SKILL.md",
+      "local_path": "skills/lindy-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/lindy-pack/skills/lindy-webhooks-events/SKILL.md",
+      "local_path": "skills/lindy-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

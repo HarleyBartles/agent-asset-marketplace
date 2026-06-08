@@ -1,0 +1,157 @@
+{
+  "bundle_name": "glean-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/glean-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-ci-integration/SKILL.md",
+      "local_path": "skills/glean-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-common-errors/SKILL.md",
+      "local_path": "skills/glean-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-core-workflow-a/SKILL.md",
+      "local_path": "skills/glean-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-core-workflow-b/SKILL.md",
+      "local_path": "skills/glean-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-cost-tuning/SKILL.md",
+      "local_path": "skills/glean-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-data-handling/SKILL.md",
+      "local_path": "skills/glean-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-debug-bundle/SKILL.md",
+      "local_path": "skills/glean-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-deploy-integration/SKILL.md",
+      "local_path": "skills/glean-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-enterprise-rbac/SKILL.md",
+      "local_path": "skills/glean-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-hello-world/SKILL.md",
+      "local_path": "skills/glean-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-incident-runbook/SKILL.md",
+      "local_path": "skills/glean-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-install-auth/SKILL.md",
+      "local_path": "skills/glean-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-local-dev-loop/SKILL.md",
+      "local_path": "skills/glean-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-migration-deep-dive/SKILL.md",
+      "local_path": "skills/glean-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-multi-env-setup/SKILL.md",
+      "local_path": "skills/glean-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-observability/SKILL.md",
+      "local_path": "skills/glean-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-performance-tuning/SKILL.md",
+      "local_path": "skills/glean-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-prod-checklist/SKILL.md",
+      "local_path": "skills/glean-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-rate-limits/SKILL.md",
+      "local_path": "skills/glean-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-reference-architecture/SKILL.md",
+      "local_path": "skills/glean-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-sdk-patterns/SKILL.md",
+      "local_path": "skills/glean-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-security-basics/SKILL.md",
+      "local_path": "skills/glean-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-upgrade-migration/SKILL.md",
+      "local_path": "skills/glean-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/glean-pack/skills/glean-webhooks-events/SKILL.md",
+      "local_path": "skills/glean-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

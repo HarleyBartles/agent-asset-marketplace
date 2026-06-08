@@ -1,0 +1,121 @@
+{
+  "bundle_name": "elevenlabs-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/elevenlabs-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-ci-integration/SKILL.md",
+      "local_path": "skills/elevenlabs-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-common-errors/SKILL.md",
+      "local_path": "skills/elevenlabs-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-core-workflow-a/SKILL.md",
+      "local_path": "skills/elevenlabs-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-core-workflow-b/SKILL.md",
+      "local_path": "skills/elevenlabs-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-cost-tuning/SKILL.md",
+      "local_path": "skills/elevenlabs-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-debug-bundle/SKILL.md",
+      "local_path": "skills/elevenlabs-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-deploy-integration/SKILL.md",
+      "local_path": "skills/elevenlabs-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-hello-world/SKILL.md",
+      "local_path": "skills/elevenlabs-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-install-auth/SKILL.md",
+      "local_path": "skills/elevenlabs-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-local-dev-loop/SKILL.md",
+      "local_path": "skills/elevenlabs-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-performance-tuning/SKILL.md",
+      "local_path": "skills/elevenlabs-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-prod-checklist/SKILL.md",
+      "local_path": "skills/elevenlabs-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-rate-limits/SKILL.md",
+      "local_path": "skills/elevenlabs-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-reference-architecture/SKILL.md",
+      "local_path": "skills/elevenlabs-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-sdk-patterns/SKILL.md",
+      "local_path": "skills/elevenlabs-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-security-basics/SKILL.md",
+      "local_path": "skills/elevenlabs-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-upgrade-migration/SKILL.md",
+      "local_path": "skills/elevenlabs-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/elevenlabs-pack/skills/elevenlabs-webhooks-events/SKILL.md",
+      "local_path": "skills/elevenlabs-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

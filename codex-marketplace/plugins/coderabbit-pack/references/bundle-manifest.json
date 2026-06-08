@@ -1,0 +1,157 @@
+{
+  "bundle_name": "coderabbit-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/coderabbit-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-ci-integration/SKILL.md",
+      "local_path": "skills/coderabbit-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-common-errors/SKILL.md",
+      "local_path": "skills/coderabbit-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-core-workflow-a/SKILL.md",
+      "local_path": "skills/coderabbit-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-core-workflow-b/SKILL.md",
+      "local_path": "skills/coderabbit-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-cost-tuning/SKILL.md",
+      "local_path": "skills/coderabbit-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-data-handling/SKILL.md",
+      "local_path": "skills/coderabbit-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-debug-bundle/SKILL.md",
+      "local_path": "skills/coderabbit-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-deploy-integration/SKILL.md",
+      "local_path": "skills/coderabbit-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-enterprise-rbac/SKILL.md",
+      "local_path": "skills/coderabbit-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-hello-world/SKILL.md",
+      "local_path": "skills/coderabbit-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-incident-runbook/SKILL.md",
+      "local_path": "skills/coderabbit-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-install-auth/SKILL.md",
+      "local_path": "skills/coderabbit-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-local-dev-loop/SKILL.md",
+      "local_path": "skills/coderabbit-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-migration-deep-dive/SKILL.md",
+      "local_path": "skills/coderabbit-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-multi-env-setup/SKILL.md",
+      "local_path": "skills/coderabbit-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-observability/SKILL.md",
+      "local_path": "skills/coderabbit-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-performance-tuning/SKILL.md",
+      "local_path": "skills/coderabbit-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-prod-checklist/SKILL.md",
+      "local_path": "skills/coderabbit-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-rate-limits/SKILL.md",
+      "local_path": "skills/coderabbit-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-reference-architecture/SKILL.md",
+      "local_path": "skills/coderabbit-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-sdk-patterns/SKILL.md",
+      "local_path": "skills/coderabbit-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-security-basics/SKILL.md",
+      "local_path": "skills/coderabbit-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-upgrade-migration/SKILL.md",
+      "local_path": "skills/coderabbit-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/coderabbit-pack/skills/coderabbit-webhooks-events/SKILL.md",
+      "local_path": "skills/coderabbit-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

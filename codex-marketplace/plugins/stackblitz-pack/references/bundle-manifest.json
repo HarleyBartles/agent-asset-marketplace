@@ -1,0 +1,121 @@
+{
+  "bundle_name": "stackblitz-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/stackblitz-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-ci-integration/SKILL.md",
+      "local_path": "skills/stackblitz-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-common-errors/SKILL.md",
+      "local_path": "skills/stackblitz-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-core-workflow-a/SKILL.md",
+      "local_path": "skills/stackblitz-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-core-workflow-b/SKILL.md",
+      "local_path": "skills/stackblitz-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-cost-tuning/SKILL.md",
+      "local_path": "skills/stackblitz-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-debug-bundle/SKILL.md",
+      "local_path": "skills/stackblitz-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-deploy-integration/SKILL.md",
+      "local_path": "skills/stackblitz-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-hello-world/SKILL.md",
+      "local_path": "skills/stackblitz-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-install-auth/SKILL.md",
+      "local_path": "skills/stackblitz-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-local-dev-loop/SKILL.md",
+      "local_path": "skills/stackblitz-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-performance-tuning/SKILL.md",
+      "local_path": "skills/stackblitz-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-prod-checklist/SKILL.md",
+      "local_path": "skills/stackblitz-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-rate-limits/SKILL.md",
+      "local_path": "skills/stackblitz-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-reference-architecture/SKILL.md",
+      "local_path": "skills/stackblitz-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-sdk-patterns/SKILL.md",
+      "local_path": "skills/stackblitz-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-security-basics/SKILL.md",
+      "local_path": "skills/stackblitz-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-upgrade-migration/SKILL.md",
+      "local_path": "skills/stackblitz-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/stackblitz-pack/skills/stackblitz-webhooks-events/SKILL.md",
+      "local_path": "skills/stackblitz-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "bundle_name": "notion-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/notion-pack/skills",
+  "candidate_count": 32,
+  "imported_count": 32,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-advanced-troubleshooting/SKILL.md",
+      "local_path": "skills/notion-advanced-troubleshooting/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-architecture-variants/SKILL.md",
+      "local_path": "skills/notion-architecture-variants/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-ci-integration/SKILL.md",
+      "local_path": "skills/notion-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-common-errors/SKILL.md",
+      "local_path": "skills/notion-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-content-management/SKILL.md",
+      "local_path": "skills/notion-content-management/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-core-workflow-a/SKILL.md",
+      "local_path": "skills/notion-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-core-workflow-b/SKILL.md",
+      "local_path": "skills/notion-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-cost-tuning/SKILL.md",
+      "local_path": "skills/notion-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-data-handling/SKILL.md",
+      "local_path": "skills/notion-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-debug-bundle/SKILL.md",
+      "local_path": "skills/notion-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-deploy-integration/SKILL.md",
+      "local_path": "skills/notion-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-enterprise-rbac/SKILL.md",
+      "local_path": "skills/notion-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-hello-world/SKILL.md",
+      "local_path": "skills/notion-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-incident-runbook/SKILL.md",
+      "local_path": "skills/notion-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-install-auth/SKILL.md",
+      "local_path": "skills/notion-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-known-pitfalls/SKILL.md",
+      "local_path": "skills/notion-known-pitfalls/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-load-scale/SKILL.md",
+      "local_path": "skills/notion-load-scale/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-local-dev-loop/SKILL.md",
+      "local_path": "skills/notion-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-migration-deep-dive/SKILL.md",
+      "local_path": "skills/notion-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-multi-env-setup/SKILL.md",
+      "local_path": "skills/notion-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-observability/SKILL.md",
+      "local_path": "skills/notion-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-performance-tuning/SKILL.md",
+      "local_path": "skills/notion-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-policy-guardrails/SKILL.md",
+      "local_path": "skills/notion-policy-guardrails/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-prod-checklist/SKILL.md",
+      "local_path": "skills/notion-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-rate-limits/SKILL.md",
+      "local_path": "skills/notion-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-reference-architecture/SKILL.md",
+      "local_path": "skills/notion-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-reliability-patterns/SKILL.md",
+      "local_path": "skills/notion-reliability-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-sdk-patterns/SKILL.md",
+      "local_path": "skills/notion-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-search-retrieve/SKILL.md",
+      "local_path": "skills/notion-search-retrieve/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-security-basics/SKILL.md",
+      "local_path": "skills/notion-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-upgrade-migration/SKILL.md",
+      "local_path": "skills/notion-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/notion-pack/skills/notion-webhooks-events/SKILL.md",
+      "local_path": "skills/notion-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

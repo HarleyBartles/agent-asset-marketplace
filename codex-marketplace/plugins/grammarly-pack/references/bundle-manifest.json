@@ -1,0 +1,157 @@
+{
+  "bundle_name": "grammarly-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/grammarly-pack/skills",
+  "candidate_count": 24,
+  "imported_count": 24,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-ci-integration/SKILL.md",
+      "local_path": "skills/grammarly-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-common-errors/SKILL.md",
+      "local_path": "skills/grammarly-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-core-workflow-a/SKILL.md",
+      "local_path": "skills/grammarly-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-core-workflow-b/SKILL.md",
+      "local_path": "skills/grammarly-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-cost-tuning/SKILL.md",
+      "local_path": "skills/grammarly-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-data-handling/SKILL.md",
+      "local_path": "skills/grammarly-data-handling/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-debug-bundle/SKILL.md",
+      "local_path": "skills/grammarly-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-deploy-integration/SKILL.md",
+      "local_path": "skills/grammarly-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-enterprise-rbac/SKILL.md",
+      "local_path": "skills/grammarly-enterprise-rbac/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-hello-world/SKILL.md",
+      "local_path": "skills/grammarly-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-incident-runbook/SKILL.md",
+      "local_path": "skills/grammarly-incident-runbook/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-install-auth/SKILL.md",
+      "local_path": "skills/grammarly-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-local-dev-loop/SKILL.md",
+      "local_path": "skills/grammarly-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-migration-deep-dive/SKILL.md",
+      "local_path": "skills/grammarly-migration-deep-dive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-multi-env-setup/SKILL.md",
+      "local_path": "skills/grammarly-multi-env-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-observability/SKILL.md",
+      "local_path": "skills/grammarly-observability/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-performance-tuning/SKILL.md",
+      "local_path": "skills/grammarly-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-prod-checklist/SKILL.md",
+      "local_path": "skills/grammarly-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-rate-limits/SKILL.md",
+      "local_path": "skills/grammarly-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-reference-architecture/SKILL.md",
+      "local_path": "skills/grammarly-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-sdk-patterns/SKILL.md",
+      "local_path": "skills/grammarly-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-security-basics/SKILL.md",
+      "local_path": "skills/grammarly-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-upgrade-migration/SKILL.md",
+      "local_path": "skills/grammarly-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/grammarly-pack/skills/grammarly-webhooks-events/SKILL.md",
+      "local_path": "skills/grammarly-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}

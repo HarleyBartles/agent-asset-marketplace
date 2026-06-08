@@ -1,0 +1,121 @@
+{
+  "bundle_name": "alchemy-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/saas-packs/alchemy-pack/skills",
+  "candidate_count": 18,
+  "imported_count": 18,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-ci-integration/SKILL.md",
+      "local_path": "skills/alchemy-ci-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-common-errors/SKILL.md",
+      "local_path": "skills/alchemy-common-errors/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-core-workflow-a/SKILL.md",
+      "local_path": "skills/alchemy-core-workflow-a/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-core-workflow-b/SKILL.md",
+      "local_path": "skills/alchemy-core-workflow-b/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-cost-tuning/SKILL.md",
+      "local_path": "skills/alchemy-cost-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-debug-bundle/SKILL.md",
+      "local_path": "skills/alchemy-debug-bundle/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-deploy-integration/SKILL.md",
+      "local_path": "skills/alchemy-deploy-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-hello-world/SKILL.md",
+      "local_path": "skills/alchemy-hello-world/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-install-auth/SKILL.md",
+      "local_path": "skills/alchemy-install-auth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-local-dev-loop/SKILL.md",
+      "local_path": "skills/alchemy-local-dev-loop/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-performance-tuning/SKILL.md",
+      "local_path": "skills/alchemy-performance-tuning/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-prod-checklist/SKILL.md",
+      "local_path": "skills/alchemy-prod-checklist/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-rate-limits/SKILL.md",
+      "local_path": "skills/alchemy-rate-limits/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-reference-architecture/SKILL.md",
+      "local_path": "skills/alchemy-reference-architecture/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-sdk-patterns/SKILL.md",
+      "local_path": "skills/alchemy-sdk-patterns/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-security-basics/SKILL.md",
+      "local_path": "skills/alchemy-security-basics/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-upgrade-migration/SKILL.md",
+      "local_path": "skills/alchemy-upgrade-migration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    },
+    {
+      "upstream_path": "plugins/saas-packs/alchemy-pack/skills/alchemy-webhooks-events/SKILL.md",
+      "local_path": "skills/alchemy-webhooks-events/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}
