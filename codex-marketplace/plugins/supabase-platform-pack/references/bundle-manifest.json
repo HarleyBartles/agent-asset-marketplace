@@ -13,7 +13,7 @@
       "upstream_path": "plugins/saas-packs/supabase-pack/skills/supabase-advanced-troubleshooting/SKILL.md",
       "local_path": "skills/supabase-advanced-troubleshooting/SKILL.md",
       "import_status": "imported",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; local-only destructive reset guard intentionally tightened for safety."
     },
     {
       "upstream_path": "plugins/saas-packs/supabase-pack/skills/supabase-architecture-variants/SKILL.md",
@@ -115,7 +115,7 @@
       "upstream_path": "plugins/saas-packs/supabase-pack/skills/supabase-multi-env-setup/SKILL.md",
       "local_path": "skills/supabase-multi-env-setup/SKILL.md",
       "import_status": "imported",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; local-only destructive reset guard intentionally tightened for safety."
     },
     {
       "upstream_path": "plugins/saas-packs/supabase-pack/skills/supabase-observability/SKILL.md",

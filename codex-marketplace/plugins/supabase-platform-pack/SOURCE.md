@@ -30,5 +30,6 @@ The full import ledger is recorded in
 
 ## Notes
 
-No behavior changes were made to the imported docs. The wrapper only maps the
-upstream skill docs into local plugin paths and attaches provenance evidence.
+Most imported docs were copied verbatim. `supabase-multi-env-setup` was
+intentionally adapted to make the destructive reset example local-only, and the
+bundle ledger records that safety change.

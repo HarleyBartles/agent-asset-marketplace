@@ -31,3 +31,5 @@ All skill docs are available under `skills/<skill-id>/SKILL.md`.
 
 The upstream Supabase bundle is MIT-licensed. This wrapper preserves the
 original skill boundaries and adds the marketplace metadata needed for Codex.
+One skill, `supabase-multi-env-setup`, is intentionally adapted to make the
+destructive reset example local-only, and the ledger records that safety fix.
