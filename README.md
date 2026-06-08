@@ -96,10 +96,12 @@ Policy:
 
 - `codex-marketplace/` - marketplace source layout and plugin source shape.
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
+- `plugins/` - repo-local marketplace bundle projections, including `plugins/house-skills/`.
 - `gpt-skills/` - GPT-native skill sources and supporting notes.
 - `gpt-skills/house-skills/` - Harley-authored first-party GPT skills only.
 - `sources/vendor/` - third-party source custody and source snapshots.
 - `provenance/` - license, attribution, source-map, reconciliation, and trust records.
 - `repo-overlays/` - destination-specific overlays.
 - `tools/` - helper scripts and validation tooling.
+- `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.
 - `generated/reports/` - derived reports and validation output.

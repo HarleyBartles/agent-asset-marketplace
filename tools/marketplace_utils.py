@@ -11,6 +11,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
+REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
+REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
 MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
@@ -21,6 +23,7 @@ SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platf
 SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
+PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "plugins/house-skills/AGENTS.md"
 SOURCE_DECISIONS_MD_PATH = ROOT / "sources/house-skills/decisions.md"
 SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/house-skills/decisions.json"
 SOURCE_INTAKE_JSON_PATH = ROOT / "sources/house-skills/intake.json"

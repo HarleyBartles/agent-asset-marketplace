@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-import sys
 
 from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
@@ -15,18 +14,22 @@ from marketplace_utils import (
     PLUGIN_README_PATH,
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
+    PLUGIN_BUNDLE_AGENTS_PATH,
     SUPABASE_BUNDLE_MANIFEST_PATH,
     TESTING_BUNDLE_MANIFEST_PATH,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_DECISIONS_MD_PATH,
     SOURCE_INTAKE_JSON_PATH,
     SOURCE_MAP_PATH,
+    REPO_INDEX_PATH,
+    REPO_INDEX_README_PATH,
     build_marketplace_manifest,
     load_json,
     normalize_decision_record,
     normalize_decision_row,
     parse_top_markdown_table,
 )
+from validate_repo_index import validate_repo_index
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -300,7 +303,11 @@ def main() -> int:
     check_text(ROOT / "codex-marketplace/plugins/testing-skill-pack/SOURCE.md")
     check_text(PLUGIN_README_PATH)
     check_text(PLUGIN_SKILL_PATH)
+    check_text(PLUGIN_BUNDLE_AGENTS_PATH)
     check_text(PROVENANCE_PATH)
+    check_text(REPO_INDEX_README_PATH)
+    check_json(REPO_INDEX_PATH)
+    validate_repo_index()
 
     print("Marketplace validation passed.")
     return 0
