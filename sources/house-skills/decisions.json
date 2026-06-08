@@ -115,14 +115,14 @@
     "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
   },
   {
-    "issue": "MARK-22",
-    "source_id": "adventures-project-doctrine-v1",
-    "source_path": "gpt-skills/house-skills/adventures-project-doctrine/v1/adventures-project-doctrine-v1/SKILL.md",
-    "public_name": "adventures-project-doctrine-v1",
-    "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
+    "issue": "MARK-65",
+    "source_id": "adventures-project-doctrine-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md",
+    "public_name": "adventures-project-doctrine-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures project doctrine",
     "import_state": "imported",
     "scope": "Adventures project doctrine",
-    "notes": "Imported as the primary Adventures survivor. Keeps the shared doctrine surface while stripping retired PSA/PIG, deck/PPTX, receipt, and standalone GitHub operations residue out of the active House Skills lane."
+    "notes": "Imported as the primary Adventures replacement line. Keeps the shared doctrine surface while using neutral stage boundaries and leaving deck/PPTX, receipt, and standalone GitHub operations residue in history."
   },
   {
     "issue": "MARK-23",
@@ -245,94 +245,94 @@
     "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-bootstrap-v1",
-    "source_path": "gpt-skills/house-skills/adventures-bootstrap/v1/adventures-bootstrap-v1/SKILL.md",
-    "public_name": "adventures-bootstrap-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-bootstrap-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md",
+    "public_name": "adventures-bootstrap-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures first-read router",
     "import_state": "imported",
     "scope": "Adventures first-read router",
-    "notes": "Imported as the compact Adventures router that hands off to project doctrine, PSA/PIG stack surfaces, or the repo playbook."
+    "notes": "Imported as the compact Adventures router."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-github-operations-v1",
-    "source_path": "gpt-skills/house-skills/adventures-github-operations/v1/adventures-github-operations-v1/SKILL.md",
-    "public_name": "adventures-github-operations-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-github-operations-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md",
+    "public_name": "adventures-github-operations-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures repo verification",
     "import_state": "imported",
     "scope": "Adventures GitHub proof overlay",
-    "notes": "Imported as the narrow Adventures repo/artifact proof overlay after the generic GitHub surface."
+    "notes": "Imported as the narrow Adventures proof overlay after generic GitHub ops."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-visual-preproduction-v1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-preproduction/v1/adventures-visual-preproduction-v1/SKILL.md",
-    "public_name": "adventures-visual-preproduction-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-visual-preproduction-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md",
+    "public_name": "adventures-visual-preproduction-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures visual preproduction",
     "import_state": "imported",
     "scope": "Adventures source-first visual planning",
-    "notes": "Imported as the visual preproduction lane for planning, bible workflow, asset readiness, and QA routing."
+    "notes": "Imported as the visual preproduction lane."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-storyboard-preflight-v1",
-    "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight/v1/adventures-storyboard-preflight-v1/SKILL.md",
-    "public_name": "adventures-storyboard-preflight-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-storyboard-preflight-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md",
+    "public_name": "adventures-storyboard-preflight-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures storyboard preflight",
     "import_state": "imported",
     "scope": "Adventures deterministic storyboard preflight",
-    "notes": "Imported as the preflight surface for storyboard, diagram, prompt-board, and reference-role artifact work."
+    "notes": "Imported as the storyboard and prompt-board preflight surface."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-visual-bible-creator-v1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator/v1/adventures-visual-bible-creator-v1/SKILL.md",
-    "public_name": "adventures-visual-bible-creator-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-visual-bible-creator-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md",
+    "public_name": "adventures-visual-bible-creator-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures visual bible authoring",
     "import_state": "imported",
     "scope": "Adventures visual bible authoring",
-    "notes": "Imported as the bible author/update/lock surface with prompt, QA, repair, and extrapolation blocks."
+    "notes": "Imported as the visual bible author/update/lock surface."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-visual-bible-interpreter-v1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter/v1/adventures-visual-bible-interpreter-v1/SKILL.md",
-    "public_name": "adventures-visual-bible-interpreter-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-visual-bible-interpreter-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md",
+    "public_name": "adventures-visual-bible-interpreter-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures visual bible interpretation",
     "import_state": "imported",
     "scope": "Adventures visual bible interpretation",
-    "notes": "Imported as the constraint-extraction surface for the visual bible and repair or preserve packets."
+    "notes": "Imported as the visual bible constraint-extraction surface."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-image-qa-v1",
-    "source_path": "gpt-skills/house-skills/adventures-image-qa/v1/adventures-image-qa-v1/SKILL.md",
-    "public_name": "adventures-image-qa-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-image-qa-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md",
+    "public_name": "adventures-image-qa-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures image QA",
     "import_state": "imported",
     "scope": "Adventures image QA",
-    "notes": "Imported as the visual QA lane for source images, compiled sheets, Patch identity checks, and bible-backed QA."
+    "notes": "Imported as the visual QA lane for source images and compiled sheets."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-asset-sheet-compiler-v1",
-    "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler/v1/adventures-asset-sheet-compiler-v1/SKILL.md",
-    "public_name": "adventures-asset-sheet-compiler-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-asset-sheet-compiler-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md",
+    "public_name": "adventures-asset-sheet-compiler-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures asset-sheet compilation",
     "import_state": "imported",
     "scope": "Adventures asset-sheet compilation",
-    "notes": "Imported as the deterministic compile surface for accepted source images, templates, and manifest discipline."
+    "notes": "Imported as the deterministic asset-sheet compiler."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "adventures-frame-buster-v1",
-    "source_path": "gpt-skills/house-skills/adventures-frame-buster/v1/adventures-frame-buster-v1/SKILL.md",
-    "public_name": "adventures-frame-buster-v1",
-    "provenance_name": "MARK-9 chunk ledger — Adventures and PIG",
+    "issue": "MARK-65",
+    "source_id": "adventures-frame-buster-v1.1",
+    "source_path": "gpt-skills/house-skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md",
+    "public_name": "adventures-frame-buster-v1.1",
+    "provenance_name": "MARK-65 replacement line - Adventures frame readiness",
     "import_state": "imported",
     "scope": "Adventures frame-readiness surface",
-    "notes": "Imported as the consolidated large-picture readiness gate that keeps the full frame visible before any subpiece is accepted."
+    "notes": "Imported as the consolidated frame-readiness gate."
   },
   {
     "issue": "MARK-30",

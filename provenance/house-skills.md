@@ -38,7 +38,7 @@
 - Public identity: `adventures-project-doctrine-v1`
 - Provenance/history only: MARK-22 prep payload for Adventures House Skills survivor import
 - Scope: Adventures project doctrine
-- Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired PSA/PIG, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
+- Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired image-generation framing, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
 
 ## rooms-image-sidecars-v0.1
 
@@ -61,7 +61,7 @@
 - Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures and PIG, and Rooms
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms
 - Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries.
 
 ## MARK-30 active imports
@@ -80,17 +80,18 @@
 - `crew-v1` - `gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md`
 - `crew-buster-v1` - `gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md`
 
-### Adventures and PIG
+### Adventures v1.1
 
-- `adventures-bootstrap-v1` - `gpt-skills/house-skills/adventures-bootstrap/v1/adventures-bootstrap-v1/SKILL.md`
-- `adventures-github-operations-v1` - `gpt-skills/house-skills/adventures-github-operations/v1/adventures-github-operations-v1/SKILL.md`
-- `adventures-visual-preproduction-v1` - `gpt-skills/house-skills/adventures-visual-preproduction/v1/adventures-visual-preproduction-v1/SKILL.md`
-- `adventures-storyboard-preflight-v1` - `gpt-skills/house-skills/adventures-storyboard-preflight/v1/adventures-storyboard-preflight-v1/SKILL.md`
-- `adventures-visual-bible-creator-v1` - `gpt-skills/house-skills/adventures-visual-bible-creator/v1/adventures-visual-bible-creator-v1/SKILL.md`
-- `adventures-visual-bible-interpreter-v1` - `gpt-skills/house-skills/adventures-visual-bible-interpreter/v1/adventures-visual-bible-interpreter-v1/SKILL.md`
-- `adventures-image-qa-v1` - `gpt-skills/house-skills/adventures-image-qa/v1/adventures-image-qa-v1/SKILL.md`
-- `adventures-asset-sheet-compiler-v1` - `gpt-skills/house-skills/adventures-asset-sheet-compiler/v1/adventures-asset-sheet-compiler-v1/SKILL.md`
-- `adventures-frame-buster-v1` - `gpt-skills/house-skills/adventures-frame-buster/v1/adventures-frame-buster-v1/SKILL.md`
+- `adventures-project-doctrine-v1.1` - `gpt-skills/house-skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md`
+- `adventures-bootstrap-v1.1` - `gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md`
+- `adventures-github-operations-v1.1` - `gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md`
+- `adventures-visual-preproduction-v1.1` - `gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md`
+- `adventures-storyboard-preflight-v1.1` - `gpt-skills/house-skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md`
+- `adventures-visual-bible-creator-v1.1` - `gpt-skills/house-skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md`
+- `adventures-visual-bible-interpreter-v1.1` - `gpt-skills/house-skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md`
+- `adventures-image-qa-v1.1` - `gpt-skills/house-skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md`
+- `adventures-asset-sheet-compiler-v1.1` - `gpt-skills/house-skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md`
+- `adventures-frame-buster-v1.1` - `gpt-skills/house-skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md`
 
 ### Rooms
 

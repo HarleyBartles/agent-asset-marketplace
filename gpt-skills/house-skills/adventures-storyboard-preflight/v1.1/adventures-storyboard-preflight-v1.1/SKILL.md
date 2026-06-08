@@ -1,39 +1,25 @@
 ---
 name: adventures-storyboard-preflight-v1.1
 description: >-
-  prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic visual planning. use when Harley asks ordinary GPT to storyboard frames, make prompt boards, map slide visuals, preflight story beats, or produce visual planning packets before image generation; never grants image-generation authority.
+  prepare deterministic storyboard and prompt-board work for Adventures. use when the task needs lightweight visual planning, reference locking, board review, or a paste-ready handoff to a more specific visual skill.
 ---
 
 # Adventures Storyboard Preflight v1.1
 
-Use this skill when Harley asks ordinary GPT/project workflow to storyboard Adventures frames, make prompt boards, map slide visuals, prepare visual planning packets, or preflight story beats before image generation. Use it to produce deterministic planning inputs that may later support image preflight, QA, deck planning, or asset work.
+Use this skill for lightweight storyboard and prompt-board planning.
 
-## Owned decision
+## Core rule
 
-Create or review deterministic storyboard/prompt-board planning outputs, decide whether the board is preflight-ready, needs repair, should be handled by direct GPT deterministic planning, or should route to another visual skill.
+Board planning is deterministic. It does not grant image-generation authority.
 
-## Hard boundaries
+## Scope
 
-Do not generate, regenerate, or edit images from this skill. Storyboards and prompt boards are deterministic planning artifacts. For ordinary GPT/project workflow, an accepted board does not authorize image generation; visible mutation still routes through Adventures visual intent and image preflight.
+- storyboard and prompt-board drafting
+- reference locking and board review
+- handoff packet preparation for downstream visual work
 
-Do not let operator context, issue text, QA notes, or session continuity leak into board copy or image prompts.
+## Boundaries
 
-## Actor boundary
-
-This is a GPT/project-side deterministic planning skill. It may create lightweight storyboard, prompt-board, reference-lock, and prompt-safe planning packets directly. It is not an image-generation execution skill, and its no-generation posture applies only to this planning lane.
-
-## Progressive references
-
-Read `references/storyboard-operating-contract.md` when you need the full storyboard/prompt-board workflow, output schemas, QA-ready criteria, source-route posture, or failure handling.
-
-Read `references/prompt-board-contract.md` before producing or validating a prompt board.
-
-For normal deterministic script execution, do not read scripts. Use the operating contract command recipes. Inspect scripts only after execution fails, when validating package contents, or when explicitly editing them.
-
-## Minimal workflow
-
-1. Classify the requested board/planning artifact and decide the lightest deterministic planning route.
-2. Gather frame, world, visual bible, and source constraints.
-3. Produce or validate lightweight deterministic storyboard/prompt-board output.
-4. State readiness or exact repairs.
-5. Stop before image generation.
+- QA does not authorize another image call.
+- Do not generate or edit images from this skill.
+- Keep the output as a planning artifact until the downstream lane accepts it.
