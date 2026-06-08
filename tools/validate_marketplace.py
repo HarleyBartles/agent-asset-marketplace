@@ -20,6 +20,10 @@ from marketplace_utils import (
     VERCEL_BUNDLE_MANIFEST_PATH,
     SENTRY_BUNDLE_MANIFEST_PATH,
     OPENROUTER_BUNDLE_MANIFEST_PATH,
+    CURSOR_BUNDLE_MANIFEST_PATH,
+    COHERE_BUNDLE_MANIFEST_PATH,
+    DATABRICKS_BUNDLE_MANIFEST_PATH,
+    FLYIO_BUNDLE_MANIFEST_PATH,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_DECISIONS_MD_PATH,
     SOURCE_INTAKE_JSON_PATH,
@@ -314,16 +318,52 @@ def main() -> int:
         source_root="plugins/saas-packs/openrouter-pack/skills",
         plugin_root="codex-marketplace/plugins/openrouter-pack",
     )
+    validate_skill_bundle_manifest(
+        check_json(CURSOR_BUNDLE_MANIFEST_PATH),
+        bundle_name="cursor-pack",
+        source_root="plugins/saas-packs/cursor-pack/skills",
+        plugin_root="codex-marketplace/plugins/cursor-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(COHERE_BUNDLE_MANIFEST_PATH),
+        bundle_name="cohere-pack",
+        source_root="plugins/saas-packs/cohere-pack/skills",
+        plugin_root="codex-marketplace/plugins/cohere-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(DATABRICKS_BUNDLE_MANIFEST_PATH),
+        bundle_name="databricks-pack",
+        source_root="plugins/saas-packs/databricks-pack/skills",
+        plugin_root="codex-marketplace/plugins/databricks-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(FLYIO_BUNDLE_MANIFEST_PATH),
+        bundle_name="flyio-pack",
+        source_root="plugins/saas-packs/flyio-pack/skills",
+        plugin_root="codex-marketplace/plugins/flyio-pack",
+    )
     for path in (
         ROOT / "codex-marketplace/plugins/vercel-pack/package.json",
         ROOT / "codex-marketplace/plugins/sentry-pack/package.json",
         ROOT / "codex-marketplace/plugins/openrouter-pack/package.json",
+        ROOT / "codex-marketplace/plugins/cursor-pack/package.json",
+        ROOT / "codex-marketplace/plugins/cohere-pack/package.json",
+        ROOT / "codex-marketplace/plugins/databricks-pack/package.json",
+        ROOT / "codex-marketplace/plugins/flyio-pack/package.json",
         ROOT / "codex-marketplace/plugins/vercel-pack/README.md",
         ROOT / "codex-marketplace/plugins/sentry-pack/README.md",
         ROOT / "codex-marketplace/plugins/openrouter-pack/README.md",
+        ROOT / "codex-marketplace/plugins/cursor-pack/README.md",
+        ROOT / "codex-marketplace/plugins/cohere-pack/README.md",
+        ROOT / "codex-marketplace/plugins/databricks-pack/README.md",
+        ROOT / "codex-marketplace/plugins/flyio-pack/README.md",
         ROOT / "codex-marketplace/plugins/vercel-pack/SOURCE.md",
         ROOT / "codex-marketplace/plugins/sentry-pack/SOURCE.md",
         ROOT / "codex-marketplace/plugins/openrouter-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/cursor-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/cohere-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/databricks-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/flyio-pack/SOURCE.md",
         ROOT / "codex-marketplace/plugins/openrouter-pack/skills/openrouter-compliance-review/references/openrouter-integration-security-questionnaire.md",
     ):
         if path.name == "package.json":
@@ -336,6 +376,8 @@ def main() -> int:
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
     check_text(ROOT / "provenance/MARK-46-activity-log.md")
+    check_text(ROOT / "provenance/MARK-62-activity-log.md")
+    check_text(ROOT / "provenance/claude-code-plugins-plus-skills-reference.md")
     check_text(ROOT / "codex-marketplace/plugins/testing-skill-pack/README.md")
     check_text(ROOT / "codex-marketplace/plugins/testing-skill-pack/SOURCE.md")
     check_text(PLUGIN_README_PATH)

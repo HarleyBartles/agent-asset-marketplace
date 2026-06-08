@@ -20,12 +20,20 @@ SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/
 VERCEL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/.codex-plugin/plugin.json"
 SENTRY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/.codex-plugin/plugin.json"
 OPENROUTER_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/.codex-plugin/plugin.json"
+CURSOR_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cursor-pack/.codex-plugin/plugin.json"
+COHERE_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cohere-pack/.codex-plugin/plugin.json"
+DATABRICKS_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/databricks-pack/.codex-plugin/plugin.json"
+FLYIO_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 TESTING_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json"
 SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json"
 VERCEL_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json"
 SENTRY_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/references/bundle-manifest.json"
 OPENROUTER_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/references/bundle-manifest.json"
+CURSOR_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cursor-pack/references/bundle-manifest.json"
+COHERE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cohere-pack/references/bundle-manifest.json"
+DATABRICKS_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/databricks-pack/references/bundle-manifest.json"
+FLYIO_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/references/bundle-manifest.json"
 SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
@@ -82,6 +90,30 @@ MARKETPLACE_PLUGIN_SPECS = [
         "registry_path": "./codex-marketplace/plugins/openrouter-pack",
         "plugin_root": "codex-marketplace/plugins/openrouter-pack",
         "manifest_path": OPENROUTER_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "cursor-pack",
+        "registry_path": "./codex-marketplace/plugins/cursor-pack",
+        "plugin_root": "codex-marketplace/plugins/cursor-pack",
+        "manifest_path": CURSOR_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "cohere-pack",
+        "registry_path": "./codex-marketplace/plugins/cohere-pack",
+        "plugin_root": "codex-marketplace/plugins/cohere-pack",
+        "manifest_path": COHERE_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "databricks-pack",
+        "registry_path": "./codex-marketplace/plugins/databricks-pack",
+        "plugin_root": "codex-marketplace/plugins/databricks-pack",
+        "manifest_path": DATABRICKS_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "flyio-pack",
+        "registry_path": "./codex-marketplace/plugins/flyio-pack",
+        "plugin_root": "codex-marketplace/plugins/flyio-pack",
+        "manifest_path": FLYIO_PACK_PLUGIN_MANIFEST_PATH,
     },
     {
         "name": "fullstack-starter-pack",

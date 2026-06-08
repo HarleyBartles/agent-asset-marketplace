@@ -39,3 +39,7 @@ and `marketplace-family-pack.md`.
 For the MARK-61 Vercel, Sentry, and OpenRouter continuation tranche, see
 `MARK-46-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
 addendum.
+
+For the MARK-62 Cursor, Cohere, Databricks, and Fly.io continuation tranche,
+see `MARK-62-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
+addendum.
