@@ -575,7 +575,7 @@ async function makeRepro(args: z.infer<typeof MakeReproSchema>) {
 
     // Add method
     if (log.method && log.method !== 'GET') {
-      parts.push(`-X ${log.method}`);
+      parts.push(`-X ${shellSingleQuote(log.method)}`);
     }
 
     // Add headers
@@ -583,7 +583,7 @@ async function makeRepro(args: z.infer<typeof MakeReproSchema>) {
       for (const [key, value] of Object.entries(log.requestHeaders)) {
         // Skip some headers that curl adds automatically
         if (!['host', 'content-length', 'connection'].includes(key.toLowerCase())) {
-          parts.push(`-H "${key}: ${value}"`);
+          parts.push(`-H ${shellSingleQuote(`${key}: ${value}`)}`);
         }
       }
     }
@@ -597,7 +597,7 @@ async function makeRepro(args: z.infer<typeof MakeReproSchema>) {
     }
 
     // Add URL (must be last)
-    parts.push(`"${log.url}"`);
+    parts.push(shellSingleQuote(log.url));
 
     // Format output
     const curl = pretty

@@ -54,29 +54,22 @@ export async function fetchPR(
 	prNumber: number,
 ): Promise<PRData> {
 	let prResponse: Awaited<ReturnType<typeof octokit.pulls.get>>;
-	let filesResponse: Awaited<ReturnType<typeof octokit.pulls.listFiles>>;
-	let commentsResponse: Awaited<ReturnType<typeof octokit.pulls.listReviewComments>>;
-	let reviewsResponse: Awaited<ReturnType<typeof octokit.pulls.listReviews>>;
+	let files: Awaited<ReturnType<typeof octokit.pulls.listFiles>>["data"];
+	let comments: Awaited<ReturnType<typeof octokit.pulls.listReviewComments>>["data"];
+	let reviews: Awaited<ReturnType<typeof octokit.pulls.listReviews>>["data"];
 
 	try {
-		[prResponse, filesResponse, commentsResponse, reviewsResponse] = await Promise.all([
+		[prResponse, files, comments, reviews] = await Promise.all([
 			octokit.pulls.get({ owner, repo, pull_number: prNumber }),
-			octokit.pulls.listFiles({ owner, repo, pull_number: prNumber, per_page: 300 }),
-			octokit.pulls.listReviewComments({ owner, repo, pull_number: prNumber, per_page: 100 }),
-			octokit.pulls.listReviews({ owner, repo, pull_number: prNumber, per_page: 50 }),
+			octokit.paginate(octokit.pulls.listFiles, { owner, repo, pull_number: prNumber, per_page: 100 }),
+			octokit.paginate(octokit.pulls.listReviewComments, { owner, repo, pull_number: prNumber, per_page: 100 }),
+			octokit.paginate(octokit.pulls.listReviews, { owner, repo, pull_number: prNumber, per_page: 100 }),
 		]);
 	} catch (err: unknown) {
 		throw mapGitHubError(err, owner, repo, prNumber);
 	}
 
 	const pr = prResponse.data;
-
-	// Warn if file list may be truncated
-	if (filesResponse.data.length >= 300) {
-		console.warn(
-			`Warning: PR #${prNumber} has 300+ files; results may be incomplete. GitHub API returns at most 300 files per page.`,
-		);
-	}
 
 	// Extract linked issues from PR body
 	const linkedIssues = extractLinkedIssues(pr.body ?? "", owner, repo);
@@ -96,7 +89,7 @@ export async function fetchPR(
 		changed_files: pr.changed_files,
 		labels: pr.labels.map((l) => l.name),
 		linked_issues: linkedIssues,
-		files: filesResponse.data.map((f) => ({
+		files: files.map((f) => ({
 			filename: f.filename,
 			status: f.status,
 			additions: f.additions,
@@ -104,14 +97,14 @@ export async function fetchPR(
 			patch: f.patch,
 			previous_filename: f.previous_filename,
 		})),
-		review_comments: commentsResponse.data.map((c) => ({
+		review_comments: comments.map((c) => ({
 			author: c.user?.login ?? "unknown",
 			body: c.body,
 			path: c.path,
 			line: c.line ?? null,
 			created_at: c.created_at,
 		})),
-		reviews: reviewsResponse.data
+		reviews: reviews
 			.filter((r) => r.state !== "PENDING")
 			.map((r) => ({
 				author: r.user?.login ?? "unknown",

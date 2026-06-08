@@ -29,6 +29,18 @@
       "category": "Productivity"
     },
     {
+      "name": "testing-skill-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/testing-skill-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "fullstack-starter-pack",
       "source": {
         "source": "local",

@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 
 from marketplace_utils import (
+    CODEX_MARKETPLACE_MANIFEST_PATH,
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
@@ -41,7 +42,13 @@ def main() -> int:
         json.dump(expected, handle, indent=2)
         handle.write("\n")
 
+    CODEX_MARKETPLACE_MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with CODEX_MARKETPLACE_MANIFEST_PATH.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(expected, handle, indent=2)
+        handle.write("\n")
+
     print(f"Wrote {MARKETPLACE_PATH.relative_to(MARKETPLACE_PATH.parents[2])}")
+    print(f"Wrote {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(CODEX_MARKETPLACE_MANIFEST_PATH.parents[1])}")
     return 0
 
 

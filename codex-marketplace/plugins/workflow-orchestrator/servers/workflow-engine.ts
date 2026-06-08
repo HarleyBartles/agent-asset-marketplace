@@ -95,6 +95,36 @@ async function executeWorkflow(args: z.infer<typeof ExecuteWorkflowSchema>) {
   const pending = new Set(workflow.tasks.map(task => task.id));
   const completed = new Set<string>();
 
+  async function runTask(task: WorkflowTask) {
+    pending.delete(task.id);
+    task.status = 'running';
+    task.startTime = new Date().toISOString();
+
+    try {
+      const { stdout, stderr } = await exec(task.command, { shell: true, windowsHide: true, maxBuffer: 10 * 1024 * 1024 });
+      task.result = {
+        command: task.command,
+        stdout: stdout.trim(),
+        stderr: stderr.trim(),
+        exitCode: 0
+      };
+      task.status = 'completed';
+      completed.add(task.id);
+    } catch (error) {
+      const execError = error as { stdout?: string; stderr?: string; code?: number | string };
+      task.status = 'failed';
+      task.error = (execError.stderr || execError.stdout || String(error)).trim();
+      task.result = {
+        command: task.command,
+        stdout: (execError.stdout || '').trim(),
+        stderr: (execError.stderr || '').trim(),
+        exitCode: typeof execError.code === 'number' ? execError.code : 1
+      };
+    } finally {
+      task.endTime = new Date().toISOString();
+    }
+  }
+
   while (pending.size > 0) {
     const runnable = Array.from(pending)
       .map(taskId => byId.get(taskId)!)
@@ -111,37 +141,10 @@ async function executeWorkflow(args: z.infer<typeof ExecuteWorkflowSchema>) {
     }
 
     const executionQueue = parallel ? runnable : runnable.slice(0, 1);
-    for (const task of executionQueue) {
-      pending.delete(task.id);
-      task.status = 'running';
-      task.startTime = new Date().toISOString();
-
-      try {
-        const { stdout, stderr } = await exec(task.command, { shell: true, windowsHide: true, maxBuffer: 10 * 1024 * 1024 });
-        task.result = {
-          command: task.command,
-          stdout: stdout.trim(),
-          stderr: stderr.trim(),
-          exitCode: 0
-        };
-        task.status = 'completed';
-        completed.add(task.id);
-      } catch (error) {
-        const execError = error as { stdout?: string; stderr?: string; code?: number | string };
-        task.status = 'failed';
-        task.error = (execError.stderr || execError.stdout || String(error)).trim();
-        task.result = {
-          command: task.command,
-          stdout: (execError.stdout || '').trim(),
-          stderr: (execError.stderr || '').trim(),
-          exitCode: typeof execError.code === 'number' ? execError.code : 1
-        };
-      }
-
-      task.endTime = new Date().toISOString();
-      if (task.status === 'completed') {
-        pending.delete(task.id);
-      }
+    if (parallel) {
+      await Promise.all(executionQueue.map(task => runTask(task)));
+    } else {
+      await runTask(executionQueue[0]);
     }
   }
 

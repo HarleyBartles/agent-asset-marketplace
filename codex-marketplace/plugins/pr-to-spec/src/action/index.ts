@@ -172,25 +172,37 @@ async function main(): Promise<void> {
 	const yamlPath = resolve(outDir, `pr-${prNumber}.spec.yaml`);
 	const mdPath = resolve(outDir, `pr-${prNumber}.summary.md`);
 	const jsonPath = resolve(outDir, `pr-${prNumber}.spec.json`);
+	let writtenYamlPath: string | undefined;
+	let writtenMdPath: string | undefined;
+	let writtenJsonPath: string | undefined;
 
 	if (inputs.format === "yaml" || inputs.format === "both") {
 		writeFileSync(yamlPath, yamlOutput, "utf-8");
 		console.log(`Written: ${yamlPath}`);
+		writtenYamlPath = yamlPath;
 	}
 	if (inputs.format === "markdown" || inputs.format === "both") {
 		writeFileSync(mdPath, mdOutput, "utf-8");
 		console.log(`Written: ${mdPath}`);
+		writtenMdPath = mdPath;
 	}
 	if (inputs.format === "json" || inputs.format === "both") {
 		writeFileSync(jsonPath, jsonOutput, "utf-8");
 		console.log(`Written: ${jsonPath}`);
+		writtenJsonPath = jsonPath;
 	}
 	console.log("::endgroup::");
 
 	// Set action outputs
-	setOutput("spec_yaml_path", yamlPath);
-	setOutput("spec_md_path", mdPath);
-	setOutput("spec_json_path", jsonPath);
+	if (writtenYamlPath) {
+		setOutput("spec_yaml_path", writtenYamlPath);
+	}
+	if (writtenMdPath) {
+		setOutput("spec_md_path", writtenMdPath);
+	}
+	if (writtenJsonPath) {
+		setOutput("spec_json_path", writtenJsonPath);
+	}
 	setOutput("pr_number", String(prNumber));
 	setOutput("files_changed", String(spec.stats.files_changed));
 	setOutput("risk_count", String(spec.risk_flags.length));
