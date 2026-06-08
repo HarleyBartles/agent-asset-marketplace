@@ -61,4 +61,3 @@ Component summary:
 | Dependency | linear | v1 | `gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md` | `skills/linear-v1/SKILL.md` | Linear mechanics |
 | Dependency | tps-reporting | v1 | `gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md` | `skills/tps-reporting-v1/SKILL.md` | reporting |
 | Dependency | tps-ingress | v1 | `gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md` | `skills/tps-ingress-v1/SKILL.md` | ingress |
-

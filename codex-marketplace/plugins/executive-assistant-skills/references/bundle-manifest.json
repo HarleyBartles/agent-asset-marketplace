@@ -1,0 +1,43 @@
+{
+    "bundle_name":  "executive-assistant-skills",
+    "bundle_version":  "1.0.0",
+    "upstream_repo":  "jeremylongshore/claude-code-plugins-plus-skills",
+    "pinned_commit":  "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+    "source_root":  "plugins/business-tools/executive-assistant-skills/skills",
+    "candidate_count":  5,
+    "imported_count":  5,
+    "skipped_count":  0,
+    "blocked_count":  0,
+    "entries":  [
+                    {
+                        "upstream_path":  "plugins/business-tools/executive-assistant-skills/skills/action-items-todoist/SKILL.md",
+                        "local_path":  "skills/action-items-todoist/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/executive-assistant-skills/skills/email-drafting/SKILL.md",
+                        "local_path":  "skills/email-drafting/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/executive-assistant-skills/skills/executive-digest/SKILL.md",
+                        "local_path":  "skills/executive-digest/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/executive-assistant-skills/skills/meeting-prep/SKILL.md",
+                        "local_path":  "skills/meeting-prep/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    },
+                    {
+                        "upstream_path":  "plugins/business-tools/executive-assistant-skills/skills/todoist-due-drafts/SKILL.md",
+                        "local_path":  "skills/todoist-due-drafts/SKILL.md",
+                        "import_status":  "imported",
+                        "adaptation_note":  "Copied verbatim into its own local skills directory; no behavior or doctrine changes."
+                    }
+                ]
+}

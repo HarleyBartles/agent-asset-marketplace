@@ -497,6 +497,18 @@
       "category": "Productivity"
     },
     {
+      "name": "executive-assistant-skills",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/executive-assistant-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "fathom-pack",
       "source": {
         "source": "local",
@@ -633,6 +645,18 @@
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/gamma-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "general-legal-assistant",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/general-legal-assistant"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -1473,6 +1497,42 @@
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/wispr-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-blue-ocean-strategy",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-blue-ocean-strategy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-contagious",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-contagious"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "wondelai-cro-methodology",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/wondelai-cro-methodology"
       },
       "policy": {
         "installation": "AVAILABLE",
