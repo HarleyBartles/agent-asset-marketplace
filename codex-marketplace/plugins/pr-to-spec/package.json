@@ -23,7 +23,7 @@
     "test:watch": "vitest",
     "format": "biome format --write src/ tests/",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
-    "bundle:action": "pnpm build && ncc build dist/action/index.js -o dist/action-bundle --minify",
+    "bundle:action": "npm run build && npm exec -- ncc build dist/action/index.js -o dist/action-bundle --minify",
     "prepublishOnly": "pnpm check && pnpm build"
   },
   "keywords": [

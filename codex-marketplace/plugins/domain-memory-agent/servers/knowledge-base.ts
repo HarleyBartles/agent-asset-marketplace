@@ -204,7 +204,9 @@ function calculateTFIDF(queryTokens: string[], docId: string): number {
 
     const tf = (termFreqMap.get(docId) || 0) / docLength;
     const df = tfidfIndex.documentFrequencies.get(term) || 0;
-    const idf = df > 0 ? Math.log((tfidfIndex.totalDocuments + 1) / (df + 1)) : 0;
+    const idf = df > 0
+      ? Math.log((tfidfIndex.totalDocuments + 1) / (df + 1)) + 1
+      : 0;
 
     score += tf * idf;
   });
