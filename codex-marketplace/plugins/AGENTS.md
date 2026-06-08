@@ -20,4 +20,3 @@ rules, and upstream-drain policy.
   manifest, runtime registry, or repo index is not updated with it.
 - Flag unsupported changes to vendored plugin custody material unless the
   change has an explicit adaptation reason and provenance trail.
-

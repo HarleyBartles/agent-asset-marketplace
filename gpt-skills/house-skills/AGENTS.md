@@ -16,4 +16,3 @@ for global doctrine and tree-level guidance.
   ledger used by the marketplace projection.
 - Flag false claims that a House Skill was copied verbatim, fully upstream, or
   otherwise source-complete when the repository evidence shows otherwise.
-

@@ -18,4 +18,3 @@ rules, and upstream-drain policy.
   marketplace surface or registry state.
 - Flag provenance prose that implies repo completion without a corresponding
   marketplace asset, manifest, or validation hook.
-

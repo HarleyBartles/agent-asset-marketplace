@@ -20,4 +20,3 @@ rules, and upstream-drain policy.
 - Flag generated-export mismatches that would let the registry or bundle source
   drift silently from the tracked marketplace source tree.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
-

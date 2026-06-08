@@ -16,4 +16,3 @@ rules, and upstream-drain policy.
   references, or unsupported plugin entries.
 - Flag tooling changes that do not keep the marketplace export, repo index,
   and validation command documentation aligned.
-

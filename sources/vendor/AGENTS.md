@@ -19,4 +19,3 @@ rules, and upstream-drain policy.
 - Flag license, notice, or source-map drift that breaks custody evidence.
 - Flag source-root claims that do not match the pinned upstream snapshot or the
   actual vendor path recorded in provenance.
-

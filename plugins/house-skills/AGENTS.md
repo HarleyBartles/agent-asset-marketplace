@@ -20,4 +20,3 @@ rules, and upstream-drain policy.
   record.
 - Flag license or rights drift, especially if the bundle metadata or README
   starts implying broader rights than the repo evidence supports.
-

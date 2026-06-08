@@ -18,4 +18,3 @@ rules, and upstream-drain policy.
 - Treat `gpt-skills/house-skills/` as first-party-only territory; imported or
   adapted material does not belong there unless Harley explicitly authored it as
   first-party source.
-

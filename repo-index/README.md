@@ -44,4 +44,3 @@ Keep the index current with:
 
 If the repo index changes, the validator should fail on stale paths or missing
 guidance files before the change can be treated as complete.
-
