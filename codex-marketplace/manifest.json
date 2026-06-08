@@ -185,6 +185,18 @@
       "category": "Productivity"
     },
     {
+      "name": "brand-strategy-framework",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/brand-strategy-framework"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "brightdata-pack",
       "source": {
         "source": "local",
@@ -453,6 +465,18 @@
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/exa-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "excel-analyst-pro",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/excel-analyst-pro"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -1101,6 +1125,18 @@
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/project-health-auditor"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "promptbook",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/promptbook"
       },
       "policy": {
         "installation": "AVAILABLE",

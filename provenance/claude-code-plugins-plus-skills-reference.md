@@ -212,6 +212,29 @@ clean wrapper source root was present in the pinned tree during inspection:
 The `x-bug-triage-plugin` alias is normalized to the `x-bug-triage` source root
 and is not duplicated as a second wrapper.
 
+## MARK-66 Plugin-Package Proof Slice Addendum
+
+The next plugin-package tranche is now also preserved as marketplace wrappers:
+
+- `codex-marketplace/plugins/brand-strategy-framework`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/brand-strategy-framework/skills/`
+- `codex-marketplace/plugins/excel-analyst-pro`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/excel-analyst-pro/skills/`
+- `codex-marketplace/plugins/promptbook`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/promptbook/skills/`
+
+Imported skill docs:
+
+- `1` imported for `brand-strategy-framework`
+- `4` imported for `excel-analyst-pro`
+- `2` imported for `promptbook`
+- `0` skipped for each pack
+- `0` blocked for each pack
+
+The bundle evidence lives in the respective
+`codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
+plugin manifests are constrained to paths that exist locally.
+
 ## MARK-60 Standalone Testing Skill Pack Addendum
 
 The upstream standalone Replit skill family is now also preserved as a

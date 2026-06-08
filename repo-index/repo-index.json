@@ -444,6 +444,27 @@
       }
     },
     {
+      "name": "brand-strategy-framework",
+      "plugin_root": "codex-marketplace/plugins/brand-strategy-framework",
+      "plugin_manifest": "codex-marketplace/plugins/brand-strategy-framework/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/brand-strategy-framework/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/brand-strategy-framework/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/brand-strategy-framework/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/brand-strategy-framework/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-66-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/brand-strategy-framework",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
       "name": "brightdata-pack",
       "plugin_root": "codex-marketplace/plugins/brightdata-pack",
       "plugin_manifest": "codex-marketplace/plugins/brightdata-pack/.codex-plugin/plugin.json",
@@ -885,6 +906,27 @@
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/evernote-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "excel-analyst-pro",
+      "plugin_root": "codex-marketplace/plugins/excel-analyst-pro",
+      "plugin_manifest": "codex-marketplace/plugins/excel-analyst-pro/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/excel-analyst-pro/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/excel-analyst-pro/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/excel-analyst-pro/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/excel-analyst-pro/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-66-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/excel-analyst-pro",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -2021,6 +2063,27 @@
       "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/project-health-auditor",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "promptbook",
+      "plugin_root": "codex-marketplace/plugins/promptbook",
+      "plugin_manifest": "codex-marketplace/plugins/promptbook/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/promptbook/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/promptbook/LICENSE",
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/promptbook/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/promptbook/./skills/",
+      "provenance_refs": [
+        "provenance/MARK-66-activity-log.md",
+        "provenance/claude-code-plugins-plus-skills-reference.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/promptbook",
       "registry_alignment": {
         "status": "aligned",
         "note": null

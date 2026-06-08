@@ -1,0 +1,49 @@
+{
+  "name": "excel-analyst-pro",
+  "version": "1.0.0",
+  "description": "Professional financial modeling toolkit for Claude Code with auto-invoked skills and Excel MCP integration.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/excel-analyst-pro"
+  },
+  "license": "MIT",
+  "rights": "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "upstream-drain",
+    "wrapper",
+    "excel",
+    "financial-modeling",
+    "dcf",
+    "lbo",
+    "valuation",
+    "pivot-tables"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Excel Analyst Pro",
+    "shortDescription": "Professional financial modeling toolkit for Claude Code with auto-invoked skills and Excel MCP integration.",
+    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/excel-analyst-pro. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/excel-analyst-pro/.claude-plugin/plugin.json.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the wrapper source map for excel-analyst-pro.",
+      "Use this Codex wrapper rather than the upstream Claude manifest.",
+      "Preserve the upstream bundle boundary while working inside the marketplace asset."
+    ],
+    "brandColor": "#1D4ED8",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
