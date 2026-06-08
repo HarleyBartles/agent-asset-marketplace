@@ -104,6 +104,16 @@ Workers must close or resolve review threads they have actually fixed. If a thre
 
 Vendored upstream assets exposed by this marketplace must pass code-review sanity. Actionable P1/P2 review findings in vendored code are our responsibility to fix, explicitly block, or remove from the market surface. Do not waive defects merely because the code came from upstream.
 
+## Codex review request stewardship
+
+Codex code review runs automatically when a PR is opened according to the repo's Codex settings. Workers must let that first review happen before claiming a reviewable marketplace PR is ready.
+
+Workers must not try to request Codex review by adding `chatgpt-codex-connector` as a GitHub reviewer. The manual Codex review trigger is a top-level PR comment using the exact form `@codex review`. For focused review, use a focused comment such as `@codex review for vendored marketplace asset correctness`, `@codex review for security regressions`, or another narrow review goal.
+
+Codex reviews are scarce. Do not request a new Codex review after every mini-push. After a Codex review, batch fixes for actionable findings, push the batch, verify the fixes are present on the PR head, and resolve only threads that are actually fixed. Request another Codex review only when the fix batch materially changes executable logic, vendored runtime code, package or dependency manifests, validation or generation scripts, security-sensitive examples, destructive commands, or market-consumable plugin assets.
+
+Worker returns must report whether another Codex review was requested after the latest push, the exact `@codex review...` comment used if any, and why a new review was or was not warranted.
+
 ## Python validation expectation
 
 Local workers should use the stable global Python command now available as `py -3` for marketplace generator and validator scripts. Do not prefer Codex runtime Python paths in normal validation returns.
