@@ -13,7 +13,7 @@ market-facing Codex plugin.
 
 ## Source roots inspected
 
-- `plugins/saas-packs/skill-databases/supabase/` candidate inventory and shape check
+- `plugins/saas-packs/supabase-pack/skills/` candidate inventory and shape check
 - `plugins/saas-packs/supabase-pack/skills/` imported functional skill root
 
 ## Outcome

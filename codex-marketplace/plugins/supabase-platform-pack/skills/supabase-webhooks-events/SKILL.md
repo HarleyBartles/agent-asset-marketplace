@@ -158,6 +158,9 @@ interface WebhookPayload {
   table: string;
   record: Record<string, unknown>;
   old_record: Record<string, unknown> | null;
+  delivery_id?: string;
+  transaction_id?: string;
+  committed_at?: string;
 }
 
 // Verify webhook signature to prevent spoofing
@@ -257,7 +260,28 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 serve(async (req) => {
   const payload = await req.json();
-  const eventId = `${payload.table}:${payload.type}:${payload.record.id}`;
+  const payloadFingerprint = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(
+      JSON.stringify({
+        table: payload.table,
+        type: payload.type,
+        record: payload.record,
+        old_record: payload.old_record,
+        delivery_id: payload.delivery_id ?? null,
+        transaction_id: payload.transaction_id ?? null,
+        committed_at: payload.committed_at ?? null,
+      })
+    )
+  );
+  const payloadHash = Array.from(new Uint8Array(payloadFingerprint))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  const eventId =
+    payload.delivery_id ??
+    payload.transaction_id ??
+    payload.committed_at ??
+    `${payload.table}:${payload.type}:${payload.record.id}:${payloadHash}`;
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,

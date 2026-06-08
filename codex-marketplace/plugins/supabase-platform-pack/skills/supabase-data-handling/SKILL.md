@@ -212,20 +212,45 @@ async function deleteUserData(userId: string): Promise<DeletionResult> {
     }
   }
 
-  // 2. Delete user files from storage
+  // 2. Delete user files from storage, paging through every object and folder
   const { data: buckets } = await supabase.storage.listBuckets();
   for (const bucket of buckets ?? []) {
-    const { data: files } = await supabase.storage
-      .from(bucket.name)
-      .list(`users/${userId}`);
+    const pathsToDelete: string[] = [];
 
-    if (files && files.length > 0) {
-      const paths = files.map((f) => `users/${userId}/${f.name}`);
+    const collectPaths = async (prefix: string): Promise<void> => {
+      let offset = 0;
+      const pageSize = 100;
+
+      while (true) {
+        const { data: entries, error } = await supabase.storage
+          .from(bucket.name)
+          .list(prefix, { limit: pageSize, offset });
+
+        if (error) throw error;
+        if (!entries || entries.length === 0) return;
+
+        for (const entry of entries) {
+          const fullPath = prefix ? `${prefix}/${entry.name}` : entry.name;
+          if (entry.metadata == null) {
+            await collectPaths(fullPath);
+          } else {
+            pathsToDelete.push(fullPath);
+          }
+        }
+
+        if (entries.length < pageSize) return;
+        offset += pageSize;
+      }
+    };
+
+    await collectPaths(`users/${userId}`);
+
+    if (pathsToDelete.length > 0) {
       const { error } = await supabase.storage
         .from(bucket.name)
-        .remove(paths);
+        .remove(pathsToDelete);
 
-      if (!error) storageFilesDeleted += paths.length;
+      if (!error) storageFilesDeleted += pathsToDelete.length;
     }
   }
 
@@ -315,17 +340,37 @@ async function exportUserData(userId: string): Promise<DataExport> {
     }
   }
 
-  // List user files in storage
+  // List user files in storage, paging through every object and folder
   const storageFiles: string[] = [];
   const { data: buckets } = await supabase.storage.listBuckets();
   for (const bucket of buckets ?? []) {
-    const { data: files } = await supabase.storage
-      .from(bucket.name)
-      .list(`users/${userId}`);
+    const walkBucket = async (prefix: string): Promise<void> => {
+      let offset = 0;
+      const pageSize = 100;
 
-    for (const file of files ?? []) {
-      storageFiles.push(`${bucket.name}/users/${userId}/${file.name}`);
-    }
+      while (true) {
+        const { data: entries, error } = await supabase.storage
+          .from(bucket.name)
+          .list(prefix, { limit: pageSize, offset });
+
+        if (error) throw error;
+        if (!entries || entries.length === 0) return;
+
+        for (const entry of entries) {
+          const fullPath = prefix ? `${prefix}/${entry.name}` : entry.name;
+          if (entry.metadata == null) {
+            await walkBucket(fullPath);
+          } else {
+            storageFiles.push(`${bucket.name}/${fullPath}`);
+          }
+        }
+
+        if (entries.length < pageSize) return;
+        offset += pageSize;
+      }
+    };
+
+    await walkBucket(`users/${userId}`);
   }
 
   // Log the export for compliance

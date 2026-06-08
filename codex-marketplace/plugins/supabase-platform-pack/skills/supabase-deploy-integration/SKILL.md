@@ -32,7 +32,7 @@ compatibility: Designed for Claude Code, also compatible with Codex and OpenClaw
 
 ## Overview
 
-Deploy and manage Supabase projects in production with confidence. This skill covers the full deployment lifecycle: pushing database migrations, deploying Edge Functions, managing secrets, executing zero-downtime rollouts with blue/green database branching, rolling back failed migrations, and verifying deployment health. All commands use the Supabase CLI with `--project-ref` for explicit project targeting.
+Deploy and manage Supabase projects in production with confidence. This skill covers the full deployment lifecycle: pushing database migrations, deploying Edge Functions, managing secrets, executing zero-downtime rollouts with blue/green database branching, rolling back failed migrations, and verifying deployment health. Link the project first, then run database commands against the linked project with `supabase db push`, `supabase migration list`, or `--linked` as appropriate.
 
 **SDK**: `@supabase/supabase-js` — [supabase.com/docs](https://supabase.com/docs)
 
@@ -54,13 +54,13 @@ Apply pending database migrations to your production project, then deploy Edge F
 
 ```bash
 # Apply all pending migrations to production
-npx supabase db push --project-ref $PROJECT_REF
+npx supabase db push --linked
 
 # Preview what will run without applying (dry run)
-npx supabase db push --project-ref $PROJECT_REF --dry-run
+npx supabase db push --linked --dry-run
 
 # Check current migration status
-npx supabase migration list --project-ref $PROJECT_REF
+npx supabase migration list --linked
 ```
 
 Each migration file in `supabase/migrations/` is applied in timestamp order. The CLI tracks which migrations have already been applied and only runs new ones.
@@ -104,14 +104,14 @@ npx supabase branches create staging-v2 --project-ref $PROJECT_REF
 
 # The branch gets its own connection string and API URL
 # Test your migrations against the branch first
-npx supabase db push --project-ref $BRANCH_REF
+npx supabase db push --db-url "$BRANCH_DATABASE_URL"
 
 # Verify the branch works with your application
 # Point a staging instance at the branch's connection string
 
 # When satisfied, merge branch changes into production
 # Apply the same migrations to the main project
-npx supabase db push --project-ref $PROJECT_REF
+npx supabase db push --linked
 
 # Delete the branch after successful cutover
 npx supabase branches delete staging-v2 --project-ref $PROJECT_REF
@@ -162,7 +162,7 @@ ALTER TABLE orders DROP COLUMN IF EXISTS status_v2;
 
 ```bash
 # Push the rollback migration
-npx supabase db push --project-ref $PROJECT_REF
+npx supabase db push --linked
 ```
 
 **Post-deploy health check:**
@@ -277,7 +277,7 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
       - name: Push migrations
-        run: npx supabase db push --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: npx supabase db push --linked
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
@@ -295,7 +295,8 @@ jobs:
 set -euo pipefail
 
 REF="${1:?Usage: rollback.sh <project-ref>}"
-LAST=$(npx supabase migration list --project-ref "$REF" 2>/dev/null | tail -1 | awk '{print $1}')
+npx supabase link --project-ref "$REF"
+LAST=$(npx supabase migration list --linked 2>/dev/null | tail -1 | awk '{print $1}')
 
 echo "Reverting migration: $LAST"
 npx supabase migration repair --status reverted "$LAST" --project-ref "$REF"
