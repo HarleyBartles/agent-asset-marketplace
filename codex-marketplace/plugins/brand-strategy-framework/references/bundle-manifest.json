@@ -1,0 +1,19 @@
+{
+  "bundle_name": "brand-strategy-framework",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/business-tools/brand-strategy-framework/skills",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/business-tools/brand-strategy-framework/skills/brand-strategy/SKILL.md",
+      "local_path": "skills/brand-strategy/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; no behavior or doctrine changes."
+    }
+  ]
+}
