@@ -206,7 +206,9 @@ export async function seedTestData(): Promise<void> {
 
 // Destructive reset — only runs in local
 export async function resetDatabase(): Promise<void> {
-  requireNonProduction('resetDatabase');
+  if (getEnvironment() !== 'local') {
+    throw new Error('[BLOCKED] "resetDatabase" is only allowed in local');
+  }
   const supabase = createServerClient();
   await supabase.rpc('truncate_all_tables');
 }
