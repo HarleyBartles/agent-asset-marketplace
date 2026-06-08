@@ -20,7 +20,7 @@ market-consumable Codex plugin. The upstream docs are preserved under
 
 - Upstream repo: `jeremylongshore/claude-code-plugins-plus-skills`
 - Pinned commit: `e773501f1dfb409fc71fccdaf6ac2898fedf66d6`
-- Source root: `plugins/saas-packs/skill-databases/supabase/`
+- Source root: `plugins/saas-packs/supabase-pack/skills/`
 
 ## Installation
 

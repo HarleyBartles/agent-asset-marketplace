@@ -60,7 +60,7 @@ before publication.
 - Starting main SHA: `8e04f6dd82938464e61cc62c70dc0ed327876c82`
 - Branch created: `mark-46-continue-upstream-drain-and-worker-doctrine`
 - Upstream inspected: `jeremylongshore/claude-code-plugins-plus-skills` at `e773501f1dfb409fc71fccdaf6ac2898fedf66d6`
-- Source guard: inspected `plugins/saas-packs/skill-databases/supabase/` as the standalone skill root and cross-checked `plugins/saas-packs/supabase-pack/`
+- Source guard: inspected `plugins/saas-packs/skill-databases/supabase/` as the candidate inventory root and vendored the functional `plugins/saas-packs/supabase-pack/skills/` root
 - Marketplace route used: `codex-marketplace/plugins/supabase-platform-pack/` plus `.agents/plugins/marketplace.json`
 
 ## Outcome Summary

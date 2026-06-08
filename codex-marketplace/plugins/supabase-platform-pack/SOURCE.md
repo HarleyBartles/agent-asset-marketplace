@@ -13,8 +13,8 @@ market-facing Codex plugin.
 
 ## Source roots inspected
 
-- `plugins/saas-packs/skill-databases/supabase/` primary standalone skill root
-- `plugins/saas-packs/supabase-pack/` cross-check bundle surface
+- `plugins/saas-packs/skill-databases/supabase/` candidate inventory and shape check
+- `plugins/saas-packs/supabase-pack/skills/` imported functional skill root
 
 ## Outcome
 

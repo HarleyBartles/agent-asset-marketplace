@@ -206,9 +206,16 @@ def validate_skill_bundle_manifest(
     if bundle_manifest.get("candidate_count") != len(entries):
         raise ValueError(f"{bundle_name} bundle manifest candidate count mismatch")
 
+    allowed_statuses = {"imported", "out_of_scope", "blocked"}
+    statuses = {entry.get("import_status") for entry in entries}
+    if not statuses.issubset(allowed_statuses):
+        raise ValueError(f"{bundle_name} bundle manifest contains unrecognized import status values")
+
     imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
     skipped_entries = [entry for entry in entries if entry.get("import_status") == "out_of_scope"]
     blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
+    if len(imported_entries) + len(skipped_entries) + len(blocked_entries) != len(entries):
+        raise ValueError(f"{bundle_name} bundle manifest import buckets do not sum to candidate_count")
     if bundle_manifest.get("imported_count") != len(imported_entries):
         raise ValueError(f"{bundle_name} bundle manifest imported count mismatch")
     if bundle_manifest.get("skipped_count") != len(skipped_entries):
@@ -280,7 +287,7 @@ def main() -> int:
     validate_skill_bundle_manifest(
         check_json(SUPABASE_BUNDLE_MANIFEST_PATH),
         bundle_name="supabase-platform-pack",
-        source_root="plugins/saas-packs/skill-databases/supabase",
+        source_root="plugins/saas-packs/supabase-pack/skills",
         plugin_root="codex-marketplace/plugins/supabase-platform-pack",
     )
 
