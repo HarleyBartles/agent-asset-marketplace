@@ -41,6 +41,18 @@
       "category": "Productivity"
     },
     {
+      "name": "adventures-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/adventures-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "ai-experiment-logger",
       "source": {
         "source": "local",

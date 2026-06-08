@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Adventures Pack icon">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#134E4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="40" fill="url(#g)"/>
+  <path d="M72 182L128 58l56 124h-28l-11-26H111l-11 26H72zm49-48h14l-7-17-7 17z" fill="#F8FAFC"/>
+  <circle cx="192" cy="68" r="16" fill="#FBBF24"/>
+</svg>

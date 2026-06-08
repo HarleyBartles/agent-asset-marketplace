@@ -16,3 +16,16 @@ for global doctrine and tree-level guidance.
   ledger used by the marketplace projection.
 - Flag false claims that a House Skill was copied verbatim, fully upstream, or
   otherwise source-complete when the repository evidence shows otherwise.
+
+## Versioned House Skills workflow
+
+- Imported skill versions are historical source records.
+- For semantic updates, create a new version line such as
+  `v1.1/<skill-name>-v1.1/` instead of editing the imported source in place.
+- Do not infer active inventory from import-era notes or reconstruction rows.
+- A versioned update is only complete when the active bundle/projection/registry
+  points at the new version and the old version is historical or provenance-only.
+- Update the designated source, decision, and inventory surfaces that current
+  tooling reads, then regenerate derived projections and validate the result.
+- If multiple ledgers exist, treat them as mirrors unless the repo convention
+  explicitly gives one authoritative authority over the others.

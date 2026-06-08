@@ -25,7 +25,7 @@ Bundle references:
 Lane summary:
 
 - Base and control plane: all reviewed imports from MARK-30 in the base/control-plane lane.
-- Adventures and PIG: all reviewed imports from MARK-30 in the Adventures lane.
+- Adventures: all reviewed imports from MARK-30 in the Adventures lane.
 - Rooms: all reviewed imports from MARK-30 in the Rooms lane.
 
 Component map:
@@ -43,15 +43,15 @@ Component map:
 | Base and control plane | session-buster-ingress | v0.1 | `session-buster-ingress-v0.1` | `gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md` | imported |
 | Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md` | imported |
 | Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-bootstrap | v1 | `adventures-bootstrap-v1` | `gpt-skills/house-skills/adventures-bootstrap/v1/adventures-bootstrap-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-github-operations | v1 | `adventures-github-operations-v1` | `gpt-skills/house-skills/adventures-github-operations/v1/adventures-github-operations-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-visual-preproduction | v1 | `adventures-visual-preproduction-v1` | `gpt-skills/house-skills/adventures-visual-preproduction/v1/adventures-visual-preproduction-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-storyboard-preflight | v1 | `adventures-storyboard-preflight-v1` | `gpt-skills/house-skills/adventures-storyboard-preflight/v1/adventures-storyboard-preflight-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-visual-bible-creator | v1 | `adventures-visual-bible-creator-v1` | `gpt-skills/house-skills/adventures-visual-bible-creator/v1/adventures-visual-bible-creator-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-visual-bible-interpreter | v1 | `adventures-visual-bible-interpreter-v1` | `gpt-skills/house-skills/adventures-visual-bible-interpreter/v1/adventures-visual-bible-interpreter-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-image-qa | v1 | `adventures-image-qa-v1` | `gpt-skills/house-skills/adventures-image-qa/v1/adventures-image-qa-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-asset-sheet-compiler | v1 | `adventures-asset-sheet-compiler-v1` | `gpt-skills/house-skills/adventures-asset-sheet-compiler/v1/adventures-asset-sheet-compiler-v1/SKILL.md` | imported |
-| Adventures and PIG | adventures-frame-buster | v1 | `adventures-frame-buster-v1` | `gpt-skills/house-skills/adventures-frame-buster/v1/adventures-frame-buster-v1/SKILL.md` | imported |
+| Adventures | adventures-bootstrap | v1.1 | `adventures-bootstrap-v1.1` | `gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md` | imported |
+| Adventures | adventures-github-operations | v1.1 | `adventures-github-operations-v1.1` | `gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md` | imported |
+| Adventures | adventures-visual-preproduction | v1.1 | `adventures-visual-preproduction-v1.1` | `gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md` | imported |
+| Adventures | adventures-storyboard-preflight | v1.1 | `adventures-storyboard-preflight-v1.1` | `gpt-skills/house-skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md` | imported |
+| Adventures | adventures-visual-bible-creator | v1.1 | `adventures-visual-bible-creator-v1.1` | `gpt-skills/house-skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md` | imported |
+| Adventures | adventures-visual-bible-interpreter | v1.1 | `adventures-visual-bible-interpreter-v1.1` | `gpt-skills/house-skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md` | imported |
+| Adventures | adventures-image-qa | v1.1 | `adventures-image-qa-v1.1` | `gpt-skills/house-skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md` | imported |
+| Adventures | adventures-asset-sheet-compiler | v1.1 | `adventures-asset-sheet-compiler-v1.1` | `gpt-skills/house-skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md` | imported |
+| Adventures | adventures-frame-buster | v1.1 | `adventures-frame-buster-v1.1` | `gpt-skills/house-skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md` | imported |
 | Rooms | rooms-project-doctrine | v1 | `rooms-project-doctrine-v1` | `gpt-skills/house-skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md` | imported |
 | Rooms | rooms-bootstrap | v1 | `rooms-bootstrap-v1` | `gpt-skills/house-skills/rooms-bootstrap/v1/rooms-bootstrap-v1/SKILL.md` | imported |
 | Rooms | rooms-source-partitioning | v1 | `rooms-source-partitioning-v1` | `gpt-skills/house-skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md` | imported |
