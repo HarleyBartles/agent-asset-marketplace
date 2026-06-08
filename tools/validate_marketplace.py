@@ -17,6 +17,9 @@ from marketplace_utils import (
     PLUGIN_BUNDLE_AGENTS_PATH,
     SUPABASE_BUNDLE_MANIFEST_PATH,
     TESTING_BUNDLE_MANIFEST_PATH,
+    VERCEL_BUNDLE_MANIFEST_PATH,
+    SENTRY_BUNDLE_MANIFEST_PATH,
+    OPENROUTER_BUNDLE_MANIFEST_PATH,
     SOURCE_DECISIONS_JSON_PATH,
     SOURCE_DECISIONS_MD_PATH,
     SOURCE_INTAKE_JSON_PATH,
@@ -293,6 +296,40 @@ def main() -> int:
         source_root="plugins/saas-packs/supabase-pack/skills",
         plugin_root="codex-marketplace/plugins/supabase-platform-pack",
     )
+    validate_skill_bundle_manifest(
+        check_json(VERCEL_BUNDLE_MANIFEST_PATH),
+        bundle_name="vercel-pack",
+        source_root="plugins/saas-packs/vercel-pack/skills",
+        plugin_root="codex-marketplace/plugins/vercel-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(SENTRY_BUNDLE_MANIFEST_PATH),
+        bundle_name="sentry-pack",
+        source_root="plugins/saas-packs/sentry-pack/skills",
+        plugin_root="codex-marketplace/plugins/sentry-pack",
+    )
+    validate_skill_bundle_manifest(
+        check_json(OPENROUTER_BUNDLE_MANIFEST_PATH),
+        bundle_name="openrouter-pack",
+        source_root="plugins/saas-packs/openrouter-pack/skills",
+        plugin_root="codex-marketplace/plugins/openrouter-pack",
+    )
+    for path in (
+        ROOT / "codex-marketplace/plugins/vercel-pack/package.json",
+        ROOT / "codex-marketplace/plugins/sentry-pack/package.json",
+        ROOT / "codex-marketplace/plugins/openrouter-pack/package.json",
+        ROOT / "codex-marketplace/plugins/vercel-pack/README.md",
+        ROOT / "codex-marketplace/plugins/sentry-pack/README.md",
+        ROOT / "codex-marketplace/plugins/openrouter-pack/README.md",
+        ROOT / "codex-marketplace/plugins/vercel-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/sentry-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/openrouter-pack/SOURCE.md",
+        ROOT / "codex-marketplace/plugins/openrouter-pack/skills/openrouter-compliance-review/references/openrouter-integration-security-questionnaire.md",
+    ):
+        if path.name == "package.json":
+            check_json(path)
+        else:
+            check_text(path)
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)

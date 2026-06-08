@@ -251,3 +251,30 @@ Imported skill docs:
 The bundle evidence lives in
 `codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json`
 and the plugin manifest is constrained to paths that exist locally.
+
+## MARK-61 Vercel, Sentry, and OpenRouter Pack Addendum
+
+The upstream standalone Vercel, Sentry, and OpenRouter skill families are now
+also preserved as marketplace plugin packs:
+
+- `codex-marketplace/plugins/vercel-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/vercel-pack/skills/`
+- `codex-marketplace/plugins/sentry-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/sentry-pack/skills/`
+- `codex-marketplace/plugins/openrouter-pack`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/saas-packs/openrouter-pack/skills/`
+
+Imported skill docs:
+
+- `30` imported for each pack
+- `0` skipped for each pack
+- `0` blocked for each pack
+
+OpenRouter support-file correction:
+
+- `plugins/saas-packs/openrouter-pack/skills/openrouter-compliance-review/references/openrouter-integration-security-questionnaire.md`
+  - recreated locally because the pinned tree referenced a missing upstream path
+
+The bundle evidence lives in the respective
+`codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
+plugin manifests are constrained to paths that exist locally.

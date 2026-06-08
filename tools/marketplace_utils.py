@@ -17,9 +17,15 @@ PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
 MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
 SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json"
+VERCEL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/.codex-plugin/plugin.json"
+SENTRY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/.codex-plugin/plugin.json"
+OPENROUTER_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 TESTING_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json"
 SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json"
+VERCEL_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json"
+SENTRY_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/references/bundle-manifest.json"
+OPENROUTER_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/references/bundle-manifest.json"
 SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
@@ -58,6 +64,24 @@ MARKETPLACE_PLUGIN_SPECS = [
         "registry_path": "./codex-marketplace/plugins/supabase-platform-pack",
         "plugin_root": "codex-marketplace/plugins/supabase-platform-pack",
         "manifest_path": SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "vercel-pack",
+        "registry_path": "./codex-marketplace/plugins/vercel-pack",
+        "plugin_root": "codex-marketplace/plugins/vercel-pack",
+        "manifest_path": VERCEL_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "sentry-pack",
+        "registry_path": "./codex-marketplace/plugins/sentry-pack",
+        "plugin_root": "codex-marketplace/plugins/sentry-pack",
+        "manifest_path": SENTRY_PACK_PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "openrouter-pack",
+        "registry_path": "./codex-marketplace/plugins/openrouter-pack",
+        "plugin_root": "codex-marketplace/plugins/openrouter-pack",
+        "manifest_path": OPENROUTER_PACK_PLUGIN_MANIFEST_PATH,
     },
     {
         "name": "fullstack-starter-pack",

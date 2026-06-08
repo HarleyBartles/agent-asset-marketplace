@@ -53,6 +53,42 @@
       "category": "Productivity"
     },
     {
+      "name": "vercel-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/vercel-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "sentry-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/sentry-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "openrouter-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/openrouter-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "fullstack-starter-pack",
       "source": {
         "source": "local",
