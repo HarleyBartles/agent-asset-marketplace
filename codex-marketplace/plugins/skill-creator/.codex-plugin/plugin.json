@@ -1,0 +1,32 @@
+{
+  "name": "skill-creator",
+  "version": "0.1.0",
+  "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/skills",
+  "repository": "https://github.com/openai/skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "skill-creator"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Skill Creator",
+    "shortDescription": "Create or update a skill",
+    "longDescription": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/openai/skills",
+    "defaultPrompt": [
+      "Create or update a skill"
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

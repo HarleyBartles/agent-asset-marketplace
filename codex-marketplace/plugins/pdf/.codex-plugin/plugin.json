@@ -1,0 +1,32 @@
+{
+  "name": "pdf",
+  "version": "0.1.0",
+  "description": "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/skills",
+  "repository": "https://github.com/openai/skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "pdf"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "PDF Skill",
+    "shortDescription": "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction.",
+    "longDescription": "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/openai/skills",
+    "defaultPrompt": [
+      "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

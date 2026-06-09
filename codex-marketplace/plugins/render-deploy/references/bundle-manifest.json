@@ -1,0 +1,19 @@
+{
+  "bundle_name": "render-deploy",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/skills",
+  "pinned_commit": "a8924c2a35cfa290458852c4fad17c9133054c2e",
+  "source_root": "skills/.curated/render-deploy",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "skills/.curated/render-deploy/SKILL.md",
+      "local_path": "skills/render-deploy/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

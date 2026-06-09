@@ -1,0 +1,32 @@
+{
+  "name": "migrate-to-codex",
+  "version": "0.1.0",
+  "description": "Migrate supported instruction files, skills, agents, and MCP config into Codex project and global files.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/skills",
+  "repository": "https://github.com/openai/skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "migrate-to-codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Migrate to Codex",
+    "shortDescription": "Migrate supported instruction files, skills, agents, and MCP config into Codex project and global files.",
+    "longDescription": "Migrate supported instruction files, skills, agents, and MCP config into Codex project and global files.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/openai/skills",
+    "defaultPrompt": [
+      "Migrate supported instruction files, skills, agents, and MCP config into Codex project and global files."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

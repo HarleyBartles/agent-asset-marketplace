@@ -1,0 +1,858 @@
+{
+  "upstream_repo": "openai/skills",
+  "upstream_url": "https://github.com/openai/skills.git",
+  "upstream_commit": "a8924c2a35cfa290458852c4fad17c9133054c2e",
+  "candidate_count": 44,
+  "copied_count": 44,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "skills/.curated/aspnet-core",
+      "skill_name": "aspnet-core",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/aspnet-core",
+      "package_name": "aspnet-core",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/chatgpt-apps",
+      "skill_name": "chatgpt-apps",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/chatgpt-apps",
+      "package_name": "chatgpt-apps",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/cli-creator",
+      "skill_name": "cli-creator",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/cli-creator",
+      "package_name": "cli-creator",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/cloudflare-deploy",
+      "skill_name": "cloudflare-deploy",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/cloudflare-deploy",
+      "package_name": "cloudflare-deploy",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/define-goal",
+      "skill_name": "define-goal",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/define-goal",
+      "package_name": "define-goal",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma",
+      "skill_name": "figma",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma",
+      "package_name": "figma",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-code-connect-components",
+      "skill_name": "figma-code-connect-components",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-code-connect-components",
+      "package_name": "figma-code-connect-components",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-create-design-system-rules",
+      "skill_name": "figma-create-design-system-rules",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-create-design-system-rules",
+      "package_name": "figma-create-design-system-rules",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-create-new-file",
+      "skill_name": "figma-create-new-file",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "maintainers.yml"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-create-new-file",
+      "package_name": "figma-create-new-file",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-generate-design",
+      "skill_name": "figma-generate-design",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "maintainers.yml"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-generate-design",
+      "package_name": "figma-generate-design",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-generate-library",
+      "skill_name": "figma-generate-library",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "maintainers.yml",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-generate-library",
+      "package_name": "figma-generate-library",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-implement-design",
+      "skill_name": "figma-implement-design",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-implement-design",
+      "package_name": "figma-implement-design",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/figma-use",
+      "skill_name": "figma-use",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.TXT",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "maintainers.yml",
+        "references"
+      ],
+      "license_evidence": "LICENSE.TXT",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/figma-use",
+      "package_name": "figma-use",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/gh-address-comments",
+      "skill_name": "gh-address-comments",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/gh-address-comments",
+      "package_name": "gh-address-comments",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/gh-fix-ci",
+      "skill_name": "gh-fix-ci",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/gh-fix-ci",
+      "package_name": "gh-fix-ci",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/hatch-pet",
+      "skill_name": "hatch-pet",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/hatch-pet",
+      "package_name": "hatch-pet",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/jupyter-notebook",
+      "skill_name": "jupyter-notebook",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/jupyter-notebook",
+      "package_name": "jupyter-notebook",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/linear",
+      "skill_name": "linear",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/openai-skills-linear",
+      "package_name": "openai-skills-linear",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/migrate-to-codex",
+      "skill_name": "migrate-to-codex",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/migrate-to-codex",
+      "package_name": "migrate-to-codex",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/netlify-deploy",
+      "skill_name": "netlify-deploy",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/netlify-deploy",
+      "package_name": "netlify-deploy",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/notion-knowledge-capture",
+      "skill_name": "notion-knowledge-capture",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "evaluations",
+        "examples",
+        "reference"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/notion-knowledge-capture",
+      "package_name": "notion-knowledge-capture",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/notion-meeting-intelligence",
+      "skill_name": "notion-meeting-intelligence",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "evaluations",
+        "examples",
+        "reference"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/notion-meeting-intelligence",
+      "package_name": "notion-meeting-intelligence",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/notion-research-documentation",
+      "skill_name": "notion-research-documentation",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "evaluations",
+        "examples",
+        "reference"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/notion-research-documentation",
+      "package_name": "notion-research-documentation",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/notion-spec-to-implementation",
+      "skill_name": "notion-spec-to-implementation",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "evaluations",
+        "examples",
+        "reference"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/notion-spec-to-implementation",
+      "package_name": "notion-spec-to-implementation",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/openai-docs",
+      "skill_name": "openai-docs",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/openai-docs",
+      "package_name": "openai-docs",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/pdf",
+      "skill_name": "pdf",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/pdf",
+      "package_name": "pdf",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/playwright",
+      "skill_name": "playwright",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": "NOTICE.txt",
+      "intended_local_path": "codex-marketplace/plugins/playwright",
+      "package_name": "playwright",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/playwright-interactive",
+      "skill_name": "playwright-interactive",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": "NOTICE.txt",
+      "intended_local_path": "codex-marketplace/plugins/playwright-interactive",
+      "package_name": "playwright-interactive",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/render-deploy",
+      "skill_name": "render-deploy",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/render-deploy",
+      "package_name": "render-deploy",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/screenshot",
+      "skill_name": "screenshot",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/screenshot",
+      "package_name": "screenshot",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/security-best-practices",
+      "skill_name": "security-best-practices",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/security-best-practices",
+      "package_name": "security-best-practices",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/security-ownership-map",
+      "skill_name": "security-ownership-map",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/security-ownership-map",
+      "package_name": "security-ownership-map",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/security-threat-model",
+      "skill_name": "security-threat-model",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/security-threat-model",
+      "package_name": "security-threat-model",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/sentry",
+      "skill_name": "sentry",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/openai-skills-sentry",
+      "package_name": "openai-skills-sentry",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/speech",
+      "skill_name": "speech",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/speech",
+      "package_name": "speech",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/transcribe",
+      "skill_name": "transcribe",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/transcribe",
+      "package_name": "transcribe",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/vercel-deploy",
+      "skill_name": "vercel-deploy",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/vercel-deploy",
+      "package_name": "vercel-deploy",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/winui-app",
+      "skill_name": "winui-app",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "config.yaml",
+        "references"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/winui-app",
+      "package_name": "winui-app",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.curated/yeet",
+      "skill_name": "yeet",
+      "surface_kind": "curated",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/yeet",
+      "package_name": "yeet",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.system/imagegen",
+      "skill_name": "imagegen",
+      "surface_kind": "system",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/imagegen",
+      "package_name": "imagegen",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.system/openai-docs",
+      "skill_name": "openai-docs",
+      "surface_kind": "system",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/openai-docs",
+      "package_name": "openai-docs",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.system/plugin-creator",
+      "skill_name": "plugin-creator",
+      "surface_kind": "system",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/plugin-creator",
+      "package_name": "plugin-creator",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.system/skill-creator",
+      "skill_name": "skill-creator",
+      "surface_kind": "system",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "references",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/skill-creator",
+      "package_name": "skill-creator",
+      "import_status": "imported",
+      "blocker": null
+    },
+    {
+      "upstream_path": "skills/.system/skill-installer",
+      "skill_name": "skill-installer",
+      "surface_kind": "system",
+      "runtime_target": "Codex skill",
+      "files_present": [
+        "LICENSE.txt",
+        "SKILL.md",
+        "agents",
+        "assets",
+        "scripts"
+      ],
+      "license_evidence": "LICENSE.txt",
+      "notice_evidence": null,
+      "intended_local_path": "codex-marketplace/plugins/skill-installer",
+      "package_name": "skill-installer",
+      "import_status": "imported",
+      "blocker": null
+    }
+  ]
+}

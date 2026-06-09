@@ -1,0 +1,32 @@
+{
+  "name": "figma-implement-design",
+  "version": "0.1.0",
+  "description": "Translates Figma designs into production-ready application code with 1:1 visual fidelity. Use when implementing UI code from Figma files, when user mentions \"implement design\", \"generate code\", \"implement component\", provides Figma URLs, or asks to build components matching Figma specs. For Figma canvas writes via `use_figma`, use `figma-use`.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/skills",
+  "repository": "https://github.com/openai/skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "figma-implement-design"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Implement Design",
+    "shortDescription": "Translates Figma designs into production-ready application code with 1:1 visual fidelity. Use when implementing UI code from Figma files, when user mentions \"implement design\", \"generate code\", \"implement component\", provides Figma URLs, or asks to build components matching Figma specs. For Figma canvas writes via `use_figma`, use `figma-use`.",
+    "longDescription": "Translates Figma designs into production-ready application code with 1:1 visual fidelity. Use when implementing UI code from Figma files, when user mentions \"implement design\", \"generate code\", \"implement component\", provides Figma URLs, or asks to build components matching Figma specs. For Figma canvas writes via `use_figma`, use `figma-use`.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/openai/skills",
+    "defaultPrompt": [
+      "Translates Figma designs into production-ready application code with 1:1 visual fidelity. Use when implementing UI code from Figma files, when user mentions \"implement design\", \"generate code\", \"implement component\", provides Figma URLs, or asks to build components matching Figma specs. For Figma canvas writes via `use_figma`, use `figma-use`."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}
