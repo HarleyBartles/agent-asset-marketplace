@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">OpenAI Developer Pack</title>
+  <desc id="desc">Blue square icon with a white code bracket motif and a centered dot.</desc>
+  <rect width="128" height="128" rx="28" fill="#0057FF"/>
+  <path d="M48 34 28 64l20 30" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 34 100 64 80 94" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M66 40 58 88" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="64" cy="64" r="8" fill="#FFFFFF"/>
+</svg>

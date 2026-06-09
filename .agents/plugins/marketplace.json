@@ -2585,6 +2585,18 @@
       "category": "Productivity"
     },
     {
+      "name": "openai-developer-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/openai-developer-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "openai-docs",
       "source": {
         "source": "local",

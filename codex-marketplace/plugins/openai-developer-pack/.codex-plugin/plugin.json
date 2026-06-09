@@ -1,0 +1,40 @@
+{
+  "name": "openai-developer-pack",
+  "version": "0.1.0",
+  "description": "Clean-room OpenAI developer workflows for API apps, Agents SDK Python and TypeScript, ChatGPT Apps SDK, MCP integration, evals, and safe environment setup. Built from first principles and official OpenAI docs without using the proprietary openai/plugins/openai-developers root.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "first_party",
+  "rights": "Original clean-room marketplace text authored for this repository. No file from openai/plugins/plugins/openai-developers was copied into this pack.",
+  "keywords": [
+    "codex",
+    "openai",
+    "agents",
+    "mcp",
+    "apps-sdk",
+    "evals",
+    "plugin"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpenAI Developer Pack",
+    "shortDescription": "Clean-room guidance for OpenAI API apps, Agents SDK Python and TypeScript, ChatGPT Apps SDK, MCP integration, evals, and safe local setup.",
+    "longDescription": "Clean-room guidance for OpenAI API apps, Agents SDK Python and TypeScript, ChatGPT Apps SDK, MCP integration, evals, and safe local setup. Use this pack when you need a repo-owned workflow that stays aligned with the current official OpenAI docs and SDK references without pulling in the proprietary openai/plugins/openai-developers root.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use the OpenAI Developer Pack for repo-owned guidance on OpenAI API apps, Agents SDK Python and TypeScript, ChatGPT Apps SDK, MCP integration, evals, and safe local environment setup.",
+      "Prefer the current official OpenAI docs and SDK references when a detail is likely to drift."
+    ],
+    "brandColor": "#0057FF",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
