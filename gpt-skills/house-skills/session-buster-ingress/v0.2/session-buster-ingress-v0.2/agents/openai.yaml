@@ -1,0 +1,14 @@
+interface:
+  display_name: Session Buster Ingress
+  short_description: Verify incoming continuity blocks and treat suggested session names as navigation metadata only.
+  icon: assets/icon.svg
+  brand_color: '#111827'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

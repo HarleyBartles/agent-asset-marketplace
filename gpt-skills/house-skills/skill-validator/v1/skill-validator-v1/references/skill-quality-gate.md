@@ -344,7 +344,7 @@ Return `repair_required` when a skill:
 - uses direct skill directory names for ordinary handoffs where descriptive capability routing would be more robust, except for hard-coupled composition skills and locked safety gates;
 - creates a duplicate specialist surface without a durable use-case justification;
 - uses actor-prefixed GPT-native names that can imply GPT is impersonating an on-disk/project actor;
-- lets validation selection, report text, worker claims, session-buster-v0.1 continuity, or package receipts launder into proof, truth, or closure state;
+- lets validation selection, report text, worker claims, session-buster-v0.2 continuity, or package receipts launder into proof, truth, or closure state;
 - omits a regression check for the current dispatch gate's three consecutive introspective GREENs when dispatch-gate behavior is in scope;
 - places generic law in a project wrapper or project-specific law in a generic skill without an explicit composition reason.
 

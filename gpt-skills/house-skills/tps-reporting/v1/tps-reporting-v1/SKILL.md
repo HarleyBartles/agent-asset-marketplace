@@ -58,7 +58,7 @@ When closure is claimed, compare observable state against the issue goal. Valida
 
 ## Skill-read stop rule
 
-After classifying the report and the evidence lanes needed, stop reading skills. Do not load dispatch, validation, session-buster-v0.1, GitHub, artifact, image, or wrong-project skills merely because the report mentions them.
+After classifying the report and the evidence lanes needed, stop reading skills. Do not load dispatch, validation, session-buster-v0.2, GitHub, artifact, image, or wrong-project skills merely because the report mentions them.
 
 Load another skill only when a named unresolved decision is outside this skill's ownership and the candidate skill directly owns it. Use only project-compatible wrappers when local report law is actually required.
 

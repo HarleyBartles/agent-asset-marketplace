@@ -39,8 +39,8 @@ Component map:
 | Base and control plane | linear | v1 | `linear-v1` | `gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md` | imported |
 | Base and control plane | tps-reporting | v1 | `tps-reporting-v1` | `gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md` | imported |
 | Base and control plane | tps-ingress | v1 | `tps-ingress-v1` | `gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md` | imported |
-| Base and control plane | session-buster | v0.1 | `session-buster-v0.1` | `gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md` | imported |
-| Base and control plane | session-buster-ingress | v0.1 | `session-buster-ingress-v0.1` | `gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md` | imported |
+| Base and control plane | session-buster | v0.2 | `session-buster-v0.2` | `gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md` | imported |
+| Base and control plane | session-buster-ingress | v0.2 | `session-buster-ingress-v0.2` | `gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md` | imported |
 | Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md` | imported |
 | Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md` | imported |
 | Adventures | adventures-bootstrap | v1.1 | `adventures-bootstrap-v1.1` | `gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md` | imported |

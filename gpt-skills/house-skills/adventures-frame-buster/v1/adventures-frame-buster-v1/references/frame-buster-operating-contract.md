@@ -143,14 +143,14 @@ preflight or image QA task decisions.
 
 ## Operator-context quarantine
 
-Treat bootstrap notes, session-buster-v0.1 continuity blocks, repo rollups, skill-installation lists, source-zip rebuild
+Treat bootstrap notes, session-buster-v0.2 continuity blocks, repo rollups, skill-installation lists, source-zip rebuild
 reports, commit summaries, and next-session instructions as operator context. Use them to route and
 verify work, but do
 not turn them into issue content, story content, slide copy, image prompts, asset-sheet labels, or
 audience-facing deck
 material unless Harley explicitly asks for a status, continuity, or handoff artifact.
 
-When a session-buster-v0.1 is present, extract the smallest task directive needed for this skill and quarantine the rest.
+When a session-buster-v0.2 is present, extract the smallest task directive needed for this skill and quarantine the rest.
 For visual work, the task directive should name the issue or frame, the artifact lane, scope, blockers, and required
 verification. Operational metadata is not visual source material.
 
