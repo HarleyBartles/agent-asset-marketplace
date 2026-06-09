@@ -5248,6 +5248,26 @@
             "license_path": "codex-marketplace/plugins/webflow-pack/LICENSE"
         },
         {
+            "name": "wild-bunch-project-pack",
+            "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+            "plugin_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wild-bunch-project-pack/SOURCE.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": null,
+            "skills_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills",
+            "provenance_refs": [
+                "provenance/MARK-73-wild-bunch-project-pack.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE"
+        },
+        {
             "name": "windsor-ai",
             "plugin_root": "codex-marketplace/plugins/windsor-ai",
             "plugin_manifest": "codex-marketplace/plugins/windsor-ai/.codex-plugin/plugin.json",

@@ -1,0 +1,41 @@
+{
+  "name": "wild-bunch-project-pack",
+  "version": "1.0.0",
+  "description": "First-party Wild Bunch project guidance for safe Codex worker execution.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "first_party",
+  "rights": "First-party Harley-authored Wild Bunch project guidance. Referenced marketplace assets remain separately licensed and were inspected as pattern references only.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "wild-bunch",
+    "project-pack",
+    "dotnet",
+    "browser-game",
+    "verification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wild Bunch Project Pack",
+    "shortDescription": "First-party Wild Bunch project guidance for Codex workers",
+    "longDescription": "A repo-local Codex plugin bundle that packages the Wild Bunch project doctrine, domain model guidance, .NET architecture guardrails, browser-game stack guidance, and worker verification rules into one installable pack.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use the Wild Bunch Project Pack to inspect project posture before making changes.",
+      "Compare the requested work against the Wild Bunch doctrine, domain, architecture, browser-game, and verification rules.",
+      "Report any scope gaps before editing source."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
