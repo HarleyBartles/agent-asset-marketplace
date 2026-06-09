@@ -24,6 +24,18 @@ This bundle packages the upstream Wondelai CRO Methodology package as a market-f
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-cro-methodology/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 6
+- `COPYWRITING.md`
+- `funnel-analysis.md`
+- `OBJECTIONS.md`
+- `PERSUASION.md`
+- `RESEARCH.md`
+- `testing-methodology.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

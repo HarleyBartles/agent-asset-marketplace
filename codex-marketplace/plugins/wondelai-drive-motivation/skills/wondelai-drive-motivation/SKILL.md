@@ -60,7 +60,7 @@ External rewards ("if-then" rewards: "If you do X, then you get Y"):
 - Any task requiring cognitive effort
 - Long-term engagement
 
-See: [references/extrinsic-rewards.md](references/extrinsic-rewards.md) for the science behind reward failures.
+See: [references/extrinsic-rewards.md](../../references/extrinsic-rewards.md) for the science behind reward failures.
 
 ## The Three Pillars: Autonomy, Mastery, Purpose
 
@@ -105,7 +105,7 @@ See: [references/extrinsic-rewards.md](references/extrinsic-rewards.md) for the 
 - No customization options
 - Rigid workflows with no flexibility
 
-See: [references/autonomy.md](references/autonomy.md) for autonomy design patterns.
+See: [references/autonomy.md](../../references/autonomy.md) for autonomy design patterns.
 
 ### 2. Mastery
 
@@ -184,7 +184,7 @@ See: [references/autonomy.md](references/autonomy.md) for autonomy design patter
 - No clear path forward
 - Punishing failures instead of teaching
 
-See: [references/mastery.md](references/mastery.md) for mastery design patterns and flow state principles.
+See: [references/mastery.md](../../references/mastery.md) for mastery design patterns and flow state principles.
 
 ### 3. Purpose
 
@@ -224,7 +224,7 @@ See: [references/mastery.md](references/mastery.md) for mastery design patterns 
 - Frame features in terms of why, not just what
 - Celebrate meaningful milestones, not vanity metrics
 
-See: [references/purpose.md](references/purpose.md) for purpose-driven design patterns.
+See: [references/purpose.md](../../references/purpose.md) for purpose-driven design patterns.
 
 ## AMP Applied: Product Design
 
@@ -283,7 +283,7 @@ See: [references/purpose.md](references/purpose.md) for purpose-driven design pa
 - But beyond "enough," more money doesn't increase motivation
 - Once baseline is met, AMP drives engagement
 
-See: [references/applications.md](references/applications.md) for product and team applications.
+See: [references/applications.md](../../references/applications.md) for product and team applications.
 
 ## Type I vs. Type X Behavior
 
@@ -330,13 +330,13 @@ Audit any motivation system:
 
 ## Reference Files
 
-- [extrinsic-rewards.md](references/extrinsic-rewards.md): The seven flaws, when rewards work and don't
-- [autonomy.md](references/autonomy.md): Four T's, product and team autonomy design
-- [mastery.md](references/mastery.md): Flow state, growth mindset, deliberate practice
-- [purpose.md](references/purpose.md): Purpose-driven design, mission alignment
-- [applications.md](references/applications.md): Product gamification, team management, compensation
-- [type-i.md](references/type-i.md): Type I vs. Type X, cultivating intrinsic motivation
-- [case-studies.md](references/case-studies.md): Atlassian, 3M, Duolingo, ROWE, Wikipedia
+- [extrinsic-rewards.md](../../references/extrinsic-rewards.md): The seven flaws, when rewards work and don't
+- [autonomy.md](../../references/autonomy.md): Four T's, product and team autonomy design
+- [mastery.md](../../references/mastery.md): Flow state, growth mindset, deliberate practice
+- [purpose.md](../../references/purpose.md): Purpose-driven design, mission alignment
+- [applications.md](../../references/applications.md): Product gamification, team management, compensation
+- [type-i.md](../../references/type-i.md): Type I vs. Type X, cultivating intrinsic motivation
+- [case-studies.md](../../references/case-studies.md): Atlassian, 3M, Duolingo, ROWE, Wikipedia
 
 ## Further Reading
 

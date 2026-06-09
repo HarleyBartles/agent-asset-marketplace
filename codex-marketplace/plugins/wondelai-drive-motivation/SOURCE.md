@@ -24,6 +24,19 @@ This bundle packages the upstream Wondelai Drive Motivation package as a market-
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-drive-motivation/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 7
+- `applications.md`
+- `autonomy.md`
+- `case-studies.md`
+- `extrinsic-rewards.md`
+- `mastery.md`
+- `purpose.md`
+- `type-i.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

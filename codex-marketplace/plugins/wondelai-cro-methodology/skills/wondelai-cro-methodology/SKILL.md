@@ -59,7 +59,7 @@ Scientific, customer-centric approach to conversion rate optimization based on t
 
 **Ethical boundary:** Never manipulate test results or cherry-pick data. Report all tests, including failures, and wait for genuine statistical significance.
 
-See: [testing-methodology.md](references/testing-methodology.md) for detailed ICE scoring, A/B vs. multivariate guidance, and statistical rigor.
+See: [testing-methodology.md](../../references/testing-methodology.md) for detailed ICE scoring, A/B vs. multivariate guidance, and statistical rigor.
 
 ### 2. Customer Research & Objections
 
@@ -96,7 +96,7 @@ See: [testing-methodology.md](references/testing-methodology.md) for detailed IC
 
 **Ethical boundary:** Respect customer privacy in research. Anonymize data, get consent for recordings, and don't survey so aggressively that you degrade the user experience.
 
-See: [RESEARCH.md](references/RESEARCH.md) for tools, survey questions, and data analysis methods.
+See: [RESEARCH.md](../../references/RESEARCH.md) for tools, survey questions, and data analysis methods.
 
 ### 3. Persuasion Assets
 
@@ -132,7 +132,7 @@ See: [RESEARCH.md](references/RESEARCH.md) for tools, survey questions, and data
 
 **Ethical boundary:** Never fabricate testimonials, inflate statistics, or display fake trust badges. All proof must be genuine and verifiable.
 
-See: [PERSUASION.md](references/PERSUASION.md) for the full persuasion assets checklist and psychological triggers.
+See: [PERSUASION.md](../../references/PERSUASION.md) for the full persuasion assets checklist and psychological triggers.
 
 ### 4. The O/CO Framework
 
@@ -168,7 +168,7 @@ See: [PERSUASION.md](references/PERSUASION.md) for the full persuasion assets ch
 
 **Ethical boundary:** Address real objections with honest counter-objections. Never dismiss legitimate concerns or use deception to overcome valid hesitations.
 
-See: [OBJECTIONS.md](references/OBJECTIONS.md) for the full O/CO framework, research methods, and counter-objection techniques.
+See: [OBJECTIONS.md](../../references/OBJECTIONS.md) for the full O/CO framework, research methods, and counter-objection techniques.
 
 ### 5. Hypothesis Design
 
@@ -204,7 +204,7 @@ See: [OBJECTIONS.md](references/OBJECTIONS.md) for the full O/CO framework, rese
 
 **Ethical boundary:** Report all test results honestly, including failures. Never cherry-pick data or run tests until you get the result you want.
 
-See: [testing-methodology.md](references/testing-methodology.md) for ICE scoring tables and detailed prioritization.
+See: [testing-methodology.md](../../references/testing-methodology.md) for ICE scoring tables and detailed prioritization.
 
 ### 6. A/B Testing Methodology
 
@@ -242,7 +242,7 @@ See: [testing-methodology.md](references/testing-methodology.md) for ICE scoring
 
 **Ethical boundary:** Never manipulate statistical methods to manufacture significance. Report confidence intervals honestly and acknowledge when results are inconclusive.
 
-See: [testing-methodology.md](references/testing-methodology.md) for statistical significance, sample size calculations, and platform comparison.
+See: [testing-methodology.md](../../references/testing-methodology.md) for statistical significance, sample size calculations, and platform comparison.
 
 ## Common Mistakes
 
@@ -284,12 +284,12 @@ When optimizing any page:
 
 ## Reference Files
 
-- [OBJECTIONS.md](references/OBJECTIONS.md): O/CO framework, research methods, counter-objection techniques
-- [COPYWRITING.md](references/COPYWRITING.md): Headlines, proof elements, persuasive writing
-- [PERSUASION.md](references/PERSUASION.md): Persuasion assets checklist, psychological triggers
-- [RESEARCH.md](references/RESEARCH.md): Tools, survey questions, data analysis
-- [testing-methodology.md](references/testing-methodology.md): A/B testing, statistical significance, ICE prioritization, multivariate testing
-- [funnel-analysis.md](references/funnel-analysis.md): Blocked arteries, missing links, industry funnels, cross-sell mapping
+- [OBJECTIONS.md](../../references/OBJECTIONS.md): O/CO framework, research methods, counter-objection techniques
+- [COPYWRITING.md](../../references/COPYWRITING.md): Headlines, proof elements, persuasive writing
+- [PERSUASION.md](../../references/PERSUASION.md): Persuasion assets checklist, psychological triggers
+- [RESEARCH.md](../../references/RESEARCH.md): Tools, survey questions, data analysis
+- [testing-methodology.md](../../references/testing-methodology.md): A/B testing, statistical significance, ICE prioritization, multivariate testing
+- [funnel-analysis.md](../../references/funnel-analysis.md): Blocked arteries, missing links, industry funnels, cross-sell mapping
 
 ## Further Reading
 

@@ -56,7 +56,7 @@ People don't make decisions rationally. They use mental shortcuts (heuristics) t
 
 **Ethical boundary:** Give genuine value. Don't create artificial debts or exploit obligation.
 
-See: [references/reciprocity.md](references/reciprocity.md) for reciprocity techniques and case studies.
+See: [references/reciprocity.md](../../references/reciprocity.md) for reciprocity techniques and case studies.
 
 ### 2. Commitment & Consistency
 
@@ -98,7 +98,7 @@ See: [references/reciprocity.md](references/reciprocity.md) for reciprocity tech
 
 **Ethical boundary:** Don't lock users into commitments they didn't freely make. Allow easy reversibility.
 
-See: [references/commitment-consistency.md](references/commitment-consistency.md) for commitment tactics and flows.
+See: [references/commitment-consistency.md](../../references/commitment-consistency.md) for commitment tactics and flows.
 
 ### 3. Social Proof
 
@@ -144,7 +144,7 @@ See: [references/commitment-consistency.md](references/commitment-consistency.md
 
 **Ethical boundary:** Never fabricate social proof. Real numbers, real testimonials. Disclose when proof is curated.
 
-See: [references/social-proof.md](references/social-proof.md) for social proof types and implementation patterns.
+See: [references/social-proof.md](../../references/social-proof.md) for social proof types and implementation patterns.
 
 ### 4. Authority
 
@@ -197,7 +197,7 @@ See: [references/social-proof.md](references/social-proof.md) for social proof t
 
 **Ethical boundary:** Never fake credentials or fabricate expertise. Real authority only.
 
-See: [references/authority.md](references/authority.md) for authority-building strategies.
+See: [references/authority.md](../../references/authority.md) for authority-building strategies.
 
 ### 5. Liking
 
@@ -235,7 +235,7 @@ See: [references/authority.md](references/authority.md) for authority-building s
 
 **Ethical boundary:** Be genuinely helpful and authentic. Don't manufacture false rapport or manipulate emotions.
 
-See: [references/liking.md](references/liking.md) for liking techniques and tone guidelines.
+See: [references/liking.md](../../references/liking.md) for liking techniques and tone guidelines.
 
 ### 6. Scarcity
 
@@ -297,7 +297,7 @@ See: [references/liking.md](references/liking.md) for liking techniques and tone
 - "Only 2 left!" repeated every day
 - Pressuring vulnerable users
 
-See: [references/scarcity.md](references/scarcity.md) for scarcity tactics and ethical implementation.
+See: [references/scarcity.md](../../references/scarcity.md) for scarcity tactics and ethical implementation.
 
 ### 7. Unity
 
@@ -339,7 +339,7 @@ See: [references/scarcity.md](references/scarcity.md) for scarcity tactics and e
 
 **Ethical boundary:** Don't create toxic in-groups or vilify out-groups. Unity should unite, not divide maliciously.
 
-See: [references/unity.md](references/unity.md) for unity-building strategies.
+See: [references/unity.md](../../references/unity.md) for unity-building strategies.
 
 ## Combining Principles
 
@@ -378,7 +378,7 @@ Before deploying influence tactics:
 - **Persuasion:** Helping people see value they'd appreciate anyway
 - **Manipulation:** Tricking people into choices against their interests
 
-See: [references/ethics.md](references/ethics.md) for comprehensive ethical boundaries.
+See: [references/ethics.md](../../references/ethics.md) for comprehensive ethical boundaries.
 
 ## Common Mistakes
 
@@ -404,16 +404,16 @@ Audit any persuasive element:
 
 ## Reference Files
 
-- [reciprocity.md](references/reciprocity.md): Reciprocity techniques, gift strategies, examples
-- [commitment-consistency.md](references/commitment-consistency.md): Commitment flows, foot-in-the-door, public commitment tactics
-- [social-proof.md](references/social-proof.md): Social proof types, implementation patterns, case studies
-- [authority.md](references/authority.md): Building authority, credentials, thought leadership
-- [liking.md](references/liking.md): Liking factors, brand voice, rapport-building
-- [scarcity.md](references/scarcity.md): Scarcity tactics, ethical vs. manipulative scarcity
-- [unity.md](references/unity.md): Tribe-building, identity marketing, community
-- [ethics.md](references/ethics.md): Ethical boundaries, manipulation vs. persuasion
-- [case-studies.md](references/case-studies.md): Real-world applications across industries
-- [copywriting.md](references/copywriting.md): Influence-based copy frameworks
+- [reciprocity.md](../../references/reciprocity.md): Reciprocity techniques, gift strategies, examples
+- [commitment-consistency.md](../../references/commitment-consistency.md): Commitment flows, foot-in-the-door, public commitment tactics
+- [social-proof.md](../../references/social-proof.md): Social proof types, implementation patterns, case studies
+- [authority.md](../../references/authority.md): Building authority, credentials, thought leadership
+- [liking.md](../../references/liking.md): Liking factors, brand voice, rapport-building
+- [scarcity.md](../../references/scarcity.md): Scarcity tactics, ethical vs. manipulative scarcity
+- [unity.md](../../references/unity.md): Tribe-building, identity marketing, community
+- [ethics.md](../../references/ethics.md): Ethical boundaries, manipulation vs. persuasion
+- [case-studies.md](../../references/case-studies.md): Real-world applications across industries
+- [copywriting.md](../../references/copywriting.md): Influence-based copy frameworks
 
 ## Further Reading
 

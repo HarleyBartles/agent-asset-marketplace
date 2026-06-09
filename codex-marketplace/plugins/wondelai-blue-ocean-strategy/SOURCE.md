@@ -24,6 +24,20 @@ This bundle packages the upstream Wondelai Blue Ocean Strategy package as a mark
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-blue-ocean-strategy/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 8
+- `blue-ocean-examples.md`
+- `errc-grid.md`
+- `implementation.md`
+- `non-customers.md`
+- `sequence.md`
+- `six-paths.md`
+- `strategy-canvas.md`
+- `value-innovation.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

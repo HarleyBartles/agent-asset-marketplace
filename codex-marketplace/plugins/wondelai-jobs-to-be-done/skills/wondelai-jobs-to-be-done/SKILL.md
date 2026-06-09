@@ -66,7 +66,7 @@ Every job has three inseparable dimensions - omitting any means failure:
 
 **Ethical boundary:** Never fabricate or exaggerate circumstances to manufacture urgency. The job must reflect genuine customer progress, not artificially created anxiety.
 
-See: [references/innovation-process.md](references/innovation-process.md)
+See: [references/innovation-process.md](../../references/innovation-process.md)
 
 ### 2. Forces of Progress (Push, Pull, Anxiety, Habit)
 
@@ -99,7 +99,7 @@ See: [references/innovation-process.md](references/innovation-process.md)
 
 **Ethical boundary:** Never manufacture artificial push by exaggerating pain or creating fear. Reducing real anxiety is ethical; creating new anxiety to drive sales is manipulation.
 
-See: [references/competitive-strategy.md](references/competitive-strategy.md)
+See: [references/competitive-strategy.md](../../references/competitive-strategy.md)
 
 ### 3. The Big Hire & Little Hire
 
@@ -131,7 +131,7 @@ See: [references/competitive-strategy.md](references/competitive-strategy.md)
 
 **Ethical boundary:** Never design dark patterns that win the Big Hire (e.g., hidden fees, misleading trials) while failing the Little Hire. Both decisions must deliver genuine progress.
 
-See: [references/case-studies.md](references/case-studies.md)
+See: [references/case-studies.md](../../references/case-studies.md)
 
 ### 4. Competitive Landscape (Non-Obvious Competition)
 
@@ -163,7 +163,7 @@ See: [references/case-studies.md](references/case-studies.md)
 
 **Ethical boundary:** Never misrepresent competitors or create false equivalences. Honest competitive framing based on the job is powerful; distorting alternatives is deceptive.
 
-See: [references/competitive-strategy.md](references/competitive-strategy.md)
+See: [references/competitive-strategy.md](../../references/competitive-strategy.md)
 
 ### 5. Customer Discovery Interviews
 
@@ -195,7 +195,7 @@ See: [references/competitive-strategy.md](references/competitive-strategy.md)
 
 **Ethical boundary:** Never lead interview subjects toward predetermined conclusions. The goal is genuine discovery, not confirmation of existing assumptions.
 
-See: [references/innovation-process.md](references/innovation-process.md)
+See: [references/innovation-process.md](../../references/innovation-process.md)
 
 ### 6. Designing for the Job
 
@@ -228,7 +228,7 @@ See: [references/innovation-process.md](references/innovation-process.md)
 
 **Ethical boundary:** Never design addictive patterns that serve engagement metrics rather than genuine customer progress. The job framework demands that the customer's progress is the true north, not your retention numbers.
 
-See: [references/organizational-change.md](references/organizational-change.md)
+See: [references/organizational-change.md](../../references/organizational-change.md)
 
 ## Common Mistakes
 
@@ -254,19 +254,19 @@ See: [references/organizational-change.md](references/organizational-change.md)
 | Can your team explain how a feature helps accomplish the job? | You're building features without strategic grounding | Require every feature proposal to reference the specific job dimension it serves |
 | Have you interviewed customers about their purchase timeline? | Your understanding of the job is based on assumptions, not evidence | Conduct 10+ discovery interviews reconstructing the first-thought-to-usage journey |
 
-See: [references/diagnostics.md](references/diagnostics.md) for the full diagnostic checklist.
+See: [references/diagnostics.md](../../references/diagnostics.md) for the full diagnostic checklist.
 
 ## Examples and Case Studies
 
-See: [references/case-studies.md](references/case-studies.md) for detailed analyses (SNHU, American Girl, Intuit).
+See: [references/case-studies.md](../../references/case-studies.md) for detailed analyses (SNHU, American Girl, Intuit).
 
 ## Reference Files
 
-- [innovation-process.md](references/innovation-process.md): Job hunting methodology, job atlas, prototype testing, job statements
-- [competitive-strategy.md](references/competitive-strategy.md): Non-obvious competition, jobs-based positioning, pricing strategy
-- [organizational-change.md](references/organizational-change.md): Overcoming objections, feature-factory trap, executive buy-in, change management
-- [diagnostics.md](references/diagnostics.md): Diagnostic checklist for evaluating products through the jobs lens
-- [case-studies.md](references/case-studies.md): Detailed analyses of SNHU, American Girl, Intuit, and more
+- [innovation-process.md](../../references/innovation-process.md): Job hunting methodology, job atlas, prototype testing, job statements
+- [competitive-strategy.md](../../references/competitive-strategy.md): Non-obvious competition, jobs-based positioning, pricing strategy
+- [organizational-change.md](../../references/organizational-change.md): Overcoming objections, feature-factory trap, executive buy-in, change management
+- [diagnostics.md](../../references/diagnostics.md): Diagnostic checklist for evaluating products through the jobs lens
+- [case-studies.md](../../references/case-studies.md): Detailed analyses of SNHU, American Girl, Intuit, and more
 
 ## About the Author
 

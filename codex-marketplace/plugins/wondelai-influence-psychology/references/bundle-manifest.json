@@ -4,8 +4,8 @@
   "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
   "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
   "source_root": "plugins/business-tools/wondelai-influence-psychology",
-  "candidate_count": 1,
-  "imported_count": 1,
+  "candidate_count": 11,
+  "imported_count": 11,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -14,6 +14,66 @@
       "local_path": "skills/wondelai-influence-psychology/SKILL.md",
       "import_status": "imported",
       "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/authority.md",
+      "local_path": "references/authority.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/case-studies.md",
+      "local_path": "references/case-studies.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/commitment-consistency.md",
+      "local_path": "references/commitment-consistency.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/copywriting.md",
+      "local_path": "references/copywriting.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/ethics.md",
+      "local_path": "references/ethics.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/liking.md",
+      "local_path": "references/liking.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/reciprocity.md",
+      "local_path": "references/reciprocity.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/scarcity.md",
+      "local_path": "references/scarcity.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/social-proof.md",
+      "local_path": "references/social-proof.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-influence-psychology/references/unity.md",
+      "local_path": "references/unity.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
     }
   ]
 }

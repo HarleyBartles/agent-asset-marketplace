@@ -82,7 +82,7 @@ S - Stories             → Is it wrapped in a narrative people want to tell?
 
 **Ethical boundary:** Social currency should make people genuinely feel good, not manipulate through false scarcity or manufactured exclusivity that breeds toxicity. Create real insider value, not artificial gatekeeping.
 
-See: [references/social-currency.md](references/social-currency.md) for remarkability exercises and game mechanics design.
+See: [references/social-currency.md](../../references/social-currency.md) for remarkability exercises and game mechanics design.
 
 ### 2. Triggers
 
@@ -119,7 +119,7 @@ See: [references/social-currency.md](references/social-currency.md) for remarkab
 
 **Ethical boundary:** Triggers should create genuine, helpful associations. Hijacking sensitive contexts (grief, health scares) as triggers is manipulative and will backfire.
 
-See: [references/triggers.md](references/triggers.md) for habitat analysis and trigger design frameworks.
+See: [references/triggers.md](../../references/triggers.md) for habitat analysis and trigger design frameworks.
 
 ### 3. Emotion
 
@@ -158,7 +158,7 @@ See: [references/triggers.md](references/triggers.md) for habitat analysis and t
 
 **Ethical boundary:** Anger and outrage are high-arousal and highly shareable, but engineering outrage for clicks corrodes trust. Use high-arousal negative emotion sparingly and only when the underlying cause genuinely warrants it.
 
-See: [references/emotion.md](references/emotion.md) for emotional arousal mapping and content audit tools.
+See: [references/emotion.md](../../references/emotion.md) for emotional arousal mapping and content audit tools.
 
 ### 4. Public
 
@@ -195,7 +195,7 @@ See: [references/emotion.md](references/emotion.md) for emotional arousal mappin
 
 **Ethical boundary:** Public visibility should empower users, not shame them. Never make private information (failures, health data, financial struggles) involuntarily public. The user should always control what is visible.
 
-See: [references/public-visibility.md](references/public-visibility.md) for observability design and behavioral residue strategies.
+See: [references/public-visibility.md](../../references/public-visibility.md) for observability design and behavioral residue strategies.
 
 ### 5. Practical Value
 
@@ -233,7 +233,7 @@ See: [references/public-visibility.md](references/public-visibility.md) for obse
 
 **Ethical boundary:** Practical value must be genuine. Fake savings (inflated "original" prices), misleading tips, or clickbait "life hacks" that don't actually work will destroy trust faster than they generate shares.
 
-See: [references/practical-value.md](references/practical-value.md) for Prospect Theory applications and knowledge packaging formats.
+See: [references/practical-value.md](../../references/practical-value.md) for Prospect Theory applications and knowledge packaging formats.
 
 ### 6. Stories
 
@@ -270,7 +270,7 @@ See: [references/practical-value.md](references/practical-value.md) for Prospect
 
 **Ethical boundary:** Stories must be true or clearly fictional. Fabricating testimonials, inventing origin stories, or creating misleading narratives will eventually be exposed, destroying the brand's credibility and making future word-of-mouth toxic.
 
-See: [references/stories-trojan-horse.md](references/stories-trojan-horse.md) for narrative templates and the Trojan Horse integration test.
+See: [references/stories-trojan-horse.md](../../references/stories-trojan-horse.md) for narrative templates and the Trojan Horse integration test.
 
 ## Engineering Word of Mouth
 
@@ -330,15 +330,15 @@ Run this diagnostic on any product, campaign, or content piece:
 
 ## Reference Files
 
-- [references/social-currency.md](references/social-currency.md) — Remarkability techniques, game mechanics, exclusivity design, and identity signaling strategies
-- [references/triggers.md](references/triggers.md) — Habitat analysis, trigger frequency matrix, competitive triggers, and the Kit Kat case study
-- [references/emotion.md](references/emotion.md) — High-arousal vs. low-arousal emotion mapping, awe engineering, humor design, and emotional audit tools
-- [references/public-visibility.md](references/public-visibility.md) — Behavioral residue, observable consumption design, self-advertising products, and the Apple logo story
-- [references/practical-value.md](references/practical-value.md) — Prospect Theory for marketers, Rule of 100, knowledge packaging formats, and deal framing
-- [references/stories-trojan-horse.md](references/stories-trojan-horse.md) — Trojan Horse narrative design, brand integration testing, and story templates
-- [references/word-of-mouth.md](references/word-of-mouth.md) — Offline vs. online WOM, conversation triggers, measurement approaches, and WOM audit
-- [references/viral-content-patterns.md](references/viral-content-patterns.md) — Content formats that spread, platform-specific patterns, viral coefficient, and shareability audit
-- [references/case-studies.md](references/case-studies.md) — Detailed breakdowns of Blendtec, Barclay Prime, Kit Kat, Livestrong, Dove, and Hotmail
+- [references/social-currency.md](../../references/social-currency.md) — Remarkability techniques, game mechanics, exclusivity design, and identity signaling strategies
+- [references/triggers.md](../../references/triggers.md) — Habitat analysis, trigger frequency matrix, competitive triggers, and the Kit Kat case study
+- [references/emotion.md](../../references/emotion.md) — High-arousal vs. low-arousal emotion mapping, awe engineering, humor design, and emotional audit tools
+- [references/public-visibility.md](../../references/public-visibility.md) — Behavioral residue, observable consumption design, self-advertising products, and the Apple logo story
+- [references/practical-value.md](../../references/practical-value.md) — Prospect Theory for marketers, Rule of 100, knowledge packaging formats, and deal framing
+- [references/stories-trojan-horse.md](../../references/stories-trojan-horse.md) — Trojan Horse narrative design, brand integration testing, and story templates
+- [references/word-of-mouth.md](../../references/word-of-mouth.md) — Offline vs. online WOM, conversation triggers, measurement approaches, and WOM audit
+- [references/viral-content-patterns.md](../../references/viral-content-patterns.md) — Content formats that spread, platform-specific patterns, viral coefficient, and shareability audit
+- [references/case-studies.md](../../references/case-studies.md) — Detailed breakdowns of Blendtec, Barclay Prime, Kit Kat, Livestrong, Dove, and Hotmail
 
 ## Further Reading
 

@@ -24,6 +24,20 @@ This bundle packages the upstream Wondelai Crossing the Chasm package as a marke
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-crossing-the-chasm/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 8
+- `b2b-saas.md`
+- `beachhead-selection.md`
+- `buyer-segments.md`
+- `case-studies.md`
+- `expansion.md`
+- `go-to-market.md`
+- `positioning.md`
+- `whole-product.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

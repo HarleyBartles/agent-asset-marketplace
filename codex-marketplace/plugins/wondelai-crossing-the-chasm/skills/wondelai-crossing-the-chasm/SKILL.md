@@ -63,7 +63,7 @@ Innovators → Early Adopters → [CHASM] → Early Majority → Late Majority �
 
 **Why this matters:** You can't market to both simultaneously. Visionary testimonials scare off pragmatists. "Revolutionary" positioning is a red flag to the early majority.
 
-See: [references/buyer-segments.md](references/buyer-segments.md) for detailed buyer psychographics.
+See: [references/buyer-segments.md](../../references/buyer-segments.md) for detailed buyer psychographics.
 
 ## Why the Chasm Exists
 
@@ -126,7 +126,7 @@ See: [references/buyer-segments.md](references/buyer-segments.md) for detailed b
 3. Choose ONE (resist temptation to keep options open)
 4. Commit to dominating it
 
-See: [references/beachhead-selection.md](references/beachhead-selection.md) for segment evaluation frameworks.
+See: [references/beachhead-selection.md](../../references/beachhead-selection.md) for segment evaluation frameworks.
 
 ### Step 2: Assemble the Invasion Force
 
@@ -171,7 +171,7 @@ Potential Product (what it could become)
 - Partner with companies that fill gaps
 - Joint go-to-market for beachhead segment
 
-See: [references/whole-product.md](references/whole-product.md) for whole product planning.
+See: [references/whole-product.md](../../references/whole-product.md) for whole product planning.
 
 ### Step 3: Define the Battle
 
@@ -214,7 +214,7 @@ See: [references/whole-product.md](references/whole-product.md) for whole produc
 - **Salesforce positioning:** "No software" (cloud-based, fast setup)
 - **Result:** Made Siebel's strength (complexity) a weakness
 
-See: [references/positioning.md](references/positioning.md) for competitive positioning frameworks.
+See: [references/positioning.md](../../references/positioning.md) for competitive positioning frameworks.
 
 ### Step 4: Launch the Invasion
 
@@ -245,7 +245,7 @@ See: [references/positioning.md](references/positioning.md) for competitive posi
 | "Change everything" | "Improve [specific metric] by X%" |
 | "Visionary" | "Pragmatic" |
 
-See: [references/go-to-market.md](references/go-to-market.md) for launch strategies.
+See: [references/go-to-market.md](../../references/go-to-market.md) for launch strategies.
 
 ## Bowling Pin Strategy
 
@@ -273,7 +273,7 @@ Beachhead → Adjacent #1 → Adjacent #2 → Adjacent #3
 
 **Anti-pattern:** Jumping to distant segments before dominating beachhead.
 
-See: [references/expansion.md](references/expansion.md) for segment expansion strategies.
+See: [references/expansion.md](../../references/expansion.md) for segment expansion strategies.
 
 ## The Tornado: After the Chasm
 
@@ -336,14 +336,14 @@ Audit any tech product go-to-market:
 
 ## Reference Files
 
-- [buyer-segments.md](references/buyer-segments.md): Detailed psychographics for each buyer type
-- [beachhead-selection.md](references/beachhead-selection.md): Segment evaluation, scoring frameworks
-- [whole-product.md](references/whole-product.md): Whole product planning, gap analysis
-- [positioning.md](references/positioning.md): Competitive positioning frameworks and templates
-- [go-to-market.md](references/go-to-market.md): Distribution, messaging, launch strategies
-- [expansion.md](references/expansion.md): Bowling pin strategy, adjacency criteria
-- [case-studies.md](references/case-studies.md): Salesforce, Documentum, Ariba, and failures
-- [b2b-saas.md](references/b2b-saas.md): Chasm-crossing for modern SaaS companies
+- [buyer-segments.md](../../references/buyer-segments.md): Detailed psychographics for each buyer type
+- [beachhead-selection.md](../../references/beachhead-selection.md): Segment evaluation, scoring frameworks
+- [whole-product.md](../../references/whole-product.md): Whole product planning, gap analysis
+- [positioning.md](../../references/positioning.md): Competitive positioning frameworks and templates
+- [go-to-market.md](../../references/go-to-market.md): Distribution, messaging, launch strategies
+- [expansion.md](../../references/expansion.md): Bowling pin strategy, adjacency criteria
+- [case-studies.md](../../references/case-studies.md): Salesforce, Documentum, Ariba, and failures
+- [b2b-saas.md](../../references/b2b-saas.md): Chasm-crossing for modern SaaS companies
 
 ## Further Reading
 

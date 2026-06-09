@@ -24,6 +24,17 @@ This bundle packages the upstream Wondelai Jobs to Be Done package as a market-f
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-jobs-to-be-done/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 5
+- `case-studies.md`
+- `competitive-strategy.md`
+- `diagnostics.md`
+- `innovation-process.md`
+- `organizational-change.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

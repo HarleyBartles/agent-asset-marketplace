@@ -58,7 +58,7 @@ The offer is the #1 lever in any business. You can have mediocre marketing, aver
 
 **Ethical boundary:** Never promise outcomes you cannot reasonably deliver. Every claim about speed, effort, or results must be substantiated by real data or clearly stated as aspirational.
 
-See: [references/value-equation.md](references/value-equation.md) for the four levers, optimization tactics, and scoring rubric.
+See: [references/value-equation.md](../../references/value-equation.md) for the four levers, optimization tactics, and scoring rubric.
 
 ### 2. The Grand Slam Offer
 
@@ -95,7 +95,7 @@ See: [references/value-equation.md](references/value-equation.md) for the four l
 
 **Ethical boundary:** Assign honest dollar values to each component. Never inflate values to create fake gaps between "value" and price. Each dollar value should be justifiable and defensible.
 
-See: [references/grand-slam-offers.md](references/grand-slam-offers.md) for the full offer assembly process and problem-solution mapping.
+See: [references/grand-slam-offers.md](../../references/grand-slam-offers.md) for the full offer assembly process and problem-solution mapping.
 
 ### 3. Finding Your Starving Crowd
 
@@ -132,7 +132,7 @@ See: [references/grand-slam-offers.md](references/grand-slam-offers.md) for the 
 
 **Ethical boundary:** Target based on genuine need and fit, not vulnerability. Avoid targeting people in crisis who cannot make rational decisions (e.g., recently bereaved, in medical emergencies).
 
-See: [references/starving-crowd.md](references/starving-crowd.md) for market selection criteria and the niche scorecard.
+See: [references/starving-crowd.md](../../references/starving-crowd.md) for market selection criteria and the niche scorecard.
 
 ### 4. Value-Based Pricing
 
@@ -169,7 +169,7 @@ See: [references/starving-crowd.md](references/starving-crowd.md) for market sel
 
 **Ethical boundary:** Value claims must be substantiated. If you claim 10x ROI, have data, case studies, or a clear logical basis. Never price based on inflated or fabricated value.
 
-See: [references/pricing-strategy.md](references/pricing-strategy.md) for value-based pricing frameworks and anchoring techniques.
+See: [references/pricing-strategy.md](../../references/pricing-strategy.md) for value-based pricing frameworks and anchoring techniques.
 
 ### 5. Bonuses: Value Stacking
 
@@ -206,7 +206,7 @@ See: [references/pricing-strategy.md](references/pricing-strategy.md) for value-
 
 **Ethical boundary:** Every dollar value assigned to a bonus must be defensible. If a bonus is a PDF you created in an hour, do not claim it is worth $5,000. Price it at what someone would actually pay for it on its own.
 
-See: [references/bonuses-stacking.md](references/bonuses-stacking.md) for bonus design frameworks and stacking strategies.
+See: [references/bonuses-stacking.md](../../references/bonuses-stacking.md) for bonus design frameworks and stacking strategies.
 
 ### 6. Guarantees: Reversing Risk
 
@@ -244,7 +244,7 @@ See: [references/bonuses-stacking.md](references/bonuses-stacking.md) for bonus 
 
 **Ethical boundary:** Honor every guarantee without friction or fine print traps. A guarantee that is hard to claim is worse than no guarantee -- it destroys trust permanently.
 
-See: [references/guarantees.md](references/guarantees.md) for the five guarantee types, naming strategies, and stacking approaches.
+See: [references/guarantees.md](../../references/guarantees.md) for the five guarantee types, naming strategies, and stacking approaches.
 
 ### 7. Scarcity and Urgency
 
@@ -281,7 +281,7 @@ See: [references/guarantees.md](references/guarantees.md) for the five guarantee
 
 **Ethical boundary:** Every scarcity and urgency claim must be 100% true. If you say 20 spots, there are 20 spots. If you say the price goes up Friday, it goes up Friday. Fake scarcity is the fastest way to destroy a brand.
 
-See: [references/scarcity-urgency.md](references/scarcity-urgency.md) for ethical scarcity patterns and evergreen urgency techniques.
+See: [references/scarcity-urgency.md](../../references/scarcity-urgency.md) for ethical scarcity patterns and evergreen urgency techniques.
 
 ### 8. Naming the Offer
 
@@ -320,7 +320,7 @@ See: [references/scarcity-urgency.md](references/scarcity-urgency.md) for ethica
 
 **Ethical boundary:** The name must accurately represent the offer. Do not name an offer "6-Figure Blueprint" if the average customer does not reach six figures. Aspirational names are fine; deceptive names are not.
 
-See: [references/naming-offers.md](references/naming-offers.md) for the MAGIC formula breakdown, 20+ examples, and naming dos and don'ts.
+See: [references/naming-offers.md](../../references/naming-offers.md) for the MAGIC formula breakdown, 20+ examples, and naming dos and don'ts.
 
 ## Offer Creation Process
 
@@ -365,16 +365,16 @@ Use this table to audit any existing offer:
 
 ## Reference Files
 
-- [value-equation.md](references/value-equation.md): The four levers of the Value Equation, optimization tactics for each, and scoring rubric
-- [grand-slam-offers.md](references/grand-slam-offers.md): Full offer assembly process, problem-solution mapping, and the Trim & Stack method
-- [starving-crowd.md](references/starving-crowd.md): Market selection criteria, demand validation, and niche scorecard template
-- [pricing-strategy.md](references/pricing-strategy.md): Value-based pricing, anchoring techniques, payment plans, and the premium pricing cycle
-- [bonuses-stacking.md](references/bonuses-stacking.md): Bonus design framework, dollar value assignment, stacking order, and naming strategies
-- [guarantees.md](references/guarantees.md): Five guarantee types, naming guarantees, stacking guarantees, and legal considerations
-- [scarcity-urgency.md](references/scarcity-urgency.md): Ethical scarcity patterns, cohort models, evergreen urgency, and what not to do
-- [naming-offers.md](references/naming-offers.md): MAGIC formula breakdown, 20+ name examples, and A/B testing offer names
-- [case-studies.md](references/case-studies.md): Detailed offer breakdowns across SaaS, coaching, e-commerce, agency, local business, and info products
-- [offer-creation-checklist.md](references/offer-creation-checklist.md): Step-by-step worksheet, scoring rubric, and fill-in templates
+- [value-equation.md](../../references/value-equation.md): The four levers of the Value Equation, optimization tactics for each, and scoring rubric
+- [grand-slam-offers.md](../../references/grand-slam-offers.md): Full offer assembly process, problem-solution mapping, and the Trim & Stack method
+- [starving-crowd.md](../../references/starving-crowd.md): Market selection criteria, demand validation, and niche scorecard template
+- [pricing-strategy.md](../../references/pricing-strategy.md): Value-based pricing, anchoring techniques, payment plans, and the premium pricing cycle
+- [bonuses-stacking.md](../../references/bonuses-stacking.md): Bonus design framework, dollar value assignment, stacking order, and naming strategies
+- [guarantees.md](../../references/guarantees.md): Five guarantee types, naming guarantees, stacking guarantees, and legal considerations
+- [scarcity-urgency.md](../../references/scarcity-urgency.md): Ethical scarcity patterns, cohort models, evergreen urgency, and what not to do
+- [naming-offers.md](../../references/naming-offers.md): MAGIC formula breakdown, 20+ name examples, and A/B testing offer names
+- [case-studies.md](../../references/case-studies.md): Detailed offer breakdowns across SaaS, coaching, e-commerce, agency, local business, and info products
+- [offer-creation-checklist.md](../../references/offer-creation-checklist.md): Step-by-step worksheet, scoring rubric, and fill-in templates
 
 ## Further Reading
 

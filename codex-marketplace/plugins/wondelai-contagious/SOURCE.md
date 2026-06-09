@@ -24,6 +24,21 @@ This bundle packages the upstream Wondelai Contagious package as a market-facing
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-contagious/references/bundle-manifest.json.
 
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 9
+- `case-studies.md`
+- `emotion.md`
+- `practical-value.md`
+- `public-visibility.md`
+- `social-currency.md`
+- `stories-trojan-horse.md`
+- `triggers.md`
+- `viral-content-patterns.md`
+- `word-of-mouth.md`
+
+The bundle ledger records each upstream/local path pairing.
+
 ## Notes
 
 The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

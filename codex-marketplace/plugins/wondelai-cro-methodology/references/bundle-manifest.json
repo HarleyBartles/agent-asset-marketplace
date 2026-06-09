@@ -1,19 +1,55 @@
 {
-    "bundle_name":  "wondelai-cro-methodology",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "jeremylongshore/claude-code-plugins-plus-skills",
-    "pinned_commit":  "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
-    "source_root":  "plugins/business-tools/wondelai-cro-methodology",
-    "candidate_count":  1,
-    "imported_count":  1,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "upstream_path":  "plugins/business-tools/wondelai-cro-methodology/SKILL.md",
-                        "local_path":  "skills/wondelai-cro-methodology/SKILL.md",
-                        "import_status":  "imported",
-                        "adaptation_note":  "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
-                    }
-                ]
+  "bundle_name": "wondelai-cro-methodology",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/business-tools/wondelai-cro-methodology",
+  "candidate_count": 7,
+  "imported_count": 7,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/SKILL.md",
+      "local_path": "skills/wondelai-cro-methodology/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/COPYWRITING.md",
+      "local_path": "references/COPYWRITING.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/funnel-analysis.md",
+      "local_path": "references/funnel-analysis.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/OBJECTIONS.md",
+      "local_path": "references/OBJECTIONS.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/PERSUASION.md",
+      "local_path": "references/PERSUASION.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/RESEARCH.md",
+      "local_path": "references/RESEARCH.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-cro-methodology/references/testing-methodology.md",
+      "local_path": "references/testing-methodology.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    }
+  ]
 }
