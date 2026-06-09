@@ -1,6 +1,6 @@
-First-party Harley-authored source.
+First-party Harley-authored source plus copied marketplace skills.
 
-This bundle contains project-specific guidance for the Wild Bunch project.
-Referenced marketplace assets remain under their respective upstream licenses,
-including MIT-licensed sources where applicable. No third-party source text was
-copied into this bundle.
+This bundle contains project-specific guidance for the Wild Bunch project and
+bundled copies of selected marketplace skills used as install-time references.
+Copied marketplace assets remain under their respective source plugin licenses.
+See `references/provenance-map.md` for the per-skill provenance split.
