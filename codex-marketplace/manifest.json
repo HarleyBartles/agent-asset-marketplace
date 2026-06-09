@@ -1937,6 +1937,18 @@
       "category": "Productivity"
     },
     {
+      "name": "magicpath",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/magicpath"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "maintainx-pack",
       "source": {
         "source": "local",

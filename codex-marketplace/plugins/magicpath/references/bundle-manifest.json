@@ -1,0 +1,19 @@
+{
+  "bundle_name": "magicpath",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "MagicPathAI/agent-skills",
+  "pinned_commit": "5e08ac90a5050a52abe4c28cbb700e989c111767",
+  "source_root": "skills/magicpath",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "skills/magicpath/SKILL.md",
+      "local_path": "skills/magicpath/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied from the MIT-licensed MagicPath upstream into the marketplace bundle with path normalization only."
+    }
+  ]
+}

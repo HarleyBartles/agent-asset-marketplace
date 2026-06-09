@@ -12,6 +12,7 @@ This directory is the pinned vendor custody snapshot for the upstream
 ## Snapshot contents
 
 - Full upstream root tree, excluding the `.git` metadata directory and the blocked roots listed in `NOTICE.md`.
+- `plugins/magicpath` was excluded from this snapshot and re-vendored separately from `MagicPathAI/agent-skills` under its own MIT-declared upstream.
 - Marketplace inventory recorded in `provenance/MARK-69-openai-plugins-inventory.json`.
 - Marketplace-facing copies were published under `codex-marketplace/plugins/`.
 

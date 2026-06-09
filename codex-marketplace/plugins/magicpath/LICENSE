@@ -1,0 +1,10 @@
+License notice for MagicPath
+
+Upstream license declaration: MIT
+Upstream author: MagicPath
+Upstream repo: https://github.com/MagicPathAI/agent-skills.git
+Upstream commit: 5e08ac90a5050a52abe4c28cbb700e989c111767
+Upstream path: .
+
+The detailed upstream source snapshot and any nested license files are
+preserved under `sources/vendor/MagicPathAI/agent-skills/5e08ac90a5050a52abe4c28cbb700e989c111767/`.

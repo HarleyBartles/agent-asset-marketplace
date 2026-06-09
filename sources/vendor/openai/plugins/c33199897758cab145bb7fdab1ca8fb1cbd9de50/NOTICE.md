@@ -15,7 +15,7 @@ license files present in the copied upstream tree.
 - `plugins/convex`: upstream plugin has no redistributable license declaration
 - `plugins/figma`: Figma developer terms are not a re-vendored marketplace license
 - `plugins/life-science-research`: proprietary upstream license is not re-vendorable into the marketplace
-- `plugins/magicpath`: upstream plugin has no redistributable license declaration
+- `plugins/magicpath`: OpenAI-hosted copy excluded; separate MIT upstream re-vendored at `codex-marketplace/plugins/magicpath`
 - `plugins/openai-developers`: proprietary upstream license is not re-vendorable into the marketplace
 
 These blocked roots are excluded from the vendor snapshot tree and are kept only in provenance records.
