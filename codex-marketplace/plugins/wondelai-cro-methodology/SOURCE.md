@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai CRO Methodology package as a market-f
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-cro-methodology
 
 ## Outcome
 
@@ -23,6 +23,19 @@ This bundle packages the upstream Wondelai CRO Methodology package as a market-f
 ## Imported skills
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-cro-methodology/references/bundle-manifest.json.
+
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 6
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/COPYWRITING.md`
+- `references/funnel-analysis.md`
+- `references/OBJECTIONS.md`
+- `references/PERSUASION.md`
+- `references/RESEARCH.md`
+- `references/testing-methodology.md`
+
+The bundle ledger records each upstream/local path pairing.
 
 ## Notes
 

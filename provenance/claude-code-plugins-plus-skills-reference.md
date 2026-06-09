@@ -212,6 +212,37 @@ clean wrapper source root was present in the pinned tree during inspection:
 The `x-bug-triage-plugin` alias is normalized to the `x-bug-triage` source root
 and is not duplicated as a second wrapper.
 
+## MARK-68 Plugin-Package Addendum
+
+The final residual plugin-package tranche is now also preserved as marketplace
+wrappers:
+
+- `codex-marketplace/plugins/wondelai-crossing-the-chasm`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-crossing-the-chasm`
+- `codex-marketplace/plugins/wondelai-drive-motivation`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-drive-motivation`
+- `codex-marketplace/plugins/wondelai-hundred-million-offers`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-hundred-million-offers`
+- `codex-marketplace/plugins/wondelai-influence-psychology`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-influence-psychology`
+- `codex-marketplace/plugins/wondelai-jobs-to-be-done`
+  - wraps `sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-jobs-to-be-done`
+
+Imported skill docs:
+
+- `1` imported for each of the five Wondelai packs
+- `0` skipped for each imported pack
+- `0` blocked for each imported pack
+
+Residual blocked package root:
+
+- `plugins/business-tools/openbb-terminal`
+  - blocked because the pinned tree still does not expose a standalone root `SKILL.md` or equivalent package boundary suitable for the current wrapper convention; it exposes support docs and a nested `skills/skill-adapter/` surface instead of a functional package root
+
+The bundle evidence lives in the respective
+`codex-marketplace/plugins/<pack>/references/bundle-manifest.json` files and the
+plugin manifests are constrained to paths that exist locally.
+
 ## MARK-67 Plugin-Package Addendum
 
 The next intact plugin-package tranche is now also preserved as marketplace

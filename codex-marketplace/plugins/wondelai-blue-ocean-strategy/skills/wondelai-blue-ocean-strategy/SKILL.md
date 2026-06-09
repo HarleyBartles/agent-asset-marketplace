@@ -47,7 +47,7 @@ Most companies fight for market share in existing industries (red oceans). Winne
 - Netflix: Not video rental, but streaming entertainment
 - Nintendo Wii: Not graphics power, but accessible motion gaming
 
-See: [references/blue-ocean-examples.md](references/blue-ocean-examples.md) for detailed case studies.
+See: [references/blue-ocean-examples.md](../../references/blue-ocean-examples.md) for detailed case studies.
 
 ## Value Innovation
 
@@ -84,7 +84,7 @@ Value Innovation = Utility × Price × Cost
 - **Created:** Theme, refined watching environment, multiple productions (new value)
 - **Outcome:** Higher prices than circus, lower costs than theater, new market created
 
-See: [references/value-innovation.md](references/value-innovation.md) for value innovation frameworks.
+See: [references/value-innovation.md](../../references/value-innovation.md) for value innovation frameworks.
 
 ## Strategy Canvas
 
@@ -138,7 +138,7 @@ Plot how you and competitors score on each factor (low to high).
 
 **Result:** Different curve = blue ocean.
 
-See: [references/strategy-canvas.md](references/strategy-canvas.md) for templates and examples.
+See: [references/strategy-canvas.md](../../references/strategy-canvas.md) for templates and examples.
 
 ## Four Actions Framework (ERRC Grid)
 
@@ -239,7 +239,7 @@ REDUCE                         CREATE
 
 **Net result:** Value increases more than cost (value innovation).
 
-See: [references/errc-grid.md](references/errc-grid.md) for ERRC templates and exercises.
+See: [references/errc-grid.md](../../references/errc-grid.md) for ERRC templates and exercises.
 
 ## The Six Paths Framework
 
@@ -325,7 +325,7 @@ See: [references/errc-grid.md](references/errc-grid.md) for ERRC templates and e
 
 **How to apply:** Identify irreversible trends → project future state → build for it today
 
-See: [references/six-paths.md](references/six-paths.md) for detailed path exercises.
+See: [references/six-paths.md](../../references/six-paths.md) for detailed path exercises.
 
 ## Three Tiers of Non-Customers
 
@@ -366,7 +366,7 @@ See: [references/six-paths.md](references/six-paths.md) for detailed path exerci
 3. Identify what would unlock massive demand
 4. Build offering to convert non-customers
 
-See: [references/non-customers.md](references/non-customers.md) for non-customer analysis frameworks.
+See: [references/non-customers.md](../../references/non-customers.md) for non-customer analysis frameworks.
 
 ## Sequence of Blue Ocean Strategy
 
@@ -444,7 +444,7 @@ See: [references/non-customers.md](references/non-customers.md) for non-customer
 
 **Goal:** Clear path to scalable adoption.
 
-See: [references/sequence.md](references/sequence.md) for detailed sequence templates.
+See: [references/sequence.md](../../references/sequence.md) for detailed sequence templates.
 
 ## Common Mistakes
 
@@ -470,14 +470,14 @@ Audit any strategy:
 
 ## Reference Files
 
-- [blue-ocean-examples.md](references/blue-ocean-examples.md): Cirque du Soleil, Netflix, Yellow Tail, Nintendo Wii case studies
-- [value-innovation.md](references/value-innovation.md): Value innovation frameworks and formulas
-- [strategy-canvas.md](references/strategy-canvas.md): Templates, examples, how to create
-- [errc-grid.md](references/errc-grid.md): Four Actions Framework exercises and templates
-- [six-paths.md](references/six-paths.md): Detailed exercises for each path
-- [non-customers.md](references/non-customers.md): Three-tier analysis frameworks
-- [sequence.md](references/sequence.md): Utility, price, cost, adoption templates
-- [implementation.md](references/implementation.md): Execution, organizational alignment
+- [blue-ocean-examples.md](../../references/blue-ocean-examples.md): Cirque du Soleil, Netflix, Yellow Tail, Nintendo Wii case studies
+- [value-innovation.md](../../references/value-innovation.md): Value innovation frameworks and formulas
+- [strategy-canvas.md](../../references/strategy-canvas.md): Templates, examples, how to create
+- [errc-grid.md](../../references/errc-grid.md): Four Actions Framework exercises and templates
+- [six-paths.md](../../references/six-paths.md): Detailed exercises for each path
+- [non-customers.md](../../references/non-customers.md): Three-tier analysis frameworks
+- [sequence.md](../../references/sequence.md): Utility, price, cost, adoption templates
+- [implementation.md](../../references/implementation.md): Execution, organizational alignment
 
 ## Further Reading
 

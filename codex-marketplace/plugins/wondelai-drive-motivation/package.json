@@ -1,0 +1,59 @@
+{
+  "name": "@intentsolutionsio/wondelai-drive-motivation",
+  "version": "1.0.0",
+  "description": "Wondelai Drive Motivation guidance packaged as a Codex marketplace plugin.",
+  "main": "README.md",
+  "type": "module",
+  "files": [
+    "README.md",
+    "LICENSE",
+    ".claude-plugin/",
+    ".codex-plugin/",
+    "skills/"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "marketplace",
+    "upstream-drain",
+    "wrapper",
+    "wondelai",
+    "drive",
+    "motivation"
+  ],
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/wondelai-drive-motivation"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "publishConfig": {
+    "access": "public"
+  },
+  "rights": "Upstream MIT source wrapped into a Codex-compatible marketplace plugin.",
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Wondelai Drive Motivation",
+    "shortDescription": "Wondelai Drive Motivation guidance packaged as a Codex marketplace plugin.",
+    "longDescription": "Codex-compatible wrapper for the upstream bundle at plugins/business-tools/wondelai-drive-motivation. The original Claude plugin metadata is preserved in sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6/plugins/business-tools/wondelai-drive-motivation/.claude-plugin/plugin.json.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect SOURCE.md and the bundled skill content before changing anything.",
+      "Use this Codex wrapper rather than the upstream Claude manifest.",
+      "Preserve the upstream bundle boundary while working inside the marketplace asset."
+    ],
+    "brandColor": "#111111",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

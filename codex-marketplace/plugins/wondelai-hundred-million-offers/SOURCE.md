@@ -1,0 +1,46 @@
+# Source
+
+This bundle packages the upstream Wondelai Hundred Million Offers package as a market-facing Codex plugin.
+
+## Upstream basis
+
+- Repo: jeremylongshore/claude-code-plugins-plus-skills
+- URL: <https://github.com/jeremylongshore/claude-code-plugins-plus-skills.git>
+- Pinned commit: e773501f1dfb409fc71fccdaf6ac2898fedf66d6
+- License: MIT
+
+## Source roots inspected
+
+- plugins/business-tools/wondelai-hundred-million-offers
+
+## Outcome
+
+- Candidate skills found: 1
+- Imported into this pack: 1
+- Skipped as out of scope: 0
+- Blocked: 0
+
+## Imported skills
+
+The full import ledger is recorded in codex-marketplace/plugins/wondelai-hundred-million-offers/references/bundle-manifest.json.
+
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 10
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/bonuses-stacking.md`
+- `references/case-studies.md`
+- `references/grand-slam-offers.md`
+- `references/guarantees.md`
+- `references/naming-offers.md`
+- `references/offer-creation-checklist.md`
+- `references/pricing-strategy.md`
+- `references/scarcity-urgency.md`
+- `references/starving-crowd.md`
+- `references/value-equation.md`
+
+The bundle ledger records each upstream/local path pairing.
+
+## Notes
+
+The upstream package was copied into its own plugin root without splitting the package boundary. The bundle ledger records the local paths, provenance, and the intact import result.

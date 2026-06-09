@@ -2819,6 +2819,111 @@
                 "status": "aligned",
                 "note": null
             }
+        },
+        {
+            "name": "wondelai-crossing-the-chasm",
+            "plugin_root": "codex-marketplace/plugins/wondelai-crossing-the-chasm",
+            "plugin_manifest": "codex-marketplace/plugins/wondelai-crossing-the-chasm/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wondelai-crossing-the-chasm/SOURCE.md",
+            "source_ledger": [],
+            "license_path": "codex-marketplace/plugins/wondelai-crossing-the-chasm/LICENSE",
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/wondelai-crossing-the-chasm/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/wondelai-crossing-the-chasm/skills/",
+            "provenance_refs": [
+                "provenance/MARK-68-activity-log.md",
+                "provenance/claude-code-plugins-plus-skills-reference.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wondelai-crossing-the-chasm",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            }
+        },
+        {
+            "name": "wondelai-drive-motivation",
+            "plugin_root": "codex-marketplace/plugins/wondelai-drive-motivation",
+            "plugin_manifest": "codex-marketplace/plugins/wondelai-drive-motivation/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wondelai-drive-motivation/SOURCE.md",
+            "source_ledger": [],
+            "license_path": "codex-marketplace/plugins/wondelai-drive-motivation/LICENSE",
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/wondelai-drive-motivation/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/wondelai-drive-motivation/skills/",
+            "provenance_refs": [
+                "provenance/MARK-68-activity-log.md",
+                "provenance/claude-code-plugins-plus-skills-reference.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wondelai-drive-motivation",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            }
+        },
+        {
+            "name": "wondelai-hundred-million-offers",
+            "plugin_root": "codex-marketplace/plugins/wondelai-hundred-million-offers",
+            "plugin_manifest": "codex-marketplace/plugins/wondelai-hundred-million-offers/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wondelai-hundred-million-offers/SOURCE.md",
+            "source_ledger": [],
+            "license_path": "codex-marketplace/plugins/wondelai-hundred-million-offers/LICENSE",
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/wondelai-hundred-million-offers/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/wondelai-hundred-million-offers/skills/",
+            "provenance_refs": [
+                "provenance/MARK-68-activity-log.md",
+                "provenance/claude-code-plugins-plus-skills-reference.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wondelai-hundred-million-offers",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            }
+        },
+        {
+            "name": "wondelai-influence-psychology",
+            "plugin_root": "codex-marketplace/plugins/wondelai-influence-psychology",
+            "plugin_manifest": "codex-marketplace/plugins/wondelai-influence-psychology/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wondelai-influence-psychology/SOURCE.md",
+            "source_ledger": [],
+            "license_path": "codex-marketplace/plugins/wondelai-influence-psychology/LICENSE",
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/wondelai-influence-psychology/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/wondelai-influence-psychology/skills/",
+            "provenance_refs": [
+                "provenance/MARK-68-activity-log.md",
+                "provenance/claude-code-plugins-plus-skills-reference.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wondelai-influence-psychology",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            }
+        },
+        {
+            "name": "wondelai-jobs-to-be-done",
+            "plugin_root": "codex-marketplace/plugins/wondelai-jobs-to-be-done",
+            "plugin_manifest": "codex-marketplace/plugins/wondelai-jobs-to-be-done/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/wondelai-jobs-to-be-done/SOURCE.md",
+            "source_ledger": [],
+            "license_path": "codex-marketplace/plugins/wondelai-jobs-to-be-done/LICENSE",
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/wondelai-jobs-to-be-done/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/wondelai-jobs-to-be-done/skills/",
+            "provenance_refs": [
+                "provenance/MARK-68-activity-log.md",
+                "provenance/claude-code-plugins-plus-skills-reference.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/wondelai-jobs-to-be-done",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            }
         }
     ]
 }

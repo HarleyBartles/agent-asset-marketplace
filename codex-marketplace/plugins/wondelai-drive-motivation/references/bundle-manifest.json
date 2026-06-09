@@ -1,0 +1,64 @@
+{
+  "bundle_name": "wondelai-drive-motivation",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/business-tools/wondelai-drive-motivation",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/SKILL.md",
+      "local_path": "skills/wondelai-drive-motivation/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
+    }
+  ],
+  "reference_asset_count": 7,
+  "reference_assets": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/applications.md",
+      "local_path": "references/applications.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/autonomy.md",
+      "local_path": "references/autonomy.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/case-studies.md",
+      "local_path": "references/case-studies.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/extrinsic-rewards.md",
+      "local_path": "references/extrinsic-rewards.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/mastery.md",
+      "local_path": "references/mastery.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/purpose.md",
+      "local_path": "references/purpose.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/type-i.md",
+      "local_path": "references/type-i.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    }
+  ]
+}

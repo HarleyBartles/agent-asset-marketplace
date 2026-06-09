@@ -1,19 +1,76 @@
 {
-    "bundle_name":  "wondelai-contagious",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "jeremylongshore/claude-code-plugins-plus-skills",
-    "pinned_commit":  "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
-    "source_root":  "plugins/business-tools/wondelai-contagious",
-    "candidate_count":  1,
-    "imported_count":  1,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "upstream_path":  "plugins/business-tools/wondelai-contagious/SKILL.md",
-                        "local_path":  "skills/wondelai-contagious/SKILL.md",
-                        "import_status":  "imported",
-                        "adaptation_note":  "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
-                    }
-                ]
+  "bundle_name": "wondelai-contagious",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/business-tools/wondelai-contagious",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/SKILL.md",
+      "local_path": "skills/wondelai-contagious/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
+    }
+  ],
+  "reference_asset_count": 9,
+  "reference_assets": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/case-studies.md",
+      "local_path": "references/case-studies.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/emotion.md",
+      "local_path": "references/emotion.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/practical-value.md",
+      "local_path": "references/practical-value.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/public-visibility.md",
+      "local_path": "references/public-visibility.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/social-currency.md",
+      "local_path": "references/social-currency.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/stories-trojan-horse.md",
+      "local_path": "references/stories-trojan-horse.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/triggers.md",
+      "local_path": "references/triggers.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/viral-content-patterns.md",
+      "local_path": "references/viral-content-patterns.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-contagious/references/word-of-mouth.md",
+      "local_path": "references/word-of-mouth.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    }
+  ]
 }

@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai Contagious package as a market-facing
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-contagious
 
 ## Outcome
 
@@ -23,6 +23,22 @@ This bundle packages the upstream Wondelai Contagious package as a market-facing
 ## Imported skills
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-contagious/references/bundle-manifest.json.
+
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 9
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/case-studies.md`
+- `references/emotion.md`
+- `references/practical-value.md`
+- `references/public-visibility.md`
+- `references/social-currency.md`
+- `references/stories-trojan-horse.md`
+- `references/triggers.md`
+- `references/viral-content-patterns.md`
+- `references/word-of-mouth.md`
+
+The bundle ledger records each upstream/local path pairing.
 
 ## Notes
 

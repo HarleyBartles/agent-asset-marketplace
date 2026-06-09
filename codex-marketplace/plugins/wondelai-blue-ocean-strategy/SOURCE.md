@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai Blue Ocean Strategy package as a mark
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-blue-ocean-strategy
 
 ## Outcome
 
@@ -23,6 +23,21 @@ This bundle packages the upstream Wondelai Blue Ocean Strategy package as a mark
 ## Imported skills
 
 The full import ledger is recorded in codex-marketplace/plugins/wondelai-blue-ocean-strategy/references/bundle-manifest.json.
+
+## Imported referenced assets
+
+- Imported referenced Markdown assets: 8
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/blue-ocean-examples.md`
+- `references/errc-grid.md`
+- `references/implementation.md`
+- `references/non-customers.md`
+- `references/sequence.md`
+- `references/six-paths.md`
+- `references/strategy-canvas.md`
+- `references/value-innovation.md`
+
+The bundle ledger records each upstream/local path pairing.
 
 ## Notes
 

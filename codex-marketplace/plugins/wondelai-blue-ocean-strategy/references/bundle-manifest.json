@@ -1,19 +1,70 @@
 {
-    "bundle_name":  "wondelai-blue-ocean-strategy",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "jeremylongshore/claude-code-plugins-plus-skills",
-    "pinned_commit":  "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
-    "source_root":  "plugins/business-tools/wondelai-blue-ocean-strategy",
-    "candidate_count":  1,
-    "imported_count":  1,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "upstream_path":  "plugins/business-tools/wondelai-blue-ocean-strategy/SKILL.md",
-                        "local_path":  "skills/wondelai-blue-ocean-strategy/SKILL.md",
-                        "import_status":  "imported",
-                        "adaptation_note":  "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
-                    }
-                ]
+  "bundle_name": "wondelai-blue-ocean-strategy",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
+  "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
+  "source_root": "plugins/business-tools/wondelai-blue-ocean-strategy",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/SKILL.md",
+      "local_path": "skills/wondelai-blue-ocean-strategy/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
+    }
+  ],
+  "reference_asset_count": 8,
+  "reference_assets": [
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/blue-ocean-examples.md",
+      "local_path": "references/blue-ocean-examples.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/errc-grid.md",
+      "local_path": "references/errc-grid.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/implementation.md",
+      "local_path": "references/implementation.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/non-customers.md",
+      "local_path": "references/non-customers.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/sequence.md",
+      "local_path": "references/sequence.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/six-paths.md",
+      "local_path": "references/six-paths.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/strategy-canvas.md",
+      "local_path": "references/strategy-canvas.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    },
+    {
+      "upstream_path": "plugins/business-tools/wondelai-blue-ocean-strategy/references/value-innovation.md",
+      "local_path": "references/value-innovation.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied the upstream referenced Markdown asset into the local references directory without splitting the package boundary."
+    }
+  ]
 }
