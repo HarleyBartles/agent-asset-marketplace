@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Scan Pack"
+  short_description: "Clean-room security scans, receipts, and report assembly"
+  default_prompt: "Run a clean-room security scan workflow with deterministic receipts, attack-path analysis, and a final markdown report."

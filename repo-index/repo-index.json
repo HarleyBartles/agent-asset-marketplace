@@ -6365,6 +6365,26 @@
             "license_path": "codex-marketplace/plugins/security-ownership-map/LICENSE"
         },
         {
+            "name": "security-scan-pack",
+            "plugin_root": "codex-marketplace/plugins/security-scan-pack",
+            "plugin_manifest": "codex-marketplace/plugins/security-scan-pack/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/security-scan-pack/SOURCE.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": null,
+            "skills_path": "codex-marketplace/plugins/security-scan-pack/skills",
+            "provenance_refs": [
+                "provenance/MARK-72-security-scan-pack.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/security-scan-pack",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/security-scan-pack/LICENSE"
+        },
+        {
             "name": "security-threat-model",
             "plugin_root": "codex-marketplace/plugins/security-threat-model",
             "plugin_manifest": "codex-marketplace/plugins/security-threat-model/.codex-plugin/plugin.json",

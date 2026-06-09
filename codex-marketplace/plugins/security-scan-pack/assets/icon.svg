@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Security Scan Pack">
+  <defs>
+    <linearGradient id="g" x1="12" y1="10" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#134e4a"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="52" height="52" rx="14" fill="url(#g)"/>
+  <path d="M32 14l14 5v10c0 10-6.1 17.8-14 21-7.9-3.2-14-11-14-21V19l14-5z" fill="#f8fafc" opacity=".95"/>
+  <path d="M29 26h6v10h-6z" fill="#0f766e"/>
+  <circle cx="31" cy="40" r="2.5" fill="#0f766e"/>
+  <circle cx="44" cy="42" r="8" fill="none" stroke="#f8fafc" stroke-width="4"/>
+  <path d="M49.5 47.5L56 54" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+</svg>
