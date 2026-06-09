@@ -6198,6 +6198,26 @@
             "license_path": "codex-marketplace/plugins/openai-docs/LICENSE"
         },
         {
+            "name": "openai-developer-pack",
+            "plugin_root": "codex-marketplace/plugins/openai-developer-pack",
+            "plugin_manifest": "codex-marketplace/plugins/openai-developer-pack/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/openai-developer-pack/references/source-map.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": null,
+            "skills_path": "codex-marketplace/plugins/openai-developer-pack/skills",
+            "provenance_refs": [
+                "provenance/MARK-71-openai-developer-pack.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/openai-developer-pack",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/openai-developer-pack/LICENSE"
+        },
+        {
             "name": "pdf",
             "plugin_root": "codex-marketplace/plugins/pdf",
             "plugin_manifest": "codex-marketplace/plugins/pdf/.codex-plugin/plugin.json",
