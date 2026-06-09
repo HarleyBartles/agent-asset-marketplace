@@ -1,0 +1,67 @@
+{
+  "bundle_name": "cloudflare",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/cloudflare",
+  "candidate_count": 9,
+  "imported_count": 9,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/cloudflare/skills/agents-sdk/SKILL.md",
+      "local_path": "skills/agents-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/building-ai-agent-on-cloudflare/SKILL.md",
+      "local_path": "skills/building-ai-agent-on-cloudflare/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/building-mcp-server-on-cloudflare/SKILL.md",
+      "local_path": "skills/building-mcp-server-on-cloudflare/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/cloudflare/SKILL.md",
+      "local_path": "skills/cloudflare/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/durable-objects/SKILL.md",
+      "local_path": "skills/durable-objects/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/sandbox-sdk/SKILL.md",
+      "local_path": "skills/sandbox-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/web-perf/SKILL.md",
+      "local_path": "skills/web-perf/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/workers-best-practices/SKILL.md",
+      "local_path": "skills/workers-best-practices/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/cloudflare/skills/wrangler/SKILL.md",
+      "local_path": "skills/wrangler/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

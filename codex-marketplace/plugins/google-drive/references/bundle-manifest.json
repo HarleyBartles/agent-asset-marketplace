@@ -1,0 +1,43 @@
+{
+  "bundle_name": "google-drive",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/google-drive",
+  "candidate_count": 5,
+  "imported_count": 5,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/google-drive/skills/google-docs/SKILL.md",
+      "local_path": "skills/google-docs/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-drive/skills/google-drive/SKILL.md",
+      "local_path": "skills/google-drive/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-drive/skills/google-drive-comments/SKILL.md",
+      "local_path": "skills/google-drive-comments/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-drive/skills/google-sheets/SKILL.md",
+      "local_path": "skills/google-sheets/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-drive/skills/google-slides/SKILL.md",
+      "local_path": "skills/google-slides/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

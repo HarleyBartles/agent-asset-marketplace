@@ -1,0 +1,85 @@
+{
+  "bundle_name": "netlify",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/netlify",
+  "candidate_count": 12,
+  "imported_count": 12,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-ai-gateway/SKILL.md",
+      "local_path": "skills/netlify-ai-gateway/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-blobs/SKILL.md",
+      "local_path": "skills/netlify-blobs/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-caching/SKILL.md",
+      "local_path": "skills/netlify-caching/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-cli-and-deploy/SKILL.md",
+      "local_path": "skills/netlify-cli-and-deploy/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-config/SKILL.md",
+      "local_path": "skills/netlify-config/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-deploy/SKILL.md",
+      "local_path": "skills/netlify-deploy/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-edge-functions/SKILL.md",
+      "local_path": "skills/netlify-edge-functions/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-forms/SKILL.md",
+      "local_path": "skills/netlify-forms/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-frameworks/SKILL.md",
+      "local_path": "skills/netlify-frameworks/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-functions/SKILL.md",
+      "local_path": "skills/netlify-functions/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-identity/SKILL.md",
+      "local_path": "skills/netlify-identity/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/netlify/skills/netlify-image-cdn/SKILL.md",
+      "local_path": "skills/netlify-image-cdn/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

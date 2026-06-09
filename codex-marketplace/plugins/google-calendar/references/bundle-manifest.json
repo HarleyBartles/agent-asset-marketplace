@@ -1,0 +1,43 @@
+{
+  "bundle_name": "google-calendar",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/google-calendar",
+  "candidate_count": 5,
+  "imported_count": 5,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/google-calendar/skills/google-calendar/SKILL.md",
+      "local_path": "skills/google-calendar/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-calendar/skills/google-calendar-daily-brief/SKILL.md",
+      "local_path": "skills/google-calendar-daily-brief/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-calendar/skills/google-calendar-free-up-time/SKILL.md",
+      "local_path": "skills/google-calendar-free-up-time/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-calendar/skills/google-calendar-group-scheduler/SKILL.md",
+      "local_path": "skills/google-calendar-group-scheduler/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/google-calendar/skills/google-calendar-meeting-prep/SKILL.md",
+      "local_path": "skills/google-calendar-meeting-prep/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "bundle_name": "circleci",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/circleci",
+  "candidate_count": 4,
+  "imported_count": 4,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/circleci/skills/builds/SKILL.md",
+      "local_path": "skills/builds/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/circleci/skills/chunk/SKILL.md",
+      "local_path": "skills/chunk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/circleci/skills/cli/SKILL.md",
+      "local_path": "skills/cli/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/circleci/skills/config/SKILL.md",
+      "local_path": "skills/config/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

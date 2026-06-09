@@ -1,0 +1,25 @@
+{
+  "bundle_name": "moody-s",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/moody-s",
+  "candidate_count": 2,
+  "imported_count": 2,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/moody-s/skills/moody-s-company-analysis/SKILL.md",
+      "local_path": "skills/moody-s-company-analysis/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/moody-s/skills/moody-s-explore-mcp/SKILL.md",
+      "local_path": "skills/moody-s-explore-mcp/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "bundle_name": "zoom",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/zoom",
+  "candidate_count": 27,
+  "imported_count": 27,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/zoom/skills/build-zoom-bot/SKILL.md",
+      "local_path": "skills/build-zoom-bot/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/build-zoom-meeting-app/SKILL.md",
+      "local_path": "skills/build-zoom-meeting-app/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/choose-zoom-approach/SKILL.md",
+      "local_path": "skills/choose-zoom-approach/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/cobrowse-sdk/SKILL.md",
+      "local_path": "skills/cobrowse-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/contact-center/SKILL.md",
+      "local_path": "skills/contact-center/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/debug-zoom/SKILL.md",
+      "local_path": "skills/debug-zoom/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/debug-zoom-integration/SKILL.md",
+      "local_path": "skills/debug-zoom-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/general/SKILL.md",
+      "local_path": "skills/general/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/meeting-sdk/SKILL.md",
+      "local_path": "skills/meeting-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/oauth/SKILL.md",
+      "local_path": "skills/oauth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/phone/SKILL.md",
+      "local_path": "skills/phone/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/plan-zoom-integration/SKILL.md",
+      "local_path": "skills/plan-zoom-integration/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/plan-zoom-product/SKILL.md",
+      "local_path": "skills/plan-zoom-product/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/probe-sdk/SKILL.md",
+      "local_path": "skills/probe-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/rest-api/SKILL.md",
+      "local_path": "skills/rest-api/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/rivet-sdk/SKILL.md",
+      "local_path": "skills/rivet-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/rtms/SKILL.md",
+      "local_path": "skills/rtms/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/scribe/SKILL.md",
+      "local_path": "skills/scribe/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/setup-zoom-oauth/SKILL.md",
+      "local_path": "skills/setup-zoom-oauth/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/start/SKILL.md",
+      "local_path": "skills/start/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/team-chat/SKILL.md",
+      "local_path": "skills/team-chat/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/ui-toolkit/SKILL.md",
+      "local_path": "skills/ui-toolkit/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/video-sdk/SKILL.md",
+      "local_path": "skills/video-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/virtual-agent/SKILL.md",
+      "local_path": "skills/virtual-agent/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/webhooks/SKILL.md",
+      "local_path": "skills/webhooks/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/websockets/SKILL.md",
+      "local_path": "skills/websockets/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/zoom/skills/zoom-apps-sdk/SKILL.md",
+      "local_path": "skills/zoom-apps-sdk/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

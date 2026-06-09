@@ -89,6 +89,37 @@ def _decision_structure(record: dict[str, object]) -> dict[str, object]:
     return {key: record.get(key, "") for key in keys}
 
 
+def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
+    if upstream_repo == "jeremylongshore/claude-code-plugins-plus-skills":
+        if pinned_commit != "e773501f1dfb409fc71fccdaf6ac2898fedf66d6":
+            raise ValueError("Unexpected pinned commit for jeremylongshore vendor snapshot")
+        return UPSTREAM_VENDOR_ROOT
+    if upstream_repo == "openai/plugins":
+        return ROOT / "sources/vendor/openai/plugins" / pinned_commit
+    if upstream_repo == "MagicPathAI/agent-skills":
+        if pinned_commit != "5e08ac90a5050a52abe4c28cbb700e989c111767":
+            raise ValueError("Unexpected pinned commit for MagicPath vendor snapshot")
+        return ROOT / "sources/vendor/MagicPathAI/agent-skills" / pinned_commit
+    raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
+
+
+def _validate_openai_blocked_roots_absent(vendor_root: Path) -> None:
+    inventory_path = ROOT / "provenance/MARK-69-openai-plugins-inventory.json"
+    if not inventory_path.exists():
+        raise FileNotFoundError(inventory_path)
+    inventory = load_json(inventory_path)
+    blocked_entries = [
+        entry
+        for entry in inventory.get("entries", [])
+        if entry.get("import_status") == "blocked" and isinstance(entry.get("upstream_path"), str)
+    ]
+    for entry in blocked_entries:
+        upstream_path = entry["upstream_path"]
+        check = vendor_root / upstream_path
+        if check.exists():
+            raise ValueError(f"Blocked upstream path remains in vendor custody: {upstream_path}")
+
+
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
     expected = build_marketplace_manifest(plugin_manifests)
     if registry != expected:
@@ -199,14 +230,19 @@ def validate_skill_bundle_manifest(
         raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("upstream_repo") != "jeremylongshore/claude-code-plugins-plus-skills":
+    upstream_repo = bundle_manifest.get("upstream_repo")
+    if not upstream_repo or not isinstance(upstream_repo, str):
         raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
-    if bundle_manifest.get("pinned_commit") != "e773501f1dfb409fc71fccdaf6ac2898fedf66d6":
+    pinned_commit = bundle_manifest.get("pinned_commit")
+    if not pinned_commit or not isinstance(pinned_commit, str):
         raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
+    vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
+    if upstream_repo == "openai/plugins":
+        _validate_openai_blocked_roots_absent(vendor_root)
     source_root = bundle_manifest.get("source_root")
     if not source_root or not isinstance(source_root, str):
         raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
-    check_path_exists(UPSTREAM_VENDOR_ROOT / source_root)
+    check_path_exists(vendor_root / source_root)
 
     entries = bundle_manifest.get("entries", [])
     if bundle_manifest.get("candidate_count") != len(entries):
@@ -242,7 +278,7 @@ def validate_skill_bundle_manifest(
         upstream_path = entry.get("upstream_path")
         if not upstream_path or not isinstance(upstream_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing an upstream_path")
-        check_path_exists(UPSTREAM_VENDOR_ROOT / upstream_path)
+        check_path_exists(vendor_root / upstream_path)
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
 

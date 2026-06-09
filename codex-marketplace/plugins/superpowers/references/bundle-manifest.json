@@ -1,0 +1,97 @@
+{
+  "bundle_name": "superpowers",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/superpowers",
+  "candidate_count": 14,
+  "imported_count": 14,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/superpowers/skills/brainstorming/SKILL.md",
+      "local_path": "skills/brainstorming/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/dispatching-parallel-agents/SKILL.md",
+      "local_path": "skills/dispatching-parallel-agents/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/executing-plans/SKILL.md",
+      "local_path": "skills/executing-plans/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/finishing-a-development-branch/SKILL.md",
+      "local_path": "skills/finishing-a-development-branch/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/receiving-code-review/SKILL.md",
+      "local_path": "skills/receiving-code-review/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/requesting-code-review/SKILL.md",
+      "local_path": "skills/requesting-code-review/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/subagent-driven-development/SKILL.md",
+      "local_path": "skills/subagent-driven-development/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/systematic-debugging/SKILL.md",
+      "local_path": "skills/systematic-debugging/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/test-driven-development/SKILL.md",
+      "local_path": "skills/test-driven-development/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/using-git-worktrees/SKILL.md",
+      "local_path": "skills/using-git-worktrees/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/using-superpowers/SKILL.md",
+      "local_path": "skills/using-superpowers/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/verification-before-completion/SKILL.md",
+      "local_path": "skills/verification-before-completion/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/writing-plans/SKILL.md",
+      "local_path": "skills/writing-plans/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/superpowers/skills/writing-skills/SKILL.md",
+      "local_path": "skills/writing-skills/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

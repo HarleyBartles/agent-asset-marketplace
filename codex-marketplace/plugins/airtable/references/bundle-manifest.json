@@ -1,0 +1,31 @@
+{
+  "bundle_name": "airtable",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/airtable",
+  "candidate_count": 3,
+  "imported_count": 3,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/airtable/skills/airtable-cli/SKILL.md",
+      "local_path": "skills/airtable-cli/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/airtable/skills/airtable-filters/SKILL.md",
+      "local_path": "skills/airtable-filters/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/airtable/skills/airtable-overview/SKILL.md",
+      "local_path": "skills/airtable-overview/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

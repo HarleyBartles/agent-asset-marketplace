@@ -1,0 +1,19 @@
+{
+  "bundle_name": "brighthire",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/brighthire",
+  "candidate_count": 1,
+  "imported_count": 1,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/brighthire/skills/brighthire/SKILL.md",
+      "local_path": "skills/brighthire/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}
