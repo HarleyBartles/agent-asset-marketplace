@@ -1,0 +1,32 @@
+{
+  "name": "notion-meeting-intelligence",
+  "version": "0.1.0",
+  "description": "Prepare meeting materials with Notion context and Codex research; use when gathering context, drafting agendas/pre-reads, and tailoring materials to attendees.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/skills",
+  "repository": "https://github.com/openai/skills",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "notion-meeting-intelligence"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Meeting Intelligence",
+    "shortDescription": "Prep meetings with Notion context and tailored agendas",
+    "longDescription": "Prepare meeting materials with Notion context and Codex research; use when gathering context, drafting agendas/pre-reads, and tailoring materials to attendees.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/openai/skills",
+    "defaultPrompt": [
+      "Prep meetings with Notion context and tailored agendas"
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

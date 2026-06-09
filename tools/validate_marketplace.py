@@ -96,6 +96,8 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         return UPSTREAM_VENDOR_ROOT
     if upstream_repo == "openai/plugins":
         return ROOT / "sources/vendor/openai/plugins" / pinned_commit
+    if upstream_repo == "openai/skills":
+        return ROOT / "sources/vendor/openai/skills" / pinned_commit
     if upstream_repo == "MagicPathAI/agent-skills":
         if pinned_commit != "5e08ac90a5050a52abe4c28cbb700e989c111767":
             raise ValueError("Unexpected pinned commit for MagicPath vendor snapshot")

@@ -1,0 +1,10 @@
+License notice for Create Design System Rules
+
+Upstream license declaration: MIT
+Upstream author: OpenAI
+Upstream repo: https://github.com/openai/skills.git
+Upstream commit: a8924c2a35cfa290458852c4fad17c9133054c2e
+Upstream path: skills/.curated/figma-create-design-system-rules
+
+The detailed upstream source snapshot and any nested license files are
+preserved under `sources/vendor/openai/skills/a8924c2a35cfa290458852c4fad17c9133054c2e/`.
