@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle packages the upstream Wondelai Drive Motivation package as a market-facing Codex plugin.
 
@@ -22,7 +22,7 @@ This bundle packages the upstream Wondelai Drive Motivation package as a market-
 
 ## Imported skills
 
-The full import ledger is recorded in eferences/bundle-manifest.json.
+The full import ledger is recorded in codex-marketplace/plugins/wondelai-drive-motivation/references/bundle-manifest.json.
 
 ## Notes
 

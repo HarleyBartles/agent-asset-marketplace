@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai Contagious package as a market-facing
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-contagious
 
 ## Outcome
 

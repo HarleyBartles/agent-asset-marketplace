@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle packages the upstream Wondelai Hundred Million Offers package as a market-facing Codex plugin.
 
@@ -22,7 +22,7 @@ This bundle packages the upstream Wondelai Hundred Million Offers package as a m
 
 ## Imported skills
 
-The full import ledger is recorded in eferences/bundle-manifest.json.
+The full import ledger is recorded in codex-marketplace/plugins/wondelai-hundred-million-offers/references/bundle-manifest.json.
 
 ## Notes
 

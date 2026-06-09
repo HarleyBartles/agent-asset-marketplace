@@ -1,4 +1,4 @@
-﻿# Wondelai Jobs to Be Done
+# Wondelai Jobs to Be Done
 
 This plugin package exposes the upstream standalone Wondelai Jobs to Be Done package as a Codex marketplace asset.
 
@@ -6,7 +6,7 @@ This plugin package exposes the upstream standalone Wondelai Jobs to Be Done pac
 
 - 1 imported skill(s) under skills/
 - provenance and source mapping in SOURCE.md
-- bundle inventory in eferences/bundle-manifest.json
+- bundle inventory in references/bundle-manifest.json
 
 ## Provenance
 

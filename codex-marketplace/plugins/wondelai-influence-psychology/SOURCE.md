@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle packages the upstream Wondelai Influence Psychology package as a market-facing Codex plugin.
 
@@ -22,7 +22,7 @@ This bundle packages the upstream Wondelai Influence Psychology package as a mar
 
 ## Imported skills
 
-The full import ledger is recorded in eferences/bundle-manifest.json.
+The full import ledger is recorded in codex-marketplace/plugins/wondelai-influence-psychology/references/bundle-manifest.json.
 
 ## Notes
 

@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai CRO Methodology package as a market-f
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-cro-methodology
 
 ## Outcome
 

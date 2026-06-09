@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle packages the upstream Wondelai Crossing the Chasm package as a market-facing Codex plugin.
 
@@ -22,7 +22,7 @@ This bundle packages the upstream Wondelai Crossing the Chasm package as a marke
 
 ## Imported skills
 
-The full import ledger is recorded in eferences/bundle-manifest.json.
+The full import ledger is recorded in codex-marketplace/plugins/wondelai-crossing-the-chasm/references/bundle-manifest.json.
 
 ## Notes
 

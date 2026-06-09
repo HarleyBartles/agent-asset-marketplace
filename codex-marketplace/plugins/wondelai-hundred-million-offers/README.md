@@ -1,4 +1,4 @@
-﻿# Wondelai Hundred Million Offers
+# Wondelai Hundred Million Offers
 
 This plugin package exposes the upstream standalone Wondelai Hundred Million Offers package as a Codex marketplace asset.
 
@@ -6,7 +6,7 @@ This plugin package exposes the upstream standalone Wondelai Hundred Million Off
 
 - 1 imported skill(s) under skills/
 - provenance and source mapping in SOURCE.md
-- bundle inventory in eferences/bundle-manifest.json
+- bundle inventory in references/bundle-manifest.json
 
 ## Provenance
 

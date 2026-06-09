@@ -1,4 +1,4 @@
-﻿# Wondelai Crossing the Chasm
+# Wondelai Crossing the Chasm
 
 This plugin package exposes the upstream standalone Wondelai Crossing the Chasm package as a Codex marketplace asset.
 
@@ -6,7 +6,7 @@ This plugin package exposes the upstream standalone Wondelai Crossing the Chasm 
 
 - 1 imported skill(s) under skills/
 - provenance and source mapping in SOURCE.md
-- bundle inventory in eferences/bundle-manifest.json
+- bundle inventory in references/bundle-manifest.json
 
 ## Provenance
 

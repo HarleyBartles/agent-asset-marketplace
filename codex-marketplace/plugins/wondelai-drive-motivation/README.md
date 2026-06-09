@@ -1,4 +1,4 @@
-﻿# Wondelai Drive Motivation
+# Wondelai Drive Motivation
 
 This plugin package exposes the upstream standalone Wondelai Drive Motivation package as a Codex marketplace asset.
 
@@ -6,7 +6,7 @@ This plugin package exposes the upstream standalone Wondelai Drive Motivation pa
 
 - 1 imported skill(s) under skills/
 - provenance and source mapping in SOURCE.md
-- bundle inventory in eferences/bundle-manifest.json
+- bundle inventory in references/bundle-manifest.json
 
 ## Provenance
 

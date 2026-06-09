@@ -11,7 +11,7 @@ This bundle packages the upstream Wondelai Blue Ocean Strategy package as a mark
 
 ## Source roots inspected
 
-- $(System.Collections.Specialized.OrderedDictionary.SourceRoot)
+- plugins/business-tools/wondelai-blue-ocean-strategy
 
 ## Outcome
 
