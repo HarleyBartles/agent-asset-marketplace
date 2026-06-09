@@ -3904,23 +3904,35 @@
       },
       "category": "Productivity"
     },
-    {
-      "name": "webflow-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/webflow-pack"
+      {
+        "name": "webflow-pack",
+        "source": {
+          "source": "local",
+          "path": "./codex-marketplace/plugins/webflow-pack"
+        },
+        "policy": {
+          "installation": "AVAILABLE",
+          "authentication": "ON_INSTALL"
+        },
+        "category": "Productivity"
       },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+      {
+        "name": "wild-bunch-project-pack",
+        "source": {
+          "source": "local",
+          "path": "./codex-marketplace/plugins/wild-bunch-project-pack"
+        },
+        "policy": {
+          "installation": "AVAILABLE",
+          "authentication": "ON_INSTALL"
+        },
+        "category": "Productivity"
       },
-      "category": "Productivity"
-    },
-    {
-      "name": "windsor-ai",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/windsor-ai"
+      {
+        "name": "windsor-ai",
+        "source": {
+          "source": "local",
+          "path": "./codex-marketplace/plugins/windsor-ai"
       },
       "policy": {
         "installation": "AVAILABLE",

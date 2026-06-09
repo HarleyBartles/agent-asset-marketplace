@@ -43,3 +43,6 @@ addendum.
 For the MARK-62 Cursor, Cohere, Databricks, and Fly.io continuation tranche,
 see `MARK-62-activity-log.md` and the `claude-code-plugins-plus-skills-reference.md`
 addendum.
+
+For the MARK-73 Wild Bunch project pack discovery note, see
+`MARK-73-wild-bunch-project-pack.md`.
