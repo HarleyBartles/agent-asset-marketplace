@@ -18,3 +18,4 @@ license files present in the copied upstream tree.
 - `plugins/magicpath`: upstream plugin has no redistributable license declaration
 - `plugins/openai-developers`: proprietary upstream license is not re-vendorable into the marketplace
 
+These blocked roots are excluded from the vendor snapshot tree and are kept only in provenance records.

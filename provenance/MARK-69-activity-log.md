@@ -27,6 +27,7 @@
 
 ## Notes
 
-- The upstream source snapshot was copied into vendor custody under the pinned commit.
+- The upstream source snapshot was copied into vendor custody under the pinned commit, then the six blocked roots were removed from `sources/vendor/openai/plugins/c33199897758cab145bb7fdab1ca8fb1cbd9de50/plugins/` so they remain provenance-only.
 - Marketplace-facing copies were normalized only where required for registry compatibility.
 - The machine-readable inventory is stored in `provenance/MARK-69-openai-plugins-inventory.json`.
+- Validation enforces that the blocked roots do not remain in vendor custody.

@@ -99,6 +99,23 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
+def _validate_openai_blocked_roots_absent(vendor_root: Path) -> None:
+    inventory_path = ROOT / "provenance/MARK-69-openai-plugins-inventory.json"
+    if not inventory_path.exists():
+        raise FileNotFoundError(inventory_path)
+    inventory = load_json(inventory_path)
+    blocked_entries = [
+        entry
+        for entry in inventory.get("entries", [])
+        if entry.get("import_status") == "blocked" and isinstance(entry.get("upstream_path"), str)
+    ]
+    for entry in blocked_entries:
+        upstream_path = entry["upstream_path"]
+        check = vendor_root / upstream_path
+        if check.exists():
+            raise ValueError(f"Blocked upstream path remains in vendor custody: {upstream_path}")
+
+
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
     expected = build_marketplace_manifest(plugin_manifests)
     if registry != expected:
@@ -216,6 +233,8 @@ def validate_skill_bundle_manifest(
     if not pinned_commit or not isinstance(pinned_commit, str):
         raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
     vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
+    if upstream_repo == "openai/plugins":
+        _validate_openai_blocked_roots_absent(vendor_root)
     source_root = bundle_manifest.get("source_root")
     if not source_root or not isinstance(source_root, str):
         raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")

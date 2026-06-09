@@ -11,7 +11,7 @@ This directory is the pinned vendor custody snapshot for the upstream
 
 ## Snapshot contents
 
-- Full upstream root tree, excluding the `.git` metadata directory.
+- Full upstream root tree, excluding the `.git` metadata directory and the blocked roots listed in `NOTICE.md`.
 - Marketplace inventory recorded in `provenance/MARK-69-openai-plugins-inventory.json`.
 - Marketplace-facing copies were published under `codex-marketplace/plugins/`.
 
@@ -20,3 +20,4 @@ This directory is the pinned vendor custody snapshot for the upstream
 - Candidate roots inventoried: `174`
 - Marketplace copies published: `168`
 - Blocked roots: `6`
+- Blocked roots are excluded from vendor custody and recorded only as provenance evidence.

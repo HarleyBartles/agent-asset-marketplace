@@ -6,6 +6,7 @@
   "candidate_count": 174,
   "copied_count": 168,
   "blocked_count": 6,
+  "blocked_roots_excluded_from_vendor_custody": true,
   "entries": [
     {
       "upstream_path": "plugins/actively",
