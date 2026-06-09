@@ -1,0 +1,91 @@
+{
+  "bundle_name": "expo",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/expo",
+  "candidate_count": 13,
+  "imported_count": 13,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/expo/skills/building-native-ui/SKILL.md",
+      "local_path": "skills/building-native-ui/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/codex-expo-run-actions/SKILL.md",
+      "local_path": "skills/codex-expo-run-actions/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-api-routes/SKILL.md",
+      "local_path": "skills/expo-api-routes/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-cicd-workflows/SKILL.md",
+      "local_path": "skills/expo-cicd-workflows/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-deployment/SKILL.md",
+      "local_path": "skills/expo-deployment/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-dev-client/SKILL.md",
+      "local_path": "skills/expo-dev-client/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-module/SKILL.md",
+      "local_path": "skills/expo-module/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-tailwind-setup/SKILL.md",
+      "local_path": "skills/expo-tailwind-setup/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-ui-jetpack-compose/SKILL.md",
+      "local_path": "skills/expo-ui-jetpack-compose/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/expo-ui-swift-ui/SKILL.md",
+      "local_path": "skills/expo-ui-swift-ui/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/native-data-fetching/SKILL.md",
+      "local_path": "skills/native-data-fetching/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/upgrading-expo/SKILL.md",
+      "local_path": "skills/upgrading-expo/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/expo/skills/use-dom/SKILL.md",
+      "local_path": "skills/use-dom/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

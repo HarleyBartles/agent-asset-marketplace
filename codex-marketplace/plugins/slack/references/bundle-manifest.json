@@ -1,0 +1,49 @@
+{
+  "bundle_name": "slack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "openai/plugins",
+  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
+  "source_root": "plugins/slack",
+  "candidate_count": 6,
+  "imported_count": 6,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "upstream_path": "plugins/slack/skills/slack/SKILL.md",
+      "local_path": "skills/slack/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/slack/skills/slack-channel-summarization/SKILL.md",
+      "local_path": "skills/slack-channel-summarization/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/slack/skills/slack-daily-digest/SKILL.md",
+      "local_path": "skills/slack-daily-digest/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/slack/skills/slack-notification-triage/SKILL.md",
+      "local_path": "skills/slack-notification-triage/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/slack/skills/slack-outgoing-message/SKILL.md",
+      "local_path": "skills/slack-outgoing-message/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    },
+    {
+      "upstream_path": "plugins/slack/skills/slack-reply-drafting/SKILL.md",
+      "local_path": "skills/slack-reply-drafting/SKILL.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+License notice for Coderabbit
+
+Upstream license declaration: MIT
+Upstream author: CodeRabbit AI
+Upstream repo: https://github.com/openai/plugins.git
+Upstream commit: c33199897758cab145bb7fdab1ca8fb1cbd9de50
+Upstream path: plugins/coderabbit
+
+The detailed upstream source snapshot and any nested license files are
+preserved under `sources/vendor/openai/plugins/c33199897758cab145bb7fdab1ca8fb1cbd9de50/`.

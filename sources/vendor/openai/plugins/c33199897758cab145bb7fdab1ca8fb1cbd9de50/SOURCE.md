@@ -1,0 +1,22 @@
+# Source
+
+This directory is the pinned vendor custody snapshot for the upstream
+`openai/plugins` repository.
+
+## Upstream basis
+
+- Repo: `openai/plugins`
+- URL: <https://github.com/openai/plugins.git>
+- Pinned commit: `c33199897758cab145bb7fdab1ca8fb1cbd9de50`
+
+## Snapshot contents
+
+- Full upstream root tree, excluding the `.git` metadata directory.
+- Marketplace inventory recorded in `provenance/MARK-69-openai-plugins-inventory.json`.
+- Marketplace-facing copies were published under `codex-marketplace/plugins/`.
+
+## Outcome
+
+- Candidate roots inventoried: `174`
+- Marketplace copies published: `168`
+- Blocked roots: `6`
