@@ -1,0 +1,15 @@
+License notice for OpenAI Developer Pack
+
+This plugin root is original clean-room work for this repository.
+
+Blocked upstream advisory root:
+- `openai/plugins/plugins/openai-developers`
+
+Permitted reference families consulted while designing the pack:
+- OpenAI API docs and developer docs pages
+- `openai/openai-agents-python` (MIT)
+- `openai/openai-agents-js` (MIT)
+- `openai/openai-cookbook` (MIT)
+
+No file from the proprietary upstream root was copied into this pack.
+
