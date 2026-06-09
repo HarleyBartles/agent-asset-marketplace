@@ -27,12 +27,13 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-cro-met
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 6
-- `COPYWRITING.md`
-- `funnel-analysis.md`
-- `OBJECTIONS.md`
-- `PERSUASION.md`
-- `RESEARCH.md`
-- `testing-methodology.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/COPYWRITING.md`
+- `references/funnel-analysis.md`
+- `references/OBJECTIONS.md`
+- `references/PERSUASION.md`
+- `references/RESEARCH.md`
+- `references/testing-methodology.md`
 
 The bundle ledger records each upstream/local path pairing.
 

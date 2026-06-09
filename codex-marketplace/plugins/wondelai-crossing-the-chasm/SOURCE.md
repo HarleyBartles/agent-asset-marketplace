@@ -27,14 +27,15 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-crossin
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 8
-- `b2b-saas.md`
-- `beachhead-selection.md`
-- `buyer-segments.md`
-- `case-studies.md`
-- `expansion.md`
-- `go-to-market.md`
-- `positioning.md`
-- `whole-product.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/b2b-saas.md`
+- `references/beachhead-selection.md`
+- `references/buyer-segments.md`
+- `references/case-studies.md`
+- `references/expansion.md`
+- `references/go-to-market.md`
+- `references/positioning.md`
+- `references/whole-product.md`
 
 The bundle ledger records each upstream/local path pairing.
 

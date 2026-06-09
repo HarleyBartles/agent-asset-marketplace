@@ -27,14 +27,15 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-blue-oc
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 8
-- `blue-ocean-examples.md`
-- `errc-grid.md`
-- `implementation.md`
-- `non-customers.md`
-- `sequence.md`
-- `six-paths.md`
-- `strategy-canvas.md`
-- `value-innovation.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/blue-ocean-examples.md`
+- `references/errc-grid.md`
+- `references/implementation.md`
+- `references/non-customers.md`
+- `references/sequence.md`
+- `references/six-paths.md`
+- `references/strategy-canvas.md`
+- `references/value-innovation.md`
 
 The bundle ledger records each upstream/local path pairing.
 

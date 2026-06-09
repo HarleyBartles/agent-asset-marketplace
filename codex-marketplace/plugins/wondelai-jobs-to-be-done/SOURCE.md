@@ -27,11 +27,12 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-jobs-to
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 5
-- `case-studies.md`
-- `competitive-strategy.md`
-- `diagnostics.md`
-- `innovation-process.md`
-- `organizational-change.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/case-studies.md`
+- `references/competitive-strategy.md`
+- `references/diagnostics.md`
+- `references/innovation-process.md`
+- `references/organizational-change.md`
 
 The bundle ledger records each upstream/local path pairing.
 

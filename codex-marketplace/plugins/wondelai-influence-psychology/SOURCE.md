@@ -27,16 +27,17 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-influen
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 10
-- `authority.md`
-- `case-studies.md`
-- `commitment-consistency.md`
-- `copywriting.md`
-- `ethics.md`
-- `liking.md`
-- `reciprocity.md`
-- `scarcity.md`
-- `social-proof.md`
-- `unity.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/authority.md`
+- `references/case-studies.md`
+- `references/commitment-consistency.md`
+- `references/copywriting.md`
+- `references/ethics.md`
+- `references/liking.md`
+- `references/reciprocity.md`
+- `references/scarcity.md`
+- `references/social-proof.md`
+- `references/unity.md`
 
 The bundle ledger records each upstream/local path pairing.
 

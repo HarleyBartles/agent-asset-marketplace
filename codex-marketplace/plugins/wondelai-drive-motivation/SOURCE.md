@@ -27,13 +27,14 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-drive-m
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 7
-- `applications.md`
-- `autonomy.md`
-- `case-studies.md`
-- `extrinsic-rewards.md`
-- `mastery.md`
-- `purpose.md`
-- `type-i.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/applications.md`
+- `references/autonomy.md`
+- `references/case-studies.md`
+- `references/extrinsic-rewards.md`
+- `references/mastery.md`
+- `references/purpose.md`
+- `references/type-i.md`
 
 The bundle ledger records each upstream/local path pairing.
 

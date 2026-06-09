@@ -27,15 +27,16 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-contagi
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 9
-- `case-studies.md`
-- `emotion.md`
-- `practical-value.md`
-- `public-visibility.md`
-- `social-currency.md`
-- `stories-trojan-horse.md`
-- `triggers.md`
-- `viral-content-patterns.md`
-- `word-of-mouth.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/case-studies.md`
+- `references/emotion.md`
+- `references/practical-value.md`
+- `references/public-visibility.md`
+- `references/social-currency.md`
+- `references/stories-trojan-horse.md`
+- `references/triggers.md`
+- `references/viral-content-patterns.md`
+- `references/word-of-mouth.md`
 
 The bundle ledger records each upstream/local path pairing.
 

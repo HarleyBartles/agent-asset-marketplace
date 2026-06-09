@@ -27,16 +27,17 @@ The full import ledger is recorded in codex-marketplace/plugins/wondelai-hundred
 ## Imported referenced assets
 
 - Imported referenced Markdown assets: 10
-- `bonuses-stacking.md`
-- `case-studies.md`
-- `grand-slam-offers.md`
-- `guarantees.md`
-- `naming-offers.md`
-- `offer-creation-checklist.md`
-- `pricing-strategy.md`
-- `scarcity-urgency.md`
-- `starving-crowd.md`
-- `value-equation.md`
+- Tracked in `reference_assets` within `references/bundle-manifest.json`
+- `references/bonuses-stacking.md`
+- `references/case-studies.md`
+- `references/grand-slam-offers.md`
+- `references/guarantees.md`
+- `references/naming-offers.md`
+- `references/offer-creation-checklist.md`
+- `references/pricing-strategy.md`
+- `references/scarcity-urgency.md`
+- `references/starving-crowd.md`
+- `references/value-equation.md`
 
 The bundle ledger records each upstream/local path pairing.
 

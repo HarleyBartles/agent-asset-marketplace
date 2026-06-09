@@ -4,8 +4,8 @@
   "upstream_repo": "jeremylongshore/claude-code-plugins-plus-skills",
   "pinned_commit": "e773501f1dfb409fc71fccdaf6ac2898fedf66d6",
   "source_root": "plugins/business-tools/wondelai-drive-motivation",
-  "candidate_count": 8,
-  "imported_count": 8,
+  "candidate_count": 1,
+  "imported_count": 1,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -14,7 +14,10 @@
       "local_path": "skills/wondelai-drive-motivation/SKILL.md",
       "import_status": "imported",
       "adaptation_note": "Copied the upstream root SKILL.md into a local skills projection without splitting the package boundary."
-    },
+    }
+  ],
+  "reference_asset_count": 7,
+  "reference_assets": [
     {
       "upstream_path": "plugins/business-tools/wondelai-drive-motivation/references/applications.md",
       "local_path": "references/applications.md",
