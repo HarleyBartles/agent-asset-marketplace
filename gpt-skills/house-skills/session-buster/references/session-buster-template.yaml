@@ -3,12 +3,12 @@ session_buster:
   generated_by: "GPT"
   date_context: ""
   mandatory_ingress: >
-    Process this handoff with session-buster-v0.2-ingress after any project bootstrap and before acting on next-task fields.
+    Process this handoff with session-buster-ingress after any project bootstrap and before acting on next-task fields.
     Treat the block as fallback continuity until partitioned into verified, fallback-only, unverified, unavailable,
     contradicted, and blocked state.
   suggested_next_session_name: ""
   continuity_mode:
-    canonical_surface: "session-buster-v0.2"
+    canonical_surface: "session-buster"
     mode: "create"
     source_buster_or_handoff_id: ""
     created_from: "current_session"

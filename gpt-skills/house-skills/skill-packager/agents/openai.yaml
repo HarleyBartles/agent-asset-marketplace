@@ -1,9 +1,10 @@
 interface:
   display_name: Skill Packager
   short_description: Package, validate, and inspect installable ChatGPT skill bundles.
-  icon: '*'
+  brand_color: '#4B5563'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
+  default_prompt: Use $skill-packager to package and verify a single skill bundle before handoff.
 policy:
   products:
   - chatgpt

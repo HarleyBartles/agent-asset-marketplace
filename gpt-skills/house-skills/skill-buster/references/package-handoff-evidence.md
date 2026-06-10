@@ -7,7 +7,7 @@ Use this reference before presenting any installable `skill.zip` link or when re
 A valid handoff requires observable evidence in order:
 
 ```text
-authored_by_skill_creator -> validated_by_skill_validator -> machine-written package-evidence.json -> packaged_by_skill_packager summary -> skill-buster-v0.1 handoff
+authored_by_skill_creator -> validated_by_skill_validator -> machine-written package-evidence.json -> packaged_by_skill_packager summary -> skill-buster handoff
 ```
 
 The stack evidence must name the same `target_skill`, the same staged source path, and the exact archive path that will be linked. Prose is never enough.

@@ -27,7 +27,7 @@ Do not use this skill as the content author. Use skill creation/update guidance 
 A queue item cannot be handed off unless the evidence chain exists for the same skill and same staged source path:
 
 ```text
-authored_by_skill_creator -> validated_by_skill_validator -> package-evidence.json -> packaged_by_skill_packager -> skill-buster-v0.1 handoff
+authored_by_skill_creator -> validated_by_skill_validator -> package-evidence.json -> packaged_by_skill_packager -> skill-buster handoff
 ```
 
 If any item is missing, stale, mismatched, or only asserted in prose, mark the item `hard_red_stack_incomplete` and return to the missing upstream step.

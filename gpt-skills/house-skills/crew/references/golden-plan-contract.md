@@ -45,7 +45,7 @@ Crew work should reject:
 
 ## Composition with busters
 
-`crew-v1-buster` applies this doctrine to a task and returns a planning result.
+`crew-buster` applies this doctrine to a task and returns a planning result.
 
 `boring-buster` may use Crew proof to decide whether a target is predictable enough for its lane.
 

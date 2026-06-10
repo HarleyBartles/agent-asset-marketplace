@@ -7,7 +7,7 @@ Use this contract for every skill create, update, repair, packaging, or package-
 The approved stack order is:
 
 ```text
-skill-creator, then skill-validator-v1, then skill-packager-v1, then skill-buster-v0.1
+skill-creator, then skill-validator, then skill-packager, then skill-buster
 ```
 
 Do not use these skills as independent substitutes for one another during skill update work. A later stack step cannot claim that an earlier step happened from memory, narrative summary, expected workflow state, or a prose note that says a prior step was done.
@@ -26,7 +26,7 @@ staged_source_path: <absolute-or-workspace-source-path>
 authored_by_skill_creator: true
 edit_summary:
   - <specific content/resource edit>
-next_required_step: skill-validator-v1
+next_required_step: skill-validator
 ```
 
 ### `validated_by_skill_validator`
@@ -43,10 +43,10 @@ blocking_reasons:
 required_repairs:
   - <empty only when no repairs are required>
 validator_summary: <short basis for the decision>
-next_required_step: skill-packager-v1
+next_required_step: skill-packager
 ```
 
-Only `decision: pass` with `handoff_allowed: true` may advance to `skill-packager-v1`. A phrase such as `validator passed`, a checklist summary, or a ledger field without this object is prose-only and must be treated as missing validation.
+Only `decision: pass` with `handoff_allowed: true` may advance to `skill-packager`. A phrase such as `validator passed`, a checklist summary, or a ledger field without this object is prose-only and must be treated as missing validation.
 
 ### `packaged_by_skill_packager`
 
@@ -64,10 +64,10 @@ archive_inspection: pass
 exact_file_exists: true
 exact_file_nonzero: true
 top_level_folder_matches_skill: true
-next_required_step: skill-buster-v0.1
+next_required_step: skill-buster
 ```
 
-`skill-packager-v1` may only create this object after checking the exact archive path. The object is invalid if the package path is guessed, stale, absent, empty, wrongly named, not emitted through a lawful assistant handoff surface, or not the archive that passed unzip and inspection. The archive basename must be exactly `skill.zip`; otherwise the expected Skill install UI may not appear.
+`skill-packager` may only create this object after checking the exact archive path. The object is invalid if the package path is guessed, stale, absent, empty, wrongly named, not emitted through a lawful assistant handoff surface, or not the archive that passed unzip and inspection. The archive basename must be exactly `skill.zip`; otherwise the expected Skill install UI may not appear.
 
 ### `presented_by_skill_buster`
 

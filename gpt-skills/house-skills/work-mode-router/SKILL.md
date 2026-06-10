@@ -1,6 +1,6 @@
 ---
 name: work-mode-router
-description: GPT-wide bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear-v1 instead of legacy dispatch stacks.
+description: GPT-wide bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
 version: v1
 source_id: work-mode-router-v1
 source_path: gpt-skills/house-skills/work-mode-router/SKILL.md
@@ -10,13 +10,13 @@ provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base 
 
 Use this skill as the GPT-wide bootstrap router for new project sessions and workflow-sensitive starts. It classifies the current request, preserves an ordinary-chat escape hatch, and routes to the smallest controlling skill surface before substantive work.
 
-This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `worker-dispatch-linear-v1`, GitHub proof skills, artifact skills, or package skills.
+This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `worker-dispatch-linear`, GitHub proof skills, artifact skills, or package skills.
 
 ## Core posture
 
 Bootstrap is orientation and classification, not source inspection. A project-relevant bootstrap is mandatory once at new-session start when a project context is active or the first user task is project-scoped. Bootstrap must classify the current request before evidence-route, connector, mutation, artifact, worker, or downstream skill decisions.
 
-Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `worker-dispatch-linear-v1` and let its golden gate decide whether Codex Cloud is executable, GPT-native skillwork must stay in the skill stack, or legacy fallback is actually needed.
+Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `worker-dispatch-linear` and let its golden gate decide whether Codex Cloud is executable, GPT-native skillwork must stay in the skill stack, or legacy fallback is actually needed.
 
 Gates are backstops, not the primary teaching surface. Future GPT should understand why a workflow gate exists before the gate has to catch a failure. Breaking a gate is bad because it may spend scarce resources, mutate protected source, collapse ambiguity, launder reports into truth, create false closure, or push work away from the correct production boundary.
 
@@ -39,11 +39,11 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 
 ## Routing map
 
-- `linear_codex_coding` -> `worker-dispatch-linear-v1` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
-- `gpt_native_skillwork` -> `skill-creator`, then `skill-validator-v1`, then `skill-packager-v1`, then `skill-buster-v0.1` when queue/handoff cadence matters. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
+- `linear_codex_coding` -> `worker-dispatch-linear` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
+- `gpt_native_skillwork` -> `skill-creator`, then `skill-validator`, then `skill-packager`, then `skill-buster` when queue/handoff cadence matters. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> the repo/GitHub proof surface after a GitHub artifact exists. Do not use repo/GitHub proof to decide worker state or issue routing.
-- `linear_control` -> `linear-v1` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
-- `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as the validation decision surface, `tps-ingress-v1`, or `tps-reporting-v1`.
+- `linear_control` -> `linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
+- `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as the validation decision surface, `tps-ingress`, or `tps-reporting`.
 - `legacy_plan_b` -> the compact legacy dispatch stack only after the default route has been rejected or unavailable.
 
 Use project bootstrap or project doctrine only when the active project actually matches the project wrapper and the current task needs local law.
@@ -89,15 +89,15 @@ Never load a project-specific wrapper skill unless its project matches the activ
 
 A project wrapper with a similar function name is not a fallback. Wrong-project doctrine is noise and may create false constraints.
 
-Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through GPT-wide `worker-dispatch-linear-v1`.
+Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through GPT-wide `worker-dispatch-linear`.
 
 ## Reference loading
 
 Load `references/source-and-evidence-posture.md` only when the classified task actually requires source evidence, connector/tool-surface diagnosis, repository claims, unavailable-route claims, or audit output about what was inspected.
 
-When returning or revising a full system prompt, load `gpt-base-doctrine-v1` for the system-prompt contract, including character-limit discipline and source-honesty expectations.
+When returning or revising a full system prompt, load `gpt-base-doctrine` for the system-prompt contract, including character-limit discipline and source-honesty expectations.
 
-Load `gpt-base-doctrine-v1/references/output-artifact-shape.md` when an output-shape rule, reserved artifact form, YAML-vs-non-YAML decision, worker-copy attention guard, or artifact-form authority conflict is material.
+Load `gpt-base-doctrine/references/output-artifact-shape.md` when an output-shape rule, reserved artifact form, YAML-vs-non-YAML decision, worker-copy attention guard, or artifact-form authority conflict is material.
 
 ## System prompt contract
 
@@ -114,7 +114,7 @@ System prompts should:
 
 ## Session handoff posture
 
-When the user provides a session buster, continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant session-buster-v0.2 ingress skill. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
+When the user provides a session buster, continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant session-buster ingress skill. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
 
 For coding work, prefer durable Linear issue IDs, Codex state, PR IDs, and next checks over bulky packet prose. Linear/Codex/GitHub are the normal continuity surfaces; session busters are fallback continuity.
 

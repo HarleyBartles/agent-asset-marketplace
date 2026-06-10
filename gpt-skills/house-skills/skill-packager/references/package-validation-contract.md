@@ -1,13 +1,13 @@
 # Package Validation Contract
 
-Use this contract before handing a skill package to `skill-buster-v0.1` or the user.
+Use this contract before handing a skill package to `skill-buster` or the user.
 
 ## Normal command
 
 Use the wrapper for ordinary packaging:
 
 ```bash
-python /home/oai/skills/skill-packager-v1/scripts/package_and_verify_skill.py <skill-folder> <external-dist-dir>
+python /home/oai/skills/skill-packager/scripts/package_and_verify_skill.py <skill-folder> <external-dist-dir>
 ```
 
 The wrapper is the normal agent-facing route. It runs the required checks in order inside one integrated single-target process, applies per-step timeouts plus a wrapper-level budget, records the active `current_step`, and writes machine evidence. Do not replace it with a hand-written sequence unless you are debugging the wrapper itself.

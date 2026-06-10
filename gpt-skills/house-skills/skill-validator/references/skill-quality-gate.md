@@ -235,7 +235,7 @@ A passable package handoff workflow should make prose-only ledgers impossible to
 
 For skills that create, validate, package, queue, or hand off installable Skill archives, validate the handoff path as a user-facing install surface, not as bookkeeping.
 
-A `sandbox:/.../skill.zip` link can render as an installable Skill preview card in ChatGPT. If the archive is missing, malformed, stale, wrongly named, or only claimed in prose, Harley may see an Install UI that fails with `We could not load this skill`. That wastes the install attempt, creates false progress, causes skill-buster-v0.1 churn, and defeats the purpose of the validator/packager/buster control system built specifically to prevent invalid handoffs.
+A `sandbox:/.../skill.zip` link can render as an installable Skill preview card in ChatGPT. If the archive is missing, malformed, stale, wrongly named, or only claimed in prose, Harley may see an Install UI that fails with `We could not load this skill`. That wastes the install attempt, creates false progress, causes skill-buster churn, and defeats the purpose of the validator/packager/buster control system built specifically to prevent invalid handoffs.
 
 Return `repair_required` when a skill handoff workflow:
 
@@ -344,7 +344,7 @@ Return `repair_required` when a skill:
 - uses direct skill directory names for ordinary handoffs where descriptive capability routing would be more robust, except for hard-coupled composition skills and locked safety gates;
 - creates a duplicate specialist surface without a durable use-case justification;
 - uses actor-prefixed GPT-native names that can imply GPT is impersonating an on-disk/project actor;
-- lets validation selection, report text, worker claims, session-buster-v0.2 continuity, or package receipts launder into proof, truth, or closure state;
+- lets validation selection, report text, worker claims, session-buster continuity, or package receipts launder into proof, truth, or closure state;
 - omits a regression check for the current dispatch gate's three consecutive introspective GREENs when dispatch-gate behavior is in scope;
 - places generic law in a project wrapper or project-specific law in a generic skill without an explicit composition reason.
 
@@ -375,13 +375,13 @@ A passable skill should teach the failure model behind each hard gate. The model
 ## Stack-order fitness
 
 For skill create, update, repair, packaging, or handoff work, the skill is not fit for handoff unless the approved stack
-order is observable: `skill-creator, then skill-validator-v1, then skill-packager-v1, then skill-buster-v0.1`.
+order is observable: `skill-creator, then skill-validator, then skill-packager, then skill-buster`.
 
 Fail validation or block the process when:
 
 - a package or handoff is attempted without an explicit `authored_by_skill_creator` token;
 - the validator pass is only claimed in prose rather than returned as a decision for the same source path;
-- `skill-packager-v1` or `skill-buster-v0.1` is being used as a substitute for validation;
+- `skill-packager` or `skill-buster` is being used as a substitute for validation;
 - a later step tries to infer an earlier step from workflow readiness, memory, or expected sequence;
 - a handoff workflow accepts assistant-authored package ledgers instead of a machine-written evidence receipt and fresh exact-file/hash verification.
 

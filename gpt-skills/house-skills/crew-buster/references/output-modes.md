@@ -9,7 +9,7 @@ Use light mode for ordinary chat and most introspective prompts.
 Shape:
 
 ```text
-The material crew-v1 lens is <Lens>. <One or two sentences explaining the finding.>
+The material Crew lens is <Lens>. <One or two sentences explaining the finding.>
 The boring route is <route>, or the blocker is <blocker>.
 ```
 
@@ -49,7 +49,7 @@ Examples:
 
 - `boring-buster`: one issue/proposal readiness.
 - current dispatch gate: send-ready worker packet proof.
-- `tps-reporting-v1`: partitioning reports, worker returns, and evidence from truth.
+- `tps-reporting`: partitioning reports, worker returns, and evidence from truth.
 - repo/GitHub proof surface: GitHub evidence/mutation route discipline.
 - `skill-creator`: GPT-native skill authorship.
 
@@ -61,4 +61,4 @@ Crew-buster result: defer to <skill>. <Lens> found <reason>. The next action is 
 
 ## Avoid ceremony drift
 
-Do not make the crew-v1 frame heavier than the user request. If the answer can be two useful sentences, use two useful sentences.
+Do not make the Crew frame heavier than the user request. If the answer can be two useful sentences, use two useful sentences.

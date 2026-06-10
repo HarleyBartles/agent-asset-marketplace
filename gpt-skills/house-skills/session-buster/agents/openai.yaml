@@ -8,8 +8,10 @@ interface:
     running work, open queues, pending decisions, caveats, source/tool availability,
     and next-session verification instructions. Do not use for ordinary summaries,
     dispatches, or project-specific execution.
+  brand_color: '#111827'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
+  default_prompt: Use $session-buster to produce a compact continuity export for the next session when a handoff or closeout is needed.
 policy:
   products:
   - chatgpt

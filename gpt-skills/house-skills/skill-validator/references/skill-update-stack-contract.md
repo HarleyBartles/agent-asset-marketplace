@@ -7,7 +7,7 @@ Use this contract for every skill create, update, repair, packaging, or package-
 The approved stack order is:
 
 ```text
-skill-creator, then skill-validator-v1, then skill-packager-v1, then skill-buster-v0.1
+skill-creator, then skill-validator, then skill-packager, then skill-buster
 ```
 
 Do not use these skills as independent substitutes for one another during skill update work. A later stack step cannot
@@ -29,7 +29,7 @@ staged_source_path: <absolute-or-workspace-source-path>
 authored_by_skill_creator: true
 edit_summary:
   - <specific content/resource edit>
-next_required_step: skill-validator-v1
+next_required_step: skill-validator
 ```
 
 ### `validated_by_skill_validator`
@@ -46,10 +46,10 @@ blocking_reasons:
 required_repairs:
   - <empty only when no repairs are required>
 validator_summary: <short basis for the decision>
-next_required_step: skill-packager-v1
+next_required_step: skill-packager
 ```
 
-Only `decision: pass` with `handoff_allowed: true` may advance to `skill-packager-v1`. A phrase such as
+Only `decision: pass` with `handoff_allowed: true` may advance to `skill-packager`. A phrase such as
 `validator passed`, a checklist summary, or a ledger field without this object is prose-only and must be treated as
 missing validation.
 
@@ -69,10 +69,10 @@ archive_inspection: pass
 exact_file_exists: true
 exact_file_nonzero: true
 top_level_folder_matches_skill: true
-next_required_step: skill-buster-v0.1
+next_required_step: skill-buster
 ```
 
-`skill-packager-v1` may only create this object after checking the exact archive path and the machine-written `package-evidence.json`. The archive path must be named exactly `skill.zip`. The object is invalid if the package path is guessed, stale, absent, empty, wrongly named, not the archive that passed unzip and inspection, or not byte-identical to the evidence hash. This exact-name rule is functional: a renamed or versioned zip may not present the expected Skill install UI.
+`skill-packager` may only create this object after checking the exact archive path and the machine-written `package-evidence.json`. The archive path must be named exactly `skill.zip`. The object is invalid if the package path is guessed, stale, absent, empty, wrongly named, not the archive that passed unzip and inspection, or not byte-identical to the evidence hash. This exact-name rule is functional: a renamed or versioned zip may not present the expected Skill install UI.
 
 A fake or broken `skill.zip` handoff is a control-system failure. The validator/packager/buster stack exists to prevent invalid skill packages from reaching Harley. If assistant-written ledger text can still create a broken Skill preview card, the stack failed at its core purpose.
 

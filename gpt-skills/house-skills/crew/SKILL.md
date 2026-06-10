@@ -1,18 +1,20 @@
 ---
 name: crew
-description: 'gpt-wide doctrine for the Crew thinking roles: Index, Silk, Writ, Klause, Rollback, and Receipt. Use when another skill or user request needs role boundaries, TPS handoffs, golden-plan preparation, route/authority/fallback/receipt reasoning, or a claimed plan/GREEN needs Crew-shaped proof. Do not use as a workflow controller for Linear/Codex dispatch, GitHub proof, validation, reporting, or skill packaging; specialist skills own those actions.'
+description: gpt-wide doctrine for the Crew thinking roles. use when another skill or user request needs route, authority, fallback, or receipt reasoning, when a plan or claimed green needs a dependency check, or when the task needs a clean Crew lens before action. do not use as the execution surface for linear dispatch, github proof, validation, reporting, or skill packaging; specialist skills own those actions.
 version: v1
 source_id: crew-v1
 source_path: gpt-skills/house-skills/crew/SKILL.md
 provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+context: Use when a task needs the Crew lens before selecting a downstream owner or route.
+user-invocable: true
 ---
 # Crew
 
 ## Purpose
 
-`crew-v1` is the GPT-wide doctrine source for the Crew thinking model. The Crew are named role-lenses GPT wears to interrogate a task before action. They are not autonomous agents, worker identities, execution actors, or authorities.
+`crew` is the GPT-wide doctrine source for the Crew thinking model. The Crew are named role-lenses GPT wears to interrogate a task before action. They are not autonomous agents, worker identities, execution actors, or authorities.
 
-This skill defines the role model, dependency order, TPS handoff discipline, and golden-plan contract. It does not run crew-v1-buster, write dispatches, mutate Linear or GitHub, validate packages, publish PRs, or replace specialist skills.
+This skill defines the role model, dependency order, TPS handoff discipline, and golden-plan contract. It does not run crew-buster, write dispatches, mutate Linear or GitHub, validate packages, publish PRs, or replace specialist skills.
 
 ## Current workflow boundary
 
@@ -20,9 +22,9 @@ Use Crew to prepare reasoning for the correct downstream owner, not to choose a 
 
 For normal coding workflow, the control plane is Linear/Codex: Linear issue as task contract, Codex worker where the golden gate says the task is executable, human Create PR gate, and GitHub PR/main verification.
 
-For GPT-native skillwork, route to the skill stack: `skill-creator`, `skill-validator-v1`, `skill-packager-v1`, and `skill-buster-v0.1`. Do not let Crew reasoning make GPT-native installed-skill edits look like Codex Cloud repo tasks unless the editable skill source is proven repo-backed and accessible to the worker.
+For GPT-native skillwork, route to the skill stack: `skill-creator`, `skill-validator`, `skill-packager`, and `skill-buster`. Do not let Crew reasoning make GPT-native installed-skill edits look like Codex Cloud repo tasks unless the editable skill source is proven repo-backed and accessible to the worker.
 
-For GitHub evidence, route to the repo/GitHub proof surface. For validation choice, route to the validation decision surface. For report language, route to `tps-reporting-v1`. For old chat/YAML worker packets, use the legacy dispatch skills only when Linear/Codex is unavailable, unsuitable, or explicitly rejected.
+For GitHub evidence, route to the repo/GitHub proof surface. For validation choice, route to the validation decision surface. For report language, route to `tps-reporting`. For old chat/YAML worker packets, use the legacy dispatch skills only when Linear/Codex is unavailable, unsuitable, or explicitly rejected.
 
 ## Canonical terms
 
@@ -38,7 +40,7 @@ Examples:
 
 ## Reference loading
 
-Read `references/crew-v1-roles.md` when role boundaries, dependency order, or proper-noun disambiguation matter.
+Read `references/crew-roles.md` when role boundaries, dependency order, or proper-noun disambiguation matter.
 
 Read `references/tps-handoffs.md` when a Crew output must be handed from one role to another, consumed by a buster, used in a worker/issue plan, or inspected after a false-green concern.
 
@@ -52,4 +54,4 @@ Do not import Adventures lore, character material, visual design, or story canon
 
 Do not store domain-specific dispatch law, issue closure law, validation selection, GitHub operations, package validation, reporting hygiene, project doctrine, or artifact workflows here. Specialist skills own those domains.
 
-Do not turn this doctrine into a verbose checklist for ordinary chat. Use `crew-v1-buster` when the user wants Crew applied to a concrete task and expects a plan, repair, blocker, or route result.
+Do not turn this doctrine into a verbose checklist for ordinary chat. Use `crew-buster` when the user wants Crew applied to a concrete task and expects a plan, repair, blocker, or route result.

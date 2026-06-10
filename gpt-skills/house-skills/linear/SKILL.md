@@ -1,6 +1,6 @@
 ---
 name: linear
-description: 'Use for Linear connector mechanics: reading, creating, updating, commenting, and organizing Linear issues, projects, documents, labels, and statuses. Use when the user asks to inspect or mutate Linear objects, capture side notes durably, create planning issues/projects, or recover from Linear connector quirks. Do not use as the coding dispatch control plane: Linear/Codex worker routing, Codex status checks, PR-gate handling, and dispatch decisions belong to worker-dispatch-linear-v1; GitHub proof belongs to the repo/GitHub proof surface.'
+description: 'Use for Linear connector mechanics: reading, creating, updating, commenting, and organizing Linear issues, projects, documents, labels, and statuses. Use when the user asks to inspect or mutate Linear objects, capture side notes durably, create planning issues/projects, or recover from Linear connector quirks. Do not use as the coding dispatch control plane: Linear/Codex worker routing, Codex status checks, PR-gate handling, and dispatch decisions belong to worker-dispatch-linear; GitHub proof belongs to the repo/GitHub proof surface.'
 version: v1
 source_id: linear-v1
 source_path: gpt-skills/house-skills/linear/SKILL.md
@@ -16,7 +16,7 @@ Linear is a durable planning and workflow surface. It can hold issues, projects,
 
 For coding work after Linear/Codex adoption:
 
-- Use `worker-dispatch-linear-v1` for issue-to-Codex routing, worker-state checks, human `Create PR` gate handling, and deciding whether a task is Codex Cloud-executable.
+- Use `worker-dispatch-linear` for issue-to-Codex routing, worker-state checks, human `Create PR` gate handling, and deciding whether a task is Codex Cloud-executable.
 - Use this skill only when the current action is to read or mutate Linear objects.
 - Use the repo/GitHub proof surface after a GitHub PR, branch, commit, review, merge, status, or file-state question exists.
 - Do not revive GitHub issue or legacy dispatch doctrine from this skill.

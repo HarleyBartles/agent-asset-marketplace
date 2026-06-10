@@ -12,7 +12,7 @@ provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base 
 
 Produce a machine-ingestable continuity export for the next ChatGPT session.
 
-`session-buster-v0.2` is fallback continuity. It is not live source truth, not worker execution, not repo publication proof, not task authority, and not the normal coding control plane when Linear/Codex/GitHub records exist.
+`session-buster` is fallback continuity. It is not live source truth, not worker execution, not repo publication proof, not task authority, and not the normal coding control plane when Linear/Codex/GitHub records exist.
 
 ## Core lesson
 
@@ -77,13 +77,13 @@ When authorized handoff is needed, use the owning issue/project tool and current
 
 ## Mandatory ingress directive
 
-Every session buster must include a top-level `mandatory_ingress` field telling the next session to process the block with `session-buster-v0.2-ingress` after any required project bootstrap and before acting on next-task fields.
+Every session buster must include a top-level `mandatory_ingress` field telling the next session to process the block with `session-buster-ingress` after any required project bootstrap and before acting on next-task fields.
 
 Use wording close to:
 
 ```yaml
 mandatory_ingress: >
-  Process this handoff with session-buster-v0.2-ingress after any project bootstrap and before acting on next-task fields.
+  Process this handoff with session-buster-ingress after any project bootstrap and before acting on next-task fields.
   Treat the block as fallback continuity until partitioned into verified, fallback-only, unverified, unavailable,
   contradicted, and blocked state.
 ```

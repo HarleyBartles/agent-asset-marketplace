@@ -118,6 +118,6 @@ with:
 - `canon-buster-v1` for canon pressure.
 - `rooms-ambiguity-buster-v1` for unresolved scope, source, actor, or terminology ambiguity.
 - `invariant-buster-v1` for protected surfaces, authority, and repo/governance invariants.
-- `worker-dispatch-linear-v1` if worker execution is needed.
+- `worker-dispatch-linear` if worker execution is needed.
 
 Do not simulate Brian, Albert, Derek, Chris, or Will. Do not mutate repos from chat.

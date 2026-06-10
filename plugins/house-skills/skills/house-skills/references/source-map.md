@@ -33,16 +33,16 @@ Component map:
 | Lane | Canonical name | Component version | Installed source skill id | Source path | Import status |
 | --- | --- | --- | --- | --- | --- |
 | Base and control plane | don-logan-boundary | v1 | `don-logan-boundary-v1` | `gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md` | imported |
-| Base and control plane | gpt-base-doctrine | v1 | `gpt-base-doctrine-v1` | `gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md` | imported |
-| Base and control plane | work-mode-router | v1 | `work-mode-router-v1` | `gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md` | imported |
-| Base and control plane | worker-dispatch-linear | v1 | `worker-dispatch-linear-v1` | `gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md` | imported |
-| Base and control plane | linear | v1 | `linear-v1` | `gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md` | imported |
-| Base and control plane | tps-reporting | v1 | `tps-reporting-v1` | `gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md` | imported |
-| Base and control plane | tps-ingress | v1 | `tps-ingress-v1` | `gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md` | imported |
-| Base and control plane | session-buster | v0.2 | `session-buster-v0.2` | `gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md` | imported |
-| Base and control plane | session-buster-ingress | v0.2 | `session-buster-ingress-v0.2` | `gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md` | imported |
-| Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md` | imported |
-| Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md` | imported |
+| Base and control plane | gpt-base-doctrine | v1 | `gpt-base-doctrine-v1` | `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md` | imported |
+| Base and control plane | work-mode-router | v1 | `work-mode-router-v1` | `gpt-skills/house-skills/work-mode-router/SKILL.md` | imported |
+| Base and control plane | worker-dispatch-linear | v1 | `worker-dispatch-linear-v1` | `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md` | imported |
+| Base and control plane | linear | v1 | `linear-v1` | `gpt-skills/house-skills/linear/SKILL.md` | imported |
+| Base and control plane | tps-reporting | v1 | `tps-reporting-v1` | `gpt-skills/house-skills/tps-reporting/SKILL.md` | imported |
+| Base and control plane | tps-ingress | v1 | `tps-ingress-v1` | `gpt-skills/house-skills/tps-ingress/SKILL.md` | imported |
+| Base and control plane | session-buster | v0.2 | `session-buster-v0.2` | `gpt-skills/house-skills/session-buster/SKILL.md` | imported |
+| Base and control plane | session-buster-ingress | v0.2 | `session-buster-ingress-v0.2` | `gpt-skills/house-skills/session-buster-ingress/SKILL.md` | imported |
+| Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/SKILL.md` | imported |
+| Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/SKILL.md` | imported |
 | Adventures | adventures-bootstrap | v1.1 | `adventures-bootstrap-v1.1` | `gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md` | imported |
 | Adventures | adventures-github-operations | v1.1 | `adventures-github-operations-v1.1` | `gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md` | imported |
 | Adventures | adventures-visual-preproduction | v1.1 | `adventures-visual-preproduction-v1.1` | `gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md` | imported |

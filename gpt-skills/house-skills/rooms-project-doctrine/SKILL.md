@@ -10,7 +10,7 @@ provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms
 
 Use this skill as the shared Rooms doctrine store and routing index for project rules not owned by a more specific Rooms skill.
 
-This skill composes the `work-mode-router-v1` pattern: bootstrap routes to doctrine-bearing skills, and doctrine skills teach the durable reasons behind gates. This skill is not a second system prompt and not an execution surface.
+This skill composes the `work-mode-router` pattern: bootstrap routes to doctrine-bearing skills, and doctrine skills teach the durable reasons behind gates. This skill is not a second system prompt and not an execution surface.
 
 `SKILL.md` is a control plane. Load only the reference needed for the current task.
 

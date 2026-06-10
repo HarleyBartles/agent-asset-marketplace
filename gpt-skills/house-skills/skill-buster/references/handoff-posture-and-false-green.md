@@ -4,7 +4,7 @@ Use this reference when preparing, repairing, or reviewing one or more installab
 
 ## Goal and non-goal
 
-`skill-buster-v0.1` is not a zip-link emission race. Its goal is to preserve the handoff control system so every surfaced archive is installable, current, and contains the intended authored and validated update.
+`skill-buster` is not a zip-link emission race. Its goal is to preserve the handoff control system so every surfaced archive is installable, current, and contains the intended authored and validated update.
 
 Non-goal:
 
@@ -32,7 +32,7 @@ capability_stack_applied:
   queue_handoff_capability_discovered_and_used: true
 ```
 
-The current normal stack is the skill authoring/update capability, the skill validation capability, the skill packaging/identity capability, and then `skill-buster-v0.1` handoff. The posture is capability-based so future renamed or wrapped skills do not bypass it.
+The current normal stack is the skill authoring/update capability, the skill validation capability, the skill packaging/identity capability, and then `skill-buster` handoff. The posture is capability-based so future renamed or wrapped skills do not bypass it.
 
 Do not treat a prepared dist folder, expected package path, previous package, or package wrapper success as evidence that the authoring or validation capability was actually used for the requested update.
 

@@ -61,7 +61,7 @@ When closure is claimed, compare observable state against the issue goal. Valida
 
 ## Skill-read stop rule
 
-After classifying the report and the evidence lanes needed, stop reading skills. Do not load dispatch, validation, session-buster-v0.2, GitHub, artifact, image, or wrong-project skills merely because the report mentions them.
+After classifying the report and the evidence lanes needed, stop reading skills. Do not load dispatch, validation, session-buster, GitHub, artifact, image, or wrong-project skills merely because the report mentions them.
 
 Load another skill only when a named unresolved decision is outside this skill's ownership and the candidate skill directly owns it. Use only project-compatible wrappers when local report law is actually required.
 
@@ -69,7 +69,7 @@ If the user says to stop reading skills, stop immediately and continue from alre
 
 ## Progressive references
 
-Read `references/tps-reporting-v1-contract.md` only when drafting or reviewing a full report, worker return, proof summary, continuity note, publication note, receipt summary, closure posture, or false-GREEN risk.
+Read `references/reporting-hygiene-contract.md` only when drafting or reviewing a full report, worker return, proof summary, continuity note, publication note, receipt summary, closure posture, or false-GREEN risk.
 
 Do not load the reference for a simple known-target issue comment unless the comment asserts verification, publication, closure readiness, worker-return truth, or another report-like proof claim.
 

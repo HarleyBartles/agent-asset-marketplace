@@ -1,13 +1,13 @@
 # Batch Packaging Workflow
 
-Use this reference when packaging multiple skills, especially under `skill-buster-v0.1` batch mode.
+Use this reference when packaging multiple skills, especially under `skill-buster` batch mode.
 
 ## Preparation before handoff
 
 Prepare every package in the current batch before emitting the handoff stack. Package each skill independently with the wrapper:
 
 ```bash
-python /home/oai/skills/skill-packager-v1/scripts/package_and_verify_skill.py <skill-folder> <external-dist-dir>
+python /home/oai/skills/skill-packager/scripts/package_and_verify_skill.py <skill-folder> <external-dist-dir>
 ```
 
 Use a separate external dist directory for each skill. Do not put dist, build, `skill.zip`, or `package-evidence.json` inside the staged skill root.
@@ -17,7 +17,7 @@ A package is prepared only after the wrapper succeeds and the exact `skill.zip`,
 
 ## Preparation unit and throughput posture
 
-`skill-packager-v1` is a single-target packager. Even in batch work, one wrapper invocation packages one skill folder into one target-specific external dist directory. Batch mode means repeated independent preparation units, not a multi-root package operation.
+`skill-packager` is a single-target packager. Even in batch work, one wrapper invocation packages one skill folder into one target-specific external dist directory. Batch mode means repeated independent preparation units, not a multi-root package operation.
 
 ```yaml
 preparation_unit:
@@ -43,7 +43,7 @@ If the wrapper reports a timeout or slow substep, classify it as a preparation e
 
 ## Handoff boundary
 
-Packager supplies archive identity evidence; skill-buster-v0.1 owns lifecycle state. The package handoff surface must be a normal assistant message controlled by skill-buster-v0.1.
+Packager supplies archive identity evidence; skill-buster owns lifecycle state. The package handoff surface must be a normal assistant message controlled by skill-buster.
 
 Do not treat an inert cursor-advance pulse as package evidence, package validation, or package mutation. A pulse with no package link, no package path, no source inspection, no external side effect, and no manifest change does not alter package validity.
 

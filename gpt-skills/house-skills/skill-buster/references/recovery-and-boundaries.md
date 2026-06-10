@@ -4,7 +4,7 @@ Use this reference when a skill queue becomes unclear, a package handoff fails, 
 
 ## User-directed reread gate
 
-If Harley explicitly says to read, re-read, check, look at, inspect, consult, or use `skill-buster-v0.1`, perform a fresh read of the skill entrypoint in the same turn before any substantive answer, package handoff, queue advancement, repair action, or process explanation. If the read is unavailable, stop and report the blocker.
+If Harley explicitly says to read, re-read, check, look at, inspect, consult, or use `skill-buster`, perform a fresh read of the skill entrypoint in the same turn before any substantive answer, package handoff, queue advancement, repair action, or process explanation. If the read is unavailable, stop and report the blocker.
 
 ## Reset and repair
 
