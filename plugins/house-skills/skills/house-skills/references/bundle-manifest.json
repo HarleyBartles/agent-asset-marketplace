@@ -77,18 +77,18 @@
                        },
                        {
                            "canonical_name":  "session-buster",
-                           "component_version":  "v0.1",
-                           "installed_source_skill_id":  "session-buster-v0.1",
-                           "source_path":  "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
+                           "component_version":  "v0.2",
+                           "installed_source_skill_id":  "session-buster-v0.2",
+                           "source_path":  "gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md",
                            "lane":  "base/control-plane",
                            "source_group":  "MARK-30 active imports / Base and control plane",
                            "import_status":  "imported"
                        },
                        {
                            "canonical_name":  "session-buster-ingress",
-                           "component_version":  "v0.1",
-                           "installed_source_skill_id":  "session-buster-ingress-v0.1",
-                           "source_path":  "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
+                           "component_version":  "v0.2",
+                           "installed_source_skill_id":  "session-buster-ingress-v0.2",
+                           "source_path":  "gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md",
                            "lane":  "base/control-plane",
                            "source_group":  "MARK-30 active imports / Base and control plane",
                            "import_status":  "imported"

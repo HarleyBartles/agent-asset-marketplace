@@ -167,18 +167,18 @@
     },
     {
       "issue": "MARK-30",
-      "source_id": "session-buster-v0.1",
-      "source_path": "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
-      "public_name": "session-buster-v0.1",
+      "source_id": "session-buster-v0.2",
+      "source_path": "gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md",
+      "public_name": "session-buster-v0.2",
       "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
       "scope": "continuity fallback artifact",
       "import_state": "imported"
     },
     {
       "issue": "MARK-30",
-      "source_id": "session-buster-ingress-v0.1",
-      "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
-      "public_name": "session-buster-ingress-v0.1",
+      "source_id": "session-buster-ingress-v0.2",
+      "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md",
+      "public_name": "session-buster-ingress-v0.2",
       "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
       "scope": "continuity fallback ingress",
       "import_state": "imported"

@@ -111,7 +111,7 @@ System prompts should:
 
 ## Session handoff posture
 
-When the user provides a session buster, continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant session-buster-v0.1 ingress skill. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
+When the user provides a session buster, continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant session-buster-v0.2 ingress skill. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
 
 For coding work, prefer durable Linear issue IDs, Codex state, PR IDs, and next checks over bulky packet prose. Linear/Codex/GitHub are the normal continuity surfaces; session busters are fallback continuity.
 

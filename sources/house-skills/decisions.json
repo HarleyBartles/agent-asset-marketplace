@@ -206,23 +206,23 @@
   },
   {
     "issue": "MARK-30",
-    "source_id": "session-buster-v0.1",
-    "source_path": "gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md",
-    "public_name": "session-buster-v0.1",
+    "source_id": "session-buster-v0.2",
+    "source_path": "gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md",
+    "public_name": "session-buster-v0.2",
     "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
     "import_state": "imported",
     "scope": "continuity fallback artifact",
-    "notes": "Imported as a provisional continuity artifact that should defer to issue body, linked docs, comments, and repo truth whenever available."
+    "notes": "Imported as the v0.2 continuity artifact with suggested next session naming metadata; v0.1 remains historical/provenance-only."
   },
   {
     "issue": "MARK-30",
-    "source_id": "session-buster-ingress-v0.1",
-    "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md",
-    "public_name": "session-buster-ingress-v0.1",
+    "source_id": "session-buster-ingress-v0.2",
+    "source_path": "gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md",
+    "public_name": "session-buster-ingress-v0.2",
     "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
     "import_state": "imported",
     "scope": "continuity fallback ingress",
-    "notes": "Imported as the ingress half of the continuity fallback, aligned to issue body and linked docs rather than chat memory."
+    "notes": "Imported as the v0.2 ingress half of the continuity fallback; suggested next session names are navigation metadata only."
   },
   {
     "issue": "MARK-30",

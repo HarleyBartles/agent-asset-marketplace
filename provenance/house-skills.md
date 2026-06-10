@@ -75,8 +75,8 @@
 - `linear-v1` - `gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md`
 - `tps-reporting-v1` - `gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
 - `tps-ingress-v1` - `gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
-- `session-buster-v0.1` - `gpt-skills/house-skills/session-buster/v0.1/session-buster-v0.1/SKILL.md`
-- `session-buster-ingress-v0.1` - `gpt-skills/house-skills/session-buster-ingress/v0.1/session-buster-ingress-v0.1/SKILL.md`
+- `session-buster-v0.2` - `gpt-skills/house-skills/session-buster/v0.2/session-buster-v0.2/SKILL.md`
+- `session-buster-ingress-v0.2` - `gpt-skills/house-skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md`
 - `crew-v1` - `gpt-skills/house-skills/crew/v1/crew-v1/SKILL.md`
 - `crew-buster-v1` - `gpt-skills/house-skills/crew-buster/v1/crew-buster-v1/SKILL.md`
 

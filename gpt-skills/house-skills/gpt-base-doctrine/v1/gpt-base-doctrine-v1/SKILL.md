@@ -1,6 +1,6 @@
 ---
 name: gpt-base-doctrine-v1
-description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster-v0.1 confusion, worker-copy attention guards, and lower-skill format conflicts.
+description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster-v0.2 confusion, worker-copy attention guards, and lower-skill format conflicts.
 ---
 
 # GPT Base Doctrine v1
@@ -28,7 +28,7 @@ Load `references/tool-surface-and-evidence.md` only when the current task actual
 
 Load `references/durable-doctrine-routing.md` when the current task asks where doctrine, skills, plugin marketplace entries, repo overlays, or agent asset source truth should live. This includes deciding whether a GPT-native skill update belongs in installed skill state, a canonical repo source, a Codex plugin marketplace, a repo overlay, Linear, GitHub, or a project repo.
 
-Load `references/output-artifact-shape.md` only when the current task involves output format authority, reserved workspace forms, dispatch/session-buster-v0.1 confusion, YAML-shaped content, reusable handoff shapes, or lower-skill output templates that may conflict with project/workspace conventions.
+Load `references/output-artifact-shape.md` only when the current task involves output format authority, reserved workspace forms, dispatch/session-buster-v0.2 confusion, YAML-shaped content, reusable handoff shapes, or lower-skill output templates that may conflict with project/workspace conventions.
 
 Use the most specific project skill, workflow skill, plugin, repo skill, or repo playbook when one owns the work. Use this skill only for base doctrine that crosses projects or prevents recurring GPT failure modes.
 

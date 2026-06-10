@@ -22,13 +22,13 @@ If the user did not ask for YAML and the content is not one of those artifacts, 
 
 ## Lower-skill output templates
 
-A skill's local output template is not authority to override workspace artifact-shape law. If a skill says to use compact YAML but the active workspace treats YAML as dispatch/session-buster-v0.1 shaped, use a non-reserved shape and preserve the same semantics.
+A skill's local output template is not authority to override workspace artifact-shape law. If a skill says to use compact YAML but the active workspace treats YAML as dispatch/session-buster-v0.2 shaped, use a non-reserved shape and preserve the same semantics.
 
 Examples:
 
 - A boring-buster assessment in ordinary chat should be prose or non-reserved structured text, not YAML, when YAML may be pasted to a worker as a packet.
 - A dispatch that has cleared the current dispatch gate may use dispatch-shaped YAML because that is the artifact requested.
-- A session buster may use the project's session-buster-v0.1 shape because continuity export is the requested artifact.
+- A session buster may use the project's session-buster-v0.2 shape because continuity export is the requested artifact.
 - A reusable draft should use the requested writing/document surface, not a dispatch-shaped block.
 
 ## Repair posture
