@@ -269,17 +269,17 @@
     {
       "name": "Base and control plane",
       "source_group": "MARK-30 active imports / Base and control plane",
-      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+      "component_versioning": "component versions are recorded in component_version and active SKILL.md metadata.version; active source skill names and paths stay unversioned"
     },
     {
       "name": "Adventures",
       "source_group": "MARK-30 active imports / Adventures",
-      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+      "component_versioning": "component versions are recorded in component_version and active SKILL.md metadata.version; active source skill names and paths stay unversioned"
     },
     {
       "name": "Rooms",
       "source_group": "MARK-30 active imports / Rooms",
-      "component_versioning": "component versions are encoded in the source skill names such as v1 and v0.1"
+      "component_versioning": "component versions are recorded in component_version and active SKILL.md metadata.version; active source skill names and paths stay unversioned"
     }
   ],
   "version_selection_notes": [
