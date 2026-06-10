@@ -1,10 +1,12 @@
 ---
 name: rooms-source-partitioning
 description: Label Rooms, Mostly claims by source basis and evidence state. Use when answers, reports, closure notes, doctrine takeaways, cleanup claims, or repo/canon/archive/manuscript assertions could blur inspected evidence, inference, conversation, reports, or unavailable sources.
-version: v1
-source_id: rooms-source-partitioning-v1
-source_path: gpt-skills/house-skills/rooms-source-partitioning/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
+metadata:
+  version: v1
+  source-id: rooms-source-partitioning-v1
+  source-path: gpt-skills/house-skills/rooms-source-partitioning/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
+license: "MIT"
 ---
 # Rooms Source Partitioning
 

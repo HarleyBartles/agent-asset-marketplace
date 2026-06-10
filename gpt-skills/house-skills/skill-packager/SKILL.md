@@ -1,10 +1,12 @@
 ---
 name: skill-packager
 description: Package, validate, inspect, and repair installable ChatGPT skill bundles. Use after skill creation or validation when a complete skill folder must become a skill.zip, when package identity or loader safety must be checked, when package evidence receipts are needed, when a timeout or failed install card occurs, or when agents need the canonical no-improvisation packaging command.
-version: v1
-source_id: skill-packager-v1
-source_path: gpt-skills/house-skills/skill-packager/SKILL.md
-provenance_name: MARK-21 skill maintenance House Skills source slice
+metadata:
+  version: v1
+  source-id: skill-packager-v1
+  source-path: gpt-skills/house-skills/skill-packager/SKILL.md
+  provenance-name: MARK-21 skill maintenance House Skills source slice
+license: "MIT"
 ---
 # Skill Packager
 

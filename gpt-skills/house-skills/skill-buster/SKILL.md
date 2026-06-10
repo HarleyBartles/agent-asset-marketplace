@@ -1,10 +1,12 @@
 ---
 name: skill-buster
 description: manage multi-skill update queues and package handoff cadence. use for queued skill creation or updates, continuing after landed, batch or one-at-a-time package presentation, recovery from broken skill.zip handoffs, poisoned batch state, fake-ledger risk, or deciding whether an installable skill package may be surfaced to the user.
-version: v0.1
-source_id: skill-buster-v0.1
-source_path: gpt-skills/house-skills/skill-buster/SKILL.md
-provenance_name: MARK-21 skill maintenance House Skills source slice
+metadata:
+  version: v0.1
+  source-id: skill-buster-v0.1
+  source-path: gpt-skills/house-skills/skill-buster/SKILL.md
+  provenance-name: MARK-21 skill maintenance House Skills source slice
+license: "MIT"
 ---
 # Skill Buster
 

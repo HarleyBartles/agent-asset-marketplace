@@ -1,10 +1,12 @@
 ---
 description: Use this skill before relying on an analogy, metaphor, comparison, role model, frame, or project-specific shorthand to answer, plan, dispatch, or make a durable decision.
+metadata:
+  version: v1
+  source-id: analogy-buster-v1
+  source-path: gpt-skills/house-skills/analogy-buster/SKILL.md
+  provenance-name: MARK-19 core generic buster House Skills source slice
 name: analogy-buster
-version: v1
-source_id: analogy-buster-v1
-source_path: gpt-skills/house-skills/analogy-buster/SKILL.md
-provenance_name: MARK-19 core generic buster House Skills source slice
+license: "MIT"
 ---
 # Analogy Buster
 

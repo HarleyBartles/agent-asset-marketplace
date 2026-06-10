@@ -1,10 +1,12 @@
 ---
 description: Use this skill before acting when unresolved ambiguity could cause the wrong scope, target, source route, authority, artifact, worker handoff, or answer.
+metadata:
+  version: v1
+  source-id: ambiguity-buster-v1
+  source-path: gpt-skills/house-skills/ambiguity-buster/SKILL.md
+  provenance-name: MARK-19 core generic buster House Skills source slice
 name: ambiguity-buster
-version: v1
-source_id: ambiguity-buster-v1
-source_path: gpt-skills/house-skills/ambiguity-buster/SKILL.md
-provenance_name: MARK-19 core generic buster House Skills source slice
+license: "MIT"
 ---
 # Ambiguity Buster
 

@@ -1,12 +1,14 @@
 ---
 name: crew
 description: gpt-wide doctrine for the Crew thinking roles. use when another skill or user request needs route, authority, fallback, or receipt reasoning, when a plan or claimed green needs a dependency check, or when the task needs a clean Crew lens before action. do not use as the execution surface for linear dispatch, github proof, validation, reporting, or skill packaging; specialist skills own those actions.
-version: v1
-source_id: crew-v1
-source_path: gpt-skills/house-skills/crew/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v1
+  source-id: crew-v1
+  source-path: gpt-skills/house-skills/crew/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 context: Use when a task needs the Crew lens before selecting a downstream owner or route.
 user-invocable: true
+license: "MIT"
 ---
 # Crew
 

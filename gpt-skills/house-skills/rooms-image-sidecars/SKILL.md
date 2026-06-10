@@ -1,10 +1,12 @@
 ---
 name: rooms-image-sidecars
 description: Prepare GPT-native semantic starter sidecars for Rooms image evidence batches before Albert/Pit ingestion. Use when a user supplies screenshots, image batches, or a zip/folder of images and wants GPT to inspect them visually, generate non-authoritative room/entity/message candidates, known-character hints, tags, DB query suggestions, and an Albert-ready sidecar packet without mutating repos or treating observations as canon.
-version: v0.1
-source_id: rooms-image-sidecars-v0.1
-source_path: gpt-skills/house-skills/rooms-image-sidecars/SKILL.md
-provenance_name: MARK-23 prep payload for Rooms House Skills survivor import
+metadata:
+  version: v0.1
+  source-id: rooms-image-sidecars-v0.1
+  source-path: gpt-skills/house-skills/rooms-image-sidecars/SKILL.md
+  provenance-name: MARK-23 prep payload for Rooms House Skills survivor import
+license: "MIT"
 ---
 # Rooms Image Sidecars
 

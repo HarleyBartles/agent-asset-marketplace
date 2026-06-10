@@ -1,10 +1,12 @@
 ---
 name: adventures-project-doctrine
 description: Shared Adventures doctrine for repo truth, source packages, bundle projection, and stage-boundary discipline across planning, source discovery, QA, image readiness, generation/editing, asset compilation, deck/package work, and acceptance.
-version: v1.1
-source_id: adventures-project-doctrine-v1.1
-source_path: gpt-skills/house-skills/adventures-project-doctrine/SKILL.md
-provenance_name: MARK-22 prep payload for Adventures House Skills survivor import
+metadata:
+  version: v1.1
+  source-id: adventures-project-doctrine-v1.1
+  source-path: gpt-skills/house-skills/adventures-project-doctrine/SKILL.md
+  provenance-name: MARK-22 prep payload for Adventures House Skills survivor import
+license: "MIT"
 ---
 # Adventures Project Doctrine
 

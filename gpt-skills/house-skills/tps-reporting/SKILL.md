@@ -1,10 +1,12 @@
 ---
 name: tps-reporting
 description: partition reports, worker returns, Linear/Codex status notes, issue comments, verification summaries, publication notes, and continuity notes so claims do not become truth. Use when drafting or reviewing language that could mix source evidence, Codex/worker claims, Linear state, GitHub proof, inference, validation, closure posture, or next action. Do not use for ordinary coding dispatch routing; Linear/Codex state checks belong to the dispatch front door, and GitHub proof belongs to GitHub Operations after a PR or repo artifact exists.
-version: v1
-source_id: tps-reporting-v1
-source_path: gpt-skills/house-skills/tps-reporting/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v1
+  source-id: tps-reporting-v1
+  source-path: gpt-skills/house-skills/tps-reporting/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
 # Tps Reporting
 

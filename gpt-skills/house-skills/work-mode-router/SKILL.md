@@ -1,10 +1,12 @@
 ---
 name: work-mode-router
 description: GPT-wide bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
-version: v1
-source_id: work-mode-router-v1
-source_path: gpt-skills/house-skills/work-mode-router/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v1
+  source-id: work-mode-router-v1
+  source-path: gpt-skills/house-skills/work-mode-router/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
 # Work Mode Router
 

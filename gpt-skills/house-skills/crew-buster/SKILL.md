@@ -1,12 +1,14 @@
 ---
 name: crew-buster
 description: apply Crew thinking roles to a concrete plan, route choice, issue shape, skill update, failure-mode question, or durable-fix prompt. use when you need a pre-action Crew read on route, authority, fallback, or proof boundaries before the downstream owner is chosen. owns planning and route interrogation only: preserve the linear/codex default coding workflow, route gpt-native skillwork to the skill stack, and defer execution/proof to specialist skills.
-version: v1
-source_id: crew-buster-v1
-source_path: gpt-skills/house-skills/crew-buster/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v1
+  source-id: crew-buster-v1
+  source-path: gpt-skills/house-skills/crew-buster/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 context: Use before selecting a downstream owner when route, authority, fallback, or proof needs a Crew lens.
 user-invocable: true
+license: "MIT"
 ---
 # Crew Buster
 

@@ -1,10 +1,12 @@
 ---
 name: rooms-project-doctrine
 description: route shared Rooms project doctrine without duplicating detailed law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity, actor/domain boundaries, report hygiene, GitHub publication or issue closure posture, and when a task needs the right Rooms doctrine-bearing skill before action.
-version: v1
-source_id: rooms-project-doctrine-v1
-source_path: gpt-skills/house-skills/rooms-project-doctrine/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
+metadata:
+  version: v1
+  source-id: rooms-project-doctrine-v1
+  source-path: gpt-skills/house-skills/rooms-project-doctrine/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
+license: "MIT"
 ---
 # Rooms Project Doctrine
 

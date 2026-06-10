@@ -1,10 +1,12 @@
 ---
 name: adventures-frame-buster
 description: Route Adventures frame-readiness checks as deterministic source-bound work before storyboard, preproduction, or package production, without invoking image-generation authority.
-version: v1.1
-source_id: adventures-frame-buster-v1.1
-source_path: gpt-skills/house-skills/adventures-frame-buster/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+metadata:
+  version: v1.1
+  source-id: adventures-frame-buster-v1.1
+  source-path: gpt-skills/house-skills/adventures-frame-buster/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
 # Adventures Frame Buster
 

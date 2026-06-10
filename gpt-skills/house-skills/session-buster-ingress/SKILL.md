@@ -1,10 +1,12 @@
 ---
 name: session-buster-ingress
 description: ingest session busters, continuity exports, resume packets, package queues, and handoff blocks without laundering stale state. use after bootstrap and before acting on continuity fields, especially Linear/Codex worker state, PR-gate claims, GitHub heads, package installs, GPT-native skill queues, or legacy dispatch packets. treat suggested_next_session_name as navigation metadata only. partitions verified, fallback-only, unavailable, contradicted, and blocked claims; extracts the next safe directive without mutating repos, issues, packages, or worker state.
-version: v0.2
-source_id: session-buster-ingress-v0.2
-source_path: gpt-skills/house-skills/session-buster-ingress/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v0.2
+  source-id: session-buster-ingress-v0.2
+  source-path: gpt-skills/house-skills/session-buster-ingress/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
 # Session Buster Ingress
 

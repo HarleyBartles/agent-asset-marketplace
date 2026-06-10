@@ -1,10 +1,12 @@
 ---
 description: 'Use this skill when designing, running, repairing, or interpreting a buster: a pre-action review gate that exposes hidden risk before GPT acts, dispatches, mutates a durable surface, or treats a claim as resolved.'
+metadata:
+  version: v1
+  source-id: buster-framework-v1
+  source-path: gpt-skills/house-skills/buster-framework/SKILL.md
+  provenance-name: MARK-19 core generic buster House Skills source slice
 name: buster-framework
-version: v1
-source_id: buster-framework-v1
-source_path: gpt-skills/house-skills/buster-framework/SKILL.md
-provenance_name: MARK-19 core generic buster House Skills source slice
+license: "MIT"
 ---
 # Buster Framework
 

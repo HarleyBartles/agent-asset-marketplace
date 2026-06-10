@@ -1,10 +1,12 @@
 ---
 name: session-buster
 description: create compact YAML continuity exports for future ChatGPT sessions while avoiding stale-state laundering. use when Harley asks for a session buster, continuity export, handoff, next-session block, or session closeout. when a dominant handoff focus exists, include a suggested next session name for navigation only. for coding work, preserve durable Linear issue IDs, Codex state, PR IDs, and next verification checks instead of bulky dispatch packets; Linear/Codex is the normal workflow surface and session busters are fallback continuity.
-version: v0.2
-source_id: session-buster-v0.2
-source_path: gpt-skills/house-skills/session-buster/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+metadata:
+  version: v0.2
+  source-id: session-buster-v0.2
+  source-path: gpt-skills/house-skills/session-buster/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
 # Session Buster
 

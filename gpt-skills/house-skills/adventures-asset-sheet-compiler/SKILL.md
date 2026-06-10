@@ -1,10 +1,12 @@
 ---
 name: adventures-asset-sheet-compiler
 description: Compile Adventures asset sheets and similar deterministic package artifacts from approved source material and locked candidate assets without performing image generation or editing.
-version: v1.1
-source_id: adventures-asset-sheet-compiler-v1.1
-source_path: gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md
-provenance_name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+metadata:
+  version: v1.1
+  source-id: adventures-asset-sheet-compiler-v1.1
+  source-path: gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
 # Adventures Asset Sheet Compiler
 
