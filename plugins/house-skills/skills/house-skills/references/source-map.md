@@ -61,4 +61,4 @@ Component map:
 | Rooms | rooms-character-investigation | v1 | `rooms-character-investigation-v1` | `gpt-skills/house-skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md` | imported |
 | Rooms | rooms-sheet-creator | v1 | `rooms-sheet-creator-v1` | `gpt-skills/house-skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md` | imported |
 
-The bundle version is separate from the component versions. The component versions stay encoded in the reviewed source skill names and source records.
+The bundle version is separate from the component versions. The component versions stay recorded in the source ledger and SKILL.md frontmatter metadata.

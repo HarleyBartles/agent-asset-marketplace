@@ -21,16 +21,11 @@ rules, and upstream-drain policy.
 - Flag license or rights drift, especially if the bundle metadata or README
   starts implying broader rights than the repo evidence supports.
 
-## Versioned bundle workflow
+## Unversioned active-root bundle workflow
 
-- House Skills bundle updates follow the canonical version line in
-  `gpt-skills/house-skills/`, not the import-era reconstruction notes.
-- A new skill version line is historical until the bundle projection, registry,
-  and source map point at it.
-- Update the designated source and inventory surfaces first, then regenerate the
-  bundle manifest and marketplace export.
+- House Skills bundle updates follow the unversioned active roots in `gpt-skills/house-skills/`, with current version recorded in each skill's frontmatter and version-history note.
+- A new skill version line is historical until the bundle projection, registry, and source map point at the unversioned active root.
+- Update the designated source and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.
-- Bundles and plugins are projections over canonical House Skills sources, not
-  new source-of-truth forks.
-- Project-scoped bundles, such as an Adventures pack, should point at explicit
-  canonical source paths and versions.
+- Bundles and plugins are projections over canonical House Skills sources, not new source-of-truth forks.
+- Project-scoped bundles, such as an Adventures pack, should point at explicit canonical source paths and version metadata.

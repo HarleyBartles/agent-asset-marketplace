@@ -1,6 +1,7 @@
 # House Skills Plugin Bundle
 
 This plugin is the repo-local marketplace projection for the reviewed House Skills source catalog.
+It uses unversioned active House Skill roots, with current version and provenance recorded in each skill's metadata and version-history reference.
 It is first-party Harley-owned source prepared to stay clean enough for a future permissive publication decision, with no unlicensed third-party bundled content.
 
 Bundle identity:
@@ -23,4 +24,4 @@ What lives here:
 - `tools/generate_marketplace.py` regenerates the marketplace export from the local source ledger and bundle metadata.
 - `tools/validate_marketplace.py` checks the export, plugin manifest, bundle manifest, and local path references.
 
-The bundle is intentionally a projection, not the source of truth. The active House Skills inventory still lives under `gpt-skills/house-skills/` and the source ledger remains the authoritative map of which reviewed skills are imported.
+The bundle is intentionally a projection, not the source of truth. The active House Skills inventory lives under unversioned roots in `gpt-skills/house-skills/`, and the source ledger remains the authoritative map of which reviewed skills are imported.
