@@ -1,7 +1,7 @@
 {
   "name": "house-skills",
   "version": "1.0.0",
-  "description": "Versioned Codex marketplace bundle for reviewed House Skills source records.",
+  "description": "Codex marketplace bundle for reviewed House Skills source records with unversioned active roots and version history in metadata.",
   "author": {
     "name": "Harley Bartles"
   },

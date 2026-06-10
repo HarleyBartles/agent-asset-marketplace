@@ -11,25 +11,25 @@ project-scoped Codex plugin.
 
 ## Source roots inspected
 
-- `gpt-skills/house-skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md`
-- `gpt-skills/house-skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md`
+- `gpt-skills/house-skills/adventures-project-doctrine/SKILL.md`
+- `gpt-skills/house-skills/adventures-bootstrap/SKILL.md`
+- `gpt-skills/house-skills/adventures-github-operations/SKILL.md`
+- `gpt-skills/house-skills/adventures-visual-preproduction/SKILL.md`
+- `gpt-skills/house-skills/adventures-storyboard-preflight/SKILL.md`
+- `gpt-skills/house-skills/adventures-visual-bible-creator/SKILL.md`
+- `gpt-skills/house-skills/adventures-visual-bible-interpreter/SKILL.md`
+- `gpt-skills/house-skills/adventures-image-qa/SKILL.md`
+- `gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md`
+- `gpt-skills/house-skills/adventures-frame-buster/SKILL.md`
 
 ## Generic dependencies
 
-- `gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md`
-- `gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md`
-- `gpt-skills/house-skills/linear/v1/linear-v1/SKILL.md`
-- `gpt-skills/house-skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
-- `gpt-skills/house-skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
+- `gpt-skills/house-skills/don-logan-boundary/SKILL.md`
+- `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
+- `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md`
+- `gpt-skills/house-skills/linear/SKILL.md`
+- `gpt-skills/house-skills/tps-reporting/SKILL.md`
+- `gpt-skills/house-skills/tps-ingress/SKILL.md`
 
 ## Outcome
 

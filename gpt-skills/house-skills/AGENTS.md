@@ -17,15 +17,11 @@ for global doctrine and tree-level guidance.
 - Flag false claims that a House Skill was copied verbatim, fully upstream, or
   otherwise source-complete when the repository evidence shows otherwise.
 
-## Versioned House Skills workflow
+## Unversioned active-root House Skills workflow
 
-- Imported skill versions are historical source records.
-- For semantic updates, create a new version line such as
-  `v1.1/<skill-name>-v1.1/` instead of editing the imported source in place.
+- Current active House Skills live at unversioned roots like `gpt-skills/house-skills/<skill-name>/SKILL.md`.
+- Current version is recorded in `SKILL.md` frontmatter metadata and mirrored in the source ledger.
+- Historical version folders may remain only as provenance or archive residue; do not project them as active names.
 - Do not infer active inventory from import-era notes or reconstruction rows.
-- A versioned update is only complete when the active bundle/projection/registry
-  points at the new version and the old version is historical or provenance-only.
-- Update the designated source, decision, and inventory surfaces that current
-  tooling reads, then regenerate derived projections and validate the result.
-- If multiple ledgers exist, treat them as mirrors unless the repo convention
-  explicitly gives one authoritative authority over the others.
+- Update the designated source, decision, and inventory surfaces that current tooling reads, then regenerate derived projections and validate the result.
+- If multiple ledgers exist, treat them as mirrors unless the repo convention explicitly gives one authoritative authority over the others.

@@ -27,7 +27,7 @@ Use it when you need to understand:
 
 ## Source boundary
 
-The bundle projects reviewed House Skills from `gpt-skills/house-skills/`.
+The bundle projects reviewed House Skills from unversioned roots in `gpt-skills/house-skills/`.
 
 The authoritative source ledger remains:
 
@@ -36,7 +36,7 @@ The authoritative source ledger remains:
 - `sources/house-skills/intake.json`
 - `provenance/house-skills.md`
 
-The bundle does not replace those files. It only points at them and packages a local marketplace surface around them.
+The bundle does not replace those files. It only points at them and packages a local marketplace surface around them. Current version lives in each skill's frontmatter; historical versions are summarized in `references/version-history.md` for each active skill.
 
 Marketplace exports are generated, not hand-edited:
 
