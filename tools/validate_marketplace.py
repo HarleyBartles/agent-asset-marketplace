@@ -188,7 +188,8 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
     projected_imports = [
         record
         for record in imports
-        if record.get("import_state") == "imported" and record.get("issue") == "MARK-30"
+        if record.get("import_state") == "imported"
+        and record.get("issue") in {"MARK-30", "WILL-276"}
     ]
     imported_by_id = {record["source_id"]: record for record in projected_imports}
     components = bundle_manifest.get("components", [])
@@ -368,8 +369,8 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
 
     if adventure_count != 10:
         raise ValueError("adventures-pack bundle manifest must project ten clean Adventures components")
-    if dependency_count != 6:
-        raise ValueError("adventures-pack bundle manifest must project six generic dependency components")
+    if dependency_count != 7:
+        raise ValueError("adventures-pack bundle manifest must project seven generic dependency components")
 
     for required in (
         ROOT / plugin_root / "README.md",

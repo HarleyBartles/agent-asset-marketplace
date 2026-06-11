@@ -1,6 +1,6 @@
 # Provenance Map
 
-This pack is self-contained. It includes five first-party Wild Bunch skills and
+This pack is self-contained. It includes six first-party Wild Bunch skills and
 bundled copies of selected marketplace skills.
 
 ## First-party Wild Bunch skills
@@ -10,6 +10,7 @@ bundled copies of selected marketplace skills.
 - `skills/wild-bunch-dotnet-architecture/SKILL.md`
 - `skills/wild-bunch-browser-game/SKILL.md`
 - `skills/wild-bunch-worker-verification/SKILL.md`
+- `skills/connector-safety/SKILL.md`
 
 ## Copied marketplace skills
 

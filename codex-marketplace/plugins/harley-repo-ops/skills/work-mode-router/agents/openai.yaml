@@ -1,0 +1,14 @@
+interface:
+  display_name: GPT Bootstrap
+  short_description: Routes new project sessions through one-time bootstrap, safe
+    request classification, and reserved output-shape guards.
+  icon: assets/icon.svg
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

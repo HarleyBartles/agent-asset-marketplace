@@ -23,6 +23,7 @@ Codex plugin.
 - `codex-marketplace/plugins/vercel/skills/agent-browser/SKILL.md`
 - `codex-marketplace/plugins/aspnet-core/skills/aspnet-core/SKILL.md`
 - `codex-marketplace/plugins/linear-pack/skills/linear-reference-architecture/SKILL.md`
+- `gpt-skills/house-skills/connector-safety/SKILL.md`
 
 ## Market discovery result
 
@@ -39,6 +40,8 @@ does not depend on another plugin being present:
   and is now copied into this bundle.
 - `linear-pack` is an installable local plugin that includes a CQRS-oriented
   reference-architecture skill and is now copied into this bundle.
+- `connector-safety` is a first-party House skill and is now copied into this
+  bundle as the shared connector/tool safety component.
 
 No third-party DDD/CQRS/.NET skill pack was vendored for v1 because the issue
 only requires a project-scoped pack and the current marketplace already exposes
@@ -48,7 +51,7 @@ runtime.
 
 ## Outcome
 
-- First-party skills: `5`
+- First-party skills: `6`
 - Copied marketplace skills: `9`
 - Skipped as out of scope: `0`
 - Blocked: `0`

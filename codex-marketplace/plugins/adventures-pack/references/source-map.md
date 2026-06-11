@@ -18,6 +18,7 @@ Canonical source references:
 - `gpt-skills/house-skills/don-logan-boundary/SKILL.md`
 - `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md`
+- `gpt-skills/house-skills/connector-safety/SKILL.md`
 - `gpt-skills/house-skills/linear/SKILL.md`
 - `gpt-skills/house-skills/tps-reporting/SKILL.md`
 - `gpt-skills/house-skills/tps-ingress/SKILL.md`
@@ -37,6 +38,7 @@ Local bundle paths:
 - `skills/don-logan-boundary-v1/SKILL.md`
 - `skills/gpt-base-doctrine-v1/SKILL.md`
 - `skills/worker-dispatch-linear-v1/SKILL.md`
+- `skills/connector-safety-v1/SKILL.md`
 - `skills/linear-v1/SKILL.md`
 - `skills/tps-reporting-v1/SKILL.md`
 - `skills/tps-ingress-v1/SKILL.md`
@@ -58,6 +60,7 @@ Component summary:
 | Dependency | don-logan-boundary | v1 | `gpt-skills/house-skills/don-logan-boundary/SKILL.md` | `skills/don-logan-boundary-v1/SKILL.md` | boundary gate |
 | Dependency | gpt-base-doctrine | v1 | `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md` | `skills/gpt-base-doctrine-v1/SKILL.md` | shared doctrine |
 | Dependency | worker-dispatch-linear | v1 | `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md` | `skills/worker-dispatch-linear-v1/SKILL.md` | Linear dispatch |
+| Dependency | connector-safety | v1 | `gpt-skills/house-skills/connector-safety/SKILL.md` | `skills/connector-safety-v1/SKILL.md` | connector safety |
 | Dependency | linear | v1 | `gpt-skills/house-skills/linear/SKILL.md` | `skills/linear-v1/SKILL.md` | Linear mechanics |
 | Dependency | tps-reporting | v1 | `gpt-skills/house-skills/tps-reporting/SKILL.md` | `skills/tps-reporting-v1/SKILL.md` | reporting |
 | Dependency | tps-ingress | v1 | `gpt-skills/house-skills/tps-ingress/SKILL.md` | `skills/tps-ingress-v1/SKILL.md` | ingress |

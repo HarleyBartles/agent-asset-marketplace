@@ -13,6 +13,7 @@ This note records the discovery and provenance context for the
   - `codex-marketplace/plugins/vercel/skills/agent-browser/SKILL.md`
   - `codex-marketplace/plugins/aspnet-core/`
   - `codex-marketplace/plugins/linear-pack/`
+  - `gpt-skills/house-skills/connector-safety/SKILL.md`
 
 ## Installability status
 
@@ -20,6 +21,7 @@ This note records the discovery and provenance context for the
 - `agent-browser`: installable local skill
 - `aspnet-core`: installable local marketplace asset
 - `linear-pack`: installable local marketplace asset
+- `connector-safety`: first-party House skill copied into the pack
 
 ## Not vendored
 

@@ -1733,6 +1733,18 @@
       "category": "Productivity"
     },
     {
+      "name": "harley-repo-ops",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/harley-repo-ops"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "hatch-pet",
       "source": {
         "source": "local",

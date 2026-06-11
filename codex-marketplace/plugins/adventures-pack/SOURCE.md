@@ -27,6 +27,7 @@ project-scoped Codex plugin.
 - `gpt-skills/house-skills/don-logan-boundary/SKILL.md`
 - `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md`
+- `gpt-skills/house-skills/connector-safety/SKILL.md`
 - `gpt-skills/house-skills/linear/SKILL.md`
 - `gpt-skills/house-skills/tps-reporting/SKILL.md`
 - `gpt-skills/house-skills/tps-ingress/SKILL.md`
@@ -34,8 +35,17 @@ project-scoped Codex plugin.
 ## Outcome
 
 - Clean active Adventures v1.1 skills projected: 10
-- Generic dependencies projected: 6
+- Generic dependencies projected: 7
 - Historical v1 imports projected as active inventory: 0
+
+## Bundle inventory
+
+| Bundle | Decision | Reason |
+| --- | --- | --- |
+| `plugins/house-skills/` | included | This is the shared House Skills aggregate projection, and it now carries `connector-safety` as a base/control-plane safety component for side-effecting connector/tool work. |
+| `codex-marketplace/plugins/adventures-pack/` | included | This is the existing project-scoped bundle that already composes side-effecting repo-work helpers, so `connector-safety` is useful and lawful here. |
+| `harley-repo-ops` / cross-repo worker bundle | excluded | No existing repo convention or source/component mapping made a new curated cross-repo bundle boring for this issue. |
+| other project-specific bundles | excluded | They were not required to make this issue useful, and the current scope did not justify inventing more bundle surfaces. |
 
 ## Notes
 
