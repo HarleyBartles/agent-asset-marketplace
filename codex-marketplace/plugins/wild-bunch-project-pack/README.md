@@ -15,6 +15,8 @@ This plugin bundle is the self-contained project-scoped marketplace surface for
   `skills/wild-bunch-browser-game/`
 - first-party Wild Bunch verification guidance under
   `skills/wild-bunch-worker-verification/`
+- shared first-party connector safety guidance under
+  `skills/connector-safety/`
 - copied marketplace skills for `game-studio`, `web-game-foundations`,
   `phaser-2d-game`, `game-ui-frontend`, `game-playtest`, `sprite-pipeline`,
   `agent-browser`, `aspnet-core`, and `linear-reference-architecture`

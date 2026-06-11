@@ -1,0 +1,13 @@
+interface:
+  display_name: Don Logan Boundary
+  short_description: Bound live-worker correction when a lawful task is known but
+    execution is drifting into process instead of completion.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

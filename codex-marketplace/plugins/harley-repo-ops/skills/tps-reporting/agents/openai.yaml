@@ -1,0 +1,16 @@
+interface:
+  display_name: Reporting Hygiene
+  short_description: Keep reports separate from source truth and verifier judgment
+  brand_color: '#111827'
+  default_prompt: Use $tps-reporting to review or compose governed reports, worker
+    returns, or verification summaries while preserving evidence, claims, issue-goal
+    conformance, inference, and judgement.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

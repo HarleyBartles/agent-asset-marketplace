@@ -5268,6 +5268,26 @@
             "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE"
         },
         {
+            "name": "harley-repo-ops",
+            "plugin_root": "codex-marketplace/plugins/harley-repo-ops",
+            "plugin_manifest": "codex-marketplace/plugins/harley-repo-ops/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/harley-repo-ops/SOURCE.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": null,
+            "skills_path": "codex-marketplace/plugins/harley-repo-ops/skills",
+            "provenance_refs": [
+                "provenance/harley-repo-ops.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/harley-repo-ops",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/harley-repo-ops/LICENSE"
+        },
+        {
             "name": "windsor-ai",
             "plugin_root": "codex-marketplace/plugins/windsor-ai",
             "plugin_manifest": "codex-marketplace/plugins/windsor-ai/.codex-plugin/plugin.json",
