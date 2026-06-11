@@ -118,6 +118,14 @@
                            "projection_status":  "projected"
                        },
                        {
+                           "canonical_name":  "connector-safety",
+                           "component_version":  "v1",
+                           "source_path":  "gpt-skills/house-skills/connector-safety/SKILL.md",
+                           "local_path":  "skills/connector-safety-v1/SKILL.md",
+                           "role":  "dependency",
+                           "projection_status":  "projected"
+                       },
+                       {
                            "canonical_name":  "linear",
                            "component_version":  "v1",
                            "source_path":  "gpt-skills/house-skills/linear/SKILL.md",

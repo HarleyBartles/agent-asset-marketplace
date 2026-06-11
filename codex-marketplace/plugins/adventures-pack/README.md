@@ -6,7 +6,7 @@ Adventures v1.1 House Skills line.
 ## Bundle contents
 
 - clean Adventures v1.1 skills under `skills/`
-- boring generic dependencies needed for project use
+- boring generic dependencies needed for project use, including `connector-safety` for safe connector/tool writes
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
@@ -21,6 +21,7 @@ Adventures v1.1 House Skills line.
 - Stage boundaries stay explicit: planning, source discovery, QA, image
   readiness, generation/editing, asset compilation, package work, and
   acceptance are separate lanes.
+- `connector-safety` is included as a dependency so connector-side effects stay narrow, auditable, and recoverable.
 
 ## Provenance
 

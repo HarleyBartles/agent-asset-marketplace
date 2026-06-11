@@ -368,8 +368,8 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
 
     if adventure_count != 10:
         raise ValueError("adventures-pack bundle manifest must project ten clean Adventures components")
-    if dependency_count != 6:
-        raise ValueError("adventures-pack bundle manifest must project six generic dependency components")
+    if dependency_count != 7:
+        raise ValueError("adventures-pack bundle manifest must project seven generic dependency components")
 
     for required in (
         ROOT / plugin_root / "README.md",

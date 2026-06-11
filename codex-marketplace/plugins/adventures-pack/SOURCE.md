@@ -27,6 +27,7 @@ project-scoped Codex plugin.
 - `gpt-skills/house-skills/don-logan-boundary/SKILL.md`
 - `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md`
+- `gpt-skills/house-skills/connector-safety/SKILL.md`
 - `gpt-skills/house-skills/linear/SKILL.md`
 - `gpt-skills/house-skills/tps-reporting/SKILL.md`
 - `gpt-skills/house-skills/tps-ingress/SKILL.md`
@@ -34,7 +35,7 @@ project-scoped Codex plugin.
 ## Outcome
 
 - Clean active Adventures v1.1 skills projected: 10
-- Generic dependencies projected: 6
+- Generic dependencies projected: 7
 - Historical v1 imports projected as active inventory: 0
 
 ## Notes
