@@ -42,7 +42,7 @@ project-scoped Codex plugin.
 
 | Bundle | Decision | Reason |
 | --- | --- | --- |
-| `plugins/house-skills/` | excluded from this PR | The House Skills aggregate is driven by `sources/house-skills/*`, and `connector-safety` is not currently part of that active source-ledger projection. Adding it there would require a separate source-ledger decision rather than a bundle-only edit. |
+| `plugins/house-skills/` | included | This is the shared House Skills aggregate projection, and it now carries `connector-safety` as a base/control-plane safety component for side-effecting connector/tool work. |
 | `codex-marketplace/plugins/adventures-pack/` | included | This is the existing project-scoped bundle that already composes side-effecting repo-work helpers, so `connector-safety` is useful and lawful here. |
 | `harley-repo-ops` / cross-repo worker bundle | excluded | No existing repo convention or source/component mapping made a new curated cross-repo bundle boring for this issue. |
 | other project-specific bundles | excluded | They were not required to make this issue useful, and the current scope did not justify inventing more bundle surfaces. |

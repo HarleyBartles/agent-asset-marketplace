@@ -112,6 +112,15 @@
       "import_status": "imported"
     },
     {
+      "canonical_name": "connector-safety",
+      "component_version": "v1",
+      "installed_source_skill_id": "connector-safety-v1",
+      "source_path": "gpt-skills/house-skills/connector-safety/SKILL.md",
+      "lane": "base/control-plane",
+      "source_group": "WILL-276 active imports / Base and control plane",
+      "import_status": "imported"
+    },
+    {
       "canonical_name": "adventures-bootstrap",
       "component_version": "v1.1",
       "installed_source_skill_id": "adventures-bootstrap-v1.1",

@@ -234,21 +234,31 @@
     "scope": "Crew role-lens doctrine",
     "notes": "Imported as the Crew doctrine source that compresses responsibility and authority without becoming a worker identity or dispatch route."
   },
-  {
-    "issue": "MARK-30",
-    "source_id": "crew-buster-v1",
-    "source_path": "gpt-skills/house-skills/crew-buster/SKILL.md",
-    "public_name": "crew-buster",
-    "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
-    "import_state": "imported",
-    "scope": "Crew planning and route interrogation",
-    "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "adventures-bootstrap-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-bootstrap/SKILL.md",
-    "public_name": "adventures-bootstrap",
+    {
+      "issue": "MARK-30",
+      "source_id": "crew-buster-v1",
+      "source_path": "gpt-skills/house-skills/crew-buster/SKILL.md",
+      "public_name": "crew-buster",
+      "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
+      "import_state": "imported",
+      "scope": "Crew planning and route interrogation",
+      "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
+    },
+    {
+      "issue": "WILL-276",
+      "source_id": "connector-safety-v1",
+      "source_path": "gpt-skills/house-skills/connector-safety/SKILL.md",
+      "public_name": "connector-safety",
+      "provenance_name": "installed connector-safety package landed via WILL-274",
+      "import_state": "imported",
+      "scope": "connector and tool safety blocks, blocked-write recovery, narrow retries, and safe-action reporting",
+      "notes": "Imported as the shared House skill safety component for side-effecting connector/tool work. Keep the canonical source in the House skills lane and project it where shared connector safety is useful."
+    },
+    {
+      "issue": "MARK-30",
+      "source_id": "adventures-bootstrap-v1.1",
+      "source_path": "gpt-skills/house-skills/adventures-bootstrap/SKILL.md",
+      "public_name": "adventures-bootstrap",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
     "scope": "Adventures first-read router",

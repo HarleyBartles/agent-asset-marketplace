@@ -70,10 +70,10 @@
 - Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work.
 
-## MARK-30 active imports
+## Active imports
 
 ### Base and control plane
 

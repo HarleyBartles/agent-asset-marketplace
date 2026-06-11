@@ -3,6 +3,7 @@
 This plugin is the repo-local marketplace projection for the reviewed House Skills source catalog.
 It uses unversioned active House Skill roots, with current version and provenance recorded in each skill's metadata and version-history reference.
 It is first-party Harley-owned source prepared to stay clean enough for a future permissive publication decision, with no unlicensed third-party bundled content.
+It now also projects `connector-safety` as a shared base/control-plane safety component for side-effecting connector/tool work.
 
 Bundle identity:
 

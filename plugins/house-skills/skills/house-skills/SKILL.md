@@ -61,4 +61,6 @@ The bundle intentionally projects the reviewed House Skills in the same three bo
 - Adventures
 - Rooms
 
+The base/control-plane lane also carries the shared `connector-safety` component so connector and tool work stays narrow, recoverable, and auditable.
+
 For the exact component list, open `references/bundle-manifest.json` or `references/source-map.md`.
