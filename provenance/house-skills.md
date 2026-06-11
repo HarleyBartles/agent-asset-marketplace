@@ -32,6 +32,15 @@
 - Scope: skill maintenance breakdown and closure checks
 - Notes: Remains v0.1. One-at-a-time is the reliable boring path. Batch handoff remains unreliable and non-closure-critical.
 
+## connector-safety
+
+- Source path: `gpt-skills/house-skills/connector-safety/SKILL.md`
+- Public identity: `connector-safety`
+- Provenance/history: installed connector-safety package landed via WILL-274
+- Ownership: Harley-authored first-party House skill
+- Scope: connector and tool safety blocks, blocked-write recovery, narrow retries, and safe-action reporting
+- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control. `assets/icon.svg` was not included because the SVG bytes were not accessible in this environment; that omission is intentional and does not imply a third-party origin.
+
 ## adventures-project-doctrine-v1
 
 - Source path: `gpt-skills/house-skills/adventures-project-doctrine/v1/adventures-project-doctrine-v1/SKILL.md`
