@@ -1,0 +1,12 @@
+interface:
+  display_name: Connector Safety
+  short_description: Safely handle blocked connector and tool writes.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
