@@ -2,8 +2,8 @@
 name: linear
 description: 'Use for Linear connector mechanics: reading, creating, updating, commenting, and organizing Linear issues, projects, documents, labels, and statuses. Use when the user asks to inspect or mutate Linear objects, capture side notes durably, create planning issues/projects, or recover from Linear connector quirks. Do not use as the coding dispatch control plane: Linear/Codex worker routing, Codex status checks, PR-gate handling, and dispatch decisions belong to worker-dispatch-linear; GitHub proof belongs to the repo/GitHub proof surface.'
 metadata:
-  version: v1
-  source-id: linear-v1
+  version: v1.1
+  source-id: linear-v1.1
   source-path: gpt-skills/house-skills/linear/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 license: "MIT"
@@ -62,6 +62,31 @@ Known high-signal quirks:
 - Project assignment by project ID has worked where project-name assignment blocked.
 - Clearing an issue project with `project: null` was rejected by the exposed schema.
 - Some calls were blocked until Harley refreshed the tool, then worked.
+
+## Label compatibility
+
+For Linear issue-label reads, prefer small paginated reads using the team key rather than the display name.
+
+Safe read probe in Harley's workspace:
+
+```json
+{"team":"WILL","limit":5}
+```
+
+Then continue with the returned `cursor`, keeping `team` as the team key or the verified team UUID.
+
+Observed behavior:
+
+- `team: "WILL"` worked for reading Will Workspace labels where the display-name form was unreliable or blocked.
+- Small limits such as `5` or `20` worked and were easier to recover from.
+- Broad label inventory calls or display-name team strings can trigger tool-layer blocking.
+
+For team-scoped label writes:
+
+1. Call `list_teams` first if the team key or UUID is not already known.
+2. Use `list_issue_labels({"team":"<team-key>","limit":5})` as the first read probe.
+3. Paginate with the returned cursor using the same team key or verified UUID.
+4. After read proof, create or update labels one label at a time with the verified team UUID.
 
 ## Legacy overlays
 

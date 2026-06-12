@@ -50,8 +50,8 @@
     },
     {
       "canonical_name": "linear",
-      "component_version": "v1",
-      "installed_source_skill_id": "linear-v1",
+      "component_version": "v1.1",
+      "installed_source_skill_id": "linear-v1.1",
       "source_path": "gpt-skills/house-skills/linear/SKILL.md",
       "lane": "base/control-plane",
       "source_group": "MARK-30 active imports / Base and control plane",

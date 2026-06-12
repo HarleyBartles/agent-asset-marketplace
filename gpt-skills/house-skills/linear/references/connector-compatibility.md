@@ -19,6 +19,31 @@ The connector successfully:
 - assigned imported issues to a project by project ID;
 - created Linear documents attached to a project.
 
+## Label reads and writes
+
+For Linear issue-label reads, prefer small paginated reads using the team key rather than the display name.
+
+Safe read probe in Harley's workspace:
+
+```json
+{"team":"WILL","limit":5}
+```
+
+Then continue with the returned `cursor`, keeping `team` as the team key or the verified team UUID.
+
+Observed behavior:
+
+- `team: "WILL"` worked for reading Will Workspace labels where the display-name form was unreliable or blocked.
+- Small limits such as `5` or `20` worked and made the call easier to recover from.
+- Broad label inventory calls or display-name team strings can trigger tool-layer blocking.
+
+For team-scoped label writes:
+
+1. Call `list_teams` first if the team key or UUID is not already known.
+2. Use `list_issue_labels({"team":"<team-key>","limit":5})` as the first read probe.
+3. Paginate with the returned cursor using the same team key or verified UUID.
+4. After read proof, create or update labels one label at a time with the verified team UUID.
+
 
 ## Project status reality check
 
