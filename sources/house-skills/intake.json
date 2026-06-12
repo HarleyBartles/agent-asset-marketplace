@@ -140,7 +140,7 @@
     },
     {
       "issue": "MARK-30",
-      "source_id": "linear-v1",
+      "source_id": "linear-v1.1",
       "source_path": "gpt-skills/house-skills/linear/SKILL.md",
       "public_name": "linear",
       "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",

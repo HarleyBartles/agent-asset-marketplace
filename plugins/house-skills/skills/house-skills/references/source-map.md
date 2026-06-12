@@ -36,7 +36,7 @@ Component map:
 | Base and control plane | gpt-base-doctrine | v1 | `gpt-base-doctrine-v1` | `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md` | imported |
 | Base and control plane | work-mode-router | v1 | `work-mode-router-v1` | `gpt-skills/house-skills/work-mode-router/SKILL.md` | imported |
 | Base and control plane | worker-dispatch-linear | v1 | `worker-dispatch-linear-v1` | `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md` | imported |
-| Base and control plane | linear | v1 | `linear-v1` | `gpt-skills/house-skills/linear/SKILL.md` | imported |
+| Base and control plane | linear | v1.1 | `linear-v1.1` | `gpt-skills/house-skills/linear/SKILL.md` | imported |
 | Base and control plane | tps-reporting | v1 | `tps-reporting-v1` | `gpt-skills/house-skills/tps-reporting/SKILL.md` | imported |
 | Base and control plane | tps-ingress | v1 | `tps-ingress-v1` | `gpt-skills/house-skills/tps-ingress/SKILL.md` | imported |
 | Base and control plane | session-buster | v0.2 | `session-buster-v0.2` | `gpt-skills/house-skills/session-buster/SKILL.md` | imported |
