@@ -4240,6 +4240,26 @@
             "license_path": "codex-marketplace/plugins/replit-pack/LICENSE"
         },
         {
+            "name": "repo-worker-base",
+            "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+            "plugin_manifest": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": null,
+            "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
+            "provenance_refs": [
+                "provenance/repo-worker-base.md"
+            ],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/repo-worker-base",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE"
+        },
+        {
             "name": "responsive",
             "plugin_root": "codex-marketplace/plugins/responsive",
             "plugin_manifest": "codex-marketplace/plugins/responsive/.codex-plugin/plugin.json",
