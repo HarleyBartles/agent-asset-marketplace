@@ -1,6 +1,8 @@
 # Reporting and issue hygiene
 
-Use `tps-reporting` first for generic report partitioning. Use `rooms-tps-reporting` when the report-like artifact is Rooms-specific or touches Chris, Albert/Pit, Brian/World, Derek/Manuscript, Will/workspace, issue closure, publication, receipts, or continuity.
+Use `tps-reporting-v1` first for generic report partitioning. Use the reporting-and-issue-hygiene guidance under
+`rooms-project-doctrine-v1` when the report-like artifact is Rooms-specific or touches Chris, Albert/Pit, Brian/World,
+Derek/Manuscript, Will/workspace, issue closure, publication, receipts, or continuity.
 
 A Rooms report is not canon, archive evidence, manuscript authority, or publication proof. Report laundering happens when smooth prose promotes worker claims, archive richness, conversation memory, validation notes, or inference into durable Rooms truth.
 

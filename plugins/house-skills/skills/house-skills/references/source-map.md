@@ -26,7 +26,7 @@ Lane summary:
 
 - Base and control plane: all reviewed imports from MARK-30 plus the shared connector-safety import from WILL-276 in the base/control-plane lane.
 - Adventures: all reviewed imports from MARK-30 in the Adventures lane.
-- Rooms: all reviewed imports from MARK-30 in the Rooms lane.
+- Rooms: all reviewed imports from MARK-30 in the Rooms lane, plus the MARK-23 `rooms-image-sidecars` import.
 
 Component map:
 
@@ -54,6 +54,7 @@ Component map:
 | Adventures | adventures-asset-sheet-compiler | v1.1 | `adventures-asset-sheet-compiler-v1.1` | `gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md` | imported |
 | Adventures | adventures-frame-buster | v1.1 | `adventures-frame-buster-v1.1` | `gpt-skills/house-skills/adventures-frame-buster/SKILL.md` | imported |
 | Rooms | rooms-project-doctrine | v1 | `rooms-project-doctrine-v1` | `gpt-skills/house-skills/rooms-project-doctrine/SKILL.md` | imported |
+| Rooms | rooms-image-sidecars | v0.1 | `rooms-image-sidecars-v0.1` | `gpt-skills/house-skills/rooms-image-sidecars/SKILL.md` | imported |
 | Rooms | rooms-bootstrap | v1 | `rooms-bootstrap-v1` | `gpt-skills/house-skills/rooms-bootstrap/SKILL.md` | imported |
 | Rooms | rooms-source-partitioning | v1 | `rooms-source-partitioning-v1` | `gpt-skills/house-skills/rooms-source-partitioning/SKILL.md` | imported |
 | Rooms | rooms-ambiguity-buster | v1 | `rooms-ambiguity-buster-v1` | `gpt-skills/house-skills/rooms-ambiguity-buster/SKILL.md` | imported |

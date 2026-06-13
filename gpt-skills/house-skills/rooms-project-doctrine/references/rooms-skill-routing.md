@@ -2,20 +2,20 @@
 
 Use the most specific skill.
 
-- `work-mode-router`: GPT-wide first-turn bootstrap routing pattern.
+- `work-mode-router-v1`: GPT-wide first-turn bootstrap routing pattern.
 - `rooms-bootstrap-v1`: Rooms first-turn project/source/doctrine mediator.
 - `rooms-project-doctrine-v1`: shared Rooms doctrine routing and references.
-- `rooms-conversation-posture`: ordinary Rooms creative or conversational posture.
-- `rooms-mode-router`: decide conversation, analysis, dispatch, issue, or verification posture when unclear.
-- `rooms-grounded-answering`: named Rooms truth, canon, archive, manuscript, actor, or repo claims.
-- `rooms-analysis-mode`: bounded read-and-reason repo/source inspection.
 - `rooms-source-partitioning-v1`: label evidence basis and prevent search/report/conversation laundering.
-- `rooms-domain-truth-boundaries`: archive/canon/manuscript/report/conversation/machine-truth boundaries.
+- `gpt-base-doctrine-v1.1`: shared Rooms doctrine, grounding, and truth-boundary references.
 - `rooms-ambiguity-buster-v1`: preserve uncertainty around identity, motive, witness, authorship, archive gaps, narrator knowledge, and disappearance.
-- `worker-dispatch-linear`: worker/action dispatch routing and PR-gate handling for repo-backed Rooms work.
+- `rooms-analogy-buster-v1`: Rooms analogy pressure checks and useful-break handling.
+- `rooms-zoom-outs-buster-v1`: large-picture readiness checks.
+- `rooms-character-investigation-v1`: broad repo lookup and source-partitioned investigation packets.
+- `rooms-sheet-creator-v1`: prompt, peek, and recall sheet creation from investigation packets.
+- `rooms-image-sidecars-v0.1`: image-sidecar prep packets before Albert/Pit ingestion.
+- `worker-dispatch-linear-v1`: worker/action dispatch routing and PR-gate handling for repo-backed Rooms work.
+- `tps-reporting-v1`: generic report partitioning and report hygiene.
+- `tps-ingress-v1`: report ingress and review-comment verification.
 - `repo/GitHub proof surface`: repo, wrapper, gitlink, publication, and worker-return verification.
-- `rooms-source-partitioning-v1`: Rooms report, worker return, issue comment, continuity, and publication-summary partitioning.
-- `rooms-ambiguity-buster-v1`: preserve uncertainty around identity, motive, witness, authorship, archive gaps, narrator knowledge, and disappearance.
-- `rooms-tps-ingress`: verify review comments, worker returns, and feedback before accepting them as scope or closure input.
 
 If more than one skill appears relevant, choose the most specific owner after bootstrap and project-doctrine routing.
