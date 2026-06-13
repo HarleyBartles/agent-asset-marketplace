@@ -1,27 +1,36 @@
 ---
 name: adventures-asset-sheet-compiler
-description: Compile Adventures asset sheets and similar deterministic package artifacts from approved source material and locked candidate assets without performing image generation or editing.
-metadata:
-  source-id: adventures-asset-sheet-compiler
-  source-path: plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+description: compile Adventures asset sheets through deterministic no-credit template work. Use when Harley asks to compile, assemble, lay out, inspect, package, or QA externally accepted source images on an approved template, or to author a blank reusable asset-sheet template package using bundled PIL tooling. Do not treat PIG self-QA as acceptance.
 ---
+
 # Adventures Asset Sheet Compiler
 
-Use this skill when Adventures work needs a deterministic asset sheet, package, or inventory artifact.
+Use this skill for deterministic Adventures asset-sheet work: compiling accepted source images onto an approved template, inspecting compiled layout, packaging rendered sheets, or authoring reusable blank template packages.
 
 ## Owned decision
 
-Compile the sheet from the approved source material and accepted candidates.
+Decide whether the request is a deterministic compile, blank-template authoring task, compiled-sheet QA handoff, or blocked because source images/templates are missing or unaccepted.
 
 ## Hard boundaries
 
-Compilation is not image generation or image editing.
+Do not generate, regenerate, restyle, or creatively edit source art. This skill may use only deterministic no-credit work and non-credit pixel operations such as PIL placement, crop, trim, annotation, or template rendering. If source art needs repair or new pixels, route to image QA/preflight and stop.
+
+PIG output is candidate production art until external Adventures/GPT/Harley acceptance says otherwise. Do not compile a PIG candidate or PIG self-QA pass into an asset sheet as accepted source art. Use only images whose acceptance/source status is explicit for the target sheet, or return a blocker identifying the missing external acceptance evidence.
+
+## Progressive references
+
+Read `references/compiler-operating-contract.md` when compiling sheets, authoring templates, checking template sidecars, running bundled commands, packaging outputs, or diagnosing failures.
+
+Read `references/manifest-schema.md` when creating or validating a compile manifest.
+
+Read `references/template-package-authoring.md` when creating or validating a reusable blank template package.
+
+For normal deterministic execution, do not read scripts. Use the command recipes in `references/compiler-operating-contract.md`; inspect scripts only after execution failure, package validation, or explicit script editing.
 
 ## Minimal workflow
 
-1. Gather the approved inputs and their lane status.
-2. Compile the deterministic package artifact.
-3. Check the output for lane correctness.
-4. Stop before downstream acceptance claims.
+1. Classify Lane A compile vs Lane B template authoring vs blocked/reroute.
+2. Verify accepted source images and matching repo/project-source template inputs.
+3. Create or validate the required manifest or template package.
+4. Run the deterministic bundled command.
+5. Inspect exact outputs and return rendered/package links.
