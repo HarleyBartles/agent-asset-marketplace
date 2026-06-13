@@ -274,7 +274,14 @@ def validate_skill_bundle_manifest(
 
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
-    if len(actual_skill_dirs) != len(imported_entries):
+    imported_skill_dirs = {
+        Path(entry["local_path"]).parts[1]
+        for entry in imported_entries
+        if isinstance(entry.get("local_path"), str)
+        and Path(entry["local_path"]).parts[:1] == ("skills",)
+        and len(Path(entry["local_path"]).parts) >= 3
+    }
+    if len(actual_skill_dirs) != len(imported_skill_dirs):
         raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
 
     for entry in imported_entries:

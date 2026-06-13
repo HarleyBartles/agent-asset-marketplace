@@ -4,8 +4,8 @@
   "upstream_repo": "mshumer/unslop",
   "pinned_commit": "edcb62386d129c65e4395f0cfcc9168eb1ba2148",
   "source_root": ".",
-  "candidate_count": 1,
-  "imported_count": 1,
+  "candidate_count": 3,
+  "imported_count": 3,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -14,6 +14,18 @@
       "local_path": "skills/unslop/SKILL.md",
       "import_status": "imported",
       "adaptation_note": "Reimplemented as an Asset Marketplace GPT/Codex skill with bundled Python scripts, local sample orchestration, output manifests, validators, and optional visual dependency smoke checks."
+    },
+    {
+      "upstream_path": "profiles/writing.md",
+      "local_path": "skills/unslop/profiles/writing.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied byte-for-byte from the pinned vendor snapshot and kept as market-facing profile evidence for traceability."
+    },
+    {
+      "upstream_path": "profiles/react-design.md",
+      "local_path": "skills/unslop/profiles/react-design.md",
+      "import_status": "imported",
+      "adaptation_note": "Copied byte-for-byte from the pinned vendor snapshot and kept as market-facing profile evidence for traceability."
     }
   ]
 }

@@ -178,6 +178,12 @@ def load_samples(samples_dir: Path | None, inline_samples: list[str], dtype: str
 
 
 def prepare_output(out: Path) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    for child in list(out.iterdir()):
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
     for child in ("samples", "before-after"):
         (out / child).mkdir(parents=True, exist_ok=True)
 
@@ -521,6 +527,29 @@ def build_manifest(
         provider_mode = "inline-samples" if not args.samples_dir else "sample-folder+inline"
     if args.prompts_only:
         provider_mode = "prompt-generation-only"
+        return {
+            "tool": "asset-marketplace-unslop",
+            "tool_version": TOOL_VERSION,
+            "created_at": utc_now(),
+            "domain": args.domain,
+            "type": args.type,
+            "output_contract": "unslop-prompts-only/v1",
+            "upstream_provenance": UPSTREAM,
+            "parameters": {
+                "count": args.count,
+                "output": str(args.output),
+                "skip_comparison": args.skip_comparison,
+            },
+            "provider_orchestration_mode": provider_mode,
+            "prompts": {"path": "prompts.json", "count": len(prompts)},
+            "samples": {"path": "samples/", "count": len(sample_records), "items": sample_records},
+            "visual_smoke": visual_smoke_result,
+            "visual_evidence": visual_evidence,
+            "validation": {"passed": validation_passed, "issues": validation_issues, "path": "validation.md"},
+            "outputs": {
+                "prompts": "prompts.json",
+            },
+        }
     return {
         "tool": "asset-marketplace-unslop",
         "tool_version": TOOL_VERSION,
@@ -558,7 +587,6 @@ def run(args: argparse.Namespace) -> int:
         visual = visual_smoke(args.type)
         validation_passed = True
         validation_issues: list[str] = []
-        write_validation(out, validation_passed, validation_issues, {"status": "not_requested"})
         manifest = build_manifest(args, prompts, [], visual, {"status": "not_requested"}, validation_passed, validation_issues)
         write_json(out / "manifest.json", manifest)
         print(f"Wrote prompts to {out / 'prompts.json'}")

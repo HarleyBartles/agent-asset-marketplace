@@ -49,6 +49,8 @@ For quick smoke validation of the package itself, use:
 python3 scripts/unslop.py --domain "release note writing" --fixture-samples --output ./unslop-output
 ```
 
+If you only need prompts, add `--prompts-only`; that mode writes `prompts.json` plus a manifest with the `unslop-prompts-only/v1` contract instead of the full analysis bundle.
+
 ## Output Review
 
 - `analysis.md` must include counts, concrete repeated patterns, and language tied to the requested domain.
