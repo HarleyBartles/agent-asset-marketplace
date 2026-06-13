@@ -49,6 +49,14 @@
 - Scope: Adventures project doctrine
 - Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired image-generation framing, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
 
+## gpt-base-doctrine-v1.1
+
+- Source path: `gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md`
+- Public identity: `gpt-base-doctrine-v1.1`
+- Provenance/history only: MARK-30 base and control plane update
+- Scope: GPT-wide shared doctrine
+- Notes: Imported as the shared doctrine store for GPT-wide House Skills, including the bounded read-loop doctrine and the updated source/reference routing table.
+
 ## rooms-image-sidecars
 
 - Source path: `gpt-skills/house-skills/rooms-image-sidecars/v0.1/rooms-image-sidecars-v0.1/SKILL.md`
@@ -78,7 +86,7 @@
 ### Base and control plane
 
 - `don-logan-boundary-v1` - `gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `gpt-base-doctrine-v1` - `gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md`
+- `gpt-base-doctrine-v1.1` - `gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md`
 - `work-mode-router-v1` - `gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `worker-dispatch-linear-v1` - `gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md`
 - `linear-v1.1` - `gpt-skills/house-skills/linear/SKILL.md`
