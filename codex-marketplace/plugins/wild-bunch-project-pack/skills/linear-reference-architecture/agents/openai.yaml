@@ -1,4 +1,0 @@
-interface:
-  display_name: "Linear Reference Architecture"
-  short_description: "Use CQRS and architecture patterns for Linear-style integrations"
-  default_prompt: "Apply the Linear reference architecture to reason about CQRS and integration patterns."

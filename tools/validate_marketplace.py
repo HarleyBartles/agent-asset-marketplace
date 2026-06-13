@@ -171,6 +171,17 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
             raise ValueError(f"Marketplace registry {name} category mismatch")
 
 
+def validate_active_plugin_tree() -> None:
+    plugin_root = ROOT / "codex-marketplace/plugins"
+    expected_names = sorted(spec["name"] for spec in MARKETPLACE_PLUGIN_SPECS)
+    actual_names = sorted(path.name for path in plugin_root.iterdir() if path.is_dir())
+    if actual_names != expected_names:
+        raise ValueError(
+            "codex-marketplace/plugins contains non-protected plugin roots: "
+            f"expected {expected_names}, found {actual_names}"
+        )
+
+
 def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_root: str) -> None:
     if plugin_manifest.get("name") != plugin_name:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
@@ -462,6 +473,7 @@ def main() -> int:
 
     validate_decisions(decisions, decision_rows, decisions_md_text)
     validate_marketplace_registry(registry, plugin_manifests)
+    validate_active_plugin_tree()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
@@ -495,8 +507,6 @@ def main() -> int:
     check_text(ROOT / "provenance/MARK-46-activity-log.md")
     check_text(ROOT / "provenance/MARK-62-activity-log.md")
     check_text(ROOT / "provenance/claude-code-plugins-plus-skills-reference.md")
-    check_text(ROOT / "codex-marketplace/plugins/testing-skill-pack/README.md")
-    check_text(ROOT / "codex-marketplace/plugins/testing-skill-pack/SOURCE.md")
     check_text(PLUGIN_README_PATH)
     check_text(PLUGIN_SKILL_PATH)
     check_text(PLUGIN_BUNDLE_AGENTS_PATH)
