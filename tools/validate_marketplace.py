@@ -193,11 +193,11 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         raise ValueError("bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("plugin_root") != "plugins/house-skills":
+    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
     if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
         raise ValueError("bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("skills_root") != "plugins/house-skills/skills":
+    if bundle_manifest.get("skills_root") != "codex-marketplace/plugins/house-skills/skills":
         raise ValueError("bundle manifest skills_root mismatch")
 
     control_plane = bundle_manifest.get("control_plane_skill")
@@ -206,11 +206,11 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
     if control_plane.get("name") != "house-skills":
         raise ValueError("bundle manifest control plane name mismatch")
     control_plane_path = control_plane.get("path")
-    if control_plane_path != "plugins/house-skills/skills/house-skills/SKILL.md":
+    if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md":
         raise ValueError("bundle manifest control plane path mismatch")
     check_path_exists(ROOT / control_plane_path)
 
-    skill_dir = ROOT / "plugins/house-skills/skills"
+    skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
         path.name for path in skill_dir.iterdir() if path.is_dir() and path.name != "house-skills"
     )
@@ -345,7 +345,7 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         raise ValueError("adventures-pack bundle manifest marketplace_root mismatch")
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/adventures-pack":
         raise ValueError("adventures-pack bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_root") != "plugins/house-skills/skills":
+    if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/house-skills/skills":
         raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_of_truth") != [
         "sources/house-skills/decisions.json",
@@ -437,9 +437,9 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
 
 def validate_source_map(text: str) -> None:
     for needle in (
-        "plugins/house-skills/skills/",
-        "plugins/house-skills/skills/house-skills/SKILL.md",
-        "plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+        "codex-marketplace/plugins/house-skills/skills/",
+        "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
         "Historical source custody remains under `gpt-skills/house-skills/`",
         "All live current roots are unversioned plugin folders.",
     ):

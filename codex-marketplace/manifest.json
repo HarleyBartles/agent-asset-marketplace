@@ -8,7 +8,7 @@
       "name": "house-skills",
       "source": {
         "source": "local",
-        "path": "./plugins/house-skills"
+        "path": "./codex-marketplace/plugins/house-skills"
       },
       "policy": {
         "installation": "AVAILABLE",

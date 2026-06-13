@@ -44,10 +44,10 @@
         },
         {
             "name": "house-skills-bundle",
-            "path": "plugins/house-skills",
+            "path": "codex-marketplace/plugins/house-skills",
             "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
             "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "plugins/house-skills/AGENTS.md",
+            "nearest_scoped_agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py"
@@ -132,22 +132,22 @@
     "marketplace_plugins": [
         {
             "name": "house-skills",
-            "plugin_root": "plugins/house-skills",
-            "plugin_manifest": "plugins/house-skills/.codex-plugin/plugin.json",
+            "plugin_root": "codex-marketplace/plugins/house-skills",
+            "plugin_manifest": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
             "source_md": null,
             "source_ledger": [
                 "sources/house-skills/decisions.json",
                 "sources/house-skills/decisions.md",
                 "sources/house-skills/intake.json"
             ],
-            "license_reference": "first-party license declared in plugins/house-skills/.codex-plugin/plugin.json",
-            "bundle_manifest": "plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-            "skills_path": "plugins/house-skills/skills",
+            "license_reference": "first-party license declared in codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
+            "bundle_manifest": "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/house-skills/skills",
             "provenance_refs": [
                 "provenance/house-skills.md"
             ],
-            "agents_md": "plugins/house-skills/AGENTS.md",
-            "registry_path": "./plugins/house-skills",
+            "agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
+            "registry_path": "./codex-marketplace/plugins/house-skills",
             "registry_alignment": {
                 "status": "aligned",
                 "note": null

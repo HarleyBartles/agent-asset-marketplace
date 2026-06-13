@@ -28,7 +28,7 @@ dispatch and connector-safe side effects.
 
 | Bundle | Decision | Reason |
 | --- | --- | --- |
-| `plugins/house-skills/` | included | This is the shared aggregate projection and now carries `connector-safety` in the base/control-plane lane. |
+| `codex-marketplace/plugins/house-skills/` | included | This is the shared aggregate projection and now carries `connector-safety` in the base/control-plane lane. |
 | `codex-marketplace/plugins/adventures-pack/` | included | This project pack already composes repo-work helpers and benefits from connector-safe side-effect handling. |
 | `codex-marketplace/plugins/wild-bunch-project-pack/` | included | This project pack benefits from the same shared safety component when workers touch Wild Bunch source or perform side effects. |
 | `codex-marketplace/plugins/harley-repo-ops/` | included | This is the curated cross-repo worker bundle for Harley repos and is the cleanest home for the shared worker-control-plane skills. |

@@ -14,7 +14,7 @@ CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
 REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 UPSTREAM_VENDOR_ROOT = ROOT / "sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6"
-PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
+PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json"
 MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
 TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
 SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json"
@@ -26,7 +26,7 @@ COHERE_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cohere-pack
 DATABRICKS_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/databricks-pack/.codex-plugin/plugin.json"
 FLYIO_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/.codex-plugin/plugin.json"
 ADVENTURES_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json"
-BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
+BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 TESTING_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json"
 SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json"
 VERCEL_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json"
@@ -39,10 +39,10 @@ FLYIO_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/refere
 ADVENTURES_PACK_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json"
 ADVENTURES_PACK_SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/source-map.md"
 ADVENTURES_PACK_SKILL_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/skills/adventures-pack/SKILL.md"
-SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
-PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
-PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
-PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "plugins/house-skills/AGENTS.md"
+SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md"
+PLUGIN_README_PATH = ROOT / "codex-marketplace/plugins/house-skills/README.md"
+PLUGIN_SKILL_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
+PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "codex-marketplace/plugins/house-skills/AGENTS.md"
 SOURCE_DECISIONS_MD_PATH = ROOT / "sources/house-skills/decisions.md"
 SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/house-skills/decisions.json"
 SOURCE_INTAKE_JSON_PATH = ROOT / "sources/house-skills/intake.json"
@@ -63,8 +63,8 @@ def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
     specs: list[dict[str, str | Path]] = [
         {
             "name": "house-skills",
-            "registry_path": "./plugins/house-skills",
-            "plugin_root": "plugins/house-skills",
+            "registry_path": "./codex-marketplace/plugins/house-skills",
+            "plugin_root": "codex-marketplace/plugins/house-skills",
             "manifest_path": PLUGIN_MANIFEST_PATH,
         },
     ]
@@ -114,7 +114,7 @@ EXPECTED_MARKETPLACE = {
 
 EXPECTED_PLUGIN_NAME = "house-skills"
 EXPECTED_PLUGIN_VERSION = "1.0.0"
-EXPECTED_PLUGIN_ROOT = "plugins/house-skills"
+EXPECTED_PLUGIN_ROOT = "codex-marketplace/plugins/house-skills"
 EXPECTED_MARKETPLACE_ROOT = ".agents/plugins/marketplace.json"
 EXPECTED_SOURCE_OF_TRUTH = [
     "sources/house-skills/decisions.json",

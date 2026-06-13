@@ -27,7 +27,7 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
 For this normalized pass, the active plugin set is limited to the protected
-roots: `plugins/house-skills`, `codex-marketplace/plugins/adventures-pack`,
+roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adventures-pack`,
 `codex-marketplace/plugins/unslop`, and
 `codex-marketplace/plugins/game-studio`.
 
@@ -100,7 +100,7 @@ Policy:
 
 - `codex-marketplace/` - marketplace source layout and active plugin source shape.
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
-- `plugins/` - repo-local marketplace bundle projections, including `plugins/house-skills/`.
+- `plugins/` - repo-local marketplace bundle projections, including `codex-marketplace/plugins/house-skills/`.
 - `gpt-skills/` - GPT-native skill sources and supporting notes.
 - `gpt-skills/house-skills/` - Harley-authored first-party GPT skills only.
 - `sources/vendor/` - third-party source custody and source snapshots.
