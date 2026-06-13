@@ -365,6 +365,16 @@
       "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
       "scope": "Rooms sheet creation from durable packets",
       "import_state": "imported"
+    },
+    {
+      "issue": "MARK-97",
+      "source_id": "rooms-canon-buster-v1",
+      "source_path": "gpt-skills/house-skills/rooms-canon-buster/SKILL.md",
+      "public_name": "rooms-canon-buster",
+      "provenance_name": "MARK-97 attached rooms canon buster zip update",
+      "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
+      "import_state": "imported",
+      "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
     }
   ]
 }

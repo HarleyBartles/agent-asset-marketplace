@@ -65,6 +65,15 @@
 - Scope: Rooms image sidecar preparation
 - Notes: Imported as the primary Rooms survivor. Provides GPT-side starter packet guidance for image evidence before Albert/Pit ingestion. No standalone GitHub mechanics, canon busters, or adjacent Rooms residue were imported.
 
+## rooms-canon-buster
+
+- Source path: `gpt-skills/house-skills/rooms-canon-buster/SKILL.md`
+- Public identity: `rooms-canon-buster`
+- Provenance/history: MARK-97 attached rooms canon buster zip update
+- Ownership: Harley-authored first-party House skill
+- Scope: Rooms canon pressure checks and lawful canon/item adjustment
+- Notes: Canonical source now lives in the House skills lane and is projected into the Rooms portion of the bundle. `agents/openai.yaml` was copied into repo source control and keeps the clear policy/interface fields from the zip. `assets/icon.svg` was included with the zip and is vendored here.
+
 ## House Skills plugin projection
 
 - Bundle name: `house-skills`
@@ -78,8 +87,8 @@
 - Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane and the `rooms-canon-buster` Rooms canon-pressure overlay.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, and `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay.
 
 ## Active imports
 

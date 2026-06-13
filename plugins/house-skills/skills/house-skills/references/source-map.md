@@ -26,7 +26,7 @@ Lane summary:
 
 - Base and control plane: all reviewed imports from MARK-30 plus the shared connector-safety v1.1 import from WILL-276 in the base/control-plane lane.
 - Adventures: all reviewed imports from MARK-30 in the Adventures lane.
-- Rooms: all reviewed imports from MARK-30 in the Rooms lane, plus the MARK-23 `rooms-image-sidecars` import.
+- Rooms: all reviewed imports from MARK-30 in the Rooms lane, plus the MARK-23 `rooms-image-sidecars` import and the MARK-97 `rooms-canon-buster` import.
 
 Component map:
 
@@ -62,5 +62,6 @@ Component map:
 | Rooms | rooms-zoom-outs-buster | v1 | `rooms-zoom-outs-buster-v1` | `gpt-skills/house-skills/rooms-zoom-outs-buster/SKILL.md` | imported |
 | Rooms | rooms-character-investigation | v1 | `rooms-character-investigation-v1` | `gpt-skills/house-skills/rooms-character-investigation/SKILL.md` | imported |
 | Rooms | rooms-sheet-creator | v1 | `rooms-sheet-creator-v1` | `gpt-skills/house-skills/rooms-sheet-creator/SKILL.md` | imported |
+| Rooms | rooms-canon-buster | v1 | `rooms-canon-buster-v1` | `gpt-skills/house-skills/rooms-canon-buster/SKILL.md` | imported |
 
 The bundle version is separate from the component versions. The component versions stay recorded in the source ledger and SKILL.md frontmatter metadata.

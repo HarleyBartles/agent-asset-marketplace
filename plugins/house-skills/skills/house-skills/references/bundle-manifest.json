@@ -281,6 +281,15 @@
       "lane": "Rooms",
       "source_group": "MARK-30 active imports / Rooms",
       "import_status": "imported"
+    },
+    {
+      "canonical_name": "rooms-canon-buster",
+      "component_version": "v1",
+      "installed_source_skill_id": "rooms-canon-buster-v1",
+      "source_path": "gpt-skills/house-skills/rooms-canon-buster/SKILL.md",
+      "lane": "Rooms",
+      "source_group": "MARK-97 attached rooms canon buster zip update",
+      "import_status": "imported"
     }
   ],
   "lanes": [

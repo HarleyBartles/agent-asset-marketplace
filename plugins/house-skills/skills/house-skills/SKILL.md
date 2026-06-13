@@ -62,4 +62,6 @@ The bundle intentionally projects the reviewed House Skills in the same three bo
 
 The base/control-plane lane also carries the shared `connector-safety` component so connector and tool work stays narrow, recoverable, and auditable.
 
+The Rooms lane also carries `rooms-canon-buster` as the Rooms canon-pressure overlay alongside the existing Rooms project and source-routing skills.
+
 For the exact component list, open `references/bundle-manifest.json` or `references/source-map.md`.

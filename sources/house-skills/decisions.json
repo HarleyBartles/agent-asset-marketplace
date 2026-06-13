@@ -423,5 +423,15 @@
     "import_state": "imported",
     "scope": "Rooms sheet creation from durable packets",
     "notes": "Imported as the sheet creator that consumes the durable investigation packet, lane information, and Harley direction."
+  },
+  {
+    "issue": "MARK-97",
+    "source_id": "rooms-canon-buster-v1",
+    "source_path": "gpt-skills/house-skills/rooms-canon-buster/SKILL.md",
+    "public_name": "rooms-canon-buster",
+    "provenance_name": "MARK-97 attached rooms canon buster zip update",
+    "import_state": "imported",
+    "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
+    "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
   }
 ]

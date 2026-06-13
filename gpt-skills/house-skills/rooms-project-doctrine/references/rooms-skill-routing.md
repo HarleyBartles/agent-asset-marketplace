@@ -7,6 +7,7 @@ Use the most specific skill.
 - `rooms-project-doctrine-v1`: shared Rooms doctrine routing and references.
 - `rooms-source-partitioning-v1`: label evidence basis and prevent search/report/conversation laundering.
 - `gpt-base-doctrine-v1.1`: shared Rooms doctrine, grounding, and truth-boundary references.
+- `rooms-canon-buster-v1`: Rooms canon pressure checks and lawful canon/item adjustment.
 - `rooms-ambiguity-buster-v1`: preserve uncertainty around identity, motive, witness, authorship, archive gaps, narrator knowledge, and disappearance.
 - `rooms-analogy-buster-v1`: Rooms analogy pressure checks and useful-break handling.
 - `rooms-zoom-outs-buster-v1`: large-picture readiness checks.

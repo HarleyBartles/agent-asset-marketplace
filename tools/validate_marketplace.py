@@ -189,7 +189,7 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         record
         for record in imports
         if record.get("import_state") == "imported"
-        and record.get("issue") in {"MARK-23", "MARK-30", "WILL-276"}
+        and record.get("issue") in {"MARK-23", "MARK-30", "MARK-97", "WILL-276"}
     ]
     imported_by_id = {record["source_id"]: record for record in projected_imports}
     components = bundle_manifest.get("components", [])
