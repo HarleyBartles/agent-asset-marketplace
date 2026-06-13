@@ -12,6 +12,7 @@ from marketplace_utils import (
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
+    PROTECTED_MARKETPLACE_PLUGIN_NAMES,
     PLUGIN_README_PATH,
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
@@ -155,6 +156,9 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
 
     plugins_by_name = {plugin.get("name"): plugin for plugin in registry.get("plugins", [])}
     expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
+    actual_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
+    if actual_plugin_names != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
+        raise ValueError("Marketplace registry plugin order does not match the protected four-root shape")
     for name, path in expected_plugins.items():
         plugin = plugins_by_name.get(name)
         if not plugin:

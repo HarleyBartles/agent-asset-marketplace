@@ -5,6 +5,12 @@ Scope: `codex-marketplace/`
 This scope covers the Codex marketplace source root, including the marketplace
 manifest and the plugin source tree beneath it.
 
+The protected active plugin roots in this scope are fixed to
+`codex-marketplace/plugins/house-skills`,
+`codex-marketplace/plugins/adventures-pack`,
+`codex-marketplace/plugins/unslop`, and
+`codex-marketplace/plugins/game-studio`.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
@@ -13,6 +19,8 @@ rules, and upstream-drain policy.
 - Treat `codex-marketplace/manifest.json` and `.agents/plugins/marketplace.json`
   as coupled surfaces; a plugin add, remove, or rename must stay aligned across
   both exports and the validator.
+- Treat any other plugin root under `codex-marketplace/plugins/` as inactive
+  unless a new issue explicitly changes the protected four-root shape.
 - Flag broken plugin root paths, missing `.codex-plugin/plugin.json` files, and
   category or install-policy drift in the marketplace manifest.
 - Flag missing `SOURCE.md`, `LICENSE`, or bundle-manifest references when a

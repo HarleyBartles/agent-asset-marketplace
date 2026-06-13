@@ -9,6 +9,7 @@ from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
+    PROTECTED_MARKETPLACE_PLUGIN_NAMES,
     REPO_INDEX_PATH,
     load_json,
 )
@@ -148,6 +149,9 @@ def validate_repo_index() -> dict:
 
     if set(registry_plugins) != set(spec_by_name):
         raise ValueError("repo-index marketplace plugins do not match the current marketplace registry")
+    registry_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
+    if registry_plugin_names != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
+        raise ValueError("repo-index marketplace registry order does not match the protected four-root shape")
 
     seen_plugin_names: set[str] = set()
     for entry in marketplace_plugins:
@@ -238,6 +242,8 @@ def validate_repo_index() -> dict:
 
     if seen_plugin_names != set(registry_plugins):
         raise ValueError("repo-index marketplace plugin list does not match the current marketplace registry")
+    if [entry.get("name") for entry in marketplace_plugins] != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
+        raise ValueError("repo-index marketplace plugin order does not match the protected four-root shape")
 
     vendor_agents = ROOT / "sources/vendor/AGENTS.md"
     vendor_guidance = check_text(vendor_agents)

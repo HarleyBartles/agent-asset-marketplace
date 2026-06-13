@@ -29,10 +29,10 @@
       "category": "Productivity"
     },
     {
-      "name": "game-studio",
+      "name": "unslop",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/game-studio"
+        "path": "./codex-marketplace/plugins/unslop"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -41,10 +41,10 @@
       "category": "Productivity"
     },
     {
-      "name": "unslop",
+      "name": "game-studio",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/unslop"
+        "path": "./codex-marketplace/plugins/game-studio"
       },
       "policy": {
         "installation": "AVAILABLE",
