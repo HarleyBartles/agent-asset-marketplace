@@ -102,6 +102,10 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "5e08ac90a5050a52abe4c28cbb700e989c111767":
             raise ValueError("Unexpected pinned commit for MagicPath vendor snapshot")
         return ROOT / "sources/vendor/MagicPathAI/agent-skills" / pinned_commit
+    if upstream_repo == "mshumer/unslop":
+        if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
+            raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
+        return ROOT / "sources/vendor/mshumer/unslop" / pinned_commit
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
