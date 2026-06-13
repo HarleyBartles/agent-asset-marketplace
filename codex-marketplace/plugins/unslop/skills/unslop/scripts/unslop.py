@@ -188,6 +188,15 @@ def prepare_output(out: Path) -> None:
         (out / child).mkdir(parents=True, exist_ok=True)
 
 
+def ensure_safe_output_dir(out: Path) -> None:
+    resolved_out = out.resolve()
+    cwd = Path.cwd().resolve()
+    if resolved_out == cwd or cwd.is_relative_to(resolved_out):
+        raise ValueError(
+            f"Refusing to clean output directory {out!s}: choose a dedicated generated directory outside the current working tree."
+        )
+
+
 def write_json(path: Path, data: object) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=False) + "\n", encoding="utf-8")
 
@@ -586,6 +595,11 @@ def build_manifest(
 
 def run(args: argparse.Namespace) -> int:
     out = args.output
+    try:
+        ensure_safe_output_dir(out)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     if args.prompts_only:
         out.mkdir(parents=True, exist_ok=True)
         for child in list(out.iterdir()):
