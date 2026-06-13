@@ -102,6 +102,10 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "5e08ac90a5050a52abe4c28cbb700e989c111767":
             raise ValueError("Unexpected pinned commit for MagicPath vendor snapshot")
         return ROOT / "sources/vendor/MagicPathAI/agent-skills" / pinned_commit
+    if upstream_repo == "mshumer/unslop":
+        if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
+            raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
+        return ROOT / "sources/vendor/mshumer/unslop" / pinned_commit
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
@@ -270,7 +274,14 @@ def validate_skill_bundle_manifest(
 
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
-    if len(actual_skill_dirs) != len(imported_entries):
+    imported_skill_dirs = {
+        Path(entry["local_path"]).parts[1]
+        for entry in imported_entries
+        if isinstance(entry.get("local_path"), str)
+        and Path(entry["local_path"]).parts[:1] == ("skills",)
+        and len(Path(entry["local_path"]).parts) >= 3
+    }
+    if len(actual_skill_dirs) != len(imported_skill_dirs):
         raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
 
     for entry in imported_entries:
