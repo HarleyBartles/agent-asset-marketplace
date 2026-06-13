@@ -117,7 +117,7 @@ Use when the work is done and the branch needs to be closed out.
 ## Local Anchors
 
 - Worker dispatch and Linear control plane: `gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md`
-- Base doctrine for source and tool posture: `gpt-skills/house-skills/gpt-base-doctrine/v1/gpt-base-doctrine-v1/SKILL.md`
+- Base doctrine for source and tool posture: `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - Provenance note for this adaptation: `provenance/superpowers-workflow-core.md`
 - Linear log for this issue: `MARK-35 Activity Log`
 

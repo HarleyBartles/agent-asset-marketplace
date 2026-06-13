@@ -51,7 +51,7 @@
 
 ## gpt-base-doctrine-v1.1
 
-- Source path: `gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md`
+- Source path: `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - Public identity: `gpt-base-doctrine-v1.1`
 - Provenance/history only: MARK-30 base and control plane update
 - Scope: GPT-wide shared doctrine
@@ -86,7 +86,7 @@
 ### Base and control plane
 
 - `don-logan-boundary-v1` - `gpt-skills/house-skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `gpt-base-doctrine-v1.1` - `gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md`
+- `gpt-base-doctrine-v1.1` - `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md`
 - `work-mode-router-v1` - `gpt-skills/house-skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `worker-dispatch-linear-v1` - `gpt-skills/house-skills/worker-dispatch-linear/v1/worker-dispatch-linear-v1/SKILL.md`
 - `linear-v1.1` - `gpt-skills/house-skills/linear/SKILL.md`

@@ -1,9 +1,9 @@
 ---
 name: gpt-base-doctrine
-description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster confusion, worker-copy attention guards, and lower-skill format conflicts.
+description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, bounded skill/reference read loops, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster confusion, worker-copy attention guards, and lower-skill format conflicts.
 metadata:
-  version: v1
-  source-id: gpt-base-doctrine-v1
+  version: v1.1
+  source-id: gpt-base-doctrine-v1.1
   source-path: gpt-skills/house-skills/gpt-base-doctrine/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 license: "MIT"
@@ -19,6 +19,7 @@ Use this skill as the GPT-wide doctrine store for cross-project operating invari
 - System prompt work: read `references/system-prompt-contract.md`.
 - Tool, memory, connector, repository-route, source-availability, or evidence-route claims: read `references/tool-surface-and-evidence.md`.
 - Deciding where durable doctrine belongs, canonical source truth, installed-skill versus repo-source boundaries, or agent asset marketplace routing: read `references/durable-doctrine-routing.md`.
+- Bounded skill/reference reading, anti-loop stop rules, or "how much should I read before acting" questions: read `references/bounded-read-loop.md`.
 - Failure, correction, and trust posture: read `references/failure-and-trust-posture.md`.
 - Output shape, reserved artifact forms, YAML-vs-non-YAML conflicts, worker-copy attention guards, or artifact authority: read `references/output-artifact-shape.md`.
 - Quick map: read `references/doctrine-index.md`.
