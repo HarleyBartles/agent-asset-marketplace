@@ -246,12 +246,12 @@
     },
     {
       "issue": "WILL-276",
-      "source_id": "connector-safety-v1",
+      "source_id": "connector-safety-v1.1",
       "source_path": "gpt-skills/house-skills/connector-safety/SKILL.md",
       "public_name": "connector-safety",
-      "provenance_name": "installed connector-safety package landed via WILL-274",
+      "provenance_name": "installed connector-safety package landed via WILL-274; v1.1 zip update",
       "import_state": "imported",
-      "scope": "connector and tool safety blocks, blocked-write recovery, narrow retries, and safe-action reporting",
+      "scope": "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
       "notes": "Imported as the shared House skill safety component for side-effecting connector/tool work. Keep the canonical source in the House skills lane and project it where shared connector safety is useful."
     },
     {

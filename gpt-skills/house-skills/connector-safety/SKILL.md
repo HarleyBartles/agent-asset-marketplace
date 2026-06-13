@@ -2,10 +2,10 @@
 name: connector-safety
 description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked or when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle.
 metadata:
-  version: v1
-  source-id: connector-safety-v1
+  version: v1.1
+  source-id: connector-safety-v1.1
   source-path: gpt-skills/house-skills/connector-safety/SKILL.md
-  provenance-name: installed connector-safety package landed via WILL-274
+  provenance-name: installed connector-safety package landed via WILL-274; v1.1 zip update
 license: "MIT"
 ---
 # Connector Safety
@@ -50,18 +50,67 @@ Use stricter posture as side effects increase.
 - Medium-risk writes: issue status, assignment, labels, project moves, document renames, calendar drafts, email drafts. Separate fields and verify after mutation.
 - High-risk writes: sends, deletes, archives, merges, closes, publishes, permission changes, irreversible or externally visible actions. Require clear user authorization and do not retry ambiguously.
 
+## Exact-state guarded high-risk writes
+
+For high-risk connector writes such as merge, close, delete, publish, send, archive, or permission-changing actions, prefer an exact-state guard when the connector supports one.
+
+Use this ladder:
+
+1. Confirm current user authority from the latest message.
+2. Read the target object immediately before the write.
+3. Extract the exact current-state guard where available, such as:
+   - PR head SHA for merge;
+   - current draft or message ID for send;
+   - current file blob SHA for update or delete;
+   - current issue, event, or comment ID for status or comment mutation.
+4. Make one narrow write call containing only:
+   - stable target identifier;
+   - requested action;
+   - exact-state guard, if available;
+   - no optional prose, status summaries, labels, unrelated comments, or bundled mutations unless the connector requires them.
+5. Read back the target object after the write.
+6. Report success only from the mutation result or readback.
+
+If the first write is blocked, retry only when the next attempt is materially safer. Adding an exact-state guard, replacing a fuzzy target with a stable ID, removing optional fields, or splitting bundled mutations are safer shapes. Repeating the same payload is not.
+
+## Invalid-attempt distinction
+
+A malformed schema, typo, invalid JSON payload, wrong field, or incomplete tool argument is not a meaningful blocked-write attempt. Classify it as `invalid_attempt`, correct the payload once, and then perform the clean guarded call if authority and target state still hold.
+
+Do not use an invalid attempt as evidence that the connector or safety layer rejected the actual authorized action. Do not keep retrying malformed calls. If the corrected clean call blocks, then treat that as the real blocked mutation.
+
+## Post-success closeout writes
+
+After a high-risk external mutation succeeds, treat tracking closeout as a separate mutation.
+
+1. Verify the high-risk mutation in the target system.
+2. Prepare the narrowest durable update, such as issue status only or a compact evidence comment only.
+3. If a status update blocks, do not weaken the primary proof. Report that the primary mutation succeeded and the closeout mutation blocked.
+4. Prefer a compact evidence comment only when it is lower-risk, explicitly useful, and authorized by the current context.
+5. Never claim an issue was closed, marked done, or updated unless that write is verified.
+
+## Documentation and safety internals
+
+When recovering from a blocked connector write, do not search for ways to bypass, defeat, or explain internal safety classifiers. Use documentation only to confirm supported connector schema, product behavior, or safer state guards.
+
+Prefer connector-state evidence over safety speculation: read the target, narrow the payload, add an exact-state guard, retry once if materially safer, read back, and stop after repeated narrow failures.
+
+Report only observable facts: attempted action, target, authority, result, readback, and next safe action. Do not claim exact hidden classifier triggers.
+
 ## Blocked-write report shape
 
 When a connector/tool action blocks or remains uncertain, report:
 
+```text
 Attempted action: <what was attempted>
 Target: <system and object>
 Authority used: <latest user instruction or durable authorization>
-Observed result: <tool response, block, or no response>
+Observed result: <tool response, block, invalid attempt, or no response>
 Verification: <readback performed or why not>
-Safe retry attempted: <narrower retry or none>
+Safe retry attempted: <narrower retry, corrected invalid attempt, or none>
 Final state: <done / not done / unknown>
 Next safe action: <manual action, narrower retry, missing authorization, or blocker>
+```
 
 Keep this report factual. Do not include hidden policy speculation or claim exact classifier triggers.
 
@@ -74,12 +123,15 @@ A retry must change the risk shape. Good retries include:
 - remove unrelated context from the payload;
 - split destructive and non-destructive work;
 - use a known stable ID instead of fuzzy name matching;
+- use an exact-state guard such as PR head SHA, file blob SHA, or current object ID;
+- correct a malformed or invalid payload once, then run the clean guarded call;
 - do a harmless read probe before another mutation;
 - ask for explicit confirmation when authority is ambiguous.
 
 Bad retries include:
 
 - repeating the same blocked payload;
+- treating malformed calls as proof of safety rejection;
 - adding language about bypassing, defeating, or working around safety;
 - using another connector surface to smuggle the same blocked mutation;
 - claiming completion from a planned action, chat summary, or stale state;

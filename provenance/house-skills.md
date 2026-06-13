@@ -36,10 +36,10 @@
 
 - Source path: `gpt-skills/house-skills/connector-safety/SKILL.md`
 - Public identity: `connector-safety`
-- Provenance/history: installed connector-safety package landed via WILL-274
+- Provenance/history: installed connector-safety package landed via WILL-274; v1.1 zip update
 - Ownership: Harley-authored first-party House skill
-- Scope: connector and tool safety blocks, blocked-write recovery, narrow retries, and safe-action reporting
-- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control. `assets/icon.svg` was not included because the SVG bytes were not accessible in this environment; that omission is intentional and does not imply a third-party origin.
+- Scope: connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting
+- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it.
 
 ## adventures-project-doctrine-v1
 

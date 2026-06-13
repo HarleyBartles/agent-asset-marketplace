@@ -1,6 +1,8 @@
 interface:
   display_name: Connector Safety
-  short_description: Safely handle blocked connector and tool writes.
+  short_description: Keep connector writes safe, narrow, auditable, and verified.
+  icon: shield
+  color: '#3454D1'
 policy:
   products:
   - chatgpt

@@ -24,7 +24,7 @@ Bundle references:
 
 Lane summary:
 
-- Base and control plane: all reviewed imports from MARK-30 plus the shared connector-safety import from WILL-276 in the base/control-plane lane.
+- Base and control plane: all reviewed imports from MARK-30 plus the shared connector-safety v1.1 import from WILL-276 in the base/control-plane lane.
 - Adventures: all reviewed imports from MARK-30 in the Adventures lane.
 - Rooms: all reviewed imports from MARK-30 in the Rooms lane, plus the MARK-23 `rooms-image-sidecars` import.
 
@@ -43,7 +43,7 @@ Component map:
 | Base and control plane | session-buster-ingress | v0.2 | `session-buster-ingress-v0.2` | `gpt-skills/house-skills/session-buster-ingress/SKILL.md` | imported |
 | Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/SKILL.md` | imported |
 | Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/SKILL.md` | imported |
-| Base and control plane | connector-safety | v1 | `connector-safety-v1` | `gpt-skills/house-skills/connector-safety/SKILL.md` | imported |
+| Base and control plane | connector-safety | v1.1 | `connector-safety-v1.1` | `gpt-skills/house-skills/connector-safety/SKILL.md` | imported |
 | Adventures | adventures-bootstrap | v1.1 | `adventures-bootstrap-v1.1` | `gpt-skills/house-skills/adventures-bootstrap/SKILL.md` | imported |
 | Adventures | adventures-github-operations | v1.1 | `adventures-github-operations-v1.1` | `gpt-skills/house-skills/adventures-github-operations/SKILL.md` | imported |
 | Adventures | adventures-visual-preproduction | v1.1 | `adventures-visual-preproduction-v1.1` | `gpt-skills/house-skills/adventures-visual-preproduction/SKILL.md` | imported |
