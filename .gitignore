@@ -9,6 +9,8 @@ generated/*
 .eslintcache
 .idea/
 .vscode/
+__pycache__/
+*.pyc
 node_modules/
 dist/
 build/
