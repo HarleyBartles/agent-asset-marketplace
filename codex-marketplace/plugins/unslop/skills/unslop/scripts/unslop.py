@@ -438,16 +438,20 @@ async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str
     browser_path = str(smoke.get("browser") or "")
     screenshots = out / "before-after"
     rendered = 0
-    async with async_playwright() as playwright:  # pragma: no cover - optional dependency
-        browser = await playwright.chromium.launch(executable_path=browser_path, headless=True)
-        try:
+    browser = None
+    try:
+        async with async_playwright() as playwright:  # pragma: no cover - optional dependency
+            browser = await playwright.chromium.launch(executable_path=browser_path, headless=True)
             for sample in sorted((out / "samples").glob("*.html")):
                 page = await browser.new_page(viewport={"width": 1280, "height": 900})
                 await page.goto(sample.resolve().as_uri())
                 await page.screenshot(path=str(screenshots / f"{sample.stem}.png"), full_page=True)
                 await page.close()
                 rendered += 1
-        finally:
+    except Exception as exc:  # pragma: no cover - optional dependency
+        return {"status": "skipped", "reason": f"Visual render failed: {exc}"}
+    finally:
+        if browser is not None:
             await browser.close()
     return {"status": "ran", "screenshots": rendered, "path": "before-after/"}
 
@@ -579,7 +583,15 @@ def build_manifest(
 
 def run(args: argparse.Namespace) -> int:
     out = args.output
-    prepare_output(out)
+    if args.prompts_only:
+        out.mkdir(parents=True, exist_ok=True)
+        for child in list(out.iterdir()):
+            if child.is_dir():
+                shutil.rmtree(child)
+            else:
+                child.unlink()
+    else:
+        prepare_output(out)
     prompts = generate_prompts(args.domain, args.count, args.type)
     write_json(out / "prompts.json", prompts)
 

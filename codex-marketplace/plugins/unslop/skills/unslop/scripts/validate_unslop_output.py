@@ -13,11 +13,6 @@ from pathlib import Path
 REQUIRED = [
     "manifest.json",
     "prompts.json",
-    "samples",
-    "analysis.md",
-    "skill.md",
-    "validation.md",
-    "before-after",
 ]
 
 
@@ -44,6 +39,27 @@ def validate(path: Path) -> list[str]:
         return issues
 
     manifest = load_json(path / "manifest.json")
+    output_contract = str(manifest.get("output_contract", "unslop-output/v1"))
+    prompts_only = output_contract == "unslop-prompts-only/v1"
+
+    if prompts_only:
+        if len(list(path.iterdir())) != 2:
+            issues.append("prompts-only output should contain only manifest.json and prompts.json")
+        return issues
+
+    if not (path / "samples").exists():
+        issues.append("missing samples")
+    if not (path / "analysis.md").exists():
+        issues.append("missing analysis.md")
+    if not (path / "skill.md").exists():
+        issues.append("missing skill.md")
+    if not (path / "validation.md").exists():
+        issues.append("missing validation.md")
+    if not (path / "before-after").exists():
+        issues.append("missing before-after")
+    if issues:
+        return issues
+
     analysis = (path / "analysis.md").read_text(encoding="utf-8")
     skill = (path / "skill.md").read_text(encoding="utf-8")
     validation = (path / "validation.md").read_text(encoding="utf-8")
@@ -76,7 +92,9 @@ def validate(path: Path) -> list[str]:
     active_text = "\n".join(
         file.read_text(encoding="utf-8", errors="ignore")
         for file in path.rglob("*")
-        if file.is_file() and file.suffix.lower() in {".md", ".json", ".txt"}
+        if file.is_file()
+        and "samples" not in file.relative_to(path).parts
+        and file.suffix.lower() in {".md", ".json", ".txt"}
     )
     for forbidden in forbidden_fragments():
         if forbidden.lower() in active_text.lower():
