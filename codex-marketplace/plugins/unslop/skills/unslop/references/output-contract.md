@@ -18,3 +18,5 @@ unslop-output/
 `analysis.md` must contain counted, domain-specific repeated patterns. `skill.md` is a draft profile for review; it should mostly say what to avoid and should not be treated as install-ready until `validate_unslop_output.py` passes and a human or agent reviews the findings.
 
 Prompt-generation runs use the `unslop-prompts-only/v1` contract and only guarantee `manifest.json` and `prompts.json`. They do not claim `analysis.md`, `skill.md`, `validation.md`, or `before-after/`.
+
+When reusing a non-empty output directory, pass `--force-cleanup` explicitly. The script refuses to clean arbitrary existing directories unless the operator opts in.

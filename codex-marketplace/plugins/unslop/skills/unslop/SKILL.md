@@ -50,12 +50,14 @@ python3 scripts/unslop.py --domain "release note writing" --fixture-samples --ou
 ```
 
 If you only need prompts, add `--prompts-only`; that mode writes `prompts.json` plus a manifest with the `unslop-prompts-only/v1` contract instead of the full analysis bundle.
+When reusing an existing output directory, add `--force-cleanup` so the script can clear it safely.
 
 ## Output Review
 
 - `analysis.md` must include counts, concrete repeated patterns, and language tied to the requested domain.
 - `skill.md` should mostly prohibit observed defaults. It should not merely prescribe a new generic house style.
 - `manifest.json` must record run parameters, sample counts, tool version, upstream provenance, provider/orchestration mode, validation status, and optional visual evidence status.
+- Prompts-only runs are intentionally non-validated and only guarantee `manifest.json` and `prompts.json`.
 - `validation.md` should state whether visual evidence ran or was skipped.
 
 ## Visual Dependency Handling

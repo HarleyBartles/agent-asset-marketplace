@@ -179,7 +179,8 @@ def load_samples(samples_dir: Path | None, inline_samples: list[str], dtype: str
 
 def prepare_output(out: Path) -> None:
     out.mkdir(parents=True, exist_ok=True)
-    for child in list(out.iterdir()):
+    existing_children = list(out.iterdir())
+    for child in existing_children:
         if child.is_dir():
             shutil.rmtree(child)
         else:
@@ -195,6 +196,17 @@ def ensure_safe_output_dir(out: Path) -> None:
         raise ValueError(
             f"Refusing to clean output directory {out!s}: choose a dedicated generated directory outside the current working tree."
         )
+
+
+def cleanup_output_dir(out: Path, *, force_cleanup: bool) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    if any(out.iterdir()) and not force_cleanup:
+        raise ValueError(f"Refusing to clean non-empty output directory {out!s} without --force-cleanup.")
+    for child in list(out.iterdir()):
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
 
 
 def write_json(path: Path, data: object) -> None:
@@ -425,13 +437,19 @@ def write_skill(out: Path, result: dict[str, object]) -> None:
 def visual_smoke(dtype: str) -> dict[str, object]:
     if dtype != "visual":
         return {"requested": False, "status": "not_requested", "reason": ""}
-    missing: list[str] = []
     if importlib.util.find_spec("playwright") is None:
-        missing.append("Playwright Python package missing")
-    browser = shutil.which("chromium") or shutil.which("google-chrome")
-    if missing:
-        return {"requested": True, "status": "skipped", "reason": "; ".join(missing), "browser": browser or ""}
-    return {"requested": True, "status": "available", "reason": "", "browser": browser or ""}
+        return {"requested": True, "status": "skipped", "reason": "Playwright Python package missing", "browser_candidates": []}
+    browser_candidates = [
+        candidate
+        for candidate in (
+            shutil.which("chromium"),
+            shutil.which("chromium-browser"),
+            shutil.which("google-chrome"),
+            shutil.which("google-chrome-stable"),
+        )
+        if candidate
+    ]
+    return {"requested": True, "status": "available", "reason": "", "browser_candidates": browser_candidates}
 
 
 async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str, object]:
@@ -442,28 +460,35 @@ async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str
     except Exception as exc:  # pragma: no cover - depends on optional package
         return {"status": "skipped", "reason": f"Playwright import failed: {exc}"}
 
-    browser_path = str(smoke.get("browser") or "")
+    browser_candidates = list(smoke.get("browser_candidates") or [])
     screenshots = out / "before-after"
     rendered = 0
+    browser = None
     try:
         async with async_playwright() as playwright:  # pragma: no cover - optional dependency
-            try:
-                browser = await playwright.chromium.launch(headless=True)
-            except Exception:
-                if browser_path:
-                    browser = await playwright.chromium.launch(executable_path=browser_path, headless=True)
-                else:
-                    raise
+            launch_errors: list[str] = []
+            launch_attempts = [{"headless": True}]
+            launch_attempts.extend({"headless": True, "executable_path": candidate} for candidate in browser_candidates)
+            for launch_kwargs in launch_attempts:
+                try:
+                    browser = await playwright.chromium.launch(**launch_kwargs)
+                    break
+                except Exception as exc:
+                    launch_errors.append(str(exc))
+            if browser is None:
+                return {"status": "failed", "reason": f"Visual browser launch failed: {'; '.join(launch_errors)}"}
             for sample in sorted((out / "samples").glob("*.html")):
                 page = await browser.new_page(viewport={"width": 1280, "height": 900})
-                await page.goto(sample.resolve().as_uri())
-                await page.screenshot(path=str(screenshots / f"{sample.stem}.png"), full_page=True)
-                await page.close()
+                try:
+                    await page.goto(sample.resolve().as_uri())
+                    await page.screenshot(path=str(screenshots / f"{sample.stem}.png"), full_page=True)
+                finally:
+                    await page.close()
                 rendered += 1
     except Exception as exc:  # pragma: no cover - optional dependency
-        return {"status": "skipped", "reason": f"Visual render failed: {exc}"}
+        return {"status": "failed", "reason": f"Visual render failed: {exc}"}
     finally:
-        if "browser" in locals():
+        if browser is not None:
             await browser.close()
     return {"status": "ran", "screenshots": rendered, "path": "before-after/"}
 
@@ -483,8 +508,19 @@ def validate_result(out: Path, domain: str, dtype: str, sample_count: int, visua
         issues.append("skill.md is too weak; expected at least six avoid/do-not instructions.")
     if "Generated from local samples" not in skill:
         issues.append("skill.md does not mark itself as a reviewed draft from local samples.")
-    if dtype == "visual" and visual_status.get("status") not in {"ran", "skipped"}:
-        issues.append("visual mode did not record ran or skipped visual evidence.")
+    if dtype == "visual":
+        visual_state = visual_status.get("status")
+        if visual_state == "failed":
+            issues.append(f"visual mode render failed: {visual_status.get('reason', 'unknown reason')}")
+        elif visual_state not in {"ran", "skipped"}:
+            issues.append("visual mode did not record ran, skipped, or failed visual evidence.")
+        if visual_state == "ran":
+            screenshot_count = visual_status.get("screenshots")
+            if not isinstance(screenshot_count, int) or screenshot_count < 1:
+                issues.append("visual mode reported ran but did not record any screenshots.")
+            screenshot_files = list((out / "before-after").glob("*.png"))
+            if isinstance(screenshot_count, int) and len(screenshot_files) != screenshot_count:
+                issues.append("visual screenshot count does not match before-after files.")
     return (not issues, issues)
 
 
@@ -561,7 +597,7 @@ def build_manifest(
             "samples": {"path": "samples/", "count": len(sample_records), "items": sample_records},
             "visual_smoke": visual_smoke_result,
             "visual_evidence": visual_evidence,
-            "validation": {"passed": validation_passed, "issues": validation_issues, "path": "validation.md"},
+            "validation": {"status": "not_applicable", "passed": None, "issues": [], "path": None},
             "outputs": {
                 "prompts": "prompts.json",
             },
@@ -584,7 +620,12 @@ def build_manifest(
         "samples": {"path": "samples/", "count": len(sample_records), "items": sample_records},
         "visual_smoke": visual_smoke_result,
         "visual_evidence": visual_evidence,
-        "validation": {"passed": validation_passed, "issues": validation_issues, "path": "validation.md"},
+        "validation": {
+            "status": "passed" if validation_passed else "failed",
+            "passed": validation_passed,
+            "issues": validation_issues,
+            "path": "validation.md",
+        },
         "outputs": {
             "analysis": "analysis.md",
             "skill": "skill.md",
@@ -600,23 +641,17 @@ def run(args: argparse.Namespace) -> int:
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
         return 2
-    if args.prompts_only:
-        out.mkdir(parents=True, exist_ok=True)
-        for child in list(out.iterdir()):
-            if child.is_dir():
-                shutil.rmtree(child)
-            else:
-                child.unlink()
-    else:
-        prepare_output(out)
     prompts = generate_prompts(args.domain, args.count, args.type)
-    write_json(out / "prompts.json", prompts)
 
     if args.prompts_only:
+        try:
+            cleanup_output_dir(out, force_cleanup=args.force_cleanup)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        write_json(out / "prompts.json", prompts)
         visual = visual_smoke(args.type)
-        validation_passed = True
-        validation_issues: list[str] = []
-        manifest = build_manifest(args, prompts, [], visual, {"status": "not_requested"}, validation_passed, validation_issues)
+        manifest = build_manifest(args, prompts, [], visual, {"status": "not_requested"}, False, [])
         write_json(out / "manifest.json", manifest)
         print(f"Wrote prompts to {out / 'prompts.json'}")
         return 0
@@ -626,6 +661,13 @@ def run(args: argparse.Namespace) -> int:
         print("No samples found. Use --samples-dir, --sample, --fixture-samples, or --prompts-only.", file=sys.stderr)
         return 2
 
+    try:
+        cleanup_output_dir(out, force_cleanup=args.force_cleanup)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    prepare_output(out)
+    write_json(out / "prompts.json", prompts)
     sample_records = write_samples(out, samples, args.type)
     result = analyze(samples, args.domain, args.type)
     write_analysis(out, result)
@@ -661,6 +703,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--prompts-only", action="store_true", help="Only write prompts.json and a manifest.")
     parser.add_argument("--output", type=Path, default=Path("unslop-output"), help="Output directory.")
     parser.add_argument("--skip-comparison", action="store_true", help="Do not write before-after review notes.")
+    parser.add_argument("--force-cleanup", action="store_true", help="Allow cleanup of a non-empty output directory.")
     args = parser.parse_args(argv)
     if args.count < 1:
         parser.error("--count must be at least 1")
