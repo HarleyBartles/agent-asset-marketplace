@@ -100,7 +100,8 @@
       "source_path": "gpt-skills/house-skills/rooms-image-sidecars/SKILL.md",
       "public_name": "rooms-image-sidecars",
       "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
-      "scope": "Rooms image sidecar preparation"
+      "scope": "Rooms image sidecar preparation",
+      "import_state": "imported"
     },
     {
       "issue": "MARK-30",

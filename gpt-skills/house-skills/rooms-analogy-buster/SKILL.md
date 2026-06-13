@@ -94,13 +94,13 @@ Check for these risks before using the analogy in Rooms reasoning:
 
 When the analogy touches other Rooms truth domains, route or compose as needed:
 
-- Use `rooms-domain-truth-boundaries` when analogy might cross archive, canon, manuscript, machine-truth, report, or
-  conversation-derived boundaries.
+- Use the `domain-truth-boundaries` reference under `rooms-project-doctrine-v1` when analogy might cross archive,
+  canon, manuscript, machine-truth, report, or conversation-derived boundaries.
 - Use `rooms-source-partitioning-v1` when an answer mixes repo evidence, analogy, inference, report, and
   conversation-derived material.
 - Use `rooms-ambiguity-buster-v1` when the analogy risks overresolving identity, motive, witness status, disappearance,
   reconstruction, or manuscript uncertainty.
-- Use `rooms-grounded-answering` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
+- Use `gpt-base-doctrine-v1.1` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
   answers.
 - Use the current dispatch gate before any worker-facing dispatch that relies on the analogy.
 

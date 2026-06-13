@@ -1,6 +1,8 @@
 # Source and grounding posture
 
-Use `rooms-grounded-answering` for named Rooms book-world, repo, workflow, canon, archive, manuscript, actor, or domain claims. Inspect bounded relevant repo surfaces before affirmative answers when repo access exists.
+Use the `source-and-grounding-posture` guidance under `rooms-project-doctrine-v1` for named Rooms book-world, repo,
+workflow, canon, archive, manuscript, actor, or domain claims. Inspect bounded relevant repo surfaces before
+affirmative answers when repo access exists.
 
 Use `rooms-source-partitioning-v1` when an answer mixes evidence classes: repo-grounded, worker-report, conversation-derived, report-derived, search-only, inferred, unavailable, or not checked.
 
