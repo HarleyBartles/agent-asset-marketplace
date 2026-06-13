@@ -33,7 +33,7 @@ Component map:
 | Lane | Canonical name | Component version | Installed source skill id | Source path | Import status |
 | --- | --- | --- | --- | --- | --- |
 | Base and control plane | don-logan-boundary | v1 | `don-logan-boundary-v1` | `gpt-skills/house-skills/don-logan-boundary/SKILL.md` | imported |
-| Base and control plane | gpt-base-doctrine | v1 | `gpt-base-doctrine-v1` | `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md` | imported |
+| Base and control plane | gpt-base-doctrine | v1.1 | `gpt-base-doctrine-v1.1` | `gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md` | imported |
 | Base and control plane | work-mode-router | v1 | `work-mode-router-v1` | `gpt-skills/house-skills/work-mode-router/SKILL.md` | imported |
 | Base and control plane | worker-dispatch-linear | v1 | `worker-dispatch-linear-v1` | `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md` | imported |
 | Base and control plane | linear | v1.1 | `linear-v1.1` | `gpt-skills/house-skills/linear/SKILL.md` | imported |
