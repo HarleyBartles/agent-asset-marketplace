@@ -1,7 +1,7 @@
 {
   "name": "adventures-pack",
   "version": "1.0.0",
-  "description": "Project-scoped Adventures marketplace bundle projected from clean House Skills sources.",
+  "description": "Project-scoped Adventures marketplace bundle projected from the current House Skills sources.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Adventures Pack",
     "shortDescription": "Project-scoped Adventures bundle projection",
-    "longDescription": "A repo-local Codex plugin bundle that projects the clean Adventures v1.1 House Skills line plus the boring generic dependencies needed to use it sensibly.",
+    "longDescription": "A repo-local Codex plugin bundle that projects the clean Adventures House Skills line plus the boring generic dependencies needed to use it sensibly.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -30,8 +30,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Adventures Pack bundle and source map.",
-      "Use the bundle to install the clean Adventures v1.1 projection.",
-      "Compare bundle versioning against the canonical House Skills sources."
+      "Use the bundle to install the clean Adventures projection.",
+      "Compare bundle versioning against the current House Skills sources."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",

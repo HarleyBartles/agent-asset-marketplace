@@ -60,6 +60,22 @@ def check_path_exists(path: Path) -> None:
     print(f"OK path: {path.relative_to(ROOT)}")
 
 
+def list_files(root: Path) -> list[Path]:
+    return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
+
+
+def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str) -> None:
+    source_files = list_files(source_root)
+    local_files = list_files(local_root)
+    if source_files != local_files:
+        raise ValueError(f"adventures-pack component {component_name} file inventory mismatch")
+    for rel_path in source_files:
+        source_bytes = (source_root / rel_path).read_bytes()
+        local_bytes = (local_root / rel_path).read_bytes()
+        if source_bytes != local_bytes:
+            raise ValueError(f"adventures-pack component {component_name} file content mismatch at {rel_path}")
+
+
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
     normalized_json = [
         _decision_structure(normalize_decision_record(row))
@@ -329,7 +345,7 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         raise ValueError("adventures-pack bundle manifest marketplace_root mismatch")
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/adventures-pack":
         raise ValueError("adventures-pack bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_root") != "gpt-skills/house-skills":
+    if bundle_manifest.get("canonical_source_root") != "plugins/house-skills/skills":
         raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_of_truth") != [
         "sources/house-skills/decisions.json",
@@ -338,6 +354,12 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         "provenance/house-skills.md",
     ]:
         raise ValueError("adventures-pack bundle manifest source_of_truth mismatch")
+
+    archive_roots = bundle_manifest.get("archive_roots", [])
+    if archive_roots != ["gpt-skills/house-skills"]:
+        raise ValueError("adventures-pack bundle manifest archive_roots mismatch")
+    for archive_root in archive_roots:
+        check_path_exists(ROOT / archive_root)
 
     components = bundle_manifest.get("components", [])
     if not isinstance(components, list) or not components:
@@ -381,8 +403,11 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         if projection_status != "projected":
             raise ValueError(f"adventures-pack bundle manifest component {canonical_name} must be projected")
 
-        check_path_exists(ROOT / source_path)
-        check_path_exists(ROOT / plugin_root / local_path)
+        source_md = ROOT / source_path
+        local_md = ROOT / plugin_root / local_path
+        check_path_exists(source_md)
+        check_path_exists(local_md)
+        validate_tree_mirror(source_md.parent, local_md.parent, canonical_name)
 
         if role == "adventures":
             adventure_count += 1

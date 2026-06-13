@@ -1,6 +1,6 @@
 ---
 name: adventures-pack
-description: Project-scoped Adventures bundle projection for the clean active v1.1 House Skills line plus the boring base dependencies required to use it sensibly. This bundle is a projection over canonical House Skills sources, not a new source of truth.
+description: Project-scoped Adventures bundle projection for the clean active House Skills line plus the boring base dependencies required to use it sensibly. This bundle is a projection over canonical House Skills sources, not a new source of truth.
 ---
 
 # Adventures Pack
@@ -11,12 +11,12 @@ Use this bundle when you need the installable Adventures project projection.
 
 - Bundle name: `adventures-pack`
 - Bundle version: `1.0.0`
-- Canonical source root: `gpt-skills/house-skills`
+- Canonical source root: `plugins/house-skills/skills`
 - Marketplace registry: `.agents/plugins/marketplace.json`
 
 ## Operating rule
 
-The bundle projects clean active Adventures v1.1 skills and the generic helper
+The bundle projects clean active Adventures skills and the generic helper
 skills they depend on.
 
 It does not reintroduce retired v1 surface area or any image-generation

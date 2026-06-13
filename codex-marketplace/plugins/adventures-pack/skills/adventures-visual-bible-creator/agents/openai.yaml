@@ -1,0 +1,14 @@
+interface:
+  display_name: Adventures Visual Bible Creator
+  short_description: Create standardized Adventures visual bibles with prompt and
+    QA blocks.
+  icon: assets/icon.svg
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
