@@ -2,8 +2,8 @@
 
 Marketplace plugin source shape lives here.
 
-The marketplace now includes `marketplace-family-pack/` plus the Codex-wrapper
-bundles added for MARK-46 and the downstream Replit, Supabase, Vercel, Sentry,
-OpenRouter, Cursor, Cohere, Databricks, Fly.io, and OpenAI developer workflow
-continuation tranches under this directory, plus the clean-room
-`security-scan-pack/` follow-up for the proprietary codex-security gap.
+The active marketplace roots under this directory are limited to
+`adventures-pack/`, `game-studio/`, and `unslop/`.
+
+Everything else in this tree is support custody or historical source material,
+not part of the active marketplace inventory for the normalized root pass.

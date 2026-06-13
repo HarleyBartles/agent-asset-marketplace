@@ -50,8 +50,14 @@ PROVENANCE_PATH = ROOT / "provenance/house-skills.md"
 
 MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",
-    "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests.",
+    "Active marketplace plugins are limited to the protected plugin roots only.",
 ]
+
+ACTIVE_MARKETPLACE_PLUGIN_NAMES = (
+    "adventures-pack",
+    "game-studio",
+    "unslop",
+)
 
 def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
     specs: list[dict[str, str | Path]] = [
@@ -64,21 +70,19 @@ def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
     ]
 
     marketplace_plugins_root = ROOT / "codex-marketplace/plugins"
-    if marketplace_plugins_root.exists():
-        for plugin_dir in sorted(marketplace_plugins_root.iterdir(), key=lambda path: path.name):
-            if not plugin_dir.is_dir():
-                continue
-            manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
-            if not manifest_path.exists():
-                continue
-            specs.append(
-                {
-                    "name": plugin_dir.name,
-                    "registry_path": f"./codex-marketplace/plugins/{plugin_dir.name}",
-                    "plugin_root": f"codex-marketplace/plugins/{plugin_dir.name}",
-                    "manifest_path": manifest_path,
-                }
-            )
+    for plugin_name in ACTIVE_MARKETPLACE_PLUGIN_NAMES:
+        plugin_dir = marketplace_plugins_root / plugin_name
+        manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
+        if not manifest_path.exists():
+            raise FileNotFoundError(manifest_path)
+        specs.append(
+            {
+                "name": plugin_name,
+                "registry_path": f"./codex-marketplace/plugins/{plugin_name}",
+                "plugin_root": f"codex-marketplace/plugins/{plugin_name}",
+                "manifest_path": manifest_path,
+            }
+        )
 
     return specs
 

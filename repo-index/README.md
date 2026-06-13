@@ -4,8 +4,9 @@
 
 The index exists so agents can traverse the repo without depending on chat
 memory, embeddings, or a separate discovery runtime. It records the main repo
-zones, the nearest scoped `AGENTS.md` file where one exists, and the current
-marketplace plugin pack surfaces that matter for validation and review.
+zones, the nearest scoped `AGENTS.md` file where one exists, and the active
+protected marketplace plugin pack surfaces that matter for validation and
+review.
 
 ## How to use it
 
@@ -13,9 +14,9 @@ marketplace plugin pack surfaces that matter for validation and review.
   repo.
 - Use the `zones` entries to find the nearest guidance file and the right
   validation or generation hook for a path.
-- Use the `marketplace_plugins` entries to jump from a plugin name to the
-  plugin manifest, license evidence, bundle manifest, skills path, and known
-  provenance references.
+- Use the `marketplace_plugins` entries to jump from a protected plugin name
+  to the plugin manifest, license evidence, bundle manifest, skills path, and
+  known provenance references.
 - Treat the index as navigation metadata only. It helps you find repo truth;
   it does not replace manifests, ledgers, provenance files, or the files on
   disk themselves.

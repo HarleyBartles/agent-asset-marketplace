@@ -2,10 +2,9 @@
 
 Canonical source location for Codex marketplace assets.
 
-This repo now includes real Codex plugin bundles under
-`plugins/marketplace-family-pack/`, `plugins/testing-skill-pack/`,
-`plugins/supabase-platform-pack/`, `plugins/vercel-pack/`,
-`plugins/sentry-pack/`, `plugins/openrouter-pack/`, `plugins/cursor-pack/`,
-`plugins/cohere-pack/`, `plugins/databricks-pack/`, `plugins/flyio-pack/`,
-`plugins/openai-developer-pack/`, `plugins/security-scan-pack/`,
-and `plugins/` plus the source manifest that exposes them.
+This repo now keeps the active Codex plugin bundles to one protected
+convention: the repo-root `plugins/house-skills/` projection plus
+`codex-marketplace/plugins/adventures-pack/`,
+`codex-marketplace/plugins/unslop/`, and
+`codex-marketplace/plugins/game-studio/`, with the source manifest exposing
+them.
