@@ -65,5 +65,4 @@ Component summary:
 | Dependency | tps-reporting | current | `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md` | `skills/tps-reporting/SKILL.md` | reporting |
 | Dependency | tps-ingress | current | `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md` | `skills/tps-ingress/SKILL.md` | ingress |
 
-Historical source custody remains under `gpt-skills/house-skills/`.
 All live current roots are unversioned plugin folders.

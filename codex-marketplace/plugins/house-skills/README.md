@@ -1,9 +1,15 @@
 # House Skills Plugin Bundle
 
 This plugin is the current first-party House Skills plugin root.
-It exposes the 42 first-party skill roots as real plugin folders under `skills/<skill-name>/`, with each current skill root carrying its own references, assets, scripts, and changelog notes.
-It is first-party Harley-owned source prepared to stay clean enough for a future permissive publication decision, with no unlicensed third-party bundled content.
-It includes `connector-safety` as a shared base/control-plane safety component for side-effecting connector/tool work and `rooms-canon-buster` as a Rooms canon-pressure overlay.
+It exposes the 42 first-party skill roots as real plugin folders under
+`skills/<skill-name>/`, with each current skill root carrying its own
+references, assets, scripts, and changelog notes.
+It is first-party Harley-owned source prepared to stay clean enough for a future
+permissive publication decision, with no unlicensed third-party bundled
+content.
+It includes `connector-safety` as a shared base/control-plane safety component
+for side-effecting connector/tool work and `rooms-canon-buster` as a Rooms
+canon-pressure overlay.
 
 Bundle identity:
 
@@ -29,4 +35,4 @@ What lives here:
 - `tools/generate_marketplace.py` regenerates the marketplace export from the local plugin metadata.
 - `tools/validate_marketplace.py` checks the export, plugin manifest, bundle manifest, and current plugin-root path references.
 
-The active House Skills inventory lives in `codex-marketplace/plugins/house-skills/skills/`, and `gpt-skills/house-skills/` remains only as historical source custody and provenance evidence.
+The active House Skills inventory lives in `codex-marketplace/plugins/house-skills/skills/`.

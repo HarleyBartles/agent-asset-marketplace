@@ -64,29 +64,9 @@
             ]
         },
         {
-            "name": "gpt-skills-root",
-            "path": "gpt-skills",
-            "purpose": "GPT-native skill sources and supporting metadata.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": "gpt-skills/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "gpt-house-skills",
-            "path": "gpt-skills/house-skills",
-            "purpose": "Harley-authored first-party House Skills sources only.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": "gpt-skills/house-skills/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
             "name": "vendor-custody",
             "path": "sources/vendor",
-            "purpose": "Third-party source custody, upstream snapshots, and vendor evidence.",
+            "purpose": "Third-party source custody for the retained unslop and game-studio upstream snapshots.",
             "surface_kind": "vendored",
             "nearest_scoped_agents_md": "sources/vendor/AGENTS.md",
             "guidance_scope": "repo-owned-guidance",
@@ -99,7 +79,7 @@
         {
             "name": "provenance",
             "path": "provenance",
-            "purpose": "Provenance notes, activity logs, trust records, and custody evidence.",
+            "purpose": "Retained provenance notes, trust records, and custody evidence.",
             "surface_kind": "provenance",
             "nearest_scoped_agents_md": "provenance/AGENTS.md",
             "key_validation_scripts": [

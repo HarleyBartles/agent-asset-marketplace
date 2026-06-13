@@ -2,7 +2,7 @@
   {
     "issue": "MARK-19",
     "source_id": "buster-framework-v1",
-    "source_path": "gpt-skills/house-skills/buster-framework/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/buster-framework/SKILL.md",
     "public_name": "buster-framework",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -12,7 +12,7 @@
   {
     "issue": "MARK-19",
     "source_id": "ambiguity-buster-v1",
-    "source_path": "gpt-skills/house-skills/ambiguity-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/ambiguity-buster/SKILL.md",
     "public_name": "ambiguity-buster",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -22,7 +22,7 @@
   {
     "issue": "MARK-19",
     "source_id": "boring-buster-v1",
-    "source_path": "gpt-skills/house-skills/boring-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/boring-buster/SKILL.md",
     "public_name": "boring-buster",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -32,7 +32,7 @@
   {
     "issue": "MARK-19",
     "source_id": "invariant-buster-v1",
-    "source_path": "gpt-skills/house-skills/invariant-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/invariant-buster/SKILL.md",
     "public_name": "invariant-buster",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -42,7 +42,7 @@
   {
     "issue": "MARK-19",
     "source_id": "analogy-buster-v1",
-    "source_path": "gpt-skills/house-skills/analogy-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/analogy-buster/SKILL.md",
     "public_name": "analogy-buster",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -52,7 +52,7 @@
   {
     "issue": "MARK-19",
     "source_id": "canon-buster-v1",
-    "source_path": "gpt-skills/house-skills/canon-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/canon-buster/SKILL.md",
     "public_name": "canon-buster",
     "provenance_name": "MARK-19 core generic buster House Skills source slice",
     "import_state": "imported",
@@ -66,18 +66,18 @@
     "import_state": "source-import-boundary",
     "decision": "MARK-19 imports exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. No unrelated House Skills, plugin projections, ChatGPT skill ZIPs, or renamed busters are imported in this slice.",
     "imported_source_paths": [
-      "gpt-skills/house-skills/buster-framework/v1/buster-framework-v1/SKILL.md",
-      "gpt-skills/house-skills/ambiguity-buster/v1/ambiguity-buster-v1/SKILL.md",
-      "gpt-skills/house-skills/boring-buster/v1/boring-buster-v1/SKILL.md",
-      "gpt-skills/house-skills/invariant-buster/v1/invariant-buster-v1/SKILL.md",
-      "gpt-skills/house-skills/analogy-buster/v1/analogy-buster-v1/SKILL.md",
-      "gpt-skills/house-skills/canon-buster/v1/canon-buster-v1/SKILL.md"
+      "codex-marketplace/plugins/house-skills/skills/buster-framework/v1/buster-framework-v1/SKILL.md",
+      "codex-marketplace/plugins/house-skills/skills/ambiguity-buster/v1/ambiguity-buster-v1/SKILL.md",
+      "codex-marketplace/plugins/house-skills/skills/boring-buster/v1/boring-buster-v1/SKILL.md",
+      "codex-marketplace/plugins/house-skills/skills/invariant-buster/v1/invariant-buster-v1/SKILL.md",
+      "codex-marketplace/plugins/house-skills/skills/analogy-buster/v1/analogy-buster-v1/SKILL.md",
+      "codex-marketplace/plugins/house-skills/skills/canon-buster/v1/canon-buster-v1/SKILL.md"
     ]
   },
   {
     "issue": "MARK-20",
     "source_id": "cleanup-custody-v0.1",
-    "source_path": "gpt-skills/house-skills/cleanup-custody/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/cleanup-custody/SKILL.md",
     "public_name": "cleanup-custody",
     "provenance_name": "legacy profanity-bearing cleanup skill",
     "import_state": "imported",
@@ -87,7 +87,7 @@
   {
     "issue": "MARK-21",
     "source_id": "skill-validator-v1",
-    "source_path": "gpt-skills/house-skills/skill-validator/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-validator/SKILL.md",
     "public_name": "skill-validator",
     "provenance_name": "MARK-21 skill maintenance House Skills source slice",
     "import_state": "imported",
@@ -97,7 +97,7 @@
   {
     "issue": "MARK-21",
     "source_id": "skill-packager-v1",
-    "source_path": "gpt-skills/house-skills/skill-packager/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-packager/SKILL.md",
     "public_name": "skill-packager",
     "provenance_name": "MARK-21 skill maintenance House Skills source slice",
     "import_state": "imported",
@@ -107,7 +107,7 @@
   {
     "issue": "MARK-21",
     "source_id": "skill-buster-v0.1",
-    "source_path": "gpt-skills/house-skills/skill-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md",
     "public_name": "skill-buster",
     "provenance_name": "MARK-21 skill maintenance House Skills source slice",
     "import_state": "imported",
@@ -117,7 +117,7 @@
   {
     "issue": "MARK-22",
     "source_id": "adventures-project-doctrine-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-project-doctrine/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md",
     "public_name": "adventures-project-doctrine",
     "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
     "import_state": "imported",
@@ -127,7 +127,7 @@
   {
     "issue": "MARK-23",
     "source_id": "rooms-image-sidecars-v0.1",
-    "source_path": "gpt-skills/house-skills/rooms-image-sidecars/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars/SKILL.md",
     "public_name": "rooms-image-sidecars",
     "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
     "import_state": "imported",
@@ -137,7 +137,7 @@
   {
     "issue": "MARK-30",
     "source_id": "don-logan-boundary-v1",
-    "source_path": "gpt-skills/house-skills/don-logan-boundary/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md",
     "public_name": "don-logan-boundary",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -147,7 +147,7 @@
   {
     "issue": "MARK-30",
     "source_id": "gpt-base-doctrine-v1.1",
-    "source_path": "gpt-skills/house-skills/gpt-base-doctrine/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md",
     "public_name": "gpt-base-doctrine-v1.1",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -157,7 +157,7 @@
   {
     "issue": "MARK-30",
     "source_id": "work-mode-router-v1",
-    "source_path": "gpt-skills/house-skills/work-mode-router/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/work-mode-router/SKILL.md",
     "public_name": "work-mode-router",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -167,7 +167,7 @@
   {
     "issue": "MARK-30",
     "source_id": "worker-dispatch-linear-v1",
-    "source_path": "gpt-skills/house-skills/worker-dispatch-linear/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md",
     "public_name": "worker-dispatch-linear",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -177,7 +177,7 @@
   {
     "issue": "MARK-30",
     "source_id": "linear-v1.1",
-    "source_path": "gpt-skills/house-skills/linear/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/linear/SKILL.md",
     "public_name": "linear",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -187,7 +187,7 @@
   {
     "issue": "MARK-30",
     "source_id": "tps-reporting-v1",
-    "source_path": "gpt-skills/house-skills/tps-reporting/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md",
     "public_name": "tps-reporting",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -197,7 +197,7 @@
   {
     "issue": "MARK-30",
     "source_id": "tps-ingress-v1",
-    "source_path": "gpt-skills/house-skills/tps-ingress/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md",
     "public_name": "tps-ingress",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -207,7 +207,7 @@
   {
     "issue": "MARK-30",
     "source_id": "session-buster-v0.2",
-    "source_path": "gpt-skills/house-skills/session-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/session-buster/SKILL.md",
     "public_name": "session-buster",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -217,7 +217,7 @@
   {
     "issue": "MARK-30",
     "source_id": "session-buster-ingress-v0.2",
-    "source_path": "gpt-skills/house-skills/session-buster-ingress/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/session-buster-ingress/SKILL.md",
     "public_name": "session-buster-ingress",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -227,7 +227,7 @@
   {
     "issue": "MARK-30",
     "source_id": "crew-v1",
-    "source_path": "gpt-skills/house-skills/crew/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/crew/SKILL.md",
     "public_name": "crew",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
     "import_state": "imported",
@@ -237,7 +237,7 @@
     {
       "issue": "MARK-30",
       "source_id": "crew-buster-v1",
-      "source_path": "gpt-skills/house-skills/crew-buster/SKILL.md",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/crew-buster/SKILL.md",
       "public_name": "crew-buster",
       "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
       "import_state": "imported",
@@ -247,7 +247,7 @@
     {
       "issue": "WILL-276",
       "source_id": "connector-safety-v1.1",
-      "source_path": "gpt-skills/house-skills/connector-safety/SKILL.md",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md",
       "public_name": "connector-safety",
       "provenance_name": "installed connector-safety package landed via WILL-274; v1.1 zip update",
       "import_state": "imported",
@@ -257,7 +257,7 @@
     {
       "issue": "MARK-30",
       "source_id": "adventures-bootstrap-v1.1",
-      "source_path": "gpt-skills/house-skills/adventures-bootstrap/SKILL.md",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/SKILL.md",
       "public_name": "adventures-bootstrap",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -267,7 +267,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-github-operations-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-github-operations/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-github-operations/SKILL.md",
     "public_name": "adventures-github-operations",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -277,7 +277,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-visual-preproduction-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-preproduction/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction/SKILL.md",
     "public_name": "adventures-visual-preproduction",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -287,7 +287,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-storyboard-preflight-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-storyboard-preflight/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md",
     "public_name": "adventures-storyboard-preflight",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -297,7 +297,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-visual-bible-creator-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-bible-creator/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md",
     "public_name": "adventures-visual-bible-creator",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -307,7 +307,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-visual-bible-interpreter-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-visual-bible-interpreter/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md",
     "public_name": "adventures-visual-bible-interpreter",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -317,7 +317,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-image-qa-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-image-qa/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-image-qa/SKILL.md",
     "public_name": "adventures-image-qa",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -327,7 +327,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-asset-sheet-compiler-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md",
     "public_name": "adventures-asset-sheet-compiler",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -337,7 +337,7 @@
   {
     "issue": "MARK-30",
     "source_id": "adventures-frame-buster-v1.1",
-    "source_path": "gpt-skills/house-skills/adventures-frame-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md",
     "public_name": "adventures-frame-buster",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
@@ -347,7 +347,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-project-doctrine-v1",
-    "source_path": "gpt-skills/house-skills/rooms-project-doctrine/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine/SKILL.md",
     "public_name": "rooms-project-doctrine",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -357,7 +357,7 @@
   {
     "issue": "MARK-97",
     "source_id": "rooms-bootstrap-v1.1",
-    "source_path": "gpt-skills/house-skills/rooms-bootstrap/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap/SKILL.md",
     "public_name": "rooms-bootstrap",
     "provenance_name": "MARK-97 rooms bootstrap zip update",
     "import_state": "imported",
@@ -367,7 +367,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-source-partitioning-v1",
-    "source_path": "gpt-skills/house-skills/rooms-source-partitioning/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning/SKILL.md",
     "public_name": "rooms-source-partitioning",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -377,7 +377,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-ambiguity-buster-v1",
-    "source_path": "gpt-skills/house-skills/rooms-ambiguity-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster/SKILL.md",
     "public_name": "rooms-ambiguity-buster",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -387,7 +387,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-analogy-buster-v1",
-    "source_path": "gpt-skills/house-skills/rooms-analogy-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster/SKILL.md",
     "public_name": "rooms-analogy-buster",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -397,7 +397,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-zoom-outs-buster-v1",
-    "source_path": "gpt-skills/house-skills/rooms-zoom-outs-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster/SKILL.md",
     "public_name": "rooms-zoom-outs-buster",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -407,7 +407,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-character-investigation-v1",
-    "source_path": "gpt-skills/house-skills/rooms-character-investigation/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-character-investigation/SKILL.md",
     "public_name": "rooms-character-investigation",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -417,7 +417,7 @@
   {
     "issue": "MARK-30",
     "source_id": "rooms-sheet-creator-v1",
-    "source_path": "gpt-skills/house-skills/rooms-sheet-creator/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator/SKILL.md",
     "public_name": "rooms-sheet-creator",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
     "import_state": "imported",
@@ -427,7 +427,7 @@
   {
     "issue": "MARK-97",
     "source_id": "rooms-canon-buster-v1",
-    "source_path": "gpt-skills/house-skills/rooms-canon-buster/SKILL.md",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster/SKILL.md",
     "public_name": "rooms-canon-buster",
     "provenance_name": "MARK-97 attached rooms canon buster zip update",
     "import_state": "imported",

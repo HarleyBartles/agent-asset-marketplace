@@ -17,7 +17,6 @@ from marketplace_utils import (
     PLUGIN_SKILL_PATH,
     PROVENANCE_PATH,
     PLUGIN_BUNDLE_AGENTS_PATH,
-    UPSTREAM_VENDOR_ROOT,
     ADVENTURES_PACK_BUNDLE_MANIFEST_PATH,
     ADVENTURES_PACK_SOURCE_MAP_PATH,
     ADVENTURES_PACK_SKILL_PATH,
@@ -108,40 +107,15 @@ def _decision_structure(record: dict[str, object]) -> dict[str, object]:
 
 
 def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
-    if upstream_repo == "jeremylongshore/claude-code-plugins-plus-skills":
-        if pinned_commit != "e773501f1dfb409fc71fccdaf6ac2898fedf66d6":
-            raise ValueError("Unexpected pinned commit for jeremylongshore vendor snapshot")
-        return UPSTREAM_VENDOR_ROOT
-    if upstream_repo == "openai/plugins":
-        return ROOT / "sources/vendor/openai/plugins" / pinned_commit
-    if upstream_repo == "openai/skills":
-        return ROOT / "sources/vendor/openai/skills" / pinned_commit
-    if upstream_repo == "MagicPathAI/agent-skills":
-        if pinned_commit != "5e08ac90a5050a52abe4c28cbb700e989c111767":
-            raise ValueError("Unexpected pinned commit for MagicPath vendor snapshot")
-        return ROOT / "sources/vendor/MagicPathAI/agent-skills" / pinned_commit
     if upstream_repo == "mshumer/unslop":
         if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
             raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
         return ROOT / "sources/vendor/mshumer/unslop" / pinned_commit
+    if upstream_repo == "openai/plugins":
+        if pinned_commit != "c33199897758cab145bb7fdab1ca8fb1cbd9de50":
+            raise ValueError("Unexpected pinned commit for openai/plugins vendor snapshot")
+        return ROOT / "sources/vendor/openai/plugins" / pinned_commit
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
-
-
-def _validate_openai_blocked_roots_absent(vendor_root: Path) -> None:
-    inventory_path = ROOT / "provenance/MARK-69-openai-plugins-inventory.json"
-    if not inventory_path.exists():
-        raise FileNotFoundError(inventory_path)
-    inventory = load_json(inventory_path)
-    blocked_entries = [
-        entry
-        for entry in inventory.get("entries", [])
-        if entry.get("import_status") == "blocked" and isinstance(entry.get("upstream_path"), str)
-    ]
-    for entry in blocked_entries:
-        upstream_path = entry["upstream_path"]
-        check = vendor_root / upstream_path
-        if check.exists():
-            raise ValueError(f"Blocked upstream path remains in vendor custody: {upstream_path}")
 
 
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
@@ -263,10 +237,8 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         raise ValueError("bundle manifest skill inventory does not match the live plugin root")
 
     archive_roots = bundle_manifest.get("archive_roots", [])
-    if archive_roots and archive_roots != ["gpt-skills/house-skills"]:
-        raise ValueError("bundle manifest archive_roots mismatch")
-    for archive_root in archive_roots:
-        check_path_exists(ROOT / archive_root)
+    if archive_roots:
+        raise ValueError("bundle manifest archive_roots must be absent in the reduced marketplace")
 
     notes = bundle_manifest.get("notes", [])
     if not isinstance(notes, list) or len(notes) < 1:
@@ -290,8 +262,6 @@ def validate_skill_bundle_manifest(
     if not pinned_commit or not isinstance(pinned_commit, str):
         raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
     vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
-    if upstream_repo == "openai/plugins":
-        _validate_openai_blocked_roots_absent(vendor_root)
     source_root = bundle_manifest.get("source_root")
     if not source_root or not isinstance(source_root, str):
         raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
@@ -369,12 +339,6 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         "provenance/house-skills.md",
     ]:
         raise ValueError("adventures-pack bundle manifest source_of_truth mismatch")
-
-    archive_roots = bundle_manifest.get("archive_roots", [])
-    if archive_roots != ["gpt-skills/house-skills"]:
-        raise ValueError("adventures-pack bundle manifest archive_roots mismatch")
-    for archive_root in archive_roots:
-        check_path_exists(ROOT / archive_root)
 
     components = bundle_manifest.get("components", [])
     if not isinstance(components, list) or not components:
@@ -455,7 +419,6 @@ def validate_source_map(text: str) -> None:
         "codex-marketplace/plugins/house-skills/skills/",
         "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md",
         "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-        "Historical source custody remains under `gpt-skills/house-skills/`",
         "All live current roots are unversioned plugin folders.",
     ):
         if needle not in text:
@@ -508,13 +471,11 @@ def main() -> int:
     validate_source_map(source_map)
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(ROOT / "provenance/MARK-46-activity-log.md")
-    check_text(ROOT / "provenance/MARK-62-activity-log.md")
-    check_text(ROOT / "provenance/claude-code-plugins-plus-skills-reference.md")
     check_text(PLUGIN_README_PATH)
     check_text(PLUGIN_SKILL_PATH)
     check_text(PLUGIN_BUNDLE_AGENTS_PATH)
     check_text(PROVENANCE_PATH)
+    check_text(ROOT / "provenance/MARK-99-unslop.md")
     check_text(REPO_INDEX_README_PATH)
     check_json(REPO_INDEX_PATH)
     validate_repo_index()

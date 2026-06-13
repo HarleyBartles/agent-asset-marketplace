@@ -11,9 +11,6 @@
                             "sources/house-skills/intake.json",
                             "provenance/house-skills.md"
                         ],
-    "archive_roots":  [
-                         "gpt-skills/house-skills"
-                     ],
     "projection_policy":  "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle.",
     "components":  [
                        {
