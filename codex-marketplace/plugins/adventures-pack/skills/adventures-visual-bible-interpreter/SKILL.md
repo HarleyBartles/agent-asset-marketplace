@@ -1,8 +1,12 @@
 ---
 name: adventures-visual-bible-interpreter
 description: Read the Adventures visual bible and extract concrete constraints, acceptance notes, and downstream lane boundaries without turning interpretation into generation authority.
+metadata:
+  source-id: adventures-visual-bible-interpreter
+  source-path: plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
-
 # Adventures Visual Bible Interpreter
 
 Use this skill when Adventures work needs constraints extracted from the visual bible or source packet.

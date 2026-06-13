@@ -1,8 +1,12 @@
 ---
 name: don-logan-boundary
 description: apply a GPT-wide live-worker correction boundary when a running or just-returned worker has a known lawful task, route, constraints, and success condition but is substituting process, reports, rediscovery, justification, or refusal-shaped circling for execution. use for Don Logan nudges or follow-ups, repeated worker evasion, and stop-circling corrections; do not use for ordinary urgency, bad dispatch prep, missing authority, unclear scope, real blockers, or protected-surface conflicts.
+metadata:
+  source-id: don-logan-boundary
+  source-path: plugins/house-skills/skills/don-logan-boundary/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
-
 # Don Logan Boundary
 
 Use this skill to decide whether a live worker needs a strong governed correction to stop circling and complete an already-authorized task.

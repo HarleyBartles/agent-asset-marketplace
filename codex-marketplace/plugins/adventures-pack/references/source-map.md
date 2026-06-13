@@ -1,9 +1,9 @@
 # Adventures Pack Source Map
 
 This bundle projects the clean Adventures line into a project-scoped
-marketplace surface.
+marketplace surface from the current House Skills roots.
 
-Canonical source references:
+Current source roots:
 
 - `plugins/house-skills/skills/adventures-project-doctrine/SKILL.md`
 - `plugins/house-skills/skills/adventures-bootstrap/SKILL.md`
@@ -64,3 +64,6 @@ Component summary:
 | Dependency | linear | current | `plugins/house-skills/skills/linear/SKILL.md` | `skills/linear/SKILL.md` | Linear mechanics |
 | Dependency | tps-reporting | current | `plugins/house-skills/skills/tps-reporting/SKILL.md` | `skills/tps-reporting/SKILL.md` | reporting |
 | Dependency | tps-ingress | current | `plugins/house-skills/skills/tps-ingress/SKILL.md` | `skills/tps-ingress/SKILL.md` | ingress |
+
+Historical source custody remains under `gpt-skills/house-skills/`.
+All live current roots are unversioned plugin folders.

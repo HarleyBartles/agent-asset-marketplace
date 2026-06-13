@@ -1,8 +1,12 @@
 ---
 name: adventures-bootstrap
 description: Bootstrap Adventures of Patch sessions by classifying project work, handoffs, deck, asset, issue, dispatch, receipt, skill-update, visual-production, and repo-sensitive requests before routing to required doctrine or task skills.
+metadata:
+  source-id: adventures-bootstrap
+  source-path: plugins/house-skills/skills/adventures-bootstrap/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
-
 # Adventures Bootstrap
 
 Use this skill as the first project-context read when binding a fresh ChatGPT agent to Adventures of Patch.

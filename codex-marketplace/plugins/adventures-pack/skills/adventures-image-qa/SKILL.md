@@ -1,9 +1,13 @@
 ---
 name: adventures-image-qa
 description: Review Adventures generated candidates and compiled assets against source constraints and acceptance criteria, while keeping QA separate from image generation or editing authority.
+metadata:
+  source-id: adventures-image-qa
+  source-path: plugins/house-skills/skills/adventures-image-qa/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
-
-# Adventures Image QA
+# Adventures Image Qa
 
 Use this skill when Adventures work needs visual QA of generated candidates, reference art, or compiled sheets.
 

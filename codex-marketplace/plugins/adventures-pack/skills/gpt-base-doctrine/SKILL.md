@@ -1,9 +1,13 @@
 ---
 name: gpt-base-doctrine
-description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster-v0.1 confusion, worker-copy attention guards, and lower-skill format conflicts.
+description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, bounded skill/reference read loops, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster confusion, worker-copy attention guards, and lower-skill format conflicts.
+metadata:
+  source-id: gpt-base-doctrine
+  source-path: plugins/house-skills/skills/gpt-base-doctrine/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
-
-# GPT Base Doctrine
+# Gpt Base Doctrine
 
 Use this skill as the GPT-wide doctrine store for cross-project operating invariants that are not owned by a more specific skill.
 
@@ -14,6 +18,7 @@ Use this skill as the GPT-wide doctrine store for cross-project operating invari
 - System prompt work: read `references/system-prompt-contract.md`.
 - Tool, memory, connector, repository-route, source-availability, or evidence-route claims: read `references/tool-surface-and-evidence.md`.
 - Deciding where durable doctrine belongs, canonical source truth, installed-skill versus repo-source boundaries, or agent asset marketplace routing: read `references/durable-doctrine-routing.md`.
+- Bounded skill/reference reading, anti-loop stop rules, or "how much should I read before acting" questions: read `references/bounded-read-loop.md`.
 - Failure, correction, and trust posture: read `references/failure-and-trust-posture.md`.
 - Output shape, reserved artifact forms, YAML-vs-non-YAML conflicts, worker-copy attention guards, or artifact authority: read `references/output-artifact-shape.md`.
 - Quick map: read `references/doctrine-index.md`.
@@ -28,13 +33,13 @@ Load `references/tool-surface-and-evidence.md` only when the current task actual
 
 Load `references/durable-doctrine-routing.md` when the current task asks where doctrine, skills, plugin marketplace entries, repo overlays, or agent asset source truth should live. This includes deciding whether a GPT-native skill update belongs in installed skill state, a canonical repo source, a Codex plugin marketplace, a repo overlay, Linear, GitHub, or a project repo.
 
-Load `references/output-artifact-shape.md` only when the current task involves output format authority, reserved workspace forms, dispatch/session-buster-v0.1 confusion, YAML-shaped content, reusable handoff shapes, or lower-skill output templates that may conflict with project/workspace conventions.
+Load `references/output-artifact-shape.md` only when the current task involves output format authority, reserved workspace forms, dispatch/session-buster confusion, YAML-shaped content, reusable handoff shapes, or lower-skill output templates that may conflict with project/workspace conventions.
 
 Use the most specific project skill, workflow skill, plugin, repo skill, or repo playbook when one owns the work. Use this skill only for base doctrine that crosses projects or prevents recurring GPT failure modes.
 
 ## Linear/Codex and agent-asset source boundary
 
-For coding work, Linear/Codex is now the default workflow control plane when available; use `worker-dispatch-linear-v1` for dispatch, worker state, PR-gate handling, and golden-gate routing. This base skill does not manage coding workflow state.
+For coding work, Linear/Codex is now the default workflow control plane when available; use `worker-dispatch-linear` for dispatch, worker state, PR-gate handling, and golden-gate routing. This base skill does not manage coding workflow state.
 
 For GPT-native skill work, installed skills are deployment targets, not durable source truth when a canonical repo source exists. The durable source should be the versioned agent asset repository or other named source artifact, then package/install through the native skill stack. Do not claim an installed skill is canonical merely because it is available in this session.
 

@@ -4,13 +4,16 @@
     "bundle_type":  "project-scoped-codex-plugin-projection",
     "marketplace_root":  ".agents/plugins/marketplace.json",
     "plugin_root":  "codex-marketplace/plugins/adventures-pack",
-    "canonical_source_root":  "gpt-skills/house-skills",
+    "canonical_source_root":  "plugins/house-skills/skills",
     "source_of_truth":  [
                             "sources/house-skills/decisions.json",
                             "sources/house-skills/decisions.md",
                             "sources/house-skills/intake.json",
                             "provenance/house-skills.md"
                         ],
+    "archive_roots":  [
+                         "gpt-skills/house-skills"
+                     ],
     "projection_policy":  "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle.",
     "components":  [
                        {

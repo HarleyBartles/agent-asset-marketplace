@@ -1,9 +1,13 @@
 ---
 name: tps-ingress
-description: verify review, verifier, worker, issue, PR, automated-check, or external feedback before it becomes action, scope, evidence, closure posture, or worker instruction. use after Linear/Codex or GitHub feedback appears and the question is whether to accept, clarify, reject, route, or block it; do not use for ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub proof already owned by worker-dispatch-linear-v1 and the repo/GitHub proof surface.
+description: verify review, verifier, worker, issue, PR, automated-check, or external feedback before it becomes action, scope, evidence, closure posture, or worker instruction. use after Linear/Codex or GitHub feedback appears and the question is whether to accept, clarify, reject, route, or block it; do not use for ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub proof already owned by worker-dispatch-linear and the repo/GitHub proof surface.
+metadata:
+  source-id: tps-ingress
+  source-path: plugins/house-skills/skills/tps-ingress/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+license: "MIT"
 ---
-
-# TPS Ingress
+# Tps Ingress
 
 Use this skill when feedback must be evaluated before it becomes action, scope, evidence, closure posture, or a worker instruction.
 
@@ -15,7 +19,7 @@ Decide whether each feedback item should be accepted, clarified, rejected, route
 
 Linear/Codex workflow state is not review feedback by itself.
 
-- Use `worker-dispatch-linear-v1` to check whether a Linear issue is planned, delegated/running, returned/pr-gate, pr-created, or landed.
+- Use `worker-dispatch-linear` to check whether a Linear issue is planned, delegated/running, returned/pr-gate, pr-created, or landed.
 - Use the repo/GitHub proof surface to verify a GitHub PR, commit, branch, status, review thread, merge, or main head.
 - Use this skill when a Codex return, PR review, verifier note, issue comment, automated check, or external suggestion could change scope, become evidence, justify closure, or become a new worker instruction.
 

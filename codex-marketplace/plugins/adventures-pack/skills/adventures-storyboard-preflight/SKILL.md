@@ -1,9 +1,12 @@
 ---
 name: adventures-storyboard-preflight
-description: >-
-  prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic visual planning. use when Harley asks ordinary GPT to storyboard frames, make prompt boards, map slide visuals, preflight story beats, or produce visual planning packets before image generation; never grants image-generation authority.
+description: prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic visual planning. use when Harley asks ordinary GPT to storyboard frames, make prompt boards, map slide visuals, preflight story beats, or produce visual planning packets before image generation; never grants image-generation authority.
+metadata:
+  source-id: adventures-storyboard-preflight
+  source-path: plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
-
 # Adventures Storyboard Preflight
 
 Use this skill when Harley asks ordinary GPT/project workflow to storyboard Adventures frames, make prompt boards, map slide visuals, prepare visual planning packets, or preflight story beats before image generation. Use it to produce deterministic planning inputs that may later support image preflight, QA, deck planning, or asset work.

@@ -1,9 +1,13 @@
 ---
 name: adventures-github-operations
 description: Use Adventures GitHub proof work for branch, PR, issue, and evidence handling after the generic GitHub lane has already been selected; keep it focused on repository proof surfaces and avoid visual or creative authority.
+metadata:
+  source-id: adventures-github-operations
+  source-path: plugins/house-skills/skills/adventures-github-operations/SKILL.md
+  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
+license: "MIT"
 ---
-
-# Adventures GitHub Operations
+# Adventures Github Operations
 
 Use this skill when Adventures work needs repo proof, branch hygiene, PR status, or issue-linked evidence.
 
