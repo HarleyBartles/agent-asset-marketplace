@@ -47,5 +47,8 @@ addendum.
 For the MARK-73 Wild Bunch project pack discovery note, see
 `MARK-73-wild-bunch-project-pack.md`.
 
+For the MARK-86 Adventures installed-skill reconciliation note, see
+`MARK-86-adventures-installed-skill-reconciliation.md`.
+
 For the Harley Repo Ops cross-repo worker bundle note, see
 `harley-repo-ops.md`.
