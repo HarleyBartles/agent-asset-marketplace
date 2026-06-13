@@ -23,7 +23,7 @@
     },
     {
       "canonical_name": "gpt-base-doctrine",
-      "component_version": "v1",
+      "component_version": "v1.1",
       "installed_source_skill_id": "gpt-base-doctrine-v1.1",
       "source_path": "gpt-skills/house-skills/gpt-base-doctrine/v1.1/gpt-base-doctrine-v1.1/SKILL.md",
       "lane": "base/control-plane",
