@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from marketplace_utils import (
@@ -176,55 +177,69 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         raise ValueError("bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
-        raise ValueError("bundle manifest marketplace_root mismatch")
     if bundle_manifest.get("plugin_root") != "plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("source_of_truth") != [
-        "sources/house-skills/decisions.json",
-        "sources/house-skills/decisions.md",
-        "sources/house-skills/intake.json",
-        "provenance/house-skills.md",
-    ]:
-        raise ValueError("bundle manifest source_of_truth mismatch")
+    if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
+        raise ValueError("bundle manifest bundle_type mismatch")
+    if bundle_manifest.get("skills_root") != "plugins/house-skills/skills":
+        raise ValueError("bundle manifest skills_root mismatch")
 
-    imports = intake.get("imports", [])
-    projected_imports = [
-        record
-        for record in imports
-        if record.get("import_state") == "imported"
-        and record.get("issue") in {"MARK-23", "MARK-30", "MARK-97", "WILL-276"}
-    ]
-    imported_by_id = {record["source_id"]: record for record in projected_imports}
-    components = bundle_manifest.get("components", [])
-    if len(components) != len(imported_by_id):
-        raise ValueError("bundle manifest component count does not match imported ledger records")
+    control_plane = bundle_manifest.get("control_plane_skill")
+    if not isinstance(control_plane, dict):
+        raise ValueError("bundle manifest control_plane_skill mismatch")
+    if control_plane.get("name") != "house-skills":
+        raise ValueError("bundle manifest control plane name mismatch")
+    control_plane_path = control_plane.get("path")
+    if control_plane_path != "plugins/house-skills/skills/house-skills/SKILL.md":
+        raise ValueError("bundle manifest control plane path mismatch")
+    check_path_exists(ROOT / control_plane_path)
 
-    projected_order = [record["source_id"] for record in projected_imports]
-    component_order: list[str] = []
-    for component in components:
-        source_id = component.get("installed_source_skill_id")
-        if source_id not in imported_by_id:
-            raise ValueError(f"bundle manifest component {source_id!r} is not present in sources/house-skills/intake.json")
-        source_row = imported_by_id[source_id]
-        if component.get("source_path") != source_row.get("source_path"):
-            raise ValueError(f"bundle manifest source path mismatch for {source_id}")
-        expected_canonical_name = source_id.rsplit("-v", 1)[0]
-        expected_component_version = f"v{source_id.rsplit('-v', 1)[1]}"
-        if component.get("canonical_name") != expected_canonical_name:
-            raise ValueError(f"bundle manifest canonical name mismatch for {source_id}")
-        if component.get("component_version") != expected_component_version:
-            raise ValueError(f"bundle manifest component version mismatch for {source_id}")
-        if component.get("import_status") != source_row.get("import_state"):
-            raise ValueError(f"bundle manifest import status mismatch for {source_id}")
-        check_path_exists(ROOT / component["source_path"])
-        component_order.append(source_id)
+    skill_dir = ROOT / "plugins/house-skills/skills"
+    current_skill_dirs = sorted(
+        path.name for path in skill_dir.iterdir() if path.is_dir() and path.name != "house-skills"
+    )
+    if any(re.match(r"^v\d", path.name) for path in skill_dir.rglob("*") if path.is_dir()):
+        raise ValueError("house-skills plugin root still contains live versioned subdirectories")
 
-    if component_order != projected_order:
-        raise ValueError("bundle manifest component ordering does not match the source ledger projection")
+    skills = bundle_manifest.get("skills", [])
+    if bundle_manifest.get("skill_count") != len(skills):
+        raise ValueError("bundle manifest skill_count mismatch")
+    if len(skills) != len(current_skill_dirs):
+        raise ValueError("bundle manifest skill inventory count mismatch")
 
-    for source_path in bundle_manifest.get("source_of_truth", []):
-        check_path_exists(ROOT / source_path)
+    manifest_names: list[str] = []
+    for entry in skills:
+        if not isinstance(entry, dict):
+            raise ValueError("bundle manifest skills must contain objects")
+        name = entry.get("name")
+        lane = entry.get("lane")
+        path = entry.get("path")
+        if not name or not isinstance(name, str):
+            raise ValueError("bundle manifest skill entry is missing a name")
+        if not lane or not isinstance(lane, str):
+            raise ValueError(f"bundle manifest skill {name} is missing a lane")
+        if not path or not isinstance(path, str):
+            raise ValueError(f"bundle manifest skill {name} is missing a path")
+        expected_lane = "Adventures" if name.startswith("adventures-") else "Rooms" if name.startswith("rooms-") else "Base and control plane"
+        if lane != expected_lane:
+            raise ValueError(f"bundle manifest skill {name} lane mismatch")
+        check_path_exists(ROOT / path)
+        if not path.endswith(f"{name}/SKILL.md"):
+            raise ValueError(f"bundle manifest skill {name} path mismatch")
+        manifest_names.append(name)
+
+    if sorted(manifest_names) != current_skill_dirs:
+        raise ValueError("bundle manifest skill inventory does not match the live plugin root")
+
+    archive_roots = bundle_manifest.get("archive_roots", [])
+    if archive_roots and archive_roots != ["gpt-skills/house-skills"]:
+        raise ValueError("bundle manifest archive_roots mismatch")
+    for archive_root in archive_roots:
+        check_path_exists(ROOT / archive_root)
+
+    notes = bundle_manifest.get("notes", [])
+    if not isinstance(notes, list) or len(notes) < 1:
+        raise ValueError("bundle manifest notes mismatch")
 
 
 def validate_skill_bundle_manifest(
@@ -397,12 +412,11 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
 
 def validate_source_map(text: str) -> None:
     for needle in (
-        ".agents/plugins/marketplace.json",
-        "plugins/house-skills/.codex-plugin/plugin.json",
+        "plugins/house-skills/skills/",
+        "plugins/house-skills/skills/house-skills/SKILL.md",
         "plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-        "sources/house-skills/decisions.json",
-        "sources/house-skills/decisions.md",
-        "sources/house-skills/intake.json",
+        "Historical source custody remains under `gpt-skills/house-skills/`",
+        "All live current roots are unversioned plugin folders.",
     ):
         if needle not in text:
             raise ValueError(f"source map is missing {needle}")

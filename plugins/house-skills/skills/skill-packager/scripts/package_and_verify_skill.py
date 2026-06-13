@@ -189,8 +189,12 @@ def step_package(skill_dir: Path, package_path: Path, evidence_path: Path):
         return False, '', 'ERROR forbidden: ' + ', '.join(forbidden)
     if package_path.exists():
         package_path.unlink()
+    try:
+        files = sorted(iter_skill_files(skill_dir), key=lambda p: str(p.relative_to(skill_dir)))
+    except ValueError as exc:
+        return False, '', f'ERROR: {exc}'
     with zipfile.ZipFile(package_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for fp in sorted(iter_skill_files(skill_dir), key=lambda p: str(p.relative_to(skill_dir))):
+        for fp in files:
             zipf.write(fp, fp.relative_to(skill_dir.parent))
     root, match = inspect_archive_shape(package_path)
     size = package_path.stat().st_size

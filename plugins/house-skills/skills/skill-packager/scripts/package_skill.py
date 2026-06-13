@@ -69,8 +69,13 @@ def package_skill(skill_path, output_dir):
     zpath = output_path / 'skill.zip'
     if zpath.exists():
         zpath.unlink()
+    try:
+        files = sorted(iter_skill_files(skill_path), key=lambda p: str(p.relative_to(skill_path)))
+    except ValueError as exc:
+        print(f'ERROR: {exc}')
+        return None
     with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for fp in sorted(iter_skill_files(skill_path), key=lambda p: str(p.relative_to(skill_path))):
+        for fp in files:
             zipf.write(fp, fp.relative_to(skill_path.parent))
     root, match = inspect_archive_shape(zpath)
     size = zpath.stat().st_size

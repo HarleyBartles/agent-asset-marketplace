@@ -1,9 +1,9 @@
 # Version History for Session Buster
 
-- Active version: `v0.2`
-- Active source id: `session-buster-v0.2`
-- Active root: `gpt-skills/house-skills/session-buster/SKILL.md`
-- Provenance: `MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane`
-- Historical version folders present in this repo: `v0.1`
+- Historical version: `v0.2`
+- Historical source id: `session-buster-v0.2`
+- Current root: `plugins/house-skills/skills/session-buster/SKILL.md`
+- Provenance: historical archive note for session-buster
+- Historical package folders folded out of the live root: `v0.1`
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

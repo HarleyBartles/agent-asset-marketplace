@@ -11,6 +11,7 @@ import csv
 import hashlib
 import json
 import mimetypes
+import re
 import shutil
 import sys
 import zipfile
@@ -45,7 +46,11 @@ def image_dimensions(path: Path) -> tuple[int | None, int | None]:
 
 def iter_images(input_dir: Path) -> list[Path]:
     images = [p for p in input_dir.iterdir() if p.is_file() and p.suffix.lower() in SUPPORTED_EXTENSIONS]
-    return sorted(images, key=lambda p: p.name.lower())
+    def natural_key(path: Path) -> list[object]:
+        parts = re.split(r"(\d+)", path.name.casefold())
+        return [int(part) if part.isdigit() else part for part in parts]
+
+    return sorted(images, key=natural_key)
 
 
 def load_json(path: Path | None) -> dict[str, Any]:

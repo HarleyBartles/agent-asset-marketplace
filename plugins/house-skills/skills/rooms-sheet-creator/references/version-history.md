@@ -1,9 +1,9 @@
 # Version History for Rooms Sheet Creator
 
-- Active version: `v1`
-- Active source id: `rooms-sheet-creator-v1`
-- Active root: `gpt-skills/house-skills/rooms-sheet-creator/SKILL.md`
-- Provenance: `MARK-9 chunk ledger Ã¢â‚¬â€ Rooms`
-- Historical version folders present in this repo: none
+- Historical version: `v1`
+- Historical source id: `rooms-sheet-creator-v1`
+- Current root: `plugins/house-skills/skills/rooms-sheet-creator/SKILL.md`
+- Provenance: historical archive note for rooms-sheet-creator
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

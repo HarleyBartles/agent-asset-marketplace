@@ -1,9 +1,9 @@
 # Version History for Skill Packager
 
-- Active version: `v1`
-- Active source id: `skill-packager-v1`
-- Active root: `gpt-skills/house-skills/skill-packager/SKILL.md`
-- Provenance: `MARK-21 skill maintenance House Skills source slice`
-- Historical version folders present in this repo: none
+- Historical version: `v1`
+- Historical source id: `skill-packager-v1`
+- Current root: `plugins/house-skills/skills/skill-packager/SKILL.md`
+- Provenance: historical archive note for skill-packager
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

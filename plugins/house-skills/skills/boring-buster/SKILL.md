@@ -1,11 +1,10 @@
 ---
+name: boring-buster
 description: Use this skill before planning, dispatching, or implementing work when success depends on the work being small, dull, explicit, falsifiable, and ready for ordinary execution.
 metadata:
-  version: v1
-  source-id: boring-buster-v1
-  source-path: gpt-skills/house-skills/boring-buster/SKILL.md
+  source-id: boring-buster
+  source-path: plugins/house-skills/skills/boring-buster/SKILL.md
   provenance-name: MARK-19 core generic buster House Skills source slice
-name: boring-buster
 license: "MIT"
 ---
 # Boring Buster

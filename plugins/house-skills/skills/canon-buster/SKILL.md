@@ -1,11 +1,10 @@
 ---
+name: canon-buster
 description: Use this skill before making, changing, summarizing, publishing, dispatching, or relying on a durable canon claim.
 metadata:
-  version: v1
-  source-id: canon-buster-v1
-  source-path: gpt-skills/house-skills/canon-buster/SKILL.md
+  source-id: canon-buster
+  source-path: plugins/house-skills/skills/canon-buster/SKILL.md
   provenance-name: MARK-19 core generic buster House Skills source slice
-name: canon-buster
 license: "MIT"
 ---
 # Canon Buster

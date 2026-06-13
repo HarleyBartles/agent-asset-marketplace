@@ -78,6 +78,8 @@ def iter_skill_files(skill_dir: Path, include_skipped: bool = False) -> Iterator
         dirs = []
         for entry in entries:
             rel = entry.relative_to(root)
+            if entry.is_symlink():
+                raise ValueError(f"symlink not allowed: {rel}")
             if entry.is_dir():
                 if not include_skipped and (is_hidden_path(rel) or is_skipped_dir(entry)):
                     continue
@@ -94,6 +96,9 @@ def skipped_output_paths(skill_dir: Path) -> list[str]:
     skipped: list[str] = []
     for path in sorted(root.rglob("*")):
         rel = path.relative_to(root)
+        if path.is_symlink():
+            skipped.append(str(rel))
+            continue
         if any(part in SKIP_DIR_NAMES for part in rel.parts):
             skipped.append(str(rel))
             continue

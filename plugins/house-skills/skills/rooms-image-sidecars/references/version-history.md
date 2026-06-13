@@ -1,9 +1,9 @@
 # Version History for Rooms Image Sidecars
 
-- Active version: `v0.1`
-- Active source id: `rooms-image-sidecars-v0.1`
-- Active root: `gpt-skills/house-skills/rooms-image-sidecars/SKILL.md`
-- Provenance: `MARK-23 prep payload for Rooms House Skills survivor import`
-- Historical version folders present in this repo: none
+- Historical version: `v0.1`
+- Historical source id: `rooms-image-sidecars-v0.1`
+- Current root: `plugins/house-skills/skills/rooms-image-sidecars/SKILL.md`
+- Provenance: historical archive note for rooms-image-sidecars
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

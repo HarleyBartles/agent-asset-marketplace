@@ -2,11 +2,10 @@
 name: linear
 description: 'Use for Linear connector mechanics: reading, creating, updating, commenting, and organizing Linear issues, projects, documents, labels, and statuses. Use when the user asks to inspect or mutate Linear objects, capture side notes durably, create planning issues/projects, or recover from Linear connector quirks. Do not use as the coding dispatch control plane: Linear/Codex worker routing, Codex status checks, PR-gate handling, and dispatch decisions belong to worker-dispatch-linear; GitHub proof belongs to the repo/GitHub proof surface.'
 metadata:
-  version: v1.1
-  source-id: linear-v1.1
-  source-path: gpt-skills/house-skills/linear/SKILL.md
+  source-id: linear
+  source-path: plugins/house-skills/skills/linear/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+license: "Apache-2.0"
 ---
 # Linear
 

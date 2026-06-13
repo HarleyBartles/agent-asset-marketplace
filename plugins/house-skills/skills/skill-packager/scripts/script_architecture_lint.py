@@ -47,11 +47,14 @@ def lint(skill_dir):
     skill_dir = Path(skill_dir).resolve()
     errors = []
     warnings = []
-    scripts = _script_files(skill_dir)
+    try:
+        scripts = _script_files(skill_dir)
+        docs = _doc_text(skill_dir)
+    except ValueError as exc:
+        return [str(exc)], warnings
     if not scripts:
         return errors, warnings
 
-    docs = _doc_text(skill_dir)
     if not docs.strip():
         errors.append('scripts present but no non-script documentation was available for normal-use recipes')
 

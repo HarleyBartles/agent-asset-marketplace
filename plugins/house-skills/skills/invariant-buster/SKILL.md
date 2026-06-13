@@ -1,11 +1,10 @@
 ---
+name: invariant-buster
 description: Use this skill before an action, answer, plan, dispatch, or durable mutation when binding constraints may be violated.
 metadata:
-  version: v1
-  source-id: invariant-buster-v1
-  source-path: gpt-skills/house-skills/invariant-buster/SKILL.md
+  source-id: invariant-buster
+  source-path: plugins/house-skills/skills/invariant-buster/SKILL.md
   provenance-name: MARK-19 core generic buster House Skills source slice
-name: invariant-buster
 license: "MIT"
 ---
 # Invariant Buster

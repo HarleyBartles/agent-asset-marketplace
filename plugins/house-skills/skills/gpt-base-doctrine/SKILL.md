@@ -2,9 +2,8 @@
 name: gpt-base-doctrine
 description: GPT-wide doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, bounded skill/reference read loops, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster confusion, worker-copy attention guards, and lower-skill format conflicts.
 metadata:
-  version: v1.1
-  source-id: gpt-base-doctrine-v1.1
-  source-path: gpt-skills/house-skills/gpt-base-doctrine/SKILL.md
+  source-id: gpt-base-doctrine
+  source-path: plugins/house-skills/skills/gpt-base-doctrine/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 license: "MIT"
 ---

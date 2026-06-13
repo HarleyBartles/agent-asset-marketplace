@@ -2,13 +2,11 @@
 name: rooms-canon-buster
 description: Rooms canon pressure checks and lawful canon/item adjustment routing for canon, gaps, ambiguity, and layer mismatches.
 metadata:
-  version: v1
-  source-id: rooms-canon-buster-v1
-  source-path: gpt-skills/house-skills/rooms-canon-buster/SKILL.md
+  source-id: rooms-canon-buster
+  source-path: plugins/house-skills/skills/rooms-canon-buster/SKILL.md
   provenance-name: MARK-97 attached rooms canon buster zip update
 license: "MIT"
 ---
-
 # Rooms Canon Buster
 
 Use this skill to test canon pressure in Rooms, Mostly. Canon Buster protects coherence, not tidiness: do not flatten useful ambiguity, narrator limitation, archive gaps, or layered truth merely because an item is uncomfortable.

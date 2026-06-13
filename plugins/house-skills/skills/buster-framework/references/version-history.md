@@ -1,9 +1,9 @@
 # Version History for Buster Framework
 
-- Active version: `v1`
-- Active source id: `buster-framework-v1`
-- Active root: `gpt-skills/house-skills/buster-framework/SKILL.md`
-- Provenance: `MARK-19 core generic buster House Skills source slice`
-- Historical version folders present in this repo: none
+- Historical version: `v1`
+- Historical source id: `buster-framework-v1`
+- Current root: `plugins/house-skills/skills/buster-framework/SKILL.md`
+- Provenance: historical archive note for buster-framework
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

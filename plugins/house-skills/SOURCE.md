@@ -1,14 +1,15 @@
 # Source
 
-This plugin packages the reviewed first-party House Skills source catalog as a market-facing Codex plugin.
+This plugin is the reviewed first-party House Skills plugin root.
 
 ## Source basis
 
 - Source ledger: `sources/house-skills/decisions.md`
-- Structured mirror: `sources/house-skills/decisions.json`
+- Structured archive ledger: `sources/house-skills/decisions.json`
 - Intake ledger: `sources/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
-- Active source roots: `gpt-skills/house-skills/`
+- Current skill roots: `plugins/house-skills/skills/`
+- Historical custody: `gpt-skills/house-skills/`
 
 ## Source surfaces copied
 
@@ -18,15 +19,15 @@ This plugin packages the reviewed first-party House Skills source catalog as a m
 
 ## Marketplace adaptation
 
-- Status: `projected`
+- Status: `current`
 - Plugin name: `house-skills`
 - Display name: `House Skills`
 - Marketplace category normalized to `Productivity`
 - Icon paths normalized to `./assets/icon.svg`
-- Mirrored each active first-party House Skills root into `skills/<skill-name>/`
-- Preserved nested historical and reference-only skill substance within each copied root
-- Kept the bundle wrapper skill as the control plane for the projection
+- Kept each current skill root unversioned and installable under `skills/<skill-name>/`
+- Folded the still-needed support files from historical version packages into the unversioned skill roots
+- Preserved the version history in each skill's changelog and archive custody
 
 ## Notes
 
-The active source inventory remains authoritative in `gpt-skills/house-skills/` and the source ledger. This plugin root is the installable marketplace surface that mirrors those active roots in place.
+The active source inventory now lives in `plugins/house-skills/skills/`. The `gpt-skills/house-skills/` tree remains as archive custody and provenance evidence only.

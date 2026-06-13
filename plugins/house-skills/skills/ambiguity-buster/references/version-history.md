@@ -1,9 +1,9 @@
 # Version History for Ambiguity Buster
 
-- Active version: `v1`
-- Active source id: `ambiguity-buster-v1`
-- Active root: `gpt-skills/house-skills/ambiguity-buster/SKILL.md`
-- Provenance: `MARK-19 core generic buster House Skills source slice`
-- Historical version folders present in this repo: none
+- Historical version: `v1`
+- Historical source id: `ambiguity-buster-v1`
+- Current root: `plugins/house-skills/skills/ambiguity-buster/SKILL.md`
+- Provenance: historical archive note for ambiguity-buster
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

@@ -1,9 +1,9 @@
 # Version History for Rooms Bootstrap
 
-- Active version: `v1.1`
-- Active source id: `rooms-bootstrap-v1.1`
-- Active root: `gpt-skills/house-skills/rooms-bootstrap/SKILL.md`
-- Provenance: `MARK-97 rooms bootstrap zip update`
-- Historical version folders present in this repo: none
+- Historical version: `v1.1`
+- Historical source id: `rooms-bootstrap-v1.1`
+- Current root: `plugins/house-skills/skills/rooms-bootstrap/SKILL.md`
+- Provenance: historical archive note for rooms-bootstrap
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

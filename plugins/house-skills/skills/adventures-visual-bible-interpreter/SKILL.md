@@ -2,9 +2,8 @@
 name: adventures-visual-bible-interpreter
 description: Read the Adventures visual bible and extract concrete constraints, acceptance notes, and downstream lane boundaries without turning interpretation into generation authority.
 metadata:
-  version: v1.1
-  source-id: adventures-visual-bible-interpreter-v1.1
-  source-path: gpt-skills/house-skills/adventures-visual-bible-interpreter/SKILL.md
+  source-id: adventures-visual-bible-interpreter
+  source-path: plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

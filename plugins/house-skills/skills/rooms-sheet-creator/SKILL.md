@@ -2,9 +2,8 @@
 name: rooms-sheet-creator
 description: create Rooms prompt, peek, and recall sheets from character-investigation packets.
 metadata:
-  version: v1
-  source-id: rooms-sheet-creator-v1
-  source-path: gpt-skills/house-skills/rooms-sheet-creator/SKILL.md
+  source-id: rooms-sheet-creator
+  source-path: plugins/house-skills/skills/rooms-sheet-creator/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
 license: "MIT"
 ---

@@ -1,9 +1,9 @@
 # Version History for Cleanup Custody
 
-- Active version: `v0.1`
-- Active source id: `cleanup-custody-v0.1`
-- Active root: `gpt-skills/house-skills/cleanup-custody/SKILL.md`
-- Provenance: `legacy profanity-bearing cleanup skill`
-- Historical version folders present in this repo: none
+- Historical version: `v0.1`
+- Historical source id: `cleanup-custody-v0.1`
+- Current root: `plugins/house-skills/skills/cleanup-custody/SKILL.md`
+- Provenance: historical archive note for cleanup-custody
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

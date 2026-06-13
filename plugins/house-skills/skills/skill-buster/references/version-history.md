@@ -1,9 +1,9 @@
 # Version History for Skill Buster
 
-- Active version: `v0.1`
-- Active source id: `skill-buster-v0.1`
-- Active root: `gpt-skills/house-skills/skill-buster/SKILL.md`
-- Provenance: `MARK-21 skill maintenance House Skills source slice`
-- Historical version folders present in this repo: none
+- Historical version: `v0.1`
+- Historical source id: `skill-buster-v0.1`
+- Current root: `plugins/house-skills/skills/skill-buster/SKILL.md`
+- Provenance: historical archive note for skill-buster
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

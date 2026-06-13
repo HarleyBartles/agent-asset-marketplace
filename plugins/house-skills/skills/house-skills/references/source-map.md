@@ -1,68 +1,59 @@
 # House Skills Source Map
 
-This bundle projects the reviewed House Skills inventory into one repo-local marketplace surface and mirrors the active roots into real plugin skill folders under `plugins/house-skills/skills/<skill-name>/`.
+The live House Skills plugin root is `plugins/house-skills/skills/`.
+Historical source custody remains under `gpt-skills/house-skills/` for archive and provenance only.
 
-Authoritative source references:
+Current control plane:
 
-- `sources/house-skills/decisions.json`
-- `sources/house-skills/decisions.md`
-- `sources/house-skills/intake.json`
-- `provenance/house-skills.md`
-
-Registry edit flow:
-
-- edit the human registry in `sources/house-skills/decisions.md`;
-- keep `sources/house-skills/decisions.json` as the structured mirror;
-- regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
-- validate the registry with `tools/validate_marketplace.py`.
-
-Bundle references:
-
-- `.agents/plugins/marketplace.json`
-- `plugins/house-skills/.codex-plugin/plugin.json`
+- `plugins/house-skills/skills/house-skills/SKILL.md`
 - `plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
-- `plugins/house-skills/skills/<skill-name>/`
+- `plugins/house-skills/skills/house-skills/references/source-map.md`
 
-Lane summary:
+Current skill inventory:
 
-- Base and control plane: all reviewed imports from MARK-30 plus the shared connector-safety v1.1 import from WILL-276 in the base/control-plane lane.
-- Adventures: all reviewed imports from MARK-30 in the Adventures lane.
-- Rooms: all reviewed imports from MARK-30 in the Rooms lane, plus the MARK-23 `rooms-image-sidecars` import, the MARK-97 `rooms-canon-buster` import, and the MARK-97 `rooms-bootstrap` v1.1 refresh.
+| Lane | Skill | Current path |
+| --- | --- | --- |
+| Base and control plane | ambiguity-buster | `plugins/house-skills/skills/ambiguity-buster/SKILL.md` |
+| Base and control plane | analogy-buster | `plugins/house-skills/skills/analogy-buster/SKILL.md` |
+| Base and control plane | boring-buster | `plugins/house-skills/skills/boring-buster/SKILL.md` |
+| Base and control plane | buster-framework | `plugins/house-skills/skills/buster-framework/SKILL.md` |
+| Base and control plane | canon-buster | `plugins/house-skills/skills/canon-buster/SKILL.md` |
+| Base and control plane | cleanup-custody | `plugins/house-skills/skills/cleanup-custody/SKILL.md` |
+| Base and control plane | connector-safety | `plugins/house-skills/skills/connector-safety/SKILL.md` |
+| Base and control plane | crew | `plugins/house-skills/skills/crew/SKILL.md` |
+| Base and control plane | crew-buster | `plugins/house-skills/skills/crew-buster/SKILL.md` |
+| Base and control plane | don-logan-boundary | `plugins/house-skills/skills/don-logan-boundary/SKILL.md` |
+| Base and control plane | gpt-base-doctrine | `plugins/house-skills/skills/gpt-base-doctrine/SKILL.md` |
+| Base and control plane | invariant-buster | `plugins/house-skills/skills/invariant-buster/SKILL.md` |
+| Base and control plane | linear | `plugins/house-skills/skills/linear/SKILL.md` |
+| Base and control plane | session-buster | `plugins/house-skills/skills/session-buster/SKILL.md` |
+| Base and control plane | session-buster-ingress | `plugins/house-skills/skills/session-buster-ingress/SKILL.md` |
+| Base and control plane | skill-buster | `plugins/house-skills/skills/skill-buster/SKILL.md` |
+| Base and control plane | skill-packager | `plugins/house-skills/skills/skill-packager/SKILL.md` |
+| Base and control plane | skill-validator | `plugins/house-skills/skills/skill-validator/SKILL.md` |
+| Base and control plane | tps-ingress | `plugins/house-skills/skills/tps-ingress/SKILL.md` |
+| Base and control plane | tps-reporting | `plugins/house-skills/skills/tps-reporting/SKILL.md` |
+| Base and control plane | work-mode-router | `plugins/house-skills/skills/work-mode-router/SKILL.md` |
+| Base and control plane | worker-dispatch-linear | `plugins/house-skills/skills/worker-dispatch-linear/SKILL.md` |
+| Adventures | adventures-asset-sheet-compiler | `plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md` |
+| Adventures | adventures-bootstrap | `plugins/house-skills/skills/adventures-bootstrap/SKILL.md` |
+| Adventures | adventures-frame-buster | `plugins/house-skills/skills/adventures-frame-buster/SKILL.md` |
+| Adventures | adventures-github-operations | `plugins/house-skills/skills/adventures-github-operations/SKILL.md` |
+| Adventures | adventures-image-qa | `plugins/house-skills/skills/adventures-image-qa/SKILL.md` |
+| Adventures | adventures-project-doctrine | `plugins/house-skills/skills/adventures-project-doctrine/SKILL.md` |
+| Adventures | adventures-storyboard-preflight | `plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md` |
+| Adventures | adventures-visual-bible-creator | `plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md` |
+| Adventures | adventures-visual-bible-interpreter | `plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md` |
+| Adventures | adventures-visual-preproduction | `plugins/house-skills/skills/adventures-visual-preproduction/SKILL.md` |
+| Rooms | rooms-ambiguity-buster | `plugins/house-skills/skills/rooms-ambiguity-buster/SKILL.md` |
+| Rooms | rooms-analogy-buster | `plugins/house-skills/skills/rooms-analogy-buster/SKILL.md` |
+| Rooms | rooms-bootstrap | `plugins/house-skills/skills/rooms-bootstrap/SKILL.md` |
+| Rooms | rooms-canon-buster | `plugins/house-skills/skills/rooms-canon-buster/SKILL.md` |
+| Rooms | rooms-character-investigation | `plugins/house-skills/skills/rooms-character-investigation/SKILL.md` |
+| Rooms | rooms-image-sidecars | `plugins/house-skills/skills/rooms-image-sidecars/SKILL.md` |
+| Rooms | rooms-project-doctrine | `plugins/house-skills/skills/rooms-project-doctrine/SKILL.md` |
+| Rooms | rooms-sheet-creator | `plugins/house-skills/skills/rooms-sheet-creator/SKILL.md` |
+| Rooms | rooms-source-partitioning | `plugins/house-skills/skills/rooms-source-partitioning/SKILL.md` |
+| Rooms | rooms-zoom-outs-buster | `plugins/house-skills/skills/rooms-zoom-outs-buster/SKILL.md` |
 
-Component map:
-
-| Lane | Canonical name | Component version | Installed source skill id | Source path | Import status |
-| --- | --- | --- | --- | --- | --- |
-| Base and control plane | don-logan-boundary | v1 | `don-logan-boundary-v1` | `gpt-skills/house-skills/don-logan-boundary/SKILL.md` | imported |
-| Base and control plane | gpt-base-doctrine | v1.1 | `gpt-base-doctrine-v1.1` | `gpt-skills/house-skills/gpt-base-doctrine/SKILL.md` | imported |
-| Base and control plane | work-mode-router | v1 | `work-mode-router-v1` | `gpt-skills/house-skills/work-mode-router/SKILL.md` | imported |
-| Base and control plane | worker-dispatch-linear | v1 | `worker-dispatch-linear-v1` | `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md` | imported |
-| Base and control plane | linear | v1.1 | `linear-v1.1` | `gpt-skills/house-skills/linear/SKILL.md` | imported |
-| Base and control plane | tps-reporting | v1 | `tps-reporting-v1` | `gpt-skills/house-skills/tps-reporting/SKILL.md` | imported |
-| Base and control plane | tps-ingress | v1 | `tps-ingress-v1` | `gpt-skills/house-skills/tps-ingress/SKILL.md` | imported |
-| Base and control plane | session-buster | v0.2 | `session-buster-v0.2` | `gpt-skills/house-skills/session-buster/SKILL.md` | imported |
-| Base and control plane | session-buster-ingress | v0.2 | `session-buster-ingress-v0.2` | `gpt-skills/house-skills/session-buster-ingress/SKILL.md` | imported |
-| Base and control plane | crew | v1 | `crew-v1` | `gpt-skills/house-skills/crew/SKILL.md` | imported |
-| Base and control plane | crew-buster | v1 | `crew-buster-v1` | `gpt-skills/house-skills/crew-buster/SKILL.md` | imported |
-| Base and control plane | connector-safety | v1.1 | `connector-safety-v1.1` | `gpt-skills/house-skills/connector-safety/SKILL.md` | imported |
-| Adventures | adventures-bootstrap | v1.1 | `adventures-bootstrap-v1.1` | `gpt-skills/house-skills/adventures-bootstrap/SKILL.md` | imported |
-| Adventures | adventures-github-operations | v1.1 | `adventures-github-operations-v1.1` | `gpt-skills/house-skills/adventures-github-operations/SKILL.md` | imported |
-| Adventures | adventures-visual-preproduction | v1.1 | `adventures-visual-preproduction-v1.1` | `gpt-skills/house-skills/adventures-visual-preproduction/SKILL.md` | imported |
-| Adventures | adventures-storyboard-preflight | v1.1 | `adventures-storyboard-preflight-v1.1` | `gpt-skills/house-skills/adventures-storyboard-preflight/SKILL.md` | imported |
-| Adventures | adventures-visual-bible-creator | v1.1 | `adventures-visual-bible-creator-v1.1` | `gpt-skills/house-skills/adventures-visual-bible-creator/SKILL.md` | imported |
-| Adventures | adventures-visual-bible-interpreter | v1.1 | `adventures-visual-bible-interpreter-v1.1` | `gpt-skills/house-skills/adventures-visual-bible-interpreter/SKILL.md` | imported |
-| Adventures | adventures-image-qa | v1.1 | `adventures-image-qa-v1.1` | `gpt-skills/house-skills/adventures-image-qa/SKILL.md` | imported |
-| Adventures | adventures-asset-sheet-compiler | v1.1 | `adventures-asset-sheet-compiler-v1.1` | `gpt-skills/house-skills/adventures-asset-sheet-compiler/SKILL.md` | imported |
-| Adventures | adventures-frame-buster | v1.1 | `adventures-frame-buster-v1.1` | `gpt-skills/house-skills/adventures-frame-buster/SKILL.md` | imported |
-| Rooms | rooms-project-doctrine | v1 | `rooms-project-doctrine-v1` | `gpt-skills/house-skills/rooms-project-doctrine/SKILL.md` | imported |
-| Rooms | rooms-image-sidecars | v0.1 | `rooms-image-sidecars-v0.1` | `gpt-skills/house-skills/rooms-image-sidecars/SKILL.md` | imported |
-| Rooms | rooms-bootstrap | v1.1 | `rooms-bootstrap-v1.1` | `gpt-skills/house-skills/rooms-bootstrap/SKILL.md` | imported |
-| Rooms | rooms-source-partitioning | v1 | `rooms-source-partitioning-v1` | `gpt-skills/house-skills/rooms-source-partitioning/SKILL.md` | imported |
-| Rooms | rooms-ambiguity-buster | v1 | `rooms-ambiguity-buster-v1` | `gpt-skills/house-skills/rooms-ambiguity-buster/SKILL.md` | imported |
-| Rooms | rooms-analogy-buster | v1 | `rooms-analogy-buster-v1` | `gpt-skills/house-skills/rooms-analogy-buster/SKILL.md` | imported |
-| Rooms | rooms-zoom-outs-buster | v1 | `rooms-zoom-outs-buster-v1` | `gpt-skills/house-skills/rooms-zoom-outs-buster/SKILL.md` | imported |
-| Rooms | rooms-character-investigation | v1 | `rooms-character-investigation-v1` | `gpt-skills/house-skills/rooms-character-investigation/SKILL.md` | imported |
-| Rooms | rooms-sheet-creator | v1 | `rooms-sheet-creator-v1` | `gpt-skills/house-skills/rooms-sheet-creator/SKILL.md` | imported |
-| Rooms | rooms-canon-buster | v1 | `rooms-canon-buster-v1` | `gpt-skills/house-skills/rooms-canon-buster/SKILL.md` | imported |
-
-The bundle version is separate from the component versions. The component versions stay recorded in the source ledger and SKILL.md frontmatter metadata.
+All live current roots are unversioned plugin folders. Any historical `v*` package residue lives only in changelog notes and archive custody, not as an active skill root.

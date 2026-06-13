@@ -2,9 +2,8 @@
 name: rooms-zoom-outs-buster
 description: rooms zoom-out compression checks against artifacts and source surfaces.
 metadata:
-  version: v1
-  source-id: rooms-zoom-outs-buster-v1
-  source-path: gpt-skills/house-skills/rooms-zoom-outs-buster/SKILL.md
+  source-id: rooms-zoom-outs-buster
+  source-path: plugins/house-skills/skills/rooms-zoom-outs-buster/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
 license: "MIT"
 ---

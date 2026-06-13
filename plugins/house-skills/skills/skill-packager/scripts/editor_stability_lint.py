@@ -27,7 +27,13 @@ def lint(skill_dir):
         elif Path(rel).name in {'skill.zip', 'package-evidence.json'} or any(part in {'dist','build','.pytest_cache','.mypy_cache','.ruff_cache','.cache','node_modules'} for part in Path(rel).parts):
             errors.append(f'{rel}: package/build/cache output is not allowed inside a staged skill root')
 
-    for path in iter_skill_files(skill_dir):
+    try:
+        paths = list(iter_skill_files(skill_dir))
+    except ValueError as exc:
+        errors.append(str(exc))
+        return errors, warnings
+
+    for path in paths:
         rel = path.relative_to(skill_dir)
         if is_hidden_path(rel):
             errors.append(f'{rel}: hidden dotfile/directory is not allowed')

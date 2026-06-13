@@ -2,5 +2,5 @@
 
 ## 2026-06-13
 
-- Mirrored the active source root from gpt-skills/house-skills/canon-buster into this plugin skill folder.
+- Folded the historical package root into this unversioned plugin skill folder and normalized the current source path.
 - Preserved the recursive source tree, including any nested historical or reference material.

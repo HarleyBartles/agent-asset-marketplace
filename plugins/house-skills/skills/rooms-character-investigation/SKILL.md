@@ -2,9 +2,8 @@
 name: rooms-character-investigation
 description: rooms character and subject investigations with source partitioning for prompt, peek, and recall handoffs.
 metadata:
-  version: v1
-  source-id: rooms-character-investigation-v1
-  source-path: gpt-skills/house-skills/rooms-character-investigation/SKILL.md
+  source-id: rooms-character-investigation
+  source-path: plugins/house-skills/skills/rooms-character-investigation/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
 license: "MIT"
 ---

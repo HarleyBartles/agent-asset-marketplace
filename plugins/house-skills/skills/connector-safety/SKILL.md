@@ -2,9 +2,8 @@
 name: connector-safety
 description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked or when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle.
 metadata:
-  version: v1.1
-  source-id: connector-safety-v1.1
-  source-path: gpt-skills/house-skills/connector-safety/SKILL.md
+  source-id: connector-safety
+  source-path: plugins/house-skills/skills/connector-safety/SKILL.md
   provenance-name: installed connector-safety package landed via WILL-274; v1.1 zip update
 license: "MIT"
 ---

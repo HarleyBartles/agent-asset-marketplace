@@ -2,9 +2,8 @@
 name: adventures-visual-bible-creator
 description: Create and maintain the Adventures visual bible as a source-backed planning artifact with explicit stage boundaries between planning, generation, editing, and acceptance.
 metadata:
-  version: v1.1
-  source-id: adventures-visual-bible-creator-v1.1
-  source-path: gpt-skills/house-skills/adventures-visual-bible-creator/SKILL.md
+  source-id: adventures-visual-bible-creator
+  source-path: plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

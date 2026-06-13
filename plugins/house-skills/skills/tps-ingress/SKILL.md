@@ -2,9 +2,8 @@
 name: tps-ingress
 description: verify review, verifier, worker, issue, PR, automated-check, or external feedback before it becomes action, scope, evidence, closure posture, or worker instruction. use after Linear/Codex or GitHub feedback appears and the question is whether to accept, clarify, reject, route, or block it; do not use for ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub proof already owned by worker-dispatch-linear and the repo/GitHub proof surface.
 metadata:
-  version: v1
-  source-id: tps-ingress-v1
-  source-path: gpt-skills/house-skills/tps-ingress/SKILL.md
+  source-id: tps-ingress
+  source-path: plugins/house-skills/skills/tps-ingress/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 license: "MIT"
 ---

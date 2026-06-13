@@ -1,9 +1,9 @@
 # Version History for Skill Validator
 
-- Active version: `v1`
-- Active source id: `skill-validator-v1`
-- Active root: `gpt-skills/house-skills/skill-validator/SKILL.md`
-- Provenance: `MARK-21 skill maintenance House Skills source slice`
-- Historical version folders present in this repo: none
+- Historical version: `v1`
+- Historical source id: `skill-validator-v1`
+- Current root: `plugins/house-skills/skills/skill-validator/SKILL.md`
+- Provenance: historical archive note for skill-validator
+- Historical package folders folded out of the live root: none
 
-The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
+The current root is unversioned; historical version details live only in this note and the changelog.

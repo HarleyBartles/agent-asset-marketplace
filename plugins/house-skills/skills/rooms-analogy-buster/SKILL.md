@@ -2,9 +2,8 @@
 name: rooms-analogy-buster
 description: rooms-specific analogy buster for the black box theatre analogy.
 metadata:
-  version: v1
-  source-id: rooms-analogy-buster-v1
-  source-path: gpt-skills/house-skills/rooms-analogy-buster/SKILL.md
+  source-id: rooms-analogy-buster
+  source-path: plugins/house-skills/skills/rooms-analogy-buster/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
 license: "MIT"
 ---

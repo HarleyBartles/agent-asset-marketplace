@@ -2,9 +2,8 @@
 name: rooms-ambiguity-buster
 description: preserve rooms ambiguity for identity, motive, authorship, archive gaps, narration, and disappearance.
 metadata:
-  version: v1
-  source-id: rooms-ambiguity-buster-v1
-  source-path: gpt-skills/house-skills/rooms-ambiguity-buster/SKILL.md
+  source-id: rooms-ambiguity-buster
+  source-path: plugins/house-skills/skills/rooms-ambiguity-buster/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
 license: "MIT"
 ---

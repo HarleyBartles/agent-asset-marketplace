@@ -2,9 +2,8 @@
 name: worker-dispatch-linear
 description: gpt-wide coding dispatch control plane for Linear plus Codex Cloud. Use for coding implementation requests, repo-backed worker dispatch, checking Codex worker status, Linear issue handoff, PR-gate handling, or any user phrase such as dispatch, worker, Codex, Linear issue, worker returned, ready for PR, verify PR, or landed. Owns the decision to route coding work through Linear/Codex by default, and the golden gate that blocks Codex delegation when the task is not executable from a Codex Cloud repo environment. GitHub Issues and chat/YAML dispatch are legacy fallback only.
 metadata:
-  version: v1
-  source-id: worker-dispatch-linear-v1
-  source-path: gpt-skills/house-skills/worker-dispatch-linear/SKILL.md
+  source-id: worker-dispatch-linear
+  source-path: plugins/house-skills/skills/worker-dispatch-linear/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
 license: "MIT"
 ---
