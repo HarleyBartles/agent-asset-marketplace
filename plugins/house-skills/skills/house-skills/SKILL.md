@@ -1,47 +1,52 @@
 ---
 name: house-skills
-description: Repo-local Codex marketplace bundle for reviewed House Skills source records. Use this bundle when you need the installable projection, bundle version, or source map for the House Skills marketplace surface. Do not treat the bundle as the source of truth; use the source catalog for the authoritative inventory.
+description: Repo-local Codex marketplace bundle for the current House Skills plugin root. Use this bundle when you need the installable current roots, bundle version, or source map for the House Skills marketplace surface. Treat the live plugin root as the source of truth for current skills and the archive ledger as historical custody.
+metadata:
+  source-id: house-skills
+  source-path: plugins/house-skills/skills/house-skills/SKILL.md
+  provenance-name: House Skills current root migration
+license: "MIT"
 ---
-
 # House Skills Bundle
 
-This skill is the installable bundle control plane for the reviewed House Skills projection.
+This skill is the installable bundle control plane for the current House Skills plugin root.
+It governs the 42 active first-party House Skills roots as real skill folders under `plugins/house-skills/skills/<skill-name>/`.
 
 Use it when you need to understand:
 
-- the bundle identity and version;
+- the plugin identity and current shape;
 - where the local marketplace entry lives;
-- which source records the bundle projects;
-- how to separate bundle versioning from component skill versioning.
+- which current skill roots live in the plugin tree;
+- how to separate historical archive custody from the live plugin surface.
 
 ## Bundle contract
 
 - Bundle name: `house-skills`
 - Bundle version: `1.0.0`
 - Marketplace registry: `.agents/plugins/marketplace.json`
-- Human registry source: `sources/house-skills/decisions.md`
-- Structured registry mirror: `sources/house-skills/decisions.json`
+- Current skill roots: `plugins/house-skills/skills/`
+- Historical custody: `gpt-skills/house-skills/`
 - Plugin manifest: `plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle manifest: `references/bundle-manifest.json`
 - Human source map: `references/source-map.md`
 
 ## Source boundary
 
-The bundle projects reviewed House Skills from unversioned roots in `gpt-skills/house-skills/`.
+The bundle's live source surface is `plugins/house-skills/skills/`, with `gpt-skills/house-skills/` retained only as historical archive custody.
 
-The authoritative source ledger remains:
+The historical source ledger remains:
 
 - `sources/house-skills/decisions.json`
 - `sources/house-skills/decisions.md`
 - `sources/house-skills/intake.json`
 - `provenance/house-skills.md`
 
-The bundle does not replace those files. It only points at them and packages a local marketplace surface around them. Current version lives in each skill's frontmatter; historical versions are summarized in `references/version-history.md` for each active skill.
+The bundle does not replace the archived source ledger. Current version lives in each skill's root `SKILL.md` frontmatter, with historical residue folded into `CHANGELOG.md` and preserved support files instead of live `v*` package directories.
 
 Marketplace exports are generated, not hand-edited:
 
-- edit the House Skills registry in `sources/house-skills/decisions.md`;
-- keep `sources/house-skills/decisions.json` aligned as the structured mirror;
+- edit the live plugin roots in `plugins/house-skills/skills/<skill-name>/`;
+- keep the historical registry in `sources/house-skills/decisions.md` and `sources/house-skills/decisions.json` as archive/provenance;
 - regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
 - verify the result with `tools/validate_marketplace.py`.
 
@@ -49,12 +54,12 @@ Marketplace exports are generated, not hand-edited:
 
 Bundle versioning is separate from component versioning.
 
-- Component versions remain whatever the imported source records already declare.
-- The source map keeps the component set boring and explicit.
+- Component history remains in changelogs and archived source custody.
+- The source map keeps the current root set boring and explicit.
 
 ## Lane map
 
-The bundle intentionally projects the reviewed House Skills in the same three boring lanes used by the source ledger:
+The bundle intentionally groups the current House Skills in the same three boring lanes used by the historical source ledger:
 
 - Base and control plane
 - Adventures
@@ -64,4 +69,4 @@ The base/control-plane lane also carries the shared `connector-safety` component
 
 The Rooms lane also carries `rooms-canon-buster` as the Rooms canon-pressure overlay alongside the existing Rooms project and source-routing skills.
 
-For the exact component list, open `references/bundle-manifest.json` or `references/source-map.md`.
+For the exact current component list, open `references/bundle-manifest.json` or `references/source-map.md`.

@@ -1,0 +1,19 @@
+License notice for House Skills
+
+This plugin surface includes first-party Harley-owned source and nested skills
+that may carry their own upstream licenses and notices.
+
+Current live roots:
+
+- `plugins/house-skills/skills/`
+
+Historical custody and provenance:
+
+- `gpt-skills/house-skills/`
+- `sources/house-skills/decisions.json`
+- `sources/house-skills/decisions.md`
+- `sources/house-skills/intake.json`
+- `provenance/house-skills.md`
+
+License and notice obligations for individual skills remain in the skill-level
+files bundled beside each current root.
