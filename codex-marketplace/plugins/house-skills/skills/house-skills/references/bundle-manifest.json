@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
   },
-  "skill_count": 42,
+  "skill_count": 45,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -219,6 +219,21 @@
       "name": "worker-dispatch-linear",
       "lane": "Base and control plane",
       "path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md"
+    },
+    {
+      "name": "asset-market",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md"
+    },
+    {
+      "name": "skill-handoff",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md"
+    },
+    {
+      "name": "skill-installer",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md"
     }
   ],
   "notes": [

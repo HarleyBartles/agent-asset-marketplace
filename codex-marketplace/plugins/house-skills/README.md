@@ -1,15 +1,16 @@
 # House Skills Plugin Bundle
 
 This plugin is the current first-party House Skills plugin root.
-It exposes the 42 first-party skill roots as real plugin folders under
+It exposes the 45 first-party skill roots as real plugin folders under
 `skills/<skill-name>/`, with each current skill root carrying its own
 references, assets, scripts, and changelog notes.
 It is first-party Harley-owned source prepared to stay clean enough for a future
 permissive publication decision, with no unlicensed third-party bundled
 content.
 It includes `connector-safety` as a shared base/control-plane safety component
-for side-effecting connector/tool work and `rooms-canon-buster` as a Rooms
-canon-pressure overlay.
+for side-effecting connector/tool work, `rooms-canon-buster` as a Rooms
+canon-pressure overlay, and the newly landed `asset-market`,
+`skill-installer`, and `skill-handoff` base/control-plane skill roots.
 
 Bundle identity:
 

@@ -375,6 +375,33 @@
       "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
       "import_state": "imported",
       "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
+    },
+    {
+      "issue": "MARK-109",
+      "source_id": "asset-market-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md",
+      "public_name": "asset-market",
+      "provenance_name": "MARK-109 saved GPT skill zip source package",
+      "scope": "marketplace source acquisition",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-109",
+      "source_id": "skill-handoff-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md",
+      "public_name": "skill-handoff",
+      "provenance_name": "MARK-109 saved GPT skill zip source package",
+      "scope": "skill package handoff cadence",
+      "import_state": "imported"
+    },
+    {
+      "issue": "MARK-109",
+      "source_id": "skill-installer-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md",
+      "public_name": "skill-installer",
+      "provenance_name": "MARK-109 saved GPT skill zip source package",
+      "scope": "skill installation handoff orchestration",
+      "import_state": "imported"
     }
   ]
 }
