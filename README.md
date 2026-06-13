@@ -26,6 +26,10 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 ## Marketplace asset flow
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
+For this normalized pass, the active plugin set is limited to the protected
+roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adventures-pack`,
+`codex-marketplace/plugins/unslop`, and
+`codex-marketplace/plugins/game-studio`.
 
 Expected flow:
 
@@ -52,8 +56,8 @@ GPT-native skills live under `gpt-skills/` as source assets and supporting metad
 4. Preserve provenance alongside any adapted or vendored plugin asset.
 
 The marketplace source tree includes real market-consumable plugin assets under
-`codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing the
-current plugin inventory.
+`codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing
+the active protected plugin inventory.
 
 `sources/vendor/**` is for third-party source snapshots, references, and custody evidence.
 
@@ -94,9 +98,9 @@ Policy:
 
 ## Directory map
 
-- `codex-marketplace/` - marketplace source layout and plugin source shape.
+- `codex-marketplace/` - marketplace source layout and active plugin source shape.
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
-- `plugins/` - repo-local marketplace bundle projections, including `plugins/house-skills/`.
+- `plugins/` - repo-local bundle projections and historical custody; active marketplace roots live under `codex-marketplace/plugins/`.
 - `gpt-skills/` - GPT-native skill sources and supporting notes.
 - `gpt-skills/house-skills/` - Harley-authored first-party GPT skills only.
 - `sources/vendor/` - third-party source custody and source snapshots.

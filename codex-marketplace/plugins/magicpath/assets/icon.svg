@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MagicPath">
-  <rect width="64" height="64" rx="16" fill="#305D3A"/>
-  <circle cx="32" cy="26" r="13" fill="none" stroke="#FFFFFF" stroke-width="4"/>
-  <path d="M20 44h24" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-  <path d="M24 30l8 8 8-8" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

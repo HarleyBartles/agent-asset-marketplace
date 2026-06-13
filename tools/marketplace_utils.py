@@ -14,35 +14,15 @@ CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
 REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 UPSTREAM_VENDOR_ROOT = ROOT / "sources/vendor/jeremylongshore/claude-code-plugins-plus-skills/e773501f1dfb409fc71fccdaf6ac2898fedf66d6"
-PLUGIN_MANIFEST_PATH = ROOT / "plugins/house-skills/.codex-plugin/plugin.json"
-MARKETPLACE_FAMILY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/marketplace-family-pack/.codex-plugin/plugin.json"
-TESTING_SKILL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/.codex-plugin/plugin.json"
-SUPABASE_PLATFORM_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/.codex-plugin/plugin.json"
-VERCEL_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/.codex-plugin/plugin.json"
-SENTRY_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/.codex-plugin/plugin.json"
-OPENROUTER_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/.codex-plugin/plugin.json"
-CURSOR_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cursor-pack/.codex-plugin/plugin.json"
-COHERE_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cohere-pack/.codex-plugin/plugin.json"
-DATABRICKS_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/databricks-pack/.codex-plugin/plugin.json"
-FLYIO_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/.codex-plugin/plugin.json"
-ADVENTURES_PACK_PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json"
-BUNDLE_MANIFEST_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
-TESTING_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/testing-skill-pack/references/bundle-manifest.json"
-SUPABASE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/supabase-platform-pack/references/bundle-manifest.json"
-VERCEL_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/vercel-pack/references/bundle-manifest.json"
-SENTRY_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/sentry-pack/references/bundle-manifest.json"
-OPENROUTER_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/openrouter-pack/references/bundle-manifest.json"
-CURSOR_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cursor-pack/references/bundle-manifest.json"
-COHERE_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/cohere-pack/references/bundle-manifest.json"
-DATABRICKS_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/databricks-pack/references/bundle-manifest.json"
-FLYIO_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/flyio-pack/references/bundle-manifest.json"
+PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json"
+BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json"
 ADVENTURES_PACK_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json"
 ADVENTURES_PACK_SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/source-map.md"
 ADVENTURES_PACK_SKILL_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/skills/adventures-pack/SKILL.md"
-SOURCE_MAP_PATH = ROOT / "plugins/house-skills/skills/house-skills/references/source-map.md"
-PLUGIN_README_PATH = ROOT / "plugins/house-skills/README.md"
-PLUGIN_SKILL_PATH = ROOT / "plugins/house-skills/skills/house-skills/SKILL.md"
-PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "plugins/house-skills/AGENTS.md"
+SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md"
+PLUGIN_README_PATH = ROOT / "codex-marketplace/plugins/house-skills/README.md"
+PLUGIN_SKILL_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
+PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "codex-marketplace/plugins/house-skills/AGENTS.md"
 SOURCE_DECISIONS_MD_PATH = ROOT / "sources/house-skills/decisions.md"
 SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/house-skills/decisions.json"
 SOURCE_INTAKE_JSON_PATH = ROOT / "sources/house-skills/intake.json"
@@ -50,35 +30,39 @@ PROVENANCE_PATH = ROOT / "provenance/house-skills.md"
 
 MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",
-    "Codex wrapper plugins mirror upstream Claude plugin packages with .codex-plugin manifests.",
+    "Active marketplace plugins are limited to the protected plugin roots only.",
 ]
+
+ACTIVE_MARKETPLACE_PLUGIN_NAMES = (
+    "adventures-pack",
+    "game-studio",
+    "unslop",
+)
 
 def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
     specs: list[dict[str, str | Path]] = [
         {
             "name": "house-skills",
-            "registry_path": "./plugins/house-skills",
-            "plugin_root": "plugins/house-skills",
+            "registry_path": "./codex-marketplace/plugins/house-skills",
+            "plugin_root": "codex-marketplace/plugins/house-skills",
             "manifest_path": PLUGIN_MANIFEST_PATH,
         },
     ]
 
     marketplace_plugins_root = ROOT / "codex-marketplace/plugins"
-    if marketplace_plugins_root.exists():
-        for plugin_dir in sorted(marketplace_plugins_root.iterdir(), key=lambda path: path.name):
-            if not plugin_dir.is_dir():
-                continue
-            manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
-            if not manifest_path.exists():
-                continue
-            specs.append(
-                {
-                    "name": plugin_dir.name,
-                    "registry_path": f"./codex-marketplace/plugins/{plugin_dir.name}",
-                    "plugin_root": f"codex-marketplace/plugins/{plugin_dir.name}",
-                    "manifest_path": manifest_path,
-                }
-            )
+    for plugin_name in ACTIVE_MARKETPLACE_PLUGIN_NAMES:
+        plugin_dir = marketplace_plugins_root / plugin_name
+        manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
+        if not manifest_path.exists():
+            raise FileNotFoundError(manifest_path)
+        specs.append(
+            {
+                "name": plugin_name,
+                "registry_path": f"./codex-marketplace/plugins/{plugin_name}",
+                "plugin_root": f"codex-marketplace/plugins/{plugin_name}",
+                "manifest_path": manifest_path,
+            }
+        )
 
     return specs
 
@@ -110,7 +94,7 @@ EXPECTED_MARKETPLACE = {
 
 EXPECTED_PLUGIN_NAME = "house-skills"
 EXPECTED_PLUGIN_VERSION = "1.0.0"
-EXPECTED_PLUGIN_ROOT = "plugins/house-skills"
+EXPECTED_PLUGIN_ROOT = "codex-marketplace/plugins/house-skills"
 EXPECTED_MARKETPLACE_ROOT = ".agents/plugins/marketplace.json"
 EXPECTED_SOURCE_OF_TRUTH = [
     "sources/house-skills/decisions.json",
