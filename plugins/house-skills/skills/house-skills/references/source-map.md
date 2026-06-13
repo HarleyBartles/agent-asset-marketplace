@@ -1,6 +1,6 @@
 # House Skills Source Map
 
-This bundle projects the reviewed House Skills inventory into one repo-local marketplace surface.
+This bundle projects the reviewed House Skills inventory into one repo-local marketplace surface and mirrors the active roots into real plugin skill folders under `plugins/house-skills/skills/<skill-name>/`.
 
 Authoritative source references:
 
@@ -21,6 +21,7 @@ Bundle references:
 - `.agents/plugins/marketplace.json`
 - `plugins/house-skills/.codex-plugin/plugin.json`
 - `plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
+- `plugins/house-skills/skills/<skill-name>/`
 
 Lane summary:
 

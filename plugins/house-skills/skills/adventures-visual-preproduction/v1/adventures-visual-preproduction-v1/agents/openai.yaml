@@ -1,0 +1,12 @@
+interface:
+  display_name: Adventures Visual Preproduction
+  short_description: Prepare Adventures visual asset packages before PPTX production.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

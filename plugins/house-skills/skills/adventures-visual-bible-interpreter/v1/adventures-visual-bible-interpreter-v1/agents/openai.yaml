@@ -1,0 +1,15 @@
+interface:
+  display_name: Adventures Visual Bible Interpreter
+  short_description: Interprets repo-indexed Adventures visual bibles into prompt,
+    QA, and repair constraints.
+  icon: assets/icon.svg
+  icon_background: '#1D2B3A'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

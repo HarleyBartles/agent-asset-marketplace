@@ -1,0 +1,12 @@
+interface:
+  display_name: Skill Validator
+  short_description: Validates skill fitness and stack order before packaging.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

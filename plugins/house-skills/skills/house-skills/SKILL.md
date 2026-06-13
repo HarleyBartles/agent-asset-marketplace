@@ -6,6 +6,7 @@ description: Repo-local Codex marketplace bundle for reviewed House Skills sourc
 # House Skills Bundle
 
 This skill is the installable bundle control plane for the reviewed House Skills projection.
+It now governs a plugin surface that mirrors the 42 active first-party House Skills roots as real skill folders under `plugins/house-skills/skills/<skill-name>/`.
 
 Use it when you need to understand:
 
@@ -27,7 +28,7 @@ Use it when you need to understand:
 
 ## Source boundary
 
-The bundle projects reviewed House Skills from unversioned roots in `gpt-skills/house-skills/`.
+The bundle projects reviewed House Skills from unversioned roots in `gpt-skills/house-skills/`, and the plugin surface mirrors those active roots in `plugins/house-skills/skills/<skill-name>/`.
 
 The authoritative source ledger remains:
 

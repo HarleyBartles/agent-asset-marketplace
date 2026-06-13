@@ -1,0 +1,143 @@
+﻿{
+  "template_name": "template_asset_sheet_4column_4hero_8alt_v2",
+  "canvas": {
+    "width": 1536,
+    "height": 1008
+  },
+  "changes_from_v1": [
+    "Reduced hero slot height from 345px to 305px",
+    "Increased each alt slot height from 188px to 198px",
+    "Kept grey placeholder text"
+  ],
+  "design_notes": [
+    "4 equal vertical columns across the page",
+    "Each column contains one hero slot with two alt slots stacked beneath it",
+    "No slot headers",
+    "No footer text",
+    "No guidance area"
+  ],
+  "heroes": [
+    {
+      "id": "hero_1",
+      "box": [
+        54,
+        205,
+        397,
+        510
+      ],
+      "parent_group": 1
+    },
+    {
+      "id": "hero_2",
+      "box": [
+        415,
+        205,
+        758,
+        510
+      ],
+      "parent_group": 2
+    },
+    {
+      "id": "hero_3",
+      "box": [
+        776,
+        205,
+        1119,
+        510
+      ],
+      "parent_group": 3
+    },
+    {
+      "id": "hero_4",
+      "box": [
+        1137,
+        205,
+        1480,
+        510
+      ],
+      "parent_group": 4
+    }
+  ],
+  "alts": [
+    {
+      "id": "hero_1_alt_A",
+      "box": [
+        54,
+        528,
+        397,
+        726
+      ],
+      "parent_hero": "hero_1"
+    },
+    {
+      "id": "hero_1_alt_B",
+      "box": [
+        54,
+        744,
+        397,
+        942
+      ],
+      "parent_hero": "hero_1"
+    },
+    {
+      "id": "hero_2_alt_A",
+      "box": [
+        415,
+        528,
+        758,
+        726
+      ],
+      "parent_hero": "hero_2"
+    },
+    {
+      "id": "hero_2_alt_B",
+      "box": [
+        415,
+        744,
+        758,
+        942
+      ],
+      "parent_hero": "hero_2"
+    },
+    {
+      "id": "hero_3_alt_A",
+      "box": [
+        776,
+        528,
+        1119,
+        726
+      ],
+      "parent_hero": "hero_3"
+    },
+    {
+      "id": "hero_3_alt_B",
+      "box": [
+        776,
+        744,
+        1119,
+        942
+      ],
+      "parent_hero": "hero_3"
+    },
+    {
+      "id": "hero_4_alt_A",
+      "box": [
+        1137,
+        528,
+        1480,
+        726
+      ],
+      "parent_hero": "hero_4"
+    },
+    {
+      "id": "hero_4_alt_B",
+      "box": [
+        1137,
+        744,
+        1480,
+        942
+      ],
+      "parent_hero": "hero_4"
+    }
+  ]
+}

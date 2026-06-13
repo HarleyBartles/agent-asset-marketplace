@@ -1,0 +1,14 @@
+interface:
+  display_name: Rooms Zoom Outs Buster
+  short_description: Test Rooms zoom-outs against artifact behaviour.
+  icon: assets/icon.svg
+  accent_color: '#5b6f95'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

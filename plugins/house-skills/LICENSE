@@ -1,0 +1,15 @@
+License notice for House Skills
+
+First-party Harley-owned source.
+No unlicensed third-party redistribution is included in this plugin surface.
+
+Source roots mirrored here:
+
+- `gpt-skills/house-skills/`
+- `sources/house-skills/decisions.json`
+- `sources/house-skills/decisions.md`
+- `sources/house-skills/intake.json`
+- `provenance/house-skills.md`
+
+The copied skill trees preserve their own historical and reference material
+from the active source roots.

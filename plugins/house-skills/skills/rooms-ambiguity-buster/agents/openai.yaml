@@ -1,0 +1,14 @@
+interface:
+  display_name: Rooms Ambiguity Discipline
+  short_description: Preserve uncertainty and ambiguity.
+  icon: assets/icon.svg
+  brand_color: '#111827'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
