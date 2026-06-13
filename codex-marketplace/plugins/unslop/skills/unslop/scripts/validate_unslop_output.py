@@ -29,6 +29,38 @@ def forbidden_fragments() -> list[str]:
     ]
 
 
+def validate_prompts_only_manifest(manifest: dict, path: Path) -> list[str]:
+    issues: list[str] = []
+    if manifest.get("tool") != "asset-marketplace-unslop":
+        issues.append("manifest tool mismatch")
+    if manifest.get("output_contract") != "unslop-prompts-only/v1":
+        issues.append("manifest output contract mismatch")
+    domain = str(manifest.get("domain", ""))
+    if not domain:
+        issues.append("manifest domain is missing")
+    if manifest.get("type") not in {"text", "visual"}:
+        issues.append("manifest type is invalid")
+    if manifest.get("upstream_provenance", {}).get("commit") != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
+        issues.append("manifest missing pinned upstream commit")
+    prompts = load_json(path / "prompts.json")
+    prompt_count = manifest.get("prompts", {}).get("count")
+    if not isinstance(prompt_count, int) or prompt_count != len(prompts):
+        issues.append("prompt count does not match prompts.json")
+    if manifest.get("validation", {}).get("passed") is not True:
+        issues.append("manifest validation result is not passed")
+    if manifest.get("validation", {}).get("issues") not in ([], None):
+        issues.append("manifest validation issues must be empty for prompts-only output")
+    if manifest.get("validation", {}).get("path") != "validation.md":
+        issues.append("manifest validation path mismatch")
+    if manifest.get("samples", {}).get("count") != 0:
+        issues.append("prompts-only sample count must be zero")
+    if manifest.get("visual_evidence", {}).get("status") not in {"not_requested", "skipped"}:
+        issues.append("prompts-only visual evidence status must be not_requested or skipped")
+    if path.joinpath("samples").exists() or path.joinpath("analysis.md").exists() or path.joinpath("skill.md").exists() or path.joinpath("validation.md").exists() or path.joinpath("before-after").exists():
+        issues.append("prompts-only output should not create full-run support files")
+    return issues
+
+
 def validate(path: Path) -> list[str]:
     issues: list[str] = []
     for required in REQUIRED:
@@ -45,6 +77,7 @@ def validate(path: Path) -> list[str]:
     if prompts_only:
         if len(list(path.iterdir())) != 2:
             issues.append("prompts-only output should contain only manifest.json and prompts.json")
+        issues.extend(validate_prompts_only_manifest(manifest, path))
         return issues
 
     if not (path / "samples").exists():
@@ -86,8 +119,17 @@ def validate(path: Path) -> list[str]:
     visual = manifest.get("visual_evidence", {})
     if manifest.get("type") == "visual" and visual.get("status") not in {"ran", "skipped"}:
         issues.append("visual evidence status is not cleanly recorded")
+    manifest_validation = manifest.get("validation", {})
+    if manifest_validation.get("path") != "validation.md":
+        issues.append("manifest validation path mismatch")
+    if manifest_validation.get("passed") is not True:
+        issues.append("manifest validation result is not passed")
+    if manifest_validation.get("issues") not in ([], None):
+        issues.append("manifest validation issues must be empty for a passing run")
     if "Status: passed" not in validation:
         issues.append("validation.md does not record a passed state")
+    if manifest_validation.get("passed") is True and "Status: passed" not in validation:
+        issues.append("manifest and validation.md disagree on passed state")
 
     active_text = "\n".join(
         file.read_text(encoding="utf-8", errors="ignore")

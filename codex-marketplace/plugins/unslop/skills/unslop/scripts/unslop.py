@@ -420,11 +420,9 @@ def visual_smoke(dtype: str) -> dict[str, object]:
     if importlib.util.find_spec("playwright") is None:
         missing.append("Playwright Python package missing")
     browser = shutil.which("chromium") or shutil.which("google-chrome")
-    if not browser:
-        missing.append("Chromium missing")
     if missing:
         return {"requested": True, "status": "skipped", "reason": "; ".join(missing), "browser": browser or ""}
-    return {"requested": True, "status": "available", "reason": "", "browser": browser}
+    return {"requested": True, "status": "available", "reason": "", "browser": browser or ""}
 
 
 async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str, object]:
@@ -438,10 +436,15 @@ async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str
     browser_path = str(smoke.get("browser") or "")
     screenshots = out / "before-after"
     rendered = 0
-    browser = None
     try:
         async with async_playwright() as playwright:  # pragma: no cover - optional dependency
-            browser = await playwright.chromium.launch(executable_path=browser_path, headless=True)
+            try:
+                browser = await playwright.chromium.launch(headless=True)
+            except Exception:
+                if browser_path:
+                    browser = await playwright.chromium.launch(executable_path=browser_path, headless=True)
+                else:
+                    raise
             for sample in sorted((out / "samples").glob("*.html")):
                 page = await browser.new_page(viewport={"width": 1280, "height": 900})
                 await page.goto(sample.resolve().as_uri())
@@ -451,7 +454,7 @@ async def render_visual_samples(out: Path, smoke: dict[str, object]) -> dict[str
     except Exception as exc:  # pragma: no cover - optional dependency
         return {"status": "skipped", "reason": f"Visual render failed: {exc}"}
     finally:
-        if browser is not None:
+        if "browser" in locals():
             await browser.close()
     return {"status": "ran", "screenshots": rendered, "path": "before-after/"}
 
