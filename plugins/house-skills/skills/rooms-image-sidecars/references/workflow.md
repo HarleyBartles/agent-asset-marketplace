@@ -75,6 +75,6 @@ python scripts/build_sidecar_packet.py \
   --output /path/to/output.zip
 ```
 
-The helper copies images into `raw/` with sequence prefixes, computes hashes, writes `starter_manifest.json`, includes supplied sidecar files, and writes a zip.
+The helper copies images into `raw/` with sequence prefixes, computes hashes, writes `starter_manifest.json`, and includes the supplied packet-root sidecar files plus any `db_promotion_companion/` folder before writing the zip.
 
 The helper does not analyze images. GPT performs the visual analysis before invoking it.

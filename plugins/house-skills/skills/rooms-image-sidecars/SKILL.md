@@ -23,9 +23,9 @@ For a supplied image batch, produce an Albert-ready packet containing:
 
 - `raw/` with images in stable sequence order when available to package.
 - `batch.intake.json` with operational intake metadata for Albert's image intake Skill.
-- `semantic_sidecar.json` using `references/semantic_sidecar_schema.md`.
-- `semantic_sidecar.md` as a readable summary of the same evidence.
-- optionally `image_observation_table.csv` for quick scanning.
+- `semantic_sidecar.json` at the packet root using `references/semantic_sidecar_schema.md`.
+- `semantic_sidecar.md` at the packet root as a readable summary of the same evidence.
+- optionally `image_observation_table.csv` at the packet root for quick scanning.
 - when downstream work includes Pit/ProjectDB promotion, `db_promotion_companion/` CSVs using `references/db_mutation_proposal_csvs.md`.
 - `README_FOR_ALBERT.md` explaining source partition, sidecar status, and verification requirements.
 

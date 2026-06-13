@@ -93,7 +93,7 @@ Workflow:
 Run with the container shell:
 
 ```bash
-python /home/oai/skills/adventures-asset-sheet-compiler-v1/scripts/compile_asset_sheet.py /mnt/data/manifest.json
+python /home/oai/skills/adventures-asset-sheet-compiler/scripts/compile_asset_sheet.py /mnt/data/manifest.json
 ```
 
 If the user asks for source-image repair, style changes, a new image, or regenerated pixels, do not compile over the
@@ -122,7 +122,7 @@ contains a file with that exact name.
 Before handing a template package to Harley or Patch, run:
 
 ```bash
-python /home/oai/skills/adventures-asset-sheet-compiler-v1/scripts/validate_template_package.py /path/to/template.zip
+python /home/oai/skills/adventures-asset-sheet-compiler/scripts/validate_template_package.py /path/to/template.zip
 ```
 
 A template package is not ready if validation fails.

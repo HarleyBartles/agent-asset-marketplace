@@ -13,6 +13,7 @@ import json
 import mimetypes
 import re
 import shutil
+import tempfile
 import sys
 import zipfile
 from datetime import datetime, timezone
@@ -99,71 +100,69 @@ def main(argv: list[str] | None = None) -> int:
     if expected_count is not None and int(expected_count) != len(images):
         print(f"warning: expected {expected_count} images but found {len(images)}", file=sys.stderr)
 
-    work_dir = args.output.with_suffix("")
-    if work_dir.exists():
-        shutil.rmtree(work_dir)
-    (work_dir / "raw").mkdir(parents=True)
-    (work_dir / "sidecar").mkdir(parents=True)
-    (work_dir / "db_promotion_companion").mkdir(parents=True)
-
-    manifest_entries: list[dict[str, Any]] = []
-    for seq, image in enumerate(images, start=1):
-        target_name = f"{seq:03d}__{image.name}"
-        target = work_dir / "raw" / target_name
-        shutil.copy2(image, target)
-        width, height = image_dimensions(image)
-        manifest_entries.append(
-            {
-                "image_seq": seq,
-                "original_filename": image.name,
-                "packet_filename": f"raw/{target_name}",
-                "byte_size": image.stat().st_size,
-                "content_hash": sha256_file(image),
-                "mime_type": mimetypes.guess_type(image.name)[0] or "application/octet-stream",
-                "width": width,
-                "height": height,
-            }
-        )
-
-    starter_manifest = {
-        "manifest_type": "rooms_image_sidecar_packet_manifest",
-        "generated_at": utc_now(),
-        "image_count": len(manifest_entries),
-        "sidecar_type": sidecar.get("sidecar_type", "unknown"),
-        "sidecar_status": sidecar.get("status", "unknown"),
-        "truth_boundary": sidecar.get("truth_boundary", "starter guidance only"),
-        "images": manifest_entries,
-    }
-    write_json(work_dir / "starter_manifest.json", starter_manifest)
-
-    copy_optional(args.sidecar, work_dir / "sidecar" / "semantic_sidecar.json")
-    copy_optional(args.sidecar_md, work_dir / "sidecar" / "semantic_sidecar.md")
-    copy_optional(args.readme, work_dir / "README_FOR_ALBERT.md")
-    copy_optional(args.batch_intake, work_dir / "batch.intake.json")
-    copy_optional(args.observation_csv, work_dir / "sidecar" / "image_observation_table.csv")
-    copy_optional(args.conversation_csv, work_dir / "sidecar" / "conversation_candidates.csv")
-    if args.db_companion_dir is not None:
-        if not args.db_companion_dir.is_dir():
-            print(f"db companion dir not found: {args.db_companion_dir}", file=sys.stderr)
-            return 2
-        for companion in sorted(args.db_companion_dir.iterdir()):
-            if companion.is_file():
-                shutil.copy2(companion, work_dir / "db_promotion_companion" / companion.name)
-
-    if args.observation_csv is None:
-        with (work_dir / "sidecar" / "image_observation_table.csv").open("w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=["image_seq", "filename", "notes"])
-            writer.writeheader()
-            for entry in manifest_entries:
-                writer.writerow({"image_seq": entry["image_seq"], "filename": entry["packet_filename"], "notes": "see semantic_sidecar.json"})
-
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    if args.output.exists():
-        args.output.unlink()
-    with zipfile.ZipFile(args.output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for path in sorted(work_dir.rglob("*")):
-            if path.is_file():
-                zf.write(path, path.relative_to(work_dir).as_posix())
+    with tempfile.TemporaryDirectory(prefix=f"{args.output.stem}_", dir=args.output.parent) as tmp_dir:
+        work_dir = Path(tmp_dir)
+        (work_dir / "raw").mkdir(parents=True)
+        (work_dir / "db_promotion_companion").mkdir(parents=True)
+
+        manifest_entries: list[dict[str, Any]] = []
+        for seq, image in enumerate(images, start=1):
+            target_name = f"{seq:03d}__{image.name}"
+            target = work_dir / "raw" / target_name
+            shutil.copy2(image, target)
+            width, height = image_dimensions(image)
+            manifest_entries.append(
+                {
+                    "image_seq": seq,
+                    "original_filename": image.name,
+                    "packet_filename": f"raw/{target_name}",
+                    "byte_size": image.stat().st_size,
+                    "content_hash": sha256_file(image),
+                    "mime_type": mimetypes.guess_type(image.name)[0] or "application/octet-stream",
+                    "width": width,
+                    "height": height,
+                }
+            )
+
+        starter_manifest = {
+            "manifest_type": "rooms_image_sidecar_packet_manifest",
+            "generated_at": utc_now(),
+            "image_count": len(manifest_entries),
+            "sidecar_type": sidecar.get("sidecar_type", "unknown"),
+            "sidecar_status": sidecar.get("status", "unknown"),
+            "truth_boundary": sidecar.get("truth_boundary", "starter guidance only"),
+            "images": manifest_entries,
+        }
+        write_json(work_dir / "starter_manifest.json", starter_manifest)
+
+        copy_optional(args.sidecar, work_dir / "semantic_sidecar.json")
+        copy_optional(args.sidecar_md, work_dir / "semantic_sidecar.md")
+        copy_optional(args.readme, work_dir / "README_FOR_ALBERT.md")
+        copy_optional(args.batch_intake, work_dir / "batch.intake.json")
+        copy_optional(args.observation_csv, work_dir / "image_observation_table.csv")
+        copy_optional(args.conversation_csv, work_dir / "conversation_candidates.csv")
+        if args.db_companion_dir is not None:
+            if not args.db_companion_dir.is_dir():
+                print(f"db companion dir not found: {args.db_companion_dir}", file=sys.stderr)
+                return 2
+            for companion in sorted(args.db_companion_dir.iterdir()):
+                if companion.is_file():
+                    shutil.copy2(companion, work_dir / "db_promotion_companion" / companion.name)
+
+        if args.observation_csv is None:
+            with (work_dir / "image_observation_table.csv").open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["image_seq", "filename", "notes"])
+                writer.writeheader()
+                for entry in manifest_entries:
+                    writer.writerow({"image_seq": entry["image_seq"], "filename": entry["packet_filename"], "notes": "see semantic_sidecar.json"})
+
+        if args.output.exists():
+            args.output.unlink()
+        with zipfile.ZipFile(args.output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for path in sorted(work_dir.rglob("*")):
+                if path.is_file():
+                    zf.write(path, path.relative_to(work_dir).as_posix())
 
     print(f"wrote {args.output} with {len(manifest_entries)} images")
     return 0

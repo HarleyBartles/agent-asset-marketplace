@@ -272,6 +272,8 @@ def compile_sheet(manifest_path: Path) -> Tuple[Path, Path]:
         raise SystemExit(f"missing bundled template: {template_path}")
 
     output_dir = Path(manifest.get("output_dir", manifest_path.parent / "asset_sheet_package")).resolve()
+    if output_dir.exists():
+        shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     source_dir = output_dir / "sources"
     source_dir.mkdir(exist_ok=True)

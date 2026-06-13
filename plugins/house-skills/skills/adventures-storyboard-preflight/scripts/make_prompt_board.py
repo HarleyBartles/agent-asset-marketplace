@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import sys
-sys.dont_write_bytecode = True
 """Create a deterministic Adventures prompt board PNG from a JSON specification."""
 from __future__ import annotations
+
+import sys
+sys.dont_write_bytecode = True
 
 import argparse
 import json
