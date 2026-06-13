@@ -2,10 +2,10 @@
 name: rooms-bootstrap
 description: Bootstrap Rooms, Mostly sessions through one-time project arrival, request classification, continuity ingress routing, and doctrine/task handoff without treating connector presence as a task signal or doing source-route selection from the entrypoint.
 metadata:
-  version: v1
-  source-id: rooms-bootstrap-v1
+  version: v1.1
+  source-id: rooms-bootstrap-v1.1
   source-path: gpt-skills/house-skills/rooms-bootstrap/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
+  provenance-name: "MARK-97 rooms bootstrap zip update"
 license: "MIT"
 ---
 # Rooms Bootstrap

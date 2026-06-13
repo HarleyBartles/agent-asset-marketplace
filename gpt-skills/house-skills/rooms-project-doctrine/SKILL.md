@@ -34,9 +34,9 @@ Use this skill for shared project doctrine orientation, then route actual work t
 
 ## Bootstrap composition
 
-When reached from `rooms-bootstrap-v1`, use this skill to select required doctrine reads by task shape. Do not continue from project doctrine alone when a more specific Rooms skill owns the decision.
+When reached from `rooms-bootstrap-v1.1`, use this skill to select required doctrine reads by task shape. Do not continue from project doctrine alone when a more specific Rooms skill owns the decision.
 
-For ordinary conversation, stay conversational and use `rooms-bootstrap-v1` only when first-turn routing is needed. For repo-sensitive, canon-sensitive, archive-sensitive, manuscript-sensitive, or issue-backed work, load the relevant reference here and then route to the owning skill.
+For ordinary conversation, stay conversational and use `rooms-bootstrap-v1.1` only when first-turn routing is needed. For repo-sensitive, canon-sensitive, archive-sensitive, manuscript-sensitive, or issue-backed work, load the relevant reference here and then route to the owning skill.
 
 ## Boundaries
 
