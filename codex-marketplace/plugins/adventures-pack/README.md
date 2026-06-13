@@ -1,11 +1,11 @@
 # Adventures Pack
 
 This plugin bundle is the project-scoped marketplace projection for the clean
-Adventures v1.1 House Skills line.
+Adventures House Skills line.
 
 ## Bundle contents
 
-- clean Adventures v1.1 skills under `skills/`
+- clean Adventures skills under `skills/`
 - boring generic dependencies needed for project use, including `connector-safety` for safe connector/tool writes
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
@@ -15,7 +15,7 @@ Adventures v1.1 House Skills line.
 
 - The bundle is a projection over canonical House Skills sources, not a new
   source of truth.
-- The clean active Adventures line lives in `gpt-skills/house-skills/`.
+- The clean active Adventures line lives in `plugins/house-skills/skills/`.
 - Historical v1 imports remain historical and are not bundled as active
   inventory.
 - Stage boundaries stay explicit: planning, source discovery, QA, image
@@ -25,7 +25,7 @@ Adventures v1.1 House Skills line.
 
 ## Provenance
 
-- Canonical source root: `gpt-skills/house-skills`
+- Canonical source root: `plugins/house-skills/skills`
 - Bundle source ledger: `sources/house-skills/decisions.json`
 - Human registry: `sources/house-skills/decisions.md`
 - Structured registry mirror: `sources/house-skills/intake.json`
