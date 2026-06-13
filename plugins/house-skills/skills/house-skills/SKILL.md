@@ -49,7 +49,6 @@ Marketplace exports are generated, not hand-edited:
 
 Bundle versioning is separate from component versioning.
 
-- Bundle version changes when the marketplace projection changes.
 - Component versions remain whatever the imported source records already declare.
 - The source map keeps the component set boring and explicit.
 
