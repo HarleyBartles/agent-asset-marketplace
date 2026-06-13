@@ -1,8 +1,9 @@
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
+  display_name: Adventures Image QA
+  short_description: QA Adventures generated images across scene, asset, and reference
+    lanes.
   icon: assets/icon.svg
-  brand_color: '#111827'
+  primary_color: '#17B1A6'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

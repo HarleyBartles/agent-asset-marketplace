@@ -1,8 +1,6 @@
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
-  icon: assets/icon.svg
-  brand_color: '#111827'
+  display_name: Adventures Visual Preproduction
+  short_description: Prepare Adventures visual asset packages before PPTX production.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

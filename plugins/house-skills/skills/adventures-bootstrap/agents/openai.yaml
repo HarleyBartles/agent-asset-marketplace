@@ -1,8 +1,6 @@
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
-  icon: assets/icon.svg
-  brand_color: '#111827'
+  display_name: Adventures Bootstrap
+  short_description: Bootstrap Adventures sessions and route requests.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

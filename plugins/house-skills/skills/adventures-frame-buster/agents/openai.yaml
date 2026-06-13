@@ -1,8 +1,8 @@
+version: 1
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
+  display_name: Adventures Frame Buster
+  short_description: Routes Adventures framing checks and readiness gates.
   icon: assets/icon.svg
-  brand_color: '#111827'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

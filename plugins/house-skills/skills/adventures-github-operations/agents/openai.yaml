@@ -1,8 +1,8 @@
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
+  display_name: Adventures GitHub Operations
+  short_description: Verify Adventures repo, asset, deck, receipt, and issue evidence.
   icon: assets/icon.svg
-  brand_color: '#111827'
+  accent_color: '#4F46E5'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

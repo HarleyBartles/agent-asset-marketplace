@@ -1,8 +1,8 @@
 interface:
-  display_name: Session Buster Ingress
-  short_description: Verify incoming continuity blocks.
+  display_name: Adventures Visual Bible Creator
+  short_description: Create standardized Adventures visual bibles with prompt and
+    QA blocks.
   icon: assets/icon.svg
-  brand_color: '#111827'
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
