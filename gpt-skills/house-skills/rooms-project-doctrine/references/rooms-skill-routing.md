@@ -3,7 +3,7 @@
 Use the most specific skill.
 
 - `work-mode-router-v1`: GPT-wide first-turn bootstrap routing pattern.
-- `rooms-bootstrap-v1`: Rooms first-turn project/source/doctrine mediator.
+- `rooms-bootstrap-v1.1`: Rooms first-turn project/source/doctrine mediator.
 - `rooms-project-doctrine-v1`: shared Rooms doctrine routing and references.
 - `rooms-source-partitioning-v1`: label evidence basis and prevent search/report/conversation laundering.
 - `gpt-base-doctrine-v1.1`: shared Rooms doctrine, grounding, and truth-boundary references.

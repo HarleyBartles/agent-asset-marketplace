@@ -355,14 +355,14 @@
     "notes": "Imported as the shared Rooms doctrine store for truth domains, actor boundaries, and repo posture."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "rooms-bootstrap-v1",
+    "issue": "MARK-97",
+    "source_id": "rooms-bootstrap-v1.1",
     "source_path": "gpt-skills/house-skills/rooms-bootstrap/SKILL.md",
     "public_name": "rooms-bootstrap",
-    "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Rooms",
+    "provenance_name": "MARK-97 rooms bootstrap zip update",
     "import_state": "imported",
     "scope": "Rooms first-read router",
-    "notes": "Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability."
+    "notes": "Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata."
   },
   {
     "issue": "MARK-30",

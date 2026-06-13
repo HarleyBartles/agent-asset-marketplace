@@ -74,6 +74,14 @@
 - Scope: Rooms canon pressure checks and lawful canon/item adjustment
 - Notes: Canonical source now lives in the House skills lane and is projected into the Rooms portion of the bundle. `agents/openai.yaml` was copied into repo source control and keeps the clear policy/interface fields from the zip. `assets/icon.svg` was included with the zip and is vendored here.
 
+## rooms-bootstrap
+
+- Source path: `gpt-skills/house-skills/rooms-bootstrap/SKILL.md`
+- Public identity: `rooms-bootstrap`
+- Provenance/history: MARK-97 rooms bootstrap zip update
+- Scope: Rooms first-read router
+- Notes: Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata. `agents/openai.yaml` keeps the repo-local brand color and implicit invocation fields; `assets/icon.svg` stays the active icon.
+
 ## House Skills plugin projection
 
 - Bundle name: `house-skills`
@@ -87,8 +95,8 @@
 - Source map: `plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane and the `rooms-canon-buster` Rooms canon-pressure overlay.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, and `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane, the `rooms-canon-buster` Rooms canon-pressure overlay, and the refreshed `rooms-bootstrap` v1.1 root.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 
@@ -122,7 +130,7 @@
 ### Rooms
 
 - `rooms-project-doctrine-v1` - `gpt-skills/house-skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
-- `rooms-bootstrap-v1` - `gpt-skills/house-skills/rooms-bootstrap/v1/rooms-bootstrap-v1/SKILL.md`
+- `rooms-bootstrap-v1.1` - `gpt-skills/house-skills/rooms-bootstrap/SKILL.md`
 - `rooms-source-partitioning-v1` - `gpt-skills/house-skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md`
 - `rooms-ambiguity-buster-v1` - `gpt-skills/house-skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md`
 - `rooms-analogy-buster-v1` - `gpt-skills/house-skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md`
