@@ -1,4 +1,0 @@
-# Keep generated outputs out of source by default.
-*
-!.gitignore
-!reports/

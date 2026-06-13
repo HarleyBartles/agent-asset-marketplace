@@ -15,8 +15,7 @@ rules, and upstream-drain policy.
 - Flag missing or broken `skills/`, `assets/`, or bundle-reference files before
   minor copy edits.
 - Flag any claim that this bundle is still a projection or mirror. The live
-  source surface is `codex-marketplace/plugins/house-skills/skills/`; `gpt-skills/house-skills/`
-  remains historical archive custody only.
+  source surface is `codex-marketplace/plugins/house-skills/skills/`.
 - Flag license or rights drift, especially if the bundle metadata or README
   starts implying broader rights than the repo evidence supports.
 
@@ -26,5 +25,4 @@ rules, and upstream-drain policy.
 - Historical package folders are folded into the current root and recorded in changelog and version-history notes.
 - Update the live skill root and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.
-- `gpt-skills/house-skills/` is archive custody, not the live source surface.
 - Project-scoped bundles, such as an Adventures pack, should point at explicit canonical source paths when they are meant to be projections.

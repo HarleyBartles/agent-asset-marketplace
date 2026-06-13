@@ -25,14 +25,13 @@ Use it when you need to understand:
 - Bundle version: `1.0.0`
 - Marketplace registry: `.agents/plugins/marketplace.json`
 - Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
-- Historical custody: `gpt-skills/house-skills/`
 - Plugin manifest: `codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle manifest: `references/bundle-manifest.json`
 - Human source map: `references/source-map.md`
 
 ## Source boundary
 
-The bundle's live source surface is `codex-marketplace/plugins/house-skills/skills/`, with `gpt-skills/house-skills/` retained only as historical archive custody.
+The bundle's live source surface is `codex-marketplace/plugins/house-skills/skills/`.
 
 The historical source ledger remains:
 

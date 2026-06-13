@@ -7,4 +7,4 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/adventures-pack/`,
 `codex-marketplace/plugins/unslop/`, and
 `codex-marketplace/plugins/game-studio/`, in that order, with the source
-manifest exposing only those roots.
+manifest exposing only those roots and no legacy marketplace roots beside them.

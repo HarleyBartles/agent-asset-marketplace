@@ -9,7 +9,6 @@ This plugin is the reviewed first-party House Skills plugin root.
 - Intake ledger: `sources/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
 - Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
-- Historical custody: `gpt-skills/house-skills/`
 
 ## Source surfaces copied
 
@@ -26,8 +25,8 @@ This plugin is the reviewed first-party House Skills plugin root.
 - Icon paths normalized to `./assets/icon.svg`
 - Kept each current skill root unversioned and installable under `skills/<skill-name>/`
 - Folded the still-needed support files from historical version packages into the unversioned skill roots
-- Preserved the version history in each skill's changelog and archive custody
+- Preserved the version history in each skill's changelog and support files
 
 ## Notes
 
-The active source inventory now lives in `codex-marketplace/plugins/house-skills/skills/`. The `gpt-skills/house-skills/` tree remains as archive custody and provenance evidence only.
+The active source inventory now lives in `codex-marketplace/plugins/house-skills/skills/`.
