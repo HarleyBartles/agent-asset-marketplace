@@ -172,24 +172,6 @@
             "license_path": "codex-marketplace/plugins/adventures-pack/LICENSE"
         },
         {
-            "name": "game-studio",
-            "plugin_root": "codex-marketplace/plugins/game-studio",
-            "plugin_manifest": "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
-            "source_md": "codex-marketplace/plugins/game-studio/SOURCE.md",
-            "source_ledger": [],
-            "license_reference": null,
-            "bundle_manifest": "codex-marketplace/plugins/game-studio/references/bundle-manifest.json",
-            "skills_path": "codex-marketplace/plugins/game-studio/skills",
-            "provenance_refs": [],
-            "agents_md": null,
-            "registry_path": "./codex-marketplace/plugins/game-studio",
-            "registry_alignment": {
-                "status": "aligned",
-                "note": null
-            },
-            "license_path": "codex-marketplace/plugins/game-studio/LICENSE"
-        },
-        {
             "name": "unslop",
             "plugin_root": "codex-marketplace/plugins/unslop",
             "plugin_manifest": "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
@@ -208,6 +190,24 @@
                 "note": null
             },
             "license_path": "codex-marketplace/plugins/unslop/LICENSE"
+        },
+        {
+            "name": "game-studio",
+            "plugin_root": "codex-marketplace/plugins/game-studio",
+            "plugin_manifest": "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
+            "source_md": "codex-marketplace/plugins/game-studio/SOURCE.md",
+            "source_ledger": [],
+            "license_reference": null,
+            "bundle_manifest": "codex-marketplace/plugins/game-studio/references/bundle-manifest.json",
+            "skills_path": "codex-marketplace/plugins/game-studio/skills",
+            "provenance_refs": [],
+            "agents_md": null,
+            "registry_path": "./codex-marketplace/plugins/game-studio",
+            "registry_alignment": {
+                "status": "aligned",
+                "note": null
+            },
+            "license_path": "codex-marketplace/plugins/game-studio/LICENSE"
         }
     ]
 }

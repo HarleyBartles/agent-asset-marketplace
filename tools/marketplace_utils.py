@@ -33,41 +33,36 @@ MARKETPLACE_NOTES = [
     "Active marketplace plugins are limited to the protected plugin roots only.",
 ]
 
-ACTIVE_MARKETPLACE_PLUGIN_NAMES = (
-    "adventures-pack",
-    "game-studio",
-    "unslop",
+PROTECTED_MARKETPLACE_PLUGIN_SPECS: tuple[dict[str, str | Path], ...] = (
+    {
+        "name": "house-skills",
+        "registry_path": "./codex-marketplace/plugins/house-skills",
+        "plugin_root": "codex-marketplace/plugins/house-skills",
+        "manifest_path": PLUGIN_MANIFEST_PATH,
+    },
+    {
+        "name": "adventures-pack",
+        "registry_path": "./codex-marketplace/plugins/adventures-pack",
+        "plugin_root": "codex-marketplace/plugins/adventures-pack",
+        "manifest_path": ROOT / "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "unslop",
+        "registry_path": "./codex-marketplace/plugins/unslop",
+        "plugin_root": "codex-marketplace/plugins/unslop",
+        "manifest_path": ROOT / "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "game-studio",
+        "registry_path": "./codex-marketplace/plugins/game-studio",
+        "plugin_root": "codex-marketplace/plugins/game-studio",
+        "manifest_path": ROOT / "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
+    },
 )
 
-def discover_marketplace_plugin_specs() -> list[dict[str, str | Path]]:
-    specs: list[dict[str, str | Path]] = [
-        {
-            "name": "house-skills",
-            "registry_path": "./codex-marketplace/plugins/house-skills",
-            "plugin_root": "codex-marketplace/plugins/house-skills",
-            "manifest_path": PLUGIN_MANIFEST_PATH,
-        },
-    ]
-
-    marketplace_plugins_root = ROOT / "codex-marketplace/plugins"
-    for plugin_name in ACTIVE_MARKETPLACE_PLUGIN_NAMES:
-        plugin_dir = marketplace_plugins_root / plugin_name
-        manifest_path = plugin_dir / ".codex-plugin" / "plugin.json"
-        if not manifest_path.exists():
-            raise FileNotFoundError(manifest_path)
-        specs.append(
-            {
-                "name": plugin_name,
-                "registry_path": f"./codex-marketplace/plugins/{plugin_name}",
-                "plugin_root": f"codex-marketplace/plugins/{plugin_name}",
-                "manifest_path": manifest_path,
-            }
-        )
-
-    return specs
-
-
-MARKETPLACE_PLUGIN_SPECS = discover_marketplace_plugin_specs()
+MARKETPLACE_PLUGIN_SPECS = list(PROTECTED_MARKETPLACE_PLUGIN_SPECS)
+PROTECTED_MARKETPLACE_PLUGIN_NAMES = tuple(spec["name"] for spec in PROTECTED_MARKETPLACE_PLUGIN_SPECS)
+PROTECTED_MARKETPLACE_PLUGIN_ROOTS = tuple(spec["plugin_root"] for spec in PROTECTED_MARKETPLACE_PLUGIN_SPECS)
 
 EXPECTED_MARKETPLACE = {
     "name": "agent-asset-marketplace",
@@ -219,10 +214,22 @@ def normalize_decision_row(row: dict[str, str]) -> dict[str, Any]:
 
 
 def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[str, Any]:
+    plugin_manifest_by_name = {}
+    for plugin_manifest in plugin_manifests:
+        plugin_name = plugin_manifest.get("name")
+        if not isinstance(plugin_name, str) or not plugin_name:
+            raise ValueError("Unsupported plugin manifest without a valid name")
+        if plugin_name in plugin_manifest_by_name:
+            raise ValueError(f"Duplicate plugin manifest supplied for {plugin_name}")
+        plugin_manifest_by_name[plugin_name] = plugin_manifest
+
     plugins: list[dict[str, Any]] = []
     registry_paths = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
-    for plugin_manifest in plugin_manifests:
-        plugin_name = plugin_manifest["name"]
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_name = spec["name"]
+        plugin_manifest = plugin_manifest_by_name.get(plugin_name)
+        if not plugin_manifest:
+            raise ValueError(f"Missing plugin manifest for protected marketplace root {plugin_name}")
         plugin_path = registry_paths.get(plugin_name)
         if not plugin_path:
             raise ValueError(f"Unsupported plugin manifest {plugin_name!r}")
