@@ -50,7 +50,7 @@ def validate(skill_root: Path) -> list[str]:
         file
         for file in package_root.rglob("*")
         if file.is_file()
-        and "sources/vendor" not in str(file)
+        and "sources/third_party" not in str(file)
         and file.suffix.lower() in {".md", ".json", ".yaml", ".py", ".txt"}
     ]
     for file in checked_files:

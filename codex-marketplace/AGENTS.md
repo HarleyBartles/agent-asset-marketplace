@@ -11,6 +11,9 @@ The protected active plugin roots in this scope are fixed to
 `codex-marketplace/plugins/unslop`, and
 `codex-marketplace/plugins/game-studio`.
 
+Those roots are installable projections only. Their editable source custody
+lives under `sources/first_party/` and `sources/third_party/`.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

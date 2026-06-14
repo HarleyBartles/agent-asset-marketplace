@@ -4,9 +4,9 @@ This plugin is the reviewed first-party House Skills plugin root.
 
 ## Source basis
 
-- Source ledger: `sources/house-skills/decisions.md`
-- Structured archive ledger: `sources/house-skills/decisions.json`
-- Intake ledger: `sources/house-skills/intake.json`
+- Source ledger: `sources/first_party/skills/house-skills/decisions.md`
+- Structured archive ledger: `sources/first_party/skills/house-skills/decisions.json`
+- Intake ledger: `sources/first_party/skills/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
 - Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
 

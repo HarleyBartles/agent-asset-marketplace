@@ -9,9 +9,9 @@ Current live roots:
 
 Historical custody and provenance:
 
-- `sources/house-skills/decisions.json`
-- `sources/house-skills/decisions.md`
-- `sources/house-skills/intake.json`
+- `sources/first_party/skills/house-skills/decisions.json`
+- `sources/first_party/skills/house-skills/decisions.md`
+- `sources/first_party/skills/house-skills/intake.json`
 - `provenance/house-skills.md`
 
 License and notice obligations for individual skills remain in the skill-level

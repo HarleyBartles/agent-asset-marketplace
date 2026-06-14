@@ -36,7 +36,7 @@ Expected flow:
 1. Preserve upstream plugin/package boundaries by default.
 2. Copy legally re-vendorable third-party plugin assets into the marketplace/plugin route with provenance and license evidence.
 3. Update the marketplace/runtime registry or manifest required for the asset to be discoverable/installable.
-4. Use `provenance/` and `sources/vendor/` to prove origin, rights, and custody.
+4. Use `provenance/` and `sources/third_party/` to prove origin, rights, and custody.
 5. Validate the repo and publish through GitHub before claiming completion.
 
 Repacking upstream skills into a new synthetic plugin is not the default drain route. Do that only when an issue explicitly asks for a curated derivative bundle and defines the transformation contract.
@@ -54,11 +54,15 @@ The marketplace source tree includes real market-consumable plugin assets under
 `codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing
 the active protected plugin inventory.
 
-`sources/vendor/**` is for third-party source snapshots, references, and custody
-evidence that are still required by the retained marketplace roots. Vendored
-package files are source evidence and package payload. Nested files from upstream
-packages should not be treated as this repo's worker doctrine unless this repo
-explicitly says so.
+`sources/first_party/**` is for editable first-party source custody. The
+normalized House Skills source ledger lives at
+`sources/first_party/skills/house-skills/`.
+
+`sources/third_party/**` is for third-party source snapshots, references, and
+custody evidence that are still required by the retained marketplace roots.
+Vendored package files are source evidence and package payload. Nested files
+from upstream packages should not be treated as this repo's worker doctrine
+unless this repo explicitly says so.
 
 ## Provenance, license, and trust
 
@@ -79,7 +83,8 @@ Default posture:
 - `codex-marketplace/` - marketplace source layout and active plugin source shape.
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
 - `sources/` - source-attribution records and retained upstream snapshots.
-- `sources/vendor/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots.
+- `sources/first_party/` - editable first-party source custody and skill-ledger records.
+- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots.
 - `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
 - `tools/` - helper scripts and validation tooling.
 - `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.

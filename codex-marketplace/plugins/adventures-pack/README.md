@@ -26,9 +26,9 @@ Adventures House Skills line.
 ## Provenance
 
 - Canonical source root: `codex-marketplace/plugins/house-skills/skills`
-- Bundle source ledger: `sources/house-skills/decisions.json`
-- Human registry: `sources/house-skills/decisions.md`
-- Structured registry mirror: `sources/house-skills/intake.json`
+- Bundle source ledger: `sources/first_party/skills/house-skills/decisions.json`
+- Human registry: `sources/first_party/skills/house-skills/decisions.md`
+- Structured registry mirror: `sources/first_party/skills/house-skills/intake.json`
 
 The copied skill docs stay in their own directories and are exposed through the
 plugin manifest only after they exist locally.

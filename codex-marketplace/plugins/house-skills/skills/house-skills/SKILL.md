@@ -36,9 +36,9 @@ The bundle's live source surface is `codex-marketplace/plugins/house-skills/skil
 
 The historical source ledger remains:
 
-- `sources/house-skills/decisions.json`
-- `sources/house-skills/decisions.md`
-- `sources/house-skills/intake.json`
+- `sources/first_party/skills/house-skills/decisions.json`
+- `sources/first_party/skills/house-skills/decisions.md`
+- `sources/first_party/skills/house-skills/intake.json`
 - `provenance/house-skills.md`
 
 The bundle does not replace the archived source ledger. Current version lives in each skill's root `SKILL.md` frontmatter, with historical residue folded into `CHANGELOG.md` and preserved support files instead of live `v*` package directories.
@@ -46,7 +46,7 @@ The bundle does not replace the archived source ledger. Current version lives in
 Marketplace exports are generated, not hand-edited:
 
 - edit the live plugin roots in `codex-marketplace/plugins/house-skills/skills/<skill-name>/`;
-- keep the historical registry in `sources/house-skills/decisions.md` and `sources/house-skills/decisions.json` as archive/provenance;
+- keep the historical registry in `sources/first_party/skills/house-skills/decisions.md` and `sources/first_party/skills/house-skills/decisions.json` as archive/provenance;
 - regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
 - verify the result with `tools/validate_marketplace.py`.
 
