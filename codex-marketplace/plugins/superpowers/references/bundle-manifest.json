@@ -58,7 +58,7 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
+      "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative.",
       "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note."
     },
@@ -129,7 +129,7 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
+      "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
       "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility."
     },

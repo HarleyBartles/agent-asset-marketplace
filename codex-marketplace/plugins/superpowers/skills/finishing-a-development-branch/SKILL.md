@@ -20,6 +20,10 @@ For this repository's Codex projection, use
 publication flow. Repo `AGENTS.md`, Linear, and GitHub-visible PR gates outrank
 the generic branch/merge cleanup guidance below whenever they differ.
 
+In Codex-marketplace-managed repos, do not treat local merge, `git checkout`,
+`git pull`, `git merge`, or shell-driven `gh pr create` as the canonical closeout
+path unless repo policy explicitly allows it.
+
 ## The Process
 
 ### Step 1: Verify Tests
@@ -77,8 +81,8 @@ Or ask: "This branch split from main - is that correct?"
 ```
 Implementation complete. What would you like to do?
 
-1. Merge back to <base-branch> locally
-2. Push and create a Pull Request
+1. Merge back to <base-branch> locally, if repo policy explicitly allows it
+2. Push and create a Pull Request, if repo policy explicitly allows it
 3. Keep the branch as-is (I'll handle it later)
 4. Discard this work
 
@@ -90,7 +94,7 @@ Which option?
 ```
 Implementation complete. You're on a detached HEAD (externally managed workspace).
 
-1. Push as new branch and create a Pull Request
+1. Push as new branch and create a Pull Request, if repo policy explicitly allows it
 2. Keep as-is (I'll handle it later)
 3. Discard this work
 
