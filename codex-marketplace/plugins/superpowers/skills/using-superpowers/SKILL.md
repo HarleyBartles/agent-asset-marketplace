@@ -17,17 +17,22 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## Instruction Priority
 
-Superpowers skills override default system prompt behavior, but **user instructions always take precedence**:
+In this Codex projection, Superpowers skills are workflow guidance inside the
+normal instruction stack. They do **not** override system, developer, runtime,
+repo, or user instructions.
 
-1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) — highest priority
-2. **Superpowers skills** — override default system behavior where they conflict
-3. **Default system prompt** — lowest priority
+1. **System / developer / runtime policy** and repo-scoped instructions remain authoritative
+2. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests)
+3. **Superpowers skills** for workflow guidance within those boundaries
+4. **Default system prompt** as the lowest fallback
 
-If CLAUDE.md, GEMINI.md, or AGENTS.md says "don't use TDD" and a skill says "always use TDD," follow the user's instructions. The user is in control.
+If CLAUDE.md, GEMINI.md, AGENTS.md, or platform policy conflicts with a skill,
+follow the governing instruction. The skill is there to help shape the workflow,
+not to overrule policy.
 
 ## How to Access Skills
 
-**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.
+**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you-follow it directly. Never use the Read tool on skill files.
 
 **In Copilot CLI:** Use the `skill` tool. Skills are auto-discovered from installed plugins. The `skill` tool works the same as Claude Code's `Skill` tool.
 
@@ -38,6 +43,10 @@ If CLAUDE.md, GEMINI.md, or AGENTS.md says "don't use TDD" and a skill says "alw
 ## Platform Adaptation
 
 Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-tools.md` (Copilot CLI), `references/codex-tools.md` (Codex) for tool equivalents. Gemini CLI users get the tool mapping loaded automatically via GEMINI.md.
+
+For the Codex marketplace projection, also consult
+`references/codex-marketplace-compatibility.md` for repo-specific precedence and
+publication rules.
 
 # Using Skills
 
@@ -77,7 +86,7 @@ digraph skill_flow {
 
 ## Red Flags
 
-These thoughts mean STOP—you're rationalizing:
+These thoughts mean STOPâ€”you're rationalizing:
 
 | Thought | Reality |
 |---------|---------|
@@ -92,7 +101,7 @@ These thoughts mean STOP—you're rationalizing:
 | "The skill is overkill" | Simple things become complex. Use it. |
 | "I'll just do this one thing first" | Check BEFORE doing anything. |
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| "I know what that means" | Knowing the concept != using the skill. Invoke it. |
 
 ## Skill Priority
 
@@ -101,8 +110,8 @@ When multiple skills could apply, use this order:
 1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
 2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
 
-"Let's build X" → brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
+"Let's build X" -> brainstorming first, then implementation skills.
+"Fix this bug" -> debugging first, then domain-specific skills.
 
 ## Skill Types
 

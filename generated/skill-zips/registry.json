@@ -893,10 +893,10 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7061,
-      "source_sha256": "79743692e03b946b55a318f9eef18cefe1800ba85f70a2a74728603f1fd82dc2",
-      "zip_size_bytes": 2786,
-      "zip_sha256": "3c266d17a80856a4579836a15f57da4afac6ff747220ba1c62e5365f498d97ed"
+      "source_bytes": 7342,
+      "source_sha256": "c0493b318cac3a674d4c03a47f3c0e7ca79a67ebe20b6e872d1e5593bbe827bf",
+      "zip_size_bytes": 2934,
+      "zip_sha256": "f5d0741521ef945ff6baf54967aec37f4d79e26ed401ae6df26a1263c7eabf4e"
     },
     {
       "pack": "superpowers",
@@ -970,10 +970,10 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 12678,
-      "source_sha256": "69025e8ddae06d67807c0322d869c08afa211fcbb05665faf70c07bb18dfa9e7",
-      "zip_size_bytes": 6176,
-      "zip_sha256": "916bd6e539e109f36b64325614947c517e2da94449c20307273495ad71ce3f5a"
+      "source_bytes": 13003,
+      "source_sha256": "bb376086acfe8033c82bfcf92f711e485a064185ace06e6a0d78b4ac1713128b",
+      "zip_size_bytes": 6333,
+      "zip_sha256": "5321eace98ec1b332602fc281d7b0344d5da2fd41fca00c3f097c8f9761f1a97"
     },
     {
       "pack": "superpowers",
