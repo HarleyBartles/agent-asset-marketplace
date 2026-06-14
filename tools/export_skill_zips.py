@@ -92,6 +92,24 @@ def _build_artifact_indexes(registry: dict[str, Any]) -> tuple[dict[tuple[str, s
     return by_key, by_skill
 
 
+def _build_exclusion_indexes(registry: dict[str, Any]) -> tuple[dict[tuple[str, str], dict[str, Any]], dict[str, list[dict[str, Any]]]]:
+    by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    by_skill: dict[str, list[dict[str, Any]]] = {}
+    for record in registry.get("excluded", []):
+        if not isinstance(record, dict):
+            raise ValueError("registry contains a malformed exclusion entry")
+        pack = str(record.get("pack"))
+        skill = str(record.get("skill"))
+        key = (pack, skill)
+        if key in by_key:
+            raise ValueError(f"duplicate registry exclusion entry for {pack}/{skill}")
+        by_key[key] = record
+        by_skill.setdefault(skill, []).append(record)
+    for entries in by_skill.values():
+        entries.sort(key=lambda item: (str(item.get("pack")), str(item.get("skill"))))
+    return by_key, by_skill
+
+
 def _resolve_token(
     token: RequestToken,
     *,
@@ -99,12 +117,20 @@ def _resolve_token(
     targets_by_skill: dict[str, list[SkillTarget]],
     artifacts_by_key: dict[tuple[str, str], SkillArtifact],
     artifacts_by_skill: dict[str, list[SkillArtifact]],
+    exclusions_by_key: dict[tuple[str, str], dict[str, Any]],
+    exclusions_by_skill: dict[str, list[dict[str, Any]]],
 ) -> ResolvedExport:
     if token.pack and token.skill:
         key = (token.pack, token.skill)
         target = targets_by_key.get(key)
         artifact = artifacts_by_key.get(key)
         if target is None or artifact is None:
+            exclusion = exclusions_by_key.get(key)
+            if exclusion is not None:
+                raise ValueError(
+                    f"requested skill {token.pack}/{token.skill} is excluded from GPT exports: "
+                    f"{exclusion.get('reason')}"
+                )
             raise ValueError(f"requested skill missing from the registry: {token.pack}/{token.skill}")
         return ResolvedExport(request=token, target=target, artifact=artifact)
 
@@ -113,7 +139,18 @@ def _resolve_token(
 
     target_matches = targets_by_skill.get(token.skill, [])
     artifact_matches = artifacts_by_skill.get(token.skill, [])
+    exclusion_matches = exclusions_by_skill.get(token.skill, [])
     if not target_matches or not artifact_matches:
+        if exclusion_matches:
+            if len(exclusion_matches) > 1:
+                matches = ", ".join(f"{entry.get('pack')}/{entry.get('skill')}" for entry in exclusion_matches)
+                raise ValueError(
+                    f"ambiguous excluded skill name {token.skill}; use <pack>/{token.skill} ({matches})"
+                )
+            exclusion = exclusion_matches[0]
+            raise ValueError(
+                f"requested skill {token.skill} is excluded from GPT exports: {exclusion.get('reason')}"
+            )
         raise ValueError(f"requested skill missing from the registry: {token.skill}")
     if len(target_matches) > 1:
         matches = ", ".join(f"{target.pack}/{target.skill}" for target in target_matches)
@@ -203,6 +240,7 @@ def export_skill_zips(
     registry = load_json(registry_path)
     targets_by_key, targets_by_skill = _build_target_indexes()
     artifacts_by_key, artifacts_by_skill = _build_artifact_indexes(registry)
+    exclusions_by_key, exclusions_by_skill = _build_exclusion_indexes(registry)
 
     if form == "pack":
         pack = values[0]
@@ -215,6 +253,12 @@ def export_skill_zips(
             key = (target.pack, target.skill)
             artifact = artifacts_by_key.get(key)
             if artifact is None:
+                exclusion = exclusions_by_key.get(key)
+                if exclusion is not None:
+                    raise ValueError(
+                        f"requested skill {target.pack}/{target.skill} is excluded from GPT exports: "
+                        f"{exclusion.get('reason')}"
+                    )
                 raise ValueError(f"requested skill missing from the registry: {target.pack}/{target.skill}")
             selected.append(ResolvedExport(request=request_tokens[0], target=target, artifact=artifact))
     else:
@@ -226,6 +270,8 @@ def export_skill_zips(
                 targets_by_skill=targets_by_skill,
                 artifacts_by_key=artifacts_by_key,
                 artifacts_by_skill=artifacts_by_skill,
+                exclusions_by_key=exclusions_by_key,
+                exclusions_by_skill=exclusions_by_skill,
             )
             for token in request_tokens
         ]

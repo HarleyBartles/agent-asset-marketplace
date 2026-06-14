@@ -1,0 +1,88 @@
+{
+  "schema_version": "skill-gpt-export-manifest.v1",
+  "default_export_mode": "direct",
+  "packs": [
+    {
+      "pack": "superpowers",
+      "skills": [
+        {
+          "skill": "brainstorming",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/brainstorming",
+          "reason": "GPT exports need a platform-neutral design-first version without Skill tool dependencies."
+        },
+        {
+          "skill": "dispatching-parallel-agents",
+          "export_mode": "excluded",
+          "reason": "This skill depends on parallel subagents and is not safe to present as a raw GPT export."
+        },
+        {
+          "skill": "executing-plans",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/executing-plans",
+          "reason": "GPT exports need a version that works without Codex-specific subagent assumptions."
+        },
+        {
+          "skill": "finishing-a-development-branch",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/finishing-a-development-branch",
+          "reason": "The GPT export should keep the branch-closeout guidance but remove Codex-only publication assumptions."
+        },
+        {
+          "skill": "receiving-code-review",
+          "export_mode": "direct",
+          "reason": "This skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "requesting-code-review",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/requesting-code-review",
+          "reason": "The GPT export needs a review workflow that does not depend on a reviewer subagent."
+        },
+        {
+          "skill": "subagent-driven-development",
+          "export_mode": "excluded",
+          "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
+        },
+        {
+          "skill": "systematic-debugging",
+          "export_mode": "direct",
+          "reason": "This skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "test-driven-development",
+          "export_mode": "direct",
+          "reason": "This skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "using-git-worktrees",
+          "export_mode": "excluded",
+          "reason": "This skill depends on local git worktree operations that should not be implied in a raw GPT export."
+        },
+        {
+          "skill": "using-superpowers",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/using-superpowers",
+          "reason": "The GPT export needs a platform-neutral meta-skill that does not assume the Codex Skill tool."
+        },
+        {
+          "skill": "verification-before-completion",
+          "export_mode": "direct",
+          "reason": "This skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "writing-plans",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/writing-plans",
+          "reason": "The GPT export should keep the planning workflow but avoid Codex-specific orchestration language."
+        },
+        {
+          "skill": "writing-skills",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/writing-skills",
+          "reason": "The GPT export needs a skill-authoring guide that is platform-neutral and clear about testing."
+        }
+      ]
+    }
+  ]
+}

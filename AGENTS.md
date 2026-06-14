@@ -21,6 +21,11 @@ Canonical repo-resident `skill.zip` artifacts, when required by an issue, live
 only under `generated/skill-zips/` and are produced by the packaging tool, not
 by hand.
 
+The generated `skill.zip` surface is the GPT-ready export surface. It is built
+from marketplace source custody plus any repo-owned GPT overlay declared under
+`gpt-overlays/`, with direct exports for GPT-safe skills and explicit
+exclusions for skills that should not be exported raw.
+
 The editable active marketplace root inventory lives at
 `codex-marketplace/plugin-roots.json`. Root additions should flow through that
 file and the matching generators/validators rather than Python constant edits.
