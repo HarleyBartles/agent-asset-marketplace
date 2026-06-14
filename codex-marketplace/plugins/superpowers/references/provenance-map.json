@@ -18,7 +18,6 @@
       "assets/superpowers-small.svg"
     ],
     "support_files": [
-      "references/codex-marketplace-compatibility.md",
       "LICENSE",
       "SOURCE.md",
       "PROJECTION.md"
@@ -55,7 +54,7 @@
     }
   ],
   "notes": [
-    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules.",
+    "The active projection copies the upstream skill trees and Codex assets verbatim.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

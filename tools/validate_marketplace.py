@@ -372,10 +372,6 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
         raise ValueError("wild-bunch-project-pack bundle manifest notes mismatch")
 
 
-def normalize_superpowers_projection_text(text: str) -> str:
-    return re.sub(r"\s+", " ", text.replace("**", "").lower()).strip()
-
-
 def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
     source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
     if bundle_manifest.get("bundle_name") != "superpowers":
@@ -454,19 +450,12 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError("superpowers imported entry is missing canonical_name")
         if entry.get("source_category") != "third_party":
             raise ValueError(f"superpowers entry {canonical_name} must be third-party sourced")
-        content_mode = entry.get("content_mode")
-        if content_mode not in {"verbatim", "adapted"}:
-            raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")
-        copy_expectation = entry.get("copy_expectation")
-        if content_mode == "verbatim":
-            if copy_expectation != "byte_identical":
-                raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
-        elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
+        if entry.get("content_mode") != "verbatim":
+            raise ValueError(f"superpowers entry {canonical_name} must be verbatim")
+        if entry.get("copy_expectation") != "byte_identical":
             raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
         if not entry.get("provenance_note"):
             raise ValueError(f"superpowers entry {canonical_name} needs a provenance note")
-        if content_mode == "adapted" and not entry.get("adaptation_note"):
-            raise ValueError(f"superpowers entry {canonical_name} needs an adaptation note")
 
         canonical_source_path = entry.get("canonical_source_path")
         local_path = entry.get("local_path")
@@ -479,29 +468,9 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         source_path = ROOT / canonical_source_path
         local_full_path = ROOT / plugin_root / local_path
         if source_path.is_dir():
-            if content_mode == "verbatim":
-                validate_tree_mirror(source_path, local_full_path, canonical_name)
-            else:
-                if canonical_name == "using-superpowers":
-                    projected_text = normalize_superpowers_projection_text(
-                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
-                    )
-                    if "workflow guidance inside the normal instruction stack" not in projected_text:
-                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
-                    if "do not override system, developer, runtime" not in projected_text:
-                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
-                    if "codex-marketplace-compatibility" not in projected_text:
-                        raise ValueError("superpowers using-superpowers compatibility note missing")
-                elif canonical_name == "finishing-a-development-branch":
-                    projected_text = normalize_superpowers_projection_text(
-                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
-                    )
-                    if "codex marketplace note" not in projected_text:
-                        raise ValueError("superpowers finishing-a-development-branch compatibility note missing")
-                    if "publication flow" not in projected_text:
-                        raise ValueError("superpowers finishing-a-development-branch publication note missing")
+            validate_tree_mirror(source_path, local_full_path, canonical_name)
         else:
-            if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
+            if source_path.read_bytes() != local_full_path.read_bytes():
                 raise ValueError(f"superpowers entry {canonical_name} drifted from its source copy")
 
     expected_support_paths = {
@@ -538,7 +507,6 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         ROOT / plugin_root / "LICENSE",
         ROOT / plugin_root / "SOURCE.md",
         ROOT / plugin_root / "PROJECTION.md",
-        ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md",
         ROOT / plugin_root / "references" / "bundle-manifest.json",
         ROOT / plugin_root / "references" / "provenance-map.json",
         ROOT / plugin_root / "assets" / "app-icon.png",

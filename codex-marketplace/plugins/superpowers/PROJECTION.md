@@ -12,7 +12,6 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 - `LICENSE`
 - `SOURCE.md`
 - `PROJECTION.md`
-- `references/codex-marketplace-compatibility.md`
 - `references/bundle-manifest.json`
 - `references/provenance-map.json`
 
