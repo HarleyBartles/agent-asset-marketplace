@@ -23,6 +23,10 @@ temp/
 *.tar
 *.tar.gz
 *.zip
+!generated/skill-zips/
+!generated/skill-zips/**/
+!generated/skill-zips/**
+!generated/skill-zips/**/*.zip
 
 # OS and editor files
 .DS_Store

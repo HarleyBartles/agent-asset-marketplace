@@ -9,6 +9,11 @@ assets where applicable. Supporting surfaces such as provenance, ledgers, indexe
 and validation helpers exist to preserve source, traceability, and review
 context. They do not substitute for vendored marketplace assets.
 
+Canonical repo-resident `skill.zip` artifacts, when present, live under
+`generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip` with a registry at
+`generated/skill-zips/registry.json`. The package tooling is the normal writer
+for that surface.
+
 The boring goal for upstream drains is simple: take useful upstream plugin-market
 assets and put them into this repo's plugin market when rights and source shape
 allow it. Preserve license, attribution, source mapping, and validation evidence
