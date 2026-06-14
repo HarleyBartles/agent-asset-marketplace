@@ -457,7 +457,11 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         content_mode = entry.get("content_mode")
         if content_mode not in {"verbatim", "adapted"}:
             raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")
-        if entry.get("copy_expectation") != "byte_identical":
+        copy_expectation = entry.get("copy_expectation")
+        if content_mode == "verbatim":
+            if copy_expectation != "byte_identical":
+                raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
+        elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
             raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
         if not entry.get("provenance_note"):
             raise ValueError(f"superpowers entry {canonical_name} needs a provenance note")
