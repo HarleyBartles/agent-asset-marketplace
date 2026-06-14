@@ -287,13 +287,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/worker-dispatch-linear/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 19339,
-      "source_sha256": "87bdf7a46ff064255f398b9e378f3a9188ebc3e61f454d5751a84d6db3037f74",
+      "source_bytes": 20544,
+      "source_sha256": "1952b2b1713ac4c2747e47845450fcc5ffaca4a5a1c3764a2b68ba59ffbc5323",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10300,
-      "zip_sha256": "551dfc0260d4eb77fed4bfdc60106718fed6d4f82df652490505e40d47d46e15"
+      "zip_size_bytes": 10739,
+      "zip_sha256": "d03378d70baffc21e5488fcb9f229987e48ddb35b30e4f591d16997b1879b5cf"
     },
     {
       "pack": "game-studio",
@@ -661,7 +661,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2504,
-      "zip_sha256": "2ce6d90b9255d0c3fc72dfda877c8926dd1c58c02186d59ea433439e26cf1985"
+      "zip_sha256": "04a007767617a0b5a31ed721b01940f4baed7b156b2cd06b35be22a1164c53d0"
     },
     {
       "pack": "house-skills",
@@ -1231,13 +1231,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/worker-dispatch-linear/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 19339,
-      "source_sha256": "87bdf7a46ff064255f398b9e378f3a9188ebc3e61f454d5751a84d6db3037f74",
+      "source_bytes": 20544,
+      "source_sha256": "1952b2b1713ac4c2747e47845450fcc5ffaca4a5a1c3764a2b68ba59ffbc5323",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10300,
-      "zip_sha256": "551dfc0260d4eb77fed4bfdc60106718fed6d4f82df652490505e40d47d46e15"
+      "zip_size_bytes": 10739,
+      "zip_sha256": "d03378d70baffc21e5488fcb9f229987e48ddb35b30e4f591d16997b1879b5cf"
     },
     {
       "pack": "superpowers",
@@ -1394,10 +1394,10 @@
       "source_bytes": 7814,
       "source_sha256": "5cd6211ec599e20d392e2146d1b85ee4895a67d8c0ef4f88ed0bda6809b03b20",
       "overlay_file_count": 1,
-      "overlay_bytes": 720,
-      "overlay_sha256": "43ecfd4cdbde017dbaa56de834bd6b17a6feb31b4a3264739c492c411c9bfc91",
-      "zip_size_bytes": 1562,
-      "zip_sha256": "eb40deb730a6130262b30a7960a3efc154038a01ba4d31a81c157cdd7a898d49"
+      "overlay_bytes": 1978,
+      "overlay_sha256": "2e19d6719a285e8189fa70f1d948a06bf300752fcc68d41bd9c3dbfb5b5e90dc",
+      "zip_size_bytes": 2095,
+      "zip_sha256": "a50a65cdd348c07c79666869d25e50090ebef2a6de603335e52de7623f18af88"
     },
     {
       "pack": "superpowers",
