@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 99,
+  "artifact_count": 100,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -799,13 +799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 19730,
-      "source_sha256": "702b2ece497e0bc6909de753a889b8bb99a00ef68804537073e3fb3ac58a12fa",
+      "source_bytes": 20090,
+      "source_sha256": "f207fc5f2622abb1da30e1de74cfbb42d97f3a1af52e27543b8d2b9af555eeb9",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4089,
-      "zip_sha256": "2518836626632eb4391caee6d5c5b011a6cfd17dfceccb6e59e11d983205c4e3"
+      "zip_size_bytes": 4134,
+      "zip_sha256": "06298d3a81533c1c88738b9f5898ffb9b6f0c7e634cf920d7c09f55b5cf09d29"
     },
     {
       "pack": "house-skills",
@@ -838,6 +838,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 13381,
       "zip_sha256": "09905392f399460009f2b1deef5f3dbdfb98749928ff68903eb5ccc5a2a65d9f"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "linear-issue-compactor",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/linear-issue-compactor/skill.zip",
+      "source_file_count": 4,
+      "source_bytes": 6852,
+      "source_sha256": "b545283879a694c60eb58070b7e59cc7cf0801a369b25710db94ce4e571d714c",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 3605,
+      "zip_sha256": "8b1aa1553234bec9769ec198e940bd1829c610e5db256797afc5e0188c6db97c"
     },
     {
       "pack": "house-skills",

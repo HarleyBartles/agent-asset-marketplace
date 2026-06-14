@@ -74,6 +74,14 @@
 - Scope: marketplace source and pack acquisition
 - Notes: Imported from the saved zip as the exact-fidelity source staging root for marketplace pulls, including pack-root resolution and per-skill install-unit expansion.
 
+## linear-issue-compactor
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor/SKILL.md`
+- Public identity: `linear-issue-compactor`
+- Provenance/history: MARK-135 Linear issue compactor skill
+- Scope: Linear issue compaction and connector-readable issue bodies
+- Notes: Repo-backed first-party Linear compaction skill for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity.
+
 ## skill-handoff
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`
