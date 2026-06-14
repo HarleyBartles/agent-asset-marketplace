@@ -54,6 +54,18 @@
       ]
     },
     {
+      "name": "superpowers-marketplace",
+      "path": "codex-marketplace/plugins/superpowers",
+      "purpose": "Codex-facing projection of the upstream Superpowers release snapshot.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py",
+        "tools/package_skill_zips.py"
+      ]
+    },
+    {
       "name": "house-skills-bundle",
       "path": "codex-marketplace/plugins/house-skills",
       "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
@@ -77,7 +89,7 @@
     {
       "name": "third-party-custody",
       "path": "sources/third_party",
-      "purpose": "Third-party source custody for the retained unslop and game-studio upstream snapshots.",
+      "purpose": "Third-party source custody for the retained unslop, game-studio, and superpowers upstream snapshots.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",
@@ -85,6 +97,19 @@
       "key_validation_scripts": [
         "tools/validate_repo_index.py",
         "tools/validate_marketplace.py"
+      ]
+    },
+    {
+      "name": "superpowers-custody",
+      "path": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
+      "purpose": "Retained third-party source custody for the upstream obra/superpowers v5.1.0 release snapshot.",
+      "surface_kind": "vendored",
+      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+      "guidance_scope": "repo-owned-guidance",
+      "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
       ]
     },
     {
@@ -224,6 +249,31 @@
         "note": null
       },
       "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE"
+    },
+    {
+      "name": "superpowers",
+      "plugin_root": "codex-marketplace/plugins/superpowers",
+      "plugin_manifest": "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/superpowers/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md"
+      ],
+      "license_path": "codex-marketplace/plugins/superpowers/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/superpowers/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/superpowers/skills",
+      "provenance_refs": [
+        "provenance/superpowers.md",
+        "codex-marketplace/plugins/superpowers/references/provenance-map.json"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/superpowers",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
     }
   ]
 }

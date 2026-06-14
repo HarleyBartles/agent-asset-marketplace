@@ -10,7 +10,8 @@ The protected active plugin roots in this scope are fixed to
 `codex-marketplace/plugins/adventures-pack`,
 `codex-marketplace/plugins/unslop`,
 `codex-marketplace/plugins/game-studio`, and
-`codex-marketplace/plugins/wild-bunch-project-pack`.
+`codex-marketplace/plugins/wild-bunch-project-pack`, and
+`codex-marketplace/plugins/superpowers`.
 
 Those roots are installable projections only. Their editable source custody
 lives under `sources/first_party/` and `sources/third_party/`.

@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 88,
+  "artifact_count": 102,
   "excluded_count": 0,
   "artifacts": [
     {
@@ -853,6 +853,160 @@
       "source_sha256": "27a534de2538c36c1c6a292d7fe8e73ca844f18884392f330d1a56f4c8b4692f",
       "zip_size_bytes": 8117,
       "zip_sha256": "e13bc3b478637d32c7a9c093be493c4da05a619641b6b8e87221e55c9c8a1436"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "brainstorming",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/brainstorming",
+      "zip_path": "generated/skill-zips/superpowers/brainstorming/skill.zip",
+      "source_file_count": 8,
+      "source_bytes": 52545,
+      "source_sha256": "af26613c1dcc50338a355c4cdde6904729efac7fa33a80aa5a2edb983067dabd",
+      "zip_size_bytes": 20637,
+      "zip_sha256": "2496b8f26eafc990a641404e642007ab960a7a7a43f6268ae0e5da45e2970c3b"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "dispatching-parallel-agents",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/dispatching-parallel-agents",
+      "zip_path": "generated/skill-zips/superpowers/dispatching-parallel-agents/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 6441,
+      "source_sha256": "473dd145b98e2a53987d275733853fbff9dba5d89acac7cc62efa77ce2822f43",
+      "zip_size_bytes": 2773,
+      "zip_sha256": "c98310c2f8e819038f1451047be4d55a34b364bbbdfb1125062f6c3f61d45918"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "executing-plans",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/executing-plans",
+      "zip_path": "generated/skill-zips/superpowers/executing-plans/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 2469,
+      "source_sha256": "a464c71cc0c0463d90563233885b158d28301a7568c2429be1ec717d422bc5a5",
+      "zip_size_bytes": 1338,
+      "zip_sha256": "6426a179a57f35fe6bd2c6a3a8def0e4ab1e4ea53236c277ba0ddc077bcb728e"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "finishing-a-development-branch",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
+      "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 7061,
+      "source_sha256": "79743692e03b946b55a318f9eef18cefe1800ba85f70a2a74728603f1fd82dc2",
+      "zip_size_bytes": 2786,
+      "zip_sha256": "3c266d17a80856a4579836a15f57da4afac6ff747220ba1c62e5365f498d97ed"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "receiving-code-review",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/receiving-code-review",
+      "zip_path": "generated/skill-zips/superpowers/receiving-code-review/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 6314,
+      "source_sha256": "2a232ab3bc247c1c882bcfc9b65b52c1ec790b05b326f1889d428aa98fda2e0b",
+      "zip_size_bytes": 2918,
+      "zip_sha256": "6a6469ffa0494aae4dcddedfb459ff6b5a7fb5dac3de166f6031768b0d514a8c"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "requesting-code-review",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/requesting-code-review",
+      "zip_path": "generated/skill-zips/superpowers/requesting-code-review/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 7610,
+      "source_sha256": "26505d926e31adaac0fe03200442fac177fd515c8559a2b37c4bb13b4c06dd16",
+      "zip_size_bytes": 3891,
+      "zip_sha256": "d8f7486b83accd83cef4aa4541ca2971a32b7431540a07ed2d8cf8fb91f3103e"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "subagent-driven-development",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/subagent-driven-development",
+      "zip_path": "generated/skill-zips/superpowers/subagent-driven-development/skill.zip",
+      "source_file_count": 4,
+      "source_bytes": 19883,
+      "source_sha256": "b09cb34ed060845094562eb591497ebb2ecda00a8975e2806305589d725f22ab",
+      "zip_size_bytes": 8245,
+      "zip_sha256": "5610bc027b456569d96ad09138c8e6212d1d179be97a196d9185614ce3e6f240"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "systematic-debugging",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/systematic-debugging",
+      "zip_path": "generated/skill-zips/superpowers/systematic-debugging/skill.zip",
+      "source_file_count": 11,
+      "source_bytes": 40733,
+      "source_sha256": "94c6b37758b5a35606242c2006e3e85cb8b7587cf56803b479e8103cfb7019ff",
+      "zip_size_bytes": 19285,
+      "zip_sha256": "5cc5f0af8f817e2ef4fe572371ea3b36c93045ca8bdafb2b8c1f76b56eb70591"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "test-driven-development",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/test-driven-development",
+      "zip_path": "generated/skill-zips/superpowers/test-driven-development/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 18118,
+      "source_sha256": "f76f9dc2303ff982bde8fbd9c4ac0dd9f9c8401cc6eef1386deacc518a321421",
+      "zip_size_bytes": 7704,
+      "zip_sha256": "c62c831840cca839829156209ac23f2806a6e1b5321a0c2d726de0eebd061119"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "using-git-worktrees",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/using-git-worktrees",
+      "zip_path": "generated/skill-zips/superpowers/using-git-worktrees/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 7983,
+      "source_sha256": "92257f8e0e1fe5dc2f073161d34c458572f21c44f9f63976a47d42c5b2ee2aea",
+      "zip_size_bytes": 3183,
+      "zip_sha256": "dcdf7267a78a38dd848eb7aeb29200559cbbb90201ced75967f1e425f875ab90"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "using-superpowers",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
+      "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
+      "source_file_count": 4,
+      "source_bytes": 12678,
+      "source_sha256": "69025e8ddae06d67807c0322d869c08afa211fcbb05665faf70c07bb18dfa9e7",
+      "zip_size_bytes": 6176,
+      "zip_sha256": "916bd6e539e109f36b64325614947c517e2da94449c20307273495ad71ce3f5a"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "verification-before-completion",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/verification-before-completion",
+      "zip_path": "generated/skill-zips/superpowers/verification-before-completion/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 4201,
+      "source_sha256": "a33c946d1bf7121c62f57c31f4a4e5982ca06b4109f32030e27d787b25892f7b",
+      "zip_size_bytes": 2163,
+      "zip_sha256": "0d41d97462ca2bc00fc9899e4ff5e168b195891dd6c28c6645383f4a0d93444a"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "writing-plans",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/writing-plans",
+      "zip_path": "generated/skill-zips/superpowers/writing-plans/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 7814,
+      "source_sha256": "5cd6211ec599e20d392e2146d1b85ee4895a67d8c0ef4f88ed0bda6809b03b20",
+      "zip_size_bytes": 3957,
+      "zip_sha256": "b813737f9a8513a1cb32abf47f08fd05c06b24cfb72e4e58f11c25227fcf43c4"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "writing-skills",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/writing-skills",
+      "zip_path": "generated/skill-zips/superpowers/writing-skills/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 103331,
+      "source_sha256": "72fc414e7a8407bd438c366515d0566b259ead5602f2c9915d94805ed7d3dd49",
+      "zip_size_bytes": 38829,
+      "zip_sha256": "0e8f33ddcb666fa01638d01a14d1b964337adedb6af001d5bb36997a7c1fb68c"
     },
     {
       "pack": "unslop",
