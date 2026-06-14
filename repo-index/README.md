@@ -4,9 +4,8 @@
 
 The index exists so agents can traverse the repo without depending on chat
 memory, embeddings, or a separate discovery runtime. It records the main repo
-zones, the nearest scoped `AGENTS.md` file where one exists, and the five
-protected marketplace plugin pack surfaces that matter for validation and
-review.
+zones, the nearest scoped `AGENTS.md` file where one exists, and the protected
+marketplace plugin pack surfaces that matter for validation and review.
 
 ## How to use it
 

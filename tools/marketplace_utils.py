@@ -35,33 +35,45 @@ MARKETPLACE_NOTES = [
 PROTECTED_MARKETPLACE_PLUGIN_SPECS: tuple[dict[str, str | Path], ...] = (
     {
         "name": "house-skills",
+        "category": "Productivity",
         "registry_path": "./codex-marketplace/plugins/house-skills",
         "plugin_root": "codex-marketplace/plugins/house-skills",
         "manifest_path": PLUGIN_MANIFEST_PATH,
     },
     {
         "name": "adventures-pack",
+        "category": "Productivity",
         "registry_path": "./codex-marketplace/plugins/adventures-pack",
         "plugin_root": "codex-marketplace/plugins/adventures-pack",
         "manifest_path": ROOT / "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
     },
     {
         "name": "unslop",
+        "category": "Productivity",
         "registry_path": "./codex-marketplace/plugins/unslop",
         "plugin_root": "codex-marketplace/plugins/unslop",
         "manifest_path": ROOT / "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
     },
     {
         "name": "game-studio",
+        "category": "Productivity",
         "registry_path": "./codex-marketplace/plugins/game-studio",
         "plugin_root": "codex-marketplace/plugins/game-studio",
         "manifest_path": ROOT / "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
     },
     {
         "name": "wild-bunch-project-pack",
+        "category": "Productivity",
         "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
         "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
         "manifest_path": ROOT / "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
+    },
+    {
+        "name": "superpowers",
+        "category": "Coding",
+        "registry_path": "./codex-marketplace/plugins/superpowers",
+        "plugin_root": "codex-marketplace/plugins/superpowers",
+        "manifest_path": ROOT / "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
     },
 )
 
@@ -81,12 +93,12 @@ EXPECTED_MARKETPLACE = {
                 "source": "local",
                 "path": spec["registry_path"],
             },
-            "policy": {
-                "installation": "AVAILABLE",
-                "authentication": "ON_INSTALL",
-            },
-            "category": "Productivity",
-        }
+                "policy": {
+                    "installation": "AVAILABLE",
+                    "authentication": "ON_INSTALL",
+                },
+                "category": spec["category"],
+            }
         for spec in MARKETPLACE_PLUGIN_SPECS
     ],
     "notes": MARKETPLACE_NOTES,

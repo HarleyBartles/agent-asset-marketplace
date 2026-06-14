@@ -34,7 +34,9 @@ Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in 
 For this normalized pass, the active plugin set is limited to the protected
 roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adventures-pack`,
 `codex-marketplace/plugins/unslop`, and
-`codex-marketplace/plugins/game-studio`.
+`codex-marketplace/plugins/game-studio`, plus
+`codex-marketplace/plugins/wild-bunch-project-pack` and
+`codex-marketplace/plugins/superpowers`.
 
 Expected flow:
 
@@ -57,7 +59,8 @@ Repacking upstream skills into a new synthetic plugin is not the default drain r
 
 The marketplace source tree includes real market-consumable plugin assets under
 `codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing
-the active protected plugin inventory.
+the active protected plugin inventory, including the Codex-facing
+`superpowers` projection.
 
 `sources/first_party/**` is for editable first-party source custody. The
 normalized House Skills source ledger lives at
@@ -89,7 +92,7 @@ Default posture:
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
 - `sources/` - source-attribution records and retained upstream snapshots.
 - `sources/first_party/` - editable first-party source custody and skill-ledger records.
-- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots.
+- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers` release snapshot.
 - `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
 - `tools/` - helper scripts and validation tooling.
 - `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.

@@ -146,7 +146,10 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
             raise ValueError(f"Marketplace registry {name} installation policy mismatch")
         if plugin.get("policy", {}).get("authentication") != "ON_INSTALL":
             raise ValueError(f"Marketplace registry {name} authentication policy mismatch")
-        if plugin.get("category") != "Productivity":
+        spec = next((item for item in MARKETPLACE_PLUGIN_SPECS if item["name"] == name), None)
+        if spec is None:
+            raise ValueError(f"Marketplace registry {name} has no protected marketplace spec")
+        if plugin.get("category") != spec["category"]:
             raise ValueError(f"Marketplace registry {name} category mismatch")
 
 
@@ -161,16 +164,32 @@ def validate_active_plugin_tree() -> None:
         )
 
 
-def validate_plugin_manifest(plugin_manifest: dict, plugin_name: str, plugin_root: str) -> None:
+def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
+    plugin_name = spec["name"]
+    plugin_root = spec["plugin_root"]
     if plugin_manifest.get("name") != plugin_name:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
-    if plugin_manifest.get("interface", {}).get("category") != "Productivity":
+    if plugin_manifest.get("interface", {}).get("category") != spec["category"]:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json category mismatch")
-    for key in ("composerIcon", "logo"):
+    if plugin_name == "superpowers":
+        expected_icons = {
+            "composerIcon": "./assets/superpowers-small.svg",
+            "logo": "./assets/app-icon.png",
+        }
+        expected_assets = ("assets/app-icon.png", "assets/superpowers-small.svg")
+    else:
+        expected_icons = {
+            "composerIcon": "./assets/icon.svg",
+            "logo": "./assets/icon.svg",
+        }
+        expected_assets = ("assets/icon.svg",)
+
+    for key, expected in expected_icons.items():
         relative = plugin_manifest.get("interface", {}).get(key)
-        if relative != "./assets/icon.svg":
+        if relative != expected:
             raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json {key} path mismatch")
-    check_path_exists(ROOT / plugin_root / "assets/icon.svg")
+    for asset_path in expected_assets:
+        check_path_exists(ROOT / plugin_root / asset_path)
     skills_path = plugin_manifest.get("skills")
     if skills_path:
         if not isinstance(skills_path, str):
@@ -351,6 +370,196 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
     notes = bundle_manifest.get("notes", [])
     if not isinstance(notes, list) or len(notes) < 3:
         raise ValueError("wild-bunch-project-pack bundle manifest notes mismatch")
+
+
+def normalize_superpowers_projection_text(text: str) -> str:
+    return re.sub(r"\s+", " ", text.replace("**", "").lower()).strip()
+
+
+def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
+    if bundle_manifest.get("bundle_name") != "superpowers":
+        raise ValueError("superpowers bundle manifest bundle_name mismatch")
+    if bundle_manifest.get("bundle_version") != "5.1.0":
+        raise ValueError("superpowers bundle manifest bundle_version mismatch")
+    if bundle_manifest.get("bundle_type") != "third-party-codex-plugin-projection":
+        raise ValueError("superpowers bundle manifest bundle_type mismatch")
+    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
+        raise ValueError("superpowers bundle manifest marketplace_root mismatch")
+    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/superpowers":
+        raise ValueError("superpowers bundle manifest plugin_root mismatch")
+    if bundle_manifest.get("canonical_source_root") != "sources/third_party/superpowers/obra-superpowers/v5.1.0":
+        raise ValueError("superpowers bundle manifest canonical_source_root mismatch")
+    if bundle_manifest.get("source_tag") != "v5.1.0":
+        raise ValueError("superpowers bundle manifest source_tag mismatch")
+    if bundle_manifest.get("source_commit") != "f2cbfbefebbfef77321e4c9abc9e949826bea9d7":
+        raise ValueError("superpowers bundle manifest source_commit mismatch")
+    if bundle_manifest.get("license") != "MIT":
+        raise ValueError("superpowers bundle manifest license mismatch")
+    if bundle_manifest.get("projection_policy") != (
+        "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody."
+    ):
+        raise ValueError("superpowers bundle manifest projection_policy mismatch")
+    if bundle_manifest.get("source_of_truth") != [
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+    ]:
+        raise ValueError("superpowers bundle manifest source_of_truth mismatch")
+
+    for relative_path in (
+        ".codex-plugin/plugin.json",
+        "LICENSE",
+        "assets/app-icon.png",
+        "assets/superpowers-small.svg",
+    ):
+        source_bytes = (source_root / relative_path).read_bytes()
+        projected_bytes = (ROOT / plugin_root / relative_path).read_bytes()
+        if source_bytes != projected_bytes:
+            raise ValueError(f"superpowers projection drift at {relative_path}")
+
+    entries = bundle_manifest.get("entries", [])
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("superpowers bundle manifest entries must be a non-empty list")
+    if bundle_manifest.get("candidate_count") != len(entries):
+        raise ValueError("superpowers bundle manifest candidate count mismatch")
+    if bundle_manifest.get("imported_count") != len(entries):
+        raise ValueError("superpowers bundle manifest imported count mismatch")
+    if bundle_manifest.get("skipped_count") != 0:
+        raise ValueError("superpowers bundle manifest skipped count mismatch")
+    if bundle_manifest.get("blocked_count") != 0:
+        raise ValueError("superpowers bundle manifest blocked count mismatch")
+
+    support_entries = bundle_manifest.get("excluded", [])
+    if not isinstance(support_entries, list) or len(support_entries) != 7:
+        raise ValueError("superpowers bundle manifest excluded support surface count mismatch")
+
+    skill_dir = ROOT / plugin_root / "skills"
+    actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
+    imported_skill_dirs = sorted(
+        Path(entry["local_path"]).parts[1]
+        for entry in entries
+        if isinstance(entry.get("local_path"), str)
+        and Path(entry["local_path"]).parts[:1] == ("skills",)
+        and len(Path(entry["local_path"]).parts) >= 2
+    )
+    if actual_skill_dirs != imported_skill_dirs:
+        raise ValueError("superpowers bundle manifest imported skill inventory mismatch")
+
+    for entry in entries:
+        canonical_name = entry.get("canonical_name")
+        if not canonical_name or not isinstance(canonical_name, str):
+            raise ValueError("superpowers imported entry is missing canonical_name")
+        if entry.get("source_category") != "third_party":
+            raise ValueError(f"superpowers entry {canonical_name} must be third-party sourced")
+        content_mode = entry.get("content_mode")
+        if content_mode not in {"verbatim", "adapted"}:
+            raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")
+        copy_expectation = entry.get("copy_expectation")
+        if content_mode == "verbatim":
+            if copy_expectation != "byte_identical":
+                raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
+        elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
+            raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
+        if not entry.get("provenance_note"):
+            raise ValueError(f"superpowers entry {canonical_name} needs a provenance note")
+        if content_mode == "adapted" and not entry.get("adaptation_note"):
+            raise ValueError(f"superpowers entry {canonical_name} needs an adaptation note")
+
+        canonical_source_path = entry.get("canonical_source_path")
+        local_path = entry.get("local_path")
+        if not isinstance(canonical_source_path, str) or not canonical_source_path:
+            raise ValueError(f"superpowers entry {canonical_name} is missing canonical_source_path")
+        if not isinstance(local_path, str) or not local_path:
+            raise ValueError(f"superpowers entry {canonical_name} is missing local_path")
+        check_path_exists(ROOT / canonical_source_path)
+        check_path_exists(ROOT / plugin_root / local_path)
+        source_path = ROOT / canonical_source_path
+        local_full_path = ROOT / plugin_root / local_path
+        if source_path.is_dir():
+            if content_mode == "verbatim":
+                validate_tree_mirror(source_path, local_full_path, canonical_name)
+            else:
+                if canonical_name == "using-superpowers":
+                    projected_text = normalize_superpowers_projection_text(
+                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
+                    )
+                    if "workflow guidance inside the normal instruction stack" not in projected_text:
+                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
+                    if "do not override system, developer, runtime" not in projected_text:
+                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
+                    if "codex-marketplace-compatibility" not in projected_text:
+                        raise ValueError("superpowers using-superpowers compatibility note missing")
+                elif canonical_name == "finishing-a-development-branch":
+                    projected_text = normalize_superpowers_projection_text(
+                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
+                    )
+                    if "codex marketplace note" not in projected_text:
+                        raise ValueError("superpowers finishing-a-development-branch compatibility note missing")
+                    if "publication flow" not in projected_text:
+                        raise ValueError("superpowers finishing-a-development-branch publication note missing")
+        else:
+            if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
+                raise ValueError(f"superpowers entry {canonical_name} drifted from its source copy")
+
+    expected_support_paths = {
+        ".claude-plugin": "Claude harness metadata",
+        ".cursor-plugin": "Cursor harness metadata",
+        ".opencode": "OpenCode harness metadata",
+        "gemini-extension.json": "Gemini harness metadata",
+        "CLAUDE.md": "Claude instructions",
+        "GEMINI.md": "Gemini instructions",
+        "hooks": "harness hook support",
+    }
+    support_paths = {}
+    for entry in support_entries:
+        if not isinstance(entry, dict):
+            raise ValueError("superpowers excluded entries must contain objects")
+        path = entry.get("path")
+        reason = entry.get("reason")
+        if not isinstance(path, str) or not path:
+            raise ValueError("superpowers excluded entry is missing path")
+        if not isinstance(reason, str) or not reason:
+            raise ValueError(f"superpowers excluded entry {path} needs a reason")
+        support_paths[path] = reason
+
+    if set(support_paths) != set(expected_support_paths):
+        raise ValueError("superpowers bundle manifest excluded support surface mismatch")
+
+    for path in expected_support_paths:
+        check_path_exists(source_root / path)
+        if (ROOT / plugin_root / path).exists():
+            raise ValueError(f"superpowers support surface {path} must not be projected")
+
+    for required in (
+        ROOT / plugin_root / ".codex-plugin" / "plugin.json",
+        ROOT / plugin_root / "LICENSE",
+        ROOT / plugin_root / "SOURCE.md",
+        ROOT / plugin_root / "PROJECTION.md",
+        ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md",
+        ROOT / plugin_root / "references" / "bundle-manifest.json",
+        ROOT / plugin_root / "references" / "provenance-map.json",
+        ROOT / plugin_root / "assets" / "app-icon.png",
+        ROOT / plugin_root / "assets" / "superpowers-small.svg",
+    ):
+        check_path_exists(required)
+
+    actual_top_level = sorted(path.name for path in (ROOT / plugin_root).iterdir())
+    allowed_top_level = sorted(
+        [
+            ".codex-plugin",
+            "LICENSE",
+            "PROJECTION.md",
+            "SOURCE.md",
+            "assets",
+            "references",
+            "skills",
+        ]
+    )
+    if actual_top_level != allowed_top_level:
+        raise ValueError("superpowers plugin root contains unexpected top-level content")
 
 
 def validate_skill_bundle_manifest(
@@ -551,7 +760,7 @@ def main() -> int:
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_manifest = check_json(spec["manifest_path"])
-        validate_plugin_manifest(plugin_manifest, spec["name"], spec["plugin_root"])
+        validate_plugin_manifest(plugin_manifest, spec)
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
@@ -570,11 +779,18 @@ def main() -> int:
         if spec["name"] == "house-skills":
             continue
         plugin_root = ROOT / spec["plugin_root"]
-        for required in ("README.md", "SOURCE.md", "LICENSE"):
-            check_text(plugin_root / required)
-        if (plugin_root / "package.json").exists():
-            check_json(plugin_root / "package.json")
-        check_path_exists(plugin_root / "assets/icon.svg")
+        if spec["name"] == "superpowers":
+            for required in ("SOURCE.md", "PROJECTION.md", "LICENSE"):
+                check_text(plugin_root / required)
+            check_json(plugin_root / ".codex-plugin" / "plugin.json")
+            check_path_exists(plugin_root / "assets" / "app-icon.png")
+            check_path_exists(plugin_root / "assets" / "superpowers-small.svg")
+        else:
+            for required in ("README.md", "SOURCE.md", "LICENSE"):
+                check_text(plugin_root / required)
+            if (plugin_root / "package.json").exists():
+                check_json(plugin_root / "package.json")
+            check_path_exists(plugin_root / "assets/icon.svg")
 
         bundle_path = plugin_root / "references/bundle-manifest.json"
         if bundle_path.exists():
@@ -583,6 +799,8 @@ def main() -> int:
                 validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "wild-bunch-project-pack":
                 validate_wild_bunch_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+            elif spec["name"] == "superpowers":
+                validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,

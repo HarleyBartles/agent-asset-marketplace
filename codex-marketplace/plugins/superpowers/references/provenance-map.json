@@ -1,0 +1,62 @@
+{
+  "bundle_name": "superpowers",
+  "bundle_version": "5.1.0",
+  "upstream": {
+    "repository": "https://github.com/obra/superpowers",
+    "release_tag": "v5.1.0",
+    "release_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
+    "tag_object": "ecbd610fce16d5faabcea997f17031129589b572",
+    "license": "MIT"
+  },
+  "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
+  "active_projection_root": "codex-marketplace/plugins/superpowers",
+  "codex_surface": {
+    "plugin_manifest": ".codex-plugin/plugin.json",
+    "skills_root": "skills",
+    "assets": [
+      "assets/app-icon.png",
+      "assets/superpowers-small.svg"
+    ],
+    "support_files": [
+      "references/codex-marketplace-compatibility.md",
+      "LICENSE",
+      "SOURCE.md",
+      "PROJECTION.md"
+    ]
+  },
+  "source_only_surfaces": [
+    {
+      "path": ".claude-plugin",
+      "reason": "Claude harness metadata stays in third-party source custody."
+    },
+    {
+      "path": ".cursor-plugin",
+      "reason": "Cursor harness metadata stays in third-party source custody."
+    },
+    {
+      "path": ".opencode",
+      "reason": "OpenCode harness metadata stays in third-party source custody."
+    },
+    {
+      "path": "gemini-extension.json",
+      "reason": "Gemini harness metadata stays in third-party source custody."
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Claude instructions stay in third-party source custody."
+    },
+    {
+      "path": "GEMINI.md",
+      "reason": "Gemini instructions stay in third-party source custody."
+    },
+    {
+      "path": "hooks",
+      "reason": "Hook definitions are source-only until Codex compatibility is proven."
+    }
+  ],
+  "notes": [
+    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules.",
+    "The harness-specific surfaces remain preserved in third-party source custody.",
+    "The retained snapshot keeps the broader package boundary for provenance and review."
+  ]
+}
