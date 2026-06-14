@@ -501,6 +501,15 @@ def validate_skill_zip_registry() -> dict[str, Any]:
     artifacts = [_artifact_from_existing(target) for target in targets]
     validate_generated_surface(artifacts)
     expected = build_registry(artifacts, exclusions=[])
+    discovered_keys = {(target.pack, target.skill) for target in targets}
+    registry_keys = {(artifact.pack, artifact.skill) for artifact in artifacts}
+    missing_targets = sorted(discovered_keys - registry_keys)
+    if missing_targets:
+        formatted = ", ".join(f"{pack}/{skill}" for pack, skill in missing_targets)
+        raise ValueError(
+            "active installable skill roots are missing from generated/skill-zips without an explicit exclusion: "
+            f"{formatted}"
+        )
     if registry != expected:
         raise ValueError("generated/skill-zips/registry.json does not match the current artifact state")
     return registry
@@ -521,8 +530,10 @@ def registry_summary(registry: dict[str, Any]) -> str:
 def print_registry_receipt(registry: dict[str, Any]) -> None:
     artifact_count = registry.get("artifact_count", 0)
     exclusion_count = registry.get("excluded_count", 0)
+    packs = sorted({artifact.get("pack") for artifact in registry.get("artifacts", []) if artifact.get("pack")})
     print(f"OK skill-zips registry: {GENERATED_SKILL_ZIPS_REGISTRY_PATH.relative_to(ROOT).as_posix()}")
     print(f"OK generated artifacts: {artifact_count}")
+    print(f"OK included packs: {', '.join(packs)}")
     print(f"OK explicit exclusions: {exclusion_count}")
     print("OK archive guard: skill.zip is not nested inside packaged skill contents")
 
