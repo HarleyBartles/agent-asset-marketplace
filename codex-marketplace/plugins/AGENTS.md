@@ -16,6 +16,19 @@ not part of the active marketplace inventory for the normalized four-root pass.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+## Manifest guidance
+
+Bundle-manifest entries for imported or retained projection content must declare
+`content_mode`.
+
+- `verbatim` means the retained source snapshot content and the projected plugin
+  content must remain byte/hash equivalent.
+- `adapted` means equality is not expected, but the entry must carry an
+  explicit adaptation note and a provenance trail.
+- Projection roots under `codex-marketplace/plugins/` are not canonical source
+  custody; they must stay aligned with the retained source/provenance contract
+  declared in the manifest.
+
 ## Review guidelines
 
 - Flag missing or broken `.codex-plugin/plugin.json` files, asset references,

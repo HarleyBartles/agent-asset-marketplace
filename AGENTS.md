@@ -139,6 +139,8 @@ git diff --check HEAD~1 HEAD
 
 If a command is unavailable or the repo conventions have changed, record the actual command, output, and reason.
 
+When a validator change creates or sharpens a worker-facing rule, the same PR must consider the matching AGENTS or scoped-guidance update. Validators should enforce documented expectations; they should not become the first place the repo teaches the rule.
+
 ## Closeout
 
 A valid return should report:
