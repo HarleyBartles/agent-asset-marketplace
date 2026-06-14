@@ -374,7 +374,7 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md",
       "public_name": "asset-market",
       "provenance_name": "MARK-109 saved GPT skill zip source package",
-      "scope": "marketplace source acquisition",
+      "scope": "marketplace source and pack acquisition",
       "import_state": "imported"
     },
     {
