@@ -235,7 +235,7 @@ A passable package handoff workflow should make prose-only ledgers impossible to
 
 For skills that create, validate, package, queue, or hand off installable Skill archives, validate the handoff path as a user-facing install surface, not as bookkeeping.
 
-A `sandbox:/.../skill.zip` link can render as an installable Skill preview card in ChatGPT. If the archive is missing, malformed, stale, wrongly named, or only claimed in prose, Harley may see an Install UI that fails with `We could not load this skill`. That wastes the install attempt, creates false progress, causes skill-buster churn, and defeats the purpose of the validator/packager/buster control system built specifically to prevent invalid handoffs.
+A `sandbox:/.../skill.zip` link can render as an installable Skill preview card in ChatGPT. If the archive is missing, malformed, stale, wrongly named, or only claimed in prose, Harley may see an Install UI that fails with `We could not load this skill`. That wastes the install attempt, creates false progress, causes handoff churn, and defeats the purpose of the validator/packager/handoff control system built specifically to prevent invalid handoffs.
 
 Return `repair_required` when a skill handoff workflow:
 
@@ -375,13 +375,13 @@ A passable skill should teach the failure model behind each hard gate. The model
 ## Stack-order fitness
 
 For skill create, update, repair, packaging, or handoff work, the skill is not fit for handoff unless the approved stack
-order is observable: `skill-creator, then skill-validator, then skill-packager, then skill-buster`.
+order is observable: `skill-creator, then skill-validator, then skill-packager, then skill-handoff`.
 
 Fail validation or block the process when:
 
 - a package or handoff is attempted without an explicit `authored_by_skill_creator` token;
 - the validator pass is only claimed in prose rather than returned as a decision for the same source path;
-- `skill-packager` or `skill-buster` is being used as a substitute for validation;
+- `skill-packager` or `skill-handoff` is being used as a substitute for validation;
 - a later step tries to infer an earlier step from workflow readiness, memory, or expected sequence;
 - a handoff workflow accepts assistant-authored package ledgers instead of a machine-written evidence receipt and fresh exact-file/hash verification.
 

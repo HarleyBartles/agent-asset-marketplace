@@ -95,7 +95,7 @@ def package_skill(skill_path, output_dir):
         'exact_file_nonzero': size > 0,
         'top_level_folder_matches_skill': match,
         'created_at_utc': datetime.now(timezone.utc).isoformat(),
-        'next_required_step': 'skill-buster',
+        'next_required_step': 'skill-handoff',
     }
     (output_path / 'package-evidence.json').write_text(json.dumps(evidence, indent=2, sort_keys=True) + '\n', encoding='utf-8')
     print(f'OK: Successfully packaged skill to: {zpath}')

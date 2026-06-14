@@ -105,16 +105,6 @@
     "notes": "Imported as the validation-before-packaging posture for House Skills; no repo-import ZIP packaging is authorized by this source import."
   },
   {
-    "issue": "MARK-21",
-    "source_id": "skill-buster-v0.1",
-    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md",
-    "public_name": "skill-buster",
-    "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-    "import_state": "imported",
-    "scope": "skill maintenance breakdown and closure checks",
-    "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
-  },
-  {
     "issue": "MARK-22",
     "source_id": "adventures-project-doctrine-v1.1",
     "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md",
@@ -234,31 +224,31 @@
     "scope": "Crew role-lens doctrine",
     "notes": "Imported as the Crew doctrine source that compresses responsibility and authority without becoming a worker identity or dispatch route."
   },
-    {
-      "issue": "MARK-30",
-      "source_id": "crew-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/crew-buster/SKILL.md",
-      "public_name": "crew-buster",
-      "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
-      "import_state": "imported",
-      "scope": "Crew planning and route interrogation",
-      "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
-    },
-    {
-      "issue": "WILL-276",
-      "source_id": "connector-safety-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md",
-      "public_name": "connector-safety",
-      "provenance_name": "installed connector-safety package landed via WILL-274; v1.1 zip update",
-      "import_state": "imported",
-      "scope": "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
-      "notes": "Imported as the shared House skill safety component for side-effecting connector/tool work. Keep the canonical source in the House skills lane and project it where shared connector safety is useful."
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-bootstrap-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/SKILL.md",
-      "public_name": "adventures-bootstrap",
+  {
+    "issue": "MARK-30",
+    "source_id": "crew-buster-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/crew-buster/SKILL.md",
+    "public_name": "crew-buster",
+    "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
+    "import_state": "imported",
+    "scope": "Crew planning and route interrogation",
+    "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
+  },
+  {
+    "issue": "WILL-276",
+    "source_id": "connector-safety-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md",
+    "public_name": "connector-safety",
+    "provenance_name": "installed connector-safety package landed via WILL-274; v1.1 zip update",
+    "import_state": "imported",
+    "scope": "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
+    "notes": "Imported as the shared House skill safety component for side-effecting connector/tool work. Keep the canonical source in the House skills lane and project it where shared connector safety is useful."
+  },
+  {
+    "issue": "MARK-30",
+    "source_id": "adventures-bootstrap-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/SKILL.md",
+    "public_name": "adventures-bootstrap",
     "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d Adventures",
     "import_state": "imported",
     "scope": "Adventures first-read router",
@@ -433,5 +423,32 @@
     "import_state": "imported",
     "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
     "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
+  },
+  {
+    "issue": "MARK-109",
+    "source_id": "asset-market-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md",
+    "public_name": "asset-market",
+    "provenance_name": "MARK-109 saved GPT skill zip source package",
+    "scope": "marketplace source acquisition",
+    "import_state": "imported"
+  },
+  {
+    "issue": "MARK-109",
+    "source_id": "skill-handoff-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md",
+    "public_name": "skill-handoff",
+    "provenance_name": "MARK-109 saved GPT skill zip source package",
+    "scope": "skill package handoff cadence",
+    "import_state": "imported"
+  },
+  {
+    "issue": "MARK-109",
+    "source_id": "skill-installer-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md",
+    "public_name": "skill-installer",
+    "provenance_name": "MARK-109 saved GPT skill zip source package",
+    "scope": "skill installation handoff orchestration",
+    "import_state": "imported"
   }
 ]

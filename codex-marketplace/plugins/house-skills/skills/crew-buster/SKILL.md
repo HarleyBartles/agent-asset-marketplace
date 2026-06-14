@@ -30,7 +30,7 @@ Linear/Codex is the normal coding implementation route. Crew-buster may recommen
 Before recommending implementation delegation, run the route question through the current golden gate:
 
   - `linear_codex_candidate`: repo-backed coding work that Codex Cloud can execute from an accessible repo environment. Next owner: `worker-dispatch-linear`.
-  - `gpt_native_skillwork`: installed ChatGPT skill or doctrine work not proven repo-backed. Next owner: `skill-creator` -> `skill-validator` -> `skill-packager` -> `skill-buster`.
+  - `gpt_native_skillwork`: installed ChatGPT skill or doctrine work not proven repo-backed. Next owner: `skill-creator` -> `skill-validator` -> `skill-packager` -> `skill-handoff`.
   - `repo_backed_skill_source`: skill/plugin/source work in a known editable repo. Next owner: `worker-dispatch-linear` only after repo path, publication path, and validation route are known.
 - `github_proof`: PR, commit, branch, status, review, or main-state question. Next owner: the repo/GitHub proof surface.
 - `legacy_plan_b`: non-Linear worker packet only when Linear/Codex is unavailable, unsuitable, or explicitly rejected. Next owner: legacy dispatch skills.
@@ -92,7 +92,7 @@ Defer to specialist skills instead of absorbing their work:
 - Use `tps-reporting` for report partitioning.
 - Use the repo/GitHub proof surface for GitHub evidence, PRs, commits, statuses, reviews, merges, and main verification.
 - Use the GitHub issue-management surface only when GitHub Issues are explicitly requested or Linear/Codex is unavailable.
-- Use `skill-creator`, `skill-validator`, `skill-packager`, and `skill-buster` for GPT-native skill creation, validation, packaging, and handoff.
+- Use `skill-creator`, `skill-validator`, `skill-packager`, and `skill-handoff` for GPT-native skill creation, validation, packaging, and handoff.
 
 ## Evidence posture for language patterns
 

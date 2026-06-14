@@ -27,9 +27,11 @@ Current skill inventory:
 | Base and control plane | linear | `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md` |
 | Base and control plane | session-buster | `codex-marketplace/plugins/house-skills/skills/session-buster/SKILL.md` |
 | Base and control plane | session-buster-ingress | `codex-marketplace/plugins/house-skills/skills/session-buster-ingress/SKILL.md` |
-| Base and control plane | skill-buster | `codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md` |
 | Base and control plane | skill-packager | `codex-marketplace/plugins/house-skills/skills/skill-packager/SKILL.md` |
 | Base and control plane | skill-validator | `codex-marketplace/plugins/house-skills/skills/skill-validator/SKILL.md` |
+| Base and control plane | asset-market | `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md` |
+| Base and control plane | skill-handoff | `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md` |
+| Base and control plane | skill-installer | `codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md` |
 | Base and control plane | tps-ingress | `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md` |
 | Base and control plane | tps-reporting | `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md` |
 | Base and control plane | work-mode-router | `codex-marketplace/plugins/house-skills/skills/work-mode-router/SKILL.md` |

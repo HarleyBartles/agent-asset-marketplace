@@ -20,7 +20,7 @@ Package evidence proves that an archive was built and verified from a stated sou
 - Read `references/skill-update-stack-contract.md` before packaging, package repair, or handoff.
 - Read `references/package-validation-contract.md` before normal packaging, timeout diagnosis, package identity checks, script architecture lint results, or failed handoff repair.
 - Read `references/frontmatter-loader-discipline.md` when repairing loader failures, auditing frontmatter, or preparing existing-skill updates.
-- Read `references/batch-packaging-workflow.md` when preparing more than one package or operating under `skill-buster` batch mode.
+- Read `references/batch-packaging-workflow.md` when preparing more than one package or operating under `skill-handoff` batch mode.
 - Read `references/source-and-evidence-posture.md` only when packaging work depends on repository evidence, connector availability, source-route claims, external package evidence, or a failed source route.
 
 ## Stack-order contract
@@ -43,11 +43,11 @@ If a substep times out or the wrapper budget is exceeded, the wrapper reports th
 
 ## Handoff lifecycle scope
 
-Package evidence proves archive identity at packaging time. It does not by itself prove that an archive remains lawful to present after a skill-buster handoff lifecycle has been broken.
+Package evidence proves archive identity at packaging time. It does not by itself prove that an archive remains lawful to present after a skill-handoff handoff lifecycle has been broken.
 
-`skill-buster` owns queue state, handoff cadence, cursor-driver behavior, and whether a prepared package is still presentation-safe. This skill supplies identity facts: intended skill, staged source path, exact package path, top-level folder, frontmatter name, exact filename, final SHA-256, archive inspection result, external dist directory, and stale dist reuse check.
+`skill-handoff` owns queue state, handoff cadence, cursor-driver behavior, and whether a prepared package is still presentation-safe. This skill supplies identity facts: intended skill, staged source path, exact package path, top-level folder, frontmatter name, exact filename, final SHA-256, archive inspection result, external dist directory, and stale dist reuse check.
 
-Do not let this skill forbid or require cursor-advance pulses. An inert cursor-advance pulse is not package evidence and does not change package validity. A package link still must be emitted through the skill-buster-controlled assistant-message handoff surface.
+Do not let this skill forbid or require cursor-advance pulses. An inert cursor-advance pulse is not package evidence and does not change package validity. A package link still must be emitted through the skill-handoff-controlled assistant-message handoff surface.
 
 ## Broken installer card hard stop
 
@@ -57,9 +57,9 @@ Never hand off a sandbox link, markdown link, or package path from memory, plann
 
 ## Batch preparation
 
-When used under `skill-buster`, run the wrapper once per skill into an external, target-specific dist directory. Batch work is repeated single-target preparation, not one multi-skill packaging operation. Mark a package prepared only after the wrapper returns success and the receipt/evidence match the exact archive. If package preparation is slow or times out, reduce the preparation window and retry the same item in isolation rather than bypassing the wrapper or overloading the batch.
+When used under `skill-handoff`, run the wrapper once per skill into an external, target-specific dist directory. Batch work is repeated single-target preparation, not one multi-skill packaging operation. Mark a package prepared only after the wrapper returns success and the receipt/evidence match the exact archive. If package preparation is slow or times out, reduce the preparation window and retry the same item in isolation rather than bypassing the wrapper or overloading the batch.
 
-After package identity facts are returned to `skill-buster`, this skill is no longer in control of handoff cadence. Re-enter this skill only for a concrete package failure.
+After package identity facts are returned to `skill-handoff`, this skill is no longer in control of handoff cadence. Re-enter this skill only for a concrete package failure.
 
 ## Script boundaries
 

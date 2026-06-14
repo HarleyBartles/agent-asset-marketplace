@@ -1,6 +1,6 @@
 # Package Validation Contract
 
-Use this contract before handing a skill package to `skill-buster` or the user.
+Use this contract before handing a skill package to `skill-handoff` or the user.
 
 ## Normal command
 
@@ -37,7 +37,7 @@ Common timeout causes are unbounded source-tree scans, generated output director
 
 ## Handoff facts
 
-Package evidence proves archive identity. It does not prove user-visible handoff success. Skill-buster owns assistant-message handoff surface, cursor cadence, optional inert cursor-advance pulses, and presentation state.
+Package evidence proves archive identity. It does not prove user-visible handoff success. Skill-handoff owns assistant-message handoff surface, cursor cadence, optional inert cursor-advance pulses, and presentation state.
 
 ## Performance and receipt hardening
 

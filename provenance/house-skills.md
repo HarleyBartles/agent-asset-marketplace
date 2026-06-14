@@ -24,14 +24,6 @@
 - Scope: skill packaging
 - Notes: Validation must happen before packaging. This source import does not add repo-import ZIP packaging, ChatGPT skill ZIP packaging, plugin projections, or skill-market replacement logic.
 
-## skill-buster
-
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-buster/v0.1/skill-buster-v0.1/SKILL.md`
-- Public identity: `skill-buster`
-- Provenance/history only: MARK-21 skill maintenance House Skills source slice
-- Scope: skill maintenance breakdown and closure checks
-- Notes: Remains v0.1. One-at-a-time is the reliable boring path. Batch handoff remains unreliable and non-closure-critical.
-
 ## connector-safety
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
@@ -73,6 +65,30 @@
 - Ownership: Harley-authored first-party House skill
 - Scope: Rooms canon pressure checks and lawful canon/item adjustment
 - Notes: Canonical source now lives in the House skills lane and is projected into the Rooms portion of the bundle. `agents/openai.yaml` was copied into repo source control and keeps the clear policy/interface fields from the zip. `assets/icon.svg` was included with the zip and is vendored here.
+
+## asset-market
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md`
+- Public identity: `asset-market`
+- Provenance/history: MARK-109 saved GPT skill zip source package
+- Scope: marketplace source acquisition
+- Notes: Imported from the saved zip as the exact-fidelity source staging root for marketplace pulls.
+
+## skill-handoff
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`
+- Public identity: `skill-handoff`
+- Provenance/history: MARK-109 saved GPT skill zip source package
+- Scope: skill package handoff cadence
+- Notes: Imported from the saved zip as the exact handoff surface for visible `skill.zip` presentation and landed confirmation.
+
+## skill-installer
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md`
+- Public identity: `skill-installer`
+- Provenance/history: MARK-109 saved GPT skill zip source package
+- Scope: skill installation handoff orchestration
+- Notes: Imported from the saved zip as the source-to-handoff coordinator for GPT skill installation flows.
 
 ## rooms-bootstrap
 
