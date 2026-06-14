@@ -1,8 +1,8 @@
 # Linear Issue Readiness
 
-Read when creating or updating a Linear issue for Codex delegation.
+Read when creating or updating a Linear issue for future worker execution.
 
-A Linear issue is boring enough to delegate when a Codex worker can read it and know:
+A Linear issue is worker-ready when a future execution actor can read it and know:
 
 - repository or implementation surface;
 - exact goal as observable state;
@@ -10,10 +10,10 @@ A Linear issue is boring enough to delegate when a Codex worker can read it and 
 - out-of-scope/protected surfaces;
 - validation commands or acceptable validation evidence;
 - expected return evidence;
-- human PR gate behavior;
+- publication or PR expectations, if any;
 - GREEN/AMBER/RED/BLOCKED criteria when useful.
 
-Do not require YAML unless the target system needs YAML or Harley explicitly asks for it.
+Do not require YAML unless the target worker or user explicitly asks for it. Boring means executable, bounded, and falsifiable, not verbose.
 
 ## Compact issue shape
 
@@ -27,19 +27,21 @@ Use ordinary markdown headings:
 - Return evidence
 - Success criteria
 
-For small tasks, collapse headings into concise paragraphs. Boring means executable, not verbose.
+For small tasks, collapse headings into concise paragraphs.
 
-## Worker lane hints
+## Worker lane wording
 
 Use lightweight lane wording only when it changes execution:
 
-- `cloud-codex-ok`: Codex Cloud can complete from the repo environment.
-- `local-codex-required`: needs local resources not present in cloud.
+- `worker-ready`: issue is clear enough for a future worker.
 - `planning-only`: do not implement yet.
-- `native-gpt-route`: belongs to ChatGPT skill/connector/UI work, not Codex.
+- `native-gpt-route`: belongs to ChatGPT skill, connector, UI, research, or packaging work rather than repo work.
+- `external-worker-handoff`: user wants paste-ready text for a worker outside this chat.
 
-## Human gate wording
+Do not name or imply an execution provider unless the user explicitly names one.
 
-When PR publication should use Codex UI, include:
+## Publication wording
 
-`When implementation is complete, return evidence in Linear. If the Codex UI offers Create PR, Harley will use that human gate; do not require shell GitHub credentials or PAT-based publication.`
+When PR publication is expected, include:
+
+`When implementation is complete, return evidence in Linear, including validation output and any PR/branch/commit link if one is created. Do not require hidden credentials or unmentioned publication routes.`

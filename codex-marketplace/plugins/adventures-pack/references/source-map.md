@@ -59,7 +59,7 @@ Component summary:
 | Adventures | adventures-frame-buster | current | `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md` | `skills/adventures-frame-buster/SKILL.md` | frame readiness |
 | Dependency | don-logan-boundary | current | `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md` | `skills/don-logan-boundary/SKILL.md` | boundary gate |
 | Dependency | gpt-base-doctrine | current | `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md` | `skills/gpt-base-doctrine/SKILL.md` | shared doctrine |
-| Dependency | worker-dispatch-linear | current | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md` | `skills/worker-dispatch-linear/SKILL.md` | Linear dispatch |
+| Dependency | worker-dispatch-linear | current | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md` | `skills/worker-dispatch-linear/SKILL.md` | Linear worker readiness |
 | Dependency | connector-safety | current | `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
 | Dependency | linear | current | `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md` | `skills/linear/SKILL.md` | Linear mechanics |
 | Dependency | tps-reporting | current | `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md` | `skills/tps-reporting/SKILL.md` | reporting |

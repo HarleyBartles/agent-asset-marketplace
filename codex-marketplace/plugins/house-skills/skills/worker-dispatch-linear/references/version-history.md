@@ -1,9 +1,9 @@
 # Version History for Worker Dispatch Linear
 
-- Historical version: `v1`
-- Historical source id: `worker-dispatch-linear-v1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
-- Provenance: historical archive note for worker-dispatch-linear
-- Historical package folders folded out of the live root: none
+- Active version: `v2`
+- Active source id: `worker-dispatch-linear-v2`
+- Active root: `gpt-skills/house-skills/worker-dispatch-linear/SKILL.md`
+- Provenance: `v1` removed execution-lane and delegation assumptions after the GPT-side skill incorrectly treated worker-ready issue shaping as a launch/delegation signal.
+- Historical version folders present in this repo: none
 
-The current root is unversioned; historical version details live only in this note and the changelog.
+The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
