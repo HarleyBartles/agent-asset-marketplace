@@ -452,6 +452,16 @@
     "import_state": "imported"
   },
   {
+    "issue": "MARK-135",
+    "source_id": "linear-issue-compactor-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor/SKILL.md",
+    "public_name": "linear-issue-compactor",
+    "provenance_name": "MARK-135 Linear issue compactor skill",
+    "scope": "Linear issue compaction and connector-readable issue bodies",
+    "import_state": "imported",
+    "notes": "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
+  },
+  {
     "issue": "MARK-85",
     "source_id": "wild-bunch-project-doctrine-v1",
     "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
