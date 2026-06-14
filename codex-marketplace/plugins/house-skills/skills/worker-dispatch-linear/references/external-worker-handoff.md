@@ -17,8 +17,6 @@ Create the smallest durable handoff that names:
 - required return evidence;
 - publication expectation, if any.
 
-For a worker-send-ready coding issue, preserve the result of the Linear Worker Issue Shaping Stack. The handoff should not weaken or bypass boring-buster and writing-plans gates that were already encoded in Linear.
-
 Avoid large YAML packets unless the target worker requires that exact format. Ordinary markdown is preferred.
 
 ## Return evidence wording
