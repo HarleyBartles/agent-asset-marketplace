@@ -7,6 +7,12 @@ This scope covers repository validation and generation scripts.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+The skill-update path is now worker-facing through
+`py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`. The root
+inventory that drives marketplace plugin ownership is
+`codex-marketplace/plugin-roots.json`, and drift validation lives in
+`tools/validate_generated_drift.py`.
+
 ## Review guidelines
 
 - Flag validators that can pass while indexed paths, plugin manifests, or
@@ -16,3 +22,5 @@ rules, and upstream-drain policy.
   references, or unsupported plugin entries.
 - Flag tooling changes that do not keep the marketplace export, repo index,
   and validation command documentation aligned.
+- Flag targeted skill-update helpers that rewrite unrelated generated state or
+  that hide full-regeneration behavior behind an ordinary update path.

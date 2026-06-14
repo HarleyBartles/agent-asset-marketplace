@@ -10,6 +10,7 @@ from marketplace_utils import (
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
     PROTECTED_MARKETPLACE_PLUGIN_NAMES,
+    PLUGIN_ROOT_INVENTORY_PATH,
     REPO_INDEX_PATH,
     load_json,
 )
@@ -82,6 +83,8 @@ def validate_repo_index() -> dict:
     schema_version = repo_index.get("schema_version")
     if schema_version != 1:
         raise ValueError("repo-index schema_version must be 1")
+    if repo_index.get("marketplace_root_inventory_path") != "codex-marketplace/plugin-roots.json":
+        raise ValueError("repo-index marketplace_root_inventory_path mismatch")
 
     zones = repo_index.get("zones")
     if not isinstance(zones, list) or not zones:
@@ -103,6 +106,16 @@ def validate_repo_index() -> dict:
         raise ValueError("repo-index marketplace validation command mismatch")
     if validation.get("repo_index") != "py -3 tools/validate_repo_index.py":
         raise ValueError("repo-index repo_index validation command mismatch")
+    if validation.get("skill_zips_update") != "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>":
+        raise ValueError("repo-index skill_zips_update command mismatch")
+    if validation.get("skill_zips_full_regeneration") != "py -3 tools/update_skill_artifacts.py --all":
+        raise ValueError("repo-index skill_zips_full_regeneration command mismatch")
+    if validation.get("skill_zips_check") != "py -3 tools/validate_skill_zips.py":
+        raise ValueError("repo-index skill_zips_check command mismatch")
+    if validation.get("generated_drift") != "py -3 tools/validate_generated_drift.py --base origin/main":
+        raise ValueError("repo-index generated_drift command mismatch")
+
+    check_path_exists(PLUGIN_ROOT_INVENTORY_PATH)
 
     seen_zone_names: set[str] = set()
     seen_zone_paths: set[str] = set()

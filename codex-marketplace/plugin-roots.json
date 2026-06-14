@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "description": "Editable inventory for the active Codex marketplace plugin roots.",
+  "roots": [
+    {
+      "order": 0,
+      "name": "house-skills",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/house-skills",
+      "plugin_root": "codex-marketplace/plugins/house-skills",
+      "manifest_path": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 1,
+      "name": "adventures-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/adventures-pack",
+      "plugin_root": "codex-marketplace/plugins/adventures-pack",
+      "manifest_path": "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 2,
+      "name": "unslop",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/unslop",
+      "plugin_root": "codex-marketplace/plugins/unslop",
+      "manifest_path": "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 3,
+      "name": "game-studio",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/game-studio",
+      "plugin_root": "codex-marketplace/plugins/game-studio",
+      "manifest_path": "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 4,
+      "name": "wild-bunch-project-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
+      "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+      "manifest_path": "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 5,
+      "name": "superpowers",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/superpowers",
+      "plugin_root": "codex-marketplace/plugins/superpowers",
+      "manifest_path": "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
+      "enabled": true
+    }
+  ]
+}

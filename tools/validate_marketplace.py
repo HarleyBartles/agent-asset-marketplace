@@ -24,6 +24,7 @@ from marketplace_utils import (
     SOURCE_DECISIONS_MD_PATH,
     SOURCE_INTAKE_JSON_PATH,
     SOURCE_MAP_PATH,
+    PLUGIN_ROOT_INVENTORY_PATH,
     REPO_INDEX_PATH,
     REPO_INDEX_README_PATH,
     build_marketplace_manifest,
@@ -810,6 +811,7 @@ def main() -> int:
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
+    check_json(PLUGIN_ROOT_INVENTORY_PATH)
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
     check_text(PLUGIN_README_PATH)

@@ -9,6 +9,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
@@ -31,78 +32,6 @@ MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",
     "Active marketplace plugins are limited to the protected plugin roots only.",
 ]
-
-PROTECTED_MARKETPLACE_PLUGIN_SPECS: tuple[dict[str, str | Path], ...] = (
-    {
-        "name": "house-skills",
-        "category": "Productivity",
-        "registry_path": "./codex-marketplace/plugins/house-skills",
-        "plugin_root": "codex-marketplace/plugins/house-skills",
-        "manifest_path": PLUGIN_MANIFEST_PATH,
-    },
-    {
-        "name": "adventures-pack",
-        "category": "Productivity",
-        "registry_path": "./codex-marketplace/plugins/adventures-pack",
-        "plugin_root": "codex-marketplace/plugins/adventures-pack",
-        "manifest_path": ROOT / "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "unslop",
-        "category": "Productivity",
-        "registry_path": "./codex-marketplace/plugins/unslop",
-        "plugin_root": "codex-marketplace/plugins/unslop",
-        "manifest_path": ROOT / "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "game-studio",
-        "category": "Productivity",
-        "registry_path": "./codex-marketplace/plugins/game-studio",
-        "plugin_root": "codex-marketplace/plugins/game-studio",
-        "manifest_path": ROOT / "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "wild-bunch-project-pack",
-        "category": "Productivity",
-        "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
-        "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
-        "manifest_path": ROOT / "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
-    },
-    {
-        "name": "superpowers",
-        "category": "Coding",
-        "registry_path": "./codex-marketplace/plugins/superpowers",
-        "plugin_root": "codex-marketplace/plugins/superpowers",
-        "manifest_path": ROOT / "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
-    },
-)
-
-MARKETPLACE_PLUGIN_SPECS = list(PROTECTED_MARKETPLACE_PLUGIN_SPECS)
-PROTECTED_MARKETPLACE_PLUGIN_NAMES = tuple(spec["name"] for spec in PROTECTED_MARKETPLACE_PLUGIN_SPECS)
-PROTECTED_MARKETPLACE_PLUGIN_ROOTS = tuple(spec["plugin_root"] for spec in PROTECTED_MARKETPLACE_PLUGIN_SPECS)
-
-EXPECTED_MARKETPLACE = {
-    "name": "agent-asset-marketplace",
-    "interface": {
-        "displayName": "Agent Asset Marketplace",
-    },
-    "plugins": [
-        {
-            "name": spec["name"],
-            "source": {
-                "source": "local",
-                "path": spec["registry_path"],
-            },
-                "policy": {
-                    "installation": "AVAILABLE",
-                    "authentication": "ON_INSTALL",
-                },
-                "category": spec["category"],
-            }
-        for spec in MARKETPLACE_PLUGIN_SPECS
-    ],
-    "notes": MARKETPLACE_NOTES,
-}
 
 EXPECTED_PLUGIN_NAME = "house-skills"
 EXPECTED_PLUGIN_VERSION = "1.0.0"
@@ -129,6 +58,101 @@ def load_json(path: Path) -> Any:
 
 def load_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _normalize_plugin_root_inventory_entry(entry: dict[str, Any], *, index: int) -> dict[str, Any]:
+    if not isinstance(entry, dict):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: root inventory entry {index} must be an object")
+
+    required_fields = ("name", "category", "registry_path", "plugin_root", "manifest_path", "order")
+    normalized: dict[str, Any] = {}
+    for field in required_fields:
+        value = entry.get(field)
+        if field == "order":
+            if not isinstance(value, int):
+                raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: root inventory entry {index} requires integer order")
+            normalized[field] = value
+            continue
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: root inventory entry {index} requires {field}")
+        normalized[field] = value
+
+    enabled = entry.get("enabled", True)
+    if not isinstance(enabled, bool):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: root inventory entry {index} enabled must be a boolean")
+    normalized["enabled"] = enabled
+    return normalized
+
+
+def load_plugin_root_inventory() -> tuple[dict[str, Any], ...]:
+    inventory = load_json(PLUGIN_ROOT_INVENTORY_PATH)
+    if inventory.get("schema_version") != 1:
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: schema_version must be 1")
+    roots = inventory.get("roots")
+    if not isinstance(roots, list) or not roots:
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: roots must be a non-empty list")
+
+    normalized = [_normalize_plugin_root_inventory_entry(entry, index=index) for index, entry in enumerate(roots)]
+    normalized.sort(key=lambda entry: entry["order"])
+
+    orders = [entry["order"] for entry in normalized if entry["enabled"]]
+    if orders != list(range(len(orders))):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: enabled root orders must be contiguous starting at zero")
+
+    names = [entry["name"] for entry in normalized if entry["enabled"]]
+    if len(names) != len(set(names)):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: enabled root names must be unique")
+    plugin_roots = [entry["plugin_root"] for entry in normalized if entry["enabled"]]
+    if len(plugin_roots) != len(set(plugin_roots)):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: enabled plugin roots must be unique")
+    manifest_paths = [entry["manifest_path"] for entry in normalized if entry["enabled"]]
+    if len(manifest_paths) != len(set(manifest_paths)):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: enabled manifest paths must be unique")
+
+    return tuple(normalized)
+
+
+PLUGIN_ROOT_INVENTORY = load_plugin_root_inventory()
+MARKETPLACE_PLUGIN_SPECS = [
+    {
+        "name": entry["name"],
+        "category": entry["category"],
+        "registry_path": entry["registry_path"],
+        "plugin_root": entry["plugin_root"],
+        "manifest_path": ROOT / entry["manifest_path"],
+        "order": entry["order"],
+        "enabled": entry["enabled"],
+    }
+    for entry in PLUGIN_ROOT_INVENTORY
+    if entry["enabled"]
+]
+PROTECTED_MARKETPLACE_PLUGIN_SPECS = tuple(MARKETPLACE_PLUGIN_SPECS)
+PROTECTED_MARKETPLACE_PLUGIN_NAMES = tuple(spec["name"] for spec in MARKETPLACE_PLUGIN_SPECS)
+PROTECTED_MARKETPLACE_PLUGIN_ROOTS = tuple(spec["plugin_root"] for spec in MARKETPLACE_PLUGIN_SPECS)
+PROTECTED_MARKETPLACE_PLUGIN_MANIFESTS = tuple(spec["manifest_path"] for spec in MARKETPLACE_PLUGIN_SPECS)
+
+EXPECTED_MARKETPLACE = {
+    "name": "agent-asset-marketplace",
+    "interface": {
+        "displayName": "Agent Asset Marketplace",
+    },
+    "plugins": [
+        {
+            "name": spec["name"],
+            "source": {
+                "source": "local",
+                "path": spec["registry_path"],
+            },
+            "policy": {
+                "installation": "AVAILABLE",
+                "authentication": "ON_INSTALL",
+            },
+            "category": spec["category"],
+        }
+        for spec in MARKETPLACE_PLUGIN_SPECS
+    ],
+    "notes": MARKETPLACE_NOTES,
+}
 
 
 def parse_top_markdown_table(path: Path) -> list[dict[str, str]]:
@@ -262,7 +286,7 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
                     "installation": "AVAILABLE",
                     "authentication": "ON_INSTALL",
                 },
-                "category": plugin_manifest["interface"]["category"],
+                "category": spec["category"],
             }
         )
 
