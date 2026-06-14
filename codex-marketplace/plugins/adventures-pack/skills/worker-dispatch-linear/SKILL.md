@@ -1,63 +1,83 @@
 ---
 name: worker-dispatch-linear
-description: gpt-wide coding dispatch control plane for Linear plus Codex Cloud. Use for coding implementation requests, repo-backed worker dispatch, checking Codex worker status, Linear issue handoff, PR-gate handling, or any user phrase such as dispatch, worker, Codex, Linear issue, worker returned, ready for PR, verify PR, or landed. Owns the decision to route coding work through Linear/Codex by default, and the golden gate that blocks Codex delegation when the task is not executable from a Codex Cloud repo environment. GitHub Issues and chat/YAML dispatch are legacy fallback only.
+description: Use for Linear-backed worker issue preparation and status handling: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch, delegate, or assume any execution lane; treat worker-ready as issue-ready only.
 metadata:
-  source-id: worker-dispatch-linear
+  source-id: worker-dispatch-linear-v2
   source-path: codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
+  provenance-name: "MARK-122 GPT-native update"
 license: "MIT"
 ---
 # Worker Dispatch Linear
 
-This skill is the GPT-wide front door for coding dispatch. The boring default is: shape the task in Linear, delegate to Codex only after the golden gate passes, watch Linear comments/attachments for worker state, use the Codex UI `Create PR` human gate when needed, then verify the GitHub PR or merged main state.
+Use this skill as the GPT-wide control plane for Linear-backed worker readiness and worker event-log handling.
 
-## Non-negotiable route
+This skill does not launch workers, delegate execution, assume a worker provider, or treat any execution lane as available. It shapes durable Linear issue contracts and reads Linear state. A `worker-ready` issue is ready for a future execution actor to pick up; it is not proof that a worker has been sent.
 
-For normal coding work, `dispatch` means Linear issue plus Codex Cloud delegation, not a chat YAML packet.
+## Core rule
 
-Run the golden gate before delegating. If the task is GPT-native skill maintenance, connector setup, research, UI-only configuration, planning, or any surface that Codex Cloud cannot edit and publish from its repo-bound environment, do not delegate to Codex. Use the appropriate native route instead.
+Linear is the durable issue/control plane. The boring default is:
 
-Read `references/golden-gate.md` before any delegation, worker launch, nudge, or conversion of planning into execution.
+1. create or update a worker-ready Linear issue;
+2. inspect Linear comments, attachments, assignee, labels, and status when checking progress;
+3. prepare a paste-ready worker handoff only when Harley explicitly asks for one;
+4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
+5. never claim execution, publication, merge, or closeout unless the target system proves it.
+
+## Durable Linear state convention
+
+Preserve this convention when shaping, updating, or interpreting MARK-style worker issues:
+
+- Worker child send-ready: `Todo` + assigned to Harley + `WORKER` label + shaped DOD/validation + no running evidence.
+- Worker child active/running: `In Progress` + assigned to Harley + `WORKER` label + durable Linear comments, attachments, or links showing actual work evidence.
+- Parent/tracker planned: `Todo` when shaped but no child work is active yet.
+- Parent/tracker active: `In Progress` when at least one child is active/running or the parent itself is actively being worked.
+
+Do not infer active/running state from phrases such as `worker-send-ready`, `worker ready`, or `send ready`. Check Linear state, assignee, labels, child issue state, comments, attachments, links, and GitHub evidence where relevant.
+
+## Route classification
+
+Classify the latest request before acting:
+
+- `issue_shape`: create or update a Linear issue so a future worker can execute it.
+- `worker_handoff_text`: draft a paste-ready worker handoff without mutating execution state.
+- `status_check`: inspect Linear issue state, comments, and attachments.
+- `pr_verification`: inspect GitHub only after a PR URL/number, branch, commit, or merged state exists.
+- `native_or_planning`: route to the relevant GPT-native, connector, planning, or skill-maintenance path.
+
+Phrases such as `worker ready`, `worker send ready`, `send-ready issue`, `worker-ready`, `make it boring`, or `make it executable` authorize issue shaping only. They do not authorize launching, assigning to an execution lane, or claiming that a worker is running.
 
 ## Normal workflow
 
-1. Classify the request.
-   - `coding_dispatch`: create/update a Linear issue and consider Codex delegation.
-   - `status_check`: fetch the Linear issue, comments, attachments, delegate, and state.
-   - `pr_verification`: inspect GitHub only after Linear has a PR attachment/comment or the user gives a PR.
-   - `native_or_planning`: do not delegate; route to the native skill, connector, research, or planning path.
-2. For coding dispatch, read `references/issue-readiness.md` and make the issue boring enough for a worker.
-3. Run `references/golden-gate.md`.
-4. If the gate passes and the latest user turn authorizes dispatch, delegate the Linear issue to Codex.
-5. For follow-up or session pickup, read `references/state-machine.md`, then inspect Linear before asking Harley for worker status.
-6. If Linear shows `returned/pr-gate`, tell Harley to open the Codex task link from the Linear thread and click `Create PR`.
-7. If Linear shows `pr-created`, switch to GitHub verification. Use GitHub tools/skills only for repo proof.
-8. Use `references/legacy-plan-b.md` only when Linear/Codex is unavailable, not connected, explicitly rejected by Harley, or the task fails the golden gate but still needs a non-Linear handoff.
+1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker.
+2. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
+3. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized.
+4. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
+5. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
 
 ## Linear as event log
 
-Treat the Linear issue as the durable task contract. Treat Linear comments and attachments as the worker event log. Do not require Harley to say "the worker returned" before checking; if the current task is status, pickup, worker follow-up, or PR readiness, fetch Linear and decide from observable state.
+Treat Linear issue body, comments, attachments, links, assignee, labels, and status as the event log for worker-shaped work.
 
-Important signals:
+Useful signals:
 
-- Codex delegate or Codex thread exists: worker may be running.
-- Codex completion/report comment exists and no PR link exists: human PR gate.
-- `Created pull request` comment or PR attachment exists: verify GitHub PR.
-- PR merged and main verified: landed.
+- issue exists but lacks scope/validation/return evidence: make it worker-ready;
+- issue has worker report/comment but no PR evidence: report returned state and ask for or prepare the next explicit handoff;
+- issue has PR attachment/comment/URL: verify the GitHub PR;
+- PR merged and main verified: report landed state and update/close Linear only when authorized.
 
 ## GitHub boundary
 
-GitHub proves repo facts: PR metadata, diff, statuses, review comments, merge state, commits, files, and main head. GitHub Issues are not the default coding control plane when Linear/Codex is available.
+GitHub proves repo facts: PR metadata, diff, statuses, review comments, merge state, commits, files, and main head. GitHub Issues are not the default control plane when Linear is available.
 
-Do not use shell GitHub credentials, PATs, or raw `git push` as the normal fix for Codex Cloud publication. The normal publication route is Codex-native PR creation behind the human `Create PR` gate.
+Do not use Linear comments, worker reports, validation summaries, local paths, or generated package names as proof of repository state. Use GitHub proof after a GitHub artifact exists.
 
 ## Skill-read stop rule
 
-After this skill classifies the route, do not read old dispatch skills or GitHub issue skills merely for comfort. Load another skill only for a named unresolved decision that this skill does not own:
+After this skill classifies the route, do not read old dispatch or issue-management skills merely for comfort. Load another skill only for a named unresolved decision that this skill does not own:
 
 - skill creation/update/package work: use the skill-maintenance stack;
 - GitHub PR/repo proof: use GitHub verification tooling;
-- validation choice after code/PR evidence exists: use validation guidance;
+- validation choice after code/PR/package evidence exists: use validation guidance;
 - project-specific domain constraints: use only the matching project wrapper.
 
-If Harley says the route is too wide, wrong, or not boring, stop expanding the skill set and return to Linear/Codex state plus the golden gate.
+If Harley says the route is too wide, wrong, or not boring, stop expanding the skill set and return to Linear issue state plus the smallest next safe action.

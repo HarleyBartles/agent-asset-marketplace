@@ -199,11 +199,11 @@
       "skill": "worker-dispatch-linear",
       "source_path": "codex-marketplace/plugins/adventures-pack/skills/worker-dispatch-linear",
       "zip_path": "generated/skill-zips/adventures-pack/worker-dispatch-linear/skill.zip",
-      "source_file_count": 9,
-      "source_bytes": 14228,
-      "source_sha256": "27a534de2538c36c1c6a292d7fe8e73ca844f18884392f330d1a56f4c8b4692f",
-      "zip_size_bytes": 8117,
-      "zip_sha256": "c7f9ecf126984d8211d7d456a15425d18b166569b1914e78a71724800348af0e"
+      "source_file_count": 10,
+      "source_bytes": 19082,
+      "source_sha256": "abf99007d7f13bdb9c4bb8f1433f69fd56f9d996a4ca29035ce3f5f75435f866",
+      "zip_size_bytes": 10257,
+      "zip_sha256": "0755b25725e028a553e19320e4137ff25a4dfade51ad55a492e1bdac6ae409d4"
     },
     {
       "pack": "game-studio",
@@ -618,10 +618,10 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster",
       "zip_path": "generated/skill-zips/house-skills/rooms-canon-buster/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 10998,
-      "source_sha256": "27225989eb7b8831af1762345a6d29c992098e0be1b44717b56fbd83d0f03ab0",
-      "zip_size_bytes": 6366,
-      "zip_sha256": "e15a358650c53c7de1fc82947e3a2976485055002603fe6c7005d6cd88982643"
+      "source_bytes": 10996,
+      "source_sha256": "f22ae3429885b58f35aa92eac9a5db79d2fd42d3d1c7fa9c69029b326fde4c73",
+      "zip_size_bytes": 6371,
+      "zip_sha256": "9c79f1f8a7e576488575c71e2549e751ae6309844d868a363c1f2538e1455d23"
     },
     {
       "pack": "house-skills",
@@ -651,10 +651,10 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine",
       "zip_path": "generated/skill-zips/house-skills/rooms-project-doctrine/skill.zip",
       "source_file_count": 12,
-      "source_bytes": 14168,
-      "source_sha256": "8433bbc5f4d12e38c1a60f0589b3abc5c66669d14e09dce8e70f28fa8eeb82d6",
-      "zip_size_bytes": 8926,
-      "zip_sha256": "09e6fcb1e8faf3ec937eef6e20a8cfabdada1900df7bb55a5c5b0eb4576294c5"
+      "source_bytes": 14167,
+      "source_sha256": "c7c2102cfff920c33d32c57cbeaef4f2b51e6387c3077d36579c6cae5bff86dc",
+      "zip_size_bytes": 8930,
+      "zip_sha256": "b26ec2071876ba825d5b0d25434619a41343e81f770a67bd4c03d797fb076d28"
     },
     {
       "pack": "house-skills",
@@ -848,11 +848,11 @@
       "skill": "worker-dispatch-linear",
       "source_path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear",
       "zip_path": "generated/skill-zips/house-skills/worker-dispatch-linear/skill.zip",
-      "source_file_count": 9,
-      "source_bytes": 14228,
-      "source_sha256": "27a534de2538c36c1c6a292d7fe8e73ca844f18884392f330d1a56f4c8b4692f",
-      "zip_size_bytes": 8117,
-      "zip_sha256": "e13bc3b478637d32c7a9c093be493c4da05a619641b6b8e87221e55c9c8a1436"
+      "source_file_count": 10,
+      "source_bytes": 19082,
+      "source_sha256": "abf99007d7f13bdb9c4bb8f1433f69fd56f9d996a4ca29035ce3f5f75435f866",
+      "zip_size_bytes": 10257,
+      "zip_sha256": "1eba9abe0863e9ac664227f9a0d5ac490ba8ee87551d9b0789f0f3bea30f1c6b"
     },
     {
       "pack": "superpowers",
@@ -893,10 +893,10 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7660,
-      "source_sha256": "bec16b6b5a89507926df6dc63746e575275e99bab0a2b8cf218dea7f02d07da5",
-      "zip_size_bytes": 3033,
-      "zip_sha256": "3abc9e908fc78729be0dab3d8ff39255dc17d5e2e1fd968a512cdef9f52940a3"
+      "source_bytes": 7922,
+      "source_sha256": "158dde32a32f946527f1ab921dfbd1f9895b458baaabcbd509d5a4bda7716024",
+      "zip_size_bytes": 3066,
+      "zip_sha256": "23e0b3aa7b302481f59a82dbf0f4ecd8772ad99658a339761d77dd7801a5184e"
     },
     {
       "pack": "superpowers",
@@ -970,10 +970,10 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 12998,
-      "source_sha256": "a91e838a9c929e34ee751d9973abc0cdb500d1dae6e9224395c11332d08a24ac",
-      "zip_size_bytes": 6312,
-      "zip_sha256": "77e9622d166637c6c70bbec2c6e1d47708de4511625e89ee2fbfd59ba6c3f7aa"
+      "source_bytes": 13124,
+      "source_sha256": "40cc6452db67a19f45c8e62ce41a487b6db7324d85b6c723670c31c2cca59728",
+      "zip_size_bytes": 6332,
+      "zip_sha256": "3fe9008c49dec6c1fcb63b2f60acd4d45cf1e7374a2f4e2e635c03c7caed94b0"
     },
     {
       "pack": "superpowers",

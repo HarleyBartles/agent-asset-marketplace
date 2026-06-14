@@ -1,9 +1,10 @@
 # Version History for Worker Dispatch Linear
 
-- Historical version: `v1`
-- Historical source id: `worker-dispatch-linear-v1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
-- Provenance: historical archive note for worker-dispatch-linear
-- Historical package folders folded out of the live root: none
+- Active version: `v2`
+- Active source id: `worker-dispatch-linear-v2`
+- Active root: `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
+- Provenance: MARK-122 GPT-native update.
+- Change summary: removes delegation/execution-lane assumptions and preserves the durable MARK worker issue convention for Todo + Harley + WORKER send-ready child issues, In Progress active/running child issues with evidence, and parent/tracker Todo vs In Progress state.
+- Historical version folders present in this repo: none
 
-The current root is unversioned; historical version details live only in this note and the changelog.
+The active root is unversioned; version details live in SKILL.md frontmatter and this history note.
