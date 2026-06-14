@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
   },
-  "skill_count": 44,
+  "skill_count": 49,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -229,10 +229,36 @@
       "name": "skill-installer",
       "lane": "Base and control plane",
       "path": "codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md"
+    },
+    {
+      "name": "wild-bunch-project-doctrine",
+      "lane": "Wild Bunch",
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md"
+    },
+    {
+      "name": "wild-bunch-domain-modeling",
+      "lane": "Wild Bunch",
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md"
+    },
+    {
+      "name": "wild-bunch-dotnet-architecture",
+      "lane": "Wild Bunch",
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md"
+    },
+    {
+      "name": "wild-bunch-browser-game",
+      "lane": "Wild Bunch",
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md"
+    },
+    {
+      "name": "wild-bunch-worker-verification",
+      "lane": "Wild Bunch",
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md"
     }
   ],
   "notes": [
     "Live skill roots are unversioned plugin folders under codex-marketplace/plugins/house-skills/skills/<skill-name>/.",
-    "Historical version-package residue was folded into the live roots and skill-level notes."
+    "Historical version-package residue was folded into the live roots and skill-level notes.",
+    "Includes the five hydrated Wild Bunch first-party roots as a separate lane."
   ]
 }

@@ -5,9 +5,11 @@ Canonical source location for Codex marketplace assets.
 This repo now keeps the active Codex plugin bundles to one protected
 convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/adventures-pack/`,
-`codex-marketplace/plugins/unslop/`, and
-`codex-marketplace/plugins/game-studio/`, in that order, with the source
-manifest exposing only those roots and no legacy marketplace roots beside them.
+`codex-marketplace/plugins/unslop/`,
+`codex-marketplace/plugins/game-studio/`, and
+`codex-marketplace/plugins/wild-bunch-project-pack/`, in that order, with the
+source manifest exposing only those roots and no legacy marketplace roots
+beside them.
 
 Editable source custody lives under `sources/first_party/` and
 `sources/third_party/`. The marketplace roots under `codex-marketplace/plugins/`

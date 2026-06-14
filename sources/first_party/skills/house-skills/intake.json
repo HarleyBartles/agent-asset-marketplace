@@ -394,6 +394,56 @@
       "provenance_name": "MARK-109 saved GPT skill zip source package",
       "scope": "skill installation handoff orchestration",
       "import_state": "imported"
+    },
+    {
+      "issue": "MARK-85",
+      "source_id": "wild-bunch-project-doctrine-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+      "public_name": "wild-bunch-project-doctrine",
+      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
+      "scope": "Wild Bunch project posture and repo sensitivity",
+      "import_state": "imported",
+      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+    },
+    {
+      "issue": "MARK-85",
+      "source_id": "wild-bunch-domain-modeling-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+      "public_name": "wild-bunch-domain-modeling",
+      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
+      "scope": "Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth",
+      "import_state": "imported",
+      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+    },
+    {
+      "issue": "MARK-85",
+      "source_id": "wild-bunch-dotnet-architecture-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "public_name": "wild-bunch-dotnet-architecture",
+      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
+      "scope": "Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage",
+      "import_state": "imported",
+      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+    },
+    {
+      "issue": "MARK-85",
+      "source_id": "wild-bunch-browser-game-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
+      "public_name": "wild-bunch-browser-game",
+      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
+      "scope": "Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA",
+      "import_state": "imported",
+      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+    },
+    {
+      "issue": "MARK-85",
+      "source_id": "wild-bunch-worker-verification-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+      "public_name": "wild-bunch-worker-verification",
+      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
+      "scope": "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
+      "import_state": "imported",
+      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
     }
   ]
 }

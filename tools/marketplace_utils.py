@@ -57,6 +57,12 @@ PROTECTED_MARKETPLACE_PLUGIN_SPECS: tuple[dict[str, str | Path], ...] = (
         "plugin_root": "codex-marketplace/plugins/game-studio",
         "manifest_path": ROOT / "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
     },
+    {
+        "name": "wild-bunch-project-pack",
+        "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
+        "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+        "manifest_path": ROOT / "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
+    },
 )
 
 MARKETPLACE_PLUGIN_SPECS = list(PROTECTED_MARKETPLACE_PLUGIN_SPECS)

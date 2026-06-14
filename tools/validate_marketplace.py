@@ -133,7 +133,7 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
     expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
     actual_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
     if actual_plugin_names != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
-        raise ValueError("Marketplace registry plugin order does not match the protected four-root shape")
+        raise ValueError("Marketplace registry plugin order does not match the protected marketplace shape")
     for name, path in expected_plugins.items():
         plugin = plugins_by_name.get(name)
         if not plugin:
@@ -226,7 +226,15 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
             raise ValueError(f"bundle manifest skill {name} is missing a lane")
         if not path or not isinstance(path, str):
             raise ValueError(f"bundle manifest skill {name} is missing a path")
-        expected_lane = "Adventures" if name.startswith("adventures-") else "Rooms" if name.startswith("rooms-") else "Base and control plane"
+        expected_lane = (
+            "Adventures"
+            if name.startswith("adventures-")
+            else "Rooms"
+            if name.startswith("rooms-")
+            else "Wild Bunch"
+            if name.startswith("wild-bunch-")
+            else "Base and control plane"
+        )
         if lane != expected_lane:
             raise ValueError(f"bundle manifest skill {name} lane mismatch")
         check_path_exists(ROOT / path)
@@ -244,6 +252,105 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
     notes = bundle_manifest.get("notes", [])
     if not isinstance(notes, list) or len(notes) < 1:
         raise ValueError("bundle manifest notes mismatch")
+
+
+def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    if bundle_manifest.get("bundle_name") != "wild-bunch-project-pack":
+        raise ValueError("wild-bunch-project-pack bundle manifest bundle_name mismatch")
+    if bundle_manifest.get("bundle_version") != "1.0.0":
+        raise ValueError("wild-bunch-project-pack bundle manifest bundle_version mismatch")
+    if bundle_manifest.get("bundle_type") != "project-scoped-codex-plugin-projection":
+        raise ValueError("wild-bunch-project-pack bundle manifest bundle_type mismatch")
+    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
+        raise ValueError("wild-bunch-project-pack bundle manifest marketplace_root mismatch")
+    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/wild-bunch-project-pack":
+        raise ValueError("wild-bunch-project-pack bundle manifest plugin_root mismatch")
+    if bundle_manifest.get("canonical_source_roots") != [
+        "codex-marketplace/plugins/house-skills/skills",
+        "sources/third_party/game-studio/upstream/skills",
+    ]:
+        raise ValueError("wild-bunch-project-pack bundle manifest canonical_source_roots mismatch")
+    if bundle_manifest.get("source_of_truth") != [
+        "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+        "sources/third_party/game-studio/upstream/.codex-plugin/plugin.json",
+        "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md",
+    ]:
+        raise ValueError("wild-bunch-project-pack bundle manifest source_of_truth mismatch")
+    if bundle_manifest.get("projection_policy") != (
+        "Project the five hydrated first-party Wild Bunch skills together with the retained browser-game helper skills in a self-contained bundle. Do not depend on another plugin at install time."
+    ):
+        raise ValueError("wild-bunch-project-pack bundle manifest projection_policy mismatch")
+
+    entries = bundle_manifest.get("entries", [])
+    if bundle_manifest.get("candidate_count") != len(entries):
+        raise ValueError("wild-bunch-project-pack bundle manifest candidate count mismatch")
+
+    imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
+    blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
+    if bundle_manifest.get("imported_count") != len(imported_entries):
+        raise ValueError("wild-bunch-project-pack bundle manifest imported count mismatch")
+    if bundle_manifest.get("blocked_count") != len(blocked_entries):
+        raise ValueError("wild-bunch-project-pack bundle manifest blocked count mismatch")
+    if bundle_manifest.get("skipped_count") != 0:
+        raise ValueError("wild-bunch-project-pack bundle manifest skipped count mismatch")
+
+    skill_dir = ROOT / plugin_root / "skills"
+    actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
+    imported_skill_dirs = sorted(
+        Path(entry["local_path"]).parts[1]
+        for entry in imported_entries
+        if isinstance(entry.get("local_path"), str)
+        and Path(entry["local_path"]).parts[:1] == ("skills",)
+        and len(Path(entry["local_path"]).parts) >= 3
+    )
+    if actual_skill_dirs != imported_skill_dirs:
+        raise ValueError("wild-bunch-project-pack bundle manifest imported skill inventory mismatch")
+
+    for entry in imported_entries:
+        canonical_name = entry.get("canonical_name")
+        if not canonical_name or not isinstance(canonical_name, str):
+            raise ValueError("wild-bunch-project-pack imported entry is missing canonical_name")
+        if entry.get("source_category") not in {"first_party", "third_party"}:
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} has an invalid source_category")
+        if entry.get("content_mode") != "verbatim":
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} must be verbatim")
+        if entry.get("copy_expectation") != "byte_identical":
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} copy expectation mismatch")
+        if not entry.get("provenance_note"):
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} needs a provenance note")
+
+        canonical_source_path = entry.get("canonical_source_path")
+        local_path = entry.get("local_path")
+        if not isinstance(canonical_source_path, str) or not canonical_source_path:
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} is missing canonical_source_path")
+        if not isinstance(local_path, str) or not local_path:
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} is missing local_path")
+        check_path_exists(ROOT / canonical_source_path)
+        check_path_exists(ROOT / plugin_root / local_path)
+        if (ROOT / canonical_source_path).read_bytes() != (ROOT / plugin_root / local_path).read_bytes():
+            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} drifted from its source copy")
+
+    if len(blocked_entries) != 1:
+        raise ValueError("wild-bunch-project-pack bundle manifest must contain one blocked entry")
+    blocked = blocked_entries[0]
+    if blocked.get("canonical_name") != "agent-browser":
+        raise ValueError("wild-bunch-project-pack blocked entry must be agent-browser")
+    if blocked.get("local_path") is not None:
+        raise ValueError("wild-bunch-project-pack blocked entry must not expose a local path")
+    if blocked.get("canonical_source_path") is not None:
+        raise ValueError("wild-bunch-project-pack blocked entry must not expose a canonical source path")
+    if blocked.get("copy_expectation") != "not_copied":
+        raise ValueError("wild-bunch-project-pack blocked entry copy expectation mismatch")
+    if not blocked.get("provenance_note"):
+        raise ValueError("wild-bunch-project-pack blocked entry needs a provenance note")
+
+    notes = bundle_manifest.get("notes", [])
+    if not isinstance(notes, list) or len(notes) < 3:
+        raise ValueError("wild-bunch-project-pack bundle manifest notes mismatch")
 
 
 def validate_skill_bundle_manifest(
@@ -474,6 +581,8 @@ def main() -> int:
             bundle_manifest_json = check_json(bundle_path)
             if spec["name"] == "adventures-pack":
                 validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+            elif spec["name"] == "wild-bunch-project-pack":
+                validate_wild_bunch_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,
