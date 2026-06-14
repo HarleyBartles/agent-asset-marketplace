@@ -1,0 +1,28 @@
+---
+name: wild-bunch-worker-verification
+description: Verify Wild Bunch worker returns, PRs, commits, validation notes, and closure claims against issue goals, source changes, publication evidence, browser/UI screenshots when relevant, and verified mainline state before completion is accepted. Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue conformance, deciding Green/Amber/Red status, or preventing tests, reports, or worker summaries from being treated as proof.
+---
+
+# Wild Bunch Worker Verification
+
+Use this skill when finishing or reviewing Wild Bunch work. Passing tests are not the same thing as issue-goal conformance.
+
+## Workflow
+
+1. Identify the issue, PR, branch, commit, changed files, validation evidence, and claimed completion state.
+2. Compare the changed source against the Linear or GitHub issue goal.
+3. Falsify likely misses before accepting the return.
+4. Report validation commands run and their results.
+5. Include branch, commit SHA, PR URL or number, and a concise touched-files summary.
+6. For browser or UI work, require screenshot evidence or state why it is unavailable.
+7. Do not claim landed or mainline state unless it is verified after merge.
+
+Read `references/verification-checklist.md` only when building or checking a verification report, closure recommendation, or Green/Amber/Red status. After reading it once for the current verification, do not reread it unless the task changes.
+
+## Rules
+
+- Worker reports, chat summaries, and issue comments are not source proof.
+- Passing validation is necessary evidence, not issue-goal conformance by itself.
+- A PR existing is not landed state.
+- A merge claim is not mainline proof until main is checked after merge.
+- Preserve uncertainty when a required source, issue, PR, or validation route is unavailable.

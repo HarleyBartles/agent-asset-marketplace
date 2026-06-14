@@ -1,0 +1,41 @@
+{
+  "name": "wild-bunch-project-pack",
+  "version": "1.0.0",
+  "description": "Wild Bunch project workflow bundle with hydrated first-party skills and retained browser-game helpers.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "mixed",
+  "rights": "Contains first-party Harley-owned Wild Bunch skills and retained third-party game-studio skills; see SOURCE.md and references/provenance-map.json for the component-level provenance.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "wild-bunch",
+    "browser-game",
+    "skills",
+    "projection"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wild Bunch Project Pack",
+    "shortDescription": "Wild Bunch project and browser-game workflow skills",
+    "longDescription": "A repo-local Codex plugin bundle that projects the five hydrated first-party Wild Bunch skills together with the approved retained browser-game helper skills in one self-contained copy bundle.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Wild Bunch project pack bundle and source map.",
+      "Use the bundle to install the hydrated Wild Bunch projection.",
+      "Compare bundle versioning against the current Wild Bunch and game-studio sources."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

@@ -97,6 +97,50 @@
 - Provenance/history: MARK-97 rooms bootstrap zip update
 - Scope: Rooms first-read router
 - Notes: Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata. `agents/openai.yaml` keeps the repo-local brand color and implicit invocation fields; `assets/icon.svg` stays the active icon.
+## wild-bunch-project-doctrine-v1
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md`
+- Public identity: `wild-bunch-project-doctrine`
+- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Ownership: Harley-authored first-party House skill
+- Scope: Wild Bunch project posture and repo sensitivity
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
+
+## wild-bunch-domain-modeling-v1
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md`
+- Public identity: `wild-bunch-domain-modeling`
+- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Ownership: Harley-authored first-party House skill
+- Scope: Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
+
+## wild-bunch-dotnet-architecture-v1
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md`
+- Public identity: `wild-bunch-dotnet-architecture`
+- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Ownership: Harley-authored first-party House skill
+- Scope: Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
+
+## wild-bunch-browser-game-v1
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md`
+- Public identity: `wild-bunch-browser-game`
+- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Ownership: Harley-authored first-party House skill
+- Scope: Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
+
+## wild-bunch-worker-verification-v1
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md`
+- Public identity: `wild-bunch-worker-verification`
+- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Ownership: Harley-authored first-party House skill
+- Scope: Wild Bunch worker returns, PRs, commits, validation notes, and completion verification
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
 
 ## House Skills plugin projection
 
@@ -111,7 +155,7 @@
 - Source map: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane, the `rooms-canon-buster` Rooms canon-pressure overlay, and the refreshed `rooms-bootstrap` v1.1 root.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
 - Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports

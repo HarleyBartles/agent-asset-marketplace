@@ -9,6 +9,7 @@ This plugin is the reviewed first-party House Skills plugin root.
 - Intake ledger: `sources/first_party/skills/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
 - Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
+- Wild Bunch first-party hydration: `codex-marketplace/plugins/house-skills/skills/wild-bunch-*/`
 
 ## Source surfaces copied
 

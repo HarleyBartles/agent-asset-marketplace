@@ -1,193 +1,229 @@
 {
-    "schema_version": 1,
-    "repo_name": "agent-asset-marketplace",
-    "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
-    "marketplace_registry_path": ".agents/plugins/marketplace.json",
-    "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
-    "validation": {
-        "marketplace": "py -3 tools/validate_marketplace.py",
-        "repo_index": "py -3 tools/validate_repo_index.py"
+  "schema_version": 1,
+  "repo_name": "agent-asset-marketplace",
+  "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
+  "marketplace_registry_path": ".agents/plugins/marketplace.json",
+  "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
+  "validation": {
+    "marketplace": "py -3 tools/validate_marketplace.py",
+    "repo_index": "py -3 tools/validate_repo_index.py"
+  },
+  "zones": [
+    {
+      "name": "runtime-registry",
+      "path": ".agents/plugins",
+      "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
     },
-    "zones": [
-        {
-            "name": "runtime-registry",
-            "path": ".agents/plugins",
-            "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": null,
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "codex-marketplace-root",
-            "path": "codex-marketplace",
-            "purpose": "Codex marketplace source root and export manifest surface.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "codex-marketplace-plugins",
-            "path": "codex-marketplace/plugins",
-            "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "house-skills-bundle",
-            "path": "codex-marketplace/plugins/house-skills",
-            "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "first-party-house-skills-ledger",
-            "path": "sources/first_party/skills/house-skills",
-            "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
-            "surface_kind": "provenance",
-            "nearest_scoped_agents_md": null,
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py"
-            ]
-        },
-        {
-            "name": "third-party-custody",
-            "path": "sources/third_party",
-            "purpose": "Third-party source custody for the retained unslop and game-studio upstream snapshots.",
-            "surface_kind": "vendored",
-            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
-            "guidance_scope": "repo-owned-guidance",
-            "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py",
-                "tools/validate_marketplace.py"
-            ]
-        },
-        {
-            "name": "provenance",
-            "path": "provenance",
-            "purpose": "Retained provenance notes, trust records, and custody evidence.",
-            "surface_kind": "provenance",
-            "nearest_scoped_agents_md": "provenance/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py"
-            ]
-        },
-        {
-            "name": "tools",
-            "path": "tools",
-            "purpose": "Repository validation and generation scripts.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": "tools/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-                "tools/generate_marketplace.py"
-            ]
-        },
-        {
-            "name": "repo-index",
-            "path": "repo-index",
-            "purpose": "Navigation metadata for repo traversal and future corpus preparation.",
-            "surface_kind": "generated",
-            "nearest_scoped_agents_md": null,
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py"
-            ]
-        }
-    ],
-    "marketplace_plugins": [
-        {
-            "name": "house-skills",
-            "plugin_root": "codex-marketplace/plugins/house-skills",
-            "plugin_manifest": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-            "source_md": null,
-            "source_ledger": [
-                "sources/first_party/skills/house-skills/decisions.json",
-                "sources/first_party/skills/house-skills/decisions.md",
-                "sources/first_party/skills/house-skills/intake.json"
-            ],
-            "license_reference": "first-party license declared in codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-            "bundle_manifest": "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-            "skills_path": "codex-marketplace/plugins/house-skills/skills",
-            "provenance_refs": [
-                "provenance/house-skills.md"
-            ],
-            "agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
-            "registry_path": "./codex-marketplace/plugins/house-skills",
-            "registry_alignment": {
-                "status": "aligned",
-                "note": null
-            }
-        },
-        {
-            "name": "adventures-pack",
-            "plugin_root": "codex-marketplace/plugins/adventures-pack",
-            "plugin_manifest": "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
-            "source_md": "codex-marketplace/plugins/adventures-pack/SOURCE.md",
-            "source_ledger": [],
-            "license_reference": null,
-            "bundle_manifest": "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json",
-            "skills_path": "codex-marketplace/plugins/adventures-pack/skills",
-            "provenance_refs": [],
-            "agents_md": null,
-            "registry_path": "./codex-marketplace/plugins/adventures-pack",
-            "registry_alignment": {
-                "status": "aligned",
-                "note": null
-            },
-            "license_path": "codex-marketplace/plugins/adventures-pack/LICENSE"
-        },
-        {
-            "name": "unslop",
-            "plugin_root": "codex-marketplace/plugins/unslop",
-            "plugin_manifest": "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
-            "source_md": "codex-marketplace/plugins/unslop/SOURCE.md",
-            "source_ledger": [],
-            "license_reference": null,
-            "bundle_manifest": "codex-marketplace/plugins/unslop/references/bundle-manifest.json",
-            "skills_path": "codex-marketplace/plugins/unslop/skills",
-            "provenance_refs": [
-                "provenance/MARK-99-unslop.md"
-            ],
-            "agents_md": null,
-            "registry_path": "./codex-marketplace/plugins/unslop",
-            "registry_alignment": {
-                "status": "aligned",
-                "note": null
-            },
-            "license_path": "codex-marketplace/plugins/unslop/LICENSE"
-        },
-        {
-            "name": "game-studio",
-            "plugin_root": "codex-marketplace/plugins/game-studio",
-            "plugin_manifest": "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
-            "source_md": "codex-marketplace/plugins/game-studio/SOURCE.md",
-            "source_ledger": [],
-            "license_reference": null,
-            "bundle_manifest": "codex-marketplace/plugins/game-studio/references/bundle-manifest.json",
-            "skills_path": "codex-marketplace/plugins/game-studio/skills",
-            "provenance_refs": [],
-            "agents_md": null,
-            "registry_path": "./codex-marketplace/plugins/game-studio",
-            "registry_alignment": {
-                "status": "aligned",
-                "note": null
-            },
-            "license_path": "codex-marketplace/plugins/game-studio/LICENSE"
-        }
-    ]
+    {
+      "name": "codex-marketplace-root",
+      "path": "codex-marketplace",
+      "purpose": "Codex marketplace source root and export manifest surface.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "codex-marketplace-plugins",
+      "path": "codex-marketplace/plugins",
+      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "wild-bunch-project-pack",
+      "path": "codex-marketplace/plugins/wild-bunch-project-pack",
+      "purpose": "Self-contained Wild Bunch project pack projection with hydrated first-party skills and retained browser-game helpers.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "house-skills-bundle",
+      "path": "codex-marketplace/plugins/house-skills",
+      "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
+      "surface_kind": "runtime-facing",
+      "nearest_scoped_agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "first-party-house-skills-ledger",
+      "path": "sources/first_party/skills/house-skills",
+      "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
+      "surface_kind": "provenance",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py"
+      ]
+    },
+    {
+      "name": "third-party-custody",
+      "path": "sources/third_party",
+      "purpose": "Third-party source custody for the retained unslop and game-studio upstream snapshots.",
+      "surface_kind": "vendored",
+      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+      "guidance_scope": "repo-owned-guidance",
+      "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+      "key_validation_scripts": [
+        "tools/validate_repo_index.py",
+        "tools/validate_marketplace.py"
+      ]
+    },
+    {
+      "name": "provenance",
+      "path": "provenance",
+      "purpose": "Retained provenance notes, trust records, and custody evidence.",
+      "surface_kind": "provenance",
+      "nearest_scoped_agents_md": "provenance/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "tools",
+      "path": "tools",
+      "purpose": "Repository validation and generation scripts.",
+      "surface_kind": "hand-authored",
+      "nearest_scoped_agents_md": "tools/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py",
+        "tools/generate_marketplace.py"
+      ]
+    },
+    {
+      "name": "repo-index",
+      "path": "repo-index",
+      "purpose": "Navigation metadata for repo traversal and future corpus preparation.",
+      "surface_kind": "generated",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_repo_index.py"
+      ]
+    }
+  ],
+  "marketplace_plugins": [
+    {
+      "name": "house-skills",
+      "plugin_root": "codex-marketplace/plugins/house-skills",
+      "plugin_manifest": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
+      "source_md": null,
+      "source_ledger": [
+        "sources/first_party/skills/house-skills/decisions.json",
+        "sources/first_party/skills/house-skills/decisions.md",
+        "sources/first_party/skills/house-skills/intake.json"
+      ],
+      "license_reference": "first-party license declared in codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
+      "bundle_manifest": "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/house-skills/skills",
+      "provenance_refs": [
+        "provenance/house-skills.md"
+      ],
+      "agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
+      "registry_path": "./codex-marketplace/plugins/house-skills",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "adventures-pack",
+      "plugin_root": "codex-marketplace/plugins/adventures-pack",
+      "plugin_manifest": "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/adventures-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/adventures-pack/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/adventures-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      },
+      "license_path": "codex-marketplace/plugins/adventures-pack/LICENSE"
+    },
+    {
+      "name": "unslop",
+      "plugin_root": "codex-marketplace/plugins/unslop",
+      "plugin_manifest": "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/unslop/SOURCE.md",
+      "source_ledger": [],
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/unslop/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/unslop/skills",
+      "provenance_refs": [
+        "provenance/MARK-99-unslop.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/unslop",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      },
+      "license_path": "codex-marketplace/plugins/unslop/LICENSE"
+    },
+    {
+      "name": "game-studio",
+      "plugin_root": "codex-marketplace/plugins/game-studio",
+      "plugin_manifest": "codex-marketplace/plugins/game-studio/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/game-studio/SOURCE.md",
+      "source_ledger": [],
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/game-studio/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/game-studio/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/game-studio",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      },
+      "license_path": "codex-marketplace/plugins/game-studio/LICENSE"
+    },
+    {
+      "name": "wild-bunch-project-pack",
+      "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+      "plugin_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/wild-bunch-project-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/first_party/skills/house-skills/decisions.json",
+        "sources/first_party/skills/house-skills/decisions.md",
+        "sources/first_party/skills/house-skills/intake.json"
+      ],
+      "license_reference": null,
+      "bundle_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills",
+      "provenance_refs": [
+        "provenance/house-skills.md",
+        "codex-marketplace/plugins/wild-bunch-project-pack/references/provenance-map.json"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      },
+      "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE"
+    }
+  ]
 }

@@ -1,0 +1,142 @@
+{
+  "bundle_name": "wild-bunch-project-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "project-scoped-codex-plugin-projection",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+  "canonical_source_roots": [
+    "codex-marketplace/plugins/house-skills/skills",
+    "sources/third_party/game-studio/upstream/skills"
+  ],
+  "projection_policy": "Project the five hydrated first-party Wild Bunch skills together with the retained browser-game helper skills in a self-contained bundle. Do not depend on another plugin at install time.",
+  "source_of_truth": [
+    "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
+    "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+    "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+    "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+    "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+    "sources/third_party/game-studio/upstream/.codex-plugin/plugin.json",
+    "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md"
+  ],
+  "candidate_count": 11,
+  "imported_count": 10,
+  "skipped_count": 0,
+  "blocked_count": 1,
+  "entries": [
+    {
+      "canonical_name": "wild-bunch-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+      "local_path": "skills/wild-bunch-project-doctrine/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "wild-bunch-domain-modeling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+      "local_path": "skills/wild-bunch-domain-modeling/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "wild-bunch-dotnet-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "local_path": "skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "wild-bunch-browser-game",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
+      "local_path": "skills/wild-bunch-browser-game/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "wild-bunch-worker-verification",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+      "local_path": "skills/wild-bunch-worker-verification/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "web-game-foundations",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md",
+      "local_path": "skills/web-game-foundations/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "phaser-2d-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game/SKILL.md",
+      "local_path": "skills/phaser-2d-game/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "game-ui-frontend",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md",
+      "local_path": "skills/game-ui-frontend/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "game-playtest",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md",
+      "local_path": "skills/game-playtest/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "sprite-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md",
+      "local_path": "skills/sprite-pipeline/SKILL.md",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "agent-browser",
+      "source_category": "third_party",
+      "content_mode": "blocked",
+      "canonical_source_path": null,
+      "local_path": null,
+      "import_status": "blocked",
+      "copy_expectation": "not_copied",
+      "provenance_note": "Excluded because this repository does not retain an approved source-copy path for agent-browser in the current marketplace projection surfaces."
+    }
+  ],
+  "notes": [
+    "Five Wild Bunch first-party skill roots are hydrated from attached authoritative zips.",
+    "Third-party browser-game helper skills are copied verbatim from retained game-studio custody.",
+    "agent-browser remains excluded because the repo does not retain it as an approved marketplace projection."
+  ]
+}

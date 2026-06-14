@@ -6,12 +6,12 @@ This scope covers the installable Codex plugin pack roots stored under the
 marketplace source tree.
 
 The active installable roots under this directory are fixed to
-`house-skills/`, `adventures-pack/`, `unslop/`, and `game-studio/`.
+`house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`, and `wild-bunch-project-pack/`.
 
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
 Everything else in this tree is support custody or historical source material,
-not part of the active marketplace inventory for the normalized four-root pass.
+not part of the active marketplace inventory for the normalized five-root pass.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.

@@ -56,6 +56,11 @@ Current skill inventory:
 | Rooms | rooms-sheet-creator | `codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator/SKILL.md` |
 | Rooms | rooms-source-partitioning | `codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning/SKILL.md` |
 | Rooms | rooms-zoom-outs-buster | `codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster/SKILL.md` |
+| Wild Bunch | wild-bunch-browser-game | `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md` |
+| Wild Bunch | wild-bunch-domain-modeling | `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md` |
+| Wild Bunch | wild-bunch-dotnet-architecture | `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md` |
+| Wild Bunch | wild-bunch-project-doctrine | `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md` |
+| Wild Bunch | wild-bunch-worker-verification | `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md` |
 
 All live current roots are unversioned plugin folders. Any historical `v*`
 package residue lives only in changelog notes and skill-level support files, not
