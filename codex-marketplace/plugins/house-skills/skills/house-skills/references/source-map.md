@@ -27,7 +27,6 @@ Current skill inventory:
 | Base and control plane | linear | `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md` |
 | Base and control plane | session-buster | `codex-marketplace/plugins/house-skills/skills/session-buster/SKILL.md` |
 | Base and control plane | session-buster-ingress | `codex-marketplace/plugins/house-skills/skills/session-buster-ingress/SKILL.md` |
-| Base and control plane | skill-buster | `codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md` |
 | Base and control plane | skill-packager | `codex-marketplace/plugins/house-skills/skills/skill-packager/SKILL.md` |
 | Base and control plane | skill-validator | `codex-marketplace/plugins/house-skills/skills/skill-validator/SKILL.md` |
 | Base and control plane | asset-market | `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md` |

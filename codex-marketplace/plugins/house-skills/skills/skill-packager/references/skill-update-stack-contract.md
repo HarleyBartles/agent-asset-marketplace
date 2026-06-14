@@ -7,7 +7,7 @@ Use this contract for every skill create, update, repair, packaging, or package-
 The approved stack order is:
 
 ```text
-skill-creator, then skill-validator, then skill-packager, then skill-buster
+skill-creator, then skill-validator, then skill-packager, then skill-handoff
 ```
 
 Do not use these skills as independent substitutes for one another during skill update work. A later stack step cannot claim that an earlier step happened from memory, narrative summary, expected workflow state, or a prose note that says a prior step was done.
@@ -64,7 +64,7 @@ archive_inspection: pass
 exact_file_exists: true
 exact_file_nonzero: true
 top_level_folder_matches_skill: true
-next_required_step: skill-buster
+next_required_step: skill-handoff
 ```
 
 `skill-packager` may only create this object after checking the exact archive path. The object is invalid if the package path is guessed, stale, absent, empty, wrongly named, not emitted through a lawful assistant handoff surface, or not the archive that passed unzip and inspection. The archive basename must be exactly `skill.zip`; otherwise the expected Skill install UI may not appear.

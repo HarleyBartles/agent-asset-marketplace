@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
   },
-  "skill_count": 45,
+  "skill_count": 44,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -184,11 +184,6 @@
       "name": "session-buster-ingress",
       "lane": "Base and control plane",
       "path": "codex-marketplace/plugins/house-skills/skills/session-buster-ingress/SKILL.md"
-    },
-    {
-      "name": "skill-buster",
-      "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md"
     },
     {
       "name": "skill-packager",

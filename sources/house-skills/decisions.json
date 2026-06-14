@@ -105,16 +105,6 @@
     "notes": "Imported as the validation-before-packaging posture for House Skills; no repo-import ZIP packaging is authorized by this source import."
   },
   {
-    "issue": "MARK-21",
-    "source_id": "skill-buster-v0.1",
-    "source_path": "codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md",
-    "public_name": "skill-buster",
-    "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-    "import_state": "imported",
-    "scope": "skill maintenance breakdown and closure checks",
-    "notes": "Imported at v0.1. Preserves one-at-a-time as the reliable boring path and treats batch handoff as unreliable and non-closure-critical."
-  },
-  {
     "issue": "MARK-22",
     "source_id": "adventures-project-doctrine-v1.1",
     "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md",

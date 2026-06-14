@@ -24,14 +24,6 @@
 - Scope: skill packaging
 - Notes: Validation must happen before packaging. This source import does not add repo-import ZIP packaging, ChatGPT skill ZIP packaging, plugin projections, or skill-market replacement logic.
 
-## skill-buster
-
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-buster/v0.1/skill-buster-v0.1/SKILL.md`
-- Public identity: `skill-buster`
-- Provenance/history only: MARK-21 skill maintenance House Skills source slice
-- Scope: skill maintenance breakdown and closure checks
-- Notes: Remains v0.1. One-at-a-time is the reliable boring path. Batch handoff remains unreliable and non-closure-critical.
-
 ## connector-safety
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`

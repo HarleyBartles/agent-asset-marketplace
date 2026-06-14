@@ -1,6 +1,6 @@
 ---
 name: skill-handoff
-description: Control GPT skill package handoff cadence, install-card safety, and landed confirmation. Use when one or more skills have been authored, validated, and packaged and Harley needs installable skill.zip links, batch or one-at-a-time handoff, recovery from broken/fake package links, or confirmation tracking. This is the renamed successor to skill-buster and is not a buster-framework skill. It owns queue state and handoff surface only; it does not author, validate, package, inspect repo source, or install skills itself.
+description: Control GPT skill package handoff cadence, install-card safety, and landed confirmation. Use when one or more skills have been authored, validated, and packaged and Harley needs installable skill.zip links, batch or one-at-a-time handoff, recovery from broken/fake package links, or confirmation tracking. It owns queue state and handoff surface only; it does not author, validate, package, inspect repo source, or install skills itself.
 ---
 
 # Skill Handoff
@@ -9,7 +9,7 @@ description: Control GPT skill package handoff cadence, install-card safety, and
 
 Manage ordered skill package handoff from verified package evidence to Harley's visible install opportunity and eventual `landed` confirmation.
 
-This skill is the renamed successor to `skill-buster`. It is not a buster-framework-derived buster and must not present itself as one. Treat old `skill-buster` references as compatibility residue for prior stack contracts until the surrounding skills and docs are updated.
+This skill owns the package handoff surface for the current House Skills stack. It is not a buster-framework-derived buster and must not present itself as one.
 
 ## What this skill does not own
 

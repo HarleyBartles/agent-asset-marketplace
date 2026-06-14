@@ -9,8 +9,8 @@ permissive publication decision, with no unlicensed third-party bundled
 content.
 It includes `connector-safety` as a shared base/control-plane safety component
 for side-effecting connector/tool work, `rooms-canon-buster` as a Rooms
-canon-pressure overlay, and the newly landed `asset-market`,
-`skill-installer`, and `skill-handoff` base/control-plane skill roots.
+canon-pressure overlay, and the newly landed `asset-market`, `skill-installer`,
+and `skill-handoff` base/control-plane skill roots.
 
 Bundle identity:
 

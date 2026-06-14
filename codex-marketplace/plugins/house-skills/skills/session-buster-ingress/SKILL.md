@@ -66,7 +66,7 @@ If the handoff concerns GPT-native skill creation, update, validation, packaging
 
 Use the skill stack source of truth:
 
-`skill-creator -> skill-validator -> skill-packager -> skill-buster`
+`skill-creator -> skill-validator -> skill-packager -> skill-handoff`
 
 A package queue claim is fallback-only until the required same-target stack evidence exists. Installed-skill state in a buster is fallback-only unless Harley confirms it or a live installed-skill/resource view supports it. Once the canonical agent asset repo exists, prefer repo source plus package evidence over installed-skill narrative.
 

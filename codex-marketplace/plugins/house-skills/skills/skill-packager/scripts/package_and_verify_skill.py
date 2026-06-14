@@ -216,7 +216,7 @@ def step_package(skill_dir: Path, package_path: Path, evidence_path: Path):
         'top_level_folder_matches_skill': match,
         'created_at_utc': utc_now(),
         'packager_wrapper': 'integrated-single-process',
-        'next_required_step': 'skill-buster',
+        'next_required_step': 'skill-handoff',
     }
     evidence_path.write_text(json.dumps(evidence, indent=2, sort_keys=True) + '\n', encoding='utf-8')
     return True, f'OK: Successfully packaged skill to: {package_path}', ''
@@ -320,7 +320,7 @@ def main(argv: list[str]) -> int:
         'top_level_folders': roots,
         'package_evidence_path': str(evidence_path),
         'total_elapsed_seconds': round(time.monotonic() - wrapper_started, 3),
-        'next_required_step': 'skill-buster',
+        'next_required_step': 'skill-handoff',
     })
     write_receipt(receipt_path, receipt)
     print(f'OK: package verified at {package_path}')

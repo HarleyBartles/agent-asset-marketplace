@@ -79,14 +79,6 @@
       "scope": "skill packaging"
     },
     {
-      "issue": "MARK-21",
-      "source_id": "skill-buster-v0.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-buster/SKILL.md",
-      "public_name": "skill-buster",
-      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill maintenance breakdown and closure checks"
-    },
-    {
       "issue": "MARK-22",
       "source_id": "adventures-project-doctrine-v1.1",
       "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md",

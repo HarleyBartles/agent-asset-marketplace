@@ -26,7 +26,7 @@ Decisions:
 
 ## Required references
 
-Read `references/skill-update-stack-contract.md` before validating any create, update, repair, packaging, or handoff path. The locked order is `skill-creator`, then `skill-validator`, then `skill-packager`, then `skill-buster`. A validator pass is invalid without an `authored_by_skill_creator` token for the same skill name and staged source path.
+Read `references/skill-update-stack-contract.md` before validating any create, update, repair, packaging, or handoff path. The locked order is `skill-creator`, then `skill-validator`, then `skill-packager`, then `skill-handoff`. A validator pass is invalid without an `authored_by_skill_creator` token for the same skill name and staged source path.
 
 Read `references/skill-quality-gate.md` before deciding. It owns the detailed review lenses: semantic discovery, compact `SKILL.md` control planes, progressive reference triggers, mutation-tool authorization, image-credit stewardship, deterministic execution recipes, fake-ledger resistance, broken install-card prevention, wrong-surface package handoff prevention, lifecycle poison, composition boundaries, and protected targets.
 
@@ -36,7 +36,7 @@ Do not validate from prose-only evidence. If the creator token is absent, stale,
 
 Do not package, unzip, lint archives, or inspect package identity. That belongs to `skill-packager` after a structured pass.
 
-Do not manage multi-skill queue state, batch cadence, or one-link-per-message handoff. That belongs to `skill-buster`.
+Do not manage multi-skill queue state, batch cadence, or one-link-per-message handoff. That belongs to `skill-handoff`.
 
 Do not validate immutable system skills as update targets. Use them as specification sources only and redirect enforcement into mutable adjacent skills.
 

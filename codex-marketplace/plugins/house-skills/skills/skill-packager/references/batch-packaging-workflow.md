@@ -1,6 +1,6 @@
 # Batch Packaging Workflow
 
-Use this reference when packaging multiple skills, especially under `skill-buster` batch mode.
+Use this reference when packaging multiple skills, especially under `skill-handoff` batch mode.
 
 ## Preparation before handoff
 
@@ -43,7 +43,7 @@ If the wrapper reports a timeout or slow substep, classify it as a preparation e
 
 ## Handoff boundary
 
-Packager supplies archive identity evidence; skill-buster owns lifecycle state. The package handoff surface must be a normal assistant message controlled by skill-buster.
+Packager supplies archive identity evidence; skill-handoff owns lifecycle state. The package handoff surface must be a normal assistant message controlled by skill-handoff.
 
 Do not treat an inert cursor-advance pulse as package evidence, package validation, or package mutation. A pulse with no package link, no package path, no source inspection, no external side effect, and no manifest change does not alter package validity.
 
