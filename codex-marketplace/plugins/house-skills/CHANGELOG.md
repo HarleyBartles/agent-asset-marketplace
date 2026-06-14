@@ -10,3 +10,4 @@
 
 - Landed the saved `asset-market`, `skill-installer`, and `skill-handoff` GPT skill zips as new live House Skills roots.
 - Removed the retired active root from the live House Skills bundle and updated the bundle manifest, source map, and source ledgers to reflect 44 active roots.
+- Refreshed the live `asset-market` source to match the updated saved zip, including bundled skill-pack lookup, GPT pack vs plugin install semantics, and per-skill install-unit expansion for `skill-installer`.

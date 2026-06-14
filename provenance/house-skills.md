@@ -71,8 +71,8 @@
 - Source path: `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md`
 - Public identity: `asset-market`
 - Provenance/history: MARK-109 saved GPT skill zip source package
-- Scope: marketplace source acquisition
-- Notes: Imported from the saved zip as the exact-fidelity source staging root for marketplace pulls.
+- Scope: marketplace source and pack acquisition
+- Notes: Imported from the saved zip as the exact-fidelity source staging root for marketplace pulls, including pack-root resolution and per-skill install-unit expansion.
 
 ## skill-handoff
 
