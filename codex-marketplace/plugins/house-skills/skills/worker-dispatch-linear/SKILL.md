@@ -23,6 +23,24 @@ Linear is the durable issue/control plane. The boring default is:
 4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
 5. never claim execution, publication, merge, or closeout unless the target system proves it.
 
+## Linear Worker Issue Shaping Stack
+
+When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
+
+```text
+worker-dispatch-linear -> boring-buster -> writing-plans -> worker-dispatch-linear
+```
+
+Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.
+
+Use `boring-buster` to decide whether the issue is bounded, lawful, route-suitable, and boring enough for the selected worker lane.
+
+Use `writing-plans` to check or repair the implementation-plan shape: one observable goal, likely files or source seams, small executable steps or chosen implementation route, explicit validation commands, no placeholders, and no hidden replanning requirement.
+
+Return to this skill after those gates to write or update the Linear issue only when the latest user turn authorizes mutation.
+
+Do not require this full stack for parent trackers, product notes, research/discovery issues, or planning-only issues unless Harley asks to make them worker-send-ready.
+
 ## Durable Linear state convention
 
 Preserve this convention when shaping, updating, or interpreting MARK-style worker issues:
@@ -75,6 +93,8 @@ Do not use Linear comments, worker reports, validation summaries, local paths, o
 
 After this skill classifies the route, do not read old dispatch or issue-management skills merely for comfort. Load another skill only for a named unresolved decision that this skill does not own:
 
+- worker-send-ready boring/readiness verdict: use `boring-buster`;
+- implementation-plan shape for worker coding issues: use `writing-plans`;
 - skill creation/update/package work: use the skill-maintenance stack;
 - GitHub PR/repo proof: use GitHub verification tooling;
 - validation choice after code/PR/package evidence exists: use validation guidance;
