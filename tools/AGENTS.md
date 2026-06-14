@@ -10,7 +10,8 @@ rules, and upstream-drain policy.
 The skill-update path is now worker-facing through
 `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`. The root
 inventory that drives marketplace plugin ownership is
-`codex-marketplace/plugin-roots.json`, and drift validation lives in
+`codex-marketplace/plugin-roots.json`, GPT overlay sources live under
+`gpt-overlays/`, and drift validation lives in
 `tools/validate_generated_drift.py`.
 
 ## Review guidelines
@@ -24,3 +25,5 @@ inventory that drives marketplace plugin ownership is
   and validation command documentation aligned.
 - Flag targeted skill-update helpers that rewrite unrelated generated state or
   that hide full-regeneration behavior behind an ordinary update path.
+- Flag GPT export manifests that allow raw Codex-specific assumptions to leak
+  into generated skill zips instead of using an overlay or exclusion.

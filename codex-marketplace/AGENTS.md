@@ -31,10 +31,11 @@ rules, and upstream-drain policy.
 - Flag missing `SOURCE.md`, `LICENSE`, or bundle-manifest references when a
   plugin root claims to expose them.
 - Flag generated-export mismatches that would let the registry or bundle source
-  drift silently from the tracked marketplace source tree.
+  drift silently from the tracked marketplace source tree or GPT overlay source.
 - Flag any `skill.zip` found inside a source skill tree; canonical install
   archives belong only under `generated/skill-zips/` and must be written by the
   package tool, not by hand.
 - Flag stale or unregistered canonical skill.zip artifacts under
-  `generated/skill-zips/`.
+  `generated/skill-zips/`, including missing overlay derivation metadata or
+  excluded GPT-export records.
 - Prefer serious packaging and discoverability issues over stylistic concerns.

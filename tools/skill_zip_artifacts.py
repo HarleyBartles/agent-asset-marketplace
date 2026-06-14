@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from marketplace_utils import CODEX_MARKETPLACE_MANIFEST_PATH, MARKETPLACE_PATH, load_json
+from skill_gpt_exports import resolve_gpt_export_policy, stage_skill_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,10 +53,19 @@ class SkillTarget:
     skill: str
     plugin_root: Path
     skill_root: Path
+    export_mode: str = "direct"
+    overlay_root: Path | None = None
+    exclusion_reason: str | None = None
 
     @property
     def source_path(self) -> str:
         return self.skill_root.relative_to(ROOT).as_posix()
+
+    @property
+    def overlay_path(self) -> str | None:
+        if self.overlay_root is None:
+            return None
+        return self.overlay_root.relative_to(ROOT).as_posix()
 
     @property
     def zip_path(self) -> Path:
@@ -66,11 +76,16 @@ class SkillTarget:
 class SkillArtifact:
     pack: str
     skill: str
+    export_mode: str
     source_path: str
+    overlay_path: str | None
     zip_path: str
     source_file_count: int
     source_bytes: int
     source_sha256: str
+    overlay_file_count: int
+    overlay_bytes: int
+    overlay_sha256: str | None
     zip_size_bytes: int
     zip_sha256: str
 
@@ -138,6 +153,38 @@ def discover_skill_targets() -> list[SkillTarget]:
             )
 
     return sorted(targets, key=lambda item: (item.pack, item.skill))
+
+
+def discover_skill_export_targets() -> list[SkillTarget]:
+    targets = discover_skill_targets()
+    export_targets: list[SkillTarget] = []
+    for target in targets:
+        policy = resolve_gpt_export_policy(pack=target.pack, skill=target.skill)
+        if policy.export_mode == "excluded":
+            export_targets.append(
+                SkillTarget(
+                    pack=target.pack,
+                    skill=target.skill,
+                    plugin_root=target.plugin_root,
+                    skill_root=target.skill_root,
+                    export_mode=policy.export_mode,
+                    overlay_root=policy.overlay_root,
+                    exclusion_reason=policy.reason,
+                )
+            )
+            continue
+        export_targets.append(
+            SkillTarget(
+                pack=target.pack,
+                skill=target.skill,
+                plugin_root=target.plugin_root,
+                skill_root=target.skill_root,
+                export_mode=policy.export_mode,
+                overlay_root=policy.overlay_root,
+                exclusion_reason=policy.reason,
+            )
+        )
+    return export_targets
 
 
 def _is_packaging_ignored(rel: Path) -> bool:
@@ -211,43 +258,100 @@ def _create_zip_path(target: SkillTarget) -> Path:
     return dest
 
 
-def package_skill_target(target: SkillTarget) -> SkillArtifact:
-    if target.skill_root.name != target.skill:
-        raise ValueError(f"{target.pack}/{target.skill} source folder mismatch: {target.skill_root.name}")
+def _materialize_export_tree(target: SkillTarget) -> tuple[Path, tempfile.TemporaryDirectory[str]]:
+    return stage_skill_tree(target.skill_root, target.overlay_root)
 
-    source_sha256, source_file_count, source_bytes, files, forbidden_paths = compute_source_fingerprint(target.skill_root)
-    if forbidden_paths:
-        raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
 
-    dest = _create_zip_path(target)
-    if dest.exists():
-        dest.unlink()
-
-    tmp_path: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(delete=False, dir=dest.parent, prefix=f"{target.skill}-", suffix=".tmp") as tmp:
-            tmp_path = Path(tmp.name)
-        with zipfile.ZipFile(tmp_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-            for file_path in files:
-                rel = file_path.relative_to(target.skill_root).as_posix()
-                archive.write(file_path, arcname=f"{target.skill}/{rel}")
-        tmp_path.replace(dest)
-    except Exception:
-        if tmp_path and tmp_path.exists():
-            tmp_path.unlink(missing_ok=True)
-        raise
-
-    zip_sha256 = sha256_file(dest)
+def _build_artifact(
+    target: SkillTarget,
+    *,
+    source_sha256: str,
+    source_file_count: int,
+    source_bytes: int,
+    overlay_sha256: str | None,
+    overlay_file_count: int,
+    overlay_bytes: int,
+    zip_path: Path,
+) -> SkillArtifact:
     return SkillArtifact(
         pack=target.pack,
         skill=target.skill,
+        export_mode=target.export_mode,
         source_path=target.source_path,
-        zip_path=dest.relative_to(ROOT).as_posix(),
+        overlay_path=target.overlay_path,
+        zip_path=zip_path.relative_to(ROOT).as_posix(),
         source_file_count=source_file_count,
         source_bytes=source_bytes,
         source_sha256=source_sha256,
-        zip_size_bytes=dest.stat().st_size,
-        zip_sha256=zip_sha256,
+        overlay_file_count=overlay_file_count,
+        overlay_bytes=overlay_bytes,
+        overlay_sha256=overlay_sha256,
+        zip_size_bytes=zip_path.stat().st_size,
+        zip_sha256=sha256_file(zip_path),
+    )
+
+
+def package_skill_target(target: SkillTarget) -> SkillArtifact:
+    if target.skill_root.name != target.skill:
+        raise ValueError(f"{target.pack}/{target.skill} source folder mismatch: {target.skill_root.name}")
+    if target.export_mode == "excluded":
+        raise ValueError(f"{target.pack}/{target.skill} is excluded from GPT exports")
+
+    source_sha256, source_file_count, source_bytes, _, forbidden_paths = compute_source_fingerprint(target.skill_root)
+    if forbidden_paths:
+        raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
+
+    overlay_sha256 = None
+    overlay_file_count = 0
+    overlay_bytes = 0
+    if target.overlay_root is not None:
+        overlay_sha256, overlay_file_count, overlay_bytes, _, overlay_forbidden_paths = compute_source_fingerprint(
+            target.overlay_root
+        )
+        if overlay_forbidden_paths:
+            raise ValueError(
+                f"{target.pack}/{target.skill} overlay contains forbidden source paths: "
+                f"{', '.join(overlay_forbidden_paths)}"
+            )
+
+    staged_root, tempdir = _materialize_export_tree(target)
+    try:
+        _, _, _, staged_files, staged_forbidden_paths = compute_source_fingerprint(staged_root)
+        if staged_forbidden_paths:
+            raise ValueError(
+                f"{target.pack}/{target.skill} staged export contains forbidden source paths: "
+                f"{', '.join(staged_forbidden_paths)}"
+            )
+
+        dest = _create_zip_path(target)
+        if dest.exists():
+            dest.unlink()
+
+        tmp_path: Path | None = None
+        try:
+            with tempfile.NamedTemporaryFile(delete=False, dir=dest.parent, prefix=f"{target.skill}-", suffix=".tmp") as tmp:
+                tmp_path = Path(tmp.name)
+            with zipfile.ZipFile(tmp_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+                for file_path in staged_files:
+                    rel = file_path.relative_to(staged_root).as_posix()
+                    archive.write(file_path, arcname=f"{target.skill}/{rel}")
+            tmp_path.replace(dest)
+        except Exception:
+            if tmp_path and tmp_path.exists():
+                tmp_path.unlink(missing_ok=True)
+            raise
+    finally:
+        tempdir.cleanup()
+
+    return _build_artifact(
+        target,
+        source_sha256=source_sha256,
+        source_file_count=source_file_count,
+        source_bytes=source_bytes,
+        overlay_sha256=overlay_sha256,
+        overlay_file_count=overlay_file_count,
+        overlay_bytes=overlay_bytes,
+        zip_path=dest,
     )
 
 
@@ -300,6 +404,10 @@ def validate_package_matches_source(target: SkillTarget, artifact: SkillArtifact
         raise FileNotFoundError(zip_path)
     if zip_path.name != "skill.zip":
         raise ValueError(f"{artifact.pack}/{artifact.skill} archive filename mismatch")
+    if artifact.export_mode != target.export_mode:
+        raise ValueError(f"{artifact.pack}/{artifact.skill} export mode mismatch")
+    if artifact.overlay_path != target.overlay_path:
+        raise ValueError(f"{artifact.pack}/{artifact.skill} overlay path mismatch")
 
     errors, root = inspect_skill_zip(target.skill, zip_path)
     if errors:
@@ -307,7 +415,7 @@ def validate_package_matches_source(target: SkillTarget, artifact: SkillArtifact
     if root != target.skill:
         raise ValueError(f"{artifact.pack}/{artifact.skill} archive root mismatch")
 
-    source_sha256, source_file_count, source_bytes, files, forbidden_paths = compute_source_fingerprint(target.skill_root)
+    source_sha256, source_file_count, source_bytes, _, forbidden_paths = compute_source_fingerprint(target.skill_root)
     if forbidden_paths:
         raise ValueError(f"{artifact.pack}/{artifact.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
     if source_sha256 != artifact.source_sha256:
@@ -317,14 +425,43 @@ def validate_package_matches_source(target: SkillTarget, artifact: SkillArtifact
     if source_bytes != artifact.source_bytes:
         raise ValueError(f"{artifact.pack}/{artifact.skill} source byte count mismatch")
 
-    with zipfile.ZipFile(zip_path) as archive:
-        extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
-        expected_names = [f"{target.skill}/{path.relative_to(target.skill_root).as_posix()}" for path in files]
-        if extracted_names != expected_names:
-            raise ValueError(f"{artifact.pack}/{artifact.skill} archive file inventory mismatch")
-        for name in extracted_names:
-            if archive.read(name) != (target.skill_root / Path(name).relative_to(target.skill)).read_bytes():
-                raise ValueError(f"{artifact.pack}/{artifact.skill} archive content drift at {name}")
+    overlay_sha256 = None
+    overlay_file_count = 0
+    overlay_bytes = 0
+    if target.overlay_root is not None:
+        overlay_sha256, overlay_file_count, overlay_bytes, _, overlay_forbidden_paths = compute_source_fingerprint(
+            target.overlay_root
+        )
+        if overlay_forbidden_paths:
+            raise ValueError(
+                f"{artifact.pack}/{artifact.skill} overlay contains forbidden source paths: "
+                f"{', '.join(overlay_forbidden_paths)}"
+            )
+    if overlay_sha256 != artifact.overlay_sha256:
+        raise ValueError(f"{artifact.pack}/{artifact.skill} overlay fingerprint mismatch")
+    if overlay_file_count != artifact.overlay_file_count:
+        raise ValueError(f"{artifact.pack}/{artifact.skill} overlay file count mismatch")
+    if overlay_bytes != artifact.overlay_bytes:
+        raise ValueError(f"{artifact.pack}/{artifact.skill} overlay byte count mismatch")
+
+    staged_root, tempdir = _materialize_export_tree(target)
+    try:
+        with zipfile.ZipFile(zip_path) as archive:
+            extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
+            staged_files, staged_forbidden_paths = scan_skill_tree(staged_root)
+            if staged_forbidden_paths:
+                raise ValueError(
+                    f"{artifact.pack}/{artifact.skill} staged export contains forbidden source paths: "
+                    f"{', '.join(staged_forbidden_paths)}"
+                )
+            expected_names = [f"{target.skill}/{path.relative_to(staged_root).as_posix()}" for path in staged_files]
+            if extracted_names != expected_names:
+                raise ValueError(f"{artifact.pack}/{artifact.skill} archive file inventory mismatch")
+            for name in extracted_names:
+                if archive.read(name) != (staged_root / Path(name).relative_to(target.skill)).read_bytes():
+                    raise ValueError(f"{artifact.pack}/{artifact.skill} archive content drift at {name}")
+    finally:
+        tempdir.cleanup()
 
     if sha256_file(zip_path) != artifact.zip_sha256:
         raise ValueError(f"{artifact.pack}/{artifact.skill} zip sha256 mismatch")
@@ -336,11 +473,16 @@ def artifact_to_record(artifact: SkillArtifact) -> dict[str, Any]:
     return {
         "pack": artifact.pack,
         "skill": artifact.skill,
+        "export_mode": artifact.export_mode,
         "source_path": artifact.source_path,
+        "overlay_path": artifact.overlay_path,
         "zip_path": artifact.zip_path,
         "source_file_count": artifact.source_file_count,
         "source_bytes": artifact.source_bytes,
         "source_sha256": artifact.source_sha256,
+        "overlay_file_count": artifact.overlay_file_count,
+        "overlay_bytes": artifact.overlay_bytes,
+        "overlay_sha256": artifact.overlay_sha256,
         "zip_size_bytes": artifact.zip_size_bytes,
         "zip_sha256": artifact.zip_sha256,
     }
@@ -350,11 +492,16 @@ def record_to_artifact(record: dict[str, Any]) -> SkillArtifact:
     return SkillArtifact(
         pack=str(record["pack"]),
         skill=str(record["skill"]),
+        export_mode=str(record.get("export_mode", "direct")),
         source_path=str(record["source_path"]),
+        overlay_path=(str(record["overlay_path"]) if record.get("overlay_path") else None),
         zip_path=str(record["zip_path"]),
         source_file_count=int(record["source_file_count"]),
         source_bytes=int(record["source_bytes"]),
         source_sha256=str(record["source_sha256"]),
+        overlay_file_count=int(record.get("overlay_file_count", 0)),
+        overlay_bytes=int(record.get("overlay_bytes", 0)),
+        overlay_sha256=(str(record["overlay_sha256"]) if record.get("overlay_sha256") else None),
         zip_size_bytes=int(record["zip_size_bytes"]),
         zip_sha256=str(record["zip_sha256"]),
     )
@@ -458,11 +605,46 @@ def load_registry() -> dict[str, Any]:
     return load_json(GENERATED_SKILL_ZIPS_REGISTRY_PATH)
 
 
+def _registry_artifact_indexes(registry: dict[str, Any]) -> dict[tuple[str, str], SkillArtifact]:
+    return {
+        (artifact.pack, artifact.skill): artifact
+        for artifact in (record_to_artifact(record) for record in registry.get("artifacts", []))
+    }
+
+
+def _registry_exclusion_indexes(registry: dict[str, Any]) -> dict[tuple[str, str], dict[str, Any]]:
+    exclusions: dict[tuple[str, str], dict[str, Any]] = {}
+    for record in registry.get("excluded", []):
+        if not isinstance(record, dict):
+            raise ValueError("generated/skill-zips registry contains a malformed exclusion entry")
+        pack = str(record.get("pack"))
+        skill = str(record.get("skill"))
+        exclusions[(pack, skill)] = record
+    return exclusions
+
+
 def _artifact_from_registry_record(target: SkillTarget, record: dict[str, Any]) -> SkillArtifact:
     artifact = record_to_artifact(record)
     if artifact.pack != target.pack or artifact.skill != target.skill:
         raise ValueError(f"{target.pack}/{target.skill} registry entry mismatch")
     return artifact
+
+
+def _exclusion_record(target: SkillTarget) -> dict[str, Any]:
+    source_sha256, source_file_count, source_bytes, _, forbidden_paths = compute_source_fingerprint(target.skill_root)
+    if forbidden_paths:
+        raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
+    return {
+        "pack": target.pack,
+        "skill": target.skill,
+        "export_mode": "excluded",
+        "source_path": target.source_path,
+        "overlay_path": target.overlay_path,
+        "source_file_count": source_file_count,
+        "source_bytes": source_bytes,
+        "source_sha256": source_sha256,
+        "reason": target.exclusion_reason,
+    }
 
 
 def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *, scope_label: str) -> SkillArtifact:
@@ -476,6 +658,16 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
             f"{scope_label} artifact for {target.pack}/{target.skill} points at {artifact.zip_path} "
             f"instead of {target.zip_path.relative_to(ROOT).as_posix()}"
         )
+    if artifact.export_mode != target.export_mode:
+        raise ValueError(
+            f"{scope_label} artifact for {target.pack}/{target.skill} export mode mismatch: "
+            f"{artifact.export_mode} != {target.export_mode}"
+        )
+    if artifact.overlay_path != target.overlay_path:
+        raise ValueError(
+            f"{scope_label} artifact for {target.pack}/{target.skill} overlay path mismatch: "
+            f"{artifact.overlay_path} != {target.overlay_path}"
+        )
 
     errors, root = inspect_skill_zip(target.skill, zip_path)
     if errors:
@@ -483,7 +675,7 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
     if root != target.skill:
         raise ValueError(f"{target.pack}/{target.skill} archive root mismatch")
 
-    source_sha256, source_file_count, source_bytes, files, forbidden_paths = compute_source_fingerprint(target.skill_root)
+    source_sha256, source_file_count, source_bytes, _, forbidden_paths = compute_source_fingerprint(target.skill_root)
     if forbidden_paths:
         raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
 
@@ -523,42 +715,82 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
             f"check {target.source_path}"
         )
 
-    with zipfile.ZipFile(zip_path) as archive:
-        extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
-        expected_names = [f"{target.skill}/{path.relative_to(target.skill_root).as_posix()}" for path in files]
-        if extracted_names != expected_names:
-            raise ValueError(
-                f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
-                f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
-            )
-        for name in extracted_names:
-            if archive.read(name) != (target.skill_root / Path(name).relative_to(target.skill)).read_bytes():
+    staged_root, tempdir = _materialize_export_tree(target)
+    try:
+        with zipfile.ZipFile(zip_path) as archive:
+            extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
+            staged_files, staged_forbidden_paths = scan_skill_tree(staged_root)
+            if staged_forbidden_paths:
                 raise ValueError(
                     f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
-                    f"generated/{artifact.zip_path} content differs from {target.source_path}"
+                    f"generated/{artifact.zip_path} staged export contains forbidden source paths: "
+                    f"{', '.join(staged_forbidden_paths)}"
                 )
+            expected_names = [f"{target.skill}/{path.relative_to(staged_root).as_posix()}" for path in staged_files]
+            if extracted_names != expected_names:
+                raise ValueError(
+                    f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                    f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
+                )
+            for name in extracted_names:
+                if archive.read(name) != (staged_root / Path(name).relative_to(target.skill)).read_bytes():
+                    raise ValueError(
+                        f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                        f"generated/{artifact.zip_path} content differs from {target.source_path}"
+                    )
+    finally:
+        tempdir.cleanup()
 
     return artifact
 
 
 def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None, write: bool) -> dict[str, Any]:
-    targets = discover_skill_targets()
+    targets = discover_skill_export_targets()
+    targets_by_key = {(target.pack, target.skill): target for target in targets}
     selected = _select_targets(targets, pack=pack, skill=skill)
+    if pack is None and skill is None:
+        selected = {key for key in selected if targets_by_key[key].export_mode != "excluded"}
     if not selected:
         if pack:
             raise ValueError(f"no installable skills found for pack {pack}")
         raise ValueError("no installable skills found in the active marketplace manifests")
 
     current_registry = load_registry()
-    current_artifacts = {
-        (artifact.pack, artifact.skill): artifact
-        for artifact in (record_to_artifact(record) for record in current_registry.get("artifacts", []))
-    }
+    current_artifacts = _registry_artifact_indexes(current_registry)
+    current_exclusions = _registry_exclusion_indexes(current_registry)
 
     artifacts: list[SkillArtifact] = []
+    exclusions: list[dict[str, Any]] = []
     for target in targets:
         key = _target_key(target.pack, target.skill)
         current_artifact = current_artifacts.get(key)
+        current_exclusion = current_exclusions.get(key)
+        if current_exclusion is not None and current_exclusion.get("export_mode") != "excluded":
+            raise ValueError(f"registry exclusion entry for {target.pack}/{target.skill} is malformed")
+        if target.export_mode == "excluded":
+            exclusion = _exclusion_record(target)
+            if key in selected:
+                raise ValueError(
+                    f"{target.pack}/{target.skill} is excluded from GPT exports: {target.exclusion_reason}"
+                )
+            if write:
+                exclusions.append(exclusion)
+            else:
+                if current_artifact is not None:
+                    raise ValueError(
+                        f"registry still contains an artifact for excluded skill {target.pack}/{target.skill}"
+                    )
+                if current_exclusion is None:
+                    raise ValueError(
+                        f"generated/skill-zips/registry.json is missing excluded skill {target.pack}/{target.skill}"
+                    )
+                if current_exclusion != exclusion:
+                    raise ValueError(
+                        f"generated/skill-zips/registry.json exclusion entry is stale for {target.pack}/{target.skill}"
+                    )
+                exclusions.append(current_exclusion)
+            continue
+
         if key in selected:
             if write:
                 artifact = package_skill_target(target)
@@ -576,7 +808,7 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
             artifact = _validate_existing_artifact(target, current_artifact, scope_label="unselected")
         artifacts.append(artifact)
 
-    registry = build_registry(artifacts, exclusions=[])
+    registry = build_registry(artifacts, exclusions=exclusions)
     if write and pack is None and skill is None:
         cleanup_generated_surface(artifacts)
     validate_generated_surface(artifacts)
@@ -593,29 +825,58 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
 
 def validate_skill_zip_registry() -> dict[str, Any]:
     registry = load_registry()
-    targets = discover_skill_targets()
-    artifacts_by_key = {
-        (artifact.pack, artifact.skill): artifact
-        for artifact in (record_to_artifact(record) for record in registry.get("artifacts", []))
-    }
+    targets = discover_skill_export_targets()
+    artifacts_by_key = _registry_artifact_indexes(registry)
+    exclusions_by_key = _registry_exclusion_indexes(registry)
     artifacts = []
+    exclusions: list[dict[str, Any]] = []
     for target in targets:
-        artifact = artifacts_by_key.get((target.pack, target.skill))
+        key = (target.pack, target.skill)
+        artifact = artifacts_by_key.get(key)
+        exclusion = exclusions_by_key.get(key)
+        if target.export_mode == "excluded":
+            expected_exclusion = _exclusion_record(target)
+            if exclusion is None:
+                raise ValueError(
+                    f"generated/skill-zips/registry.json is missing excluded skill {target.pack}/{target.skill}"
+                )
+            if exclusion != expected_exclusion:
+                raise ValueError(
+                    f"generated/skill-zips/registry.json exclusion entry is stale for {target.pack}/{target.skill}"
+                )
+            if artifact is not None:
+                raise ValueError(f"excluded skill {target.pack}/{target.skill} still has a generated artifact")
+            exclusions.append(exclusion)
+            continue
         if artifact is None:
             raise ValueError(
                 f"generated/skill-zips/registry.json is missing active skill {target.pack}/{target.skill}"
             )
+        if exclusion is not None:
+            raise ValueError(f"active skill {target.pack}/{target.skill} is incorrectly marked as excluded")
         artifacts.append(_validate_existing_artifact(target, artifact, scope_label="current"))
     validate_generated_surface(artifacts)
-    expected = build_registry(artifacts, exclusions=[])
+    expected = build_registry(artifacts, exclusions=exclusions)
     discovered_keys = {(target.pack, target.skill) for target in targets}
     registry_keys = {(artifact.pack, artifact.skill) for artifact in artifacts}
-    missing_targets = sorted(discovered_keys - registry_keys)
+    registry_exclusion_keys = {(entry.get("pack"), entry.get("skill")) for entry in exclusions}
+    covered_keys = registry_keys | registry_exclusion_keys
+    missing_targets = sorted(discovered_keys - covered_keys)
     if missing_targets:
         formatted = ", ".join(f"{pack}/{skill}" for pack, skill in missing_targets)
         raise ValueError(
             "active installable skill roots are missing from generated/skill-zips without an explicit exclusion: "
             f"{formatted}"
+        )
+    missing_exclusions = sorted(
+        (target.pack, target.skill)
+        for target in targets
+        if target.export_mode == "excluded" and (target.pack, target.skill) not in registry_exclusion_keys
+    )
+    if missing_exclusions:
+        formatted = ", ".join(f"{pack}/{skill}" for pack, skill in missing_exclusions)
+        raise ValueError(
+            "excluded skill roots are missing from generated/skill-zips registry exclusions: " f"{formatted}"
         )
     if registry != expected:
         raise ValueError("generated/skill-zips/registry.json does not match the current artifact state")
@@ -637,9 +898,13 @@ def registry_summary(registry: dict[str, Any]) -> str:
 def print_registry_receipt(registry: dict[str, Any]) -> None:
     artifact_count = registry.get("artifact_count", 0)
     exclusion_count = registry.get("excluded_count", 0)
+    direct_count = sum(1 for artifact in registry.get("artifacts", []) if artifact.get("export_mode", "direct") == "direct")
+    overlay_count = sum(1 for artifact in registry.get("artifacts", []) if artifact.get("export_mode") == "overlay")
     packs = sorted({artifact.get("pack") for artifact in registry.get("artifacts", []) if artifact.get("pack")})
     print(f"OK skill-zips registry: {GENERATED_SKILL_ZIPS_REGISTRY_PATH.relative_to(ROOT).as_posix()}")
     print(f"OK generated artifacts: {artifact_count}")
+    print(f"OK direct exports: {direct_count}")
+    print(f"OK overlay exports: {overlay_count}")
     print(f"OK included packs: {', '.join(packs)}")
     print(f"OK explicit exclusions: {exclusion_count}")
     print("OK archive guard: skill.zip is not nested inside packaged skill contents")
