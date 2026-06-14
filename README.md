@@ -14,6 +14,10 @@ Canonical repo-resident `skill.zip` artifacts, when present, live under
 `generated/skill-zips/registry.json`. The package tooling is the normal writer
 for that surface.
 
+For this PR, that generated surface is the raw deterministic packaging of the
+Codex plugin skill tree. It is not yet the GPT overlay export surface; that
+conversion needs a separate follow-up.
+
 The active marketplace root inventory is editable at
 `codex-marketplace/plugin-roots.json`. Workers should update that inventory,
 the relevant source/projection files, and then run

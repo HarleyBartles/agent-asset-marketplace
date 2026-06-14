@@ -13,6 +13,8 @@ Current marketplace flow:
 - `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, and local path references for the protected marketplace shape.
 - `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces.
 
+Current scope note: `generated/skill-zips/` is the raw deterministic packaging surface for Codex plugin skills. It is not the GPT overlay export surface yet.
+
 Common worker update command:
 
 ```bash

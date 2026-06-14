@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Worker-facing entrypoint for deterministic skill artifact updates."""
+"""Worker-facing entrypoint for deterministic skill artifact updates.
+
+Current scope: raw deterministic packaging of Codex plugin skills. GPT overlay
+export conversion is intentionally parked for follow-up work.
+"""
 
 from __future__ import annotations
 

@@ -24,6 +24,10 @@ Repo-resident canonical `skill.zip` artifacts are published separately under
 `generated/skill-zips/registry.json` mapping each archive back to the source
 skill tree that produced it.
 
+In this PR, that generated surface is the raw deterministic packaging of the
+Codex plugin skill tree. It is not the GPT overlay export surface yet; that
+meaning is intentionally parked for follow-up work.
+
 Targeted updates should use `py -3 tools/update_skill_artifacts.py --skill
 <pack>/<skill>`; `--all` is only for explicit full regeneration. Unrelated
 generated drift is not acceptable.
