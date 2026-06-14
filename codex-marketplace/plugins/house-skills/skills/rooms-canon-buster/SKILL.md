@@ -15,7 +15,7 @@ Use this skill to test canon pressure in Rooms, Mostly. Canon Buster protects co
 
 This skill is Rooms-only. It does not answer generic continuity questions for other projects.
 
-Use `rooms-project-doctrine-v1` for Rooms truth boundaries, `rooms-source-partitioning-v1` to separate evidence classes, `rooms-ambiguity-buster-v1` when the right outcome is to preserve unresolved identity or motive, and `worker-dispatch-linear-v1` when a canon-safe next step turns into repo-backed work, issue handling, or publication.
+Use `rooms-project-doctrine-v1` for Rooms truth boundaries, `rooms-source-partitioning-v1` to separate evidence classes, `rooms-ambiguity-buster-v1` when the right outcome is to preserve unresolved identity or motive, and `worker-dispatch-linear-v2` when a canon-safe next step turns into Linear issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, or GitHub proof handoff after a PR/branch/commit exists.
 
 Use the GPT-wide buster framework pattern. Run internally when there is one lawful path. Switch to interactive queue mode when Harley must decide a real creative/canon tradeoff.
 
@@ -65,7 +65,7 @@ Use or defer to:
 - `rooms-character-investigation-v1` for broad source lookup and source-partitioned investigation packets;
 - `rooms-sheet-creator-v1` for prompt, peek, and recall sheet creation from durable packets;
 - `rooms-image-sidecars-v0.1` for image evidence starter packets before Albert/Pit ingestion;
-- `worker-dispatch-linear-v1` for repo-backed work, publication, and issue closure posture.
+- `worker-dispatch-linear-v2` for Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
 
 ## Green Outcomes
 

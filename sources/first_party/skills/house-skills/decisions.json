@@ -156,13 +156,13 @@
   },
   {
     "issue": "MARK-30",
-    "source_id": "worker-dispatch-linear-v1",
+    "source_id": "worker-dispatch-linear-v2",
     "source_path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md",
     "public_name": "worker-dispatch-linear",
-    "provenance_name": "MARK-9 chunk ledger \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u009d base and control plane",
+    "provenance_name": "MARK-122 GPT-native update",
     "import_state": "imported",
-    "scope": "Linear issue dispatch and work packet control plane",
-    "notes": "Imported as the narrow dispatch/control-plane skill that treats the Linear issue as the durable task contract and the branch/PR as the work packet."
+    "scope": "Linear issue readiness and status handling",
+    "notes": "Imported as the worker-ready Linear issue control plane that shapes durable issue contracts, reads Linear event-log state, and prepares external handoff text only when explicitly requested."
   },
   {
     "issue": "MARK-30",
