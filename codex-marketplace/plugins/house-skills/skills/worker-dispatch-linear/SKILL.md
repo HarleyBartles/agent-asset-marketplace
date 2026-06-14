@@ -1,12 +1,8 @@
 ---
 name: worker-dispatch-linear
-description: Use for Linear-backed worker issue preparation and status handling: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch, delegate, or assume any execution lane; treat worker-ready as issue-ready only.
-metadata:
-  source-id: worker-dispatch-linear-v2
-  source-path: codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md
-  provenance-name: "MARK-122 GPT-native update"
-license: "MIT"
+description: 'shape and inspect Linear-backed worker issues without launching workers. use when creating, grooming, checking status, drafting handoff text, or preparing worker-ready Linear issues. for repo/code worker-send-ready issues, require the Linear Worker Issue Shaping Stack: worker-dispatch-linear, boring-buster, writing-plans, then worker-dispatch-linear for authorized Linear updates.'
 ---
+
 # Worker Dispatch Linear
 
 Use this skill as the GPT-wide control plane for Linear-backed worker readiness and worker event-log handling.
@@ -22,6 +18,24 @@ Linear is the durable issue/control plane. The boring default is:
 3. prepare a paste-ready worker handoff only when Harley explicitly asks for one;
 4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
 5. never claim execution, publication, merge, or closeout unless the target system proves it.
+
+## Linear Worker Issue Shaping Stack
+
+When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
+
+```text
+worker-dispatch-linear -> boring-buster -> writing-plans -> worker-dispatch-linear
+```
+
+Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.
+
+Use `boring-buster` to decide whether the issue is bounded, lawful, route-suitable, and boring enough for the selected worker lane.
+
+Use `writing-plans` to check or repair the implementation-plan shape: one observable goal, likely files or source seams, small executable steps or chosen implementation route, explicit validation commands, no placeholders, and no hidden replanning requirement.
+
+Return to this skill after those gates to write or update the Linear issue only when the latest user turn authorizes mutation.
+
+Do not require this full stack for parent trackers, product notes, research/discovery issues, or planning-only issues unless Harley asks to make them worker-send-ready.
 
 ## Durable Linear state convention
 
@@ -49,10 +63,11 @@ Phrases such as `worker ready`, `worker send ready`, `send-ready issue`, `worker
 ## Normal workflow
 
 1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker.
-2. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
-3. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized.
-4. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
-5. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
+2. If the issue is intended for repo/code worker execution, run the Linear Worker Issue Shaping Stack before calling it worker-ready.
+3. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
+4. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized.
+5. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
+6. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
 
 ## Linear as event log
 
@@ -63,7 +78,7 @@ Useful signals:
 - issue exists but lacks scope/validation/return evidence: make it worker-ready;
 - issue has worker report/comment but no PR evidence: report returned state and ask for or prepare the next explicit handoff;
 - issue has PR attachment/comment/URL: verify the GitHub PR;
-- PR merged and main verified: report landed state and update/close Linear only when authorized.
+- PR merged and main verified: report landed state; update or close Linear only when authorized.
 
 ## GitHub boundary
 
@@ -75,6 +90,8 @@ Do not use Linear comments, worker reports, validation summaries, local paths, o
 
 After this skill classifies the route, do not read old dispatch or issue-management skills merely for comfort. Load another skill only for a named unresolved decision that this skill does not own:
 
+- worker-send-ready boring/readiness verdict: use `boring-buster`;
+- implementation-plan shape for worker coding issues: use `writing-plans`;
 - skill creation/update/package work: use the skill-maintenance stack;
 - GitHub PR/repo proof: use GitHub verification tooling;
 - validation choice after code/PR/package evidence exists: use validation guidance;

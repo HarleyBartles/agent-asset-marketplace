@@ -1,7 +1,7 @@
 interface:
-  display_name: Linear Worker Readiness
-  short_description: Shape worker-ready Linear issues and inspect Linear/GitHub proof
-    without launching workers.
+  display_name: writing plans
+  short_description: Use for concrete implementation plans and worker-ready Linear
+    issue shaping before code changes begin.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

@@ -15,6 +15,20 @@ A Linear issue is worker-ready when a future execution actor can read it and kno
 
 Do not require YAML unless the target worker or user explicitly asks for it. Boring means executable, bounded, and falsifiable, not verbose.
 
+## Required composition for worker-send-ready coding issues
+
+For a Linear issue intended to be worker-send-ready for repo or code execution, use the Linear Worker Issue Shaping Stack:
+
+```text
+worker-dispatch-linear -> boring-buster -> writing-plans -> worker-dispatch-linear
+```
+
+`boring-buster` must establish that the issue is bounded, lawful, and boring enough for the chosen worker lane.
+
+`writing-plans` must establish that the issue contains enough implementation shape for the next engineer: one goal, likely files or source seams, small steps or intended route, validation commands, guardrails, return evidence, and no placeholders.
+
+If either gate is missing, do not call the issue worker-ready. Classify it as planning, discovery, or needs repair.
+
 ## Durable MARK worker issue convention
 
 For MARK-style worker child issues, preserve this durable Linear shape:
@@ -36,17 +50,18 @@ Use ordinary markdown headings:
 - Goal
 - Scope
 - Guardrails
+- Plan / likely edit surfaces
 - Validation
 - Return evidence
 - Success criteria
 
-For small tasks, collapse headings into concise paragraphs.
+For small tasks, collapse headings into concise paragraphs, but keep the implementation-plan facts available when the issue is worker-send-ready.
 
 ## Worker lane wording
 
 Use lightweight lane wording only when it changes execution:
 
-- `worker-ready`: issue is clear enough for a future worker.
+- `worker-ready`: issue is clear enough for a future worker and has passed the applicable boring and writing-plans gates.
 - `planning-only`: do not implement yet.
 - `native-gpt-route`: belongs to ChatGPT skill, connector, UI, research, or packaging work rather than repo work.
 - `external-worker-handoff`: user wants paste-ready text for a worker outside this chat.

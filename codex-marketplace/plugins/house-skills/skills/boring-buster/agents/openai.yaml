@@ -1,7 +1,8 @@
 interface:
-  display_name: Linear Worker Readiness
-  short_description: Shape worker-ready Linear issues and inspect Linear/GitHub proof
-    without launching workers.
+  display_name: Boring Buster
+  short_description: Judges whether issue-shaped work is boring enough for the right
+    lane.
+  icon: assets/icon.svg
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
