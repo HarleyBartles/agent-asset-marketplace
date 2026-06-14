@@ -245,10 +245,10 @@ def validate_repo_index() -> dict:
     if [entry.get("name") for entry in marketplace_plugins] != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("repo-index marketplace plugin order does not match the protected four-root shape")
 
-    vendor_agents = ROOT / "sources/third_party/AGENTS.md"
-    vendor_guidance = check_text(vendor_agents)
-    normalized_vendor_guidance = " ".join(vendor_guidance.split())
-    if "third-party source custody" not in normalized_vendor_guidance or "not repository doctrine" not in normalized_vendor_guidance:
+    third_party_agents = ROOT / "sources/third_party/AGENTS.md"
+    third_party_guidance = check_text(third_party_agents)
+    normalized_third_party_guidance = " ".join(third_party_guidance.split())
+    if "third-party source custody" not in normalized_third_party_guidance or "not repository doctrine" not in normalized_third_party_guidance:
         raise ValueError("sources/third_party/AGENTS.md must clearly distinguish repo-owned guidance from third-party instructions")
 
     print("Repo index validation passed.")

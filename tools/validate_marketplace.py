@@ -305,10 +305,10 @@ def validate_skill_bundle_manifest(
         if not local_path or not isinstance(local_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
         check_path_exists(ROOT / plugin_root / local_path)
-        upstream_path = entry.get("upstream_path")
-        if not upstream_path or not isinstance(upstream_path, str):
-            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing an upstream_path")
-        check_path_exists(vendor_root / upstream_path)
+        snapshot_path = entry.get("snapshot_path")
+        if not snapshot_path or not isinstance(snapshot_path, str):
+            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
+        check_path_exists(vendor_root / snapshot_path)
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
 
