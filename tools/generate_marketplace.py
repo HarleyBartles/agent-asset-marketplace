@@ -31,7 +31,7 @@ def main() -> int:
         raise ValueError("No imported House Skills records found in the source ledger")
 
     if not intake.get("imports"):
-        raise ValueError("sources/house-skills/intake.json does not contain imports")
+        raise ValueError("sources/first_party/skills/house-skills/intake.json does not contain imports")
 
     expected = build_marketplace_manifest(plugin_manifests)
     if expected != EXPECTED_MARKETPLACE:

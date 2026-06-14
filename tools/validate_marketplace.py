@@ -88,17 +88,17 @@ def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, 
         if row.get("source_id") and row.get("source_id") != "global.mark-19.source-import-boundary"
     ]
     if normalized_json != normalized_md:
-        raise ValueError("sources/house-skills/decisions.md does not match sources/house-skills/decisions.json")
+        raise ValueError("sources/first_party/skills/house-skills/decisions.md does not match sources/first_party/skills/house-skills/decisions.json")
 
     boundary = next((row for row in decisions if row.get("id") == "global.mark-19.source-import-boundary"), None)
     if boundary is None:
-        raise ValueError("sources/house-skills/decisions.json is missing the MARK-19 boundary row")
+        raise ValueError("sources/first_party/skills/house-skills/decisions.json is missing the MARK-19 boundary row")
     if boundary.get("import_state") != "source-import-boundary":
-        raise ValueError("sources/house-skills/decisions.json has an invalid MARK-19 boundary state")
+        raise ValueError("sources/first_party/skills/house-skills/decisions.json has an invalid MARK-19 boundary state")
     if "global.mark-19.source-import-boundary" not in decisions_md_text:
-        raise ValueError("sources/house-skills/decisions.md is missing the MARK-19 boundary row")
+        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary row")
     if "MARK-19 imports exactly six reviewed core generic buster source records" not in decisions_md_text:
-        raise ValueError("sources/house-skills/decisions.md is missing the MARK-19 boundary description")
+        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary description")
 
 
 def _decision_structure(record: dict[str, object]) -> dict[str, object]:
@@ -110,11 +110,11 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
     if upstream_repo == "mshumer/unslop":
         if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
             raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
-        return ROOT / "sources/vendor/mshumer/unslop" / pinned_commit
+        return ROOT / "sources/third_party/unslop/upstream"
     if upstream_repo == "openai/plugins":
         if pinned_commit != "c33199897758cab145bb7fdab1ca8fb1cbd9de50":
             raise ValueError("Unexpected pinned commit for openai/plugins vendor snapshot")
-        return ROOT / "sources/vendor/openai/plugins" / pinned_commit
+        return ROOT / "sources/third_party/game-studio/upstream"
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
@@ -305,12 +305,24 @@ def validate_skill_bundle_manifest(
         if not local_path or not isinstance(local_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
         check_path_exists(ROOT / plugin_root / local_path)
-        upstream_path = entry.get("upstream_path")
-        if not upstream_path or not isinstance(upstream_path, str):
-            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing an upstream_path")
-        check_path_exists(vendor_root / upstream_path)
+        snapshot_path = entry.get("snapshot_path")
+        if not snapshot_path or not isinstance(snapshot_path, str):
+            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
+        check_path_exists(vendor_root / snapshot_path)
+        content_mode = entry.get("content_mode")
+        if content_mode not in {"verbatim", "adapted"}:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
+        if content_mode == "verbatim":
+            source_bytes = (vendor_root / snapshot_path).read_bytes()
+            projected_bytes = (ROOT / plugin_root / local_path).read_bytes()
+            if source_bytes != projected_bytes:
+                raise ValueError(
+                    f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
+                )
+        elif content_mode == "adapted" and not entry.get("adaptation_note"):
+            raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
 
     for entry in skipped_entries + blocked_entries:
         if entry.get("local_path") not in ("", None):
@@ -333,9 +345,9 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
     if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/house-skills/skills":
         raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        "sources/house-skills/decisions.json",
-        "sources/house-skills/decisions.md",
-        "sources/house-skills/intake.json",
+        "sources/first_party/skills/house-skills/decisions.json",
+        "sources/first_party/skills/house-skills/decisions.md",
+        "sources/first_party/skills/house-skills/intake.json",
         "provenance/house-skills.md",
     ]:
         raise ValueError("adventures-pack bundle manifest source_of_truth mismatch")

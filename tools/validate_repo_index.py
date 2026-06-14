@@ -128,11 +128,11 @@ def validate_repo_index() -> dict:
         if agents_md is not None:
             agents_path = _resolved_path(agents_md)
             check_path_exists(agents_path)
-            if zone_path == "sources/vendor":
+            if zone_path == "sources/third_party":
                 guidance_scope = zone.get("guidance_scope")
                 if guidance_scope != "repo-owned-guidance":
                     raise ValueError(
-                        "sources/vendor zone must state that its scoped AGENTS guidance is repo-owned"
+                        "sources/third_party zone must state that its scoped AGENTS guidance is repo-owned"
                     )
 
         scripts = _validate_optional_list_field(zone, "key_validation_scripts")
@@ -245,11 +245,11 @@ def validate_repo_index() -> dict:
     if [entry.get("name") for entry in marketplace_plugins] != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("repo-index marketplace plugin order does not match the protected four-root shape")
 
-    vendor_agents = ROOT / "sources/vendor/AGENTS.md"
-    vendor_guidance = check_text(vendor_agents)
-    normalized_vendor_guidance = " ".join(vendor_guidance.split())
-    if "vendored package instructions" not in normalized_vendor_guidance or "not repository doctrine" not in normalized_vendor_guidance:
-        raise ValueError("sources/vendor/AGENTS.md must clearly distinguish repo-owned guidance from vendor instructions")
+    third_party_agents = ROOT / "sources/third_party/AGENTS.md"
+    third_party_guidance = check_text(third_party_agents)
+    normalized_third_party_guidance = " ".join(third_party_guidance.split())
+    if "third-party source custody" not in normalized_third_party_guidance or "not repository doctrine" not in normalized_third_party_guidance:
+        raise ValueError("sources/third_party/AGENTS.md must clearly distinguish repo-owned guidance from third-party instructions")
 
     print("Repo index validation passed.")
     return repo_index

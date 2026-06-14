@@ -1,6 +1,6 @@
 # plugins
 
-Marketplace plugin source shape lives here.
+Marketplace plugin projection shape lives here.
 
 The active marketplace roots under this directory are limited to
 `house-skills/`, `adventures-pack/`, `unslop/`, and `game-studio/`.

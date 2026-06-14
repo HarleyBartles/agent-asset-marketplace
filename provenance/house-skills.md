@@ -103,8 +103,8 @@
 - Bundle name: `house-skills`
 - Bundle version: `1.0.0`
 - Marketplace source: `.agents/plugins/marketplace.json`
-- Human registry source: `sources/house-skills/decisions.md`
-- Structured registry mirror: `sources/house-skills/decisions.json`
+- Human registry source: `sources/first_party/skills/house-skills/decisions.md`
+- Structured registry mirror: `sources/first_party/skills/house-skills/decisions.json`
 - Plugin manifest: `codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle skill: `codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md`
 - Bundle manifest: `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
@@ -112,7 +112,7 @@
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
 - Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, and Rooms, plus the shared `connector-safety` component in the base/control-plane lane, the `rooms-canon-buster` Rooms canon-pressure overlay, and the refreshed `rooms-bootstrap` v1.1 root.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 

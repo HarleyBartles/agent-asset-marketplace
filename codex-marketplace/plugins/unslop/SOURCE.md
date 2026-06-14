@@ -8,7 +8,7 @@ This plugin adapts the upstream `mshumer/unslop` workflow into an Asset Marketpl
 - URL: <https://github.com/mshumer/unslop.git>
 - Pinned commit: `edcb62386d129c65e4395f0cfcc9168eb1ba2148`
 - License: `MIT`
-- Source custody: `sources/vendor/mshumer/unslop/edcb62386d129c65e4395f0cfcc9168eb1ba2148/`
+- Source custody: `sources/third_party/unslop/upstream/`
 
 ## Marketplace Adaptation
 

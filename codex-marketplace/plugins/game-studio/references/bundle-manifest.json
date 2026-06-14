@@ -3,64 +3,74 @@
   "bundle_version": "1.0.0",
   "upstream_repo": "openai/plugins",
   "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
-  "source_root": "plugins/game-studio",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
   "candidate_count": 9,
   "imported_count": 9,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
     {
-      "upstream_path": "plugins/game-studio/skills/game-playtest/SKILL.md",
+      "snapshot_path": "skills/game-playtest/SKILL.md",
       "local_path": "skills/game-playtest/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/game-studio/SKILL.md",
+      "snapshot_path": "skills/game-studio/SKILL.md",
       "local_path": "skills/game-studio/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/game-ui-frontend/SKILL.md",
+      "snapshot_path": "skills/game-ui-frontend/SKILL.md",
       "local_path": "skills/game-ui-frontend/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/phaser-2d-game/SKILL.md",
+      "snapshot_path": "skills/phaser-2d-game/SKILL.md",
       "local_path": "skills/phaser-2d-game/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/react-three-fiber-game/SKILL.md",
+      "snapshot_path": "skills/react-three-fiber-game/SKILL.md",
       "local_path": "skills/react-three-fiber-game/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/sprite-pipeline/SKILL.md",
+      "snapshot_path": "skills/sprite-pipeline/SKILL.md",
       "local_path": "skills/sprite-pipeline/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/three-webgl-game/SKILL.md",
+      "snapshot_path": "skills/three-webgl-game/SKILL.md",
       "local_path": "skills/three-webgl-game/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/web-3d-asset-pipeline/SKILL.md",
+      "snapshot_path": "skills/web-3d-asset-pipeline/SKILL.md",
       "local_path": "skills/web-3d-asset-pipeline/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     },
     {
-      "upstream_path": "plugins/game-studio/skills/web-game-foundations/SKILL.md",
+      "snapshot_path": "skills/web-game-foundations/SKILL.md",
       "local_path": "skills/web-game-foundations/SKILL.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     }
   ]

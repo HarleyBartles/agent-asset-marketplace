@@ -22,9 +22,9 @@ SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-sk
 PLUGIN_README_PATH = ROOT / "codex-marketplace/plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
 PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "codex-marketplace/plugins/house-skills/AGENTS.md"
-SOURCE_DECISIONS_MD_PATH = ROOT / "sources/house-skills/decisions.md"
-SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/house-skills/decisions.json"
-SOURCE_INTAKE_JSON_PATH = ROOT / "sources/house-skills/intake.json"
+SOURCE_DECISIONS_MD_PATH = ROOT / "sources/first_party/skills/house-skills/decisions.md"
+SOURCE_DECISIONS_JSON_PATH = ROOT / "sources/first_party/skills/house-skills/decisions.json"
+SOURCE_INTAKE_JSON_PATH = ROOT / "sources/first_party/skills/house-skills/intake.json"
 PROVENANCE_PATH = ROOT / "provenance/house-skills.md"
 
 MARKETPLACE_NOTES = [
@@ -91,9 +91,9 @@ EXPECTED_PLUGIN_VERSION = "1.0.0"
 EXPECTED_PLUGIN_ROOT = "codex-marketplace/plugins/house-skills"
 EXPECTED_MARKETPLACE_ROOT = ".agents/plugins/marketplace.json"
 EXPECTED_SOURCE_OF_TRUTH = [
-    "sources/house-skills/decisions.json",
-    "sources/house-skills/decisions.md",
-    "sources/house-skills/intake.json",
+    "sources/first_party/skills/house-skills/decisions.json",
+    "sources/first_party/skills/house-skills/decisions.md",
+    "sources/first_party/skills/house-skills/intake.json",
     "provenance/house-skills.md",
 ]
 
