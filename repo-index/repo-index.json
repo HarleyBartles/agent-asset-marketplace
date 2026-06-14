@@ -2,11 +2,16 @@
   "schema_version": 1,
   "repo_name": "agent-asset-marketplace",
   "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
+  "marketplace_root_inventory_path": "codex-marketplace/plugin-roots.json",
   "marketplace_registry_path": ".agents/plugins/marketplace.json",
   "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
   "validation": {
     "marketplace": "py -3 tools/validate_marketplace.py",
-    "repo_index": "py -3 tools/validate_repo_index.py"
+    "repo_index": "py -3 tools/validate_repo_index.py",
+    "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
+    "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
+    "skill_zips_check": "py -3 tools/validate_skill_zips.py",
+    "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main"
   },
   "zones": [
     {
@@ -26,6 +31,17 @@
       "purpose": "Codex marketplace source root and export manifest surface.",
       "surface_kind": "runtime-facing",
       "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "marketplace-root-inventory",
+      "path": "codex-marketplace/plugin-roots.json",
+      "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
+      "surface_kind": "hand-authored",
+      "nearest_scoped_agents_md": null,
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py"

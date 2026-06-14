@@ -41,6 +41,8 @@ Keep the index current with:
 
 - `py -3 tools/validate_marketplace.py`
 - `py -3 tools/validate_repo_index.py`
+- `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`
+- `py -3 tools/validate_generated_drift.py --base origin/main`
 
 If the repo index changes, the validator should fail on stale paths or missing
 guidance files before the change can be treated as complete.

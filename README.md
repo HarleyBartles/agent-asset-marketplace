@@ -14,6 +14,12 @@ Canonical repo-resident `skill.zip` artifacts, when present, live under
 `generated/skill-zips/registry.json`. The package tooling is the normal writer
 for that surface.
 
+The active marketplace root inventory is editable at
+`codex-marketplace/plugin-roots.json`. Workers should update that inventory,
+the relevant source/projection files, and then run
+`py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>` for a targeted
+refresh. Use `--all` only for an explicit full regeneration.
+
 The boring goal for upstream drains is simple: take useful upstream plugin-market
 assets and put them into this repo's plugin market when rights and source shape
 allow it. Preserve license, attribution, source mapping, and validation evidence

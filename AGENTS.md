@@ -21,6 +21,12 @@ Canonical repo-resident `skill.zip` artifacts, when required by an issue, live
 only under `generated/skill-zips/` and are produced by the packaging tool, not
 by hand.
 
+The editable active marketplace root inventory lives at
+`codex-marketplace/plugin-roots.json`. Root additions should flow through that
+file and the matching generators/validators rather than Python constant edits.
+Targeted skill updates should use `py -3 tools/update_skill_artifacts.py --skill
+<pack>/<skill>`; `--all` is an explicit full regeneration and must be reported.
+
 ## Source-of-truth split
 
 GitHub and the repository tree prove file state, landed assets, manifests, source snapshots, provenance notes, validation scripts, and playbooks.

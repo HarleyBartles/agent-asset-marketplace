@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""Validate that generated skill-zips changed only with matching source updates."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import subprocess
+from pathlib import Path
+from typing import Any
+
+from skill_zip_artifacts import (
+    GENERATED_SKILL_ZIPS_REGISTRY_PATH,
+    ROOT,
+    artifact_to_record,
+    load_registry,
+    record_to_artifact,
+    validate_skill_zip_registry,
+)
+
+
+def _git_lines(*args: str) -> list[str]:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def _git_text(*args: str) -> str | None:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout
+
+
+def _load_git_json(*args: str) -> dict[str, Any] | None:
+    text = _git_text(*args)
+    if text is None:
+        return None
+    return json.loads(text)
+
+
+def _path_changes(base: str) -> list[str]:
+    return _git_lines("diff", "--name-only", base, "--")
+
+
+def _generated_changes(base: str) -> list[str]:
+    return [path for path in _path_changes(base) if path.startswith("generated/skill-zips/")]
+
+
+def _source_changes(base: str) -> list[str]:
+    return [
+        path
+        for path in _path_changes(base)
+        if not path.startswith("generated/skill-zips/") and not path.startswith(".git/")
+    ]
+
+
+def _artifact_key_from_generated_path(path: str) -> tuple[str, str] | None:
+    rel = Path(path)
+    parts = rel.parts
+    if len(parts) != 5 or parts[:2] != ("generated", "skill-zips") or parts[4] != "skill.zip":
+        return None
+    return parts[2], parts[3]
+
+
+def _source_changed_for_path(source_changes: list[str], source_path: str) -> bool:
+    prefix = source_path.rstrip("/") + "/"
+    return any(change == source_path or change.startswith(prefix) for change in source_changes)
+
+
+def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> None:
+    validate_skill_zip_registry()
+
+    current_registry = load_registry()
+    current_by_key = {
+        (artifact.pack, artifact.skill): artifact
+        for artifact in (record_to_artifact(record) for record in current_registry.get("artifacts", []))
+    }
+
+    base_registry = _load_git_json("show", f"{base}:generated/skill-zips/registry.json")
+    base_by_key = {}
+    if isinstance(base_registry, dict):
+        base_by_key = {
+            (artifact.pack, artifact.skill): artifact
+            for artifact in (record_to_artifact(record) for record in base_registry.get("artifacts", []))
+        }
+
+    source_changes = _source_changes(base)
+    generated_changes = _generated_changes(base)
+
+    if not generated_changes:
+        return
+
+    for path in generated_changes:
+        if path == "generated/skill-zips/registry.json":
+            continue
+        key = _artifact_key_from_generated_path(path)
+        if key is None:
+            raise ValueError(f"unexpected generated artifact path in diff: {path}")
+        artifact = current_by_key.get(key)
+        if artifact is None:
+            raise ValueError(f"generated artifact diff references missing registry entry: {path}")
+        if not full_regeneration and not _source_changed_for_path(source_changes, artifact.source_path):
+            raise ValueError(
+                f"generated artifact drift detected for {artifact.pack}/{artifact.skill}: "
+                f"{path} changed without a matching source change at {artifact.source_path}; "
+                f"run py -3 tools/update_skill_artifacts.py --skill {artifact.pack}/{artifact.skill} "
+                f"or use py -3 tools/update_skill_artifacts.py --all for explicit full regeneration"
+            )
+
+    changed_registry_keys: set[tuple[str, str]] = set()
+    if isinstance(base_registry, dict):
+        all_keys = set(base_by_key) | set(current_by_key)
+        for key in sorted(all_keys):
+            current_record = artifact_to_record(current_by_key[key]) if key in current_by_key else None
+            base_record = artifact_to_record(base_by_key[key]) if key in base_by_key else None
+            if current_record != base_record:
+                changed_registry_keys.add(key)
+
+    for key in sorted(changed_registry_keys):
+        artifact = current_by_key.get(key)
+        if artifact is None:
+            continue
+        if full_regeneration:
+            continue
+        if not _source_changed_for_path(source_changes, artifact.source_path):
+            raise ValueError(
+                f"generated registry drift detected for {artifact.pack}/{artifact.skill}: "
+                f"registry entry changed without a matching source change at {artifact.source_path}; "
+                f"run py -3 tools/update_skill_artifacts.py --skill {artifact.pack}/{artifact.skill} "
+                f"or use py -3 tools/update_skill_artifacts.py --all for explicit full regeneration"
+            )
+
+    if not full_regeneration and base_registry is not None:
+        for key in sorted(set(current_by_key) - set(base_by_key)):
+            artifact = current_by_key[key]
+            if not _source_changed_for_path(source_changes, artifact.source_path):
+                raise ValueError(
+                    f"generated registry added {artifact.pack}/{artifact.skill} without a matching source change "
+                    f"at {artifact.source_path}; run py -3 tools/update_skill_artifacts.py --skill "
+                    f"{artifact.pack}/{artifact.skill} or use py -3 tools/update_skill_artifacts.py --all"
+                )
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Validate generated skill-zips against the current git base")
+    parser.add_argument("--base", default="origin/main", help="git revision to compare against")
+    parser.add_argument(
+        "--full-regeneration",
+        action="store_true",
+        help="treat generated skill-zips changes as explicitly declared full regeneration",
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = _parse_args()
+    validate_generated_drift(base=args.base, full_regeneration=args.full_regeneration)
+    print(
+        "OK generated skill-zips drift: "
+        f"base={args.base}, full_regeneration={str(args.full_regeneration).lower()}, "
+        f"registry={GENERATED_SKILL_ZIPS_REGISTRY_PATH.relative_to(ROOT).as_posix()}"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -8,6 +8,9 @@ marketplace source tree.
 The active installable roots under this directory are fixed to
 `house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`, `wild-bunch-project-pack/`, and `superpowers/`.
 
+That active set is now sourced from `codex-marketplace/plugin-roots.json` and
+validated against the protected marketplace manifests and registry surfaces.
+
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
 Everything else in this tree is support custody or historical source material,

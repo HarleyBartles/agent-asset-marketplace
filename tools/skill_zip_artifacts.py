@@ -432,16 +432,24 @@ def load_registry() -> dict[str, Any]:
     return load_json(GENERATED_SKILL_ZIPS_REGISTRY_PATH)
 
 
-def _artifact_from_existing(target: SkillTarget) -> SkillArtifact:
-    zip_path = target.zip_path
+def _artifact_from_registry_record(target: SkillTarget, record: dict[str, Any]) -> SkillArtifact:
+    artifact = record_to_artifact(record)
+    if artifact.pack != target.pack or artifact.skill != target.skill:
+        raise ValueError(f"{target.pack}/{target.skill} registry entry mismatch")
+    return artifact
+
+
+def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *, scope_label: str) -> SkillArtifact:
+    zip_path = ROOT / artifact.zip_path
     if not zip_path.exists():
         raise FileNotFoundError(zip_path)
     if zip_path.name != "skill.zip":
         raise ValueError(f"{target.pack}/{target.skill} archive filename mismatch")
-
-    source_sha256, source_file_count, source_bytes, files, forbidden_paths = compute_source_fingerprint(target.skill_root)
-    if forbidden_paths:
-        raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
+    if artifact.zip_path != target.zip_path.relative_to(ROOT).as_posix():
+        raise ValueError(
+            f"{scope_label} artifact for {target.pack}/{target.skill} points at {artifact.zip_path} "
+            f"instead of {target.zip_path.relative_to(ROOT).as_posix()}"
+        )
 
     errors, root = inspect_skill_zip(target.skill, zip_path)
     if errors:
@@ -449,18 +457,62 @@ def _artifact_from_existing(target: SkillTarget) -> SkillArtifact:
     if root != target.skill:
         raise ValueError(f"{target.pack}/{target.skill} archive root mismatch")
 
-    zip_sha256 = sha256_file(zip_path)
-    return SkillArtifact(
-        pack=target.pack,
-        skill=target.skill,
-        source_path=target.source_path,
-        zip_path=zip_path.relative_to(ROOT).as_posix(),
-        source_file_count=source_file_count,
-        source_bytes=source_bytes,
-        source_sha256=source_sha256,
-        zip_size_bytes=zip_path.stat().st_size,
-        zip_sha256=zip_sha256,
-    )
+    source_sha256, source_file_count, source_bytes, files, forbidden_paths = compute_source_fingerprint(target.skill_root)
+    if forbidden_paths:
+        raise ValueError(f"{target.pack}/{target.skill} contains forbidden source paths: {', '.join(forbidden_paths)}")
+
+    if artifact.source_path != target.source_path:
+        raise ValueError(
+            f"existing generated artifact for {target.pack}/{target.skill} points at {artifact.source_path} "
+            f"instead of {target.source_path}"
+        )
+    if source_sha256 != artifact.source_sha256:
+        raise ValueError(
+            f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+            f"generated/{artifact.zip_path} is stale relative to {target.source_path}; "
+            f"include --skill {target.pack}/{target.skill}, run py -3 tools/update_skill_artifacts.py --all, "
+            f"or fix stale generated artifact before continuing"
+        )
+    if source_file_count != artifact.source_file_count:
+        raise ValueError(
+            f"{scope_label} artifact for {target.pack}/{target.skill} has the wrong source file count; "
+            f"check {target.source_path}"
+        )
+    if source_bytes != artifact.source_bytes:
+        raise ValueError(
+            f"{scope_label} artifact for {target.pack}/{target.skill} has the wrong source byte count; "
+            f"check {target.source_path}"
+        )
+
+    if sha256_file(zip_path) != artifact.zip_sha256:
+        raise ValueError(
+            f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+            f"generated/{artifact.zip_path} checksum differs from registry state; "
+            f"check {target.source_path}"
+        )
+    if zip_path.stat().st_size != artifact.zip_size_bytes:
+        raise ValueError(
+            f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+            f"generated/{artifact.zip_path} size differs from registry state; "
+            f"check {target.source_path}"
+        )
+
+    with zipfile.ZipFile(zip_path) as archive:
+        extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
+        expected_names = [f"{target.skill}/{path.relative_to(target.skill_root).as_posix()}" for path in files]
+        if extracted_names != expected_names:
+            raise ValueError(
+                f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
+            )
+        for name in extracted_names:
+            if archive.read(name) != (target.skill_root / Path(name).relative_to(target.skill)).read_bytes():
+                raise ValueError(
+                    f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                    f"generated/{artifact.zip_path} content differs from {target.source_path}"
+                )
+
+    return artifact
 
 
 def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None, write: bool) -> dict[str, Any]:
@@ -471,26 +523,42 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
             raise ValueError(f"no installable skills found for pack {pack}")
         raise ValueError("no installable skills found in the active marketplace manifests")
 
+    current_registry = load_registry()
+    current_artifacts = {
+        (artifact.pack, artifact.skill): artifact
+        for artifact in (record_to_artifact(record) for record in current_registry.get("artifacts", []))
+    }
+
     artifacts: list[SkillArtifact] = []
     for target in targets:
         key = _target_key(target.pack, target.skill)
+        current_artifact = current_artifacts.get(key)
         if key in selected:
-            artifact = package_skill_target(target) if write else _artifact_from_existing(target)
+            if write:
+                artifact = package_skill_target(target)
+            else:
+                if current_artifact is None:
+                    raise ValueError(
+                        f"generated/skill-zips/registry.json is missing selected skill {target.pack}/{target.skill}"
+                    )
+                artifact = _validate_existing_artifact(target, current_artifact, scope_label="selected")
         else:
-            artifact = _artifact_from_existing(target)
+            if current_artifact is None:
+                raise ValueError(
+                    f"generated/skill-zips/registry.json is missing unselected skill {target.pack}/{target.skill}"
+                )
+            artifact = _validate_existing_artifact(target, current_artifact, scope_label="unselected")
         artifacts.append(artifact)
 
     registry = build_registry(artifacts, exclusions=[])
+    validate_generated_surface(artifacts)
     if write:
-        validate_generated_surface(artifacts)
         GENERATED_SKILL_ZIPS_ROOT.mkdir(parents=True, exist_ok=True)
         with GENERATED_SKILL_ZIPS_REGISTRY_PATH.open("w", encoding="utf-8", newline="\n") as handle:
             json.dump(registry, handle, indent=2)
             handle.write("\n")
     else:
-        validate_generated_surface(artifacts)
-        current = load_registry()
-        if current != registry:
+        if current_registry != registry:
             raise ValueError("generated/skill-zips/registry.json is stale or inconsistent with on-disk artifacts")
     return registry
 
@@ -498,7 +566,18 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
 def validate_skill_zip_registry() -> dict[str, Any]:
     registry = load_registry()
     targets = discover_skill_targets()
-    artifacts = [_artifact_from_existing(target) for target in targets]
+    artifacts_by_key = {
+        (artifact.pack, artifact.skill): artifact
+        for artifact in (record_to_artifact(record) for record in registry.get("artifacts", []))
+    }
+    artifacts = []
+    for target in targets:
+        artifact = artifacts_by_key.get((target.pack, target.skill))
+        if artifact is None:
+            raise ValueError(
+                f"generated/skill-zips/registry.json is missing active skill {target.pack}/{target.skill}"
+            )
+        artifacts.append(_validate_existing_artifact(target, artifact, scope_label="current"))
     validate_generated_surface(artifacts)
     expected = build_registry(artifacts, exclusions=[])
     discovered_keys = {(target.pack, target.skill) for target in targets}

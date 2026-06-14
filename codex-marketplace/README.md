@@ -15,7 +15,15 @@ Editable source custody lives under `sources/first_party/` and
 `sources/third_party/`. The marketplace roots under `codex-marketplace/plugins/`
 are the installable projections.
 
+The editable active-root inventory is `codex-marketplace/plugin-roots.json`.
+The manifest export and the protected-root validators derive their active root
+set from that file instead of duplicating the six roots in Python constants.
+
 Repo-resident canonical `skill.zip` artifacts are published separately under
 `generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip`, with
 `generated/skill-zips/registry.json` mapping each archive back to the source
 skill tree that produced it.
+
+Targeted updates should use `py -3 tools/update_skill_artifacts.py --skill
+<pack>/<skill>`; `--all` is only for explicit full regeneration. Unrelated
+generated drift is not acceptable.
