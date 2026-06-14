@@ -14,18 +14,21 @@
       "snapshot_path": "skills/unslop/SKILL.md",
       "local_path": "skills/unslop/SKILL.md",
       "import_status": "imported",
+      "content_mode": "adapted",
       "adaptation_note": "Reimplemented as an Asset Marketplace GPT/Codex skill with bundled Python scripts, local sample orchestration, output manifests, validators, and optional visual dependency smoke checks."
     },
     {
       "snapshot_path": "profiles/writing.md",
       "local_path": "skills/unslop/profiles/writing.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied byte-for-byte from the pinned vendor snapshot and kept as market-facing profile evidence for traceability."
     },
     {
       "snapshot_path": "profiles/react-design.md",
       "local_path": "skills/unslop/profiles/react-design.md",
       "import_status": "imported",
+      "content_mode": "verbatim",
       "adaptation_note": "Copied byte-for-byte from the pinned vendor snapshot and kept as market-facing profile evidence for traceability."
     }
   ]

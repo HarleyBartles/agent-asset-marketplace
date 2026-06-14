@@ -309,8 +309,20 @@ def validate_skill_bundle_manifest(
         if not snapshot_path or not isinstance(snapshot_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
         check_path_exists(vendor_root / snapshot_path)
+        content_mode = entry.get("content_mode")
+        if content_mode not in {"verbatim", "adapted"}:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
+        if content_mode == "verbatim":
+            source_bytes = (vendor_root / snapshot_path).read_bytes()
+            projected_bytes = (ROOT / plugin_root / local_path).read_bytes()
+            if source_bytes != projected_bytes:
+                raise ValueError(
+                    f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
+                )
+        elif content_mode == "adapted" and not entry.get("adaptation_note"):
+            raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
 
     for entry in skipped_entries + blocked_entries:
         if entry.get("local_path") not in ("", None):
