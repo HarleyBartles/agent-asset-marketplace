@@ -415,6 +415,32 @@ def validate_generated_surface(expected_records: list[SkillArtifact]) -> None:
         raise ValueError("generated/skill-zips artifact surface mismatch: " + "; ".join(parts))
 
 
+def cleanup_generated_surface(expected_records: list[SkillArtifact]) -> None:
+    expected_zip_paths = {
+        (ROOT / record.zip_path).resolve().relative_to(ROOT).as_posix()
+        for record in expected_records
+    }
+    for path in _discover_generated_surface_files():
+        rel = path.relative_to(ROOT).as_posix()
+        if path.resolve() == GENERATED_SKILL_ZIPS_REGISTRY_PATH.resolve():
+            continue
+        if path.name != "skill.zip":
+            continue
+        if rel not in expected_zip_paths:
+            path.unlink()
+
+    if GENERATED_SKILL_ZIPS_ROOT.exists():
+        for candidate in sorted(GENERATED_SKILL_ZIPS_ROOT.rglob("*"), key=lambda item: len(item.parts), reverse=True):
+            if not candidate.is_dir():
+                continue
+            if candidate.resolve() == GENERATED_SKILL_ZIPS_ROOT.resolve():
+                continue
+            try:
+                next(candidate.iterdir())
+            except StopIteration:
+                candidate.rmdir()
+
+
 def _select_targets(targets: list[SkillTarget], pack: str | None, skill: str | None) -> set[tuple[str, str]]:
     if skill:
         parts = skill.split("/", 1)
@@ -551,6 +577,8 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
         artifacts.append(artifact)
 
     registry = build_registry(artifacts, exclusions=[])
+    if write and pack is None and skill is None:
+        cleanup_generated_surface(artifacts)
     validate_generated_surface(artifacts)
     if write:
         GENERATED_SKILL_ZIPS_ROOT.mkdir(parents=True, exist_ok=True)

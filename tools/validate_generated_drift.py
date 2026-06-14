@@ -53,8 +53,31 @@ def _path_changes(base: str) -> list[str]:
     return _git_lines("diff", "--name-only", base, "--")
 
 
-def _generated_changes(base: str) -> list[str]:
-    return [path for path in _path_changes(base) if path.startswith("generated/skill-zips/")]
+def _path_status_changes(base: str) -> list[tuple[str, str]]:
+    result = subprocess.run(
+        ["git", "diff", "--name-status", base, "--"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    entries: list[tuple[str, str]] = []
+    for raw_line in result.stdout.splitlines():
+        if not raw_line.strip():
+            continue
+        parts = raw_line.split("\t")
+        status = parts[0]
+        if status.startswith(("R", "C")) and len(parts) >= 3:
+            entries.append((status, parts[1]))
+            entries.append((status, parts[2]))
+            continue
+        if len(parts) >= 2:
+            entries.append((status, parts[-1]))
+    return entries
+
+
+def _generated_changes(base: str) -> list[tuple[str, str]]:
+    return [(status, path) for status, path in _path_status_changes(base) if path.startswith("generated/skill-zips/")]
 
 
 def _source_changes(base: str) -> list[str]:
@@ -101,13 +124,25 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
     if not generated_changes:
         return
 
-    for path in generated_changes:
+    for status, path in generated_changes:
         if path == "generated/skill-zips/registry.json":
             continue
         key = _artifact_key_from_generated_path(path)
         if key is None:
             raise ValueError(f"unexpected generated artifact path in diff: {path}")
         artifact = current_by_key.get(key)
+        base_artifact = base_by_key.get(key)
+        if status.startswith("D"):
+            if base_artifact is None:
+                raise ValueError(f"deleted generated artifact diff references missing base registry entry: {path}")
+            if not full_regeneration and not _source_changed_for_path(source_changes, base_artifact.source_path):
+                raise ValueError(
+                    f"generated artifact deletion detected for {base_artifact.pack}/{base_artifact.skill}: "
+                    f"{path} was removed without a matching source change at {base_artifact.source_path}; "
+                    f"run py -3 tools/update_skill_artifacts.py --all for explicit full regeneration "
+                    f"or delete the matching source/projection input first"
+                )
+            continue
         if artifact is None:
             raise ValueError(f"generated artifact diff references missing registry entry: {path}")
         if not full_regeneration and not _source_changed_for_path(source_changes, artifact.source_path):
@@ -149,6 +184,14 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
                     f"generated registry added {artifact.pack}/{artifact.skill} without a matching source change "
                     f"at {artifact.source_path}; run py -3 tools/update_skill_artifacts.py --skill "
                     f"{artifact.pack}/{artifact.skill} or use py -3 tools/update_skill_artifacts.py --all"
+                )
+        for key in sorted(set(base_by_key) - set(current_by_key)):
+            artifact = base_by_key[key]
+            if not _source_changed_for_path(source_changes, artifact.source_path):
+                raise ValueError(
+                    f"generated registry removed {artifact.pack}/{artifact.skill} without a matching source change "
+                    f"at {artifact.source_path}; run py -3 tools/update_skill_artifacts.py --all "
+                    f"for explicit full regeneration or delete the matching source/projection input first"
                 )
 
 
