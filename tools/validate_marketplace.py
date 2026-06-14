@@ -33,6 +33,7 @@ from marketplace_utils import (
     parse_top_markdown_table,
 )
 from validate_repo_index import validate_repo_index
+from skill_zip_artifacts import validate_skill_zip_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -453,6 +454,7 @@ def main() -> int:
     validate_decisions(decisions, decision_rows, decisions_md_text)
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
+    validate_skill_zip_registry()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")

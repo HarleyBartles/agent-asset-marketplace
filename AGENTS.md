@@ -17,6 +17,10 @@ Durable assets in this repo may include:
 - provenance, license, attribution, and trust records under `provenance/` as evidence and traceability, not completion by itself;
 - worker playbooks, validation scripts, and other enablement assets where the repo conventions support them.
 
+Canonical repo-resident `skill.zip` artifacts, when required by an issue, live
+only under `generated/skill-zips/` and are produced by the packaging tool, not
+by hand.
+
 ## Source-of-truth split
 
 GitHub and the repository tree prove file state, landed assets, manifests, source snapshots, provenance notes, validation scripts, and playbooks.

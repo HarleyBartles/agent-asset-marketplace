@@ -41,3 +41,5 @@ Bundle-manifest entries for imported or retained projection content must declare
   manifest, runtime registry, or repo index is not updated with it.
 - Flag unsupported changes to vendored plugin custody material unless the
   change has an explicit adaptation reason and provenance trail.
+- Flag any source-tree `skill.zip` file. Canonical install archives belong only
+  under `generated/skill-zips/`.

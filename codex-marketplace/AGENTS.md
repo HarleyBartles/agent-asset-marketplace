@@ -30,4 +30,9 @@ rules, and upstream-drain policy.
   plugin root claims to expose them.
 - Flag generated-export mismatches that would let the registry or bundle source
   drift silently from the tracked marketplace source tree.
+- Flag any `skill.zip` found inside a source skill tree; canonical install
+  archives belong only under `generated/skill-zips/` and must be written by the
+  package tool, not by hand.
+- Flag stale or unregistered canonical skill.zip artifacts under
+  `generated/skill-zips/`.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
