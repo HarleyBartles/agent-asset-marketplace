@@ -54,12 +54,13 @@
     {
       "canonical_name": "finishing-a-development-branch",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative.",
+      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note."
     },
     {
       "canonical_name": "receiving-code-review",
@@ -124,12 +125,13 @@
     {
       "canonical_name": "using-superpowers",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
+      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility."
     },
     {
       "canonical_name": "verification-before-completion",
@@ -193,7 +195,7 @@
     }
   ],
   "notes": [
-    "The active projection is a verbatim copy of the upstream skill trees and Codex assets.",
+    "The active projection is mostly verbatim, with the using-superpowers and finishing-a-development-branch skills adapted for Codex marketplace policy compatibility.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

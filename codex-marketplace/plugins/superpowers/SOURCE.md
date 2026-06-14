@@ -20,6 +20,7 @@ Codex marketplace.
 - `assets/app-icon.png`
 - `assets/superpowers-small.svg`
 - `LICENSE`
+- `references/codex-marketplace-compatibility.md`
 
 ## Source-only support provenance
 
