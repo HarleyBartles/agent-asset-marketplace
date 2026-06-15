@@ -1,6 +1,6 @@
 ---
 name: connector-safety
-description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked or when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle.
+description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify.
 metadata:
   source-id: connector-safety
   source-path: codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md
@@ -16,6 +16,29 @@ Use this skill to keep connector and tool-side-effect work safe, auditable, and 
 Treat connector or tool safety blocks as signals to narrow, clarify, verify, or stop. Do not frame the safety layer as an adversary and do not try to bypass it.
 
 A blocked mutation is not proof that the mutation happened. A planned mutation is not proof of authorization. A retry is lawful only when it is materially safer, narrower, clearer, or more auditable than the failed call.
+
+## Discovery-before-mutation rule
+
+For side-effecting connector work, use the connector itself to discover the narrowest safe mutation target before writing.
+
+Default sequence:
+
+1. Discover the bounded surface with read-only calls.
+   * Find the team, project, repository, folder, calendar, draft, issue, PR, document, or parent object using the narrowest available filters.
+   * Prefer exact slugs, keys, IDs, team filters, project filters, owner filters, and limits.
+   * Do not jump from session memory or chat knowledge straight to a write when a connector read can cheaply confirm the target.
+2. Read the target object using the discovered stable identifier.
+   * Read the exact issue, document, PR, draft, event, file, or record that will be mutated.
+   * Confirm current state, relations, attachments, documents, comments, or equivalent context where relevant.
+3. Write one bounded mutation using the discovered identifier.
+   * Use one side effect per call.
+   * Use narrow payloads.
+   * Do not bundle status, assignment, body rewrite, comments, relations, or document creation unless the connector requires it.
+4. Verify after writing.
+   * Prefer readback of the target object or created/updated child object.
+   * Claim success only from the mutation result or readback.
+
+Even when the user or prior chat provides likely correct values, perform read-only discovery when practical. The discovery calls are part of the safety proof.
 
 ## Use this skill when
 
@@ -33,13 +56,54 @@ Do not use this skill for ordinary read-only lookup unless the read is part of a
 ## Safe action ladder
 
 1. Confirm current authority from the latest user request and the relevant durable surface.
-2. Inspect the smallest relevant current state before writing when practical.
+2. Inspect the smallest relevant current state before writing when practical, including a discover/read chain when the target can be confirmed cheaply.
 3. Prefer one side effect per call: create, update body, rename, relate, move, assign, or close as separate steps.
 4. Keep payloads narrow and specific. Avoid bundling broad tool-control instructions, unrelated doctrine, and multiple mutations in one call.
 5. If a call is blocked, do not claim success. Read back current state when safe to determine whether anything changed.
 6. Retry only with a materially safer shape, such as smaller content, fewer fields, a non-destructive read probe, an ID instead of a name, or separate create-then-enrich steps.
 7. Stop after repeated narrow failures, destructive ambiguity, unsupported schema errors, or unclear authority.
 8. Report the blocker with enough detail for the user or next actor to continue safely.
+
+## Post-create read-chain requirement
+
+A successful create response is evidence that the object was created, but it is not always enough to justify immediate follow-up mutations against that object.
+
+When a workflow creates a parent object and then needs to add child objects, attachments, comments, documents, relations, status changes, or other follow-up mutations, run a fresh discover/read chain before the next write when practical.
+
+Example pattern:
+
+1. Create the parent object with a narrow payload.
+2. Discover the parent through the connector using bounded filters, such as team, project, folder, repository, owner, title, or issue key.
+3. Read the exact parent object with its stable ID.
+4. Confirm the parent is on the expected durable surface and has the expected current state.
+5. Create or update one child object using the stable parent ID.
+6. Read back the parent or child object before claiming success.
+
+This matters even when the create response includes the new object ID. The read-only discovery path proves that the target exists in the current durable connector surface before the agent switches back into write mode.
+
+If a follow-up write blocks after a successful create, step back into discovery rather than retrying the same write. Discover the bounded surface, read the parent, then retry only with a narrower or more auditable mutation.
+
+## Minimal create, then enrich
+
+When creating child objects such as documents, comments, drafts, attachments, tasks, or records, prefer a minimal create followed by a targeted update when the full payload is large or previously blocked.
+
+* Create the object with the stable parent ID, title, and short placeholder body.
+* Use the returned child object ID for enrichment.
+* Update only that child object's content.
+* Read back the parent or child after enrichment.
+
+This is safer than creating a large fully populated child object in one call because the parent binding and child identity are proven before the larger content mutation.
+
+## Retry posture update
+
+A retry after a blocked write should usually move one step earlier in the chain:
+
+* if write blocks, read the parent or target again;
+* if target read blocks, discover the bounded surface with narrower filters;
+* if workspace search blocks, use team/project/repo/folder filters;
+* if large create blocks, create a minimal child object first, then update by returned child ID;
+* if follow-up child write blocks after a successful parent create, rediscover and read the parent before retrying;
+* if repeated bounded discovery or writes block, stop and report.
 
 ## Mutation classes
 
