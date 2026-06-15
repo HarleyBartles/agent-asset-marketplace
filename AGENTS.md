@@ -6,6 +6,8 @@ This repository is the source of truth for agent-facing assets. It is an agent a
 
 The primary durable output is market-consumable assets. Support surfaces such as provenance, catalogs, ledgers, reports, doctrine notes, indexes, and discovery records exist to support those assets. They do not substitute for them.
 
+Codex plugin first; generated GPT-safe skill zips second.
+
 The current market-facing route is `codex-marketplace/` and `.agents/plugins/` unless repo conventions explicitly change. Market work should land as vendored or adapted assets on those surfaces, with provenance attached as support evidence.
 
 Durable assets in this repo may include:
@@ -25,6 +27,11 @@ The generated `skill.zip` surface is the GPT-ready export surface. It is built
 from marketplace source custody plus any repo-owned GPT overlay declared under
 `gpt-overlays/`, with direct exports for GPT-safe skills and explicit
 exclusions for skills that should not be exported raw.
+
+Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
+canonical install surface. Treat `generated/skill-zips/` as a derived GPT
+export corpus, not canonical source. GPT overlays can make a generated export
+installable and safe without weakening Codex-native plugin behavior.
 
 The editable active marketplace root inventory lives at
 `codex-marketplace/plugin-roots.json`. Root additions should flow through that
