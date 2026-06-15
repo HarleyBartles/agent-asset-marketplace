@@ -31,6 +31,13 @@
       "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
       "local_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md",
       "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+    },
+    {
+      "canonical_name": "github-superpowers",
+      "source_category": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/github-superpowers/SKILL.md",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
     }
   ],
   "source_only_surfaces": [
@@ -64,7 +71,7 @@
     }
   ],
   "notes": [
-    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers projection.",
+    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers and github-superpowers projections.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

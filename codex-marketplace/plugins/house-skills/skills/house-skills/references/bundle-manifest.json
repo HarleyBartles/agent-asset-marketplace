@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
   },
-  "skill_count": 52,
+  "skill_count": 53,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -139,6 +139,11 @@
       "name": "github-operations",
       "lane": "Base and control plane",
       "path": "codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md"
+    },
+    {
+      "name": "github-superpowers",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md"
     },
     {
       "name": "rooms-ambiguity-buster",

@@ -10,14 +10,14 @@ license: "MIT"
 # House Skills Bundle
 
 This skill is the installable bundle control plane for the current House Skills plugin root.
-It governs the 52 active first-party House Skills roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
+It governs the 53 active first-party House Skills roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
 
 Use it when you need to understand:
 
 - the plugin identity and current shape;
 - where the local marketplace entry lives;
 - which current skill roots live in the plugin tree;
-- the `github-operations`, `asset-market`, `skill-installer`, `skill-handoff`, `linear-issue-compactor`, and `linear-superpowers` roots that now live as current control-plane skills;
+- the `github-operations`, `github-superpowers`, `asset-market`, `skill-installer`, `skill-handoff`, `linear-issue-compactor`, and `linear-superpowers` roots that now live as current control-plane skills;
 - how to separate historical archive custody from the live plugin surface.
 
 ## Bundle contract
