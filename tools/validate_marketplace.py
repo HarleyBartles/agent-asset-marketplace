@@ -38,9 +38,10 @@ from skill_zip_artifacts import validate_skill_zip_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FIRST_PARTY_LINEAR_SUPERPOWERS_SOURCE = (
-    "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md"
-)
+FIRST_PARTY_SUPERPOWERS_SOURCES = {
+    "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+    "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
+}
 
 
 def check_json(path: Path) -> dict:
@@ -461,10 +462,12 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         if source_category not in {"third_party", "first_party"}:
             raise ValueError(f"superpowers entry {canonical_name} has an invalid source_category")
         if source_category == "first_party":
-            if canonical_name != "linear-superpowers":
-                raise ValueError("superpowers first-party projections are limited to linear-superpowers")
-            if canonical_source_path != FIRST_PARTY_LINEAR_SUPERPOWERS_SOURCE:
-                raise ValueError("superpowers linear-superpowers first-party source path mismatch")
+            expected_source_path = FIRST_PARTY_SUPERPOWERS_SOURCES.get(canonical_name)
+            if expected_source_path is None:
+                allowed = ", ".join(sorted(FIRST_PARTY_SUPERPOWERS_SOURCES))
+                raise ValueError(f"superpowers first-party projections are limited to {allowed}")
+            if canonical_source_path != expected_source_path:
+                raise ValueError(f"superpowers {canonical_name} first-party source path mismatch")
         content_mode = entry.get("content_mode")
         if content_mode not in {"verbatim", "adapted"}:
             raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")

@@ -25,8 +25,11 @@ source custody.
 The bundle also projects the first-party `linear-superpowers` skill from
 `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
 into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md`
-so the Superpowers plugin surface shows Harley's compositional Linear workflow
-skill without creating a second editable source root.
+and the first-party `github-superpowers` skill from
+`codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
+into `codex-marketplace/plugins/superpowers/skills/github-superpowers/SKILL.md`
+so the Superpowers plugin surface shows Harley's compositional Linear and
+GitHub workflow skills without creating second editable source roots.
 
 ## Excluded from the active projection
 

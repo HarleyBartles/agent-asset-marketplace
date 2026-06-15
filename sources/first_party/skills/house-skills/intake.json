@@ -405,19 +405,29 @@
       "import_state": "imported",
       "notes": "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
     },
-    {
-      "issue": "MARK-139",
-      "source_id": "linear-superpowers-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-      "public_name": "linear-superpowers",
-      "provenance_name": "MARK-139 Linear Superpowers compositional skill",
-      "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
-      "import_state": "imported",
-      "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, and @linear-issue-compactor without introducing a second source of truth."
-    },
-    {
-      "issue": "MARK-142",
-      "source_id": "github-operations-v1",
+  {
+    "issue": "MARK-139",
+    "source_id": "linear-superpowers-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+    "public_name": "linear-superpowers",
+    "provenance_name": "MARK-139 Linear Superpowers compositional skill",
+    "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
+    "import_state": "imported",
+    "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, and @linear-issue-compactor without introducing a second source of truth."
+  },
+  {
+    "issue": "MARK-143",
+    "source_id": "github-superpowers-v1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
+    "public_name": "github-superpowers",
+    "provenance_name": "MARK-143 GitHub Superpowers compositional skill",
+    "scope": "GitHub evidence, review routing, and publication proof with smallest-applicable workflow selection",
+    "import_state": "imported",
+    "notes": "First-party Harley-owned source custody for compositional GitHub-facing work. Composes @using-superpowers, @github-operations, @requesting-code-review, @receiving-code-review, @verification-before-completion, @finishing-a-development-branch, and @connector-safety without introducing a second source of truth."
+  },
+  {
+    "issue": "MARK-142",
+    "source_id": "github-operations-v1",
       "source_path": "codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md",
       "public_name": "github-operations",
       "provenance_name": "MARK-142 GitHub operations zip import",

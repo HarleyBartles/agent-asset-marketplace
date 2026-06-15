@@ -1,13 +1,14 @@
 # House Skills Plugin Bundle
 
 This plugin is the current first-party House Skills plugin root.
-It exposes the 52 first-party skill roots as real plugin folders under
+It exposes the 53 first-party skill roots as real plugin folders under
 `skills/<skill-name>/`, with each current skill root carrying its own
 references, assets, scripts, and changelog notes.
 It is first-party Harley-owned source prepared to stay clean enough for a future
 permissive publication decision, with no unlicensed third-party bundled
 content.
 It includes `github-operations` as the generic GitHub proof base skill,
+`github-superpowers` as the GitHub-facing compositional workflow skill,
 `connector-safety` as a shared base/control-plane safety component for
 side-effecting connector/tool work, `rooms-canon-buster` as a Rooms
 canon-pressure overlay, the newly landed `asset-market`, `skill-installer`,
