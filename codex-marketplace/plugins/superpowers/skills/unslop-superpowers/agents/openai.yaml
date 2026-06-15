@@ -1,0 +1,11 @@
+interface:
+  display_name: Unslop Superpowers
+  short_description: Guard Superpowers work with repo-specific anti-slop controls.
+  default_prompt: Use $unslop-superpowers to discover the active repo unslop profile, choose the smallest safe anti-slop action, and turn profile findings into controls, non-goals, and evidence requirements.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

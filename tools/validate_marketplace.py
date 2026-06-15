@@ -41,6 +41,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
     "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
+    "unslop-superpowers": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md",
 }
 
 

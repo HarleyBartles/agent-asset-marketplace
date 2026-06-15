@@ -109,6 +109,15 @@
 - Scope: GitHub-facing workflow selection, proof boundaries, and branch-closeout routing
 - Notes: First-party compositional GitHub workflow skill for naming the smallest applicable specialist workflow, preserving `github-operations` as the GitHub proof and review-write boundary skill, and keeping GitHub proof, publication, merge, and final-main verification narrow.
 
+## unslop-superpowers
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md`
+- Public identity: `unslop-superpowers`
+- Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
+- Ownership: Harley-owned first-party House skill
+- Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
+- Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. It composes `@using-superpowers` and `@unslop` without replacing the underlying profile-generation engine.
+
 ## skill-handoff
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`

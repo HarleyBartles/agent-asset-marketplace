@@ -28,8 +28,12 @@ into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md`
 and the first-party `github-superpowers` skill from
 `codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
 into `codex-marketplace/plugins/superpowers/skills/github-superpowers/SKILL.md`
-so the Superpowers plugin surface shows Harley's compositional Linear and
-GitHub workflow skills without creating second editable source roots.
+and the first-party `unslop-superpowers` skill from
+`codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md`
+into `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/SKILL.md`
+so the Superpowers plugin surface shows Harley's compositional Linear,
+GitHub, and anti-slop workflow skills without creating second editable source
+roots.
 
 ## Excluded from the active projection
 
