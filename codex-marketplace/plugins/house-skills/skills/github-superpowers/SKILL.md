@@ -37,6 +37,8 @@ Use `@finishing-a-development-branch` when implementation is complete and branch
 
 Use `@connector-safety` for any GitHub mutation or blocked-write recovery.
 
+Use `@unslop-superpowers` when the GitHub packet needs repo-specific anti-slop controls, profile-aware review findings, or evidence requirements.
+
 Nesting rule:
 
 - pick the smallest specialist workflow that actually fits;

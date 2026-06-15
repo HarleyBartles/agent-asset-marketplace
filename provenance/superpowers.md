@@ -35,6 +35,10 @@ so the Superpowers plugin surface shows Harley's compositional Linear,
 GitHub, and anti-slop workflow skills without creating second editable source
 roots.
 
+`linear-superpowers` and `github-superpowers` both invoke `unslop-superpowers`
+when repo-specific anti-slop controls, profile-aware non-goals, or evidence
+requirements matter.
+
 ## Excluded from the active projection
 
 - `.claude-plugin/`

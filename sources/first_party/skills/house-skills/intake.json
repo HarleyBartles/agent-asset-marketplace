@@ -413,7 +413,7 @@
     "provenance_name": "MARK-139 Linear Superpowers compositional skill",
     "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
     "import_state": "imported",
-    "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, and @linear-issue-compactor without introducing a second source of truth."
+      "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, @linear-issue-compactor, and @unslop-superpowers without introducing a second source of truth."
   },
     {
       "issue": "MARK-143",
@@ -423,7 +423,7 @@
       "provenance_name": "MARK-143 GitHub Superpowers compositional skill",
       "scope": "GitHub evidence, review routing, and publication proof with smallest-applicable workflow selection",
       "import_state": "imported",
-      "notes": "First-party Harley-owned source custody for compositional GitHub-facing work. Composes @using-superpowers, @github-operations, @requesting-code-review, @receiving-code-review, @verification-before-completion, @finishing-a-development-branch, and @connector-safety without introducing a second source of truth."
+      "notes": "First-party Harley-owned source custody for compositional GitHub-facing work. Composes @using-superpowers, @github-operations, @requesting-code-review, @receiving-code-review, @verification-before-completion, @finishing-a-development-branch, @connector-safety, and @unslop-superpowers without introducing a second source of truth."
     },
     {
       "issue": "MARK-144",

@@ -29,6 +29,8 @@ Use `@connector-safety` for any Linear write or blocked-write recovery.
 
 Use `@linear-issue-compactor` when the issue body is getting too long for the connector to stay readable.
 
+Use `@unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.
+
 Nesting rule:
 
 - pick the smallest specialist workflow that actually fits;
