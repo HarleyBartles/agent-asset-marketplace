@@ -91,6 +91,15 @@
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
 - Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. It composes `@using-superpowers`, `@writing-plans`, `@executing-plans`, `@connector-safety`, and `@linear-issue-compactor` without creating a second source of truth.
 
+## github-operations
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md`
+- Public identity: `github-operations`
+- Provenance/history: MARK-142 GitHub operations zip import
+- Ownership: Harley-owned first-party House skill
+- Scope: GitHub evidence, PR review routing, and publication proof
+- Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The Adventures overlay composes this base skill rather than owning the generic doctrine.
+
 ## skill-handoff
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`
@@ -172,8 +181,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the new `github-operations` GitHub proof base skill, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 

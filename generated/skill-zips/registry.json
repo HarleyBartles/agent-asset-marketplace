@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 102,
+  "artifact_count": 103,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -63,13 +63,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/adventures-github-operations/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 8260,
-      "source_sha256": "7ac34db712f4c3f38447e2052a84e1bea116ce5599e17119024eb36beb9a6a07",
+      "source_bytes": 8430,
+      "source_sha256": "e56d9234847c137f674b27e6c853b98ace3f52b188c1b3627466fdd93b3e7aea",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5196,
-      "zip_sha256": "5392ce1d9f2523e2beaf8c05adc09f83d2f17687ab6809c571f1a473648a2078"
+      "zip_size_bytes": 5256,
+      "zip_sha256": "65e7e03eda29389547ea1a5e6e5dd61f6ec252f81c633a5156f46b361a15d313"
     },
     {
       "pack": "adventures-pack",
@@ -495,13 +495,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/adventures-github-operations/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 8260,
-      "source_sha256": "7ac34db712f4c3f38447e2052a84e1bea116ce5599e17119024eb36beb9a6a07",
+      "source_bytes": 8430,
+      "source_sha256": "e56d9234847c137f674b27e6c853b98ace3f52b188c1b3627466fdd93b3e7aea",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5196,
-      "zip_sha256": "5392ce1d9f2523e2beaf8c05adc09f83d2f17687ab6809c571f1a473648a2078"
+      "zip_size_bytes": 5256,
+      "zip_sha256": "355552d77bdf992d0bb4e99ce0e2e455278d10a174b5fc3b3647f6b8ac7d051f"
     },
     {
       "pack": "house-skills",
@@ -777,6 +777,22 @@
     },
     {
       "pack": "house-skills",
+      "skill": "github-operations",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/github-operations",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/github-operations/skill.zip",
+      "source_file_count": 5,
+      "source_bytes": 20151,
+      "source_sha256": "40b16e49e7e36f8125c76d2d02c1b289e3adc3745c15512fb77beadeccfcd284",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 8968,
+      "zip_sha256": "efcfe9297fdd14bdfe31f13c7e228ca023e40a60136f4d8e0261d990d639fa82"
+    },
+    {
+      "pack": "house-skills",
       "skill": "gpt-base-doctrine",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine",
@@ -799,13 +815,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 20766,
-      "source_sha256": "f400576849979d5b8db30bf65ff3bd7d4659bbc7a7b4f8b3bd2cfec677680796",
+      "source_bytes": 21073,
+      "source_sha256": "cd1ff7d555787799d9447d21ce8d16e93fec937ffa8bdf6d5028fff7b6755709",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4140,
-      "zip_sha256": "ca4487ad5ca95c0a04812a2986f7ee9b3b3790416f15d87f008082bed77aa507"
+      "zip_size_bytes": 4196,
+      "zip_sha256": "fcebfb4d72efa60fc4cb99af01e041e1c0b421a48eb557b2d6425d7ed8ab2192"
     },
     {
       "pack": "house-skills",
