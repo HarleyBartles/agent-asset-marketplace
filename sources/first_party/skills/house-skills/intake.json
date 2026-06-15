@@ -406,6 +406,16 @@
       "notes": "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
     },
     {
+      "issue": "MARK-139",
+      "source_id": "linear-superpowers-v1",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+      "public_name": "linear-superpowers",
+      "provenance_name": "MARK-139 Linear Superpowers compositional skill",
+      "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
+      "import_state": "imported",
+      "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, and @linear-issue-compactor without introducing a second source of truth."
+    },
+    {
       "issue": "MARK-85",
       "source_id": "wild-bunch-project-doctrine-v1",
       "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
