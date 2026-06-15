@@ -9,6 +9,12 @@ assets where applicable. Supporting surfaces such as provenance, ledgers, indexe
 and validation helpers exist to preserve source, traceability, and review
 context. They do not substitute for vendored marketplace assets.
 
+The repo posture is `Codex plugin first; generated GPT-safe skill zips second.`.
+The Codex plugin roots under `codex-marketplace/plugins/` are the canonical
+marketplace source custody. The generated `skill.zip` surface is a derived GPT
+export surface built from that source plus any repo-owned GPT overlay declared
+under `gpt-overlays/`.
+
 Canonical repo-resident `skill.zip` artifacts, when present, live under
 `generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip` with a registry at
 `generated/skill-zips/registry.json`. The package tooling is the normal writer
@@ -57,6 +63,10 @@ Expected flow:
 3. Update the marketplace/runtime registry or manifest required for the asset to be discoverable/installable.
 4. Use `provenance/` and `sources/third_party/` to prove origin, rights, and custody.
 5. Validate the repo and publish through GitHub before claiming completion.
+
+When a task touches both Codex plugin custody and GPT exports, treat the plugin
+source tree as the canonical edit surface and the generated zip surface as the
+derived publication surface.
 
 Repacking upstream skills into a new synthetic plugin is not the default drain route. Do that only when an issue explicitly asks for a curated derivative bundle and defines the transformation contract.
 

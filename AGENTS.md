@@ -26,6 +26,11 @@ from marketplace source custody plus any repo-owned GPT overlay declared under
 `gpt-overlays/`, with direct exports for GPT-safe skills and explicit
 exclusions for skills that should not be exported raw.
 
+Repo posture is `Codex plugin first; generated GPT-safe skill zips second.`
+Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
+canonical edit surface. Treat `generated/skill-zips/` as a derived publication
+surface, not a source root. Use `gpt-overlays/` for GPT-safe adaptations only.
+
 The editable active marketplace root inventory lives at
 `codex-marketplace/plugin-roots.json`. Root additions should flow through that
 file and the matching generators/validators rather than Python constant edits.
@@ -77,6 +82,11 @@ Upstream drains are not complete merely because an upstream was inventoried or c
 The goal of third-party upstream drains is to legally re-vendor usable upstream plugin-market assets into this repo's plugin market when rights and source shape allow it.
 
 For upstream plugin markets, preserve upstream plugin/package boundaries by default. Take the upstream plugins and put them into this repo's plugin market. Do not pull skills out of upstream plugins and repack them into a new synthetic plugin unless the issue explicitly asks for a curated derivative bundle and defines the transformation contract.
+
+When a repo task spans both plugin custody and GPT export, keep the plugin tree
+canonical and let the generated zip surface follow it. If a skill is not GPT-safe
+as-is, solve that with an overlay or exclusion instead of treating the generated
+zip as the canonical source.
 
 For upstream drains, the default outcome is vendored or adapted market assets. Documentation, doctrine, catalog, reference, provenance, or ledger-only output is valid only when the issue explicitly asks for that or every scoped asset has concrete blocker evidence.
 
