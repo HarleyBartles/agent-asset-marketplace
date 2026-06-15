@@ -19,10 +19,14 @@ Use this skill for structure decisions in the Wild Bunch C#/.NET codebase. Prote
 - CQRS is allowed as a read/write separation tool, not a mandate to split everything.
 - Event-sourcing concepts may inform audit or replay thinking, but do not convert persistence to full event sourcing unless the issue scopes it.
 - Onion or clean architecture only matters when it protects domain rules from UI, database, or framework leakage.
+- Seeded setup and randomness require explicit seams. Avoid unseeded random calls and hidden world-start defaults in domain or application code.
+- Prefer deterministic seed plumbing and explicit setup objects when a task touches initial world state or variability controls.
+- Use the installed `wild-bunch-project-doctrine` skill reference for seeded setup, difficulty, entropy, and world-start posture.
 
 ## Reference trigger
 
 Read `references/dotnet-architecture.md` when the task needs persistence-shape, CQRS, database-boundary, layering, or verification detail beyond the core rules. Do not reread it after the architecture route is classified unless a concrete unresolved decision remains.
+Consult the installed `wild-bunch-project-doctrine` skill reference when a task touches world-start identity, randomness, or setup-seam design.
 
 ## Boundary
 

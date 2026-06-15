@@ -1167,13 +1167,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/wild-bunch-domain-modeling/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 5507,
-      "source_sha256": "8aadae0c8575755c171a1b278dfc568b59894a4879a32972f416fedeb756c81f",
+      "source_bytes": 5996,
+      "source_sha256": "44e0c97236b2362c9bba914adb89366a7a6674349d97af626045f54415a4b27f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3307,
-      "zip_sha256": "b6b0ab65dd8aa85dc4521527dc068672e1cad8de72e407e0b5189b4e029df6c9"
+      "zip_size_bytes": 3486,
+      "zip_sha256": "b6f51efce288724063ad1b63bfb4bd6c8e85a4244f1edaad148605d11f382a55"
     },
     {
       "pack": "house-skills",
@@ -1183,13 +1183,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/wild-bunch-dotnet-architecture/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 6727,
-      "source_sha256": "5e2afbba38adc9a78499a4ef29b9057a26bf0d842d9b163298704f36455faa70",
+      "source_bytes": 7275,
+      "source_sha256": "17b53dc65013135ef07a798737775b0b538fac9a83bc85ff958a4ec36c9eaaf8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3738,
-      "zip_sha256": "7f062e0c43b38d1420891d442c0877b8698bd8fa457610d9de380e6419830c96"
+      "zip_size_bytes": 3951,
+      "zip_sha256": "08a471a8dc9bfb2f5a30bcad2b12d7baee7f0a58394e47bc2ed0bf07ed9e9e3d"
     },
     {
       "pack": "house-skills",
@@ -1198,14 +1198,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/wild-bunch-project-doctrine/skill.zip",
-      "source_file_count": 4,
-      "source_bytes": 2444,
-      "source_sha256": "e153f76f3075b86af79ecde497a2ffae90f530a819d1427e71fb7641c0c1e7a7",
+      "source_file_count": 5,
+      "source_bytes": 6363,
+      "source_sha256": "bb0744b3e4162f5db56109ba4fb587c9bcf857f8667e8b3bf0927ad07e119428",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2049,
-      "zip_sha256": "d4a9d26bc5a26ff4c5ef73fa55029b66a30e85143a63d687abba8d9f2e40607f"
+      "zip_size_bytes": 3985,
+      "zip_sha256": "c5d2d9e89ce8d7d367afe3e07c9deed0f7a4a39a9a324026008101fc6b398365"
     },
     {
       "pack": "house-skills",
@@ -1215,13 +1215,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/wild-bunch-worker-verification/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 4363,
-      "source_sha256": "7dfa6625c5c942119c99f405126fd2d8f02edbe5678c262c4072881adefdb4d1",
+      "source_bytes": 4772,
+      "source_sha256": "6c80995bada872de369731627c52e8299d985a458f2d0b3de12b659f292f7e00",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2737,
-      "zip_sha256": "daabc9e236f173a6369306478299308483d355642b0957abbc9f118a0b46b63b"
+      "zip_size_bytes": 2898,
+      "zip_sha256": "bd5c40532c5821d7ea2a783ebe9109a1a64ab06651323d6b703a78a8cc1c2d7e"
     },
     {
       "pack": "house-skills",
@@ -1551,13 +1551,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-domain-modeling/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 5507,
-      "source_sha256": "8aadae0c8575755c171a1b278dfc568b59894a4879a32972f416fedeb756c81f",
+      "source_bytes": 5996,
+      "source_sha256": "44e0c97236b2362c9bba914adb89366a7a6674349d97af626045f54415a4b27f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3307,
-      "zip_sha256": "b6b0ab65dd8aa85dc4521527dc068672e1cad8de72e407e0b5189b4e029df6c9"
+      "zip_size_bytes": 3486,
+      "zip_sha256": "b6f51efce288724063ad1b63bfb4bd6c8e85a4244f1edaad148605d11f382a55"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1567,13 +1567,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-dotnet-architecture/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 6727,
-      "source_sha256": "5e2afbba38adc9a78499a4ef29b9057a26bf0d842d9b163298704f36455faa70",
+      "source_bytes": 7275,
+      "source_sha256": "17b53dc65013135ef07a798737775b0b538fac9a83bc85ff958a4ec36c9eaaf8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3738,
-      "zip_sha256": "7f062e0c43b38d1420891d442c0877b8698bd8fa457610d9de380e6419830c96"
+      "zip_size_bytes": 3951,
+      "zip_sha256": "08a471a8dc9bfb2f5a30bcad2b12d7baee7f0a58394e47bc2ed0bf07ed9e9e3d"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1582,14 +1582,14 @@
       "source_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-project-doctrine/skill.zip",
-      "source_file_count": 4,
-      "source_bytes": 2444,
-      "source_sha256": "e153f76f3075b86af79ecde497a2ffae90f530a819d1427e71fb7641c0c1e7a7",
+      "source_file_count": 5,
+      "source_bytes": 6363,
+      "source_sha256": "bb0744b3e4162f5db56109ba4fb587c9bcf857f8667e8b3bf0927ad07e119428",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2049,
-      "zip_sha256": "d4a9d26bc5a26ff4c5ef73fa55029b66a30e85143a63d687abba8d9f2e40607f"
+      "zip_size_bytes": 3985,
+      "zip_sha256": "c5d2d9e89ce8d7d367afe3e07c9deed0f7a4a39a9a324026008101fc6b398365"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1599,13 +1599,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-worker-verification/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 4363,
-      "source_sha256": "7dfa6625c5c942119c99f405126fd2d8f02edbe5678c262c4072881adefdb4d1",
+      "source_bytes": 4772,
+      "source_sha256": "6c80995bada872de369731627c52e8299d985a458f2d0b3de12b659f292f7e00",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2737,
-      "zip_sha256": "daabc9e236f173a6369306478299308483d355642b0957abbc9f118a0b46b63b"
+      "zip_size_bytes": 2898,
+      "zip_sha256": "bd5c40532c5821d7ea2a783ebe9109a1a64ab06651323d6b703a78a8cc1c2d7e"
     }
   ],
   "excluded": [

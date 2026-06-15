@@ -12,3 +12,9 @@
 - Removed the retired active root from the live House Skills bundle and updated the bundle manifest, source map, and source ledgers to reflect 44 active roots.
 - Refreshed the live `asset-market` source to match the updated saved zip, including bundled skill-pack lookup, GPT pack vs plugin install semantics, and per-skill install-unit expansion for `skill-installer`.
 - Added the repo-backed `linear-issue-compactor` House Skills root and updated the live bundle manifest, source map, source ledgers, and bundle skill count to reflect 50 active roots.
+
+## 2026-06-15
+
+- Added the Wild Bunch seeded world setup doctrine reference to the first-party project-doctrine source.
+- Threaded compact difficulty, entropy, and seeded setup composition hooks into the Wild Bunch domain modeling, .NET architecture, and worker verification skills.
+- Recorded the semantic Wild Bunch skill update in the House Skills decision ledger.

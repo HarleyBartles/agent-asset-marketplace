@@ -510,5 +510,45 @@
     "scope": "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
     "import_state": "imported",
     "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+  },
+  {
+    "issue": "MARK-136",
+    "source_id": "wild-bunch-project-doctrine-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+    "public_name": "wild-bunch-project-doctrine",
+    "provenance_name": "MARK-136 Wild Bunch difficulty, entropy, and seeded setup update",
+    "scope": "Wild Bunch project posture and seeded setup doctrine",
+    "import_state": "imported",
+    "notes": "Updated to add the canonical difficulty, entropy, and seeded world setup reference for project-posture routing."
+  },
+  {
+    "issue": "MARK-136",
+    "source_id": "wild-bunch-domain-modeling-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+    "public_name": "wild-bunch-domain-modeling",
+    "provenance_name": "MARK-136 Wild Bunch difficulty, entropy, and seeded setup update",
+    "scope": "Wild Bunch gameplay state, GameSession boundaries, and seeded setup composition",
+    "import_state": "imported",
+    "notes": "Updated to classify difficulty, entropy, and seeded setup as in-scope, deferred, or irrelevant when gameplay state or initial world state is under discussion."
+  },
+  {
+    "issue": "MARK-136",
+    "source_id": "wild-bunch-dotnet-architecture-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+    "public_name": "wild-bunch-dotnet-architecture",
+    "provenance_name": "MARK-136 Wild Bunch difficulty, entropy, and seeded setup update",
+    "scope": "Wild Bunch C#/.NET architecture guardrails for seeded setup and randomness seams",
+    "import_state": "imported",
+    "notes": "Updated to require explicit seams for seeded setup and randomness, and to avoid hidden world-start defaults in domain/application code."
+  },
+  {
+    "issue": "MARK-136",
+    "source_id": "wild-bunch-worker-verification-v1.1",
+    "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+    "public_name": "wild-bunch-worker-verification",
+    "provenance_name": "MARK-136 Wild Bunch difficulty, entropy, and seeded setup update",
+    "scope": "Wild Bunch worker returns and seeded setup verification",
+    "import_state": "imported",
+    "notes": "Updated to falsify PRs that change variable gameplay outcomes or initial setup unless they show difficulty, entropy, and seeded setup handling or explicit deferral."
   }
 ]
