@@ -86,11 +86,11 @@
       "canonical_name": "unslop-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md",
-      "local_path": "skills/unslop-superpowers/SKILL.md",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+      "local_path": "skills/unslop-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
     },
     {
       "canonical_name": "receiving-code-review",

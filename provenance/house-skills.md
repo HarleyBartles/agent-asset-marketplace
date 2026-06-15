@@ -111,7 +111,7 @@
 
 ## unslop-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
 - Public identity: `unslop-superpowers`
 - Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
 - Ownership: Harley-owned first-party House skill

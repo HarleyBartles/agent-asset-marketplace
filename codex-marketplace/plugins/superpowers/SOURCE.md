@@ -17,7 +17,7 @@ source-backed projections.
 - House Skills source custody:
   `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
   `codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
-  `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md`
+  `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
 
 ## Projected surface
 
@@ -52,4 +52,6 @@ the top-level license and release notes) in third-party custody.
 
 `linear-superpowers`, `github-superpowers`, and `unslop-superpowers` stay
 editable in House Skills and are projected here as readable copies for the
-Superpowers bundle rather than as second source roots.
+Superpowers bundle rather than as second source roots. `unslop-superpowers`
+is mirrored as a directory so its `agents/openai.yaml` stays in the source-
+backed projection contract.

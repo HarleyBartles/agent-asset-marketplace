@@ -42,9 +42,9 @@
     {
       "canonical_name": "unslop-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md",
-      "local_path": "codex-marketplace/plugins/superpowers/skills/unslop-superpowers/SKILL.md",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/unslop-superpowers",
+      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
     }
   ],
   "source_only_surfaces": [

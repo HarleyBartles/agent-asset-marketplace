@@ -245,7 +245,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             projected_skill_root = plugin_root / "skills" / "unslop-superpowers"
             _touch(house_skill_root / "SKILL.md", "---\nname: unslop-superpowers\n---\n")
+            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
             _touch(projected_skill_root / "SKILL.md", "---\nname: unslop-superpowers\n---\n")
+            _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
                 ".codex-plugin/plugin.json",
@@ -313,11 +315,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "unslop-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md",
-                        "local_path": "skills/unslop-superpowers/SKILL.md",
+                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+                        "local_path": "skills/unslop-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected from House Skills as the canonical first-party source.",
+                        "provenance_note": "Projected as a directory mirror from House Skills as the canonical first-party source.",
                     }
                 ],
                 "excluded": [

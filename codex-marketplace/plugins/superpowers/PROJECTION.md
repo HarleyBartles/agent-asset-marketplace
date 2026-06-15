@@ -24,8 +24,8 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 source at `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`.
 `skills/github-superpowers/SKILL.md` is copied from the canonical House Skills
 source at `codex-marketplace/plugins/house-skills/skills/github-superpowers/`.
-`skills/unslop-superpowers/SKILL.md` is copied from the canonical House Skills
-source at `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`.
+`skills/unslop-superpowers/` is copied from the canonical House Skills source
+at `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`.
 
 ## Excluded from the active install surface
 
