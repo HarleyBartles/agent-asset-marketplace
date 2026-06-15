@@ -31,6 +31,7 @@ Current skill inventory:
 | Base and control plane | skill-validator | `codex-marketplace/plugins/house-skills/skills/skill-validator/SKILL.md` |
 | Base and control plane | asset-market | `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md` |
 | Base and control plane | linear-issue-compactor | `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor/SKILL.md` |
+| Base and control plane | linear-superpowers | `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md` |
 | Base and control plane | skill-handoff | `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md` |
 | Base and control plane | skill-installer | `codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md` |
 | Base and control plane | tps-ingress | `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md` |

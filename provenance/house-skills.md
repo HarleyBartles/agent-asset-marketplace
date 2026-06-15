@@ -82,6 +82,15 @@
 - Scope: Linear issue compaction and connector-readable issue bodies
 - Notes: Repo-backed first-party Linear compaction skill for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity.
 
+## linear-superpowers
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
+- Public identity: `linear-superpowers`
+- Provenance/history: MARK-139 Linear Superpowers compositional skill
+- Ownership: Harley-owned first-party House skill
+- Scope: Linear issue and track shaping with smallest-applicable workflow selection
+- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. It composes `@using-superpowers`, `@writing-plans`, `@executing-plans`, `@connector-safety`, and `@linear-issue-compactor` without creating a second source of truth.
+
 ## skill-handoff
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`
