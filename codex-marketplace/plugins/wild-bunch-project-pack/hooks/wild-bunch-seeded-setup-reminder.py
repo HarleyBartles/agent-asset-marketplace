@@ -7,9 +7,10 @@ import os
 REMINDER = (
     "Wild Bunch reminder: when a task touches seed, world setup, difficulty, "
     "entropy, inventory profile, rope, ammo, random rolls, shuffles, luck, "
-    "travel, encounters, or gameplay decision loops, consult "
-    "`codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/"
-    "references/difficulty-entropy-seeded-world-setup.md` before planning or review."
+    "travel, encounters, or gameplay decision loops, consult the installed "
+    "`wild-bunch-project-doctrine` reference at "
+    "`skills/wild-bunch-project-doctrine/references/"
+    "difficulty-entropy-seeded-world-setup.md` before planning or review."
 )
 
 
