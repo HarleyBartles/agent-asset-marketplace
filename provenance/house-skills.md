@@ -30,8 +30,8 @@
 - Public identity: `connector-safety`
 - Provenance/history: installed connector-safety package landed via WILL-274; v1.1 zip update
 - Ownership: Harley-authored first-party House skill
-- Scope: connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting
-- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it.
+- Scope: connector and tool safety blocks, discover-before-mutation flow, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, post-create read chains, and safe-action reporting
+- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it. The current update sharpens the connector safety doctrine with mandatory discover -> read -> write -> verify guidance while preserving the existing blocked-write and exact-state guard rules.
 
 ## adventures-project-doctrine-v1
 
