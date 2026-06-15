@@ -24,6 +24,9 @@ Turn the active repo's unslop profile into concrete controls for:
 
 Start with `@using-superpowers` as the workflow-selection entrypoint.
 
+Use `@connector-safety` before any GPT connector write or blocked-write
+recovery, especially direct-to-main profile custody writes.
+
 Use `@unslop` when profile creation or refresh is the smallest necessary next step.
 
 If a repo unslop profile already exists, apply it to the current work packet. If the profile is stale, weak, contradicted by current repo outputs, or missing relevant failure modes, refresh it. If no profile exists and local write access is lawful, create the smallest useful profile. If mutation is unavailable or unsafe, report the exact profile gap instead of pretending the guard ran.

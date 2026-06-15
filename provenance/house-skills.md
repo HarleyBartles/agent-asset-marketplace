@@ -84,12 +84,12 @@
 
 ## linear-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
 - Public identity: `linear-superpowers`
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. It composes `@using-superpowers`, `@writing-plans`, `@executing-plans`, `@connector-safety`, `@linear-issue-compactor`, and `@unslop-superpowers` without creating a second source of truth.
+- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@using-superpowers`, `@writing-plans`, `@executing-plans`, `@connector-safety`, `@linear-issue-compactor`, and `@unslop-superpowers` without creating a second source of truth.
 
 ## github-operations
 
@@ -102,12 +102,12 @@
 
 ## github-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/github-superpowers/`
 - Public identity: `github-superpowers`
 - Provenance/history: MARK-143 GitHub Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
 - Scope: GitHub-facing workflow selection, proof boundaries, and branch-closeout routing
-- Notes: First-party compositional GitHub workflow skill for naming the smallest applicable specialist workflow, preserving `github-operations` as the GitHub proof and review-write boundary skill, and keeping GitHub proof, publication, merge, and final-main verification narrow. It composes `@unslop-superpowers` when repo-specific anti-slop controls or evidence requirements matter.
+- Notes: First-party compositional GitHub workflow skill for naming the smallest applicable specialist workflow, preserving `github-operations` as the GitHub proof and review-write boundary skill, and keeping GitHub proof, publication, merge, and final-main verification narrow. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@unslop-superpowers` when repo-specific anti-slop controls or evidence requirements matter.
 
 ## unslop-superpowers
 
@@ -116,7 +116,7 @@
 - Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
 - Ownership: Harley-owned first-party House skill
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
-- Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. It composes `@using-superpowers` and `@unslop` without replacing the underlying profile-generation engine.
+- Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@using-superpowers`, `@connector-safety`, and `@unslop` without replacing the underlying profile-generation engine.
 
 ## skill-handoff
 

@@ -8,9 +8,9 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 
 - `.codex-plugin/plugin.json`
 - `skills/`
-- `skills/linear-superpowers/SKILL.md`
-- `skills/github-superpowers/SKILL.md`
-- `skills/unslop-superpowers/SKILL.md`
+- `skills/linear-superpowers/`
+- `skills/github-superpowers/`
+- `skills/unslop-superpowers/`
 - `assets/app-icon.png`
 - `assets/superpowers-small.svg`
 - `LICENSE`
@@ -20,12 +20,16 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 - `references/bundle-manifest.json`
 - `references/provenance-map.json`
 
-`skills/linear-superpowers/SKILL.md` is copied from the canonical House Skills
-source at `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`.
-`skills/github-superpowers/SKILL.md` is copied from the canonical House Skills
-source at `codex-marketplace/plugins/house-skills/skills/github-superpowers/`.
+`skills/linear-superpowers/` is copied from the canonical House Skills source
+at `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`.
+`skills/github-superpowers/` is copied from the canonical House Skills source
+at `codex-marketplace/plugins/house-skills/skills/github-superpowers/`.
 `skills/unslop-superpowers/` is copied from the canonical House Skills source
 at `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`.
+
+Each first-party projection is a directory-level skill spec, so the copied
+tree includes both `SKILL.md` and `agents/openai.yaml` when the canonical
+source provides them.
 
 ## Excluded from the active install surface
 

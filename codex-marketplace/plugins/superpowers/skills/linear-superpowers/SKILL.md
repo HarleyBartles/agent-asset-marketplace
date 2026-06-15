@@ -25,7 +25,9 @@ Start with `@using-superpowers` as the workflow-selection entrypoint.
 
 When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `@writing-plans` for route review and `@executing-plans` as the outer execution workflow.
 
-Use `@connector-safety` for any Linear write or blocked-write recovery.
+Use `@connector-safety` before any Linear write or blocked-write recovery,
+including issue create or update, comments, status changes, labels,
+relations or blockers, documents, assignments, and project moves.
 
 Use `@linear-issue-compactor` when the issue body is getting too long for the connector to stay readable.
 

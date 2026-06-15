@@ -66,8 +66,8 @@
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-      "local_path": "skills/linear-superpowers/SKILL.md",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+      "local_path": "skills/linear-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
@@ -76,8 +76,8 @@
       "canonical_name": "github-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
-      "local_path": "skills/github-superpowers/SKILL.md",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
+      "local_path": "skills/github-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."

@@ -35,7 +35,10 @@ Use `@verification-before-completion` before claiming fixed, passing, merged, pu
 
 Use `@finishing-a-development-branch` when implementation is complete and branch closeout is the actual task.
 
-Use `@connector-safety` for any GitHub mutation or blocked-write recovery.
+Use `@connector-safety` before any GitHub mutation or blocked-write recovery,
+including PR comments, PR reviews and inline comments, issue mutations,
+labels, milestones, file or profile updates, merges, closes, deletes,
+publishes, and other high-risk mutations.
 
 Use `@unslop-superpowers` when the GitHub packet needs repo-specific anti-slop controls, profile-aware review findings, or evidence requirements.
 
