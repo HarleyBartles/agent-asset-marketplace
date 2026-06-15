@@ -23,10 +23,13 @@ Use this skill when the task touches live gameplay state or Wild Bunch domain la
 - Treat travel as moving toward an active journey or trail-day loop, not a single immediate multi-day town leap.
 - Model journey state with origin, destination, route profile, remaining days or distance, travel mode, player and horse condition, resources, and pending encounter state when the slice needs that detail.
 - Advance travel one trail day at a time and pause when player choice is needed.
+- When gameplay decision loops or initial world state are in play, classify difficulty, entropy, and seeded setup as in scope, explicitly deferred, or irrelevant before choosing structure.
+- Use the seeded setup doctrine reference when domain modeling needs the world-start identity or randomness boundary.
 
 ## Reference trigger
 
 Read `references/domain-model.md` when a task needs the compact domain anchor list for implementation, issue shaping, review, or validation. Do not reread the reference repeatedly after the relevant domain constraints have been extracted.
+Read `references/difficulty-entropy-seeded-world-setup.md` when a task touches initial world state, difficulty envelopes, entropy, or seed identity.
 
 ## Composition
 

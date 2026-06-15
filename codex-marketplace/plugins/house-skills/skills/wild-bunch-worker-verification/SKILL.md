@@ -16,8 +16,10 @@ Use this skill when finishing or reviewing Wild Bunch work. Passing tests are no
 5. Include branch, commit SHA, PR URL or number, and a concise touched-files summary.
 6. For browser or UI work, require screenshot evidence or state why it is unavailable.
 7. Do not claim landed or mainline state unless it is verified after merge.
+8. If a PR changes variable gameplay outcomes or initial setup, verify difficulty, entropy, and seeded setup handling or an explicit deferral.
 
 Read `references/verification-checklist.md` only when building or checking a verification report, closure recommendation, or Green/Amber/Red status. After reading it once for the current verification, do not reread it unless the task changes.
+Read `references/difficulty-entropy-seeded-world-setup.md` when the verification needs a falsification pass for setup or entropy handling.
 
 ## Rules
 

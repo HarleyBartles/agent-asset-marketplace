@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3 \"${CLAUDE_PLUGIN_ROOT}/hooks/wild-bunch-seeded-setup-reminder.py\"",
+            "async": false
+          }
+        ]
+      }
+    ]
+  }
+}

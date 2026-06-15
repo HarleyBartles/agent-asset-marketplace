@@ -20,6 +20,7 @@ This bundle packages the hydrated Wild Bunch first-party skills together with th
 - `skills/game-ui-frontend/SKILL.md`
 - `skills/game-playtest/SKILL.md`
 - `skills/sprite-pipeline/SKILL.md`
+- `hooks/`
 
 ## Marketplace adaptation
 
@@ -34,3 +35,4 @@ This bundle packages the hydrated Wild Bunch first-party skills together with th
 ## Notes
 
 The active projection inventory now lives in `codex-marketplace/plugins/wild-bunch-project-pack/skills/`.
+Pack-local Codex hooks live under `hooks/` and are advisory only; they do not become part of GPT skill exports.

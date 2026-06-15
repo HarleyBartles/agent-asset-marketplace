@@ -16,3 +16,4 @@ This bundle is a self-contained projection of the Wild Bunch project workflow.
 - Copy the retained component trees verbatim into this plugin root.
 - Keep first-party and third-party provenance separate in the bundle manifest and provenance map.
 - Do not introduce linked-bundle or dependency semantics.
+- Pack-local Codex hooks live under `hooks/` using the default discovery path, and they stay outside GPT skill export text.
