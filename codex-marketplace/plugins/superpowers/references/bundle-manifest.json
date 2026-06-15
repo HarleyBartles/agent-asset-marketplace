@@ -16,8 +16,8 @@
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json"
   ],
-  "candidate_count": 16,
-  "imported_count": 16,
+  "candidate_count": 17,
+  "imported_count": 17,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -81,6 +81,16 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+    },
+    {
+      "canonical_name": "unslop-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+      "local_path": "skills/unslop-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
     },
     {
       "canonical_name": "receiving-code-review",
@@ -215,7 +225,7 @@
     }
   ],
   "notes": [
-    "The active projection is mostly verbatim, with the using-superpowers and finishing-a-development-branch skills adapted for Codex marketplace policy compatibility, and linear-superpowers plus github-superpowers projected from the House Skills canonical source.",
+    "The active projection is mostly verbatim, with the using-superpowers and finishing-a-development-branch skills adapted for Codex marketplace policy compatibility, and linear-superpowers, github-superpowers, plus unslop-superpowers projected from the House Skills canonical source.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

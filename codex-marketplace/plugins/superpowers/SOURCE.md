@@ -2,7 +2,8 @@
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
 Codex marketplace and adds the first-party `linear-superpowers` and
-`github-superpowers` skills from House Skills as source-backed projections.
+`github-superpowers` and `unslop-superpowers` skills from House Skills as
+source-backed projections.
 
 ## Canonical basis
 
@@ -16,6 +17,7 @@ Codex marketplace and adds the first-party `linear-superpowers` and
 - House Skills source custody:
   `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
   `codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
+  `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
 
 ## Projected surface
 
@@ -26,6 +28,7 @@ Codex marketplace and adds the first-party `linear-superpowers` and
 - `LICENSE`
 - `skills/linear-superpowers/SKILL.md`
 - `skills/github-superpowers/SKILL.md`
+- `skills/unslop-superpowers/SKILL.md`
 - `references/codex-marketplace-compatibility.md`
 
 ## Source-only support provenance
@@ -47,6 +50,8 @@ The retained upstream snapshot also preserves the broader package boundary
 (`docs/`, `scripts/`, `tests/`, `README.md`, `package.json`, `AGENTS.md`, and
 the top-level license and release notes) in third-party custody.
 
-`linear-superpowers` and `github-superpowers` stay editable in House Skills
-and are projected here as readable copies for the Superpowers bundle rather
-than as second source roots.
+`linear-superpowers`, `github-superpowers`, and `unslop-superpowers` stay
+editable in House Skills and are projected here as readable copies for the
+Superpowers bundle rather than as second source roots. `unslop-superpowers`
+is mirrored as a directory so its `agents/openai.yaml` stays in the source-
+backed projection contract.
