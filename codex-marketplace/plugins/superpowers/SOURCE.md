@@ -1,7 +1,8 @@
 # Source
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
-Codex marketplace.
+Codex marketplace and adds the first-party `linear-superpowers` skill from
+House Skills as a source-backed projection.
 
 ## Canonical basis
 
@@ -12,6 +13,8 @@ Codex marketplace.
 - License: MIT
 - Retained source custody:
   `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
+- House Skills source custody:
+  `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
 
 ## Projected surface
 
@@ -20,6 +23,7 @@ Codex marketplace.
 - `assets/app-icon.png`
 - `assets/superpowers-small.svg`
 - `LICENSE`
+- `skills/linear-superpowers/SKILL.md`
 - `references/codex-marketplace-compatibility.md`
 
 ## Source-only support provenance
@@ -40,3 +44,6 @@ pass and are not projected into the Codex install surface:
 The retained upstream snapshot also preserves the broader package boundary
 (`docs/`, `scripts/`, `tests/`, `README.md`, `package.json`, `AGENTS.md`, and
 the top-level license and release notes) in third-party custody.
+
+`linear-superpowers` stays editable in House Skills and is projected here as a
+readable copy for the Superpowers bundle rather than as a second source root.

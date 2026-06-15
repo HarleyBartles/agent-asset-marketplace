@@ -275,7 +275,8 @@
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md"
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+        "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md"
       ],
       "license_path": "codex-marketplace/plugins/superpowers/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/superpowers/references/bundle-manifest.json",
