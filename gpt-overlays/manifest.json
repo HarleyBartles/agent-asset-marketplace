@@ -29,6 +29,11 @@
           "reason": "The GPT export should keep the branch-closeout guidance but remove Codex-only publication assumptions."
         },
         {
+          "skill": "linear-superpowers",
+          "export_mode": "direct",
+          "reason": "This first-party projection is already GPT-safe as-is."
+        },
+        {
           "skill": "receiving-code-review",
           "export_mode": "direct",
           "reason": "This skill is already GPT-safe as-is."

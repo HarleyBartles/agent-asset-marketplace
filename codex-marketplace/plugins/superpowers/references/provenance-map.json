@@ -24,6 +24,15 @@
       "PROJECTION.md"
     ]
   },
+  "source_backed_projections": [
+    {
+      "canonical_name": "linear-superpowers",
+      "source_category": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+    }
+  ],
   "source_only_surfaces": [
     {
       "path": ".claude-plugin",
@@ -55,7 +64,7 @@
     }
   ],
   "notes": [
-    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules.",
+    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers projection.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

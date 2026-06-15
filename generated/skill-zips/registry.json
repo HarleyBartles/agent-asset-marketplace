@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 101,
+  "artifact_count": 102,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -799,13 +799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 20416,
-      "source_sha256": "1a8225b67ddc4306c5d1287b90851e721fb598ab5a0d276f319ea7f75a5056e8",
+      "source_bytes": 20766,
+      "source_sha256": "f400576849979d5b8db30bf65ff3bd7d4659bbc7a7b4f8b3bd2cfec677680796",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4175,
-      "zip_sha256": "42140119a120ccd97f7fa618242ddc4143ad15bca8033c6860b00f5ceab16a16"
+      "zip_size_bytes": 4191,
+      "zip_sha256": "eb367ba7046b822be65079a492aaec5b62e6aabdcfdeb10e1a9e80edf59a1eb6"
     },
     {
       "pack": "house-skills",
@@ -863,13 +863,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3208,
-      "source_sha256": "f84e7776db6d35237119d33ac3abf9ca908a38f6c9a3f466c12094acbfbf8f75",
+      "source_bytes": 3280,
+      "source_sha256": "ddf9d7347390a6f17b0911840563ac78346aae3df7461fab3c3d78437be37b43",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1812,
-      "zip_sha256": "6871847dbc568da47e2aca33aa131cb8e59d83c6140966a172110610fc8eab9f"
+      "zip_size_bytes": 1832,
+      "zip_sha256": "21528f38bf1b1f926749cd0444811c93116323dfde11afc7d030aa0e560bd573"
     },
     {
       "pack": "house-skills",
@@ -1318,6 +1318,22 @@
       "overlay_sha256": "6d71f5016f3d5a0d44f34ba15b54f63e13e78e07d33e60c4cada7e432c4a2989",
       "zip_size_bytes": 629,
       "zip_sha256": "d4c932587c0b0a513be63b755f1f73f42ae914a518ea3da1be8d160a7f630189"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "linear-superpowers",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/superpowers/linear-superpowers/skill.zip",
+      "source_file_count": 1,
+      "source_bytes": 2821,
+      "source_sha256": "b719e84113d45b0a955b1081ac711949305c7824c6e1b33621ca8493745f3cf5",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1423,
+      "zip_sha256": "6b6d3a1a62836b31305575ed3e9e7da3cf2c5d5803e4d07d7dde5eb44c8ccd58"
     },
     {
       "pack": "superpowers",

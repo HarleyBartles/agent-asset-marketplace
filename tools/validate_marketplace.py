@@ -38,6 +38,9 @@ from skill_zip_artifacts import validate_skill_zip_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
+FIRST_PARTY_LINEAR_SUPERPOWERS_SOURCE = (
+    "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md"
+)
 
 
 def check_json(path: Path) -> dict:
@@ -453,8 +456,15 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         canonical_name = entry.get("canonical_name")
         if not canonical_name or not isinstance(canonical_name, str):
             raise ValueError("superpowers imported entry is missing canonical_name")
-        if entry.get("source_category") != "third_party":
-            raise ValueError(f"superpowers entry {canonical_name} must be third-party sourced")
+        canonical_source_path = entry.get("canonical_source_path")
+        source_category = entry.get("source_category")
+        if source_category not in {"third_party", "first_party"}:
+            raise ValueError(f"superpowers entry {canonical_name} has an invalid source_category")
+        if source_category == "first_party":
+            if canonical_name != "linear-superpowers":
+                raise ValueError("superpowers first-party projections are limited to linear-superpowers")
+            if canonical_source_path != FIRST_PARTY_LINEAR_SUPERPOWERS_SOURCE:
+                raise ValueError("superpowers linear-superpowers first-party source path mismatch")
         content_mode = entry.get("content_mode")
         if content_mode not in {"verbatim", "adapted"}:
             raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")
@@ -469,7 +479,6 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         if content_mode == "adapted" and not entry.get("adaptation_note"):
             raise ValueError(f"superpowers entry {canonical_name} needs an adaptation note")
 
-        canonical_source_path = entry.get("canonical_source_path")
         local_path = entry.get("local_path")
         if not isinstance(canonical_source_path, str) or not canonical_source_path:
             raise ValueError(f"superpowers entry {canonical_name} is missing canonical_source_path")

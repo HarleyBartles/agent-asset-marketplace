@@ -22,6 +22,12 @@ It copies the upstream skill trees and Codex assets into the active plugin
 surface and keeps the non-Codex harness metadata and hooks in third-party
 source custody.
 
+The bundle also projects the first-party `linear-superpowers` skill from
+`codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
+into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md`
+so the Superpowers plugin surface shows Harley's compositional Linear workflow
+skill without creating a second editable source root.
+
 ## Excluded from the active projection
 
 - `.claude-plugin/`
