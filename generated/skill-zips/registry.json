@@ -1199,13 +1199,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/unslop-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3551,
-      "source_sha256": "50747ef434e52281851ae63e3136b3a7a30be8bc9177e16c22f8592ebfcf807f",
+      "source_bytes": 3891,
+      "source_sha256": "bf43708af86b42d9ffdc315fb774c7fed11d2798be34ba6c5c28d26a31b9bd43",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1984,
-      "zip_sha256": "fddc1599c222fbad2d8baf79128837f4d7695be17496c80864e777154ae30e90"
+      "zip_size_bytes": 2105,
+      "zip_sha256": "edc293ce535c0f7fdd49b9543fd1b973d98e842ab3610511b20e685de5733129"
     },
     {
       "pack": "house-skills",
@@ -1471,13 +1471,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers/unslop-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3551,
-      "source_sha256": "50747ef434e52281851ae63e3136b3a7a30be8bc9177e16c22f8592ebfcf807f",
+      "source_bytes": 3891,
+      "source_sha256": "bf43708af86b42d9ffdc315fb774c7fed11d2798be34ba6c5c28d26a31b9bd43",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1984,
-      "zip_sha256": "d3da7e50367b31d1e15771e98b25ac51259de0a37013e113f7656c291ff98d07"
+      "zip_size_bytes": 2105,
+      "zip_sha256": "1414306468d70fcc137f6f44069b68340716e43d507347aa242321871f808018"
     },
     {
       "pack": "superpowers",

@@ -48,6 +48,8 @@ Nesting rule:
 
 If the task is specifically to create, refresh, or repair the repo's unslop profile, a worker may commit that profile update directly to `main` without raising a PR solely for that artifact. That escape hatch applies only to the profile artifact and any minimal manifest or provenance file it requires.
 
+For GPT connector use, the same narrow escape hatch applies only when the user explicitly authorizes the write and the connector can safely perform `discover -> read -> write -> verify` under `@connector-safety`. The GPT path must not widen the mutation beyond the profile artifact and any minimal manifest or provenance file it requires.
+
 Even then, the worker must verify current `main`, inspect the current profile or prove absence, update the smallest relevant file set, base the change on concrete repo evidence, run relevant validation, and return commit SHA plus readback proof.
 
 ## Authority split
