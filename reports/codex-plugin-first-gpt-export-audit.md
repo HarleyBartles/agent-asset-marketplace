@@ -100,6 +100,7 @@ Validation commands run and passed:
 - `py -3 tools/validate_marketplace.py`
 - `py -3 tools/validate_repo_index.py`
 - `py -3 tools/validate_generated_drift.py --full-regeneration`
+- `git diff --check HEAD~1 HEAD`
 
 Archive-scan evidence:
 
