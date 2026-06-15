@@ -133,7 +133,7 @@
     {
       "name": "linear-superpowers",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers"
     },
     {
       "name": "github-operations",
@@ -143,12 +143,12 @@
     {
       "name": "github-superpowers",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/github-superpowers"
     },
     {
       "name": "unslop-superpowers",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers"
     },
     {
       "name": "rooms-ambiguity-buster",

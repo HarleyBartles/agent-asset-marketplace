@@ -33,7 +33,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             projected_skill_root = plugin_root / "skills" / "linear-superpowers"
             _touch(house_skill_root / "SKILL.md", "---\nname: linear-superpowers\n---\n")
+            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
             _touch(projected_skill_root / "SKILL.md", "---\nname: linear-superpowers\n---\n")
+            _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
                 ".codex-plugin/plugin.json",
@@ -101,8 +103,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "linear-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-                        "local_path": "skills/linear-superpowers/SKILL.md",
+                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+                        "local_path": "skills/linear-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
                         "provenance_note": "Projected from House Skills as the canonical first-party source.",
@@ -139,7 +141,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             projected_skill_root = plugin_root / "skills" / "github-superpowers"
             _touch(house_skill_root / "SKILL.md", "---\nname: github-superpowers\n---\n")
+            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
             _touch(projected_skill_root / "SKILL.md", "---\nname: github-superpowers\n---\n")
+            _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
                 ".codex-plugin/plugin.json",
@@ -207,8 +211,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "github-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
-                        "local_path": "skills/github-superpowers/SKILL.md",
+                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
+                        "local_path": "skills/github-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
                         "provenance_note": "Projected from House Skills as the canonical first-party source.",

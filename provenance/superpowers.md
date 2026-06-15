@@ -23,17 +23,20 @@ surface and keeps the non-Codex harness metadata and hooks in third-party
 source custody.
 
 The bundle also projects the first-party `linear-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md`
-into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/SKILL.md`
+`codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
+into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/`
 and the first-party `github-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md`
-into `codex-marketplace/plugins/superpowers/skills/github-superpowers/SKILL.md`
+`codex-marketplace/plugins/house-skills/skills/github-superpowers/`
+into `codex-marketplace/plugins/superpowers/skills/github-superpowers/`
 and the first-party `unslop-superpowers` skill from
 `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
 GitHub, and anti-slop workflow skills without creating second editable source
 roots.
+
+These first-party projections are directory-level skill specs with
+`SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
 
 `linear-superpowers` and `github-superpowers` both invoke `unslop-superpowers`
 when repo-specific anti-slop controls, profile-aware non-goals, or evidence

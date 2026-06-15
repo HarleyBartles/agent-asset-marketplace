@@ -39,8 +39,8 @@ from skill_zip_artifacts import validate_skill_zip_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 FIRST_PARTY_SUPERPOWERS_SOURCES = {
-    "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-    "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md",
+    "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+    "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
     "unslop-superpowers": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
 }
 
@@ -263,7 +263,13 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         if lane != expected_lane:
             raise ValueError(f"bundle manifest skill {name} lane mismatch")
         check_path_exists(ROOT / path)
-        if not path.endswith(f"{name}/SKILL.md"):
+        if name in {"linear-superpowers", "github-superpowers", "unslop-superpowers"}:
+            skill_root = ROOT / path
+            if skill_root.name != name:
+                raise ValueError(f"bundle manifest skill {name} path mismatch")
+            check_path_exists(skill_root / "SKILL.md")
+            check_path_exists(skill_root / "agents" / "openai.yaml")
+        elif not path.endswith(f"{name}/SKILL.md"):
             raise ValueError(f"bundle manifest skill {name} path mismatch")
         manifest_names.append(name)
 
