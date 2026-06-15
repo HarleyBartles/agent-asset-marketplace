@@ -4,6 +4,8 @@ Canonical source of truth for an agent/plugin asset marketplace.
 
 This repository represents an agent/plugin asset marketplace.
 
+Codex plugin first; generated GPT-safe skill zips second.
+
 Primary deliverables are market-consumable assets, especially Codex plugin-market
 assets where applicable. Supporting surfaces such as provenance, ledgers, indexes,
 and validation helpers exist to preserve source, traceability, and review
@@ -19,6 +21,10 @@ marketplace source tree plus any repo-owned GPT overlay declared under
 `gpt-overlays/`. Direct exports stay direct when the source is already
 GPT-safe; overlay exports apply the overlay before packaging; excluded skills
 are recorded in the registry with a reason instead of being exported raw.
+
+Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
+canonical install surface. Treat `generated/skill-zips/` as a generated GPT
+export corpus, not canonical source.
 
 The active marketplace root inventory is editable at
 `codex-marketplace/plugin-roots.json`. Workers should update that inventory,

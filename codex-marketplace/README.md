@@ -2,6 +2,8 @@
 
 Canonical source location for Codex marketplace assets.
 
+Codex plugin first; generated GPT-safe skill zips second.
+
 This repo now keeps the active Codex plugin bundles to one protected
 convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/adventures-pack/`,
@@ -29,6 +31,10 @@ skill tree plus any repo-owned GPT overlay declared under `gpt-overlays/`.
 Direct exports stay direct when the source is already GPT-safe; overlay exports
 apply the overlay before packaging; excluded skills are recorded in the
 registry with a reason instead of being exported raw.
+
+The marketplace plugin roots are the canonical install surface. `gpt-overlays/`
+exists to keep generated exports GPT-safe without changing Codex plugin
+behavior.
 
 Targeted updates should use `py -3 tools/update_skill_artifacts.py --skill
 <pack>/<skill>`; `--all` is only for explicit full regeneration. Unrelated

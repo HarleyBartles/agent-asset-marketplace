@@ -5,6 +5,8 @@ Scope: `codex-marketplace/plugins/`
 This scope covers the installable Codex plugin pack roots stored under the
 marketplace source tree.
 
+Codex plugin first; generated GPT-safe skill zips second.
+
 The active installable roots under this directory are fixed to
 `house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`, `wild-bunch-project-pack/`, and `superpowers/`.
 
@@ -13,6 +15,10 @@ validated against the protected marketplace manifests and registry surfaces.
 
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
+
+Treat these plugin roots as the canonical install surface. Generated
+`skill.zip` artifacts are downstream GPT exports; `gpt-overlays/manifest.json`
+controls whether a skill is exported direct, via overlay, or excluded.
 Everything else in this tree is support custody or historical source material,
 not part of the active marketplace inventory for the normalized six-root pass.
 

@@ -5,6 +5,8 @@ Scope: `codex-marketplace/`
 This scope covers the Codex marketplace source root, including the marketplace
 manifest and the plugin source tree beneath it.
 
+Codex plugin first; generated GPT-safe skill zips second.
+
 The protected active plugin roots in this scope are fixed to
 `codex-marketplace/plugins/house-skills`,
 `codex-marketplace/plugins/adventures-pack`,
@@ -15,6 +17,11 @@ The protected active plugin roots in this scope are fixed to
 
 Those roots are installable projections only. Their editable source custody
 lives under `sources/first_party/` and `sources/third_party/`.
+
+The marketplace plugin roots are the canonical install surface. Generated
+`skill.zip` files under `generated/skill-zips/` are downstream GPT exports, and
+`gpt-overlays/manifest.json` decides whether each one is `direct`, `overlay`,
+or `excluded`.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
