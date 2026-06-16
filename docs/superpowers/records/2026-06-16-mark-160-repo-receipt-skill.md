@@ -3,8 +3,9 @@
 **Issue:** MARK-160
 **Branch:** `codex/mark-160-repo-receipt-skill`
 **Starting main SHA:** `6cbec0a6ae1b8d1bd51b7388575974b455f7d245`
-**Final head SHA:** `6cbec0a6ae1b8d1bd51b7388575974b455f7d245` (working tree only; no commit or PR published yet)
-**PR URL:** not created
+**Final head SHA:** `dceb5b084921777a8f53a8a77e2551afd54d74dc`
+**PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/98](https://github.com/HarleyBartles/agent-asset-marketplace/pull/98)
+**Publication state:** Published on branch `codex/mark-160-repo-receipt-skill` and tracked by PR #98 against `main`.
 
 ## Changed files
 
@@ -53,6 +54,7 @@
 - `tools/generate_repo_index.py`
 - `tools/validate_marketplace.py`
 - `tools/validate_repo_index.py`
+- `docs/superpowers/records/2026-06-16-mark-160-repo-receipt-skill.md`
 - `tools/update_skill_artifacts.py` was not edited; it was used for regeneration
 
 ## What changed
@@ -82,4 +84,4 @@
 
 - No repo index mirror was hand-edited after the generator was added.
 - No Linear "Open in Codex Desktop" prompt template was edited.
-- No commit, push, or PR was created in this turn.
+- The current publication record is commit `dceb5b084921777a8f53a8a77e2551afd54d74dc` on PR #98.
