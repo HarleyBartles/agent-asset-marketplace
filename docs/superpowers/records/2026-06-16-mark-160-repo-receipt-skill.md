@@ -3,9 +3,10 @@
 **Issue:** MARK-160
 **Branch:** `codex/mark-160-repo-receipt-skill`
 **Starting main SHA:** `6cbec0a6ae1b8d1bd51b7388575974b455f7d245`
+**Implementation SHA:** `dceb5b084921777a8f53a8a77e2551afd54d74dc`
 **Final head SHA:** `dceb5b084921777a8f53a8a77e2551afd54d74dc`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/98](https://github.com/HarleyBartles/agent-asset-marketplace/pull/98)
-**Publication state:** Published on branch `codex/mark-160-repo-receipt-skill` and tracked by PR #98 against `main`.
+**Publication state:** Published on branch `codex/mark-160-repo-receipt-skill` and tracked by PR #98 against `main`. A documentation-only follow-up commit corrected this record after the feature commit landed.
 
 ## Changed files
 
@@ -76,6 +77,12 @@
 - `py -3 tools/validate_generated_drift.py --base origin/main`
 - `git diff --check`
 
+## Latest Checks
+
+- `py -3 tools/generate_repo_index.py`
+- `py -3 tools/validate_repo_index.py`
+- `git diff --check`
+
 ## Generator command
 
 - `py -3 tools/generate_repo_index.py`
@@ -84,4 +91,5 @@
 
 - No repo index mirror was hand-edited after the generator was added.
 - No Linear "Open in Codex Desktop" prompt template was edited.
-- The current publication record is commit `dceb5b084921777a8f53a8a77e2551afd54d74dc` on PR #98.
+- The documentation-only follow-up commit is `6082647f5d6c55d6fb333de57eb26ff5ffb72ced`.
+- The current publication record remains commit `dceb5b084921777a8f53a8a77e2551afd54d74dc` on PR #98.
