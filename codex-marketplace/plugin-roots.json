@@ -55,6 +55,15 @@
       "plugin_root": "codex-marketplace/plugins/superpowers",
       "manifest_path": "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 6,
+      "name": "repo-worker-base",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/repo-worker-base",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+      "manifest_path": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

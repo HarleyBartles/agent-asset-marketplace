@@ -16,8 +16,8 @@
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json"
   ],
-  "candidate_count": 17,
-  "imported_count": 17,
+  "candidate_count": 18,
+  "imported_count": 18,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -91,6 +91,16 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+    },
+    {
+      "canonical_name": "codex-repo-receipts",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
+      "local_path": "skills/codex-repo-receipts",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
     },
     {
       "canonical_name": "receiving-code-review",
@@ -226,6 +236,7 @@
   ],
   "notes": [
     "The active projection is mostly verbatim, with the using-superpowers and finishing-a-development-branch skills adapted for Codex marketplace policy compatibility, and linear-superpowers, github-superpowers, plus unslop-superpowers projected from the House Skills canonical source.",
+    "The bundle also includes the House Skills-backed codex-repo-receipts skill for durable repo-resident plan and implementation-record guidance.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]
