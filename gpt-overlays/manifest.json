@@ -3,6 +3,17 @@
   "default_export_mode": "direct",
   "packs": [
     {
+      "pack": "house-skills",
+      "skills": [
+        {
+          "skill": "linear-superpowers",
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/house-skills/linear-superpowers",
+          "reason": "GPT exports need the controller-side @skill-name dialect while the Codex source stays $-native."
+        }
+      ]
+    },
+    {
       "pack": "superpowers",
       "skills": [
         {
@@ -30,8 +41,9 @@
         },
         {
           "skill": "linear-superpowers",
-          "export_mode": "direct",
-          "reason": "This first-party projection is already GPT-safe as-is."
+          "export_mode": "overlay",
+          "overlay_path": "gpt-overlays/superpowers/linear-superpowers",
+          "reason": "GPT exports need the controller-side @skill-name dialect while the Codex projection stays $-native."
         },
         {
           "skill": "github-superpowers",
