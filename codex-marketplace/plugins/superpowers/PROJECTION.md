@@ -4,6 +4,28 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 `v5.1.0`, plus the source-backed House Skills `linear-superpowers` and
 `github-superpowers` and `unslop-superpowers` skills.
 
+## Projection contract
+
+- `superpowers` is a third-party plugin projection with selected first-party
+  compositional skills projected into the vendored marketplace plugin.
+- The active plugin may contain upstream Superpowers skills plus the selected
+  first-party wrapper skills `linear-superpowers`, `github-superpowers`, and
+  `unslop-superpowers`.
+- Those first-party skills are compositional and complementary. They compose
+  Superpowers workflow guidance with first-party expert skills that live
+  outside the Superpowers plugin.
+- Do not place first-party expert or domain skills directly in the Superpowers
+  plugin.
+- Do not use this plugin as a dumping ground for House Skills, project doctrine,
+  verification experts, GitHub/Linear mechanics, or other first-party expert
+  surfaces.
+- Keep repo-specific overlay and adaptation text intact. Do not overwrite or
+  reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection
+  wording.
+- Any future first-party skill proposed for projection into `superpowers` must
+  be justified as a compositional wrapper over Superpowers, not as an expert
+  skill being relocated into the third-party plugin.
+
 ## Included in the active install surface
 
 - `.codex-plugin/plugin.json`
