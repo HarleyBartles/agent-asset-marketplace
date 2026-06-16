@@ -1,0 +1,11 @@
+interface:
+  display_name: Boring Buster
+  short_description: Judge whether work is small and boring enough to execute safely.
+  default_prompt: Use $boring-buster before planning, dispatching, or implementing work when success depends on the work being small, dull, explicit, falsifiable, and ready for ordinary execution.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

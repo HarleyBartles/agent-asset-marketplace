@@ -6,129 +6,129 @@
   "skills_root": "codex-marketplace/plugins/house-skills/skills",
   "control_plane_skill": {
     "name": "house-skills",
-    "path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
+    "path": "codex-marketplace/plugins/house-skills/skills/house-skills"
   },
   "skill_count": 54,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler"
     },
     {
       "name": "adventures-bootstrap",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap"
     },
     {
       "name": "adventures-frame-buster",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-frame-buster"
     },
     {
       "name": "adventures-github-operations",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-github-operations/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-github-operations"
     },
     {
       "name": "adventures-image-qa",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-image-qa/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-image-qa"
     },
     {
       "name": "adventures-project-doctrine",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine"
     },
     {
       "name": "adventures-storyboard-preflight",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight"
     },
     {
       "name": "adventures-visual-bible-creator",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator"
     },
     {
       "name": "adventures-visual-bible-interpreter",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter"
     },
     {
       "name": "adventures-visual-preproduction",
       "lane": "Adventures",
-      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction"
     },
     {
       "name": "ambiguity-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/ambiguity-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/ambiguity-buster"
     },
     {
       "name": "analogy-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/analogy-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/analogy-buster"
     },
     {
       "name": "boring-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/boring-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/boring-buster"
     },
     {
       "name": "buster-framework",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/buster-framework/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/buster-framework"
     },
     {
       "name": "canon-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/canon-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/canon-buster"
     },
     {
       "name": "cleanup-custody",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/cleanup-custody/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/cleanup-custody"
     },
     {
       "name": "connector-safety",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/connector-safety"
     },
     {
       "name": "crew",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/crew/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/crew"
     },
     {
       "name": "crew-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/crew-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/crew-buster"
     },
     {
       "name": "don-logan-boundary",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/don-logan-boundary"
     },
     {
       "name": "gpt-base-doctrine",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine"
     },
     {
       "name": "invariant-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/invariant-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/invariant-buster"
     },
     {
       "name": "linear",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/linear/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/linear"
     },
     {
       "name": "linear-issue-compactor",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor"
     },
     {
       "name": "linear-superpowers",
@@ -138,7 +138,7 @@
     {
       "name": "github-operations",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/github-operations"
     },
     {
       "name": "github-superpowers",
@@ -153,132 +153,132 @@
     {
       "name": "rooms-ambiguity-buster",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster"
     },
     {
       "name": "rooms-analogy-buster",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster"
     },
     {
       "name": "rooms-bootstrap",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap"
     },
     {
       "name": "rooms-canon-buster",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster"
     },
     {
       "name": "rooms-character-investigation",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-character-investigation/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-character-investigation"
     },
     {
       "name": "rooms-image-sidecars",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars"
     },
     {
       "name": "rooms-project-doctrine",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine"
     },
     {
       "name": "rooms-sheet-creator",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator"
     },
     {
       "name": "rooms-source-partitioning",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning"
     },
     {
       "name": "rooms-zoom-outs-buster",
       "lane": "Rooms",
-      "path": "codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster"
     },
     {
       "name": "session-buster",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/session-buster/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/session-buster"
     },
     {
       "name": "session-buster-ingress",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/session-buster-ingress/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/session-buster-ingress"
     },
     {
       "name": "skill-packager",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/skill-packager/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-packager"
     },
     {
       "name": "skill-validator",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/skill-validator/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-validator"
     },
     {
       "name": "tps-ingress",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/tps-ingress"
     },
     {
       "name": "tps-reporting",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/tps-reporting"
     },
     {
       "name": "work-mode-router",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/work-mode-router/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/work-mode-router"
     },
     {
       "name": "worker-dispatch-linear",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear"
     },
     {
       "name": "asset-market",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/asset-market"
     },
     {
       "name": "skill-handoff",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-handoff"
     },
     {
       "name": "skill-installer",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/skill-installer"
     },
     {
       "name": "wild-bunch-project-doctrine",
       "lane": "Wild Bunch",
-      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine"
     },
     {
       "name": "wild-bunch-domain-modeling",
       "lane": "Wild Bunch",
-      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling"
     },
     {
       "name": "wild-bunch-dotnet-architecture",
       "lane": "Wild Bunch",
-      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture"
     },
     {
       "name": "wild-bunch-browser-game",
       "lane": "Wild Bunch",
-      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game"
     },
     {
       "name": "wild-bunch-worker-verification",
       "lane": "Wild Bunch",
-      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md"
+      "path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification"
     }
   ],
   "notes": [

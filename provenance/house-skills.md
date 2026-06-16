@@ -26,7 +26,7 @@
 
 ## connector-safety
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/connector-safety`
 - Public identity: `connector-safety`
 - Provenance/history: installed connector-safety package landed via WILL-274; v1.1 zip update
 - Ownership: Harley-authored first-party House skill
@@ -43,7 +43,7 @@
 
 ## gpt-base-doctrine-v1.1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine`
 - Public identity: `gpt-base-doctrine-v1.1`
 - Provenance/history only: MARK-30 base and control plane update
 - Scope: GPT-wide shared doctrine
@@ -59,7 +59,7 @@
 
 ## rooms-canon-buster
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-canon-buster/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-canon-buster`
 - Public identity: `rooms-canon-buster`
 - Provenance/history: MARK-97 attached rooms canon buster zip update
 - Ownership: Harley-authored first-party House skill
@@ -68,7 +68,7 @@
 
 ## asset-market
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/asset-market/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/asset-market`
 - Public identity: `asset-market`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: marketplace source and pack acquisition
@@ -76,7 +76,7 @@
 
 ## linear-issue-compactor
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor`
 - Public identity: `linear-issue-compactor`
 - Provenance/history: MARK-135 Linear issue compactor skill
 - Scope: Linear issue compaction and connector-readable issue bodies
@@ -84,7 +84,7 @@
 
 ## linear-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
+- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers`
 - Public identity: `linear-superpowers`
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -93,7 +93,7 @@
 
 ## github-operations
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/github-operations`
 - Public identity: `github-operations`
 - Provenance/history: MARK-142 GitHub operations zip import
 - Ownership: Harley-owned first-party House skill
@@ -102,7 +102,7 @@
 
 ## github-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/github-superpowers/`
+- Source path: `codex-marketplace/plugins/house-skills/skills/github-superpowers`
 - Public identity: `github-superpowers`
 - Provenance/history: MARK-143 GitHub Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -111,7 +111,7 @@
 
 ## unslop-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
+- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers`
 - Public identity: `unslop-superpowers`
 - Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
 - Ownership: Harley-owned first-party House skill
@@ -120,7 +120,7 @@
 
 ## skill-handoff
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff`
 - Public identity: `skill-handoff`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: skill package handoff cadence
@@ -128,7 +128,7 @@
 
 ## skill-installer
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-installer/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/skill-installer`
 - Public identity: `skill-installer`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: skill installation handoff orchestration
@@ -136,14 +136,14 @@
 
 ## rooms-bootstrap
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap`
 - Public identity: `rooms-bootstrap`
 - Provenance/history: MARK-97 rooms bootstrap zip update
 - Scope: Rooms first-read router
 - Notes: Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata. `agents/openai.yaml` keeps the repo-local brand color and implicit invocation fields; `assets/icon.svg` stays the active icon.
 ## wild-bunch-project-doctrine-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine`
 - Public identity: `wild-bunch-project-doctrine`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -152,7 +152,7 @@
 
 ## wild-bunch-domain-modeling-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling`
 - Public identity: `wild-bunch-domain-modeling`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -161,7 +161,7 @@
 
 ## wild-bunch-dotnet-architecture-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture`
 - Public identity: `wild-bunch-dotnet-architecture`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -170,7 +170,7 @@
 
 ## wild-bunch-browser-game-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game`
 - Public identity: `wild-bunch-browser-game`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -179,7 +179,7 @@
 
 ## wild-bunch-worker-verification-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md`
+- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification`
 - Public identity: `wild-bunch-worker-verification`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -194,7 +194,7 @@
 - Human registry source: `sources/first_party/skills/house-skills/decisions.md`
 - Structured registry mirror: `sources/first_party/skills/house-skills/decisions.json`
 - Plugin manifest: `codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json`
-- Bundle skill: `codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md`
+- Bundle skill: `codex-marketplace/plugins/house-skills/skills/house-skills`
 - Bundle manifest: `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
 - Source map: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
@@ -207,10 +207,10 @@
 ### Base and control plane
 
 - `don-logan-boundary-v1` - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `gpt-base-doctrine-v1.1` - `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md`
+- `gpt-base-doctrine-v1.1` - `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine`
 - `work-mode-router-v1` - `codex-marketplace/plugins/house-skills/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
-- `worker-dispatch-linear-v2` - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
-- `linear-v1.1` - `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
+- `worker-dispatch-linear-v2` - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear`
+- `linear-v1.1` - `codex-marketplace/plugins/house-skills/skills/linear`
 - `tps-reporting-v1` - `codex-marketplace/plugins/house-skills/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
 - `tps-ingress-v1` - `codex-marketplace/plugins/house-skills/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
 - `session-buster-v0.2` - `codex-marketplace/plugins/house-skills/skills/session-buster/v0.2/session-buster-v0.2/SKILL.md`
@@ -234,7 +234,7 @@
 ### Rooms
 
 - `rooms-project-doctrine-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
-- `rooms-bootstrap-v1.1` - `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap/SKILL.md`
+- `rooms-bootstrap-v1.1` - `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap`
 - `rooms-source-partitioning-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md`
 - `rooms-ambiguity-buster-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md`
 - `rooms-analogy-buster-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md`

@@ -1,0 +1,11 @@
+interface:
+  display_name: House Skills
+  short_description: Bundle control plane for the current House Skills plugin root.
+  default_prompt: Use $house-skills to inspect or normalize the current House Skills bundle root, source map, and live skill inventory before changing the marketplace shape.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

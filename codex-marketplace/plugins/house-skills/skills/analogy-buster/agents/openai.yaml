@@ -1,0 +1,11 @@
+interface:
+  display_name: Analogy Buster
+  short_description: Check whether an analogy clarifies or distorts.
+  default_prompt: Use $analogy-buster before relying on an analogy, metaphor, comparison, role model, frame, or shorthand to support a durable decision.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
