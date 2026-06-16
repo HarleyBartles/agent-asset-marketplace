@@ -18,6 +18,13 @@ Repo Worker Base asset.
   - `skills/codex-repo-receipts/SKILL.md`
   - `skills/codex-repo-receipts/agents/openai.yaml`
 
+## Projected boring-loop
+
+- `boring-loop` projected from `sources/first_party/skills/boring-loop`
+- Source files:
+  - `skills/boring-loop/SKILL.md`
+  - `skills/boring-loop/agents/openai.yaml`
+
 ## Scope
 
 This asset is intentionally thin:
@@ -30,3 +37,5 @@ This asset is intentionally thin:
 It does not include project-specific doctrine for any particular repo. The
 `codex-repo-receipts` skill is a projected first-party House Skills workflow
 skill for durable plan and implementation-record receipts.
+The `boring-loop` skill is a projected first-party coordination skill for
+keeping work small, honest, and routed to the right specialist.

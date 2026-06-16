@@ -15,3 +15,7 @@
   source at `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts`
   so repo-backed work can publish durable plan and implementation-record
   receipts from the repo-worker-base plugin surface.
+- `boring-loop` is projected here from the canonical first-party source at
+  `sources/first_party/skills/boring-loop/` and keeps the same retained loop
+  cadence, readiness, queue grooming, and specialist-routing doctrine on the
+  worker-facing plugin surface.
