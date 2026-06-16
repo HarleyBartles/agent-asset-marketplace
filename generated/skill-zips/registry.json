@@ -613,7 +613,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2937,
-      "zip_sha256": "8fb220e26c43c126638b2c0f06053a33dfd50ee77a1760e5f4351f53c1314fee"
+      "zip_sha256": "607602c8e86c085802ba192bf40d1294cff2a2f64158c1c296945bcf8f949750"
     },
     {
       "pack": "house-skills",
@@ -629,7 +629,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2538,
-      "zip_sha256": "d6447f7abfacf1e680d3bd8f96c43f93a875cc5f502f65cb350e2c3fc94ca3ed"
+      "zip_sha256": "fd09cb4db65365639c5afcaa012f14b85df948ea8a3d0fa5a4e87cc8c0c13070"
     },
     {
       "pack": "house-skills",
@@ -661,7 +661,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2901,
-      "zip_sha256": "32106f3ca7cecd36c682e650ebc7ed946d7b67d93d29768fcba8a2901bcbc09b"
+      "zip_sha256": "4e9eac66bf547e69e390853b210db2728942e2fc54917b1b836dba86ee4563fe"
     },
     {
       "pack": "house-skills",
@@ -677,7 +677,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 3198,
-      "zip_sha256": "ca1b4b5c6f234a6210e7b87afe60fb8cc5981861728be85daf0315078d209e08"
+      "zip_sha256": "a3ca2d875c47aeffc9b900f5ac55c1b1a9f8a0aada352b7daf07f5c6361be70d"
     },
     {
       "pack": "house-skills",
@@ -693,7 +693,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2873,
-      "zip_sha256": "1a0fd3567513102cf1e753c0c852879e5d7a6d048c78c0748f2b99bfb9060ec0"
+      "zip_sha256": "9db7c110861d3181570d1df4eee0e0bae61140eec8516dd078f5eb0bf7a5871b"
     },
     {
       "pack": "house-skills",
@@ -709,7 +709,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 3315,
-      "zip_sha256": "ac4f660526dbf221eefeb40cec9c43fb475a26c6a85cb19243a01d77680d5025"
+      "zip_sha256": "5a70e065948eed7969eb2776c400be75b08b816c5c7046f908fcc6f55304f089"
     },
     {
       "pack": "house-skills",
@@ -837,7 +837,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 4590,
-      "zip_sha256": "387acf51c067c77f352530cf448d285b9ded8d4c62c163ab9cefcd48207be187"
+      "zip_sha256": "d043458dc474cbe72a0f6a5a4ab482d084673d33e51c52216e6ca7b07d6488ff"
     },
     {
       "pack": "house-skills",
@@ -853,7 +853,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 2760,
-      "zip_sha256": "c95de7fe30e57f36271152a8e02d4f5f49ea97ae0102528d5566979727ef9ff6"
+      "zip_sha256": "a4ead2fc63dfe76444473936f285ab44c24b26babd4d642b812aadc071817149"
     },
     {
       "pack": "house-skills",
@@ -895,13 +895,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3635,
-      "source_sha256": "0c3f800f1a94f408ceaaa8708df70345165820339bef4d8d66cca9c6cf8e4869",
+      "source_bytes": 3615,
+      "source_sha256": "f808a8c904ba1d424f883c513f7d1161456eba94fb6715feff3c57b9e7f2ec05",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1962,
-      "zip_sha256": "ff12f0ae79d1a6e04449b2f7a93f47c860ebdf04f9d5f20b1a5a0926fa7e0d10"
+      "zip_size_bytes": 1959,
+      "zip_sha256": "d37863b71ec161daa0ecff5aeb0a696969dbfbda8a04993f4fd869c07b084575"
     },
     {
       "pack": "house-skills",
@@ -1391,13 +1391,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3635,
-      "source_sha256": "0c3f800f1a94f408ceaaa8708df70345165820339bef4d8d66cca9c6cf8e4869",
+      "source_bytes": 3615,
+      "source_sha256": "f808a8c904ba1d424f883c513f7d1161456eba94fb6715feff3c57b9e7f2ec05",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1962,
-      "zip_sha256": "ff12f0ae79d1a6e04449b2f7a93f47c860ebdf04f9d5f20b1a5a0926fa7e0d10"
+      "zip_size_bytes": 1959,
+      "zip_sha256": "29d174ea9ce821f6109d4821ed86151ef6efdbc927ed55f4eb4b1b6a157333cb"
     },
     {
       "pack": "superpowers",
