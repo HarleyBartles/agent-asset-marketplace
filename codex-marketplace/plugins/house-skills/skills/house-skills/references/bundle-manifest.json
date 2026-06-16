@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills"
   },
-  "skill_count": 55,
+  "skill_count": 56,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -69,6 +69,11 @@
       "name": "analogy-buster",
       "lane": "Base and control plane",
       "path": "codex-marketplace/plugins/house-skills/skills/analogy-buster"
+    },
+    {
+      "name": "boring-loop",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/boring-loop"
     },
     {
       "name": "boring-buster",

@@ -10,14 +10,14 @@ license: "MIT"
 # House Skills Bundle
 
 This skill is the installable bundle control plane for the current House Skills plugin root.
-It governs the 55 active first-party House Skills roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
+It governs the 56 active first-party House Skills roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
 
 Use it when you need to understand:
 
 - the plugin identity and current shape;
 - where the local marketplace entry lives;
 - which current skill roots live in the plugin tree;
-- the `github-operations`, `github-superpowers`, `asset-market`, `skill-installer`, `skill-handoff`, `linear-issue-compactor`, `linear-superpowers`, and `codex-repo-receipts` roots that now live as current control-plane skills;
+- the `github-operations`, `github-superpowers`, `asset-market`, `skill-installer`, `skill-handoff`, `linear-issue-compactor`, `linear-superpowers`, `codex-repo-receipts`, and `boring-loop` roots that now live as current control-plane skills;
 - how to separate historical archive custody from the live plugin surface.
 
 ## Bundle contract
@@ -42,6 +42,10 @@ The historical source ledger remains:
 - `provenance/house-skills.md`
 
 The bundle does not replace the archived source ledger. Current version lives in each skill's root `SKILL.md` frontmatter, with historical residue folded into `CHANGELOG.md` and preserved support files instead of live `v*` package directories.
+
+## Shared loop control
+
+- `codex-marketplace/plugins/house-skills/skills/boring-loop`
 
 Marketplace exports are generated, not hand-edited:
 

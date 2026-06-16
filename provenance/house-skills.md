@@ -82,6 +82,15 @@
 - Scope: Linear issue compaction and connector-readable issue bodies
 - Notes: Repo-backed first-party Linear compaction skill for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity.
 
+## boring-loop
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/boring-loop`
+- Public identity: `boring-loop`
+- Provenance/history: MARK-152 Boring Loop beta first-party source
+- Ownership: Harley-owned first-party House skill
+- Scope: loop cadence, readiness and false-green prevention, parent/child DoD coverage, queue grooming, next boring move selection, route-to-specialist guidance
+- Notes: Canonical source lives at `sources/first_party/skills/boring-loop/` and is projected into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required.
+
 ## linear-superpowers
 
 - Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers`

@@ -14,6 +14,7 @@ Current skill inventory:
 | --- | --- | --- |
 | Base and control plane | ambiguity-buster | `codex-marketplace/plugins/house-skills/skills/ambiguity-buster` |
 | Base and control plane | analogy-buster | `codex-marketplace/plugins/house-skills/skills/analogy-buster` |
+| Base and control plane | boring-loop | `codex-marketplace/plugins/house-skills/skills/boring-loop` |
 | Base and control plane | boring-buster | `codex-marketplace/plugins/house-skills/skills/boring-buster` |
 | Base and control plane | buster-framework | `codex-marketplace/plugins/house-skills/skills/buster-framework` |
 | Base and control plane | canon-buster | `codex-marketplace/plugins/house-skills/skills/canon-buster` |
