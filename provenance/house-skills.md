@@ -89,7 +89,7 @@
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `$using-superpowers`, `$writing-plans`, `$executing-plans`, `$connector-safety`, `$linear-issue-compactor`, and `$unslop-superpowers` without creating a second source of truth.
+- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `/linear-issue-compactor`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
 
 ## github-operations
 

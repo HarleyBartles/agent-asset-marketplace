@@ -21,17 +21,17 @@ Shape boring, worker-send-ready Linear issues and issue tracks so they say:
 
 ## Composition
 
-Start with `$using-superpowers` as the workflow-selection entrypoint.
+Start with `/using-superpowers` as the workflow-selection entrypoint.
 
-When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `$writing-plans` for route review and `$executing-plans` as the outer execution workflow.
+When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `/writing-plans` for route review and `/executing-plans` as the outer execution workflow.
 
-Use `$connector-safety` before any Linear write or blocked-write recovery,
+Use `/connector-safety` before any Linear write or blocked-write recovery,
 including issue create or update, comments, status changes, labels,
 relations or blockers, documents, assignments, and project moves.
 
-Use `$linear-issue-compactor` when the issue body is getting too long for the connector to stay readable.
+Use `/linear-issue-compactor` when the issue body is getting too long for the connector to stay readable.
 
-Use `$unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.
+Use `/unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.
 
 Nesting rule:
 

@@ -7,9 +7,8 @@
       "skills": [
         {
           "skill": "linear-superpowers",
-          "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/house-skills/linear-superpowers",
-          "reason": "GPT exports need the controller-side @skill-name dialect while the Codex source stays $-native."
+          "export_mode": "direct",
+          "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
         }
       ]
     },
@@ -41,9 +40,8 @@
         },
         {
           "skill": "linear-superpowers",
-          "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers/linear-superpowers",
-          "reason": "GPT exports need the controller-side @skill-name dialect while the Codex projection stays $-native."
+          "export_mode": "direct",
+          "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
         },
         {
           "skill": "github-superpowers",
