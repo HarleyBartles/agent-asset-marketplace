@@ -11,7 +11,8 @@
     "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
     "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
     "skill_zips_check": "py -3 tools/validate_skill_zips.py",
-    "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main"
+    "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main",
+    "repo_index_generate": "py -3 tools/generate_repo_index.py"
   },
   "zones": [
     {
@@ -287,6 +288,25 @@
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/superpowers",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "repo-worker-base",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+      "plugin_manifest": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
+      "bundle_manifest": null,
+      "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
+      "provenance_refs": [
+        "provenance/repo-worker-base.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/repo-worker-base",
       "registry_alignment": {
         "status": "aligned",
         "note": null

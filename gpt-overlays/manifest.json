@@ -39,6 +39,11 @@
           "reason": "The GPT export should keep the branch-closeout guidance but remove Codex-only publication assumptions."
         },
         {
+          "skill": "codex-repo-receipts",
+          "export_mode": "direct",
+          "reason": "The guidance is GPT-safe and does not depend on Codex-only tool behavior."
+        },
+        {
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."

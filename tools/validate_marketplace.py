@@ -42,6 +42,7 @@ FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
     "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
     "unslop-superpowers": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+    "codex-repo-receipts": "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
 }
 
 

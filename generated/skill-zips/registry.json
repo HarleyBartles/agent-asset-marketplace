@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 107,
+  "artifact_count": 111,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -197,7 +197,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 5924,
-      "zip_sha256": "34f435ed099bc978c8da4b8d7562862f6f6691b8344c1c84f2b2c61c61c4bda1"
+      "zip_sha256": "71bdab26e0ba8f5850f3ece54c93151635ff5a991b3006055d58bdda2f424dd9"
     },
     {
       "pack": "adventures-pack",
@@ -713,6 +713,22 @@
     },
     {
       "pack": "house-skills",
+      "skill": "codex-repo-receipts",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/codex-repo-receipts/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 2612,
+      "source_sha256": "14d284a92cea64127949817d3c1549624b620b8f7b250ea223c080598dcadc94",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1528,
+      "zip_sha256": "18baf7018af99247acb92279fd629473a97d76a3ed9353ed7d38886b1020f7b5"
+    },
+    {
+      "pack": "house-skills",
       "skill": "connector-safety",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety",
@@ -725,7 +741,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 5924,
-      "zip_sha256": "34f435ed099bc978c8da4b8d7562862f6f6691b8344c1c84f2b2c61c61c4bda1"
+      "zip_sha256": "71bdab26e0ba8f5850f3ece54c93151635ff5a991b3006055d58bdda2f424dd9"
     },
     {
       "pack": "house-skills",
@@ -831,13 +847,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 21208,
-      "source_sha256": "740eea7998b6a034ccfea7f48fc8d6396e2c21f66aa380fdb3428c4c33e04a68",
+      "source_bytes": 21507,
+      "source_sha256": "168e002105a1997a7c23650ab7bbac0f90bcd44ac37755513894abd24b2327ff",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4590,
-      "zip_sha256": "d043458dc474cbe72a0f6a5a4ab482d084673d33e51c52216e6ca7b07d6488ff"
+      "zip_size_bytes": 4644,
+      "zip_sha256": "c23aeef2fc6f9b22686bf0143f3d35f0ca92e143e9f07c5845b7472c81d20987"
     },
     {
       "pack": "house-skills",
@@ -901,7 +917,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1957,
-      "zip_sha256": "46e9d8bb02b36a473fe2787ae3a734cf054be92f5a05383c7c126b19556698ad"
+      "zip_sha256": "a1435c861ff4fb3757cd9e05afff0e04bd9d195a19b64c386be9714df8f2e2ff"
     },
     {
       "pack": "house-skills",
@@ -1320,6 +1336,38 @@
       "zip_sha256": "639b564737542040eb356f83d7ca3e2128a47f5f8c658f5d8b0125595a88a23c"
     },
     {
+      "pack": "repo-worker-base",
+      "skill": "codex-repo-receipts",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/codex-repo-receipts",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/codex-repo-receipts/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 2612,
+      "source_sha256": "14d284a92cea64127949817d3c1549624b620b8f7b250ea223c080598dcadc94",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1528,
+      "zip_sha256": "c4a7b40089b7266ded3006b440ef3c31a3debc0e276b192cbd7faf743f6d35bf"
+    },
+    {
+      "pack": "repo-worker-base",
+      "skill": "repo-worker-base",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/repo-worker-base/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3707,
+      "source_sha256": "2a76a367b7eb39687c4bbb2a1ae17096fa688b9ccdc802959b9fa2b7455ad6ae",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1914,
+      "zip_sha256": "8d0a2975de11713511d39a384093166fe033a1c61313ba3fec5cc74d9a42ebac"
+    },
+    {
       "pack": "superpowers",
       "skill": "brainstorming",
       "export_mode": "overlay",
@@ -1334,6 +1382,22 @@
       "overlay_sha256": "fe96dc65eb15fcfafd7c2b504c3a93dac123ac0dc9e2fa726e6840bada633cf6",
       "zip_size_bytes": 16986,
       "zip_sha256": "e556cad728e716e648a87ba8bf0ca9bcf46ace02e92287287821c0e03d672d70"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "codex-repo-receipts",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/codex-repo-receipts",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/superpowers/codex-repo-receipts/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 2612,
+      "source_sha256": "14d284a92cea64127949817d3c1549624b620b8f7b250ea223c080598dcadc94",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1528,
+      "zip_sha256": "dadcfb0f67a161442943b404a624aac5f8c3143f9f95303914522965399b7a92"
     },
     {
       "pack": "superpowers",
@@ -1397,7 +1461,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1957,
-      "zip_sha256": "46e9d8bb02b36a473fe2787ae3a734cf054be92f5a05383c7c126b19556698ad"
+      "zip_sha256": "a1435c861ff4fb3757cd9e05afff0e04bd9d195a19b64c386be9714df8f2e2ff"
     },
     {
       "pack": "superpowers",
