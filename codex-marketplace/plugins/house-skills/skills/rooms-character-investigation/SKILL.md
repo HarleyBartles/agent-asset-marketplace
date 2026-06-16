@@ -20,7 +20,7 @@ This Skill owns broad repo lookup and source partitioning. It does not create pa
 Compose with these Skills when available:
 
 - `rooms-source-partitioning-v1` for source-basis separation.
-- `gpt-base-doctrine-v1.1` and `rooms-project-doctrine-v1` for named Rooms character, world, canon, archive, room,
+- `base-doctrine-v1.1` and `rooms-project-doctrine-v1` for named Rooms character, world, canon, archive, room,
   narrator, actor, or repo-structure claims and the related truth-boundary references.
 - `rooms-ambiguity-buster-v1` when identity, motive, authorship, witness status, archive gaps, relationship meaning,
   disappearance, room history, or emotional cost could be overresolved.

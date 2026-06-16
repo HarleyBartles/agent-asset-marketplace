@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills"
   },
-  "skill_count": 56,
+  "skill_count": 57,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -19,6 +19,11 @@
       "name": "adventures-bootstrap",
       "lane": "Adventures",
       "path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap"
+    },
+    {
+      "name": "bootstrap-router",
+      "lane": "Base and control plane",
+      "path": "codex-marketplace/plugins/house-skills/skills/bootstrap-router"
     },
     {
       "name": "adventures-frame-buster",
@@ -116,9 +121,9 @@
       "path": "codex-marketplace/plugins/house-skills/skills/don-logan-boundary"
     },
     {
-      "name": "gpt-base-doctrine",
+      "name": "base-doctrine",
       "lane": "Base and control plane",
-      "path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine"
+      "path": "codex-marketplace/plugins/house-skills/skills/base-doctrine"
     },
     {
       "name": "invariant-buster",

@@ -1,509 +1,519 @@
 {
-  "imports": [
-    {
-      "issue": "MARK-19",
-      "source_id": "buster-framework-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/buster-framework",
-      "public_name": "buster-framework",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "generic pre-action buster framework",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "ambiguity-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/ambiguity-buster",
-      "public_name": "ambiguity-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "ambiguity pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "boring-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/boring-buster",
-      "public_name": "boring-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "boring-readiness pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "invariant-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/invariant-buster",
-      "public_name": "invariant-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "binding invariant pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "analogy-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/analogy-buster",
-      "public_name": "analogy-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "analogy pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "canon-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/canon-buster",
-      "public_name": "canon-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "canon/source drift pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-20",
-      "source_id": "cleanup-custody-v0.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/cleanup-custody",
-      "public_name": "cleanup-custody",
-      "provenance_name": "legacy profanity-bearing cleanup skill",
-      "scope": "cleanup-custody"
-    },
-    {
-      "issue": "MARK-21",
-      "source_id": "skill-validator-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-validator",
-      "public_name": "skill-validator",
-      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill validation"
-    },
-    {
-      "issue": "MARK-21",
-      "source_id": "skill-packager-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-packager",
-      "public_name": "skill-packager",
-      "provenance_name": "MARK-21 skill maintenance House Skills source slice",
-      "scope": "skill packaging"
-    },
-    {
-      "issue": "MARK-22",
-      "source_id": "adventures-project-doctrine-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine",
-      "public_name": "adventures-project-doctrine",
-      "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
-      "scope": "Adventures project doctrine"
-    },
-    {
-      "issue": "MARK-23",
-      "source_id": "rooms-image-sidecars-v0.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars",
-      "public_name": "rooms-image-sidecars",
-      "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
-      "scope": "Rooms image sidecar preparation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "don-logan-boundary-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/don-logan-boundary",
-      "public_name": "don-logan-boundary",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "lawful worker boundary and finish-line enforcement",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "gpt-base-doctrine-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine",
-      "public_name": "gpt-base-doctrine-v1.1",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "GPT-wide shared doctrine",
-      "import_state": "imported",
-      "notes": "Imported as the shared doctrine store for GPT-wide House Skills, including the bounded read-loop doctrine and the updated source/reference routing table."
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "work-mode-router-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/work-mode-router",
-      "public_name": "work-mode-router",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "first-turn work mode routing",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "worker-dispatch-linear-v2",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear",
-      "public_name": "worker-dispatch-linear",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "Linear issue dispatch and work packet control plane",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "linear-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/linear",
-      "public_name": "linear",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "Linear object mechanics and working-state surfaces",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "tps-reporting-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/tps-reporting",
-      "public_name": "tps-reporting",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "producer-side TPS reporting",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "tps-ingress-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/tps-ingress",
-      "public_name": "tps-ingress",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "consumer-side TPS ingress",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "session-buster-v0.2",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/session-buster",
-      "public_name": "session-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "continuity fallback artifact",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "session-buster-ingress-v0.2",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/session-buster-ingress",
-      "public_name": "session-buster-ingress",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "continuity fallback ingress",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "crew-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/crew",
-      "public_name": "crew",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "Crew role-lens doctrine",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "crew-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/crew-buster",
-      "public_name": "crew-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
-      "scope": "Crew planning and route interrogation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "WILL-276",
-      "source_id": "connector-safety-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety",
-      "public_name": "connector-safety",
-      "provenance_name": "installed connector-safety package landed via WILL-274; v1.1 zip update",
-      "scope": "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
-      "import_state": "imported",
-      "notes": "Shared House skill safety component for side-effecting connector/tool work. Project it where shared connector safety makes a bundle more useful."
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-bootstrap-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap",
-      "public_name": "adventures-bootstrap",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures first-read router",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-github-operations-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-github-operations",
-      "public_name": "adventures-github-operations",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures GitHub proof overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-preproduction-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction",
-      "public_name": "adventures-visual-preproduction",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures source-first visual planning",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-storyboard-preflight-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight",
-      "public_name": "adventures-storyboard-preflight",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures deterministic storyboard preflight",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-bible-creator-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator",
-      "public_name": "adventures-visual-bible-creator",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures visual bible authoring",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-bible-interpreter-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter",
-      "public_name": "adventures-visual-bible-interpreter",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures visual bible interpretation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-image-qa-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-image-qa",
-      "public_name": "adventures-image-qa",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures image QA",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-asset-sheet-compiler-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler",
-      "public_name": "adventures-asset-sheet-compiler",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures asset-sheet compilation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-frame-buster-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/adventures-frame-buster",
-      "public_name": "adventures-frame-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
-      "scope": "Adventures frame-readiness surface",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-project-doctrine-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine",
-      "public_name": "rooms-project-doctrine",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms shared project doctrine",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-bootstrap-v1.1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap",
-      "public_name": "rooms-bootstrap",
-      "provenance_name": "MARK-97 rooms bootstrap zip update",
-      "scope": "Rooms first-read router",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-source-partitioning-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning",
-      "public_name": "rooms-source-partitioning",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms source-answering and evidence partitioning",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-ambiguity-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster",
-      "public_name": "rooms-ambiguity-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms project-specific ambiguity overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-analogy-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster",
-      "public_name": "rooms-analogy-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms analogy overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-zoom-outs-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster",
-      "public_name": "rooms-zoom-outs-buster",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms zoom-out readiness check",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-character-investigation-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-character-investigation",
-      "public_name": "rooms-character-investigation",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms character investigation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-sheet-creator-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator",
-      "public_name": "rooms-sheet-creator",
-      "provenance_name": "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
-      "scope": "Rooms sheet creation from durable packets",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-97",
-      "source_id": "rooms-canon-buster-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster",
-      "public_name": "rooms-canon-buster",
-      "provenance_name": "MARK-97 attached rooms canon buster zip update",
-      "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
-      "import_state": "imported",
-      "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
-    },
-    {
-      "issue": "MARK-109",
-      "source_id": "asset-market-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/asset-market",
-      "public_name": "asset-market",
-      "provenance_name": "MARK-109 saved GPT skill zip source package",
-      "scope": "marketplace source and pack acquisition",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-109",
-      "source_id": "skill-handoff-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-handoff",
-      "public_name": "skill-handoff",
-      "provenance_name": "MARK-109 saved GPT skill zip source package",
-      "scope": "skill package handoff cadence",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-109",
-      "source_id": "skill-installer-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/skill-installer",
-      "public_name": "skill-installer",
-      "provenance_name": "MARK-109 saved GPT skill zip source package",
-      "scope": "skill installation handoff orchestration",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-135",
-      "source_id": "linear-issue-compactor-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor",
-      "public_name": "linear-issue-compactor",
-      "provenance_name": "MARK-135 Linear issue compactor skill",
-      "scope": "Linear issue compaction and connector-readable issue bodies",
-      "import_state": "imported",
-      "notes": "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
-    },
-    {
-      "issue": "MARK-139",
-      "source_id": "linear-superpowers-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
-      "public_name": "linear-superpowers",
-      "provenance_name": "MARK-139 Linear Superpowers compositional skill",
-      "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
-      "import_state": "imported",
-      "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes /using-superpowers, /writing-plans, /executing-plans, /connector-safety, /linear-issue-compactor, and /unslop-superpowers without introducing a second source of truth."
-    },
-    {
-      "issue": "MARK-143",
-      "source_id": "github-superpowers-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
-      "public_name": "github-superpowers",
-      "provenance_name": "MARK-143 GitHub Superpowers compositional skill",
-      "scope": "GitHub evidence, review routing, and publication proof with smallest-applicable workflow selection",
-      "import_state": "imported",
-      "notes": "First-party Harley-owned source custody for compositional GitHub-facing work. Composes @using-superpowers, @github-operations, @requesting-code-review, @receiving-code-review, @verification-before-completion, @finishing-a-development-branch, @connector-safety, and @unslop-superpowers without introducing a second source of truth."
-    },
-    {
-      "issue": "MARK-144",
-      "source_id": "unslop-superpowers-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
-      "public_name": "unslop-superpowers",
-      "provenance_name": "MARK-144 Unslop Superpowers compositional guard skill",
-      "scope": "repo-specific anti-slop controls and profile-aware workflow shaping",
-      "import_state": "imported",
-      "notes": "First-party Harley-owned source custody for a compositional anti-slop guard skill. Composes @using-superpowers and @unslop, turns profile findings into non-goals and evidence requirements, and preserves the narrow direct-to-main escape hatch for profile-only updates."
-    },
-    {
-      "issue": "MARK-160",
-      "source_id": "codex-repo-receipts-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
-      "public_name": "codex-repo-receipts",
-      "provenance_name": "MARK-160 repo receipt workflow skill",
-      "scope": "repo-resident plan and implementation-record receipts for non-trivial repo-backed work",
-      "notes": "First-party Harley-owned source custody for a compositional repo receipt skill. Composes /codex-repo-receipts and keeps durable plan and implementation-record receipts in the repository's local convention or docs/superpowers/plans/ and docs/superpowers/records/ by default.",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-142",
-      "source_id": "github-operations-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/github-operations",
-      "public_name": "github-operations",
-      "provenance_name": "MARK-142 GitHub operations zip import",
-      "scope": "GitHub evidence, PR review routing, and publication proof",
-      "import_state": "imported",
-      "notes": "Imported as the first-party GitHub proof skill. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-project-doctrine-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine",
-      "public_name": "wild-bunch-project-doctrine",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch project posture and repo sensitivity",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-domain-modeling-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling",
-      "public_name": "wild-bunch-domain-modeling",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-dotnet-architecture-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture",
-      "public_name": "wild-bunch-dotnet-architecture",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-browser-game-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game",
-      "public_name": "wild-bunch-browser-game",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-worker-verification-v1",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification",
-      "public_name": "wild-bunch-worker-verification",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    }
-  ]
+    "imports":  [
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "buster-framework-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/buster-framework",
+                        "public_name":  "buster-framework",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "generic pre-action buster framework",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "ambiguity-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/ambiguity-buster",
+                        "public_name":  "ambiguity-buster",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "ambiguity pre-action review",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "boring-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/boring-buster",
+                        "public_name":  "boring-buster",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "boring-readiness pre-action review",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "invariant-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/invariant-buster",
+                        "public_name":  "invariant-buster",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "binding invariant pre-action review",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "analogy-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/analogy-buster",
+                        "public_name":  "analogy-buster",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "analogy pre-action review",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-19",
+                        "source_id":  "canon-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/canon-buster",
+                        "public_name":  "canon-buster",
+                        "provenance_name":  "MARK-19 core generic buster House Skills source slice",
+                        "scope":  "canon/source drift pre-action review",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-20",
+                        "source_id":  "cleanup-custody-v0.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/cleanup-custody",
+                        "public_name":  "cleanup-custody",
+                        "provenance_name":  "legacy profanity-bearing cleanup skill",
+                        "scope":  "cleanup-custody"
+                    },
+                    {
+                        "issue":  "MARK-21",
+                        "source_id":  "skill-validator-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/skill-validator",
+                        "public_name":  "skill-validator",
+                        "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
+                        "scope":  "skill validation"
+                    },
+                    {
+                        "issue":  "MARK-21",
+                        "source_id":  "skill-packager-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/skill-packager",
+                        "public_name":  "skill-packager",
+                        "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
+                        "scope":  "skill packaging"
+                    },
+                    {
+                        "issue":  "MARK-22",
+                        "source_id":  "adventures-project-doctrine-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine",
+                        "public_name":  "adventures-project-doctrine",
+                        "provenance_name":  "MARK-22 prep payload for Adventures House Skills survivor import",
+                        "scope":  "Adventures project doctrine"
+                    },
+                    {
+                        "issue":  "MARK-23",
+                        "source_id":  "rooms-image-sidecars-v0.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars",
+                        "public_name":  "rooms-image-sidecars",
+                        "provenance_name":  "MARK-23 prep payload for Rooms House Skills survivor import",
+                        "scope":  "Rooms image sidecar preparation",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "don-logan-boundary-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/don-logan-boundary",
+                        "public_name":  "don-logan-boundary",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "lawful worker boundary and finish-line enforcement",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "base-doctrine-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/base-doctrine",
+                        "public_name":  "base-doctrine",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "cross-runtime shared doctrine",
+                        "import_state":  "imported",
+                        "notes":  "Imported as the shared doctrine store for cross-runtime House Skills, including the bounded read-loop doctrine and the updated source/reference routing table."
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "work-mode-router-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/work-mode-router",
+                        "public_name":  "work-mode-router",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "first-turn work mode routing",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "worker-dispatch-linear-v2",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear",
+                        "public_name":  "worker-dispatch-linear",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "Linear issue dispatch and work packet control plane",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "linear-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/linear",
+                        "public_name":  "linear",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "Linear object mechanics and working-state surfaces",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "tps-reporting-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/tps-reporting",
+                        "public_name":  "tps-reporting",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "producer-side TPS reporting",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "tps-ingress-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/tps-ingress",
+                        "public_name":  "tps-ingress",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "consumer-side TPS ingress",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "session-buster-v0.2",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/session-buster",
+                        "public_name":  "session-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "continuity fallback artifact",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "session-buster-ingress-v0.2",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/session-buster-ingress",
+                        "public_name":  "session-buster-ingress",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "continuity fallback ingress",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "crew-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/crew",
+                        "public_name":  "crew",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "Crew role-lens doctrine",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "crew-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/crew-buster",
+                        "public_name":  "crew-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ base and control plane",
+                        "scope":  "Crew planning and route interrogation",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "WILL-276",
+                        "source_id":  "connector-safety-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/connector-safety",
+                        "public_name":  "connector-safety",
+                        "provenance_name":  "installed connector-safety package landed via WILL-274; v1.1 zip update",
+                        "scope":  "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
+                        "import_state":  "imported",
+                        "notes":  "Shared House skill safety component for side-effecting connector/tool work. Project it where shared connector safety makes a bundle more useful."
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-bootstrap-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-bootstrap",
+                        "public_name":  "adventures-bootstrap",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures first-read router",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-161",
+                        "source_id":  "bootstrap-router-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/bootstrap-router",
+                        "public_name":  "bootstrap-router",
+                        "provenance_name":  "MARK-161 bootstrap-router seed contract",
+                        "scope":  "project bootstrap routing and first-turn classification",
+                        "import_state":  "imported",
+                        "notes":  "Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through worker-dispatch-linear."
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-github-operations-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-github-operations",
+                        "public_name":  "adventures-github-operations",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures GitHub proof overlay",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-visual-preproduction-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction",
+                        "public_name":  "adventures-visual-preproduction",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures source-first visual planning",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-storyboard-preflight-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight",
+                        "public_name":  "adventures-storyboard-preflight",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures deterministic storyboard preflight",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-visual-bible-creator-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator",
+                        "public_name":  "adventures-visual-bible-creator",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures visual bible authoring",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-visual-bible-interpreter-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter",
+                        "public_name":  "adventures-visual-bible-interpreter",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures visual bible interpretation",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-image-qa-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-image-qa",
+                        "public_name":  "adventures-image-qa",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures image QA",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-asset-sheet-compiler-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler",
+                        "public_name":  "adventures-asset-sheet-compiler",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures asset-sheet compilation",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "adventures-frame-buster-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/adventures-frame-buster",
+                        "public_name":  "adventures-frame-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Adventures",
+                        "scope":  "Adventures frame-readiness surface",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-project-doctrine-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine",
+                        "public_name":  "rooms-project-doctrine",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms shared project doctrine",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-bootstrap-v1.1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap",
+                        "public_name":  "rooms-bootstrap",
+                        "provenance_name":  "MARK-97 rooms bootstrap zip update",
+                        "scope":  "Rooms first-read router",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-source-partitioning-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning",
+                        "public_name":  "rooms-source-partitioning",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms source-answering and evidence partitioning",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-ambiguity-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster",
+                        "public_name":  "rooms-ambiguity-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms project-specific ambiguity overlay",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-analogy-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster",
+                        "public_name":  "rooms-analogy-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms analogy overlay",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-zoom-outs-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster",
+                        "public_name":  "rooms-zoom-outs-buster",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms zoom-out readiness check",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-character-investigation-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-character-investigation",
+                        "public_name":  "rooms-character-investigation",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms character investigation",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-30",
+                        "source_id":  "rooms-sheet-creator-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator",
+                        "public_name":  "rooms-sheet-creator",
+                        "provenance_name":  "MARK-9 chunk ledger Ã¢â‚¬â€ Rooms",
+                        "scope":  "Rooms sheet creation from durable packets",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-97",
+                        "source_id":  "rooms-canon-buster-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/rooms-canon-buster",
+                        "public_name":  "rooms-canon-buster",
+                        "provenance_name":  "MARK-97 attached rooms canon buster zip update",
+                        "scope":  "Rooms canon pressure checks and lawful canon/item adjustment",
+                        "import_state":  "imported",
+                        "notes":  "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
+                    },
+                    {
+                        "issue":  "MARK-109",
+                        "source_id":  "asset-market-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/asset-market",
+                        "public_name":  "asset-market",
+                        "provenance_name":  "MARK-109 saved GPT skill zip source package",
+                        "scope":  "marketplace source and pack acquisition",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-109",
+                        "source_id":  "skill-handoff-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/skill-handoff",
+                        "public_name":  "skill-handoff",
+                        "provenance_name":  "MARK-109 saved GPT skill zip source package",
+                        "scope":  "skill package handoff cadence",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-109",
+                        "source_id":  "skill-installer-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/skill-installer",
+                        "public_name":  "skill-installer",
+                        "provenance_name":  "MARK-109 saved GPT skill zip source package",
+                        "scope":  "skill installation handoff orchestration",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-135",
+                        "source_id":  "linear-issue-compactor-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/linear-issue-compactor",
+                        "public_name":  "linear-issue-compactor",
+                        "provenance_name":  "MARK-135 Linear issue compactor skill",
+                        "scope":  "Linear issue compaction and connector-readable issue bodies",
+                        "import_state":  "imported",
+                        "notes":  "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
+                    },
+                    {
+                        "issue":  "MARK-139",
+                        "source_id":  "linear-superpowers-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+                        "public_name":  "linear-superpowers",
+                        "provenance_name":  "MARK-139 Linear Superpowers compositional skill",
+                        "scope":  "Linear issue and track shaping with smallest-applicable workflow selection",
+                        "import_state":  "imported",
+                        "notes":  "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes /using-superpowers, /writing-plans, /executing-plans, /connector-safety, /linear-issue-compactor, and /unslop-superpowers without introducing a second source of truth."
+                    },
+                    {
+                        "issue":  "MARK-143",
+                        "source_id":  "github-superpowers-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/github-superpowers",
+                        "public_name":  "github-superpowers",
+                        "provenance_name":  "MARK-143 GitHub Superpowers compositional skill",
+                        "scope":  "GitHub evidence, review routing, and publication proof with smallest-applicable workflow selection",
+                        "import_state":  "imported",
+                        "notes":  "First-party Harley-owned source custody for compositional GitHub-facing work. Composes @using-superpowers, @github-operations, @requesting-code-review, @receiving-code-review, @verification-before-completion, @finishing-a-development-branch, @connector-safety, and @unslop-superpowers without introducing a second source of truth."
+                    },
+                    {
+                        "issue":  "MARK-144",
+                        "source_id":  "unslop-superpowers-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+                        "public_name":  "unslop-superpowers",
+                        "provenance_name":  "MARK-144 Unslop Superpowers compositional guard skill",
+                        "scope":  "repo-specific anti-slop controls and profile-aware workflow shaping",
+                        "import_state":  "imported",
+                        "notes":  "First-party Harley-owned source custody for a compositional anti-slop guard skill. Composes @using-superpowers and @unslop, turns profile findings into non-goals and evidence requirements, and preserves the narrow direct-to-main escape hatch for profile-only updates."
+                    },
+                    {
+                        "issue":  "MARK-160",
+                        "source_id":  "codex-repo-receipts-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
+                        "public_name":  "codex-repo-receipts",
+                        "provenance_name":  "MARK-160 repo receipt workflow skill",
+                        "scope":  "repo-resident plan and implementation-record receipts for non-trivial repo-backed work",
+                        "notes":  "First-party Harley-owned source custody for a compositional repo receipt skill. Composes /codex-repo-receipts and keeps durable plan and implementation-record receipts in the repository\u0027s local convention or docs/superpowers/plans/ and docs/superpowers/records/ by default.",
+                        "import_state":  "imported"
+                    },
+                    {
+                        "issue":  "MARK-142",
+                        "source_id":  "github-operations-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/github-operations",
+                        "public_name":  "github-operations",
+                        "provenance_name":  "MARK-142 GitHub operations zip import",
+                        "scope":  "GitHub evidence, PR review routing, and publication proof",
+                        "import_state":  "imported",
+                        "notes":  "Imported as the first-party GitHub proof skill. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
+                    },
+                    {
+                        "issue":  "MARK-85",
+                        "source_id":  "wild-bunch-project-doctrine-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine",
+                        "public_name":  "wild-bunch-project-doctrine",
+                        "provenance_name":  "MARK-85 Wild Bunch first-party source hydration from attached zip",
+                        "scope":  "Wild Bunch project posture and repo sensitivity",
+                        "import_state":  "imported",
+                        "notes":  "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+                    },
+                    {
+                        "issue":  "MARK-85",
+                        "source_id":  "wild-bunch-domain-modeling-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling",
+                        "public_name":  "wild-bunch-domain-modeling",
+                        "provenance_name":  "MARK-85 Wild Bunch first-party source hydration from attached zip",
+                        "scope":  "Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth",
+                        "import_state":  "imported",
+                        "notes":  "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+                    },
+                    {
+                        "issue":  "MARK-85",
+                        "source_id":  "wild-bunch-dotnet-architecture-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture",
+                        "public_name":  "wild-bunch-dotnet-architecture",
+                        "provenance_name":  "MARK-85 Wild Bunch first-party source hydration from attached zip",
+                        "scope":  "Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage",
+                        "import_state":  "imported",
+                        "notes":  "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+                    },
+                    {
+                        "issue":  "MARK-85",
+                        "source_id":  "wild-bunch-browser-game-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game",
+                        "public_name":  "wild-bunch-browser-game",
+                        "provenance_name":  "MARK-85 Wild Bunch first-party source hydration from attached zip",
+                        "scope":  "Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA",
+                        "import_state":  "imported",
+                        "notes":  "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+                    },
+                    {
+                        "issue":  "MARK-85",
+                        "source_id":  "wild-bunch-worker-verification-v1",
+                        "source_path":  "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification",
+                        "public_name":  "wild-bunch-worker-verification",
+                        "provenance_name":  "MARK-85 Wild Bunch first-party source hydration from attached zip",
+                        "scope":  "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
+                        "import_state":  "imported",
+                        "notes":  "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+                    }
+                ]
 }

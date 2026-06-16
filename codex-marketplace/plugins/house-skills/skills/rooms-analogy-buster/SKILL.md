@@ -9,7 +9,7 @@ license: "MIT"
 ---
 # Rooms Analogy Buster
 
-Use this Skill as the Rooms-specific binding for the GPT-wide `analogy-buster` pattern. The analogy method is GPT-wide;
+Use this Skill as the Rooms-specific binding for the cross-runtime `analogy-buster` pattern. The analogy method is cross-runtime;
 the Rooms analogy itself lives in the repo.
 
 ## Authoritative analogy surface
@@ -55,7 +55,7 @@ Treat the analogy as:
 
 ## Workflow
 
-1. Invoke or follow GPT-wide `analogy-buster` mechanics first: internal mode when clear, interactive queue when Harley
+1. Invoke or follow cross-runtime `analogy-buster` mechanics first: internal mode when clear, interactive queue when Harley
 must resolve amber items, and useful-break handling when the analogy clarifies by failing.
 2. If the task is Rooms-specific and the analogy matters, use the World Systems analogy surface as the active project
 analogy.
@@ -99,7 +99,7 @@ When the analogy touches other Rooms truth domains, route or compose as needed:
   conversation-derived material.
 - Use `rooms-ambiguity-buster-v1` when the analogy risks overresolving identity, motive, witness status, disappearance,
   reconstruction, or manuscript uncertainty.
-- Use `gpt-base-doctrine-v1.1` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
+- Use `base-doctrine-v1.1` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
   answers.
 - Use the current dispatch gate before any worker-facing dispatch that relies on the analogy.
 

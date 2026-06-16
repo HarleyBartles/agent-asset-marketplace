@@ -102,10 +102,10 @@
                            "projection_status":  "projected"
                        },
                        {
-                           "canonical_name":  "gpt-base-doctrine",
+                           "canonical_name":  "base-doctrine",
                            "component_version":  "v1",
-                           "source_path":  "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md",
-                           "local_path":  "skills/gpt-base-doctrine/SKILL.md",
+                           "source_path":  "codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md",
+                           "local_path":  "skills/base-doctrine/SKILL.md",
                            "role":  "dependency",
                            "projection_status":  "projected"
                        },

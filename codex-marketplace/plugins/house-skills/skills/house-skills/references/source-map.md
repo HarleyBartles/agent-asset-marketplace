@@ -23,7 +23,7 @@ Current skill inventory:
 | Base and control plane | crew | `codex-marketplace/plugins/house-skills/skills/crew` |
 | Base and control plane | crew-buster | `codex-marketplace/plugins/house-skills/skills/crew-buster` |
 | Base and control plane | don-logan-boundary | `codex-marketplace/plugins/house-skills/skills/don-logan-boundary` |
-| Base and control plane | gpt-base-doctrine | `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine` |
+| Base and control plane | base-doctrine | `codex-marketplace/plugins/house-skills/skills/base-doctrine` |
 | Base and control plane | invariant-buster | `codex-marketplace/plugins/house-skills/skills/invariant-buster` |
 | Base and control plane | linear | `codex-marketplace/plugins/house-skills/skills/linear` |
 | Base and control plane | session-buster | `codex-marketplace/plugins/house-skills/skills/session-buster` |
@@ -45,6 +45,7 @@ Current skill inventory:
 | Base and control plane | worker-dispatch-linear | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear` |
 | Adventures | adventures-asset-sheet-compiler | `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler` |
 | Adventures | adventures-bootstrap | `codex-marketplace/plugins/house-skills/skills/adventures-bootstrap` |
+| Base and control plane | bootstrap-router | `codex-marketplace/plugins/house-skills/skills/bootstrap-router` |
 | Adventures | adventures-frame-buster | `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster` |
 | Adventures | adventures-github-operations | `codex-marketplace/plugins/house-skills/skills/adventures-github-operations` |
 | Adventures | adventures-image-qa | `codex-marketplace/plugins/house-skills/skills/adventures-image-qa` |
