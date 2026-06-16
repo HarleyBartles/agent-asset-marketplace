@@ -1,6 +1,6 @@
 ---
 name: connector-safety
-description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify.
+description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify or step back up the connector discovery chain.
 metadata:
   source-id: connector-safety
   source-path: codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md
@@ -94,13 +94,23 @@ When creating child objects such as documents, comments, drafts, attachments, ta
 
 This is safer than creating a large fully populated child object in one call because the parent binding and child identity are proven before the larger content mutation.
 
-## Retry posture update
+## Upstream discovery fallback
 
-A retry after a blocked write should usually move one step earlier in the chain:
+When a read, write, or readback is blocked even though a likely stable identifier is known, do not keep retrying the same target-level call. Step back to the nearest parent discovery surface that can prove the target exists in the current connector state.
 
-* if write blocks, read the parent or target again;
-* if target read blocks, discover the bounded surface with narrower filters;
-* if workspace search blocks, use team/project/repo/folder filters;
+Use the connector-observed chain:
+
+parent discovery -> bounded target discovery -> exact target read -> one bounded mutation -> readback.
+
+Parent discovery surfaces can be team, project, repository, folder, workspace, branch, owner, or another connector-native object that proves the target belongs to the current state.
+
+If post-mutation readback blocks, step back to the same parent discovery chain used before the mutation, then re-read the target from that chain.
+
+A retry after a blocked write or readback should usually move one step earlier in the chain:
+
+* if write or readback blocks, step back to the parent discovery surface and read the parent or target again;
+* if target read blocks, discover the bounded surface with narrower filters or a parent surface that proves the target exists;
+* if workspace search blocks, use team/project/repo/folder/workspace/branch/owner filters;
 * if large create blocks, create a minimal child object first, then update by returned child ID;
 * if follow-up child write blocks after a successful parent create, rediscover and read the parent before retrying;
 * if repeated bounded discovery or writes block, stop and report.
