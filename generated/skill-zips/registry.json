@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 113,
+  "artifact_count": 112,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1414,22 +1414,6 @@
       "overlay_sha256": "fe96dc65eb15fcfafd7c2b504c3a93dac123ac0dc9e2fa726e6840bada633cf6",
       "zip_size_bytes": 16986,
       "zip_sha256": "e556cad728e716e648a87ba8bf0ca9bcf46ace02e92287287821c0e03d672d70"
-    },
-    {
-      "pack": "superpowers",
-      "skill": "codex-repo-receipts",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/superpowers/skills/codex-repo-receipts",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/superpowers/codex-repo-receipts/skill.zip",
-      "source_file_count": 2,
-      "source_bytes": 2678,
-      "source_sha256": "7069bb7f1e05210db3db66752a07227a3f27d07e72c735a3ff14a5fb3cbbdf29",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 1540,
-      "zip_sha256": "726663efd5a8c8553cc0d997ce966a402d6122a7722ab310e705dc95bf860817"
     },
     {
       "pack": "superpowers",

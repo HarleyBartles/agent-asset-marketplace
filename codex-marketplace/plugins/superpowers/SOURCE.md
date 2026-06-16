@@ -1,8 +1,8 @@
 # Source
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
-Codex marketplace and adds the first-party `linear-superpowers` and
-`github-superpowers` and `unslop-superpowers` skills from House Skills as
+Codex marketplace and adds the first-party `linear-superpowers`,
+`github-superpowers`, and `unslop-superpowers` skills from House Skills as
 source-backed projections.
 
 ## Canonical basis
@@ -29,7 +29,6 @@ source-backed projections.
 - `skills/linear-superpowers/`
 - `skills/github-superpowers/`
 - `skills/unslop-superpowers/`
-- `skills/codex-repo-receipts/`
 - `references/codex-marketplace-compatibility.md`
 
 ## Source-only support provenance
@@ -56,7 +55,3 @@ editable in House Skills and are projected here as readable directory copies
 for the Superpowers bundle rather than as second source roots. Each
 first-party projection is a directory-level skill spec that carries both
 `SKILL.md` and `agents/openai.yaml` under the same custody contract.
-
-`codex-repo-receipts` is a first-party House Skills source skill projected
-into this bundle to give Codex workers durable repo-resident plan and
-implementation record guidance.

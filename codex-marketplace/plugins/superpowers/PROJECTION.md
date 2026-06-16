@@ -11,7 +11,6 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 - `skills/linear-superpowers/`
 - `skills/github-superpowers/`
 - `skills/unslop-superpowers/`
-- `skills/codex-repo-receipts/`
 - `assets/app-icon.png`
 - `assets/superpowers-small.svg`
 - `LICENSE`
@@ -27,9 +26,6 @@ at `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`.
 at `codex-marketplace/plugins/house-skills/skills/github-superpowers/`.
 `skills/unslop-superpowers/` is copied from the canonical House Skills source
 at `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`.
-`skills/codex-repo-receipts/` is copied from the canonical House Skills source
-at `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts/` and
-provides repo-resident plan and implementation-record guidance.
 
 Each first-party projection is a directory-level skill spec, so the copied
 tree includes both `SKILL.md` and `agents/openai.yaml` when the canonical
