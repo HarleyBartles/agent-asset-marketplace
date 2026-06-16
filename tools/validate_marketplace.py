@@ -221,9 +221,12 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
     if control_plane.get("name") != "house-skills":
         raise ValueError("bundle manifest control plane name mismatch")
     control_plane_path = control_plane.get("path")
-    if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md":
+    if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
         raise ValueError("bundle manifest control plane path mismatch")
-    check_path_exists(ROOT / control_plane_path)
+    control_plane_root = ROOT / control_plane_path
+    check_path_exists(control_plane_root)
+    check_path_exists(control_plane_root / "SKILL.md")
+    check_path_exists(control_plane_root / "agents" / "openai.yaml")
 
     skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
@@ -263,14 +266,11 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         if lane != expected_lane:
             raise ValueError(f"bundle manifest skill {name} lane mismatch")
         check_path_exists(ROOT / path)
-        if name in {"linear-superpowers", "github-superpowers", "unslop-superpowers"}:
-            skill_root = ROOT / path
-            if skill_root.name != name:
-                raise ValueError(f"bundle manifest skill {name} path mismatch")
-            check_path_exists(skill_root / "SKILL.md")
-            check_path_exists(skill_root / "agents" / "openai.yaml")
-        elif not path.endswith(f"{name}/SKILL.md"):
+        skill_root = ROOT / path
+        if skill_root.name != name:
             raise ValueError(f"bundle manifest skill {name} path mismatch")
+        check_path_exists(skill_root / "SKILL.md")
+        check_path_exists(skill_root / "agents" / "openai.yaml")
         manifest_names.append(name)
 
     if sorted(manifest_names) != current_skill_dirs:
@@ -766,9 +766,9 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
 def validate_source_map(text: str) -> None:
     for needle in (
         "codex-marketplace/plugins/house-skills/skills/",
-        "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md",
+        "codex-marketplace/plugins/house-skills/skills/house-skills",
         "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-        "All live current roots are unversioned plugin folders.",
+        "All live current roots are unversioned directory-level plugin folders with `SKILL.md` and `agents/openai.yaml`.",
     ):
         if needle not in text:
             raise ValueError(f"source map is missing {needle}")
