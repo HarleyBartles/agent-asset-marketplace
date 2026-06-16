@@ -1,7 +1,7 @@
 # House Skills Plugin Bundle
 
 This plugin is the current first-party House Skills plugin root.
-It exposes the 56 first-party skill roots as real plugin folders under
+It exposes the 57 first-party skill roots as real plugin folders under
 `skills/<skill-name>/`, with each current skill root carrying its own
 references, assets, scripts, and changelog notes.
 It is first-party Harley-owned source prepared to stay clean enough for a future
@@ -13,10 +13,12 @@ It includes `github-operations` as the generic GitHub proof base skill,
 `codex-repo-receipts` as the durable repo-receipt skill,
 `boring-loop` as the shared boring-loop coordinator,
 `connector-safety` as a shared base/control-plane safety component for
-side-effecting connector/tool work, `rooms-canon-buster` as a Rooms
-canon-pressure overlay, the newly landed `asset-market`, `skill-installer`,
-`skill-handoff`, `linear-superpowers`, and `unslop-superpowers`
-base/control-plane skill roots, and the hydrated Wild Bunch first-party roots.
+side-effecting connector/tool work, `base-doctrine` and
+`bootstrap-router` as the shared base/control-plane routers,
+`rooms-canon-buster` as a Rooms canon-pressure overlay, the newly landed
+`asset-market`, `skill-installer`, `skill-handoff`, `linear-superpowers`,
+and `unslop-superpowers` base/control-plane skill roots, and the hydrated
+Wild Bunch first-party roots.
 
 Bundle identity:
 

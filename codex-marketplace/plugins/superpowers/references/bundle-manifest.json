@@ -226,6 +226,7 @@
   ],
   "notes": [
     "The active projection is mostly verbatim, with the using-superpowers and finishing-a-development-branch skills adapted for Codex marketplace policy compatibility, and linear-superpowers, github-superpowers, plus unslop-superpowers projected from the House Skills canonical source.",
+    "The projection contract is narrow: keep Superpowers as a third-party plugin projection, allow only the selected first-party compositional wrapper skills, and do not relocate first-party expert or domain skills into the plugin.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

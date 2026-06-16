@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 112,
+  "artifact_count": 113,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -20,8 +20,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 118092,
-      "zip_sha256": "7b04519f0e386f85efba634d3059451ff149553b1e2702fd27a824b395a15cc2"
+      "zip_size_bytes": 115336,
+      "zip_sha256": "e02f94fb8cb9ef4733e004795a65d884981b5535e5fb29db56d9ef99fa5b4e2b"
     },
     {
       "pack": "adventures-pack",
@@ -36,8 +36,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5384,
-      "zip_sha256": "65ba08676cfc0d45baeed4f0d3b4cec4718ba046ffc7e6a8da87c4ba487adcbc"
+      "zip_size_bytes": 5406,
+      "zip_sha256": "f6ef1ffb5683ab80c8f254643809cc9794a6a72ac036d5afb8a9a4499999079f"
     },
     {
       "pack": "adventures-pack",
@@ -52,8 +52,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 11972,
-      "zip_sha256": "75cd6a8a7a752082134affe043217c37c222b786efa376ce80d1065fc39d8141"
+      "zip_size_bytes": 11993,
+      "zip_sha256": "a1ff381ece8cc65928837b6d9798cbe856293a585336bfbc24e9ea7e0166032b"
     },
     {
       "pack": "adventures-pack",
@@ -68,8 +68,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5259,
-      "zip_sha256": "791956d3be3a8cd399f8be3be23543f39ec209bcf1b1513834eea5466cb8baa2"
+      "zip_size_bytes": 5275,
+      "zip_sha256": "40575e97dfa117d2ba6a71947874d9c5780fe465b2fb345217f4c35fe704ef05"
     },
     {
       "pack": "adventures-pack",
@@ -84,8 +84,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9932,
-      "zip_sha256": "61734d186f012f21f4927e649c66e1421ebfc26ac8f6a27b77b9e0bcf81ceacf"
+      "zip_size_bytes": 9929,
+      "zip_sha256": "6bb5f58f5f22f425cfa5942dce7e52c29c71ca20a01cf76efb1bc2e7a39074af"
     },
     {
       "pack": "adventures-pack",
@@ -100,8 +100,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 730,
-      "zip_sha256": "f8845b25b85aba5a50428a317e5bf4df0db934b76400577a6738879513605668"
+      "zip_size_bytes": 733,
+      "zip_sha256": "06682665f2c1bcdb466a3fa2581a9e514e515379a0b617d5723029a145903024"
     },
     {
       "pack": "adventures-pack",
@@ -116,8 +116,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10994,
-      "zip_sha256": "65cb3fc4547e36caa24444d6892f77aa10e747801cc302ad2a119f6f0a123704"
+      "zip_size_bytes": 11048,
+      "zip_sha256": "fe801f471b284ad472fe501169bdaf39c61c0fe1818658cfcd00c797f93e1897"
     },
     {
       "pack": "adventures-pack",
@@ -132,8 +132,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 19313,
-      "zip_sha256": "956044db8de7c200b5090da0c1f379488fda6face9a25bb003cde748b9ee2632"
+      "zip_size_bytes": 19310,
+      "zip_sha256": "c15bc400f771fe2d40c08f989260a1b64c0a53a1b2ed9e793439afc1c77d3811"
     },
     {
       "pack": "adventures-pack",
@@ -148,8 +148,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6906,
-      "zip_sha256": "efabb77dbb68539326aade6f4554c01329d86388eff041b53590ebb1562be90f"
+      "zip_size_bytes": 6912,
+      "zip_sha256": "ed70a5a25219e17df493106fdbe7df6509abce7fa28db93c5237bdbef3b4d7c7"
     },
     {
       "pack": "adventures-pack",
@@ -164,8 +164,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7667,
-      "zip_sha256": "799df04a398787d20bf39381f3140a07d1496f03b80aeb2807954ceb2c1d234b"
+      "zip_size_bytes": 7669,
+      "zip_sha256": "c1430b070f34c25f05b6a4eecb5db38fcca8ceb2cf226457be16417998cdc52d"
     },
     {
       "pack": "adventures-pack",
@@ -180,8 +180,24 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 13320,
-      "zip_sha256": "6f40503d59345982fe9a6cde0301ad7a1086d5583a7999610c65e7813a6de52c"
+      "zip_size_bytes": 13253,
+      "zip_sha256": "d92da45cd12f50a31d140a0ec13b5bbee21289e60846634900bafe6ddcab9c8c"
+    },
+    {
+      "pack": "adventures-pack",
+      "skill": "base-doctrine",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/adventures-pack/skills/base-doctrine",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/adventures-pack/base-doctrine/skill.zip",
+      "source_file_count": 12,
+      "source_bytes": 23618,
+      "source_sha256": "0fb3be4f3af47af75d7972e8c9920880b9382829ed51bf4bd8d6c5cfe5ad4dd5",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 12304,
+      "zip_sha256": "aeca9b5aee8499001d42023a878b633bc590bf93d1555154c8f4533b32737a2d"
     },
     {
       "pack": "adventures-pack",
@@ -196,8 +212,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5924,
-      "zip_sha256": "71bdab26e0ba8f5850f3ece54c93151635ff5a991b3006055d58bdda2f424dd9"
+      "zip_size_bytes": 5920,
+      "zip_sha256": "5155a297d06ca647a3a751628078e5b0c2dfac72f3054bf40b5977e899870705"
     },
     {
       "pack": "adventures-pack",
@@ -212,24 +228,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4538,
-      "zip_sha256": "805e8d5866a162359af065841f710aec740103a8d6db862e7b581a2604960e63"
-    },
-    {
-      "pack": "adventures-pack",
-      "skill": "gpt-base-doctrine",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/adventures-pack/skills/gpt-base-doctrine",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/adventures-pack/gpt-base-doctrine/skill.zip",
-      "source_file_count": 12,
-      "source_bytes": 23421,
-      "source_sha256": "1a88710352da8b5defeec0ebd77cf9c31b564fda591b01ef805daa6b6626d853",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 12258,
-      "zip_sha256": "4f4f7139de26e226be5db2670aee9f90483d30429775472706e15a2f13fd2d79"
+      "zip_size_bytes": 4557,
+      "zip_sha256": "f0342f65da7353531a52e352608c6ebf1314c148978abe6f495933ead79803a3"
     },
     {
       "pack": "adventures-pack",
@@ -244,8 +244,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 13313,
-      "zip_sha256": "bca1b57664d0dbb8c03977a16da719852e11edd4b5c8b6b1cf0dc316a1e8c46b"
+      "zip_size_bytes": 13381,
+      "zip_sha256": "145cb10e22bdf3fc089147e8dc06580d68b6b9bcda801d807f9e317510c1ab55"
     },
     {
       "pack": "adventures-pack",
@@ -260,8 +260,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7006,
-      "zip_sha256": "fcb0b52372fc4aeead2568e8ca8949ee23a360be17c230e21bed43281de3fd3b"
+      "zip_size_bytes": 7040,
+      "zip_sha256": "9a36c34fc52928f65b90ff85bad026ab74ee3aa4b29eff530e2317271ab58a7d"
     },
     {
       "pack": "adventures-pack",
@@ -276,8 +276,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6074,
-      "zip_sha256": "4ee5b123710b3dd71dfa56ca6b3403533e4e1e663c2198626096d7c69acbe691"
+      "zip_size_bytes": 6073,
+      "zip_sha256": "bd945e67b51ae77aa1d1490b75ea42392298c5bcab6d46437b5e6bcd62437b38"
     },
     {
       "pack": "adventures-pack",
@@ -292,8 +292,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10684,
-      "zip_sha256": "639b564737542040eb356f83d7ca3e2128a47f5f8c658f5d8b0125595a88a23c"
+      "zip_size_bytes": 10726,
+      "zip_sha256": "33f79522255a3b5696bc032fe873912778497a03349a99c0170e81929dc51322"
     },
     {
       "pack": "game-studio",
@@ -308,8 +308,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1866,
-      "zip_sha256": "8886a6e90ea61533a37431eb6d705724ddf5dc9cbd3abc9efb089c341ee830f6"
+      "zip_size_bytes": 1879,
+      "zip_sha256": "3d5708f3a7d3172584be170956d4f8c7788e7618d8cf808eb68c6679f844b483"
     },
     {
       "pack": "game-studio",
@@ -324,8 +324,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2603,
-      "zip_sha256": "f1d1b03309a0e3f3cbae5aa6187bab992ca45f44ab989fc1a56b559f681d0f35"
+      "zip_size_bytes": 2616,
+      "zip_sha256": "2350c34623341dd36f0c474b007c5d5f8534975a825fd4049a2e014cb37e6c7d"
     },
     {
       "pack": "game-studio",
@@ -340,8 +340,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2764,
-      "zip_sha256": "f884814a938f032e954249e135c795dbc92d0e651ed7c4bd66e6a834bf5210a3"
+      "zip_size_bytes": 2769,
+      "zip_sha256": "68d756511debd55e0f9cd6b946d24ae8ffef2919aceff058b385eff67f8391e1"
     },
     {
       "pack": "game-studio",
@@ -356,8 +356,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1970,
-      "zip_sha256": "e3598c5db8ed0d04e48aadd0de5ace10eeb1cbb9358dd92a8f0f298d49814242"
+      "zip_size_bytes": 1971,
+      "zip_sha256": "b665ecf8b3870247906d9ce9a063a81bee9a604e9cdb68a3610eac51b6166068"
     },
     {
       "pack": "game-studio",
@@ -372,8 +372,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2203,
-      "zip_sha256": "1af1ed472c9f3df94deb0e933b9aabfe56d1d3a866c310e95b7cfcac8c1979bc"
+      "zip_size_bytes": 2200,
+      "zip_sha256": "657446d2d1b5e01ac66d94a362a15d1674416ac575288205aa66b53092e60064"
     },
     {
       "pack": "game-studio",
@@ -389,7 +389,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1909,
-      "zip_sha256": "ce936acb653f2c62856000086a0131a0847f2a9b09eb9d1297e0b2bd824710ff"
+      "zip_sha256": "bc3ed384ebbb735b86b2ba4e2817dcf87341458d925e6940f83426cc49293d53"
     },
     {
       "pack": "game-studio",
@@ -404,8 +404,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3018,
-      "zip_sha256": "947349f66279162920d4aa1cb9f47dd9f08d488ca26f9dc7c0a2d368ea3aaca5"
+      "zip_size_bytes": 3038,
+      "zip_sha256": "658750d6b6ecf3e44460b007d0ad407f5316f3606c0fe39f26f9fad777717864"
     },
     {
       "pack": "game-studio",
@@ -420,8 +420,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2061,
-      "zip_sha256": "dc221074107b36b0acecce93b6445646d235053299cef9d98dac7249717128dc"
+      "zip_size_bytes": 2059,
+      "zip_sha256": "b498f0accc3bfb50c8375a5edee975c99083f921ad55c488495e3721e0cb5f6b"
     },
     {
       "pack": "game-studio",
@@ -436,8 +436,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2491,
-      "zip_sha256": "177dc77d1d9b4621cccccbe44d29cda43e0901b9557823643344af1679833b9a"
+      "zip_size_bytes": 2499,
+      "zip_sha256": "96be3e751d5697fca06613d90c5e0a7c365d1ea5ad4cac9f20ed5b0a1dbc4796"
     },
     {
       "pack": "house-skills",
@@ -452,8 +452,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 118092,
-      "zip_sha256": "7b04519f0e386f85efba634d3059451ff149553b1e2702fd27a824b395a15cc2"
+      "zip_size_bytes": 115336,
+      "zip_sha256": "e02f94fb8cb9ef4733e004795a65d884981b5535e5fb29db56d9ef99fa5b4e2b"
     },
     {
       "pack": "house-skills",
@@ -468,8 +468,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5384,
-      "zip_sha256": "65ba08676cfc0d45baeed4f0d3b4cec4718ba046ffc7e6a8da87c4ba487adcbc"
+      "zip_size_bytes": 5406,
+      "zip_sha256": "f6ef1ffb5683ab80c8f254643809cc9794a6a72ac036d5afb8a9a4499999079f"
     },
     {
       "pack": "house-skills",
@@ -484,8 +484,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 11972,
-      "zip_sha256": "75cd6a8a7a752082134affe043217c37c222b786efa376ce80d1065fc39d8141"
+      "zip_size_bytes": 11993,
+      "zip_sha256": "a1ff381ece8cc65928837b6d9798cbe856293a585336bfbc24e9ea7e0166032b"
     },
     {
       "pack": "house-skills",
@@ -500,8 +500,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5259,
-      "zip_sha256": "791956d3be3a8cd399f8be3be23543f39ec209bcf1b1513834eea5466cb8baa2"
+      "zip_size_bytes": 5275,
+      "zip_sha256": "40575e97dfa117d2ba6a71947874d9c5780fe465b2fb345217f4c35fe704ef05"
     },
     {
       "pack": "house-skills",
@@ -516,8 +516,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9932,
-      "zip_sha256": "61734d186f012f21f4927e649c66e1421ebfc26ac8f6a27b77b9e0bcf81ceacf"
+      "zip_size_bytes": 9929,
+      "zip_sha256": "6bb5f58f5f22f425cfa5942dce7e52c29c71ca20a01cf76efb1bc2e7a39074af"
     },
     {
       "pack": "house-skills",
@@ -532,8 +532,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10994,
-      "zip_sha256": "65cb3fc4547e36caa24444d6892f77aa10e747801cc302ad2a119f6f0a123704"
+      "zip_size_bytes": 11048,
+      "zip_sha256": "fe801f471b284ad472fe501169bdaf39c61c0fe1818658cfcd00c797f93e1897"
     },
     {
       "pack": "house-skills",
@@ -548,8 +548,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 19313,
-      "zip_sha256": "956044db8de7c200b5090da0c1f379488fda6face9a25bb003cde748b9ee2632"
+      "zip_size_bytes": 19310,
+      "zip_sha256": "c15bc400f771fe2d40c08f989260a1b64c0a53a1b2ed9e793439afc1c77d3811"
     },
     {
       "pack": "house-skills",
@@ -564,8 +564,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6906,
-      "zip_sha256": "efabb77dbb68539326aade6f4554c01329d86388eff041b53590ebb1562be90f"
+      "zip_size_bytes": 6912,
+      "zip_sha256": "ed70a5a25219e17df493106fdbe7df6509abce7fa28db93c5237bdbef3b4d7c7"
     },
     {
       "pack": "house-skills",
@@ -580,8 +580,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7667,
-      "zip_sha256": "799df04a398787d20bf39381f3140a07d1496f03b80aeb2807954ceb2c1d234b"
+      "zip_size_bytes": 7669,
+      "zip_sha256": "c1430b070f34c25f05b6a4eecb5db38fcca8ceb2cf226457be16417998cdc52d"
     },
     {
       "pack": "house-skills",
@@ -596,8 +596,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 13320,
-      "zip_sha256": "6f40503d59345982fe9a6cde0301ad7a1086d5583a7999610c65e7813a6de52c"
+      "zip_size_bytes": 13253,
+      "zip_sha256": "d92da45cd12f50a31d140a0ec13b5bbee21289e60846634900bafe6ddcab9c8c"
     },
     {
       "pack": "house-skills",
@@ -612,8 +612,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2937,
-      "zip_sha256": "607602c8e86c085802ba192bf40d1294cff2a2f64158c1c296945bcf8f949750"
+      "zip_size_bytes": 2936,
+      "zip_sha256": "1512ca2710c7e1b291ab818537b388a55a205f374dde575e39a63ebfb0ddf000"
     },
     {
       "pack": "house-skills",
@@ -628,8 +628,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2538,
-      "zip_sha256": "fd09cb4db65365639c5afcaa012f14b85df948ea8a3d0fa5a4e87cc8c0c13070"
+      "zip_size_bytes": 2548,
+      "zip_sha256": "57c197fbe0f9a335148539897ab734b66ffd41c1718d3caf9552094f58b5f20d"
     },
     {
       "pack": "house-skills",
@@ -644,8 +644,40 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4410,
-      "zip_sha256": "246deb6b8cdd8278c0e9d32bdd332cf4510efdc7c29ffde7a53718748b57fd57"
+      "zip_size_bytes": 4394,
+      "zip_sha256": "9c42a8f95184dcfef935e4530e767461e7e69807a5b867661a70bb904444fc2e"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "base-doctrine",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/base-doctrine",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/base-doctrine/skill.zip",
+      "source_file_count": 12,
+      "source_bytes": 23618,
+      "source_sha256": "0fb3be4f3af47af75d7972e8c9920880b9382829ed51bf4bd8d6c5cfe5ad4dd5",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 12304,
+      "zip_sha256": "aeca9b5aee8499001d42023a878b633bc590bf93d1555154c8f4533b32737a2d"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "bootstrap-router",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/bootstrap-router",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/bootstrap-router/skill.zip",
+      "source_file_count": 4,
+      "source_bytes": 13436,
+      "source_sha256": "3d819a5a52be32a99b9343a46f0dbe3d552f1ad82bc6218035283a0e7279d1b8",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 6068,
+      "zip_sha256": "a187d4a1e4c34e2e073b84d150a840c918d51808e1ee28cf48c39d4fdeb88b24"
     },
     {
       "pack": "house-skills",
@@ -660,8 +692,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2901,
-      "zip_sha256": "4e9eac66bf547e69e390853b210db2728942e2fc54917b1b836dba86ee4563fe"
+      "zip_size_bytes": 2909,
+      "zip_sha256": "27bed03995996750c1d386a542f76b6d30a63a63a73801fb6b1df2797ced6651"
     },
     {
       "pack": "house-skills",
@@ -671,13 +703,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/boring-loop/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3717,
-      "source_sha256": "8ec11cdcc36ece5adc8fed68bac1bd6bc249844b8754b7cb7bc6382c34a295c1",
+      "source_bytes": 3828,
+      "source_sha256": "ed52c8d4b1da82befabfc26555fd3f56eb7a27687276c6927b848853f74ce58d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2074,
-      "zip_sha256": "79a648b9444c56770aa2b01c9c40979cdda91b16942bdfe0e0e84ec63a1fee54"
+      "zip_size_bytes": 2097,
+      "zip_sha256": "351c33a33741bcb81faa5480f0aec763a571232429edc74ac42db61afb3bcf46"
     },
     {
       "pack": "house-skills",
@@ -692,8 +724,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3198,
-      "zip_sha256": "a3ca2d875c47aeffc9b900f5ac55c1b1a9f8a0aada352b7daf07f5c6361be70d"
+      "zip_size_bytes": 3215,
+      "zip_sha256": "265ded8a5b8c765f8d520badbdf2a96ff163253492ffb27cfe0471eb00317065"
     },
     {
       "pack": "house-skills",
@@ -708,8 +740,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2873,
-      "zip_sha256": "9db7c110861d3181570d1df4eee0e0bae61140eec8516dd078f5eb0bf7a5871b"
+      "zip_size_bytes": 2876,
+      "zip_sha256": "8a289ce01b4415e34f18cc675091fefecefed2af47a6398a1262d5a10d2f06ad"
     },
     {
       "pack": "house-skills",
@@ -724,8 +756,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3315,
-      "zip_sha256": "5a70e065948eed7969eb2776c400be75b08b816c5c7046f908fcc6f55304f089"
+      "zip_size_bytes": 3320,
+      "zip_sha256": "136903539d2915771b3b5f4b1aef8f21f56bbb0f224aeb4bf6a25c02db109be5"
     },
     {
       "pack": "house-skills",
@@ -740,8 +772,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1540,
-      "zip_sha256": "726663efd5a8c8553cc0d997ce966a402d6122a7722ab310e705dc95bf860817"
+      "zip_size_bytes": 1561,
+      "zip_sha256": "305c2f2602385021142a6b31646e70a03e066bfac5b56e7f4f22bbfbcda9501f"
     },
     {
       "pack": "house-skills",
@@ -756,8 +788,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5924,
-      "zip_sha256": "71bdab26e0ba8f5850f3ece54c93151635ff5a991b3006055d58bdda2f424dd9"
+      "zip_size_bytes": 5920,
+      "zip_sha256": "5155a297d06ca647a3a751628078e5b0c2dfac72f3054bf40b5977e899870705"
     },
     {
       "pack": "house-skills",
@@ -772,8 +804,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8850,
-      "zip_sha256": "2068a2b6fb7afba8736c8b8bce914e60a7123a5f1b8215d7d46db83390cbf698"
+      "zip_size_bytes": 8910,
+      "zip_sha256": "e34e7eb54b9ce066bb51abe6fc05904f9080b7d778df6e5009bd4c4a68b16a95"
     },
     {
       "pack": "house-skills",
@@ -788,8 +820,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6696,
-      "zip_sha256": "63650e16dab3c7bbc12c3aeb933a7cf1034a709f812856d88817240f64f88410"
+      "zip_size_bytes": 6712,
+      "zip_sha256": "5a608fe43b389551977cbe76d7150476cc9a555bbe44e494b762c4012bafaead"
     },
     {
       "pack": "house-skills",
@@ -804,8 +836,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4538,
-      "zip_sha256": "805e8d5866a162359af065841f710aec740103a8d6db862e7b581a2604960e63"
+      "zip_size_bytes": 4557,
+      "zip_sha256": "f0342f65da7353531a52e352608c6ebf1314c148978abe6f495933ead79803a3"
     },
     {
       "pack": "house-skills",
@@ -820,8 +852,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9012,
-      "zip_sha256": "a25e12dc8c6c461bf6f164e6b794332d5db0e6696db0b31cd074ae694384495c"
+      "zip_size_bytes": 9030,
+      "zip_sha256": "58b738a211911f4d5f8f6ae8895ed02df78252e1445a661611dae75119dfdc56"
     },
     {
       "pack": "house-skills",
@@ -836,24 +868,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1986,
-      "zip_sha256": "ebae7532a00c5fffb039f24ed21a7eb36a9a2c68b664216061109b29643000b5"
-    },
-    {
-      "pack": "house-skills",
-      "skill": "gpt-base-doctrine",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/house-skills/gpt-base-doctrine/skill.zip",
-      "source_file_count": 12,
-      "source_bytes": 23421,
-      "source_sha256": "1a88710352da8b5defeec0ebd77cf9c31b564fda591b01ef805daa6b6626d853",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 12258,
-      "zip_sha256": "4f4f7139de26e226be5db2670aee9f90483d30429775472706e15a2f13fd2d79"
+      "zip_size_bytes": 1993,
+      "zip_sha256": "7981d9eef352dc73d1b74bbf95c90eec43ce16779b79937b79f612f8e1398542"
     },
     {
       "pack": "house-skills",
@@ -863,13 +879,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 21870,
-      "source_sha256": "9981a7d2242280f2d4cda46bb310ca196faae38673728d01f4550d736d4e4a49",
+      "source_bytes": 22150,
+      "source_sha256": "8294884b6f8c276b3652e0bbd889050f82bc3b4e90df946ca97b34935b190c31",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4695,
-      "zip_sha256": "4d36f5840ad82e7a383a4c10511aafc42eb07971769cf6a2407763d2f5bf4df0"
+      "zip_size_bytes": 4776,
+      "zip_sha256": "a573019f7d56e8187ceb4f9466d3d1a11c1bc60c9755156e5085cd12694051aa"
     },
     {
       "pack": "house-skills",
@@ -884,8 +900,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2760,
-      "zip_sha256": "a4ead2fc63dfe76444473936f285ab44c24b26babd4d642b812aadc071817149"
+      "zip_size_bytes": 2759,
+      "zip_sha256": "414ac2a2a707605e2818fe844d9607823bca94b64bdb348fc05fd1d29e4b636a"
     },
     {
       "pack": "house-skills",
@@ -900,8 +916,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 13313,
-      "zip_sha256": "bca1b57664d0dbb8c03977a16da719852e11edd4b5c8b6b1cf0dc316a1e8c46b"
+      "zip_size_bytes": 13381,
+      "zip_sha256": "145cb10e22bdf3fc089147e8dc06580d68b6b9bcda801d807f9e317510c1ab55"
     },
     {
       "pack": "house-skills",
@@ -916,8 +932,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3612,
-      "zip_sha256": "1839a82f3f60f319508889e34d439346e4b118e90a52b017f631b8f5eb0db88c"
+      "zip_size_bytes": 3628,
+      "zip_sha256": "a8dfd3f130c05b242d23bb0160a8429cbe726d18e283465459ac52ed7e4279c0"
     },
     {
       "pack": "house-skills",
@@ -932,8 +948,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1957,
-      "zip_sha256": "a1435c861ff4fb3757cd9e05afff0e04bd9d195a19b64c386be9714df8f2e2ff"
+      "zip_size_bytes": 1976,
+      "zip_sha256": "7fe6d7fb0285f66bd4ba9db41dccf9d7cebbd8fcb122d4c14077e39372df24de"
     },
     {
       "pack": "house-skills",
@@ -948,8 +964,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3198,
-      "zip_sha256": "cc26a18b17f956c4a03969209fae1b03a0d79a66edd2c10a2af114420a9c8832"
+      "zip_size_bytes": 3205,
+      "zip_sha256": "14a05fb497d6ac50478e56988d220771ca349dd43bf247ff573d563cb52188f3"
     },
     {
       "pack": "house-skills",
@@ -959,13 +975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-analogy-buster/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 9032,
-      "source_sha256": "4fa02c8f630e2e9a428e43de4335770a4386e47d1904dbb2fb5e883077379932",
+      "source_bytes": 9043,
+      "source_sha256": "358e4df023b3d34cba81b0c2a7e4738223114bc9035df76f05f132de2d57ff7c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5157,
-      "zip_sha256": "2e573f3e9b6a8f4e40c529731b482916f9a0bdc8643bd632a60afab17c1d67eb"
+      "zip_size_bytes": 5180,
+      "zip_sha256": "20532559cb80faa088237ee3ffa88110924835c23d4492302c5cc7bdc6c72929"
     },
     {
       "pack": "house-skills",
@@ -980,8 +996,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6270,
-      "zip_sha256": "43d0ce8ce800d9578fc6fb627b701e8ee18dd8f12827db73d99257e8acc36a04"
+      "zip_size_bytes": 6304,
+      "zip_sha256": "55197b402f9775412663260d8f7691ee58bb445fb67736f9a47d840e2d2a37f7"
     },
     {
       "pack": "house-skills",
@@ -996,8 +1012,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6423,
-      "zip_sha256": "c75cf44a4e2d729a6ad1453111a321f9cc5cad2c74fe2da724e0210eec107a9c"
+      "zip_size_bytes": 6427,
+      "zip_sha256": "557064e350be808af27ce37f67f422fa988d4df877ea4f2be154293617a6a045"
     },
     {
       "pack": "house-skills",
@@ -1007,13 +1023,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-character-investigation/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 25446,
-      "source_sha256": "d702996d08ffd336e3404095e763afc974b3caca3fce48903a9062d1a0586336",
+      "source_bytes": 25442,
+      "source_sha256": "8d0fc7de29b586fa2577eee22e01084ecfbd89ea306c04cc3878ec0333436b6c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12179,
-      "zip_sha256": "829854bde2cdc949d4a3c813aa321a5bd409e43c6aee4c7880641e777bf78c53"
+      "zip_size_bytes": 12237,
+      "zip_sha256": "6713f01b529cf57e53632a9d97a2b9084122f7e9472ed0e6d06257f0c2d6482b"
     },
     {
       "pack": "house-skills",
@@ -1028,8 +1044,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 14428,
-      "zip_sha256": "9355c6bf0c6e3bfeed795b978c4bfa161b18e6fb06723393c32693f0a9e7db4a"
+      "zip_size_bytes": 14477,
+      "zip_sha256": "4e6961ea301297c1a0e765c6026a42cd55da14d3143b6c7299e5fde5e0595072"
     },
     {
       "pack": "house-skills",
@@ -1039,13 +1055,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-project-doctrine/skill.zip",
       "source_file_count": 12,
-      "source_bytes": 14263,
-      "source_sha256": "5dde62adb8b1dbe31a762c3b5ddeb33b524223bc03f07c32f02ee328126a48d8",
+      "source_bytes": 14264,
+      "source_sha256": "ac928913101de269fdcb68fc2ed55a54fbf89821eb1802b6a6cf0ccc32057e57",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8946,
-      "zip_sha256": "c82d6f11245ae3b5133a4c3049fee355277c54e563fa69d51421c258f079df8d"
+      "zip_size_bytes": 8981,
+      "zip_sha256": "1de60c015f8437961de7f054dff71bdd3754fd9e1e336acbbeb7ca551a5c4184"
     },
     {
       "pack": "house-skills",
@@ -1060,8 +1076,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8123,
-      "zip_sha256": "a6020e97965da6eec0cdd54f5a46008aa26a4c7a69f395ed991c99fdd6805a72"
+      "zip_size_bytes": 8154,
+      "zip_sha256": "990aa66c51cdf5a94dc2d898dcc93891929cc485c6e892296bb35a238433dd20"
     },
     {
       "pack": "house-skills",
@@ -1076,8 +1092,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4735,
-      "zip_sha256": "e5a27c1e98aef2eede5aaa51fbffba34a4525ff47d80465b323ca29d3484ab3c"
+      "zip_size_bytes": 4750,
+      "zip_sha256": "b04b859fd2921b842ff56c1b3ccb0dfffbfda9cab76d076db79af430ba4c7323"
     },
     {
       "pack": "house-skills",
@@ -1092,8 +1108,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8448,
-      "zip_sha256": "3bdca986c1262bc97ec805cbd168efea2b126e00760ae96947571708888b135d"
+      "zip_size_bytes": 8492,
+      "zip_sha256": "29acce16aa07f4ed664894880317acc2ec7aac19cf8a5500c227714529a3c409"
     },
     {
       "pack": "house-skills",
@@ -1108,8 +1124,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7614,
-      "zip_sha256": "cbb540ee78313b47806be76cc0b73e0babbaa6e130f2c8d5d6f20d8a2ab92ade"
+      "zip_size_bytes": 7642,
+      "zip_sha256": "c93d0970535d7ea870eaf1acfaad489056af1bc9b648a9507aa680a18d784b04"
     },
     {
       "pack": "house-skills",
@@ -1124,8 +1140,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5040,
-      "zip_sha256": "1fd74deb6ddaf9b7d425063e27c9e342ccd79fe688ea6ff1fb3ae3c0b859dfca"
+      "zip_size_bytes": 5046,
+      "zip_sha256": "e0ca8526034a5966df2cd7c5f174448ce204053a63afa9cdf332a7674b61029f"
     },
     {
       "pack": "house-skills",
@@ -1140,8 +1156,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3585,
-      "zip_sha256": "c4cd2d185946d6510803869ab33fe693dd1b4a1ac18966acab25819b7e547a1c"
+      "zip_size_bytes": 3602,
+      "zip_sha256": "0ae920335469a9694108a84ccf3976768271afc76aee017f9ad03e1ab4838e68"
     },
     {
       "pack": "house-skills",
@@ -1156,8 +1172,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2691,
-      "zip_sha256": "63f3509a94b4b876705bd0b2b013350f1d5db1b6ed67138f6c2916d3c33d59fc"
+      "zip_size_bytes": 2700,
+      "zip_sha256": "ad4d97a0e618faefd3ea548174109a62f68239634ee32734f9ff55251b645e02"
     },
     {
       "pack": "house-skills",
@@ -1172,8 +1188,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 25131,
-      "zip_sha256": "3b5da174bec3f738ebbc13fa2623c4d3d110fe9fd8cd2438753a7721316b4466"
+      "zip_size_bytes": 25159,
+      "zip_sha256": "86aef9efc757234a10be97bb3eb38f4ed7ffdb6659cf978ac06e32946161a6c0"
     },
     {
       "pack": "house-skills",
@@ -1188,8 +1204,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16010,
-      "zip_sha256": "15a2ef0d6c74697c6ea90884b562f3f4f323849464ff9e2b35be70c9609b7726"
+      "zip_size_bytes": 15958,
+      "zip_sha256": "998d459d308b9ed7f6e438ada877b0abaa933c73ba9e83c2b494c2b75438b3b8"
     },
     {
       "pack": "house-skills",
@@ -1204,8 +1220,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7006,
-      "zip_sha256": "fcb0b52372fc4aeead2568e8ca8949ee23a360be17c230e21bed43281de3fd3b"
+      "zip_size_bytes": 7040,
+      "zip_sha256": "9a36c34fc52928f65b90ff85bad026ab74ee3aa4b29eff530e2317271ab58a7d"
     },
     {
       "pack": "house-skills",
@@ -1220,8 +1236,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6074,
-      "zip_sha256": "4ee5b123710b3dd71dfa56ca6b3403533e4e1e663c2198626096d7c69acbe691"
+      "zip_size_bytes": 6073,
+      "zip_sha256": "bd945e67b51ae77aa1d1490b75ea42392298c5bcab6d46437b5e6bcd62437b38"
     },
     {
       "pack": "house-skills",
@@ -1236,8 +1252,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2208,
-      "zip_sha256": "71342992f8d2a88eb809f2ebcac0cbd939f9f3c3b190d2cbc08794b63ece0533"
+      "zip_size_bytes": 2224,
+      "zip_sha256": "7bfda5d3fb74564ecf0858274d88d562205f2f90544b0af0260e9ce94928c1f0"
     },
     {
       "pack": "house-skills",
@@ -1252,8 +1268,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2995,
-      "zip_sha256": "555157859c7d3721a791e83ec1702517287f642e12d39f977b13e6ed2d10bb54"
+      "zip_size_bytes": 3009,
+      "zip_sha256": "d2fe2851fe844160b53d7244fb4f59b37a1a52e76e552dbc6ce8a0320de4541b"
     },
     {
       "pack": "house-skills",
@@ -1268,8 +1284,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3472,
-      "zip_sha256": "ee122ec156c28355abedcace5ad9443e7f685ae3cb7bcc21d0ce84ed1b10e15b"
+      "zip_size_bytes": 3501,
+      "zip_sha256": "0d312bc6917c48db150de08590d954ea638e2ac3c91454ca7058b322ae093e35"
     },
     {
       "pack": "house-skills",
@@ -1284,8 +1300,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3934,
-      "zip_sha256": "cf19c64392cafc023361f9119361d0c4bf8e42d05fc65f5fb436c3269309fe34"
+      "zip_size_bytes": 3974,
+      "zip_sha256": "136f2ba970e532bf1c6cb221bb1b66808ac72b9528800645664ece9e96096bba"
     },
     {
       "pack": "house-skills",
@@ -1300,8 +1316,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3992,
-      "zip_sha256": "b7c31d83024e05e99286b8364163c585df695271f8cebf15d626fe9b036577b4"
+      "zip_size_bytes": 4010,
+      "zip_sha256": "5581685e5becf2cbcb7dd2e18a0b021d3b5fac54f2f2853a9abaa86bc479baea"
     },
     {
       "pack": "house-skills",
@@ -1316,8 +1332,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2905,
-      "zip_sha256": "bf51c177398c452ebd1c860cd574b62f299f55b1290d9ab1bfe8cb5d5dc5aada"
+      "zip_size_bytes": 2918,
+      "zip_sha256": "d276409736a7e3d0c1b76af542e34ca6c9305ade187742ac5fdb3719f23cd360"
     },
     {
       "pack": "house-skills",
@@ -1327,13 +1343,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 14636,
-      "source_sha256": "1e58df34ebf8fb22c4c000ef62d8904de16560d355e0dea5566465d6f078816b",
+      "source_bytes": 14643,
+      "source_sha256": "936040af87238ac2ee2d953f8f853d7d43232ede91a252bb494a92ceb6635107",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6977,
-      "zip_sha256": "230b2644f1daf65bf23a05cfa6c193e3ac6ec99a29edbf345b00098280f67fd2"
+      "zip_size_bytes": 6981,
+      "zip_sha256": "a0b6b13840fea63571082761deeda29a6cd032366689d8b7948adc13dad2a30d"
     },
     {
       "pack": "house-skills",
@@ -1348,8 +1364,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10684,
-      "zip_sha256": "639b564737542040eb356f83d7ca3e2128a47f5f8c658f5d8b0125595a88a23c"
+      "zip_size_bytes": 10726,
+      "zip_sha256": "33f79522255a3b5696bc032fe873912778497a03349a99c0170e81929dc51322"
     },
     {
       "pack": "repo-worker-base",
@@ -1359,13 +1375,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/boring-loop/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3725,
-      "source_sha256": "3d2eb2983183f7d17f509a8a11d6e03b83a0d2f6bb6fd819a753543529e38820",
+      "source_bytes": 3836,
+      "source_sha256": "97cfdf16dddc96dfe7dec86bad9b5c3e0700012aca0bca5e34a89adfe82358d3",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2072,
-      "zip_sha256": "716e1bbe1c71ab081e503babb889d4caf707338811d887ecdec90210fe896834"
+      "zip_size_bytes": 2095,
+      "zip_sha256": "a2688216e45e7ddefc6e52c9505ed7f57dd8b85dbfb3cf2f0fb2abedf2a36c78"
     },
     {
       "pack": "repo-worker-base",
@@ -1380,8 +1396,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1540,
-      "zip_sha256": "726663efd5a8c8553cc0d997ce966a402d6122a7722ab310e705dc95bf860817"
+      "zip_size_bytes": 1561,
+      "zip_sha256": "305c2f2602385021142a6b31646e70a03e066bfac5b56e7f4f22bbfbcda9501f"
     },
     {
       "pack": "repo-worker-base",
@@ -1396,8 +1412,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1914,
-      "zip_sha256": "3b6acf9c1de3c603c12f8768d4dc9efb5c78e1b30b9b4f81f9450dc8d2358d07"
+      "zip_size_bytes": 1922,
+      "zip_sha256": "36bfa48038ea0cc34a4dac4bf33cde15d4d5e6f68b31db4fb0d5c972cefd129c"
     },
     {
       "pack": "superpowers",
@@ -1412,8 +1428,8 @@
       "overlay_file_count": 1,
       "overlay_bytes": 890,
       "overlay_sha256": "fe96dc65eb15fcfafd7c2b504c3a93dac123ac0dc9e2fa726e6840bada633cf6",
-      "zip_size_bytes": 16986,
-      "zip_sha256": "e556cad728e716e648a87ba8bf0ca9bcf46ace02e92287287821c0e03d672d70"
+      "zip_size_bytes": 16938,
+      "zip_sha256": "e030322c20bd1820ec33376ea39e9b774ac27fe683be54d25111b2bd8295ec37"
     },
     {
       "pack": "superpowers",
@@ -1428,8 +1444,8 @@
       "overlay_file_count": 1,
       "overlay_bytes": 892,
       "overlay_sha256": "91c72d3e574a3ee03b98043d301514eb3f73ab5eb37e7fea1fa57453e788afb6",
-      "zip_size_bytes": 646,
-      "zip_sha256": "1c3e8a237e0482c88a4086cc40226c2842479fd45cb38c3b94f1a318d422ff0f"
+      "zip_size_bytes": 649,
+      "zip_sha256": "0ea0ae66b1e2cddcc92c16d73fc5534f15b147eed8c6e9f06f940594354e0bdb"
     },
     {
       "pack": "superpowers",
@@ -1439,13 +1455,13 @@
       "overlay_path": "gpt-overlays/superpowers/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7922,
-      "source_sha256": "158dde32a32f946527f1ab921dfbd1f9895b458baaabcbd509d5a4bda7716024",
+      "source_bytes": 7660,
+      "source_sha256": "bec16b6b5a89507926df6dc63746e575275e99bab0a2b8cf218dea7f02d07da5",
       "overlay_file_count": 1,
       "overlay_bytes": 829,
       "overlay_sha256": "485d44f667e7df755891140e75285260a6460bf52488affa4103717a25fdc942",
-      "zip_size_bytes": 636,
-      "zip_sha256": "e61eee429192332fa0c6ef0f29ae0a0307cedfc0f3e6c3b46b6803220fab6998"
+      "zip_size_bytes": 641,
+      "zip_sha256": "93707515571cb7a4e8458025266bb0025ee8603f2969bcd0f4ddfe2fbce0a4ed"
     },
     {
       "pack": "superpowers",
@@ -1460,8 +1476,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1986,
-      "zip_sha256": "ebae7532a00c5fffb039f24ed21a7eb36a9a2c68b664216061109b29643000b5"
+      "zip_size_bytes": 1993,
+      "zip_sha256": "7981d9eef352dc73d1b74bbf95c90eec43ce16779b79937b79f612f8e1398542"
     },
     {
       "pack": "superpowers",
@@ -1476,8 +1492,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1957,
-      "zip_sha256": "a1435c861ff4fb3757cd9e05afff0e04bd9d195a19b64c386be9714df8f2e2ff"
+      "zip_size_bytes": 1976,
+      "zip_sha256": "7fe6d7fb0285f66bd4ba9db41dccf9d7cebbd8fcb122d4c14077e39372df24de"
     },
     {
       "pack": "superpowers",
@@ -1492,8 +1508,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2919,
-      "zip_sha256": "09d8e6910403eb7f35a654653618ad002a5e528d1117c50f84f6d63fb9576703"
+      "zip_size_bytes": 2918,
+      "zip_sha256": "f0524e52c3fd4a779442082494125339c9f31cea8d5ee38d06abe19db8eba78a"
     },
     {
       "pack": "superpowers",
@@ -1508,8 +1524,8 @@
       "overlay_file_count": 1,
       "overlay_bytes": 825,
       "overlay_sha256": "3647f05dd2a63b096e7f71d68ebcefc609046165a90ee10b83b7bed0df8847cf",
-      "zip_size_bytes": 2928,
-      "zip_sha256": "b41ee793544c4dd66c459c0439b9ec4096ee1af7e2126e698fb61c43f4d428e8"
+      "zip_size_bytes": 2953,
+      "zip_sha256": "1495aa025820add954f3dec6a390c325c74da90fe6a165cc731dc45642200022"
     },
     {
       "pack": "superpowers",
@@ -1524,8 +1540,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 19246,
-      "zip_sha256": "99a6746e7c808cccb70603fc71b5977f5630f7f9457c3b24966c9bd4ba6d8a3f"
+      "zip_size_bytes": 19285,
+      "zip_sha256": "02c7b9ee643606fac6e62dfdce3711025eb29fdf683b44c394eaf33f1ecbd456"
     },
     {
       "pack": "superpowers",
@@ -1540,8 +1556,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7716,
-      "zip_sha256": "978ecb337cd71e32394a4c002c213edf3e6d660a3bca9836cc998d2ba458bc25"
+      "zip_size_bytes": 7704,
+      "zip_sha256": "7da75a4ed7a972cb0d630230337bfeb890f79214abf10c6ace2b134230b59c5b"
     },
     {
       "pack": "superpowers",
@@ -1556,8 +1572,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2208,
-      "zip_sha256": "71342992f8d2a88eb809f2ebcac0cbd939f9f3c3b190d2cbc08794b63ece0533"
+      "zip_size_bytes": 2224,
+      "zip_sha256": "7bfda5d3fb74564ecf0858274d88d562205f2f90544b0af0260e9ce94928c1f0"
     },
     {
       "pack": "superpowers",
@@ -1567,13 +1583,13 @@
       "overlay_path": "gpt-overlays/superpowers/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 13276,
-      "source_sha256": "b96c2c866e5bd334aab0279766e3b4c727a684896aba49766bcc962acd2e05c1",
+      "source_bytes": 12998,
+      "source_sha256": "a91e838a9c929e34ee751d9973abc0cdb500d1dae6e9224395c11332d08a24ac",
       "overlay_file_count": 1,
       "overlay_bytes": 873,
       "overlay_sha256": "33715515de15a6e19ab7a1397a332b8848df4a9fed94e7bd3d036b40fe15af4f",
-      "zip_size_bytes": 4432,
-      "zip_sha256": "28308c6a9f9952513397facc7e92570852663638b9700f7a0daf933edf3233e8"
+      "zip_size_bytes": 4415,
+      "zip_sha256": "d2d0aca6b02cb22579279500f938116ef9ae2c79453d41a2e149cd54dbe43e29"
     },
     {
       "pack": "superpowers",
@@ -1588,8 +1604,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2155,
-      "zip_sha256": "b6a631079d6d68b1307697c19d310b2457174fc2f88e42f7db8cf4b5d9dd30e3"
+      "zip_size_bytes": 2163,
+      "zip_sha256": "02ef9693aef6bd5ff251c6532e04788dd72a1bebe6636810d3cfaede25f9f661"
     },
     {
       "pack": "superpowers",
@@ -1604,8 +1620,8 @@
       "overlay_file_count": 1,
       "overlay_bytes": 2018,
       "overlay_sha256": "040e3637fe7138c463b9a6a0197685862370d1be19ca9cdbd597b3d1d261c21f",
-      "zip_size_bytes": 2084,
-      "zip_sha256": "f96f4c2ef716b43569309518906246f4589041e74ecf6f87bde82a4846fd532e"
+      "zip_size_bytes": 2096,
+      "zip_sha256": "858977a69c735c49f43d49fd0bb01195cf5061321b9cd823fcd3f180196cd519"
     },
     {
       "pack": "superpowers",
@@ -1620,8 +1636,8 @@
       "overlay_file_count": 1,
       "overlay_bytes": 828,
       "overlay_sha256": "6d691b37f7015e941bea75ffde0d7b44022b0cf90ee20b03330e65d3d235603e",
-      "zip_size_bytes": 30572,
-      "zip_sha256": "2cce56f361d72a33296020f02d3a14f80f303624e9a9c7302fe100317a15adec"
+      "zip_size_bytes": 30506,
+      "zip_sha256": "097c62ebbf36d8a9ecbf5afde2376c4cd4e1f26c9719f62c095ace9cd2d2edee"
     },
     {
       "pack": "unslop",
@@ -1636,8 +1652,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 20871,
-      "zip_sha256": "fa142a0c17e4764b23e5b03bdc7bac861645816738c21951f38819a8b27e547d"
+      "zip_size_bytes": 20971,
+      "zip_sha256": "e6c5d32973fb906eedb5550bbf27108b8cf41ada9a12312fdd67c5739f2b55a9"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1652,8 +1668,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1866,
-      "zip_sha256": "3ac9b6ce23608d56c1d44a7bc4ff512a9080f41b79c141a6915c4a5a71f89d55"
+      "zip_size_bytes": 1879,
+      "zip_sha256": "3d5708f3a7d3172584be170956d4f8c7788e7618d8cf808eb68c6679f844b483"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1668,8 +1684,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2764,
-      "zip_sha256": "6acaf7d80708c30c6c1fc01c9528440deff033557bb90c70e292229abfd0458c"
+      "zip_size_bytes": 2769,
+      "zip_sha256": "68d756511debd55e0f9cd6b946d24ae8ffef2919aceff058b385eff67f8391e1"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1684,8 +1700,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1970,
-      "zip_sha256": "b798d71680d33ebe7f07e3637d15c211850ab88405b2e8be9673299741f98b51"
+      "zip_size_bytes": 1971,
+      "zip_sha256": "b665ecf8b3870247906d9ce9a063a81bee9a604e9cdb68a3610eac51b6166068"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1701,7 +1717,7 @@
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1909,
-      "zip_sha256": "5d39609ff0eb6e0cd46f0825566110a031c34d9462bc1059fdafad40814ca503"
+      "zip_sha256": "bc3ed384ebbb735b86b2ba4e2817dcf87341458d925e6940f83426cc49293d53"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1716,8 +1732,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2491,
-      "zip_sha256": "40520d8051022ff301ebd6e38ac6caab28d3780c1249585fbca1362d4a267859"
+      "zip_size_bytes": 2499,
+      "zip_sha256": "96be3e751d5697fca06613d90c5e0a7c365d1ea5ad4cac9f20ed5b0a1dbc4796"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1732,8 +1748,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2995,
-      "zip_sha256": "555157859c7d3721a791e83ec1702517287f642e12d39f977b13e6ed2d10bb54"
+      "zip_size_bytes": 3009,
+      "zip_sha256": "d2fe2851fe844160b53d7244fb4f59b37a1a52e76e552dbc6ce8a0320de4541b"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1748,8 +1764,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3472,
-      "zip_sha256": "ee122ec156c28355abedcace5ad9443e7f685ae3cb7bcc21d0ce84ed1b10e15b"
+      "zip_size_bytes": 3501,
+      "zip_sha256": "0d312bc6917c48db150de08590d954ea638e2ac3c91454ca7058b322ae093e35"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1764,8 +1780,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3934,
-      "zip_sha256": "cf19c64392cafc023361f9119361d0c4bf8e42d05fc65f5fb436c3269309fe34"
+      "zip_size_bytes": 3974,
+      "zip_sha256": "136f2ba970e532bf1c6cb221bb1b66808ac72b9528800645664ece9e96096bba"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1780,8 +1796,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3992,
-      "zip_sha256": "a4a3eef5df969217473da165bc06508773311d210c667584d7585f84ee44af86"
+      "zip_size_bytes": 4010,
+      "zip_sha256": "5581685e5becf2cbcb7dd2e18a0b021d3b5fac54f2f2853a9abaa86bc479baea"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -1796,8 +1812,8 @@
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2905,
-      "zip_sha256": "bf51c177398c452ebd1c860cd574b62f299f55b1290d9ab1bfe8cb5d5dc5aada"
+      "zip_size_bytes": 2918,
+      "zip_sha256": "d276409736a7e3d0c1b76af542e34ca6c9305ade187742ac5fdb3719f23cd360"
     }
   ],
   "excluded": [

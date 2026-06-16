@@ -16,7 +16,7 @@ Current source roots:
 - `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md`
+- `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
@@ -36,7 +36,7 @@ Local bundle paths:
 - `skills/adventures-asset-sheet-compiler/SKILL.md`
 - `skills/adventures-frame-buster/SKILL.md`
 - `skills/don-logan-boundary/SKILL.md`
-- `skills/gpt-base-doctrine/SKILL.md`
+- `skills/base-doctrine/SKILL.md`
 - `skills/worker-dispatch-linear/SKILL.md`
 - `skills/connector-safety/SKILL.md`
 - `skills/linear/SKILL.md`
@@ -58,7 +58,7 @@ Component summary:
 | Adventures | adventures-asset-sheet-compiler | current | `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md` | `skills/adventures-asset-sheet-compiler/SKILL.md` | asset-sheet compilation |
 | Adventures | adventures-frame-buster | current | `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md` | `skills/adventures-frame-buster/SKILL.md` | frame readiness |
 | Dependency | don-logan-boundary | current | `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md` | `skills/don-logan-boundary/SKILL.md` | boundary gate |
-| Dependency | gpt-base-doctrine | current | `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine/SKILL.md` | `skills/gpt-base-doctrine/SKILL.md` | shared doctrine |
+| Dependency | base-doctrine | current | `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md` | `skills/base-doctrine/SKILL.md` | shared doctrine |
 | Dependency | worker-dispatch-linear | current | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md` | `skills/worker-dispatch-linear/SKILL.md` | Linear dispatch |
 | Dependency | connector-safety | current | `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
 | Dependency | linear | current | `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md` | `skills/linear/SKILL.md` | Linear mechanics |

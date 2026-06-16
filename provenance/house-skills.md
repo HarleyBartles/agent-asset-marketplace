@@ -41,13 +41,21 @@
 - Scope: Adventures project doctrine
 - Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired image-generation framing, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
 
-## gpt-base-doctrine-v1.1
+## base-doctrine
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine`
-- Public identity: `gpt-base-doctrine-v1.1`
+- Source path: `codex-marketplace/plugins/house-skills/skills/base-doctrine`
+- Public identity: `base-doctrine`
 - Provenance/history only: MARK-30 base and control plane update
-- Scope: GPT-wide shared doctrine
-- Notes: Imported as the shared doctrine store for GPT-wide House Skills, including the bounded read-loop doctrine and the updated source/reference routing table.
+- Scope: cross-runtime shared doctrine
+- Notes: Imported as the shared doctrine store for cross-runtime House Skills, including the bounded read-loop doctrine and the updated source/reference routing table.
+
+## bootstrap-router
+
+- Source path: `codex-marketplace/plugins/house-skills/skills/bootstrap-router`
+- Public identity: `bootstrap-router`
+- Provenance/history: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
+- Scope: first-turn bootstrap routing and request classification
+- Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through worker-dispatch-linear.
 
 ## rooms-image-sidecars
 
@@ -216,7 +224,7 @@
 ### Base and control plane
 
 - `don-logan-boundary-v1` - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `gpt-base-doctrine-v1.1` - `codex-marketplace/plugins/house-skills/skills/gpt-base-doctrine`
+- `base-doctrine` - `codex-marketplace/plugins/house-skills/skills/base-doctrine`
 - `work-mode-router-v1` - `codex-marketplace/plugins/house-skills/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `worker-dispatch-linear-v2` - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear`
 - `linear-v1.1` - `codex-marketplace/plugins/house-skills/skills/linear`

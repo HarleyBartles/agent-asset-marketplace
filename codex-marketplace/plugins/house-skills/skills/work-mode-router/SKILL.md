@@ -1,6 +1,6 @@
 ---
 name: work-mode-router
-description: GPT-wide bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
+description: cross-runtime bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
 metadata:
   source-id: work-mode-router
   source-path: codex-marketplace/plugins/house-skills/skills/work-mode-router/SKILL.md
@@ -9,7 +9,7 @@ license: "MIT"
 ---
 # Work Mode Router
 
-Use this skill as the GPT-wide bootstrap router for new project sessions and workflow-sensitive starts. It classifies the current request, preserves an ordinary-chat escape hatch, and routes to the smallest controlling skill surface before substantive work.
+Use this skill as the cross-runtime bootstrap router for new project sessions and workflow-sensitive starts. It classifies the current request, preserves an ordinary-chat escape hatch, and routes to the smallest controlling skill surface before substantive work.
 
 This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `worker-dispatch-linear`, GitHub proof skills, artifact skills, or package skills.
 
@@ -90,15 +90,15 @@ Never load a project-specific wrapper skill unless its project matches the activ
 
 A project wrapper with a similar function name is not a fallback. Wrong-project doctrine is noise and may create false constraints.
 
-Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through GPT-wide `worker-dispatch-linear`.
+Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `worker-dispatch-linear`.
 
 ## Reference loading
 
 Load `references/source-and-evidence-posture.md` only when the classified task actually requires source evidence, connector/tool-surface diagnosis, repository claims, unavailable-route claims, or audit output about what was inspected.
 
-When returning or revising a full system prompt, load `gpt-base-doctrine` for the system-prompt contract, including character-limit discipline and source-honesty expectations.
+When returning or revising a full system prompt, load `base-doctrine` for the system-prompt contract, including character-limit discipline and source-honesty expectations.
 
-Load `gpt-base-doctrine/references/output-artifact-shape.md` when an output-shape rule, reserved artifact form, YAML-vs-non-YAML decision, worker-copy attention guard, or artifact-form authority conflict is material.
+Load `base-doctrine/references/output-artifact-shape.md` when an output-shape rule, reserved artifact form, YAML-vs-non-YAML decision, worker-copy attention guard, or artifact-form authority conflict is material.
 
 ## System prompt contract
 
