@@ -27,4 +27,3 @@ This file is the repo-specific anti-slop guard for `HarleyBartles/agent-asset-ma
 - A valid worker return must name the files changed, commands run, validation output, generated-artifact impact, and any blockers.
 - Reject broad "cleanup", "refactor", or "improve" work unless the packet names source seams, validation, and evidence.
 - Use the smallest surface that can prove the claim. If the surface cannot prove it, the claim is unfinished.
-
