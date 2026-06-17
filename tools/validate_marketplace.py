@@ -124,6 +124,10 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "c33199897758cab145bb7fdab1ca8fb1cbd9de50":
             raise ValueError("Unexpected pinned commit for openai/plugins vendor snapshot")
         return ROOT / "sources/third_party/game-studio/upstream"
+    if upstream_repo == "codewithmukesh/dotnet-claude-kit":
+        if pinned_commit != "9a9a91107596b3ac3ad1d0ad5ec5eef189e74515":
+            raise ValueError("Unexpected pinned commit for codewithmukesh/dotnet-claude-kit vendor snapshot")
+        return ROOT / "sources/third_party/dotnet-claude-kit/upstream"
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 

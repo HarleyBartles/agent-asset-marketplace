@@ -64,6 +64,15 @@
       "plugin_root": "codex-marketplace/plugins/repo-worker-base",
       "manifest_path": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 7,
+      "name": "dotnet-kit",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/dotnet-kit",
+      "plugin_root": "codex-marketplace/plugins/dotnet-kit",
+      "manifest_path": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }
