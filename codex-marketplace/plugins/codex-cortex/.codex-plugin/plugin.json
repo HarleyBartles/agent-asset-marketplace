@@ -1,0 +1,41 @@
+{
+  "name": "codex-cortex",
+  "version": "1.0.0",
+  "description": "Codex marketplace custody bundle for the retained Claude-Cortex cqrs-event-sourcing seed.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "rights": "Contains a third-party Claude-Cortex-derived custody skill; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "architecture",
+    "cqrs",
+    "event-sourcing",
+    "skills",
+    "custody"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Cortex",
+    "shortDescription": "Retained Claude-Cortex custody surface",
+    "longDescription": "A repo-local Codex plugin bundle that holds the MARK-172 cqrs-event-sourcing seed as the canonical import and custody surface for downstream projection.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Codex Cortex bundle and source map.",
+      "Use the bundle to review the cqrs-event-sourcing custody source.",
+      "Compare the bundle versioning against the downstream Architecture Pack projection."
+    ],
+    "brandColor": "#1D4ED8",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

@@ -1,7 +1,7 @@
 # Architecture Pack
 
 This plugin bundle projects the MARK-172 `cqrs-event-sourcing` seed from the
-retained Codex Cortex custody surface into an installable Codex marketplace
+retained Codex Cortex custody plugin into an installable Codex marketplace
 shape.
 
 ## Bundle contents
@@ -23,4 +23,3 @@ shape.
 The installable skill zip is generated under
 `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip` and can
 be installed directly from that artifact.
-

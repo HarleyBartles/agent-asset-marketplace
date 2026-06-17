@@ -13,6 +13,7 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/superpowers/`,
 `codex-marketplace/plugins/repo-worker-base/`,
 `codex-marketplace/plugins/dotnet-kit/`,
+`codex-marketplace/plugins/codex-cortex/`,
 `codex-marketplace/plugins/architecture-pack/`, in that order, with the source
 manifest exposing only those roots and no legacy marketplace roots beside them.
 

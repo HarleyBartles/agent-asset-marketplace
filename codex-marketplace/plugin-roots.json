@@ -76,6 +76,15 @@
     },
     {
       "order": 8,
+      "name": "codex-cortex",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/codex-cortex",
+      "plugin_root": "codex-marketplace/plugins/codex-cortex",
+      "manifest_path": "codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 9,
       "name": "architecture-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/architecture-pack",

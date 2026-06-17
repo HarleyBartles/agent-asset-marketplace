@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 122,
+  "artifact_count": 123,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -302,6 +302,22 @@
       "source_path": "codex-marketplace/plugins/architecture-pack/skills/cqrs-event-sourcing",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip",
+      "source_file_count": 6,
+      "source_bytes": 5807,
+      "source_sha256": "d6cb41ab5ef972f824ee180be481b52308c64ad4e77ca06135ee81210151a4c7",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 3992,
+      "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+    },
+    {
+      "pack": "codex-cortex",
+      "skill": "cqrs-event-sourcing",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip",
       "source_file_count": 6,
       "source_bytes": 5807,
       "source_sha256": "d6cb41ab5ef972f824ee180be481b52308c64ad4e77ca06135ee81210151a4c7",

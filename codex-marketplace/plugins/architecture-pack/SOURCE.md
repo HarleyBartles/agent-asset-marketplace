@@ -1,15 +1,13 @@
 # Source
 
 This plugin projects the MARK-172 `cqrs-event-sourcing` seed from the retained
-Codex Cortex custody surface into a Codex marketplace pack.
+Codex Cortex custody plugin into a Codex marketplace pack.
 
-## Upstream basis
+## Source custody plugin
 
-- Repo: `NickCrew/Claude-Cortex`
-- URL: <https://github.com/NickCrew/Claude-Cortex.git>
-- Pinned commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
-- License: `MIT`
-- Retained snapshot root: `sources/third_party/codex-cortex/upstream/`
+- Plugin root: `codex-marketplace/plugins/codex-cortex/`
+- Skill root: `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/`
+- Source map: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
 
 ## First-party custody
 
@@ -27,4 +25,3 @@ Codex Cortex custody surface into a Codex marketplace pack.
 
 Only the single seed skill is projected. Later Claude-Cortex candidates stay
 out of scope for MARK-172.
-
