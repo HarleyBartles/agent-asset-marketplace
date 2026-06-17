@@ -13,6 +13,7 @@ TOOLS = ROOT / "tools"
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
+import validate_marketplace  # noqa: E402
 from validate_marketplace import validate_superpowers_bundle_manifest  # noqa: E402
 
 
@@ -22,6 +23,88 @@ def _touch(path: Path, content: str = "ok") -> None:
 
 
 class ValidateMarketplaceTests(unittest.TestCase):
+    def test_codex_receipts_superpowers_uses_canonical_cross_plugin_reference(self) -> None:
+        source_text = (
+            ROOT
+            / "codex-marketplace"
+            / "plugins"
+            / "house-skills"
+            / "skills"
+            / "codex-receipts-superpowers"
+            / "SKILL.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("repo-worker-base:codex-repo-receipts", source_text)
+        self.assertNotIn("@codex-repo-receipts", source_text)
+
+    def test_validate_marketplace_rejects_bare_cross_plugin_receipt_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_roots = (
+                temp_root / "codex-marketplace" / "plugins" / "house-skills" / "skills" / "codex-receipts-superpowers",
+                temp_root / "codex-marketplace" / "plugins" / "superpowers" / "skills" / "codex-receipts-superpowers",
+                temp_root / "sources" / "first_party" / "skills" / "house-skills",
+            )
+
+            for source_root in source_roots:
+                source_root.mkdir(parents=True, exist_ok=True)
+
+            _touch(
+                source_roots[0] / "SKILL.md",
+                "---\nname: codex-receipts-superpowers\n---\nUse `@codex-repo-receipts`.\n",
+            )
+            _touch(
+                source_roots[1] / "SKILL.md",
+                "---\nname: codex-receipts-superpowers\n---\nUse `repo-worker-base:codex-repo-receipts`.\n",
+            )
+            _touch(
+                source_roots[2] / "decisions.md",
+                "| MARK-162 | codex-receipts-superpowers-v1 | `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers` | codex-receipts-superpowers | MARK-162 | imported | scope | Composes `repo-worker-base:codex-repo-receipts`. |\n",
+            )
+            _touch(
+                source_roots[2] / "decisions.json",
+                json.dumps(
+                    [
+                        {
+                            "issue": "MARK-162",
+                            "source_id": "codex-receipts-superpowers-v1",
+                            "source_path": "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers",
+                            "public_name": "codex-receipts-superpowers",
+                            "provenance_name": "MARK-162",
+                            "scope": "scope",
+                            "notes": "Composes repo-worker-base:codex-repo-receipts.",
+                            "import_state": "imported",
+                        }
+                    ],
+                    indent=2,
+                ),
+            )
+            _touch(
+                source_roots[2] / "intake.json",
+                json.dumps(
+                    [
+                        {
+                            "issue": "MARK-162",
+                            "source_id": "codex-receipts-superpowers-v1",
+                            "source_path": "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers",
+                            "public_name": "codex-receipts-superpowers",
+                            "provenance_name": "MARK-162",
+                            "scope": "scope",
+                            "notes": "Composes repo-worker-base:codex-repo-receipts.",
+                            "import_state": "imported",
+                        }
+                    ],
+                    indent=2,
+                ),
+            )
+
+            with patch("validate_marketplace.ROOT", temp_root):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    r"codex-receipts-superpowers[\\/]+SKILL\.md must use repo-worker-base:codex-repo-receipts",
+                ):
+                    validate_marketplace.validate_canonical_cross_plugin_skill_references()
+
     def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)

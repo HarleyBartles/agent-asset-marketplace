@@ -394,6 +394,27 @@ def normalize_superpowers_projection_text(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("**", "").lower()).strip()
 
 
+def validate_canonical_cross_plugin_skill_references() -> None:
+    canonical_reference = "repo-worker-base:codex-repo-receipts"
+    bare_reference = "@codex-repo-receipts"
+    source_paths = (
+        ROOT / "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md",
+        ROOT / "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md",
+        ROOT / "sources/first_party/skills/house-skills/decisions.md",
+        ROOT / "sources/first_party/skills/house-skills/decisions.json",
+        ROOT / "sources/first_party/skills/house-skills/intake.json",
+    )
+
+    for path in source_paths:
+        text = check_text(path)
+        if bare_reference in text:
+            raise ValueError(
+                f"{path.relative_to(ROOT)} must use {canonical_reference} instead of the bare cross-plugin reference"
+            )
+        if canonical_reference not in text:
+            raise ValueError(f"{path.relative_to(ROOT)} must include {canonical_reference}")
+
+
 def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
     source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
     if bundle_manifest.get("bundle_name") != "superpowers":
@@ -834,6 +855,7 @@ def main() -> int:
                     plugin_root=spec["plugin_root"],
                 )
 
+    validate_canonical_cross_plugin_skill_references()
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
     check_json(PLUGIN_ROOT_INVENTORY_PATH)

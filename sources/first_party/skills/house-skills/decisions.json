@@ -519,7 +519,7 @@
         "provenance_name":  "MARK-162 Codex Receipts Superpowers compositional skill",
         "scope":  "repo-backed planning and durable receipt composition for non-trivial work",
         "import_state":  "imported",
-        "notes":  "First-party Harley-owned source custody for a compositional repo planning-and-receipts wrapper. Composes @using-superpowers, @writing-plans, @executing-plans, @codex-repo-receipts, and @unslop-superpowers, keeps the matching implementation record linked from the PR body or final worker report, and preserves the narrow omission path for tiny mechanical changes."
+        "notes":  "First-party Harley-owned source custody for a compositional repo planning-and-receipts wrapper. Composes @using-superpowers, @writing-plans, @executing-plans, repo-worker-base:codex-repo-receipts, and @unslop-superpowers, keeps the matching implementation record linked from the PR body or final worker report, and preserves the narrow omission path for tiny mechanical changes."
     },
     {
         "issue":  "MARK-142",
