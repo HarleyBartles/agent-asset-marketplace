@@ -5,8 +5,8 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 6,
-  "imported_count": 6,
+  "candidate_count": 15,
+  "imported_count": 15,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -51,10 +51,73 @@
       "import_status": "imported",
       "content_mode": "verbatim",
       "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/SKILL.md",
+      "local_path": "skills/event-driven-architecture/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/event-fundamentals.md",
+      "local_path": "skills/event-driven-architecture/references/event-fundamentals.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/event-sourcing.md",
+      "local_path": "skills/event-driven-architecture/references/event-sourcing.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/cqrs.md",
+      "local_path": "skills/event-driven-architecture/references/cqrs.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/message-brokers.md",
+      "local_path": "skills/event-driven-architecture/references/message-brokers.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/saga-pattern.md",
+      "local_path": "skills/event-driven-architecture/references/saga-pattern.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
+      "local_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/eventual-consistency.md",
+      "local_path": "skills/event-driven-architecture/references/eventual-consistency.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/event-driven-architecture/references/best-practices.md",
+      "local_path": "skills/event-driven-architecture/references/best-practices.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
     }
   ],
   "notes": [
-    "Single seed skill only.",
+    "Two retained architecture skills.",
     "The installable projection mirrors the Codex Cortex custody plugin.",
     "Later Claude-Cortex candidates remain out of scope."
   ]

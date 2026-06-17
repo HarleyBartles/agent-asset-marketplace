@@ -17,10 +17,11 @@
 
 - Installable plugin projection: `codex-marketplace/plugins/architecture-pack/`
 - Generated install unit: `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip`
+- Generated install unit: `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
 
 ## Boundary
 
-The retained custody surface only seeds `cqrs-event-sourcing`. Later Claude-
-Cortex candidates such as `event-driven-architecture` and
-`database-design-patterns` remain out of scope for MARK-172.
+The retained custody surface seeds `cqrs-event-sourcing` and
+`event-driven-architecture`. `database-design-patterns` remains out of scope
+for MARK-200.
 
