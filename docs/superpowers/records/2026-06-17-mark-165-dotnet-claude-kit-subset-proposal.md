@@ -4,12 +4,14 @@
 **Branch:** `codex/mark-165-dotnet-claude-kit-subset-proposal`
 **Starting main SHA:** `cf36959fcf3ff4e502d2b27d103c23ffb8582fdd`
 **Implementation commit SHA:** `3a680368fc051d2bb4d7b5479d1bff0718b9b0c1`
+**Current PR head SHA:** `27f96321d72c3a78f91677935231d6b86c97f2ea`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/102](https://github.com/HarleyBartles/agent-asset-marketplace/pull/102)
 
 ## Files changed
 
 - `docs/superpowers/plans/2026-06-17-mark-165-dotnet-claude-kit-subset-proposal.md`
 - `provenance/dotnet-claude-kit.md`
+- `docs/superpowers/records/2026-06-17-mark-165-dotnet-claude-kit-subset-proposal.md`
 
 ## Selected subset
 
