@@ -14,4 +14,6 @@ deployment output.
 - `third_party/` holds retained third-party source custody.
 - `third_party/unslop/`, `third_party/game-studio/`, `third_party/dotnet-claude-kit/`,
   and `third_party/codex-cortex/` hold the retained third-party plugin source
-  custody for the plugins already carried in the marketplace.
+  custody for the plugins already carried in the marketplace, including the
+  `api-design-patterns` contract-doctrine slice now projected through
+  `api-contracts-pack/`.

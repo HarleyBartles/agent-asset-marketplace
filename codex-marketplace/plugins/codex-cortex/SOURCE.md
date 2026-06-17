@@ -1,8 +1,9 @@
 # Source
 
-This plugin is the MARK-172, MARK-200, and MARK-201 Codex Cortex custody
-surface for the retained Claude-Cortex `cqrs-event-sourcing` seed,
-`event-driven-architecture` import, and `database-design-patterns` import.
+This plugin is the MARK-172, MARK-200, MARK-201, and MARK-204 Codex Cortex
+custody surface for the retained Claude-Cortex `cqrs-event-sourcing` seed,
+`event-driven-architecture` import, `database-design-patterns` import, and
+`api-design-patterns` import.
 
 ## Upstream basis
 
@@ -25,9 +26,10 @@ surface for the retained Claude-Cortex `cqrs-event-sourcing` seed,
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/`
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/`
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/`
+- Skill root: `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/`
 - Generated install units: `generated/skill-zips/codex-cortex/<skill-name>/skill.zip`
 
 ## Boundary
 
 Only the retained source skills are kept here. Later Claude-Cortex candidates
-stay out of scope for MARK-172, MARK-200, and MARK-201.
+stay out of scope for MARK-172, MARK-200, MARK-201, and MARK-204.

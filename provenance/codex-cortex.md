@@ -17,16 +17,18 @@
 
 - Installable plugin projection: `codex-marketplace/plugins/codex-cortex/`
 - Installable plugin projection: `codex-marketplace/plugins/architecture-pack/`
+- Installable plugin projection: `codex-marketplace/plugins/api-contracts-pack/`
 - Generated install unit: `generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/database-design-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/codex-cortex/api-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
 
 ## Boundary
 
 The retained custody surface seeds `cqrs-event-sourcing`,
-`event-driven-architecture`, and `database-design-patterns`. No later
-Claude-Cortex candidate is imported.
-
+`event-driven-architecture`, `database-design-patterns`, and
+`api-design-patterns`. No later Claude-Cortex candidate is imported.

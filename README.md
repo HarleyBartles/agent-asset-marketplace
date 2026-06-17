@@ -56,7 +56,8 @@ roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adve
 `codex-marketplace/plugins/wild-bunch-project-pack` and
 `codex-marketplace/plugins/superpowers`,
 `codex-marketplace/plugins/repo-worker-base`, `codex-marketplace/plugins/dotnet-kit`,
-`codex-marketplace/plugins/codex-cortex`, and `codex-marketplace/plugins/architecture-pack`.
+`codex-marketplace/plugins/codex-cortex`, `codex-marketplace/plugins/api-contracts-pack`,
+and `codex-marketplace/plugins/architecture-pack`.
 
 Expected flow:
 
