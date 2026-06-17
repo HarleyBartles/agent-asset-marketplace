@@ -7,8 +7,8 @@ Current source roots:
 - `codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base/SKILL.md`
 - `codex-marketplace/plugins/repo-worker-base/skills/boring-loop/SKILL.md`
 - `codex-marketplace/plugins/repo-worker-base/skills/codex-repo-receipts/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md`
+- `sources/first_party/skills/connector-safety/SKILL.md`
+- `sources/first_party/skills/github-operations/SKILL.md`
 
 Local bundle paths:
 
@@ -25,7 +25,7 @@ Component summary:
 | Base | repo-worker-base | 1.0.0 | `codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base/SKILL.md` | `skills/repo-worker-base/SKILL.md` | repo worker hygiene |
 | Dependency | boring-loop | v1 | `codex-marketplace/plugins/repo-worker-base/skills/boring-loop/SKILL.md` | `skills/boring-loop/SKILL.md` | boring loop routing |
 | Dependency | codex-repo-receipts | v1 | `codex-marketplace/plugins/repo-worker-base/skills/codex-repo-receipts/SKILL.md` | `skills/codex-repo-receipts/SKILL.md` | repo receipts |
-| Dependency | connector-safety | current | `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
-| Dependency | github-operations | current | `codex-marketplace/plugins/house-skills/skills/github-operations/SKILL.md` | `skills/github-operations/SKILL.md` | GitHub proof |
+| Dependency | connector-safety | current | `sources/first_party/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
+| Dependency | github-operations | current | `sources/first_party/skills/github-operations/SKILL.md` | `skills/github-operations/SKILL.md` | GitHub proof |
 
 All live current roots are unversioned plugin folders.

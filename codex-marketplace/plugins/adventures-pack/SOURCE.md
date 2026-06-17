@@ -27,7 +27,7 @@ project-scoped Codex plugin.
 - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
+- `sources/first_party/skills/connector-safety/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md`

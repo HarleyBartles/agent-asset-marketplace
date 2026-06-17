@@ -20,10 +20,10 @@
   `sources/first_party/skills/boring-loop/` and keeps the same retained loop
   cadence, readiness, queue grooming, and specialist-routing doctrine on the
   worker-facing plugin surface.
-- `connector-safety` is projected here from the canonical House Skills source
-  at `codex-marketplace/plugins/house-skills/skills/connector-safety/` so
-  connector and tool writes stay narrow, auditable, and recoverable.
-- `github-operations` is projected here from the canonical House Skills source
-  at `codex-marketplace/plugins/house-skills/skills/github-operations/` so
-  GitHub evidence, publication proof, and merge/readiness checks have a
-  canonical non-House-Skills home.
+- `connector-safety` is projected here from the canonical first-party source
+  at `sources/first_party/skills/connector-safety/` so connector and tool
+  writes stay narrow, auditable, and recoverable.
+- `github-operations` is projected here from the canonical first-party source
+  at `sources/first_party/skills/github-operations/` so GitHub evidence,
+  publication proof, and merge/readiness checks have a canonical non-House-Skills
+  home.

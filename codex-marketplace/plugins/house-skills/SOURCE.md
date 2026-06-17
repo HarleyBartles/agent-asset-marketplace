@@ -31,3 +31,9 @@ This plugin is the reviewed first-party House Skills plugin root.
 ## Notes
 
 The active source inventory now lives in `codex-marketplace/plugins/house-skills/skills/`.
+
+`connector-safety` and `github-operations` are now projected from
+`sources/first_party/skills/connector-safety/` and
+`sources/first_party/skills/github-operations/` respectively. House Skills
+keeps the installable projections, not the canonical first-party source
+authority, for those two skills.

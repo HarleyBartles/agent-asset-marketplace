@@ -198,12 +198,12 @@
                     {
                         "issue":  "WILL-276",
                         "source_id":  "connector-safety-v1.1",
-                        "source_path":  "codex-marketplace/plugins/house-skills/skills/connector-safety",
+                        "source_path":  "sources/first_party/skills/connector-safety",
                         "public_name":  "connector-safety",
-                        "provenance_name":  "installed connector-safety package landed via WILL-274; v1.1 zip update",
+                        "provenance_name":  "MARK-226 canonical first-party source for connector-safety",
                         "scope":  "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
                         "import_state":  "imported",
-                        "notes":  "Shared House skill safety component for side-effecting connector/tool work. Project it where shared connector safety makes a bundle more useful."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/connector-safety/. House Skills is a projection surface only."
                     },
                     {
                         "issue":  "MARK-30",
@@ -468,12 +468,12 @@
                     {
                         "issue":  "MARK-142",
                         "source_id":  "github-operations-v1",
-                        "source_path":  "codex-marketplace/plugins/house-skills/skills/github-operations",
+                        "source_path":  "sources/first_party/skills/github-operations",
                         "public_name":  "github-operations",
-                        "provenance_name":  "MARK-142 GitHub operations zip import",
+                        "provenance_name":  "MARK-226 canonical first-party source for github-operations",
                         "scope":  "GitHub evidence, PR review routing, and publication proof",
                         "import_state":  "imported",
-                        "notes":  "Imported as the first-party GitHub proof skill. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
                     },
                     {
                         "issue":  "MARK-85",

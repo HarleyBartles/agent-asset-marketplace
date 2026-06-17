@@ -18,7 +18,7 @@ Current source roots:
 - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
+- `sources/first_party/skills/connector-safety/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md`
 - `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md`
@@ -60,7 +60,7 @@ Component summary:
 | Dependency | don-logan-boundary | current | `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md` | `skills/don-logan-boundary/SKILL.md` | boundary gate |
 | Dependency | base-doctrine | current | `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md` | `skills/base-doctrine/SKILL.md` | shared doctrine |
 | Dependency | worker-dispatch-linear | current | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md` | `skills/worker-dispatch-linear/SKILL.md` | Linear dispatch |
-| Dependency | connector-safety | current | `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
+| Dependency | connector-safety | current | `sources/first_party/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
 | Dependency | linear | current | `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md` | `skills/linear/SKILL.md` | Linear mechanics |
 | Dependency | tps-reporting | current | `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md` | `skills/tps-reporting/SKILL.md` | reporting |
 | Dependency | tps-ingress | current | `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md` | `skills/tps-ingress/SKILL.md` | ingress |

@@ -15,8 +15,8 @@ Repo Worker Base asset.
 
 - `codex-repo-receipts` projected from `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts`
 - `boring-loop` projected from `sources/first_party/skills/boring-loop`
-- `connector-safety` projected from `codex-marketplace/plugins/house-skills/skills/connector-safety`
-- `github-operations` projected from `codex-marketplace/plugins/house-skills/skills/github-operations`
+- `connector-safety` projected from `sources/first_party/skills/connector-safety`
+- `github-operations` projected from `sources/first_party/skills/github-operations`
 
 ## Source files
 
@@ -50,4 +50,5 @@ The `boring-loop` skill is a projected first-party coordination skill for
 keeping work small, honest, and routed to the right specialist.
 The `connector-safety` and `github-operations` skills are projected as the
 generic safety/proof helper surfaces that no longer need House Skills as the
-install surface.
+install surface. Their canonical source roots live under
+`sources/first_party/skills/<skill>/`.

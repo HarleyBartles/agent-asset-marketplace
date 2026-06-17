@@ -26,12 +26,12 @@
 
 ## connector-safety
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/connector-safety`
+- Source path: `sources/first_party/skills/connector-safety`
 - Public identity: `connector-safety`
 - Provenance/history: installed connector-safety package landed via WILL-274; v1.1 zip update
 - Ownership: Harley-authored first-party House skill
 - Scope: connector and tool safety blocks, discover-before-mutation flow, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, post-create read chains, and safe-action reporting
-- Notes: Canonical source now lives in the House skills lane. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it. The current update sharpens the connector safety doctrine with mandatory discover -> read -> write -> verify guidance while preserving the existing blocked-write and exact-state guard rules.
+- Notes: Canonical source now lives in `sources/first_party/skills/connector-safety/`. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it. The current update sharpens the connector safety doctrine with mandatory discover -> read -> write -> verify guidance while preserving the existing blocked-write and exact-state guard rules.
 
 ## adventures-project-doctrine-v1
 
@@ -110,12 +110,12 @@
 
 ## github-operations
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/github-operations`
+- Source path: `sources/first_party/skills/github-operations`
 - Public identity: `github-operations`
 - Provenance/history: MARK-142 GitHub operations zip import
 - Ownership: Harley-owned first-party House skill
 - Scope: GitHub evidence, PR review routing, and publication proof
-- Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The Adventures overlay composes this base skill rather than owning the generic doctrine.
+- Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The canonical first-party source now lives in `sources/first_party/skills/github-operations/`; House Skills projects that source rather than owning it.
 
 ## github-superpowers
 
