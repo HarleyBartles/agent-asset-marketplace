@@ -52,9 +52,16 @@ Nesting rule:
 
 - Treat non-trivial repo-backed work as incomplete until both durable artifacts
   exist, unless a narrow explicit omission applies.
-- Keep the implementation record factual: issue, branch, main SHA, head SHA, PR
-  URL, changed files, generated artifacts, validation, skipped checks, and
-  surprises or follow-ups.
+- Keep the implementation record factual: issue, branch, main SHA,
+  implementation commit SHA, receipt/record commit SHA when known, final PR
+  head at publication or review when useful, PR URL, changed files, generated
+  artifacts, validation, skipped checks, and surprises or follow-ups.
+- Do not require the record file to be rewritten solely because later pushes
+  move the PR tip.
+- After the record commit exists, later PR head movement is publication
+  evidence verified from GitHub PR state, not a recursive receipt update.
+- A record is stale only if it misstates a durable fact, omits important
+  validation or publication evidence, or claims finality that GitHub disproves.
 - Keep the PR body or final worker report linked to both the plan and the
   implementation record.
 - Do not duplicate repository doctrine into repository `AGENTS.md` files.

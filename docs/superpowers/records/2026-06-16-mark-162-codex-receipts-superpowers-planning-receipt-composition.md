@@ -6,7 +6,7 @@
 **Implementation SHA:** `10847ae4b89c224d5e09f5dd8413723c9ac59f43`
 **Final head SHA:** `c28cfa88d6085325a11c7e5df788e5cbf0e92b6e`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/101](https://github.com/HarleyBartles/agent-asset-marketplace/pull/101)
-**Publication state:** Published on branch `codex/mark-162-add-codex-receipts-superpowers-planning-receipt-composition` and tracked by PR #101 against `main`. The feature commit landed first, and this record commit became the final head so the PR head and record now match.
+**Publication state:** Published on branch `codex/mark-162-add-codex-receipts-superpowers-planning-receipt-composition` and tracked by PR #101 against `main`. The record commit is the current branch head. Final PR head at publication/review is verified from GitHub PR state; later PR tip movement is publication evidence, not a reason to rewrite this record.
 
 ## Changed files
 
@@ -71,3 +71,4 @@
 - The marketplace validator then failed because `tools/validate_marketplace.py` still limited first-party `superpowers` projections to the older wrapper set; adding `codex-receipts-superpowers` to the allowlist resolved it.
 - The generator also refreshed several unrelated existing `skill.zip` artifacts and `generated/skill-zips/registry.json`.
 - No additional GPT overlay file was needed beyond the manifest classification updates.
+- This record captures the implementation SHA separately from the record/receipt SHA so later PR head movement does not require endless record rewrites.
