@@ -4,8 +4,8 @@
 **Branch:** `codex/mark-171-claude-cortex-upstream-candidates`
 **Starting main SHA:** `116120743d0060e58c88758a740ec58a63202ed2`
 **Implementation commit SHA:** `c24cdd5e2e58d9ecb0e9f3b8c2c3e03f2f7d1e2a`
-**PR URL:** `pending`
-**Publication state:** Drafted on the worker branch. This record captures the upstream source inventory and the first import-candidate selection for MARK-171. It does not implement a plugin or generate skill zips.
+**PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/107](https://github.com/HarleyBartles/agent-asset-marketplace/pull/107)
+**Publication state:** Published on the worker branch and tracked by draft PR #107 against `main`. This record captures the upstream source inventory and the first import-candidate selection for MARK-171. It does not implement a plugin or generate skill zips.
 
 ## Upstream evidence
 
