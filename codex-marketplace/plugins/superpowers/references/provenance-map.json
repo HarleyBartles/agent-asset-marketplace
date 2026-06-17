@@ -44,14 +44,14 @@
       "source_category": "first_party",
       "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/unslop-superpowers",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
     {
       "canonical_name": "codex-receipts-superpowers",
       "source_category": "first_party",
       "canonical_source_path": "sources/first_party/skills/codex-receipts-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
   ],
   "source_only_surfaces": [

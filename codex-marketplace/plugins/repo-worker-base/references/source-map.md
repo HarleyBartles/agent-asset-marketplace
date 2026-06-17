@@ -1,4 +1,4 @@
-﻿# Repo Worker Base Source Map
+# Repo Worker Base Source Map
 
 This plugin keeps the repo-worker-base project thin and first-party while adding the generic safety and GitHub proof helpers that repo-backed work needs.
 

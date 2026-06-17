@@ -1,4 +1,4 @@
-﻿# Superpowers Provenance
+# Superpowers Provenance
 
 ## Source anchor
 

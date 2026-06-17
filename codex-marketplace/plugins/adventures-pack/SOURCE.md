@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle packages the clean Adventures first-party line as a
 project-scoped Codex plugin.

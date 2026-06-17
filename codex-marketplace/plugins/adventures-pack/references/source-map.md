@@ -1,4 +1,4 @@
-﻿# Adventures Pack Source Map
+# Adventures Pack Source Map
 
 This bundle projects the clean Adventures line into a project-scoped
 marketplace surface from the current first-party source roots.

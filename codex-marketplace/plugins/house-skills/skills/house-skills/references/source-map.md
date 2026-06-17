@@ -1,4 +1,4 @@
-﻿# House Skills Source Map
+# House Skills Source Map
 
 The live House Skills plugin root is `codex-marketplace/plugins/house-skills/skills/`.
 

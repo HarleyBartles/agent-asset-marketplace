@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
 Codex marketplace and adds the first-party `linear-superpowers`,
