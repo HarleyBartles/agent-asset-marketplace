@@ -4,10 +4,10 @@
 **Branch:** `codex/mark-163-update-wild-bunch-ddd-aggregate-guidance`
 **Starting main SHA:** `4ae23edc1cab98f4a7dd00ae1ba4c8a0cf497eaf`
 **Implementation SHA:** `beb32379c071fdc5c4e7fca2d0da4d9bc9b120d3`
-**Final head SHA:** pending record publication commit
+**Final head SHA:** `0da48e8eee429da4e822bcd0dff06318b66a7752`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/104](https://github.com/HarleyBartles/agent-asset-marketplace/pull/104)
 **Plan:** [docs/superpowers/plans/2026-06-17-mark-163-wild-bunch-ddd-aggregate-guidance.md](/C:/WORK/codex-lanes/codex-b/agent-asset-marketplace/docs/superpowers/plans/2026-06-17-mark-163-wild-bunch-ddd-aggregate-guidance.md)
-**Publication state:** Published on branch `codex/mark-163-update-wild-bunch-ddd-aggregate-guidance` and tracked by PR #104 against `main`. The execution record is being added as a follow-up documentation commit so the published receipt can link the plan and implementation result without rewriting the feature commit.
+**Publication state:** Published on branch `codex/mark-163-update-wild-bunch-ddd-aggregate-guidance` and tracked by PR #104 against `main`. The execution record is a follow-up documentation commit that captures the feature commit and the receipt commit without rewriting the feature commit.
 
 ## Changed files
 
@@ -54,4 +54,4 @@
 - The first targeted artifact regeneration attempt failed because `dotnet-kit/clean-architecture` was stale, so the full `--all` regeneration was used.
 - The marketplace validator confirmed the project-pack copies had to match the canonical House Skills bytes exactly, so the mirrored Wild Bunch skill files were aligned directly from the canonical source.
 - The PR is draft PR #104 against `main`.
-- This record will be updated with the final head SHA after the documentation commit is published.
+- The follow-up documentation commit is `0da48e8eee429da4e822bcd0dff06318b66a7752`.
