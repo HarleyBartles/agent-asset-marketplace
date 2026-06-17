@@ -33,7 +33,7 @@ Use `@executing-plans` as the outer implementation workflow and do not treat
 the work as finished until the matching implementation record is ready for
 closeout.
 
-Use `@codex-repo-receipts` for the exact artifact contract, default paths, and
+Use `repo-worker-base:codex-repo-receipts` for the exact artifact contract, default paths, and
 narrow omission rule.
 
 Use `@unslop-superpowers` when the packet needs repo-specific anti-slop
@@ -71,7 +71,7 @@ Nesting rule:
 This skill shapes workflow selection and receipt publication for repo-backed
 work.
 
-It does not replace `@codex-repo-receipts`, does not own connector mutation
+It does not replace `repo-worker-base:codex-repo-receipts`, does not own connector mutation
 rules, and does not claim publication or closeout by itself.
 
 interface:
