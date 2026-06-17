@@ -10,7 +10,7 @@ from pathlib import Path
 
 from editor_stability_lint import lint as editor_lint
 from quick_validate import validate_skill
-from safe_skill_tree import iter_skill_files, skipped_output_paths
+from safe_skill_tree import iter_skill_files, skipped_output_paths, write_canonical_skill_zip
 
 
 def sha256_file(path):
@@ -75,8 +75,7 @@ def package_skill(skill_path, output_dir):
         print(f'ERROR: {exc}')
         return None
     with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for fp in files:
-            zipf.write(fp, fp.relative_to(skill_path.parent))
+        write_canonical_skill_zip(zipf, files, root=skill_path.parent)
     root, match = inspect_archive_shape(zpath)
     size = zpath.stat().st_size
     evidence = {

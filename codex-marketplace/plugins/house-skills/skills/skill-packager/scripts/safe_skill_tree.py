@@ -5,6 +5,7 @@ sys.dont_write_bytecode = True
 
 from pathlib import Path
 from typing import Iterable, Iterator
+import zipfile
 
 SKIP_DIR_NAMES = {
     ".git",
@@ -51,6 +52,8 @@ BINARY_SUFFIXES = {
     ".zip",
 }
 MAX_TEXT_BYTES = 2 * 1024 * 1024
+CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+CANONICAL_ZIP_PERMISSIONS = 0o644
 
 
 def is_hidden_path(rel: Path) -> bool:
@@ -117,3 +120,29 @@ def read_bounded_text(path: Path) -> tuple[bytes | None, str | None, str | None]
     except UnicodeDecodeError as exc:
         return raw, None, f"text file is not valid UTF-8: {exc}"
     return raw, text, None
+
+
+def canonicalize_text_bytes(raw: bytes) -> bytes:
+    return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
+def read_canonical_file_bytes(path: Path) -> bytes:
+    raw = path.read_bytes()
+    if is_text_file(path):
+        raw.decode("utf-8")
+        return canonicalize_text_bytes(raw)
+    return raw
+
+
+def zip_info_for_arcname(arcname: str) -> zipfile.ZipInfo:
+    info = zipfile.ZipInfo(arcname, date_time=CANONICAL_ZIP_TIMESTAMP)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.create_system = 3
+    info.external_attr = (0o100000 | CANONICAL_ZIP_PERMISSIONS) << 16
+    return info
+
+
+def write_canonical_skill_zip(archive: zipfile.ZipFile, files: Iterable[Path], *, root: Path) -> None:
+    for file_path in files:
+        arcname = file_path.relative_to(root).as_posix()
+        archive.writestr(zip_info_for_arcname(arcname), read_canonical_file_bytes(file_path))

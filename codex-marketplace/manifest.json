@@ -99,6 +99,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "architecture-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/architecture-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "notes": [

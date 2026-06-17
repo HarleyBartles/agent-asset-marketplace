@@ -1,0 +1,33 @@
+{
+  "issue": "MARK-172",
+  "upstream_repo": "NickCrew/Claude-Cortex",
+  "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "license": "MIT",
+  "retained_snapshot_root": "sources/third_party/codex-cortex/upstream",
+  "imports": [
+    {
+      "source_id": "codex-cortex-cqrs-event-sourcing-v1",
+      "public_name": "cqrs-event-sourcing",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+      "status": "imported"
+    }
+  ],
+  "deferred": [
+    {
+      "source_id": "codex-cortex-event-driven-architecture-v1",
+      "public_name": "event-driven-architecture",
+      "reason": "Later Claude-Cortex candidate excluded from MARK-172."
+    },
+    {
+      "source_id": "codex-cortex-database-design-patterns-v1",
+      "public_name": "database-design-patterns",
+      "reason": "Later Claude-Cortex candidate excluded from MARK-172."
+    }
+  ],
+  "notes": [
+    "Selective retained snapshot only.",
+    "No later Claude-Cortex candidates are imported into this child.",
+    "The retained custody surface is the durable source home for the seed skill."
+  ]
+}
+

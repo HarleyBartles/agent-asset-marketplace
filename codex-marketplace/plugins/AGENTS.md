@@ -8,7 +8,9 @@ marketplace source tree.
 Codex plugin first; generated GPT-safe skill zips second.
 
 The active installable roots under this directory are fixed to
-`house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`, `wild-bunch-project-pack/`, and `superpowers/`.
+`house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
+`wild-bunch-project-pack/`, `superpowers/`, `repo-worker-base/`,
+`dotnet-kit/`, and `architecture-pack/`.
 
 That active set is now sourced from `codex-marketplace/plugin-roots.json` and
 validated against the protected marketplace manifests and registry surfaces.
@@ -20,7 +22,7 @@ Treat these plugin roots as the canonical install surface. Generated
 `skill.zip` artifacts are downstream GPT exports; `gpt-overlays/manifest.json`
 controls whether a skill is exported direct, via overlay, or excluded.
 Everything else in this tree is support custody or historical source material,
-not part of the active marketplace inventory for the normalized six-root pass.
+not part of the active marketplace inventory for the normalized root pass.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.

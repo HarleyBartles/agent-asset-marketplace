@@ -54,7 +54,9 @@ roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adve
 `codex-marketplace/plugins/unslop`, and
 `codex-marketplace/plugins/game-studio`, plus
 `codex-marketplace/plugins/wild-bunch-project-pack` and
-`codex-marketplace/plugins/superpowers`.
+`codex-marketplace/plugins/superpowers`,
+`codex-marketplace/plugins/repo-worker-base`, `codex-marketplace/plugins/dotnet-kit`,
+and `codex-marketplace/plugins/architecture-pack`.
 
 Expected flow:
 
@@ -110,7 +112,7 @@ Default posture:
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
 - `sources/` - source-attribution records and retained upstream snapshots.
 - `sources/first_party/` - editable first-party source custody and skill-ledger records.
-- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers` release snapshot.
+- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers`, `dotnet-claude-kit`, and `Claude-Cortex` snapshots.
 - `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
 - `tools/` - helper scripts and validation tooling.
 - `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.

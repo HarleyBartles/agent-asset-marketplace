@@ -18,7 +18,7 @@ from editor_stability_lint import lint as editor_lint
 from frontmatter_lint import lint as frontmatter_lint
 from inspect_skill_zip import inspect as inspect_skill_zip
 from quick_validate import validate_skill
-from safe_skill_tree import iter_skill_files, skipped_output_paths
+from safe_skill_tree import iter_skill_files, skipped_output_paths, write_canonical_skill_zip
 from script_architecture_lint import lint as script_architecture_lint
 
 DEFAULT_TIMEOUT_SECONDS = 25
@@ -194,8 +194,7 @@ def step_package(skill_dir: Path, package_path: Path, evidence_path: Path):
     except ValueError as exc:
         return False, '', f'ERROR: {exc}'
     with zipfile.ZipFile(package_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for fp in files:
-            zipf.write(fp, fp.relative_to(skill_dir.parent))
+        write_canonical_skill_zip(zipf, files, root=skill_dir.parent)
     root, match = inspect_archive_shape(package_path)
     size = package_path.stat().st_size
     evidence = {
