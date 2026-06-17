@@ -4,9 +4,9 @@
 **Branch:** `codex/mark-162-add-codex-receipts-superpowers-planning-receipt-composition`
 **Starting main SHA:** `6b71b02d5cdae2873f7c2c141295c90ca0bf5699`
 **Implementation SHA:** `10847ae4b89c224d5e09f5dd8413723c9ac59f43`
-**Final head SHA:** `10847ae4b89c224d5e09f5dd8413723c9ac59f43`
+**Final head SHA:** `c28cfa88d6085325a11c7e5df788e5cbf0e92b6e`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/101](https://github.com/HarleyBartles/agent-asset-marketplace/pull/101)
-**Publication state:** Published on branch `codex/mark-162-add-codex-receipts-superpowers-planning-receipt-composition` and tracked by PR #101 against `main`. This record is the documentation-only follow-up commit that records the feature commit and publication proof after the source changes landed.
+**Publication state:** Published on branch `codex/mark-162-add-codex-receipts-superpowers-planning-receipt-composition` and tracked by PR #101 against `main`. The feature commit landed first, and this record commit became the final head so the PR head and record now match.
 
 ## Changed files
 
@@ -56,11 +56,13 @@
 
 - `py -3 tools/update_skill_artifacts.py --all`
 - `py -3 tools/validate_marketplace.py`
+- `py -3 tools/validate_repo_index.py`
 - `git diff --check`
 
 ## Latest checks
 
 - `py -3 tools/validate_marketplace.py`
+- `py -3 tools/validate_repo_index.py`
 - `git diff --check`
 
 ## Notes
