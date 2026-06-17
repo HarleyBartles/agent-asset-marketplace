@@ -1,6 +1,6 @@
 ---
 name: wild-bunch-dotnet-architecture
-description: Apply Wild Bunch .NET architecture guardrails for C#/.NET repo work involving domain ownership, GameSession mutation routes, application orchestration, infrastructure persistence, CQRS/read models, JSON snapshot state, database-table pressure, or framework leakage. Use when designing, reviewing, dispatching, or verifying Wild Bunch code changes that could move rules out of the domain, normalize live session state too early, overuse CQRS/event sourcing, or confuse static content/read models with runtime aggregate state.
+description: Apply Wild Bunch .NET architecture guardrails for C#/.NET repo work involving domain ownership, GameSession Aggregate Root mutation paths, application orchestration, infrastructure persistence, CQRS/read models, JSON snapshot state, database-table pressure, or framework leakage. Use when designing, reviewing, dispatching, or verifying Wild Bunch code changes that could move rules out of the domain, confuse Aggregate Root boundaries with coordinators, normalize live session state too early, overuse CQRS/event sourcing, or confuse static content/read models with runtime aggregate state.
 ---
 
 # Wild Bunch .NET Architecture
@@ -10,7 +10,10 @@ Use this skill for structure decisions in the Wild Bunch C#/.NET codebase. Prote
 ## Core rules
 
 - The domain owns rules and invariants.
-- `GameSession` and existing aggregate routes should remain the normal live-play mutation path unless current repo source proves another route.
+- `GameSession` is the live-play Aggregate Root.
+- External live-play commands mutate through `GameSession`.
+- Owned aggregate/component files under the root may own cohesive state, behavior, invariants, and lifecycle transitions when the DDD model calls for them.
+- Policy/coordinator/resolver extraction is not aggregate progress unless a DDD aggregate/component owns responsibility.
 - The application or use-case layer coordinates commands and queries but does not become the source of domain truth.
 - Infrastructure persists snapshots or read models and should not leak framework objects into the domain.
 - Persist runtime session state as strongly typed aggregate state suitable for JSON snapshots unless the issue explicitly says otherwise.

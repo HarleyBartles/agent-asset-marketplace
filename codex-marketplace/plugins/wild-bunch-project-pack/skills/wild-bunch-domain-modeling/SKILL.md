@@ -1,18 +1,21 @@
 ---
 name: wild-bunch-domain-modeling
-description: apply Wild Bunch project-scoped domain guidance when work touches gameplay state, GameSession aggregate boundaries, player wallet or inventory, clue or journal flows, wanted posters, hidden culprit truth, horse and saddle rules, water handling, town or trail travel, journey state, or trail-day progression. Use to keep C#/.NET game-domain modeling aligned with live repo source and to prevent generic inventory, service, database, or travel abstractions from flattening Wild Bunch-specific design.
+description: apply Wild Bunch project-scoped domain guidance when work touches DDD tactical modeling, GameSession Aggregate Root boundaries, player wallet or inventory, clue or journal flows, wanted posters, hidden culprit truth, horse and saddle rules, water handling, town or trail travel, journey state, or trail-day progression. Use to keep C#/.NET game-domain modeling aligned with live repo source and to prevent policy, service, database, or travel abstractions from flattening Wild Bunch-specific design.
 ---
 
 # Wild Bunch Domain Modeling
 
 ## Overview
 
-Use this skill when the task touches live gameplay state or Wild Bunch domain language. Keep the model close to the current source and avoid introducing generic game abstractions that flatten the project-specific design.
+Use this skill when the task touches live gameplay state or Wild Bunch domain language. Keep the model close to the current source, use DDD tactical terms, and avoid generic game abstractions that flatten the project-specific design.
 
 ## Rules
 
-- Treat `GameSession` as the live-play aggregate root or aggregate route unless the current source proves otherwise.
-- Route game mutations through the aggregate route, not through ad hoc services that mutate state elsewhere.
+- Treat `GameSession` as the live-play Aggregate Root.
+- External live-play commands mutate through `GameSession`.
+- Owned aggregate/component files under the root may own cohesive state, behavior, invariants, and lifecycle transitions.
+- Policy/coordinator/resolver extraction is not aggregate extraction unless a DDD aggregate/component owns responsibility.
+- Use Aggregate Root terminology; do not fall back to route-metaphor wording.
 - Keep Wallet and Inventory as concrete player state; do not reintroduce generic supplies.
 - Keep hidden culprit truth internal.
 - Keep clue, journal, and wanted-poster flows stable unless the current task directly changes them.

@@ -1,7 +1,9 @@
 # Domain Notes
 
-- Prefer `GameSession` as the live-play aggregate root unless the source proves another root.
-- Route mutations through the aggregate so invariants stay in one place.
+- Prefer `GameSession` as the live-play Aggregate Root unless the source proves another root.
+- External live-play commands mutate through `GameSession`.
+- Owned aggregate/component files under the root may own cohesive state, behavior, invariants, and lifecycle transitions.
+- Policy/coordinator/resolver extraction is not aggregate extraction unless a DDD aggregate/component owns responsibility.
 - Keep wallet and inventory concrete.
 - Preserve the project's internal hidden-culprit truth.
 - Keep clue, journal, and wanted-poster flows stable unless the scope says otherwise.
