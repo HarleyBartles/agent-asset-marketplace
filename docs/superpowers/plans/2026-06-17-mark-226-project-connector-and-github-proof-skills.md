@@ -145,4 +145,3 @@ Expected: all commands pass.
 - [ ] **Step 2: Commit, push, and open the PR**
 
 Commit the projection and index updates on the branch, push it, and open a GitHub PR into `main`.
-
