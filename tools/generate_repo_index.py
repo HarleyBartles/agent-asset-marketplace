@@ -97,11 +97,11 @@ def build_repo_index() -> dict:
         if name == "codex-cortex":
             ordered_plugins.append(dict(CODEX_CORTEX_ENTRY))
             continue
-        if name in current_plugins:
-            ordered_plugins.append(current_plugins[name])
-            continue
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))
+            continue
+        if name in current_plugins:
+            ordered_plugins.append(current_plugins[name])
             continue
         raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
 

@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 127,
+  "artifact_count": 129,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1606,6 +1606,38 @@
       "overlay_sha256": null,
       "zip_size_bytes": 1545,
       "zip_sha256": "8a8669b3891cd73637e0c68387b1836b6d94c47ab2deaa0ee9b106e2fcd3fa59"
+    },
+    {
+      "pack": "repo-worker-base",
+      "skill": "connector-safety",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/connector-safety",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/connector-safety/skill.zip",
+      "source_file_count": 3,
+      "source_bytes": 14776,
+      "source_sha256": "99d8edb5e421dd955b86c3c985ee3f4302364639f998dce17a1ab2fd5af5ea9b",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 5890,
+      "zip_sha256": "a0b071934f49a120670b98124ac97aab4740aff06b0de156221f0b3633a5ce23"
+    },
+    {
+      "pack": "repo-worker-base",
+      "skill": "github-operations",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/github-operations",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/github-operations/skill.zip",
+      "source_file_count": 5,
+      "source_bytes": 20158,
+      "source_sha256": "5ff196cbc50a59a0aeb4a559d023caf59d15a7514b47589502d7507ba620c6d5",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 8990,
+      "zip_sha256": "d45565e4b31a858b1015171690d321a9e89a57204fd499dd9bdd2adee8e9a9bc"
     },
     {
       "pack": "repo-worker-base",
