@@ -20,15 +20,25 @@
     "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle."
   },
   {
-    "issue": "MARK-200",
+    "issue": "MARK-201",
+    "source_id": "codex-cortex-database-design-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
+    "public_name": "database-design-patterns",
+    "provenance_name": "MARK-201 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Database schema design patterns and optimization guidance",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle."
+  },
+  {
+    "issue": "MARK-201",
     "id": "global.codex-cortex.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-172 retains cqrs-event-sourcing and MARK-200 adds event-driven-architecture to the selective custody surface. database-design-patterns remains deferred, and no later Claude-Cortex candidate is imported.",
+    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, and MARK-201 adds database-design-patterns to the selective custody surface. No later Claude-Cortex candidate is imported.",
     "imported_source_paths": [
       "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-      "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md"
+      "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md"
     ]
   }
 ]
-
