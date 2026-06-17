@@ -33,11 +33,18 @@ DOTNET_KIT_ENTRY = {
     "plugin_root": "codex-marketplace/plugins/dotnet-kit",
     "plugin_manifest": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
     "source_md": "codex-marketplace/plugins/dotnet-kit/SOURCE.md",
-    "source_ledger": [],
+    "source_ledger": [
+        "sources/first_party/skills/dotnet-kit/decisions.json",
+        "sources/first_party/skills/dotnet-kit/decisions.md",
+        "sources/first_party/skills/dotnet-kit/intake.json",
+    ],
     "license_path": "codex-marketplace/plugins/dotnet-kit/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/dotnet-kit/skills",
-    "provenance_refs": [],
+    "provenance_refs": [
+        "provenance/dotnet-claude-kit.md",
+        "codex-marketplace/plugins/dotnet-kit/references/source-map.md",
+    ],
     "agents_md": None,
     "registry_path": "./codex-marketplace/plugins/dotnet-kit",
     "registry_alignment": {
@@ -59,14 +66,14 @@ def build_repo_index() -> dict:
         if not isinstance(name, str) or not name:
             raise ValueError("marketplace registry contains a malformed plugin name")
 
+        if name == "dotnet-kit":
+            ordered_plugins.append(dict(DOTNET_KIT_ENTRY))
+            continue
         if name in current_plugins:
             ordered_plugins.append(current_plugins[name])
             continue
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))
-            continue
-        if name == "dotnet-kit":
-            ordered_plugins.append(dict(DOTNET_KIT_ENTRY))
             continue
         raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
 
