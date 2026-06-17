@@ -34,6 +34,7 @@ Current skill inventory:
 | Base and control plane | linear-issue-compactor | `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor` |
 | Base and control plane | linear-superpowers | `codex-marketplace/plugins/house-skills/skills/linear-superpowers` |
 | Base and control plane | codex-repo-receipts | `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts` |
+| Base and control plane | codex-receipts-superpowers | `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers` |
 | Base and control plane | github-operations | `codex-marketplace/plugins/house-skills/skills/github-operations` |
 | Base and control plane | github-superpowers | `codex-marketplace/plugins/house-skills/skills/github-superpowers` |
 | Base and control plane | unslop-superpowers | `codex-marketplace/plugins/house-skills/skills/unslop-superpowers` |

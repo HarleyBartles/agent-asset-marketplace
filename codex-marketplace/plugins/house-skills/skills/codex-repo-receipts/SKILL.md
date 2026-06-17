@@ -29,7 +29,9 @@ Use the narrowest local convention that already exists. If the repository has no
 - issue identifier;
 - branch name;
 - starting `main` SHA;
-- final head SHA;
+- implementation commit SHA;
+- receipt/record commit SHA when known;
+- final PR head at publication or review, verified from GitHub PR state when useful;
 - PR URL if one was created;
 - exact files changed;
 - generated artifacts;
@@ -38,6 +40,10 @@ Use the narrowest local convention that already exists. If the repository has no
 - surprises, deviations from the plan, and follow-ups.
 
 Keep the record factual. It is not a transcript, and it should not include secrets, raw private tool output, or worker chatter.
+
+Do not require the record file to be rewritten solely because later pushes move the PR tip.
+After the record commit exists, later PR head movement is publication evidence verified from GitHub, not a recursive receipt update.
+A record is stale only if it misstates a durable fact, omits important validation or publication evidence, or claims finality that GitHub disproves.
 
 ## Linkage rule
 

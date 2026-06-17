@@ -9,6 +9,11 @@
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
+        },
+        {
+          "skill": "codex-receipts-superpowers",
+          "export_mode": "direct",
+          "reason": "The receipt workflow is GPT-safe and does not depend on Codex-only tool behavior."
         }
       ]
     },
@@ -42,6 +47,11 @@
           "skill": "codex-repo-receipts",
           "export_mode": "direct",
           "reason": "The guidance is GPT-safe and does not depend on Codex-only tool behavior."
+        },
+        {
+          "skill": "codex-receipts-superpowers",
+          "export_mode": "direct",
+          "reason": "The wrapper is GPT-safe and composes shared workflow guidance without Codex-only tool assumptions."
         },
         {
           "skill": "linear-superpowers",

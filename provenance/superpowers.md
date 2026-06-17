@@ -27,8 +27,8 @@ Projection contract:
 - `superpowers` is a third-party plugin projection with selected first-party
   compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
-  first-party wrapper skills `linear-superpowers`, `github-superpowers`, and
-  `unslop-superpowers`.
+  first-party wrapper skills `linear-superpowers`, `github-superpowers`,
+  `unslop-superpowers`, and `codex-receipts-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -53,16 +53,19 @@ into `codex-marketplace/plugins/superpowers/skills/github-superpowers/`
 and the first-party `unslop-superpowers` skill from
 `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/`
+and the first-party `codex-receipts-superpowers` skill from
+`codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/`
+into `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, and anti-slop workflow skills without creating second editable source
+GitHub, anti-slop, and receipt workflow skills without creating second editable source
 roots.
 
 These first-party projections are directory-level skill specs with
 `SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
 
-`linear-superpowers` and `github-superpowers` both invoke `unslop-superpowers`
-when repo-specific anti-slop controls, profile-aware non-goals, or evidence
-requirements matter.
+`linear-superpowers`, `github-superpowers`, and `codex-receipts-superpowers`
+invoke `unslop-superpowers` when repo-specific anti-slop controls,
+profile-aware non-goals, or evidence requirements matter.
 
 ## Excluded from the active projection
 

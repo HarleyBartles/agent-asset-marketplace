@@ -2,16 +2,16 @@
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
 Codex marketplace and adds the first-party `linear-superpowers`,
-`github-superpowers`, and `unslop-superpowers` skills from House Skills as
-source-backed projections.
+`github-superpowers`, `unslop-superpowers`, and `codex-receipts-superpowers`
+skills from House Skills as source-backed projections.
 
 ## Projection contract
 
 - `superpowers` is a third-party plugin projection with selected first-party
   compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
-  first-party wrapper skills `linear-superpowers`, `github-superpowers`, and
-  `unslop-superpowers`.
+  first-party wrapper skills `linear-superpowers`, `github-superpowers`,
+  `unslop-superpowers`, and `codex-receipts-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -40,6 +40,7 @@ source-backed projections.
   `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
   `codex-marketplace/plugins/house-skills/skills/github-superpowers/`
   `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
+  `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/`
 
 ## Projected surface
 
@@ -51,6 +52,7 @@ source-backed projections.
 - `skills/linear-superpowers/`
 - `skills/github-superpowers/`
 - `skills/unslop-superpowers/`
+- `skills/codex-receipts-superpowers/`
 - `references/codex-marketplace-compatibility.md`
 
 ## Source-only support provenance
@@ -72,7 +74,8 @@ The retained upstream snapshot also preserves the broader package boundary
 (`docs/`, `scripts/`, `tests/`, `README.md`, `package.json`, `AGENTS.md`, and
 the top-level license and release notes) in third-party custody.
 
-`linear-superpowers`, `github-superpowers`, and `unslop-superpowers` stay
+`linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
+`codex-receipts-superpowers` stay
 editable in House Skills and are projected here as readable directory copies
 for the Superpowers bundle rather than as second source roots. Each
 first-party projection is a directory-level skill spec that carries both

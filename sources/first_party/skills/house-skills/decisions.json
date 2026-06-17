@@ -512,6 +512,16 @@
         "notes":  "First-party Harley-owned source custody for a compositional repo receipt skill. Composes /codex-repo-receipts and keeps durable plan and implementation-record receipts in the repository\u0027s local convention or docs/superpowers/plans/ and docs/superpowers/records/ by default."
     },
     {
+        "issue":  "MARK-162",
+        "source_id":  "codex-receipts-superpowers-v1",
+        "source_path":  "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers",
+        "public_name":  "codex-receipts-superpowers",
+        "provenance_name":  "MARK-162 Codex Receipts Superpowers compositional skill",
+        "scope":  "repo-backed planning and durable receipt composition for non-trivial work",
+        "import_state":  "imported",
+        "notes":  "First-party Harley-owned source custody for a compositional repo planning-and-receipts wrapper. Composes @using-superpowers, @writing-plans, @executing-plans, @codex-repo-receipts, and @unslop-superpowers, keeps the matching implementation record linked from the PR body or final worker report, and preserves the narrow omission path for tiny mechanical changes."
+    },
+    {
         "issue":  "MARK-142",
         "source_id":  "github-operations-v1",
         "source_path":  "codex-marketplace/plugins/house-skills/skills/github-operations",
