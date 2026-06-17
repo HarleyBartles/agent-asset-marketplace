@@ -4,7 +4,6 @@
 **Branch:** `codex/mark-165-dotnet-claude-kit-subset-proposal`
 **Starting main SHA:** `cf36959fcf3ff4e502d2b27d103c23ffb8582fdd`
 **Implementation commit SHA:** `3a680368fc051d2bb4d7b5479d1bff0718b9b0c1`
-**Final head SHA:** `3a680368fc051d2bb4d7b5479d1bff0718b9b0c1`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/102](https://github.com/HarleyBartles/agent-asset-marketplace/pull/102)
 
 ## Files changed
