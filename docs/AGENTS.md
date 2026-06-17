@@ -12,6 +12,7 @@ rules, and upstream-drain policy.
 
 - Treat docs under `docs/` as discovery and guidance surfaces, not canonical
   marketplace source.
+- The canonical repo unslop profile lives at `docs/unslop/profile.md`.
 - Keep docs-owned profile files stable once they are chosen as canonical
   homes.
 - Flag stale cross-references when a canonical docs path moves.
