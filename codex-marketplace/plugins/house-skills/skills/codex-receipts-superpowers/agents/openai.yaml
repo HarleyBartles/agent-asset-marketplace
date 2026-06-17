@@ -2,7 +2,7 @@ name: codex-receipts-superpowers
 description: Use when repo-backed work needs durable plan and implementation-record receipts for non-trivial work.
 metadata:
   source-id: codex-receipts-superpowers
-  source-path: codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md
+  source-path: sources/first_party/skills/codex-receipts-superpowers/SKILL.md
   provenance-name: MARK-162 Codex Receipts Superpowers compositional skill
 license: "MIT"
 interface:

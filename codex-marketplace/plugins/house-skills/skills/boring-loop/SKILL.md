@@ -1,9 +1,9 @@
----
+﻿---
 name: boring-loop
 description: Use when coordinating a boring work loop, picking the next smallest safe move, or preventing false-green repo work.
 metadata:
   source-id: boring-loop-v1
-  source-path: codex-marketplace/plugins/house-skills/skills/boring-loop/SKILL.md
+  source-path: sources/first_party/skills/boring-loop/SKILL.md
   provenance-name: MARK-152 Boring Loop beta House Skills projection
 license: "MIT"
 ---

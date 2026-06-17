@@ -1,8 +1,8 @@
-# Version History for Adventures Frame Buster
+﻿# Version History for Adventures Frame Buster
 
 - Historical version: `v1.1`
 - Historical source id: `adventures-frame-buster-v1.1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md`
+- Current root: `sources/first_party/skills/adventures-frame-buster/SKILL.md`
 - Provenance: historical archive note for adventures-frame-buster
 - Historical package folders folded out of the live root: `v1`
 

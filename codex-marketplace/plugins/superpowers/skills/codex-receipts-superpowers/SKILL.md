@@ -1,9 +1,9 @@
----
+﻿---
 name: codex-receipts-superpowers
 description: Use when repo-backed work needs the smallest applicable workflow skill, durable plan and implementation-record receipts, and a closeout path that naturally links both artifacts.
 metadata:
   source-id: codex-receipts-superpowers
-  source-path: codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md
+  source-path: sources/first_party/skills/codex-receipts-superpowers/SKILL.md
   provenance-name: MARK-162 Codex Receipts Superpowers compositional skill
 license: "MIT"
 ---

@@ -11,7 +11,7 @@ Use this bundle when you need the installable Adventures project projection.
 
 - Bundle name: `adventures-pack`
 - Bundle version: `1.0.0`
-- Canonical source root: `codex-marketplace/plugins/house-skills/skills`
+- Canonical source root: `sources/first_party/skills`
 - Marketplace registry: `.agents/plugins/marketplace.json`
 
 ## Operating rule

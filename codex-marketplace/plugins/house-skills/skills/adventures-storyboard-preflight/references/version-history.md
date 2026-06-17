@@ -1,8 +1,8 @@
-# Version History for Adventures Storyboard Preflight
+﻿# Version History for Adventures Storyboard Preflight
 
 - Historical version: `v1.1`
 - Historical source id: `adventures-storyboard-preflight-v1.1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md`
+- Current root: `sources/first_party/skills/adventures-storyboard-preflight/SKILL.md`
 - Provenance: historical archive note for adventures-storyboard-preflight
 - Historical package folders folded out of the live root: `v1`
 

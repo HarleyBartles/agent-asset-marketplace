@@ -39,11 +39,11 @@ from skill_zip_artifacts import validate_skill_zip_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 FIRST_PARTY_SUPERPOWERS_SOURCES = {
-    "linear-superpowers": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
-    "github-superpowers": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
-    "unslop-superpowers": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
-    "codex-repo-receipts": "codex-marketplace/plugins/house-skills/skills/codex-repo-receipts",
-    "codex-receipts-superpowers": "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers",
+    "linear-superpowers": "sources/first_party/skills/linear-superpowers",
+    "github-superpowers": "sources/first_party/skills/github-superpowers",
+    "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
+    "codex-repo-receipts": "sources/first_party/skills/codex-repo-receipts",
+    "codex-receipts-superpowers": "sources/first_party/skills/codex-receipts-superpowers",
 }
 
 
@@ -307,16 +307,16 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/wild-bunch-project-pack":
         raise ValueError("wild-bunch-project-pack bundle manifest plugin_root mismatch")
     if bundle_manifest.get("canonical_source_roots") != [
-        "codex-marketplace/plugins/house-skills/skills",
+        "sources/first_party/skills",
         "sources/third_party/game-studio/upstream/skills",
     ]:
         raise ValueError("wild-bunch-project-pack bundle manifest canonical_source_roots mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
-        "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
-        "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
-        "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
-        "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+        "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
+        "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
+        "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
+        "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
+        "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md",
         "sources/third_party/game-studio/upstream/.codex-plugin/plugin.json",
         "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md",
     ]:

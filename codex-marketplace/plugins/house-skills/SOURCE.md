@@ -1,6 +1,6 @@
 # Source
 
-This plugin is the reviewed first-party House Skills plugin root.
+This plugin is the reviewed first-party House Skills projection root.
 
 ## Source basis
 
@@ -8,8 +8,9 @@ This plugin is the reviewed first-party House Skills plugin root.
 - Structured archive ledger: `sources/first_party/skills/house-skills/decisions.json`
 - Intake ledger: `sources/first_party/skills/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
-- Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
-- Wild Bunch first-party hydration: `codex-marketplace/plugins/house-skills/skills/wild-bunch-*/`
+- Current install surfaces: `codex-marketplace/plugins/house-skills/skills/`
+- Canonical first-party skill roots: `sources/first_party/skills/<skill-name>/`
+- Wild Bunch first-party hydration: `sources/first_party/skills/wild-bunch-*/`
 
 ## Source surfaces copied
 
@@ -30,7 +31,7 @@ This plugin is the reviewed first-party House Skills plugin root.
 
 ## Notes
 
-The active source inventory now lives in `codex-marketplace/plugins/house-skills/skills/`.
+The active projection inventory now lives in `codex-marketplace/plugins/house-skills/skills/`.
 
 `connector-safety` and `github-operations` are now projected from
 `sources/first_party/skills/connector-safety/` and

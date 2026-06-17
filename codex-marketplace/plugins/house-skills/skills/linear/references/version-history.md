@@ -1,8 +1,8 @@
-# Version History for Linear
+﻿# Version History for Linear
 
 - Historical version: `v1.1`
 - Historical source id: `linear-v1.1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
+- Current root: `sources/first_party/skills/linear/SKILL.md`
 - Provenance: historical archive note for linear
 - Historical package folders folded out of the live root: none
 

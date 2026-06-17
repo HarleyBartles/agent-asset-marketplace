@@ -15,7 +15,7 @@ Adventures House Skills line.
 
 - The bundle is a projection over canonical first-party and House Skills
   sources, not a new source of truth.
-- The clean active Adventures line lives in `codex-marketplace/plugins/house-skills/skills/`.
+- The clean active Adventures line lives in `sources/first_party/skills/`.
 - Historical v1 imports remain historical and are not bundled as active
   inventory.
 - Stage boundaries stay explicit: planning, source discovery, QA, image
@@ -25,7 +25,7 @@ Adventures House Skills line.
 
 ## Provenance
 
-- Canonical source root: `codex-marketplace/plugins/house-skills/skills`
+- Canonical source root: `sources/first_party/skills`
 - Bundle source ledger: `sources/first_party/skills/house-skills/decisions.json`
 - Human registry: `sources/first_party/skills/house-skills/decisions.md`
 - Structured registry mirror: `sources/first_party/skills/house-skills/intake.json`

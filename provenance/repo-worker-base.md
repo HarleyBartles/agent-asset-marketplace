@@ -1,4 +1,4 @@
-# Repo Worker Base Provenance
+﻿# Repo Worker Base Provenance
 
 ## Origin
 
@@ -13,7 +13,7 @@
   validation evidence, publication reporting, and the generic safety/proof
   helpers that repo-backed work needs.
 - `codex-repo-receipts` is projected here from the canonical House Skills
-  source at `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts`
+  source at `sources/first_party/skills/codex-repo-receipts`
   so repo-backed work can publish durable plan and implementation-record
   receipts from the repo-worker-base plugin surface.
 - `boring-loop` is projected here from the canonical first-party source at

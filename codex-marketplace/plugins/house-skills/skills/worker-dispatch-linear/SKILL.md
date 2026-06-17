@@ -1,9 +1,9 @@
----
+﻿---
 name: worker-dispatch-linear
 description: Use for Linear-backed worker issue preparation and status handling: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch, delegate, or assume any execution lane; treat worker-ready as issue-ready only.
 metadata:
   source-id: worker-dispatch-linear-v2
-  source-path: codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md
+  source-path: sources/first_party/skills/worker-dispatch-linear/SKILL.md
   provenance-name: "MARK-122 GPT-native update"
 license: "MIT"
 ---

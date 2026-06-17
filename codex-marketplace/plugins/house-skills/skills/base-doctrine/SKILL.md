@@ -1,9 +1,9 @@
----
+﻿---
 name: base-doctrine
 description: Cross-runtime doctrine store for cross-project operating invariants not owned by a more specific skill. Use when work involves system-prompt limits, tool/source evidence honesty, durable doctrine routing, bounded skill/reference read loops, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/session-buster confusion, worker-copy attention guards, and lower-skill format conflicts.
 metadata:
   source-id: base-doctrine
-  source-path: codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md
+  source-path: sources/first_party/skills/base-doctrine/SKILL.md
   provenance-name: "MARK-161 base-doctrine migration slice"
 license: "MIT"
 ---

@@ -1,4 +1,4 @@
----
+﻿---
 name: house-skills
 description: Repo-local Codex marketplace bundle for the current House Skills plugin root. Use this bundle when you need the installable current roots, bundle version, or source map for the House Skills marketplace surface. Treat the live plugin root as the source of truth for current skills and the archive ledger as historical custody.
 metadata:
@@ -10,7 +10,7 @@ license: "MIT"
 # House Skills Bundle
 
 This skill is the installable bundle control plane for the current House Skills plugin root.
-It governs the 56 active first-party House Skills roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
+It governs the 56 active first-party House Skills projection roots as real skill folders under `codex-marketplace/plugins/house-skills/skills/<skill-name>/`.
 
 Use it when you need to understand:
 
@@ -25,14 +25,14 @@ Use it when you need to understand:
 - Bundle name: `house-skills`
 - Bundle version: `1.0.0`
 - Marketplace registry: `.agents/plugins/marketplace.json`
-- Current skill roots: `codex-marketplace/plugins/house-skills/skills/`
+- Current projection roots: `codex-marketplace/plugins/house-skills/skills/`
 - Plugin manifest: `codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle manifest: `references/bundle-manifest.json`
 - Human source map: `references/source-map.md`
 
 ## Source boundary
 
-The bundle's live source surface is `codex-marketplace/plugins/house-skills/skills/`.
+The bundle's live projection surface is `codex-marketplace/plugins/house-skills/skills/`.
 
 The historical source ledger remains:
 
@@ -45,7 +45,7 @@ The bundle does not replace the archived source ledger. Current version lives in
 
 ## Shared loop control
 
-- `codex-marketplace/plugins/house-skills/skills/boring-loop`
+- `sources/first_party/skills/boring-loop`
 
 Marketplace exports are generated, not hand-edited:
 

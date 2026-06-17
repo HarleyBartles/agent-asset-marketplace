@@ -6,7 +6,7 @@
     {
       "canonical_name": "wild-bunch-project-doctrine",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/SKILL.md",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
       "projection_path": "skills/wild-bunch-project-doctrine/SKILL.md",
       "content_mode": "verbatim",
       "copy_expectation": "byte_identical",
@@ -15,7 +15,7 @@
     {
       "canonical_name": "wild-bunch-domain-modeling",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling/SKILL.md",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
       "projection_path": "skills/wild-bunch-domain-modeling/SKILL.md",
       "content_mode": "verbatim",
       "copy_expectation": "byte_identical",
@@ -24,7 +24,7 @@
     {
       "canonical_name": "wild-bunch-dotnet-architecture",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
       "projection_path": "skills/wild-bunch-dotnet-architecture/SKILL.md",
       "content_mode": "verbatim",
       "copy_expectation": "byte_identical",
@@ -33,7 +33,7 @@
     {
       "canonical_name": "wild-bunch-browser-game",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game/SKILL.md",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
       "projection_path": "skills/wild-bunch-browser-game/SKILL.md",
       "content_mode": "verbatim",
       "copy_expectation": "byte_identical",
@@ -42,7 +42,7 @@
     {
       "canonical_name": "wild-bunch-worker-verification",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/SKILL.md",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md",
       "projection_path": "skills/wild-bunch-worker-verification/SKILL.md",
       "content_mode": "verbatim",
       "copy_expectation": "byte_identical",

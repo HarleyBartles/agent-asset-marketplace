@@ -1,8 +1,8 @@
-# Version History for Tps Ingress
+﻿# Version History for Tps Ingress
 
 - Historical version: `v1`
 - Historical source id: `tps-ingress-v1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md`
+- Current root: `sources/first_party/skills/tps-ingress/SKILL.md`
 - Provenance: historical archive note for tps-ingress
 - Historical package folders folded out of the live root: none
 

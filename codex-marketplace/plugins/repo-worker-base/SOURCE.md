@@ -1,4 +1,4 @@
-# Source
+﻿# Source
 
 This Codex marketplace plugin is the repo-canonical copy of the locally created
 Repo Worker Base asset.
@@ -13,7 +13,7 @@ Repo Worker Base asset.
 
 ## Projected skills
 
-- `codex-repo-receipts` projected from `codex-marketplace/plugins/house-skills/skills/codex-repo-receipts`
+- `codex-repo-receipts` projected from `sources/first_party/skills/codex-repo-receipts`
 - `boring-loop` projected from `sources/first_party/skills/boring-loop`
 - `connector-safety` projected from `sources/first_party/skills/connector-safety`
 - `github-operations` projected from `sources/first_party/skills/github-operations`

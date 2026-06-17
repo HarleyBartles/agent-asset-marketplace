@@ -1,9 +1,9 @@
----
+﻿---
 name: github-superpowers
 description: Use when shaping GitHub-facing work so it starts with @using-superpowers, selects the smallest applicable specialist workflow, and keeps GitHub proof, review routing, publication proof, and final main-state verification bound to github-operations.
 metadata:
   source-id: github-superpowers
-  source-path: codex-marketplace/plugins/house-skills/skills/github-superpowers/SKILL.md
+  source-path: sources/first_party/skills/github-superpowers/SKILL.md
   provenance-name: MARK-143 GitHub Superpowers compositional skill
 license: "MIT"
 ---

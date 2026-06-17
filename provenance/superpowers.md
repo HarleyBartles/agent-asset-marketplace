@@ -1,4 +1,4 @@
-# Superpowers Provenance
+﻿# Superpowers Provenance
 
 ## Source anchor
 
@@ -45,16 +45,16 @@ Projection contract:
   skill being relocated into the third-party plugin.
 
 The bundle also projects the first-party `linear-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
+`sources/first_party/skills/linear-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/`
 and the first-party `github-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/github-superpowers/`
+`sources/first_party/skills/github-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/github-superpowers/`
 and the first-party `unslop-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
+`sources/first_party/skills/unslop-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/`
 and the first-party `codex-receipts-superpowers` skill from
-`codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/`
+`sources/first_party/skills/codex-receipts-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
 GitHub, anti-slop, and receipt workflow skills without creating second editable source

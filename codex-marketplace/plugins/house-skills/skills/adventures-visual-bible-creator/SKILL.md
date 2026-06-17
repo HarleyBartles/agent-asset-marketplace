@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-visual-bible-creator
 description: Create and maintain the Adventures visual bible as a source-backed planning artifact with explicit stage boundaries between planning, generation, editing, and acceptance.
 metadata:
   source-id: adventures-visual-bible-creator
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md
+  source-path: sources/first_party/skills/adventures-visual-bible-creator/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

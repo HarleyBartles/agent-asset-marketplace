@@ -15,13 +15,13 @@ rules, and upstream-drain policy.
 - Flag missing or broken `skills/`, `assets/`, or bundle-reference files before
   minor copy edits.
 - Flag any claim that this bundle is still a projection or mirror. The live
-  source surface is `codex-marketplace/plugins/house-skills/skills/`.
+  projection/install surface is `codex-marketplace/plugins/house-skills/skills/`.
 - Flag license or rights drift, especially if the bundle metadata or README
   starts implying broader rights than the repo evidence supports.
 
 ## Current-root workflow
 
-- House Skills updates follow the unversioned current roots in `codex-marketplace/plugins/house-skills/skills/`.
+- House Skills updates follow the unversioned current projection roots in `codex-marketplace/plugins/house-skills/skills/`.
 - Historical package folders are folded into the current root and recorded in changelog and version-history notes.
 - Update the live skill root and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.

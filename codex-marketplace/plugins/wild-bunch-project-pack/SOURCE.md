@@ -4,7 +4,7 @@ This bundle packages the hydrated Wild Bunch first-party skills together with th
 
 ## Canonical basis
 
-- First-party Wild Bunch source custody: `codex-marketplace/plugins/house-skills/skills/`
+- First-party Wild Bunch source custody: `sources/first_party/skills/`
 - Third-party browser-game source custody: `sources/third_party/game-studio/upstream/skills/`
 - License posture: mixed first-party and third-party custody
 

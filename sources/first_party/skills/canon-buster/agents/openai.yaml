@@ -1,0 +1,11 @@
+interface:
+  display_name: Canon Buster
+  short_description: Protect durable canon from drift and misuse.
+  default_prompt: Use $canon-buster before making, changing, summarizing, publishing, dispatching, or relying on a durable canon claim.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

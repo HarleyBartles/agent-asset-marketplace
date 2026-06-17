@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-visual-preproduction
 description: Prepare source-first Adventures visual planning packets, frame breakdowns, and readiness checks before image generation or editing, keeping deterministic planning separate from downstream production.
 metadata:
   source-id: adventures-visual-preproduction
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction/SKILL.md
+  source-path: sources/first_party/skills/adventures-visual-preproduction/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---
