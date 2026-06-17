@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 123,
+  "artifact_count": 125,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -312,6 +312,22 @@
       "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
     },
     {
+      "pack": "architecture-pack",
+      "skill": "event-driven-architecture",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip",
+      "source_file_count": 9,
+      "source_bytes": 31199,
+      "source_sha256": "dba9d1ea614d0b4165dcaef12d146e797ac9ef95e91c647766cf91e059e3d061",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 14508,
+      "zip_sha256": "fdd992afa022bab17d77d673d7815185f2800b47b7937cbb9c19e9441cd61a76"
+    },
+    {
       "pack": "codex-cortex",
       "skill": "cqrs-event-sourcing",
       "export_mode": "direct",
@@ -326,6 +342,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 3992,
       "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+    },
+    {
+      "pack": "codex-cortex",
+      "skill": "event-driven-architecture",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip",
+      "source_file_count": 9,
+      "source_bytes": 31199,
+      "source_sha256": "dba9d1ea614d0b4165dcaef12d146e797ac9ef95e91c647766cf91e059e3d061",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 14508,
+      "zip_sha256": "fdd992afa022bab17d77d673d7815185f2800b47b7937cbb9c19e9441cd61a76"
     },
     {
       "pack": "dotnet-kit",

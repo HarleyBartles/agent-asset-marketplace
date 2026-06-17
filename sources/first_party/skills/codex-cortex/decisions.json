@@ -10,13 +10,24 @@
     "notes": "Imported from the selective Claude-Cortex custody surface and normalized for the architecture-pack projection."
   },
   {
-    "issue": "MARK-172",
+    "issue": "MARK-200",
+    "source_id": "codex-cortex-event-driven-architecture-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+    "public_name": "event-driven-architecture",
+    "provenance_name": "MARK-200 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Event-driven architecture guidance",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle."
+  },
+  {
+    "issue": "MARK-200",
     "id": "global.codex-cortex.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-172 imports exactly one reviewed seed skill: cqrs-event-sourcing. event-driven-architecture and database-design-patterns remain deferred, and no later Claude-Cortex candidate is imported.",
+    "decision": "MARK-172 retains cqrs-event-sourcing and MARK-200 adds event-driven-architecture to the selective custody surface. database-design-patterns remains deferred, and no later Claude-Cortex candidate is imported.",
     "imported_source_paths": [
-      "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md"
+      "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md"
     ]
   }
 ]

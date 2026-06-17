@@ -1,7 +1,7 @@
 {
   "name": "architecture-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for CQRS and event-sourcing guidance projected from the retained Codex Cortex custody plugin.",
+  "description": "Codex marketplace bundle for CQRS and event-driven architecture guidance projected from the retained Codex Cortex custody plugin.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -15,14 +15,17 @@
     "architecture",
     "cqrs",
     "event-sourcing",
+    "event-driven",
+    "saga",
+    "message-broker",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Architecture Pack",
-    "shortDescription": "CQRS and event-sourcing projection",
-    "longDescription": "A repo-local Codex plugin bundle that projects the retained Codex Cortex seed skill from the custody plugin into an installable marketplace shape.",
+    "shortDescription": "CQRS and event-driven architecture projection",
+    "longDescription": "A repo-local Codex plugin bundle that projects the retained Codex Cortex seed skill and event-driven-architecture follow-on into an installable marketplace shape.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -31,7 +34,7 @@
     ],
     "defaultPrompt": [
       "Inspect the Architecture Pack bundle and source map.",
-      "Use the bundle to install the cqrs-event-sourcing projection.",
+      "Use the bundle to install the cqrs-event-sourcing and event-driven-architecture projections.",
       "Compare the bundle versioning against the retained Codex Cortex custody surface."
     ],
     "brandColor": "#1D4ED8",
