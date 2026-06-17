@@ -28,6 +28,24 @@ REPO_WORKER_BASE_ENTRY = {
     },
 }
 
+DOTNET_KIT_ENTRY = {
+    "name": "dotnet-kit",
+    "plugin_root": "codex-marketplace/plugins/dotnet-kit",
+    "plugin_manifest": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/dotnet-kit/SOURCE.md",
+    "source_ledger": [],
+    "license_path": "codex-marketplace/plugins/dotnet-kit/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/dotnet-kit/skills",
+    "provenance_refs": [],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/dotnet-kit",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
@@ -46,6 +64,9 @@ def build_repo_index() -> dict:
             continue
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))
+            continue
+        if name == "dotnet-kit":
+            ordered_plugins.append(dict(DOTNET_KIT_ENTRY))
             continue
         raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
 

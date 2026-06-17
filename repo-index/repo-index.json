@@ -93,30 +93,30 @@
         "tools/validate_repo_index.py"
       ]
     },
-  {
-    "name": "first-party-house-skills-ledger",
-    "path": "sources/first_party/skills/house-skills",
-    "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
-    "surface_kind": "provenance",
-    "nearest_scoped_agents_md": null,
-    "key_validation_scripts": [
-      "tools/validate_marketplace.py"
-    ]
-  },
-  {
-    "name": "first-party-boring-loop-ledger",
-    "path": "sources/first_party/skills/boring-loop",
-    "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
-    "surface_kind": "provenance",
-    "nearest_scoped_agents_md": null,
-    "key_validation_scripts": [
-      "tools/update_skill_artifacts.py",
-      "tools/validate_marketplace.py",
-      "tools/validate_repo_index.py"
-    ]
-  },
-  {
-    "name": "third-party-custody",
+    {
+      "name": "first-party-house-skills-ledger",
+      "path": "sources/first_party/skills/house-skills",
+      "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
+      "surface_kind": "provenance",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py"
+      ]
+    },
+    {
+      "name": "first-party-boring-loop-ledger",
+      "path": "sources/first_party/skills/boring-loop",
+      "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
+      "surface_kind": "provenance",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/update_skill_artifacts.py",
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "third-party-custody",
       "path": "sources/third_party",
       "purpose": "Third-party source custody for the retained unslop, game-studio, and superpowers upstream snapshots.",
       "surface_kind": "vendored",
@@ -319,6 +319,23 @@
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/repo-worker-base",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "dotnet-kit",
+      "plugin_root": "codex-marketplace/plugins/dotnet-kit",
+      "plugin_manifest": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/dotnet-kit/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/dotnet-kit/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/dotnet-kit/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/dotnet-kit",
       "registry_alignment": {
         "status": "aligned",
         "note": null

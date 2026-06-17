@@ -1,0 +1,61 @@
+{
+  "bundle_name": "dotnet-kit",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "codewithmukesh/dotnet-claude-kit",
+  "pinned_commit": "9a9a91107596b3ac3ad1d0ad5ec5eef189e74515",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 6,
+  "imported_count": 6,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/modern-csharp/SKILL.md",
+      "local_path": "skills/modern-csharp/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples."
+    },
+    {
+      "snapshot_path": "skills/vertical-slice/SKILL.md",
+      "local_path": "skills/vertical-slice/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance."
+    },
+    {
+      "snapshot_path": "skills/clean-architecture/SKILL.md",
+      "local_path": "skills/clean-architecture/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Removed advisor-specific trigger language and kept the clean architecture guidance."
+    },
+    {
+      "snapshot_path": "skills/ddd/SKILL.md",
+      "local_path": "skills/ddd/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Kept the DDD tactical guidance and normalized provider-specific wording."
+    },
+    {
+      "snapshot_path": "skills/ef-core/SKILL.md",
+      "local_path": "skills/ef-core/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Kept the EF Core guidance and removed provider-specific load assumptions."
+    },
+    {
+      "snapshot_path": "skills/testing/SKILL.md",
+      "local_path": "skills/testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Kept the testing guidance and removed provider-specific load assumptions."
+    }
+  ],
+  "notes": [
+    "Selective retained upstream snapshot only.",
+    "tdd and verify are deferred from this child.",
+    "The pack projects six installable technical skills and no full upstream kit."
+  ]
+}

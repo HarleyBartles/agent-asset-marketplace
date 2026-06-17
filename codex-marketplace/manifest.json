@@ -87,6 +87,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "dotnet-kit",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/dotnet-kit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "notes": [

@@ -1,0 +1,40 @@
+{
+  "name": "dotnet-kit",
+  "version": "1.0.0",
+  "description": "Selective Codex .NET pack projected from the retained dotnet-claude-kit snapshot and first-party provenance ledger.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "dotnet",
+    "csharp",
+    "ef-core",
+    "clean-architecture",
+    "ddd",
+    "testing",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dotnet Kit",
+    "shortDescription": "Selective Codex .NET skills pack",
+    "longDescription": "A repo-local Codex plugin bundle projecting the MARK-166 approved .NET technical skills from a selective retained upstream snapshot. It keeps provider-specific assumptions out of the installable pack and records the six-skill boundary in source custody.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the dotnet-kit source map and bundle manifest.",
+      "Use the pack to install the six approved .NET technical skills.",
+      "Confirm tdd and verify were deferred from this child."
+    ],
+    "brandColor": "#0F4C81",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
