@@ -20,7 +20,9 @@ side-effecting connector/tool work, `base-doctrine` and
 `rooms-canon-buster` as a Rooms canon-pressure overlay, the newly landed
 `asset-market`, `skill-installer`, `skill-handoff`, `linear-superpowers`,
 and `unslop-superpowers` base/control-plane skill roots, and the hydrated
-Wild Bunch first-party roots.
+Wild Bunch first-party roots. `connector-safety` and `github-operations`
+now project from `sources/first_party/skills/<skill-name>/` instead of
+claiming House Skills as their canonical source authority.
 
 Bundle identity:
 

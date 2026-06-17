@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 127,
+  "artifact_count": 129,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -206,14 +206,14 @@
       "source_path": "codex-marketplace/plugins/adventures-pack/skills/connector-safety",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/connector-safety/skill.zip",
-      "source_file_count": 3,
-      "source_bytes": 14776,
-      "source_sha256": "99d8edb5e421dd955b86c3c985ee3f4302364639f998dce17a1ab2fd5af5ea9b",
+      "source_file_count": 6,
+      "source_bytes": 16965,
+      "source_sha256": "19c4dc607012a28ae7d5c6e7d42a582238cc847dfd3bedf2f9346a5f8fee7dbb",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5890,
-      "zip_sha256": "a0b071934f49a120670b98124ac97aab4740aff06b0de156221f0b3633a5ce23"
+      "zip_size_bytes": 7364,
+      "zip_sha256": "a9d484c4cc37e81f52507cd368090f39e9dfd8c63b4ba2afba4187dec54bc304"
     },
     {
       "pack": "adventures-pack",
@@ -990,14 +990,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/connector-safety",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/connector-safety/skill.zip",
-      "source_file_count": 3,
-      "source_bytes": 14776,
-      "source_sha256": "99d8edb5e421dd955b86c3c985ee3f4302364639f998dce17a1ab2fd5af5ea9b",
+      "source_file_count": 6,
+      "source_bytes": 16965,
+      "source_sha256": "19c4dc607012a28ae7d5c6e7d42a582238cc847dfd3bedf2f9346a5f8fee7dbb",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5890,
-      "zip_sha256": "a0b071934f49a120670b98124ac97aab4740aff06b0de156221f0b3633a5ce23"
+      "zip_size_bytes": 7364,
+      "zip_sha256": "a9d484c4cc37e81f52507cd368090f39e9dfd8c63b4ba2afba4187dec54bc304"
     },
     {
       "pack": "house-skills",
@@ -1054,14 +1054,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/github-operations",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/github-operations/skill.zip",
-      "source_file_count": 5,
-      "source_bytes": 20151,
-      "source_sha256": "40b16e49e7e36f8125c76d2d02c1b289e3adc3745c15512fb77beadeccfcd284",
+      "source_file_count": 8,
+      "source_bytes": 22108,
+      "source_sha256": "b0393fe3f83dc3cf6009c85da8feb3625b34351181867728be50191296408c0a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8992,
-      "zip_sha256": "fcbcc998169393d661038406b2a92d1620d2bc8b643eaff4fc1f6b45b9b3e5bb"
+      "zip_size_bytes": 10340,
+      "zip_sha256": "0b8ab2acd05c3fc970ddcfe6ef1715ab5ce5b7e3a7bae2172e56022943ad0ab3"
     },
     {
       "pack": "house-skills",
@@ -1606,6 +1606,38 @@
       "overlay_sha256": null,
       "zip_size_bytes": 1545,
       "zip_sha256": "8a8669b3891cd73637e0c68387b1836b6d94c47ab2deaa0ee9b106e2fcd3fa59"
+    },
+    {
+      "pack": "repo-worker-base",
+      "skill": "connector-safety",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/connector-safety",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/connector-safety/skill.zip",
+      "source_file_count": 6,
+      "source_bytes": 16965,
+      "source_sha256": "19c4dc607012a28ae7d5c6e7d42a582238cc847dfd3bedf2f9346a5f8fee7dbb",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 7364,
+      "zip_sha256": "a9d484c4cc37e81f52507cd368090f39e9dfd8c63b4ba2afba4187dec54bc304"
+    },
+    {
+      "pack": "repo-worker-base",
+      "skill": "github-operations",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-base/skills/github-operations",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-base/github-operations/skill.zip",
+      "source_file_count": 8,
+      "source_bytes": 22108,
+      "source_sha256": "b0393fe3f83dc3cf6009c85da8feb3625b34351181867728be50191296408c0a",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 10340,
+      "zip_sha256": "0b8ab2acd05c3fc970ddcfe6ef1715ab5ce5b7e3a7bae2172e56022943ad0ab3"
     },
     {
       "pack": "repo-worker-base",

@@ -13,8 +13,8 @@ Adventures House Skills line.
 
 ## Projection rules
 
-- The bundle is a projection over canonical House Skills sources, not a new
-  source of truth.
+- The bundle is a projection over canonical first-party and House Skills
+  sources, not a new source of truth.
 - The clean active Adventures line lives in `codex-marketplace/plugins/house-skills/skills/`.
 - Historical v1 imports remain historical and are not bundled as active
   inventory.

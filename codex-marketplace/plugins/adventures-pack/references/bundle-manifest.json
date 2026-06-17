@@ -120,7 +120,7 @@
                        {
                            "canonical_name":  "connector-safety",
                            "component_version":  "v1",
-                           "source_path":  "codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md",
+                           "source_path":  "sources/first_party/skills/connector-safety/SKILL.md",
                            "local_path":  "skills/connector-safety/SKILL.md",
                            "role":  "dependency",
                            "projection_status":  "projected"
