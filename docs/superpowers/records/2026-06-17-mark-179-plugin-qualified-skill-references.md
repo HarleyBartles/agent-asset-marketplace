@@ -8,7 +8,7 @@ Starting main SHA: `e4777ffa796f7fa9fd181fa7e67a177b7609fef4`
 
 Implementation commit SHA: `46e09d22`
 
-PR URL: not created yet
+PR URL: [PR #106](https://github.com/HarleyBartles/agent-asset-marketplace/pull/106)
 
 Changed files:
 
