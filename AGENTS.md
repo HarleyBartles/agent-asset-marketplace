@@ -17,6 +17,7 @@ Durable assets in this repo may include:
 - repo-specific overlays under `repo-overlays/`;
 - upstream source snapshots and references under `sources/`;
 - provenance, license, attribution, and trust records under `provenance/` as evidence and traceability, not completion by itself;
+- docs-owned repo guidance such as `docs/unslop/profile.md` when a canonical profile needs a stable docs home;
 - worker playbooks, validation scripts, and other enablement assets where the repo conventions support them.
 
 Canonical repo-resident `skill.zip` artifacts, when required by an issue, live
