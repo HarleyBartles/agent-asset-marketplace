@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-project-doctrine
 description: Shared Adventures doctrine for repo truth, source packages, bundle projection, and stage-boundary discipline across planning, source discovery, QA, image readiness, generation/editing, asset compilation, deck/package work, and acceptance.
 metadata:
   source-id: adventures-project-doctrine
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md
+  source-path: sources/first_party/skills/adventures-project-doctrine/SKILL.md
   provenance-name: MARK-22 prep payload for Adventures House Skills survivor import
 license: "MIT"
 ---

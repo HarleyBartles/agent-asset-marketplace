@@ -1,8 +1,8 @@
-# Version History for Adventures Image Qa
+﻿# Version History for Adventures Image Qa
 
 - Historical version: `v1.1`
 - Historical source id: `adventures-image-qa-v1.1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/adventures-image-qa/SKILL.md`
+- Current root: `sources/first_party/skills/adventures-image-qa/SKILL.md`
 - Provenance: historical archive note for adventures-image-qa
 - Historical package folders folded out of the live root: `v1`
 

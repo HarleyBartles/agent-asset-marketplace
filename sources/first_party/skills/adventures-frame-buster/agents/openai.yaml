@@ -1,0 +1,14 @@
+version: 1
+interface:
+  display_name: Adventures Frame Buster
+  short_description: Routes Adventures framing checks and readiness gates.
+  icon: assets/icon.svg
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

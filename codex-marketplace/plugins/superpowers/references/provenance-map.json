@@ -28,30 +28,30 @@
     {
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },
     {
       "canonical_name": "github-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
+      "canonical_source_path": "sources/first_party/skills/github-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/github-superpowers",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },
     {
       "canonical_name": "unslop-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/unslop-superpowers",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
     {
       "canonical_name": "codex-receipts-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers",
+      "canonical_source_path": "sources/first_party/skills/codex-receipts-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
   ],
   "source_only_surfaces": [

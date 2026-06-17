@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-image-qa
 description: Review Adventures generated candidates and compiled assets against source constraints and acceptance criteria, while keeping QA separate from image generation or editing authority.
 metadata:
   source-id: adventures-image-qa
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-image-qa/SKILL.md
+  source-path: sources/first_party/skills/adventures-image-qa/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

@@ -1,4 +1,4 @@
-# Projection
+﻿# Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
 `v5.1.0`, plus the source-backed House Skills `linear-superpowers`,
@@ -45,13 +45,13 @@ skills.
 - `references/provenance-map.json`
 
 `skills/linear-superpowers/` is copied from the canonical House Skills source
-at `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`.
+at `sources/first_party/skills/linear-superpowers/`.
 `skills/github-superpowers/` is copied from the canonical House Skills source
-at `codex-marketplace/plugins/house-skills/skills/github-superpowers/`.
+at `sources/first_party/skills/github-superpowers/`.
 `skills/unslop-superpowers/` is copied from the canonical House Skills source
-at `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`.
+at `sources/first_party/skills/unslop-superpowers/`.
 `skills/codex-receipts-superpowers/` is copied from the canonical House Skills
-source at `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/`.
+source at `sources/first_party/skills/codex-receipts-superpowers/`.
 
 Each first-party projection is a directory-level skill spec, so the copied
 tree includes both `SKILL.md` and `agents/openai.yaml` when the canonical

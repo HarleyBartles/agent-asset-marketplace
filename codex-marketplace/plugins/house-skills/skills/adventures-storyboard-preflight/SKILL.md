@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-storyboard-preflight
 description: prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic visual planning. use when Harley asks ordinary GPT to storyboard frames, make prompt boards, map slide visuals, preflight story beats, or produce visual planning packets before image generation; never grants image-generation authority.
 metadata:
   source-id: adventures-storyboard-preflight
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md
+  source-path: sources/first_party/skills/adventures-storyboard-preflight/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

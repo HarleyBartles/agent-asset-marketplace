@@ -1,9 +1,9 @@
----
+﻿---
 name: unslop-superpowers
 description: Use when shaping Linear issues, GitHub proof, worker returns, or closeout language needs repo-specific anti-slop controls, profile discovery or refresh, concrete evidence requirements, or a narrow direct-to-main unslop profile update.
 metadata:
   source-id: unslop-superpowers
-  source-path: codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md
+  source-path: sources/first_party/skills/unslop-superpowers/SKILL.md
   provenance-name: MARK-144 Unslop Superpowers compositional guard skill
 license: "MIT"
 ---

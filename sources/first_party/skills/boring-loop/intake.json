@@ -13,8 +13,8 @@
     "route-to-specialist guidance"
   ],
   "projected_paths": [
-    "codex-marketplace/plugins/house-skills/skills/boring-loop",
-    "codex-marketplace/plugins/repo-worker-base/skills/boring-loop"
+    "sources/first_party/skills/boring-loop",
+    "sources/first_party/skills/boring-loop"
   ],
   "gpt_overlay": "direct export by default",
   "notes": "Use a GPT overlay only if later validation shows a GPT runtime safety or behavior gap."

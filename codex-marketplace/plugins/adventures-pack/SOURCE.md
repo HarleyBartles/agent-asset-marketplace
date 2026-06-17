@@ -1,36 +1,36 @@
 # Source
 
-This bundle packages the clean Adventures House Skills line as a
+This bundle packages the clean Adventures first-party line as a
 project-scoped Codex plugin.
 
 ## Canonical basis
 
-- Canonical root: `codex-marketplace/plugins/house-skills/skills`
+- Canonical roots: `sources/first_party/skills/`
 - Active projection lane: Adventures
 - License posture: first-party Harley-owned source
 
 ## Source roots inspected
 
-- `codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-github-operations/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-image-qa/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md`
+- `sources/first_party/skills/adventures-project-doctrine/SKILL.md`
+- `sources/first_party/skills/adventures-bootstrap/SKILL.md`
+- `sources/first_party/skills/adventures-github-operations/SKILL.md`
+- `sources/first_party/skills/adventures-visual-preproduction/SKILL.md`
+- `sources/first_party/skills/adventures-storyboard-preflight/SKILL.md`
+- `sources/first_party/skills/adventures-visual-bible-creator/SKILL.md`
+- `sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md`
+- `sources/first_party/skills/adventures-image-qa/SKILL.md`
+- `sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md`
+- `sources/first_party/skills/adventures-frame-buster/SKILL.md`
 
 ## Generic dependencies
 
-- `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/base-doctrine/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear/SKILL.md`
+- `sources/first_party/skills/don-logan-boundary/SKILL.md`
+- `sources/first_party/skills/base-doctrine/SKILL.md`
+- `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
 - `sources/first_party/skills/connector-safety/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/linear/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md`
-- `codex-marketplace/plugins/house-skills/skills/tps-ingress/SKILL.md`
+- `sources/first_party/skills/linear/SKILL.md`
+- `sources/first_party/skills/tps-reporting/SKILL.md`
+- `sources/first_party/skills/tps-ingress/SKILL.md`
 
 ## Outcome
 

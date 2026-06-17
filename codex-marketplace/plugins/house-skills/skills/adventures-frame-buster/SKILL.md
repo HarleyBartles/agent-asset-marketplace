@@ -1,9 +1,9 @@
----
+﻿---
 name: adventures-frame-buster
 description: Route Adventures frame-readiness checks as deterministic source-bound work before storyboard, preproduction, or package production, without invoking image-generation authority.
 metadata:
   source-id: adventures-frame-buster
-  source-path: codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/SKILL.md
+  source-path: sources/first_party/skills/adventures-frame-buster/SKILL.md
   provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
 license: "MIT"
 ---

@@ -1,8 +1,8 @@
-# Version History for Tps Reporting
+﻿# Version History for Tps Reporting
 
 - Historical version: `v1`
 - Historical source id: `tps-reporting-v1`
-- Current root: `codex-marketplace/plugins/house-skills/skills/tps-reporting/SKILL.md`
+- Current root: `sources/first_party/skills/tps-reporting/SKILL.md`
 - Provenance: historical archive note for tps-reporting
 - Historical package folders folded out of the live root: none
 

@@ -1,8 +1,8 @@
-# House Skills Provenance
+﻿# House Skills Provenance
 
 ## cleanup-custody
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/cleanup-custody/v0.1/cleanup-custody-v0.1/SKILL.md`
+- Source path: `sources/first_party/skills/cleanup-custody/v0.1/cleanup-custody-v0.1/SKILL.md`
 - Public identity: `cleanup-custody`
 - Provenance/history only: legacy profanity-bearing cleanup-skill naming
 - Scope: cleanup-custody only
@@ -10,7 +10,7 @@
 
 ## skill-validator
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-validator/v1/skill-validator-v1/SKILL.md`
+- Source path: `sources/first_party/skills/skill-validator/v1/skill-validator-v1/SKILL.md`
 - Public identity: `skill-validator`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice
 - Scope: skill validation
@@ -18,7 +18,7 @@
 
 ## skill-packager
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-packager/v1/skill-packager-v1/SKILL.md`
+- Source path: `sources/first_party/skills/skill-packager/v1/skill-packager-v1/SKILL.md`
 - Public identity: `skill-packager`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice
 - Scope: skill packaging
@@ -35,7 +35,7 @@
 
 ## adventures-project-doctrine-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/v1/adventures-project-doctrine-v1/SKILL.md`
+- Source path: `sources/first_party/skills/adventures-project-doctrine/v1/adventures-project-doctrine-v1/SKILL.md`
 - Public identity: `adventures-project-doctrine-v1`
 - Provenance/history only: MARK-22 prep payload for Adventures House Skills survivor import
 - Scope: Adventures project doctrine
@@ -43,7 +43,7 @@
 
 ## base-doctrine
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/base-doctrine`
+- Source path: `sources/first_party/skills/base-doctrine`
 - Public identity: `base-doctrine`
 - Provenance/history only: MARK-30 base and control plane update
 - Scope: cross-runtime shared doctrine
@@ -51,7 +51,7 @@
 
 ## bootstrap-router
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/bootstrap-router`
+- Source path: `sources/first_party/skills/bootstrap-router`
 - Public identity: `bootstrap-router`
 - Provenance/history: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
 - Scope: first-turn bootstrap routing and request classification
@@ -59,7 +59,7 @@
 
 ## rooms-image-sidecars
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars/v0.1/rooms-image-sidecars-v0.1/SKILL.md`
+- Source path: `sources/first_party/skills/rooms-image-sidecars/v0.1/rooms-image-sidecars-v0.1/SKILL.md`
 - Public identity: `rooms-image-sidecars`
 - Provenance/history only: MARK-23 prep payload for Rooms House Skills survivor import
 - Scope: Rooms image sidecar preparation
@@ -67,7 +67,7 @@
 
 ## rooms-canon-buster
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-canon-buster`
+- Source path: `sources/first_party/skills/rooms-canon-buster`
 - Public identity: `rooms-canon-buster`
 - Provenance/history: MARK-97 attached rooms canon buster zip update
 - Ownership: Harley-authored first-party House skill
@@ -76,7 +76,7 @@
 
 ## asset-market
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/asset-market`
+- Source path: `sources/first_party/skills/asset-market`
 - Public identity: `asset-market`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: marketplace source and pack acquisition
@@ -84,7 +84,7 @@
 
 ## linear-issue-compactor
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor`
+- Source path: `sources/first_party/skills/linear-issue-compactor`
 - Public identity: `linear-issue-compactor`
 - Provenance/history: MARK-135 Linear issue compactor skill
 - Scope: Linear issue compaction and connector-readable issue bodies
@@ -92,7 +92,7 @@
 
 ## boring-loop
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/boring-loop`
+- Source path: `sources/first_party/skills/boring-loop`
 - Public identity: `boring-loop`
 - Provenance/history: MARK-152 Boring Loop beta first-party source
 - Ownership: Harley-owned first-party House skill
@@ -101,7 +101,7 @@
 
 ## linear-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/linear-superpowers`
+- Source path: `sources/first_party/skills/linear-superpowers`
 - Public identity: `linear-superpowers`
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -119,7 +119,7 @@
 
 ## github-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/github-superpowers`
+- Source path: `sources/first_party/skills/github-superpowers`
 - Public identity: `github-superpowers`
 - Provenance/history: MARK-143 GitHub Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -128,7 +128,7 @@
 
 ## unslop-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/unslop-superpowers`
+- Source path: `sources/first_party/skills/unslop-superpowers`
 - Public identity: `unslop-superpowers`
 - Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
 - Ownership: Harley-owned first-party House skill
@@ -137,7 +137,7 @@
 
 ## codex-receipts-superpowers
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers`
+- Source path: `sources/first_party/skills/codex-receipts-superpowers`
 - Public identity: `codex-receipts-superpowers`
 - Provenance/history: MARK-162 Codex Receipts Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -146,7 +146,7 @@
 
 ## skill-handoff
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-handoff`
+- Source path: `sources/first_party/skills/skill-handoff`
 - Public identity: `skill-handoff`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: skill package handoff cadence
@@ -154,7 +154,7 @@
 
 ## skill-installer
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/skill-installer`
+- Source path: `sources/first_party/skills/skill-installer`
 - Public identity: `skill-installer`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: skill installation handoff orchestration
@@ -162,14 +162,14 @@
 
 ## rooms-bootstrap
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap`
+- Source path: `sources/first_party/skills/rooms-bootstrap`
 - Public identity: `rooms-bootstrap`
 - Provenance/history: MARK-97 rooms bootstrap zip update
 - Scope: Rooms first-read router
 - Notes: Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata. `agents/openai.yaml` keeps the repo-local brand color and implicit invocation fields; `assets/icon.svg` stays the active icon.
 ## wild-bunch-project-doctrine-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine`
+- Source path: `sources/first_party/skills/wild-bunch-project-doctrine`
 - Public identity: `wild-bunch-project-doctrine`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -178,7 +178,7 @@
 
 ## wild-bunch-domain-modeling-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling`
+- Source path: `sources/first_party/skills/wild-bunch-domain-modeling`
 - Public identity: `wild-bunch-domain-modeling`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -187,7 +187,7 @@
 
 ## wild-bunch-dotnet-architecture-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture`
+- Source path: `sources/first_party/skills/wild-bunch-dotnet-architecture`
 - Public identity: `wild-bunch-dotnet-architecture`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -196,7 +196,7 @@
 
 ## wild-bunch-browser-game-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game`
+- Source path: `sources/first_party/skills/wild-bunch-browser-game`
 - Public identity: `wild-bunch-browser-game`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -205,7 +205,7 @@
 
 ## wild-bunch-worker-verification-v1
 
-- Source path: `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification`
+- Source path: `sources/first_party/skills/wild-bunch-worker-verification`
 - Public identity: `wild-bunch-worker-verification`
 - Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
 - Ownership: Harley-authored first-party House skill
@@ -232,40 +232,40 @@
 
 ### Base and control plane
 
-- `don-logan-boundary-v1` - `codex-marketplace/plugins/house-skills/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
-- `base-doctrine` - `codex-marketplace/plugins/house-skills/skills/base-doctrine`
-- `work-mode-router-v1` - `codex-marketplace/plugins/house-skills/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
-- `worker-dispatch-linear-v2` - `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear`
-- `linear-v1.1` - `codex-marketplace/plugins/house-skills/skills/linear`
-- `tps-reporting-v1` - `codex-marketplace/plugins/house-skills/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
-- `tps-ingress-v1` - `codex-marketplace/plugins/house-skills/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
-- `session-buster-v0.2` - `codex-marketplace/plugins/house-skills/skills/session-buster/v0.2/session-buster-v0.2/SKILL.md`
-- `session-buster-ingress-v0.2` - `codex-marketplace/plugins/house-skills/skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md`
-- `crew-v1` - `codex-marketplace/plugins/house-skills/skills/crew/v1/crew-v1/SKILL.md`
-- `crew-buster-v1` - `codex-marketplace/plugins/house-skills/skills/crew-buster/v1/crew-buster-v1/SKILL.md`
+- `don-logan-boundary-v1` - `sources/first_party/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
+- `base-doctrine` - `sources/first_party/skills/base-doctrine`
+- `work-mode-router-v1` - `sources/first_party/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
+- `worker-dispatch-linear-v2` - `sources/first_party/skills/worker-dispatch-linear`
+- `linear-v1.1` - `sources/first_party/skills/linear`
+- `tps-reporting-v1` - `sources/first_party/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
+- `tps-ingress-v1` - `sources/first_party/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
+- `session-buster-v0.2` - `sources/first_party/skills/session-buster/v0.2/session-buster-v0.2/SKILL.md`
+- `session-buster-ingress-v0.2` - `sources/first_party/skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md`
+- `crew-v1` - `sources/first_party/skills/crew/v1/crew-v1/SKILL.md`
+- `crew-buster-v1` - `sources/first_party/skills/crew-buster/v1/crew-buster-v1/SKILL.md`
 
 ### Adventures v1.1
 
-- `adventures-project-doctrine-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md`
-- `adventures-bootstrap-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md`
-- `adventures-github-operations-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md`
-- `adventures-visual-preproduction-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md`
-- `adventures-storyboard-preflight-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md`
-- `adventures-visual-bible-creator-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md`
-- `adventures-visual-bible-interpreter-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md`
-- `adventures-image-qa-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md`
-- `adventures-asset-sheet-compiler-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md`
-- `adventures-frame-buster-v1.1` - `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md`
+- `adventures-project-doctrine-v1.1` - `sources/first_party/skills/adventures-project-doctrine/v1.1/adventures-project-doctrine-v1.1/SKILL.md`
+- `adventures-bootstrap-v1.1` - `sources/first_party/skills/adventures-bootstrap/v1.1/adventures-bootstrap-v1.1/SKILL.md`
+- `adventures-github-operations-v1.1` - `sources/first_party/skills/adventures-github-operations/v1.1/adventures-github-operations-v1.1/SKILL.md`
+- `adventures-visual-preproduction-v1.1` - `sources/first_party/skills/adventures-visual-preproduction/v1.1/adventures-visual-preproduction-v1.1/SKILL.md`
+- `adventures-storyboard-preflight-v1.1` - `sources/first_party/skills/adventures-storyboard-preflight/v1.1/adventures-storyboard-preflight-v1.1/SKILL.md`
+- `adventures-visual-bible-creator-v1.1` - `sources/first_party/skills/adventures-visual-bible-creator/v1.1/adventures-visual-bible-creator-v1.1/SKILL.md`
+- `adventures-visual-bible-interpreter-v1.1` - `sources/first_party/skills/adventures-visual-bible-interpreter/v1.1/adventures-visual-bible-interpreter-v1.1/SKILL.md`
+- `adventures-image-qa-v1.1` - `sources/first_party/skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md`
+- `adventures-asset-sheet-compiler-v1.1` - `sources/first_party/skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md`
+- `adventures-frame-buster-v1.1` - `sources/first_party/skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md`
 
 ### Rooms
 
-- `rooms-project-doctrine-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
-- `rooms-bootstrap-v1.1` - `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap`
-- `rooms-source-partitioning-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md`
-- `rooms-ambiguity-buster-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md`
-- `rooms-analogy-buster-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md`
-- `rooms-zoom-outs-buster-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster/v1/rooms-zoom-outs-buster-v1/SKILL.md`
-- `rooms-character-investigation-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
-- `rooms-sheet-creator-v1` - `codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
+- `rooms-project-doctrine-v1` - `sources/first_party/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
+- `rooms-bootstrap-v1.1` - `sources/first_party/skills/rooms-bootstrap`
+- `rooms-source-partitioning-v1` - `sources/first_party/skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md`
+- `rooms-ambiguity-buster-v1` - `sources/first_party/skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md`
+- `rooms-analogy-buster-v1` - `sources/first_party/skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md`
+- `rooms-zoom-outs-buster-v1` - `sources/first_party/skills/rooms-zoom-outs-buster/v1/rooms-zoom-outs-buster-v1/SKILL.md`
+- `rooms-character-investigation-v1` - `sources/first_party/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
+- `rooms-sheet-creator-v1` - `sources/first_party/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
 
 Retired, folded, reference-only, and deferred MARK-9 decisions remain in Linear ledgers and are not duplicated here.

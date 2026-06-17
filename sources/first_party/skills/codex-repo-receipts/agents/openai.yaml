@@ -1,0 +1,11 @@
+interface:
+  display_name: Codex Repo Receipts
+  short_description: Publish durable repo-resident plan and implementation-record receipts.
+  default_prompt: Use /codex-repo-receipts for non-trivial repo-backed work so the worker publishes a plan under the repository's local convention, or docs/superpowers/plans/ by default, plus a matching implementation record under the repository's local convention, or docs/superpowers/records/ by default. The implementation record should capture the implementation commit SHA, may capture the receipt commit SHA when known, and should distinguish implementation SHA, receipt SHA, and current PR head observed at review time when useful; it must not be rewritten just to chase later PR tip movement. Link both artifacts in the PR body or final worker report. Omit receipts only for tiny mechanical changes, and only when the omission is explicit and justified.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

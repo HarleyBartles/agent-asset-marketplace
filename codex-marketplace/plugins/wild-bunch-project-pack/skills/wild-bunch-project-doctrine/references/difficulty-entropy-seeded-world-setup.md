@@ -1,4 +1,4 @@
-# Difficulty, Entropy, and Seeded Setup Doctrine
+﻿# Difficulty, Entropy, and Seeded Setup Doctrine
 
 This document preserves the product doctrine that [MARK-136](https://linear.app/harleys-workspace/issue/MARK-136/thread-wild-bunch-difficulty-entropy-and-seeded-setup-into-skills-and) must add to the Wild Bunch skill stack.
 
@@ -92,4 +92,4 @@ Rope is boolean because the meaningful starting-state question is "has rope?" Am
 
 Suggested canonical reference path:
 
-`codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine/references/difficulty-entropy-seeded-world-setup.md`
+`sources/first_party/skills/wild-bunch-project-doctrine/references/difficulty-entropy-seeded-world-setup.md`

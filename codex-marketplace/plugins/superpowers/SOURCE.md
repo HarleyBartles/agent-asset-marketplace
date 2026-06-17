@@ -37,10 +37,10 @@ skills from House Skills as source-backed projections.
 - Retained source custody:
   `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
 - House Skills source custody:
-  `codex-marketplace/plugins/house-skills/skills/linear-superpowers/`
-  `codex-marketplace/plugins/house-skills/skills/github-superpowers/`
-  `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/`
-  `codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/`
+  `sources/first_party/skills/linear-superpowers/`
+  `sources/first_party/skills/github-superpowers/`
+  `sources/first_party/skills/unslop-superpowers/`
+  `sources/first_party/skills/codex-receipts-superpowers/`
 
 ## Projected surface
 
