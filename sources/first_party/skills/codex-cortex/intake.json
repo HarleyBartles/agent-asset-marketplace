@@ -1,5 +1,5 @@
 {
-  "issue": "MARK-200",
+  "issue": "MARK-201",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
@@ -16,15 +16,15 @@
       "public_name": "event-driven-architecture",
       "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
       "status": "imported"
-    }
-  ],
-  "deferred": [
+    },
     {
       "source_id": "codex-cortex-database-design-patterns-v1",
       "public_name": "database-design-patterns",
-      "reason": "Later Claude-Cortex candidate excluded from MARK-200."
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
+      "status": "imported"
     }
   ],
+  "deferred": [],
   "notes": [
     "Selective retained snapshot only.",
     "The retained custody surface is the durable source home for the imported skills.",

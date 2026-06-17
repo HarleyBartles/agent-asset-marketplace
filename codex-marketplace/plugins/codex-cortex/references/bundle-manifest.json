@@ -5,8 +5,8 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 15,
-  "imported_count": 15,
+  "candidate_count": 22,
+  "imported_count": 22,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -51,6 +51,55 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical seed."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/SKILL.md",
+      "local_path": "skills/database-design-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/core-principles.md",
+      "local_path": "skills/database-design-patterns/references/core-principles.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/schema-design-patterns.md",
+      "local_path": "skills/database-design-patterns/references/schema-design-patterns.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/indexing-strategies.md",
+      "local_path": "skills/database-design-patterns/references/indexing-strategies.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/partitioning-patterns.md",
+      "local_path": "skills/database-design-patterns/references/partitioning-patterns.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/replication-patterns.md",
+      "local_path": "skills/database-design-patterns/references/replication-patterns.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
+    },
+    {
+      "snapshot_path": "skills/database-design-patterns/references/query-optimization.md",
+      "local_path": "skills/database-design-patterns/references/query-optimization.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the canonical architecture guidance surface."
     },
     {
       "snapshot_path": "skills/event-driven-architecture/SKILL.md",
@@ -117,8 +166,8 @@
     }
   ],
   "notes": [
-    "Two retained architecture skills.",
-    "The plugin is the custody home for the imported seed and follow-on architecture skill.",
+    "Three retained architecture guidance skills.",
+    "The plugin is the custody home for the imported seed and follow-on architecture skills.",
     "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
   ]
 }

@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 125,
+  "artifact_count": 127,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -313,6 +313,22 @@
     },
     {
       "pack": "architecture-pack",
+      "skill": "database-design-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/architecture-pack/skills/database-design-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/architecture-pack/database-design-patterns/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 26431,
+      "source_sha256": "6c4f180ae17e814dbe9738fe119d7d9032903bd9b61cee209c8ca3234c0ed395",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 12022,
+      "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
+    },
+    {
+      "pack": "architecture-pack",
       "skill": "event-driven-architecture",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture",
@@ -342,6 +358,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 3992,
       "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+    },
+    {
+      "pack": "codex-cortex",
+      "skill": "database-design-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/codex-cortex/skills/database-design-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/codex-cortex/database-design-patterns/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 26431,
+      "source_sha256": "6c4f180ae17e814dbe9738fe119d7d9032903bd9b61cee209c8ca3234c0ed395",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 12022,
+      "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
     },
     {
       "pack": "codex-cortex",

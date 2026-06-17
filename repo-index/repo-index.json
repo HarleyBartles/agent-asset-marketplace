@@ -131,7 +131,7 @@
     {
       "name": "codex-cortex-custody",
       "path": "sources/third_party/codex-cortex/upstream",
-      "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed imported by MARK-172.",
+      "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, and database-design-patterns import retained by MARK-172 through MARK-201.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",
