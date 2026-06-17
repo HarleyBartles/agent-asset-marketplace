@@ -45,6 +45,24 @@ FORBIDDEN_FILE_NAMES = {
     "package-evidence.json",
     "package-run-receipt.json",
 }
+TEXT_SUFFIXES = {
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".py",
+    ".sh",
+    ".svg",
+    ".xml",
+    ".html",
+    ".css",
+    ".js",
+    ".ts",
+}
+TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
+CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+CANONICAL_ZIP_PERMISSIONS = 0o644
 
 
 @dataclass(frozen=True)
@@ -100,6 +118,42 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _is_text_file(path: Path) -> bool:
+    return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES
+
+
+def _canonicalize_text_bytes(raw: bytes) -> bytes:
+    return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
+def _read_canonical_file_bytes(path: Path) -> bytes:
+    raw = path.read_bytes()
+    if _is_text_file(path):
+        raw.decode("utf-8")
+        return _canonicalize_text_bytes(raw)
+    return raw
+
+
+def _zip_info_for_arcname(arcname: str) -> zipfile.ZipInfo:
+    info = zipfile.ZipInfo(arcname, date_time=CANONICAL_ZIP_TIMESTAMP)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.create_system = 3
+    info.external_attr = (0o100000 | CANONICAL_ZIP_PERMISSIONS) << 16
+    return info
+
+
+def _write_canonical_zip_tree(
+    archive: zipfile.ZipFile,
+    files: Iterable[Path],
+    *,
+    root: Path,
+    archive_root_name: str,
+) -> None:
+    for file_path in files:
+        rel = file_path.relative_to(root).as_posix()
+        archive.writestr(_zip_info_for_arcname(f"{archive_root_name}/{rel}"), _read_canonical_file_bytes(file_path))
 
 
 def load_marketplace_definition() -> dict[str, Any]:
@@ -240,7 +294,7 @@ def compute_source_fingerprint(skill_root: Path) -> tuple[str, int, int, list[Pa
     total_bytes = 0
     for path in packaged_files:
         rel = path.relative_to(skill_root).as_posix()
-        raw = path.read_bytes()
+        raw = _read_canonical_file_bytes(path)
         file_digest = _sha256_bytes(raw)
         total_bytes += len(raw)
         digest.update(rel.encode("utf-8"))
@@ -332,9 +386,7 @@ def package_skill_target(target: SkillTarget) -> SkillArtifact:
             with tempfile.NamedTemporaryFile(delete=False, dir=dest.parent, prefix=f"{target.skill}-", suffix=".tmp") as tmp:
                 tmp_path = Path(tmp.name)
             with zipfile.ZipFile(tmp_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-                for file_path in staged_files:
-                    rel = file_path.relative_to(staged_root).as_posix()
-                    archive.write(file_path, arcname=f"{target.skill}/{rel}")
+                _write_canonical_zip_tree(archive, staged_files, root=staged_root, archive_root_name=target.skill)
             tmp_path.replace(dest)
         except Exception:
             if tmp_path and tmp_path.exists():
@@ -458,7 +510,8 @@ def validate_package_matches_source(target: SkillTarget, artifact: SkillArtifact
             if extracted_names != expected_names:
                 raise ValueError(f"{artifact.pack}/{artifact.skill} archive file inventory mismatch")
             for name in extracted_names:
-                if archive.read(name) != (staged_root / Path(name).relative_to(target.skill)).read_bytes():
+                staged_file = staged_root / Path(name).relative_to(target.skill)
+                if archive.read(name) != _read_canonical_file_bytes(staged_file):
                     raise ValueError(f"{artifact.pack}/{artifact.skill} archive content drift at {name}")
     finally:
         tempdir.cleanup()
@@ -733,7 +786,8 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
                     f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
                 )
             for name in extracted_names:
-                if archive.read(name) != (staged_root / Path(name).relative_to(target.skill)).read_bytes():
+                staged_file = staged_root / Path(name).relative_to(target.skill)
+                if archive.read(name) != _read_canonical_file_bytes(staged_file):
                     raise ValueError(
                         f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
                         f"generated/{artifact.zip_path} content differs from {target.source_path}"

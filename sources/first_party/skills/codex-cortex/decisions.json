@@ -1,0 +1,23 @@
+[
+  {
+    "issue": "MARK-172",
+    "source_id": "codex-cortex-cqrs-event-sourcing-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+    "public_name": "cqrs-event-sourcing",
+    "provenance_name": "MARK-172 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "CQRS and event sourcing guidance",
+    "notes": "Imported from the selective Claude-Cortex custody surface and normalized for the architecture-pack projection."
+  },
+  {
+    "issue": "MARK-172",
+    "id": "global.codex-cortex.source-import-boundary",
+    "status": "v1",
+    "import_state": "source-import-boundary",
+    "decision": "MARK-172 imports exactly one reviewed seed skill: cqrs-event-sourcing. event-driven-architecture and database-design-patterns remain deferred, and no later Claude-Cortex candidate is imported.",
+    "imported_source_paths": [
+      "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md"
+    ]
+  }
+]
+

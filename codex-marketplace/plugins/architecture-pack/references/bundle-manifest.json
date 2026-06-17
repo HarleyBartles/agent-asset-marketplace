@@ -1,0 +1,61 @@
+{
+  "bundle_name": "architecture-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "NickCrew/Claude-Cortex",
+  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 6,
+  "imported_count": 6,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/SKILL.md",
+      "local_path": "skills/cqrs-event-sourcing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
+      "local_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
+      "local_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
+      "local_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
+      "local_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/cqrs-event-sourcing/references/best-practices.md",
+      "local_path": "skills/cqrs-event-sourcing/references/best-practices.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    }
+  ],
+  "notes": [
+    "Single seed skill only.",
+    "The installable projection mirrors the Codex Cortex custody plugin.",
+    "Later Claude-Cortex candidates remain out of scope."
+  ]
+}

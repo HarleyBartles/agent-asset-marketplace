@@ -53,6 +53,31 @@ DOTNET_KIT_ENTRY = {
     },
 }
 
+CODEX_CORTEX_ENTRY = {
+    "name": "codex-cortex",
+    "plugin_root": "codex-marketplace/plugins/codex-cortex",
+    "plugin_manifest": "codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/codex-cortex/SOURCE.md",
+    "source_ledger": [
+        "sources/first_party/skills/codex-cortex/intake.json",
+        "sources/first_party/skills/codex-cortex/decisions.json",
+        "sources/first_party/skills/codex-cortex/decisions.md",
+    ],
+    "license_path": "codex-marketplace/plugins/codex-cortex/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/codex-cortex/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/codex-cortex/skills",
+    "provenance_refs": [
+        "provenance/codex-cortex.md",
+        "codex-marketplace/plugins/codex-cortex/references/source-map.md",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/codex-cortex",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
@@ -68,6 +93,9 @@ def build_repo_index() -> dict:
 
         if name == "dotnet-kit":
             ordered_plugins.append(dict(DOTNET_KIT_ENTRY))
+            continue
+        if name == "codex-cortex":
+            ordered_plugins.append(dict(CODEX_CORTEX_ENTRY))
             continue
         if name in current_plugins:
             ordered_plugins.append(current_plugins[name])

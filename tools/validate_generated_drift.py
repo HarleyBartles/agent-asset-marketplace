@@ -18,6 +18,15 @@ from skill_zip_artifacts import (
     validate_skill_zip_registry,
 )
 
+PACKAGING_TOOLING_PATHS = {
+    "tools/skill_zip_artifacts.py",
+    "tools/skill_gpt_exports.py",
+    "tools/update_skill_artifacts.py",
+    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/safe_skill_tree.py",
+    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_skill.py",
+    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_and_verify_skill.py",
+}
+
 
 def _git_lines(*args: str) -> list[str]:
     result = subprocess.run(
@@ -113,6 +122,10 @@ def _artifact_changed(source_changes: list[str], artifact: Any) -> bool:
     return any(_source_changed_for_path(source_changes, path) for path in _artifact_relevant_changes(artifact))
 
 
+def _packaging_tool_changed(source_changes: list[str]) -> bool:
+    return any(change in PACKAGING_TOOLING_PATHS for change in source_changes)
+
+
 def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> None:
     validate_skill_zip_registry()
 
@@ -139,6 +152,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
 
     source_changes = _source_changes(base)
     generated_changes = _generated_changes(base)
+    packaging_tooling_changed = _packaging_tool_changed(source_changes)
 
     if not generated_changes:
         return
@@ -154,7 +168,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         if status.startswith("D"):
             if base_artifact is None:
                 raise ValueError(f"deleted generated artifact diff references missing base registry entry: {path}")
-            if not full_regeneration and not _artifact_changed(source_changes, base_artifact):
+            if not full_regeneration and not packaging_tooling_changed and not _artifact_changed(source_changes, base_artifact):
                 raise ValueError(
                     f"generated artifact deletion detected for {base_artifact.pack}/{base_artifact.skill}: "
                     f"{path} was removed without a matching source or overlay change for {base_artifact.source_path}; "
@@ -164,7 +178,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
             continue
         if artifact is None:
             raise ValueError(f"generated artifact diff references missing registry entry: {path}")
-        if not full_regeneration and not _artifact_changed(source_changes, artifact):
+        if not full_regeneration and not packaging_tooling_changed and not _artifact_changed(source_changes, artifact):
             raise ValueError(
                 f"generated artifact drift detected for {artifact.pack}/{artifact.skill}: "
                 f"{path} changed without a matching source or overlay change at {artifact.source_path}; "
@@ -188,7 +202,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
     for key in sorted(changed_registry_keys):
         artifact = current_by_key.get(key)
         if artifact is not None:
-            if full_regeneration:
+            if full_regeneration or packaging_tooling_changed:
                 continue
             if not _artifact_changed(source_changes, artifact):
                 raise ValueError(
@@ -202,7 +216,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         exclusion = current_exclusions_by_key.get(key)
         if exclusion is None:
             continue
-        if full_regeneration:
+        if full_regeneration or packaging_tooling_changed:
             continue
         source_path = str(exclusion.get("source_path", ""))
         if not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
@@ -216,7 +230,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
     if not full_regeneration and base_registry is not None:
         for key in sorted(set(current_by_key) - set(base_by_key)):
             artifact = current_by_key[key]
-            if not _artifact_changed(source_changes, artifact):
+            if not packaging_tooling_changed and not _artifact_changed(source_changes, artifact):
                 raise ValueError(
                     f"generated registry added {artifact.pack}/{artifact.skill} without a matching source change "
                     f"at {artifact.source_path}; run py -3 tools/update_skill_artifacts.py --skill "
@@ -225,7 +239,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         for key in sorted(set(current_exclusions_by_key) - set(base_exclusions_by_key)):
             entry = current_exclusions_by_key[key]
             source_path = str(entry.get("source_path", ""))
-            if not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
+            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
                 raise ValueError(
                     f"generated registry added exclusion {entry.get('pack')}/{entry.get('skill')} without a matching "
                     f"source or overlay manifest change at {source_path or 'gpt-overlays/manifest.json'}; run "
@@ -234,7 +248,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         for key in sorted(set(base_exclusions_by_key) - set(current_exclusions_by_key)):
             entry = base_exclusions_by_key[key]
             source_path = str(entry.get("source_path", ""))
-            if not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
+            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
                 raise ValueError(
                     f"generated registry removed exclusion {entry.get('pack')}/{entry.get('skill')} without a matching "
                     f"source or overlay manifest change at {source_path or 'gpt-overlays/manifest.json'}; run "
@@ -242,7 +256,7 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
                 )
         for key in sorted(set(base_by_key) - set(current_by_key)):
             artifact = base_by_key[key]
-            if not _artifact_changed(source_changes, artifact):
+            if not packaging_tooling_changed and not _artifact_changed(source_changes, artifact):
                 raise ValueError(
                     f"generated registry removed {artifact.pack}/{artifact.skill} without a matching source change "
                     f"at {artifact.source_path}; run py -3 tools/update_skill_artifacts.py --all "
