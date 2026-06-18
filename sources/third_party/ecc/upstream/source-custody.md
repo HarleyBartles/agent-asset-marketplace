@@ -1,10 +1,15 @@
-# ECC Skills Inventory Report
+# ECC Source Custody Record
 
 > Issue: MARK-235
-> Scope: inventory only; no import, projection, copy, or adaptation
+> Scope: third-party source custody for the upstream ECC skills inventory
 > Upstream repo: `https://github.com/affaan-m/ECC/tree/main/skills`
 > Upstream commit inspected: `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
 > Total skills inspected: `271`
+
+This record is the promoted ECC inventory source-custody surface for MARK-238.
+The deleted `docs/inventory/ecc-agent-first-workflow-skills.md` report has been
+retired in favor of this third-party custody copy so future drain workers can
+use one durable upstream reference.
 
 ## Summary
 
@@ -14,8 +19,10 @@
 - `maybe-later`: 56
 - `probably-not`: 39
 
-- All source custody remains third-party if adopted later: `sources/third_party/ecc/upstream/skills/<skill>/`
-- The best-fit market home is still a projection decision; this report only suggests likely packs.
+- All source custody remains third-party if adopted later:
+  `sources/third_party/ecc/upstream/skills/<skill>/`
+- The best-fit market home is still a projection decision; this record only
+  preserves stable adoption-target notes.
 
 ## Top 10 Shortlist
 

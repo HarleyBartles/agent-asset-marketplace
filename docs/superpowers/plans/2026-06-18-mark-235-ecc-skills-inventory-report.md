@@ -41,7 +41,7 @@ Use the upstream names/descriptions plus the issue cues to separate `today`, `to
 ### Task 2: Write the repo-resident inventory report
 
 **Files:**
-- Add: `docs/inventory/ecc-agent-first-workflow-skills.md`
+- Add: `sources/third_party/ecc/upstream/source-custody.md`
 
 - [x] **Step 1: Build the markdown inventory report**
 
