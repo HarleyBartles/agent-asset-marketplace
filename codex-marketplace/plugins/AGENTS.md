@@ -11,7 +11,7 @@ The active installable roots under this directory are fixed to
 `house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
 `wild-bunch-project-pack/`, `superpowers/`, `repo-worker-base/`,
 `dotnet-kit/`, `codex-cortex/`, `api-contracts-pack/`, `architecture-pack/`,
-`language-patterns-pack/`, and `security-pack/`.
+`language-patterns-pack/`, `security-pack/`, and `frontend-pack/`.
 
 That active set is now sourced from `codex-marketplace/plugin-roots.json` and
 validated against the protected marketplace manifests and registry surfaces.

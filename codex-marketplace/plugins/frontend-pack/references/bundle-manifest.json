@@ -1,0 +1,53 @@
+{
+  "bundle_name": "frontend-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "NickCrew/Claude-Cortex",
+  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 5,
+  "imported_count": 5,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/react-performance-optimization/SKILL.md",
+      "local_path": "skills/react-performance-optimization/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+    },
+    {
+      "snapshot_path": "skills/accessibility-audit/SKILL.md",
+      "local_path": "skills/accessibility-audit/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+    },
+    {
+      "snapshot_path": "skills/ux-review/SKILL.md",
+      "local_path": "skills/ux-review/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+    },
+    {
+      "snapshot_path": "skills/interaction-design/SKILL.md",
+      "local_path": "skills/interaction-design/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+    },
+    {
+      "snapshot_path": "skills/webapp-testing/SKILL.md",
+      "local_path": "skills/webapp-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+    }
+  ],
+  "notes": [
+    "Frontend application pack covering React performance, accessibility, UX review, interaction design, and webapp testing.",
+    "The retained upstream skills keep their source-path references intact in the projected pack."
+  ]
+}

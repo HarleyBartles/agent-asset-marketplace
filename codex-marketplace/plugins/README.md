@@ -8,7 +8,7 @@ The active marketplace roots under this directory are limited to
 `house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
 `wild-bunch-project-pack/`, `superpowers/`, `repo-worker-base/`,
 `dotnet-kit/`, `codex-cortex/`, `api-contracts-pack/`, `architecture-pack/`,
-`language-patterns-pack/`, and `security-pack/`.
+`language-patterns-pack/`, `security-pack/`, and `frontend-pack/`.
 
 Everything else in this tree is support custody or historical source material,
 not part of the active marketplace inventory for the normalized root pass.
