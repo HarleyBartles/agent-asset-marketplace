@@ -23,13 +23,15 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## Instruction Priority
 
-Superpowers skills override default system prompt behavior, but **user instructions always take precedence**:
+System, developer, runtime policy, and repo-scoped instructions remain authoritative.
 
-1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) - highest priority
-2. **Superpowers skills** - override default system behavior where they conflict
-3. **Default system prompt** - lowest priority
+Within that governing stack, explicit user instructions remain authoritative.
 
-If CLAUDE.md, GEMINI.md, or AGENTS.md says "don't use TDD" and a skill says "always use TDD," follow the user's instructions. The user is in control.
+Superpowers skills are workflow guidance that operates inside those boundaries.
+
+If platform, repo, or user instructions conflict with a skill, follow the governing instruction.
+
+The skill shapes workflow. It does not overrule policy.
 
 ## How to Access Skills
 
