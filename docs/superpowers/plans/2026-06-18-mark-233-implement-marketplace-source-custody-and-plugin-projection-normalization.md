@@ -1,1 +1,114 @@
-# MARK-233 Marketplace Source Custody and Projection Normalization Implementation Plan> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.**Goal:** Establish `sources/first_party/core/` as the canonical home for generic reusable first-party skills, repoint the affected marketplace projections to that new custody root, and refresh the derived marketplace/index/artifact surfaces.**Architecture:** Move only the inventory-identified generic first-party skills into the new `core` custody lane, leaving family-owned wrapper skills and third-party custody untouched. Update source maps, manifests, provenance, and validation tooling together so the repo consistently treats `sources/first_party/core/` as editable source and `codex-marketplace/plugins/` as projection-only.**Tech Stack:** PowerShell move operations, Markdown docs, JSON manifests, repo validation scripts, `py -3 tools/update_skill_artifacts.py`, `py -3 tools/validate_marketplace.py`, `py -3 tools/validate_repo_index.py`, `py -3 tools/validate_skill_zips.py`, `py -3 tools/validate_generated_drift.py --base origin/main`, `git diff --check`---### Task 1: Move the generic first-party skill roots into `sources/first_party/core/`**Files:**- Move: `sources/first_party/core/connector-safety/` -> `sources/first_party/core/connector-safety/`- Move: `sources/first_party/core/github-operations/` -> `sources/first_party/core/github-operations/`- Move: `sources/first_party/core/codex-repo-receipts/` -> `sources/first_party/core/codex-repo-receipts/`- Move: `sources/first_party/core/boring-loop/` -> `sources/first_party/core/boring-loop/`- Move: `sources/first_party/core/linear-superpowers/` -> `sources/first_party/core/linear-superpowers/`- Move: `sources/first_party/core/cleanup-custody/` -> `sources/first_party/core/cleanup-custody/`- Move: `sources/first_party/core/skill-packager/` -> `sources/first_party/core/skill-packager/`- Move: `sources/first_party/core/skill-validator/` -> `sources/first_party/core/skill-validator/`- Move: `sources/first_party/core/skill-installer/` -> `sources/first_party/core/skill-installer/`- Move: `sources/first_party/core/bootstrap-router/` -> `sources/first_party/core/bootstrap-router/`- [x] **Step 1: Move the source directories**Move only the inventory-identified generic reusable skills into the new `core` home and leave family-owned and third-party roots in place.- [x] **Step 2: Verify the moved roots still contain the same authored content**Confirm the moved paths preserve each skill’s existing files and no unrelated roots changed.### Task 2: Repoint projections, ledgers, and repo-facing docs to the new core custody root**Files:**- Modify: `provenance/house-skills.md`- Modify: `provenance/repo-worker-base.md`- Modify: `provenance/superpowers.md`- Modify: `codex-marketplace/plugins/house-skills/README.md`- Modify: `codex-marketplace/plugins/house-skills/SOURCE.md`- Modify: `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`- Modify: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`- Modify: `codex-marketplace/plugins/repo-worker-base/README.md`- Modify: `codex-marketplace/plugins/repo-worker-base/SOURCE.md`- Modify: `codex-marketplace/plugins/repo-worker-base/references/source-map.md`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/decisions.json`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/decisions.md`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/intake.json`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/decisions.json`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/decisions.md`- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/intake.json`- Modify: `codex-marketplace/plugins/superpowers/SOURCE.md`- Modify: `codex-marketplace/plugins/superpowers/PROJECTION.md`- Modify: `codex-marketplace/plugins/superpowers/references/bundle-manifest.json`- Modify: `codex-marketplace/plugins/superpowers/references/provenance-map.json`- Modify: `codex-marketplace/plugins/codex-cortex/SOURCE.md`- Modify: `codex-marketplace/plugins/codex-cortex/references/source-map.md`- Modify: `codex-marketplace/plugins/security-pack/SOURCE.md`- Modify: `codex-marketplace/plugins/security-pack/references/source-map.md`- Modify: `tools/validate_marketplace.py`- Modify: `tools/generate_repo_index.py`- Modify: `tools/update_skill_artifacts.py`- [x] **Step 1: Update human-readable source/projection guidance**Reword the affected docs so the generic first-party skills are described as `sources/first_party/core/` custody while the plugin roots remain projection-only.- [x] **Step 2: Update tooling assumptions**Adjust the path maps and validators that still hardcode `sources/first_party/skills/<skill>/` for the moved generic skills.### Task 3: Regenerate the derived marketplace and index artifacts**Files:**- Modify: `codex-marketplace/manifest.json`- Modify: `.agents/plugins/marketplace.json`- Modify: `repo-index/repo-index.json`- Modify: `generated/skill-zips/registry.json`- Modify: `generated/skill-zips/**/skill.zip`- [x] **Step 1: Regenerate the skill corpus**Run: `py -3 tools/update_skill_artifacts.py --all`- [x] **Step 2: Regenerate the repo index if needed**Run: `py -3 tools/generate_repo_index.py`### Task 4: Validate, record, commit, push, and open the draft PR**Files:**- Add: `docs/superpowers/records/2026-06-18-mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization.md`- [x] **Step 1: Write the implementation record**Capture the moved roots, the projection/doc updates, generated artifact impact, and the final validation state in the repository record convention.- [x] **Step 2: Run the validation ladder**Run:```powershellpy -3 tools/validate_marketplace.pypy -3 tools/validate_repo_index.pypy -3 tools/validate_skill_zips.pypy -3 tools/validate_generated_drift.py --base origin/maingit diff --check```- [x] **Step 3: Commit, push, and open a draft PR**Commit the scoped change set on `harleydbartles/mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization`, push it, and open a draft PR with the implementation record linked in the body.
+# MARK-233 Marketplace Source Custody and Projection Normalization Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+
+**Goal:** Establish `sources/first_party/core/` as the canonical home for generic reusable first-party skills, repoint the affected marketplace projections to that new custody root, and refresh the derived marketplace/index/artifact surfaces.
+
+**Architecture:** Move only the inventory-identified generic first-party skills into the new `core` custody lane, leaving family-owned wrapper skills and third-party custody untouched. Update source maps, manifests, provenance, and validation tooling together so the repo consistently treats `sources/first_party/core/` as editable source and `codex-marketplace/plugins/` as projection-only.
+
+**Tech Stack:** PowerShell move operations, Markdown docs, JSON manifests, repo validation scripts, `py -3 tools/update_skill_artifacts.py`, `py -3 tools/validate_marketplace.py`, `py -3 tools/validate_repo_index.py`, `py -3 tools/validate_skill_zips.py`, `py -3 tools/validate_generated_drift.py --base origin/main`, `git diff --check`
+
+---
+
+### Task 1: Move the generic first-party skill roots into `sources/first_party/core/`
+
+**Files:**
+- Move: `sources/first_party/core/connector-safety/` -> `sources/first_party/core/connector-safety/`
+- Move: `sources/first_party/core/github-operations/` -> `sources/first_party/core/github-operations/`
+- Move: `sources/first_party/core/codex-repo-receipts/` -> `sources/first_party/core/codex-repo-receipts/`
+- Move: `sources/first_party/core/boring-loop/` -> `sources/first_party/core/boring-loop/`
+- Move: `sources/first_party/core/linear-superpowers/` -> `sources/first_party/core/linear-superpowers/`
+- Move: `sources/first_party/core/cleanup-custody/` -> `sources/first_party/core/cleanup-custody/`
+- Move: `sources/first_party/core/skill-packager/` -> `sources/first_party/core/skill-packager/`
+- Move: `sources/first_party/core/skill-validator/` -> `sources/first_party/core/skill-validator/`
+- Move: `sources/first_party/core/skill-installer/` -> `sources/first_party/core/skill-installer/`
+- Move: `sources/first_party/core/bootstrap-router/` -> `sources/first_party/core/bootstrap-router/`
+
+- [x] **Step 1: Move the source directories**
+
+Move only the inventory-identified generic reusable skills into the new `core` home and leave family-owned and third-party roots in place.
+
+- [x] **Step 2: Verify the moved roots still contain the same authored content**
+
+Confirm the moved paths preserve each skill’s existing files and no unrelated roots changed.
+
+### Task 2: Repoint projections, ledgers, and repo-facing docs to the new core custody root
+
+**Files:**
+- Modify: `provenance/house-skills.md`
+- Modify: `provenance/repo-worker-base.md`
+- Modify: `provenance/superpowers.md`
+- Modify: `codex-marketplace/plugins/house-skills/README.md`
+- Modify: `codex-marketplace/plugins/house-skills/SOURCE.md`
+- Modify: `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
+- Modify: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/README.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/SOURCE.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/references/source-map.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/decisions.json`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/decisions.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/connector-safety/intake.json`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/decisions.json`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/decisions.md`
+- Modify: `codex-marketplace/plugins/repo-worker-base/skills/github-operations/intake.json`
+- Modify: `codex-marketplace/plugins/superpowers/SOURCE.md`
+- Modify: `codex-marketplace/plugins/superpowers/PROJECTION.md`
+- Modify: `codex-marketplace/plugins/superpowers/references/bundle-manifest.json`
+- Modify: `codex-marketplace/plugins/superpowers/references/provenance-map.json`
+- Modify: `codex-marketplace/plugins/codex-cortex/SOURCE.md`
+- Modify: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
+- Modify: `codex-marketplace/plugins/security-pack/SOURCE.md`
+- Modify: `codex-marketplace/plugins/security-pack/references/source-map.md`
+- Modify: `tools/validate_marketplace.py`
+- Modify: `tools/generate_repo_index.py`
+- Modify: `tools/update_skill_artifacts.py`
+
+- [x] **Step 1: Update human-readable source/projection guidance**
+
+Reword the affected docs so the generic first-party skills are described as `sources/first_party/core/` custody while the plugin roots remain projection-only.
+
+- [x] **Step 2: Update tooling assumptions**
+
+Adjust the path maps and validators that still hardcode `sources/first_party/skills/<skill>/` for the moved generic skills.
+
+### Task 3: Regenerate the derived marketplace and index artifacts
+
+**Files:**
+- Modify: `codex-marketplace/manifest.json`
+- Modify: `.agents/plugins/marketplace.json`
+- Modify: `repo-index/repo-index.json`
+- Modify: `generated/skill-zips/registry.json`
+- Modify: `generated/skill-zips/**/skill.zip`
+
+- [x] **Step 1: Regenerate the skill corpus**
+
+Run: `py -3 tools/update_skill_artifacts.py --all`
+
+- [x] **Step 2: Regenerate the repo index if needed**
+
+Run: `py -3 tools/generate_repo_index.py`
+
+### Task 4: Validate, record, commit, push, and open the draft PR
+
+**Files:**
+- Add: `docs/superpowers/records/2026-06-18-mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization.md`
+
+- [x] **Step 1: Write the implementation record**
+
+Capture the moved roots, the projection/doc updates, generated artifact impact, and the final validation state in the repository record convention.
+
+- [x] **Step 2: Run the validation ladder**
+
+Run:
+
+```powershell
+py -3 tools/validate_marketplace.py
+py -3 tools/validate_repo_index.py
+py -3 tools/validate_skill_zips.py
+py -3 tools/validate_generated_drift.py --base origin/main
+git diff --check
+```
+
+- [x] **Step 3: Commit, push, and open a draft PR**
+
+Commit the scoped change set on `harleydbartles/mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization`, push it, and open a draft PR with the implementation record linked in the body.

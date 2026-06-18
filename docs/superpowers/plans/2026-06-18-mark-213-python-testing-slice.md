@@ -1,1 +1,149 @@
-# Python Language Slice for `language-patterns-pack` Implementation Plan> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.**Goal:** Import the retained Claude-Cortex Python language/runtime slice into `language-patterns-pack` with matching custody, projection, provenance, and generated install artifacts.**Architecture:** Treat Python testing, Python runtime/concurrency, and Python performance optimization as one language slice for this issue. Mirror the upstream Python skill bodies and references into retained source custody first, then project the accepted Python skills into the marketplace plugin surface and regenerate the install zip plus registry metadata. Keep the pack boundary narrow: language/runtime-only, no frontend, architecture, database, security, repo governance, CI, or generic engineering doctrine.**Tech Stack:** PowerShell, Git, existing repo Python packaging scripts, Markdown, JSON, Codex marketplace plugin layout.---### Task 1: Inspect and capture the retained Python source custody**Files:**- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/SKILL.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/pytest-fundamentals.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/fixtures.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/parametrized-tests.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/mocking.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/async-testing.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/property-based-testing.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/monkeypatch.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/test-organization.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/coverage.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/integration-testing.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/best-practices.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/validation/rubric.yaml`- Create: `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/SKILL.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/SKILL.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/acceleration.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/algorithms.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/memory.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/profiling.md`- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/string-io.md`- Modify: `sources/first_party/skills/codex-cortex/intake.json`- Modify: `sources/first_party/skills/codex-cortex/decisions.json`- Modify: `sources/first_party/skills/codex-cortex/decisions.md`- Modify: `provenance/codex-cortex.md`- [x] **Step 1: Add the upstream skill body and reference files**Populate each file from the retained Claude-Cortex source body and the matching upstream reference content for `python-testing-patterns`, `async-python-patterns`, and `python-performance-optimization`. Keep the files under the retained `sources/third_party/codex-cortex/upstream/skills/` tree so the repo preserves source custody before projection.- [x] **Step 2: Record the source custody decision**Update the codex-cortex intake and decisions ledgers so they name the Python runtime/testing skills that fit `language-patterns-pack`. Record any inspected Python candidates that were rejected or deferred with reasons. Keep the provenance note aligned with the retained source paths and the include/reject/defer split.- [x] **Step 3: Verify the source custody tree**Run:```powershellGet-ChildItem sources\third_party\codex-cortex\upstream\skills | Where-Object { $_.Name -like 'python*' -or $_.Name -like 'async*' } | Select-Object Name```Expected: the Python runtime/testing skill roots are present and any inspected Python candidate that is not imported is explicitly explained in the custody records.### Task 2: Project the Python slice into `language-patterns-pack`**Files:**- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/SKILL.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/pytest-fundamentals.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/fixtures.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/parametrized-tests.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/mocking.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/async-testing.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/property-based-testing.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/monkeypatch.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/test-organization.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/coverage.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/integration-testing.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/best-practices.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/async-python-patterns/SKILL.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/SKILL.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/acceleration.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/algorithms.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/memory.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/profiling.md`- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/string-io.md`- Modify: `codex-marketplace/plugins/language-patterns-pack/README.md`- Modify: `codex-marketplace/plugins/language-patterns-pack/SOURCE.md`- Modify: `codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json`- Modify: `codex-marketplace/plugins/language-patterns-pack/references/source-map.md`- [x] **Step 1: Project the skills into the marketplace pack**Copy the retained source into the marketplace plugin tree using the existing projection style. Keep the `SKILL.md` reference paths skill-root-relative in the projected copies and preserve the upstream bodies otherwise. Leave source-only validation rubrics in retained custody unless the repoâ€™s skill spec explicitly wants them projected.- [x] **Step 2: Update pack docs and manifests**Expand the pack README, source ledger, bundle manifest, and source map so they describe the new Python slice, the retained source custody paths, and the include/reject/defer decision set.- [x] **Step 3: Verify the projected pack tree**Run:```powershellGet-ChildItem codex-marketplace\plugins\language-patterns-pack\skills | Where-Object { $_.Name -like 'python*' -or $_.Name -like 'async*' } | Select-Object Name```Expected: the projected skill roots mirror the retained source tree.### Task 3: Regenerate install artifacts and validate**Files:**- Modify: `generated/skill-zips/registry.json`- Create or update: `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`- Create or update: `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`- Create or update: `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`- Potentially modify: `.agents/plugins/marketplace.json`- Potentially modify: `codex-marketplace/manifest.json`- Potentially modify: `codex-marketplace/plugin-roots.json`- Potentially modify: `repo-index/repo-index.json`- [x] **Step 1: Regenerate the skill zips**Run:```powershellpy -3 tools\update_skill_artifacts.py --pack language-patterns-pack```Expected: the generator emits new Python skill archives and updates the skill zip registry entries.- [x] **Step 2: Run validation**Run:```powershellpy -3 tools\validate_repo_index.pypy -3 tools\validate_skill_zips.pygit diff --checkpy -3 tools\validate_marketplace.py```Expected: repo index and skill zip validation pass, `git diff --check` reports no whitespace or patch formatting errors, and marketplace validation passes or reports only unrelated known blockers with the existing evidence.- [x] **Step 3: Commit and publish**Run:```powershellgit add sources\third_party\codex-cortex\upstream\skills `  sources\first_party\skills\codex-cortex\intake.json `  sources\first_party\skills\codex-cortex\decisions.json `  sources\first_party\skills\codex-cortex\decisions.md `  provenance\codex-cortex.md `  codex-marketplace\plugins\language-patterns-pack `  generated\skill-zips `  .agents\plugins\marketplace.json `  codex-marketplace\manifest.json `  codex-marketplace\plugin-roots.json `  repo-index\repo-index.jsongit commit -m "feat: project python language slice into language pack"git push origin harleydbartles/mark-213-project-python-testing-and-async-patterns-into-language```Expected: a published branch with the Python language slice available for PR creation.
+# Python Language Slice for `language-patterns-pack` Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+
+**Goal:** Import the retained Claude-Cortex Python language/runtime slice into `language-patterns-pack` with matching custody, projection, provenance, and generated install artifacts.
+
+**Architecture:** Treat Python testing, Python runtime/concurrency, and Python performance optimization as one language slice for this issue. Mirror the upstream Python skill bodies and references into retained source custody first, then project the accepted Python skills into the marketplace plugin surface and regenerate the install zip plus registry metadata. Keep the pack boundary narrow: language/runtime-only, no frontend, architecture, database, security, repo governance, CI, or generic engineering doctrine.
+
+**Tech Stack:** PowerShell, Git, existing repo Python packaging scripts, Markdown, JSON, Codex marketplace plugin layout.
+
+---
+
+### Task 1: Inspect and capture the retained Python source custody
+
+**Files:**
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/pytest-fundamentals.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/fixtures.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/parametrized-tests.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/mocking.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/async-testing.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/property-based-testing.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/monkeypatch.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/test-organization.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/coverage.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/integration-testing.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/references/best-practices.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/validation/rubric.yaml`
+- Create: `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/acceleration.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/algorithms.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/memory.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/profiling.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/references/string-io.md`
+- Modify: `sources/first_party/skills/codex-cortex/intake.json`
+- Modify: `sources/first_party/skills/codex-cortex/decisions.json`
+- Modify: `sources/first_party/skills/codex-cortex/decisions.md`
+- Modify: `provenance/codex-cortex.md`
+
+- [x] **Step 1: Add the upstream skill body and reference files**
+
+Populate each file from the retained Claude-Cortex source body and the matching upstream reference content for `python-testing-patterns`, `async-python-patterns`, and `python-performance-optimization`. Keep the files under the retained `sources/third_party/codex-cortex/upstream/skills/` tree so the repo preserves source custody before projection.
+
+- [x] **Step 2: Record the source custody decision**
+
+Update the codex-cortex intake and decisions ledgers so they name the Python runtime/testing skills that fit `language-patterns-pack`. Record any inspected Python candidates that were rejected or deferred with reasons. Keep the provenance note aligned with the retained source paths and the include/reject/defer split.
+
+- [x] **Step 3: Verify the source custody tree**
+
+Run:
+```powershell
+Get-ChildItem sources\third_party\codex-cortex\upstream\skills | Where-Object { $_.Name -like 'python*' -or $_.Name -like 'async*' } | Select-Object Name
+```
+Expected: the Python runtime/testing skill roots are present and any inspected Python candidate that is not imported is explicitly explained in the custody records.
+
+### Task 2: Project the Python slice into `language-patterns-pack`
+
+**Files:**
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/SKILL.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/pytest-fundamentals.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/fixtures.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/parametrized-tests.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/mocking.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/async-testing.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/property-based-testing.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/monkeypatch.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/test-organization.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/coverage.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/integration-testing.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/references/best-practices.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/async-python-patterns/SKILL.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/SKILL.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/acceleration.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/algorithms.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/memory.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/profiling.md`
+- Create: `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/references/string-io.md`
+- Modify: `codex-marketplace/plugins/language-patterns-pack/README.md`
+- Modify: `codex-marketplace/plugins/language-patterns-pack/SOURCE.md`
+- Modify: `codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json`
+- Modify: `codex-marketplace/plugins/language-patterns-pack/references/source-map.md`
+
+- [x] **Step 1: Project the skills into the marketplace pack**
+
+Copy the retained source into the marketplace plugin tree using the existing projection style. Keep the `SKILL.md` reference paths skill-root-relative in the projected copies and preserve the upstream bodies otherwise. Leave source-only validation rubrics in retained custody unless the repo’s skill spec explicitly wants them projected.
+
+- [x] **Step 2: Update pack docs and manifests**
+
+Expand the pack README, source ledger, bundle manifest, and source map so they describe the new Python slice, the retained source custody paths, and the include/reject/defer decision set.
+
+- [x] **Step 3: Verify the projected pack tree**
+
+Run:
+```powershell
+Get-ChildItem codex-marketplace\plugins\language-patterns-pack\skills | Where-Object { $_.Name -like 'python*' -or $_.Name -like 'async*' } | Select-Object Name
+```
+Expected: the projected skill roots mirror the retained source tree.
+
+### Task 3: Regenerate install artifacts and validate
+
+**Files:**
+- Modify: `generated/skill-zips/registry.json`
+- Create or update: `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`
+- Create or update: `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`
+- Create or update: `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`
+- Potentially modify: `.agents/plugins/marketplace.json`
+- Potentially modify: `codex-marketplace/manifest.json`
+- Potentially modify: `codex-marketplace/plugin-roots.json`
+- Potentially modify: `repo-index/repo-index.json`
+
+- [x] **Step 1: Regenerate the skill zips**
+
+Run:
+```powershell
+py -3 tools\update_skill_artifacts.py --pack language-patterns-pack
+```
+Expected: the generator emits new Python skill archives and updates the skill zip registry entries.
+
+- [x] **Step 2: Run validation**
+
+Run:
+```powershell
+py -3 tools\validate_repo_index.py
+py -3 tools\validate_skill_zips.py
+git diff --check
+py -3 tools\validate_marketplace.py
+```
+Expected: repo index and skill zip validation pass, `git diff --check` reports no whitespace or patch formatting errors, and marketplace validation passes or reports only unrelated known blockers with the existing evidence.
+
+- [x] **Step 3: Commit and publish**
+
+Run:
+```powershell
+git add sources\third_party\codex-cortex\upstream\skills `
+  sources\first_party\skills\codex-cortex\intake.json `
+  sources\first_party\skills\codex-cortex\decisions.json `
+  sources\first_party\skills\codex-cortex\decisions.md `
+  provenance\codex-cortex.md `
+  codex-marketplace\plugins\language-patterns-pack `
+  generated\skill-zips `
+  .agents\plugins\marketplace.json `
+  codex-marketplace\manifest.json `
+  codex-marketplace\plugin-roots.json `
+  repo-index\repo-index.json
+git commit -m "feat: project python language slice into language pack"
+git push origin harleydbartles/mark-213-project-python-testing-and-async-patterns-into-language
+```
+Expected: a published branch with the Python language slice available for PR creation.

@@ -41,3 +41,5 @@ Result:
 
 - The repository no longer contains the old implementation-record files under `docs/superpowers/records/`.
 - Historical plan files were updated to reflect completed work; unfinished future work, if any, remains visible in the active plan file.
+- After review, the historical plan files were restored to readable multi-line markdown while preserving the intended `[x]` backfill.
+- No unrelated Superpowers skills were removed in this repair pass.
