@@ -1999,13 +1999,13 @@
       "overlay_path": "gpt-overlays/superpowers-plus/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers-plus/finishing-a-development-branch/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 8154,
-      "source_sha256": "1816b3c4bbd80ffca743b467b0c5732d713e46f3761a171162393158cf4a2844",
+      "source_bytes": 8924,
+      "source_sha256": "f2b5a606aa94e8da4fbe42f0e8e0fe629c8a529f89c7b491dac720548289ea65",
       "overlay_file_count": 1,
-      "overlay_bytes": 805,
-      "overlay_sha256": "6d71f5016f3d5a0d44f34ba15b54f63e13e78e07d33e60c4cada7e432c4a2989",
-      "zip_size_bytes": 949,
-      "zip_sha256": "5c487930e08ddc74de6d9c9c1ad9554a950e22c31d69b225548ed6955aef3951"
+      "overlay_bytes": 1200,
+      "overlay_sha256": "62d75c2b0ed2c5d397b423c122734cfb7b19a2d37f22fdecfa5cde67b0cff9d8",
+      "zip_size_bytes": 1123,
+      "zip_sha256": "603d4ae2b3b74636a42c6192745c8df23cf1a40e8c586bb0ca533e24d4218d03"
     },
     {
       "pack": "superpowers-plus",
