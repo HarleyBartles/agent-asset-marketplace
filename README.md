@@ -58,7 +58,8 @@ roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adve
 `codex-marketplace/plugins/repo-worker-base`, `codex-marketplace/plugins/dotnet-kit`,
 `codex-marketplace/plugins/codex-cortex`, `codex-marketplace/plugins/api-contracts-pack`,
 `codex-marketplace/plugins/architecture-pack`, and
-`codex-marketplace/plugins/security-pack`.
+`codex-marketplace/plugins/security-pack`, and
+`codex-marketplace/plugins/frontend-pack`.
 
 Expected flow:
 

@@ -118,6 +118,15 @@
       "plugin_root": "codex-marketplace/plugins/security-pack",
       "manifest_path": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 13,
+      "name": "frontend-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/frontend-pack",
+      "plugin_root": "codex-marketplace/plugins/frontend-pack",
+      "manifest_path": "codex-marketplace/plugins/frontend-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }
