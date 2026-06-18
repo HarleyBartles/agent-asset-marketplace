@@ -51,7 +51,7 @@
     {
       "name": "codex-marketplace-plugins",
       "path": "codex-marketplace/plugins",
-      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for threat-modeling-techniques.",
+      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques.",
       "surface_kind": "runtime-facing",
       "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
       "key_validation_scripts": [
@@ -131,7 +131,7 @@
     {
       "name": "codex-cortex-custody",
       "path": "sources/third_party/codex-cortex/upstream",
-      "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, database-design-patterns import, api-design-patterns import, and openapi-specification import retained by MARK-172 through MARK-205.",
+      "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, database-design-patterns import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",

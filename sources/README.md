@@ -17,5 +17,6 @@ deployment output.
   custody for the plugins already carried in the marketplace, including the
   `api-design-patterns` contract-doctrine slice, the narrower
   `openapi-specification` companion slice now projected through
-  `api-contracts-pack/`, and the `threat-modeling-techniques` slice now
+  `api-contracts-pack/`, and the `secure-coding-practices`, `owasp-top-10`,
+  `security-testing-patterns`, and `threat-modeling-techniques` slices now
   projected through `security-pack/`.

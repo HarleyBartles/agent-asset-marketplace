@@ -25,6 +25,9 @@
 - Generated install unit: `generated/skill-zips/codex-cortex/database-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/api-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/openapi-specification/skill.zip`
+- Generated install unit: `generated/skill-zips/codex-cortex/secure-coding-practices/skill.zip`
+- Generated install unit: `generated/skill-zips/codex-cortex/owasp-top-10/skill.zip`
+- Generated install unit: `generated/skill-zips/codex-cortex/security-testing-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
@@ -34,13 +37,17 @@
 - Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
 - Installable plugin projection: `codex-marketplace/plugins/language-patterns-pack/`
+- Generated install unit: `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
+- Generated install unit: `generated/skill-zips/security-pack/owasp-top-10/skill.zip`
+- Generated install unit: `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip`
 
 ## Boundary
 
 The retained custody surface seeds `cqrs-event-sourcing`,
 `event-driven-architecture`, `database-design-patterns`, `api-design-patterns`,
-`openapi-specification`, the MARK-212 `typescript-advanced-patterns`
+`openapi-specification`, `secure-coding-practices`, `owasp-top-10`,
+`security-testing-patterns`, the MARK-212 `typescript-advanced-patterns`
 guidance projected through `language-patterns-pack`, and `threat-modeling-techniques`.
 Generic compliance theatre, infra security, repo governance, and audit-prep-only
 material stay out of scope unless a later issue explicitly composes them in.

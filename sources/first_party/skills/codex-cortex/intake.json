@@ -1,5 +1,5 @@
 {
-  "issue": "MARK-210",
+  "issue": "MARK-207",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
@@ -36,6 +36,24 @@
       "status": "imported"
     },
     {
+      "source_id": "codex-cortex-secure-coding-practices-v1",
+      "public_name": "secure-coding-practices",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+      "status": "imported"
+    },
+    {
+      "source_id": "codex-cortex-owasp-top-10-v1",
+      "public_name": "owasp-top-10",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
+      "status": "imported"
+    },
+    {
+      "source_id": "codex-cortex-security-testing-patterns-v1",
+      "public_name": "security-testing-patterns",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
+      "status": "imported"
+    },
+    {
       "source_id": "codex-cortex-threat-modeling-techniques-v1",
       "public_name": "threat-modeling-techniques",
       "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
@@ -48,6 +66,7 @@
     "The retained custody surface is the durable source home for the imported skills.",
     "MARK-204 adds api-design-patterns as the umbrella contract-doctrine slice for the api-contracts-pack projection.",
     "MARK-205 adds openapi-specification as the OpenAPI-specific companion slice for the api-contracts-pack projection.",
+    "MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns as the coding-security trio for the security-pack projection.",
     "MARK-210 adds threat-modeling-techniques as the design-time security-framing slice for the security-pack projection."
   ]
 }

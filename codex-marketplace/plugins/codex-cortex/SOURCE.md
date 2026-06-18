@@ -1,10 +1,11 @@
 # Source
 
-This plugin is the MARK-172, MARK-200, MARK-201, MARK-204, MARK-205, and
-MARK-210 Codex Cortex custody surface for the retained Claude-Cortex
+This plugin is the MARK-172, MARK-200, MARK-201, MARK-204, MARK-205,
+MARK-207, and MARK-210 Codex Cortex custody surface for the retained Claude-Cortex
 `cqrs-event-sourcing` seed, `event-driven-architecture` import,
 `database-design-patterns` import, `api-design-patterns` import,
-`openapi-specification` import, and `threat-modeling-techniques` import.
+`openapi-specification` import, `secure-coding-practices`, `owasp-top-10`, and
+`security-testing-patterns` imports, and `threat-modeling-techniques` import.
 
 ## Upstream basis
 
@@ -29,6 +30,9 @@ MARK-210 Codex Cortex custody surface for the retained Claude-Cortex
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/`
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/`
 - Skill root: `codex-marketplace/plugins/codex-cortex/skills/openapi-specification/`
+- Skill root: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/`
+- Skill root: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/`
+- Skill root: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/`
 - Skill root:
   `codex-marketplace/plugins/codex-cortex/skills/threat-modeling-techniques/`
 - Generated install units: `generated/skill-zips/codex-cortex/<skill-name>/skill.zip`
@@ -36,5 +40,5 @@ MARK-210 Codex Cortex custody surface for the retained Claude-Cortex
 ## Boundary
 
 Only the retained source skills are kept here. Later Claude-Cortex candidates
-stay out of scope for MARK-172, MARK-200, MARK-201, MARK-204, MARK-205, and
-MARK-210.
+stay out of scope for MARK-172, MARK-200, MARK-201, MARK-204, MARK-205,
+MARK-207, and MARK-210.

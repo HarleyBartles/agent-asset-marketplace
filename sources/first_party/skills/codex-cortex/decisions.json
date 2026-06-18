@@ -50,17 +50,50 @@
     "notes": "Imported from the selective Claude-Cortex custody surface and projected into the api-contracts-pack companion slice."
   },
   {
-    "issue": "MARK-210",
+    "issue": "MARK-207",
+    "source_id": "codex-cortex-secure-coding-practices-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+    "public_name": "secure-coding-practices",
+    "provenance_name": "MARK-207 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Defensive application coding, input validation, output encoding, secrets handling, and secure defaults",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the security-pack foundation slice."
+  },
+  {
+    "issue": "MARK-207",
+    "source_id": "codex-cortex-owasp-top-10-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
+    "public_name": "owasp-top-10",
+    "provenance_name": "MARK-207 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "OWASP Top 10 application risk review, vulnerability taxonomy, and remediation guidance",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the security-pack review-taxonomy slice."
+  },
+  {
+    "issue": "MARK-207",
+    "source_id": "codex-cortex-security-testing-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
+    "public_name": "security-testing-patterns",
+    "provenance_name": "MARK-207 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Security testing strategy, SAST/DAST/SCA, penetration testing, and validation automation",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the security-pack verification slice."
+  },
+  {
+    "issue": "MARK-207",
     "id": "global.codex-cortex.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, and MARK-210 adds threat-modeling-techniques to the selective custody surface. Generic compliance theatre, infra security, repo governance, and audit-prep-only material stay out of scope unless a later issue explicitly composes them in.",
+    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns, and MARK-210 adds threat-modeling-techniques to the selective custody surface. Generic compliance theatre, infra security, repo governance, and audit-prep-only material stay out of scope unless a later issue explicitly composes them in.",
     "imported_source_paths": [
       "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md"
     ]
   }
