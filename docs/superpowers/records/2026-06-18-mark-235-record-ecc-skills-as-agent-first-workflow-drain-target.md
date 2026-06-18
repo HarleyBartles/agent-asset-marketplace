@@ -3,8 +3,10 @@
 **Issue:** MARK-235
 **Branch:** `harleydbartles/mark-235-record-ecc-skills-as-agent-first-workflow-drain-target`
 **Starting main SHA:** `7c1b9f2e93dcaa6a464dd81290414960a02b65a4`
+**Final head SHA:** `37cf75fbc612851dafdaee82a9913aa0001894f8`
 **Upstream ECC commit inspected:** `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
 **Report path:** `docs/inventory/ecc-agent-first-workflow-skills.md`
+**Draft PR:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/123](https://github.com/HarleyBartles/agent-asset-marketplace/pull/123)
 
 ## Scope
 
@@ -44,10 +46,11 @@
 - `py -3` inventory generation script against `.tmp/ecc-upstream/skills/**/SKILL.md`
   - Result: passed; wrote `docs/inventory/ecc-agent-first-workflow-skills.md`
 - `git diff --check`
-  - Result: pending
+  - Result: passed
+  - Notes: Git warned that CRLF will be normalized on the planning and record markdown files on the next Git touch, but `git diff --check` itself was clean.
 
 ## Publication
 
-- Commit: pending
-- Push: pending
-- Draft PR: pending
+- Commit: `37cf75fbc612851dafdaee82a9913aa0001894f8`
+- Push: completed to `origin/harleydbartles/mark-235-record-ecc-skills-as-agent-first-workflow-drain-target`
+- Draft PR: [https://github.com/HarleyBartles/agent-asset-marketplace/pull/123](https://github.com/HarleyBartles/agent-asset-marketplace/pull/123)
