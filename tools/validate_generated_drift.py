@@ -117,8 +117,8 @@ def _artifact_relevant_changes(artifact: Any) -> list[str]:
     overlay_path = getattr(artifact, "overlay_path", None)
     if overlay_path:
         paths.append(str(overlay_path))
-    if getattr(artifact, "pack", None) == "superpowers":
-        paths.append("codex-marketplace/plugins/superpowers/references/bundle-manifest.json")
+    if getattr(artifact, "pack", None) == "superpowers-plus":
+        paths.append("codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json")
         adaptation_overlay_path = _superpowers_adaptation_overlay_path(getattr(artifact, "skill", ""))
         if adaptation_overlay_path:
             paths.append(adaptation_overlay_path)
@@ -127,7 +127,7 @@ def _artifact_relevant_changes(artifact: Any) -> list[str]:
 
 @lru_cache(maxsize=1)
 def _superpowers_bundle_manifest() -> dict[str, Any] | None:
-    bundle_manifest_path = ROOT / "codex-marketplace/plugins/superpowers/references/bundle-manifest.json"
+    bundle_manifest_path = ROOT / "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json"
     if not bundle_manifest_path.exists():
         return None
     loaded = load_json(bundle_manifest_path)
@@ -200,9 +200,16 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
             raise ValueError(f"unexpected generated artifact path in diff: {path}")
         artifact = current_by_key.get(key)
         base_artifact = base_by_key.get(key)
+        if artifact is None and key[0] == "superpowers" and current_by_key.get(("superpowers-plus", key[1])) is not None:
+            continue
         if status.startswith("D"):
             if base_artifact is None:
                 raise ValueError(f"deleted generated artifact diff references missing base registry entry: {path}")
+            if (
+                base_artifact.pack == "superpowers"
+                and (current_by_key.get(("superpowers-plus", base_artifact.skill)) is not None)
+            ):
+                continue
             if not full_regeneration and not packaging_tooling_changed and not _artifact_changed(source_changes, base_artifact):
                 raise ValueError(
                     f"generated artifact deletion detected for {base_artifact.pack}/{base_artifact.skill}: "

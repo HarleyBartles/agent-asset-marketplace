@@ -17,6 +17,22 @@ OVERLAY_FILENAME = "overlay.yaml"
 OPENAI_AGENT_FILENAME = Path("agents/openai.yaml")
 ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata"}
 UTF8_BOM = b"\xef\xbb\xbf"
+TEXT_SUFFIXES = {
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".py",
+    ".sh",
+    ".svg",
+    ".xml",
+    ".html",
+    ".css",
+    ".js",
+    ".ts",
+}
+TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 
 
 def _ensure_unique_keys(node: MappingNode | SequenceNode, *, path: Path) -> None:
@@ -47,6 +63,24 @@ def _load_yaml_document(path: Path) -> Any:
     if node is not None:
         _ensure_unique_keys(node, path=path)
     return parsed
+
+
+def _is_text_file(path: Path) -> bool:
+    return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES
+
+
+def _normalize_tree_text_files(root: Path) -> None:
+    for path in root.rglob("*"):
+        if not path.is_file() or not _is_text_file(path):
+            continue
+        raw = path.read_bytes()
+        if raw.startswith(UTF8_BOM):
+            raw = raw[len(UTF8_BOM) :]
+        normalized = raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        if normalized != raw:
+            path.write_bytes(normalized)
+        elif raw.startswith(UTF8_BOM):
+            path.write_bytes(raw[len(UTF8_BOM) :])
 
 
 def _load_yaml_mapping(path: Path) -> dict[str, Any]:
@@ -156,6 +190,7 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
                 validate_openai_agent_yaml(openai_yaml)
             _apply_deletes(staged_root, overlay_root, spec["deletes"])
             _apply_overlay_files(staged_root, overlay_root)
+        _normalize_tree_text_files(staged_root)
         shutil.copytree(staged_root, destination_root)
     finally:
         tempdir.cleanup()
@@ -181,6 +216,7 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
                 validate_openai_agent_yaml(openai_yaml)
             _apply_deletes(staged_root, overlay_root, spec["deletes"])
             _apply_overlay_files(staged_root, overlay_root)
+        _normalize_tree_text_files(staged_root)
     except Exception:
         tempdir.cleanup()
         raise

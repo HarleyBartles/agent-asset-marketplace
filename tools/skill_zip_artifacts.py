@@ -195,6 +195,8 @@ def _read_canonical_file_bytes(path: Path) -> bytes:
     raw = path.read_bytes()
     if _is_text_file(path):
         raw.decode("utf-8")
+        if raw.startswith(b"\xef\xbb\xbf"):
+            raw = raw[3:]
         return _canonicalize_text_bytes(raw)
     return raw
 
@@ -260,7 +262,7 @@ def discover_skill_targets() -> list[SkillTarget]:
             skill_file = skill_dir / "SKILL.md"
             if not skill_file.is_file():
                 continue
-            if plugin_name == "superpowers":
+            if plugin_name == "superpowers-plus":
                 validate_skill_markdown_frontmatter(skill_dir)
             targets.append(
                 SkillTarget(

@@ -9,7 +9,7 @@ Codex plugin first; generated GPT-safe skill zips second.
 
 The active installable roots under this directory are fixed to
 `house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
-`wild-bunch-project-pack/`, `superpowers/`, `repo-worker-base/`,
+`wild-bunch-project-pack/`, `superpowers-plus/`, `repo-worker-base/`,
 `dotnet-kit/`, `codex-cortex/`, `api-contracts-pack/`, `architecture-pack/`,
 `language-patterns-pack/`, `security-pack/`, and `frontend-pack/`.
 

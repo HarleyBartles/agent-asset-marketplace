@@ -120,13 +120,13 @@ def validate_tree_reconstruction(source_root: Path, overlay_root: Path | None, l
 def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str) -> None:
     provenance_map = load_json(ROOT / plugin_root / "references" / "provenance-map.json")
     if not isinstance(provenance_map, dict):
-        raise ValueError("superpowers provenance-map.json must contain an object")
+        raise ValueError("superpowers-plus provenance-map.json must contain an object")
 
     source_backed = provenance_map.get("source_backed_projections", [])
     adapted = provenance_map.get("adapted_projections", [])
     source_only = provenance_map.get("source_only_surfaces", [])
     if not isinstance(source_backed, list) or not isinstance(adapted, list) or not isinstance(source_only, list):
-        raise ValueError("superpowers provenance-map.json uses an invalid shape")
+        raise ValueError("superpowers-plus provenance-map.json uses an invalid shape")
 
     expected_source_backed = {
         entry["canonical_name"]: entry
@@ -143,35 +143,35 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
     adapted_by_name = {entry.get("canonical_name"): entry for entry in adapted if isinstance(entry, dict)}
 
     if set(source_backed_by_name) != set(expected_source_backed):
-        raise ValueError("superpowers provenance-map.json source_backed_projections mismatch")
+        raise ValueError("superpowers-plus provenance-map.json source_backed_projections mismatch")
     if set(adapted_by_name) != set(expected_adapted):
-        raise ValueError("superpowers provenance-map.json adapted_projections mismatch")
+        raise ValueError("superpowers-plus provenance-map.json adapted_projections mismatch")
 
     for canonical_name, expected_entry in expected_source_backed.items():
         projection = source_backed_by_name[canonical_name]
         if projection.get("content_mode") != "verbatim":
-            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] must be verbatim")
+            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] must be verbatim")
         if projection.get("adaptation_overlay_path") is not None:
-            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] must not declare an overlay")
-        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers/skills/{canonical_name}":
-            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] local path mismatch")
+            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] must not declare an overlay")
+        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers-plus/skills/{canonical_name}":
+            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] local path mismatch")
         if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
-            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] source path mismatch")
+            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] source path mismatch")
 
     for canonical_name, expected_entry in expected_adapted.items():
         projection = adapted_by_name[canonical_name]
         expected_overlay = expected_entry.get("adaptation_overlay_path")
         if projection.get("content_mode") != "adapted":
-            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] must be adapted")
+            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] must be adapted")
         if projection.get("adaptation_overlay_path") != expected_overlay:
-            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] overlay path mismatch")
-        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers/skills/{canonical_name}":
-            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
+            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] overlay path mismatch")
+        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers-plus/skills/{canonical_name}":
+            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
         if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
-            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
+            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
 
     if len(source_only) != 7:
-        raise ValueError("superpowers provenance-map.json source_only_surfaces count mismatch")
+        raise ValueError("superpowers-plus provenance-map.json source_only_surfaces count mismatch")
 
 
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
@@ -276,7 +276,7 @@ def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json name mismatch")
     if plugin_manifest.get("interface", {}).get("category") != spec["category"]:
         raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json category mismatch")
-    if plugin_name == "superpowers":
+    if plugin_name == "superpowers-plus":
         expected_icons = {
             "composerIcon": "./assets/superpowers-small.svg",
             "logo": "./assets/app-icon.png",
@@ -487,30 +487,39 @@ def normalize_superpowers_projection_text(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("**", "").lower()).strip()
 
 
+def _expected_superpowers_projected_plugin(source_plugin: dict) -> dict:
+    projected_plugin = json.loads(json.dumps(source_plugin))
+    projected_plugin["name"] = "superpowers-plus"
+    interface = projected_plugin.get("interface")
+    if isinstance(interface, dict):
+        interface["displayName"] = "Superpowers+"
+    return projected_plugin
+
+
 def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
     source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
-    if bundle_manifest.get("bundle_name") != "superpowers":
-        raise ValueError("superpowers bundle manifest bundle_name mismatch")
+    if bundle_manifest.get("bundle_name") != "superpowers-plus":
+        raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "5.1.0":
-        raise ValueError("superpowers bundle manifest bundle_version mismatch")
+        raise ValueError("superpowers-plus bundle manifest bundle_version mismatch")
     if bundle_manifest.get("bundle_type") != "third-party-codex-plugin-projection":
-        raise ValueError("superpowers bundle manifest bundle_type mismatch")
+        raise ValueError("superpowers-plus bundle manifest bundle_type mismatch")
     if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
-        raise ValueError("superpowers bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/superpowers":
-        raise ValueError("superpowers bundle manifest plugin_root mismatch")
+        raise ValueError("superpowers-plus bundle manifest marketplace_root mismatch")
+    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/superpowers-plus":
+        raise ValueError("superpowers-plus bundle manifest plugin_root mismatch")
     if bundle_manifest.get("canonical_source_root") != "sources/third_party/superpowers/obra-superpowers/v5.1.0":
-        raise ValueError("superpowers bundle manifest canonical_source_root mismatch")
+        raise ValueError("superpowers-plus bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_tag") != "v5.1.0":
-        raise ValueError("superpowers bundle manifest source_tag mismatch")
+        raise ValueError("superpowers-plus bundle manifest source_tag mismatch")
     if bundle_manifest.get("source_commit") != "f2cbfbefebbfef77321e4c9abc9e949826bea9d7":
-        raise ValueError("superpowers bundle manifest source_commit mismatch")
+        raise ValueError("superpowers-plus bundle manifest source_commit mismatch")
     if bundle_manifest.get("license") != "MIT":
-        raise ValueError("superpowers bundle manifest license mismatch")
+        raise ValueError("superpowers-plus bundle manifest license mismatch")
     if bundle_manifest.get("projection_policy") != (
         "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody."
     ):
-        raise ValueError("superpowers bundle manifest projection_policy mismatch")
+        raise ValueError("superpowers-plus bundle manifest projection_policy mismatch")
     if bundle_manifest.get("source_of_truth") != [
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
@@ -518,12 +527,13 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
     ]:
-        raise ValueError("superpowers bundle manifest source_of_truth mismatch")
+        raise ValueError("superpowers-plus bundle manifest source_of_truth mismatch")
 
     source_plugin = json.loads((source_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
     projected_plugin = json.loads((ROOT / plugin_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
-    if source_plugin != projected_plugin:
-        raise ValueError("superpowers projection drift at .codex-plugin/plugin.json")
+    expected_projected_plugin = _expected_superpowers_projected_plugin(source_plugin)
+    if expected_projected_plugin != projected_plugin:
+        raise ValueError("superpowers-plus projection drift at .codex-plugin/plugin.json")
 
     for relative_path in (
         "LICENSE",
@@ -533,23 +543,23 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         source_bytes = (source_root / relative_path).read_bytes()
         projected_bytes = (ROOT / plugin_root / relative_path).read_bytes()
         if source_bytes != projected_bytes:
-            raise ValueError(f"superpowers projection drift at {relative_path}")
+            raise ValueError(f"superpowers-plus projection drift at {relative_path}")
 
     entries = bundle_manifest.get("entries", [])
     if not isinstance(entries, list) or not entries:
-        raise ValueError("superpowers bundle manifest entries must be a non-empty list")
+        raise ValueError("superpowers-plus bundle manifest entries must be a non-empty list")
     if bundle_manifest.get("candidate_count") != len(entries):
-        raise ValueError("superpowers bundle manifest candidate count mismatch")
+        raise ValueError("superpowers-plus bundle manifest candidate count mismatch")
     if bundle_manifest.get("imported_count") != len(entries):
-        raise ValueError("superpowers bundle manifest imported count mismatch")
+        raise ValueError("superpowers-plus bundle manifest imported count mismatch")
     if bundle_manifest.get("skipped_count") != 0:
-        raise ValueError("superpowers bundle manifest skipped count mismatch")
+        raise ValueError("superpowers-plus bundle manifest skipped count mismatch")
     if bundle_manifest.get("blocked_count") != 0:
-        raise ValueError("superpowers bundle manifest blocked count mismatch")
+        raise ValueError("superpowers-plus bundle manifest blocked count mismatch")
 
     support_entries = bundle_manifest.get("excluded", [])
     if not isinstance(support_entries, list) or len(support_entries) != 7:
-        raise ValueError("superpowers bundle manifest excluded support surface count mismatch")
+        raise ValueError("superpowers-plus bundle manifest excluded support surface count mismatch")
 
     projection_doc = (ROOT / plugin_root / "PROJECTION.md").read_text(encoding="utf-8")
     compatibility_doc = (ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md").read_text(
@@ -589,51 +599,51 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         and len(Path(entry["local_path"]).parts) >= 2
     )
     if actual_skill_dirs != imported_skill_dirs:
-        raise ValueError("superpowers bundle manifest imported skill inventory mismatch")
+        raise ValueError("superpowers-plus bundle manifest imported skill inventory mismatch")
 
     for entry in entries:
         canonical_name = entry.get("canonical_name")
         if not canonical_name or not isinstance(canonical_name, str):
-            raise ValueError("superpowers imported entry is missing canonical_name")
+            raise ValueError("superpowers-plus imported entry is missing canonical_name")
         canonical_source_path = entry.get("canonical_source_path")
         source_category = entry.get("source_category")
         if source_category not in {"third_party", "first_party"}:
-            raise ValueError(f"superpowers entry {canonical_name} has an invalid source_category")
+            raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid source_category")
         if source_category == "first_party":
             expected_source_path = FIRST_PARTY_SUPERPOWERS_SOURCES.get(canonical_name)
             if expected_source_path is None:
                 allowed = ", ".join(sorted(FIRST_PARTY_SUPERPOWERS_SOURCES))
-                raise ValueError(f"superpowers first-party projections are limited to {allowed}")
+                raise ValueError(f"superpowers-plus first-party projections are limited to {allowed}")
             if canonical_source_path != expected_source_path:
-                raise ValueError(f"superpowers {canonical_name} first-party source path mismatch")
+                raise ValueError(f"superpowers-plus {canonical_name} first-party source path mismatch")
         content_mode = entry.get("content_mode")
         if content_mode not in {"verbatim", "adapted"}:
-            raise ValueError(f"superpowers entry {canonical_name} has an invalid content_mode")
+            raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid content_mode")
         copy_expectation = entry.get("copy_expectation")
         if content_mode == "verbatim":
             if copy_expectation != "byte_identical":
-                raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
+                raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
         elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
-            raise ValueError(f"superpowers entry {canonical_name} copy expectation mismatch")
+            raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
         if not entry.get("provenance_note"):
-            raise ValueError(f"superpowers entry {canonical_name} needs a provenance note")
+            raise ValueError(f"superpowers-plus entry {canonical_name} needs a provenance note")
         if content_mode == "adapted" and not entry.get("adaptation_note"):
-            raise ValueError(f"superpowers entry {canonical_name} needs an adaptation note")
+            raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
 
         adaptation_overlay_path = entry.get("adaptation_overlay_path")
         if source_category == "third_party" and content_mode == "adapted":
-            expected_overlay_path = f"adaptation-overlays/superpowers/{canonical_name}"
+            expected_overlay_path = f"adaptation-overlays/superpowers-plus/{canonical_name}"
             if adaptation_overlay_path != expected_overlay_path:
-                raise ValueError(f"superpowers adapted entry {canonical_name} needs {expected_overlay_path}")
+                raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs {expected_overlay_path}")
             check_path_exists(ROOT / expected_overlay_path)
         elif adaptation_overlay_path is not None:
-            raise ValueError(f"superpowers verbatim entry {canonical_name} must not declare adaptation_overlay_path")
+            raise ValueError(f"superpowers-plus verbatim entry {canonical_name} must not declare adaptation_overlay_path")
 
         local_path = entry.get("local_path")
         if not isinstance(canonical_source_path, str) or not canonical_source_path:
-            raise ValueError(f"superpowers entry {canonical_name} is missing canonical_source_path")
+            raise ValueError(f"superpowers-plus entry {canonical_name} is missing canonical_source_path")
         if not isinstance(local_path, str) or not local_path:
-            raise ValueError(f"superpowers entry {canonical_name} is missing local_path")
+            raise ValueError(f"superpowers-plus entry {canonical_name} is missing local_path")
         check_path_exists(ROOT / canonical_source_path)
         check_path_exists(ROOT / plugin_root / local_path)
         source_path = ROOT / canonical_source_path
@@ -648,7 +658,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
                 validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
         else:
             if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
-                raise ValueError(f"superpowers entry {canonical_name} drifted from its source copy")
+                raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
 
     expected_support_paths = {
         ".claude-plugin": "Claude harness metadata",
@@ -662,22 +672,22 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     support_paths = {}
     for entry in support_entries:
         if not isinstance(entry, dict):
-            raise ValueError("superpowers excluded entries must contain objects")
+            raise ValueError("superpowers-plus excluded entries must contain objects")
         path = entry.get("path")
         reason = entry.get("reason")
         if not isinstance(path, str) or not path:
-            raise ValueError("superpowers excluded entry is missing path")
+            raise ValueError("superpowers-plus excluded entry is missing path")
         if not isinstance(reason, str) or not reason:
-            raise ValueError(f"superpowers excluded entry {path} needs a reason")
+            raise ValueError(f"superpowers-plus excluded entry {path} needs a reason")
         support_paths[path] = reason
 
     if set(support_paths) != set(expected_support_paths):
-        raise ValueError("superpowers bundle manifest excluded support surface mismatch")
+        raise ValueError("superpowers-plus bundle manifest excluded support surface mismatch")
 
     for path in expected_support_paths:
         check_path_exists(source_root / path)
         if (ROOT / plugin_root / path).exists():
-            raise ValueError(f"superpowers support surface {path} must not be projected")
+            raise ValueError(f"superpowers-plus support surface {path} must not be projected")
 
     for required in (
         ROOT / plugin_root / ".codex-plugin" / "plugin.json",
@@ -925,7 +935,7 @@ def main() -> int:
         if spec["name"] == "house-skills":
             continue
         plugin_root = ROOT / spec["plugin_root"]
-        if spec["name"] == "superpowers":
+        if spec["name"] == "superpowers-plus":
             for required in ("SOURCE.md", "PROJECTION.md", "LICENSE"):
                 check_text(plugin_root / required)
             check_json(plugin_root / ".codex-plugin" / "plugin.json")
@@ -945,7 +955,7 @@ def main() -> int:
                 validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "wild-bunch-project-pack":
                 validate_wild_bunch_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
-            elif spec["name"] == "superpowers":
+            elif spec["name"] == "superpowers-plus":
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             else:
                 validate_skill_bundle_manifest(

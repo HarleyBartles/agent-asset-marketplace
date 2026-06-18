@@ -13,11 +13,11 @@ def _assert_overlay_export_present(registry: dict) -> None:
     artifact = next(
         record
         for record in registry["artifacts"]
-        if record["pack"] == "superpowers" and record["skill"] == "finishing-a-development-branch"
+        if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
     )
     if artifact["export_mode"] != "overlay":
         raise AssertionError("expected finishing-a-development-branch to be an overlay export")
-    if artifact["overlay_path"] != "gpt-overlays/superpowers/finishing-a-development-branch":
+    if artifact["overlay_path"] != "gpt-overlays/superpowers-plus/finishing-a-development-branch":
         raise AssertionError("expected finishing-a-development-branch overlay path to match gpt-overlays")
 
     zip_path = ROOT / artifact["zip_path"]
@@ -33,7 +33,7 @@ def _assert_excluded_skill_present(registry: dict) -> None:
     excluded = next(
         record
         for record in registry["excluded"]
-        if record["pack"] == "superpowers" and record["skill"] == "dispatching-parallel-agents"
+        if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
     )
     if excluded["export_mode"] != "excluded":
         raise AssertionError("expected dispatching-parallel-agents to be excluded")

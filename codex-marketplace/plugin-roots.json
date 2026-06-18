@@ -49,11 +49,11 @@
     },
     {
       "order": 5,
-      "name": "superpowers",
+      "name": "superpowers-plus",
       "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/superpowers",
-      "plugin_root": "codex-marketplace/plugins/superpowers",
-      "manifest_path": "codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/superpowers-plus",
+      "plugin_root": "codex-marketplace/plugins/superpowers-plus",
+      "manifest_path": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
       "enabled": true
     },
     {

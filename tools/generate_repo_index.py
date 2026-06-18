@@ -128,6 +128,51 @@ LANGUAGE_PATTERNS_PACK_ENTRY = {
     },
 }
 
+SUPERPOWERS_PLUS_ENTRY = {
+    "name": "superpowers-plus",
+    "plugin_root": "codex-marketplace/plugins/superpowers-plus",
+    "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+    "source_ledger": [
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
+        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+        "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+        "sources/first_party/skills/architecture-superpowers/SKILL.md",
+    ],
+    "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+    "provenance_refs": [
+        "provenance/superpowers-plus.md",
+        "codex-marketplace/plugins/superpowers-plus/references/provenance-map.json",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/superpowers-plus",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
+
+def _normalize_zones(zones: list[dict]) -> list[dict]:
+    normalized_zones: list[dict] = []
+    for zone in zones:
+        if not isinstance(zone, dict):
+            normalized_zones.append(zone)
+            continue
+        if zone.get("name") == "superpowers-marketplace":
+            updated_zone = dict(zone)
+            updated_zone["name"] = "superpowers-plus-marketplace"
+            updated_zone["path"] = "codex-marketplace/plugins/superpowers-plus"
+            updated_zone["purpose"] = "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+."
+            normalized_zones.append(updated_zone)
+            continue
+        normalized_zones.append(zone)
+    return normalized_zones
+
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
@@ -156,12 +201,16 @@ def build_repo_index() -> dict:
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))
             continue
+        if name == "superpowers-plus":
+            ordered_plugins.append(dict(SUPERPOWERS_PLUS_ENTRY))
+            continue
         if name in current_plugins:
             ordered_plugins.append(current_plugins[name])
             continue
         raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
 
     repo_index["marketplace_plugins"] = ordered_plugins
+    repo_index["zones"] = _normalize_zones(list(repo_index.get("zones", [])))
     validation = dict(repo_index.get("validation", {}))
     validation["repo_index_generate"] = "py -3 tools/generate_repo_index.py"
     repo_index["validation"] = validation

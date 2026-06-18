@@ -1,7 +1,0 @@
-schema_version: 1
-metadata:
-  source_category: third_party
-  upstream_name: using-superpowers
-  upstream_version: v5.1.0
-  adaptation_overlay: adaptation-overlays/superpowers/using-superpowers
-  projection_plugin: superpowers
