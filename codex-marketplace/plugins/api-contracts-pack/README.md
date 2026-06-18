@@ -1,25 +1,27 @@
 # API Contracts Pack
 
 This plugin bundle projects the MARK-204 `api-design-patterns` contract-doctrine
-slice from the retained Codex Cortex custody plugin into an installable Codex
-marketplace pack.
+slice and the MARK-205 `openapi-specification` companion slice from the retained
+Codex Cortex custody plugin into an installable Codex marketplace pack.
 
 ## Bundle contents
 
 - `api-design-patterns`
+- `openapi-specification`
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
 
-- Only the retained contract-doctrine slice is projected.
-- `openapi-specification` remains a separate MARK-205 companion slice.
+- `api-design-patterns` carries the umbrella contract doctrine.
+- `openapi-specification` carries the OpenAPI-specific companion slice.
 - The bundle is a projection over retained source custody, not a new source of
   truth.
 
 ## Install shape
 
-The installable skill zip is generated under
-`generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip` and can
-be installed directly from that artifact.
+The installable skill zips are generated under:
+
+- `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
+- `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`

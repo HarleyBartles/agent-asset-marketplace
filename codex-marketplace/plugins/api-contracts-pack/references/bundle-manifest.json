@@ -5,8 +5,8 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 3,
-  "imported_count": 3,
+  "candidate_count": 6,
+  "imported_count": 6,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -30,11 +30,32 @@
       "import_status": "imported",
       "content_mode": "verbatim",
       "adaptation_note": "Mirrored as the skill quality rubric and validation posture for the umbrella slice."
+    },
+    {
+      "snapshot_path": "skills/openapi-specification/SKILL.md",
+      "local_path": "skills/openapi-specification/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the OpenAPI-specific companion slice for api-contracts-pack, composed with api-design-patterns."
+    },
+    {
+      "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
+      "local_path": "skills/openapi-specification/references/spec-patterns.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
+    },
+    {
+      "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
+      "local_path": "skills/openapi-specification/validation/rubric.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the OpenAPI quality rubric for the companion slice."
     }
   ],
   "notes": [
-    "Single contract-doctrine slice.",
-    "The bundle projects the retained api-design-patterns guidance into an installable marketplace shape.",
-    "openapi-specification remains out of scope for MARK-204."
+    "Two-slice contract-doctrine pack.",
+    "The bundle projects the retained api-design-patterns guidance and the narrower openapi-specification companion slice into an installable marketplace shape.",
+    "openapi-specification composes with api-design-patterns and stays within the OpenAPI-specific boundary."
   ]
 }

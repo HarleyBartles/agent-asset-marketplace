@@ -8,5 +8,5 @@ from the installable marketplace projections under `codex-marketplace/`.
 
 Current retained roots include `unslop/`, `game-studio/`, `superpowers/`,
 `dotnet-claude-kit/`, and `codex-cortex/`, which now retains the MARK-204
-`api-design-patterns` custody slice alongside the earlier Claude-Cortex
-imports.
+`api-design-patterns` custody slice and the MARK-205 `openapi-specification`
+companion slice alongside the earlier Claude-Cortex imports.
