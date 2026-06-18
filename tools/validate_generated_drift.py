@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,7 @@ from skill_zip_artifacts import (
 PACKAGING_TOOLING_PATHS = {
     "tools/skill_zip_artifacts.py",
     "tools/skill_gpt_exports.py",
+    "tools/materialize_superpowers_projection.py",
     "tools/update_skill_artifacts.py",
     "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/safe_skill_tree.py",
     "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_skill.py",
@@ -115,7 +117,40 @@ def _artifact_relevant_changes(artifact: Any) -> list[str]:
     overlay_path = getattr(artifact, "overlay_path", None)
     if overlay_path:
         paths.append(str(overlay_path))
+    if getattr(artifact, "pack", None) == "superpowers":
+        paths.append("codex-marketplace/plugins/superpowers/references/bundle-manifest.json")
+        adaptation_overlay_path = _superpowers_adaptation_overlay_path(getattr(artifact, "skill", ""))
+        if adaptation_overlay_path:
+            paths.append(adaptation_overlay_path)
     return paths
+
+
+@lru_cache(maxsize=1)
+def _superpowers_bundle_manifest() -> dict[str, Any] | None:
+    bundle_manifest_path = ROOT / "codex-marketplace/plugins/superpowers/references/bundle-manifest.json"
+    if not bundle_manifest_path.exists():
+        return None
+    loaded = load_json(bundle_manifest_path)
+    if not isinstance(loaded, dict):
+        return None
+    return loaded
+
+
+@lru_cache(maxsize=None)
+def _superpowers_adaptation_overlay_path(skill: str) -> str | None:
+    bundle_manifest = _superpowers_bundle_manifest()
+    if not bundle_manifest:
+        return None
+    for entry in bundle_manifest.get("entries", []):
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("canonical_name") != skill:
+            continue
+        overlay_path = entry.get("adaptation_overlay_path")
+        if isinstance(overlay_path, str) and overlay_path.strip():
+            return overlay_path
+        return None
+    return None
 
 
 def _artifact_changed(source_changes: list[str], artifact: Any) -> bool:

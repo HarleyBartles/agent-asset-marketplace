@@ -2046,14 +2046,14 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
       "overlay_path": "gpt-overlays/superpowers/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
-      "source_file_count": 1,
-      "source_bytes": 7826,
-      "source_sha256": "8b8a4b3ffaba05180cda38ea79d0488770d4881dfc0c1ccd52e77ed41b454bb7",
+      "source_file_count": 2,
+      "source_bytes": 8144,
+      "source_sha256": "8af2e44737931e4e4974ec5498d3b6bf67cbace903178e2c053be2dcb7816c41",
       "overlay_file_count": 1,
       "overlay_bytes": 805,
       "overlay_sha256": "6d71f5016f3d5a0d44f34ba15b54f63e13e78e07d33e60c4cada7e432c4a2989",
-      "zip_size_bytes": 629,
-      "zip_sha256": "5b98954fcfa339eb93abc86d72b3d0766ee0e24b0c2fd02169aee95f27c20ee6"
+      "zip_size_bytes": 946,
+      "zip_sha256": "8ce5c0c370285ea4a88628ccca83ba1188b1b07a7e4f96b2c14d3a8f135a71ef"
     },
     {
       "pack": "superpowers",
@@ -2174,14 +2174,14 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
       "overlay_path": "gpt-overlays/superpowers/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
-      "source_file_count": 4,
-      "source_bytes": 13306,
-      "source_sha256": "a77fa135e22f00be979a990074590d2ea5dbc3890dda479f42cacdee2ad29037",
+      "source_file_count": 5,
+      "source_bytes": 13737,
+      "source_sha256": "92259cc96be12d5e585d1ac7489a2317c40bfc88e002ee3fdc24e5ed61403ffc",
       "overlay_file_count": 1,
       "overlay_bytes": 848,
       "overlay_sha256": "a0aa5286747b0376a3ed479b484608d9aadaa3aa2b15346cf0dc555efd9eb8b7",
-      "zip_size_bytes": 4405,
-      "zip_sha256": "a79cdaa76511838a113c8c0c1af7b70aacfe415540524ae1e22606390beabd40"
+      "zip_size_bytes": 4679,
+      "zip_sha256": "1951ad4f3094b84dad07eee78305f30ffe7af6814af2707dbda23c19f38a5e2b"
     },
     {
       "pack": "superpowers",

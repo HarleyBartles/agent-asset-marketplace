@@ -123,6 +123,9 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         raise ValueError(f"{skill_md} frontmatter must include nonblank name")
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
+    metadata = parsed_frontmatter.get("metadata")
+    if metadata is not None and not isinstance(metadata, dict):
+        raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
 
 
 @dataclass(frozen=True)

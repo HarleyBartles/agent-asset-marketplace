@@ -3,13 +3,13 @@
 
 from __future__ import annotations
 
-import shutil
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from marketplace_utils import load_json
+from skill_overlay_materializer import stage_overlay_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -87,12 +87,5 @@ def resolve_gpt_export_policy(*, pack: str, skill: str) -> GPTExportPolicy:
 
 
 def stage_skill_tree(source_root: Path, overlay_root: Path | None) -> tuple[Path, tempfile.TemporaryDirectory[str]]:
-    tempdir = tempfile.TemporaryDirectory()
-    staged_root = Path(tempdir.name) / source_root.name
-    shutil.copytree(source_root, staged_root, dirs_exist_ok=True)
-    if overlay_root is not None:
-        if not overlay_root.exists():
-            raise FileNotFoundError(overlay_root)
-        shutil.copytree(overlay_root, staged_root, dirs_exist_ok=True)
-    return staged_root, tempdir
+    return stage_overlay_tree(source_root, overlay_root)
 

@@ -15,6 +15,11 @@ This repository uses three distinct layers for the Superpowers bundle:
 - Installation/export layer is derived from the projection plus overlays and
   is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
+- The adapted Superpowers skills are materialized from
+  `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/...` plus
+  `adaptation-overlays/superpowers/...`.
+- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -44,8 +49,8 @@ The split is deliberate:
   reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection
   wording.
 - The adapted `using-superpowers` and `finishing-a-development-branch`
-  projections stay in the marketplace copy only; the upstream source snapshot
-  remains verbatim.
+  projections are materialized from source custody plus adaptation overlays;
+  the upstream source snapshot remains verbatim.
 - Any future first-party skill proposed for projection into `superpowers` must
   be justified as a compositional wrapper over Superpowers, not as an expert
   skill being relocated into the third-party plugin.
