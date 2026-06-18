@@ -55,20 +55,20 @@ Load detailed references on-demand:
 
 | Topic | Reference File |
 |-------|----------------|
-| Conditional Types | `skills/typescript-advanced-patterns/references/conditional-types.md` |
-| Mapped Types | `skills/typescript-advanced-patterns/references/mapped-types.md` |
-| Template Literal Types | `skills/typescript-advanced-patterns/references/template-literal-types.md` |
-| Type Guards | `skills/typescript-advanced-patterns/references/type-guards.md` |
-| Discriminated Unions | `skills/typescript-advanced-patterns/references/discriminated-unions.md` |
-| Branded Types | `skills/typescript-advanced-patterns/references/branded-types.md` |
-| Builder Pattern | `skills/typescript-advanced-patterns/references/builder-pattern.md` |
-| Advanced Generics | `skills/typescript-advanced-patterns/references/advanced-generics.md` |
-| Utility Types | `skills/typescript-advanced-patterns/references/utility-types.md` |
-| Type Inference | `skills/typescript-advanced-patterns/references/type-inference.md` |
-| Decorators | `skills/typescript-advanced-patterns/references/decorators.md` |
-| Performance Best Practices | `skills/typescript-advanced-patterns/references/performance-best-practices.md` |
-| Common Pitfalls | `skills/typescript-advanced-patterns/references/common-pitfalls.md` |
-| Testing Types | `skills/typescript-advanced-patterns/references/testing-types.md` |
+| Conditional Types | `references/conditional-types.md` |
+| Mapped Types | `references/mapped-types.md` |
+| Template Literal Types | `references/template-literal-types.md` |
+| Type Guards | `references/type-guards.md` |
+| Discriminated Unions | `references/discriminated-unions.md` |
+| Branded Types | `references/branded-types.md` |
+| Builder Pattern | `references/builder-pattern.md` |
+| Advanced Generics | `references/advanced-generics.md` |
+| Utility Types | `references/utility-types.md` |
+| Type Inference | `references/type-inference.md` |
+| Decorators | `references/decorators.md` |
+| Performance Best Practices | `references/performance-best-practices.md` |
+| Common Pitfalls | `references/common-pitfalls.md` |
+| Testing Types | `references/testing-types.md` |
 
 ## Implementation Workflow
 

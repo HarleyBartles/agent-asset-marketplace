@@ -4,6 +4,7 @@
 **Branch:** `harleydbartles/mark-212-project-typescript-advanced-patterns-into-language-patterns`
 **Source basis:** MARK-211 inventory return document plus retained Claude-Cortex `typescript-advanced-patterns` snapshot at pinned commit `7892d00e7cb6adf00144a535103b930c772fb2c0`
 **Publication target:** New installable `language-patterns-pack` Codex plugin projection
+**Projection posture:** Adapted projection. The retained upstream skill uses plugin-root-relative reference paths, so the installable pack normalizes those paths to skill-root-relative references and adds canonical `agents/openai.yaml`.
 
 ## Changed surfaces
 
@@ -30,6 +31,7 @@
 - `codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json`
 - `codex-marketplace/plugins/language-patterns-pack/references/source-map.md`
 - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/SKILL.md`
+- `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/agents/openai.yaml`
 - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/references/advanced-generics.md`
 - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/references/branded-types.md`
 - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/references/builder-pattern.md`
@@ -72,6 +74,8 @@
 ## Generated artifact explanation
 
 The generated artifact is the durable installable export for the new `language-patterns-pack/typescript-advanced-patterns` slice. It exists because the repo treats `generated/skill-zips/` as the GPT-ready export surface and `skill.zip` as the canonical installable artifact for the projected skill.
+
+The upstream snapshot was not projected verbatim: its reference links were plugin-root-relative, so the installable pack rewrites them to skill-root-relative paths and adds the canonical agents file.
 
 ## Repo-index generator justification
 

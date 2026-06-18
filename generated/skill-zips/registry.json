@@ -1646,14 +1646,14 @@
       "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip",
-      "source_file_count": 15,
-      "source_bytes": 30082,
-      "source_sha256": "aa6c5891a0ebbd672daa1028e2bf7876fec2f61b0600135abca91b07f06b7d8a",
+      "source_file_count": 16,
+      "source_bytes": 29687,
+      "source_sha256": "a724d753c4645d42338474e37cb5cb81ec11929e1a021ba62ea34892c8df729d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15400,
-      "zip_sha256": "f1f6c7184068013e5258294c682316151686d81ac2b1c63ca6552bbb615cb446"
+      "zip_size_bytes": 15644,
+      "zip_sha256": "2f37c0b533e99417316f8afa070aa3a556b665ab46b4ab5d62629915040350d5"
     },
     {
       "pack": "repo-worker-base",

@@ -1,7 +1,10 @@
 # Language Patterns Pack Source Map
 
 This bundle projects the MARK-212 `typescript-advanced-patterns` slice from the
-retained Claude-Cortex custody plugin into a marketplace surface.
+retained Claude-Cortex custody plugin into a marketplace surface. The retained
+upstream skill uses plugin-root-relative reference paths; the projected pack
+normalizes those references to skill-root-relative paths and adds canonical
+`agents/openai.yaml` metadata in the installable shape.
 
 Retained custody evidence:
 
@@ -34,7 +37,7 @@ Projected pack skill:
 
 | Skill | Source path | Pack path | Notes |
 | --- | --- | --- | --- |
-| typescript-advanced-patterns | `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md` | `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/SKILL.md` | Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack. |
+| typescript-advanced-patterns | `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md` | `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/SKILL.md` | Adapted projection that normalizes plugin-root-relative reference paths to skill-root-relative references. |
 
 The pack root is an installable Codex plugin projection. It does not replace
 the `codex-cortex` custody plugin or the first-party import ledger.
