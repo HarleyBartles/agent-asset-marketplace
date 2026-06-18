@@ -12,12 +12,19 @@ or closeout help, then open the relevant skill before you act.
 This overlay is the Asset Marketplace `Superpowers+` adaptation layer, not
 upstream/base Superpowers doctrine. It only routes to compositional wrappers
 that are actually present in `superpowers-plus`.
+If the task has or needs a written plan, route it through the verified-plan
+adapter path: `writing-plans` -> `executing-plans` ->
+`verification-before-completion`.
 
 ## Adapted Routing
 
 - Brainstorming and task framing: use `brainstorming`.
 - Plan creation and plan execution: use `writing-plans` for route review and
   `executing-plans` for implementation.
+- Verified-plan adapter path: use `writing-plans` to make the plan checkable,
+  `executing-plans` to update verified checkboxes as work lands, and
+  `verification-before-completion` before any completion or ready-for-review
+  claim.
 - Test-disciplined implementation: use `test-driven-development`.
 - Debugging and unexpected behavior analysis: use `systematic-debugging`.
 - Verification and completion claims: use `verification-before-completion`.

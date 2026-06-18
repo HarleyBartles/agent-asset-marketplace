@@ -1986,10 +1986,10 @@
       "source_bytes": 2469,
       "source_sha256": "a464c71cc0c0463d90563233885b158d28301a7568c2429be1ec717d422bc5a5",
       "overlay_file_count": 1,
-      "overlay_bytes": 866,
-      "overlay_sha256": "2e2f20600ca95b14766195bf41e918f0991af83374c6fe8387ab090a6e9800c1",
-      "zip_size_bytes": 639,
-      "zip_sha256": "f96d91a679039a939264a7e6f395f745c467596cd72e67db0e650708775c59b6"
+      "overlay_bytes": 1091,
+      "overlay_sha256": "2291ce6c6be5e80bc7c3459785b2f1524891a75ef4edf3d13ddc56d3a4f4b22d",
+      "zip_size_bytes": 747,
+      "zip_sha256": "c29b16184e0d13c5d86b5ba627eea7851957f88c5a5aacee2f206b63b45ac36e"
     },
     {
       "pack": "superpowers-plus",
@@ -2127,13 +2127,13 @@
       "overlay_path": "gpt-overlays/superpowers-plus/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers-plus/using-superpowers/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 15316,
-      "source_sha256": "68c160d7ef8acc8b67b87ab5d003069ba8194f30bfde7935113d59cb2f915917",
+      "source_bytes": 15539,
+      "source_sha256": "4613006ff11a7373fb1d97a2a13c6dc039db8f613222f32b7f2c8f5bbc857773",
       "overlay_file_count": 1,
-      "overlay_bytes": 2222,
-      "overlay_sha256": "f4d201dc257321011510ce404c99cc463f9489c6fb6aad757cf4b1446890fd71",
-      "zip_size_bytes": 5244,
-      "zip_sha256": "747617f9ea34c63bb0c4abc0d943aa1144e77cba25e81ca0f274ec209621cc2a"
+      "overlay_bytes": 2619,
+      "overlay_sha256": "a52131b85dde15a61ba740132a82dc7792e31f4af9263fcb680df4ad296d45b7",
+      "zip_size_bytes": 5381,
+      "zip_sha256": "9628dc1f950673914188866ae7dfe5939c3b69445b2faa20fce66ef48cc28647"
     },
     {
       "pack": "superpowers-plus",
@@ -2162,10 +2162,10 @@
       "source_bytes": 7814,
       "source_sha256": "5cd6211ec599e20d392e2146d1b85ee4895a67d8c0ef4f88ed0bda6809b03b20",
       "overlay_file_count": 1,
-      "overlay_bytes": 1967,
-      "overlay_sha256": "58faefd0cb2707f5e125bb4c70b7408ccd7b24fd0ce15ced755f10bf3bdb051f",
-      "zip_size_bytes": 2081,
-      "zip_sha256": "6e02695eae4c39aba67bbe9dfaa8233cf0a0b1244157b35a33c1d53410ff1a52"
+      "overlay_bytes": 2285,
+      "overlay_sha256": "eced60825cde5b08b83f20a970194b2ac7a64d75b90a03133d6190855142de3b",
+      "zip_size_bytes": 2213,
+      "zip_sha256": "de291d36f6c6931b7e36027588e0edd2bcd8347670b3ad44771d289179bad1c0"
     },
     {
       "pack": "superpowers-plus",
