@@ -103,6 +103,31 @@ API_CONTRACTS_PACK_ENTRY = {
     },
 }
 
+LANGUAGE_PATTERNS_PACK_ENTRY = {
+    "name": "language-patterns-pack",
+    "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
+    "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
+    "source_ledger": [
+        "sources/first_party/skills/codex-cortex/intake.json",
+        "sources/first_party/skills/codex-cortex/decisions.json",
+        "sources/first_party/skills/codex-cortex/decisions.md",
+    ],
+    "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
+    "provenance_refs": [
+        "provenance/codex-cortex.md",
+        "codex-marketplace/plugins/language-patterns-pack/references/source-map.md",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
@@ -124,6 +149,9 @@ def build_repo_index() -> dict:
             continue
         if name == "api-contracts-pack":
             ordered_plugins.append(dict(API_CONTRACTS_PACK_ENTRY))
+            continue
+        if name == "language-patterns-pack":
+            ordered_plugins.append(dict(LANGUAGE_PATTERNS_PACK_ENTRY))
             continue
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))

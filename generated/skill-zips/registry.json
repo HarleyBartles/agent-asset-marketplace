@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 134,
+  "artifact_count": 135,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1638,6 +1638,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 10653,
       "zip_sha256": "d8441bdd2b36563053da0afc4b9d5f3b1f1feb3c19ccdb5e844f00f8e355cec1"
+    },
+    {
+      "pack": "language-patterns-pack",
+      "skill": "typescript-advanced-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip",
+      "source_file_count": 15,
+      "source_bytes": 30082,
+      "source_sha256": "aa6c5891a0ebbd672daa1028e2bf7876fec2f61b0600135abca91b07f06b7d8a",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 15400,
+      "zip_sha256": "f1f6c7184068013e5258294c682316151686d81ac2b1c63ca6552bbb615cb446"
     },
     {
       "pack": "repo-worker-base",

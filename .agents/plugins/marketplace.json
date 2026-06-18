@@ -135,6 +135,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "language-patterns-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/language-patterns-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "notes": [
