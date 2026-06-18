@@ -4,6 +4,7 @@
 **Branch:** `codex/mark-173-architecture-superpowers`
 **Starting main SHA:** `5edd9f80a045beb7192000a8f8d178e3ba5cc9a9`
 **Implementation commit SHA:** `8313b7163cc57335fdd27139f41ef1b2a0d7337f`
+**Receipt commit SHA:** `9d76120efe6d8aa568ec9f2628b4dea64e4e9d28`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/116](https://github.com/HarleyBartles/agent-asset-marketplace/pull/116)
 **Publication state:** Draft PR opened on branch `codex/mark-173-architecture-superpowers` against `main`. This record covers the final pre-fork Superpowers wrapper projection for `architecture-superpowers`, the durable freeze record in `provenance/superpowers.md`, and the tooling-driven generated artifact refresh.
 
