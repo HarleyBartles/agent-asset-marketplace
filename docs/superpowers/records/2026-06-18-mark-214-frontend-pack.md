@@ -3,7 +3,7 @@
 **Issue:** MARK-214
 **Branch:** `harleydbartles/mark-214-project-frontend-first-wave-skills-into-frontend-pack`
 **PR:** `https://github.com/HarleyBartles/agent-asset-marketplace/pull/122`
-**Head SHA:** `57109f0143642460bf6fc78cd90d8c938546eb91`
+**Head SHA:** `23c589eda078f5453457ad73224efa5f7a20b114`
 **Rebase:** Required; rebased cleanly onto latest `origin/main` after `MARK-233` landed.
 **Included skills:** `react-performance-optimization`, `accessibility-audit`, `ux-review`, `interaction-design`, `webapp-testing`
 **Removed skills:** `web-game-foundations`, `game-ui-frontend`, `react-three-fiber-game`, `game-playtest`
