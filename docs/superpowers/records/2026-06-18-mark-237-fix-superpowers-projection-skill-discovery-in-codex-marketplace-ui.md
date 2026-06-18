@@ -3,7 +3,7 @@
 **Issue:** MARK-237
 **Branch:** `harleydbartles/mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui`
 **Starting main SHA:** `7c1b9f2e93dcaa6a464dd81290414960a02b65a4`
-**Implementation SHA:** `cdf490b0d61980109bea7f52aca5c46d924f4e79`
+**Implementation SHA:** `579bc92fc44a20247b9405b44bb061c1451d4d0c`
 **Publication state:** Draft branch work in progress. This record captures the implementation commit separately from the later publication commit and PR evidence.
 
 ## Changed files
@@ -41,6 +41,14 @@
 - Regenerated the skill zip corpus and `generated/skill-zips/registry.json`.
 - Narrowed the mirror validation to compare canonical text bytes rather than flagging line-ending noise as projection drift.
 
+## Repair pass addendum
+
+- Restored the full behavior-bearing bodies for `using-superpowers` and `finishing-a-development-branch` in the projected Superpowers install surface.
+- Added source-controlled Python dependency declarations for the repo startup lane with `PyYAML` and `Pillow`.
+- Switched Superpowers frontmatter validation to real YAML parsing with duplicate-key safety while preserving nested metadata structures already used by installable skills.
+- Added regression coverage for BOMs, collapsed frontmatter, missing delimiters, missing or blank required fields, duplicate keys, and nested metadata acceptance.
+- Regenerated the canonical skill zip registry after the source restoration.
+
 ## Validation
 
 - `py -3 tools/update_skill_artifacts.py --all`
@@ -55,6 +63,7 @@
 - Repo-index validation passed.
 - Generated drift validation passed against `origin/main`.
 - Diff whitespace checks passed.
+- The Superpowers validator now accepts canonical nested metadata while still requiring nonblank `name` and `description` fields in `SKILL.md` frontmatter.
 - UI install proof was not run in this workspace; the remaining verification is for Harley to confirm the Codex marketplace UI lists the surviving Superpowers skills after install.
 
 ## Coordination note
