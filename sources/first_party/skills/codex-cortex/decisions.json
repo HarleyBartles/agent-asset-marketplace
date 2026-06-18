@@ -96,5 +96,45 @@
       "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md"
     ]
+  },
+  {
+    "issue": "MARK-212",
+    "source_id": "codex-cortex-typescript-advanced-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
+    "public_name": "typescript-advanced-patterns",
+    "provenance_name": "MARK-212 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "TypeScript language and runtime guidance",
+    "notes": "Imported from the retained Claude-Cortex custody surface and projected into the language-patterns-pack bundle."
+  },
+  {
+    "issue": "MARK-213",
+    "source_id": "codex-cortex-python-testing-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/SKILL.md",
+    "public_name": "python-testing-patterns",
+    "provenance_name": "MARK-213 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Python testing idioms, fixtures, mocking, parametrization, property-based testing, and async test patterns",
+    "notes": "Imported from the retained Claude-Cortex custody surface and projected into the language-patterns-pack bundle."
+  },
+  {
+    "issue": "MARK-213",
+    "source_id": "codex-cortex-async-python-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/async-python-patterns/SKILL.md",
+    "public_name": "async-python-patterns",
+    "provenance_name": "MARK-213 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Python asyncio and concurrent programming guidance",
+    "notes": "Imported from the retained Claude-Cortex custody surface and projected into the language-patterns-pack bundle."
+  },
+  {
+    "issue": "MARK-213",
+    "source_id": "codex-cortex-python-performance-optimization-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/SKILL.md",
+    "public_name": "python-performance-optimization",
+    "provenance_name": "MARK-213 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Python profiling, optimization, memory, and acceleration guidance",
+    "notes": "Imported from the retained Claude-Cortex custody surface and projected into the language-patterns-pack bundle."
   }
 ]

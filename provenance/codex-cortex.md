@@ -37,6 +37,12 @@
 - Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
 - Installable plugin projection: `codex-marketplace/plugins/language-patterns-pack/`
+- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/`
+- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/`
+- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/`
+- Generated install unit: `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`
 - Generated install unit: `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
 - Generated install unit: `generated/skill-zips/security-pack/owasp-top-10/skill.zip`
 - Generated install unit: `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
@@ -44,10 +50,4 @@
 
 ## Boundary
 
-The retained custody surface seeds `cqrs-event-sourcing`,
-`event-driven-architecture`, `database-design-patterns`, `api-design-patterns`,
-`openapi-specification`, `secure-coding-practices`, `owasp-top-10`,
-`security-testing-patterns`, the MARK-212 `typescript-advanced-patterns`
-guidance projected through `language-patterns-pack`, and `threat-modeling-techniques`.
-Generic compliance theatre, infra security, repo governance, and audit-prep-only
-material stay out of scope unless a later issue explicitly composes them in.
+The retained custody surface seeds `cqrs-event-sourcing`, `event-driven-architecture`, `database-design-patterns`, `api-design-patterns`, `openapi-specification`, and the MARK-212 `typescript-advanced-patterns` guidance that is projected through `language-patterns-pack`. MARK-213 adds the Python language/runtime slice through `python-testing-patterns`, `async-python-patterns`, and `python-performance-optimization`. The retained `python-testing-patterns` validation rubric stays in source custody only. No other later Claude-Cortex candidate is imported.
