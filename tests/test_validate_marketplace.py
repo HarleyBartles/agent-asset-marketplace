@@ -14,6 +14,7 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import validate_marketplace  # noqa: E402
+from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
 from validate_marketplace import validate_superpowers_bundle_manifest  # noqa: E402
 
 
@@ -109,15 +110,19 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
-            house_skill_root = (
-                temp_root / "codex-marketplace" / "plugins" / "house-skills" / "skills" / "linear-superpowers"
-            )
+            source_skill_root = temp_root / "sources" / "first_party" / "core" / "linear-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
 
             projected_skill_root = plugin_root / "skills" / "linear-superpowers"
-            _touch(house_skill_root / "SKILL.md", "---\nname: linear-superpowers\n---\n")
-            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-            _touch(projected_skill_root / "SKILL.md", "---\nname: linear-superpowers\n---\n")
+            _touch(
+                source_skill_root / "SKILL.md",
+                "---\nname: linear-superpowers\ndescription: Use when the Linear packet needs the smallest applicable Superpowers router.\n---\n",
+            )
+            _touch(source_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
+            _touch(
+                projected_skill_root / "SKILL.md",
+                "---\nname: linear-superpowers\ndescription: Use when the Linear packet needs the smallest applicable Superpowers router.\n---\n",
+            )
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
@@ -186,11 +191,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "linear-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/linear-superpowers",
+                        "canonical_source_path": "sources/first_party/core/linear-superpowers",
                         "local_path": "skills/linear-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected from House Skills as the canonical first-party source.",
+                        "provenance_note": "Projected from the canonical first-party source.",
                     }
                 ],
                 "excluded": [
@@ -217,15 +222,19 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
-            house_skill_root = (
-                temp_root / "codex-marketplace" / "plugins" / "house-skills" / "skills" / "github-superpowers"
-            )
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "github-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
 
             projected_skill_root = plugin_root / "skills" / "github-superpowers"
-            _touch(house_skill_root / "SKILL.md", "---\nname: github-superpowers\n---\n")
-            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-            _touch(projected_skill_root / "SKILL.md", "---\nname: github-superpowers\n---\n")
+            _touch(
+                source_skill_root / "SKILL.md",
+                "---\nname: github-superpowers\ndescription: Use when GitHub-facing work needs the smallest applicable Superpowers router.\n---\n",
+            )
+            _touch(source_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
+            _touch(
+                projected_skill_root / "SKILL.md",
+                "---\nname: github-superpowers\ndescription: Use when GitHub-facing work needs the smallest applicable Superpowers router.\n---\n",
+            )
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
@@ -294,11 +303,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "github-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/github-superpowers",
+                        "canonical_source_path": "sources/first_party/skills/github-superpowers",
                         "local_path": "skills/github-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected from House Skills as the canonical first-party source.",
+                        "provenance_note": "Projected from the canonical first-party source.",
                     }
                 ],
                 "excluded": [
@@ -321,19 +330,77 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 except ValueError as exc:  # pragma: no cover - exercised by the red test run
                     self.fail(f"validator rejected the first-party projection: {exc}")
 
+    def test_validate_skill_markdown_frontmatter_accepts_simple_headers(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            skill_root = Path(temp_dir) / "example-skill"
+            skill_root.mkdir(parents=True, exist_ok=True)
+            _touch(
+                skill_root / "SKILL.md",
+                "---\nname: example-skill\ndescription: Use when something simple is needed.\n---\nBody.\n",
+            )
+
+            validate_skill_markdown_frontmatter(skill_root)
+
+    def test_validate_skill_markdown_frontmatter_accepts_nested_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            skill_root = Path(temp_dir) / "example-skill"
+            skill_root.mkdir(parents=True, exist_ok=True)
+            _touch(
+                skill_root / "SKILL.md",
+                (
+                    "---\n"
+                    "name: example-skill\n"
+                    "description: Use when something simple is needed.\n"
+                    "metadata:\n"
+                    "  keywords:\n"
+                    "    - alpha\n"
+                    "    - beta\n"
+                    "  owner: docs\n"
+                    "---\n"
+                    "Body.\n"
+                ),
+            )
+
+            validate_skill_markdown_frontmatter(skill_root)
+
+    def test_validate_skill_markdown_frontmatter_rejects_invalid_headers(self) -> None:
+        cases = {
+            "bom": b"\xef\xbb\xbf---\nname: example-skill\ndescription: ok\n---\n",
+            "collapsed": b"--- name: example-skill description: ok ---\n",
+            "missing_closing_delimiter": b"---\nname: example-skill\ndescription: ok\n",
+            "missing_name": b"---\ndescription: ok\n---\n",
+            "missing_description": b"---\nname: example-skill\n---\n",
+            "blank_name": b"---\nname:   \ndescription: ok\n---\n",
+            "blank_description": b"---\nname: example-skill\ndescription:   \n---\n",
+            "duplicate_name": b"---\nname: first\nname: second\ndescription: ok\n---\n",
+        }
+
+        for label, raw in cases.items():
+            with self.subTest(label=label):
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    skill_root = Path(temp_dir) / "example-skill"
+                    skill_root.mkdir(parents=True, exist_ok=True)
+                    (skill_root / "SKILL.md").write_bytes(raw)
+                    with self.assertRaises(ValueError):
+                        validate_skill_markdown_frontmatter(skill_root)
+
     def test_superpowers_bundle_accepts_first_party_unslop_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
-            house_skill_root = (
-                temp_root / "codex-marketplace" / "plugins" / "house-skills" / "skills" / "unslop-superpowers"
-            )
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "unslop-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
 
             projected_skill_root = plugin_root / "skills" / "unslop-superpowers"
-            _touch(house_skill_root / "SKILL.md", "---\nname: unslop-superpowers\n---\n")
-            _touch(house_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-            _touch(projected_skill_root / "SKILL.md", "---\nname: unslop-superpowers\n---\n")
+            _touch(
+                source_skill_root / "SKILL.md",
+                "---\nname: unslop-superpowers\ndescription: Use when repo-specific anti-slop controls need the smallest applicable Superpowers router.\n---\n",
+            )
+            _touch(source_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
+            _touch(
+                projected_skill_root / "SKILL.md",
+                "---\nname: unslop-superpowers\ndescription: Use when repo-specific anti-slop controls need the smallest applicable Superpowers router.\n---\n",
+            )
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
@@ -402,11 +469,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "unslop-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/unslop-superpowers",
+                        "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
                         "local_path": "skills/unslop-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected as a directory mirror from House Skills as the canonical first-party source.",
+                        "provenance_note": "Projected as a directory mirror from the canonical first-party source.",
                     }
                 ],
                 "excluded": [

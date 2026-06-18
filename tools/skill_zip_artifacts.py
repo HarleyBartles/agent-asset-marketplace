@@ -13,6 +13,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
+import yaml
+from yaml.nodes import MappingNode, ScalarNode, SequenceNode
+
 from marketplace_utils import CODEX_MARKETPLACE_MANIFEST_PATH, MARKETPLACE_PATH, load_json
 from skill_gpt_exports import resolve_gpt_export_policy, stage_skill_tree
 
@@ -72,26 +75,54 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
 
     raw = skill_md.read_bytes()
     if raw.startswith(b"\xef\xbb\xbf"):
-        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md begins with a UTF-8 BOM")
+        raise ValueError(f"{skill_md} begins with a UTF-8 BOM")
 
     text = raw.decode("utf-8")
     lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md must start with a standalone YAML frontmatter delimiter")
+    if not lines or lines[0] != "---":
+        raise ValueError(f"{skill_md} must start with a standalone YAML frontmatter delimiter")
 
     end_index = None
     for index, line in enumerate(lines[1:], start=1):
-        if line.strip() == "---":
+        if line == "---":
             end_index = index
             break
     if end_index is None:
-        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md is missing a closing YAML frontmatter delimiter")
+        raise ValueError(f"{skill_md} is missing a closing YAML frontmatter delimiter")
 
-    frontmatter = lines[1:end_index]
-    has_name = any(line.lstrip().startswith("name:") for line in frontmatter)
-    has_description = any(line.lstrip().startswith("description:") for line in frontmatter)
-    if not has_name or not has_description:
-        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md frontmatter must include name and description")
+    frontmatter_text = "\n".join(lines[1:end_index])
+    parsed_frontmatter = yaml.safe_load(frontmatter_text)
+    if not isinstance(parsed_frontmatter, dict):
+        raise ValueError(f"{skill_md} frontmatter must be a mapping")
+
+    frontmatter_node = yaml.compose(frontmatter_text, Loader=yaml.SafeLoader)
+    if not isinstance(frontmatter_node, MappingNode):
+        raise ValueError(f"{skill_md} frontmatter must be a mapping")
+
+    def ensure_unique_keys(node: MappingNode | SequenceNode) -> None:
+        if isinstance(node, MappingNode):
+            seen_keys: set[str] = set()
+            for key_node, value_node in node.value:
+                if not isinstance(key_node, ScalarNode):
+                    raise ValueError(f"{skill_md} frontmatter keys must be simple scalars")
+                key = key_node.value
+                if key in seen_keys:
+                    raise ValueError(f"{skill_md} frontmatter contains duplicate key {key!r}")
+                seen_keys.add(key)
+                ensure_unique_keys(value_node)
+            return
+        if isinstance(node, SequenceNode):
+            for child in node.value:
+                ensure_unique_keys(child)
+
+    ensure_unique_keys(frontmatter_node)
+
+    name = parsed_frontmatter.get("name")
+    description = parsed_frontmatter.get("description")
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError(f"{skill_md} frontmatter must include nonblank name")
+    if not isinstance(description, str) or not description.strip():
+        raise ValueError(f"{skill_md} frontmatter must include nonblank description")
 
 
 @dataclass(frozen=True)
