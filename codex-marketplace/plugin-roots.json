@@ -109,6 +109,15 @@
       "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
       "manifest_path": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 12,
+      "name": "security-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/security-pack",
+      "plugin_root": "codex-marketplace/plugins/security-pack",
+      "manifest_path": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

@@ -50,17 +50,18 @@
     "notes": "Imported from the selective Claude-Cortex custody surface and projected into the api-contracts-pack companion slice."
   },
   {
-    "issue": "MARK-205",
+    "issue": "MARK-210",
     "id": "global.codex-cortex.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, and MARK-205 adds openapi-specification to the selective custody surface. No later Claude-Cortex candidate is imported.",
+    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, and MARK-210 adds threat-modeling-techniques to the selective custody surface. Generic compliance theatre, infra security, repo governance, and audit-prep-only material stay out of scope unless a later issue explicitly composes them in.",
     "imported_source_paths": [
       "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
-      "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md"
+      "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md"
     ]
   }
 ]

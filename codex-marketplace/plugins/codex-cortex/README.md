@@ -3,7 +3,8 @@
 This plugin bundle retains the MARK-172 `cqrs-event-sourcing` seed, the MARK-200
 `event-driven-architecture` import, the MARK-201
 `database-design-patterns` import, the MARK-204 `api-design-patterns` import,
-and the MARK-205 `openapi-specification` import from Claude-Cortex.
+the MARK-205 `openapi-specification` import, and the MARK-210
+`threat-modeling-techniques` import from Claude-Cortex.
 
 ## Bundle contents
 
@@ -12,6 +13,7 @@ and the MARK-205 `openapi-specification` import from Claude-Cortex.
 - `database-design-patterns`
 - `api-design-patterns`
 - `openapi-specification`
+- `threat-modeling-techniques`
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
@@ -19,7 +21,7 @@ and the MARK-205 `openapi-specification` import from Claude-Cortex.
 ## Boundary
 
 - Only the retained source skills are projected.
-- Later Claude-Cortex candidates stay out of scope.
+- Later Claude-Cortex candidates beyond MARK-210 stay out of scope.
 - The bundle is a custody surface, not the installable marketplace projection.
 
 ## Install shape
@@ -31,3 +33,4 @@ The installable skill zips are generated under:
 - `generated/skill-zips/codex-cortex/database-design-patterns/skill.zip`
 - `generated/skill-zips/codex-cortex/api-design-patterns/skill.zip`
 - `generated/skill-zips/codex-cortex/openapi-specification/skill.zip`
+- `generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip`

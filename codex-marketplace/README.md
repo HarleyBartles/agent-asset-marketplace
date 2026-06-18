@@ -15,8 +15,9 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/dotnet-kit/`,
 `codex-marketplace/plugins/codex-cortex/`,
 `codex-marketplace/plugins/api-contracts-pack/`,
-`codex-marketplace/plugins/architecture-pack/`, and
-`codex-marketplace/plugins/language-patterns-pack/`, in that order, with the source
+`codex-marketplace/plugins/architecture-pack/`,
+`codex-marketplace/plugins/language-patterns-pack/`, and
+`codex-marketplace/plugins/security-pack/`, in that order, with the source
 manifest exposing only those roots and no legacy marketplace roots beside them.
 
 Editable source custody lives under `sources/first_party/` and

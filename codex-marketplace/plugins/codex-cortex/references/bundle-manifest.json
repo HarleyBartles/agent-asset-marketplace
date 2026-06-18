@@ -5,11 +5,11 @@
     "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
     "source_root": ".",
     "path_semantics": "retained-snapshot-relative",
-    "candidate_count": 28,
-    "imported_count": 28,
+  "candidate_count": 41,
+  "imported_count": 41,
     "skipped_count": 0,
     "blocked_count": 0,
-    "entries": [
+  "entries": [
         {
             "snapshot_path": "skills/cqrs-event-sourcing/SKILL.md",
             "local_path": "skills/cqrs-event-sourcing/SKILL.md",
@@ -199,17 +199,108 @@
             "content_mode": "verbatim",
             "adaptation_note": "Imported into the Codex Cortex custody plugin as the retained OpenAPI reference surface."
         },
-        {
-            "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
-            "local_path": "skills/openapi-specification/validation/rubric.yaml",
-            "import_status": "imported",
-            "content_mode": "adapted",
-            "adaptation_note": "Imported into the Codex Cortex custody plugin as the OpenAPI validation rubric."
-        }
-    ],
-    "notes": [
-        "Five retained guidance skills.",
-        "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, and the MARK-205 OpenAPI companion slice.",
-        "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
-    ]
+    {
+      "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
+      "local_path": "skills/openapi-specification/validation/rubric.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the OpenAPI validation rubric."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
+      "local_path": "skills/threat-modeling-techniques/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as the MARK-210 security-framing slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
+      "local_path": "skills/threat-modeling-techniques/references/attack-trees.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as a supporting threat-tree reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
+      "local_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as a supporting DFD reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
+      "local_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the DREAD scoring reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
+      "local_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the mitigation planning reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE spoofing reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE tampering reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE repudiation reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE information disclosure reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-dos.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE denial-of-service reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the STRIDE elevation-of-privilege reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
+      "local_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the tooling and process reference."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
+      "local_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the threat-modeling validation rubric."
+    }
+  ],
+  "notes": [
+    "Six retained guidance skills.",
+    "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, the MARK-205 OpenAPI companion slice, and the MARK-210 security-framing slice.",
+    "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
+  ]
 }
