@@ -5,11 +5,221 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 13,
-  "imported_count": 13,
+  "candidate_count": 43,
+  "imported_count": 43,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/authentication.md",
+      "local_path": "skills/secure-coding-practices/references/authentication.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/cryptography.md",
+      "local_path": "skills/secure-coding-practices/references/cryptography.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/dependencies.md",
+      "local_path": "skills/secure-coding-practices/references/dependencies.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/error-handling.md",
+      "local_path": "skills/secure-coding-practices/references/error-handling.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/input-validation.md",
+      "local_path": "skills/secure-coding-practices/references/input-validation.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/output-encoding.md",
+      "local_path": "skills/secure-coding-practices/references/output-encoding.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/references/secure-defaults.md",
+      "local_path": "skills/secure-coding-practices/references/secure-defaults.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/SKILL.md",
+      "local_path": "skills/secure-coding-practices/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/secure-coding-practices/validation/rubric.yaml",
+      "local_path": "skills/secure-coding-practices/validation/rubric.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/assessment-workflow.md",
+      "local_path": "skills/owasp-top-10/references/assessment-workflow.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/authentication-failures.md",
+      "local_path": "skills/owasp-top-10/references/authentication-failures.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/broken-access-control.md",
+      "local_path": "skills/owasp-top-10/references/broken-access-control.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/cryptographic-failures.md",
+      "local_path": "skills/owasp-top-10/references/cryptographic-failures.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/injection.md",
+      "local_path": "skills/owasp-top-10/references/injection.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/insecure-design.md",
+      "local_path": "skills/owasp-top-10/references/insecure-design.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/integrity-failures.md",
+      "local_path": "skills/owasp-top-10/references/integrity-failures.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/logging-monitoring.md",
+      "local_path": "skills/owasp-top-10/references/logging-monitoring.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/prevention-strategies.md",
+      "local_path": "skills/owasp-top-10/references/prevention-strategies.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/security-misconfiguration.md",
+      "local_path": "skills/owasp-top-10/references/security-misconfiguration.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/ssrf.md",
+      "local_path": "skills/owasp-top-10/references/ssrf.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/references/vulnerable-components.md",
+      "local_path": "skills/owasp-top-10/references/vulnerable-components.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/owasp-top-10/SKILL.md",
+      "local_path": "skills/owasp-top-10/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/api-security.md",
+      "local_path": "skills/security-testing-patterns/references/api-security.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/automation-pipeline.md",
+      "local_path": "skills/security-testing-patterns/references/automation-pipeline.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/dast.md",
+      "local_path": "skills/security-testing-patterns/references/dast.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/fuzzing.md",
+      "local_path": "skills/security-testing-patterns/references/fuzzing.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/penetration-testing.md",
+      "local_path": "skills/security-testing-patterns/references/penetration-testing.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/sast.md",
+      "local_path": "skills/security-testing-patterns/references/sast.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/references/sca.md",
+      "local_path": "skills/security-testing-patterns/references/sca.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
+    {
+      "snapshot_path": "skills/security-testing-patterns/SKILL.md",
+      "local_path": "skills/security-testing-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
+    },
     {
       "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
       "local_path": "skills/threat-modeling-techniques/SKILL.md",
@@ -108,4 +318,3 @@
     "The slice stays focused on pre-implementation risk framing, attack surfaces, abuse cases, and security design choices."
   ]
 }
-

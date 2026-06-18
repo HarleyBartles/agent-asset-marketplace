@@ -1,0 +1,194 @@
+# MARK-207 Coding Security Trio into Security Pack Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Project `secure-coding-practices`, `owasp-top-10`, and `security-testing-patterns` into `security-pack` while preserving Codex Cortex custody, provenance, and generated marketplace artifacts on top of the existing MARK-210 threat-modeling base.
+
+**Architecture:** Keep the retained Claude-Cortex source snapshots under `sources/third_party/codex-cortex/upstream/`, record the import decisions in the first-party Codex Cortex ledgers, mirror each skill into the `codex-cortex` custody plugin, and adapt the same three skills into the installable `security-pack` projection. Update the pack manifests, source maps, provenance notes, repo index, and generated skill zips together so the new bundle stays discoverable and validation-clean.
+
+**Tech Stack:** Markdown skill sources, JSON manifests, provenance ledgers, repo index metadata, `py -3 tools/update_skill_artifacts.py`, `py -3 tools/validate_marketplace.py`, `py -3 tools/validate_repo_index.py`, `py -3 tools/validate_skill_zips.py`, `git diff --check`
+
+---
+
+### Task 1: Import the three security skills into retained Codex Cortex custody and first-party ledgers
+
+**Files:**
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/authentication.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/cryptography.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/dependencies.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/error-handling.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/input-validation.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/output-encoding.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/secure-defaults.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/validation/rubric.yaml`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/authentication-failures.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/broken-access-control.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/cryptographic-failures.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/injection.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/insecure-design.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/integrity-failures.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/logging-monitoring.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/prevention-strategies.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/security-misconfiguration.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/ssrf.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/vulnerable-components.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/assessment-workflow.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/validation/rubric.yaml`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/api-security.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/automation-pipeline.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/dast.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/fuzzing.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/penetration-testing.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sca.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sast.md`
+- Create: `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/validation/rubric.yaml`
+- Modify: `sources/first_party/skills/codex-cortex/intake.json`
+- Modify: `sources/first_party/skills/codex-cortex/decisions.json`
+- Modify: `sources/first_party/skills/codex-cortex/decisions.md`
+- Modify: `provenance/codex-cortex.md`
+
+- [ ] **Step 1: Copy the retained upstream skills into third-party custody**
+
+Bring the three upstream security skills and their reference/rubric files into the retained Claude-Cortex snapshot tree so the repo keeps the source basis for later projection.
+
+- [ ] **Step 2: Record the import ledger entries**
+
+Add MARK-207 import entries for `secure-coding-practices`, `owasp-top-10`, and `security-testing-patterns`, including the boundary note that they stay focused on application coding-security guidance.
+
+### Task 2: Project the three skills into `codex-cortex` custody and `security-pack`
+
+**Files:**
+- Modify: `codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json`
+- Modify: `codex-marketplace/plugins/codex-cortex/README.md`
+- Modify: `codex-marketplace/plugins/codex-cortex/SOURCE.md`
+- Modify: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
+- Modify: `codex-marketplace/plugins/codex-cortex/references/bundle-manifest.json`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/SKILL.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/authentication.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/cryptography.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/dependencies.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/error-handling.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/input-validation.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/output-encoding.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/references/secure-defaults.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/secure-coding-practices/validation/rubric.yaml`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/SKILL.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/authentication-failures.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/broken-access-control.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/cryptographic-failures.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/injection.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/insecure-design.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/integrity-failures.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/logging-monitoring.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/prevention-strategies.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/security-misconfiguration.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/ssrf.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/vulnerable-components.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/references/assessment-workflow.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/owasp-top-10/validation/rubric.yaml`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/SKILL.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/api-security.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/automation-pipeline.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/dast.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/fuzzing.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/penetration-testing.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/sca.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/references/sast.md`
+- Create: `codex-marketplace/plugins/codex-cortex/skills/security-testing-patterns/validation/rubric.yaml`
+- Modify: `codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json`
+- Modify: `codex-marketplace/plugins/security-pack/README.md`
+- Modify: `codex-marketplace/plugins/security-pack/SOURCE.md`
+- Modify: `codex-marketplace/plugins/security-pack/references/source-map.md`
+- Modify: `codex-marketplace/plugins/security-pack/references/bundle-manifest.json`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/SKILL.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/authentication.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/cryptography.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/dependencies.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/error-handling.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/input-validation.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/output-encoding.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/references/secure-defaults.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/validation/rubric.yaml`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/SKILL.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/authentication-failures.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/broken-access-control.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/cryptographic-failures.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/injection.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/insecure-design.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/integrity-failures.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/logging-monitoring.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/prevention-strategies.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/security-misconfiguration.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/ssrf.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/vulnerable-components.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/references/assessment-workflow.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/owasp-top-10/validation/rubric.yaml`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/SKILL.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/api-security.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/automation-pipeline.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/dast.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/fuzzing.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/penetration-testing.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/sca.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/sast.md`
+- Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/validation/rubric.yaml`
+
+- [ ] **Step 1: Mirror the custody plugin**
+
+Project the three security skills into `codex-cortex` so the retained custody surface keeps the imported source for downstream projection.
+
+- [ ] **Step 2: Build the installable pack projection**
+
+Adapt the same three skills into `security-pack` so the pack covers secure coding, OWASP review, and security testing alongside the existing threat-modeling slice.
+
+### Task 3: Refresh provenance, discoverability, and repo-facing guidance
+
+**Files:**
+- Modify: `sources/README.md`
+- Modify: `sources/third_party/README.md`
+- Modify: `provenance/codex-cortex.md`
+- Modify: `repo-index/repo-index.json`
+
+- [ ] **Step 1: Refresh source-custody guidance**
+
+Update the source and third-party guidance so they name the three new security skills and the broader `security-pack` composition instead of only the MARK-210 threat-modeling slice.
+
+- [ ] **Step 2: Refresh structured navigation metadata**
+
+Keep the repo index aligned with the expanded Codex Cortex custody set and the broader Security Pack projection.
+
+### Task 4: Regenerate and validate the artifacts
+
+**Files:**
+- Modify: `generated/skill-zips/registry.json`
+- Modify: `generated/skill-zips/codex-cortex/secure-coding-practices/skill.zip`
+- Modify: `generated/skill-zips/codex-cortex/owasp-top-10/skill.zip`
+- Modify: `generated/skill-zips/codex-cortex/security-testing-patterns/skill.zip`
+- Modify: `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
+- Modify: `generated/skill-zips/security-pack/owasp-top-10/skill.zip`
+- Modify: `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
+
+- [ ] **Step 1: Regenerate the skill corpus**
+
+Run: `py -3 tools/update_skill_artifacts.py --all`
+Expected: deterministic regenerated zips and registry entries for the three new skills in both `codex-cortex` custody and `security-pack`.
+
+- [ ] **Step 2: Validate the repo surfaces**
+
+Run:
+
+```powershell
+py -3 tools/validate_marketplace.py
+py -3 tools/validate_repo_index.py
+py -3 tools/validate_skill_zips.py
+git diff --check
+```
+
+Expected: all commands pass with no unexpected drift.
+
+- [ ] **Step 3: Capture publication evidence**
+
+Record the branch name, final head SHA, changed files, generated zip paths, validation output, and the composition note showing `security-pack` stays focused on practical application coding-security guidance rather than generic compliance theatre or infra security.

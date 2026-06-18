@@ -1,7 +1,7 @@
 {
   "name": "security-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for design-time threat modeling and security framing projected from the retained Codex Cortex custody plugin.",
+  "description": "Codex marketplace bundle for secure coding, OWASP review, security testing, and threat modeling projected from the retained Codex Cortex custody plugin.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -13,6 +13,9 @@
     "codex",
     "marketplace",
     "security",
+    "secure-coding",
+    "owasp",
+    "testing",
     "threat-modeling",
     "stride",
     "attack-tree",
@@ -26,7 +29,7 @@
   "interface": {
     "displayName": "Security Pack",
     "shortDescription": "Design-time threat modeling and security framing",
-    "longDescription": "A repo-local Codex plugin bundle that projects the retained Claude-Cortex threat-modeling-techniques slice into an installable marketplace shape for STRIDE analysis, attack trees, DREAD scoring, mitigation planning, and security requirement framing.",
+    "longDescription": "A repo-local Codex plugin bundle that projects the retained Claude-Cortex secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques slices into an installable marketplace shape for defensive coding, OWASP review, STRIDE analysis, attack trees, DREAD scoring, testing, mitigation planning, and security requirement framing.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -35,7 +38,7 @@
     ],
     "defaultPrompt": [
       "Inspect the Security Pack bundle and source map.",
-      "Use the bundle to review the threat-modeling-techniques slice.",
+      "Use the bundle to review the secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques slices.",
       "Compare the bundle against the retained Codex Cortex custody surface."
     ],
     "brandColor": "#991B1B",
