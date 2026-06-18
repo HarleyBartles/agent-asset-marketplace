@@ -11,6 +11,10 @@ The deleted `docs/inventory/ecc-agent-first-workflow-skills.md` report has been
 retired in favor of this third-party custody copy so future drain workers can
 use one durable upstream reference.
 
+As of MARK-240, the full upstream ECC skill tree is mirrored verbatim under
+`sources/third_party/ecc/upstream/skills/`, and the machine-readable custody
+manifest lives at `sources/third_party/ecc/upstream/manifest.json`.
+
 ## Summary
 
 - `today`: 40

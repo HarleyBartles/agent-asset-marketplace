@@ -16,5 +16,8 @@ the MARK-205 `openapi-specification` companion slice, the MARK-207
 imports. The `claude-cortex/` root retains the MARK-214 frontend slice:
 `react-performance-optimization`, `accessibility-audit`, `ux-review`,
 `interaction-design`, and `webapp-testing`.
-The `ecc/` root retains the MARK-235 upstream skill inventory as third-party
-source custody under `sources/third_party/ecc/upstream/source-custody.md`.
+The `ecc/` root retains the MARK-240 full upstream ECC skill mirror as
+third-party source custody under `sources/third_party/ecc/upstream/skills/`,
+with the inventory record and manifest at
+`sources/third_party/ecc/upstream/source-custody.md` and
+`sources/third_party/ecc/upstream/manifest.json`.
