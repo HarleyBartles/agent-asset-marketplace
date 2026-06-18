@@ -1,4 +1,4 @@
-﻿# Projection
+# Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
 `v5.1.0`, plus the source-backed House Skills `linear-superpowers`,
@@ -46,7 +46,7 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 - `references/provenance-map.json`
 
 `skills/linear-superpowers/` is copied from the canonical House Skills source
-at `sources/first_party/skills/linear-superpowers/`.
+at `sources/first_party/core/linear-superpowers/`.
 `skills/github-superpowers/` is copied from the canonical House Skills source
 at `sources/first_party/skills/github-superpowers/`.
 `skills/unslop-superpowers/` is copied from the canonical House Skills source

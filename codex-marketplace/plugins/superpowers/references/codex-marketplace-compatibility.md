@@ -13,6 +13,7 @@ This note applies to the active Codex projection of `obra/superpowers`.
 - `superpowers` is a third-party plugin projection with selected first-party compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected first-party wrapper skills `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, `codex-receipts-superpowers`, and `architecture-superpowers`.
 - Those first-party skills are compositional and complementary. They compose Superpowers workflow guidance with first-party expert skills that live outside the Superpowers plugin.
+- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projected `skills/` copies and this compatibility note; the retained upstream snapshot stays unchanged.
 - Do not place first-party expert or domain skills directly in the Superpowers plugin.
 - Do not use this plugin as a dumping ground for House Skills, project doctrine, verification experts, GitHub/Linear mechanics, or other first-party expert surfaces.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.

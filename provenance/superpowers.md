@@ -46,7 +46,7 @@ Projection contract:
   skill being relocated into the third-party plugin.
 
 The bundle also projects the first-party `linear-superpowers` skill from
-`sources/first_party/skills/linear-superpowers/`
+`sources/first_party/core/linear-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/linear-superpowers/`
 and the first-party `github-superpowers` skill from
 `sources/first_party/skills/github-superpowers/`

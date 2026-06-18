@@ -1,4 +1,4 @@
-﻿# Source
+# Source
 
 This Codex marketplace plugin is the repo-canonical copy of the locally created
 Repo Worker Base asset.
@@ -13,10 +13,10 @@ Repo Worker Base asset.
 
 ## Projected skills
 
-- `codex-repo-receipts` projected from `sources/first_party/skills/codex-repo-receipts`
-- `boring-loop` projected from `sources/first_party/skills/boring-loop`
-- `connector-safety` projected from `sources/first_party/skills/connector-safety`
-- `github-operations` projected from `sources/first_party/skills/github-operations`
+- `codex-repo-receipts` projected from `sources/first_party/core/codex-repo-receipts`
+- `boring-loop` projected from `sources/first_party/core/boring-loop`
+- `connector-safety` projected from `sources/first_party/core/connector-safety`
+- `github-operations` projected from `sources/first_party/core/github-operations`
 
 ## Source files
 
@@ -51,4 +51,4 @@ keeping work small, honest, and routed to the right specialist.
 The `connector-safety` and `github-operations` skills are projected as the
 generic safety/proof helper surfaces that no longer need House Skills as the
 install surface. Their canonical source roots live under
-`sources/first_party/skills/<skill>/`.
+`sources/first_party/core/<skill>/`.

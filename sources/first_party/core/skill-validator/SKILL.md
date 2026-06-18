@@ -3,7 +3,7 @@ name: skill-validator
 description: validate skill fitness after skill-creator and before skill-packager. use for skill create, update, repair, package-handoff, or no-op review when semantic discovery, compact control-plane design, progressive references, mutation authorization gates, image-credit stewardship, deterministic execution contracts, script architecture and efficiency checks, protected targets, fake-ledger resistance, broken skill.zip install-card prevention, exact skill.zip naming, wrong-surface package handoff prevention, no-op repackaging prevention, bounded skill-read anti-loop rules, project-wrapper compatibility, or locked stack-order proof could affect whether a skill may be packaged or handed off.
 metadata:
   source-id: skill-validator
-  source-path: sources/first_party/skills/skill-validator/SKILL.md
+  source-path: sources/first_party/core/skill-validator/SKILL.md
   provenance-name: MARK-21 skill maintenance House Skills source slice
 license: "MIT"
 ---
@@ -62,3 +62,4 @@ next_required_step: skill-packager
 For `pass`, `handoff_allowed` must be `true`, both reviewed fields must be `true`, and both arrays must be empty. For every other decision, `handoff_allowed` must be `false`.
 
 For diagnostic-only reviews, add `diagnostic_only: true` and do not set `handoff_allowed: true`.
+

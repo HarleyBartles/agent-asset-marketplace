@@ -8,6 +8,8 @@ deployment output.
 ## Layout
 
 - `first_party/` holds editable first-party source custody.
+- `first_party/core/` holds the generic reusable first-party skills that are
+  shared across marketplace projections.
 - `first_party/skills/<skill-name>/` holds canonical first-party skill roots when a
   skill is owned outside the House Skills bundle.
 - `first_party/skills/house-skills/` is the current House Skills source ledger.

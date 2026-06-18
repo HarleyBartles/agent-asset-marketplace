@@ -23,7 +23,7 @@
     {
       "name": "bootstrap-router",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/bootstrap-router"
+      "path": "sources/first_party/core/bootstrap-router"
     },
     {
       "name": "adventures-frame-buster",
@@ -78,7 +78,7 @@
     {
       "name": "boring-loop",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/boring-loop"
+      "path": "sources/first_party/core/boring-loop"
     },
     {
       "name": "boring-buster",
@@ -98,12 +98,12 @@
     {
       "name": "cleanup-custody",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/cleanup-custody"
+      "path": "sources/first_party/core/cleanup-custody"
     },
     {
       "name": "connector-safety",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/connector-safety"
+      "path": "sources/first_party/core/connector-safety"
     },
     {
       "name": "crew",
@@ -143,12 +143,12 @@
     {
       "name": "linear-superpowers",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/linear-superpowers"
+      "path": "sources/first_party/core/linear-superpowers"
     },
     {
       "name": "codex-repo-receipts",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/codex-repo-receipts"
+      "path": "sources/first_party/core/codex-repo-receipts"
     },
     {
       "name": "codex-receipts-superpowers",
@@ -158,7 +158,7 @@
     {
       "name": "github-operations",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/github-operations"
+      "path": "sources/first_party/core/github-operations"
     },
     {
       "name": "github-superpowers",
@@ -233,12 +233,12 @@
     {
       "name": "skill-packager",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/skill-packager"
+      "path": "sources/first_party/core/skill-packager"
     },
     {
       "name": "skill-validator",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/skill-validator"
+      "path": "sources/first_party/core/skill-validator"
     },
     {
       "name": "tps-ingress",
@@ -273,7 +273,7 @@
     {
       "name": "skill-installer",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/skill-installer"
+      "path": "sources/first_party/core/skill-installer"
     },
     {
       "name": "wild-bunch-project-doctrine",

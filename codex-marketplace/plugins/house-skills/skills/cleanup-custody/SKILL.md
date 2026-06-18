@@ -1,9 +1,9 @@
-﻿---
+---
 name: cleanup-custody
 description: Use this skill to classify whether a workspace or repository surface should stay live, move to cold store, move to governed trash, be deleted now, or block and route to an owning authority.
 metadata:
   source-id: cleanup-custody
-  source-path: sources/first_party/skills/cleanup-custody/SKILL.md
+  source-path: sources/first_party/core/cleanup-custody/SKILL.md
   provenance-name: legacy profanity-bearing cleanup skill
 license: "MIT"
 ---

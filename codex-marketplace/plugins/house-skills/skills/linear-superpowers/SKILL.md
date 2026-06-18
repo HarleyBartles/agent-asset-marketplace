@@ -1,9 +1,9 @@
-﻿---
+---
 name: linear-superpowers
 description: Use when shaping Linear issues, issue tracks, and worker packets so they name the smallest applicable Superpowers workflow skill, explain why it applies, and name the evidence required to prove it was followed.
 metadata:
   source-id: linear-superpowers
-  source-path: sources/first_party/skills/linear-superpowers/SKILL.md
+  source-path: sources/first_party/core/linear-superpowers/SKILL.md
   provenance-name: MARK-139 Linear Superpowers compositional skill
 license: "MIT"
 ---

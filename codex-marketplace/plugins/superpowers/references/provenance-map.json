@@ -28,7 +28,7 @@
     {
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
+      "canonical_source_path": "sources/first_party/core/linear-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },

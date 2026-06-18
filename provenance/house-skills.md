@@ -1,8 +1,8 @@
-﻿# House Skills Provenance
+# House Skills Provenance
 
 ## cleanup-custody
 
-- Source path: `sources/first_party/skills/cleanup-custody/v0.1/cleanup-custody-v0.1/SKILL.md`
+- Source path: `sources/first_party/core/cleanup-custody/SKILL.md`
 - Public identity: `cleanup-custody`
 - Provenance/history only: legacy profanity-bearing cleanup-skill naming
 - Scope: cleanup-custody only
@@ -10,7 +10,7 @@
 
 ## skill-validator
 
-- Source path: `sources/first_party/skills/skill-validator/v1/skill-validator-v1/SKILL.md`
+- Source path: `sources/first_party/core/skill-validator/SKILL.md`
 - Public identity: `skill-validator`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice
 - Scope: skill validation
@@ -18,7 +18,7 @@
 
 ## skill-packager
 
-- Source path: `sources/first_party/skills/skill-packager/v1/skill-packager-v1/SKILL.md`
+- Source path: `sources/first_party/core/skill-packager/SKILL.md`
 - Public identity: `skill-packager`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice
 - Scope: skill packaging
@@ -26,12 +26,12 @@
 
 ## connector-safety
 
-- Source path: `sources/first_party/skills/connector-safety`
+- Source path: `sources/first_party/core/connector-safety`
 - Public identity: `connector-safety`
 - Provenance/history: installed connector-safety package landed via WILL-274; v1.1 zip update
 - Ownership: Harley-authored first-party House skill
 - Scope: connector and tool safety blocks, discover-before-mutation flow, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, post-create read chains, and safe-action reporting
-- Notes: Canonical source now lives in `sources/first_party/skills/connector-safety/`. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it. The current update sharpens the connector safety doctrine with mandatory discover -> read -> write -> verify guidance while preserving the existing blocked-write and exact-state guard rules.
+- Notes: Canonical source now lives in `sources/first_party/core/connector-safety/`. `agents/openai.yaml` was copied into repo source control and retains the repository policy fields while adopting the clearer interface description and visual hints from the zip. `assets/icon.svg` was not included because the zip did not provide it. The current update sharpens the connector safety doctrine with mandatory discover -> read -> write -> verify guidance while preserving the existing blocked-write and exact-state guard rules.
 
 ## adventures-project-doctrine-v1
 
@@ -51,7 +51,7 @@
 
 ## bootstrap-router
 
-- Source path: `sources/first_party/skills/bootstrap-router`
+- Source path: `sources/first_party/core/bootstrap-router`
 - Public identity: `bootstrap-router`
 - Provenance/history: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
 - Scope: first-turn bootstrap routing and request classification
@@ -92,16 +92,16 @@
 
 ## boring-loop
 
-- Source path: `sources/first_party/skills/boring-loop`
+- Source path: `sources/first_party/core/boring-loop`
 - Public identity: `boring-loop`
 - Provenance/history: MARK-152 Boring Loop beta first-party source
 - Ownership: Harley-owned first-party House skill
 - Scope: loop cadence, readiness and false-green prevention, parent/child DoD coverage, queue grooming, next boring move selection, route-to-specialist guidance
-- Notes: Canonical source lives at `sources/first_party/skills/boring-loop/` and is projected into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required.
+- Notes: Canonical source lives at `sources/first_party/core/boring-loop/` and is projected into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required.
 
 ## linear-superpowers
 
-- Source path: `sources/first_party/skills/linear-superpowers`
+- Source path: `sources/first_party/core/linear-superpowers`
 - Public identity: `linear-superpowers`
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
@@ -110,12 +110,12 @@
 
 ## github-operations
 
-- Source path: `sources/first_party/skills/github-operations`
+- Source path: `sources/first_party/core/github-operations`
 - Public identity: `github-operations`
 - Provenance/history: MARK-142 GitHub operations zip import
 - Ownership: Harley-owned first-party House skill
 - Scope: GitHub evidence, PR review routing, and publication proof
-- Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The canonical first-party source now lives in `sources/first_party/skills/github-operations/`; House Skills projects that source rather than owning it.
+- Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The canonical first-party source now lives in `sources/first_party/core/github-operations/`; House Skills projects that source rather than owning it.
 
 ## github-superpowers
 
@@ -154,7 +154,7 @@
 
 ## skill-installer
 
-- Source path: `sources/first_party/skills/skill-installer`
+- Source path: `sources/first_party/core/skill-installer`
 - Public identity: `skill-installer`
 - Provenance/history: MARK-109 saved GPT skill zip source package
 - Scope: skill installation handoff orchestration

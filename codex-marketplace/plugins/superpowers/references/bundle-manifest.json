@@ -66,7 +66,7 @@
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
+      "canonical_source_path": "sources/first_party/core/linear-superpowers",
       "local_path": "skills/linear-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

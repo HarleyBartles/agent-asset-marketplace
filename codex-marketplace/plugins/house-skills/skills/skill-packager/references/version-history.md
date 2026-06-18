@@ -1,8 +1,8 @@
-﻿# Version History for Skill Packager
+# Version History for Skill Packager
 
 - Historical version: `v1`
 - Historical source id: `skill-packager-v1`
-- Current root: `sources/first_party/skills/skill-packager/SKILL.md`
+- Current root: `sources/first_party/core/skill-packager/SKILL.md`
 - Provenance: historical archive note for skill-packager
 - Historical package folders folded out of the live root: none
 

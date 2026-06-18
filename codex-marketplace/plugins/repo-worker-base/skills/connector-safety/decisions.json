@@ -2,7 +2,7 @@
   {
     "issue": "MARK-226",
     "source_id": "connector-safety-v1.1",
-    "source_path": "sources/first_party/skills/connector-safety",
+    "source_path": "sources/first_party/core/connector-safety",
     "public_name": "connector-safety",
     "provenance_name": "MARK-226 canonical first-party source for connector-safety",
     "import_state": "canonical",

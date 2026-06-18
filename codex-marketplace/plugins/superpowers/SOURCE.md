@@ -39,7 +39,7 @@ projections.
 - Retained source custody:
   `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
 - House Skills source custody:
-  `sources/first_party/skills/linear-superpowers/`
+  `sources/first_party/core/linear-superpowers/`
   `sources/first_party/skills/github-superpowers/`
   `sources/first_party/skills/unslop-superpowers/`
   `sources/first_party/skills/codex-receipts-superpowers/`
