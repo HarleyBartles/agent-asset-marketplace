@@ -501,6 +501,28 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     if not isinstance(support_entries, list) or len(support_entries) != 7:
         raise ValueError("superpowers bundle manifest excluded support surface count mismatch")
 
+    projection_doc = (ROOT / plugin_root / "PROJECTION.md").read_text(encoding="utf-8")
+    compatibility_doc = (ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md").read_text(
+        encoding="utf-8"
+    )
+    for needle in (
+        "source custody -> projection layer -> installation/export layer",
+        "Source custody keeps the retained third-party snapshot verbatim.",
+        "Projection layer holds the source-controlled marketplace copy",
+        "Installation/export layer is derived from the projection plus overlays",
+    ):
+        if needle not in projection_doc:
+            raise ValueError(f"superpowers PROJECTION.md is missing the three-layer model text: {needle}")
+    for needle in (
+        "lives only in the projection layer",
+        "Source custody remains a verbatim upstream snapshot",
+        "Installation and export artifacts are derived from the projection layer plus overlays",
+    ):
+        if needle not in compatibility_doc:
+            raise ValueError(
+                f"superpowers codex-marketplace-compatibility note is missing the custody split text: {needle}"
+            )
+
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
     imported_skill_dirs = sorted(

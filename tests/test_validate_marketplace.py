@@ -23,6 +23,35 @@ def _touch(path: Path, content: str = "ok") -> None:
     path.write_text(content, encoding="utf-8")
 
 
+SUPERPOWERS_PROJECTION_DOC = """# Projection
+
+This root is the Codex-facing marketplace projection of `obra/superpowers`
+`v5.1.0`, plus the source-backed House Skills `linear-superpowers`,
+`github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`
+skills.
+
+## Layer Model
+
+This repository uses three distinct layers for the Superpowers bundle:
+
+- Source custody keeps the retained third-party snapshot verbatim.
+- Projection layer holds the source-controlled marketplace copy and any
+  Codex-marketplace adaptations.
+- Installation/export layer is derived from the projection plus overlays and
+  is produced only by canonical tooling.
+- The custody flow is `source custody -> projection layer -> installation/export layer`.
+"""
+
+SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
+
+## Projection contract
+
+- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projection layer.
+- Source custody remains a verbatim upstream snapshot.
+- Installation and export artifacts are derived from the projection layer plus overlays.
+"""
+
+
 class ValidateMarketplaceTests(unittest.TestCase):
     def test_codex_receipts_superpowers_uses_canonical_cross_plugin_reference(self) -> None:
         source_text = (
@@ -137,6 +166,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "assets/superpowers-small.svg",
             ):
                 _touch(plugin_root / rel_path)
+            _touch(plugin_root / "PROJECTION.md", SUPERPOWERS_PROJECTION_DOC)
+            _touch(
+                plugin_root / "references" / "codex-marketplace-compatibility.md",
+                SUPERPOWERS_COMPATIBILITY_DOC,
+            )
 
             for rel_path in (
                 ".codex-plugin/plugin.json",
@@ -249,6 +283,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "assets/superpowers-small.svg",
             ):
                 _touch(plugin_root / rel_path)
+            _touch(plugin_root / "PROJECTION.md", SUPERPOWERS_PROJECTION_DOC)
+            _touch(
+                plugin_root / "references" / "codex-marketplace-compatibility.md",
+                SUPERPOWERS_COMPATIBILITY_DOC,
+            )
 
             for rel_path in (
                 ".codex-plugin/plugin.json",
@@ -415,6 +454,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "assets/superpowers-small.svg",
             ):
                 _touch(plugin_root / rel_path)
+            _touch(plugin_root / "PROJECTION.md", SUPERPOWERS_PROJECTION_DOC)
+            _touch(
+                plugin_root / "references" / "codex-marketplace-compatibility.md",
+                SUPERPOWERS_COMPATIBILITY_DOC,
+            )
 
             for rel_path in (
                 ".codex-plugin/plugin.json",

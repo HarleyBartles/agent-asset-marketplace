@@ -5,6 +5,26 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 `github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`
 skills.
 
+## Layer Model
+
+This repository uses three distinct layers for the Superpowers bundle:
+
+- Source custody keeps the retained third-party snapshot verbatim.
+- Projection layer holds the source-controlled marketplace copy and any
+  Codex-marketplace adaptations.
+- Installation/export layer is derived from the projection plus overlays and
+  is produced only by canonical tooling.
+- The custody flow is `source custody -> projection layer -> installation/export layer`.
+
+The split is deliberate:
+
+- Do not apply Codex-safe wording, frontmatter normalization, or marketplace
+  adaptation inside the third-party source custody root.
+- Do apply projection-layer adaptations in the marketplace copy where they can
+  be reviewed, documented, and regenerated.
+- Do treat generated zips, registry entries, and GPT exports as derived
+  install surfaces, not hand-edited sources.
+
 ## Projection contract
 
 - `superpowers` is a third-party plugin projection with selected first-party
@@ -23,6 +43,9 @@ skills.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or
   reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection
   wording.
+- The adapted `using-superpowers` and `finishing-a-development-branch`
+  projections stay in the marketplace copy only; the upstream source snapshot
+  remains verbatim.
 - Any future first-party skill proposed for projection into `superpowers` must
   be justified as a compositional wrapper over Superpowers, not as an expert
   skill being relocated into the third-party plugin.
