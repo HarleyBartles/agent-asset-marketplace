@@ -3,8 +3,8 @@
 **Issue:** MARK-237
 **Branch:** `harleydbartles/mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui`
 **Starting main SHA:** `81b82b579a3ede48a914e61da0edc8fd01237ca6`
-**Implementation SHA:** `060afa560b274f1514f590804b89a98bc8743180`
-**Publication state:** Implementation committed locally; branch still needs push and draft PR publication.
+**Implementation SHA:** `c15e0030b4376063ec1b63c6436ca01b0f788f5e`
+**Publication state:** Implementation committed; branch has been pushed and the draft PR is open.
 
 ## Changed files
 
