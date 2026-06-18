@@ -34,7 +34,7 @@ from marketplace_utils import (
     parse_top_markdown_table,
 )
 from validate_repo_index import validate_repo_index
-from skill_zip_artifacts import validate_skill_zip_registry
+from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,9 +43,25 @@ FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "github-superpowers": "sources/first_party/skills/github-superpowers",
     "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
     "codex-repo-receipts": "sources/first_party/core/codex-repo-receipts",
-    "codex-receipts-superpowers": "sources/first_party/skills/codex-receipts-superpowers",
     "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
 }
+
+TEXT_SUFFIXES = {
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".py",
+    ".sh",
+    ".svg",
+    ".xml",
+    ".html",
+    ".css",
+    ".js",
+    ".ts",
+}
+TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 
 
 def check_json(path: Path) -> dict:
@@ -74,14 +90,20 @@ def list_files(root: Path) -> list[Path]:
     return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
 
 
+def _canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
+    if path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES:
+        return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return raw
+
+
 def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str) -> None:
     source_files = list_files(source_root)
     local_files = list_files(local_root)
     if source_files != local_files:
         raise ValueError(f"adventures-pack component {component_name} file inventory mismatch")
     for rel_path in source_files:
-        source_bytes = (source_root / rel_path).read_bytes()
-        local_bytes = (local_root / rel_path).read_bytes()
+        source_bytes = _canonicalize_tree_bytes(source_root / rel_path, (source_root / rel_path).read_bytes())
+        local_bytes = _canonicalize_tree_bytes(local_root / rel_path, (local_root / rel_path).read_bytes())
         if source_bytes != local_bytes:
             raise ValueError(f"adventures-pack component {component_name} file content mismatch at {rel_path}")
 
@@ -404,7 +426,6 @@ def validate_canonical_cross_plugin_skill_references() -> None:
     bare_reference = "@codex-repo-receipts"
     source_paths = (
         ROOT / "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md",
-        ROOT / "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md",
         ROOT / "sources/first_party/skills/house-skills/decisions.md",
         ROOT / "sources/first_party/skills/house-skills/decisions.json",
         ROOT / "sources/first_party/skills/house-skills/intake.json",
@@ -530,6 +551,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         check_path_exists(ROOT / plugin_root / local_path)
         source_path = ROOT / canonical_source_path
         local_full_path = ROOT / plugin_root / local_path
+        validate_skill_markdown_frontmatter(local_full_path)
         if source_path.is_dir():
             if content_mode == "verbatim":
                 validate_tree_mirror(source_path, local_full_path, canonical_name)

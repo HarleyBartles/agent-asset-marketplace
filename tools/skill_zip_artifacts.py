@@ -65,6 +65,35 @@ CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 CANONICAL_ZIP_PERMISSIONS = 0o644
 
 
+def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
+    skill_md = skill_root / "SKILL.md"
+    if not skill_md.is_file():
+        raise FileNotFoundError(skill_md)
+
+    raw = skill_md.read_bytes()
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md begins with a UTF-8 BOM")
+
+    text = raw.decode("utf-8")
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md must start with a standalone YAML frontmatter delimiter")
+
+    end_index = None
+    for index, line in enumerate(lines[1:], start=1):
+        if line.strip() == "---":
+            end_index = index
+            break
+    if end_index is None:
+        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md is missing a closing YAML frontmatter delimiter")
+
+    frontmatter = lines[1:end_index]
+    has_name = any(line.lstrip().startswith("name:") for line in frontmatter)
+    has_description = any(line.lstrip().startswith("description:") for line in frontmatter)
+    if not has_name or not has_description:
+        raise ValueError(f"{skill_root.relative_to(ROOT)}/SKILL.md frontmatter must include name and description")
+
+
 @dataclass(frozen=True)
 class SkillTarget:
     pack: str
@@ -197,6 +226,8 @@ def discover_skill_targets() -> list[SkillTarget]:
             skill_file = skill_dir / "SKILL.md"
             if not skill_file.is_file():
                 continue
+            if plugin_name == "superpowers":
+                validate_skill_markdown_frontmatter(skill_dir)
             targets.append(
                 SkillTarget(
                     pack=plugin_name,
