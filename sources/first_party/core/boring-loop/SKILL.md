@@ -1,9 +1,9 @@
----
+﻿---
 name: boring-loop
 description: Use when coordinating a boring work loop, picking the next smallest safe move, or preventing false-green repo work.
 metadata:
   source-id: boring-loop-v1
-  source-path: sources/first_party/skills/boring-loop/SKILL.md
+  source-path: sources/first_party/core/boring-loop/SKILL.md
   provenance-name: MARK-152 Boring Loop beta first-party source
 license: "MIT"
 ---
@@ -98,3 +98,4 @@ GPT-controller guidance:
 - ask for repair when the work is not yet boring enough.
 
 Both variants use the same first-party source and the same retained doctrine.
+

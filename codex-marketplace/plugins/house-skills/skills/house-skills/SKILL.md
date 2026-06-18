@@ -1,4 +1,4 @@
-﻿---
+---
 name: house-skills
 description: Repo-local Codex marketplace bundle for the current House Skills plugin root. Use this bundle when you need the installable current roots, bundle version, or source map for the House Skills marketplace surface. Treat the live plugin root as the source of truth for current skills and the archive ledger as historical custody.
 metadata:
@@ -45,7 +45,7 @@ The bundle does not replace the archived source ledger. Current version lives in
 
 ## Shared loop control
 
-- `sources/first_party/skills/boring-loop`
+- `sources/first_party/core/boring-loop`
 
 Marketplace exports are generated, not hand-edited:
 

@@ -39,10 +39,10 @@ from skill_zip_artifacts import validate_skill_zip_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 FIRST_PARTY_SUPERPOWERS_SOURCES = {
-    "linear-superpowers": "sources/first_party/skills/linear-superpowers",
+    "linear-superpowers": "sources/first_party/core/linear-superpowers",
     "github-superpowers": "sources/first_party/skills/github-superpowers",
     "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
-    "codex-repo-receipts": "sources/first_party/skills/codex-repo-receipts",
+    "codex-repo-receipts": "sources/first_party/core/codex-repo-receipts",
     "codex-receipts-superpowers": "sources/first_party/skills/codex-receipts-superpowers",
     "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
 }

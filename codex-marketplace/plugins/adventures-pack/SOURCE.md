@@ -27,7 +27,7 @@ project-scoped Codex plugin.
 - `sources/first_party/skills/don-logan-boundary/SKILL.md`
 - `sources/first_party/skills/base-doctrine/SKILL.md`
 - `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
-- `sources/first_party/skills/connector-safety/SKILL.md`
+- `sources/first_party/core/connector-safety/SKILL.md`
 - `sources/first_party/skills/linear/SKILL.md`
 - `sources/first_party/skills/tps-reporting/SKILL.md`
 - `sources/first_party/skills/tps-ingress/SKILL.md`

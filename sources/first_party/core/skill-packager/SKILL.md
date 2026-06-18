@@ -3,7 +3,7 @@ name: skill-packager
 description: Package, validate, inspect, and repair installable ChatGPT skill bundles. Use after skill creation or validation when a complete skill folder must become a skill.zip, when package identity or loader safety must be checked, when package evidence receipts are needed, when a timeout or failed install card occurs, or when agents need the canonical no-improvisation packaging command.
 metadata:
   source-id: skill-packager
-  source-path: sources/first_party/skills/skill-packager/SKILL.md
+  source-path: sources/first_party/core/skill-packager/SKILL.md
   provenance-name: MARK-21 skill maintenance House Skills source slice
 license: "MIT"
 ---
@@ -71,3 +71,4 @@ Bundled scripts:
 - `scripts/frontmatter_lint.py`, `scripts/editor_stability_lint.py`, `scripts/quick_validate.py`, `scripts/package_skill.py`, and `scripts/inspect_skill_zip.py` are wrapper substeps and targeted-debug tools.
 - `scripts/safe_skill_tree.py` provides bounded traversal and skip rules for the packaging scripts.
 - `scripts/init_skill.py` initializes a normal skill folder when needed.
+

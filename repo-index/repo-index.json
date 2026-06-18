@@ -105,7 +105,7 @@
     },
     {
       "name": "first-party-boring-loop-ledger",
-      "path": "sources/first_party/skills/boring-loop",
+      "path": "sources/first_party/core/boring-loop",
       "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
       "surface_kind": "provenance",
       "nearest_scoped_agents_md": null,

@@ -57,7 +57,7 @@
                     {
                         "issue":  "MARK-20",
                         "source_id":  "cleanup-custody-v0.1",
-                        "source_path":  "sources/first_party/skills/cleanup-custody",
+                        "source_path":  "sources/first_party/core/cleanup-custody",
                         "public_name":  "cleanup-custody",
                         "provenance_name":  "legacy profanity-bearing cleanup skill",
                         "scope":  "cleanup-custody"
@@ -65,7 +65,7 @@
                     {
                         "issue":  "MARK-21",
                         "source_id":  "skill-validator-v1",
-                        "source_path":  "sources/first_party/skills/skill-validator",
+                        "source_path":  "sources/first_party/core/skill-validator",
                         "public_name":  "skill-validator",
                         "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
                         "scope":  "skill validation"
@@ -73,7 +73,7 @@
                     {
                         "issue":  "MARK-21",
                         "source_id":  "skill-packager-v1",
-                        "source_path":  "sources/first_party/skills/skill-packager",
+                        "source_path":  "sources/first_party/core/skill-packager",
                         "public_name":  "skill-packager",
                         "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
                         "scope":  "skill packaging"
@@ -100,7 +100,7 @@
                         "source_id":  "don-logan-boundary-v1",
                         "source_path":  "sources/first_party/skills/don-logan-boundary",
                         "public_name":  "don-logan-boundary",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "lawful worker boundary and finish-line enforcement",
                         "import_state":  "imported"
                     },
@@ -109,7 +109,7 @@
                         "source_id":  "base-doctrine-v1.1",
                         "source_path":  "sources/first_party/skills/base-doctrine",
                         "public_name":  "base-doctrine",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "cross-runtime shared doctrine",
                         "import_state":  "imported",
                         "notes":  "Imported as the shared doctrine store for cross-runtime House Skills, including the bounded read-loop doctrine and the updated source/reference routing table."
@@ -119,7 +119,7 @@
                         "source_id":  "work-mode-router-v1",
                         "source_path":  "sources/first_party/skills/work-mode-router",
                         "public_name":  "work-mode-router",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "first-turn work mode routing",
                         "import_state":  "imported"
                     },
@@ -128,7 +128,7 @@
                         "source_id":  "worker-dispatch-linear-v2",
                         "source_path":  "sources/first_party/skills/worker-dispatch-linear",
                         "public_name":  "worker-dispatch-linear",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "Linear issue dispatch and work packet control plane",
                         "import_state":  "imported"
                     },
@@ -137,7 +137,7 @@
                         "source_id":  "linear-v1.1",
                         "source_path":  "sources/first_party/skills/linear",
                         "public_name":  "linear",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "Linear object mechanics and working-state surfaces",
                         "import_state":  "imported"
                     },
@@ -146,7 +146,7 @@
                         "source_id":  "tps-reporting-v1",
                         "source_path":  "sources/first_party/skills/tps-reporting",
                         "public_name":  "tps-reporting",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "producer-side TPS reporting",
                         "import_state":  "imported"
                     },
@@ -155,7 +155,7 @@
                         "source_id":  "tps-ingress-v1",
                         "source_path":  "sources/first_party/skills/tps-ingress",
                         "public_name":  "tps-ingress",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "consumer-side TPS ingress",
                         "import_state":  "imported"
                     },
@@ -164,7 +164,7 @@
                         "source_id":  "session-buster-v0.2",
                         "source_path":  "sources/first_party/skills/session-buster",
                         "public_name":  "session-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "continuity fallback artifact",
                         "import_state":  "imported"
                     },
@@ -173,7 +173,7 @@
                         "source_id":  "session-buster-ingress-v0.2",
                         "source_path":  "sources/first_party/skills/session-buster-ingress",
                         "public_name":  "session-buster-ingress",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "continuity fallback ingress",
                         "import_state":  "imported"
                     },
@@ -182,7 +182,7 @@
                         "source_id":  "crew-v1",
                         "source_path":  "sources/first_party/skills/crew",
                         "public_name":  "crew",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "Crew role-lens doctrine",
                         "import_state":  "imported"
                     },
@@ -191,33 +191,33 @@
                         "source_id":  "crew-buster-v1",
                         "source_path":  "sources/first_party/skills/crew-buster",
                         "public_name":  "crew-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â base and control plane",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "Crew planning and route interrogation",
                         "import_state":  "imported"
                     },
                     {
                         "issue":  "WILL-276",
                         "source_id":  "connector-safety-v1.1",
-                        "source_path":  "sources/first_party/skills/connector-safety",
+                        "source_path":  "sources/first_party/core/connector-safety",
                         "public_name":  "connector-safety",
                         "provenance_name":  "MARK-226 canonical first-party source for connector-safety",
                         "scope":  "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
                         "import_state":  "imported",
-                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/connector-safety/. House Skills is a projection surface only."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/core/connector-safety/. House Skills is a projection surface only."
                     },
                     {
                         "issue":  "MARK-30",
                         "source_id":  "adventures-bootstrap-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-bootstrap",
                         "public_name":  "adventures-bootstrap",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures first-read router",
                         "import_state":  "imported"
                     },
                     {
                         "issue":  "MARK-161",
                         "source_id":  "bootstrap-router-v1",
-                        "source_path":  "sources/first_party/skills/bootstrap-router",
+                        "source_path":  "sources/first_party/core/bootstrap-router",
                         "public_name":  "bootstrap-router",
                         "provenance_name":  "MARK-161 bootstrap-router seed contract",
                         "scope":  "project bootstrap routing and first-turn classification",
@@ -229,7 +229,7 @@
                         "source_id":  "adventures-github-operations-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-github-operations",
                         "public_name":  "adventures-github-operations",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures GitHub proof overlay",
                         "import_state":  "imported"
                     },
@@ -238,7 +238,7 @@
                         "source_id":  "adventures-visual-preproduction-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-visual-preproduction",
                         "public_name":  "adventures-visual-preproduction",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures source-first visual planning",
                         "import_state":  "imported"
                     },
@@ -247,7 +247,7 @@
                         "source_id":  "adventures-storyboard-preflight-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-storyboard-preflight",
                         "public_name":  "adventures-storyboard-preflight",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures deterministic storyboard preflight",
                         "import_state":  "imported"
                     },
@@ -256,7 +256,7 @@
                         "source_id":  "adventures-visual-bible-creator-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-visual-bible-creator",
                         "public_name":  "adventures-visual-bible-creator",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures visual bible authoring",
                         "import_state":  "imported"
                     },
@@ -265,7 +265,7 @@
                         "source_id":  "adventures-visual-bible-interpreter-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-visual-bible-interpreter",
                         "public_name":  "adventures-visual-bible-interpreter",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures visual bible interpretation",
                         "import_state":  "imported"
                     },
@@ -274,7 +274,7 @@
                         "source_id":  "adventures-image-qa-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-image-qa",
                         "public_name":  "adventures-image-qa",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures image QA",
                         "import_state":  "imported"
                     },
@@ -283,7 +283,7 @@
                         "source_id":  "adventures-asset-sheet-compiler-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-asset-sheet-compiler",
                         "public_name":  "adventures-asset-sheet-compiler",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures asset-sheet compilation",
                         "import_state":  "imported"
                     },
@@ -292,7 +292,7 @@
                         "source_id":  "adventures-frame-buster-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-frame-buster",
                         "public_name":  "adventures-frame-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Adventures",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
                         "scope":  "Adventures frame-readiness surface",
                         "import_state":  "imported"
                     },
@@ -301,7 +301,7 @@
                         "source_id":  "rooms-project-doctrine-v1",
                         "source_path":  "sources/first_party/skills/rooms-project-doctrine",
                         "public_name":  "rooms-project-doctrine",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms shared project doctrine",
                         "import_state":  "imported"
                     },
@@ -319,7 +319,7 @@
                         "source_id":  "rooms-source-partitioning-v1",
                         "source_path":  "sources/first_party/skills/rooms-source-partitioning",
                         "public_name":  "rooms-source-partitioning",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms source-answering and evidence partitioning",
                         "import_state":  "imported"
                     },
@@ -328,7 +328,7 @@
                         "source_id":  "rooms-ambiguity-buster-v1",
                         "source_path":  "sources/first_party/skills/rooms-ambiguity-buster",
                         "public_name":  "rooms-ambiguity-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms project-specific ambiguity overlay",
                         "import_state":  "imported"
                     },
@@ -337,7 +337,7 @@
                         "source_id":  "rooms-analogy-buster-v1",
                         "source_path":  "sources/first_party/skills/rooms-analogy-buster",
                         "public_name":  "rooms-analogy-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms analogy overlay",
                         "import_state":  "imported"
                     },
@@ -346,7 +346,7 @@
                         "source_id":  "rooms-zoom-outs-buster-v1",
                         "source_path":  "sources/first_party/skills/rooms-zoom-outs-buster",
                         "public_name":  "rooms-zoom-outs-buster",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms zoom-out readiness check",
                         "import_state":  "imported"
                     },
@@ -355,7 +355,7 @@
                         "source_id":  "rooms-character-investigation-v1",
                         "source_path":  "sources/first_party/skills/rooms-character-investigation",
                         "public_name":  "rooms-character-investigation",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms character investigation",
                         "import_state":  "imported"
                     },
@@ -364,7 +364,7 @@
                         "source_id":  "rooms-sheet-creator-v1",
                         "source_path":  "sources/first_party/skills/rooms-sheet-creator",
                         "public_name":  "rooms-sheet-creator",
-                        "provenance_name":  "MARK-9 chunk ledger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Rooms",
+                        "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
                         "scope":  "Rooms sheet creation from durable packets",
                         "import_state":  "imported"
                     },
@@ -399,7 +399,7 @@
                     {
                         "issue":  "MARK-109",
                         "source_id":  "skill-installer-v1",
-                        "source_path":  "sources/first_party/skills/skill-installer",
+                        "source_path":  "sources/first_party/core/skill-installer",
                         "public_name":  "skill-installer",
                         "provenance_name":  "MARK-109 saved GPT skill zip source package",
                         "scope":  "skill installation handoff orchestration",
@@ -418,7 +418,7 @@
                     {
                         "issue":  "MARK-139",
                         "source_id":  "linear-superpowers-v1",
-                        "source_path":  "sources/first_party/skills/linear-superpowers",
+                        "source_path":  "sources/first_party/core/linear-superpowers",
                         "public_name":  "linear-superpowers",
                         "provenance_name":  "MARK-139 Linear Superpowers compositional skill",
                         "scope":  "Linear issue and track shaping with smallest-applicable workflow selection",
@@ -448,7 +448,7 @@
                     {
                         "issue":  "MARK-160",
                         "source_id":  "codex-repo-receipts-v1",
-                        "source_path":  "sources/first_party/skills/codex-repo-receipts",
+                        "source_path":  "sources/first_party/core/codex-repo-receipts",
                         "public_name":  "codex-repo-receipts",
                         "provenance_name":  "MARK-160 repo receipt workflow skill",
                         "scope":  "repo-resident plan and implementation-record receipts for non-trivial repo-backed work",
@@ -468,12 +468,12 @@
                     {
                         "issue":  "MARK-142",
                         "source_id":  "github-operations-v1",
-                        "source_path":  "sources/first_party/skills/github-operations",
+                        "source_path":  "sources/first_party/core/github-operations",
                         "public_name":  "github-operations",
                         "provenance_name":  "MARK-226 canonical first-party source for github-operations",
                         "scope":  "GitHub evidence, PR review routing, and publication proof",
                         "import_state":  "imported",
-                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/core/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
                     },
                     {
                         "issue":  "MARK-85",
