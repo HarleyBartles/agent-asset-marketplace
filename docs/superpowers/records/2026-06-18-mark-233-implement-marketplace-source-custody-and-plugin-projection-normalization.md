@@ -3,7 +3,7 @@
 **Issue:** MARK-233
 **Branch:** `harleydbartles/mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization`
 **Starting main SHA:** `1da78655b12cc0d1e70e91b184893021295ea763`
-**Implementation commit SHA:** `6901b4c4a1a131863ae5ddba97204db591295cbc`
+**Implementation commit SHA:** `640dd23893ed218c3e0a29512437fee4fb4d2c8c`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/121](https://github.com/HarleyBartles/agent-asset-marketplace/pull/121)
 **Publication state:** This record captures the MARK-233 custody move that relocates the shared first-party marketplace core skills into `sources/first_party/core/`, the matching projection/path normalization across the marketplace surfaces, and the Superpowers source/projection byte-alignment needed to keep the bundle validators clean. The branch is published on draft PR #121 against `main`.
 
