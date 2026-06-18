@@ -7,9 +7,12 @@ upstream snapshots, patches, normalized copies, and custody notes separated
 from the installable marketplace projections under `codex-marketplace/`.
 
 Current retained roots include `unslop/`, `game-studio/`, `superpowers/`,
-`dotnet-claude-kit/`, and `codex-cortex/`, which now retains the MARK-204
-`api-design-patterns` custody slice, the MARK-205 `openapi-specification`
-companion slice, the MARK-207 `secure-coding-practices`, `owasp-top-10`, and
+`dotnet-claude-kit/`, `codex-cortex/`, and `claude-cortex/`. The
+`codex-cortex/` root retains the MARK-204 `api-design-patterns` custody slice,
+the MARK-205 `openapi-specification` companion slice, the MARK-207
+`secure-coding-practices`, `owasp-top-10`, and
 `security-testing-patterns` custody slices, and the MARK-210
 `threat-modeling-techniques` custody slice alongside the earlier Claude-Cortex
-imports.
+imports. The `claude-cortex/` root retains the MARK-214 frontend slice:
+`react-performance-optimization`, `accessibility-audit`, `ux-review`,
+`interaction-design`, and `webapp-testing`.

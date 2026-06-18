@@ -1,0 +1,66 @@
+[
+  {
+    "issue": "MARK-214",
+    "source_id": "frontend-pack-react-performance-optimization-v1",
+    "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+    "public_name": "react-performance-optimization",
+    "provenance_name": "MARK-214 frontend-pack source custody",
+    "import_state": "imported",
+    "scope": "React rendering performance, memoization, code splitting, virtualization, and profiling guidance",
+    "notes": "Imported from the retained NickCrew/Claude-Cortex custody surface and projected into frontend-pack."
+  },
+  {
+    "issue": "MARK-214",
+    "source_id": "frontend-pack-accessibility-audit-v1",
+    "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+    "public_name": "accessibility-audit",
+    "provenance_name": "MARK-214 frontend-pack source custody",
+    "import_state": "imported",
+    "scope": "WCAG 2.2 AA accessibility triage and keyboard, labels, contrast, and motion checks",
+    "notes": "Imported from the retained NickCrew/Claude-Cortex custody surface and projected into frontend-pack."
+  },
+  {
+    "issue": "MARK-214",
+    "source_id": "frontend-pack-ux-review-v1",
+    "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+    "public_name": "ux-review",
+    "provenance_name": "MARK-214 frontend-pack source custody",
+    "import_state": "imported",
+    "scope": "Usability heuristics, accessibility, and interaction review for frontend flows and components",
+    "notes": "Imported from the retained NickCrew/Claude-Cortex custody surface and projected into frontend-pack."
+  },
+  {
+    "issue": "MARK-214",
+    "source_id": "frontend-pack-interaction-design-v1",
+    "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+    "public_name": "interaction-design",
+    "provenance_name": "MARK-214 frontend-pack source custody",
+    "import_state": "imported",
+    "scope": "User flows, state transitions, micro-interactions, and interface behavior patterns",
+    "notes": "Imported from the retained NickCrew/Claude-Cortex custody surface and projected into frontend-pack."
+  },
+  {
+    "issue": "MARK-214",
+    "source_id": "frontend-pack-webapp-testing-v1",
+    "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+    "public_name": "webapp-testing",
+    "provenance_name": "MARK-214 frontend-pack source custody",
+    "import_state": "imported",
+    "scope": "Playwright-based browser automation and local web application testing",
+    "notes": "Imported from the retained NickCrew/Claude-Cortex custody surface and projected into frontend-pack."
+  },
+  {
+    "issue": "MARK-214",
+    "id": "global.frontend-pack.source-import-boundary",
+    "status": "v1",
+    "import_state": "source-import-boundary",
+    "decision": "MARK-214 retains react-performance-optimization, accessibility-audit, ux-review, interaction-design, and webapp-testing to the selective frontend custody surface. Game-studio/browser-game material stays out of frontend-pack unless a later issue explicitly composes it in.",
+    "imported_source_paths": [
+      "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+      "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+      "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+      "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+      "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md"
+    ]
+  }
+]

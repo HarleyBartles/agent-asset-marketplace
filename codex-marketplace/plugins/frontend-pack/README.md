@@ -1,36 +1,37 @@
 # Frontend Pack
 
-Marketplace wrapper for the retained `game-studio` source snapshot projected into an available-source frontend seed.
+Marketplace wrapper for the retained `claude-cortex` frontend application
+source slice.
 
 ## Bundle contents
 
-- `web-game-foundations`
-- `game-ui-frontend`
-- `react-three-fiber-game`
-- `game-playtest`
+- `react-performance-optimization`
+- `accessibility-audit`
+- `ux-review`
+- `interaction-design`
+- `webapp-testing`
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
 
-- `web-game-foundations` carries browser-game architectural guidance for simulation/render boundaries, input mapping, and shared UI structure.
-- `game-ui-frontend` carries DOM HUD, menu, overlay, and responsive layout guidance.
-- `react-three-fiber-game` carries React-hosted 3D UI and shared-state guidance.
-- `game-playtest` carries browser-game QA and playtest guidance.
-- The exact issue-named candidates `react-performance-optimization`, `accessibility-audit`, `ux-review`, `interaction-design`, and `webapp-testing` were searched for in durable repo and retained source surfaces and are not present in this checkout.
-- Because those source files do not exist here, the pack is a source-backed frontend seed rather than a direct projection of the requested five candidates.
-- The game-studio slice is the only retained frontend implementation source available in this checkout, so the current pack intentionally projects that source instead of inventing missing candidates.
-- The missing five remain blocked by source custody, not merely deferred.
+- `react-performance-optimization` carries React render, memoization, code splitting, virtualization, and profiling guidance.
+- `accessibility-audit` carries WCAG 2.2 AA triage and keyboard, labels, contrast, and motion checks.
+- `ux-review` carries heuristic UX review, accessibility review, and interaction analysis for frontend flows and components.
+- `interaction-design` carries user flow, state transition, micro-interaction, and feedback pattern guidance.
+- `webapp-testing` carries Playwright-based browser automation and local web application testing guidance.
+- The pack is sourced from retained `NickCrew/Claude-Cortex` frontend skills, not from `game-studio`.
 - The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
 The installable skill zips are generated under:
 
-- `generated/skill-zips/frontend-pack/web-game-foundations/skill.zip`
-- `generated/skill-zips/frontend-pack/game-ui-frontend/skill.zip`
-- `generated/skill-zips/frontend-pack/react-three-fiber-game/skill.zip`
-- `generated/skill-zips/frontend-pack/game-playtest/skill.zip`
+- `generated/skill-zips/frontend-pack/react-performance-optimization/skill.zip`
+- `generated/skill-zips/frontend-pack/accessibility-audit/skill.zip`
+- `generated/skill-zips/frontend-pack/ux-review/skill.zip`
+- `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
+- `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
 
 and can be installed directly from those artifacts.

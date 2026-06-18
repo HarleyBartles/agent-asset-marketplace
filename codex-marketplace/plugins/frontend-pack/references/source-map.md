@@ -1,45 +1,36 @@
 # Frontend Pack Source Map
 
-This bundle projects the retained `game-studio` browser frontend and QA guidance into a marketplace surface. The retained upstream skills keep their original bodies and are projected into `frontend-pack` with pack-relative references.
+This bundle projects the retained `NickCrew/Claude-Cortex` frontend application
+skills into a marketplace surface. The retained upstream skills keep their
+original bodies and are projected into `frontend-pack` with pack-relative
+references.
 
 Retained custody evidence:
 
-- `sources/third_party/game-studio/upstream/README.md` is not present as a root file in this snapshot; the retained source lives under the upstream skill and reference tree.
-- `sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md`
-- `sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md`
-- `sources/third_party/game-studio/upstream/skills/react-three-fiber-game/SKILL.md`
-- `sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md`
-- `sources/third_party/game-studio/upstream/references/engine-selection.md`
-- `sources/third_party/game-studio/upstream/references/phaser-architecture.md`
-- `sources/third_party/game-studio/upstream/references/three-webgl-architecture.md`
-- `sources/third_party/game-studio/upstream/references/threejs-stack.md`
-- `sources/third_party/game-studio/upstream/references/react-three-fiber-stack.md`
-- `sources/third_party/game-studio/upstream/references/web-3d-asset-pipeline.md`
-- `sources/third_party/game-studio/upstream/references/frontend-prompts.md`
-- `sources/third_party/game-studio/upstream/references/three-hud-layout-patterns.md`
-- `sources/third_party/game-studio/upstream/references/playtest-checklist.md`
-- `sources/third_party/game-studio/upstream/references/react-three-fiber-starter.md`
-- `sources/third_party/game-studio/upstream/references/gltf-loading-starter.md`
-- `sources/third_party/game-studio/upstream/references/rapier-integration-starter.md`
-- `sources/third_party/game-studio/upstream/references/webgl-debugging-and-performance.md`
+- `sources/third_party/claude-cortex/upstream/README.md`
+- `sources/third_party/claude-cortex/upstream/LICENSE`
+- `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md`
+- `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/validation/rubric.yaml`
+- `sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md`
+- `sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md`
+- `sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md`
+- `sources/third_party/claude-cortex/upstream/skills/interaction-design/references/state-patterns.md`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/LICENSE.txt`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/scripts/with_server.py`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/examples/static_html_automation.py`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/examples/element_discovery.py`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/examples/console_logging.py`
 
 Projected pack skills:
 
 | Skill | Source path | Pack path | Notes |
 | --- | --- | --- | --- |
-| web-game-foundations | `sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/web-game-foundations/SKILL.md` | Verbatim projection of the shared browser-game architecture guidance that the UI and QA skills reference. |
-| game-ui-frontend | `sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/game-ui-frontend/SKILL.md` | Verbatim projection of the retained frontend UI guidance. |
-| react-three-fiber-game | `sources/third_party/game-studio/upstream/skills/react-three-fiber-game/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/react-three-fiber-game/SKILL.md` | Verbatim projection of the retained React-hosted 3D guidance. |
-| game-playtest | `sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/game-playtest/SKILL.md` | Verbatim projection of the retained browser QA and playtest guidance. |
+| react-performance-optimization | `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/react-performance-optimization/SKILL.md` | Verbatim projection of React performance guidance. |
+| accessibility-audit | `sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/accessibility-audit/SKILL.md` | Verbatim projection of WCAG 2.2 AA triage guidance. |
+| ux-review | `sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/ux-review/SKILL.md` | Verbatim projection of the UX review workflow. |
+| interaction-design | `sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/interaction-design/SKILL.md` | Verbatim projection of the interaction design guidance and state-pattern reference. |
+| webapp-testing | `sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/SKILL.md` | Verbatim projection of the Playwright-based testing toolkit, scripts, and examples. |
 
-Deferred issue-named candidates:
-
-- `react-performance-optimization`
-- `accessibility-audit`
-- `ux-review`
-- `interaction-design`
-- `webapp-testing`
-
-Those exact names are not present in the retained source snapshot in this checkout, so they are deferred until a real source file is available.
-
-The pack root is an installable Codex plugin projection. It does not replace the retained `game-studio` custody snapshot or the issue-level defer record.
+The pack root is an installable Codex plugin projection. It does not replace
+the retained `claude-cortex` custody snapshot.

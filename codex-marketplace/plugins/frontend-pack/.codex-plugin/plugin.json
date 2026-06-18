@@ -1,7 +1,7 @@
 {
   "name": "frontend-pack",
   "version": "0.1.0",
-  "description": "Design, prototype, and test browser frontend and React-hosted 3D experiences with guided UI, architecture, and QA workflows.",
+  "description": "React frontend application skills for performance optimization, accessibility review, interaction design, UX review, and webapp testing.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,18 +13,18 @@
   "keywords": [
     "frontend",
     "react",
-    "react-three-fiber",
+    "performance",
     "accessibility",
+    "ux",
+    "interaction-design",
     "testing",
-    "webapp",
-    "webgl",
-    "playtest"
+    "playwright"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Frontend Pack",
-    "shortDescription": "Design, prototype, and test browser frontend experiences",
-    "longDescription": "Plan, prototype, and build browser frontend experiences with guided workflows for shared browser architecture, DOM UI, React-hosted 3D surfaces, and frontend QA across responsive desktop and mobile projects.",
+    "shortDescription": "React and frontend application workflows",
+    "longDescription": "Plan, optimize, review, and test React and frontend application work with guidance for performance, accessibility, UX review, interaction design, and browser-based testing.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
@@ -35,7 +35,7 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Design a browser frontend and plan the UI, React, and QA boundaries"
+      "Design a frontend workstream for React performance, accessibility, UX, interaction, and webapp testing"
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",

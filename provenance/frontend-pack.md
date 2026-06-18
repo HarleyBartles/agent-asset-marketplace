@@ -2,24 +2,30 @@
 
 ## Source anchor
 
-- Upstream repository: `openai/plugins`
-- Upstream commit: `c33199897758cab145bb7fdab1ca8fb1cbd9de50`
-- License: MIT
+- Upstream repository: `NickCrew/claude-cortex`
+- Upstream commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
+- License: retained upstream license in source custody
 
 ## Custody surface
 
-- Retained snapshot root: `sources/third_party/game-studio/upstream/`
+- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
 
 ## Projection surface
 
 - Installable plugin projection: `codex-marketplace/plugins/frontend-pack/`
-- Generated install unit: `generated/skill-zips/frontend-pack/web-game-foundations/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/game-ui-frontend/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/react-three-fiber-game/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/game-playtest/skill.zip`
+- Generated install unit: `generated/skill-zips/frontend-pack/react-performance-optimization/skill.zip`
+- Generated install unit: `generated/skill-zips/frontend-pack/accessibility-audit/skill.zip`
+- Generated install unit: `generated/skill-zips/frontend-pack/ux-review/skill.zip`
+- Generated install unit: `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
+- Generated install unit: `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
 
 ## Boundary
 
-The retained custody surface seeds browser-game frontend guidance for `web-game-foundations`, `game-ui-frontend`, `react-three-fiber-game`, and `game-playtest`. The exact issue-named candidates `react-performance-optimization`, `accessibility-audit`, `ux-review`, `interaction-design`, and `webapp-testing` were searched for in live repo source and are not present in this checkout, so they remain blocked by missing source custody rather than being projected from invented placeholders.
+The retained custody surface seeds the exact MARK-214 first-wave frontend skills:
+`react-performance-optimization`, `accessibility-audit`, `ux-review`,
+`interaction-design`, and `webapp-testing`.
 
-This makes `frontend-pack` an available-source frontend seed for MARK-214, not a direct projection of the requested five candidates. If those exact skills later appear in durable source custody, they should be projected from that source or split into a separate follow-up issue rather than retrofitted into this pack.
+These skills are imported from retained upstream custody under
+`sources/third_party/claude-cortex/upstream/` and projected into
+`codex-marketplace/plugins/frontend-pack/` with pack-relative paths. Game-studio
+or browser-game material is intentionally excluded from this pack boundary.
