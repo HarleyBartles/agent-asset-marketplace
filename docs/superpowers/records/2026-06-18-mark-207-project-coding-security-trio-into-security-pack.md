@@ -3,9 +3,9 @@
 **Issue:** MARK-207
 **Branch:** `harleydbartles/mark-207-project-coding-security-trio-into-security-pack`
 **Starting main SHA:** `2931b99f407215d6b5cea137a64d2947b7284497`
-**Implementation commit SHA:** pending
-**PR URL:** pending
-**Publication state:** The MARK-207 trio projection is implemented in the working tree and staged for publication on the required branch. This record captures the repo-resident change set, the derived artifact refresh, and the remaining repo-wide validation blocker that is outside the issue slice.
+**Implementation commit SHA:** `21dc9d9d4d7098fd6dc5e063d92d814fd7d26e2f`
+**PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/120](https://github.com/HarleyBartles/agent-asset-marketplace/pull/120)
+**Publication state:** The MARK-207 trio projection is published on the required branch and tracked by PR #120 against `main`. This record captures the repo-resident change set, the derived artifact refresh, and the remaining repo-wide validation blocker that is outside the issue slice.
 
 ## Files changed
 
