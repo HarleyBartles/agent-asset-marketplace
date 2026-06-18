@@ -1,6 +1,6 @@
 # threat-modeling-techniques Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Project Claude-Cortex `threat-modeling-techniques` into `security-pack` while preserving retained Codex Cortex custody, provenance, and publishable marketplace artifacts.
 
@@ -117,12 +117,12 @@ Keep the repo index aligned with the new source custody and projection notes.
 - Modify: `generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip`
 - Modify: `generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip`
 
-- [ ] **Step 1: Regenerate the targeted skill zips**
+- [x] **Step 1: Regenerate the targeted skill zips**
 
 Run: `py -3 tools/update_skill_artifacts.py --skill security-pack/threat-modeling-techniques`
 Expected: new deterministic zips for the `security-pack` and `codex-cortex` threat-modeling slices plus the matching registry entries.
 
-- [ ] **Step 2: Validate the marketplace and repo index**
+- [x] **Step 2: Validate the marketplace and repo index**
 
 Run:
 
@@ -134,7 +134,6 @@ git diff --check
 
 Expected: all commands pass with no unexpected drift.
 
-- [ ] **Step 3: Capture publication evidence**
+- [x] **Step 3: Capture publication evidence**
 
 Record the branch name, final head SHA, changed files, generated zip paths, validation output, and the exact composition note showing that `threat-modeling-techniques` stays narrower than generic compliance or infra security material.
-

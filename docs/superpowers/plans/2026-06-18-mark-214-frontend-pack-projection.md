@@ -1,6 +1,6 @@
 # Frontend Pack Projection Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Repair `frontend-pack` so it projects the exact MARK-214 first-wave frontend skills from retained upstream custody, and keep the pack boundary strictly frontend rather than browser-game.
 
@@ -17,7 +17,7 @@
 - Create: `codex-marketplace/plugins/frontend-pack/SOURCE.md`
 - Create: `codex-marketplace/plugins/frontend-pack/references/source-map.md`
 
-- [ ] **Step 1: Capture the retained source basis**
+- [x] **Step 1: Capture the retained source basis**
 
 Use the retained `NickCrew/claude-cortex` source snapshot as the source basis for this slice:
 
@@ -29,7 +29,7 @@ Use the retained `NickCrew/claude-cortex` source snapshot as the source basis fo
 
 Record the exact upstream commit used and the retained source paths for each imported skill.
 
-- [ ] **Step 2: Write the pack custody note**
+- [x] **Step 2: Write the pack custody note**
 
 Document the include split in `provenance/frontend-pack.md` and the pack `SOURCE.md`. Keep the note concrete:
 
@@ -47,7 +47,7 @@ This pack projects retained `NickCrew/claude-cortex` frontend guidance into `fro
 - `webapp-testing`
 ```
 
-- [ ] **Step 3: Verify the live source search result**
+- [x] **Step 3: Verify the live source search result**
 
 Run:
 
@@ -79,7 +79,7 @@ Expected: the retained `claude-cortex` source snapshot is found and provides the
 - Create: `codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json`
 - Create: `codex-marketplace/plugins/frontend-pack/references/source-map.md`
 
-- [ ] **Step 1: Project the skill bodies and references**
+- [x] **Step 1: Project the skill bodies and references**
 
 Copy the retained `claude-cortex` skill bodies into the new pack, preserving the source content and normalizing only the projection path roots so they resolve under `frontend-pack/skills/...`:
 
@@ -89,7 +89,7 @@ Copy the retained `claude-cortex` skill bodies into the new pack, preserving the
 - `interaction-design`
 - `webapp-testing`
 
-- [ ] **Step 2: Add the pack wrapper files**
+- [x] **Step 2: Add the pack wrapper files**
 
 Write the new pack `plugin.json`, README, LICENSE, and icon so the pack is installable and has a clear boundary:
 
@@ -99,7 +99,7 @@ Write the new pack `plugin.json`, README, LICENSE, and icon so the pack is insta
 - interaction design guidance
 - browser/webapp testing guidance
 
-- [ ] **Step 3: Verify the projected tree**
+- [x] **Step 3: Verify the projected tree**
 
 Run:
 
@@ -124,7 +124,7 @@ Expected: the five imported frontend skills are present under the new `frontend-
 - Modify: `repo-index/repo-index.json`
 - Create: `docs/superpowers/records/2026-06-18-mark-214-frontend-pack.md`
 
-- [ ] **Step 1: Regenerate the skill zips**
+- [x] **Step 1: Regenerate the skill zips**
 
 Run:
 
@@ -134,7 +134,7 @@ py -3 tools/update_skill_artifacts.py --all
 
 Expected: the generator updates the new `frontend-pack` zip archives and the registry entries for the projected frontend skills.
 
-- [ ] **Step 2: Run validation**
+- [x] **Step 2: Run validation**
 
 Run:
 
@@ -148,7 +148,7 @@ py -3 tools/validate_marketplace.py
 
 Expected: repo index, zip validation, drift validation, diff checks, and marketplace validation all pass after the superpowers byte drift repair.
 
-- [ ] **Step 3: Create the implementation record, commit, push, and open a draft PR**
+- [x] **Step 3: Create the implementation record, commit, push, and open a draft PR**
 
 Write the implementation record with the final branch, changed files, included skills, removed game-studio skills, validation results, and any blockers. Then publish the branch and keep the draft PR against `main` on the required branch:
 

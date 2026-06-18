@@ -7,7 +7,6 @@ helpers needed to keep repo-backed work self-contained.
 ## Contents
 
 - one skill under `skills/repo-worker-base/`
-- the projected `codex-repo-receipts` skill under `skills/codex-repo-receipts/`
 - the projected `boring-loop` skill under `skills/boring-loop/`
 - the projected `connector-safety` skill under `skills/connector-safety/`
 - the projected `github-operations` skill under `skills/github-operations/`
@@ -25,8 +24,6 @@ The canonical source for this plugin was created locally at:
 The vendored copy in this repository keeps the plugin thin and scoped to
 generic repo-worker behavior plus the generic safety/proof helpers that repo
 work routinely needs.
-`codex-repo-receipts` is a projected first-party House Skills workflow skill for
-durable plan and implementation-record receipts.
 `boring-loop` is a projected first-party coordination skill for keeping work
 small, honest, and routed to the right specialist.
 `connector-safety` is projected from `sources/first_party/core/connector-safety/`

@@ -6,7 +6,6 @@ Current source roots:
 
 - `sources/first_party/skills/repo-worker-base/SKILL.md`
 - `sources/first_party/core/boring-loop/SKILL.md`
-- `sources/first_party/core/codex-repo-receipts/SKILL.md`
 - `sources/first_party/core/connector-safety/SKILL.md`
 - `sources/first_party/core/github-operations/SKILL.md`
 
@@ -14,7 +13,6 @@ Local bundle paths:
 
 - `skills/repo-worker-base/SKILL.md`
 - `skills/boring-loop/SKILL.md`
-- `skills/codex-repo-receipts/SKILL.md`
 - `skills/connector-safety/SKILL.md`
 - `skills/github-operations/SKILL.md`
 
@@ -24,7 +22,6 @@ Component summary:
 | --- | --- | --- | --- | --- | --- |
 | Base | repo-worker-base | 1.0.0 | `sources/first_party/skills/repo-worker-base/SKILL.md` | `skills/repo-worker-base/SKILL.md` | repo worker hygiene |
 | Dependency | boring-loop | v1 | `sources/first_party/core/boring-loop/SKILL.md` | `skills/boring-loop/SKILL.md` | boring loop routing |
-| Dependency | codex-repo-receipts | v1 | `sources/first_party/core/codex-repo-receipts/SKILL.md` | `skills/codex-repo-receipts/SKILL.md` | repo receipts |
 | Dependency | connector-safety | current | `sources/first_party/core/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
 | Dependency | github-operations | current | `sources/first_party/core/github-operations/SKILL.md` | `skills/github-operations/SKILL.md` | GitHub proof |
 

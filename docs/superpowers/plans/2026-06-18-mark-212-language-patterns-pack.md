@@ -1,6 +1,6 @@
 # Language Patterns Pack Projection Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Project the retained Claude-Cortex `typescript-advanced-patterns` skill into a new installable `language-patterns-pack` Codex plugin.
 
@@ -29,11 +29,11 @@
 - Create: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/references/type-inference.md`
 - Create: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/references/utility-types.md`
 
-- [ ] **Step 1: Copy the upstream skill snapshot into retained custody**
+- [x] **Step 1: Copy the upstream skill snapshot into retained custody**
 
 Use the upstream Claude-Cortex skill contents as the canonical source snapshot for the new retained custody tree.
 
-- [ ] **Step 2: Verify the retained snapshot inventory**
+- [x] **Step 2: Verify the retained snapshot inventory**
 
 Run:
 
@@ -69,15 +69,15 @@ Expected: one `SKILL.md` plus 14 reference files, with no extra outputs or gener
 - Create: `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/references/type-inference.md`
 - Create: `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/references/utility-types.md`
 
-- [ ] **Step 1: Scaffold the plugin root**
+- [x] **Step 1: Scaffold the plugin root**
 
 Create the plugin manifest, README, source note, license, asset, and references folder.
 
-- [ ] **Step 2: Project the skill tree**
+- [x] **Step 2: Project the skill tree**
 
 Mirror the upstream `typescript-advanced-patterns` skill folder into `codex-marketplace/plugins/language-patterns-pack/skills/`.
 
-- [ ] **Step 3: Record the pack boundary**
+- [x] **Step 3: Record the pack boundary**
 
 Document that the pack owns language/runtime guidance only and does not pull in React, CQRS, database, security, or frontend architecture doctrine.
 
@@ -93,15 +93,15 @@ Document that the pack owns language/runtime guidance only and does not pull in 
 - Modify: `repo-index/repo-index.json`
 - Modify: `provenance/codex-cortex.md`
 
-- [ ] **Step 1: Add the new root to the active inventory**
+- [x] **Step 1: Add the new root to the active inventory**
 
 Insert `language-patterns-pack` into the protected root list in the inventory and regenerate the marketplace registry/manifest pair.
 
-- [ ] **Step 2: Add repo-index coverage**
+- [x] **Step 2: Add repo-index coverage**
 
 Update the repo index to include the new pack with the source/provenance/bundle paths that match the new plugin root.
 
-- [ ] **Step 3: Refresh provenance references**
+- [x] **Step 3: Refresh provenance references**
 
 Record the new retained source custody and the new projected install pack in the Codex Cortex provenance note.
 
@@ -111,7 +111,7 @@ Record the new retained source custody and the new projected install pack in the
 - Modify: `generated/skill-zips/registry.json`
 - Create: `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
 
-- [ ] **Step 1: Regenerate the targeted skill zip**
+- [x] **Step 1: Regenerate the targeted skill zip**
 
 Run:
 
@@ -119,7 +119,7 @@ Run:
 py -3 tools/update_skill_artifacts.py --skill language-patterns-pack/typescript-advanced-patterns
 ```
 
-- [ ] **Step 2: Validate the marketplace and repo index**
+- [x] **Step 2: Validate the marketplace and repo index**
 
 Run:
 
@@ -129,6 +129,6 @@ py -3 tools/validate_repo_index.py
 git diff --check
 ```
 
-- [ ] **Step 3: Confirm the generated artifact surface**
+- [x] **Step 3: Confirm the generated artifact surface**
 
 Verify `generated/skill-zips/registry.json` includes only the new `language-patterns-pack/typescript-advanced-patterns` artifact for this issue slice and no unrelated generated drift.

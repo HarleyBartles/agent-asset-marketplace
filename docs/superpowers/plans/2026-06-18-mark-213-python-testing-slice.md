@@ -1,6 +1,6 @@
 # Python Language Slice for `language-patterns-pack` Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Import the retained Claude-Cortex Python language/runtime slice into `language-patterns-pack` with matching custody, projection, provenance, and generated install artifacts.
 
@@ -38,15 +38,15 @@
 - Modify: `sources/first_party/skills/codex-cortex/decisions.md`
 - Modify: `provenance/codex-cortex.md`
 
-- [ ] **Step 1: Add the upstream skill body and reference files**
+- [x] **Step 1: Add the upstream skill body and reference files**
 
 Populate each file from the retained Claude-Cortex source body and the matching upstream reference content for `python-testing-patterns`, `async-python-patterns`, and `python-performance-optimization`. Keep the files under the retained `sources/third_party/codex-cortex/upstream/skills/` tree so the repo preserves source custody before projection.
 
-- [ ] **Step 2: Record the source custody decision**
+- [x] **Step 2: Record the source custody decision**
 
 Update the codex-cortex intake and decisions ledgers so they name the Python runtime/testing skills that fit `language-patterns-pack`. Record any inspected Python candidates that were rejected or deferred with reasons. Keep the provenance note aligned with the retained source paths and the include/reject/defer split.
 
-- [ ] **Step 3: Verify the source custody tree**
+- [x] **Step 3: Verify the source custody tree**
 
 Run:
 ```powershell
@@ -81,15 +81,15 @@ Expected: the Python runtime/testing skill roots are present and any inspected P
 - Modify: `codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json`
 - Modify: `codex-marketplace/plugins/language-patterns-pack/references/source-map.md`
 
-- [ ] **Step 1: Project the skills into the marketplace pack**
+- [x] **Step 1: Project the skills into the marketplace pack**
 
-Copy the retained source into the marketplace plugin tree using the existing projection style. Keep the `SKILL.md` reference paths skill-root-relative in the projected copies and preserve the upstream bodies otherwise. Leave source-only validation rubrics in retained custody unless the repoâ€™s skill spec explicitly wants them projected.
+Copy the retained source into the marketplace plugin tree using the existing projection style. Keep the `SKILL.md` reference paths skill-root-relative in the projected copies and preserve the upstream bodies otherwise. Leave source-only validation rubrics in retained custody unless the repo’s skill spec explicitly wants them projected.
 
-- [ ] **Step 2: Update pack docs and manifests**
+- [x] **Step 2: Update pack docs and manifests**
 
 Expand the pack README, source ledger, bundle manifest, and source map so they describe the new Python slice, the retained source custody paths, and the include/reject/defer decision set.
 
-- [ ] **Step 3: Verify the projected pack tree**
+- [x] **Step 3: Verify the projected pack tree**
 
 Run:
 ```powershell
@@ -109,7 +109,7 @@ Expected: the projected skill roots mirror the retained source tree.
 - Potentially modify: `codex-marketplace/plugin-roots.json`
 - Potentially modify: `repo-index/repo-index.json`
 
-- [ ] **Step 1: Regenerate the skill zips**
+- [x] **Step 1: Regenerate the skill zips**
 
 Run:
 ```powershell
@@ -117,7 +117,7 @@ py -3 tools\update_skill_artifacts.py --pack language-patterns-pack
 ```
 Expected: the generator emits new Python skill archives and updates the skill zip registry entries.
 
-- [ ] **Step 2: Run validation**
+- [x] **Step 2: Run validation**
 
 Run:
 ```powershell
@@ -128,7 +128,7 @@ py -3 tools\validate_marketplace.py
 ```
 Expected: repo index and skill zip validation pass, `git diff --check` reports no whitespace or patch formatting errors, and marketplace validation passes or reports only unrelated known blockers with the existing evidence.
 
-- [ ] **Step 3: Commit and publish**
+- [x] **Step 3: Commit and publish**
 
 Run:
 ```powershell

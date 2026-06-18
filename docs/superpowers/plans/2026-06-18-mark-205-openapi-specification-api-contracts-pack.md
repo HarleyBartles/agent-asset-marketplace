@@ -1,6 +1,6 @@
 # openapi-specification Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Project Claude-Cortex `openapi-specification` into `api-contracts-pack` as the narrower OpenAPI companion slice while preserving retained Codex Cortex custody and publishable marketplace artifacts.
 
@@ -80,12 +80,12 @@ Keep the repo index aligned with the new source custody and projection notes.
 - Modify: `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
 - Modify: `generated/skill-zips/codex-cortex/openapi-specification/skill.zip`
 
-- [ ] **Step 1: Regenerate the targeted skill zips**
+- [x] **Step 1: Regenerate the targeted skill zips**
 
 Run: `py -3 tools/update_skill_artifacts.py --skill api-contracts-pack/openapi-specification`
 Expected: new deterministic zips for the `api-contracts-pack` and `codex-cortex` OpenAPI slices plus the matching registry entries.
 
-- [ ] **Step 2: Validate the marketplace and repo index**
+- [x] **Step 2: Validate the marketplace and repo index**
 
 Run:
 
@@ -97,6 +97,6 @@ git diff --check
 
 Expected: all commands pass with no unexpected drift.
 
-- [ ] **Step 3: Capture publication evidence**
+- [x] **Step 3: Capture publication evidence**
 
 Record the branch name, final head SHA, changed files, generated zip paths, validation output, and the exact composition note showing that `openapi-specification` stays narrower than `api-design-patterns`.

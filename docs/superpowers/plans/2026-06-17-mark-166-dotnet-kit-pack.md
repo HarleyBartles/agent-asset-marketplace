@@ -1,6 +1,6 @@
 # dotnet-kit Repack Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Build the `dotnet-kit` Codex marketplace pack from the MARK-165 approved six-skill subset, with selective retained upstream custody and generated installable artifacts.
 
@@ -29,15 +29,15 @@
 - Create: `sources/first_party/skills/dotnet-kit/decisions.json`
 - Create: `sources/first_party/skills/dotnet-kit/intake.json`
 
-- [ ] **Step 1: Copy only the retained upstream evidence**
+- [x] **Step 1: Copy only the retained upstream evidence**
 
 Retain the upstream files needed to verify and adapt the six approved skills, plus source-custody proof files. Do not copy the whole repository snapshot.
 
-- [ ] **Step 2: Record the first-party selection boundary**
+- [x] **Step 2: Record the first-party selection boundary**
 
 Write the ledger entries for the six selected skills and explicit exclusions for `tdd` and `verify`.
 
-- [ ] **Step 3: Verify the retained surface is selective**
+- [x] **Step 3: Verify the retained surface is selective**
 
 Run:
 
@@ -64,15 +64,15 @@ Expected: only the retained upstream evidence files and the six selected skill s
 - Create: `codex-marketplace/plugins/dotnet-kit/skills/ef-core/SKILL.md`
 - Create: `codex-marketplace/plugins/dotnet-kit/skills/testing/SKILL.md`
 
-- [ ] **Step 1: Author the pack root metadata**
+- [x] **Step 1: Author the pack root metadata**
 
 Define the plugin as `dotnet-kit`, point the skill root at `./skills/`, and describe it as a projection over the selective upstream snapshot and first-party ledger.
 
-- [ ] **Step 2: Adapt the six selected skills**
+- [x] **Step 2: Adapt the six selected skills**
 
 Strip or rewrite provider-specific wording from the upstream skill sources while keeping the technical guidance intact. Preserve modern .NET guidance, architecture guidance, DDD guidance, EF Core guidance, and testing guidance.
 
-- [ ] **Step 3: Write the source map and bundle manifest**
+- [x] **Step 3: Write the source map and bundle manifest**
 
 Record the upstream commit, selective retained snapshot, first-party ledger paths, and the six imported skill entries. Keep `tdd` and `verify` absent from the imported pack.
 
@@ -85,11 +85,11 @@ Record the upstream commit, selective retained snapshot, first-party ledger path
 - Modify: `generated/skill-zips/registry.json`
 - Modify: `tools/marketplace_utils.py` if discovery needs a new constant
 
-- [ ] **Step 1: Add the new plugin root to the active inventory**
+- [x] **Step 1: Add the new plugin root to the active inventory**
 
 Insert `dotnet-kit` in the protected marketplace root inventory and regenerate the marketplace manifest.
 
-- [ ] **Step 2: Rebuild the generated skill artifacts**
+- [x] **Step 2: Rebuild the generated skill artifacts**
 
 Run:
 
@@ -99,7 +99,7 @@ py -3 tools/update_skill_artifacts.py --pack dotnet-kit
 
 Expected: six `skill.zip` artifacts under `generated/skill-zips/dotnet-kit/` and a matching registry entry set.
 
-- [ ] **Step 3: Verify generated registry alignment**
+- [x] **Step 3: Verify generated registry alignment**
 
 Run:
 
@@ -114,7 +114,7 @@ Expected: registry validation passes for the new pack and still reports any unre
 **Files:**
 - None
 
-- [ ] **Step 1: Run marketplace validation**
+- [x] **Step 1: Run marketplace validation**
 
 Run:
 
@@ -124,7 +124,7 @@ py -3 tools/validate_marketplace.py
 
 Expected: pass, or a single unrelated existing drift must be reported separately from the `dotnet-kit` work.
 
-- [ ] **Step 2: Run diff hygiene**
+- [x] **Step 2: Run diff hygiene**
 
 Run:
 
@@ -134,6 +134,6 @@ git diff --check
 
 Expected: no whitespace or patch-format errors.
 
-- [ ] **Step 3: Capture publication evidence**
+- [x] **Step 3: Capture publication evidence**
 
 Record the branch, head SHA, generated zip paths, and direct install notes for each produced artifact.

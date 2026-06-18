@@ -1,6 +1,6 @@
 # Project Connector and GitHub Proof Skills Beyond House Skills Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Project `connector-safety` and `github-operations` into `repo-worker-base` so the skills are available outside the House Skills mega-plugin and the marketplace registry reflects that projection.
 
@@ -25,7 +25,7 @@
 - Modify: `codex-marketplace/plugins/repo-worker-base/README.md`
 - Modify: `provenance/repo-worker-base.md`
 
-- [ ] **Step 1: Copy the House Skills source into the new repo-worker-base projection paths**
+- [x] **Step 1: Copy the House Skills source into the new repo-worker-base projection paths**
 
 Use the current House Skills files as the source of truth for the projected skill content:
 
@@ -40,11 +40,11 @@ Get-Content codex-marketplace/plugins/house-skills/skills/github-operations/refe
 Get-Content codex-marketplace/plugins/house-skills/skills/github-operations/references/pr-review-writes.md
 ```
 
-- [ ] **Step 2: Update repo-worker-base surface docs**
+- [x] **Step 2: Update repo-worker-base surface docs**
 
 Make `README.md`, `SOURCE.md`, and `provenance/repo-worker-base.md` explicitly list the new projected skills and describe the repo-worker-base bundle as the canonical non-House-Skills home for repo hygiene and GitHub proof.
 
-- [ ] **Step 3: Verify the new tree shape**
+- [x] **Step 3: Verify the new tree shape**
 
 Run:
 
@@ -60,7 +60,7 @@ Expected: the new `connector-safety` and `github-operations` directories appear 
 - Create: `codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json`
 - Create: `codex-marketplace/plugins/repo-worker-base/references/source-map.md`
 
-- [ ] **Step 1: Add the bundle manifest entries**
+- [x] **Step 1: Add the bundle manifest entries**
 
 Record the canonical source paths and local projection paths for:
 
@@ -82,11 +82,11 @@ and
 }
 ```
 
-- [ ] **Step 2: Add the human-readable source map**
+- [x] **Step 2: Add the human-readable source map**
 
 Summarize the same mapping in Markdown and note that `repo-worker-base` already owns repo hygiene plus `codex-repo-receipts` and `boring-loop`.
 
-- [ ] **Step 3: Re-run repo index generation after the manifest is in place**
+- [x] **Step 3: Re-run repo index generation after the manifest is in place**
 
 The generator update in Task 3 depends on this file existing.
 
@@ -99,11 +99,11 @@ The generator update in Task 3 depends on this file existing.
 - Generate: `generated/skill-zips/repo-worker-base/connector-safety/skill.zip`
 - Generate: `generated/skill-zips/repo-worker-base/github-operations/skill.zip`
 
-- [ ] **Step 1: Teach the repo index generator about the bundle manifest**
+- [x] **Step 1: Teach the repo index generator about the bundle manifest**
 
 Set the `repo-worker-base` entry to point at `codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json`.
 
-- [ ] **Step 2: Regenerate the repo index**
+- [x] **Step 2: Regenerate the repo index**
 
 Run:
 
@@ -113,7 +113,7 @@ py -3 tools/generate_repo_index.py
 
 Expected: `repo-index/repo-index.json` updates and the `repo-worker-base` entry now includes the bundle manifest path.
 
-- [ ] **Step 3: Regenerate the affected skill zips**
+- [x] **Step 3: Regenerate the affected skill zips**
 
 Run:
 
@@ -129,7 +129,7 @@ Expected: the two new `generated/skill-zips/repo-worker-base/.../skill.zip` arti
 **Files:**
 - None new; verify the edited surfaces
 
-- [ ] **Step 1: Validate the marketplace and generated drift**
+- [x] **Step 1: Validate the marketplace and generated drift**
 
 Run:
 
@@ -142,6 +142,6 @@ git diff --check HEAD~1 HEAD
 
 Expected: all commands pass.
 
-- [ ] **Step 2: Commit, push, and open the PR**
+- [x] **Step 2: Commit, push, and open the PR**
 
 Commit the projection and index updates on the branch, push it, and open a GitHub PR into `main`.

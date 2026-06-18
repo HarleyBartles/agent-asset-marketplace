@@ -1,6 +1,6 @@
 # dotnet-claude-kit Codex .NET subset proposal Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Produce a provenance-safe subset proposal for a future Codex-native .NET skill/plugin pack, based on the live upstream `codewithmukesh/dotnet-claude-kit` release state, without repackaging any skills in this child.
 
@@ -15,7 +15,7 @@
 **Files:**
 - Create: `provenance/dotnet-claude-kit.md`
 
-- [ ] **Step 1: Capture the live upstream anchor**
+- [x] **Step 1: Capture the live upstream anchor**
 
 Record the inspected upstream repository, default branch, and commit:
 
@@ -26,7 +26,7 @@ Resolved commit: `9a9a91107596b3ac3ad1d0ad5ec5eef189e74515`
 License: MIT
 ```
 
-- [ ] **Step 2: Record the provider-specific surfaces that are not Codex-native**
+- [x] **Step 2: Record the provider-specific surfaces that are not Codex-native**
 
 Call out the upstream surfaces that should stay out of the first Codex pack because they are Claude-specific or provider-specific:
 
@@ -43,7 +43,7 @@ Call out the upstream surfaces that should stay out of the first Codex pack beca
 - slash-command workflows under `skills/` such as `/tdd` and `/verify`
 ```
 
-- [ ] **Step 3: Keep the provenance claim narrow**
+- [x] **Step 3: Keep the provenance claim narrow**
 
 State that the proposal is a source intake and selection artifact, not a repackaging or endorsement of the full upstream kit.
 
@@ -52,7 +52,7 @@ State that the proposal is a source intake and selection artifact, not a repacka
 **Files:**
 - Modify: `provenance/dotnet-claude-kit.md`
 
-- [ ] **Step 1: Keep the technical foundation skills**
+- [x] **Step 1: Keep the technical foundation skills**
 
 Select the skills that are broadly useful, low-risk to adapt, and not tied to Claude-only command plumbing:
 
@@ -65,7 +65,7 @@ Select the skills that are broadly useful, low-risk to adapt, and not tied to Cl
 - `testing`
 ```
 
-- [ ] **Step 2: Record why each skill belongs in the first slice**
+- [x] **Step 2: Record why each skill belongs in the first slice**
 
 Use this selection logic:
 
@@ -78,7 +78,7 @@ Use this selection logic:
 - `testing`: high-value test guidance that maps cleanly to Codex-native repo work.
 ```
 
-- [ ] **Step 3: Record the adaptation boundary for each kept skill**
+- [x] **Step 3: Record the adaptation boundary for each kept skill**
 
 Note the rewrite requirements:
 
@@ -89,7 +89,7 @@ Note the rewrite requirements:
 - Rewrite any MCP or command-routing assumptions into Codex-neutral guidance.
 ```
 
-- [ ] **Step 4: Defer the workflow orchestrators explicitly**
+- [x] **Step 4: Defer the workflow orchestrators explicitly**
 
 Mark `tdd` and `verify` as deferred for the first Codex subset because they are workflow orchestrators with strong Claude command and validation-pipeline assumptions.
 
@@ -98,7 +98,7 @@ Mark `tdd` and `verify` as deferred for the first Codex subset because they are 
 **Files:**
 - Modify: `provenance/dotnet-claude-kit.md`
 
-- [ ] **Step 1: Name the likely target surfaces for MARK-166**
+- [x] **Step 1: Name the likely target surfaces for MARK-166**
 
 Recommend that the repack child create:
 
@@ -108,11 +108,11 @@ Recommend that the repack child create:
 - a source/provenance map that ties each imported skill back to the upstream commit and this proposal
 ```
 
-- [ ] **Step 2: State the subset boundary for the repack child**
+- [x] **Step 2: State the subset boundary for the repack child**
 
 Tell MARK-166 to repack only the six selected technical skills first, and to leave workflow orchestrators (`tdd`, `verify`) for a later Codex-native workflow decision.
 
-- [ ] **Step 3: Add the compatibility warning**
+- [x] **Step 3: Add the compatibility warning**
 
 Record that upstream `CLAUDE.md`, slash-command workflows, hooks, and MCP-install assumptions must be stripped or rewritten instead of copied as-is.
 
@@ -121,7 +121,7 @@ Record that upstream `CLAUDE.md`, slash-command workflows, hooks, and MCP-instal
 **Files:**
 - None
 
-- [ ] **Step 1: Search for false originality claims**
+- [x] **Step 1: Search for false originality claims**
 
 Run:
 
@@ -131,7 +131,7 @@ rg -n "original work|authored here|first-party origin" provenance/dotnet-claude-
 
 Expected: only the explicit provenance-safe boundaries and no claim that upstream kit content is original to this repo.
 
-- [ ] **Step 2: Run the repo validation that applies to docs-only changes**
+- [x] **Step 2: Run the repo validation that applies to docs-only changes**
 
 Run:
 

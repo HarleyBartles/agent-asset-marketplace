@@ -1,6 +1,6 @@
 # MARK-207 Coding Security Trio into Security Pack Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Project `secure-coding-practices`, `owasp-top-10`, and `security-testing-patterns` into `security-pack` while preserving Codex Cortex custody, provenance, and generated marketplace artifacts on top of the existing MARK-210 threat-modeling base.
 
@@ -50,11 +50,11 @@
 - Modify: `sources/first_party/skills/codex-cortex/decisions.md`
 - Modify: `provenance/codex-cortex.md`
 
-- [ ] **Step 1: Copy the retained upstream skills into third-party custody**
+- [x] **Step 1: Copy the retained upstream skills into third-party custody**
 
 Bring the three upstream security skills and their reference/rubric files into the retained Claude-Cortex snapshot tree so the repo keeps the source basis for later projection.
 
-- [ ] **Step 2: Record the import ledger entries**
+- [x] **Step 2: Record the import ledger entries**
 
 Add MARK-207 import entries for `secure-coding-practices`, `owasp-top-10`, and `security-testing-patterns`, including the boundary note that they stay focused on application coding-security guidance.
 
@@ -136,11 +136,11 @@ Add MARK-207 import entries for `secure-coding-practices`, `owasp-top-10`, and `
 - Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/references/sast.md`
 - Create: `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/validation/rubric.yaml`
 
-- [ ] **Step 1: Mirror the custody plugin**
+- [x] **Step 1: Mirror the custody plugin**
 
 Project the three security skills into `codex-cortex` so the retained custody surface keeps the imported source for downstream projection.
 
-- [ ] **Step 2: Build the installable pack projection**
+- [x] **Step 2: Build the installable pack projection**
 
 Adapt the same three skills into `security-pack` so the pack covers secure coding, OWASP review, and security testing alongside the existing threat-modeling slice.
 
@@ -152,11 +152,11 @@ Adapt the same three skills into `security-pack` so the pack covers secure codin
 - Modify: `provenance/codex-cortex.md`
 - Modify: `repo-index/repo-index.json`
 
-- [ ] **Step 1: Refresh source-custody guidance**
+- [x] **Step 1: Refresh source-custody guidance**
 
 Update the source and third-party guidance so they name the three new security skills and the broader `security-pack` composition instead of only the MARK-210 threat-modeling slice.
 
-- [ ] **Step 2: Refresh structured navigation metadata**
+- [x] **Step 2: Refresh structured navigation metadata**
 
 Keep the repo index aligned with the expanded Codex Cortex custody set and the broader Security Pack projection.
 
@@ -171,12 +171,12 @@ Keep the repo index aligned with the expanded Codex Cortex custody set and the b
 - Modify: `generated/skill-zips/security-pack/owasp-top-10/skill.zip`
 - Modify: `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
 
-- [ ] **Step 1: Regenerate the skill corpus**
+- [x] **Step 1: Regenerate the skill corpus**
 
 Run: `py -3 tools/update_skill_artifacts.py --all`
 Expected: deterministic regenerated zips and registry entries for the three new skills in both `codex-cortex` custody and `security-pack`.
 
-- [ ] **Step 2: Validate the repo surfaces**
+- [x] **Step 2: Validate the repo surfaces**
 
 Run:
 
@@ -189,6 +189,6 @@ git diff --check
 
 Expected: all commands pass with no unexpected drift.
 
-- [ ] **Step 3: Capture publication evidence**
+- [x] **Step 3: Capture publication evidence**
 
 Record the branch name, final head SHA, changed files, generated zip paths, validation output, and the composition note showing `security-pack` stays focused on practical application coding-security guidance rather than generic compliance theatre or infra security.

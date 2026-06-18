@@ -1,6 +1,6 @@
-﻿# MARK-233 Marketplace Source Custody and Projection Normalization Implementation Plan
+# MARK-233 Marketplace Source Custody and Projection Normalization Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Establish `sources/first_party/core/` as the canonical home for generic reusable first-party skills, repoint the affected marketplace projections to that new custody root, and refresh the derived marketplace/index/artifact surfaces.
 
@@ -24,13 +24,13 @@
 - Move: `sources/first_party/core/skill-installer/` -> `sources/first_party/core/skill-installer/`
 - Move: `sources/first_party/core/bootstrap-router/` -> `sources/first_party/core/bootstrap-router/`
 
-- [ ] **Step 1: Move the source directories**
+- [x] **Step 1: Move the source directories**
 
 Move only the inventory-identified generic reusable skills into the new `core` home and leave family-owned and third-party roots in place.
 
-- [ ] **Step 2: Verify the moved roots still contain the same authored content**
+- [x] **Step 2: Verify the moved roots still contain the same authored content**
 
-Confirm the moved paths preserve each skillâ€™s existing files and no unrelated roots changed.
+Confirm the moved paths preserve each skill’s existing files and no unrelated roots changed.
 
 ### Task 2: Repoint projections, ledgers, and repo-facing docs to the new core custody root
 
@@ -63,11 +63,11 @@ Confirm the moved paths preserve each skillâ€™s existing files and no unrel
 - Modify: `tools/generate_repo_index.py`
 - Modify: `tools/update_skill_artifacts.py`
 
-- [ ] **Step 1: Update human-readable source/projection guidance**
+- [x] **Step 1: Update human-readable source/projection guidance**
 
 Reword the affected docs so the generic first-party skills are described as `sources/first_party/core/` custody while the plugin roots remain projection-only.
 
-- [ ] **Step 2: Update tooling assumptions**
+- [x] **Step 2: Update tooling assumptions**
 
 Adjust the path maps and validators that still hardcode `sources/first_party/skills/<skill>/` for the moved generic skills.
 
@@ -80,11 +80,11 @@ Adjust the path maps and validators that still hardcode `sources/first_party/ski
 - Modify: `generated/skill-zips/registry.json`
 - Modify: `generated/skill-zips/**/skill.zip`
 
-- [ ] **Step 1: Regenerate the skill corpus**
+- [x] **Step 1: Regenerate the skill corpus**
 
 Run: `py -3 tools/update_skill_artifacts.py --all`
 
-- [ ] **Step 2: Regenerate the repo index if needed**
+- [x] **Step 2: Regenerate the repo index if needed**
 
 Run: `py -3 tools/generate_repo_index.py`
 
@@ -93,11 +93,11 @@ Run: `py -3 tools/generate_repo_index.py`
 **Files:**
 - Add: `docs/superpowers/records/2026-06-18-mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization.md`
 
-- [ ] **Step 1: Write the implementation record**
+- [x] **Step 1: Write the implementation record**
 
 Capture the moved roots, the projection/doc updates, generated artifact impact, and the final validation state in the repository record convention.
 
-- [ ] **Step 2: Run the validation ladder**
+- [x] **Step 2: Run the validation ladder**
 
 Run:
 
@@ -109,7 +109,6 @@ py -3 tools/validate_generated_drift.py --base origin/main
 git diff --check
 ```
 
-- [ ] **Step 3: Commit, push, and open a draft PR**
+- [x] **Step 3: Commit, push, and open a draft PR**
 
 Commit the scoped change set on `harleydbartles/mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization`, push it, and open a draft PR with the implementation record linked in the body.
-

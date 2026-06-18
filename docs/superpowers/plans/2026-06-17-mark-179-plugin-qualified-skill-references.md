@@ -1,6 +1,6 @@
 # Canonical Plugin-Qualified Skill References Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Canonicalize cross-plugin marketplace skill references to `plugin_name:skill_name` and add validation that keeps those references from regressing.
 
@@ -17,7 +17,7 @@
 - Modify: `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md`
 - Test: `tests/test_validate_marketplace.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Add a unit test that asserts the marketplace source copy for `codex-receipts-superpowers` contains the canonical `repo-worker-base:codex-repo-receipts` reference and does not rely on the bare cross-plugin form in source text.
 
@@ -37,12 +37,12 @@ def test_codex_receipts_superpowers_uses_canonical_cross_plugin_reference(self) 
     self.assertNotIn("@codex-repo-receipts", source_text)
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `py -3 -m unittest tests.test_validate_marketplace.ValidateMarketplaceTests.test_codex_receipts_superpowers_uses_canonical_cross_plugin_reference -v`
 Expected: FAIL because the source still uses the bare cross-plugin form.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Change the source prose in both `codex-receipts-superpowers` copies so the cross-plugin artifact contract reference reads:
 
@@ -52,12 +52,12 @@ Use `repo-worker-base:codex-repo-receipts` for the exact artifact contract, defa
 
 Keep the GPT overlay/export prompt text in `agents/openai.yaml` unchanged.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `py -3 -m unittest tests.test_validate_marketplace.ValidateMarketplaceTests.test_codex_receipts_superpowers_uses_canonical_cross_plugin_reference -v`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md tests/test_validate_marketplace.py
@@ -70,7 +70,7 @@ git commit -m "fix: canonicalize cross-plugin receipt reference"
 - Modify: `tools/validate_marketplace.py`
 - Test: `tests/test_validate_marketplace.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Add a unit test that patches the repo root to a temp tree and verifies the validator rejects a source copy that still contains the bare cross-plugin `@codex-repo-receipts` reference.
 
@@ -101,21 +101,21 @@ def test_validate_marketplace_rejects_bare_cross_plugin_receipt_reference(self) 
                 validate_marketplace.validate_canonical_cross_plugin_skill_references()
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `py -3 -m unittest tests.test_validate_marketplace.ValidateMarketplaceTests.test_validate_marketplace_rejects_bare_cross_plugin_receipt_reference -v`
 Expected: FAIL because the validator helper does not exist yet.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Add a small helper in `tools/validate_marketplace.py` that checks the known source surfaces for the canonical cross-plugin reference and raises if it finds the bare `@codex-repo-receipts` form in marketplace source text.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `py -3 -m unittest tests.test_validate_marketplace.ValidateMarketplaceTests.test_validate_marketplace_rejects_bare_cross_plugin_receipt_reference -v`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/validate_marketplace.py tests/test_validate_marketplace.py
@@ -127,21 +127,21 @@ git commit -m "test: guard canonical cross-plugin skill references"
 **Files:**
 - None
 
-- [ ] **Step 1: Run marketplace validation**
+- [x] **Step 1: Run marketplace validation**
 
 Run: `py -3 tools/validate_marketplace.py`
 Expected: PASS.
 
-- [ ] **Step 2: Run diff hygiene**
+- [x] **Step 2: Run diff hygiene**
 
 Run: `git diff --check`
 Expected: PASS.
 
-- [ ] **Step 3: Regenerate generated skill zips**
+- [x] **Step 3: Regenerate generated skill zips**
 
 Run: `py -3 tools/update_skill_artifacts.py --all`
 Expected: PASS, with the regenerated `generated/skill-zips/` corpus matching the updated source references.
 
-- [ ] **Step 4: Capture publication evidence**
+- [x] **Step 4: Capture publication evidence**
 
 Record branch name, base SHA, final head SHA, validation output, and changed files for the issue closeout.

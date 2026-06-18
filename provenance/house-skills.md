@@ -135,15 +135,6 @@
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
 - Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@using-superpowers`, `@connector-safety`, and `@unslop` without replacing the underlying profile-generation engine.
 
-## codex-receipts-superpowers
-
-- Source path: `sources/first_party/skills/codex-receipts-superpowers`
-- Public identity: `codex-receipts-superpowers`
-- Provenance/history: MARK-162 Codex Receipts Superpowers compositional skill
-- Ownership: Harley-owned first-party House skill
-- Scope: repo-backed planning and durable receipt composition for non-trivial work
-- Notes: First-party compositional wrapper for repo-backed work that composes `@using-superpowers`, `@writing-plans`, `@executing-plans`, `@codex-repo-receipts`, and `@unslop-superpowers`, keeps the matching implementation record linked from the PR body or final worker report, and preserves the narrow omission path for tiny mechanical changes. `@connector-safety` is only used when a connector mutation or blocked-write recovery is actually needed.
-
 ## skill-handoff
 
 - Source path: `sources/first_party/skills/skill-handoff`
@@ -225,8 +216,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the new `github-operations` and `github-superpowers` GitHub skills, the `codex-repo-receipts` repo receipt skill, the `codex-receipts-superpowers` repo-backed planning and receipts wrapper, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `github-superpowers` is projected here as the GitHub-facing compositional workflow skill, `codex-repo-receipts` is projected here as the durable repo-receipt skill, `codex-receipts-superpowers` is projected here as the repo-backed planning and receipt composition skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the new `github-operations` and `github-superpowers` GitHub skills, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `github-superpowers` is projected here as the GitHub-facing compositional workflow skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 

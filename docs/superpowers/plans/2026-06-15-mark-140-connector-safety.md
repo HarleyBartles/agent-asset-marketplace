@@ -1,6 +1,6 @@
 # Connector Safety Discover-Read-Write Update Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Update the vendored `connector-safety` skill so side-effecting connector work follows a mandatory discover -> read -> write -> verify protocol without weakening the existing safety doctrine.
 
@@ -16,7 +16,7 @@
 - Modify: `codex-marketplace/plugins/house-skills/skills/connector-safety/SKILL.md`
 - Modify: `codex-marketplace/plugins/adventures-pack/skills/connector-safety/SKILL.md`
 
-- [ ] **Step 1: Add the discover-before-mutation rule near the top**
+- [x] **Step 1: Add the discover-before-mutation rule near the top**
 
 ```md
 ## Discovery-before-mutation rule
@@ -34,7 +34,7 @@ Default sequence:
 4. Verify after writing.
 ```
 
-- [ ] **Step 2: Preserve the existing safety doctrine**
+- [x] **Step 2: Preserve the existing safety doctrine**
 
 ```md
 Do not remove or weaken:
@@ -49,7 +49,7 @@ Do not remove or weaken:
 - stop signs.
 ```
 
-- [ ] **Step 3: Mirror the same text into the Adventures projection copy**
+- [x] **Step 3: Mirror the same text into the Adventures projection copy**
 
 ```md
 Keep the House Skills and Adventures `connector-safety` skill text identical so the shared projection stays aligned with the canonical source.
@@ -62,23 +62,22 @@ Keep the House Skills and Adventures `connector-safety` skill text identical so 
 - Modify: `generated/skill-zips/house-skills/connector-safety/skill.zip`
 - Modify: `generated/skill-zips/adventures-pack/connector-safety/skill.zip`
 
-- [ ] **Step 1: Regenerate the targeted artifacts**
+- [x] **Step 1: Regenerate the targeted artifacts**
 
 ```powershell
 py -3 tools/update_skill_artifacts.py --skill house-skills/connector-safety
 py -3 tools/update_skill_artifacts.py --skill adventures-pack/connector-safety
 ```
 
-- [ ] **Step 2: Verify the registry and drift checks**
+- [x] **Step 2: Verify the registry and drift checks**
 
 ```powershell
 py -3 tools/update_skill_artifacts.py --check
 py -3 tools/validate_marketplace.py
 ```
 
-- [ ] **Step 3: Confirm the generated zips match the updated source**
+- [x] **Step 3: Confirm the generated zips match the updated source**
 
 ```powershell
 git diff --check HEAD~1 HEAD
 ```
-

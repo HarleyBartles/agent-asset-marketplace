@@ -1,6 +1,6 @@
 # unslop-superpowers Compositional Guard Skill Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add a first-party `unslop-superpowers` guard skill in House Skills and project it into Superpowers so `linear-superpowers` and `github-superpowers` can use repo-specific anti-slop controls without replacing the existing `@unslop` profile generator.
 
@@ -23,19 +23,19 @@
 - Modify: `codex-marketplace/plugins/house-skills/README.md`
 - Modify: `provenance/house-skills.md`
 
-- [ ] **Step 1: Add the new source skill**
+- [x] **Step 1: Add the new source skill**
 
 Create a House Skills `unslop-superpowers` entry that starts with `@using-superpowers`, names `@unslop` as the specialist profile-analysis engine, and keeps the composition narrow to profile discovery, smallest-safe action selection, repo-specific anti-slop controls, non-goals, and evidence requirements.
 
-- [ ] **Step 2: Register the source record**
+- [x] **Step 2: Register the source record**
 
 Add matching decision and intake rows so the canonical source path is recorded as the House Skills file and the provenance notes explain that this is a first-party compositional guard skill rather than a replacement for `unslop`.
 
-- [ ] **Step 3: Update the House Skills inventory**
+- [x] **Step 3: Update the House Skills inventory**
 
 Increment the bundle manifest skill count, add the new live root to the inventory, add the corresponding source-map row, and adjust the House Skills README wording if it still reports the old skill total or omits the new guard skill.
 
-- [ ] **Step 4: Record provenance**
+- [x] **Step 4: Record provenance**
 
 Add a provenance entry that points at the new House Skills source path and explains that `@unslop` remains the profile generator while `unslop-superpowers` is the compositional guard.
 
@@ -48,19 +48,19 @@ Add a provenance entry that points at the new House Skills source path and expla
 - Modify: `codex-marketplace/plugins/superpowers/SOURCE.md`
 - Modify: `codex-marketplace/plugins/superpowers/PROJECTION.md`
 
-- [ ] **Step 1: Mirror the projected skill**
+- [x] **Step 1: Mirror the projected skill**
 
 Copy the House Skills `unslop-superpowers` skill into the Superpowers bundle so the projection stays source-backed and editable in House Skills.
 
-- [ ] **Step 2: Update bundle metadata**
+- [x] **Step 2: Update bundle metadata**
 
 Add a first-party projection entry in the Superpowers bundle manifest and provenance map that points back to `codex-marketplace/plugins/house-skills/skills/unslop-superpowers/SKILL.md` as the canonical source path.
 
-- [ ] **Step 3: Refresh the bundle docs**
+- [x] **Step 3: Refresh the bundle docs**
 
 Update `SOURCE.md` and `PROJECTION.md` to explain that Superpowers now carries three source-backed first-party projections: `linear-superpowers`, `github-superpowers`, and `unslop-superpowers`.
 
-- [ ] **Step 4: Confirm GPT overlay need**
+- [x] **Step 4: Confirm GPT overlay need**
 
 Check whether the new projection requires a `gpt-overlays/` entry. If no GPT-only incompatibility is found, leave the overlay manifest untouched and record that the export is GPT-safe without an overlay.
 
@@ -73,15 +73,15 @@ Check whether the new projection requires a `gpt-overlays/` entry. If no GPT-onl
 - Regenerated: `generated/skill-zips/house-skills/unslop-superpowers/skill.zip`
 - Regenerated: `generated/skill-zips/superpowers/unslop-superpowers/skill.zip`
 
-- [ ] **Step 1: Write the failing validator test**
+- [x] **Step 1: Write the failing validator test**
 
 Add `test_superpowers_bundle_accepts_first_party_unslop_superpowers_projection()` to `tests/test_validate_marketplace.py`, mirroring the existing `linear-superpowers` and `github-superpowers` cases but using `unslop-superpowers` as the projected entry. Run `py -3 -m pytest tests/test_validate_marketplace.py -q` and confirm the new test fails until the validator is updated.
 
-- [ ] **Step 2: Update the validator**
+- [x] **Step 2: Update the validator**
 
 Extend `validate_superpowers_bundle_manifest()` so `unslop-superpowers` is accepted as a first-party source-backed Superpowers projection when the House Skills source tree and projected tree match the established pattern.
 
-- [ ] **Step 3: Regenerate the artifacts**
+- [x] **Step 3: Regenerate the artifacts**
 
 Run:
 
@@ -92,7 +92,7 @@ py -3 tools/update_skill_artifacts.py --skill superpowers/unslop-superpowers
 
 Expect the generated registry and both `skill.zip` artifacts to pick up the new skill.
 
-- [ ] **Step 4: Validate the full marketplace**
+- [x] **Step 4: Validate the full marketplace**
 
 Run:
 
@@ -108,14 +108,14 @@ Confirm the validator passes and the diff has no whitespace or patch-format issu
 **Files:**
 - No new files; commit the validated source, projection, manifest, provenance, test, and generated-output changes.
 
-- [ ] **Step 1: Review the diff**
+- [x] **Step 1: Review the diff**
 
 Check the final file list for only the intended source, projection, ledger, validation, and generated-artifact changes.
 
-- [ ] **Step 2: Commit and push**
+- [x] **Step 2: Commit and push**
 
 Create a focused commit, push the branch, and open a PR against `main`.
 
-- [ ] **Step 3: Record publication proof**
+- [x] **Step 3: Record publication proof**
 
 Capture the branch name, starting `main` SHA, head SHA, PR URL, validation commands, and any remaining Linear or GitHub follow-up needed for closeout.

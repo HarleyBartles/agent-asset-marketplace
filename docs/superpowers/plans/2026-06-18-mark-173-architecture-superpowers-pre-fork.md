@@ -1,6 +1,6 @@
 # architecture-superpowers Pre-Fork Projection Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add `architecture-superpowers` as the final authorized pre-fork Superpowers projection, mirror it into the `superpowers` marketplace bundle, and publish a durable freeze record that blocks any further direct Superpowers wrapper projection until the fork/overlay custody model exists.
 
@@ -18,15 +18,15 @@
 - Create: `codex-marketplace/plugins/superpowers/skills/architecture-superpowers/SKILL.md`
 - Create: `codex-marketplace/plugins/superpowers/skills/architecture-superpowers/agents/openai.yaml`
 
-- [ ] **Step 1: Write the source skill as a compositional router**
+- [x] **Step 1: Write the source skill as a compositional router**
 
 The skill must start with `/using-superpowers`, route to `/connector-safety`, `/linear-superpowers`, `/github-superpowers`, `/unslop-superpowers`, `/codex-receipts-superpowers`, and the relevant architecture-pack skills only when the problem warrants them, and explicitly say not to treat CQRS/Event Sourcing as the default answer.
 
-- [ ] **Step 2: Mirror the source skill into the Superpowers projection**
+- [x] **Step 2: Mirror the source skill into the Superpowers projection**
 
 Keep the projected `SKILL.md` byte-for-byte aligned with the canonical source skill and create the matching `agents/openai.yaml` mirror so the bundle installs cleanly as a directory-level skill.
 
-- [ ] **Step 3: Verify the new source/projection trees exist**
+- [x] **Step 3: Verify the new source/projection trees exist**
 
 Run:
 
@@ -47,19 +47,19 @@ Expected: both trees contain `SKILL.md` and `agents/openai.yaml`.
 - Modify: `tools/validate_marketplace.py`
 - Modify: `repo-index/repo-index.json` if the generator does not update it cleanly
 
-- [ ] **Step 1: Add `architecture-superpowers` to the projection contract text**
+- [x] **Step 1: Add `architecture-superpowers` to the projection contract text**
 
 Update `SOURCE.md` and `PROJECTION.md` so the live pre-fork wrapper set is explicitly listed as `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, `codex-receipts-superpowers`, and `architecture-superpowers`.
 
-- [ ] **Step 2: Register the new first-party source-backed entry**
+- [x] **Step 2: Register the new first-party source-backed entry**
 
 Add the new `architecture-superpowers` entry to the Superpowers bundle manifest and provenance map with its canonical source path pointing at `sources/first_party/skills/architecture-superpowers/`.
 
-- [ ] **Step 3: Extend the validator allowlist**
+- [x] **Step 3: Extend the validator allowlist**
 
 Add `architecture-superpowers` to the first-party Superpowers source map in `tools/validate_marketplace.py` so bundle validation accepts the new projection.
 
-- [ ] **Step 4: Verify the bundle still validates before generation**
+- [x] **Step 4: Verify the bundle still validates before generation**
 
 Run:
 
@@ -75,15 +75,15 @@ Expected: validation passes once the new entry and source mirror are in place.
 - Create: `docs/superpowers/records/2026-06-18-mark-173-architecture-superpowers-pre-fork.md`
 - Create: `docs/superpowers/records/2026-06-18-mark-173-architecture-superpowers-pre-fork.md` content must include the final wrapper set and the freeze statement
 
-- [ ] **Step 1: Write the freeze record**
+- [x] **Step 1: Write the freeze record**
 
 Record that this is the final allowed pre-fork Superpowers wrapper projection and that any further wrapper requires the Superpowers fork/overlay custody model to exist first.
 
-- [ ] **Step 2: Write the implementation record after validation**
+- [x] **Step 2: Write the implementation record after validation**
 
 Capture the issue, branch, starting main SHA, final head SHA, PR URL, changed files, generated artifacts, validation commands/results, skipped checks, and any follow-up issues.
 
-- [ ] **Step 3: Confirm the record files are present**
+- [x] **Step 3: Confirm the record files are present**
 
 Run:
 
@@ -100,7 +100,7 @@ Expected: both the freeze record and implementation record are present.
 - Modify: `generated/skill-zips/superpowers/architecture-superpowers/skill.zip`
 - Modify: `repo-index/repo-index.json` if regenerated output changes it
 
-- [ ] **Step 1: Regenerate the affected skill zip**
+- [x] **Step 1: Regenerate the affected skill zip**
 
 Run:
 
@@ -110,7 +110,7 @@ py -3 tools/update_skill_artifacts.py --skill superpowers/architecture-superpowe
 
 Expected: the `generated/skill-zips/superpowers/architecture-superpowers/skill.zip` artifact and registry entry are updated by tooling, not hand edits.
 
-- [ ] **Step 2: Regenerate and validate marketplace surfaces**
+- [x] **Step 2: Regenerate and validate marketplace surfaces**
 
 Run:
 
@@ -122,6 +122,6 @@ git diff --check
 
 Expected: repo index and marketplace validation pass and the diff has no whitespace or patch formatting errors.
 
-- [ ] **Step 3: Review the final diff for scope**
+- [x] **Step 3: Review the final diff for scope**
 
 Confirm the diff is limited to the new wrapper, the existing Superpowers projection surfaces, the freeze/implementation records, and the generated outputs required by tooling.

@@ -1,6 +1,6 @@
 # Document Codex-plugin-first GPT export posture Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Make the repo guidance layer state the Codex-plugin-first / generated-GPT-export posture plainly before workers edit plugin, skill, overlay, or generated zip surfaces.
 
@@ -16,17 +16,17 @@
 - Modify: `README.md`
 - Modify: `AGENTS.md`
 
-- [ ] **Step 1: Add the failing wording gap to the root guidance**
+- [x] **Step 1: Add the failing wording gap to the root guidance**
 
 ```md
 Codex plugin first; generated GPT-safe skill zips second.
 ```
 
-- [ ] **Step 2: Add the policy in the repo-root docs**
+- [x] **Step 2: Add the policy in the repo-root docs**
 
 Use wording that says plugin roots are the canonical marketplace install surface, and generated `skill.zip` artifacts are GPT-ready derivatives, not canonical source.
 
-- [ ] **Step 3: Verify the new wording appears in both files**
+- [x] **Step 3: Verify the new wording appears in both files**
 
 Run: `rg -n "Codex plugin first|generated GPT-safe skill zips|plugin roots are the canonical" README.md AGENTS.md`
 Expected: matches in both files.
@@ -41,17 +41,17 @@ Expected: matches in both files.
 - Modify: `gpt-overlays/README.md`
 - Modify: `gpt-overlays/AGENTS.md`
 
-- [ ] **Step 1: Add the posture to the marketplace and overlay guidance**
+- [x] **Step 1: Add the posture to the marketplace and overlay guidance**
 
 ```md
 Codex plugin first; generated GPT-safe skill zips second.
 ```
 
-- [ ] **Step 2: Keep each surface aligned to its role**
+- [x] **Step 2: Keep each surface aligned to its role**
 
 State that marketplace plugin roots are canonical, `generated/skill-zips/` is the GPT-ready export corpus, and `gpt-overlays/manifest.json` controls direct, overlay, and excluded GPT exports.
 
-- [ ] **Step 3: Verify the wording is present in the targeted docs**
+- [x] **Step 3: Verify the wording is present in the targeted docs**
 
 Run: `rg -n "Codex plugin first|generated GPT-safe skill zips|gpt-overlays/manifest.json|generated/skill-zips" codex-marketplace gpt-overlays`
 Expected: matches in the updated docs.
@@ -61,17 +61,17 @@ Expected: matches in the updated docs.
 **Files:**
 - None
 
-- [ ] **Step 1: Run the marketplace validator**
+- [x] **Step 1: Run the marketplace validator**
 
 Run: `py -3 tools/validate_marketplace.py`
 Expected: pass with no new marketplace warnings or errors.
 
-- [ ] **Step 2: Check the diff for accidental formatting issues**
+- [x] **Step 2: Check the diff for accidental formatting issues**
 
 Run: `git diff --check HEAD~1 HEAD`
 Expected: no whitespace or patch-format errors.
 
-- [ ] **Step 3: Commit after validation**
+- [x] **Step 3: Commit after validation**
 
 Run: `git status --short`
 Expected: only the intended documentation files and this plan file are modified before commit.

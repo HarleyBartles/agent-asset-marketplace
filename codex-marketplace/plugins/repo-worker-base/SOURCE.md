@@ -13,15 +13,12 @@ Repo Worker Base asset.
 
 ## Projected skills
 
-- `codex-repo-receipts` projected from `sources/first_party/core/codex-repo-receipts`
 - `boring-loop` projected from `sources/first_party/core/boring-loop`
 - `connector-safety` projected from `sources/first_party/core/connector-safety`
 - `github-operations` projected from `sources/first_party/core/github-operations`
 
 ## Source files
 
-- `skills/codex-repo-receipts/SKILL.md`
-- `skills/codex-repo-receipts/agents/openai.yaml`
 - `skills/boring-loop/SKILL.md`
 - `skills/boring-loop/agents/openai.yaml`
 - `skills/connector-safety/SKILL.md`
@@ -43,9 +40,7 @@ This asset is intentionally thin:
 - honest status reporting for repo-backed work;
 - generic connector safety and GitHub proof helpers needed by workers.
 
-It does not include project-specific doctrine for any particular repo. The
-`codex-repo-receipts` skill is a projected first-party House Skills workflow
-skill for durable plan and implementation-record receipts.
+It does not include project-specific doctrine for any particular repo.
 The `boring-loop` skill is a projected first-party coordination skill for
 keeping work small, honest, and routed to the right specialist.
 The `connector-safety` and `github-operations` skills are projected as the

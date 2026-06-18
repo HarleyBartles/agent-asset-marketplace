@@ -1,6 +1,6 @@
 # Export Skill Zips Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add a copy-only export command that turns canonical `generated/skill-zips/` artifacts into a GPT-upload-ready worker output directory with a manifest.
 
@@ -15,7 +15,7 @@
 **Files:**
 - Create: `tools/validate_export_skill_zips.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 def test_export_happy_path_and_error_cases(tmp_path):
@@ -29,21 +29,21 @@ def test_export_happy_path_and_error_cases(tmp_path):
     assert sample_manifest["copied"][0]["output_path"].endswith("skill.zip")
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `py -3 tools/validate_export_skill_zips.py`
 Expected: fail because `export_skill_zips.py` does not exist yet.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 No production code yet. Keep this script as the first consumer of the new exporter and its manifest.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `py -3 tools/validate_export_skill_zips.py`
 Expected: PASS after the exporter exists.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/validate_export_skill_zips.py
@@ -56,7 +56,7 @@ git commit -m "test: add export skill zip validation coverage"
 - Create: `tools/export_skill_zips.py`
 - Modify: `tools/skill_zip_artifacts.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 def test_export_requires_pack_scoped_resolution_for_duplicate_skill_names(tmp_path):
@@ -71,12 +71,12 @@ def test_export_requires_pack_scoped_resolution_for_duplicate_skill_names(tmp_pa
     assert "<pack>/linear" in result.stderr
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `py -3 tools/validate_export_skill_zips.py`
 Expected: fail until the exporter resolves pack-scoped and bare-name requests correctly.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Implement:
 
@@ -109,12 +109,12 @@ def registry_artifacts_by_skill(registry: dict[str, Any]) -> dict[str, list[dict
     ...
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `py -3 tools/validate_export_skill_zips.py`
 Expected: PASS with copied `skill.zip` files and a written manifest.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/export_skill_zips.py tools/skill_zip_artifacts.py
@@ -127,7 +127,7 @@ git commit -m "feat: add skill zip export command"
 - Modify: `tools/README.md`
 - Modify: `tools/validate_marketplace.py` if needed to keep tool docs aligned with the new exporter
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 def test_tools_readme_mentions_export_batch_command():
@@ -136,12 +136,12 @@ def test_tools_readme_mentions_export_batch_command():
     assert "worker-output/<issue>/<name>" in text
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `py -3 tools/validate_export_skill_zips.py`
 Expected: fail until the README mentions the worker command.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Add a short usage snippet to `tools/README.md` showing the common worker flow:
 
@@ -149,7 +149,7 @@ Add a short usage snippet to `tools/README.md` showing the common worker flow:
 python tools/export_skill_zips.py --skills <pack>/<skill>,<pack>/<skill> --out worker-output/<issue>/<name> --clean-output
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run:
 
@@ -161,7 +161,7 @@ git diff --check HEAD~1 HEAD
 
 Expected: all pass; export tooling remains copy-only and the repo validation still sees a consistent marketplace surface.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/README.md tools/validate_marketplace.py

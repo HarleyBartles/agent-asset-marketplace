@@ -1,6 +1,6 @@
 # MARK-141 Linear Superpowers Projection Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Expose `linear-superpowers` in the Superpowers marketplace bundle while keeping `codex-marketplace/plugins/house-skills/skills/linear-superpowers/` as the canonical editable source.
 
@@ -15,14 +15,14 @@
 **Files:**
 - Create: `tests/test_validate_marketplace.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection():
     ...
 ```
 
-- [ ] **Step 2: Run the test and confirm it fails**
+- [x] **Step 2: Run the test and confirm it fails**
 
 Run: `py -3 -m unittest tests.test_validate_marketplace -v`
 Expected: fail because the current Superpowers validator rejects a first-party sourced projection entry.
@@ -37,19 +37,19 @@ Expected: fail because the current Superpowers validator rejects a first-party s
 - Modify: `codex-marketplace/plugins/superpowers/SOURCE.md`
 - Modify: `repo-index/repo-index.json`
 
-- [ ] **Step 1: Add the projected skill**
+- [x] **Step 1: Add the projected skill**
 
 Mirror the House Skills `SKILL.md` content into the Superpowers skill root so the marketplace skill list includes `linear-superpowers` under the Superpowers bundle.
 
-- [ ] **Step 2: Record provenance and source custody**
+- [x] **Step 2: Record provenance and source custody**
 
 Update the Superpowers bundle manifest and provenance map so the new entry points back to `codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md` as the canonical editable source.
 
-- [ ] **Step 3: Update the human-facing bundle docs**
+- [x] **Step 3: Update the human-facing bundle docs**
 
 Refresh `SOURCE.md` and `PROJECTION.md` so they explain that Superpowers now carries one source-backed first-party projection in addition to the retained upstream Superpowers roots.
 
-- [ ] **Step 4: Keep the repo index aligned**
+- [x] **Step 4: Keep the repo index aligned**
 
 Update `repo-index/repo-index.json` so the superpowers zone records the additional House Skills source ledger path if needed for discoverability.
 
@@ -58,11 +58,11 @@ Update `repo-index/repo-index.json` so the superpowers zone records the addition
 **Files:**
 - Modify: `tools/validate_marketplace.py`
 
-- [ ] **Step 1: Allow the special first-party projected entry**
+- [x] **Step 1: Allow the special first-party projected entry**
 
 Extend `validate_superpowers_bundle_manifest()` so a first-party `linear-superpowers` entry is accepted when it points at the House Skills canonical source and the projected skill directory matches the source tree.
 
-- [ ] **Step 2: Keep the rest of the projection strict**
+- [x] **Step 2: Keep the rest of the projection strict**
 
 Preserve the existing checks for the upstream third-party Superpowers projection, the support-surface exclusions, and the top-level install surface shape.
 
@@ -72,11 +72,11 @@ Preserve the existing checks for the upstream third-party Superpowers projection
 - Regenerated: `generated/skill-zips/superpowers/linear-superpowers/skill.zip`
 - Regenerated: `generated/skill-zips/registry.json`
 
-- [ ] **Step 1: Regenerate the targeted skill artifact**
+- [x] **Step 1: Regenerate the targeted skill artifact**
 
 Run: `py -3 tools/update_skill_artifacts.py --skill superpowers/linear-superpowers`
 
-- [ ] **Step 2: Run the repo validation ladder**
+- [x] **Step 2: Run the repo validation ladder**
 
 Run:
 
@@ -87,10 +87,10 @@ py -3 tools/validate_generated_drift.py --base origin/main
 py -3 tools/validate_skill_zips.py
 ```
 
-- [ ] **Step 3: Check the diff**
+- [x] **Step 3: Check the diff**
 
 Run: `git diff --check`
 
-- [ ] **Step 4: Commit and publish**
+- [x] **Step 4: Commit and publish**
 
 Commit the Superpowers projection, the validator update, and the regenerated zip/registry together, then push the branch and open a PR against `main`.

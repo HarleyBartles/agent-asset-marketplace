@@ -1,6 +1,6 @@
 # Architecture Pack README Update Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Update `architecture-pack` README text so it reflects the projected first-wave triad: `cqrs-event-sourcing`, `event-driven-architecture`, and `database-design-patterns`.
 
@@ -18,11 +18,11 @@
 - Test: `py -3 tools/validate_repo_index.py`
 - Test: `git diff --check`
 
-- [ ] **Step 1: Inspect the README wording against plugin metadata and bundle manifest**
+- [x] **Step 1: Inspect the README wording against plugin metadata and bundle manifest**
 
-- [ ] **Step 2: Update the README to name all three first-wave projected skills**
+- [x] **Step 2: Update the README to name all three first-wave projected skills**
 
-- [ ] **Step 3: Run marketplace and repo-index validation**
+- [x] **Step 3: Run marketplace and repo-index validation**
 
 Run:
 ```powershell
@@ -33,7 +33,7 @@ git diff --check
 
 Expected: all commands succeed with no formatting or validation errors.
 
-- [ ] **Step 4: Confirm only the README changed and no generated artifacts moved**
+- [x] **Step 4: Confirm only the README changed and no generated artifacts moved**
 
 Run:
 ```powershell
