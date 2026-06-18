@@ -1,0 +1,7 @@
+version: 1
+metadata:
+  skill_name: finishing-a-development-branch
+  plugin: superpowers
+  source_category: third_party
+  upstream_version: v5.1.0
+  adaptation_overlay: adaptation-overlays/superpowers-plus/finishing-a-development-branch

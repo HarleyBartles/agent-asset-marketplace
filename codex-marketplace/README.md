@@ -10,7 +10,7 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/unslop/`,
 `codex-marketplace/plugins/game-studio/`,
 `codex-marketplace/plugins/wild-bunch-project-pack/`, and
-`codex-marketplace/plugins/superpowers/`,
+`codex-marketplace/plugins/superpowers-plus/`,
 `codex-marketplace/plugins/repo-worker-base/`,
 `codex-marketplace/plugins/dotnet-kit/`,
 `codex-marketplace/plugins/codex-cortex/`,

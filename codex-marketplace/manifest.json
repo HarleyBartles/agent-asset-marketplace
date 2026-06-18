@@ -65,10 +65,10 @@
       "category": "Productivity"
     },
     {
-      "name": "superpowers",
+      "name": "superpowers-plus",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/superpowers"
+        "path": "./codex-marketplace/plugins/superpowers-plus"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -34,7 +34,7 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
             "source_category": entry["source_category"],
             "content_mode": entry["content_mode"],
             "canonical_source_path": entry["canonical_source_path"],
-            "local_path": f"codex-marketplace/plugins/superpowers/{entry['local_path']}",
+            "local_path": f"codex-marketplace/plugins/superpowers-plus/{entry['local_path']}",
             "copy_expectation": entry["copy_expectation"],
             "provenance_note": entry["provenance_note"],
         }
@@ -48,7 +48,7 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
             adapted.append(record)
 
     provenance_map = {
-        "bundle_name": "superpowers",
+        "bundle_name": "superpowers-plus",
         "bundle_version": "5.1.0",
         "upstream": {
             "repository": "https://github.com/obra/superpowers",
@@ -58,7 +58,7 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
             "license": "MIT",
         },
         "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-        "active_projection_root": "codex-marketplace/plugins/superpowers",
+        "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
         "codex_surface": {
             "plugin_manifest": ".codex-plugin/plugin.json",
             "skills_root": "skills",
@@ -92,6 +92,17 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
         ],
     }
     _touch(plugin_root / "references" / "provenance-map.json", json.dumps(provenance_map, indent=2))
+
+
+def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) -> None:
+    _touch(
+        source_root / ".codex-plugin" / "plugin.json",
+        json.dumps({"name": "superpowers", "interface": {"displayName": "Superpowers"}}, indent=2),
+    )
+    _touch(
+        plugin_root / ".codex-plugin" / "plugin.json",
+        json.dumps({"name": "superpowers-plus", "interface": {"displayName": "Superpowers+"}}, indent=2),
+    )
 
 
 SUPERPOWERS_PROJECTION_DOC = """# Projection
@@ -135,7 +146,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "core" / "linear-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
             projected_skill_root = plugin_root / "skills" / "linear-superpowers"
             _touch(
@@ -150,7 +161,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
-                ".codex-plugin/plugin.json",
                 "LICENSE",
                 "SOURCE.md",
                 "PROJECTION.md",
@@ -193,12 +203,14 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 else:
                     _touch(target)
 
+            _write_superpowers_plugin_manifests(source_root, plugin_root)
+
             bundle_manifest = {
-                "bundle_name": "superpowers",
+                "bundle_name": "superpowers-plus",
                 "bundle_version": "5.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers",
+                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
                 "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
@@ -243,7 +255,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
-                        plugin_root="codex-marketplace/plugins/superpowers",
+                        plugin_root="codex-marketplace/plugins/superpowers-plus",
                     )
                 except ValueError as exc:  # pragma: no cover - exercised by the red test run
                     self.fail(f"validator rejected the first-party projection: {exc}")
@@ -253,7 +265,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "skills" / "github-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
             projected_skill_root = plugin_root / "skills" / "github-superpowers"
             _touch(
@@ -268,7 +280,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
-                ".codex-plugin/plugin.json",
                 "LICENSE",
                 "SOURCE.md",
                 "PROJECTION.md",
@@ -311,12 +322,14 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 else:
                     _touch(target)
 
+            _write_superpowers_plugin_manifests(source_root, plugin_root)
+
             bundle_manifest = {
-                "bundle_name": "superpowers",
+                "bundle_name": "superpowers-plus",
                 "bundle_version": "5.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers",
+                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
                 "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
@@ -361,7 +374,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
-                        plugin_root="codex-marketplace/plugins/superpowers",
+                        plugin_root="codex-marketplace/plugins/superpowers-plus",
                     )
                 except ValueError as exc:  # pragma: no cover - exercised by the red test run
                     self.fail(f"validator rejected the first-party projection: {exc}")
@@ -426,7 +439,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "skills" / "unslop-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
             projected_skill_root = plugin_root / "skills" / "unslop-superpowers"
             _touch(
@@ -441,7 +454,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
             _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
 
             for rel_path in (
-                ".codex-plugin/plugin.json",
                 "LICENSE",
                 "SOURCE.md",
                 "PROJECTION.md",
@@ -484,12 +496,14 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 else:
                     _touch(target)
 
+            _write_superpowers_plugin_manifests(source_root, plugin_root)
+
             bundle_manifest = {
-                "bundle_name": "superpowers",
+                "bundle_name": "superpowers-plus",
                 "bundle_version": "5.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers",
+                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
                 "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
@@ -534,7 +548,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
-                        plugin_root="codex-marketplace/plugins/superpowers",
+                        plugin_root="codex-marketplace/plugins/superpowers-plus",
                     )
                 except ValueError as exc:  # pragma: no cover - exercised by the red test run
                     self.fail(f"validator rejected the first-party projection: {exc}")
@@ -544,7 +558,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
             source_skill_root = source_root / "skills" / "using-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers"
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
             projected_skill_root = plugin_root / "skills" / "using-superpowers"
 
             _touch(
@@ -559,7 +573,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
             _touch(projected_skill_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: using-superpowers}\n")
 
             for rel_path in (
-                ".codex-plugin/plugin.json",
                 "LICENSE",
                 "SOURCE.md",
                 "PROJECTION.md",
@@ -599,12 +612,14 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 else:
                     _touch(target)
 
+            _write_superpowers_plugin_manifests(source_root, plugin_root)
+
             bundle_manifest = {
-                "bundle_name": "superpowers",
+                "bundle_name": "superpowers-plus",
                 "bundle_version": "5.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers",
+                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
                 "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
@@ -648,7 +663,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 plugin_root / "references" / "provenance-map.json",
                 json.dumps(
                     {
-                        "bundle_name": "superpowers",
+                        "bundle_name": "superpowers-plus",
                         "bundle_version": "5.1.0",
                         "upstream": {
                             "repository": "https://github.com/obra/superpowers",
@@ -658,7 +673,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                             "license": "MIT",
                         },
                         "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-                        "active_projection_root": "codex-marketplace/plugins/superpowers",
+                        "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
                         "codex_surface": {
                             "plugin_manifest": ".codex-plugin/plugin.json",
                             "skills_root": "skills",
@@ -680,7 +695,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                                 "source_category": "third_party",
                                 "content_mode": "adapted",
                                 "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
-                                "local_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
+                                "local_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers",
                                 "copy_expectation": "adapted_from_source",
                                 "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
                                 "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
@@ -707,9 +722,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
             with patch("validate_marketplace.ROOT", temp_root):
                 with self.assertRaisesRegex(
                     ValueError,
-                    r"superpowers adapted entry using-superpowers needs adaptation-overlays/superpowers/using-superpowers",
+                    r"superpowers-plus adapted entry using-superpowers needs adaptation-overlays/superpowers-plus/using-superpowers",
                 ):
-                    validate_superpowers_bundle_manifest(bundle_manifest, plugin_root="codex-marketplace/plugins/superpowers")
+                    validate_superpowers_bundle_manifest(bundle_manifest, plugin_root="codex-marketplace/plugins/superpowers-plus")
 
 
 if __name__ == "__main__":

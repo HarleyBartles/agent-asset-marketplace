@@ -81,11 +81,10 @@ def resolve_gpt_export_policy(*, pack: str, skill: str) -> GPTExportPolicy:
     policy = policy_index.get((pack, skill))
     if policy is not None:
         return policy
-    if pack == "superpowers":
+    if pack == "superpowers-plus":
         raise ValueError(f"gpt export manifest is missing a classification for {pack}/{skill}")
     return GPTExportPolicy(export_mode=default_export_mode)
 
 
 def stage_skill_tree(source_root: Path, overlay_root: Path | None) -> tuple[Path, tempfile.TemporaryDirectory[str]]:
     return stage_overlay_tree(source_root, overlay_root)
-
