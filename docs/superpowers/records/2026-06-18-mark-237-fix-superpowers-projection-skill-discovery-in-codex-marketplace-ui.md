@@ -2,61 +2,57 @@
 
 **Issue:** MARK-237
 **Branch:** `harleydbartles/mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui`
-**Starting main SHA:** `7c1b9f2e93dcaa6a464dd81290414960a02b65a4`
-**Implementation SHA:** `15a6f597dc32886ec4ac9f23d05c9734f87fa7e4`
-**Publication state:** Draft branch work in progress. This record captures the implementation commit separately from the later publication commit and PR evidence.
+**Starting main SHA:** `81b82b579a3ede48a914e61da0edc8fd01237ca6`
+**Implementation SHA:** `060afa560b274f1514f590804b89a98bc8743180`
+**Publication state:** Implementation committed locally; branch still needs push and draft PR publication.
 
 ## Changed files
 
-- `codex-marketplace/plugins/superpowers/.codex-plugin/plugin.json`
+- `adaptation-overlays/superpowers/finishing-a-development-branch/SKILL.md`
+- `adaptation-overlays/superpowers/finishing-a-development-branch/agents/openai.yaml`
+- `adaptation-overlays/superpowers/finishing-a-development-branch/overlay.yaml`
+- `adaptation-overlays/superpowers/using-superpowers/SKILL.md`
+- `adaptation-overlays/superpowers/using-superpowers/agents/openai.yaml`
+- `adaptation-overlays/superpowers/using-superpowers/overlay.yaml`
 - `codex-marketplace/plugins/superpowers/PROJECTION.md`
-- `codex-marketplace/plugins/superpowers/SOURCE.md`
 - `codex-marketplace/plugins/superpowers/references/bundle-manifest.json`
 - `codex-marketplace/plugins/superpowers/references/codex-marketplace-compatibility.md`
 - `codex-marketplace/plugins/superpowers/references/provenance-map.json`
-- `codex-marketplace/plugins/superpowers/skills/architecture-superpowers/SKILL.md`
-- `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md`
-- `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/agents/openai.yaml`
 - `codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch/SKILL.md`
-- `codex-marketplace/plugins/superpowers/skills/github-superpowers/SKILL.md`
-- `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/SKILL.md`
+- `codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch/agents/openai.yaml`
 - `codex-marketplace/plugins/superpowers/skills/using-superpowers/SKILL.md`
+- `codex-marketplace/plugins/superpowers/skills/using-superpowers/agents/openai.yaml`
+- `docs/contracts/openai-agent-yaml.md`
+- `docs/contracts/skill-frontmatter.md`
 - `generated/skill-zips/registry.json`
-- `generated/skill-zips/superpowers/architecture-superpowers/skill.zip`
-- `generated/skill-zips/superpowers/codex-receipts-superpowers/skill.zip`
-- `generated/skill-zips/superpowers/github-superpowers/skill.zip`
-- `generated/skill-zips/superpowers/unslop-superpowers/skill.zip`
-- `requirements.txt`
-- `sources/first_party/skills/architecture-superpowers/SKILL.md`
-- `sources/first_party/skills/github-superpowers/SKILL.md`
-- `sources/first_party/skills/unslop-superpowers/SKILL.md`
-- `docs/superpowers/records/2026-06-18-mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui.md`
+- `generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip`
+- `generated/skill-zips/superpowers/using-superpowers/skill.zip`
+- `tests/test_skill_overlay_materializer.py`
+- `tests/test_validate_marketplace.py`
+- `tools/materialize_superpowers_projection.py`
+- `tools/skill_gpt_exports.py`
+- `tools/skill_overlay_materializer.py`
 - `tools/skill_zip_artifacts.py`
+- `tools/update_skill_artifacts.py`
+- `tools/validate_generated_drift.py`
 - `tools/validate_marketplace.py`
 
 ## What changed
 
-- Normalized the surviving projected Superpowers skill files so the marketplace-facing `SKILL.md` files begin with standalone YAML frontmatter, have required `name` and `description` fields, and are BOM-free where the issue called out corruption.
-- Removed `codex-receipts-superpowers` from the active Superpowers projection and deleted the projected directory so the install surface matches the intended surviving skill set.
-- Updated the Superpowers bundle manifest, projection docs, provenance map, and marketplace compatibility note to reflect the reduced active projection.
-- Added frontmatter validation helpers that reject BOM-prefixed or malformed `SKILL.md` headers for the Superpowers marketplace surface.
-- Regenerated the skill zip corpus and `generated/skill-zips/registry.json`.
-- Narrowed the mirror validation to compare canonical text bytes rather than flagging line-ending noise as projection drift.
-
-## Repair pass addendum
-
-- Restored the full behavior-bearing bodies for `using-superpowers` and `finishing-a-development-branch` in the projected Superpowers install surface.
-- Added source-controlled Python dependency declarations for the repo startup lane with `PyYAML` and `Pillow`.
-- Explicitly documented the `source custody -> projection layer -> installation/export layer` model in the Superpowers projection docs and compatibility note.
-- Kept the third-party source custody snapshot verbatim while making the marketplace projection the only adapted layer.
-- Switched Superpowers frontmatter validation to real YAML parsing with duplicate-key safety while preserving nested metadata structures already used by installable skills.
-- Added regression coverage for BOMs, collapsed frontmatter, missing delimiters, missing or blank required fields, duplicate keys, nested metadata acceptance, and the three-layer projection model text.
-- Regenerated the canonical skill zip registry after the source restoration and projection-doc updates.
+- Added a source-controlled adaptation overlay layer for `using-superpowers` and `finishing-a-development-branch`.
+- Preserved the full behavior-bearing skill bodies in the overlay copies and normalized the `SKILL.md` frontmatter for Codex parsing.
+- Added explicit contracts for skill frontmatter and `agents/openai.yaml` under `docs/contracts/`.
+- Added a canonical Superpowers projection materializer that rebuilds `codex-marketplace/plugins/superpowers/skills/...` from custody plus overlays.
+- Updated bundle/provenance metadata so adapted third-party entries carry explicit `adaptation_overlay_path` values.
+- Tightened validation to parse YAML frontmatter, enforce required metadata shape, verify overlay contracts, and reconstruct the Superpowers projection from source plus overlay.
+- Regenerated the canonical Superpowers skill zips and registry through the update tooling.
 
 ## Validation
 
-- `py -3 tools/update_skill_artifacts.py --all`
+- `py -3 -m unittest tests.test_skill_overlay_materializer`
 - `py -3 -m unittest tests.test_validate_marketplace`
+- `py -3 tools/materialize_superpowers_projection.py --check`
+- `py -3 tools/update_skill_artifacts.py --all`
 - `py -3 tools/validate_marketplace.py`
 - `py -3 tools/validate_repo_index.py`
 - `py -3 tools/validate_generated_drift.py --base origin/main`
@@ -64,16 +60,11 @@
 
 ## Results
 
-- Marketplace validation passed after the projection cleanup and validation updates.
-- Unit tests passed after the projection cleanup, doc updates, and validation updates.
-- Repo-index validation passed.
+- Overlay materialization tests passed.
+- Marketplace validation passed with adapted Superpowers entries reconstructed from source plus overlay.
+- Projection check passed for the materialized Superpowers skill tree.
+- Generated skill zips and registry were refreshed successfully.
+- Repo index validation passed.
 - Generated drift validation passed against `origin/main`.
 - Diff whitespace checks passed.
-- The Superpowers validator now accepts canonical nested metadata while still requiring nonblank `name` and `description` fields in `SKILL.md` frontmatter.
-- The projection docs now encode the custody split explicitly, and the validator checks that text rather than relying only on file presence.
-- UI install proof was not run in this workspace; the remaining verification is for Harley to confirm the Codex marketplace UI lists the surviving Superpowers skills after install.
-
-## Coordination note
-
-- This branch coordinated the MARK-236 receipt-skill removal by dropping `codex-receipts-superpowers` from the active Superpowers projection.
-- The canonical source snapshot for the removed skill remains in `sources/first_party/skills/codex-receipts-superpowers/` as historical custody, but it is no longer part of the installable Superpowers projection.
+- The branch is ready for publication once pushed and wrapped in a draft PR.
