@@ -2143,13 +2143,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 4201,
-      "source_sha256": "a33c946d1bf7121c62f57c31f4a4e5982ca06b4109f32030e27d787b25892f7b",
+      "source_bytes": 4713,
+      "source_sha256": "19366e388f052750b92b27dbfed4be6379a6738e2af2334c9ef83b5d61257e03",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2163,
-      "zip_sha256": "ec08cf561a7ede0c00acaeb53ad3bfa0c7d93e7a3d2c80dfb2ccd37717089247"
+      "zip_size_bytes": 2400,
+      "zip_sha256": "9dcea8e18cdf8f9719a3df91141615436fcd75a628999b98ef69addde5ebdb2f"
     },
     {
       "pack": "superpowers-plus",

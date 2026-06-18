@@ -18,6 +18,7 @@ from skill_zip_artifacts import (
     record_to_artifact,
     validate_skill_zip_registry,
 )
+from marketplace_utils import load_json
 
 PACKAGING_TOOLING_PATHS = {
     "tools/skill_zip_artifacts.py",
