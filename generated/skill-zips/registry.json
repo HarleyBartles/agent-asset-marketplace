@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 143,
+  "artifact_count": 146,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1702,6 +1702,54 @@
       "overlay_sha256": null,
       "zip_size_bytes": 10653,
       "zip_sha256": "d8441bdd2b36563053da0afc4b9d5f3b1f1feb3c19ccdb5e844f00f8e355cec1"
+    },
+    {
+      "pack": "language-patterns-pack",
+      "skill": "async-python-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/async-python-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 12817,
+      "source_sha256": "06f29ea66038e362f0a28f94a76cc43a1adba84ae765de9d65163265ac037499",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 4784,
+      "zip_sha256": "d3dc58bf11e712c27e40d5843ad27950e4a4b6f201b009bf27adee33bf49c19e"
+    },
+    {
+      "pack": "language-patterns-pack",
+      "skill": "python-performance-optimization",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 20935,
+      "source_sha256": "b6e2f57774108b11d8b01dad7e7176d38a5319f786af6061a3b1168dfdf18ef6",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 10180,
+      "zip_sha256": "30ea755ead70af3d61b340d055e7bc9e38fedd5c3a771a13b5fe8895b0c19308"
+    },
+    {
+      "pack": "language-patterns-pack",
+      "skill": "python-testing-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 60600,
+      "source_sha256": "e33b919ca0ac328875a4c985df40f867556855aa76f4a7013f422964f9420b75",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 24183,
+      "zip_sha256": "273f63a6224eecc19e3b2cb389e62b3eba652641581ec782d6b45b71dc426da8"
     },
     {
       "pack": "language-patterns-pack",
