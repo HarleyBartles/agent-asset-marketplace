@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 135,
+  "artifact_count": 137,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -454,6 +454,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 7037,
       "zip_sha256": "5f0c80114c372e7e823f3d334860abf450f43a7a595c7bb22e5c91b02499dafd"
+    },
+    {
+      "pack": "codex-cortex",
+      "skill": "threat-modeling-techniques",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/codex-cortex/skills/threat-modeling-techniques",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 13849,
+      "source_sha256": "8ff4d57ec35f03e370535d2d999ba2f915e1eef4db25252d0eaac2b312b9631d",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 9153,
+      "zip_sha256": "aca1ffdff18e154d7a25b562f85b6b111f97c2a984c324eab8be8789a9b25099"
     },
     {
       "pack": "dotnet-kit",
@@ -1734,6 +1750,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 1910,
       "zip_sha256": "f9d5541e12847bbe6de83f2ba612c89e0722676991e0351d01ef02f26ed1eeba"
+    },
+    {
+      "pack": "security-pack",
+      "skill": "threat-modeling-techniques",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 13844,
+      "source_sha256": "10fecc4670229bbf0ea6cea4f6ebce42db52cee0cb387b8cf7a61d0d0d3e10f9",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 9148,
+      "zip_sha256": "a666ae92908c636afb3e60a82cf484ccc20e4abdfed4f4d6ae3158cd7725fdce"
     },
     {
       "pack": "superpowers",

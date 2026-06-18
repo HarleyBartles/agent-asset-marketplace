@@ -1,0 +1,111 @@
+{
+  "bundle_name": "security-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "NickCrew/Claude-Cortex",
+  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 13,
+  "imported_count": 13,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
+      "local_path": "skills/threat-modeling-techniques/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Claude-Cortex source into the installable security-pack slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
+      "local_path": "skills/threat-modeling-techniques/references/attack-trees.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the threat-tree reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
+      "local_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the DFD reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
+      "local_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the DREAD scoring reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
+      "local_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the mitigation planning reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE spoofing reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE tampering reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE repudiation reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE information disclosure reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-dos.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE denial-of-service reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
+      "local_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the STRIDE elevation-of-privilege reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
+      "local_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the tooling and process reference for the installable slice."
+    },
+    {
+      "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
+      "local_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Projected as the threat-modeling quality rubric for the installable slice."
+    }
+  ],
+  "notes": [
+    "One-slice security pack.",
+    "The bundle projects the retained threat-modeling-techniques guidance into an installable marketplace shape.",
+    "The slice stays focused on pre-implementation risk framing, attack surfaces, abuse cases, and security design choices."
+  ]
+}
+

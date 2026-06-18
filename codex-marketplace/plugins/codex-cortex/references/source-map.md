@@ -3,8 +3,9 @@
 This bundle holds the MARK-172 `cqrs-event-sourcing` seed, the MARK-200
 `event-driven-architecture` import, the MARK-201
 `database-design-patterns` import, the MARK-204 `api-design-patterns` import,
-and the MARK-205 `openapi-specification` import from a selective retained
-snapshot of `NickCrew/Claude-Cortex`.
+the MARK-205 `openapi-specification` import, and the MARK-210
+`threat-modeling-techniques` import from a selective retained snapshot of
+`NickCrew/Claude-Cortex`.
 
 Retained upstream evidence:
 
@@ -38,6 +39,19 @@ Retained upstream evidence:
 - `sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md`
 - `sources/third_party/codex-cortex/upstream/skills/openapi-specification/references/spec-patterns.md`
 - `sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/attack-trees.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/data-flow-diagrams.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/dread-scoring.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/mitigation-strategies.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-spoofing.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-tampering.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-repudiation.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-disclosure.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-dos.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-elevation.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md`
+- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml`
 
 First-party custody:
 
@@ -55,6 +69,7 @@ Retained custody skill:
 | database-design-patterns | `sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-201 database guidance follow-on. |
 | api-design-patterns | `sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-204 contract-doctrine follow-on. |
 | openapi-specification | `sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/openapi-specification/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-205 OpenAPI companion follow-on. |
+| threat-modeling-techniques | `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/threat-modeling-techniques/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-210 security-framing follow-on. |
 
 The pack root is the installable custody home. It does not replace the
 first-party import ledger or the downstream `architecture-pack` and
