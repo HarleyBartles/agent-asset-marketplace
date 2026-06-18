@@ -3,7 +3,7 @@
 **Issue:** MARK-237
 **Branch:** `harleydbartles/mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui`
 **Starting main SHA:** `7c1b9f2e93dcaa6a464dd81290414960a02b65a4`
-**Implementation SHA:** `579bc92fc44a20247b9405b44bb061c1451d4d0c`
+**Implementation SHA:** `15a6f597dc32886ec4ac9f23d05c9734f87fa7e4`
 **Publication state:** Draft branch work in progress. This record captures the implementation commit separately from the later publication commit and PR evidence.
 
 ## Changed files
@@ -26,9 +26,11 @@
 - `generated/skill-zips/superpowers/codex-receipts-superpowers/skill.zip`
 - `generated/skill-zips/superpowers/github-superpowers/skill.zip`
 - `generated/skill-zips/superpowers/unslop-superpowers/skill.zip`
+- `requirements.txt`
 - `sources/first_party/skills/architecture-superpowers/SKILL.md`
 - `sources/first_party/skills/github-superpowers/SKILL.md`
 - `sources/first_party/skills/unslop-superpowers/SKILL.md`
+- `docs/superpowers/records/2026-06-18-mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui.md`
 - `tools/skill_zip_artifacts.py`
 - `tools/validate_marketplace.py`
 
@@ -45,13 +47,16 @@
 
 - Restored the full behavior-bearing bodies for `using-superpowers` and `finishing-a-development-branch` in the projected Superpowers install surface.
 - Added source-controlled Python dependency declarations for the repo startup lane with `PyYAML` and `Pillow`.
+- Explicitly documented the `source custody -> projection layer -> installation/export layer` model in the Superpowers projection docs and compatibility note.
+- Kept the third-party source custody snapshot verbatim while making the marketplace projection the only adapted layer.
 - Switched Superpowers frontmatter validation to real YAML parsing with duplicate-key safety while preserving nested metadata structures already used by installable skills.
-- Added regression coverage for BOMs, collapsed frontmatter, missing delimiters, missing or blank required fields, duplicate keys, and nested metadata acceptance.
-- Regenerated the canonical skill zip registry after the source restoration.
+- Added regression coverage for BOMs, collapsed frontmatter, missing delimiters, missing or blank required fields, duplicate keys, nested metadata acceptance, and the three-layer projection model text.
+- Regenerated the canonical skill zip registry after the source restoration and projection-doc updates.
 
 ## Validation
 
 - `py -3 tools/update_skill_artifacts.py --all`
+- `py -3 -m unittest tests.test_validate_marketplace`
 - `py -3 tools/validate_marketplace.py`
 - `py -3 tools/validate_repo_index.py`
 - `py -3 tools/validate_generated_drift.py --base origin/main`
@@ -60,10 +65,12 @@
 ## Results
 
 - Marketplace validation passed after the projection cleanup and validation updates.
+- Unit tests passed after the projection cleanup, doc updates, and validation updates.
 - Repo-index validation passed.
 - Generated drift validation passed against `origin/main`.
 - Diff whitespace checks passed.
 - The Superpowers validator now accepts canonical nested metadata while still requiring nonblank `name` and `description` fields in `SKILL.md` frontmatter.
+- The projection docs now encode the custody split explicitly, and the validator checks that text rather than relying only on file presence.
 - UI install proof was not run in this workspace; the remaining verification is for Harley to confirm the Codex marketplace UI lists the surviving Superpowers skills after install.
 
 ## Coordination note
