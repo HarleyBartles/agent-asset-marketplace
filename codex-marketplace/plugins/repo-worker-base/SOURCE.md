@@ -51,4 +51,4 @@ keeping work small, honest, and routed to the right specialist.
 The `connector-safety` and `github-operations` skills are projected as the
 generic safety/proof helper surfaces that no longer need House Skills as the
 install surface. Their canonical source roots live under
-`sources/first_party/skills/<skill>/`.
+`sources/first_party/core/<skill>/`.
