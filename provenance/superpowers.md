@@ -28,7 +28,8 @@ Projection contract:
   compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, and `codex-receipts-superpowers`.
+  `unslop-superpowers`, `codex-receipts-superpowers`, and
+  `architecture-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -56,16 +57,26 @@ into `codex-marketplace/plugins/superpowers/skills/unslop-superpowers/`
 and the first-party `codex-receipts-superpowers` skill from
 `sources/first_party/skills/codex-receipts-superpowers/`
 into `codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/`
+and the first-party `architecture-superpowers` skill from
+`sources/first_party/skills/architecture-superpowers/`
+into `codex-marketplace/plugins/superpowers/skills/architecture-superpowers/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, anti-slop, and receipt workflow skills without creating second editable source
-roots.
+GitHub, anti-slop, receipt, and architecture workflow skills without creating
+second editable source roots.
 
 These first-party projections are directory-level skill specs with
 `SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
 
-`linear-superpowers`, `github-superpowers`, and `codex-receipts-superpowers`
-invoke `unslop-superpowers` when repo-specific anti-slop controls,
-profile-aware non-goals, or evidence requirements matter.
+`linear-superpowers`, `github-superpowers`, `codex-receipts-superpowers`, and
+`architecture-superpowers` invoke `unslop-superpowers` when repo-specific
+anti-slop controls, profile-aware non-goals, or evidence requirements matter.
+
+This is the final allowed pre-fork Superpowers wrapper projection. Any further
+first-party wrapper projection into `superpowers` requires the Superpowers
+fork/overlay custody model to exist first, plus a migration plan for the
+existing wrapper set:
+`linear-superpowers`, `github-superpowers`, `unslop-superpowers`,
+`codex-receipts-superpowers`, and `architecture-superpowers`.
 
 ## Excluded from the active projection
 

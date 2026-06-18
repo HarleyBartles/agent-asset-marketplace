@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 133,
+  "artifact_count": 134,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1718,6 +1718,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 1910,
       "zip_sha256": "f9d5541e12847bbe6de83f2ba612c89e0722676991e0351d01ef02f26ed1eeba"
+    },
+    {
+      "pack": "superpowers",
+      "skill": "architecture-superpowers",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/superpowers/skills/architecture-superpowers",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/superpowers/architecture-superpowers/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3192,
+      "source_sha256": "164973122eb7efd1320784741f4945fd899a1803e422f3fde9bd70daa5217d0b",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1752,
+      "zip_sha256": "dc9aa06c8e6eb533d29959c910f6f345f5c5edbe61cdb90c418a35415e6a0257"
     },
     {
       "pack": "superpowers",

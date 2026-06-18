@@ -54,6 +54,11 @@
           "reason": "The wrapper is GPT-safe and composes shared workflow guidance without Codex-only tool assumptions."
         },
         {
+          "skill": "architecture-superpowers",
+          "export_mode": "direct",
+          "reason": "This first-party projection is GPT-safe as a compositional architecture router and gate."
+        },
+        {
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
