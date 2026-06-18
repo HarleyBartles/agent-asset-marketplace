@@ -3,8 +3,8 @@
 **Issue:** MARK-237
 **Branch:** `harleydbartles/mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui`
 **Starting main SHA:** `81b82b579a3ede48a914e61da0edc8fd01237ca6`
-**Implementation SHA:** `c15e0030b4376063ec1b63c6436ca01b0f788f5e`
-**Publication state:** Implementation committed; branch has been pushed and the draft PR is open.
+**Implementation SHA:** `198b90f94a67d520396cdb175dca9d5ba6ad9fff`
+**Publication state:** Implementation committed locally; branch will be pushed and the draft PR updated.
 
 ## Changed files
 
@@ -36,6 +36,7 @@
 - `tools/update_skill_artifacts.py`
 - `tools/validate_generated_drift.py`
 - `tools/validate_marketplace.py`
+- `docs/superpowers/records/2026-06-18-mark-237-fix-superpowers-projection-skill-discovery-in-codex-marketplace-ui.md`
 
 ## What changed
 
@@ -67,4 +68,5 @@
 - Repo index validation passed.
 - Generated drift validation passed against `origin/main`.
 - Diff whitespace checks passed.
+- The `using-superpowers` projection and overlay were corrected to remove the unsafe override claim while keeping the compatibility reference intact.
 - The branch is ready for publication once pushed and wrapped in a draft PR.
