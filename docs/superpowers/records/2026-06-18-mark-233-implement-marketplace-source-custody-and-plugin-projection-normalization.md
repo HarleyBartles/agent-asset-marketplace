@@ -3,7 +3,7 @@
 **Issue:** MARK-233
 **Branch:** `harleydbartles/mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization`
 **Starting main SHA:** `1da78655b12cc0d1e70e91b184893021295ea763`
-**Implementation commit SHA:** `640dd23893ed218c3e0a29512437fee4fb4d2c8c`
+**Implementation commit SHA:** `3a339922fe462c155434c7f58118fa365608b78a`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/121](https://github.com/HarleyBartles/agent-asset-marketplace/pull/121)
 **Publication state:** This record captures the MARK-233 custody move that relocates the shared first-party marketplace core skills into `sources/first_party/core/`, the matching projection/path normalization across the marketplace surfaces, and the Superpowers source/projection byte-alignment needed to keep the bundle validators clean. The branch is published on draft PR #121 against `main`.
 
@@ -57,7 +57,7 @@ Representative repo surfaces changed for this issue:
 ## Scope and boundary
 
 - Included: moving the shared first-party core skills into `sources/first_party/core/`, updating the marketplace source/projection references that point at those roots, refreshing the generated skill-zips corpus, and normalizing the Superpowers retained snapshot so byte-sensitive bundle validation passes.
-- Included as validation repair: aligning `sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json` and the mirrored Superpowers skill files to the active projection bytes so `validate_marketplace.py` could complete.
+- Included as validation repair: restoring the retained upstream Superpowers snapshots to upstream-only content, and aligning `sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json` plus the mirrored Superpowers skill files to the active projection bytes so `validate_marketplace.py` could complete.
 - Excluded: any repo-wide cleanup beyond the exact custody and projection paths needed for MARK-233.
 
 ## Generated artifact alignment
@@ -86,4 +86,5 @@ This is a derived export surface, not canonical source.
 ## Notes
 
 - The implementation record intentionally separates the MARK-233 slice from any unrelated repo drift.
+- The retained upstream Superpowers snapshots no longer carry repo-specific Codex doctrine; the projection compatibility note holds the marketplace-specific adaptation guidance instead.
 - The final publication metadata is recorded above and matches the draft PR published on GitHub.
