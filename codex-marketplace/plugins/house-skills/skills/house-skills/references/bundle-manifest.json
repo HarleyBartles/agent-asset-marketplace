@@ -8,7 +8,7 @@
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills"
   },
-  "skill_count": 58,
+  "skill_count": 56,
   "skills": [
     {
       "name": "adventures-asset-sheet-compiler",
@@ -144,16 +144,6 @@
       "name": "linear-superpowers",
       "lane": "Base and control plane",
       "path": "sources/first_party/core/linear-superpowers"
-    },
-    {
-      "name": "codex-repo-receipts",
-      "lane": "Base and control plane",
-      "path": "sources/first_party/core/codex-repo-receipts"
-    },
-    {
-      "name": "codex-receipts-superpowers",
-      "lane": "Base and control plane",
-      "path": "sources/first_party/skills/codex-receipts-superpowers"
     },
     {
       "name": "github-operations",

@@ -502,26 +502,6 @@
     "notes": "First-party Harley-owned source custody for a compositional anti-slop guard skill. Composes @using-superpowers and @unslop, turns profile findings into non-goals and evidence requirements, and preserves the narrow direct-to-main escape hatch for profile-only updates."
   },
   {
-    "issue": "MARK-160",
-    "source_id": "codex-repo-receipts-v1",
-    "source_path": "sources/first_party/core/codex-repo-receipts",
-    "public_name": "codex-repo-receipts",
-    "provenance_name": "MARK-160 repo receipt workflow skill",
-    "scope": "repo-resident plan and implementation-record receipts for non-trivial repo-backed work",
-    "import_state": "imported",
-    "notes": "First-party Harley-owned source custody for a compositional repo receipt skill. Composes /codex-repo-receipts and keeps durable plan and implementation-record receipts in the repository's local convention or docs/superpowers/plans/ and docs/superpowers/records/ by default."
-  },
-  {
-    "issue": "MARK-162",
-    "source_id": "codex-receipts-superpowers-v1",
-    "source_path": "sources/first_party/skills/codex-receipts-superpowers",
-    "public_name": "codex-receipts-superpowers",
-    "provenance_name": "MARK-162 Codex Receipts Superpowers compositional skill",
-    "scope": "repo-backed planning and durable receipt composition for non-trivial work",
-    "import_state": "imported",
-    "notes": "First-party Harley-owned source custody for a compositional repo planning-and-receipts wrapper. Composes @using-superpowers, @writing-plans, @executing-plans, repo-worker-base:codex-repo-receipts, and @unslop-superpowers, keeps the matching implementation record linked from the PR body or final worker report, and preserves the narrow omission path for tiny mechanical changes."
-  },
-  {
     "issue": "MARK-142",
     "source_id": "github-operations-v1",
     "source_path": "sources/first_party/core/github-operations",

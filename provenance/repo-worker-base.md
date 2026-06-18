@@ -12,10 +12,6 @@
 - The plugin content is limited to fresh-main discipline, worker branching,
   validation evidence, publication reporting, and the generic safety/proof
   helpers that repo-backed work needs.
-- `codex-repo-receipts` is projected here from the canonical House Skills
-  source at `sources/first_party/core/codex-repo-receipts`
-  so repo-backed work can publish durable plan and implementation-record
-  receipts from the repo-worker-base plugin surface.
 - `boring-loop` is projected here from the canonical first-party source at
   `sources/first_party/core/boring-loop/` and keeps the same retained loop
   cadence, readiness, queue grooming, and specialist-routing doctrine on the

@@ -33,8 +33,6 @@ Current skill inventory:
 | Base and control plane | asset-market | `sources/first_party/skills/asset-market` |
 | Base and control plane | linear-issue-compactor | `sources/first_party/skills/linear-issue-compactor` |
 | Base and control plane | linear-superpowers | `sources/first_party/core/linear-superpowers` |
-| Base and control plane | codex-repo-receipts | `sources/first_party/core/codex-repo-receipts` |
-| Base and control plane | codex-receipts-superpowers | `sources/first_party/skills/codex-receipts-superpowers` |
 | Base and control plane | github-operations | `sources/first_party/core/github-operations` |
 | Base and control plane | github-superpowers | `sources/first_party/skills/github-superpowers` |
 | Base and control plane | unslop-superpowers | `sources/first_party/skills/unslop-superpowers` |
