@@ -1,7 +1,7 @@
 {
   "name": "codex-cortex",
   "version": "1.0.0",
-  "description": "Codex marketplace custody bundle for the retained Claude-Cortex cqrs-event-sourcing, event-driven-architecture, database-design-patterns, and api-design-patterns imports.",
+  "description": "Codex marketplace custody bundle for the retained Claude-Cortex cqrs-event-sourcing, event-driven-architecture, database-design-patterns, api-design-patterns, and openapi-specification imports.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -18,6 +18,7 @@
     "event-driven",
     "database",
     "api",
+    "openapi",
     "schema",
     "saga",
     "message-broker",
@@ -28,7 +29,7 @@
   "interface": {
     "displayName": "Codex Cortex",
     "shortDescription": "Retained Claude-Cortex custody surface",
-    "longDescription": "A repo-local Codex plugin bundle that holds the MARK-172 cqrs-event-sourcing seed, the MARK-200 event-driven-architecture import, the MARK-201 database-design-patterns import, and the MARK-204 api-design-patterns import as the canonical source surface for downstream projection.",
+    "longDescription": "A repo-local Codex plugin bundle that holds the MARK-172 cqrs-event-sourcing seed, the MARK-200 event-driven-architecture import, the MARK-201 database-design-patterns import, the MARK-204 api-design-patterns import, and the MARK-205 openapi-specification import as the canonical source surface for downstream projection.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -37,7 +38,7 @@
     ],
     "defaultPrompt": [
       "Inspect the Codex Cortex bundle and source map.",
-      "Use the bundle to review the cqrs-event-sourcing, event-driven-architecture, database-design-patterns, and api-design-patterns custody sources.",
+      "Use the bundle to review the cqrs-event-sourcing, event-driven-architecture, database-design-patterns, api-design-patterns, and openapi-specification custody sources.",
       "Compare the bundle versioning against the downstream Architecture Pack and API Contracts Pack projections."
     ],
     "brandColor": "#1D4ED8",

@@ -22,13 +22,15 @@
 - Generated install unit: `generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/database-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/codex-cortex/api-design-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/codex-cortex/openapi-specification/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
 - Generated install unit: `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
+- Generated install unit: `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
 
 ## Boundary
 
 The retained custody surface seeds `cqrs-event-sourcing`,
-`event-driven-architecture`, `database-design-patterns`, and
-`api-design-patterns`. No later Claude-Cortex candidate is imported.
+`event-driven-architecture`, `database-design-patterns`, `api-design-patterns`,
+and `openapi-specification`. No later Claude-Cortex candidate is imported.

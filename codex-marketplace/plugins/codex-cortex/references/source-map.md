@@ -2,9 +2,9 @@
 
 This bundle holds the MARK-172 `cqrs-event-sourcing` seed, the MARK-200
 `event-driven-architecture` import, the MARK-201
-`database-design-patterns` import, and the MARK-204
-`api-design-patterns` import from a selective retained snapshot of
-`NickCrew/Claude-Cortex`.
+`database-design-patterns` import, the MARK-204 `api-design-patterns` import,
+and the MARK-205 `openapi-specification` import from a selective retained
+snapshot of `NickCrew/Claude-Cortex`.
 
 Retained upstream evidence:
 
@@ -35,6 +35,9 @@ Retained upstream evidence:
 - `sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md`
 - `sources/third_party/codex-cortex/upstream/skills/api-design-patterns/references/design-process.md`
 - `sources/third_party/codex-cortex/upstream/skills/api-design-patterns/validation/rubric.yaml`
+- `sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md`
+- `sources/third_party/codex-cortex/upstream/skills/openapi-specification/references/spec-patterns.md`
+- `sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml`
 
 First-party custody:
 
@@ -51,6 +54,8 @@ Retained custody skill:
 | event-driven-architecture | `sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-200 architecture follow-on. |
 | database-design-patterns | `sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-201 database guidance follow-on. |
 | api-design-patterns | `sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-204 contract-doctrine follow-on. |
+| openapi-specification | `sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md` | `codex-marketplace/plugins/codex-cortex/skills/openapi-specification/SKILL.md` | Imported into the Codex Cortex custody plugin and retained as the MARK-205 OpenAPI companion follow-on. |
 
 The pack root is the installable custody home. It does not replace the
-first-party import ledger or the downstream `architecture-pack` projection.
+first-party import ledger or the downstream `architecture-pack` and
+`api-contracts-pack` projections.

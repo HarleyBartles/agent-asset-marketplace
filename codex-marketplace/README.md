@@ -14,7 +14,7 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/repo-worker-base/`,
 `codex-marketplace/plugins/dotnet-kit/`,
 `codex-marketplace/plugins/codex-cortex/`,
-`codex-marketplace/plugins/api-contracts-pack/`,
+`codex-marketplace/plugins/api-contracts-pack/`, and
 `codex-marketplace/plugins/architecture-pack/`, in that order, with the source
 manifest exposing only those roots and no legacy marketplace roots beside them.
 
@@ -24,7 +24,7 @@ are the installable projections.
 
 The editable active-root inventory is `codex-marketplace/plugin-roots.json`.
 The manifest export and the protected-root validators derive their active root
-set from that file instead of duplicating the seven roots in Python constants.
+set from that file instead of duplicating the active roots in Python constants.
 
 Repo-resident canonical `skill.zip` artifacts are published separately under
 `generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip`, with

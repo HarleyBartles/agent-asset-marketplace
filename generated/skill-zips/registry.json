@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 131,
+  "artifact_count": 133,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -312,6 +312,22 @@
       "zip_sha256": "2feeaf75b27cbe9e2a755bf5261a9e7c2e1e4b2a5ea2b7cd29f3710fd7063bc6"
     },
     {
+      "pack": "api-contracts-pack",
+      "skill": "openapi-specification",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/api-contracts-pack/skills/openapi-specification",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip",
+      "source_file_count": 3,
+      "source_bytes": 9291,
+      "source_sha256": "658ae34aa3d7b7916e7752aba2d4bca3693daea9e769e4c06428b9f853aec9f0",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 4390,
+      "zip_sha256": "05131aba6be8ee520ef214e8b726874b34551e0b66c82cf990c8d7b772055766"
+    },
+    {
       "pack": "architecture-pack",
       "skill": "cqrs-event-sourcing",
       "export_mode": "direct",
@@ -422,6 +438,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 14508,
       "zip_sha256": "fdd992afa022bab17d77d673d7815185f2800b47b7937cbb9c19e9441cd61a76"
+    },
+    {
+      "pack": "codex-cortex",
+      "skill": "openapi-specification",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/codex-cortex/skills/openapi-specification",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/codex-cortex/openapi-specification/skill.zip",
+      "source_file_count": 3,
+      "source_bytes": 18349,
+      "source_sha256": "1789b674cb39d0fcd13347adb05e90068a0e2680f6a4154bdb5a874119ca6dda",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 7037,
+      "zip_sha256": "5f0c80114c372e7e823f3d334860abf450f43a7a595c7bb22e5c91b02499dafd"
     },
     {
       "pack": "dotnet-kit",

@@ -1,21 +1,23 @@
 {
   "name": "api-contracts-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for contract-first API design and contract validation guidance projected from the retained Codex Cortex custody plugin.",
+  "description": "Codex marketplace bundle for contract-first API design and OpenAPI contract expression projected from the retained Codex Cortex custody plugin.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains a third-party Claude-Cortex-derived contract-doctrine projection; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "rights": "Contains third-party Claude-Cortex-derived contract-doctrine and OpenAPI companion projections; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
   "keywords": [
     "codex",
     "marketplace",
     "api",
     "contracts",
     "rest",
-    "graphql",
+    "openapi",
+    "swagger",
+    "specification",
     "versioning",
     "pagination",
     "validation",
@@ -26,8 +28,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "API Contracts Pack",
-    "shortDescription": "Contract-first API design and validation guidance",
-    "longDescription": "A repo-local Codex plugin bundle that projects the retained Claude-Cortex api-design-patterns guidance into an installable marketplace shape for contract-first API design, backend/frontend contract seams, generated-client expectations, and contract validation posture.",
+    "shortDescription": "Contract-first API design and OpenAPI guidance",
+    "longDescription": "A repo-local Codex plugin bundle that projects the retained Claude-Cortex api-design-patterns guidance and the narrower openapi-specification companion slice into an installable marketplace shape for contract-first API design, OpenAPI expression, generated-client expectations, and contract validation posture.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -36,7 +38,7 @@
     ],
     "defaultPrompt": [
       "Inspect the API Contracts Pack bundle and source map.",
-      "Use the bundle to review the api-design-patterns contract-doctrine slice.",
+      "Use the bundle to review the api-design-patterns and openapi-specification slices.",
       "Compare the bundle versioning against the retained Codex Cortex custody surface."
     ],
     "brandColor": "#0F766E",

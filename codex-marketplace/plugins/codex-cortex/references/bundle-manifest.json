@@ -5,8 +5,8 @@
     "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
     "source_root": ".",
     "path_semantics": "retained-snapshot-relative",
-    "candidate_count": 25,
-    "imported_count": 25,
+    "candidate_count": 28,
+    "imported_count": 28,
     "skipped_count": 0,
     "blocked_count": 0,
     "entries": [
@@ -184,11 +184,32 @@
             "import_status": "imported",
             "content_mode": "verbatim",
             "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the MARK-204 contract-doctrine follow-on."
+        },
+        {
+            "snapshot_path": "skills/openapi-specification/SKILL.md",
+            "local_path": "skills/openapi-specification/SKILL.md",
+            "import_status": "imported",
+            "content_mode": "adapted",
+            "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as the MARK-205 OpenAPI companion source slice."
+        },
+        {
+            "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
+            "local_path": "skills/openapi-specification/references/spec-patterns.md",
+            "import_status": "imported",
+            "content_mode": "verbatim",
+            "adaptation_note": "Imported into the Codex Cortex custody plugin as the retained OpenAPI reference surface."
+        },
+        {
+            "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
+            "local_path": "skills/openapi-specification/validation/rubric.yaml",
+            "import_status": "imported",
+            "content_mode": "adapted",
+            "adaptation_note": "Imported into the Codex Cortex custody plugin as the OpenAPI validation rubric."
         }
     ],
     "notes": [
-        "Four retained contract guidance skills.",
-        "The plugin is the custody home for the imported seed, follow-on architecture skills, and the MARK-204 contract-doctrine slice.",
+        "Five retained guidance skills.",
+        "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, and the MARK-205 OpenAPI companion slice.",
         "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
     ]
 }

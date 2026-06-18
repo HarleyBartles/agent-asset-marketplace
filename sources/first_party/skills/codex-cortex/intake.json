@@ -1,5 +1,5 @@
 {
-  "issue": "MARK-204",
+  "issue": "MARK-205",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
@@ -28,12 +28,19 @@
       "public_name": "api-design-patterns",
       "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
       "status": "imported"
+    },
+    {
+      "source_id": "codex-cortex-openapi-specification-v1",
+      "public_name": "openapi-specification",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "status": "imported"
     }
   ],
   "deferred": [],
   "notes": [
     "Selective retained snapshot only.",
     "The retained custody surface is the durable source home for the imported skills.",
-    "MARK-204 adds api-design-patterns as the umbrella contract-doctrine slice for the api-contracts-pack projection."
+    "MARK-204 adds api-design-patterns as the umbrella contract-doctrine slice for the api-contracts-pack projection.",
+    "MARK-205 adds openapi-specification as the OpenAPI-specific companion slice for the api-contracts-pack projection."
   ]
 }
