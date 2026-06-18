@@ -3,7 +3,7 @@
 **Issue:** MARK-210
 **Branch:** `harleydbartles/mark-210-project-threat-modeling-techniques-into-security-pack`
 **Starting main SHA:** `e27cbb584b01a48107d374a72296c64449f21e91`
-**Implementation commit SHA:** `eb1cc8c8fdc4bb3660cbee0781ea326ac0645d9e`
+**Implementation commit SHA:** `aa9ae64287972c50756e812efc5b4794e8f4e24f`
 **PR URL:** [https://github.com/HarleyBartles/agent-asset-marketplace/pull/118](https://github.com/HarleyBartles/agent-asset-marketplace/pull/118)
 **Publication state:** This record captures the MARK-210 projection of `threat-modeling-techniques` into `security-pack`, the retained `codex-cortex` custody slice, the generated artifact refresh, and the validation blocker that remains outside the issue slice. The issue is published on branch `harleydbartles/mark-210-project-threat-modeling-techniques-into-security-pack` and tracked by PR #118 against `main`.
 
