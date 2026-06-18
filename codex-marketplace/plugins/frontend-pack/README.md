@@ -1,6 +1,6 @@
 # Frontend Pack
 
-Marketplace wrapper for the retained `game-studio` source snapshot projected into a frontend-focused pack.
+Marketplace wrapper for the retained `game-studio` source snapshot projected into an available-source frontend seed.
 
 ## Bundle contents
 
@@ -18,7 +18,10 @@ Marketplace wrapper for the retained `game-studio` source snapshot projected int
 - `game-ui-frontend` carries DOM HUD, menu, overlay, and responsive layout guidance.
 - `react-three-fiber-game` carries React-hosted 3D UI and shared-state guidance.
 - `game-playtest` carries browser-game QA and playtest guidance.
-- The pack does not include the exact issue-named candidates `react-performance-optimization`, `accessibility-audit`, `ux-review`, `interaction-design`, or `webapp-testing` because those names are not present in the retained source snapshot in this checkout.
+- The exact issue-named candidates `react-performance-optimization`, `accessibility-audit`, `ux-review`, `interaction-design`, and `webapp-testing` were searched for in durable repo and retained source surfaces and are not present in this checkout.
+- Because those source files do not exist here, the pack is a source-backed frontend seed rather than a direct projection of the requested five candidates.
+- The game-studio slice is the only retained frontend implementation source available in this checkout, so the current pack intentionally projects that source instead of inventing missing candidates.
+- The missing five remain blocked by source custody, not merely deferred.
 - The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
