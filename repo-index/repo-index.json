@@ -129,11 +129,24 @@
     {
       "name": "third-party-custody",
       "path": "sources/third_party",
-      "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, dotnet-claude-kit, and codex-cortex upstream snapshots.",
+      "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, dotnet-claude-kit, codex-cortex, claude-cortex, and ecc upstream snapshots.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",
       "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+      "key_validation_scripts": [
+        "tools/validate_repo_index.py",
+        "tools/validate_marketplace.py"
+      ]
+    },
+    {
+      "name": "ecc-custody",
+      "path": "sources/third_party/ecc/upstream",
+      "purpose": "Retained third-party source custody for the promoted ECC upstream skills inventory and adoption-target notes.",
+      "surface_kind": "vendored",
+      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+      "guidance_scope": "repo-owned-guidance",
+      "notes": "Third-party inventory truth is preserved here after MARK-238 promotion from docs/inventory/.",
       "key_validation_scripts": [
         "tools/validate_repo_index.py",
         "tools/validate_marketplace.py"

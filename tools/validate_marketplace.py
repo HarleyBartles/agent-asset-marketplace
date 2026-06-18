@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -519,8 +520,12 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     ]:
         raise ValueError("superpowers bundle manifest source_of_truth mismatch")
 
+    source_plugin = json.loads((source_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
+    projected_plugin = json.loads((ROOT / plugin_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
+    if source_plugin != projected_plugin:
+        raise ValueError("superpowers projection drift at .codex-plugin/plugin.json")
+
     for relative_path in (
-        ".codex-plugin/plugin.json",
         "LICENSE",
         "assets/app-icon.png",
         "assets/superpowers-small.svg",
