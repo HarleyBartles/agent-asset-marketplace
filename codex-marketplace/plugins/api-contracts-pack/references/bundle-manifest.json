@@ -35,6 +35,6 @@
   "notes": [
     "Single contract-doctrine slice.",
     "The bundle projects the retained api-design-patterns guidance into an installable marketplace shape.",
-    "openapi-specification remains out of scope for MARK-205."
+    "openapi-specification remains out of scope for MARK-204."
   ]
 }
