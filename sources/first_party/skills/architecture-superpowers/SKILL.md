@@ -43,8 +43,8 @@ Keep architecture guidance compositional and narrow:
    repo's domain-modeling skill, when the question is about invariants,
    aggregates, or domain boundaries;
 7. use `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
-   `codex-receipts-superpowers` for workflow, proof, anti-slop, and receipts
-   when those are the smallest fit.
+   `verification-before-completion` for workflow, proof, anti-slop, and final
+   checks when those are the smallest fit.
 
 ## Guardrails
 
@@ -60,10 +60,10 @@ Keep architecture guidance compositional and narrow:
 - Prefer simpler guidance or a narrower specialist skill when the architecture
   question does not need named replay, audit, projection, or distribution
   reasoning.
-- Use `codex-receipts-superpowers` for repo-backed work that needs a durable
-  plan and implementation record.
+- Use `verification-before-completion` for repo-backed work that needs a
+  durable final proof checkpoint.
 - Treat `architecture-superpowers` as the final allowed pre-fork Superpowers
   wrapper projection.
 - The pre-fork wrapper set is `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, `codex-receipts-superpowers`, and
+  `unslop-superpowers`, `verification-before-completion`, and
   `architecture-superpowers`.

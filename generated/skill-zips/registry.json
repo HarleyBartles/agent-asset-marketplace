@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 151,
+  "artifact_count": 150,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1999,13 +1999,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers/architecture-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3192,
-      "source_sha256": "164973122eb7efd1320784741f4945fd899a1803e422f3fde9bd70daa5217d0b",
+      "source_bytes": 3200,
+      "source_sha256": "56433297fa1924baf221adcf2805db40532ac9de9624de9c78a38e58958ee93a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1752,
-      "zip_sha256": "dc9aa06c8e6eb533d29959c910f6f345f5c5edbe61cdb90c418a35415e6a0257"
+      "zip_size_bytes": 1746,
+      "zip_sha256": "2782190667830b3759db10d6ad8cd72058ab2cbe5eefdad6bebd425f976bc58f"
     },
     {
       "pack": "superpowers",
@@ -2022,22 +2022,6 @@
       "overlay_sha256": "59cc54e40c7d1c5708aeef9e5157cd03f534fef81b22eefde0f642d29e865cd6",
       "zip_size_bytes": 16920,
       "zip_sha256": "5b9fdc9d4abc8f2d209a2b78c30eb787dcbffeafa557a4846f776ab20af5a0ec"
-    },
-    {
-      "pack": "superpowers",
-      "skill": "codex-receipts-superpowers",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/superpowers/codex-receipts-superpowers/skill.zip",
-      "source_file_count": 2,
-      "source_bytes": 5707,
-      "source_sha256": "da7bab9cef0f74f14c2987ad91d8615ac4fdb2d7c5efc9f5d7d13cc2a177b384",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 2677,
-      "zip_sha256": "aeffe0c24489febc4985d2cc9ab7480a4bbb9499e316916a0478856e712fe8a2"
     },
     {
       "pack": "superpowers",
@@ -2062,14 +2046,14 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
       "overlay_path": "gpt-overlays/superpowers/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers/finishing-a-development-branch/skill.zip",
-      "source_file_count": 1,
-      "source_bytes": 7659,
-      "source_sha256": "bbc9a68810e2ab913a868a8440b8fbcec847dcc8267e1788a2d66cb73a33284e",
+      "source_file_count": 2,
+      "source_bytes": 8144,
+      "source_sha256": "8af2e44737931e4e4974ec5498d3b6bf67cbace903178e2c053be2dcb7816c41",
       "overlay_file_count": 1,
       "overlay_bytes": 805,
       "overlay_sha256": "6d71f5016f3d5a0d44f34ba15b54f63e13e78e07d33e60c4cada7e432c4a2989",
-      "zip_size_bytes": 629,
-      "zip_sha256": "5b98954fcfa339eb93abc86d72b3d0766ee0e24b0c2fd02169aee95f27c20ee6"
+      "zip_size_bytes": 946,
+      "zip_sha256": "8ce5c0c370285ea4a88628ccca83ba1188b1b07a7e4f96b2c14d3a8f135a71ef"
     },
     {
       "pack": "superpowers",
@@ -2079,13 +2063,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers/github-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3673,
-      "source_sha256": "d588f3711c264798d13ea9c09939b4778643a35371e7b7efff06bd804ce97902",
+      "source_bytes": 3670,
+      "source_sha256": "eb8bc77ccc700bebc30e4e870eb7df7b2d609618fabe92e56fe2a7d0e7c48076",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1972,
-      "zip_sha256": "9d223adb8001e2eb598f2d2f592680d5076961fda206e5f97b28f54269f77003"
+      "zip_size_bytes": 1963,
+      "zip_sha256": "a12f34160ec7844b79e45b9082633130616d05d874eb84c7af011be8e681abe5"
     },
     {
       "pack": "superpowers",
@@ -2175,13 +2159,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers/unslop-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4088,
-      "source_sha256": "54f79d3b2894491afb8a7bf3e25bab33e77dcec92b5afea6e6cfcbdd52d0d535",
+      "source_bytes": 4085,
+      "source_sha256": "b9bfcbdbe79d5d702068d6d88dada37f0b53bcac077f3e7bf6a0e2a5008cdded",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2201,
-      "zip_sha256": "7be6e223c54b46b0720d198a0342099c075c16357d5ec7fd2faaf6b438953522"
+      "zip_size_bytes": 2192,
+      "zip_sha256": "acdce3f9f0675d6811bfb9b001a014b8d07deac8117a9a07dcfbd85e9a011bd4"
     },
     {
       "pack": "superpowers",
@@ -2190,14 +2174,14 @@
       "source_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
       "overlay_path": "gpt-overlays/superpowers/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers/using-superpowers/skill.zip",
-      "source_file_count": 4,
-      "source_bytes": 12997,
-      "source_sha256": "1363477639386e56d7f7bf79995281316536d007e0a332a78a0cfcc4034e348b",
+      "source_file_count": 5,
+      "source_bytes": 13642,
+      "source_sha256": "bee5fd77aa7a61a771305e0227bf3bd676d9a7483e67daa955e5b0e647436b45",
       "overlay_file_count": 1,
       "overlay_bytes": 848,
       "overlay_sha256": "a0aa5286747b0376a3ed479b484608d9aadaa3aa2b15346cf0dc555efd9eb8b7",
-      "zip_size_bytes": 4405,
-      "zip_sha256": "a79cdaa76511838a113c8c0c1af7b70aacfe415540524ae1e22606390beabd40"
+      "zip_size_bytes": 4679,
+      "zip_sha256": "1951ad4f3094b84dad07eee78305f30ffe7af6814af2707dbda23c19f38a5e2b"
     },
     {
       "pack": "superpowers",

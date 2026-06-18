@@ -34,7 +34,8 @@ from marketplace_utils import (
     parse_top_markdown_table,
 )
 from validate_repo_index import validate_repo_index
-from skill_zip_artifacts import validate_skill_zip_registry
+from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
+from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,9 +44,25 @@ FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "github-superpowers": "sources/first_party/skills/github-superpowers",
     "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
     "codex-repo-receipts": "sources/first_party/core/codex-repo-receipts",
-    "codex-receipts-superpowers": "sources/first_party/skills/codex-receipts-superpowers",
     "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
 }
+
+TEXT_SUFFIXES = {
+    ".md",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".py",
+    ".sh",
+    ".svg",
+    ".xml",
+    ".html",
+    ".css",
+    ".js",
+    ".ts",
+}
+TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 
 
 def check_json(path: Path) -> dict:
@@ -74,16 +91,87 @@ def list_files(root: Path) -> list[Path]:
     return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
 
 
+def _canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
+    if path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES:
+        return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return raw
+
+
 def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str) -> None:
     source_files = list_files(source_root)
     local_files = list_files(local_root)
     if source_files != local_files:
         raise ValueError(f"adventures-pack component {component_name} file inventory mismatch")
     for rel_path in source_files:
-        source_bytes = (source_root / rel_path).read_bytes()
-        local_bytes = (local_root / rel_path).read_bytes()
+        source_bytes = _canonicalize_tree_bytes(source_root / rel_path, (source_root / rel_path).read_bytes())
+        local_bytes = _canonicalize_tree_bytes(local_root / rel_path, (local_root / rel_path).read_bytes())
         if source_bytes != local_bytes:
             raise ValueError(f"adventures-pack component {component_name} file content mismatch at {rel_path}")
+
+
+def validate_tree_reconstruction(source_root: Path, overlay_root: Path | None, local_root: Path, component_name: str) -> None:
+    expected_root, tempdir = stage_overlay_tree(source_root, overlay_root)
+    try:
+        validate_tree_mirror(expected_root, local_root, component_name)
+    finally:
+        tempdir.cleanup()
+
+
+def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str) -> None:
+    provenance_map = load_json(ROOT / plugin_root / "references" / "provenance-map.json")
+    if not isinstance(provenance_map, dict):
+        raise ValueError("superpowers provenance-map.json must contain an object")
+
+    source_backed = provenance_map.get("source_backed_projections", [])
+    adapted = provenance_map.get("adapted_projections", [])
+    source_only = provenance_map.get("source_only_surfaces", [])
+    if not isinstance(source_backed, list) or not isinstance(adapted, list) or not isinstance(source_only, list):
+        raise ValueError("superpowers provenance-map.json uses an invalid shape")
+
+    expected_source_backed = {
+        entry["canonical_name"]: entry
+        for entry in bundle_manifest.get("entries", [])
+        if isinstance(entry, dict) and entry.get("source_category") == "first_party"
+    }
+    expected_adapted = {
+        entry["canonical_name"]: entry
+        for entry in bundle_manifest.get("entries", [])
+        if isinstance(entry, dict) and entry.get("source_category") == "third_party" and entry.get("content_mode") == "adapted"
+    }
+
+    source_backed_by_name = {entry.get("canonical_name"): entry for entry in source_backed if isinstance(entry, dict)}
+    adapted_by_name = {entry.get("canonical_name"): entry for entry in adapted if isinstance(entry, dict)}
+
+    if set(source_backed_by_name) != set(expected_source_backed):
+        raise ValueError("superpowers provenance-map.json source_backed_projections mismatch")
+    if set(adapted_by_name) != set(expected_adapted):
+        raise ValueError("superpowers provenance-map.json adapted_projections mismatch")
+
+    for canonical_name, expected_entry in expected_source_backed.items():
+        projection = source_backed_by_name[canonical_name]
+        if projection.get("content_mode") != "verbatim":
+            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] must be verbatim")
+        if projection.get("adaptation_overlay_path") is not None:
+            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] must not declare an overlay")
+        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers/skills/{canonical_name}":
+            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] local path mismatch")
+        if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
+            raise ValueError(f"superpowers provenance-map.json source_backed_projections[{canonical_name}] source path mismatch")
+
+    for canonical_name, expected_entry in expected_adapted.items():
+        projection = adapted_by_name[canonical_name]
+        expected_overlay = expected_entry.get("adaptation_overlay_path")
+        if projection.get("content_mode") != "adapted":
+            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] must be adapted")
+        if projection.get("adaptation_overlay_path") != expected_overlay:
+            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] overlay path mismatch")
+        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers/skills/{canonical_name}":
+            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
+        if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
+            raise ValueError(f"superpowers provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
+
+    if len(source_only) != 7:
+        raise ValueError("superpowers provenance-map.json source_only_surfaces count mismatch")
 
 
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
@@ -404,7 +492,6 @@ def validate_canonical_cross_plugin_skill_references() -> None:
     bare_reference = "@codex-repo-receipts"
     source_paths = (
         ROOT / "codex-marketplace/plugins/house-skills/skills/codex-receipts-superpowers/SKILL.md",
-        ROOT / "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers/SKILL.md",
         ROOT / "sources/first_party/skills/house-skills/decisions.md",
         ROOT / "sources/first_party/skills/house-skills/decisions.json",
         ROOT / "sources/first_party/skills/house-skills/intake.json",
@@ -480,6 +567,34 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     if not isinstance(support_entries, list) or len(support_entries) != 7:
         raise ValueError("superpowers bundle manifest excluded support surface count mismatch")
 
+    projection_doc = (ROOT / plugin_root / "PROJECTION.md").read_text(encoding="utf-8")
+    compatibility_doc = (ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md").read_text(
+        encoding="utf-8"
+    )
+    for needle in (
+        "source custody -> projection layer -> installation/export layer",
+        "Source custody keeps the retained third-party snapshot verbatim.",
+        "Projection layer holds the source-controlled marketplace copy",
+        "Installation/export layer is derived from the projection plus overlays",
+        "docs/contracts/skill-frontmatter.md",
+        "docs/contracts/openai-agent-yaml.md",
+    ):
+        if needle not in projection_doc:
+            raise ValueError(f"superpowers PROJECTION.md is missing the three-layer model text: {needle}")
+    for needle in (
+        "lives only in the projection layer",
+        "Source custody remains a verbatim upstream snapshot",
+        "Installation and export artifacts are derived from the projection layer plus overlays",
+        "docs/contracts/skill-frontmatter.md",
+        "docs/contracts/openai-agent-yaml.md",
+    ):
+        if needle not in compatibility_doc:
+            raise ValueError(
+                f"superpowers codex-marketplace-compatibility note is missing the custody split text: {needle}"
+            )
+
+    _validate_superpowers_provenance_map(bundle_manifest, plugin_root)
+
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
     imported_skill_dirs = sorted(
@@ -521,6 +636,15 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         if content_mode == "adapted" and not entry.get("adaptation_note"):
             raise ValueError(f"superpowers entry {canonical_name} needs an adaptation note")
 
+        adaptation_overlay_path = entry.get("adaptation_overlay_path")
+        if source_category == "third_party" and content_mode == "adapted":
+            expected_overlay_path = f"adaptation-overlays/superpowers/{canonical_name}"
+            if adaptation_overlay_path != expected_overlay_path:
+                raise ValueError(f"superpowers adapted entry {canonical_name} needs {expected_overlay_path}")
+            check_path_exists(ROOT / expected_overlay_path)
+        elif adaptation_overlay_path is not None:
+            raise ValueError(f"superpowers verbatim entry {canonical_name} must not declare adaptation_overlay_path")
+
         local_path = entry.get("local_path")
         if not isinstance(canonical_source_path, str) or not canonical_source_path:
             raise ValueError(f"superpowers entry {canonical_name} is missing canonical_source_path")
@@ -530,28 +654,14 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         check_path_exists(ROOT / plugin_root / local_path)
         source_path = ROOT / canonical_source_path
         local_full_path = ROOT / plugin_root / local_path
+        validate_skill_markdown_frontmatter(local_full_path)
         if source_path.is_dir():
             if content_mode == "verbatim":
                 validate_tree_mirror(source_path, local_full_path, canonical_name)
             else:
-                if canonical_name == "using-superpowers":
-                    projected_text = normalize_superpowers_projection_text(
-                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
-                    )
-                    if "workflow guidance inside the normal instruction stack" not in projected_text:
-                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
-                    if "do not override system, developer, runtime" not in projected_text:
-                        raise ValueError("superpowers using-superpowers adaptation note mismatch")
-                    if "codex-marketplace-compatibility" not in projected_text:
-                        raise ValueError("superpowers using-superpowers compatibility note missing")
-                elif canonical_name == "finishing-a-development-branch":
-                    projected_text = normalize_superpowers_projection_text(
-                        local_full_path.joinpath("SKILL.md").read_text(encoding="utf-8")
-                    )
-                    if "codex marketplace note" not in projected_text:
-                        raise ValueError("superpowers finishing-a-development-branch compatibility note missing")
-                    if "publication flow" not in projected_text:
-                        raise ValueError("superpowers finishing-a-development-branch publication note missing")
+                overlay_root = ROOT / adaptation_overlay_path
+                validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
         else:
             if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
                 raise ValueError(f"superpowers entry {canonical_name} drifted from its source copy")

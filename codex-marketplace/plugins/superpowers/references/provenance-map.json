@@ -28,37 +28,62 @@
     {
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
+      "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/core/linear-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/linear-superpowers",
+      "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },
     {
       "canonical_name": "github-superpowers",
       "source_category": "first_party",
+      "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/github-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/github-superpowers",
+      "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },
     {
       "canonical_name": "unslop-superpowers",
       "source_category": "first_party",
+      "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/unslop-superpowers",
-      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
-    },
-    {
-      "canonical_name": "codex-receipts-superpowers",
-      "source_category": "first_party",
-      "canonical_source_path": "sources/first_party/skills/codex-receipts-superpowers",
-      "local_path": "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers",
+      "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
     {
       "canonical_name": "architecture-superpowers",
       "source_category": "first_party",
+      "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers/skills/architecture-superpowers",
+      "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+    }
+  ],
+  "adapted_projections": [
+    {
+      "canonical_name": "finishing-a-development-branch",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/finishing-a-development-branch",
+      "adaptation_overlay_path": "adaptation-overlays/superpowers/finishing-a-development-branch",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative.",
+      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note."
+    },
+    {
+      "canonical_name": "using-superpowers",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/using-superpowers",
+      "adaptation_overlay_path": "adaptation-overlays/superpowers/using-superpowers",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
+      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility."
     }
   ],
   "source_only_surfaces": [
@@ -92,7 +117,8 @@
     }
   ],
   "notes": [
-    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, codex-receipts-superpowers, and architecture-superpowers projections.",
+    "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
+    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, and architecture-superpowers projections.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]
