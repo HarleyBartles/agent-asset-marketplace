@@ -78,6 +78,31 @@ CODEX_CORTEX_ENTRY = {
     },
 }
 
+API_CONTRACTS_PACK_ENTRY = {
+    "name": "api-contracts-pack",
+    "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
+    "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
+    "source_ledger": [
+        "sources/first_party/skills/codex-cortex/intake.json",
+        "sources/first_party/skills/codex-cortex/decisions.json",
+        "sources/first_party/skills/codex-cortex/decisions.md",
+    ],
+    "license_path": "codex-marketplace/plugins/api-contracts-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/api-contracts-pack/skills",
+    "provenance_refs": [
+        "provenance/codex-cortex.md",
+        "codex-marketplace/plugins/api-contracts-pack/references/source-map.md",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
@@ -96,6 +121,9 @@ def build_repo_index() -> dict:
             continue
         if name == "codex-cortex":
             ordered_plugins.append(dict(CODEX_CORTEX_ENTRY))
+            continue
+        if name == "api-contracts-pack":
+            ordered_plugins.append(dict(API_CONTRACTS_PACK_ENTRY))
             continue
         if name == "repo-worker-base":
             ordered_plugins.append(dict(REPO_WORKER_BASE_ENTRY))

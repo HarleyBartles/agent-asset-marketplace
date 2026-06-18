@@ -30,15 +30,26 @@
     "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle."
   },
   {
-    "issue": "MARK-201",
+    "issue": "MARK-204",
+    "source_id": "codex-cortex-api-design-patterns-v1",
+    "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
+    "public_name": "api-design-patterns",
+    "provenance_name": "MARK-204 codex-cortex source custody",
+    "import_state": "imported",
+    "scope": "Contract-first API design, generated-client expectations, and contract validation posture",
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the api-contracts-pack bundle."
+  },
+  {
+    "issue": "MARK-204",
     "id": "global.codex-cortex.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, and MARK-201 adds database-design-patterns to the selective custody surface. No later Claude-Cortex candidate is imported.",
+    "decision": "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, and MARK-204 adds api-design-patterns to the selective custody surface. No later Claude-Cortex candidate is imported.",
     "imported_source_paths": [
       "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
       "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-      "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md"
+      "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
+      "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md"
     ]
   }
 ]

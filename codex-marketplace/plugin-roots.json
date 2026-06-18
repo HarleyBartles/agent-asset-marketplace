@@ -85,6 +85,15 @@
     },
     {
       "order": 9,
+      "name": "api-contracts-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
+      "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
+      "manifest_path": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 10,
       "name": "architecture-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/architecture-pack",

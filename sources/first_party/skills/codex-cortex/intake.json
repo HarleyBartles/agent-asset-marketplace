@@ -1,5 +1,5 @@
 {
-  "issue": "MARK-201",
+  "issue": "MARK-204",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
@@ -22,13 +22,18 @@
       "public_name": "database-design-patterns",
       "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
       "status": "imported"
+    },
+    {
+      "source_id": "codex-cortex-api-design-patterns-v1",
+      "public_name": "api-design-patterns",
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
+      "status": "imported"
     }
   ],
   "deferred": [],
   "notes": [
     "Selective retained snapshot only.",
     "The retained custody surface is the durable source home for the imported skills.",
-    "No later Claude-Cortex candidates beyond database-design-patterns are imported into this child."
+    "MARK-204 adds api-design-patterns as the umbrella contract-doctrine slice for the api-contracts-pack projection."
   ]
 }
-
