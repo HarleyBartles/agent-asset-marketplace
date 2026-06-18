@@ -16,15 +16,15 @@
 - Create: `sources/third_party/ecc/upstream/skills/**`
 - Create: `.tmp/ecc-upstream/**` (temporary working checkout only)
 
-- [ ] **Step 1: Fetch the pinned upstream commit into a temporary checkout**
+- [x] **Step 1: Fetch the pinned upstream commit into a temporary checkout**
 
 Run the upstream clone from `https://github.com/affaan-m/ECC.git`, then check out `ceca28852e5b31edbbf66ebccc8fd163dd14208e` in `.tmp/ecc-upstream`.
 
-- [ ] **Step 2: Mirror every upstream skill directory verbatim**
+- [x] **Step 2: Mirror every upstream skill directory verbatim**
 
 Copy all 271 directories from `.tmp/ecc-upstream/skills/` into `sources/third_party/ecc/upstream/skills/` without adapting the contents.
 
-- [ ] **Step 3: Confirm the mirrored count and skip count**
+- [x] **Step 3: Confirm the mirrored count and skip count**
 
 Verify the custody root contains 271 mirrored skill directories and zero skipped directories.
 
@@ -34,7 +34,7 @@ Verify the custody root contains 271 mirrored skill directories and zero skipped
 - Create: `sources/third_party/ecc/upstream/manifest.json`
 - Modify: `sources/third_party/ecc/upstream/source-custody.md`
 
-- [ ] **Step 1: Generate the custody manifest**
+- [x] **Step 1: Generate the custody manifest**
 
 Write a JSON manifest with `copied_skill_count: 271`, `skipped_skill_count: 0`, the pinned upstream commit, and one entry per mirrored skill containing:
 
@@ -49,7 +49,7 @@ Write a JSON manifest with `copied_skill_count: 271`, `skipped_skill_count: 0`, 
 }
 ```
 
-- [ ] **Step 2: Update the source-custody note**
+- [x] **Step 2: Update the source-custody note**
 
 Add a short note to `sources/third_party/ecc/upstream/source-custody.md` that points readers to the mirrored skill tree and the new manifest.
 
@@ -60,11 +60,11 @@ Add a short note to `sources/third_party/ecc/upstream/source-custody.md` that po
 - Review: `sources/third_party/ecc/upstream/manifest.json`
 - Review: `sources/third_party/ecc/upstream/source-custody.md`
 
-- [ ] **Step 1: Compare every mirrored skill directory against upstream**
+- [x] **Step 1: Compare every mirrored skill directory against upstream**
 
 Use a deterministic directory comparison against the pinned upstream commit so the verification proves the mirrored directories are verbatim.
 
-- [ ] **Step 2: Run the repo validation ladder**
+- [x] **Step 2: Run the repo validation ladder**
 
 Run:
 
@@ -74,7 +74,7 @@ py -3 tools/validate_repo_index.py
 git diff --check
 ```
 
-- [ ] **Step 3: Record the validation results**
+- [x] **Step 3: Record the validation results**
 
 Capture the command results and the exact verbatim-copy proof for the final return.
 
@@ -87,6 +87,10 @@ Capture the command results and the exact verbatim-copy proof for the final retu
 
 Document the mirror scope, the manifest path, the verbatim verification method, the validation results, and the publication state.
 
-- [ ] **Step 2: Commit, push, and open a draft PR**
+This step is intentionally left open because the branch must not reintroduce an implementation record surface.
+
+- [x] **Step 2: Commit, push, and open a draft PR**
 
 Commit the mirrored source custody changes on `harleydbartles/mark-240-drain-selected-ecc-skills-into-third-party-source-custody`, push the branch, and open a draft PR against `main`.
+
+This branch already has the draft PR open and the implementation record was intentionally removed per user instruction.
