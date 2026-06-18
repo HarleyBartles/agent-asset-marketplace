@@ -28,9 +28,14 @@
 - Generated install unit: `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
+- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
+- Generated install unit: `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
+- Installable plugin projection: `codex-marketplace/plugins/language-patterns-pack/`
 
 ## Boundary
 
 The retained custody surface seeds `cqrs-event-sourcing`,
 `event-driven-architecture`, `database-design-patterns`, `api-design-patterns`,
-and `openapi-specification`. No later Claude-Cortex candidate is imported.
+`openapi-specification`, and the MARK-212 `typescript-advanced-patterns`
+guidance that is projected through `language-patterns-pack`. No other later
+Claude-Cortex candidate is imported.

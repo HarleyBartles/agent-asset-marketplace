@@ -1,0 +1,124 @@
+{
+  "bundle_name": "language-patterns-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "NickCrew/Claude-Cortex",
+  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 15,
+  "imported_count": 15,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/SKILL.md",
+      "local_path": "skills/typescript-advanced-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/advanced-generics.md",
+      "local_path": "skills/typescript-advanced-patterns/references/advanced-generics.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/branded-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/branded-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/builder-pattern.md",
+      "local_path": "skills/typescript-advanced-patterns/references/builder-pattern.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/common-pitfalls.md",
+      "local_path": "skills/typescript-advanced-patterns/references/common-pitfalls.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/conditional-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/conditional-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/decorators.md",
+      "local_path": "skills/typescript-advanced-patterns/references/decorators.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/discriminated-unions.md",
+      "local_path": "skills/typescript-advanced-patterns/references/discriminated-unions.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/mapped-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/mapped-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/performance-best-practices.md",
+      "local_path": "skills/typescript-advanced-patterns/references/performance-best-practices.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/template-literal-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/template-literal-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/testing-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/testing-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/type-guards.md",
+      "local_path": "skills/typescript-advanced-patterns/references/type-guards.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/type-inference.md",
+      "local_path": "skills/typescript-advanced-patterns/references/type-inference.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/utility-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/utility-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
+    }
+  ],
+  "notes": [
+    "One-skill language/runtime pack.",
+    "The retained upstream skill uses plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
+    "The pack boundary excludes React, CQRS, database, security, and other non-language doctrine."
+  ]
+}
