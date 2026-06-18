@@ -2127,13 +2127,13 @@
       "overlay_path": "gpt-overlays/superpowers-plus/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers-plus/using-superpowers/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 13657,
-      "source_sha256": "b089bbd83fb8f4b00a7c19e95b6bf5515931bddf6092318a2e36fc6ef1275e3d",
+      "source_bytes": 15316,
+      "source_sha256": "68c160d7ef8acc8b67b87ab5d003069ba8194f30bfde7935113d59cb2f915917",
       "overlay_file_count": 1,
-      "overlay_bytes": 848,
-      "overlay_sha256": "a0aa5286747b0376a3ed479b484608d9aadaa3aa2b15346cf0dc555efd9eb8b7",
-      "zip_size_bytes": 4683,
-      "zip_sha256": "01aa41a2bbfae0e85b905de49e37183b0f0f204b1a48af69a56fee0354dc0c58"
+      "overlay_bytes": 2222,
+      "overlay_sha256": "f4d201dc257321011510ce404c99cc463f9489c6fb6aad757cf4b1446890fd71",
+      "zip_size_bytes": 5244,
+      "zip_sha256": "747617f9ea34c63bb0c4abc0d943aa1144e77cba25e81ca0f274ec209621cc2a"
     },
     {
       "pack": "superpowers-plus",

@@ -6,7 +6,7 @@ metadata:
   upstream_name: using-superpowers
   upstream_version: v5.1.0
   adaptation_overlay: adaptation-overlays/superpowers-plus/using-superpowers
-  projection_plugin: superpowers
+  projection_plugin: superpowers-plus
 ---
 
 <SUBAGENT-STOP>
@@ -46,6 +46,26 @@ The skill shapes workflow. It does not overrule policy.
 ## Platform Adaptation
 
 Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-tools.md` (Copilot CLI), `references/codex-tools.md` (Codex) for tool equivalents. Gemini CLI users get the tool mapping loaded automatically via GEMINI.md.
+
+## Asset Marketplace Routing
+
+This projection is Asset Marketplace `Superpowers+` adaptation behavior, not upstream/base Superpowers doctrine. It only routes to wrapper skills that are actually projected into `superpowers-plus`.
+
+- Brainstorming and initial task framing: use `brainstorming`.
+- Plan creation and plan execution: use `writing-plans` for route review and `executing-plans` for implementation.
+- Direct implementation work where test discipline matters: use `test-driven-development`.
+- Debugging, bug-finding, and unexpected behavior analysis: use `systematic-debugging`.
+- Validation, pass/fail claims, and completion assertions: use `verification-before-completion`.
+- Review and redline workflows: use `requesting-code-review` and `receiving-code-review`.
+- Branch completion and publication closeout: use `finishing-a-development-branch`.
+- Linear issue shaping and smallest-applicable workflow selection: use `linear-superpowers`.
+- GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`.
+- Repo-specific anti-slop or profile work: use `unslop-superpowers`.
+- Architecture review and composition boundaries: use `architecture-superpowers`.
+- Parallel agent dispatch or worktree setup when those are the smallest useful helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or `using-git-worktrees`.
+- Writing or updating skill content: use `writing-skills`.
+
+Do not treat these wrapper routes as upstream doctrine. They are the Marketplace projection's adaptation layer for Asset Marketplace work, and they only refer to wrappers actually projected into `superpowers-plus`.
 
 # Using Skills
 
