@@ -2,8 +2,8 @@
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
 `v5.1.0`, plus the source-backed House Skills `linear-superpowers`,
-`github-superpowers`, `unslop-superpowers`, and `codex-receipts-superpowers`
-skills.
+`github-superpowers`, `unslop-superpowers`, `codex-receipts-superpowers`, and
+`architecture-superpowers` skills.
 
 ## Projection contract
 
@@ -11,7 +11,8 @@ skills.
   compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, and `codex-receipts-superpowers`.
+  `unslop-superpowers`, `codex-receipts-superpowers`, and
+  `architecture-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -52,6 +53,8 @@ at `sources/first_party/skills/github-superpowers/`.
 at `sources/first_party/skills/unslop-superpowers/`.
 `skills/codex-receipts-superpowers/` is copied from the canonical House Skills
 source at `sources/first_party/skills/codex-receipts-superpowers/`.
+`skills/architecture-superpowers/` is copied from the canonical House Skills
+source at `sources/first_party/skills/architecture-superpowers/`.
 
 Each first-party projection is a directory-level skill spec, so the copied
 tree includes both `SKILL.md` and `agents/openai.yaml` when the canonical

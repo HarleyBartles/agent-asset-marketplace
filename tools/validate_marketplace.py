@@ -44,6 +44,7 @@ FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
     "codex-repo-receipts": "sources/first_party/skills/codex-repo-receipts",
     "codex-receipts-superpowers": "sources/first_party/skills/codex-receipts-superpowers",
+    "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
 }
 
 

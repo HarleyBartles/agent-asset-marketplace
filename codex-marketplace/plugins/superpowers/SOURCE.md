@@ -2,8 +2,9 @@
 
 This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
 Codex marketplace and adds the first-party `linear-superpowers`,
-`github-superpowers`, `unslop-superpowers`, and `codex-receipts-superpowers`
-skills from House Skills as source-backed projections.
+`github-superpowers`, `unslop-superpowers`, `codex-receipts-superpowers`, and
+`architecture-superpowers` skills from House Skills as source-backed
+projections.
 
 ## Projection contract
 
@@ -11,7 +12,8 @@ skills from House Skills as source-backed projections.
   compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, and `codex-receipts-superpowers`.
+  `unslop-superpowers`, `codex-receipts-superpowers`, and
+  `architecture-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -74,9 +76,9 @@ The retained upstream snapshot also preserves the broader package boundary
 (`docs/`, `scripts/`, `tests/`, `README.md`, `package.json`, `AGENTS.md`, and
 the top-level license and release notes) in third-party custody.
 
-`linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
-`codex-receipts-superpowers` stay
-editable in House Skills and are projected here as readable directory copies
-for the Superpowers bundle rather than as second source roots. Each
-first-party projection is a directory-level skill spec that carries both
-`SKILL.md` and `agents/openai.yaml` under the same custody contract.
+`linear-superpowers`, `github-superpowers`, `unslop-superpowers`,
+`codex-receipts-superpowers`, and `architecture-superpowers` stay editable in
+House Skills and are projected here as readable directory copies for the
+Superpowers bundle rather than as second source roots. Each first-party
+projection is a directory-level skill spec that carries both `SKILL.md` and
+`agents/openai.yaml` under the same custody contract.

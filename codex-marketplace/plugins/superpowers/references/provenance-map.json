@@ -53,6 +53,13 @@
       "local_path": "codex-marketplace/plugins/superpowers/skills/codex-receipts-superpowers",
       "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
     },
+    {
+      "canonical_name": "architecture-superpowers",
+      "source_category": "first_party",
+      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers/skills/architecture-superpowers",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+    }
   ],
   "source_only_surfaces": [
     {
@@ -85,7 +92,7 @@
     }
   ],
   "notes": [
-    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, and codex-receipts-superpowers projections.",
+    "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, codex-receipts-superpowers, and architecture-superpowers projections.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]
