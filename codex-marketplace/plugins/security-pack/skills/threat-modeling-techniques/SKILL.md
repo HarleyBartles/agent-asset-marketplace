@@ -22,9 +22,8 @@ confidence: 0.82
 
 # Threat Modeling Techniques
 
-Use this installable slice to frame attack surfaces, abuse cases, trust
-boundaries, and design-time security controls before implementation hardens the
-architecture.
+Use this skill to identify attack surfaces, abuse cases, trust boundaries, and
+design-time security controls before implementation hardens the architecture.
 
 ## When to Use This Skill
 

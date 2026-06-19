@@ -55,13 +55,13 @@ Validate all input, encode all output, verify all sources, authenticate all requ
 
 | Task | Load reference |
 | --- | --- |
-| Input validation & sanitization | `references/input-validation.md` |
-| Output encoding & XSS prevention | `references/output-encoding.md` |
-| Authentication & sessions | `references/authentication.md` |
-| Cryptography & key management | `references/cryptography.md` |
-| Dependencies & supply chain | `references/dependencies.md` |
-| Error handling & logging | `references/error-handling.md` |
-| Secure defaults & configuration | `references/secure-defaults.md` |
+| Input validation & sanitization | `skills/secure-coding-practices/references/input-validation.md` |
+| Output encoding & XSS prevention | `skills/secure-coding-practices/references/output-encoding.md` |
+| Authentication & sessions | `skills/secure-coding-practices/references/authentication.md` |
+| Cryptography & key management | `skills/secure-coding-practices/references/cryptography.md` |
+| Dependencies & supply chain | `skills/secure-coding-practices/references/dependencies.md` |
+| Error handling & logging | `skills/secure-coding-practices/references/error-handling.md` |
+| Secure defaults & configuration | `skills/secure-coding-practices/references/secure-defaults.md` |
 
 ## Workflow
 

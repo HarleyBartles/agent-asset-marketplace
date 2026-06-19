@@ -79,13 +79,13 @@ Expert guidance for implementing comprehensive security testing strategies inclu
 
 | Task | Load reference |
 | --- | --- |
-| Static Application Security Testing (SAST) | `references/sast.md` |
-| Dynamic Application Security Testing (DAST) | `references/dast.md` |
-| Software Composition Analysis (SCA) | `references/sca.md` |
-| Penetration Testing Techniques | `references/penetration-testing.md` |
-| API Security Testing (OWASP Top 10) | `references/api-security.md` |
-| Fuzzing and Property-Based Testing | `references/fuzzing.md` |
-| Security Automation Pipeline | `references/automation-pipeline.md` |
+| Static Application Security Testing (SAST) | `skills/security-testing-patterns/references/sast.md` |
+| Dynamic Application Security Testing (DAST) | `skills/security-testing-patterns/references/dast.md` |
+| Software Composition Analysis (SCA) | `skills/security-testing-patterns/references/sca.md` |
+| Penetration Testing Techniques | `skills/security-testing-patterns/references/penetration-testing.md` |
+| API Security Testing (OWASP Top 10) | `skills/security-testing-patterns/references/api-security.md` |
+| Fuzzing and Property-Based Testing | `skills/security-testing-patterns/references/fuzzing.md` |
+| Security Automation Pipeline | `skills/security-testing-patterns/references/automation-pipeline.md` |
 
 ## Security Testing Workflow
 
