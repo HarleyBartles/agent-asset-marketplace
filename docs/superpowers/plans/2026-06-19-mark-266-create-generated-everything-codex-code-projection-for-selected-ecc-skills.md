@@ -146,13 +146,13 @@
   git diff --check
   ```
 
-- [ ] **Step 2: Write the implementation record.**
+- [x] **Step 2: Write the implementation record.**
 
   Capture the final branch, changed files, generated-artifact explanation,
   validation results, and any remaining ambiguity about how future ECC-derived
   projections should be mirrored into `everything-codex-code`.
 
-- [ ] **Step 3: Commit, push, and open a draft PR.**
+- [x] **Step 3: Commit, push, and open a draft PR.**
 
   Publish the branch to origin and open a draft PR against `main` before the
   final return.

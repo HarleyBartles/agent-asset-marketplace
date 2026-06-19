@@ -92,5 +92,5 @@ The new generated output is the `generated/skill-zips/everything-codex-code/` tr
 
 - Branch: `harleydbartles/mark-266-create-generated-everything-codex-code-projection-for`
 - Start SHA from refreshed `origin/main`: `ea62c518015e8c0b29cbf77ffc9510032c9b8982`
-- Current commit SHA: `3a1bcb08`
-- Push / PR: pending
+- Push: `origin/harleydbartles/mark-266-create-generated-everything-codex-code-projection-for`
+- PR: [#135](https://github.com/HarleyBartles/agent-asset-marketplace/pull/135)
