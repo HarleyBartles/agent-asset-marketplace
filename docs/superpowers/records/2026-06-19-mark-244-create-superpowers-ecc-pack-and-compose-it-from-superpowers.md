@@ -73,7 +73,7 @@ The generated `skill.zip` registry now includes `superpowers-ecc` as a first-cla
 ## Publication
 
 - Branch: `harleydbartles/mark-244-create-superpowers-ecc-pack-and-compose-it-from-superpowers`
-  - Commit: `d157db07a5b0cf3ecae5b911ed09e7387f8d7e53`
+  - Commit: `6eff4fba0084f279676295494e13c9f2a53eb031`
   - Push: published to `origin/harleydbartles/mark-244-create-superpowers-ecc-pack-and-compose-it-from-superpowers`
 - Draft PR: [#131](https://github.com/HarleyBartles/agent-asset-marketplace/pull/131)
 
