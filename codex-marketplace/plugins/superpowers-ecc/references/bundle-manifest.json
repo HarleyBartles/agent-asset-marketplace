@@ -13,6 +13,21 @@
   "upstream_license": "MIT",
   "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
   "source_root": ".",
+  "repo_index": {
+    "source_ledger": [
+      "sources/third_party/ecc/upstream/LICENSE",
+      "sources/third_party/ecc/upstream/source-custody.md"
+    ],
+    "provenance_refs": [
+      "provenance/superpowers-ecc.md",
+      "codex-marketplace/plugins/superpowers-ecc/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  },
   "candidate_count": 14,
   "imported_count": 14,
   "skipped_count": 0,
