@@ -40,3 +40,7 @@ This pack projects the MARK-212 TypeScript slice and the MARK-213 Python languag
 Only the retained TypeScript and Python language/testing/async/performance guidance is kept here. The pack does not absorb frontend, architecture, CQRS, database, security, repo governance, CI, or other non-language guidance.
 
 The `python-testing-patterns` retained source snapshot also contains `validation/rubric.yaml`; that rubric stays in retained source custody and is not projected into the installable pack.
+
+## Authorship
+
+The plugin shell is authored by Harley Bartles. The projected skill roots retain their upstream source author, source license, and source path in the bundle manifest and source map so verbatim content stays attributable.
