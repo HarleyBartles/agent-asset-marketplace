@@ -44,4 +44,9 @@ The generated `skill.zip` and registry were refreshed through the standard tooli
 ## Notes
 
 - The repo currently does not contain a live `everything-codex-code` projection surface, so the implementation records that omission rather than inventing a new mirror target.
-- The branch still needs publication steps after the final validation pass: commit, push, and draft PR creation.
+
+## Publication
+
+- Branch: `harleydbartles/mark-258-validate-projection-contracts-and-licensing-provenance`
+- Commit: `81fe28bd`
+- Draft PR: [#133](https://github.com/HarleyBartles/agent-asset-marketplace/pull/133)

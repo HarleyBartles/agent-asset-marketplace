@@ -104,7 +104,7 @@ py -3 tools/validate_skill_zips.py
 git diff --check
 ```
 
-- [ ] **Step 3: Update the MARK-258 implementation record, commit, push the branch, and open a draft PR on `harleydbartles/mark-258-validate-projection-contracts-and-licensing-provenance`.**
+- [x] **Step 3: Update the MARK-258 implementation record, commit, push the branch, and open a draft PR on `harleydbartles/mark-258-validate-projection-contracts-and-licensing-provenance`.**
 
 ### Non-goals
 
