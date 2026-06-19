@@ -2047,13 +2047,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/boring-loop/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3700,
-      "source_sha256": "4d307b03708f467166011e0bbb3a5813c2a403eb67168c4975072487dd634e4a",
+      "source_bytes": 3873,
+      "source_sha256": "9c25a21feff2480f6d75f26a8d844b6bcac77d6ed8165e51323328a04db7cb1f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2067,
-      "zip_sha256": "c63a3b015d38146371de4573e71364bffd48feacecc1bfae5421a29bae2e3a38"
+      "zip_size_bytes": 2151,
+      "zip_sha256": "255e9e1c004d56dee81c2082af0ed2c63eb188b9cd024c795c5ebbaf04817f3b"
     },
     {
       "pack": "repo-worker-base",
@@ -2063,13 +2063,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/connector-safety/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 16911,
-      "source_sha256": "1548f02dc2cc5e2c226361f05c1db761ae59ea7b4aedb9a89515c9758fb31975",
+      "source_bytes": 17084,
+      "source_sha256": "dd306ec6ff9a5b0b34f7d0806f1733ad61ef4bd26e2dad8de459e8900e0620a4",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7335,
-      "zip_sha256": "518cfc794c139dc5d3a8c6de0731a37ceabcdc718b78f2a3770adaf337bb0297"
+      "zip_size_bytes": 7420,
+      "zip_sha256": "3a221a5f08a723902c06788e62b42e10c8e51ade0ff2ec8814b198171a571732"
     },
     {
       "pack": "repo-worker-base",
@@ -2079,13 +2079,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/github-operations/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 22054,
-      "source_sha256": "b9a5a909b8e323893c3c1512aa132f34656c6598b8a72b96884cb94b4ac004f1",
+      "source_bytes": 22227,
+      "source_sha256": "cc117be1d45c7014c4bc3800d062d176b239181f7fa86038b3933dd3ade84de5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10313,
-      "zip_sha256": "d78780bd4d16fe54729de4e170cfd1cb559001705d5b72a1548342b3d36b9586"
+      "zip_size_bytes": 10394,
+      "zip_sha256": "ce378d7b4560614a4517671e35b3df1dc320f8fd674fcf575f6db6e2087e97a0"
     },
     {
       "pack": "repo-worker-base",
@@ -2095,13 +2095,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/repo-worker-base/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3613,
-      "source_sha256": "4833f0a9cfd5f3203e087f22672815172652029e859fb8f680cce3507c7a3259",
+      "source_bytes": 3864,
+      "source_sha256": "9e5d3b88093be5c3d1d2039e98772d2427edcb4b40c58282cd083c11126d779b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1910,
-      "zip_sha256": "f9d5541e12847bbe6de83f2ba612c89e0722676991e0351d01ef02f26ed1eeba"
+      "zip_size_bytes": 2033,
+      "zip_sha256": "cd5dc549692e782c10cb92402335809a831ed56bee49cd5519c21161555f9ad1"
     },
     {
       "pack": "security-pack",
