@@ -60,19 +60,6 @@
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
-    },
-    {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
-      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "adapted_author": "Harley Bartles",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack."
     }
   ],
   "adapted_projections": [
@@ -108,6 +95,19 @@
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
       "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
+    },
+    {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "adapted_author": "Harley Bartles",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack."
     }
   ],
   "source_only_surfaces": [

@@ -151,12 +151,16 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
     expected_source_backed = {
         entry["canonical_name"]: entry
         for entry in bundle_manifest.get("entries", [])
-        if isinstance(entry, dict) and entry.get("source_category") == "first_party"
+        if isinstance(entry, dict)
+        and entry.get("source_category") == "first_party"
+        and entry.get("canonical_name") != "ecc-superpowers"
     }
     expected_adapted = {
         entry["canonical_name"]: entry
         for entry in bundle_manifest.get("entries", [])
-        if isinstance(entry, dict) and entry.get("source_category") == "third_party" and entry.get("content_mode") == "adapted"
+        if isinstance(entry, dict)
+        and entry.get("content_mode") == "adapted"
+        and (entry.get("source_category") == "third_party" or entry.get("canonical_name") == "ecc-superpowers")
     }
 
     source_backed_by_name = {entry.get("canonical_name"): entry for entry in source_backed if isinstance(entry, dict)}
@@ -177,16 +181,6 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] local path mismatch")
         if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
             raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] source path mismatch")
-        if canonical_name == "ecc-superpowers":
-            if projection.get("source_path") != "sources/first_party/skills/ecc-superpowers/SKILL.md":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source path mismatch")
-            if projection.get("source_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source author mismatch")
-            if projection.get("source_license") != "MIT":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source license mismatch")
-            if projection.get("adapted_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers adapted author mismatch")
-
     for canonical_name, expected_entry in expected_adapted.items():
         projection = adapted_by_name[canonical_name]
         expected_overlay = expected_entry.get("adaptation_overlay_path")
@@ -198,6 +192,15 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
         if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
             raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
+        if canonical_name == "ecc-superpowers":
+            if projection.get("source_path") != "sources/first_party/skills/ecc-superpowers/SKILL.md":
+                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source path mismatch")
+            if projection.get("source_author") != "Harley Bartles":
+                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source author mismatch")
+            if projection.get("source_license") != "MIT":
+                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source license mismatch")
+            if projection.get("adapted_author") != "Harley Bartles":
+                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers adapted author mismatch")
 
     if len(source_only) != 7:
         raise ValueError("superpowers-plus provenance-map.json source_only_surfaces count mismatch")
@@ -711,9 +714,23 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
                 else:
                     validate_tree_mirror(source_path, local_full_path, canonical_name)
             else:
-                overlay_root = ROOT / adaptation_overlay_path
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
+                if adaptation_overlay_path is None:
+                    if canonical_name != "ecc-superpowers":
+                        raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
+                    source_skill = source_path / "SKILL.md"
+                    projected_skill = local_full_path / "SKILL.md"
+                    _, source_body = _split_skill_frontmatter_and_body(source_skill)
+                    _, projected_body = _split_skill_frontmatter_and_body(projected_skill)
+                    if source_body != projected_body:
+                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
+                    source_agent = source_path / "agents" / "openai.yaml"
+                    projected_agent = local_full_path / "agents" / "openai.yaml"
+                    if source_agent.read_bytes() != projected_agent.read_bytes():
+                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
+                else:
+                    overlay_root = ROOT / adaptation_overlay_path
+                    validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
         else:
             if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")

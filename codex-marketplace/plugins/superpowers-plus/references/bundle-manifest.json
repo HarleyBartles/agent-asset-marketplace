@@ -104,20 +104,6 @@
       "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
     },
     {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "skills/ecc-superpowers",
-      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "adapted_author": "Harley Bartles",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the repo-authored ECC Superpowers router skill into the Superpowers bundle."
-    },
-    {
       "canonical_name": "receiving-code-review",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -200,6 +186,21 @@
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
       "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
+    },
+    {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "adapted_author": "Harley Bartles",
+      "import_status": "imported",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Projected from the repo-authored ECC Superpowers router skill into the Superpowers bundle as an adapted wrapper.",
+      "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance."
     },
     {
       "canonical_name": "writing-plans",

@@ -2415,13 +2415,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/ecc-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3034,
-      "source_sha256": "a328143318224b4b2142ee25680981f0f145b1afa9217b415a24dc308e2ef6b5",
+      "source_bytes": 3248,
+      "source_sha256": "e0f4e13b47cce27582dbaf62ec1125a08ce36dc51f0c95008eb9ce6b71c2ba13",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1633,
-      "zip_sha256": "4c5fca0c3ebb30b19744ecadc66cf7d139d843278c0062c5dbb2140120332b2e"
+      "zip_size_bytes": 1749,
+      "zip_sha256": "ccb8cc152b1e2a4cfcb81e0a5b21645bd9220017961da98f770da7864184cd66"
     },
     {
       "pack": "superpowers-plus",
