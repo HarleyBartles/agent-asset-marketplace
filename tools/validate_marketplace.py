@@ -192,15 +192,12 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
         if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
             raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
-        if canonical_name == "ecc-superpowers":
-            if projection.get("source_path") != "sources/first_party/skills/ecc-superpowers/SKILL.md":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source path mismatch")
-            if projection.get("source_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source author mismatch")
-            if projection.get("source_license") != "MIT":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers source license mismatch")
-            if projection.get("adapted_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus provenance-map.json ecc-superpowers adapted author mismatch")
+        for field_name in ("source_path", "source_author", "source_license", "adapted_author"):
+            expected_value = expected_entry.get(field_name)
+            if expected_value is not None and projection.get(field_name) != expected_value:
+                raise ValueError(
+                    f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] {field_name} mismatch"
+                )
 
     if len(source_only) != 7:
         raise ValueError("superpowers-plus provenance-map.json source_only_surfaces count mismatch")
@@ -240,6 +237,50 @@ def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, 
         value = repo_index.get(field_name)
         if value is not None and (not isinstance(value, str) or not value.strip()):
             raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a nonblank string or null")
+
+
+def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> None:
+    canonical_name = entry.get("canonical_name")
+    if not isinstance(canonical_name, str) or not canonical_name:
+        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing canonical_name")
+
+    def require_nonblank(field_name: str) -> None:
+        value = entry.get(field_name)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} is missing {field_name}")
+
+    require_nonblank("canonical_source_path")
+    require_nonblank("provenance_note")
+
+    content_mode = entry.get("content_mode")
+    source_category = entry.get("source_category")
+    if content_mode == "verbatim":
+        if source_category not in {"first_party", "third_party"}:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
+        if entry.get("adaptation_overlay_path") is not None:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_overlay_path")
+        if entry.get("adapted_author") is not None:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adapted_author")
+        for field_name in ("source_path", "source_author", "source_license", "source_repo"):
+            if field_name in entry:
+                require_nonblank(field_name)
+        return
+
+    if content_mode != "adapted":
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has invalid content_mode")
+    if not entry.get("adaptation_note"):
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note")
+
+    if source_category == "third_party":
+        require_nonblank("adaptation_overlay_path")
+        require_nonblank("adapted_author")
+    elif source_category == "first_party":
+        require_nonblank("source_path")
+        require_nonblank("source_author")
+        require_nonblank("source_license")
+        require_nonblank("adapted_author")
+    else:
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
 
 
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
@@ -706,16 +747,6 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus entry {canonical_name} needs a provenance note")
         if content_mode == "adapted" and not entry.get("adaptation_note"):
             raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
-        if canonical_name == "ecc-superpowers":
-            if entry.get("source_path") != "sources/first_party/skills/ecc-superpowers/SKILL.md":
-                raise ValueError("superpowers-plus bundle manifest ecc-superpowers source path mismatch")
-            if entry.get("source_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus bundle manifest ecc-superpowers source author mismatch")
-            if entry.get("source_license") != "MIT":
-                raise ValueError("superpowers-plus bundle manifest ecc-superpowers source license mismatch")
-            if entry.get("adapted_author") != "Harley Bartles":
-                raise ValueError("superpowers-plus bundle manifest ecc-superpowers adapted author mismatch")
-
         adaptation_overlay_path = entry.get("adaptation_overlay_path")
         if source_category == "third_party" and content_mode == "adapted":
             expected_overlay_path = f"adaptation-overlays/superpowers-plus/{canonical_name}"
@@ -730,6 +761,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus entry {canonical_name} is missing canonical_source_path")
         if not isinstance(local_path, str) or not local_path:
             raise ValueError(f"superpowers-plus entry {canonical_name} is missing local_path")
+        _validate_projection_entry_provenance(entry, bundle_name="superpowers-plus")
         check_path_exists(ROOT / canonical_source_path)
         check_path_exists(ROOT / plugin_root / local_path)
         source_path = ROOT / canonical_source_path

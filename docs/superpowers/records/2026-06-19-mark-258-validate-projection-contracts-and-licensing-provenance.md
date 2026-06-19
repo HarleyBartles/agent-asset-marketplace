@@ -12,19 +12,20 @@
 
 ## Files Changed
 
-- `.agents/plugins/marketplace.json`
-- `codex-marketplace/manifest.json`
-- `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/agents/openai.yaml`
+- `adaptation-overlays/superpowers-plus/verification-before-completion/SKILL.md`
+- `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json`
+- `codex-marketplace/plugins/superpowers-plus/references/provenance-map.json`
+- `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/SKILL.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md`
 - `docs/contracts/openai-agent-yaml.md`
 - `docs/contracts/skill-frontmatter.md`
 - `docs/superpowers/plans/2026-06-19-mark-258-validate-projection-contracts-and-licensing-provenance.md`
 - `docs/superpowers/records/2026-06-19-mark-258-validate-projection-contracts-and-licensing-provenance.md`
 - `generated/skill-zips/registry.json`
-- `generated/skill-zips/superpowers-plus/ecc-superpowers/skill.zip`
-- `sources/first_party/skills/ecc-superpowers/agents/openai.yaml`
-- `tests/test_skill_overlay_materializer.py`
+- `generated/skill-zips/superpowers-plus/architecture-superpowers/skill.zip`
+- `generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip`
+- `sources/first_party/skills/architecture-superpowers/SKILL.md`
 - `tests/test_validate_marketplace.py`
-- `tools/skill_overlay_materializer.py`
 - `tools/skill_zip_artifacts.py`
 - `tools/validate_marketplace.py`
 
@@ -34,8 +35,10 @@
 - `py -3 tools/update_skill_artifacts.py --all`
 - `py -3 tools/generate_marketplace.py`
 - `py -3 tools/generate_repo_index.py`
+- `py -3 tools/validate_marketplace.py`
 - `py -3 tools/validate_repo_index.py`
 - `py -3 tools/validate_skill_zips.py`
+- `git diff --check`
 
 ## Generated Artifacts
 

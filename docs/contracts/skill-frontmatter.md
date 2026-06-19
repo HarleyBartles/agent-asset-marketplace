@@ -27,7 +27,8 @@ metadata:
 - The frontmatter must be a top-level mapping.
 - `name` is required and must be a nonblank string.
 - `description` is required and must be a nonblank string.
-- `metadata` is optional, but if present it must be a mapping.
+- `metadata` is required for the current wrapper/projection set under `codex-marketplace/plugins/superpowers-plus/skills/{architecture-superpowers,ecc-superpowers,finishing-a-development-branch,github-superpowers,linear-superpowers,unslop-superpowers,using-superpowers,verification-before-completion}` and must be a mapping.
+- `metadata` is optional for non-projected source custody surfaces, but if present it must be a mapping.
 - Duplicate keys are rejected.
 - Frontmatter should not contain execution instructions.
 - Descriptions should say when to use the skill, not just what it is.

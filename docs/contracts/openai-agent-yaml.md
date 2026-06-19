@@ -45,6 +45,7 @@ policy:
 - The top level must be a mapping.
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
+- The current wrapper/projection set under `codex-marketplace/plugins/superpowers-plus/skills/{architecture-superpowers,ecc-superpowers,finishing-a-development-branch,github-superpowers,linear-superpowers,unslop-superpowers,using-superpowers,verification-before-completion}` must include `metadata`; source-custody snapshots can omit it.
 - When present, provenance keys such as `skill_name`, `plugin`,
   `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`,
   `projection_plugin`, `source-id`, `source-path`, `provenance-name`, `origin`,

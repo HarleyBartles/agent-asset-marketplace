@@ -3,6 +3,11 @@ name: architecture-superpowers
 description: >
   Use when shaping architecture decisions and review packets that need a
   compositional gate over Superpowers instead of a new doctrine surface.
+metadata:
+  source-id: architecture-superpowers
+  source-path: sources/first_party/skills/architecture-superpowers/SKILL.md
+  provenance-name: MARK-173 Architecture Superpowers compositional skill
+license: "MIT"
 keywords:
   - architecture
   - routing

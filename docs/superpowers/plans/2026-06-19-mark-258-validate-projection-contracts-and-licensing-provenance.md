@@ -19,7 +19,7 @@
 - Modify: `tests/test_skill_overlay_materializer.py`
 - Modify: `tests/test_validate_marketplace.py`
 
-- [ ] **Step 1: Extend `validate_skill_markdown_frontmatter` so projected `SKILL.md` files must keep structured metadata instead of only `name` and `description`.**
+- [x] **Step 1: Extend `validate_skill_markdown_frontmatter` so projected `SKILL.md` files must keep structured metadata instead of only `name` and `description`.**
 
 ```python
 metadata = parsed_frontmatter.get("metadata")
@@ -27,7 +27,7 @@ if not isinstance(metadata, dict):
     raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
 ```
 
-- [ ] **Step 2: Add focused checks for the projection metadata keys already used in this repo, including `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`, `projection_plugin`, `source-id`, `source-path`, `provenance-name`, `origin`, `content_mode`, `source_author`, `source_license`, and `adapted_author` when those fields are present.**
+- [x] **Step 2: Add focused checks for the projection metadata keys already used in this repo, including `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`, `projection_plugin`, `source-id`, `source-path`, `provenance-name`, `origin`, `content_mode`, `source_author`, `source_license`, and `adapted_author` when those fields are present.**
 
 ```python
 if metadata.get("content_mode") == "adapted":
@@ -36,7 +36,7 @@ if metadata.get("content_mode") == "adapted":
             raise ValueError(f"{skill_md} metadata {field} must be a nonblank string for adapted projections")
 ```
 
-- [ ] **Step 3: Expand `validate_openai_agent_yaml` so `agents/openai.yaml` must support the richer Codex metadata pattern used in the repo, including `version`, `metadata`, optional `interface`, optional `policy`, and optional tool `dependencies`.**
+- [x] **Step 3: Expand `validate_openai_agent_yaml` so `agents/openai.yaml` must support the richer Codex metadata pattern used in the repo, including `version`, `metadata`, optional `interface`, optional `policy`, and optional tool `dependencies`.**
 
 ```python
 interface = parsed.get("interface")
@@ -47,7 +47,7 @@ if policy is not None and not isinstance(policy, dict):
     raise ValueError(f"{agent_yaml_path} policy must be a mapping when present")
 ```
 
-- [ ] **Step 4: Update the OpenAI agent contract doc to describe the validated fields and the repo's two observed patterns: light projection metadata and richer Codex UI/policy metadata.**
+- [x] **Step 4: Update the OpenAI agent contract doc to describe the validated fields and the repo's two observed patterns: light projection metadata and richer Codex UI/policy metadata.**
 
 ### Task 2: Enforce bundle provenance and repo-index contract shape
 
@@ -56,7 +56,7 @@ if policy is not None and not isinstance(policy, dict):
 - Modify: `tests/test_validate_marketplace.py`
 - Modify: `tools/generate_repo_index.py` if the validator exposes a missing `repo_index` field that the generator currently tolerates
 
-- [ ] **Step 1: Add a reusable helper that validates bundle-manifest `repo_index` metadata for projected packs.**
+- [x] **Step 1: Add a reusable helper that validates bundle-manifest `repo_index` metadata for projected packs.**
 
 ```python
 def _validate_repo_index_metadata(repo_index: dict, *, plugin_root: str) -> None:
@@ -64,7 +64,7 @@ def _validate_repo_index_metadata(repo_index: dict, *, plugin_root: str) -> None
         raise ValueError(f"{plugin_root} repo_index source_ledger must be a list")
 ```
 
-- [ ] **Step 2: Require explicit provenance fields on bundle entries so verbatim projections retain source author/license/source and adapted projections also declare repo adaptation authorship.**
+- [x] **Step 2: Require explicit provenance fields on bundle entries so verbatim projections retain source author/license/source and adapted projections also declare repo adaptation authorship.**
 
 ```python
 if content_mode == "verbatim":
@@ -81,7 +81,7 @@ if plugin_root.name == "everything-codex-code":
     ...
 ```
 
-- [ ] **Step 4: Add or update regression tests that prove the validator accepts the current Superpowers+/ECC projections and rejects missing provenance or malformed `repo_index` metadata.**
+- [x] **Step 4: Add or update regression tests that prove the validator accepts the current Superpowers+/ECC projections and rejects missing provenance or malformed `repo_index` metadata.**
 
 ### Task 3: Regenerate evidence, update the implementation record, and close out publication
 
