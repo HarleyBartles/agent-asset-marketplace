@@ -1,6 +1,8 @@
 {
   "bundle_name": "dotnet-kit",
   "bundle_version": "1.0.0",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "upstream_repo": "codewithmukesh/dotnet-claude-kit",
   "pinned_commit": "9a9a91107596b3ac3ad1d0ad5ec5eef189e74515",
   "source_root": ".",

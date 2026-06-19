@@ -8,6 +8,7 @@ metadata:
   source_repo: openai/plugins
   source_path: sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md
   content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Sprite Pipeline

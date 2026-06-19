@@ -18,6 +18,14 @@ file_patterns:
   - '**/auth/**'
   - '**/security/**'
 confidence: 0.9
+metadata:
+  origin: Claude-Cortex
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # OWASP Top 10 Security Vulnerabilities
@@ -56,18 +64,18 @@ Load detailed guidance for each vulnerability:
 
 | Vulnerability | Reference File |
 |---|---|
-| **Broken Access Control** | `skills/owasp-top-10/references/broken-access-control.md` |
-| **Cryptographic Failures** | `skills/owasp-top-10/references/cryptographic-failures.md` |
-| **Injection** | `skills/owasp-top-10/references/injection.md` |
-| **Insecure Design** | `skills/owasp-top-10/references/insecure-design.md` |
-| **Security Misconfiguration** | `skills/owasp-top-10/references/security-misconfiguration.md` |
-| **Vulnerable Components** | `skills/owasp-top-10/references/vulnerable-components.md` |
-| **Authentication Failures** | `skills/owasp-top-10/references/authentication-failures.md` |
-| **Integrity Failures** | `skills/owasp-top-10/references/integrity-failures.md` |
-| **Logging & Monitoring** | `skills/owasp-top-10/references/logging-monitoring.md` |
-| **SSRF** | `skills/owasp-top-10/references/ssrf.md` |
-| **Prevention Strategies** | `skills/owasp-top-10/references/prevention-strategies.md` |
-| **Assessment Workflow** | `skills/owasp-top-10/references/assessment-workflow.md` |
+| **Broken Access Control** | `references/broken-access-control.md` |
+| **Cryptographic Failures** | `references/cryptographic-failures.md` |
+| **Injection** | `references/injection.md` |
+| **Insecure Design** | `references/insecure-design.md` |
+| **Security Misconfiguration** | `references/security-misconfiguration.md` |
+| **Vulnerable Components** | `references/vulnerable-components.md` |
+| **Authentication Failures** | `references/authentication-failures.md` |
+| **Integrity Failures** | `references/integrity-failures.md` |
+| **Logging & Monitoring** | `references/logging-monitoring.md` |
+| **SSRF** | `references/ssrf.md` |
+| **Prevention Strategies** | `references/prevention-strategies.md` |
+| **Assessment Workflow** | `references/assessment-workflow.md` |
 
 ## Security Audit Workflow
 

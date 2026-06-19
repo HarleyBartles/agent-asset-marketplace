@@ -41,8 +41,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/ai-first-engineering/SKILL.md",
@@ -52,8 +51,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/deployment-patterns/SKILL.md",
@@ -63,8 +61,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/dmux-workflows/SKILL.md",
@@ -74,8 +71,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/messages-ops/SKILL.md",
@@ -85,8 +81,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/messages-ops/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/ml-adoption-playbook/SKILL.md",
@@ -96,8 +91,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/ml-adoption-playbook/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/prediction-market-oracle-research/SKILL.md",
@@ -107,8 +101,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/prediction-market-oracle-research/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/recursive-decision-ledger/SKILL.md",
@@ -118,8 +111,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/recursive-decision-ledger/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/research-ops/SKILL.md",
@@ -129,8 +121,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/research-ops/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/safety-guard/SKILL.md",
@@ -140,8 +131,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/safety-guard/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/search-first/SKILL.md",
@@ -151,8 +141,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/search-first/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/team-agent-orchestration/SKILL.md",
@@ -162,8 +151,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/team-agent-orchestration/SKILL.md",
       "source_author": "Affaan Mustafa",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/team-builder/SKILL.md",
@@ -173,8 +161,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/team-builder/SKILL.md",
       "source_author": "Community contributors",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     },
     {
       "snapshot_path": "skills/token-budget-advisor/SKILL.md",
@@ -184,8 +171,7 @@
       "source_path": "sources/third_party/ecc/upstream/skills/token-budget-advisor/SKILL.md",
       "source_author": "Community contributors",
       "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+      "source_repo": "https://github.com/affaan-m/ECC"
     }
   ],
   "notes": [

@@ -3,12 +3,12 @@ name: ecc-superpowers
 description: Use when Superpowers+ work needs to route ECC workflow-shaped tasks to the dedicated superpowers-ecc pack while keeping the Superpowers+ router thin and compositional.
 metadata:
   source-id: ecc-superpowers
-  source-path: sources/first_party/skills/ecc-superpowers/SKILL.md
   provenance-name: MARK-244 ECC Superpowers compositional routing skill
   origin: first_party
   source_author: Harley Bartles
   source_license: MIT
   source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
+  source_path: sources/first_party/skills/ecc-superpowers/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
 license: "MIT"

@@ -8,6 +8,7 @@ metadata:
   source_repo: openai/plugins
   source_path: sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline/SKILL.md
   content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Web 3D Asset Pipeline

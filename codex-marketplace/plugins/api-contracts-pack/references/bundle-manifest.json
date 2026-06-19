@@ -1,6 +1,8 @@
 {
   "bundle_name": "api-contracts-pack",
   "bundle_version": "1.0.0",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
@@ -30,8 +32,7 @@
       "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/references/design-process.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Mirrored as the supporting contract design-process reference for the umbrella slice."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/api-design-patterns/validation/rubric.yaml",
@@ -41,8 +42,7 @@
       "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/validation/rubric.yaml",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Mirrored as the skill quality rubric and validation posture for the umbrella slice."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/openapi-specification/SKILL.md",

@@ -28,7 +28,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/game-studio/SKILL.md",
@@ -39,7 +40,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/game-ui-frontend/SKILL.md",
@@ -50,7 +52,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/phaser-2d-game/SKILL.md",
@@ -61,7 +64,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/react-three-fiber-game/SKILL.md",
@@ -72,7 +76,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/sprite-pipeline/SKILL.md",
@@ -83,7 +88,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/three-webgl-game/SKILL.md",
@@ -94,7 +100,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/web-3d-asset-pipeline/SKILL.md",
@@ -105,7 +112,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/web-game-foundations/SKILL.md",
@@ -116,7 +124,8 @@
       "source_author": "OpenAI",
       "source_license": "MIT",
       "source_repo": "openai/plugins",
-      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter."
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "provenance_refs": [

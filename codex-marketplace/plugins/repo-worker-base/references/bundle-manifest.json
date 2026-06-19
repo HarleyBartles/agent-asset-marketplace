@@ -2,6 +2,8 @@
   "bundle_name": "repo-worker-base",
   "bundle_version": "1.0.0",
   "bundle_type": "first-party-repo-worker-plugin",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "plugin_root": "codex-marketplace/plugins/repo-worker-base",
   "skills_root": "codex-marketplace/plugins/repo-worker-base/skills",
   "control_plane_skill": {
