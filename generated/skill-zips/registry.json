@@ -303,13 +303,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19400,
-      "source_sha256": "b4ebeefc1013bd6bdc39e3757d13499f262ee7bb115b6dca87f1177c6be719c5",
+      "source_bytes": 19693,
+      "source_sha256": "d72b6b273a0823329e3b1543820523f400d8fb5efc67322a53a15d374beaf01e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8904,
-      "zip_sha256": "2feeaf75b27cbe9e2a755bf5261a9e7c2e1e4b2a5ea2b7cd29f3710fd7063bc6"
+      "zip_size_bytes": 9048,
+      "zip_sha256": "3702ba1e5a5a5928f8a12ab4685247f2b3194401a4bcd1fe878239eb3fb44da9"
     },
     {
       "pack": "api-contracts-pack",
@@ -319,13 +319,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 9291,
-      "source_sha256": "658ae34aa3d7b7916e7752aba2d4bca3693daea9e769e4c06428b9f853aec9f0",
+      "source_bytes": 9586,
+      "source_sha256": "d44d64c8d3c2c4ab204c0a7e59f8d646705a9fb3fc9f0ad1d19a830d17f94191",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4390,
-      "zip_sha256": "05131aba6be8ee520ef214e8b726874b34551e0b66c82cf990c8d7b772055766"
+      "zip_size_bytes": 4534,
+      "zip_sha256": "8a2b6f3f56ea5a35ace3f19692156d680060cf9caa69b5eaeb947eb85dc90e7b"
     },
     {
       "pack": "architecture-pack",

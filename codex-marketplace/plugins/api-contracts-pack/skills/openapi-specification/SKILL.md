@@ -1,4 +1,13 @@
 ---
+metadata:
+  origin: Claude-Cortex
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
+---
 name: openapi-specification
 description: OpenAPI 3.x contract expression, schema composition, and validation for REST API specs. Use with api-design-patterns when you need the format-specific OpenAPI slice rather than broad API doctrine.
 tags:

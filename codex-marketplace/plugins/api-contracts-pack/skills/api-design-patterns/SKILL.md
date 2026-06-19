@@ -1,4 +1,13 @@
 ---
+metadata:
+  origin: Claude-Cortex
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
+---
 name: api-design-patterns
 description: Contract-first API design patterns for REST and GraphQL services, with versioning, pagination, error handling, generated-client expectations, and validation posture.
 keywords:
