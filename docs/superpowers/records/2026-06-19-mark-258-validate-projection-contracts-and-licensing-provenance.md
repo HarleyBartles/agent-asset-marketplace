@@ -16,6 +16,7 @@
 - `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json`
 - `codex-marketplace/plugins/superpowers-plus/references/provenance-map.json`
 - `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/SKILL.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/agents/openai.yaml`
 - `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md`
 - `docs/contracts/openai-agent-yaml.md`
 - `docs/contracts/skill-frontmatter.md`
@@ -23,9 +24,13 @@
 - `docs/superpowers/records/2026-06-19-mark-258-validate-projection-contracts-and-licensing-provenance.md`
 - `generated/skill-zips/registry.json`
 - `generated/skill-zips/superpowers-plus/architecture-superpowers/skill.zip`
+- `generated/skill-zips/superpowers-plus/ecc-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip`
 - `sources/first_party/skills/architecture-superpowers/SKILL.md`
+- `sources/first_party/skills/ecc-superpowers/agents/openai.yaml`
+- `tests/test_skill_overlay_materializer.py`
 - `tests/test_validate_marketplace.py`
+- `tools/skill_overlay_materializer.py`
 - `tools/skill_zip_artifacts.py`
 - `tools/validate_marketplace.py`
 
