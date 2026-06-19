@@ -34,10 +34,32 @@ The standard established in MARK-237 for Superpowers+ has three layers:
 - **unslop**: Has SOURCE.md, adapted third-party custody. May need overlays if adaptations are platform-specific
 - **game-studio**: Has SOURCE.md, imported third-party custody. May need overlays if adaptations are platform-specific
 
+## Overlay Requirement Analysis
+
+Based on analysis of platform-specific content and Skill tool dependencies:
+
+### Plugins requiring overlays (already compliant)
+- **superpowers-plus**: Has Skill tool dependencies and platform-specific routing, requires both Codex and GPT overlays (already implemented)
+
+### Plugins suitable for direct export (no overlays needed)
+- **house-skills**: First-party skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **adventures-pack**: First-party skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **unslop**: Adapted third-party skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **wild-bunch-project-pack**: Mixed custody with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **game-studio**: Imported third-party skills, no Skill tool dependencies, direct export appropriate
+- **superpowers-ecc**: Third-party ECC skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **everything-codex-code**: Mirrored ECC skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **codex-cortex**: Third-party Claude-Cortex skills, no Skill tool dependencies, direct export appropriate
+- **repo-worker-base**: First-party core skills with descriptive Codex references, no Skill tool dependencies, direct export appropriate
+- **dotnet-kit**: Third-party dotnet skills, no Skill tool dependencies, direct export appropriate
+- **api-contracts-pack**: Mirrored Claude-Cortex skills, no Skill tool dependencies, direct export appropriate
+- **architecture-pack**: Mirrored Claude-Cortex skills, no Skill tool dependencies, direct export appropriate
+- **language-patterns-pack**: Third-party Claude-Cortex skills, no Skill tool dependencies, direct export appropriate
+- **security-pack**: Third-party Claude-Cortex and ECC skills, no Skill tool dependencies, direct export appropriate
+- **frontend-pack**: Third-party Claude-Cortex skills, no Skill tool dependencies, direct export appropriate
+
 ## Follow-up Work Required
 
-1. Determine which plugins actually need Codex/GPT overlays vs. direct export
-2. Add PROJECTION.md to plugins that have complex custody or adaptation stories
-3. Add Codex overlays where platform-specific adaptations are needed
-4. Add GPT overlays and manifest entries where GPT-specific adaptations are needed
-5. Update validation to enforce the standard for new plugins
+1. Add PROJECTION.md to plugins that have complex custody or adaptation stories (for documentation clarity)
+2. Add GPT manifest entries with direct export mode for all plugins that don't have them
+3. Update validation to enforce the standard for new plugins
