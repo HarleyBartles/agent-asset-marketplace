@@ -140,6 +140,7 @@ SUPERPOWERS_PLUS_ENTRY = {
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
         "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
         "sources/first_party/skills/architecture-superpowers/SKILL.md",
+        "sources/first_party/skills/ecc-superpowers/SKILL.md",
     ],
     "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
@@ -150,6 +151,30 @@ SUPERPOWERS_PLUS_ENTRY = {
     ],
     "agents_md": None,
     "registry_path": "./codex-marketplace/plugins/superpowers-plus",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
+SUPERPOWERS_ECC_ENTRY = {
+    "name": "superpowers-ecc",
+    "plugin_root": "codex-marketplace/plugins/superpowers-ecc",
+    "plugin_manifest": "codex-marketplace/plugins/superpowers-ecc/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/superpowers-ecc/SOURCE.md",
+    "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md",
+    ],
+    "license_path": "codex-marketplace/plugins/superpowers-ecc/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/superpowers-ecc/skills",
+    "provenance_refs": [
+        "provenance/superpowers-ecc.md",
+        "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/superpowers-ecc",
     "registry_alignment": {
         "status": "aligned",
         "note": None,
@@ -203,6 +228,9 @@ def build_repo_index() -> dict:
             continue
         if name == "superpowers-plus":
             ordered_plugins.append(dict(SUPERPOWERS_PLUS_ENTRY))
+            continue
+        if name == "superpowers-ecc":
+            ordered_plugins.append(dict(SUPERPOWERS_ECC_ENTRY))
             continue
         if name in current_plugins:
             ordered_plugins.append(current_plugins[name])

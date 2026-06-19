@@ -16,8 +16,8 @@
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json"
   ],
-  "candidate_count": 18,
-  "imported_count": 18,
+  "candidate_count": 19,
+  "imported_count": 19,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -188,6 +188,21 @@
       "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
     },
     {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "adapted_author": "Harley Bartles",
+      "import_status": "imported",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Projected from the repo-authored ECC Superpowers router skill into the Superpowers bundle as an adapted wrapper.",
+      "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance."
+    },
+    {
       "canonical_name": "writing-plans",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -239,10 +254,8 @@
     }
   ],
   "notes": [
-    "The source custody root stays verbatim, the projection layer marks each entry as verbatim or adapted, and the using-superpowers plus finishing-a-development-branch skills are the only adapted Superpowers projections.",
-    "The installation/export layer is derived from the projection plus overlays; do not hand-edit generated zips or registry entries.",
-    "The projection contract is narrow: keep Superpowers as a third-party plugin projection, allow only the selected first-party compositional wrapper skills, and do not relocate first-party expert or domain skills into the plugin.",
-    "The harness-specific surfaces remain preserved in third-party source custody.",
-    "The retained snapshot keeps the broader package boundary for provenance and review."
+    "Dedicated Superpowers+ projection with the repo-authored ECC router wrapper.",
+    "The bundle keeps Superpowers+ broad while routing ECC workflow-shaped work to the dedicated superpowers-ecc pack.",
+    "The retained upstream snapshot and non-Codex harness surfaces remain in third-party source custody."
   ]
 }

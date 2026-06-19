@@ -1,0 +1,20 @@
+version: 1
+metadata:
+  author: Harley Bartles
+  license: MIT
+  origin: first_party
+  content_mode: adapted
+  upstream_author: Affaan Mustafa
+  upstream_license: MIT
+  upstream_repo: https://github.com/affaan-m/ECC
+interface:
+  display_name: ECC Superpowers
+  short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.
+  default_prompt: Use /ecc-superpowers to keep Superpowers+ thin, route ECC workflow-shaped work to the dedicated superpowers-ecc pack, and keep the actual workflow slice in the dedicated pack instead of absorbing it into Superpowers+.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

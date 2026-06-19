@@ -1,0 +1,48 @@
+{
+  "name": "superpowers-ecc",
+  "version": "1.0.0",
+  "description": "Codex marketplace bundle for the dedicated ECC Superpowers workflow pack and its thin Superpowers+ router companion.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "rights": "Harley-authored plugin shell with third-party ECC-derived skill projections. Each skill carries its own source author, source license, and adaptation notes in SOURCE.md, references/source-map.md, and references/bundle-manifest.json.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "ecc",
+    "superpowers",
+    "workflow",
+    "skills",
+    "projection",
+    "research",
+    "orchestration",
+    "safety",
+    "decision-ledger",
+    "token-budget",
+    "agent-harness",
+    "ai-first-engineering"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Superpowers ECC",
+    "shortDescription": "ECC Superpowers workflow pack",
+    "longDescription": "A repo-local Codex plugin bundle that projects selected ECC Superpowers-style workflow skills into a dedicated installable marketplace pack while Superpowers+ keeps only the thin ecc-superpowers routing wrapper.",
+    "developerName": "Harley Bartles",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Superpowers ECC bundle and source map.",
+      "Use the pack to review the selected ECC workflow skills and their source map.",
+      "Compare the bundle against the retained ECC custody surfaces and the Superpowers+ wrapper."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

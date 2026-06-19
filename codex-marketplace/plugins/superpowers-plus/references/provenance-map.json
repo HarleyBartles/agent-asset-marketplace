@@ -95,6 +95,19 @@
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
       "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
+    },
+    {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "adapted_author": "Harley Bartles",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack."
     }
   ],
   "source_only_surfaces": [
@@ -129,7 +142,7 @@
   ],
   "notes": [
     "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
-    "The active projection adapts the using-superpowers, finishing-a-development-branch, and verification-before-completion workflows for Codex marketplace precedence, publication rules, and verified-plan backstop behavior, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, and architecture-superpowers projections.",
+    "The active projection adapts the using-superpowers, finishing-a-development-branch, and verification-before-completion workflows for Codex marketplace precedence, publication rules, and verified-plan backstop behavior, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, architecture-superpowers, and repo-authored ecc-superpowers projections.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]

@@ -59,6 +59,11 @@
           "reason": "This first-party projection is GPT-safe as a compositional architecture router and gate."
         },
         {
+          "skill": "ecc-superpowers",
+          "export_mode": "direct",
+          "reason": "This repo-authored router wrapper is GPT-safe and only points to the dedicated superpowers-ecc pack."
+        },
+        {
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
