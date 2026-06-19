@@ -738,11 +738,39 @@ def validate_skill_bundle_manifest(
     pinned_commit = bundle_manifest.get("pinned_commit")
     if not pinned_commit or not isinstance(pinned_commit, str):
         raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
-    vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
     source_root = bundle_manifest.get("source_root")
     if not source_root or not isinstance(source_root, str):
         raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
-    check_path_exists(vendor_root / source_root)
+    vendor_root: Path | None = None
+    source_family_roots: dict[str, Path] | None = None
+
+    if bundle_name == "security-pack" and isinstance(bundle_manifest.get("source_families"), list):
+        source_family_roots = {}
+        for family in bundle_manifest["source_families"]:
+            if not isinstance(family, dict):
+                raise ValueError("security-pack bundle manifest source_families must contain objects")
+            family_name = family.get("name")
+            family_upstream_repo = family.get("upstream_repo")
+            family_pinned_commit = family.get("pinned_commit")
+            family_source_root = family.get("source_root")
+            if not family_name or not isinstance(family_name, str):
+                raise ValueError("security-pack bundle manifest source_families entry name mismatch")
+            if family_name in source_family_roots:
+                raise ValueError("security-pack bundle manifest source_families entry name duplicated")
+            if not family_upstream_repo or not isinstance(family_upstream_repo, str):
+                raise ValueError("security-pack bundle manifest source_families upstream_repo mismatch")
+            if not family_pinned_commit or not isinstance(family_pinned_commit, str):
+                raise ValueError("security-pack bundle manifest source_families pinned_commit mismatch")
+            if not family_source_root or not isinstance(family_source_root, str):
+                raise ValueError("security-pack bundle manifest source_families source_root mismatch")
+            family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
+            resolved_family_root = family_vendor_root / family_source_root
+            check_path_exists(resolved_family_root)
+            source_family_roots[family_name] = resolved_family_root
+        check_path_exists(ROOT / plugin_root / source_root)
+    else:
+        vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
+        check_path_exists(vendor_root / source_root)
 
     entries = bundle_manifest.get("entries", [])
     if bundle_manifest.get("candidate_count") != len(entries):
@@ -785,14 +813,25 @@ def validate_skill_bundle_manifest(
         snapshot_path = entry.get("snapshot_path")
         if not snapshot_path or not isinstance(snapshot_path, str):
             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
-        check_path_exists(vendor_root / snapshot_path)
+        entry_vendor_root = vendor_root
+        if source_family_roots is not None:
+            source_family = entry.get("source_family")
+            if not source_family or not isinstance(source_family, str):
+                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a source_family")
+            entry_vendor_root = source_family_roots.get(source_family)
+            if entry_vendor_root is None:
+                raise ValueError(
+                    f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
+                )
+        assert entry_vendor_root is not None
+        check_path_exists(entry_vendor_root / snapshot_path)
         content_mode = entry.get("content_mode")
         if content_mode not in {"verbatim", "adapted"}:
             raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
         if content_mode == "verbatim":
-            source_bytes = (vendor_root / snapshot_path).read_bytes()
+            source_bytes = (entry_vendor_root / snapshot_path).read_bytes()
             projected_bytes = (ROOT / plugin_root / local_path).read_bytes()
             if source_bytes != projected_bytes:
                 raise ValueError(

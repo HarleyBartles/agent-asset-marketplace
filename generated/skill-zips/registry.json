@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 156,
+  "artifact_count": 160,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1961,6 +1961,22 @@
     },
     {
       "pack": "security-pack",
+      "skill": "owasp-top-10",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/security-pack/skills/owasp-top-10",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/security-pack/owasp-top-10/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 35401,
+      "source_sha256": "942e03aad63b17bb185fa5f053d6a87fc009e5d51ad80f4b81dd70e798b6cfd9",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 18445,
+      "zip_sha256": "11d9126dc9946eb88e291cde20157a3f4a1b39b3776ab89bbb7ba0fdecdb4c38"
+    },
+    {
+      "pack": "security-pack",
       "skill": "perl-security",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/security-pack/skills/perl-security",
@@ -2025,6 +2041,22 @@
     },
     {
       "pack": "security-pack",
+      "skill": "secure-coding-practices",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/security-pack/skills/secure-coding-practices",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/security-pack/secure-coding-practices/skill.zip",
+      "source_file_count": 9,
+      "source_bytes": 32682,
+      "source_sha256": "500d8feff249c6a208a88357d63242fc706aa05b0c546608c80383f2e1adcdb5",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 15730,
+      "zip_sha256": "96a0b47742229918325f787c8641925db9efe71a3d79524e901bef48a67f4da9"
+    },
+    {
+      "pack": "security-pack",
       "skill": "security-bounty-hunter",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/security-pack/skills/security-bounty-hunter",
@@ -2073,6 +2105,22 @@
     },
     {
       "pack": "security-pack",
+      "skill": "security-testing-patterns",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/security-pack/skills/security-testing-patterns",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/security-pack/security-testing-patterns/skill.zip",
+      "source_file_count": 8,
+      "source_bytes": 36732,
+      "source_sha256": "903db4cfacd7d2296bdc1bd57dd15d30397657088efd008e50c1307ea743aafd",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 16563,
+      "zip_sha256": "d9012b7580e27eb4b95f40b3aabdf32fc1e24fa96d204696b9f0073735c11c08"
+    },
+    {
+      "pack": "security-pack",
       "skill": "springboot-security",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/security-pack/skills/springboot-security",
@@ -2086,6 +2134,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 3499,
       "zip_sha256": "0adf82bc1bb2418a41695885dff3d1af130a2410643e78993e3a8f753550433c"
+    },
+    {
+      "pack": "security-pack",
+      "skill": "threat-modeling-techniques",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 13844,
+      "source_sha256": "10fecc4670229bbf0ea6cea4f6ebce42db52cee0cb387b8cf7a61d0d0d3e10f9",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 9148,
+      "zip_sha256": "a666ae92908c636afb3e60a82cf484ccc20e4abdfed4f4d6ae3158cd7725fdce"
     },
     {
       "pack": "superpowers-plus",

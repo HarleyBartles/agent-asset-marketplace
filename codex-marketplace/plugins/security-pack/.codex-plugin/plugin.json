@@ -1,22 +1,25 @@
 {
   "name": "security-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for ECC security review, security scanning, safe-operation guidance, config validation, and framework-specific security hardening.",
+  "description": "Codex marketplace bundle combining retained Codex Cortex security foundations with retained ECC security review, scanning, safe-operation, config validation, and hardening skills.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains third-party ECC-derived security skill projections; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "rights": "Contains third-party Codex Cortex- and ECC-derived security skill projections; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
   "keywords": [
     "codex",
     "marketplace",
     "security",
     "ecc",
+    "codex-cortex",
+    "owasp",
     "security-review",
     "security-scan",
     "security-bounty",
+    "security-testing",
     "framework-security",
     "config-validation",
     "risk-review",
@@ -33,7 +36,7 @@
   "interface": {
     "displayName": "Security Pack",
     "shortDescription": "ECC security review and hardening",
-    "longDescription": "A repo-local Codex plugin bundle that projects selected ECC security skills into an installable marketplace shape for security review, security scanning, safe-operation guidance, config validation, bounty hunting, risk review, and framework-specific security hardening.",
+    "longDescription": "A repo-local Codex plugin bundle that projects retained Codex Cortex security foundations together with selected ECC security skills into an installable marketplace shape for secure coding, OWASP review, security testing, threat modeling, cloud review, config validation, bounty hunting, risk review, and framework-specific security hardening.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -42,8 +45,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Security Pack bundle and source map.",
-      "Use the bundle to review the ECC security skills and their source map.",
-      "Compare the bundle against the retained ECC custody surface."
+      "Use the bundle to review the combined Codex Cortex and ECC security skills and their source map.",
+      "Compare the bundle against the retained Codex Cortex and ECC custody surfaces."
     ],
     "brandColor": "#991B1B",
     "composerIcon": "./assets/icon.svg",
