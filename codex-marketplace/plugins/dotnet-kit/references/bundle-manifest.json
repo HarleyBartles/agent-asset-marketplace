@@ -57,5 +57,8 @@
     "Selective retained upstream snapshot only.",
     "tdd and verify are deferred from this child.",
     "The pack projects six installable technical skills and no full upstream kit."
+  ],
+  "provenance_refs": [
+    "provenance/dotnet-kit.md"
   ]
 }

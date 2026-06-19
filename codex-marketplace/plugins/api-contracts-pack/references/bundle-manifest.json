@@ -57,5 +57,8 @@
     "Two-slice contract-doctrine pack.",
     "The bundle projects the retained api-design-patterns guidance and the narrower openapi-specification companion slice into an installable marketplace shape.",
     "openapi-specification composes with api-design-patterns and stays within the OpenAPI-specific boundary."
+  ],
+  "provenance_refs": [
+    "provenance/api-contracts-pack.md"
   ]
 }

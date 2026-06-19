@@ -964,6 +964,18 @@ def validate_skill_bundle_manifest(
         raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
+    
+    # First-party bundles don't require upstream_repo, pinned_commit, source_root
+    bundle_type = bundle_manifest.get("bundle_type")
+    if bundle_type and "first-party" in bundle_type:
+        # First-party bundle validation
+        if not bundle_manifest.get("plugin_root"):
+            raise ValueError(f"{bundle_name} bundle manifest plugin_root missing")
+        if not bundle_manifest.get("skills_root"):
+            raise ValueError(f"{bundle_name} bundle manifest skills_root missing")
+        return
+    
+    # Third-party bundle validation requires upstream fields
     upstream_repo = bundle_manifest.get("upstream_repo")
     if not upstream_repo or not isinstance(upstream_repo, str):
         raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
@@ -1003,6 +1015,9 @@ def validate_skill_bundle_manifest(
             check_path_exists(resolved_family_root)
             source_family_roots[family_name] = resolved_family_root
         check_path_exists(ROOT / plugin_root / source_root)
+    elif bundle_type and "first-party" in bundle_type:
+        # First-party bundles don't have vendor roots to validate
+        pass
     else:
         vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
         check_path_exists(vendor_root / source_root)

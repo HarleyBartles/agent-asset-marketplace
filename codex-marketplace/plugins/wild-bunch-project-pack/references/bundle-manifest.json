@@ -139,5 +139,8 @@
     "Third-party browser-game helper skills are copied verbatim from retained game-studio custody.",
     "Pack-local advisory hooks live under hooks/ and do not affect GPT skill exports.",
     "agent-browser remains excluded because the repo does not retain it as an approved marketplace projection."
+  ],
+  "provenance_refs": [
+    "provenance/wild-bunch-project-pack.md"
   ]
 }

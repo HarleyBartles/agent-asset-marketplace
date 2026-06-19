@@ -253,5 +253,8 @@
                   "Four-skill language/runtime pack covering TypeScript and Python.",
                   "The retained upstream skills use plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
                   "The python-testing-patterns validation rubric remains retained source custody only and is not projected into the installable pack."
-              ]
+              ],
+    "provenance_refs": [
+        "provenance/language-patterns-pack.md"
+    ]
 }

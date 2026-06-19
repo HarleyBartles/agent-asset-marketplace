@@ -73,5 +73,8 @@
       "content_mode": "verbatim",
       "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
     }
+  ],
+  "provenance_refs": [
+    "provenance/game-studio.md"
   ]
 }
