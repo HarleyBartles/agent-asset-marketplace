@@ -1,12 +1,13 @@
 # MARK-264 Implementation Record
 
-**Goal:** normalize the frontend-pack custody pointers onto the retained `codex-cortex` source root without reshaping the active marketplace surface.
+**Goal:** normalize the frontend-pack custody pointers onto the retained `claude-cortex` source root without reshaping the active marketplace surface.
 
 ## Scope
 
-- Updated the frontend-pack README, source note, source map, and provenance note to point at the normalized `sources/third_party/codex-cortex/upstream/` custody root.
+- Updated the frontend-pack README, source note, source map, and provenance note to point at the retained `sources/third_party/claude-cortex/upstream/` custody root.
 - Kept the projected skill set, bundle contents, and marketplace boundaries unchanged.
 - Recorded the work in the Superpowers plan/record surfaces for issue-traceable handoff.
+- Explicitly accounted for the `dotnet-kit` MARK-263 row: the selective retained snapshot covers exactly the six projected skills (`modern-csharp`, `vertical-slice`, `clean-architecture`, `ddd`, `ef-core`, `testing`), so no repo file changes were needed for that row beyond this record note.
 
 ## Files Changed
 
@@ -26,11 +27,11 @@
 
 ## Generated Artifacts
 
-No generated artifact content changed. The repo already retained the frontend skill slice under the normalized `codex-cortex` custody root, so this issue only needed source/provenance pointer normalization and no regeneration step.
+No generated artifact content changed. The repo already retained the frontend skill slice under the honest `claude-cortex` custody root, so this issue only needed source/provenance pointer normalization and no regeneration step.
 
 ## Notes
 
-- `dotnet-kit` was inspected as part of the issue source basis, but its selective retained snapshot remained within the current pack boundary and did not require a change for this repair.
+- `dotnet-kit` was verified against the MARK-263 row as a no-op: the retained snapshot covers the six projected skills and the deferred `tdd` / `verify` items remain intentionally out of scope.
 
 ## Publication
 

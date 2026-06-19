@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Normalize the frontend-pack custody references onto the retained `codex-cortex` source root so the active projection points at the repo's normalized retained upstream snapshot.
+**Goal:** Normalize the frontend-pack custody references onto the retained `claude-cortex` source root so the active projection points at the repo's honest retained upstream snapshot.
 
 **Architecture:** Keep the change narrow and documentation-first. Update the frontend-pack source/provenance surfaces to point at the normalized third-party custody root that already contains the retained frontend skill slice, then record the repair and run validation without reshaping pack membership.
 
@@ -20,12 +20,12 @@
 
 - [x] **Step 1: Update the failing source-custody references**
 
-Replace the `claude-cortex` custody-root references with the normalized `codex-cortex` custody-root references in the frontend pack documentation and source map, while keeping the pack boundary and projected skills unchanged.
+Replace the wrong `codex-cortex` custody-root references with the honest `claude-cortex` custody-root references in the frontend pack documentation and source map, while keeping the pack boundary and projected skills unchanged.
 
 - [x] **Step 2: Verify the updated wording**
 
 Run: `rg -n "claude-cortex|codex-cortex" codex-marketplace/plugins/frontend-pack provenance/frontend-pack.md`
-Expected: `claude-cortex` remains only where the repo intentionally keeps historical upstream naming, and the frontend-pack custody references point at `codex-cortex`.
+Expected: `codex-cortex` remains only where the repo intentionally keeps other family naming, and the frontend-pack custody references point at `claude-cortex`.
 
 ### Task 2: Record the repair
 

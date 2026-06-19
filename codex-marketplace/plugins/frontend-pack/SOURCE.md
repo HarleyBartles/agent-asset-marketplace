@@ -1,7 +1,7 @@
 # Source
 
 This plugin packages the retained `NickCrew/Claude-Cortex` frontend
-application skills from the normalized `codex-cortex` custody root as a
+application skills from the retained `claude-cortex` custody root as a
 market-facing Codex plugin focused on React and frontend implementation
 guidance.
 
@@ -35,7 +35,7 @@ guidance.
 ## Notes
 
 The retained upstream snapshot now lives under
-`sources/third_party/codex-cortex/upstream/`.
+`sources/third_party/claude-cortex/upstream/`.
 The project intentionally keeps the source-custody record separate from the
 installable marketplace root so the bundle can be regenerated from live source
 bytes.
