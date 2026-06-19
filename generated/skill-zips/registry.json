@@ -2047,13 +2047,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/security-review/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 22664,
-      "source_sha256": "ab95ab1467f3f4c3bcc47897e08bdf0092c1ec0b038d5ada0254e07bf50c94fd",
+      "source_bytes": 22753,
+      "source_sha256": "31e7e6659f6b79587bca8c8c4d437b6bb62798f63c7ad18088b9be1d1263dd43",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9069,
-      "zip_sha256": "e2d658346d5a3637aac70f009c6ea2c111f4e4b719b23c9012d30d6cad420336"
+      "zip_size_bytes": 9131,
+      "zip_sha256": "0ffe8373d12702dccc40b541c8d8a378f959d647067598eef82897f750270c67"
     },
     {
       "pack": "security-pack",

@@ -82,7 +82,7 @@
     },
     {
       "snapshot_path": "skills/security-review/cloud-infrastructure-security.md",
-      "local_path": "skills/security-review/cloud-infrastructure-security.md",
+      "local_path": "skills/security-review/references/cloud-infrastructure-security.md",
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-review slice."
