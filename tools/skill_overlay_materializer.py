@@ -110,6 +110,105 @@ def validate_openai_agent_yaml(agent_yaml_path: Path) -> None:
     if not isinstance(metadata, dict):
         raise ValueError(f"{agent_yaml_path} metadata must be a mapping")
 
+    def _require_nonblank_string(field_name: str) -> None:
+        value = metadata.get(field_name)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{agent_yaml_path} metadata {field_name} must be a nonblank string")
+
+    for field_name in (
+        "skill_name",
+        "plugin",
+        "source_category",
+        "upstream_name",
+        "upstream_version",
+        "adaptation_overlay",
+        "projection_plugin",
+        "source-id",
+        "source-path",
+        "provenance-name",
+        "origin",
+        "content_mode",
+        "source_author",
+        "source_license",
+        "source_repo",
+        "adapted_author",
+    ):
+        if field_name in metadata:
+            _require_nonblank_string(field_name)
+
+    if metadata.get("source_category") and metadata["source_category"] not in {"first_party", "third_party"}:
+        raise ValueError(f"{agent_yaml_path} metadata source_category must be first_party or third_party")
+    if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "adapted"}:
+        raise ValueError(f"{agent_yaml_path} metadata content_mode must be verbatim or adapted")
+
+    if metadata.get("source_category") == "third_party":
+        for field_name in ("upstream_version", "adaptation_overlay"):
+            _require_nonblank_string(field_name)
+
+    if metadata.get("content_mode") == "adapted":
+        _require_nonblank_string("adapted_author")
+
+    interface = parsed.get("interface")
+    if interface is not None:
+        if not isinstance(interface, dict):
+            raise ValueError(f"{agent_yaml_path} interface must be a mapping when present")
+        for field_name in ("display_name", "short_description"):
+            value = interface.get(field_name)
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f"{agent_yaml_path} interface {field_name} must be a nonblank string")
+        for field_name in ("default_prompt", "icon_small", "icon_large", "brand_color"):
+            value = interface.get(field_name)
+            if value is not None and (not isinstance(value, str) or not value.strip()):
+                raise ValueError(f"{agent_yaml_path} interface {field_name} must be a nonblank string when present")
+
+    policy = parsed.get("policy")
+    if policy is not None:
+        if not isinstance(policy, dict):
+            raise ValueError(f"{agent_yaml_path} policy must be a mapping when present")
+        allow_implicit_invocation = policy.get("allow_implicit_invocation")
+        if allow_implicit_invocation is not None and not isinstance(allow_implicit_invocation, bool):
+            raise ValueError(
+                f"{agent_yaml_path} policy allow_implicit_invocation must be a boolean when present"
+            )
+        products = policy.get("products")
+        if products is not None:
+            if not isinstance(products, list) or not products:
+                raise ValueError(f"{agent_yaml_path} policy products must be a non-empty list when present")
+            for product in products:
+                if not isinstance(product, str) or not product.strip():
+                    raise ValueError(f"{agent_yaml_path} policy products must contain nonblank strings")
+
+    dependencies = parsed.get("dependencies")
+    if dependencies is not None:
+        if not isinstance(dependencies, dict):
+            raise ValueError(f"{agent_yaml_path} dependencies must be a mapping when present")
+        tools = dependencies.get("tools")
+        if tools is not None:
+            if not isinstance(tools, list) or not tools:
+                raise ValueError(f"{agent_yaml_path} dependencies.tools must be a non-empty list when present")
+            for tool in tools:
+                if not isinstance(tool, dict):
+                    raise ValueError(f"{agent_yaml_path} dependencies.tools entries must be mappings")
+                for field_name in ("type", "value"):
+                    value = tool.get(field_name)
+                    if not isinstance(value, str) or not value.strip():
+                        raise ValueError(
+                            f"{agent_yaml_path} dependencies.tools entries must include nonblank {field_name}"
+                        )
+                description = tool.get("description")
+                if description is not None and (not isinstance(description, str) or not description.strip()):
+                    raise ValueError(
+                        f"{agent_yaml_path} dependencies.tools description must be a nonblank string when present"
+                    )
+                transport = tool.get("transport")
+                if transport is not None and (not isinstance(transport, str) or not transport.strip()):
+                    raise ValueError(
+                        f"{agent_yaml_path} dependencies.tools transport must be a nonblank string when present"
+                    )
+                url = tool.get("url")
+                if url is not None and (not isinstance(url, str) or not url.strip()):
+                    raise ValueError(f"{agent_yaml_path} dependencies.tools url must be a nonblank string when present")
+
 
 def _apply_deletes(staged_root: Path, overlay_root: Path, deletes: list[str]) -> None:
     for delete_path in deletes:

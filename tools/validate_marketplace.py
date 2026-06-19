@@ -206,6 +206,42 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
         raise ValueError("superpowers-plus provenance-map.json source_only_surfaces count mismatch")
 
 
+def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, plugin_root: str) -> None:
+    if repo_index is None:
+        return
+    if not isinstance(repo_index, dict):
+        raise ValueError(f"{bundle_name} bundle manifest repo_index must be a mapping")
+
+    for field_name in ("source_ledger", "provenance_refs"):
+        value = repo_index.get(field_name)
+        if not isinstance(value, list):
+            raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a list")
+        for item in value:
+            if not isinstance(item, str) or not item.strip():
+                raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must contain nonblank strings")
+
+    agents_md = repo_index.get("agents_md")
+    if agents_md is not None and (not isinstance(agents_md, str) or not agents_md.strip()):
+        raise ValueError(f"{bundle_name} bundle manifest repo_index agents_md must be a nonblank string or null")
+
+    registry_alignment = repo_index.get("registry_alignment")
+    if not isinstance(registry_alignment, dict):
+        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment must be a mapping")
+    status = registry_alignment.get("status")
+    note = registry_alignment.get("note")
+    if status not in {"aligned", "intentional-delta"}:
+        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment status mismatch")
+    if status == "intentional-delta" and not isinstance(note, str):
+        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment note must be text")
+    if status == "intentional-delta" and not note.strip():
+        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment note must be nonblank")
+
+    for field_name in ("source_md", "license_path", "license_reference", "bundle_manifest", "skills_path"):
+        value = repo_index.get(field_name)
+        if value is not None and (not isinstance(value, str) or not value.strip()):
+            raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a nonblank string or null")
+
+
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
     normalized_json = [
         _decision_structure(normalize_decision_record(row))
@@ -628,6 +664,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             )
 
     _validate_superpowers_provenance_map(bundle_manifest, plugin_root)
+    _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name="superpowers-plus", plugin_root=plugin_root)
 
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
@@ -845,6 +882,8 @@ def validate_skill_bundle_manifest(
     else:
         vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
         check_path_exists(vendor_root / source_root)
+
+    _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name=bundle_name, plugin_root=plugin_root)
 
     entries = bundle_manifest.get("entries", [])
     if bundle_manifest.get("candidate_count") != len(entries):

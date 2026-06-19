@@ -15,7 +15,7 @@ if str(TOOLS) not in sys.path:
 
 import validate_marketplace  # noqa: E402
 from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
-from validate_marketplace import validate_superpowers_bundle_manifest  # noqa: E402
+from validate_marketplace import _validate_repo_index_metadata, validate_superpowers_bundle_manifest  # noqa: E402
 
 
 def _touch(path: Path, content: str = "ok") -> None:
@@ -223,6 +223,20 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
                 ],
+                "repo_index": {
+                    "source_ledger": [
+                        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+                        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+                    ],
+                    "provenance_refs": [
+                        "provenance/superpowers-plus.md",
+                    ],
+                    "agents_md": None,
+                    "registry_alignment": {
+                        "status": "aligned",
+                        "note": None,
+                    },
+                },
                 "candidate_count": 1,
                 "imported_count": 1,
                 "skipped_count": 0,
@@ -259,6 +273,31 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     )
                 except ValueError as exc:  # pragma: no cover - exercised by the red test run
                     self.fail(f"validator rejected the first-party projection: {exc}")
+
+    def test_validate_repo_index_metadata_accepts_current_shape(self) -> None:
+        _validate_repo_index_metadata(
+            {
+                "source_ledger": ["sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md"],
+                "provenance_refs": ["provenance/superpowers-plus.md"],
+                "agents_md": None,
+                "registry_alignment": {"status": "aligned", "note": None},
+            },
+            bundle_name="superpowers-plus",
+            plugin_root="codex-marketplace/plugins/superpowers-plus",
+        )
+
+    def test_validate_repo_index_metadata_rejects_bad_shape(self) -> None:
+        with self.assertRaises(ValueError):
+            _validate_repo_index_metadata(
+                {
+                    "source_ledger": "nope",
+                    "provenance_refs": ["provenance/superpowers-plus.md"],
+                    "agents_md": None,
+                    "registry_alignment": {"status": "aligned", "note": None},
+                },
+                bundle_name="superpowers-plus",
+                plugin_root="codex-marketplace/plugins/superpowers-plus",
+            )
 
     def test_superpowers_bundle_accepts_first_party_github_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

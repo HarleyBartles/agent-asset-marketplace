@@ -126,6 +126,52 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     metadata = parsed_frontmatter.get("metadata")
     if metadata is not None and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
+    if isinstance(metadata, dict):
+        def require_string(field_names: tuple[str, ...], *, allow_empty: bool = False) -> None:
+            for field_name in field_names:
+                if field_name not in metadata:
+                    continue
+                value = metadata.get(field_name)
+                if not isinstance(value, str) or (not allow_empty and not value.strip()):
+                    raise ValueError(
+                        f"{skill_md} frontmatter metadata {field_name} must be a "
+                        f"{'string' if allow_empty else 'nonblank string'}"
+                    )
+
+        require_string(
+            (
+                "source_category",
+                "upstream_name",
+                "upstream_version",
+                "adaptation_overlay",
+                "projection_plugin",
+                "source-id",
+                "source_path",
+                "source-path",
+                "provenance-name",
+                "provenance_name",
+                "origin",
+                "content_mode",
+                "source_author",
+                "source_license",
+                "source_repo",
+                "adapted_author",
+            )
+        )
+        if metadata.get("source_category") and metadata["source_category"] not in {"first_party", "third_party"}:
+            raise ValueError(f"{skill_md} frontmatter metadata source_category must be first_party or third_party")
+        if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "adapted"}:
+            raise ValueError(f"{skill_md} frontmatter metadata content_mode must be verbatim or adapted")
+        if metadata.get("source_category") == "third_party":
+            for field_name in ("upstream_name", "upstream_version", "adaptation_overlay", "projection_plugin"):
+                require_string((field_name,))
+        if metadata.get("content_mode") == "adapted":
+            require_string(("adapted_author",))
+            if "source_author" not in metadata or "source_license" not in metadata:
+                raise ValueError(
+                    f"{skill_md} frontmatter metadata adapted projections must declare source_author and source_license"
+                )
+            require_string(("source_author", "source_license"))
 
 
 @dataclass(frozen=True)

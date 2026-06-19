@@ -31,6 +31,9 @@ metadata:
 - Duplicate keys are rejected.
 - Frontmatter should not contain execution instructions.
 - Descriptions should say when to use the skill, not just what it is.
+- Projected skills are expected to keep provenance and projection identity in
+  structured `metadata` fields instead of scattering those facts across loose
+  top-level YAML keys.
 
 ## Notes
 
