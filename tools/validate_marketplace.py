@@ -239,6 +239,98 @@ def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, 
             raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a nonblank string or null")
 
 
+def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str]:
+    rows = parse_top_markdown_table(path)
+    values: list[str] = []
+    seen_values: set[str] = set()
+    for row in rows:
+        value = row.get(column_name)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{path}: markdown table column {column_name} must contain nonblank strings")
+        if value in seen_values:
+            raise ValueError(f"{path}: markdown table column {column_name} contains a duplicate value: {value}")
+        seen_values.add(value)
+        values.append(value)
+    if not values:
+        raise ValueError(f"{path}: markdown table column {column_name} must contain at least one value")
+    return values
+
+
+def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    if bundle_manifest.get("bundle_name") != "everything-codex-code":
+        raise ValueError("everything-codex-code bundle manifest bundle_name mismatch")
+    if bundle_manifest.get("bundle_version") != "1.0.0":
+        raise ValueError("everything-codex-code bundle manifest bundle_version mismatch")
+    if bundle_manifest.get("bundle_type") != "project-scoped-codex-plugin-projection":
+        raise ValueError("everything-codex-code bundle manifest bundle_type mismatch")
+    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
+        raise ValueError("everything-codex-code bundle manifest marketplace_root mismatch")
+    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/everything-codex-code":
+        raise ValueError("everything-codex-code bundle manifest plugin_root mismatch")
+    if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/superpowers-ecc/skills":
+        raise ValueError("everything-codex-code bundle manifest canonical_source_root mismatch")
+    if bundle_manifest.get("source_of_truth") != [
+        "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
+        "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
+        "provenance/superpowers-ecc.md",
+    ]:
+        raise ValueError("everything-codex-code bundle manifest source_of_truth mismatch")
+    if bundle_manifest.get("projection_policy") != (
+        "Project the ECC workflow skills already selected into superpowers-ecc. Keep this pack mirrored from that marketplace projection rather than upstream ECC custody."
+    ):
+        raise ValueError("everything-codex-code bundle manifest projection_policy mismatch")
+
+    components = bundle_manifest.get("components", [])
+    if not isinstance(components, list) or not components:
+        raise ValueError("everything-codex-code bundle manifest components must be a non-empty list")
+
+    skill_dir = ROOT / plugin_root / "skills"
+    source_map_path = ROOT / plugin_root / "references" / "source-map.md"
+    check_path_exists(skill_dir)
+    check_path_exists(source_map_path)
+    expected_names = _load_markdown_table_column_values(source_map_path, "Skill")
+    actual_skill_names = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
+    if actual_skill_names != sorted(expected_names):
+        raise ValueError("everything-codex-code bundle manifest skill directory inventory mismatch")
+
+    seen_names: set[str] = set()
+    seen_local_paths: set[str] = set()
+    component_names: list[str] = []
+    for component in components:
+        if not isinstance(component, dict):
+            raise ValueError("everything-codex-code bundle manifest components must contain objects")
+        canonical_name = component.get("canonical_name")
+        source_path = component.get("source_path")
+        local_path = component.get("local_path")
+        projection_status = component.get("projection_status")
+        if not isinstance(canonical_name, str) or not canonical_name:
+            raise ValueError("everything-codex-code bundle manifest component is missing canonical_name")
+        if canonical_name in seen_names:
+            raise ValueError(f"everything-codex-code bundle manifest component is duplicated: {canonical_name}")
+        seen_names.add(canonical_name)
+        component_names.append(canonical_name)
+        if not isinstance(source_path, str) or not source_path:
+            raise ValueError(f"everything-codex-code bundle manifest component {canonical_name} is missing source_path")
+        if not isinstance(local_path, str) or not local_path:
+            raise ValueError(f"everything-codex-code bundle manifest component {canonical_name} is missing local_path")
+        if local_path in seen_local_paths:
+            raise ValueError(f"everything-codex-code bundle manifest component local path is duplicated: {local_path}")
+        seen_local_paths.add(local_path)
+        if projection_status != "projected":
+            raise ValueError(f"everything-codex-code bundle manifest component {canonical_name} must be projected")
+
+        source_md = ROOT / source_path
+        local_md = ROOT / plugin_root / local_path
+        check_path_exists(source_md)
+        check_path_exists(local_md)
+        validate_tree_mirror(source_md.parent, local_md.parent, canonical_name)
+
+    if component_names != expected_names:
+        raise ValueError("everything-codex-code bundle manifest components must match the source map selection")
+
+    _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name="everything-codex-code", plugin_root=plugin_root)
+
+
 def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> None:
     canonical_name = entry.get("canonical_name")
     if not isinstance(canonical_name, str) or not canonical_name:
@@ -1159,6 +1251,8 @@ def main() -> int:
                 validate_wild_bunch_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "superpowers-plus":
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+            elif spec["name"] == "everything-codex-code":
+                validate_everything_codex_code_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,

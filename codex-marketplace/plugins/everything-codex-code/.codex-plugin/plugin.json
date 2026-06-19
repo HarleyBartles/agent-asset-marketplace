@@ -1,0 +1,49 @@
+{
+  "name": "everything-codex-code",
+  "version": "1.0.0",
+  "description": "Codex marketplace bundle for the generated aggregate ECC workflow projection built from the selected superpowers-ecc surface.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "rights": "Harley-authored plugin shell with third-party ECC-derived skill projections mirrored from the existing superpowers-ecc marketplace surface. Each skill carries its own source author, source license, and projection notes in SOURCE.md, references/source-map.md, and references/bundle-manifest.json.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "ecc",
+    "superpowers",
+    "everything-codex-code",
+    "workflow",
+    "skills",
+    "projection",
+    "research",
+    "orchestration",
+    "safety",
+    "decision-ledger",
+    "token-budget",
+    "agent-harness",
+    "ai-first-engineering"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Everything Codex Code",
+    "shortDescription": "Generated ECC workflow aggregate",
+    "longDescription": "A repo-local Codex plugin bundle that projects the selected ECC Superpowers-style workflow skills already selected in superpowers-ecc into a second generated installable marketplace pack.",
+    "developerName": "Harley Bartles",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Everything Codex Code bundle and source map.",
+      "Use the pack to review the selected ECC workflow skills and their source map.",
+      "Compare the bundle against the retained ECC custody surfaces and the superpowers-ecc marketplace projection."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

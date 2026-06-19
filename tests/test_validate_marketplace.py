@@ -19,6 +19,7 @@ from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E40
 from validate_marketplace import (  # noqa: E402
     _validate_projection_entry_provenance,
     _validate_repo_index_metadata,
+    validate_everything_codex_code_bundle_manifest,
     validate_superpowers_bundle_manifest,
 )
 
@@ -338,6 +339,97 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 bundle_name="superpowers-plus",
                 plugin_root="codex-marketplace/plugins/superpowers-plus",
             )
+
+    def test_validate_everything_codex_code_bundle_manifest_accepts_current_shape(self) -> None:
+        bundle_manifest = json.loads(
+            (ROOT / "codex-marketplace/plugins/everything-codex-code/references/bundle-manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        validate_everything_codex_code_bundle_manifest(
+            bundle_manifest,
+            plugin_root="codex-marketplace/plugins/everything-codex-code",
+        )
+
+    def test_validate_everything_codex_code_bundle_manifest_tracks_source_surfaces(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "everything-codex-code"
+            source_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-ecc" / "skills"
+
+            selected_names = ["alpha-skill", "beta-skill"]
+            for name in selected_names:
+                source_skill_root = source_root / name
+                local_skill_root = plugin_root / "skills" / name
+                skill_md = _first_party_projection_frontmatter(
+                    name,
+                    f"codex-marketplace/plugins/superpowers-ecc/skills/{name}/SKILL.md",
+                    f"{name} provenance",
+                    f"{name} description",
+                )
+                _touch(source_skill_root / "SKILL.md", skill_md)
+                _touch(local_skill_root / "SKILL.md", skill_md)
+
+            _touch(
+                plugin_root / "references" / "source-map.md",
+                (
+                    "# Everything Codex Code Source Map\n\n"
+                    "This bundle projects the selected ECC Superpowers-style workflow skills into an installable Codex marketplace surface.\n\n"
+                    "| Skill | Source projection root | Local path | Notes |\n"
+                    "| --- | --- | --- | --- |\n"
+                    "| alpha-skill | `codex-marketplace/plugins/superpowers-ecc/skills/alpha-skill/SKILL.md` | `codex-marketplace/plugins/everything-codex-code/skills/alpha-skill/SKILL.md` | Projected unchanged from the selected ECC slice. |\n"
+                    "| beta-skill | `codex-marketplace/plugins/superpowers-ecc/skills/beta-skill/SKILL.md` | `codex-marketplace/plugins/everything-codex-code/skills/beta-skill/SKILL.md` | Projected unchanged from the selected ECC slice. |\n"
+                ),
+            )
+
+            bundle_manifest = {
+                "bundle_name": "everything-codex-code",
+                "bundle_version": "1.0.0",
+                "bundle_type": "project-scoped-codex-plugin-projection",
+                "marketplace_root": ".agents/plugins/marketplace.json",
+                "plugin_root": "codex-marketplace/plugins/everything-codex-code",
+                "canonical_source_root": "codex-marketplace/plugins/superpowers-ecc/skills",
+                "source_of_truth": [
+                    "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
+                    "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
+                    "provenance/superpowers-ecc.md",
+                ],
+                "projection_policy": (
+                    "Project the ECC workflow skills already selected into superpowers-ecc. "
+                    "Keep this pack mirrored from that marketplace projection rather than upstream ECC custody."
+                ),
+                "repo_index": {
+                    "source_ledger": [
+                        "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
+                        "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
+                    ],
+                    "provenance_refs": [
+                        "provenance/everything-codex-code.md",
+                        "codex-marketplace/plugins/everything-codex-code/references/source-map.md",
+                    ],
+                    "agents_md": None,
+                    "registry_alignment": {"status": "aligned", "note": None},
+                },
+                "components": [
+                    {
+                        "canonical_name": name,
+                        "source_path": f"codex-marketplace/plugins/superpowers-ecc/skills/{name}/SKILL.md",
+                        "local_path": f"skills/{name}/SKILL.md",
+                        "projection_status": "projected",
+                    }
+                    for name in selected_names
+                ],
+                "notes": [
+                    "Installable aggregate projection over the dedicated superpowers-ecc pack.",
+                    "This bundle does not mirror upstream ECC custody directly.",
+                ],
+            }
+
+            with patch.object(validate_marketplace, "ROOT", temp_root):
+                validate_everything_codex_code_bundle_manifest(
+                    bundle_manifest,
+                    plugin_root="codex-marketplace/plugins/everything-codex-code",
+                )
 
     def test_validate_projection_entry_provenance_accepts_content_mode_matrix(self) -> None:
         _validate_projection_entry_provenance(
