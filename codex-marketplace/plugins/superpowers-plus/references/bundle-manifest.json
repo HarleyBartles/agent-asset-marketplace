@@ -16,6 +16,26 @@
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json"
   ],
+  "repo_index": {
+    "source_ledger": [
+      "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+      "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+      "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
+      "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+      "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
+      "sources/first_party/skills/architecture-superpowers/SKILL.md",
+      "sources/first_party/skills/ecc-superpowers/SKILL.md"
+    ],
+    "provenance_refs": [
+      "provenance/superpowers-plus.md",
+      "codex-marketplace/plugins/superpowers-plus/references/provenance-map.json"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  },
   "candidate_count": 19,
   "imported_count": 19,
   "skipped_count": 0,
