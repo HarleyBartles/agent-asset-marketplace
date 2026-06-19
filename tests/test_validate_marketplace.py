@@ -19,6 +19,7 @@ from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E40
 from validate_marketplace import (  # noqa: E402
     _validate_projection_entry_provenance,
     _validate_repo_index_metadata,
+    validate_everything_codex_code_bundle_manifest,
     validate_superpowers_bundle_manifest,
 )
 
@@ -338,6 +339,17 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 bundle_name="superpowers-plus",
                 plugin_root="codex-marketplace/plugins/superpowers-plus",
             )
+
+    def test_validate_everything_codex_code_bundle_manifest_accepts_current_shape(self) -> None:
+        bundle_manifest = json.loads(
+            (ROOT / "codex-marketplace/plugins/everything-codex-code/references/bundle-manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        validate_everything_codex_code_bundle_manifest(
+            bundle_manifest,
+            plugin_root="codex-marketplace/plugins/everything-codex-code",
+        )
 
     def test_validate_projection_entry_provenance_accepts_content_mode_matrix(self) -> None:
         _validate_projection_entry_provenance(
