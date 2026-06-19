@@ -19,6 +19,11 @@ Guide completion of development work by presenting clear options and handling ch
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
+If the work used a written plan, run the verified-plan adapter backstop before
+presenting closeout options: reread the plan, confirm checked steps have
+evidence, confirm open steps are intentionally open or blocked, and refuse
+completion claims when the plan and evidence disagree.
+
 ## The Process
 
 ### Step 1: Verify Tests
@@ -42,6 +47,19 @@ Cannot proceed with merge/PR until tests pass.
 Stop. Don't proceed to Step 2.
 
 **If tests pass:** Continue to Step 2.
+
+### Step 1b: Reconcile Plan Evidence
+
+If the work has a written plan, run the plan-checkbox backstop before
+presenting closeout options:
+
+- reread the plan if one exists;
+- verify checked `[x]` steps have matching evidence;
+- verify unchecked `[ ]` steps are intentionally open with an explanation or
+  are real blockers;
+- run the final validation ladder named by the plan or issue;
+- refuse completion, publication, or ready-for-review claims when plan boxes
+  and evidence disagree.
 
 ### Step 2: Detect Environment
 

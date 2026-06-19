@@ -8,6 +8,10 @@ description: Use when a task is multi-step and needs a concrete implementation p
 Write a focused plan that assumes the next engineer needs exact paths, clear
 steps, and enough verification detail to work without guessing.
 
+In the verified-plan adapter path, plans should be checkable execution
+artifacts: each step needs named evidence, and intentionally open steps should
+stay open with a short reason.
+
 ## Linear worker issue shaping
 
 When composing with `worker-dispatch-linear` and `boring-buster`, this skill
@@ -37,6 +41,8 @@ issue as discovery/planning, not worker-ready.
   file names cannot yet be known.
 - Break the work into small steps that can each finish in a few minutes.
 - Include the command or observable evidence that proves each step worked.
+- Make each step checkable by naming the validation command, file/path readback,
+  or evidence condition that proves the step completed.
 - Keep the plan narrow enough that it can be executed without replanning.
 
 ## Guardrails
@@ -48,4 +54,3 @@ issue as discovery/planning, not worker-ready.
   is settled.
 - Do not claim worker-readiness; hand that verdict back to `boring-buster` and
   `worker-dispatch-linear`.
-

@@ -25,6 +25,11 @@ def _write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def _write_bytes(path: Path, content: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+
+
 class SkillOverlayMaterializerTests(unittest.TestCase):
     def test_stage_overlay_tree_applies_replacements_and_deletes(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -58,6 +63,35 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 )
                 self.assertFalse((destination_root / "overlay.yaml").exists())
                 self.assertFalse((destination_root / "remove.txt").exists())
+            finally:
+                temp_handle.cleanup()
+
+    def test_stage_overlay_tree_preserves_existing_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write_bytes(source_root / "SKILL.md", b"source skill\r\nsecond line\r\n")
+            _write_bytes(source_root / "agents" / "openai.yaml", b"version: 1\r\nmetadata: {skill_name: source}\r\n")
+            _write(overlay_root / "overlay.yaml", "schema_version: 1\nmetadata:\n  note: adapted\n")
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                self.assertEqual(
+                    (expected_root / "SKILL.md").read_bytes(),
+                    b"source skill\r\nsecond line\r\n",
+                )
+                self.assertEqual(
+                    (destination_root / "SKILL.md").read_bytes(),
+                    b"source skill\r\nsecond line\r\n",
+                )
+                self.assertEqual(
+                    (destination_root / "agents" / "openai.yaml").read_bytes(),
+                    b"version: 1\r\nmetadata: {skill_name: source}\r\n",
+                )
             finally:
                 temp_handle.cleanup()
 

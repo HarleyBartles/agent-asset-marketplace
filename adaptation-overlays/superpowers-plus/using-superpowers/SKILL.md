@@ -52,6 +52,7 @@ Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-too
 This projection is Asset Marketplace `Superpowers+` adaptation behavior, not upstream/base Superpowers doctrine. It only routes to wrapper skills that are actually projected into `superpowers-plus`.
 
 - Brainstorming and initial task framing: use `brainstorming`.
+- Plan-shaped work: use `writing-plans` to make the plan checkable, then `executing-plans` to update verified checkboxes as work lands, then `verification-before-completion` before any completion or ready-for-review claim.
 - Plan creation and plan execution: use `writing-plans` for route review and `executing-plans` for implementation.
 - Direct implementation work where test discipline matters: use `test-driven-development`.
 - Debugging, bug-finding, and unexpected behavior analysis: use `systematic-debugging`.
