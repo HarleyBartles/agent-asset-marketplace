@@ -1,320 +1,117 @@
 {
   "bundle_name": "security-pack",
   "bundle_version": "1.0.0",
-  "upstream_repo": "NickCrew/Claude-Cortex",
-  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "upstream_repo": "affaan-m/ECC",
+  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 43,
-  "imported_count": 43,
+  "candidate_count": 14,
+  "imported_count": 14,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
     {
-      "snapshot_path": "skills/secure-coding-practices/references/authentication.md",
-      "local_path": "skills/secure-coding-practices/references/authentication.md",
+      "snapshot_path": "skills/defi-amm-security/SKILL.md",
+      "local_path": "skills/defi-amm-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack defi-amm-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/cryptography.md",
-      "local_path": "skills/secure-coding-practices/references/cryptography.md",
+      "snapshot_path": "skills/django-security/SKILL.md",
+      "local_path": "skills/django-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack django-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/dependencies.md",
-      "local_path": "skills/secure-coding-practices/references/dependencies.md",
+      "snapshot_path": "skills/laravel-security/SKILL.md",
+      "local_path": "skills/laravel-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack laravel-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/error-handling.md",
-      "local_path": "skills/secure-coding-practices/references/error-handling.md",
+      "snapshot_path": "skills/llm-trading-agent-security/SKILL.md",
+      "local_path": "skills/llm-trading-agent-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack llm-trading-agent-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/input-validation.md",
-      "local_path": "skills/secure-coding-practices/references/input-validation.md",
+      "snapshot_path": "skills/network-config-validation/SKILL.md",
+      "local_path": "skills/network-config-validation/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack network-config-validation slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/output-encoding.md",
-      "local_path": "skills/secure-coding-practices/references/output-encoding.md",
+      "snapshot_path": "skills/perl-security/SKILL.md",
+      "local_path": "skills/perl-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack perl-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/references/secure-defaults.md",
-      "local_path": "skills/secure-coding-practices/references/secure-defaults.md",
+      "snapshot_path": "skills/prediction-market-risk-review/SKILL.md",
+      "local_path": "skills/prediction-market-risk-review/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack prediction-market-risk-review slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/SKILL.md",
-      "local_path": "skills/secure-coding-practices/SKILL.md",
+      "snapshot_path": "skills/quarkus-security/SKILL.md",
+      "local_path": "skills/quarkus-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack quarkus-security slice."
     },
     {
-      "snapshot_path": "skills/secure-coding-practices/validation/rubric.yaml",
-      "local_path": "skills/secure-coding-practices/validation/rubric.yaml",
+      "snapshot_path": "skills/safety-guard/SKILL.md",
+      "local_path": "skills/safety-guard/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack safety-guard slice."
     },
     {
-      "snapshot_path": "skills/owasp-top-10/references/assessment-workflow.md",
-      "local_path": "skills/owasp-top-10/references/assessment-workflow.md",
+      "snapshot_path": "skills/security-bounty-hunter/SKILL.md",
+      "local_path": "skills/security-bounty-hunter/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-bounty-hunter slice."
     },
     {
-      "snapshot_path": "skills/owasp-top-10/references/authentication-failures.md",
-      "local_path": "skills/owasp-top-10/references/authentication-failures.md",
+      "snapshot_path": "skills/security-review/cloud-infrastructure-security.md",
+      "local_path": "skills/security-review/cloud-infrastructure-security.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-review slice."
     },
     {
-      "snapshot_path": "skills/owasp-top-10/references/broken-access-control.md",
-      "local_path": "skills/owasp-top-10/references/broken-access-control.md",
+      "snapshot_path": "skills/security-review/SKILL.md",
+      "local_path": "skills/security-review/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-review slice."
     },
     {
-      "snapshot_path": "skills/owasp-top-10/references/cryptographic-failures.md",
-      "local_path": "skills/owasp-top-10/references/cryptographic-failures.md",
+      "snapshot_path": "skills/security-scan/SKILL.md",
+      "local_path": "skills/security-scan/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-scan slice."
     },
     {
-      "snapshot_path": "skills/owasp-top-10/references/injection.md",
-      "local_path": "skills/owasp-top-10/references/injection.md",
+      "snapshot_path": "skills/springboot-security/SKILL.md",
+      "local_path": "skills/springboot-security/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/insecure-design.md",
-      "local_path": "skills/owasp-top-10/references/insecure-design.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/integrity-failures.md",
-      "local_path": "skills/owasp-top-10/references/integrity-failures.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/logging-monitoring.md",
-      "local_path": "skills/owasp-top-10/references/logging-monitoring.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/prevention-strategies.md",
-      "local_path": "skills/owasp-top-10/references/prevention-strategies.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/security-misconfiguration.md",
-      "local_path": "skills/owasp-top-10/references/security-misconfiguration.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/ssrf.md",
-      "local_path": "skills/owasp-top-10/references/ssrf.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/references/vulnerable-components.md",
-      "local_path": "skills/owasp-top-10/references/vulnerable-components.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/owasp-top-10/SKILL.md",
-      "local_path": "skills/owasp-top-10/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/api-security.md",
-      "local_path": "skills/security-testing-patterns/references/api-security.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/automation-pipeline.md",
-      "local_path": "skills/security-testing-patterns/references/automation-pipeline.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/dast.md",
-      "local_path": "skills/security-testing-patterns/references/dast.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/fuzzing.md",
-      "local_path": "skills/security-testing-patterns/references/fuzzing.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/penetration-testing.md",
-      "local_path": "skills/security-testing-patterns/references/penetration-testing.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/sast.md",
-      "local_path": "skills/security-testing-patterns/references/sast.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/references/sca.md",
-      "local_path": "skills/security-testing-patterns/references/sca.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/security-testing-patterns/SKILL.md",
-      "local_path": "skills/security-testing-patterns/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
-      "local_path": "skills/threat-modeling-techniques/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Claude-Cortex source into the installable security-pack slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
-      "local_path": "skills/threat-modeling-techniques/references/attack-trees.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the threat-tree reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
-      "local_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the DFD reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
-      "local_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the DREAD scoring reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
-      "local_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the mitigation planning reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE spoofing reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE tampering reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE repudiation reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE information disclosure reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-dos.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE denial-of-service reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
-      "local_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the STRIDE elevation-of-privilege reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
-      "local_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the tooling and process reference for the installable slice."
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
-      "local_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
-      "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Projected as the threat-modeling quality rubric for the installable slice."
+      "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack springboot-security slice."
     }
   ],
   "notes": [
-    "One-slice security pack.",
-    "The bundle projects the retained threat-modeling-techniques guidance into an installable marketplace shape.",
-    "The slice stays focused on pre-implementation risk framing, attack surfaces, abuse cases, and security design choices."
+    "ECC security-only bundle.",
+    "The bundle projects the retained ECC security skills into an installable marketplace shape.",
+    "The slice stays focused on security review, security scanning, safe-operation guidance, config validation, bounty hunting, risk review, and framework-specific hardening."
   ]
 }

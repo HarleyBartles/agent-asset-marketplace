@@ -221,6 +221,10 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "7892d00e7cb6adf00144a535103b930c772fb2c0":
             raise ValueError("Unexpected pinned commit for NickCrew/Claude-Cortex vendor snapshot")
         return ROOT / "sources/third_party/codex-cortex/upstream"
+    if upstream_repo == "affaan-m/ECC":
+        if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
+            raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
+        return ROOT / "sources/third_party/ecc/upstream"
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
