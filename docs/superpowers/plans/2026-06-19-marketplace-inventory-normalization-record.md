@@ -57,4 +57,5 @@ None required. All marketplace plugins now have clear SOURCE.md and PROJECTION.m
 
 ## Publication Proof
 
-[Fill in PR URL and head SHA after creating PR]
+PR URL: https://github.com/HarleyBartles/agent-asset-marketplace/pull/139
+Head SHA: 89d0fc80f21f47e5fe75f57c88bb5f7cbb20d084
