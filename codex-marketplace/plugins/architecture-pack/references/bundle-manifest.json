@@ -169,5 +169,8 @@
     "Three retained architecture guidance skills.",
     "The installable projection mirrors the Codex Cortex custody plugin.",
     "Later Claude-Cortex candidates remain out of scope."
+  ],
+  "provenance_refs": [
+    "provenance/architecture-pack.md"
   ]
 }

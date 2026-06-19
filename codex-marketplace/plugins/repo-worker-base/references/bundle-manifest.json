@@ -1,0 +1,38 @@
+{
+  "bundle_name": "repo-worker-base",
+  "bundle_version": "1.0.0",
+  "bundle_type": "first-party-repo-worker-plugin",
+  "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+  "skills_root": "codex-marketplace/plugins/repo-worker-base/skills",
+  "control_plane_skill": {
+    "name": "repo-worker-base",
+    "path": "codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base"
+  },
+  "skill_count": 4,
+  "skills": [
+    {
+      "name": "repo-worker-base",
+      "lane": "Base",
+      "path": "sources/first_party/skills/repo-worker-base"
+    },
+    {
+      "name": "boring-loop",
+      "lane": "Base",
+      "path": "sources/first_party/core/boring-loop"
+    },
+    {
+      "name": "connector-safety",
+      "lane": "Base",
+      "path": "sources/first_party/core/connector-safety"
+    },
+    {
+      "name": "github-operations",
+      "lane": "Base",
+      "path": "sources/first_party/core/github-operations"
+    }
+  ],
+  "provenance_refs": [
+    "provenance/repo-worker-base.md"
+  ],
+  "source_map": "references/source-map.md"
+}

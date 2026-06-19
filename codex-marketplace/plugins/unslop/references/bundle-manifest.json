@@ -31,5 +31,8 @@
       "content_mode": "verbatim",
       "adaptation_note": "Copied byte-for-byte from the pinned vendor snapshot and kept as market-facing profile evidence for traceability."
     }
+  ],
+  "provenance_refs": [
+    "provenance/unslop.md"
   ]
 }

@@ -11,6 +11,9 @@
                             "sources/first_party/skills/house-skills/intake.json",
                             "provenance/house-skills.md"
                         ],
+    "provenance_refs":  [
+                            "provenance/adventures-pack.md"
+                        ],
     "projection_policy":  "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle.",
     "components":  [
                        {

@@ -485,5 +485,8 @@
                   "Combined security pack.",
                   "The bundle projects retained Codex Cortex security foundations together with retained ECC security-oriented skills into an installable marketplace shape.",
                   "Overlap is resolved at the projection layer: code-hardening, OWASP taxonomy, security testing, threat modeling, cloud review, and framework-specific hardening remain distinct and composable."
-              ]
+              ],
+    "provenance_refs": [
+        "provenance/security-pack.md"
+    ]
 }
