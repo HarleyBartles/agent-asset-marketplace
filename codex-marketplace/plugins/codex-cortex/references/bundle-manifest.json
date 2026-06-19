@@ -1,6 +1,8 @@
 {
   "bundle_name": "codex-cortex",
   "bundle_version": "1.0.0",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
@@ -19,7 +21,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
@@ -30,7 +33,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/cqrs-patterns.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/cqrs-patterns.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
@@ -41,7 +45,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-sourcing.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-sourcing.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
@@ -52,7 +57,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-store-tech.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-store-tech.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
@@ -63,7 +69,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/consistency-patterns.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/consistency-patterns.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/best-practices.md",
@@ -74,7 +81,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/best-practices.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/best-practices.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/SKILL.md",
@@ -85,7 +93,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/core-principles.md",
@@ -96,7 +105,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/core-principles.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/core-principles.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/schema-design-patterns.md",
@@ -107,7 +117,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/schema-design-patterns.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/schema-design-patterns.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/indexing-strategies.md",
@@ -118,7 +129,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/indexing-strategies.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/indexing-strategies.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/partitioning-patterns.md",
@@ -129,7 +141,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/partitioning-patterns.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/partitioning-patterns.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/replication-patterns.md",
@@ -140,7 +153,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/replication-patterns.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/replication-patterns.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/query-optimization.md",
@@ -151,7 +165,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/query-optimization.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/query-optimization.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/SKILL.md",
@@ -162,7 +177,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-fundamentals.md",
@@ -173,7 +189,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-fundamentals.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-fundamentals.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-sourcing.md",
@@ -184,7 +201,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-sourcing.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-sourcing.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/cqrs.md",
@@ -195,7 +213,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/cqrs.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/cqrs.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/message-brokers.md",
@@ -206,7 +225,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/message-brokers.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/message-brokers.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/saga-pattern.md",
@@ -217,7 +237,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/saga-pattern.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/saga-pattern.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
@@ -228,7 +249,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/choreography-orchestration.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/choreography-orchestration.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/eventual-consistency.md",
@@ -239,7 +261,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/eventual-consistency.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/eventual-consistency.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/best-practices.md",
@@ -250,7 +273,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/best-practices.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/best-practices.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/api-design-patterns/SKILL.md",
@@ -261,7 +285,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/api-design-patterns/references/design-process.md",
@@ -294,7 +319,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
@@ -316,7 +342,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/authentication.md",
@@ -327,7 +354,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/authentication.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/authentication.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/cryptography.md",
@@ -338,7 +366,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/cryptography.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/cryptography.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/dependencies.md",
@@ -349,7 +378,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/dependencies.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/dependencies.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/error-handling.md",
@@ -360,7 +390,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/error-handling.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/error-handling.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/input-validation.md",
@@ -371,7 +402,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/input-validation.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/input-validation.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/output-encoding.md",
@@ -382,7 +414,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/output-encoding.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/output-encoding.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/secure-defaults.md",
@@ -393,7 +426,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/secure-defaults.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/secure-defaults.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/SKILL.md",
@@ -404,7 +438,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/validation/rubric.yaml",
@@ -415,7 +450,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/validation/rubric.yaml"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/validation/rubric.yaml",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/assessment-workflow.md",
@@ -426,7 +462,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/assessment-workflow.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/assessment-workflow.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/authentication-failures.md",
@@ -437,7 +474,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/authentication-failures.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/authentication-failures.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/broken-access-control.md",
@@ -448,7 +486,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/broken-access-control.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/broken-access-control.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/cryptographic-failures.md",
@@ -459,7 +498,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/cryptographic-failures.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/cryptographic-failures.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/injection.md",
@@ -470,7 +510,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/injection.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/injection.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/insecure-design.md",
@@ -481,7 +522,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/insecure-design.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/insecure-design.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/integrity-failures.md",
@@ -492,7 +534,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/integrity-failures.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/integrity-failures.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/logging-monitoring.md",
@@ -503,7 +546,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/logging-monitoring.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/logging-monitoring.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/prevention-strategies.md",
@@ -514,7 +558,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/prevention-strategies.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/prevention-strategies.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/security-misconfiguration.md",
@@ -525,7 +570,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/security-misconfiguration.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/security-misconfiguration.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/ssrf.md",
@@ -536,7 +582,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/ssrf.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/ssrf.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/vulnerable-components.md",
@@ -547,7 +594,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/vulnerable-components.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/vulnerable-components.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/SKILL.md",
@@ -558,7 +606,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/api-security.md",
@@ -569,7 +618,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/api-security.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/api-security.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/automation-pipeline.md",
@@ -580,7 +630,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/automation-pipeline.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/automation-pipeline.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/dast.md",
@@ -591,7 +642,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/dast.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/dast.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/fuzzing.md",
@@ -602,7 +654,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/fuzzing.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/fuzzing.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/penetration-testing.md",
@@ -613,7 +666,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/penetration-testing.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/penetration-testing.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sast.md",
@@ -624,7 +678,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sast.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sast.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sca.md",
@@ -635,7 +690,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sca.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sca.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/SKILL.md",
@@ -646,7 +702,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
@@ -657,7 +714,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
@@ -668,7 +726,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/attack-trees.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/attack-trees.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
@@ -679,7 +738,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/data-flow-diagrams.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/data-flow-diagrams.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
@@ -690,7 +750,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/dread-scoring.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/dread-scoring.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
@@ -701,7 +762,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/mitigation-strategies.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/mitigation-strategies.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
@@ -712,7 +774,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-spoofing.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-spoofing.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
@@ -723,7 +786,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-tampering.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-tampering.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
@@ -734,7 +798,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-repudiation.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-repudiation.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
@@ -745,7 +810,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-disclosure.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-disclosure.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
@@ -756,7 +822,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-dos.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-dos.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
@@ -767,7 +834,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-elevation.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-elevation.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
@@ -778,7 +846,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
@@ -789,7 +858,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml"
+      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [

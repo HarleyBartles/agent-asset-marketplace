@@ -1,6 +1,8 @@
 {
   "bundle_name": "frontend-pack",
   "bundle_version": "1.0.0",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
@@ -19,7 +21,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/accessibility-audit/SKILL.md",
@@ -30,7 +33,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/ux-review/SKILL.md",
@@ -41,7 +45,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/interaction-design/SKILL.md",
@@ -52,7 +57,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/webapp-testing/SKILL.md",
@@ -63,7 +69,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [

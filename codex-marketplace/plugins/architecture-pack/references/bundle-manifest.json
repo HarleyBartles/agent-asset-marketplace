@@ -1,6 +1,8 @@
 {
   "bundle_name": "architecture-pack",
   "bundle_version": "1.0.0",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
@@ -19,7 +21,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
@@ -30,7 +33,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
@@ -41,7 +45,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
@@ -52,7 +57,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
@@ -63,7 +69,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/best-practices.md",
@@ -74,7 +81,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/SKILL.md",
@@ -85,7 +93,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/core-principles.md",
@@ -96,7 +105,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/schema-design-patterns.md",
@@ -107,7 +117,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/indexing-strategies.md",
@@ -118,7 +129,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/partitioning-patterns.md",
@@ -129,7 +141,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/replication-patterns.md",
@@ -140,7 +153,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/query-optimization.md",
@@ -151,7 +165,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/SKILL.md",
@@ -162,7 +177,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-fundamentals.md",
@@ -173,7 +189,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-sourcing.md",
@@ -184,7 +201,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/cqrs.md",
@@ -195,7 +213,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/message-brokers.md",
@@ -206,7 +225,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/saga-pattern.md",
@@ -217,7 +237,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
@@ -228,7 +249,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/eventual-consistency.md",
@@ -239,7 +261,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/best-practices.md",
@@ -250,7 +273,8 @@
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [

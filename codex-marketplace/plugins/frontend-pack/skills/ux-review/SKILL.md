@@ -25,6 +25,7 @@ metadata:
   source_repo: https://github.com/NickCrew/Claude-Cortex
   source_path: sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md
   content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # UX Review
