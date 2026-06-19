@@ -35,5 +35,5 @@ No generated artifact content changed. The repo already retained the frontend sk
 ## Publication
 
 - Branch: `harleydbartles/mark-264-repair-upstream-source-custody-gaps`
-- Commit: pending
-- Draft PR: pending
+- Commit: `442681d480bde78157502e1a28b023d80fd93124`
+- Draft PR: [#134](https://github.com/HarleyBartles/agent-asset-marketplace/pull/134)

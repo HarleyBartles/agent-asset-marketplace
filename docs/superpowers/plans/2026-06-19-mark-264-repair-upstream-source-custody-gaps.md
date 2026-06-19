@@ -57,6 +57,6 @@ Run:
 
 Change completed steps to `[x]` in this plan so the record reflects the work actually done.
 
-- [ ] **Step 3: Publish the branch**
+- [x] **Step 3: Publish the branch**
 
 Commit the scoped changes, push `harleydbartles/mark-264-repair-upstream-source-custody-gaps`, and open a draft PR without broadening scope.
