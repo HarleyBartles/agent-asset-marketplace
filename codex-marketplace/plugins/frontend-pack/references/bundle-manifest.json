@@ -14,36 +14,56 @@
       "snapshot_path": "skills/react-performance-optimization/SKILL.md",
       "local_path": "skills/react-performance-optimization/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
     },
     {
       "snapshot_path": "skills/accessibility-audit/SKILL.md",
       "local_path": "skills/accessibility-audit/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
     },
     {
       "snapshot_path": "skills/ux-review/SKILL.md",
       "local_path": "skills/ux-review/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
     },
     {
       "snapshot_path": "skills/interaction-design/SKILL.md",
       "local_path": "skills/interaction-design/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
     },
     {
       "snapshot_path": "skills/webapp-testing/SKILL.md",
       "local_path": "skills/webapp-testing/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream."
     }
   ],
   "notes": [

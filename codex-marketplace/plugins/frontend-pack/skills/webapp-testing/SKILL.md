@@ -16,6 +16,13 @@ file_patterns:
   - '**/tests/**/*.tsx'
 confidence: 0.83
 license: MIT License - Complete terms in LICENSE.txt
+metadata:
+  origin: Claude-Cortex
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md
+  content_mode: adapted
 ---
 
 # Web Application Testing

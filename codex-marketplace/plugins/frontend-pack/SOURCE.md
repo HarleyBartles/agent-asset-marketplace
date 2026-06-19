@@ -34,6 +34,10 @@ guidance.
 
 ## Notes
 
+The plugin shell is authored by Harley Bartles. The projected skill roots retain
+their upstream source author, source license, and source path in the bundle
+manifest and source map so verbatim content stays attributable.
+
 The retained upstream snapshot now lives under
 `sources/third_party/claude-cortex/upstream/`.
 The project intentionally keeps the source-custody record separate from the
