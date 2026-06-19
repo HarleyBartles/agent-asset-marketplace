@@ -927,13 +927,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/game-playtest/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3137,
-      "source_sha256": "5ea18523dc313d526624c964d11c0eae80af8d75f2b474dbc7c6f48592780bfb",
+      "source_bytes": 3355,
+      "source_sha256": "8cf57fc0d76ee29484d2ae66c17927e140db8b89485ec6b4b741ba7966be2224",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1864,
-      "zip_sha256": "4015c9e26243520a5c639cfa1fdecb855790ee6b345889def34b9bc47448e735"
+      "zip_size_bytes": 1975,
+      "zip_sha256": "a0b8c69c077f0d8f6d5548986a975c5a5ac34c5a7a75d836f3d096d394ee8ab1"
     },
     {
       "pack": "game-studio",
@@ -943,13 +943,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/game-studio/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5609,
-      "source_sha256": "8e338dae0f0c8648641f2ad9721a20927f187da027928ed8bd850712aee689ad",
+      "source_bytes": 5825,
+      "source_sha256": "5a139ec489257d48b00593f5d3ea8ae96b18894ccd1aa3046a80c82ba6dcc38a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2604,
-      "zip_sha256": "53d98b0ba66e5e8ea1703fc46805b3daef19f1638760e94bb2f6781587e55fd1"
+      "zip_size_bytes": 2709,
+      "zip_sha256": "e2c3ae15162c6e9fba8f22bb7dec3e8b102129dd0c57671da5687e157a950835"
     },
     {
       "pack": "game-studio",
@@ -959,13 +959,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/game-ui-frontend/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5292,
-      "source_sha256": "41cf619fed7ce944a89a79862e7c6f91de43c183d09cad0ac88d990c8fbf48ba",
+      "source_bytes": 5513,
+      "source_sha256": "758aa4518cfe66686c7429c24bf8a0c88f4b0898ad8f0f12d330d8be58e43dee",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2754,
-      "zip_sha256": "714eb3a90cbf721cc225123ca6f112b088d5c32bc364b24e22d59a53952477a8"
+      "zip_size_bytes": 2865,
+      "zip_sha256": "527880de4e12d8027794bc0a8e7eb3bfff2d660f9cdb69f4b7ae91ab35330b16"
     },
     {
       "pack": "game-studio",
@@ -975,13 +975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/phaser-2d-game/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3395,
-      "source_sha256": "5483f07beb017dd3fa9ee489c7010d327d88d633850dfec6e9c827a10d81620d",
+      "source_bytes": 3614,
+      "source_sha256": "476a83ac320617030b351b9b19eefdf0c824101da4b342414df30f8dd4eb6313",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1951,
-      "zip_sha256": "467f1528fc8e217fded0823a7e1c5b071da0b1469ee83e0930399fb50c0febb6"
+      "zip_size_bytes": 2060,
+      "zip_sha256": "fdca86a756384c85bc13586ed1081a3a25ad80257f2ca2c9d3813f8b293007c3"
     },
     {
       "pack": "game-studio",
@@ -991,13 +991,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/react-three-fiber-game/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4262,
-      "source_sha256": "1ba12012bf045f1552942f87bc3d636de7264bdb1c310036ebf3453bcb445908",
+      "source_bytes": 4489,
+      "source_sha256": "811f6a449eec1ebe22adb530be2d8b7e545dc7650caffaee9a3ae42ae94412e8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2187,
-      "zip_sha256": "4f24c35ffb5ab4d18129fe1a292539e606ab0d07936f7aec7c85a746e3f6159f"
+      "zip_size_bytes": 2296,
+      "zip_sha256": "08905f00284e26b2bc8182c594ec184e5c9fd0023bd81ba090db769145cde003"
     },
     {
       "pack": "game-studio",
@@ -1007,13 +1007,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/sprite-pipeline/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3617,
-      "source_sha256": "e61dece19d36da25efe24b2935cec914dbd196fc01316968e9229baee230b08b",
+      "source_bytes": 3837,
+      "source_sha256": "9e3426e3748dcad473fa06113457d37fbd7c50ececc6949dc1f93df139421369",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1891,
-      "zip_sha256": "7a4d477cb4f5b9d64b778117fa7c73bce429c266a5eeb4f2f171416c3d9cb1fb"
+      "zip_size_bytes": 1998,
+      "zip_sha256": "f1a79b7cfa34eefeae8bcb81930a18347ec04a65d057c566631a08acf985a498"
     },
     {
       "pack": "game-studio",
@@ -1023,13 +1023,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/three-webgl-game/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 6067,
-      "source_sha256": "900fe3b5cdef1ac9f0bc1b02f64b8740d86397fe902489c683104aad2490f636",
+      "source_bytes": 6288,
+      "source_sha256": "e670898ad1839e4322909dc9d7ce0defebdcabd8498f228f5ea397171ce8f1c5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3022,
-      "zip_sha256": "09d4b509b5a1dd62fe744bfd54d05f5a7172ed549e8de5b88817c187a599107a"
+      "zip_size_bytes": 3129,
+      "zip_sha256": "77d28f62ab3881af8143471b6c42da7d22411581af913df2e33797f741b69bda"
     },
     {
       "pack": "game-studio",
@@ -1039,13 +1039,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/web-3d-asset-pipeline/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3689,
-      "source_sha256": "ec512f3d2edcc0930aff7008e7159f2a67d50abbb6a774d6851aa47fb95373c3",
+      "source_bytes": 3915,
+      "source_sha256": "27a761ea576c8d84c7b332ee358029b4a326a47eb186be54be40121f2e12b953",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2044,
-      "zip_sha256": "341e483a80b2386549e7774ffd4c9c63344ff85567ebc080b918ca7a4619a3c8"
+      "zip_size_bytes": 2156,
+      "zip_sha256": "cad6bfc9d4fea2149eded166d120bca8804a8306cb0fda2d057eefb341e7bf99"
     },
     {
       "pack": "game-studio",
@@ -1055,13 +1055,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/game-studio/web-game-foundations/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4821,
-      "source_sha256": "0748a96033c00a0977db6ab3905541835ea2a16674bebcb746df302e80309e5c",
+      "source_bytes": 5046,
+      "source_sha256": "4fb032cf8c0bb7f9ac082fbe6bd42f58437aaa2ee93cf21723ecac2bd04f4652",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2484,
-      "zip_sha256": "8e0b836e2cb6f5ca1f9ffeb10043f625d157b3948b651eae2d1ae413ace96c5d"
+      "zip_size_bytes": 2597,
+      "zip_sha256": "7b0226662a2e5805de57c290d3a9d69802f248bbc5c0301fbc2704d48ddd2437"
     },
     {
       "pack": "house-skills",

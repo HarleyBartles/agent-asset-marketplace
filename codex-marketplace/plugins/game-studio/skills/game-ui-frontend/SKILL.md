@@ -1,6 +1,13 @@
 ---
 name: game-ui-frontend
 description: Design UI surfaces for browser games. Use when the user asks for HUDs, menus, overlays, responsive layouts, or visual direction that must protect the playfield.
+metadata:
+  origin: third_party
+  source_author: OpenAI
+  source_license: MIT
+  source_repo: openai/plugins
+  source_path: sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md
+  content_mode: adapted
 ---
 
 # Game UI Frontend

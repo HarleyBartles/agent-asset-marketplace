@@ -1,6 +1,13 @@
 ---
 name: react-three-fiber-game
 description: Build React-hosted 3D browser games with React Three Fiber. Use when the user wants pmndrs-based scene composition, shared React state, and 3D HUD integration inside a React app.
+metadata:
+  origin: third_party
+  source_author: OpenAI
+  source_license: MIT
+  source_repo: openai/plugins
+  source_path: sources/third_party/game-studio/upstream/skills/react-three-fiber-game/SKILL.md
+  content_mode: adapted
 ---
 
 # React Three Fiber Game
