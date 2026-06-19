@@ -51,5 +51,5 @@ The generated `skill.zip` and registry were refreshed through the standard tooli
 ## Publication
 
 - Branch: `harleydbartles/mark-258-validate-projection-contracts-and-licensing-provenance`
-- Commit: `81fe28bd`
+- Commit: `1a392abced55a2766169a274607f6b3904747400`
 - Draft PR: [#133](https://github.com/HarleyBartles/agent-asset-marketplace/pull/133)
