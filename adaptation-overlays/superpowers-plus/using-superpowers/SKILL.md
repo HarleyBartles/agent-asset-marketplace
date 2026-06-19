@@ -63,6 +63,8 @@ This projection is Asset Marketplace `Superpowers+` adaptation behavior, not ups
 - GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`.
 - Repo-specific anti-slop or profile work: use `unslop-superpowers`.
 - Architecture review and composition boundaries: use `architecture-superpowers`.
+- ECC workflow-shaped work: use `ecc-superpowers` to route to the dedicated
+  `superpowers-ecc` pack.
 - Parallel agent dispatch or worktree setup when those are the smallest useful helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or `using-git-worktrees`.
 - Writing or updating skill content: use `writing-skills`.
 

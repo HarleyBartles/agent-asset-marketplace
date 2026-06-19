@@ -45,6 +45,7 @@ FIRST_PARTY_SUPERPOWERS_SOURCES = {
     "github-superpowers": "sources/first_party/skills/github-superpowers",
     "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
     "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
+    "ecc-superpowers": "sources/first_party/skills/ecc-superpowers",
 }
 
 TEXT_SUFFIXES = {
@@ -222,6 +223,10 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
             raise ValueError("Unexpected pinned commit for NickCrew/Claude-Cortex vendor snapshot")
         return ROOT / "sources/third_party/codex-cortex/upstream"
     if upstream_repo == "affaan-m/ECC":
+        if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
+            raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
+        return ROOT / "sources/third_party/ecc/upstream"
+    if upstream_repo == "https://github.com/affaan-m/ECC/tree/main/skills":
         if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
             raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
         return ROOT / "sources/third_party/ecc/upstream"

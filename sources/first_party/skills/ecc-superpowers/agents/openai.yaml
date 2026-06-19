@@ -1,0 +1,11 @@
+interface:
+  display_name: ECC Superpowers
+  short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.
+  default_prompt: Use /ecc-superpowers to keep Superpowers+ thin, route ECC workflow-shaped work to the dedicated superpowers-ecc pack, and keep the actual workflow slice in the dedicated pack instead of absorbing it into Superpowers+.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

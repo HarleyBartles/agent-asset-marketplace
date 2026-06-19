@@ -29,7 +29,7 @@ Projection contract:
   plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, and `architecture-superpowers`.
+  `unslop-superpowers`, `architecture-superpowers`, and `ecc-superpowers`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -57,23 +57,23 @@ into `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/`
 and the first-party `architecture-superpowers` skill from
 `sources/first_party/skills/architecture-superpowers/`
 into `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/`
+and the repo-authored `ecc-superpowers` skill from
+`sources/first_party/skills/ecc-superpowers/`
+into `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, anti-slop, and architecture workflow skills without creating
+GitHub, anti-slop, architecture, and ECC routing workflow skills without creating
 second editable source roots.
 
 These first-party projections are directory-level skill specs with
 `SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
 
-`linear-superpowers`, `github-superpowers`, and `architecture-superpowers`
-invoke `unslop-superpowers` when repo-specific
-anti-slop controls, profile-aware non-goals, or evidence requirements matter.
+`linear-superpowers`, `github-superpowers`, `architecture-superpowers`, and
+`ecc-superpowers` invoke `unslop-superpowers` when repo-specific anti-slop
+controls, profile-aware non-goals, or evidence requirements matter.
 
-This is the final allowed pre-fork Superpowers wrapper projection. Any further
-first-party wrapper projection into `superpowers-plus` requires the
-Superpowers fork/overlay custody model to exist first, plus a migration plan
-for the existing wrapper set:
-`linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
-`architecture-superpowers`.
+`ecc-superpowers` is a repo-authored router wrapper that points to the
+dedicated `superpowers-ecc` pack. It is compositional, not a fork cue, and it
+keeps ECC workflow doctrine out of the upstream Superpowers snapshot.
 
 ## Excluded from the active projection
 

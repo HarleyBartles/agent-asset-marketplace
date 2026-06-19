@@ -1,0 +1,121 @@
+{
+  "bundle_name": "superpowers-ecc",
+  "bundle_version": "1.0.0",
+  "bundle_type": "third-party-codex-plugin-projection",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/superpowers-ecc",
+  "canonical_source_root": "sources/third_party/ecc/upstream/skills",
+  "source_custody_root": "sources/third_party/ecc/upstream/skills",
+  "upstream_repo": "https://github.com/affaan-m/ECC/tree/main/skills",
+  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+  "source_root": ".",
+  "candidate_count": 14,
+  "imported_count": 14,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/agent-harness-construction/SKILL.md",
+      "local_path": "skills/agent-harness-construction/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/ai-first-engineering/SKILL.md",
+      "local_path": "skills/ai-first-engineering/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/deployment-patterns/SKILL.md",
+      "local_path": "skills/deployment-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/dmux-workflows/SKILL.md",
+      "local_path": "skills/dmux-workflows/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/messages-ops/SKILL.md",
+      "local_path": "skills/messages-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/ml-adoption-playbook/SKILL.md",
+      "local_path": "skills/ml-adoption-playbook/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/prediction-market-oracle-research/SKILL.md",
+      "local_path": "skills/prediction-market-oracle-research/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/recursive-decision-ledger/SKILL.md",
+      "local_path": "skills/recursive-decision-ledger/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/research-ops/SKILL.md",
+      "local_path": "skills/research-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/safety-guard/SKILL.md",
+      "local_path": "skills/safety-guard/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/search-first/SKILL.md",
+      "local_path": "skills/search-first/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/team-agent-orchestration/SKILL.md",
+      "local_path": "skills/team-agent-orchestration/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/team-builder/SKILL.md",
+      "local_path": "skills/team-builder/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    },
+    {
+      "snapshot_path": "skills/token-budget-advisor/SKILL.md",
+      "local_path": "skills/token-budget-advisor/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim from the retained ECC source into the dedicated Superpowers ECC slice."
+    }
+  ],
+  "notes": [
+    "Dedicated ECC Superpowers workflow pack.",
+    "The bundle projects only the selected ECC workflow skills named in MARK-244.",
+    "Superpowers+ keeps only the thin ecc-superpowers router companion."
+  ]
+}
