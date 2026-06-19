@@ -82,7 +82,7 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 
 ## Rights and Attribution
 
-### Codex Cortex Content
+### NickCrew/Claude-Cortex Content
 
 - **Upstream source**: NickCrew/Claude-Cortex
 - **License**: MIT

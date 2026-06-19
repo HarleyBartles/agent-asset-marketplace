@@ -1000,152 +1000,178 @@ def validate_skill_bundle_manifest(
             if not skill.get("path"):
                 raise ValueError(f"{bundle_name} bundle manifest skill missing path")
         
-        # Validate paths exist
+        # Validate plugin_root exists
+        plugin_root_path = ROOT / bundle_manifest["plugin_root"]
+        check_path_exists(plugin_root_path)
+
+        # Validate skills_root exists
+        skills_root_path = ROOT / bundle_manifest["skills_root"]
+        check_path_exists(skills_root_path)
+
+        # Validate control_plane_skill.path exists and has SKILL.md
         control_plane_path = ROOT / control_plane["path"]
         check_path_exists(control_plane_path)
         check_path_exists(control_plane_path / "SKILL.md")
-        
+
         # Validate source_map if present
         source_map = bundle_manifest.get("source_map")
         if source_map:
             check_path_exists(ROOT / plugin_root / source_map)
-        
-        return
-    
-    # Third-party bundle validation requires upstream fields
-    upstream_repo = bundle_manifest.get("upstream_repo")
-    if not upstream_repo or not isinstance(upstream_repo, str):
-        raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
-    pinned_commit = bundle_manifest.get("pinned_commit")
-    if not pinned_commit or not isinstance(pinned_commit, str):
-        raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
-    source_root = bundle_manifest.get("source_root")
-    if not source_root or not isinstance(source_root, str):
-        raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
-    vendor_root: Path | None = None
-    source_family_roots: dict[str, Path] | None = None
 
-    if bundle_name == "superpowers-ecc":
-        check_path_exists(ROOT / "sources/third_party/ecc/upstream/LICENSE")
+        # Validate each skills[] source path exists
+        for skill in skills:
+            source_path = ROOT / skill["path"]
+            check_path_exists(source_path)
 
-    if bundle_name == "security-pack" and isinstance(bundle_manifest.get("source_families"), list):
-        source_family_roots = {}
-        for family in bundle_manifest["source_families"]:
-            if not isinstance(family, dict):
-                raise ValueError("security-pack bundle manifest source_families must contain objects")
-            family_name = family.get("name")
-            family_upstream_repo = family.get("upstream_repo")
-            family_pinned_commit = family.get("pinned_commit")
-            family_source_root = family.get("source_root")
-            if not family_name or not isinstance(family_name, str):
-                raise ValueError("security-pack bundle manifest source_families entry name mismatch")
-            if family_name in source_family_roots:
-                raise ValueError("security-pack bundle manifest source_families entry name duplicated")
-            if not family_upstream_repo or not isinstance(family_upstream_repo, str):
-                raise ValueError("security-pack bundle manifest source_families upstream_repo mismatch")
-            if not family_pinned_commit or not isinstance(family_pinned_commit, str):
-                raise ValueError("security-pack bundle manifest source_families pinned_commit mismatch")
-            if not family_source_root or not isinstance(family_source_root, str):
-                raise ValueError("security-pack bundle manifest source_families source_root mismatch")
-            family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
-            resolved_family_root = family_vendor_root / family_source_root
-            check_path_exists(resolved_family_root)
-            source_family_roots[family_name] = resolved_family_root
-        check_path_exists(ROOT / plugin_root / source_root)
-    elif bundle_type and "first-party" in bundle_type:
-        # First-party bundles don't have vendor roots to validate
-        pass
+        # Validate each corresponding projected local skill path exists
+        skills_root = bundle_manifest["skills_root"]
+        for skill in skills:
+            skill_name = skill["name"]
+            local_skill_path = ROOT / skills_root / skill_name
+            check_path_exists(local_skill_path)
+            check_path_exists(local_skill_path / "SKILL.md")
+
+        # Validate provenance_refs exist
+        provenance_refs = bundle_manifest.get("provenance_refs")
+        if isinstance(provenance_refs, list):
+            for ref in provenance_refs:
+                check_path_exists(ROOT / ref)
+
+        # Do not return early - allow repo-index metadata validation to run
     else:
-        vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
-        check_path_exists(vendor_root / source_root)
+        # Third-party bundle validation requires upstream fields
+        upstream_repo = bundle_manifest.get("upstream_repo")
+        if not upstream_repo or not isinstance(upstream_repo, str):
+            raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
+        pinned_commit = bundle_manifest.get("pinned_commit")
+        if not pinned_commit or not isinstance(pinned_commit, str):
+            raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
+        source_root = bundle_manifest.get("source_root")
+        if not source_root or not isinstance(source_root, str):
+            raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
+        vendor_root: Path | None = None
+        source_family_roots: dict[str, Path] | None = None
+
+        if bundle_name == "superpowers-ecc":
+            check_path_exists(ROOT / "sources/third_party/ecc/upstream/LICENSE")
+
+        if bundle_name == "security-pack" and isinstance(bundle_manifest.get("source_families"), list):
+            source_family_roots = {}
+            for family in bundle_manifest["source_families"]:
+                if not isinstance(family, dict):
+                    raise ValueError("security-pack bundle manifest source_families must contain objects")
+                family_name = family.get("name")
+                family_upstream_repo = family.get("upstream_repo")
+                family_pinned_commit = family.get("pinned_commit")
+                family_source_root = family.get("source_root")
+                if not family_name or not isinstance(family_name, str):
+                    raise ValueError("security-pack bundle manifest source_families entry name mismatch")
+                if family_name in source_family_roots:
+                    raise ValueError("security-pack bundle manifest source_families entry name duplicated")
+                if not family_upstream_repo or not isinstance(family_upstream_repo, str):
+                    raise ValueError("security-pack bundle manifest source_families upstream_repo mismatch")
+                if not family_pinned_commit or not isinstance(family_pinned_commit, str):
+                    raise ValueError("security-pack bundle manifest source_families pinned_commit mismatch")
+                if not family_source_root or not isinstance(family_source_root, str):
+                    raise ValueError("security-pack bundle manifest source_families source_root mismatch")
+                family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
+                resolved_family_root = family_vendor_root / family_source_root
+                check_path_exists(resolved_family_root)
+                source_family_roots[family_name] = resolved_family_root
+            check_path_exists(ROOT / plugin_root / source_root)
+        else:
+            vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
+            check_path_exists(vendor_root / source_root)
 
     _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name=bundle_name, plugin_root=plugin_root)
 
-    entries = bundle_manifest.get("entries", [])
-    if bundle_manifest.get("candidate_count") != len(entries):
-        raise ValueError(f"{bundle_name} bundle manifest candidate count mismatch")
+    # Only validate entries/candidate_count for third-party import manifests
+    entries = bundle_manifest.get("entries")
+    if entries is not None:
+        if bundle_manifest.get("candidate_count") != len(entries):
+            raise ValueError(f"{bundle_name} bundle manifest candidate count mismatch")
 
-    allowed_statuses = {"imported", "out_of_scope", "blocked"}
-    statuses = {entry.get("import_status") for entry in entries}
-    if not statuses.issubset(allowed_statuses):
-        raise ValueError(f"{bundle_name} bundle manifest contains unrecognized import status values")
+        allowed_statuses = {"imported", "out_of_scope", "blocked"}
+        statuses = {entry.get("import_status") for entry in entries}
+        if not statuses.issubset(allowed_statuses):
+            raise ValueError(f"{bundle_name} bundle manifest contains unrecognized import status values")
 
-    imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
-    skipped_entries = [entry for entry in entries if entry.get("import_status") == "out_of_scope"]
-    blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
-    if len(imported_entries) + len(skipped_entries) + len(blocked_entries) != len(entries):
-        raise ValueError(f"{bundle_name} bundle manifest import buckets do not sum to candidate_count")
-    if bundle_manifest.get("imported_count") != len(imported_entries):
-        raise ValueError(f"{bundle_name} bundle manifest imported count mismatch")
-    if bundle_manifest.get("skipped_count") != len(skipped_entries):
-        raise ValueError(f"{bundle_name} bundle manifest skipped count mismatch")
-    if bundle_manifest.get("blocked_count") != len(blocked_entries):
-        raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
+        imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
+        skipped_entries = [entry for entry in entries if entry.get("import_status") == "out_of_scope"]
+        blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
+        if len(imported_entries) + len(skipped_entries) + len(blocked_entries) != len(entries):
+            raise ValueError(f"{bundle_name} bundle manifest import buckets do not sum to candidate_count")
+        if bundle_manifest.get("imported_count") != len(imported_entries):
+            raise ValueError(f"{bundle_name} bundle manifest imported count mismatch")
+        if bundle_manifest.get("skipped_count") != len(skipped_entries):
+            raise ValueError(f"{bundle_name} bundle manifest skipped count mismatch")
+        if bundle_manifest.get("blocked_count") != len(blocked_entries):
+            raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
 
-    skill_dir = ROOT / plugin_root / "skills"
-    actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
-    imported_skill_dirs = {
-        Path(entry["local_path"]).parts[1]
-        for entry in imported_entries
-        if isinstance(entry.get("local_path"), str)
-        and Path(entry["local_path"]).parts[:1] == ("skills",)
-        and len(Path(entry["local_path"]).parts) >= 3
-    }
-    if len(actual_skill_dirs) != len(imported_skill_dirs):
-        raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
+        skill_dir = ROOT / plugin_root / "skills"
+        actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
+        imported_skill_dirs = {
+            Path(entry["local_path"]).parts[1]
+            for entry in imported_entries
+            if isinstance(entry.get("local_path"), str)
+            and Path(entry["local_path"]).parts[:1] == ("skills",)
+            and len(Path(entry["local_path"]).parts) >= 3
+        }
+        if len(actual_skill_dirs) != len(imported_skill_dirs):
+            raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
 
-    for entry in imported_entries:
-        local_path = entry.get("local_path")
-        if not local_path or not isinstance(local_path, str):
-            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
-        check_path_exists(ROOT / plugin_root / local_path)
-        snapshot_path = entry.get("snapshot_path")
-        if not snapshot_path or not isinstance(snapshot_path, str):
-            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
-        if bundle_name == "superpowers-ecc":
-            for field in ("source_path", "source_author", "source_license", "source_repo"):
-                if not isinstance(entry.get(field), str) or not entry.get(field):
-                    raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
-        entry_vendor_root = vendor_root
-        if source_family_roots is not None:
-            source_family = entry.get("source_family")
-            if not source_family or not isinstance(source_family, str):
-                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a source_family")
-            entry_vendor_root = source_family_roots.get(source_family)
-            if entry_vendor_root is None:
-                raise ValueError(
-                    f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
-                )
-        assert entry_vendor_root is not None
-        check_path_exists(entry_vendor_root / snapshot_path)
-        content_mode = entry.get("content_mode")
-        if content_mode not in {"verbatim", "adapted"}:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
-        if not entry.get("adaptation_note"):
-            raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
-        if content_mode == "verbatim":
-            source_path = entry_vendor_root / snapshot_path
-            projected_path = ROOT / plugin_root / local_path
+        for entry in imported_entries:
+            local_path = entry.get("local_path")
+            if not local_path or not isinstance(local_path, str):
+                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
+            check_path_exists(ROOT / plugin_root / local_path)
+            snapshot_path = entry.get("snapshot_path")
+            if not snapshot_path or not isinstance(snapshot_path, str):
+                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
             if bundle_name == "superpowers-ecc":
-                _, source_body = _split_skill_frontmatter_and_body(source_path)
-                _, projected_body = _split_skill_frontmatter_and_body(projected_path)
-                if source_body != projected_body:
+                for field in ("source_path", "source_author", "source_license", "source_repo"):
+                    if not isinstance(entry.get(field), str) or not entry.get(field):
+                        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
+            entry_vendor_root = vendor_root
+            if source_family_roots is not None:
+                source_family = entry.get("source_family")
+                if not source_family or not isinstance(source_family, str):
+                    raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a source_family")
+                entry_vendor_root = source_family_roots.get(source_family)
+                if entry_vendor_root is None:
                     raise ValueError(
-                        f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
+                        f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
                     )
-            else:
-                source_bytes = source_path.read_bytes()
-                projected_bytes = projected_path.read_bytes()
-                if source_bytes != projected_bytes:
-                    raise ValueError(
-                        f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
-                    )
-        elif content_mode == "adapted" and not entry.get("adaptation_note"):
-            raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
+            assert entry_vendor_root is not None
+            check_path_exists(entry_vendor_root / snapshot_path)
+            content_mode = entry.get("content_mode")
+            if content_mode not in {"verbatim", "adapted"}:
+                raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
+            if not entry.get("adaptation_note"):
+                raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
+            if content_mode == "verbatim":
+                source_path = entry_vendor_root / snapshot_path
+                projected_path = ROOT / plugin_root / local_path
+                if bundle_name == "superpowers-ecc":
+                    _, source_body = _split_skill_frontmatter_and_body(source_path)
+                    _, projected_body = _split_skill_frontmatter_and_body(projected_path)
+                    if source_body != projected_body:
+                        raise ValueError(
+                            f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
+                        )
+                else:
+                    source_bytes = source_path.read_bytes()
+                    projected_bytes = projected_path.read_bytes()
+                    if source_bytes != projected_bytes:
+                        raise ValueError(
+                            f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
+                        )
+            elif content_mode == "adapted" and not entry.get("adaptation_note"):
+                raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
 
-    for entry in skipped_entries + blocked_entries:
-        if entry.get("local_path") not in ("", None):
-            raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry should not expose a local path")
+        for entry in skipped_entries + blocked_entries:
+            if entry.get("local_path") not in ("", None):
+                raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry should not expose a local path")
         if not entry.get("adaptation_note"):
             raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
