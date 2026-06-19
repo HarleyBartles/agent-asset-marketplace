@@ -2,7 +2,7 @@
 
 ## Source anchor
 
-- Upstream repository: `NickCrew/claude-cortex`
+- Upstream repository: `NickCrew/Claude-Cortex`
 - Upstream commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
 - License: retained upstream license in source custody
 

@@ -1,9 +1,9 @@
 # Frontend Pack Source Map
 
-This bundle projects the retained `NickCrew/Claude-Cortex` frontend application
-skills into a marketplace surface. The retained upstream skills keep their
-original bodies and are projected into `frontend-pack` with pack-relative
-references.
+This bundle projects the retained `NickCrew/Claude-Cortex` frontend
+application skills from the retained `claude-cortex` custody root into a
+marketplace surface. The retained upstream skills keep their original bodies
+and are projected into `frontend-pack` with pack-relative references.
 
 Retained custody evidence:
 
