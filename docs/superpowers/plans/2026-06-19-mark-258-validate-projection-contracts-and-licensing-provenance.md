@@ -73,7 +73,7 @@ if content_mode == "verbatim":
             raise ValueError(f"{bundle_name} entry {canonical_name} must declare {field}")
 ```
 
-- [ ] **Step 3: Make the no-clobber check and protected-root checks continue to work against the current marketplace registry order, and add coverage for the mirror rule that keeps `everything-codex-code` from becoming a raw snapshot if that surface is present.**
+- [x] **Step 3: No-op for the no-clobber / `everything-codex-code` guard.** The repo does not contain a live `everything-codex-code` projection surface, so there is nothing to guard in this branch; evidence: `rg -n "everything-codex-code|no-clobber|protected-root|clobber" tools docs tests codex-marketplace sources -g '!**/node_modules/**'` returned only the plan and implementation-record references.
 
 ```python
 if plugin_root.name == "everything-codex-code":

@@ -7,7 +7,7 @@ metadata:
   source-id: architecture-superpowers
   source-path: sources/first_party/skills/architecture-superpowers/SKILL.md
   provenance-name: MARK-173 Architecture Superpowers compositional skill
-license: "MIT"
+  license: "MIT"
 keywords:
   - architecture
   - routing

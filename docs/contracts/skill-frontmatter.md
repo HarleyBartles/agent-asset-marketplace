@@ -15,6 +15,7 @@ metadata:
   upstream_version: v5.1.0
   adaptation_overlay: adaptation-overlays/superpowers/using-superpowers
   projection_plugin: superpowers
+  license: "MIT"
 ---
 ```
 
@@ -32,9 +33,9 @@ metadata:
 - Duplicate keys are rejected.
 - Frontmatter should not contain execution instructions.
 - Descriptions should say when to use the skill, not just what it is.
-- Projected skills are expected to keep provenance and projection identity in
-  structured `metadata` fields instead of scattering those facts across loose
-  top-level YAML keys.
+- Projected skills are expected to keep provenance, license, and projection
+  identity in structured `metadata` fields instead of scattering those facts
+  across loose top-level YAML keys.
 
 ## Notes
 
