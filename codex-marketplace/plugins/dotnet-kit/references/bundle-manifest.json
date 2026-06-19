@@ -15,42 +15,72 @@
       "local_path": "skills/modern-csharp/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples."
+      "adaptation_note": "Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/vertical-slice/SKILL.md",
       "local_path": "skills/vertical-slice/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance."
+      "adaptation_note": "Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/clean-architecture/SKILL.md",
       "local_path": "skills/clean-architecture/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Removed advisor-specific trigger language and kept the clean architecture guidance."
+      "adaptation_note": "Removed advisor-specific trigger language and kept the clean architecture guidance.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/ddd/SKILL.md",
       "local_path": "skills/ddd/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Kept the DDD tactical guidance and normalized provider-specific wording."
+      "adaptation_note": "Kept the DDD tactical guidance and normalized provider-specific wording.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/ddd/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/ef-core/SKILL.md",
       "local_path": "skills/ef-core/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Kept the EF Core guidance and removed provider-specific load assumptions."
+      "adaptation_note": "Kept the EF Core guidance and removed provider-specific load assumptions.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/ef-core/SKILL.md",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/testing/SKILL.md",
       "local_path": "skills/testing/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Kept the testing guidance and removed provider-specific load assumptions."
+      "adaptation_note": "Kept the testing guidance and removed provider-specific load assumptions.",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
+      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/testing/SKILL.md",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [
