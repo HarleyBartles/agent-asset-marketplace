@@ -178,12 +178,14 @@
     {
       "canonical_name": "verification-before-completion",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
+      "adaptation_overlay_path": "adaptation-overlays/superpowers-plus/verification-before-completion",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
+      "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
     },
     {
       "canonical_name": "writing-plans",

@@ -137,3 +137,17 @@ From 24 failure memories:
 Run the command. Read the output. THEN claim the result.
 
 This is non-negotiable.
+
+## Verified-Plan Adapter Backstop
+
+When a written plan exists, this skill is the closeout backstop before any
+completion, publication, PR-ready, ready-for-review, or success claim.
+
+Before making such a claim:
+
+1. Reread the plan.
+2. Verify checked `[x]` steps have matching evidence.
+3. Verify unchecked `[ ]` steps are intentionally open with an explanation or
+   are real blockers.
+4. Run the final validation ladder named by the plan or issue.
+5. Refuse the claim when checkbox state and evidence disagree.

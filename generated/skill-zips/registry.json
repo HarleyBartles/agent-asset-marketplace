@@ -2142,14 +2142,14 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip",
-      "source_file_count": 1,
-      "source_bytes": 4713,
-      "source_sha256": "19366e388f052750b92b27dbfed4be6379a6738e2af2334c9ef83b5d61257e03",
+      "source_file_count": 2,
+      "source_bytes": 4949,
+      "source_sha256": "35d68873a45c5e8ce49864d7f34eec655d03ae4258197d50460313292ef71674",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2400,
-      "zip_sha256": "9dcea8e18cdf8f9719a3df91141615436fcd75a628999b98ef69addde5ebdb2f"
+      "zip_size_bytes": 2716,
+      "zip_sha256": "0f2d61ed6ec5116ebf572fe3274ee8c31ef8d7b37325f5c9a372ad56113acf01"
     },
     {
       "pack": "superpowers-plus",
