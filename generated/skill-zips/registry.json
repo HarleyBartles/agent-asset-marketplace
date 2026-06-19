@@ -383,13 +383,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19400,
-      "source_sha256": "b4ebeefc1013bd6bdc39e3757d13499f262ee7bb115b6dca87f1177c6be719c5",
+      "source_bytes": 19689,
+      "source_sha256": "03626d8a47850d2884475585d1d66e4789801f47556850f8100f96e3f712ac4e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8904,
-      "zip_sha256": "2feeaf75b27cbe9e2a755bf5261a9e7c2e1e4b2a5ea2b7cd29f3710fd7063bc6"
+      "zip_size_bytes": 9049,
+      "zip_sha256": "73a30124a90321ddca6354f0ff303b8ca42df5a837029c85d00a656a5c4722ff"
     },
     {
       "pack": "codex-cortex",
@@ -399,13 +399,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 5807,
-      "source_sha256": "d6cb41ab5ef972f824ee180be481b52308c64ad4e77ca06135ee81210151a4c7",
+      "source_bytes": 6096,
+      "source_sha256": "951e6befc48d56de287b6fb705c35ec26aeacbfae75d58f963e2b83e7e57c716",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3992,
-      "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+      "zip_size_bytes": 4137,
+      "zip_sha256": "5e46b35d507229e7300501bd41f709ec1e14f44e396e8adb3c07d001d83f615f"
     },
     {
       "pack": "codex-cortex",
@@ -415,13 +415,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/database-design-patterns/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 26431,
-      "source_sha256": "6c4f180ae17e814dbe9738fe119d7d9032903bd9b61cee209c8ca3234c0ed395",
+      "source_bytes": 26725,
+      "source_sha256": "37d1c6e5843c9ca46fa290de798e1bb43fed333c2af53e1f7f3b05af4f901fe7",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12022,
-      "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
+      "zip_size_bytes": 12167,
+      "zip_sha256": "8051646e536d8b667fd67465cf9de7a3411cb87894eb9415d367e57a314050b1"
     },
     {
       "pack": "codex-cortex",
@@ -431,13 +431,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip",
       "source_file_count": 9,
-      "source_bytes": 31199,
-      "source_sha256": "dba9d1ea614d0b4165dcaef12d146e797ac9ef95e91c647766cf91e059e3d061",
+      "source_bytes": 31494,
+      "source_sha256": "42e5772fbab0a97d5f57ea34cd8848da57578624e120c3d64f82537d48a65a5d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 14508,
-      "zip_sha256": "fdd992afa022bab17d77d673d7815185f2800b47b7937cbb9c19e9441cd61a76"
+      "zip_size_bytes": 14653,
+      "zip_sha256": "4d560d8f6ccfc88e223d68bf13e6854459f0075099b96b72f0239459ff61d15d"
     },
     {
       "pack": "codex-cortex",
@@ -447,13 +447,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/openapi-specification/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 18349,
-      "source_sha256": "1789b674cb39d0fcd13347adb05e90068a0e2680f6a4154bdb5a874119ca6dda",
+      "source_bytes": 18640,
+      "source_sha256": "e1436e7cadeb58ed39a16ce63ae338b3f376656e9a04ec7f1e3c7480668663d1",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7037,
-      "zip_sha256": "5f0c80114c372e7e823f3d334860abf450f43a7a595c7bb22e5c91b02499dafd"
+      "zip_size_bytes": 7182,
+      "zip_sha256": "4edfec2a5fbfe682432e1c759cbb36e14f3fbab50ff3f951f0da6753af7bbbe1"
     },
     {
       "pack": "codex-cortex",
@@ -463,13 +463,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/owasp-top-10/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 35401,
-      "source_sha256": "942e03aad63b17bb185fa5f053d6a87fc009e5d51ad80f4b81dd70e798b6cfd9",
+      "source_bytes": 35683,
+      "source_sha256": "0516d8789633c9764b3d330a459c6bb445671ed87f08cfbe71dfcc4f41012c66",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18445,
-      "zip_sha256": "11d9126dc9946eb88e291cde20157a3f4a1b39b3776ab89bbb7ba0fdecdb4c38"
+      "zip_size_bytes": 18588,
+      "zip_sha256": "331b98710aae796ba76698f03dd95aaf430ce24e075406e23d9c4d50dcd512f9"
     },
     {
       "pack": "codex-cortex",
@@ -479,13 +479,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/secure-coding-practices/skill.zip",
       "source_file_count": 9,
-      "source_bytes": 32682,
-      "source_sha256": "500d8feff249c6a208a88357d63242fc706aa05b0c546608c80383f2e1adcdb5",
+      "source_bytes": 32975,
+      "source_sha256": "bbdd63f9d667ad3bfd484d656ec61cf49f236d7cb36f5996ab11385481ed3d6b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15730,
-      "zip_sha256": "96a0b47742229918325f787c8641925db9efe71a3d79524e901bef48a67f4da9"
+      "zip_size_bytes": 15869,
+      "zip_sha256": "27ab69f4bf4995002e19d58a220c494c7c7bbff313b2bc1d42fd83b1e229985d"
     },
     {
       "pack": "codex-cortex",
@@ -495,13 +495,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/security-testing-patterns/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 36732,
-      "source_sha256": "903db4cfacd7d2296bdc1bd57dd15d30397657088efd008e50c1307ea743aafd",
+      "source_bytes": 37027,
+      "source_sha256": "99240c992259928228580b0b1bcce2418dbb4a642e9101136dbb5274b82670dd",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16563,
-      "zip_sha256": "d9012b7580e27eb4b95f40b3aabdf32fc1e24fa96d204696b9f0073735c11c08"
+      "zip_size_bytes": 16702,
+      "zip_sha256": "1f8f687e2766b4d42c528e70653d507f0f1a0363e0286cb1440e6d603fe5a0d5"
     },
     {
       "pack": "codex-cortex",
@@ -511,13 +511,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 13849,
-      "source_sha256": "8ff4d57ec35f03e370535d2d999ba2f915e1eef4db25252d0eaac2b312b9631d",
+      "source_bytes": 14145,
+      "source_sha256": "7a2ee48771c82629e158e82999f0b782d1de99ce1bf69667066dafee6463bfbc",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9153,
-      "zip_sha256": "aca1ffdff18e154d7a25b562f85b6b111f97c2a984c324eab8be8789a9b25099"
+      "zip_size_bytes": 9301,
+      "zip_sha256": "c3559525a8936cc742350871ff7e3e7717aa1fd65e07052b0c4a858553d24c93"
     },
     {
       "pack": "dotnet-kit",
