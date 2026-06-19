@@ -2,7 +2,7 @@
 
 ## Summary
 
-The API Contracts Pack projects the MARK-204 `api-design-patterns` contract-doctrine slice and the MARK-205 `openapi-specification` companion slice from the retained Codex Cortex custody plugin into a Codex marketplace pack.
+The API Contracts Pack projects the MARK-204 `api-design-patterns` contract-doctrine slice and the MARK-205 `openapi-specification` companion slice from the retained NickCrew/Claude-Cortex custody plugin into a Codex marketplace pack.
 
 ## Source Custody
 
@@ -38,13 +38,13 @@ The API Contracts Pack projects the MARK-204 `api-design-patterns` contract-doct
 - **Plugin name**: `api-contracts-pack`
 - **Display name**: `API Contracts Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `adapted` from Codex Cortex custody
-- **Adaptation note**: Projected from retained Codex Cortex custody with first-party selection ledger
+- **Content mode**: `adapted` from NickCrew/Claude-Cortex custody
+- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex custody with first-party selection ledger
 
 ## Rights and Attribution
 
-- **Upstream source**: Codex Cortex (OpenAI)
-- **License**: Per Codex Cortex license terms
+- **Upstream source**: NickCrew/Claude-Cortex
+- **License**: MIT
 - **First-party selection**: MARK-204 and MARK-205 decision records
 - **Redistribution rights**: Per upstream license terms with first-party selection provenance
 

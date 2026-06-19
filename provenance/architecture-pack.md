@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Architecture Pack projects the MARK-172 `cqrs-event-sourcing` seed, the MARK-200 `event-driven-architecture` candidate, and the MARK-201 `database-design-patterns` candidate from the retained Codex Cortex custody plugin into a Codex marketplace pack.
+The Architecture Pack projects the MARK-172 `cqrs-event-sourcing` seed, the MARK-200 `event-driven-architecture` candidate, and the MARK-201 `database-design-patterns` candidate from the retained NickCrew/Claude-Cortex custody plugin into a Codex marketplace pack.
 
 ## Source Custody
 
@@ -34,13 +34,13 @@ The Architecture Pack projects the MARK-172 `cqrs-event-sourcing` seed, the MARK
 - **Plugin name**: `architecture-pack`
 - **Display name**: `Architecture Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `adapted` from Codex Cortex custody
-- **Adaptation note**: Projected from retained Codex Cortex custody with first-party selection ledger
+- **Content mode**: `adapted` from NickCrew/Claude-Cortex custody
+- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex custody with first-party selection ledger
 
 ## Rights and Attribution
 
-- **Upstream source**: Codex Cortex (OpenAI)
-- **License**: Per Codex Cortex license terms
+- **Upstream source**: NickCrew/Claude-Cortex
+- **License**: MIT
 - **First-party selection**: MARK-172, MARK-200, and MARK-201 decision records
 - **Redistribution rights**: Per upstream license terms with first-party selection provenance
 

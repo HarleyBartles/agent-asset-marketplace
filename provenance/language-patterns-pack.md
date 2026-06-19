@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Language Patterns Pack projects the MARK-212 TypeScript slice and the MARK-213 Python language/runtime slice from retained Claude-Cortex source custody into a Codex marketplace pack.
+The Language Patterns Pack projects the MARK-212 TypeScript slice and the MARK-213 Python language/runtime slice from retained NickCrew/Claude-Cortex source custody into a Codex marketplace pack.
 
 ## Source Custody
 
@@ -45,13 +45,13 @@ The Language Patterns Pack projects the MARK-212 TypeScript slice and the MARK-2
 - **Plugin name**: `language-patterns-pack`
 - **Display name**: `Language Patterns Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `adapted` from Codex Cortex custody
-- **Adaptation note**: Projected from retained Codex Cortex custody with first-party selection ledger
+- **Content mode**: `adapted` from NickCrew/Claude-Cortex custody
+- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex custody with first-party selection ledger
 
 ## Rights and Attribution
 
-- **Upstream source**: Codex Cortex (OpenAI)
-- **License**: Per Codex Cortex license terms
+- **Upstream source**: NickCrew/Claude-Cortex
+- **License**: MIT
 - **First-party selection**: MARK-212 and MARK-213 decision records
 - **Redistribution rights**: Per upstream license terms with first-party selection provenance
 

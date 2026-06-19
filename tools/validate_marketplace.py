@@ -965,14 +965,51 @@ def validate_skill_bundle_manifest(
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
     
-    # First-party bundles don't require upstream_repo, pinned_commit, source_root
+    # First-party bundles have specific structure requirements
     bundle_type = bundle_manifest.get("bundle_type")
     if bundle_type and "first-party" in bundle_type:
-        # First-party bundle validation
+        # Validate first-party bundle structure
         if not bundle_manifest.get("plugin_root"):
             raise ValueError(f"{bundle_name} bundle manifest plugin_root missing")
         if not bundle_manifest.get("skills_root"):
             raise ValueError(f"{bundle_name} bundle manifest skills_root missing")
+        
+        # Validate control_plane_skill for first-party bundles
+        control_plane = bundle_manifest.get("control_plane_skill")
+        if not isinstance(control_plane, dict):
+            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill missing")
+        if not control_plane.get("name"):
+            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.name missing")
+        if not control_plane.get("path"):
+            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.path missing")
+        
+        # Validate skills array
+        skills = bundle_manifest.get("skills")
+        if not isinstance(skills, list):
+            raise ValueError(f"{bundle_name} bundle manifest skills missing or not array")
+        
+        # Validate skill_count matches skills array length
+        skill_count = bundle_manifest.get("skill_count")
+        if skill_count != len(skills):
+            raise ValueError(f"{bundle_name} bundle manifest skill_count mismatch")
+        
+        # Validate each skill has required fields
+        for skill in skills:
+            if not skill.get("name"):
+                raise ValueError(f"{bundle_name} bundle manifest skill missing name")
+            if not skill.get("path"):
+                raise ValueError(f"{bundle_name} bundle manifest skill missing path")
+        
+        # Validate paths exist
+        control_plane_path = ROOT / control_plane["path"]
+        check_path_exists(control_plane_path)
+        check_path_exists(control_plane_path / "SKILL.md")
+        
+        # Validate source_map if present
+        source_map = bundle_manifest.get("source_map")
+        if source_map:
+            check_path_exists(ROOT / plugin_root / source_map)
+        
         return
     
     # Third-party bundle validation requires upstream fields

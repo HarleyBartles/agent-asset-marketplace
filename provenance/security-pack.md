@@ -2,11 +2,11 @@
 
 ## Summary
 
-The Security Pack projects retained Codex Cortex security foundations and retained ECC security-oriented skills into a Codex marketplace pack.
+The Security Pack projects retained NickCrew/Claude-Cortex security foundations and retained ECC security-oriented skills into a Codex marketplace pack.
 
 ## Source Custody
 
-### Retained Codex Cortex Upstream
+### Retained NickCrew/Claude-Cortex Upstream
 
 - **Upstream root**: `sources/third_party/codex-cortex/upstream/`
 - **Retained skill roots**:
@@ -44,7 +44,7 @@ The Security Pack projects retained Codex Cortex security foundations and retain
 
 ## Projection Surfaces
 
-### Codex Cortex Projection
+### NickCrew/Claude-Cortex Projection
 
 - `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/`
 - `codex-marketplace/plugins/security-pack/skills/owasp-top-10/`
@@ -76,16 +76,16 @@ The Security Pack projects retained Codex Cortex security foundations and retain
 - **Display name**: `Security Pack`
 - **Marketplace category**: `Productivity`
 - **Content mode**: 
-  - `adapted` from Codex Cortex custody
+  - `adapted` from NickCrew/Claude-Cortex custody
   - `verbatim` from ECC custody
-- **Adaptation note**: Projected from retained Codex Cortex and ECC custody with first-party selection ledger
+- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex and ECC custody with first-party selection ledger
 
 ## Rights and Attribution
 
 ### Codex Cortex Content
 
-- **Upstream source**: Codex Cortex (OpenAI)
-- **License**: Per Codex Cortex license terms
+- **Upstream source**: NickCrew/Claude-Cortex
+- **License**: MIT
 - **Redistribution rights**: Per upstream license terms with first-party selection provenance
 
 ### ECC Content
