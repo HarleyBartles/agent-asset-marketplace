@@ -7,20 +7,16 @@ manifest and the plugin source tree beneath it.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
-The protected active plugin roots in this scope are fixed to
-`codex-marketplace/plugins/house-skills`,
-`codex-marketplace/plugins/adventures-pack`,
-`codex-marketplace/plugins/unslop`,
-`codex-marketplace/plugins/game-studio`, and
-`codex-marketplace/plugins/wild-bunch-project-pack`, and
-`codex-marketplace/plugins/superpowers-plus`.
+The active plugin roots in this scope are defined by
+`codex-marketplace/plugin-roots.json` and validated against the protected
+marketplace manifests and registry surfaces.
 
 Those roots are installable projections only. Their editable source custody
 lives under `sources/first_party/` and `sources/third_party/`.
 
 The marketplace plugin roots are the canonical install surface. Generated
 `skill.zip` files under `generated/skill-zips/` are downstream GPT exports, and
-`gpt-overlays/manifest.json` decides whether each one is `direct`, `overlay`,
+`adapters/gpt/manifest.json` decides whether each one is `direct`, `overlay`,
 or `excluded`.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
@@ -31,8 +27,9 @@ rules, and upstream-drain policy.
 - Treat `codex-marketplace/manifest.json` and `.agents/plugins/marketplace.json`
   as coupled surfaces; a plugin add, remove, or rename must stay aligned across
   both exports and the validator.
-- Treat any other plugin root under `codex-marketplace/plugins/` as inactive
-  unless a new issue explicitly changes the protected marketplace shape.
+- Treat any plugin root under `codex-marketplace/plugins/` not listed in
+  `plugin-roots.json` as inactive unless a new issue explicitly changes the
+  marketplace shape.
 - Flag broken plugin root paths, missing `.codex-plugin/plugin.json` files, and
   category or install-policy drift in the marketplace manifest.
 - Flag missing `SOURCE.md`, `LICENSE`, or bundle-manifest references when a
