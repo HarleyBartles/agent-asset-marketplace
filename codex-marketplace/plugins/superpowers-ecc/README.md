@@ -3,6 +3,10 @@
 This plugin bundle projects the selected ECC Superpowers-style workflow skills
 into a dedicated installable Codex marketplace pack.
 
+The plugin shell is Harley-authored and MIT licensed. Projected skill roots
+retain their upstream authorship and license evidence in the bundle manifest,
+source map, and retained third-party snapshot.
+
 ## Bundle contents
 
 - `agent-harness-construction`

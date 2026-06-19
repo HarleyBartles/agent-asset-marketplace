@@ -18,6 +18,7 @@
 - `codex-marketplace/plugins/AGENTS.md`
 - `codex-marketplace/plugins/README.md`
 - `codex-marketplace/plugins/superpowers-ecc/.codex-plugin/plugin.json`
+- `codex-marketplace/plugins/superpowers-ecc/LICENSE`
 - `codex-marketplace/plugins/superpowers-ecc/README.md`
 - `codex-marketplace/plugins/superpowers-ecc/SOURCE.md`
 - `codex-marketplace/plugins/superpowers-ecc/assets/icon.svg`
@@ -41,6 +42,8 @@
 - `repo-index/repo-index.json`
 - `sources/first_party/skills/ecc-superpowers/SKILL.md`
 - `sources/first_party/skills/ecc-superpowers/agents/openai.yaml`
+- `sources/third_party/ecc/upstream/LICENSE`
+- `sources/third_party/ecc/upstream/source-custody.md`
 - `tools/generate_repo_index.py`
 - `tools/validate_marketplace.py`
 
@@ -53,6 +56,15 @@
 - `py -3 tools/validate_repo_index.py`
 - `py -3 tools/validate_skill_zips.py`
 - `git diff --check`
+
+## Licensing Repair
+
+- Recovered the upstream ECC MIT license into `sources/third_party/ecc/upstream/LICENSE`.
+- Corrected the `superpowers-ecc` plugin shell license to Harley Bartles while
+  keeping upstream skill authorship and license evidence in the projected
+  bundle metadata.
+- Added explicit upstream author, source path, and license fields to the
+  projected ECC skill headers and the Superpowers+ wrapper provenance records.
 
 ## Generated Artifacts
 

@@ -8,7 +8,7 @@
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains third-party ECC-derived Superpowers workflow skill projections; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "rights": "Harley-authored plugin shell with third-party ECC-derived skill projections. Each skill carries its own source author, source license, and adaptation notes in SOURCE.md, references/source-map.md, and references/bundle-manifest.json.",
   "keywords": [
     "codex",
     "marketplace",

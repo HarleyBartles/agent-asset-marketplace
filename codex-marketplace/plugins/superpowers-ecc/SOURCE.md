@@ -3,9 +3,14 @@
 This bundle projects selected ECC Superpowers-style workflow skills into a
 dedicated Codex marketplace pack.
 
+The plugin shell is authored by Harley Bartles. The projected skill roots
+retain their upstream source author, source license, and source path in the
+bundle manifest and source map so verbatim content stays attributable.
+
 ## Source custody
 
 - Retained ECC upstream root: `sources/third_party/ecc/upstream/`
+- Retained ECC upstream license: `sources/third_party/ecc/upstream/LICENSE`
 - Retained ECC skill roots:
   - `sources/third_party/ecc/upstream/skills/agent-harness-construction/`
   - `sources/third_party/ecc/upstream/skills/ai-first-engineering/`
@@ -41,3 +46,5 @@ dedicated Codex marketplace pack.
 The retained upstream snapshot stays in third-party custody. This pack is the
 dedicated home for the ECC workflow slice named in MARK-244, while
 `superpowers-plus` keeps only the small router wrapper needed to expose it.
+The wrapper is repo-authored and adapted by Harley Bartles; it is not ECC
+authored.

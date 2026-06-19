@@ -67,6 +67,10 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "adapted_author": "Harley Bartles",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack."
     }

@@ -5,6 +5,12 @@ metadata:
   source-id: ecc-superpowers
   source-path: sources/first_party/skills/ecc-superpowers/SKILL.md
   provenance-name: MARK-244 ECC Superpowers compositional routing skill
+  origin: first_party
+  source_author: Harley Bartles
+  source_license: MIT
+  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
+  content_mode: adapted
+  adapted_author: Harley Bartles
 license: "MIT"
 ---
 # ECC Superpowers
@@ -12,6 +18,10 @@ license: "MIT"
 Use this skill when Superpowers+ needs to hand ECC workflow-shaped work to the
 dedicated `superpowers-ecc` pack instead of absorbing the ECC doctrine into the
 Superpowers+ bundle.
+
+This wrapper is repo-authored and adapted by Harley Bartles. It routes work to
+the dedicated ECC pack but does not claim ECC authorship for the wrapper
+itself.
 
 ## Core job
 

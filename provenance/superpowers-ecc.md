@@ -5,6 +5,15 @@
 - Upstream repository: `https://github.com/affaan-m/ECC/tree/main/skills`
 - Pinned upstream commit: `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
 - Retained custody root: `sources/third_party/ecc/upstream/skills/`
+- Retained upstream license: `sources/third_party/ecc/upstream/LICENSE`
+
+## Authorship split
+
+- The `superpowers-ecc` plugin shell is authored by Harley Bartles.
+- Verbatim skill projections retain upstream source attribution and MIT
+  licensing in the projected skill metadata and bundle manifest.
+- The `ecc-superpowers` wrapper is repo-authored and adapted by Harley
+  Bartles.
 
 ## Projection
 

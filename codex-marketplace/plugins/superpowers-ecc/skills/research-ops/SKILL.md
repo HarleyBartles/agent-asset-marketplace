@@ -3,6 +3,11 @@ name: research-ops
 description: Evidence-first current-state research workflow for ECC. Use when the user wants fresh facts, comparisons, enrichment, or a recommendation built from current public evidence and any supplied local context.
 metadata:
   origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/research-ops/SKILL.md
+  content_mode: verbatim
 ---
 
 # Research Ops

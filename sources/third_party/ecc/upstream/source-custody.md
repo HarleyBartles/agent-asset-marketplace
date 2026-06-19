@@ -4,6 +4,7 @@
 > Scope: third-party source custody for the upstream ECC skills inventory
 > Upstream repo: `https://github.com/affaan-m/ECC/tree/main/skills`
 > Upstream commit inspected: `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
+> Upstream license: `MIT` (`sources/third_party/ecc/upstream/LICENSE`)
 > Total skills inspected: `271`
 
 This record is the promoted ECC inventory source-custody surface for MARK-238.

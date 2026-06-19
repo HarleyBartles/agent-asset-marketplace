@@ -369,7 +369,10 @@
       "plugin_root": "codex-marketplace/plugins/superpowers-ecc",
       "plugin_manifest": "codex-marketplace/plugins/superpowers-ecc/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/superpowers-ecc/SOURCE.md",
-      "source_ledger": [],
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md"
+      ],
       "license_path": "codex-marketplace/plugins/superpowers-ecc/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/superpowers-ecc/skills",
