@@ -1,6 +1,12 @@
 ---
 name: verification-before-completion
 description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
+metadata:
+  source_category: third_party
+  upstream_name: verification-before-completion
+  upstream_version: v5.1.0
+  adaptation_overlay: adaptation-overlays/superpowers-plus/verification-before-completion
+  projection_plugin: superpowers-plus
 ---
 
 # Verification Before Completion

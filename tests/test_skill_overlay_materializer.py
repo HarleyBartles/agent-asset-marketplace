@@ -127,6 +127,73 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 validate_openai_agent_yaml(openai_yaml)
 
+    def test_validate_openai_agent_yaml_accepts_rich_codex_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            openai_yaml = temp_root / "agents" / "openai.yaml"
+
+            _write(
+                openai_yaml,
+                (
+                    "version: 1\n"
+                    "metadata:\n"
+                    "  source-id: ecc-superpowers\n"
+                    "  source-path: sources/first_party/skills/ecc-superpowers/SKILL.md\n"
+                    "  provenance-name: MARK-244 ECC Superpowers compositional routing skill\n"
+                    "  origin: first_party\n"
+                    "  source_author: Harley Bartles\n"
+                    "  source_license: MIT\n"
+                    "  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace\n"
+                    "  content_mode: adapted\n"
+                    "  adapted_author: Harley Bartles\n"
+                    "interface:\n"
+                    "  display_name: ECC Superpowers\n"
+                    "  short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.\n"
+                    "  default_prompt: Use /ecc-superpowers to keep Superpowers+ thin.\n"
+                    "policy:\n"
+                    "  allow_implicit_invocation: true\n"
+                    "  products:\n"
+                    "    - chatgpt\n"
+                    "    - codex\n"
+                    "dependencies:\n"
+                    "  tools:\n"
+                    "    - type: mcp\n"
+                    "      value: openaiDeveloperDocs\n"
+                    "      description: OpenAI Docs MCP server\n"
+                    "      transport: streamable_http\n"
+                    "      url: https://developers.openai.com/mcp\n"
+                ),
+            )
+
+            validate_openai_agent_yaml(openai_yaml)
+
+    def test_validate_openai_agent_yaml_rejects_bad_rich_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            openai_yaml = temp_root / "agents" / "openai.yaml"
+
+            _write(
+                openai_yaml,
+                (
+                    "version: 1\n"
+                    "metadata: {source_category: third_party, upstream_name: using-superpowers, upstream_version: v5.1.0}\n"
+                    "interface: nope\n"
+                ),
+            )
+            with self.assertRaises(ValueError):
+                validate_openai_agent_yaml(openai_yaml)
+
+            _write(
+                openai_yaml,
+                (
+                    "version: 1\n"
+                    "metadata: {source_category: third_party, upstream_name: using-superpowers, upstream_version: v5.1.0, adaptation_overlay: overlay, projection_plugin: superpowers-plus}\n"
+                    "policy: {allow_implicit_invocation: maybe}\n"
+                ),
+            )
+            with self.assertRaises(ValueError):
+                validate_openai_agent_yaml(openai_yaml)
+
 
 if __name__ == "__main__":
     unittest.main()
