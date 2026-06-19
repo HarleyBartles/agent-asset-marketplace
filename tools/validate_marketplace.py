@@ -1013,10 +1013,11 @@ def validate_skill_bundle_manifest(
         check_path_exists(control_plane_path)
         check_path_exists(control_plane_path / "SKILL.md")
 
-        # Validate source_map if present
+        # Require and validate source_map for first-party bundles
         source_map = bundle_manifest.get("source_map")
-        if source_map:
-            check_path_exists(ROOT / plugin_root / source_map)
+        if not source_map or not isinstance(source_map, str):
+            raise ValueError(f"{bundle_name} bundle manifest source_map missing or malformed")
+        check_path_exists(ROOT / plugin_root / source_map)
 
         # Validate each skills[] source path exists
         for skill in skills:
@@ -1031,11 +1032,14 @@ def validate_skill_bundle_manifest(
             check_path_exists(local_skill_path)
             check_path_exists(local_skill_path / "SKILL.md")
 
-        # Validate provenance_refs exist
+        # Require and validate provenance_refs for first-party bundles
         provenance_refs = bundle_manifest.get("provenance_refs")
-        if isinstance(provenance_refs, list):
-            for ref in provenance_refs:
-                check_path_exists(ROOT / ref)
+        if not provenance_refs or not isinstance(provenance_refs, list):
+            raise ValueError(f"{bundle_name} bundle manifest provenance_refs missing or malformed")
+        for ref in provenance_refs:
+            if not ref or not isinstance(ref, str):
+                raise ValueError(f"{bundle_name} bundle manifest provenance_refs entry missing or malformed")
+            check_path_exists(ROOT / ref)
 
         # Do not return early - allow repo-index metadata validation to run
     else:
