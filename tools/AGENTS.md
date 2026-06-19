@@ -27,3 +27,12 @@ inventory that drives marketplace plugin ownership is
   that hide full-regeneration behavior behind an ordinary update path.
 - Flag GPT export manifests that allow raw Codex-specific assumptions to leak
   into generated skill zips instead of using an overlay or exclusion.
+
+## Maintenance responsibility
+
+This file must stay aligned with the repo's validation and generation tooling.
+When tooling paths change, new validation scripts are added, or worker-facing
+commands evolve, review and update this file to reflect current expectations.
+The skill-update path, marketplace inventory source, and drift validation
+references must stay accurate—when those change, this file should be updated to
+prevent drift.

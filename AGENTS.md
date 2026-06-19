@@ -179,3 +179,11 @@ A valid return should report:
 - any explicit follow-up issues required to finish selected outcomes.
 
 Passing validation is not the same as issue-goal conformance. Compare the final repo state and follow-up issues against the issue goal before claiming completion.
+
+## Maintenance responsibility
+
+This file is the repository's primary worker doctrine. When repo conventions,
+marketplace structure, or publication rules change, this file must be updated
+to reflect the new expectations. Do not let this file become stale—if agents are
+following patterns that contradict this document, either update the document or
+update the repo conventions to match.

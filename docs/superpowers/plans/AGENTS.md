@@ -23,3 +23,10 @@ publication rules.
 - [x] Step 3: Run validation.
 - [x] Step 4: Publish the PR with return evidence.
 ```
+
+## Maintenance responsibility
+
+This file must stay aligned with the repo's plan documentation practices. When
+plan formats change or new guidance is needed for plan structure, review and
+update this file to reflect current expectations. Plans should be archived or
+removed when the work they describe is complete—stale plans create confusion.

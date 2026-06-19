@@ -26,3 +26,11 @@ rules, and upstream-drain policy.
 - Update the live skill root and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.
 - Project-scoped bundles, such as an Adventures pack, should point at explicit canonical source paths when they are meant to be projections.
+
+## Maintenance responsibility
+
+This file must stay aligned with the House Skills plugin structure and the repo's
+first-party skill conventions. When House Skills workflow changes or new
+project-scoped bundles are added, review and update this file to reflect current
+expectations. The current-root workflow guidance must stay accurate—when that
+workflow evolves, this file should be updated to prevent drift.

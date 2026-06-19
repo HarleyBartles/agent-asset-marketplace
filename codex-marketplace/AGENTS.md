@@ -43,3 +43,12 @@ rules, and upstream-drain policy.
   `generated/skill-zips/`, including missing overlay derivation metadata or
   excluded GPT-export records.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
+
+## Maintenance responsibility
+
+This file must stay aligned with the marketplace structure defined in
+`codex-marketplace/plugin-roots.json`. When the marketplace shape changes or
+when validation rules evolve, review and update this file to reflect current
+expectations. Do not let this file become stale—if agents are following patterns
+that contradict this document, either update the document or update the repo
+conventions to match.

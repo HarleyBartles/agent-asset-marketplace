@@ -7,14 +7,9 @@ marketplace source tree.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
-The active installable roots under this directory are fixed to
-`house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
-`wild-bunch-project-pack/`, `superpowers-plus/`, `superpowers-ecc/`, `repo-worker-base/`,
-`everything-codex-code/`, `dotnet-kit/`, `codex-cortex/`, `api-contracts-pack/`, `architecture-pack/`,
-`language-patterns-pack/`, `security-pack/`, and `frontend-pack/`.
-
-That active set is now sourced from `codex-marketplace/plugin-roots.json` and
-validated against the protected marketplace manifests and registry surfaces.
+The active installable roots under this directory are defined by
+`codex-marketplace/plugin-roots.json` and validated against the protected
+marketplace manifests and registry surfaces.
 
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
@@ -55,3 +50,10 @@ Bundle-manifest entries for imported or retained projection content must declare
   change has an explicit adaptation reason and provenance trail.
 - Flag any source-tree `skill.zip` file. Canonical install archives belong only
   under `generated/skill-zips/`.
+
+## Maintenance responsibility
+
+This file must stay aligned with `codex-marketplace/plugin-roots.json`. When adding,
+removing, or reordering plugin roots, update the JSON inventory first—this AGENTS.md
+should not hardcode root names or counts. Review this file when the marketplace shape
+changes or when validation rules evolve.

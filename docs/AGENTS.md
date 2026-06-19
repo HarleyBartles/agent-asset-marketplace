@@ -16,3 +16,11 @@ rules, and upstream-drain policy.
 - Keep docs-owned profile files stable once they are chosen as canonical
   homes.
 - Flag stale cross-references when a canonical docs path moves.
+
+## Maintenance responsibility
+
+This file must stay aligned with the repo's documentation structure. When
+canonical docs paths move or new docs-owned surfaces are added, review and
+update this file to reflect current expectations. The canonical unslop profile
+at `docs/unslop/profile.md` should remain stable once chosen—changes to that
+path require updating this file.

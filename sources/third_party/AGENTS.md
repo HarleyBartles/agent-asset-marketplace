@@ -32,3 +32,11 @@ matching bundle manifest must declare `content_mode` for imported entries.
 - Flag license, notice, or source-map drift that breaks custody evidence.
 - Flag source-root claims that do not match the pinned upstream snapshot or the
   actual third-party path recorded in provenance.
+
+## Maintenance responsibility
+
+This file must stay aligned with the repo's third-party custody structure. When
+third-party source patterns change or new upstream snapshot conventions are added,
+review and update this file to reflect current expectations. Manifest guidance
+on `content_mode` must stay aligned with bundle-manifest practices—when those
+practices evolve, this file should be updated to prevent drift.
