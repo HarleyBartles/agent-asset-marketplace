@@ -161,7 +161,7 @@ This repository uses three distinct layers for the Superpowers bundle:
   is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The adapted Superpowers skills are materialized from source custody plus
-  `adaptation-overlays/superpowers/...`.
+  `adapters/codex/superpowers-plus/...`.
 - Frontmatter contract: docs/contracts/skill-frontmatter.md
 - OpenAI agent contract: docs/contracts/openai-agent-yaml.md
 """
@@ -170,7 +170,7 @@ SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
 
 ## Projection contract
 
-- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projection layer and is source-controlled in `adaptation-overlays/superpowers/...`.
+- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
 - Source custody remains a verbatim upstream snapshot.
 - Installation and export artifacts are derived from the projection layer plus overlays.
 - Frontmatter contract: docs/contracts/skill-frontmatter.md
@@ -439,7 +439,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "content_mode": "adapted",
                 "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
                 "local_path": "skills/using-superpowers",
-                "adaptation_overlay_path": "adaptation-overlays/superpowers-plus/using-superpowers",
+                "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
                 "adapted_author": "Harley Bartles",
                 "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
                 "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
@@ -472,7 +472,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     "content_mode": "adapted",
                     "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
                     "local_path": "skills/using-superpowers",
-                    "adaptation_overlay_path": "adaptation-overlays/superpowers-plus/using-superpowers",
+                    "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
                     "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
                     "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
                 },
@@ -821,7 +821,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             skill_md = _third_party_projection_frontmatter(
                 "using-superpowers",
                 "using-superpowers",
-                "adaptation-overlays/superpowers-plus/using-superpowers",
+                "adapters/codex/superpowers-plus/using-superpowers",
                 "Use when workflow-sensitive work needs Superpowers guidance.",
             )
             _touch(
@@ -984,7 +984,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             with patch("validate_marketplace.ROOT", temp_root):
                 with self.assertRaisesRegex(
                     ValueError,
-                    r"superpowers-plus adapted entry using-superpowers needs adaptation-overlays/superpowers-plus/using-superpowers",
+                    r"superpowers-plus adapted entry using-superpowers needs adapters/codex/superpowers-plus/using-superpowers",
                 ):
                     validate_superpowers_bundle_manifest(bundle_manifest, plugin_root="codex-marketplace/plugins/superpowers-plus")
 

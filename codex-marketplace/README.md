@@ -37,12 +37,12 @@ Repo-resident canonical `skill.zip` artifacts are published separately under
 skill tree that produced it.
 
 That generated surface is the GPT-ready export surface. It packages the source
-skill tree plus any repo-owned GPT overlay declared under `gpt-overlays/`.
+skill tree plus any repo-owned GPT overlay declared under `adapters/gpt/`.
 Direct exports stay direct when the source is already GPT-safe; overlay exports
 apply the overlay before packaging; excluded skills are recorded in the
 registry with a reason instead of being exported raw.
 
-The marketplace plugin roots are the canonical install surface. `gpt-overlays/`
+The marketplace plugin roots are the canonical install surface. `adapters/gpt/`
 exists to keep generated exports GPT-safe without changing Codex plugin
 behavior.
 

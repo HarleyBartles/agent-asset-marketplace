@@ -34,6 +34,11 @@ def _entry_overlay_root(entry: dict[str, Any]) -> Path | None:
     overlay_root = (ROOT / overlay_path).resolve()
     if not overlay_root.exists():
         raise FileNotFoundError(overlay_root)
+    expected_root = (ROOT / "adapters/codex").resolve()
+    try:
+        overlay_root.relative_to(expected_root)
+    except ValueError:
+        raise ValueError(f"superpowers-plus entry {entry.get('canonical_name')} adaptation_overlay_path must be under adapters/codex/: {overlay_path}")
     return overlay_root
 
 

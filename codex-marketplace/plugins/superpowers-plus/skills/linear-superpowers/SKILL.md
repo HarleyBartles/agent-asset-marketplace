@@ -25,11 +25,9 @@ Start with `/using-superpowers` as the workflow-selection entrypoint.
 
 When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `/writing-plans` for route review and `/executing-plans` as the outer execution workflow.
 
-Use `/connector-safety` before any Linear write or blocked-write recovery,
-including issue create or update, comments, status changes, labels,
-relations or blockers, documents, assignments, and project moves.
+Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. This is not optional background guidance.
 
-Use `/linear-issue-compactor` when the issue body is getting too long for the connector to stay readable.
+Use `/linear-issue-compactor` when the issue body is long, dense, connector-hostile, or when source seams, plans, guardrails, validation, coverage maps, or evidence should move to attached Linear docs. Do not duplicate the full compactor procedure here.
 
 Use `/unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.
 
@@ -51,6 +49,14 @@ Nesting rule:
 - Keep issue create, update, comment, status, label, project, and relation payloads narrow.
 - Treat blocked connector writes as a signal to narrow, verify, or stop, not as completion.
 - Do not claim a Linear mutation succeeded unless the connector result or readback proves it.
+
+## Native Linear delegation guard
+
+Worker-send-ready issue creation is not Linear native delegation. Do not set Linear connector `delegate` or agent delegation fields unless the user explicitly asks to use Linear's native delegation mechanism for that issue.
+
+Ambiguous phrases such as "dispatch a worker", "send to a worker", or "worker issue" should be treated as issue-shaping intent unless the user clearly authorizes Linear native delegation.
+
+Codex-from-Linear delegation is not part of the default workflow until separately promoted.
 
 ## Authority split
 

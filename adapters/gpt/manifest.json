@@ -9,11 +9,6 @@
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
-        },
-        {
-          "skill": "codex-receipts-superpowers",
-          "export_mode": "direct",
-          "reason": "The receipt workflow is GPT-safe and does not depend on Codex-only tool behavior."
         }
       ]
     },
@@ -23,7 +18,7 @@
         {
           "skill": "brainstorming",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/brainstorming",
+          "overlay_path": "adapters/gpt/superpowers-plus/brainstorming",
           "reason": "GPT exports need a platform-neutral design-first version without Skill tool dependencies."
         },
         {
@@ -34,24 +29,14 @@
         {
           "skill": "executing-plans",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/executing-plans",
+          "overlay_path": "adapters/gpt/superpowers-plus/executing-plans",
           "reason": "GPT exports need a version that works without Codex-specific subagent assumptions."
         },
         {
           "skill": "finishing-a-development-branch",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/finishing-a-development-branch",
+          "overlay_path": "adapters/gpt/superpowers-plus/finishing-a-development-branch",
           "reason": "The GPT export should keep the branch-closeout guidance but remove Codex-only publication assumptions."
-        },
-        {
-          "skill": "codex-repo-receipts",
-          "export_mode": "direct",
-          "reason": "The guidance is GPT-safe and does not depend on Codex-only tool behavior."
-        },
-        {
-          "skill": "codex-receipts-superpowers",
-          "export_mode": "direct",
-          "reason": "The wrapper is GPT-safe and composes shared workflow guidance without Codex-only tool assumptions."
         },
         {
           "skill": "architecture-superpowers",
@@ -86,7 +71,7 @@
         {
           "skill": "requesting-code-review",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/requesting-code-review",
+          "overlay_path": "adapters/gpt/superpowers-plus/requesting-code-review",
           "reason": "The GPT export needs a review workflow that does not depend on a reviewer subagent."
         },
         {
@@ -112,7 +97,7 @@
         {
           "skill": "using-superpowers",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/using-superpowers",
+          "overlay_path": "adapters/gpt/superpowers-plus/using-superpowers",
           "reason": "The GPT export needs a platform-neutral meta-skill that does not assume the Codex Skill tool."
         },
         {
@@ -123,13 +108,13 @@
         {
           "skill": "writing-plans",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/writing-plans",
+          "overlay_path": "adapters/gpt/superpowers-plus/writing-plans",
           "reason": "The GPT export should keep the planning workflow but avoid Codex-specific orchestration language."
         },
         {
           "skill": "writing-skills",
           "export_mode": "overlay",
-          "overlay_path": "gpt-overlays/superpowers-plus/writing-skills",
+          "overlay_path": "adapters/gpt/superpowers-plus/writing-skills",
           "reason": "The GPT export needs a skill-authoring guide that is platform-neutral and clear about testing."
         }
       ]

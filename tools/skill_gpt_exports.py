@@ -13,7 +13,7 @@ from skill_overlay_materializer import stage_overlay_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GPT_OVERLAYS_ROOT = ROOT / "gpt-overlays"
+GPT_OVERLAYS_ROOT = ROOT / "adapters/gpt"
 GPT_EXPORT_MANIFEST_PATH = GPT_OVERLAYS_ROOT / "manifest.json"
 
 
@@ -63,6 +63,11 @@ def _build_policy_index() -> tuple[str, dict[tuple[str, str], GPTExportPolicy]]:
                 overlay_root = (ROOT / overlay_path).resolve()
                 if not overlay_root.exists():
                     raise FileNotFoundError(overlay_root)
+                expected_root = (ROOT / "adapters/gpt").resolve()
+                try:
+                    overlay_root.relative_to(expected_root)
+                except ValueError:
+                    raise ValueError(f"gpt export manifest pack {pack_name}/{skill_name} overlay_path must be under adapters/gpt/: {overlay_path}")
             if export_mode == "excluded":
                 if not isinstance(reason, str) or not reason:
                     raise ValueError(f"gpt export manifest pack {pack_name}/{skill_name} is missing an exclusion reason")

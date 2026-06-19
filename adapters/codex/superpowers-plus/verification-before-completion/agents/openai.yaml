@@ -4,4 +4,4 @@ metadata:
   plugin: superpowers
   source_category: third_party
   upstream_version: v5.1.0
-  adaptation_overlay: adaptation-overlays/superpowers-plus/verification-before-completion
+  adaptation_overlay: adapters/codex/superpowers-plus/verification-before-completion

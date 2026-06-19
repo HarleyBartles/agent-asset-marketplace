@@ -841,7 +841,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
         adaptation_overlay_path = entry.get("adaptation_overlay_path")
         if source_category == "third_party" and content_mode == "adapted":
-            expected_overlay_path = f"adaptation-overlays/superpowers-plus/{canonical_name}"
+            expected_overlay_path = f"adapters/codex/superpowers-plus/{canonical_name}"
             if adaptation_overlay_path != expected_overlay_path:
                 raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs {expected_overlay_path}")
             check_path_exists(ROOT / expected_overlay_path)
@@ -1176,8 +1176,8 @@ def validate_skill_bundle_manifest(
         for entry in skipped_entries + blocked_entries:
             if entry.get("local_path") not in ("", None):
                 raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry should not expose a local path")
-        if not entry.get("adaptation_note"):
-            raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
+            if not entry.get("adaptation_note"):
+                raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
 
 def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
