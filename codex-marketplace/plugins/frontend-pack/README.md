@@ -1,7 +1,7 @@
 # Frontend Pack
 
-Marketplace wrapper for the retained `claude-cortex` frontend application
-source slice.
+Marketplace wrapper for the retained `codex-cortex` frontend application source
+slice.
 
 ## Bundle contents
 
@@ -21,7 +21,7 @@ source slice.
 - `ux-review` carries heuristic UX review, accessibility review, and interaction analysis for frontend flows and components.
 - `interaction-design` carries user flow, state transition, micro-interaction, and feedback pattern guidance.
 - `webapp-testing` carries Playwright-based browser automation and local web application testing guidance.
-- The pack is sourced from retained `NickCrew/Claude-Cortex` frontend skills, not from `game-studio`.
+- The pack is sourced from retained `NickCrew/Claude-Cortex` frontend skills under the normalized `codex-cortex` custody root, not from `game-studio`.
 - The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape

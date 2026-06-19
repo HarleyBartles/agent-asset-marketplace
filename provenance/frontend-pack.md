@@ -2,13 +2,13 @@
 
 ## Source anchor
 
-- Upstream repository: `NickCrew/claude-cortex`
+- Upstream repository: `NickCrew/Claude-Cortex`
 - Upstream commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
 - License: retained upstream license in source custody
 
 ## Custody surface
 
-- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
+- Retained snapshot root: `sources/third_party/codex-cortex/upstream/`
 
 ## Projection surface
 
@@ -26,6 +26,6 @@ The retained custody surface seeds the exact MARK-214 first-wave frontend skills
 `interaction-design`, and `webapp-testing`.
 
 These skills are imported from retained upstream custody under
-`sources/third_party/claude-cortex/upstream/` and projected into
+`sources/third_party/codex-cortex/upstream/` and projected into
 `codex-marketplace/plugins/frontend-pack/` with pack-relative paths. Game-studio
 or browser-game material is intentionally excluded from this pack boundary.
