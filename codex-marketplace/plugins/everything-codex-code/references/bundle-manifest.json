@@ -10,7 +10,7 @@
     "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
     "provenance/superpowers-ecc.md"
   ],
-  "projection_policy": "Project the 14 ECC workflow skills already selected into superpowers-ecc. Keep this pack generated from that marketplace projection rather than upstream ECC custody.",
+  "projection_policy": "Project the ECC workflow skills already selected into superpowers-ecc. Keep this pack mirrored from that marketplace projection rather than upstream ECC custody.",
   "repo_index": {
     "source_ledger": [
       "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
@@ -113,7 +113,7 @@
     }
   ],
   "notes": [
-    "Generated aggregate projection over the dedicated superpowers-ecc pack.",
+    "Installable aggregate projection over the dedicated superpowers-ecc pack.",
     "This bundle does not mirror upstream ECC custody directly."
   ]
 }

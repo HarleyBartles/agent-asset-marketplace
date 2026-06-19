@@ -2,15 +2,15 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`[ ]`) syntax for tracking.
 
-**Goal:** Create `everything-codex-code` as a generated marketplace projection of the already-selected ECC workflow skills that live in `superpowers-ecc`, without importing any raw upstream ECC snapshot or broadening the ECC slice.
+**Goal:** Create `everything-codex-code` as an installable marketplace projection of the already-selected ECC workflow skills that live in `superpowers-ecc`, without importing any raw upstream ECC snapshot or broadening the ECC slice.
 
-**Architecture:** Treat `everything-codex-code` as a projection over the existing `superpowers-ecc` marketplace pack, not as new upstream custody. Keep the plugin root, bundle manifest, source map, provenance note, marketplace registry, and validator coverage in sync so the pack is installable, generated, and explicitly bounded to the 14 ECC workflow skills already selected for `superpowers-ecc`.
+**Architecture:** Treat `everything-codex-code` as a projection over the existing `superpowers-ecc` marketplace pack, not as new upstream custody. Keep the plugin root, bundle manifest, source map, provenance note, marketplace registry, and validator coverage in sync so the pack is installable and explicitly bounded to the ECC workflow skills already selected for `superpowers-ecc`.
 
 **Tech Stack:** Markdown skill sources, JSON plugin metadata, project-scoped bundle manifests, marketplace generators, repo-index metadata, validator updates, PowerShell shell commands.
 
 ---
 
-### Task 1: Lock the source basis and the generated aggregate boundary
+### Task 1: Lock the source basis and the projection boundary
 
 **Files:**
 - Read: `codex-marketplace/plugins/superpowers-ecc/README.md`
@@ -40,11 +40,11 @@
 
 - [x] **Step 2: Record the source/projection decision for the new pack.**
 
-  The record should state that `everything-codex-code` is generated from the
+  The record should state that `everything-codex-code` is installed from the
   existing `superpowers-ecc` marketplace projection and is not a raw mirror of
   `affaan-m/ECC`.
 
-### Task 2: Create the `everything-codex-code` plugin root and generated projection metadata
+### Task 2: Create the `everything-codex-code` plugin root and projection metadata
 
 **Files:**
 - Create: `codex-marketplace/plugins/everything-codex-code/.codex-plugin/plugin.json`
@@ -73,13 +73,13 @@
 - [x] **Step 1: Materialize the new pack by mirroring the selected ECC skills from the existing `superpowers-ecc` projection.**
 
   The local skill tree should mirror the current `superpowers-ecc` files so the
-  new pack is a generated aggregate surface, not a manual rewrite.
+  new pack is an installable projection surface, not a manual rewrite.
 
 - [x] **Step 2: Write the new pack metadata and source map.**
 
-  The bundle manifest and source map should make the generated-aggregate
+  The bundle manifest and source map should make the installable-projection
   posture explicit, point at `codex-marketplace/plugins/superpowers-ecc/skills`
-  as the source projection surface, and list the 14 included skills directly.
+  as the source projection surface, and list the included skills directly.
 
 - [x] **Step 3: Add a provenance note for the aggregate projection.**
 
@@ -109,7 +109,7 @@
   Update the active root lists and registry surfaces so `everything-codex-code`
   appears as a live installable root next to `superpowers-ecc`.
 
-- [x] **Step 2: Add validator coverage for the generated aggregate projection.**
+- [x] **Step 2: Add validator coverage for the installable aggregate projection.**
 
   Extend marketplace validation so the new pack is checked against its own
   bundle manifest, source map, and generated mirror rules rather than being

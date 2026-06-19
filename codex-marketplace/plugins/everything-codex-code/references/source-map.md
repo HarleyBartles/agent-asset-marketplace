@@ -1,7 +1,7 @@
 # Everything Codex Code Source Map
 
-This bundle projects the 14 selected ECC Superpowers-style workflow skills into
-a generated aggregate Codex marketplace surface.
+This bundle projects the selected ECC Superpowers-style workflow skills into
+an installable Codex marketplace surface.
 
 The plugin shell is Harley-authored. Verbatim skill projections retain upstream
 authorship and MIT licensing in the bundle manifest and the projected skill
@@ -31,6 +31,7 @@ Source basis:
 - `codex-marketplace/plugins/superpowers-ecc/references/source-map.md`
 - `provenance/everything-codex-code.md`
 
-The pack root is an installable Codex plugin projection. It is a generated
-aggregate over the existing `superpowers-ecc` projection, not a new source of
-truth and not a raw mirror of the upstream ECC repository.
+The pack root is an installable Codex plugin projection. The downstream skill
+zips and registry outputs are generated from this checked-in root. The root is
+an aggregate over the existing `superpowers-ecc` projection, not a new source
+of truth and not a raw mirror of the upstream ECC repository.

@@ -1,7 +1,7 @@
 # Everything Codex Code
 
 This plugin bundle projects the selected ECC Superpowers-style workflow skills
-into a generated aggregate installable Codex marketplace pack.
+into an installable Codex marketplace projection pack.
 
 The plugin shell is Harley-authored and MIT licensed. Projected skill roots
 retain their upstream authorship and license evidence in the bundle manifest,
@@ -48,9 +48,9 @@ directly from the upstream ECC repository.
 - The bundle stays out of branding, social publishing, media production, and
   unrelated domain-specialist skills unless another issue explicitly composes
   them in.
-- The bundle is a generated aggregate projection over the selected ECC
-  workflow skills already installed in `superpowers-ecc`, not a new source of
-  truth and not a raw mirror of upstream ECC custody.
+- The bundle is an installable projection over the selected ECC workflow
+  skills already installed in `superpowers-ecc`, not a new source of truth and
+  not a raw mirror of upstream ECC custody.
 
 ## Install shape
 

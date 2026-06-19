@@ -43,8 +43,8 @@ Selected pack skills:
 
 Projection contract:
 
-- `everything-codex-code` is a generated aggregate projection over the existing
-  `superpowers-ecc` marketplace pack.
+- `everything-codex-code` is an installable aggregate projection over the
+  existing `superpowers-ecc` marketplace pack.
 - `superpowers-ecc` remains the dedicated source projection for the selected
   ECC workflow slice.
 - Keep the workflow slice narrow and avoid pulling branding, social, media, or

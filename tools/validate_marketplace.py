@@ -239,6 +239,23 @@ def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, 
             raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a nonblank string or null")
 
 
+def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str]:
+    rows = parse_top_markdown_table(path)
+    values: list[str] = []
+    seen_values: set[str] = set()
+    for row in rows:
+        value = row.get(column_name)
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"{path}: markdown table column {column_name} must contain nonblank strings")
+        if value in seen_values:
+            raise ValueError(f"{path}: markdown table column {column_name} contains a duplicate value: {value}")
+        seen_values.add(value)
+        values.append(value)
+    if not values:
+        raise ValueError(f"{path}: markdown table column {column_name} must contain at least one value")
+    return values
+
+
 def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
     if bundle_manifest.get("bundle_name") != "everything-codex-code":
         raise ValueError("everything-codex-code bundle manifest bundle_name mismatch")
@@ -259,40 +276,26 @@ def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin
     ]:
         raise ValueError("everything-codex-code bundle manifest source_of_truth mismatch")
     if bundle_manifest.get("projection_policy") != (
-        "Project the 14 ECC workflow skills already selected into superpowers-ecc. Keep this pack generated from that marketplace projection rather than upstream ECC custody."
+        "Project the ECC workflow skills already selected into superpowers-ecc. Keep this pack mirrored from that marketplace projection rather than upstream ECC custody."
     ):
         raise ValueError("everything-codex-code bundle manifest projection_policy mismatch")
 
     components = bundle_manifest.get("components", [])
     if not isinstance(components, list) or not components:
         raise ValueError("everything-codex-code bundle manifest components must be a non-empty list")
-    if len(components) != 14:
-        raise ValueError("everything-codex-code bundle manifest must project fourteen selected ECC skills")
 
-    expected_names = {
-        "agent-harness-construction",
-        "ai-first-engineering",
-        "deployment-patterns",
-        "dmux-workflows",
-        "messages-ops",
-        "ml-adoption-playbook",
-        "prediction-market-oracle-research",
-        "recursive-decision-ledger",
-        "research-ops",
-        "safety-guard",
-        "search-first",
-        "team-agent-orchestration",
-        "team-builder",
-        "token-budget-advisor",
-    }
     skill_dir = ROOT / plugin_root / "skills"
+    source_map_path = ROOT / plugin_root / "references" / "source-map.md"
     check_path_exists(skill_dir)
+    check_path_exists(source_map_path)
+    expected_names = _load_markdown_table_column_values(source_map_path, "Skill")
     actual_skill_names = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
     if actual_skill_names != sorted(expected_names):
         raise ValueError("everything-codex-code bundle manifest skill directory inventory mismatch")
 
     seen_names: set[str] = set()
     seen_local_paths: set[str] = set()
+    component_names: list[str] = []
     for component in components:
         if not isinstance(component, dict):
             raise ValueError("everything-codex-code bundle manifest components must contain objects")
@@ -302,11 +305,10 @@ def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin
         projection_status = component.get("projection_status")
         if not isinstance(canonical_name, str) or not canonical_name:
             raise ValueError("everything-codex-code bundle manifest component is missing canonical_name")
-        if canonical_name not in expected_names:
-            raise ValueError(f"everything-codex-code bundle manifest component {canonical_name} is not selected")
         if canonical_name in seen_names:
             raise ValueError(f"everything-codex-code bundle manifest component is duplicated: {canonical_name}")
         seen_names.add(canonical_name)
+        component_names.append(canonical_name)
         if not isinstance(source_path, str) or not source_path:
             raise ValueError(f"everything-codex-code bundle manifest component {canonical_name} is missing source_path")
         if not isinstance(local_path, str) or not local_path:
@@ -323,8 +325,8 @@ def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin
         check_path_exists(local_md)
         validate_tree_mirror(source_md.parent, local_md.parent, canonical_name)
 
-    if seen_names != expected_names:
-        raise ValueError("everything-codex-code bundle manifest component set mismatch")
+    if component_names != expected_names:
+        raise ValueError("everything-codex-code bundle manifest components must match the source map selection")
 
     _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name="everything-codex-code", plugin_root=plugin_root)
 

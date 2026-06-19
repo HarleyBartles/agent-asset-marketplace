@@ -1,7 +1,7 @@
 # Source
 
 This bundle projects the selected ECC Superpowers-style workflow skills into a
-generated aggregate Codex marketplace pack.
+Codex marketplace projection pack.
 
 The plugin shell is authored by Harley Bartles. The projected skill roots
 retain their upstream source author, source license, and source path in the
@@ -47,7 +47,8 @@ upstream ECC repository directly.
 
 ## Notes
 
-The retained upstream snapshot stays in third-party custody. This pack is a
-generated aggregate home for the ECC workflow slice already selected into the
-dedicated `superpowers-ecc` marketplace projection. It does not replace that
-projection or create a new source of truth.
+The retained upstream snapshot stays in third-party custody. This pack is an
+installable projection home for the ECC workflow slice already selected into
+the dedicated `superpowers-ecc` marketplace projection. The downstream skill
+zips and registry outputs are generated from this checked-in root. It does not
+replace that projection or create a new source of truth.
