@@ -1,6 +1,13 @@
 ---
 name: wild-bunch-dotnet-architecture
 description: Apply Wild Bunch .NET architecture guardrails for C#/.NET repo work involving domain ownership, GameSession Aggregate Root mutation paths, application orchestration, infrastructure persistence, CQRS/read models, JSON snapshot state, database-table pressure, or framework leakage. Use when designing, reviewing, dispatching, or verifying Wild Bunch code changes that could move rules out of the domain, confuse Aggregate Root boundaries with coordinators, normalize live session state too early, overuse CQRS/event sourcing, or confuse static content/read models with runtime aggregate state.
+metadata:
+  origin: first_party
+  source_author: Harley Bartles
+  source_license: MIT
+  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
+  source_path: sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md
+  content_mode: verbatim
 ---
 
 # Wild Bunch .NET Architecture

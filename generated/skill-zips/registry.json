@@ -2879,13 +2879,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/game-playtest/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3137,
-      "source_sha256": "5ea18523dc313d526624c964d11c0eae80af8d75f2b474dbc7c6f48592780bfb",
+      "source_bytes": 3375,
+      "source_sha256": "0c36db2a4e3df0b7c09c0ce5d2ad37a21f7d80f60bcb7d8f254273dc30fc7a6e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1864,
-      "zip_sha256": "4015c9e26243520a5c639cfa1fdecb855790ee6b345889def34b9bc47448e735"
+      "zip_size_bytes": 1990,
+      "zip_sha256": "0b8ae7f258c1029cde814dd40832fb70c45d5b50a7c2bbf25d0408674612da8d"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2895,13 +2895,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/game-ui-frontend/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5292,
-      "source_sha256": "41cf619fed7ce944a89a79862e7c6f91de43c183d09cad0ac88d990c8fbf48ba",
+      "source_bytes": 5533,
+      "source_sha256": "ef1768dc95dff3efa4608361f77beb7bd57740d9dac2d8de6bc306e0562438ca",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2754,
-      "zip_sha256": "714eb3a90cbf721cc225123ca6f112b088d5c32bc364b24e22d59a53952477a8"
+      "zip_size_bytes": 2878,
+      "zip_sha256": "75ddac9046aeaba3ded9180210afbdf7e71f468326099efb2adf9a0f4e52e2da"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2911,13 +2911,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/phaser-2d-game/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3395,
-      "source_sha256": "5483f07beb017dd3fa9ee489c7010d327d88d633850dfec6e9c827a10d81620d",
+      "source_bytes": 3634,
+      "source_sha256": "e8b75a125c6dbbe822a9f6fa8277172ff5ba203894914b0fec53226a347c028f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1951,
-      "zip_sha256": "467f1528fc8e217fded0823a7e1c5b071da0b1469ee83e0930399fb50c0febb6"
+      "zip_size_bytes": 2077,
+      "zip_sha256": "629a001cf3050adb0d0459856fe4ceff8800f462b4bd52ffd83ef9b3a063369d"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2927,13 +2927,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/sprite-pipeline/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3617,
-      "source_sha256": "e61dece19d36da25efe24b2935cec914dbd196fc01316968e9229baee230b08b",
+      "source_bytes": 3857,
+      "source_sha256": "73ad7e502a6ace4b486a69e3c8e80e789623b7dfef1d0545a50a840dc71aeed2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1891,
-      "zip_sha256": "7a4d477cb4f5b9d64b778117fa7c73bce429c266a5eeb4f2f171416c3d9cb1fb"
+      "zip_size_bytes": 2014,
+      "zip_sha256": "eb408b1a5e6eae6a8a2940f9921cf399ed8563311a7a951d68b3e3607f08858d"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2943,13 +2943,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/web-game-foundations/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4821,
-      "source_sha256": "0748a96033c00a0977db6ab3905541835ea2a16674bebcb746df302e80309e5c",
+      "source_bytes": 5066,
+      "source_sha256": "ff05fa6c5eda08c1fcddbff26d4a341685447c4861f61d1b64fe2140d22961db",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2484,
-      "zip_sha256": "8e0b836e2cb6f5ca1f9ffeb10043f625d157b3948b651eae2d1ae413ace96c5d"
+      "zip_size_bytes": 2609,
+      "zip_sha256": "e8454d1632205660c20194a8ee1b683c18f650207d11590fe52bafb4f956e0c6"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2959,13 +2959,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-browser-game/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 4878,
-      "source_sha256": "e21bfb2f8838770d818099a21469c363e703bcf9a297751ad1daadc0d03c90e2",
+      "source_bytes": 5136,
+      "source_sha256": "47b7586fc1180f04f6e2255d194c2991fc9b5d06409902d94c837c1ee622686f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2988,
-      "zip_sha256": "193835cfc53c9bde3d17e4f6df9de4943604ad699db0f8b60cc19a963debbb4a"
+      "zip_size_bytes": 3116,
+      "zip_sha256": "04a123eece2c06a2da4818dac2cc67a4c6942af69744a74d0486dafad7a68ed3"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2975,13 +2975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-domain-modeling/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 6454,
-      "source_sha256": "1a8c7a476f1cd47795dc0df878294c43a224fa3a5c4ed08e96a2b8792f2d406a",
+      "source_bytes": 6715,
+      "source_sha256": "64692d7b8b116e6bedb9aaf50b7cf6113f87901bb9e10772856e5657c49c9a5c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3727,
-      "zip_sha256": "c4823f879d835069bd39f4f97716757ecc764b560b9ea4a0897ed3106a806c10"
+      "zip_size_bytes": 3862,
+      "zip_sha256": "6c15b3763657327e8c00030f8ecdfbb05db13ac4ce10c875a051807dd5f3fae6"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -2991,13 +2991,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-dotnet-architecture/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 7574,
-      "source_sha256": "afbf685789ab80a7671f4d392118727b051a7acd7aa2f53159f77a71ee98a95c",
+      "source_bytes": 7839,
+      "source_sha256": "c94e3f92f089b5fe7768e2021e6545109d62c3fad2f0595d1be795d5432dba5e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4063,
-      "zip_sha256": "d6537d4face2a9fedb3ac676c86bff0a8591738ed97bae4d9b8e8925259e2a39"
+      "zip_size_bytes": 4196,
+      "zip_sha256": "3c90201a9954ef33aaa24900f79e3e6c608ed61340bf8a37ce6e9a2d459e7753"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -3007,13 +3007,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-project-doctrine/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 6344,
-      "source_sha256": "1bd2daadf79fb01c8a9fb3eab2ee696f28c644e1cc405f6ac2de3b6657c80cf7",
+      "source_bytes": 6606,
+      "source_sha256": "aecc7028c9a8dafec820c5b5edce09ce938da6867f8ef1b349f3b8f6cc9ee3b5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3977,
-      "zip_sha256": "d97b0472acb2409831ffd6d764488b7a0a8ed218fd9938b8adb537a8fce4c79c"
+      "zip_size_bytes": 4108,
+      "zip_sha256": "58c03ed72595d2300d4d7ae07bf4b344858394e6409c0023caa78965d1869cee"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -3023,13 +3023,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-worker-verification/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 4772,
-      "source_sha256": "6c80995bada872de369731627c52e8299d985a458f2d0b3de12b659f292f7e00",
+      "source_bytes": 5037,
+      "source_sha256": "f97a5d05ff703704b55eab0469daee2360c2b4e0d9466e10c2729388a1c17ca0",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2898,
-      "zip_sha256": "653f86693cc90a6eb5fdce689aca914fb69be0ab5756d3933765064a93a47cdf"
+      "zip_size_bytes": 3037,
+      "zip_sha256": "923e0baf856cc76a7eee5ba5c9272c7373320278076bda2af3923df1e1cc3ea8"
     }
   ],
   "excluded": [

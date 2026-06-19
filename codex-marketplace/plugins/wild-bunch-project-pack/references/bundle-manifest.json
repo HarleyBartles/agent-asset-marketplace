@@ -31,7 +31,11 @@
       "local_path": "skills/wild-bunch-project-doctrine/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack.",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_path": "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md"
     },
     {
       "canonical_name": "wild-bunch-domain-modeling",
@@ -41,7 +45,11 @@
       "local_path": "skills/wild-bunch-domain-modeling/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack.",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_path": "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md"
     },
     {
       "canonical_name": "wild-bunch-dotnet-architecture",
@@ -51,7 +59,11 @@
       "local_path": "skills/wild-bunch-dotnet-architecture/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack.",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md"
     },
     {
       "canonical_name": "wild-bunch-browser-game",
@@ -61,7 +73,11 @@
       "local_path": "skills/wild-bunch-browser-game/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack.",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_path": "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
     },
     {
       "canonical_name": "wild-bunch-worker-verification",
@@ -71,7 +87,11 @@
       "local_path": "skills/wild-bunch-worker-verification/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack."
+      "provenance_note": "Hydrated from the authoritative attached zip and projected unchanged into the Wild Bunch pack.",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_path": "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md"
     },
     {
       "canonical_name": "web-game-foundations",
@@ -81,7 +101,11 @@
       "local_path": "skills/web-game-foundations/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md"
     },
     {
       "canonical_name": "phaser-2d-game",
@@ -91,7 +115,11 @@
       "local_path": "skills/phaser-2d-game/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game/SKILL.md"
     },
     {
       "canonical_name": "game-ui-frontend",
@@ -101,7 +129,11 @@
       "local_path": "skills/game-ui-frontend/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md"
     },
     {
       "canonical_name": "game-playtest",
@@ -111,7 +143,11 @@
       "local_path": "skills/game-playtest/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md"
     },
     {
       "canonical_name": "sprite-pipeline",
@@ -121,7 +157,11 @@
       "local_path": "skills/sprite-pipeline/SKILL.md",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md"
     },
     {
       "canonical_name": "agent-browser",
@@ -141,6 +181,7 @@
     "agent-browser remains excluded because the repo does not retain it as an approved marketplace projection."
   ],
   "provenance_refs": [
-    "provenance/wild-bunch-project-pack.md"
+    "provenance/wild-bunch-project-pack.md",
+    "codex-marketplace/plugins/wild-bunch-project-pack/references/source-map.md"
   ]
 }
