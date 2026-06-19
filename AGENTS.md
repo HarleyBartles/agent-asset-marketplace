@@ -14,7 +14,8 @@ Durable assets in this repo may include:
 
 - GPT-native skill sources under `gpt-skills/`, but `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only;
 - Codex marketplace metadata and plugin source shape under `codex-marketplace/` and `.agents/plugins/`;
-- repo-specific overlays under `repo-overlays/`;
+- Codex/plugin/marketplace adapter material under `adapters/codex/`;
+- GPT overlay/export adapter material under `adapters/gpt/`;
 - upstream source snapshots and references under `sources/`;
 - provenance, license, attribution, and trust records under `provenance/` as evidence and traceability, not completion by itself;
 - docs-owned repo guidance under `docs/AGENTS.md`, including `docs/unslop/profile.md` when a canonical profile needs a stable docs home;
@@ -26,7 +27,7 @@ by hand.
 
 The generated `skill.zip` surface is the GPT-ready export surface. It is built
 from marketplace source custody plus any repo-owned GPT overlay declared under
-`gpt-overlays/`, with direct exports for GPT-safe skills and explicit
+`adapters/gpt/`, with direct exports for GPT-safe skills and explicit
 exclusions for skills that should not be exported raw.
 
 Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the

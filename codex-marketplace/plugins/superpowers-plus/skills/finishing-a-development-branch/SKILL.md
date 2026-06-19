@@ -5,7 +5,7 @@ metadata:
   source_category: third_party
   upstream_name: finishing-a-development-branch
   upstream_version: v5.1.0
-  adaptation_overlay: adaptation-overlays/superpowers-plus/finishing-a-development-branch
+  adaptation_overlay: adapters/codex/superpowers-plus/finishing-a-development-branch
   projection_plugin: superpowers
 ---
 

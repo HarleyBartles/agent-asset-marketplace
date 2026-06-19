@@ -18,7 +18,7 @@ for that surface.
 
 That generated surface is the GPT-ready export surface. It is built from the
 marketplace source tree plus any repo-owned GPT overlay declared under
-`gpt-overlays/`. Direct exports stay direct when the source is already
+`adapters/gpt/`. Direct exports stay direct when the source is already
 GPT-safe; overlay exports apply the overlay before packaging; excluded skills
 are recorded in the registry with a reason instead of being exported raw.
 

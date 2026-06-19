@@ -11,7 +11,7 @@ The skill-update path is now worker-facing through
 `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`. The root
 inventory that drives marketplace plugin ownership is
 `codex-marketplace/plugin-roots.json`, GPT overlay sources live under
-`gpt-overlays/`, and drift validation lives in
+`adapters/gpt/`, and drift validation lives in
 `tools/validate_generated_drift.py`.
 
 ## Review guidelines

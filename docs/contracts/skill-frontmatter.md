@@ -13,7 +13,7 @@ metadata:
   source_category: third_party
   upstream_name: using-superpowers
   upstream_version: v5.1.0
-  adaptation_overlay: adaptation-overlays/superpowers/using-superpowers
+  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers
   projection_plugin: superpowers
   license: "MIT"
 ---

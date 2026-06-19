@@ -114,7 +114,7 @@ def _source_changed_for_path(source_changes: list[str], source_path: str) -> boo
 
 
 def _artifact_relevant_changes(artifact: Any) -> list[str]:
-    paths = [artifact.source_path, "gpt-overlays/manifest.json"]
+    paths = [artifact.source_path, "adapters/gpt/manifest.json"]
     overlay_path = getattr(artifact, "overlay_path", None)
     if overlay_path:
         paths.append(str(overlay_path))
@@ -262,11 +262,11 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         if full_regeneration or packaging_tooling_changed:
             continue
         source_path = str(exclusion.get("source_path", ""))
-        if not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
+        if not _source_changed_for_path(source_changes, source_path) and "adapters/gpt/manifest.json" not in source_changes:
             raise ValueError(
                 f"generated registry drift detected for excluded skill {exclusion.get('pack')}/{exclusion.get('skill')}: "
                 f"registry entry changed without a matching source or overlay manifest change at "
-                f"{source_path or 'gpt-overlays/manifest.json'}; run py -3 tools/update_skill_artifacts.py --all "
+                f"{source_path or 'adapters/gpt/manifest.json'}; run py -3 tools/update_skill_artifacts.py --all "
                 "for explicit full regeneration"
             )
 
@@ -282,19 +282,19 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
         for key in sorted(set(current_exclusions_by_key) - set(base_exclusions_by_key)):
             entry = current_exclusions_by_key[key]
             source_path = str(entry.get("source_path", ""))
-            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
+            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "adapters/gpt/manifest.json" not in source_changes:
                 raise ValueError(
                     f"generated registry added exclusion {entry.get('pack')}/{entry.get('skill')} without a matching "
-                    f"source or overlay manifest change at {source_path or 'gpt-overlays/manifest.json'}; run "
+                    f"source or overlay manifest change at {source_path or 'adapters/gpt/manifest.json'}; run "
                     "py -3 tools/update_skill_artifacts.py --all for explicit full regeneration"
                 )
         for key in sorted(set(base_exclusions_by_key) - set(current_exclusions_by_key)):
             entry = base_exclusions_by_key[key]
             source_path = str(entry.get("source_path", ""))
-            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "gpt-overlays/manifest.json" not in source_changes:
+            if not packaging_tooling_changed and not _source_changed_for_path(source_changes, source_path) and "adapters/gpt/manifest.json" not in source_changes:
                 raise ValueError(
                     f"generated registry removed exclusion {entry.get('pack')}/{entry.get('skill')} without a matching "
-                    f"source or overlay manifest change at {source_path or 'gpt-overlays/manifest.json'}; run "
+                    f"source or overlay manifest change at {source_path or 'adapters/gpt/manifest.json'}; run "
                     "py -3 tools/update_skill_artifacts.py --all for explicit full regeneration"
                 )
         for key in sorted(set(base_by_key) - set(current_by_key)):

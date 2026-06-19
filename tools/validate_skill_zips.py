@@ -17,8 +17,8 @@ def _assert_overlay_export_present(registry: dict) -> None:
     )
     if artifact["export_mode"] != "overlay":
         raise AssertionError("expected finishing-a-development-branch to be an overlay export")
-    if artifact["overlay_path"] != "gpt-overlays/superpowers-plus/finishing-a-development-branch":
-        raise AssertionError("expected finishing-a-development-branch overlay path to match gpt-overlays")
+    if artifact["overlay_path"] != "adapters/gpt/superpowers-plus/finishing-a-development-branch":
+        raise AssertionError("expected finishing-a-development-branch overlay path to match adapters/gpt")
 
     zip_path = ROOT / artifact["zip_path"]
     with zipfile.ZipFile(zip_path) as archive:

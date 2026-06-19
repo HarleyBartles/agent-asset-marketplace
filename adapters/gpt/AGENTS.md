@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Scope: `gpt-overlays/`
+Scope: `adapters/gpt/`
 
 This scope covers source-owned GPT export overlays for generated skill zips.
 
@@ -9,7 +9,7 @@ Codex plugin first; generated GPT-safe skill zips second.
 Overlay files in this tree are not the Codex plugin projection and not the
 generated artifact surface. They are the source input for GPT-ready exports.
 
-Keep overlay paths aligned with `gpt-overlays/manifest.json`, and keep the
+Keep overlay paths aligned with `adapters/gpt/manifest.json`, and keep the
 manifest aligned with the generated registry fields that prove source plus
 overlay derivation.
 

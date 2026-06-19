@@ -7,10 +7,10 @@ Codex plugin first; generated GPT-safe skill zips second.
 
 Convention:
 
-- `gpt-overlays/manifest.json` classifies each generated skill as `direct`,
+- `adapters/gpt/manifest.json` classifies each generated skill as `direct`,
   `overlay`, or `excluded`.
 - Overlay sources mirror the target skill path under
-  `gpt-overlays/<pack>/<skill>/...`.
+  `adapters/gpt/<pack>/<skill>/...`.
 - Generated archives are assembled from marketplace source custody plus the
   overlay tree when an overlay is declared.
 

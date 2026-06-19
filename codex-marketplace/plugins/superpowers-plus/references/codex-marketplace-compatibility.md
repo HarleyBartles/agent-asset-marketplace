@@ -13,7 +13,7 @@ This note applies to the active Codex projection of `obra/superpowers`.
 - `superpowers` is a third-party plugin projection with selected first-party compositional skills projected into the vendored marketplace plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected first-party wrapper skills `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, `architecture-superpowers`, and `ecc-superpowers`.
 - Those first-party skills are compositional and complementary. They compose Superpowers workflow guidance with first-party expert skills that live outside the Superpowers plugin.
-- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projection layer and is source-controlled in `adaptation-overlays/superpowers-plus/...`.
+- The repo-specific adaptation for `using-superpowers`, `finishing-a-development-branch`, and `verification-before-completion` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
 - `ecc-superpowers` is the thin router wrapper that points to the dedicated `superpowers-ecc` pack rather than absorbing ECC workflow doctrine into Superpowers+.
 - Source custody remains a verbatim upstream snapshot. Do not fold Codex-safe wording, frontmatter normalization, marketplace policy, or adaptation overlays into the retained source tree.
 - Installation and export artifacts are derived from the projection layer plus overlays. Do not hand-edit generated zips or registry entries.

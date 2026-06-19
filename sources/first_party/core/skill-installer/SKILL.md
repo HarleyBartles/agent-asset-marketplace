@@ -11,6 +11,12 @@ Drive a skill from an authorized source path to a valid installable `skill.zip` 
 
 This skill composes the existing skill stack. It does not replace source acquisition, semantic authorship, validation, packaging, or handoff cadence rules.
 
+## Anti-use rule for repo-resident generated zips
+
+If the work is repo-backed generation of `skill.zip` artifacts and Harley says he will install the generated zips directly in GPT, do not route into the GPT handoff lifecycle. Do not create a separate GPT handoff queue, install-handoff Linear issue, or `landed` requirement as worker DOD for that repo-backed case. The repo worker should return generated zip paths, package/projection validation evidence, and direct install notes instead.
+
+Preserve `skill-installer` for explicit GPT install/present/package handoff requests, recovery from broken package handoff, handoff cadence management, or landed-confirmation tracking.
+
 ## Input routes
 
 ### Marketplace route
