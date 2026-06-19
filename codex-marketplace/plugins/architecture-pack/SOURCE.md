@@ -5,6 +5,8 @@ This plugin projects the MARK-172 `cqrs-event-sourcing` seed, the MARK-200
 `database-design-patterns` candidate from the retained Codex Cortex custody
 plugin into a Codex marketplace pack.
 
+The plugin shell is authored by Harley Bartles. The projected skill roots retain their upstream source author, source license, and source path in the bundle manifest and source map so verbatim content stays attributable.
+
 ## Source custody plugin
 
 - Plugin root: `codex-marketplace/plugins/codex-cortex/`
