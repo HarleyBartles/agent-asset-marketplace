@@ -1,14 +1,27 @@
 {
   "bundle_name": "codex-cortex",
   "bundle_version": "1.0.0",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
-  "upstream_repo": "NickCrew/Claude-Cortex",
-  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 71,
-  "imported_count": 71,
+  "content_mode": "combined-source",
+  "source_families": [
+    {
+      "name": "claude-cortex",
+      "upstream_repo": "NickCrew/Claude-Cortex",
+      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+      "source_root": "."
+    },
+    {
+      "name": "ecc",
+      "upstream_repo": "affaan-m/ECC",
+      "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+      "source_root": "."
+    }
+  ],
+  "candidate_count": 100,
+  "imported_count": 100,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -16,855 +29,971 @@
       "snapshot_path": "skills/cqrs-event-sourcing/SKILL.md",
       "local_path": "skills/cqrs-event-sourcing/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the MARK-172 seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
       "local_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/cqrs-patterns.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/references/cqrs-patterns.md"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
       "local_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-sourcing.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/references/event-sourcing.md"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
       "local_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/event-store-tech.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/references/event-store-tech.md"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
       "local_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/consistency-patterns.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/references/consistency-patterns.md"
     },
     {
       "snapshot_path": "skills/cqrs-event-sourcing/references/best-practices.md",
       "local_path": "skills/cqrs-event-sourcing/references/best-practices.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical seed (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/references/best-practices.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/references/best-practices.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/SKILL.md",
       "local_path": "skills/database-design-patterns/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/core-principles.md",
       "local_path": "skills/database-design-patterns/references/core-principles.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/core-principles.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/core-principles.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/schema-design-patterns.md",
       "local_path": "skills/database-design-patterns/references/schema-design-patterns.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/schema-design-patterns.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/schema-design-patterns.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/indexing-strategies.md",
       "local_path": "skills/database-design-patterns/references/indexing-strategies.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/indexing-strategies.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/indexing-strategies.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/partitioning-patterns.md",
       "local_path": "skills/database-design-patterns/references/partitioning-patterns.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/partitioning-patterns.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/partitioning-patterns.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/replication-patterns.md",
       "local_path": "skills/database-design-patterns/references/replication-patterns.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/replication-patterns.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/replication-patterns.md"
     },
     {
       "snapshot_path": "skills/database-design-patterns/references/query-optimization.md",
       "local_path": "skills/database-design-patterns/references/query-optimization.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical architecture guidance surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/references/query-optimization.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/references/query-optimization.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/SKILL.md",
       "local_path": "skills/event-driven-architecture/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-fundamentals.md",
       "local_path": "skills/event-driven-architecture/references/event-fundamentals.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-fundamentals.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/event-fundamentals.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/event-sourcing.md",
       "local_path": "skills/event-driven-architecture/references/event-sourcing.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/event-sourcing.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/event-sourcing.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/cqrs.md",
       "local_path": "skills/event-driven-architecture/references/cqrs.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/cqrs.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/cqrs.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/message-brokers.md",
       "local_path": "skills/event-driven-architecture/references/message-brokers.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/message-brokers.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/message-brokers.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/saga-pattern.md",
       "local_path": "skills/event-driven-architecture/references/saga-pattern.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/saga-pattern.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/saga-pattern.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
       "local_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/choreography-orchestration.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/choreography-orchestration.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/eventual-consistency.md",
       "local_path": "skills/event-driven-architecture/references/eventual-consistency.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/eventual-consistency.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/eventual-consistency.md"
     },
     {
       "snapshot_path": "skills/event-driven-architecture/references/best-practices.md",
       "local_path": "skills/event-driven-architecture/references/best-practices.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and as part of the canonical follow-on architecture surface (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/references/best-practices.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/references/best-practices.md"
     },
     {
       "snapshot_path": "skills/api-design-patterns/SKILL.md",
       "local_path": "skills/api-design-patterns/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-204 contract-doctrine follow-on (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md"
     },
     {
       "snapshot_path": "skills/api-design-patterns/references/design-process.md",
       "local_path": "skills/api-design-patterns/references/design-process.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as part of the MARK-204 contract-doctrine follow-on (no content adaptation).",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/references/design-process.md"
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the MARK-204 contract-doctrine follow-on."
     },
     {
       "snapshot_path": "skills/api-design-patterns/validation/rubric.yaml",
       "local_path": "skills/api-design-patterns/validation/rubric.yaml",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as part of the MARK-204 contract-doctrine follow-on (no content adaptation).",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/validation/rubric.yaml"
+      "adaptation_note": "Imported into the Codex Cortex custody plugin and retained as part of the MARK-204 contract-doctrine follow-on."
     },
     {
       "snapshot_path": "skills/openapi-specification/SKILL.md",
       "local_path": "skills/openapi-specification/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-205 OpenAPI companion source slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md"
     },
     {
       "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
       "local_path": "skills/openapi-specification/references/spec-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the retained OpenAPI reference surface (no content adaptation).",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/references/spec-patterns.md"
+      "adaptation_note": "Imported into the Codex Cortex custody plugin as the retained OpenAPI reference surface."
     },
     {
       "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
       "local_path": "skills/openapi-specification/validation/rubric.yaml",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the OpenAPI validation rubric (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/validation/rubric.yaml"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/authentication.md",
       "local_path": "skills/secure-coding-practices/references/authentication.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/authentication.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/authentication.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/cryptography.md",
       "local_path": "skills/secure-coding-practices/references/cryptography.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/cryptography.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/cryptography.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/dependencies.md",
       "local_path": "skills/secure-coding-practices/references/dependencies.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/dependencies.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/dependencies.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/error-handling.md",
       "local_path": "skills/secure-coding-practices/references/error-handling.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/error-handling.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/error-handling.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/input-validation.md",
       "local_path": "skills/secure-coding-practices/references/input-validation.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/input-validation.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/input-validation.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/output-encoding.md",
       "local_path": "skills/secure-coding-practices/references/output-encoding.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/output-encoding.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/output-encoding.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/secure-defaults.md",
       "local_path": "skills/secure-coding-practices/references/secure-defaults.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/references/secure-defaults.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/references/secure-defaults.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/SKILL.md",
       "local_path": "skills/secure-coding-practices/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/SKILL.md"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/validation/rubric.yaml",
       "local_path": "skills/secure-coding-practices/validation/rubric.yaml",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 secure-coding-practices slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/validation/rubric.yaml",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/validation/rubric.yaml"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/assessment-workflow.md",
       "local_path": "skills/owasp-top-10/references/assessment-workflow.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/assessment-workflow.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/assessment-workflow.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/authentication-failures.md",
       "local_path": "skills/owasp-top-10/references/authentication-failures.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/authentication-failures.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/authentication-failures.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/broken-access-control.md",
       "local_path": "skills/owasp-top-10/references/broken-access-control.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/broken-access-control.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/broken-access-control.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/cryptographic-failures.md",
       "local_path": "skills/owasp-top-10/references/cryptographic-failures.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/cryptographic-failures.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/cryptographic-failures.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/injection.md",
       "local_path": "skills/owasp-top-10/references/injection.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/injection.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/injection.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/insecure-design.md",
       "local_path": "skills/owasp-top-10/references/insecure-design.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/insecure-design.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/insecure-design.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/integrity-failures.md",
       "local_path": "skills/owasp-top-10/references/integrity-failures.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/integrity-failures.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/integrity-failures.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/logging-monitoring.md",
       "local_path": "skills/owasp-top-10/references/logging-monitoring.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/logging-monitoring.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/logging-monitoring.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/prevention-strategies.md",
       "local_path": "skills/owasp-top-10/references/prevention-strategies.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/prevention-strategies.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/prevention-strategies.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/security-misconfiguration.md",
       "local_path": "skills/owasp-top-10/references/security-misconfiguration.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/security-misconfiguration.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/security-misconfiguration.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/ssrf.md",
       "local_path": "skills/owasp-top-10/references/ssrf.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/ssrf.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/ssrf.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/vulnerable-components.md",
       "local_path": "skills/owasp-top-10/references/vulnerable-components.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/references/vulnerable-components.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/references/vulnerable-components.md"
     },
     {
       "snapshot_path": "skills/owasp-top-10/SKILL.md",
       "local_path": "skills/owasp-top-10/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 owasp-top-10 slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/SKILL.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/api-security.md",
       "local_path": "skills/security-testing-patterns/references/api-security.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/api-security.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/api-security.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/automation-pipeline.md",
       "local_path": "skills/security-testing-patterns/references/automation-pipeline.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/automation-pipeline.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/automation-pipeline.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/dast.md",
       "local_path": "skills/security-testing-patterns/references/dast.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/dast.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/dast.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/fuzzing.md",
       "local_path": "skills/security-testing-patterns/references/fuzzing.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/fuzzing.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/fuzzing.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/penetration-testing.md",
       "local_path": "skills/security-testing-patterns/references/penetration-testing.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/penetration-testing.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/penetration-testing.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sast.md",
       "local_path": "skills/security-testing-patterns/references/sast.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sast.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/sast.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sca.md",
       "local_path": "skills/security-testing-patterns/references/sca.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/references/sca.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/references/sca.md"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/SKILL.md",
       "local_path": "skills/security-testing-patterns/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-207 security-testing-patterns slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
       "local_path": "skills/threat-modeling-techniques/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy and retained as the MARK-210 security-framing slice (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
       "local_path": "skills/threat-modeling-techniques/references/attack-trees.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as a supporting threat-tree reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/attack-trees.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/attack-trees.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
       "local_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as a supporting DFD reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/data-flow-diagrams.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/data-flow-diagrams.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
       "local_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the DREAD scoring reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/dread-scoring.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/dread-scoring.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
       "local_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the mitigation planning reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/mitigation-strategies.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/mitigation-strategies.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE spoofing reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-spoofing.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-spoofing.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE tampering reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-tampering.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-tampering.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE repudiation reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-repudiation.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-repudiation.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE information disclosure reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-disclosure.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-disclosure.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-dos.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE denial-of-service reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-dos.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-dos.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
       "local_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the STRIDE elevation-of-privilege reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/stride-elevation.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/stride-elevation.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
       "local_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the tooling and process reference (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
       "local_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "adaptation_note": "Custody import into the Codex Cortex plugin retaining canonical source copy as the threat-modeling validation rubric (no content adaptation).",
+      "content_mode": "normalised",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml",
-      "adapted_author": "Harley Bartles"
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml"
+    },
+    {
+      "snapshot_path": "skills/agent-architecture-audit/SKILL.md",
+      "local_path": "skills/agent-architecture-audit/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/agent-eval/SKILL.md",
+      "local_path": "skills/agent-eval/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/agent-self-evaluation/SKILL.md",
+      "local_path": "skills/agent-self-evaluation/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/agentic-engineering/SKILL.md",
+      "local_path": "skills/agentic-engineering/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/agentic-os/SKILL.md",
+      "local_path": "skills/agentic-os/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/ai-regression-testing/SKILL.md",
+      "local_path": "skills/ai-regression-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/autonomous-agent-harness/SKILL.md",
+      "local_path": "skills/autonomous-agent-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/autonomous-loops/SKILL.md",
+      "local_path": "skills/autonomous-loops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/benchmark/SKILL.md",
+      "local_path": "skills/benchmark/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/benchmark-methodology/SKILL.md",
+      "local_path": "skills/benchmark-methodology/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/benchmark-optimization-loop/SKILL.md",
+      "local_path": "skills/benchmark-optimization-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/context-budget/SKILL.md",
+      "local_path": "skills/context-budget/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/continuous-agent-loop/SKILL.md",
+      "local_path": "skills/continuous-agent-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/dynamic-workflow-mode/SKILL.md",
+      "local_path": "skills/dynamic-workflow-mode/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/eval-harness/SKILL.md",
+      "local_path": "skills/eval-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/gan-style-harness/SKILL.md",
+      "local_path": "skills/gan-style-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/gateguard/SKILL.md",
+      "local_path": "skills/gateguard/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/iterative-retrieval/SKILL.md",
+      "local_path": "skills/iterative-retrieval/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-add-feature/SKILL.md",
+      "local_path": "skills/orch-add-feature/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-build-mvp/SKILL.md",
+      "local_path": "skills/orch-build-mvp/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-change-feature/SKILL.md",
+      "local_path": "skills/orch-change-feature/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-fix-defect/SKILL.md",
+      "local_path": "skills/orch-fix-defect/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-pipeline/SKILL.md",
+      "local_path": "skills/orch-pipeline/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/orch-refine-code/SKILL.md",
+      "local_path": "skills/orch-refine-code/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/plan-orchestrate/SKILL.md",
+      "local_path": "skills/plan-orchestrate/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/prompt-optimizer/SKILL.md",
+      "local_path": "skills/prompt-optimizer/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/ralphinho-rfc-pipeline/SKILL.md",
+      "local_path": "skills/ralphinho-rfc-pipeline/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/santa-method/SKILL.md",
+      "local_path": "skills/santa-method/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/verification-loop/SKILL.md",
+      "local_path": "skills/verification-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "source_family": "ecc"
     }
   ],
   "notes": [
-    "Six retained guidance skills.",
-    "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, the MARK-205 OpenAPI companion slice, and the MARK-210 security-framing slice.",
-    "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
-  ]
+    "Nine retained guidance skills from Claude-Cortex plus 29 ECC agent/eval workflow skills projected under MARK-242.",
+    "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, the MARK-205 OpenAPI companion slice, the MARK-210 security-framing slice, and the MARK-242 ECC agent/eval workflow skills.",
+    "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope.",
+    "ECC skills beyond the 29 agent/eval workflow skills projected under MARK-242 remain out of scope."
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

@@ -5,13 +5,13 @@ description: >
   objects, domain events, domain services, strongly-typed IDs, or repositories
   that persist aggregate roots.
 metadata:
-  origin: dotnet-claude-kit
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Kept the DDD tactical guidance and normalized provider-specific wording.
   source_author: codewithmukesh
   source_license: MIT
   source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
   source_path: sources/third_party/dotnet-claude-kit/upstream/skills/ddd/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Domain-Driven Design (DDD)

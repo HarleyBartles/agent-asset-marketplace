@@ -2,17 +2,11 @@
   "bundle_name": "superpowers-plus",
   "bundle_version": "5.1.0",
   "bundle_type": "third-party-codex-plugin-projection",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
   "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-  "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
   "source_tag": "v5.1.0",
   "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-  "license": "MIT",
-  "upstream_author": "Obra AI",
-  "upstream_license": "MIT",
   "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
   "source_of_truth": [
     "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
@@ -52,13 +46,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/brainstorming",
       "local_path": "skills/brainstorming",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/brainstorming",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/brainstorming/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "dispatching-parallel-agents",
@@ -66,13 +61,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/dispatching-parallel-agents",
       "local_path": "skills/dispatching-parallel-agents",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/dispatching-parallel-agents",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/dispatching-parallel-agents/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "executing-plans",
@@ -80,13 +76,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/executing-plans",
       "local_path": "skills/executing-plans",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/executing-plans",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/executing-plans/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "finishing-a-development-branch",
@@ -94,16 +91,17 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/finishing-a-development-branch",
       "adapted_author": "Harley Bartles",
       "import_status": "imported",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative.",
-      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note."
+      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "linear-superpowers",
@@ -111,13 +109,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/core/linear-superpowers",
       "local_path": "skills/linear-superpowers",
-      "source_path": "sources/first_party/core/linear-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
+      "source_path": "sources/first_party/core/linear-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "github-superpowers",
@@ -125,13 +124,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/github-superpowers",
       "local_path": "skills/github-superpowers",
-      "source_path": "sources/first_party/skills/github-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "unslop-superpowers",
@@ -139,13 +139,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "skills/unslop-superpowers",
-      "source_path": "sources/first_party/skills/unslop-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "architecture-superpowers",
@@ -153,13 +154,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
       "local_path": "skills/architecture-superpowers",
-      "source_path": "sources/first_party/skills/architecture-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "receiving-code-review",
@@ -167,13 +169,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/receiving-code-review",
       "local_path": "skills/receiving-code-review",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/receiving-code-review",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/receiving-code-review/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "requesting-code-review",
@@ -181,13 +184,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/requesting-code-review",
       "local_path": "skills/requesting-code-review",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/requesting-code-review",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/requesting-code-review/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "subagent-driven-development",
@@ -195,13 +199,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/subagent-driven-development",
       "local_path": "skills/subagent-driven-development",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/subagent-driven-development",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/subagent-driven-development/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "systematic-debugging",
@@ -209,13 +214,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/systematic-debugging",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/systematic-debugging/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "test-driven-development",
@@ -223,13 +229,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/test-driven-development",
       "local_path": "skills/test-driven-development",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/test-driven-development",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/test-driven-development/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "using-git-worktrees",
@@ -237,13 +244,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-git-worktrees",
       "local_path": "skills/using-git-worktrees",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-git-worktrees",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-git-worktrees/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "using-superpowers",
@@ -251,16 +259,17 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
       "adapted_author": "Harley Bartles",
       "import_status": "imported",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
-      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility."
+      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "verification-before-completion",
@@ -268,16 +277,17 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/verification-before-completion",
       "adapted_author": "Harley Bartles",
       "import_status": "imported",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
-      "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
+      "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "ecc-superpowers",
@@ -288,12 +298,13 @@
       "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "adapted_author": "Harley Bartles",
       "import_status": "imported",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Projected from the repo-authored ECC Superpowers router skill into the Superpowers bundle as an adapted wrapper.",
-      "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance."
+      "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance.",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "writing-plans",
@@ -301,13 +312,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-plans",
       "local_path": "skills/writing-plans",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-plans",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-plans/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "writing-skills",
@@ -315,13 +327,14 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-skills",
       "local_path": "skills/writing-skills",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-skills",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-skills/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_family": "superpowers"
     }
   ],
   "excluded": [
@@ -358,5 +371,17 @@
     "Dedicated Superpowers+ projection with the repo-authored ECC router wrapper.",
     "The bundle keeps Superpowers+ broad while routing ECC workflow-shaped work to the dedicated superpowers-ecc pack.",
     "The retained upstream snapshot and non-Codex harness surfaces remain in third-party source custody."
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "content_mode": "combined-source",
+  "source_families": [
+    "superpowers",
+    "house-skills"
+  ],
+  "source_family_roots": {
+    "superpowers": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
+    "house-skills": "sources/first_party"
+  },
+  "license": "MIT"
 }

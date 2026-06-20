@@ -20,3 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+---
+
+This bundle contains skill content derived from third-party sources:
+
+- Codex Cortex (NickCrew/Claude-Cortex): See SOURCE.md and references/source-map.md for details
+- ECC (affaan-m/ECC): See SOURCE.md and references/source-map.md for details
+
+The third-party skill content is projected under MIT license terms consistent
+with the upstream licenses. See bundle-manifest.json for individual skill
+provenance and content_mode declarations.
+

@@ -1,6 +1,13 @@
 ---
 name: ml-adoption-playbook
 description: End-to-end methodology for AI agents and software engineers to add machine learning algorithms to existing non-ML codebases. Covers problem framing, data readiness, architectural decoupling, and baseline model integration.
+metadata:
+  origin: ECC
+  content_mode: normalised
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/ml-adoption-playbook/SKILL.md
 ---
 
 # ML Adoption Playbook

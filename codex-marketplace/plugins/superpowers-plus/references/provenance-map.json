@@ -31,12 +31,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/core/linear-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers",
-      "source_path": "sources/first_party/core/linear-superpowers",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
+      "source_path": "sources/first_party/core/linear-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "github-superpowers",
@@ -44,12 +45,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/github-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/github-superpowers",
-      "source_path": "sources/first_party/skills/github-superpowers",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "unslop-superpowers",
@@ -57,12 +59,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers",
-      "source_path": "sources/first_party/skills/unslop-superpowers",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory mirror from the canonical first-party source into the Superpowers bundle."
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "architecture-superpowers",
@@ -70,12 +73,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers",
-      "source_path": "sources/first_party/skills/architecture-superpowers",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle."
+      "source_family": "house-skills"
     }
   ],
   "adapted_projections": [
@@ -85,15 +89,16 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/finishing-a-development-branch",
       "adapted_author": "Harley Bartles",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative.",
-      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note."
+      "adaptation_note": "Added Codex marketplace publication guidance and repo-specific precedence note.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/obra/superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "using-superpowers",
@@ -101,15 +106,16 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
       "adapted_author": "Harley Bartles",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
-      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility."
+      "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/obra/superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "verification-before-completion",
@@ -117,15 +123,16 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion",
       "local_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion",
-      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion",
-      "source_author": "Obra AI",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/obra-ai/obra-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/verification-before-completion",
       "adapted_author": "Harley Bartles",
       "copy_expectation": "adapted_from_source",
       "provenance_note": "Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence.",
-      "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims."
+      "adaptation_note": "Added plan-checkbox backstop language for completion, publication, and review claims.",
+      "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/obra/superpowers",
+      "source_family": "superpowers"
     },
     {
       "canonical_name": "ecc-superpowers",
@@ -136,10 +143,11 @@
       "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "adapted_author": "Harley Bartles",
       "copy_expectation": "adapted_from_source",
-      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack."
+      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack.",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
     }
   ],
   "source_only_surfaces": [

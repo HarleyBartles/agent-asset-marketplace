@@ -1,13 +1,6 @@
 ---
 name: repo-worker-base
 description: Base repo hygiene for Codex workers in Harley's workspace. Use when a Codex worker is working in any repository in Harley's workspace, especially when starting repo work, editing files, creating or updating a branch, preparing a PR, reporting validation, handling mergeability, or returning work evidence.
-metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/repo-worker-base/SKILL.md
-  content_mode: verbatim
 ---
 
 # Repo Worker Base

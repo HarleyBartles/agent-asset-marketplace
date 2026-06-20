@@ -6,13 +6,13 @@ description: >
   keyword, extension members, records, pattern matching, spans, or raw string
   literals.
 metadata:
-  origin: dotnet-claude-kit
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples.
   source_author: codewithmukesh
   source_license: MIT
   source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
   source_path: sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Modern C# (C# 14 / .NET 10)

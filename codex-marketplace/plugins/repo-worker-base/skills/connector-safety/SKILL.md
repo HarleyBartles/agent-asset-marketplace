@@ -5,11 +5,6 @@ metadata:
   source-id: connector-safety-v1.1
   source-path: sources/first_party/core/connector-safety/SKILL.md
   provenance-name: MARK-226 canonical first-party source for connector-safety
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  content_mode: verbatim
 license: "MIT"
 ---
 # Connector Safety

@@ -19,15 +19,14 @@ file_patterns:
   - '**/tsconfig.json'
 confidence: 0.78
 metadata:
-  origin: Claude-Cortex
   source_author: NickCrew
   source_license: MIT
   source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md
+  source_path: sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
+  adaptation_note: Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths.
 ---
-
 
 # TypeScript Advanced Patterns
 

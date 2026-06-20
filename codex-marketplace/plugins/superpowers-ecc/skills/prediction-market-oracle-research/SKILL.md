@@ -1,6 +1,13 @@
 ---
 name: prediction-market-oracle-research
 description: Research prediction markets as data sources or oracle signals for products, agents, dashboards, and corporate decision intelligence. Use for source-grounded analysis of market-implied probabilities, caveats, and integration patterns without investment advice.
+metadata:
+  origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/prediction-market-oracle-research/SKILL.md
+  content_mode: normalised
 ---
 
 # Prediction Market Oracle Research

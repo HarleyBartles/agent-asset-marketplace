@@ -1,6 +1,13 @@
 ---
 name: team-agent-orchestration
 description: "Run team-based orchestration for agent squads using work items, ownership, agent Kanban, merge gates, and control pane handoffs."
+metadata:
+  origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/team-agent-orchestration/SKILL.md
+  content_mode: normalised
 ---
 
 # Team Agent Orchestration

@@ -1,14 +1,6 @@
 ---
 name: web-game-foundations
 description: Set browser-game architecture before implementation. Use when the user needs engine choice, simulation and render boundaries, input model, asset organization, or save/debug/performance strategy.
-metadata:
-  origin: third_party
-  source_author: OpenAI
-  source_license: MIT
-  source_repo: openai/plugins
-  source_path: sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Web Game Foundations

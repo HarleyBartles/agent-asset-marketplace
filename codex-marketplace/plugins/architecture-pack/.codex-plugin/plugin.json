@@ -1,14 +1,14 @@
 {
   "name": "architecture-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for CQRS, event-driven architecture, and database design guidance projected from the retained Codex Cortex custody plugin.",
+  "description": "Codex marketplace bundle for architecture guidance projected from Codex Cortex custody and ECC (affaan-m/ECC) upstream. Includes CQRS, event-driven architecture, database design, ADRs, backend patterns, Docker, hexagonal architecture, intent-driven development, Kubernetes, MCP server patterns, and MLE workflow.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains a third-party Claude-Cortex-derived skill projection; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "rights": "Contains third-party skill projections from Codex Cortex and ECC (affaan-m/ECC); see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
   "keywords": [
     "codex",
     "marketplace",
@@ -20,14 +20,22 @@
     "schema",
     "saga",
     "message-broker",
+    "adr",
+    "backend",
+    "docker",
+    "hexagonal",
+    "intent-driven",
+    "kubernetes",
+    "mcp",
+    "mle",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Architecture Pack",
-    "shortDescription": "CQRS, event-driven, and database design projection",
-    "longDescription": "A repo-local Codex plugin bundle that projects the retained Codex Cortex seed skill, event-driven-architecture follow-on, and database-design-patterns slice into an installable marketplace shape.",
+    "shortDescription": "Architecture guidance projection from Codex Cortex and ECC",
+    "longDescription": "A repo-local Codex plugin bundle that projects retained Codex Cortex architecture skills and ECC (affaan-m/ECC) architecture skills into an installable marketplace shape. Includes CQRS, event-driven architecture, database design, ADRs, backend patterns, Docker, hexagonal architecture, intent-driven development, Kubernetes, MCP server patterns, and MLE workflow.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -36,8 +44,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Architecture Pack bundle and source map.",
-      "Use the bundle to install the cqrs-event-sourcing, event-driven-architecture, and database-design-patterns projections.",
-      "Compare the bundle versioning against the retained Codex Cortex custody surface."
+      "Use the bundle to install the Codex Cortex projections (cqrs-event-sourcing, event-driven-architecture, database-design-patterns) and ECC projections (architecture-decision-records, backend-patterns, docker-patterns, hexagonal-architecture, intent-driven-development, kubernetes-patterns, mcp-server-patterns, mle-workflow).",
+      "Compare the bundle versioning against the retained Codex Cortex custody surface and ECC custody surface."
     ],
     "brandColor": "#1D4ED8",
     "composerIcon": "./assets/icon.svg",

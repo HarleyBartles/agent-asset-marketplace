@@ -2,8 +2,6 @@
   "bundle_name": "everything-codex-code",
   "bundle_version": "1.0.0",
   "bundle_type": "project-scoped-codex-plugin-projection",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/everything-codex-code",
   "canonical_source_root": "codex-marketplace/plugins/superpowers-ecc/skills",
@@ -33,131 +31,91 @@
       "canonical_name": "agent-harness-construction",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/agent-harness-construction/SKILL.md",
       "local_path": "skills/agent-harness-construction/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "ai-first-engineering",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/ai-first-engineering/SKILL.md",
       "local_path": "skills/ai-first-engineering/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "deployment-patterns",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/deployment-patterns/SKILL.md",
       "local_path": "skills/deployment-patterns/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "dmux-workflows",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/dmux-workflows/SKILL.md",
       "local_path": "skills/dmux-workflows/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "messages-ops",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/messages-ops/SKILL.md",
       "local_path": "skills/messages-ops/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "ml-adoption-playbook",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/ml-adoption-playbook/SKILL.md",
       "local_path": "skills/ml-adoption-playbook/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "prediction-market-oracle-research",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/prediction-market-oracle-research/SKILL.md",
       "local_path": "skills/prediction-market-oracle-research/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "recursive-decision-ledger",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/recursive-decision-ledger/SKILL.md",
       "local_path": "skills/recursive-decision-ledger/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "research-ops",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/research-ops/SKILL.md",
       "local_path": "skills/research-ops/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "safety-guard",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/safety-guard/SKILL.md",
       "local_path": "skills/safety-guard/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "search-first",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/search-first/SKILL.md",
       "local_path": "skills/search-first/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "team-agent-orchestration",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/team-agent-orchestration/SKILL.md",
       "local_path": "skills/team-agent-orchestration/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "team-builder",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/team-builder/SKILL.md",
       "local_path": "skills/team-builder/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Community contributors",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     },
     {
       "canonical_name": "token-budget-advisor",
       "source_path": "codex-marketplace/plugins/superpowers-ecc/skills/token-budget-advisor/SKILL.md",
       "local_path": "skills/token-budget-advisor/SKILL.md",
-      "projection_status": "projected",
-      "source_author": "Community contributors",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC"
+      "projection_status": "projected"
     }
   ],
   "notes": [
     "Installable aggregate projection over the dedicated superpowers-ecc pack.",
     "This bundle does not mirror upstream ECC custody directly."
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

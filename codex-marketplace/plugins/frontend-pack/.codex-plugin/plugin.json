@@ -1,7 +1,7 @@
 {
   "name": "frontend-pack",
   "version": "0.1.0",
-  "description": "React frontend application skills for performance optimization, accessibility review, interaction design, UX review, and webapp testing.",
+  "description": "Frontend application skills for React, Angular, Vue, SwiftUI, design systems, e2e testing, performance optimization, accessibility review, interaction design, UX review, and webapp testing.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,18 +13,24 @@
   "keywords": [
     "frontend",
     "react",
+    "angular",
+    "vue",
+    "swiftui",
     "performance",
     "accessibility",
     "ux",
     "interaction-design",
+    "design-system",
     "testing",
-    "playwright"
+    "e2e",
+    "playwright",
+    "patterns"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Frontend Pack",
     "shortDescription": "React and frontend application workflows",
-    "longDescription": "Plan, optimize, review, and test React and frontend application work with guidance for performance, accessibility, UX review, interaction design, and browser-based testing.",
+    "longDescription": "Plan, optimize, review, and test frontend application work with guidance for React, Angular, Vue, SwiftUI, design systems, e2e testing, performance optimization, accessibility review, UX review, interaction design, and browser-based testing.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [

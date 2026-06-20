@@ -42,5 +42,5 @@ The split is deliberate:
 
 ## Excluded from the active install surface
 
-- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/codex-cortex/upstream/` as support provenance and retained source custody.
+- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/claude-cortex/upstream/` as support provenance and retained source custody.
 - Other Claude-Cortex skills remain in the primary projection only.

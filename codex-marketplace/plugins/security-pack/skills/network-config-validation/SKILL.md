@@ -2,13 +2,12 @@
 name: network-config-validation
 description: Pre-deployment checks for router and switch configuration, including dangerous commands, duplicate addresses, subnet overlaps, stale references, management-plane risk, and IOS-style security hygiene.
 metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/network-config-validation/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_path: skills/network-config-validation/SKILL.md
+  version: 1.0.0
 ---
 
 # Network Config Validation

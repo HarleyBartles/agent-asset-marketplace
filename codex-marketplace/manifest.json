@@ -195,6 +195,42 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "data-platform-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/data-platform-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ops-connectors-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ops-connectors-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "media-content-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/media-content-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "notes": [

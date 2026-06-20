@@ -2,15 +2,13 @@
   "bundle_name": "repo-worker-base",
   "bundle_version": "1.0.0",
   "bundle_type": "first-party-repo-worker-plugin",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
   "plugin_root": "codex-marketplace/plugins/repo-worker-base",
   "skills_root": "codex-marketplace/plugins/repo-worker-base/skills",
   "control_plane_skill": {
     "name": "repo-worker-base",
     "path": "codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base"
   },
-  "skill_count": 4,
+  "skill_count": 47,
   "skills": [
     {
       "name": "repo-worker-base",
@@ -31,27 +29,356 @@
       "name": "github-operations",
       "lane": "Base",
       "path": "sources/first_party/core/github-operations"
+    },
+    {
+      "name": "agent-introspection-debugging",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/agent-introspection-debugging",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "agent-sort",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/agent-sort",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "android-clean-architecture",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/android-clean-architecture",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "api-connector-builder",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/api-connector-builder",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "claude-devfleet",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/claude-devfleet",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "click-path-audit",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/click-path-audit",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "code-tour",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/code-tour",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "codebase-onboarding",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/codebase-onboarding",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "competitive-report-structure",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/competitive-report-structure",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "config-gc",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/config-gc",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "cost-tracking",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/cost-tracking",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "cpp-coding-standards",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/cpp-coding-standards",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "data-scraper-agent",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/data-scraper-agent",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "deep-research",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/deep-research",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "django-verification",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/django-verification",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "ecc-guide",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/ecc-guide",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "ecc-tools-cost-audit",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/ecc-tools-cost-audit",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "flox-environments",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/flox-environments",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "git-workflow",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/git-workflow",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "github-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/github-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "google-workspace-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/google-workspace-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "hermes-imports",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/hermes-imports",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "inherit-legacy-style",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/inherit-legacy-style",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "knowledge-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/knowledge-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "kotlin-exposed-patterns",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/kotlin-exposed-patterns",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "laravel-verification",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/laravel-verification",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "market-research",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/market-research",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "parallel-execution-optimizer",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/parallel-execution-optimizer",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "production-audit",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/production-audit",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "project-flow-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/project-flow-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "quarkus-verification",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/quarkus-verification",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "react-performance",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/react-performance",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "repo-scan",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/repo-scan",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "rules-distill",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/rules-distill",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "security-bounty-hunter",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/security-bounty-hunter",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "security-scan",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/security-scan",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "skill-comply",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/skill-comply",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "skill-scout",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/skill-scout",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "skill-stocktake",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/skill-stocktake",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "springboot-verification",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/springboot-verification",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "terminal-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/terminal-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "unified-notifications-ops",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/unified-notifications-ops",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
+    },
+    {
+      "name": "workspace-surface-audit",
+      "lane": "ECC-repo-operator",
+      "path": "sources/third_party/ecc/upstream/skills/workspace-surface-audit",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT"
     }
   ],
   "provenance_refs": [
     "provenance/repo-worker-base.md"
   ],
   "source_map": "references/source-map.md",
-  "repo_index": {
-    "source_ledger": [
-      "sources/first_party/skills/repo-worker-base/SKILL.md",
-      "sources/first_party/core/boring-loop/SKILL.md",
-      "sources/first_party/core/connector-safety/SKILL.md",
-      "sources/first_party/core/github-operations/SKILL.md"
-    ],
-    "provenance_refs": [
-      "provenance/repo-worker-base.md",
-      "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
-    ],
-    "agents_md": null,
-    "registry_alignment": {
-      "status": "aligned",
-      "note": null
-    }
-  }
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

@@ -1,158 +1,158 @@
 {
-    "bundle_name":  "adventures-pack",
-    "bundle_version":  "1.0.0",
-    "bundle_type":  "project-scoped-codex-plugin-projection",
-    "plugin_author":  "Harley Bartles",
-    "plugin_license":  "MIT",
-    "marketplace_root":  ".agents/plugins/marketplace.json",
-    "plugin_root":  "codex-marketplace/plugins/adventures-pack",
-    "canonical_source_root":  "codex-marketplace/plugins/house-skills/skills",
-    "source_of_truth":  [
-                            "sources/first_party/skills/house-skills/decisions.json",
-                            "sources/first_party/skills/house-skills/decisions.md",
-                            "sources/first_party/skills/house-skills/intake.json",
-                            "provenance/house-skills.md"
-                        ],
-    "provenance_refs":  [
-                            "provenance/adventures-pack.md"
-                        ],
-    "projection_policy":  "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle.",
-    "components":  [
-                       {
-                           "canonical_name":  "adventures-project-doctrine",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-project-doctrine/SKILL.md",
-                           "local_path":  "skills/adventures-project-doctrine/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-bootstrap",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-bootstrap/SKILL.md",
-                           "local_path":  "skills/adventures-bootstrap/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-github-operations",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-github-operations/SKILL.md",
-                           "local_path":  "skills/adventures-github-operations/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-visual-preproduction",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-visual-preproduction/SKILL.md",
-                           "local_path":  "skills/adventures-visual-preproduction/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-storyboard-preflight",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-storyboard-preflight/SKILL.md",
-                           "local_path":  "skills/adventures-storyboard-preflight/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-visual-bible-creator",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-visual-bible-creator/SKILL.md",
-                           "local_path":  "skills/adventures-visual-bible-creator/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-visual-bible-interpreter",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md",
-                           "local_path":  "skills/adventures-visual-bible-interpreter/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-image-qa",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-image-qa/SKILL.md",
-                           "local_path":  "skills/adventures-image-qa/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-asset-sheet-compiler",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md",
-                           "local_path":  "skills/adventures-asset-sheet-compiler/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "adventures-frame-buster",
-                           "component_version":  "v1.1",
-                           "source_path":  "sources/first_party/skills/adventures-frame-buster/SKILL.md",
-                           "local_path":  "skills/adventures-frame-buster/SKILL.md",
-                           "role":  "adventures",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "don-logan-boundary",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/don-logan-boundary/SKILL.md",
-                           "local_path":  "skills/don-logan-boundary/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "base-doctrine",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/base-doctrine/SKILL.md",
-                           "local_path":  "skills/base-doctrine/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "worker-dispatch-linear",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/worker-dispatch-linear/SKILL.md",
-                           "local_path":  "skills/worker-dispatch-linear/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "connector-safety",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/core/connector-safety/SKILL.md",
-                           "local_path":  "skills/connector-safety/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "linear",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/linear/SKILL.md",
-                           "local_path":  "skills/linear/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "tps-reporting",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/tps-reporting/SKILL.md",
-                           "local_path":  "skills/tps-reporting/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       },
-                       {
-                           "canonical_name":  "tps-ingress",
-                           "component_version":  "v1",
-                           "source_path":  "sources/first_party/skills/tps-ingress/SKILL.md",
-                           "local_path":  "skills/tps-ingress/SKILL.md",
-                           "role":  "dependency",
-                           "projection_status":  "projected"
-                       }
-                   ]
+  "bundle_name": "adventures-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "project-scoped-codex-plugin-projection",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/adventures-pack",
+  "canonical_source_root": "codex-marketplace/plugins/house-skills/skills",
+  "source_of_truth": [
+    "sources/first_party/skills/house-skills/decisions.json",
+    "sources/first_party/skills/house-skills/decisions.md",
+    "sources/first_party/skills/house-skills/intake.json",
+    "provenance/house-skills.md"
+  ],
+  "provenance_refs": [
+    "provenance/adventures-pack.md"
+  ],
+  "projection_policy": "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle.",
+  "components": [
+    {
+      "canonical_name": "adventures-project-doctrine",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-project-doctrine/SKILL.md",
+      "local_path": "skills/adventures-project-doctrine/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-bootstrap",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-bootstrap/SKILL.md",
+      "local_path": "skills/adventures-bootstrap/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-github-operations",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-github-operations/SKILL.md",
+      "local_path": "skills/adventures-github-operations/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-visual-preproduction",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-visual-preproduction/SKILL.md",
+      "local_path": "skills/adventures-visual-preproduction/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-storyboard-preflight",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-storyboard-preflight/SKILL.md",
+      "local_path": "skills/adventures-storyboard-preflight/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-creator",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-visual-bible-creator/SKILL.md",
+      "local_path": "skills/adventures-visual-bible-creator/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-interpreter",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md",
+      "local_path": "skills/adventures-visual-bible-interpreter/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-image-qa",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-image-qa/SKILL.md",
+      "local_path": "skills/adventures-image-qa/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-asset-sheet-compiler",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md",
+      "local_path": "skills/adventures-asset-sheet-compiler/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "adventures-frame-buster",
+      "component_version": "v1.1",
+      "source_path": "sources/first_party/skills/adventures-frame-buster/SKILL.md",
+      "local_path": "skills/adventures-frame-buster/SKILL.md",
+      "role": "adventures",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "don-logan-boundary",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/don-logan-boundary/SKILL.md",
+      "local_path": "skills/don-logan-boundary/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "base-doctrine",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/base-doctrine/SKILL.md",
+      "local_path": "skills/base-doctrine/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "worker-dispatch-linear",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/worker-dispatch-linear/SKILL.md",
+      "local_path": "skills/worker-dispatch-linear/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "connector-safety",
+      "component_version": "v1",
+      "source_path": "sources/first_party/core/connector-safety/SKILL.md",
+      "local_path": "skills/connector-safety/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "linear",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/linear/SKILL.md",
+      "local_path": "skills/linear/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "tps-reporting",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/tps-reporting/SKILL.md",
+      "local_path": "skills/tps-reporting/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    },
+    {
+      "canonical_name": "tps-ingress",
+      "component_version": "v1",
+      "source_path": "sources/first_party/skills/tps-ingress/SKILL.md",
+      "local_path": "skills/tps-ingress/SKILL.md",
+      "role": "dependency",
+      "projection_status": "projected"
+    }
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

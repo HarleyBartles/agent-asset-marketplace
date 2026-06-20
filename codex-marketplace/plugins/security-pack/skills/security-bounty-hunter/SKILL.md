@@ -2,13 +2,12 @@
 name: security-bounty-hunter
 description: Hunt for exploitable, bounty-worthy security issues in repositories. Focuses on remotely reachable vulnerabilities that qualify for real reports instead of noisy local-only findings.
 metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/security-bounty-hunter/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_path: skills/security-bounty-hunter/SKILL.md
+  version: 1.0.0
 ---
 
 # Security Bounty Hunter

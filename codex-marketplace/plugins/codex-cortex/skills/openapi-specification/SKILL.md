@@ -20,13 +20,11 @@ keywords:
   - specification
   - openapi specification
 metadata:
-  origin: Claude-Cortex
   source_author: NickCrew
   source_license: MIT
   source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_path: sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md
+  content_mode: normalised
 ---
 
 # OpenAPI Specification

@@ -5,13 +5,13 @@ description: >
   migrations, interceptors, compiled queries, ExecuteUpdateAsync,
   ExecuteDeleteAsync, value converters, query optimization, or LINQ queries.
 metadata:
-  origin: dotnet-claude-kit
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Kept the EF Core guidance and removed provider-specific load assumptions.
   source_author: codewithmukesh
   source_license: MIT
   source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
   source_path: sources/third_party/dotnet-claude-kit/upstream/skills/ef-core/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # EF Core (.NET 10)

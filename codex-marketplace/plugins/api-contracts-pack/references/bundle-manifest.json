@@ -1,12 +1,19 @@
 {
   "bundle_name": "api-contracts-pack",
   "bundle_version": "1.0.0",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
-  "upstream_repo": "NickCrew/Claude-Cortex",
-  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
+  "source_families": [
+    {
+      "name": "claude-cortex",
+      "upstream_repo": "NickCrew/Claude-Cortex",
+      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+      "source_root": "."
+    }
+  ],
   "candidate_count": 6,
   "imported_count": 6,
   "skipped_count": 0,
@@ -16,69 +23,63 @@
       "snapshot_path": "skills/api-design-patterns/SKILL.md",
       "local_path": "skills/api-design-patterns/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
+      "content_mode": "normalised",
+      "source_family": "claude-cortex",
+      "source_path": "skills/api-design-patterns/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Adapted from the retained Claude-Cortex source into the installable api-contracts-pack umbrella slice."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/api-design-patterns/references/design-process.md",
       "local_path": "skills/api-design-patterns/references/design-process.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/references/design-process.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/api-design-patterns/validation/rubric.yaml",
       "local_path": "skills/api-design-patterns/validation/rubric.yaml",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/validation/rubric.yaml",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/openapi-specification/SKILL.md",
       "local_path": "skills/openapi-specification/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "adaptation_note": "Projected as the OpenAPI-specific companion slice for api-contracts-pack, composed with api-design-patterns.",
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/openapi-specification/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Projected as the OpenAPI-specific companion slice for api-contracts-pack, composed with api-design-patterns."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
       "local_path": "skills/openapi-specification/references/spec-patterns.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/references/spec-patterns.md",
+      "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice.",
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/openapi-specification/references/spec-patterns.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
       "local_path": "skills/openapi-specification/validation/rubric.yaml",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/validation/rubric.yaml",
+      "content_mode": "normalised",
+      "source_family": "claude-cortex",
+      "source_path": "skills/openapi-specification/validation/rubric.yaml",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Projected as the OpenAPI quality rubric for the companion slice."
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     }
   ],
   "notes": [
@@ -88,5 +89,7 @@
   ],
   "provenance_refs": [
     "provenance/api-contracts-pack.md"
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

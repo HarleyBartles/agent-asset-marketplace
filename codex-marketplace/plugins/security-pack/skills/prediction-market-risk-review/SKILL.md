@@ -2,13 +2,12 @@
 name: prediction-market-risk-review
 description: Review prediction-market, basket, oracle, and trading-agent workflows for compliance, safety, data-quality, privacy, and execution risk. Use before any workflow handles venue auth, user portfolio data, API keys, or trade planning.
 metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/prediction-market-risk-review/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_path: skills/prediction-market-risk-review/SKILL.md
+  version: 1.0.0
 ---
 
 # Prediction Market Risk Review

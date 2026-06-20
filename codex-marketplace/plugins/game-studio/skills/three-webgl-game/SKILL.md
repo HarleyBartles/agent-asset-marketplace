@@ -1,14 +1,6 @@
 ---
 name: three-webgl-game
 description: Implement browser-game runtimes with plain Three.js. Use when the user wants imperative scene control in TypeScript or Vite with GLB assets, loaders, physics, and low-level WebGL debugging.
-metadata:
-  origin: third_party
-  source_author: OpenAI
-  source_license: MIT
-  source_repo: openai/plugins
-  source_path: sources/third_party/game-studio/upstream/skills/three-webgl-game/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Three WebGL Game
