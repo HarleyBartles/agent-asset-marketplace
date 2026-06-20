@@ -154,5 +154,8 @@
   ],
   "source_family_roots": {
     "ecc": "sources/third_party/ecc/upstream"
-  }
+  },
+  "upstream_repo": "https://github.com/affaan-m/ECC/tree/main/skills",
+  "upstream_author": "Affaan Mustafa",
+  "upstream_license": "MIT"
 }
