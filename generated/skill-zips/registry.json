@@ -5256,20 +5256,20 @@
       "zip_sha256": "74a6b7a0fd0b3b058fe24dc82fd8eb4b59b6309410e1a919b46aaa1fb235bdfe"
     },
     {
-      "pack": "unslop",
-      "skill": "unslop",
+      "pack": "unslop-plus",
+      "skill": "unslop-plus",
       "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/unslop/skills/unslop",
+      "source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-plus",
       "overlay_path": null,
-      "zip_path": "generated/skill-zips/unslop/unslop/skill.zip",
-      "source_file_count": 10,
-      "source_bytes": 60038,
-      "source_sha256": "5b20b0f81c33fed8ed491d08250eb201b89cc8c4afbd3f1b40c3b054e87001bf",
+      "zip_path": "generated/skill-zips/unslop-plus/unslop-plus/skill.zip",
+      "source_file_count": 19,
+      "source_bytes": 85940,
+      "source_sha256": "d08524dc6598d70b6671549a2daaaae60edee2d55f394274366034b8398ebbfd",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 20993,
-      "zip_sha256": "b98ea209ffe6b95edca986ff97e9c060edabf8d29d5120f5399c6d0ca7d3cdf4"
+      "zip_size_bytes": 34292,
+      "zip_sha256": "ccc894a9bf6d602d5e06d33633875344a5145f8f1efb4b3deabcaef4ad9beabc"
     },
     {
       "pack": "wild-bunch-project-pack",
