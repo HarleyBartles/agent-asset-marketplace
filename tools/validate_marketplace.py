@@ -1252,13 +1252,15 @@ def validate_skill_bundle_manifest(
             snapshot_path = entry.get("snapshot_path")
             if not snapshot_path or not isinstance(snapshot_path, str):
                 raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
+            assert entry_vendor_root is not None
+            check_path_exists(entry_vendor_root / snapshot_path)
+            content_mode = entry.get("content_mode")
             if bundle_name == "superpowers-ecc":
                 # MARK-262: Only require source fields for adapted entries, not verbatim
                 if content_mode == "adapted":
                     for field in ("source_path", "source_author", "source_license", "source_repo"):
                         if not isinstance(entry.get(field), str) or not entry.get(field):
                             raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
-            entry_vendor_root = vendor_root
             if source_family_roots is not None:
                 source_family = entry.get("source_family")
                 if not source_family or not isinstance(source_family, str):
@@ -1268,9 +1270,6 @@ def validate_skill_bundle_manifest(
                     raise ValueError(
                         f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
                     )
-            assert entry_vendor_root is not None
-            check_path_exists(entry_vendor_root / snapshot_path)
-            content_mode = entry.get("content_mode")
             # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
             local_full_path = ROOT / plugin_root / local_path
             # Only validate if the local path points to a SKILL.md file (not profiles or other files)
