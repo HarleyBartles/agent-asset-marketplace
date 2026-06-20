@@ -1,6 +1,7 @@
 {
   "schema_version": "skill-gpt-export-manifest.v1",
   "default_export_mode": "direct",
+  "notes": "Plugins not explicitly listed in this manifest use the default_export_mode of 'direct'. This includes adventures-pack, unslop, game-studio, wild-bunch-project-pack, everything-codex-code, codex-cortex, repo-worker-base, dotnet-kit, api-contracts-pack, architecture-pack, language-patterns-pack, security-pack, and frontend-pack. These plugins have received first-pass analysis (no Skill tool dependencies found via grep) and are classified as direct export candidates pending full GPT QA.",
   "packs": [
     {
       "pack": "house-skills",
@@ -9,6 +10,81 @@
           "skill": "linear-superpowers",
           "export_mode": "direct",
           "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
+        }
+      ]
+    },
+    {
+      "pack": "superpowers-ecc",
+      "skills": [
+        {
+          "skill": "agent-harness-construction",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "ai-first-engineering",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "deployment-patterns",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "dmux-workflows",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "messages-ops",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "ml-adoption-playbook",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "prediction-market-oracle-research",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "recursive-decision-ledger",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "research-ops",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "safety-guard",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "search-first",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "team-agent-orchestration",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "team-builder",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
+        },
+        {
+          "skill": "token-budget-advisor",
+          "export_mode": "direct",
+          "reason": "This ECC skill is already GPT-safe as-is."
         }
       ]
     },
