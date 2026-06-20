@@ -163,6 +163,15 @@
       "plugin_root": "codex-marketplace/plugins/ops-connectors-pack",
       "manifest_path": "codex-marketplace/plugins/ops-connectors-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "media-content-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/media-content-pack",
+      "plugin_root": "codex-marketplace/plugins/media-content-pack",
+      "manifest_path": "codex-marketplace/plugins/media-content-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

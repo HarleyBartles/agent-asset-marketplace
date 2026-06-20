@@ -550,13 +550,13 @@ git commit -m "MARK-251: create ops-connectors-pack with ECC connector/ops skill
 - Create: `codex-marketplace/plugins/media-content-pack/skills/<skill>/SKILL.md`
 - Modify: `codex-marketplace/plugin-roots.json`
 
-- [ ] **Step 1: Create plugin directory structure**
+- [x] **Step 1: Create plugin directory structure**
 
 ```bash
 mkdir -p codex-marketplace/plugins/media-content-pack/{.codex-plugin,assets,references,skills}
 ```
 
-- [ ] **Step 2: Create plugin.json**
+- [x] **Step 2: Create plugin.json**
 
 ```json
 {
@@ -570,27 +570,27 @@ mkdir -p codex-marketplace/plugins/media-content-pack/{.codex-plugin,assets,refe
 }
 ```
 
-- [ ] **Step 3: Create SOURCE.md**
+- [x] **Step 3: Create SOURCE.md**
 
-Document ECC source custody for 10 media/content skills
+Document ECC source custody for 2 media/content skills
 
-- [ ] **Step 4: Copy ECC media/content skills**
+- [x] **Step 4: Copy ECC media/content skills**
 
-Copy 10 media/content skills from categorization
+Copy 2 media/content skills from categorization
 
-- [ ] **Step 5: Create bundle-manifest.json**
+- [x] **Step 5: Create bundle-manifest.json**
 
-Add all 10 ECC media/content skills with provenance
+Add all 2 ECC media/content skills with provenance
 
-- [ ] **Step 6: Create source-map.md**
+- [x] **Step 6: Create source-map.md**
 
-Document all 10 ECC media/content skills
+Document all 2 ECC media/content skills
 
-- [ ] **Step 7: Update plugin-roots.json**
+- [x] **Step 7: Update plugin-roots.json**
 
 Add media-content-pack entry to plugin roots
 
-- [ ] **Step 8: Commit media-content-pack creation**
+- [x] **Step 8: Commit media-content-pack creation**
 
 ```bash
 git add codex-marketplace/plugins/media-content-pack/ codex-marketplace/plugin-roots.json
@@ -716,7 +716,7 @@ Consolidated MARK-241 implementation projecting remaining ECC source custody ski
 - MARK-249 (architecture-pack): ✅ Implemented - 8 ECC architecture skills projected
 - MARK-250 (data-platform-pack): ✅ Implemented - New plugin created with 11 ECC data/platform skills
 - MARK-251 (ops-connectors-pack): ✅ Implemented - New plugin created with 9 ECC connector/ops skills
-- MARK-252/255 (media-content-pack): ✅ Implemented - New plugin created with 10 ECC media/content skills
+- MARK-252/255 (media-content-pack): ✅ Implemented - New plugin created with 2 ECC media/content skills
 
 ## Changed Plugins
 
@@ -727,11 +727,11 @@ Consolidated MARK-241 implementation projecting remaining ECC source custody ski
 - architecture-pack: Added 8 ECC architecture skills
 - data-platform-pack: New plugin with 11 ECC data/platform skills
 - ops-connectors-pack: New plugin with 9 ECC connector/ops skills
-- media-content-pack: New plugin with 10 ECC media/content skills
+- media-content-pack: New plugin with 2 ECC media/content skills
 
 ## ECC Skills Included
 
-Total: 156 ECC skills projected across 8 plugins
+Total: 148 ECC skills projected across 8 plugins
 
 ## Validation
 
