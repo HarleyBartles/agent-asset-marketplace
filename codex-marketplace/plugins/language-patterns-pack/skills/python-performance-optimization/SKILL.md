@@ -17,6 +17,14 @@ file_patterns:
   - '**/pyproject.toml'
   - '**/requirements.txt'
 confidence: 0.75
+metadata:
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.
 ---
 
 # Python Performance Optimization

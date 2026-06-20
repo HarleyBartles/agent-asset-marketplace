@@ -19,6 +19,12 @@ keywords:
   - REST contract
   - specification
   - openapi specification
+metadata:
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md
+  content_mode: normalised
 ---
 
 # OpenAPI Specification

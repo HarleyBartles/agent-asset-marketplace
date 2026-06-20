@@ -18,6 +18,12 @@ file_patterns:
   - "**/contracts/**"
   - "**/schema/**"
 confidence: 0.86
+metadata:
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md
+  content_mode: normalised
 ---
 
 # API Design Patterns

@@ -137,13 +137,11 @@
       "source_family": "claude-cortex"
     },
     {
-      "content_mode": "adapted",
-      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.",
+      "content_mode": "normalised",
       "snapshot_path": "skills/python-testing-patterns/SKILL.md",
       "local_path": "skills/python-testing-patterns/SKILL.md",
       "import_status": "imported",
       "source_family": "claude-cortex",
-      "adapted_author": "Harley Bartles",
       "source_path": "skills/python-testing-patterns/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
