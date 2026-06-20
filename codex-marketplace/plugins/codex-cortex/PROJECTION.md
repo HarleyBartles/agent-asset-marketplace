@@ -10,7 +10,7 @@ This repository uses two distinct layers for the Claude-Cortex bundle:
 - Projection layer holds the source-controlled marketplace copy with first-party selection decisions.
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The projected Claude-Cortex skills are materialized from `sources/third_party/codex-cortex/upstream/skills/...` per the first-party selection ledger.
+- The projected Claude-Cortex skills are materialized from `sources/third_party/claude-cortex/upstream/skills/...` per the first-party selection ledger.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
@@ -40,5 +40,5 @@ The split is deliberate:
 
 ## Excluded from the active install surface
 
-- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/codex-cortex/upstream/` as support provenance and retained source custody.
+- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/claude-cortex/upstream/` as support provenance and retained source custody.
 - Claude-Cortex skills not selected in the first-party ledger remain in source custody only.
