@@ -5,12 +5,12 @@ ECC security-oriented skills into a Codex marketplace pack.
 
 ## Source custody
 
-- Retained Codex Cortex upstream root: `sources/third_party/codex-cortex/upstream/`
+- Retained Codex Cortex upstream root: `sources/third_party/claude-cortex/upstream/`
 - Retained Codex Cortex skill roots:
-  `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/`
-  `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/`
-  `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/`
-  `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/`
+  `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/`
+  `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/`
+  `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
+  `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
 - Retained ECC upstream root: `sources/third_party/ecc/upstream/`
 - Retained ECC skill roots:
   `sources/third_party/ecc/upstream/skills/defi-amm-security/`

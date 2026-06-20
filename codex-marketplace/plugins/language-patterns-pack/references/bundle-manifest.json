@@ -1,524 +1,601 @@
 {
-    "bundle_name":  "language-patterns-pack",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "NickCrew/Claude-Cortex",
-    "pinned_commit":  "7892d00e7cb6adf00144a535103b930c772fb2c0",
-    "source_root":  ".",
-    "path_semantics":  "retained-snapshot-relative",
-    "candidate_count":  63,
-    "imported_count":  63,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/SKILL.md",
-                        "local_path":  "skills/typescript-advanced-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "adapted",
-                        "adaptation_note":  "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/advanced-generics.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/advanced-generics.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/branded-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/branded-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/builder-pattern.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/builder-pattern.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/common-pitfalls.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/common-pitfalls.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/conditional-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/conditional-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/decorators.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/decorators.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/discriminated-unions.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/discriminated-unions.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/mapped-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/mapped-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/performance-best-practices.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/performance-best-practices.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/template-literal-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/template-literal-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/testing-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/testing-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/type-guards.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/type-guards.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/type-inference.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/type-inference.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/typescript-advanced-patterns/references/utility-types.md",
-                        "local_path":  "skills/typescript-advanced-patterns/references/utility-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "content_mode":  "adapted",
-                        "adaptation_note":  "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.",
-                        "snapshot_path":  "skills/python-testing-patterns/SKILL.md",
-                        "local_path":  "skills/python-testing-patterns/SKILL.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/pytest-fundamentals.md",
-                        "local_path":  "skills/python-testing-patterns/references/pytest-fundamentals.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/fixtures.md",
-                        "local_path":  "skills/python-testing-patterns/references/fixtures.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/parametrized-tests.md",
-                        "local_path":  "skills/python-testing-patterns/references/parametrized-tests.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/mocking.md",
-                        "local_path":  "skills/python-testing-patterns/references/mocking.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/async-testing.md",
-                        "local_path":  "skills/python-testing-patterns/references/async-testing.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/property-based-testing.md",
-                        "local_path":  "skills/python-testing-patterns/references/property-based-testing.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/monkeypatch.md",
-                        "local_path":  "skills/python-testing-patterns/references/monkeypatch.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/test-organization.md",
-                        "local_path":  "skills/python-testing-patterns/references/test-organization.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/coverage.md",
-                        "local_path":  "skills/python-testing-patterns/references/coverage.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/integration-testing.md",
-                        "local_path":  "skills/python-testing-patterns/references/integration-testing.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-testing-patterns/references/best-practices.md",
-                        "local_path":  "skills/python-testing-patterns/references/best-practices.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/async-python-patterns/SKILL.md",
-                        "local_path":  "skills/async-python-patterns/SKILL.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "adapted",
-                        "adaptation_note":  "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.",
-                        "snapshot_path":  "skills/python-performance-optimization/SKILL.md",
-                        "local_path":  "skills/python-performance-optimization/SKILL.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-performance-optimization/references/acceleration.md",
-                        "local_path":  "skills/python-performance-optimization/references/acceleration.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-performance-optimization/references/algorithms.md",
-                        "local_path":  "skills/python-performance-optimization/references/algorithms.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-performance-optimization/references/memory.md",
-                        "local_path":  "skills/python-performance-optimization/references/memory.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-performance-optimization/references/profiling.md",
-                        "local_path":  "skills/python-performance-optimization/references/profiling.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
-                        "snapshot_path":  "skills/python-performance-optimization/references/string-io.md",
-                        "local_path":  "skills/python-performance-optimization/references/string-io.md",
-                        "import_status":  "imported"
-                    },
-                    {
-                        "snapshot_path":  "skills/bun-runtime/SKILL.md",
-                        "local_path":  "skills/bun-runtime/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/cpp-testing/SKILL.md",
-                        "local_path":  "skills/cpp-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/csharp-testing/SKILL.md",
-                        "local_path":  "skills/csharp-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/dart-flutter-patterns/SKILL.md",
-                        "local_path":  "skills/dart-flutter-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/django-celery/SKILL.md",
-                        "local_path":  "skills/django-celery/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/django-patterns/SKILL.md",
-                        "local_path":  "skills/django-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/django-tdd/SKILL.md",
-                        "local_path":  "skills/django-tdd/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/fastapi-patterns/SKILL.md",
-                        "local_path":  "skills/fastapi-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/flutter-dart-code-review/SKILL.md",
-                        "local_path":  "skills/flutter-dart-code-review/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/fsharp-testing/SKILL.md",
-                        "local_path":  "skills/fsharp-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/golang-testing/SKILL.md",
-                        "local_path":  "skills/golang-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/kotlin-coroutines-flows/SKILL.md",
-                        "local_path":  "skills/kotlin-coroutines-flows/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/kotlin-ktor-patterns/SKILL.md",
-                        "local_path":  "skills/kotlin-ktor-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/kotlin-testing/SKILL.md",
-                        "local_path":  "skills/kotlin-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/laravel-patterns/SKILL.md",
-                        "local_path":  "skills/laravel-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/laravel-plugin-discovery/SKILL.md",
-                        "local_path":  "skills/laravel-plugin-discovery/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/laravel-tdd/SKILL.md",
-                        "local_path":  "skills/laravel-tdd/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/nestjs-patterns/SKILL.md",
-                        "local_path":  "skills/nestjs-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/perl-testing/SKILL.md",
-                        "local_path":  "skills/perl-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/python-testing/SKILL.md",
-                        "local_path":  "skills/python-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/pytorch-patterns/SKILL.md",
-                        "local_path":  "skills/pytorch-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/quarkus-patterns/SKILL.md",
-                        "local_path":  "skills/quarkus-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/quarkus-tdd/SKILL.md",
-                        "local_path":  "skills/quarkus-tdd/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/rust-testing/SKILL.md",
-                        "local_path":  "skills/rust-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/springboot-patterns/SKILL.md",
-                        "local_path":  "skills/springboot-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/springboot-tdd/SKILL.md",
-                        "local_path":  "skills/springboot-tdd/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/swift-protocol-di-testing/SKILL.md",
-                        "local_path":  "skills/swift-protocol-di-testing/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/tinystruct-patterns/SKILL.md",
-                        "local_path":  "skills/tinystruct-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/tdd-workflow/SKILL.md",
-                        "local_path":  "skills/tdd-workflow/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "upstream_author":  "ECC (affaan-m/ECC)",
-                        "upstream_license":  "MIT",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
-                    }
-                ],
-    "notes":  [
-                  "Thirty-three-skill language/framework pack covering TypeScript, Python, and other language/framework testing and pattern guidance.",
-                  "Four skills from Claude-Cortex retained custody: typescript-advanced-patterns, python-testing-patterns, async-python-patterns, python-performance-optimization.",
-                  "Twenty-nine skills from ECC retained custody: bun-runtime, cpp-testing, csharp-testing, dart-flutter-patterns, django-celery, django-patterns, django-tdd, fastapi-patterns, flutter-dart-code-review, fsharp-testing, golang-testing, kotlin-coroutines-flows, kotlin-ktor-patterns, kotlin-testing, laravel-patterns, laravel-plugin-discovery, laravel-tdd, nestjs-patterns, perl-testing, python-testing, pytorch-patterns, quarkus-patterns, quarkus-tdd, rust-testing, springboot-patterns, springboot-tdd, swift-protocol-di-testing, tinystruct-patterns, tdd-workflow.",
-                  "The retained Claude-Cortex upstream skills use plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
-                  "ECC skills are projected verbatim from retained ECC source custody with MIT license attribution to upstream author affaan-m/ECC.",
-                  "The python-testing-patterns validation rubric remains retained source custody only and is not projected into the installable pack."
-              ],
-    "provenance_refs": [
-        "provenance/language-patterns-pack.md"
-    ]
+  "bundle_name": "language-patterns-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "source_families": [
+    {
+      "name": "claude-cortex",
+      "upstream_repo": "NickCrew/Claude-Cortex",
+      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+      "source_root": "."
+    },
+    {
+      "name": "ecc",
+      "upstream_repo": "affaan-m/ECC",
+      "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+      "source_root": "."
+    }
+  ],
+  "candidate_count": 63,
+  "imported_count": 63,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/SKILL.md",
+      "local_path": "skills/typescript-advanced-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/advanced-generics.md",
+      "local_path": "skills/typescript-advanced-patterns/references/advanced-generics.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/branded-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/branded-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/builder-pattern.md",
+      "local_path": "skills/typescript-advanced-patterns/references/builder-pattern.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/common-pitfalls.md",
+      "local_path": "skills/typescript-advanced-patterns/references/common-pitfalls.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/conditional-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/conditional-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/decorators.md",
+      "local_path": "skills/typescript-advanced-patterns/references/decorators.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/discriminated-unions.md",
+      "local_path": "skills/typescript-advanced-patterns/references/discriminated-unions.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/mapped-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/mapped-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/performance-best-practices.md",
+      "local_path": "skills/typescript-advanced-patterns/references/performance-best-practices.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/template-literal-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/template-literal-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/testing-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/testing-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/type-guards.md",
+      "local_path": "skills/typescript-advanced-patterns/references/type-guards.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/type-inference.md",
+      "local_path": "skills/typescript-advanced-patterns/references/type-inference.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/typescript-advanced-patterns/references/utility-types.md",
+      "local_path": "skills/typescript-advanced-patterns/references/utility-types.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.",
+      "snapshot_path": "skills/python-testing-patterns/SKILL.md",
+      "local_path": "skills/python-testing-patterns/SKILL.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/pytest-fundamentals.md",
+      "local_path": "skills/python-testing-patterns/references/pytest-fundamentals.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/fixtures.md",
+      "local_path": "skills/python-testing-patterns/references/fixtures.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/parametrized-tests.md",
+      "local_path": "skills/python-testing-patterns/references/parametrized-tests.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/mocking.md",
+      "local_path": "skills/python-testing-patterns/references/mocking.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/async-testing.md",
+      "local_path": "skills/python-testing-patterns/references/async-testing.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/property-based-testing.md",
+      "local_path": "skills/python-testing-patterns/references/property-based-testing.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/monkeypatch.md",
+      "local_path": "skills/python-testing-patterns/references/monkeypatch.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/test-organization.md",
+      "local_path": "skills/python-testing-patterns/references/test-organization.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/coverage.md",
+      "local_path": "skills/python-testing-patterns/references/coverage.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/integration-testing.md",
+      "local_path": "skills/python-testing-patterns/references/integration-testing.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-testing-patterns/references/best-practices.md",
+      "local_path": "skills/python-testing-patterns/references/best-practices.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/async-python-patterns/SKILL.md",
+      "local_path": "skills/async-python-patterns/SKILL.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "adapted",
+      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata.",
+      "snapshot_path": "skills/python-performance-optimization/SKILL.md",
+      "local_path": "skills/python-performance-optimization/SKILL.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-performance-optimization/references/acceleration.md",
+      "local_path": "skills/python-performance-optimization/references/acceleration.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-performance-optimization/references/algorithms.md",
+      "local_path": "skills/python-performance-optimization/references/algorithms.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-performance-optimization/references/memory.md",
+      "local_path": "skills/python-performance-optimization/references/memory.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-performance-optimization/references/profiling.md",
+      "local_path": "skills/python-performance-optimization/references/profiling.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained Claude-Cortex snapshot into the installable Language Patterns Pack.",
+      "snapshot_path": "skills/python-performance-optimization/references/string-io.md",
+      "local_path": "skills/python-performance-optimization/references/string-io.md",
+      "import_status": "imported",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/bun-runtime/SKILL.md",
+      "local_path": "skills/bun-runtime/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/cpp-testing/SKILL.md",
+      "local_path": "skills/cpp-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/csharp-testing/SKILL.md",
+      "local_path": "skills/csharp-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/dart-flutter-patterns/SKILL.md",
+      "local_path": "skills/dart-flutter-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/django-celery/SKILL.md",
+      "local_path": "skills/django-celery/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/django-patterns/SKILL.md",
+      "local_path": "skills/django-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/django-tdd/SKILL.md",
+      "local_path": "skills/django-tdd/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/fastapi-patterns/SKILL.md",
+      "local_path": "skills/fastapi-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/flutter-dart-code-review/SKILL.md",
+      "local_path": "skills/flutter-dart-code-review/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/fsharp-testing/SKILL.md",
+      "local_path": "skills/fsharp-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/golang-testing/SKILL.md",
+      "local_path": "skills/golang-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/kotlin-coroutines-flows/SKILL.md",
+      "local_path": "skills/kotlin-coroutines-flows/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/kotlin-ktor-patterns/SKILL.md",
+      "local_path": "skills/kotlin-ktor-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/kotlin-testing/SKILL.md",
+      "local_path": "skills/kotlin-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/laravel-patterns/SKILL.md",
+      "local_path": "skills/laravel-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/laravel-plugin-discovery/SKILL.md",
+      "local_path": "skills/laravel-plugin-discovery/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/laravel-tdd/SKILL.md",
+      "local_path": "skills/laravel-tdd/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/nestjs-patterns/SKILL.md",
+      "local_path": "skills/nestjs-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/perl-testing/SKILL.md",
+      "local_path": "skills/perl-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/python-testing/SKILL.md",
+      "local_path": "skills/python-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/pytorch-patterns/SKILL.md",
+      "local_path": "skills/pytorch-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/quarkus-patterns/SKILL.md",
+      "local_path": "skills/quarkus-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/quarkus-tdd/SKILL.md",
+      "local_path": "skills/quarkus-tdd/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/rust-testing/SKILL.md",
+      "local_path": "skills/rust-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/springboot-patterns/SKILL.md",
+      "local_path": "skills/springboot-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/springboot-tdd/SKILL.md",
+      "local_path": "skills/springboot-tdd/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/swift-protocol-di-testing/SKILL.md",
+      "local_path": "skills/swift-protocol-di-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/tinystruct-patterns/SKILL.md",
+      "local_path": "skills/tinystruct-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/tdd-workflow/SKILL.md",
+      "local_path": "skills/tdd-workflow/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack.",
+      "source_family": "ecc"
+    }
+  ],
+  "notes": [
+    "Thirty-three-skill language/framework pack covering TypeScript, Python, and other language/framework testing and pattern guidance.",
+    "Four skills from Claude-Cortex retained custody: typescript-advanced-patterns, python-testing-patterns, async-python-patterns, python-performance-optimization.",
+    "Twenty-nine skills from ECC retained custody: bun-runtime, cpp-testing, csharp-testing, dart-flutter-patterns, django-celery, django-patterns, django-tdd, fastapi-patterns, flutter-dart-code-review, fsharp-testing, golang-testing, kotlin-coroutines-flows, kotlin-ktor-patterns, kotlin-testing, laravel-patterns, laravel-plugin-discovery, laravel-tdd, nestjs-patterns, perl-testing, python-testing, pytorch-patterns, quarkus-patterns, quarkus-tdd, rust-testing, springboot-patterns, springboot-tdd, swift-protocol-di-testing, tinystruct-patterns, tdd-workflow.",
+    "The retained Claude-Cortex upstream skills use plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
+    "ECC skills are projected verbatim from retained ECC source custody with MIT license attribution to upstream author affaan-m/ECC.",
+    "The python-testing-patterns validation rubric remains retained source custody only and is not projected into the installable pack."
+  ],
+  "provenance_refs": [
+    "provenance/language-patterns-pack.md"
+  ]
 }

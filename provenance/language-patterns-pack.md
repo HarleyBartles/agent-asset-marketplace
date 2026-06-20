@@ -8,12 +8,12 @@ The Language Patterns Pack projects the MARK-212 TypeScript slice and the MARK-2
 
 ### Claude-Cortex Retained Upstream Root
 
-- **Upstream root**: `sources/third_party/codex-cortex/upstream/`
+- **Upstream root**: `sources/third_party/claude-cortex/upstream/`
 - **Retained skill roots**:
-  - `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/`
+  - `sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/async-python-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/`
 
 ### Claude-Cortex First-Party Ledgers and Provenance
 

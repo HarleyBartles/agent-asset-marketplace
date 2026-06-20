@@ -14,7 +14,7 @@ the ECC agent/eval workflow skills projected under MARK-242.
 - URL: <https://github.com/NickCrew/Claude-Cortex.git>
 - Pinned commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
 - License: `MIT`
-- Retained snapshot root: `sources/third_party/codex-cortex/upstream/`
+- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
 
 ## First-party custody
 

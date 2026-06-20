@@ -18,10 +18,10 @@ Harmonization notes:
 
 Retained Codex Cortex custody:
 
-- `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/`
-- `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/`
-- `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/`
-- `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/`
+- `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/`
+- `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/`
+- `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
+- `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
 
 Retained ECC custody:
 
@@ -46,10 +46,10 @@ Projected pack skills:
 
 | Skill | Source path | Pack path | Notes |
 | --- | --- | --- | --- |
-| secure-coding-practices | `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/` | `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/` | Retained code-hardening foundation, kept distinct from infrastructure review. |
-| owasp-top-10 | `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/` | `codex-marketplace/plugins/security-pack/skills/owasp-top-10/` | Retained OWASP taxonomy and remediation layer. |
-| security-testing-patterns | `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/` | `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/` | Retained security validation and testing layer. |
-| threat-modeling-techniques | `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/` | `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques/` | Retained design-time risk-framing layer. |
+| secure-coding-practices | `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/` | `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/` | Retained code-hardening foundation, kept distinct from infrastructure review. |
+| owasp-top-10 | `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/` | `codex-marketplace/plugins/security-pack/skills/owasp-top-10/` | Retained OWASP taxonomy and remediation layer. |
+| security-testing-patterns | `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/` | `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/` | Retained security validation and testing layer. |
+| threat-modeling-techniques | `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/` | `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques/` | Retained design-time risk-framing layer. |
 
 ## ECC projection
 

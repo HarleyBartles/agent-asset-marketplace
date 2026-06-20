@@ -9,7 +9,7 @@
 
 ## Custody surface
 
-- Retained snapshot root: `sources/third_party/codex-cortex/upstream/`
+- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
 - First-party import ledger: `sources/first_party/skills/codex-cortex/decisions.json`
 - First-party intake record: `sources/first_party/skills/codex-cortex/intake.json`
 
@@ -34,12 +34,12 @@
 - Generated install unit: `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
-- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
+- Retained source snapshot root: `sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
 - Installable plugin projection: `codex-marketplace/plugins/language-patterns-pack/`
-- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/`
-- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/`
-- Retained source snapshot root: `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/`
+- Retained source snapshot root: `sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/`
+- Retained source snapshot root: `sources/third_party/claude-cortex/upstream/skills/async-python-patterns/`
+- Retained source snapshot root: `sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`
 - Generated install unit: `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`

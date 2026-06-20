@@ -6,12 +6,12 @@ This pack projects the MARK-212 TypeScript slice and the MARK-213 Python languag
 
 ### Claude-Cortex retained skills
 
-- Retained upstream root: `sources/third_party/codex-cortex/upstream/`
+- Retained upstream root: `sources/third_party/claude-cortex/upstream/`
 - Retained skill roots:
-  - `sources/third_party/codex-cortex/upstream/skills/typescript-advanced-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/async-python-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/python-performance-optimization/`
+  - `sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/async-python-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/`
 
 ### ECC retained skills
 
