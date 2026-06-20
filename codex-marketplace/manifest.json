@@ -29,10 +29,10 @@
       "category": "Productivity"
     },
     {
-      "name": "unslop",
+      "name": "unslop-plus",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/unslop"
+        "path": "./codex-marketplace/plugins/unslop-plus"
       },
       "policy": {
         "installation": "AVAILABLE",
