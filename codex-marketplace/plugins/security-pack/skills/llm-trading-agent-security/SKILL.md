@@ -2,13 +2,8 @@
 name: llm-trading-agent-security
 description: Security patterns for autonomous trading agents with wallet or transaction authority. Covers prompt injection, spend limits, pre-send simulation, circuit breakers, MEV protection, and key handling.
 metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/llm-trading-agent-security/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  origin: ECC direct-port adaptation
+version: "1.0.0"
 ---
 
 # LLM Trading Agent Security

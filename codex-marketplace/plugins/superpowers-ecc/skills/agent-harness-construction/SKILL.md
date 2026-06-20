@@ -1,6 +1,13 @@
 ---
 name: agent-harness-construction
 description: Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates.
+metadata:
+  origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md
+  content_mode: verbatim
 ---
 
 # Agent Harness Construction

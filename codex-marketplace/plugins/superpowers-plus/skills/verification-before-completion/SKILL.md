@@ -2,13 +2,11 @@
 name: verification-before-completion
 description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
 metadata:
-  origin: Obra AI
-  source_author: Obra AI
-  source_license: MIT
-  source_repo: https://github.com/obra-ai/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_category: third_party
+  upstream_name: verification-before-completion
+  upstream_version: v5.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/verification-before-completion
+  projection_plugin: superpowers-plus
 ---
 
 # Verification Before Completion

@@ -18,14 +18,6 @@ file_patterns:
   - '**/auth/**'
   - '**/security/**'
 confidence: 0.9
-metadata:
-  origin: Claude-Cortex
-  source_author: NickCrew
-  source_license: MIT
-  source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # OWASP Top 10 Security Vulnerabilities

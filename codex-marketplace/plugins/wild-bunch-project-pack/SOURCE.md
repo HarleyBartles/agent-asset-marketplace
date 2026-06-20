@@ -2,8 +2,6 @@
 
 This bundle packages the hydrated Wild Bunch first-party skills together with the selected browser-game helper skills as a self-contained Codex plugin.
 
-The plugin shell is authored by Harley Bartles. The projected skill roots retain their upstream source author, source license, and source path in the bundle manifest and source map so verbatim content stays attributable.
-
 ## Canonical basis
 
 - First-party Wild Bunch source custody: `sources/first_party/skills/`

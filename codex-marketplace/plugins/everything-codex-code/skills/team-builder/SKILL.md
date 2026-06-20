@@ -1,6 +1,13 @@
 ---
 name: team-builder
 description: Interactive agent picker for composing and dispatching parallel teams
+metadata:
+  origin: community
+  source_author: Community contributors
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/team-builder/SKILL.md
+  content_mode: verbatim
 ---
 
 # Team Builder

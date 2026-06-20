@@ -2,13 +2,11 @@
 name: using-superpowers
 description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
 metadata:
-  origin: Obra AI
-  source_author: Obra AI
-  source_license: MIT
-  source_repo: https://github.com/obra-ai/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  source_category: third_party
+  upstream_name: using-superpowers
+  upstream_version: v5.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers
+  projection_plugin: superpowers-plus
 ---
 
 <SUBAGENT-STOP>

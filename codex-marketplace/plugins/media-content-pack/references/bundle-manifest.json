@@ -1,0 +1,103 @@
+{
+  "bundle_name": "media-content-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "affaan-m/ECC",
+  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 10,
+  "imported_count": 10,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/competitive-report-structure/SKILL.md",
+      "local_path": "skills/competitive-report-structure/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/fal-ai-media/SKILL.md",
+      "local_path": "skills/fal-ai-media/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/frontend-slides/SKILL.md",
+      "local_path": "skills/frontend-slides/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/manim-video/SKILL.md",
+      "local_path": "skills/manim-video/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/nutrient-document-processing/SKILL.md",
+      "local_path": "skills/nutrient-document-processing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/remotion-video-creation/SKILL.md",
+      "local_path": "skills/remotion-video-creation/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/seo/SKILL.md",
+      "local_path": "skills/seo/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/visa-doc-translate/SKILL.md",
+      "local_path": "skills/visa-doc-translate/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/video-editing/SKILL.md",
+      "local_path": "skills/video-editing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/videodb/SKILL.md",
+      "local_path": "skills/videodb/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    }
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/media-content-pack/SOURCE.md",
+    "source_ledger": [
+      "sources/third_party/ecc/upstream/LICENSE",
+      "sources/third_party/ecc/upstream/source-custody.md"
+    ],
+    "license_path": "codex-marketplace/plugins/media-content-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/media-content-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/media-content-pack/skills",
+    "provenance_refs": [
+      "provenance/media-content-pack.md",
+      "codex-marketplace/plugins/media-content-pack/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

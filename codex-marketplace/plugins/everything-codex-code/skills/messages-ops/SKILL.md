@@ -1,6 +1,13 @@
 ---
 name: messages-ops
 description: Evidence-first live messaging workflow for ECC. Use when the user wants to read texts or DMs, recover a recent one-time code, inspect a thread before replying, or prove which message source was actually checked.
+metadata:
+  origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/messages-ops/SKILL.md
+  content_mode: verbatim
 ---
 
 # Messages Ops

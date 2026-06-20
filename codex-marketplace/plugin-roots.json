@@ -145,6 +145,33 @@
       "plugin_root": "codex-marketplace/plugins/frontend-pack",
       "manifest_path": "codex-marketplace/plugins/frontend-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 16,
+      "name": "data-platform-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/data-platform-pack",
+      "plugin_root": "codex-marketplace/plugins/data-platform-pack",
+      "manifest_path": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 17,
+      "name": "ops-connectors-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/ops-connectors-pack",
+      "plugin_root": "codex-marketplace/plugins/ops-connectors-pack",
+      "manifest_path": "codex-marketplace/plugins/ops-connectors-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "media-content-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/media-content-pack",
+      "plugin_root": "codex-marketplace/plugins/media-content-pack",
+      "manifest_path": "codex-marketplace/plugins/media-content-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

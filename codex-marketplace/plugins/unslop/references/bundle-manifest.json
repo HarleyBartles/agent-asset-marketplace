@@ -1,8 +1,6 @@
 {
   "bundle_name": "unslop",
   "bundle_version": "1.0.0",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
   "upstream_repo": "mshumer/unslop",
   "pinned_commit": "edcb62386d129c65e4395f0cfcc9168eb1ba2148",
   "source_root": ".",
@@ -17,8 +15,7 @@
       "local_path": "skills/unslop/SKILL.md",
       "import_status": "imported",
       "content_mode": "adapted",
-      "adaptation_note": "Reimplemented as an Asset Marketplace GPT/Codex skill with bundled Python scripts, local sample orchestration, output manifests, validators, and optional visual dependency smoke checks. Added upstream authorship metadata frontmatter.",
-      "adapted_author": "Harley Bartles"
+      "adaptation_note": "Reimplemented as an Asset Marketplace GPT/Codex skill with bundled Python scripts, local sample orchestration, output manifests, validators, and optional visual dependency smoke checks."
     },
     {
       "snapshot_path": "profiles/writing.md",

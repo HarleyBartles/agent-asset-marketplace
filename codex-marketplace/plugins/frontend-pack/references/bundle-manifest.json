@@ -1,14 +1,26 @@
 {
   "bundle_name": "frontend-pack",
   "bundle_version": "1.0.0",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
-  "upstream_repo": "NickCrew/Claude-Cortex",
-  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 5,
-  "imported_count": 5,
+  "source_families": [
+    {
+      "name": "claude-cortex",
+      "upstream_repo": "NickCrew/Claude-Cortex",
+      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+      "source_root": "."
+    },
+    {
+      "name": "ecc",
+      "upstream_repo": "affaan-m/ECC",
+      "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+      "source_root": "."
+    }
+  ],
+  "candidate_count": 16,
+  "imported_count": 16,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -16,65 +28,156 @@
       "snapshot_path": "skills/react-performance-optimization/SKILL.md",
       "local_path": "skills/react-performance-optimization/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
-      "adapted_author": "Harley Bartles"
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory.",
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/accessibility-audit/SKILL.md",
       "local_path": "skills/accessibility-audit/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
-      "adapted_author": "Harley Bartles"
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory.",
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/ux-review/SKILL.md",
       "local_path": "skills/ux-review/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
-      "adapted_author": "Harley Bartles"
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory.",
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/interaction-design/SKILL.md",
       "local_path": "skills/interaction-design/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
-      "adapted_author": "Harley Bartles"
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory.",
+      "source_family": "claude-cortex"
     },
     {
       "snapshot_path": "skills/webapp-testing/SKILL.md",
       "local_path": "skills/webapp-testing/SKILL.md",
       "import_status": "imported",
-      "content_mode": "adapted",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adaptation_note": "Added upstream authorship metadata frontmatter (origin, source_author, source_license, source_repo, source_path, content_mode) to the projected SKILL.md for MARK-244 provenance compliance. The skill content body remains verbatim from upstream.",
-      "adapted_author": "Harley Bartles"
+      "content_mode": "verbatim",
+      "adaptation_note": "Copied verbatim into the installable frontend-pack skill directory.",
+      "source_family": "claude-cortex"
+    },
+    {
+      "snapshot_path": "skills/accessibility/SKILL.md",
+      "local_path": "skills/accessibility/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/angular-developer/SKILL.md",
+      "local_path": "skills/angular-developer/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/browser-qa/SKILL.md",
+      "local_path": "skills/browser-qa/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/design-system/SKILL.md",
+      "local_path": "skills/design-system/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/e2e-testing/SKILL.md",
+      "local_path": "skills/e2e-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/make-interfaces-feel-better/SKILL.md",
+      "local_path": "skills/make-interfaces-feel-better/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/react-patterns/SKILL.md",
+      "local_path": "skills/react-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/react-testing/SKILL.md",
+      "local_path": "skills/react-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/swiftui-patterns/SKILL.md",
+      "local_path": "skills/swiftui-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/vue-patterns/SKILL.md",
+      "local_path": "skills/vue-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
+    },
+    {
+      "snapshot_path": "skills/windows-desktop-e2e/SKILL.md",
+      "local_path": "skills/windows-desktop-e2e/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Copied verbatim from ECC custody into the installable frontend-pack skill directory as part of MARK-245.",
+      "source_family": "ecc"
     }
   ],
   "notes": [
-    "Frontend application pack covering React performance, accessibility, UX review, interaction design, and webapp testing.",
-    "The retained upstream skills keep their source-path references intact in the projected pack."
+    "Frontend application pack covering React performance, accessibility, UX review, interaction design, webapp testing, and ECC frontend skills.",
+    "The retained upstream skills keep their source-path references intact in the projected pack.",
+    "ECC skills (accessibility, angular-developer, browser-qa, design-system, e2e-testing, make-interfaces-feel-better, react-patterns, react-testing, swiftui-patterns, vue-patterns, windows-desktop-e2e) were added as part of MARK-245."
   ]
 }

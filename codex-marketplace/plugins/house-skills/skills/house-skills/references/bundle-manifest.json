@@ -2,8 +2,6 @@
   "bundle_name": "house-skills",
   "bundle_version": "1.0.0",
   "bundle_type": "current-first-party-house-skills-plugin",
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
   "plugin_root": "codex-marketplace/plugins/house-skills",
   "skills_root": "codex-marketplace/plugins/house-skills/skills",
   "control_plane_skill": {

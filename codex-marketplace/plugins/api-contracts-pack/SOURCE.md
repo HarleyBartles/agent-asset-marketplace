@@ -4,10 +4,6 @@ This plugin projects the MARK-204 `api-design-patterns` contract-doctrine slice
 and the MARK-205 `openapi-specification` companion slice from the retained Codex
 Cortex custody plugin into a Codex marketplace pack.
 
-The plugin shell is authored by Harley Bartles. The projected skill roots retain
-their upstream source author, source license, and source path in the bundle
-manifest and source map so verbatim content stays attributable.
-
 ## Source custody plugin
 
 - Plugin root: `codex-marketplace/plugins/codex-cortex/`

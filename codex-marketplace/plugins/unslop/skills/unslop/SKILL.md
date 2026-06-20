@@ -1,14 +1,6 @@
 ---
 name: unslop
 description: Generate a domain-specific anti-slop profile from local GPT/Codex samples, validate that the analysis is concrete, and record optional visual evidence status without external source fetching or provider-specific CLI dependencies.
-metadata:
-  origin: unslop
-  source_author: mshumer
-  source_license: MIT
-  source_repo: https://github.com/mshumer/unslop
-  source_path: sources/third_party/unslop/upstream/skills/unslop/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Unslop

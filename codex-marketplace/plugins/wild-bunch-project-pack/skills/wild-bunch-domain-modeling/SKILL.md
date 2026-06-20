@@ -1,13 +1,6 @@
 ---
 name: wild-bunch-domain-modeling
 description: apply Wild Bunch project-scoped domain guidance when work touches DDD tactical modeling, GameSession Aggregate Root boundaries, player wallet or inventory, clue or journal flows, wanted posters, hidden culprit truth, horse and saddle rules, water handling, town or trail travel, journey state, or trail-day progression. Use to keep C#/.NET game-domain modeling aligned with live repo source and to prevent policy, service, database, or travel abstractions from flattening Wild Bunch-specific design.
-metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md
-  content_mode: verbatim
 ---
 
 # Wild Bunch Domain Modeling

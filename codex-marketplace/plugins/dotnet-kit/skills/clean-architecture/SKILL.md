@@ -4,14 +4,6 @@ description: >
   Use when building or reviewing a layered .NET system that uses Domain,
   Application, Infrastructure, and Api projects, dependency inversion, use case
   handlers, domain entities with behavior, or infrastructure as a plugin.
-metadata:
-  origin: dotnet-claude-kit
-  source_author: codewithmukesh
-  source_license: MIT
-  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
-  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Clean Architecture

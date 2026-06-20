@@ -2,13 +2,8 @@
 name: defi-amm-security
 description: Security checklist for Solidity AMM contracts, liquidity pools, and swap flows. Covers reentrancy, CEI ordering, donation or inflation attacks, oracle manipulation, slippage, admin controls, and integer math.
 metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/defi-amm-security/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
+  origin: ECC direct-port adaptation
+version: "1.0.0"
 ---
 
 # DeFi AMM Security

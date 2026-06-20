@@ -5,14 +5,6 @@ description: >
   needing guidance on primary constructors, collection expressions, the field
   keyword, extension members, records, pattern matching, spans, or raw string
   literals.
-metadata:
-  origin: dotnet-claude-kit
-  source_author: codewithmukesh
-  source_license: MIT
-  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
-  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Modern C# (C# 14 / .NET 10)

@@ -3,12 +3,6 @@ name: quarkus-security
 description: Quarkus Security best practices for authentication, authorization, JWT/OIDC, RBAC, input validation, CSRF, secrets management, and dependency security.
 metadata:
   origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/quarkus-security/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Quarkus Security Review

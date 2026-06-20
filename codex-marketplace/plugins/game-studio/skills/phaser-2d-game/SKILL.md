@@ -1,14 +1,6 @@
 ---
 name: phaser-2d-game
 description: Implement 2D browser games with Phaser. Use when the user wants a Phaser, TypeScript, and Vite stack for scenes, gameplay systems, cameras, sprite animation, and DOM-overlay HUD patterns.
-metadata:
-  origin: third_party
-  source_author: OpenAI
-  source_license: MIT
-  source_repo: openai/plugins
-  source_path: sources/third_party/game-studio/upstream/skills/phaser-2d-game/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # Phaser 2D Game

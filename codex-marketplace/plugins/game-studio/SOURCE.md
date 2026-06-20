@@ -2,10 +2,6 @@
 
 This plugin packages the retained `game-studio` source snapshot as a market-facing Codex plugin.
 
-The plugin shell is authored by Harley Bartles. The projected skill roots
-retain their upstream source author, source license, and source path in the
-bundle manifest and source map so verbatim content stays attributable.
-
 ## Upstream basis
 
 - Repo: `openai/plugins`

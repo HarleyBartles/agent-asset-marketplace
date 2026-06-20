@@ -4,14 +4,6 @@ description: >
   Use when working with Entity Framework Core, DbContext configuration,
   migrations, interceptors, compiled queries, ExecuteUpdateAsync,
   ExecuteDeleteAsync, value converters, query optimization, or LINQ queries.
-metadata:
-  origin: dotnet-claude-kit
-  source_author: codewithmukesh
-  source_license: MIT
-  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
-  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/ef-core/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
 ---
 
 # EF Core (.NET 10)
