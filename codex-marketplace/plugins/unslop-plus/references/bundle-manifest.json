@@ -20,8 +20,8 @@
       "source_root": "skills/unslop-plus"
     }
   ],
-  "candidate_count": 18,
-  "imported_count": 18,
+  "candidate_count": 19,
+  "imported_count": 19,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -31,9 +31,20 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "source_family": "unslop-engine",
-      "adaptation_note": "Adapted from upstream unslop.py for Asset Marketplace plugin projection with Codex/OpenAI skill packaging.",
+      "adaptation_note": "Upstream unslop.py is a Claude Code CLI tool requiring the claude binary (shutil.which check at line 996), spawning claude -p subprocesses (line 407), with interactive TerminalUI spinners/progress bars (lines 30-170) and signal-based process management. Adapted to use Python standard library text analysis on local samples, removing Claude Code CLI dependency, interactive terminal UI, and subprocess process model. Upstream MIT license preserved in LICENSE.upstream.",
       "adapted_author": "Harley Bartles",
       "source_path": "unslop.py",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    },
+    {
+      "snapshot_path": "LICENSE",
+      "local_path": "skills/unslop-plus/LICENSE.upstream",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "unslop-engine",
+      "source_path": "LICENSE",
       "source_author": "mshumer",
       "source_license": "MIT",
       "source_repo": "https://github.com/mshumer/unslop"

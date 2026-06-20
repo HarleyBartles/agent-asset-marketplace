@@ -4,7 +4,7 @@ Anti-slop profiles for software development workflows.
 
 ## What's Included
 
-This plugin bundles the Unslop analysis engine with thirteen first-party portable profiles:
+This plugin bundles an adapted Unslop analysis engine with thirteen first-party portable profiles:
 
 - **writing** - Generic AI prose patterns
 - **technical-writing** - Documentation and technical content
@@ -26,6 +26,8 @@ Use the appropriate profile for your workflow before drafting or reviewing conte
 
 ## Provenance
 
-- Engine: Adapted from `mshumer/unslop` (MIT license)
-- Profiles: First-party portable profiles by Asset Marketplace
-- Source custody: `sources/third_party/unslop/upstream/`
+- Engine: Adapted from `mshumer/unslop` (MIT license, Copyright (c) 2026 Matt Shumer). The upstream script is a Claude Code CLI tool; the projected script is adapted for Codex/GPT skill use with Python standard library text analysis. See `SOURCE.md` for the adaptation rationale.
+- Profiles: First-party portable profiles by Asset Marketplace (MIT license)
+- Upstream source custody: `sources/third_party/unslop/upstream/` (retained verbatim)
+- First-party profile custody: `sources/first_party/skills/unslop-plus/profiles/`
+- Upstream MIT notice: `skills/unslop-plus/LICENSE.upstream`
