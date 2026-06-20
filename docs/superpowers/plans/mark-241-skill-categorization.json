@@ -85,20 +85,40 @@
     "mle-workflow"
   ],
   "data-platform-pack": [
+    "clickhouse-io",
+    "content-hash-cache-pattern",
+    "dashboard-builder",
+    "data-throughput-accelerator",
+    "database-migrations",
     "postgres-patterns",
+    "pytorch-patterns",
     "quality-nonconformance",
     "scientific-db-pubmed-database",
     "scientific-thinking-literature-review",
     "scientific-thinking-scholar-evaluation"
   ],
   "ops-connectors-pack": [
+    "api-connector-builder",
     "automation-audit-ops",
+    "customer-billing-ops",
     "email-ops",
-    "jira-integration"
+    "finance-billing-ops",
+    "google-workspace-ops",
+    "jira-integration",
+    "messages-ops",
+    "unified-notifications-ops"
   ],
   "media-content-pack": [
+    "competitive-report-structure",
     "fal-ai-media",
-    "seo"
+    "frontend-slides",
+    "manim-video",
+    "nutrient-document-processing",
+    "remotion-video-creation",
+    "seo",
+    "visa-doc-translate",
+    "video-editing",
+    "videodb"
   ],
   "security-pack": [
     "defi-amm-security",
@@ -111,24 +131,5 @@
     "quarkus-security",
     "security-review",
     "springboot-security"
-  ],
-  "park": [
-    "canary-watch",
-    "cisco-ios-patterns",
-    "codehealth-mcp",
-    "coding-standards",
-    "connections-optimizer",
-    "cost-aware-llm-pipeline",
-    "documentation-lookup",
-    "enterprise-agent-ops",
-    "exa-search",
-    "generating-python-installer",
-    "healthcare-eval-harness",
-    "healthcare-phi-compliance",
-    "hipaa-compliance",
-    "ito-data-atlas-agent",
-    "jpa-patterns",
-    "plankton-code-quality",
-    "product-lens"
   ]
 }
