@@ -1,6 +1,13 @@
 ---
 name: wild-bunch-project-doctrine
 description: bootstrap the wild bunch repo posture before any repo-sensitive change. use when work touches harleybartles/wild-bunch, worker dispatch, worker return verification, source-truth claims, issue-goal conformance, world setup, seeded setup, difficulty, entropy, or when chat summaries, session busters, worker reports, or issue comments might be mistaken for live repo truth.
+metadata:
+  origin: first_party
+  source_author: Harley Bartles
+  source_license: MIT
+  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
+  source_path: sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md
+  content_mode: verbatim
 ---
 
 # Wild Bunch Project Doctrine
