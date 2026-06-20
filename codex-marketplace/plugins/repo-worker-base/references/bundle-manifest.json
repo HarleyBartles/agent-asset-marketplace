@@ -378,5 +378,7 @@
   "provenance_refs": [
     "provenance/repo-worker-base.md"
   ],
-  "source_map": "references/source-map.md"
+  "source_map": "references/source-map.md",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

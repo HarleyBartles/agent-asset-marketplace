@@ -142,5 +142,7 @@
   ],
   "provenance_refs": [
     "provenance/wild-bunch-project-pack.md"
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

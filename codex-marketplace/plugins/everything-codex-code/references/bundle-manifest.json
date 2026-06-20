@@ -115,5 +115,7 @@
   "notes": [
     "Installable aggregate projection over the dedicated superpowers-ecc pack.",
     "This bundle does not mirror upstream ECC custody directly."
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

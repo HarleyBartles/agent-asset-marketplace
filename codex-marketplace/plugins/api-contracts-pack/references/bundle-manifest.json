@@ -16,14 +16,14 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Claude-Cortex source into the installable api-contracts-pack umbrella slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/api-design-patterns/references/design-process.md",
       "local_path": "skills/api-design-patterns/references/design-process.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Mirrored as the supporting contract design-process reference for the umbrella slice.",
       "source_family": "claude-cortex"
     },
     {
@@ -31,7 +31,6 @@
       "local_path": "skills/api-design-patterns/validation/rubric.yaml",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Mirrored as the skill quality rubric and validation posture for the umbrella slice.",
       "source_family": "claude-cortex"
     },
     {
@@ -40,7 +39,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the OpenAPI-specific companion slice for api-contracts-pack, composed with api-design-patterns.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/openapi-specification/references/spec-patterns.md",
@@ -48,7 +48,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
@@ -56,7 +57,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the OpenAPI quality rubric for the companion slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [
@@ -66,5 +68,7 @@
   ],
   "provenance_refs": [
     "provenance/api-contracts-pack.md"
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

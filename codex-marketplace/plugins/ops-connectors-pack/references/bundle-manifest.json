@@ -1,96 +1,89 @@
 {
-    "bundle_name":  "ops-connectors-pack",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "affaan-m/ECC",
-    "pinned_commit":  "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-    "source_root":  ".",
-    "path_semantics":  "retained-snapshot-relative",
-    "candidate_count":  9,
-    "imported_count":  9,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "snapshot_path":  "skills/api-connector-builder/SKILL.md",
-                        "local_path":  "skills/api-connector-builder/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/automation-audit-ops/SKILL.md",
-                        "local_path":  "skills/automation-audit-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/customer-billing-ops/SKILL.md",
-                        "local_path":  "skills/customer-billing-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/email-ops/SKILL.md",
-                        "local_path":  "skills/email-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/finance-billing-ops/SKILL.md",
-                        "local_path":  "skills/finance-billing-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/google-workspace-ops/SKILL.md",
-                        "local_path":  "skills/google-workspace-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/jira-integration/SKILL.md",
-                        "local_path":  "skills/jira-integration/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/messages-ops/SKILL.md",
-                        "local_path":  "skills/messages-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/unified-notifications-ops/SKILL.md",
-                        "local_path":  "skills/unified-notifications-ops/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
-                    }
-                ],
-    "repo_index": {
-        "source_md": "codex-marketplace/plugins/ops-connectors-pack/SOURCE.md",
-        "source_ledger": [
-            "sources/third_party/ecc/upstream/LICENSE",
-            "sources/third_party/ecc/upstream/source-custody.md"
-        ],
-        "license_path": "codex-marketplace/plugins/ops-connectors-pack/LICENSE",
-        "bundle_manifest": "codex-marketplace/plugins/ops-connectors-pack/references/bundle-manifest.json",
-        "skills_path": "codex-marketplace/plugins/ops-connectors-pack/skills",
-        "provenance_refs": [
-            "provenance/ops-connectors-pack.md",
-            "codex-marketplace/plugins/ops-connectors-pack/references/source-map.md"
-        ],
-        "agents_md": null,
-        "registry_alignment": {
-            "status": "aligned",
-            "note": null
-        }
+  "bundle_name": "ops-connectors-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "affaan-m/ECC",
+  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 9,
+  "imported_count": 9,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/api-connector-builder/SKILL.md",
+      "local_path": "skills/api-connector-builder/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/automation-audit-ops/SKILL.md",
+      "local_path": "skills/automation-audit-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/customer-billing-ops/SKILL.md",
+      "local_path": "skills/customer-billing-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/email-ops/SKILL.md",
+      "local_path": "skills/email-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/finance-billing-ops/SKILL.md",
+      "local_path": "skills/finance-billing-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/google-workspace-ops/SKILL.md",
+      "local_path": "skills/google-workspace-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/jira-integration/SKILL.md",
+      "local_path": "skills/jira-integration/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/messages-ops/SKILL.md",
+      "local_path": "skills/messages-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/unified-notifications-ops/SKILL.md",
+      "local_path": "skills/unified-notifications-ops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
     }
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/ops-connectors-pack/SOURCE.md",
+    "source_ledger": [
+      "sources/third_party/ecc/upstream/LICENSE",
+      "sources/third_party/ecc/upstream/source-custody.md"
+    ],
+    "license_path": "codex-marketplace/plugins/ops-connectors-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/ops-connectors-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/ops-connectors-pack/skills",
+    "provenance_refs": [
+      "provenance/ops-connectors-pack.md",
+      "codex-marketplace/plugins/ops-connectors-pack/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  },
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

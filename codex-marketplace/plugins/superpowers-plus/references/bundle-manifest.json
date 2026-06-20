@@ -280,5 +280,7 @@
     "Dedicated Superpowers+ projection with the repo-authored ECC router wrapper.",
     "The bundle keeps Superpowers+ broad while routing ECC workflow-shaped work to the dedicated superpowers-ecc pack.",
     "The retained upstream snapshot and non-Codex harness surfaces remain in third-party source custody."
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

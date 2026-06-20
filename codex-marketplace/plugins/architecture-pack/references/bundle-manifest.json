@@ -29,7 +29,6 @@
       "local_path": "skills/cqrs-event-sourcing/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -37,7 +36,6 @@
       "local_path": "skills/cqrs-event-sourcing/references/cqrs-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -45,7 +43,6 @@
       "local_path": "skills/cqrs-event-sourcing/references/event-sourcing.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -53,7 +50,6 @@
       "local_path": "skills/cqrs-event-sourcing/references/event-store-tech.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -61,7 +57,6 @@
       "local_path": "skills/cqrs-event-sourcing/references/consistency-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -69,7 +64,6 @@
       "local_path": "skills/cqrs-event-sourcing/references/best-practices.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -77,7 +71,6 @@
       "local_path": "skills/database-design-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -85,7 +78,6 @@
       "local_path": "skills/database-design-patterns/references/core-principles.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -93,7 +85,6 @@
       "local_path": "skills/database-design-patterns/references/schema-design-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -101,7 +92,6 @@
       "local_path": "skills/database-design-patterns/references/indexing-strategies.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -109,7 +99,6 @@
       "local_path": "skills/database-design-patterns/references/partitioning-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -117,7 +106,6 @@
       "local_path": "skills/database-design-patterns/references/replication-patterns.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -125,7 +113,6 @@
       "local_path": "skills/database-design-patterns/references/query-optimization.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -133,7 +120,6 @@
       "local_path": "skills/event-driven-architecture/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -141,7 +127,6 @@
       "local_path": "skills/event-driven-architecture/references/event-fundamentals.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -149,7 +134,6 @@
       "local_path": "skills/event-driven-architecture/references/event-sourcing.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -157,7 +141,6 @@
       "local_path": "skills/event-driven-architecture/references/cqrs.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -165,7 +148,6 @@
       "local_path": "skills/event-driven-architecture/references/message-brokers.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -173,7 +155,6 @@
       "local_path": "skills/event-driven-architecture/references/saga-pattern.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -181,7 +162,6 @@
       "local_path": "skills/event-driven-architecture/references/choreography-orchestration.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -189,7 +169,6 @@
       "local_path": "skills/event-driven-architecture/references/eventual-consistency.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -197,7 +176,6 @@
       "local_path": "skills/event-driven-architecture/references/best-practices.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack.",
       "source_family": "claude-cortex"
     },
     {
@@ -205,80 +183,72 @@
       "local_path": "skills/architecture-decision-records/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/backend-patterns/SKILL.md",
       "local_path": "skills/backend-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/docker-patterns/SKILL.md",
       "local_path": "skills/docker-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/hexagonal-architecture/SKILL.md",
       "local_path": "skills/hexagonal-architecture/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/intent-driven-development/SKILL.md",
       "local_path": "skills/intent-driven-development/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/kubernetes-patterns/SKILL.md",
       "local_path": "skills/kubernetes-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/mcp-server-patterns/SKILL.md",
       "local_path": "skills/mcp-server-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     },
     {
       "snapshot_path": "skills/mle-workflow/SKILL.md",
       "local_path": "skills/mle-workflow/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT",
-      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT"
     }
   ],
   "notes": [
@@ -289,5 +259,7 @@
   ],
   "provenance_refs": [
     "provenance/architecture-pack.md"
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

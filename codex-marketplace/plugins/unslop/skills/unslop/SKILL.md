@@ -1,6 +1,8 @@
 ---
 name: unslop
 description: Generate a domain-specific anti-slop profile from local GPT/Codex samples, validate that the analysis is concrete, and record optional visual evidence status without external source fetching or provider-specific CLI dependencies.
+content_mode: adapted
+adapted_author: Harley Bartles
 ---
 
 # Unslop

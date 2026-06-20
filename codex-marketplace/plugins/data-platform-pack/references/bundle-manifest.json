@@ -1,110 +1,101 @@
 {
-    "bundle_name":  "data-platform-pack",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "affaan-m/ECC",
-    "pinned_commit":  "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-    "source_root":  ".",
-    "path_semantics":  "retained-snapshot-relative",
-    "candidate_count":  11,
-    "imported_count":  11,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "snapshot_path":  "skills/clickhouse-io/SKILL.md",
-                        "local_path":  "skills/clickhouse-io/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/content-hash-cache-pattern/SKILL.md",
-                        "local_path":  "skills/content-hash-cache-pattern/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/dashboard-builder/SKILL.md",
-                        "local_path":  "skills/dashboard-builder/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/data-throughput-accelerator/SKILL.md",
-                        "local_path":  "skills/data-throughput-accelerator/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/database-migrations/SKILL.md",
-                        "local_path":  "skills/database-migrations/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/postgres-patterns/SKILL.md",
-                        "local_path":  "skills/postgres-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/pytorch-patterns/SKILL.md",
-                        "local_path":  "skills/pytorch-patterns/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/quality-nonconformance/SKILL.md",
-                        "local_path":  "skills/quality-nonconformance/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/scientific-db-pubmed-database/SKILL.md",
-                        "local_path":  "skills/scientific-db-pubmed-database/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/scientific-thinking-literature-review/SKILL.md",
-                        "local_path":  "skills/scientific-thinking-literature-review/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    },
-                    {
-                        "snapshot_path":  "skills/scientific-thinking-scholar-evaluation/SKILL.md",
-                        "local_path":  "skills/scientific-thinking-scholar-evaluation/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
-                    }
-                ],
-    "repo_index": {
-        "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
-        "source_ledger": [
-            "sources/third_party/ecc/upstream/LICENSE",
-            "sources/third_party/ecc/upstream/source-custody.md"
-        ],
-        "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
-        "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
-        "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
-        "provenance_refs": [
-            "provenance/data-platform-pack.md",
-            "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
-        ],
-        "agents_md": null,
-        "registry_alignment": {
-            "status": "aligned",
-            "note": null
-        }
+  "bundle_name": "data-platform-pack",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "affaan-m/ECC",
+  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "candidate_count": 11,
+  "imported_count": 11,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "skills/clickhouse-io/SKILL.md",
+      "local_path": "skills/clickhouse-io/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/content-hash-cache-pattern/SKILL.md",
+      "local_path": "skills/content-hash-cache-pattern/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/dashboard-builder/SKILL.md",
+      "local_path": "skills/dashboard-builder/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/data-throughput-accelerator/SKILL.md",
+      "local_path": "skills/data-throughput-accelerator/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/database-migrations/SKILL.md",
+      "local_path": "skills/database-migrations/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/postgres-patterns/SKILL.md",
+      "local_path": "skills/postgres-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/pytorch-patterns/SKILL.md",
+      "local_path": "skills/pytorch-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/quality-nonconformance/SKILL.md",
+      "local_path": "skills/quality-nonconformance/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/scientific-db-pubmed-database/SKILL.md",
+      "local_path": "skills/scientific-db-pubmed-database/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/scientific-thinking-literature-review/SKILL.md",
+      "local_path": "skills/scientific-thinking-literature-review/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
+    },
+    {
+      "snapshot_path": "skills/scientific-thinking-scholar-evaluation/SKILL.md",
+      "local_path": "skills/scientific-thinking-scholar-evaluation/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim"
     }
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
+    "source_ledger": [
+      "sources/third_party/ecc/upstream/LICENSE",
+      "sources/third_party/ecc/upstream/source-custody.md"
+    ],
+    "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
+    "provenance_refs": [
+      "provenance/data-platform-pack.md",
+      "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  },
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

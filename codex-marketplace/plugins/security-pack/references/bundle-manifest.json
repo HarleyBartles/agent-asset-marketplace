@@ -30,7 +30,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/cryptography.md",
@@ -38,7 +39,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/dependencies.md",
@@ -46,7 +48,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/error-handling.md",
@@ -54,7 +57,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/input-validation.md",
@@ -62,7 +66,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/output-encoding.md",
@@ -70,7 +75,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/secure-defaults.md",
@@ -78,7 +84,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/SKILL.md",
@@ -86,7 +93,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/validation/rubric.yaml",
@@ -94,7 +102,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack secure-coding-practices slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/assessment-workflow.md",
@@ -102,7 +111,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/authentication-failures.md",
@@ -110,7 +120,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/broken-access-control.md",
@@ -118,7 +129,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/cryptographic-failures.md",
@@ -126,7 +138,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/injection.md",
@@ -134,7 +147,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/insecure-design.md",
@@ -142,7 +156,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/integrity-failures.md",
@@ -150,7 +165,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/logging-monitoring.md",
@@ -158,7 +174,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/prevention-strategies.md",
@@ -166,7 +183,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/security-misconfiguration.md",
@@ -174,7 +192,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/ssrf.md",
@@ -182,7 +201,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/references/vulnerable-components.md",
@@ -190,7 +210,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/owasp-top-10/SKILL.md",
@@ -198,7 +219,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack owasp-top-10 slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/api-security.md",
@@ -206,7 +228,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/automation-pipeline.md",
@@ -214,7 +237,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/dast.md",
@@ -222,7 +246,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/fuzzing.md",
@@ -230,7 +255,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/penetration-testing.md",
@@ -238,7 +264,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sast.md",
@@ -246,7 +273,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/references/sca.md",
@@ -254,7 +282,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-testing-patterns/SKILL.md",
@@ -262,7 +291,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Codex Cortex source into the installable Security Pack security-testing-patterns slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/SKILL.md",
@@ -270,7 +300,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Claude-Cortex source into the installable security-pack slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/attack-trees.md",
@@ -278,7 +309,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the threat-tree reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/data-flow-diagrams.md",
@@ -286,7 +318,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the DFD reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/dread-scoring.md",
@@ -294,7 +327,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the DREAD scoring reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/mitigation-strategies.md",
@@ -302,7 +336,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the mitigation planning reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-spoofing.md",
@@ -310,7 +345,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE spoofing reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-tampering.md",
@@ -318,7 +354,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE tampering reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-repudiation.md",
@@ -326,7 +363,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE repudiation reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-disclosure.md",
@@ -334,7 +372,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE information disclosure reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-dos.md",
@@ -342,7 +381,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE denial-of-service reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/stride-elevation.md",
@@ -350,7 +390,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the STRIDE elevation-of-privilege reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/references/tools-and-process.md",
@@ -358,7 +399,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the tooling and process reference for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
@@ -366,7 +408,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Projected as the threat-modeling quality rubric for the installable slice.",
-      "source_family": "claude-cortex"
+      "source_family": "claude-cortex",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/defi-amm-security/SKILL.md",
@@ -374,7 +417,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack defi-amm-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/django-security/SKILL.md",
@@ -382,7 +426,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack django-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/laravel-security/SKILL.md",
@@ -390,7 +435,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack laravel-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/llm-trading-agent-security/SKILL.md",
@@ -398,7 +444,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack llm-trading-agent-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/network-config-validation/SKILL.md",
@@ -406,7 +453,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack network-config-validation slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/perl-security/SKILL.md",
@@ -414,7 +462,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack perl-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/prediction-market-risk-review/SKILL.md",
@@ -422,7 +471,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack prediction-market-risk-review slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/quarkus-security/SKILL.md",
@@ -430,7 +480,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack quarkus-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/safety-guard/SKILL.md",
@@ -438,7 +489,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack safety-guard slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-bounty-hunter/SKILL.md",
@@ -446,7 +498,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-bounty-hunter slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-review/cloud-infrastructure-security.md",
@@ -454,7 +507,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-review slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-review/SKILL.md",
@@ -462,7 +516,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-review slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/security-scan/SKILL.md",
@@ -470,7 +525,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack security-scan slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/springboot-security/SKILL.md",
@@ -478,7 +534,8 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained ECC source into the installable Security Pack springboot-security slice.",
-      "source_family": "ecc"
+      "source_family": "ecc",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "notes": [
@@ -488,5 +545,7 @@
   ],
   "provenance_refs": [
     "provenance/security-pack.md"
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }
