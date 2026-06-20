@@ -21,3 +21,14 @@ For issue-backed work, preserve or require:
 - `judgment`.
 
 Tracked source-controlled changes route through worker dispatches unless Harley explicitly authorizes a direct GPT exception.
+
+## Devin-shaped Rooms repo cleanup campaigns
+
+Rooms repo cleanup campaigns may be Devin-shaped. Prefer:
+
+- one durable Linear parent issue with a clear repo target and issue goal;
+- Linear documents as lane/subtask packets where a chunky cleanup campaign needs multiple seams, instead of spawning many child issues by default;
+- one coherent PR unless a split condition triggers (too-large diff, unrelated concerns, protected surface, validation dependency, or repo boundary);
+- mandatory worktree isolation: before mutation, Devin must work in a fresh dedicated worktree based on current `main` or the issue-specified base, and report worktree path, branch name, base commit, `git status --short` before mutation, and whether any pre-existing dirty state was present.
+
+Keep Rooms-specific protected-surface law in Rooms wrapper references. Do not collapse Rooms doctrine into the generic GPT-wide worker skill.

@@ -17,6 +17,18 @@ Before editing files, the worker must:
 4. Do not start implementation from a stale branch base.
 5. If the branch cannot be updated from current main, stop and report BLOCKED or AMBER with the exact blocker.
 
+## Worktree isolation gate
+
+For Devin-backed repo tasks, work in a fresh dedicated worktree based on current `main` or the issue-specified base before any file mutation. Report before mutating:
+
+- worktree path;
+- branch name;
+- base commit;
+- `git status --short` before mutation;
+- whether any pre-existing dirty state was present.
+
+Do not overwrite pre-existing dirty state. Report it. This gate composes with the fresh-main invariant; it does not replace it.
+
 ## Branch and PR discipline
 
 Use a task branch for repo work. Do not treat direct push to `main` as the normal path.

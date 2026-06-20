@@ -15,6 +15,18 @@ A Linear issue is worker-ready when a future execution actor can read it and kno
 
 Do not require YAML unless the target worker or user explicitly asks for it. Boring means executable, bounded, and falsifiable, not verbose.
 
+## Issue-type classification
+
+Classify before shaping so the issue gets the right size and return contract. Read `devin-campaign-shape.md` for the full profile.
+
+- `small worker-ready issue`: one bounded Linear issue with a compact DOD and standard worker return.
+- `devin campaign issue`: one durable Linear parent issue, Linear documents as lane/subtask packets where a chunky campaign needs multiple seams, one PR unless a split condition triggers, and stronger return evidence.
+- `planning/tracker issue`: parent/tracker or planning-only issue, no execution yet.
+- `gpt-native skillwork`: GPT-native skill author/edit/package work. Route to Devin only when the editable source is repo-backed and the issue explicitly targets that repo.
+- `non-repo/manual work`: UI, connector, account, research, or manual action with no PR.
+
+Do not overgrow a small worker issue into campaign shape. Do not route GPT-native skillwork to Devin merely because it touches skill text.
+
 ## Durable MARK worker issue convention
 
 For MARK-style worker child issues, preserve this durable Linear shape:
@@ -58,3 +70,30 @@ Do not name or imply an execution provider unless the user explicitly names one.
 When PR publication is expected, include:
 
 `When implementation is complete, return evidence in Linear, including validation output and any PR/branch/commit link if one is created. Do not require hidden credentials or unmentioned publication routes.`
+
+## Devin campaign issue shape
+
+When the issue is a Devin campaign issue (chunky repo campaign), read `devin-campaign-shape.md` and add to the issue body:
+
+- campaign shape note: one PR preference and lane-document option;
+- at least one split condition;
+- the worktree isolation gate (see below);
+- stronger return evidence: branch, PR URL, final head SHA, changed files, validation output, generated-artifact explanation, and blockers/readiness.
+
+Prefer one durable Linear parent issue with Linear documents as lane/subtask packets over spawning many child issues by default.
+
+## Devin worktree isolation gate
+
+For any Devin-backed repo task, the issue body must include the worktree isolation gate. Before mutation, Devin must work in a fresh dedicated worktree based on current `main` or the issue-specified base, and report:
+
+- worktree path;
+- branch name;
+- base commit;
+- `git status --short` before mutation;
+- whether any pre-existing dirty state was present.
+
+Pre-existing dirty state must be reported, not overwritten.
+
+Suggested issue-body wording:
+
+`Before mutation, work in a fresh dedicated worktree based on current main (or the issue-specified base). Report worktree path, branch name, base commit, git status --short before mutation, and whether any pre-existing dirty state was present. Do not overwrite pre-existing dirty state.`
