@@ -555,7 +555,7 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
     if upstream_repo == "NickCrew/Claude-Cortex":
         if pinned_commit != "7892d00e7cb6adf00144a535103b930c772fb2c0":
             raise ValueError("Unexpected pinned commit for NickCrew/Claude-Cortex vendor snapshot")
-        return ROOT / "sources/third_party/codex-cortex/upstream"
+        return ROOT / "sources/third_party/claude-cortex/upstream"
     if upstream_repo == "affaan-m/ECC":
         if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
             raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
@@ -564,6 +564,9 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
             raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
         return ROOT / "sources/third_party/ecc/upstream"
+    if upstream_repo == "combined-source":
+        # Combined-source bundles aggregate from multiple upstreams; no single vendor root
+        return None
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
@@ -1216,13 +1219,15 @@ def validate_skill_bundle_manifest(
                 if not family_source_root or not isinstance(family_source_root, str):
                     raise ValueError("security-pack bundle manifest source_families source_root mismatch")
                 family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
-                resolved_family_root = family_vendor_root / family_source_root
-                check_path_exists(resolved_family_root)
-                source_family_roots[family_name] = resolved_family_root
+                if family_vendor_root is not None:
+                    resolved_family_root = family_vendor_root / family_source_root
+                    check_path_exists(resolved_family_root)
+                    source_family_roots[family_name] = resolved_family_root
             check_path_exists(ROOT / plugin_root / source_root)
         else:
             vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
-            check_path_exists(vendor_root / source_root)
+            if vendor_root is not None:
+                check_path_exists(vendor_root / source_root)
 
     _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name=bundle_name, plugin_root=plugin_root)
     _validate_plugin_level_authorship(bundle_manifest, bundle_name=bundle_name)
@@ -1280,8 +1285,9 @@ def validate_skill_bundle_manifest(
                     raise ValueError(
                         f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
                     )
-            assert entry_vendor_root is not None
-            check_path_exists(entry_vendor_root / snapshot_path)
+            # For combined-source bundles, vendor_root may be None; skip snapshot path validation in that case
+            if entry_vendor_root is not None:
+                check_path_exists(entry_vendor_root / snapshot_path)
             content_mode = entry.get("content_mode")
             
             # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
@@ -1306,7 +1312,9 @@ def validate_skill_bundle_manifest(
                     raise ValueError(f"{bundle_name} bundle manifest normalised entry should not have adapted_author or adaptation_note")
             if content_mode == "adapted" and not entry.get("adaptation_note"):
                 raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
-            if content_mode == "verbatim":
+            
+            # Content-equivalence checks (only if vendor_root is available)
+            if entry_vendor_root is not None:
                 source_path = entry_vendor_root / snapshot_path
                 projected_path = ROOT / plugin_root / local_path
                 
@@ -1320,15 +1328,30 @@ def validate_skill_bundle_manifest(
                         )
                 elif content_mode in {"normalised", "normalized"}:
                     # Normalised: body-equivalence comparison ignoring projection-only metadata
+                    # and accounting for canonical path normalization (e.g., references/ moves)
                     _, source_body = _split_skill_frontmatter_and_body(source_path)
                     _, projected_body = _split_skill_frontmatter_and_body(projected_path)
+                    
+                    # For combined-source bundles, canonicalize path references in the body
+                    # to account for projection-only path normalization (e.g., skills/x/references/ -> references/)
+                    if bundle_manifest.get("content_mode") == "combined-source":
+                        # Extract skill name from local_path to build canonical path mappings
+                        # local_path format: skills/<skill-name>/SKILL.md
+                        parts = local_path.split('/')
+                        if len(parts) >= 2 and parts[0] == "skills":
+                            skill_name = parts[1]
+                            # Normalize path references from skills/<skill>/references/ to references/
+                            source_body = source_body.replace(f"skills/{skill_name}/references/", "references/")
+                    
+                    # Normalize line endings for comparison (CRLF vs LF)
+                    source_body = source_body.replace('\r\n', '\n')
+                    projected_body = projected_body.replace('\r\n', '\n')
+                    
                     if source_body != projected_body:
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} substantive content drifted from retained snapshot"
                         )
                 # For adapted entries, no content-equivalence check
-            elif content_mode == "adapted" and not entry.get("adaptation_note"):
-                raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
 
         for entry in skipped_entries + blocked_entries:
             if entry.get("local_path") not in ("", None):

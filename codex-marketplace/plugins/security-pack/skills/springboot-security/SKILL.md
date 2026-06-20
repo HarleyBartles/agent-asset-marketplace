@@ -2,7 +2,12 @@
 name: springboot-security
 description: Spring Security best practices for authn/authz, validation, CSRF, secrets, headers, rate limiting, and dependency security in Java Spring Boot services.
 metadata:
-  origin: ECC
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: skills/springboot-security/SKILL.md
+  version: 1.0.0
 ---
 
 # Spring Boot Security Review

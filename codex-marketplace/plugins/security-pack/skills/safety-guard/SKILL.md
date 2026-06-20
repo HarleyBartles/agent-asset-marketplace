@@ -2,7 +2,12 @@
 name: safety-guard
 description: Use this skill to prevent destructive operations when working on production systems or running agents autonomously.
 metadata:
-  origin: ECC
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: skills/safety-guard/SKILL.md
+  version: 1.0.0
 ---
 
 # Safety Guard — Prevent Destructive Operations

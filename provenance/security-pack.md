@@ -76,9 +76,9 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 - **Display name**: `Security Pack`
 - **Marketplace category**: `Productivity`
 - **Content mode**: 
-  - `adapted` from NickCrew/Claude-Cortex custody
-  - `verbatim` from ECC custody
-- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex and ECC custody with first-party selection ledger
+  - `normalised` from NickCrew/Claude-Cortex custody (path normalization, frontmatter enrichment, MARK-262 metadata)
+  - `normalised` from ECC custody (frontmatter enrichment, MARK-262 metadata)
+- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex and ECC custody with first-party selection ledger; substantive content unchanged
 
 ## Rights and Attribution
 

@@ -18,13 +18,18 @@ file_patterns:
   - "**/auth/**"
   - "**/security/**"
 confidence: 0.82
+metadata:
+  content_mode: normalised
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md
 ---
 
 # Threat Modeling Techniques
 
-Use this installable slice to frame attack surfaces, abuse cases, trust
-boundaries, and design-time security controls before implementation hardens the
-architecture.
+Use this skill to identify attack surfaces, abuse cases, trust boundaries, and
+design-time security controls before implementation hardens the architecture.
 
 ## When to Use This Skill
 

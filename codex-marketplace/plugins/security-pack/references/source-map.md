@@ -13,6 +13,9 @@ Harmonization notes:
   `owasp-top-10`; it owns general review and cloud infrastructure security, and
   its support doc is projected at
   `codex-marketplace/plugins/security-pack/skills/security-review/references/cloud-infrastructure-security.md`.
+- All skills are projected as `normalised` - substantive content is unchanged,
+  with only path normalization, frontmatter enrichment, and MARK-262 metadata
+  added for Codex/OpenAI compatibility.
 - Detailed file-level projections and source-file inventories are captured in
   `references/bundle-manifest.json`.
 

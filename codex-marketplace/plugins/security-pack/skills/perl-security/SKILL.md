@@ -2,7 +2,12 @@
 name: perl-security
 description: Comprehensive Perl security covering taint mode, input validation, safe process execution, DBI parameterized queries, web security (XSS/SQLi/CSRF), and perlcritic security policies.
 metadata:
-  origin: ECC
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: skills/perl-security/SKILL.md
+  version: 1.0.0
 ---
 
 # Perl Security Patterns

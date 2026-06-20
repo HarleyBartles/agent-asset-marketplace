@@ -2,7 +2,12 @@
 name: security-review
 description: Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
 metadata:
-  origin: ECC
+  content_mode: normalised
+  source_author: ECC (affaan-m/ECC)
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: skills/security-review/SKILL.md
+  version: 1.0.0
 ---
 
 # Security Review Skill
@@ -498,7 +503,6 @@ Before ANY production deployment:
 - [Next.js Security](https://nextjs.org/docs/security)
 - [Supabase Security](https://supabase.com/docs/guides/auth)
 - [Web Security Academy](https://portswigger.net/web-security)
-- [Cloud infrastructure security reference](references/cloud-infrastructure-security.md)
 
 ---
 

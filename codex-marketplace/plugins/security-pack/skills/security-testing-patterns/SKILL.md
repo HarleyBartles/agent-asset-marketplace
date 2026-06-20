@@ -20,6 +20,12 @@ file_patterns:
   - '**/docker-compose*.yml'
   - '**/security/**'
 confidence: 0.8
+metadata:
+  content_mode: normalised
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md
 ---
 
 # Security Testing Patterns

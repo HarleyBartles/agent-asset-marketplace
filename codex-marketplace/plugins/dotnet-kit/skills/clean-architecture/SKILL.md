@@ -4,6 +4,14 @@ description: >
   Use when building or reviewing a layered .NET system that uses Domain,
   Application, Infrastructure, and Api projects, dependency inversion, use case
   handlers, domain entities with behavior, or infrastructure as a plugin.
+metadata:
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Removed advisor-specific trigger language and kept the clean architecture guidance.
+  source_author: codewithmukesh
+  source_license: MIT
+  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
+  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture/SKILL.md
 ---
 
 # Clean Architecture

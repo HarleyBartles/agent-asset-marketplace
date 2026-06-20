@@ -4,6 +4,14 @@ description: >
   Use when modeling a .NET domain with aggregates, aggregate roots, value
   objects, domain events, domain services, strongly-typed IDs, or repositories
   that persist aggregate roots.
+metadata:
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Kept the DDD tactical guidance and normalized provider-specific wording.
+  source_author: codewithmukesh
+  source_license: MIT
+  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
+  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/ddd/SKILL.md
 ---
 
 # Domain-Driven Design (DDD)

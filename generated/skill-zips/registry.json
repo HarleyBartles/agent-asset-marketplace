@@ -1295,13 +1295,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/clean-architecture/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 12825,
-      "source_sha256": "f91f422c6a6f6a6d02487d8c11d47fe12ae54982a0453c1f15cfff124c761bfc",
+      "source_bytes": 13213,
+      "source_sha256": "d59644d6745b93fc13f8e8284d3cd50175bb5fd97b4b38586456bd56b5b30259",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4184,
-      "zip_sha256": "614c45bb9621b78f1282adbf4a3b526327c85c2d29e483745f82fbec57162224"
+      "zip_size_bytes": 4390,
+      "zip_sha256": "aec82c9b1ff76a282a043c8c75cd22e3f9ec42248a1e664df4c82642ab4594ba"
     },
     {
       "pack": "dotnet-kit",
@@ -1311,13 +1311,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/ddd/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 11748,
-      "source_sha256": "966479747c3e2c7373ece283bbf5b8bee831827c5577f9907cf54dfcac67ec68",
+      "source_bytes": 12110,
+      "source_sha256": "24ac5c4270571c772771c144a0299ce004d7c4fd283fc8a34352593d8a95356c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4157,
-      "zip_sha256": "d5eb805f8f00fe31023e8d7935869056fd51e97d4799f6a5518cc4ff894ff44e"
+      "zip_size_bytes": 4361,
+      "zip_sha256": "f541e391881c0ca5944f893e98e25cf0773b563d78e3e7d2ebe82c6b350720b6"
     },
     {
       "pack": "dotnet-kit",
@@ -1327,13 +1327,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/ef-core/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 8812,
-      "source_sha256": "657368090d293f46e29dd80c81375860457d33777b23de9745ef057d8e5c4a3c",
+      "source_bytes": 9179,
+      "source_sha256": "e85a53efd7e86dc5112d96c4c2bff597661d46618d00b72f1d0b5961e0064e7d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3318,
-      "zip_sha256": "c5c7ecfdc031b784fa0dc51b82987bfa305db0dd1652344c643e18b86fd7a2cf"
+      "zip_size_bytes": 3505,
+      "zip_sha256": "4ab773fa1d5d3ea418b89bcb0d3fab54e25c1e9e4dbe53a06af15a46e6852937"
     },
     {
       "pack": "dotnet-kit",
@@ -1343,13 +1343,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/modern-csharp/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6019,
-      "source_sha256": "472ff5ec3a94b7a1d31e76c1cf4e1182d38597600b51058c271da4b2b0c7bfb1",
+      "source_bytes": 6405,
+      "source_sha256": "e0637281407131421f366b1d4e0f77d6fd407f75cd46101f4812e7c4659e4acd",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2636,
-      "zip_sha256": "42639e05be9e9818102b880f0fa58fe1c61df33ae0fef92d4100ab624fa8f1eb"
+      "zip_size_bytes": 2836,
+      "zip_sha256": "4daa29ff0feab4b90baf1061395b180581691758c9863988dc00644c26613820"
     },
     {
       "pack": "dotnet-kit",
@@ -1359,13 +1359,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/testing/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 9874,
-      "source_sha256": "531490209b230491793a67b714869e39ddce4a02666c84de1a91f822f1cffbe7",
+      "source_bytes": 10241,
+      "source_sha256": "2bdfbf177b806a951c1e0386bc6307044d1c730cc07060f1e0fbe40411d4423a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3447,
-      "zip_sha256": "c351a5190f65a674dac4f92fabdd2c8ee5a7d733166860e0b5c1ef3715a8756a"
+      "zip_size_bytes": 3630,
+      "zip_sha256": "45b995e5c43c2eeb9eb1291131a510e728c60a2e884ddb6addbea6b49d2226a8"
     },
     {
       "pack": "dotnet-kit",
@@ -1375,13 +1375,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/dotnet-kit/vertical-slice/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 10198,
-      "source_sha256": "c2b3aa2ed51c690e9d9c95b8d3282802a679c99a8b1aae05172fd015fda4c8a3",
+      "source_bytes": 10592,
+      "source_sha256": "d5e1995285ec66e857805c67ef882bcb1d397b88663c7cae4cfa878556b73630",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3506,
-      "zip_sha256": "52bf53a10daf64ffa8284b266fa17afa2b2831c1c2dc08b3cadf96d172d3fe93"
+      "zip_size_bytes": 3697,
+      "zip_sha256": "15ed4bb9bc2edf565a518774b9514bc9de59dc63ad19aef1457119d50af6666d"
     },
     {
       "pack": "everything-codex-code",
@@ -4511,13 +4511,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/defi-amm-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 5315,
-      "source_sha256": "cdad377f28df2869144ec6ad5a164f1ce0af354c8be886e8af4aef259ee49fb3",
+      "source_bytes": 5459,
+      "source_sha256": "ba42ac38ef4e46012dfc104875c2428df82030a660786f7e0bc4ce8779ff7d94",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2385,
-      "zip_sha256": "9a50106f70af0fa828799e347740b168a0e31107c16cf2383857a7b9d1b159b8"
+      "zip_size_bytes": 2458,
+      "zip_sha256": "f7bd97cb55ec5de1783594aed9e904b60b4f725770b628d4f473497f88455741"
     },
     {
       "pack": "security-pack",
@@ -4527,13 +4527,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/django-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 15817,
-      "source_sha256": "d59f90092c96e1f9c1dc7b5484132bd8841c6305601c90d9ef9ece570e5e369f",
+      "source_bytes": 15999,
+      "source_sha256": "aab20237100a298f078de48ef39e95b3538747fce0bf4d2ef05fabc8cff15cef",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5655,
-      "zip_sha256": "40cc7d916fc2749f84deec8cdddf8052d46d7ab5b9c2623d619de055d32127de"
+      "zip_size_bytes": 5750,
+      "zip_sha256": "4de843e9f94131af444522d563946f944bf85b1a6c810533efa20769b1e689aa"
     },
     {
       "pack": "security-pack",
@@ -4543,13 +4543,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/laravel-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 26452,
-      "source_sha256": "a5ad18c347bd982755af315712915e86ff56e6b111056580139ee699fe9d3415",
+      "source_bytes": 26635,
+      "source_sha256": "7fa266b0b63925a337997c3079a438e2b7fc62ee3b04e1967a57d6005c3a6cf7",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9450,
-      "zip_sha256": "b80e867091f126ab5e160ff6a9607c52d2cb52420477ed2b9a7759e1b131db1d"
+      "zip_size_bytes": 9541,
+      "zip_sha256": "c42fa3a4f4b3d6af733bb82a4727015b7bfceaeff099f723e6cbb455e2a4bd45"
     },
     {
       "pack": "security-pack",
@@ -4559,13 +4559,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/llm-trading-agent-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 4506,
-      "source_sha256": "76b370d867098c545e2cb3c7003e4176f9fcdd3e58957bc1fec5d7dade89228f",
+      "source_bytes": 4659,
+      "source_sha256": "971015f62f8b7ae0ab26a558a3d19c8b51ed8b7d9d74598e5008acb3156fae4a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2218,
-      "zip_sha256": "627a4c720ec12971f97c46fdf94d61e39367e9091a58e435a412a2d24447b427"
+      "zip_size_bytes": 2286,
+      "zip_sha256": "7554250b32e713b098601b1da2b071201b992b3384f9f14f2a866991595145da"
     },
     {
       "pack": "security-pack",
@@ -4575,13 +4575,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/network-config-validation/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7656,
-      "source_sha256": "c4e4fa2e5c98356bd7790a2c074825de4dabb6f06792d530d6299a1f1146be20",
+      "source_bytes": 7842,
+      "source_sha256": "109283f5bec23a790b2eaacc2f7b79e26b046692fe2ab0aa0cd1e9ae4aa1f355",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3024,
-      "zip_sha256": "596e9e68626249fc13f43b430485f22414640cae561fd72f2a272c25823cb5e7"
+      "zip_size_bytes": 3117,
+      "zip_sha256": "06c4ee322e46f14be28333a9cbeb588351bdb6196dfb8637adfbd86e3a691ffa"
     },
     {
       "pack": "security-pack",
@@ -4591,13 +4591,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/owasp-top-10/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 35401,
-      "source_sha256": "942e03aad63b17bb185fa5f053d6a87fc009e5d51ad80f4b81dd70e798b6cfd9",
+      "source_bytes": 35630,
+      "source_sha256": "ba5a0faa316a913859723f982d7eee2ae8299d372768a93eaca41ac985424821",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18445,
-      "zip_sha256": "11d9126dc9946eb88e291cde20157a3f4a1b39b3776ab89bbb7ba0fdecdb4c38"
+      "zip_size_bytes": 18566,
+      "zip_sha256": "74cf6354fecda6fad0aaff3e643c9ecfa4e791693807695adb6b6cc3075eb3ca"
     },
     {
       "pack": "security-pack",
@@ -4607,13 +4607,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/perl-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 13764,
-      "source_sha256": "d0c2ef874d224be310ec0e59065347924d215e2e9fe11d371bf02818ef9b240b",
+      "source_bytes": 13944,
+      "source_sha256": "34e24ab6a9f9c6e8c7ea41cf22e9e7aac7315dc397b35a8fc7edc287e4e2e038",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 5621,
-      "zip_sha256": "0826dd1b0362f31249300c6bb35fc90ff61e54907485aee8f1629ba6f0bf387e"
+      "zip_size_bytes": 5712,
+      "zip_sha256": "118f37abae89648ce2a3d4d8b58fb71e8a5d42939ca342f1ff378e8223f51dc9"
     },
     {
       "pack": "security-pack",
@@ -4623,13 +4623,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/prediction-market-risk-review/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 1882,
-      "source_sha256": "7787d7d4c629dcde6a2de3d8308863eb7a424f1731f290095ddf384a6031bb39",
+      "source_bytes": 2078,
+      "source_sha256": "c985d3cd82ff421ebf9f7257bc5c4f12197fa105dd00cfd6c7cfccbee85e3fc3",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1147,
-      "zip_sha256": "6e9d72f772504c989b2aa5630e3cfb7bc4ae437fadb515358dc1b65b3590a2ef"
+      "zip_size_bytes": 1248,
+      "zip_sha256": "ae11395644575cf8f106653d9d9583a9652ddeff48e72a8dbc2a528d316017d3"
     },
     {
       "pack": "security-pack",
@@ -4639,13 +4639,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/quarkus-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 12091,
-      "source_sha256": "4f6605091b88fe668d898b13bffa7c405c405e662f9992d4d3cc0c0feb02bc7f",
+      "source_bytes": 12274,
+      "source_sha256": "a9c988f704ace4f330bf4e617cb02cc0944d589f0e905ee6856023d1a74070e1",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4441,
-      "zip_sha256": "5f3f86c0fd3fd1a6d54c2ac868519ce4c81a55ea513f4e8b7eef2fbeabfce1b1"
+      "zip_size_bytes": 4533,
+      "zip_sha256": "5de9cf4d6040d20f138e7f78cf1fb12ff132cc325cfcc2712065d2edad564ec6"
     },
     {
       "pack": "security-pack",
@@ -4655,13 +4655,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/safety-guard/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 1945,
-      "source_sha256": "0cb777421d97d804362ee29173cecaa02d1ef2038bd1c934642189c78f114573",
+      "source_bytes": 2124,
+      "source_sha256": "074dafa16a035ef3f4efb5956769e26492b8971ebdfa918bbec9dd2c09ade82e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1142,
-      "zip_sha256": "c92df7d257c26bd659422967eda0ef38f5016536aee94e24dcf28fec63b849f5"
+      "zip_size_bytes": 1235,
+      "zip_sha256": "f67ff59b86119551973dc3b56caa67f1dd895528d66cb7f847b4f57835273fe5"
     },
     {
       "pack": "security-pack",
@@ -4671,13 +4671,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/secure-coding-practices/skill.zip",
       "source_file_count": 9,
-      "source_bytes": 32682,
-      "source_sha256": "500d8feff249c6a208a88357d63242fc706aa05b0c546608c80383f2e1adcdb5",
+      "source_bytes": 32922,
+      "source_sha256": "75ec62f28321b0f7b5ee0e1ade9b5d6815ea9327f7d1d34266f22cde32a99541",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15730,
-      "zip_sha256": "96a0b47742229918325f787c8641925db9efe71a3d79524e901bef48a67f4da9"
+      "zip_size_bytes": 15849,
+      "zip_sha256": "baca2907bcf2591464965b5bcf971bd98a189a8c0cbca891005ab0cf9b601da2"
     },
     {
       "pack": "security-pack",
@@ -4687,13 +4687,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/security-bounty-hunter/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3545,
-      "source_sha256": "91fedd1836266b44b8ae5504e273166b7d2e349b92b49146474d370d4bfc3d52",
+      "source_bytes": 3694,
+      "source_sha256": "0900f43a316952acc127549921a62d091626264dfb5b46d4088f81ff618dd17f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1962,
-      "zip_sha256": "fc3772c5fe3a0e523ac197bb1e2ed5d301c79728d0938475d8717380342fd7e2"
+      "zip_size_bytes": 2038,
+      "zip_sha256": "133900a274bc7e89dd669e05cfd2882e44148dd287a9332f5c3ce5548a2a6a50"
     },
     {
       "pack": "security-pack",
@@ -4703,13 +4703,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/security-review/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 22753,
-      "source_sha256": "31e7e6659f6b79587bca8c8c4d437b6bb62798f63c7ad18088b9be1d1263dd43",
+      "source_bytes": 22846,
+      "source_sha256": "122b2e8cd4131a7174c3b20894d2215c47b717fa7375652e482a6bc25f1dbe7f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9131,
-      "zip_sha256": "0ffe8373d12702dccc40b541c8d8a378f959d647067598eef82897f750270c67"
+      "zip_size_bytes": 9178,
+      "zip_sha256": "5d2b89f9141b11690f9916d42b650570c882c810a677a9132d2f7e0e0cb58959"
     },
     {
       "pack": "security-pack",
@@ -4719,13 +4719,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/security-scan/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 4481,
-      "source_sha256": "0e8debaf983202de5eaa61490e20bd3bcd6e3b39b4c9f171ab646a98b378de1b",
+      "source_bytes": 4661,
+      "source_sha256": "e97d95bf4baac8a415b9f9ee6e70f92d22d54ba81e573b4a5a37a02b4cdef0e6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2109,
-      "zip_sha256": "a19ea5a6505287144cb7de687138e663be3e3270641c2d46c1e70830af21f3ce"
+      "zip_size_bytes": 2181,
+      "zip_sha256": "79d4f814dacaee57f44f31cb12996390830b28f3751a85530863bb1a1ac0f06b"
     },
     {
       "pack": "security-pack",
@@ -4735,13 +4735,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/security-testing-patterns/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 36732,
-      "source_sha256": "903db4cfacd7d2296bdc1bd57dd15d30397657088efd008e50c1307ea743aafd",
+      "source_bytes": 36974,
+      "source_sha256": "78656a8b02792398ec14dbd17a3acc361ef95f71e2c41245de60a0c2b8e9b5e9",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16563,
-      "zip_sha256": "d9012b7580e27eb4b95f40b3aabdf32fc1e24fa96d204696b9f0073735c11c08"
+      "zip_size_bytes": 16678,
+      "zip_sha256": "c991c2331083310d9bfa5485f45d2b4b1b7061f6cc51f337a8fe6081b9589358"
     },
     {
       "pack": "security-pack",
@@ -4751,13 +4751,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/springboot-security/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 8031,
-      "source_sha256": "c4db53014dab63314fd633b8f23638a47c4661f9aff3caa028b2b69c2e8dabbb",
+      "source_bytes": 8217,
+      "source_sha256": "08c7e7930fe15cec1732d98b7d8c9cbb9815ee5a1fdff57947ff135427de176c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3499,
-      "zip_sha256": "0adf82bc1bb2418a41695885dff3d1af130a2410643e78993e3a8f753550433c"
+      "zip_size_bytes": 3594,
+      "zip_sha256": "718e0a0f617606be94a03b11cea890654e3f1b58813c16e361f77c08123bffe3"
     },
     {
       "pack": "security-pack",
@@ -4767,13 +4767,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 13844,
-      "source_sha256": "10fecc4670229bbf0ea6cea4f6ebce42db52cee0cb387b8cf7a61d0d0d3e10f9",
+      "source_bytes": 14078,
+      "source_sha256": "afb180a684dae3aadd0ebc17c5f328cbaf0d296eae0881759f405d5add91084d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9148,
-      "zip_sha256": "a666ae92908c636afb3e60a82cf484ccc20e4abdfed4f4d6ae3158cd7725fdce"
+      "zip_size_bytes": 9259,
+      "zip_sha256": "9bda7ed873d5b6040c8f29407a8fa1402445986d594daad4201790e6086f7ee2"
     },
     {
       "pack": "superpowers-ecc",

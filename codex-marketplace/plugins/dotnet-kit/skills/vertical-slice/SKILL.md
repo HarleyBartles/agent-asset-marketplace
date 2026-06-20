@@ -4,6 +4,14 @@ description: >
   Use when organizing a .NET application by feature rather than layer, working in
   a feature-folder codebase, or needing guidance on endpoint grouping and handler
   patterns for Mediator, Wolverine, or raw handler classes.
+metadata:
+  content_mode: adapted
+  adapted_author: Harley Bartles
+  adaptation_note: Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance.
+  source_author: codewithmukesh
+  source_license: MIT
+  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
+  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md
 ---
 
 # Vertical Slice Architecture (VSA)
