@@ -58,20 +58,20 @@ Projected pack skills:
 
 | Skill | Source path | Pack path | Notes |
 | --- | --- | --- | --- |
-| defi-amm-security | `sources/third_party/ecc/upstream/skills/defi-amm-security/` | `codex-marketplace/plugins/security-pack/skills/defi-amm-security/` | Adapted into the combined Security Pack as the DeFi AMM review slice. |
-| django-security | `sources/third_party/ecc/upstream/skills/django-security/` | `codex-marketplace/plugins/security-pack/skills/django-security/` | Adapted into the combined Security Pack as the Django hardening slice. |
-| laravel-security | `sources/third_party/ecc/upstream/skills/laravel-security/` | `codex-marketplace/plugins/security-pack/skills/laravel-security/` | Adapted into the combined Security Pack as the Laravel hardening slice. |
-| llm-trading-agent-security | `sources/third_party/ecc/upstream/skills/llm-trading-agent-security/` | `codex-marketplace/plugins/security-pack/skills/llm-trading-agent-security/` | Adapted into the combined Security Pack as the LLM trading-agent guardrails slice. |
-| network-config-validation | `sources/third_party/ecc/upstream/skills/network-config-validation/` | `codex-marketplace/plugins/security-pack/skills/network-config-validation/` | Adapted into the combined Security Pack as the network config validation slice. |
-| perl-security | `sources/third_party/ecc/upstream/skills/perl-security/` | `codex-marketplace/plugins/security-pack/skills/perl-security/` | Adapted into the combined Security Pack as the Perl hardening slice. |
-| prediction-market-risk-review | `sources/third_party/ecc/upstream/skills/prediction-market-risk-review/` | `codex-marketplace/plugins/security-pack/skills/prediction-market-risk-review/` | Adapted into the combined Security Pack as the prediction-market risk slice. |
-| quarkus-security | `sources/third_party/ecc/upstream/skills/quarkus-security/` | `codex-marketplace/plugins/security-pack/skills/quarkus-security/` | Adapted into the combined Security Pack as the Quarkus hardening slice. |
-| safety-guard | `sources/third_party/ecc/upstream/skills/safety-guard/` | `codex-marketplace/plugins/security-pack/skills/safety-guard/` | Adapted into the combined Security Pack as the safe-operation overlay. |
-| security-bounty-hunter | `sources/third_party/ecc/upstream/skills/security-bounty-hunter/` | `codex-marketplace/plugins/security-pack/skills/security-bounty-hunter/` | Adapted into the combined Security Pack as the exploit-oriented review slice. |
-| security-review | `sources/third_party/ecc/upstream/skills/security-review/` | `codex-marketplace/plugins/security-pack/skills/security-review/` | Adapted into the combined Security Pack as the general security review slice. |
+| defi-amm-security | `sources/third_party/ecc/upstream/skills/defi-amm-security/` | `codex-marketplace/plugins/security-pack/skills/defi-amm-security/` | Normalised projection as the DeFi AMM review slice. |
+| django-security | `sources/third_party/ecc/upstream/skills/django-security/` | `codex-marketplace/plugins/security-pack/skills/django-security/` | Normalised projection as the Django hardening slice. |
+| laravel-security | `sources/third_party/ecc/upstream/skills/laravel-security/` | `codex-marketplace/plugins/security-pack/skills/laravel-security/` | Normalised projection as the Laravel hardening slice. |
+| llm-trading-agent-security | `sources/third_party/ecc/upstream/skills/llm-trading-agent-security/` | `codex-marketplace/plugins/security-pack/skills/llm-trading-agent-security/` | Normalised projection as the LLM trading-agent guardrails slice. |
+| network-config-validation | `sources/third_party/ecc/upstream/skills/network-config-validation/` | `codex-marketplace/plugins/security-pack/skills/network-config-validation/` | Normalised projection as the network config validation slice. |
+| perl-security | `sources/third_party/ecc/upstream/skills/perl-security/` | `codex-marketplace/plugins/security-pack/skills/perl-security/` | Normalised projection as the Perl hardening slice. |
+| prediction-market-risk-review | `sources/third_party/ecc/upstream/skills/prediction-market-risk-review/` | `codex-marketplace/plugins/security-pack/skills/prediction-market-risk-review/` | Normalised projection as the prediction-market risk slice. |
+| quarkus-security | `sources/third_party/ecc/upstream/skills/quarkus-security/` | `codex-marketplace/plugins/security-pack/skills/quarkus-security/` | Normalised projection as the Quarkus hardening slice. |
+| safety-guard | `sources/third_party/ecc/upstream/skills/safety-guard/` | `codex-marketplace/plugins/security-pack/skills/safety-guard/` | Normalised projection as the safe-operation overlay. |
+| security-bounty-hunter | `sources/third_party/ecc/upstream/skills/security-bounty-hunter/` | `codex-marketplace/plugins/security-pack/skills/security-bounty-hunter/` | Normalised projection as the exploit-oriented review slice. |
+| security-review | `sources/third_party/ecc/upstream/skills/security-review/` | `codex-marketplace/plugins/security-pack/skills/security-review/` | Normalised projection as the general security review slice. |
 | security-review support doc | `sources/third_party/ecc/upstream/skills/security-review/cloud-infrastructure-security.md` | `codex-marketplace/plugins/security-pack/skills/security-review/references/cloud-infrastructure-security.md` | Projected through the skill-local `references/` adapter path. |
-| security-scan | `sources/third_party/ecc/upstream/skills/security-scan/` | `codex-marketplace/plugins/security-pack/skills/security-scan/` | Adapted into the combined Security Pack as the configuration scanning slice. |
-| springboot-security | `sources/third_party/ecc/upstream/skills/springboot-security/` | `codex-marketplace/plugins/security-pack/skills/springboot-security/` | Adapted into the combined Security Pack as the Spring Boot hardening slice. |
+| security-scan | `sources/third_party/ecc/upstream/skills/security-scan/` | `codex-marketplace/plugins/security-pack/skills/security-scan/` | Normalised projection as the configuration scanning slice. |
+| springboot-security | `sources/third_party/ecc/upstream/skills/springboot-security/` | `codex-marketplace/plugins/security-pack/skills/springboot-security/` | Normalised projection as the Spring Boot hardening slice. |
 
 The pack root is an installable Codex plugin projection. It does not replace
 either retained custody tree.
