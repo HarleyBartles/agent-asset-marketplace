@@ -6,7 +6,7 @@
   "source_root": ".",
   "path_semantics": "composed-projection",
   "candidate_count": 14,
-  "imported_count": 6,
+  "imported_count": 9,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -65,6 +65,39 @@
     {
       "snapshot_path": "profiles/implementation-plans.md",
       "local_path": "skills/unslop-plus/profiles/implementation-plans.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "First-party portable profile derived from MARK-265 Linear issue requirements.",
+      "adapted_author": "Harley Bartles",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/code-review.md",
+      "local_path": "skills/unslop-plus/profiles/code-review.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "First-party portable profile derived from MARK-265 Linear issue requirements.",
+      "adapted_author": "Harley Bartles",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/worker-returns.md",
+      "local_path": "skills/unslop-plus/profiles/worker-returns.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "First-party portable profile derived from MARK-265 Linear issue requirements.",
+      "adapted_author": "Harley Bartles",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/debugging.md",
+      "local_path": "skills/unslop-plus/profiles/debugging.md",
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "First-party portable profile derived from MARK-265 Linear issue requirements.",
