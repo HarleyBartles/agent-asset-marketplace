@@ -23,6 +23,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch origin/main
+        run: git fetch origin main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,7 +38,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Generate skill artifacts
-        run: python tools/update_skill_artifacts.py --all
+        run: python tools/update_skill_artifacts.py --all --base origin/main
 
       - name: Generate marketplace
         run: python tools/generate_marketplace.py
