@@ -3,11 +3,6 @@ name: recursive-decision-ledger
 description: Use when the user asks for repeated rollouts, marked decision processes, high-dimensional search, stochastic optimization, local-optima exploration, ensemble comparison, or recursive reasoning with a visible evidence trail.
 metadata:
   origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/recursive-decision-ledger/SKILL.md
-  content_mode: verbatim
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

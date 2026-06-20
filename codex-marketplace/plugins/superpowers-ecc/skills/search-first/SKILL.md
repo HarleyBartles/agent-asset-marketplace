@@ -3,11 +3,6 @@ name: search-first
 description: Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent.
 metadata:
   origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/search-first/SKILL.md
-  content_mode: verbatim
 ---
 
 # /search-first — Research Before You Code

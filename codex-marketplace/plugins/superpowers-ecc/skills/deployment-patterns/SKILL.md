@@ -3,11 +3,6 @@ name: deployment-patterns
 description: Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, rollback strategies, and production readiness checklists for web applications.
 metadata:
   origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md
-  content_mode: verbatim
 ---
 
 # Deployment Patterns
