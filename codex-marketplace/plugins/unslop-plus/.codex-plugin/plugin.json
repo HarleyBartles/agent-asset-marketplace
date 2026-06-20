@@ -1,0 +1,38 @@
+{
+  "name": "unslop-plus",
+  "version": "1.0.0",
+  "description": "Generate and validate domain-specific anti-slop profiles from bundled Python scripts with thirteen first-party portable profiles for common software development workflows.",
+  "author": {
+    "name": "Asset Marketplace",
+    "url": "https://github.com/HarleyBartles/agent-asset-marketplace"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "writing",
+    "profile",
+    "validation",
+    "code-review",
+    "debugging",
+    "testing",
+    "architecture"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Unslop+",
+    "shortDescription": "Anti-slop profiles for software development workflows",
+    "longDescription": "Asset Marketplace-owned unslop-plus package with thirteen first-party portable profiles for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, and cleanup-custody workflows.",
+    "developerName": "Asset Marketplace",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "defaultPrompt": [
+      "Use $unslop-plus to apply the appropriate anti-slop profile for your current workflow."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

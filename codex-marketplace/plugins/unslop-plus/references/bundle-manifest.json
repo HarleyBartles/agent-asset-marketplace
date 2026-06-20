@@ -1,0 +1,18 @@
+{
+  "bundle_name": "unslop-plus",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "mshumer/unslop",
+  "pinned_commit": "edcb62386d129c65e4395f0cfcc9168eb1ba2148",
+  "source_root": ".",
+  "path_semantics": "composed-projection",
+  "candidate_count": 14,
+  "imported_count": 14,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [],
+  "provenance_refs": [
+    "provenance/unslop.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
+}
