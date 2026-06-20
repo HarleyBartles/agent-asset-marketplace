@@ -1,0 +1,96 @@
+.TH CORTEX 1 "2026-05-02" "cortex 2.0.0" "User Commands"
+.SH NAME
+cortex \- Python implementation of cortex list and status commands
+.SH SYNOPSIS
+.B cortex
+[
+B-h
+    R | 
+        B--help
+               R]
+.br
+.B cortex
+
+ICOMMAND
+        R [
+           ISUBCOMMAND
+                      R] [
+                          IARGS
+                               R...]
+.SH DESCRIPTION
+.B cortex
+is Python implementation of cortex list and status commands
+.SH COMMANDS
+Available commands:
+.TP
+.B agent
+Agent commands
+.TP
+.B rules
+Rule commands
+.TP
+.B hooks
+Hook commands
+.TP
+.B skills
+Skill commands
+.TP
+.B completions
+Print shell completion script to stdout
+.TP
+.B mcp
+MCP server commands
+.TP
+.B git
+Safe git operations
+.TP
+.B tmux
+Tmux window management for agents
+.TP
+.B statusline
+Render Claude Code status line
+.TP
+.B tui
+Launch interactive TUI for agent management
+.TP
+.B suggest
+Unified skill and agent suggestions for the current context
+.TP
+.B export
+Export context commands
+.TP
+.B install
+Install CLI integrations and optional extras
+.TP
+.B notes
+Capture and manage notes in the basic-memory vault (~/basic-memory/)
+.TP
+.B docs
+Browse documentation (includes bundled package docs)
+.TP
+.B dev
+Development and maintenance tools
+.TP
+.B uninstall
+Uninstall cortex
+.TP
+.B status
+Show overall status
+.TP
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show help message and exit
+.SH ENVIRONMENT
+.TP
+.B CLAUDE_PLUGIN_ROOT
+Override for context directory (set automatically by Claude Code when running plugin commands)
+.SH FILES
+.TP
+.B ~/.claude/
+Default context directory containing agents, modes, rules, and other configuration
+.SH SEE ALSO
+.BR cortex-tui (1),
+.BR cortex-workflow (1)
+.SH AUTHORS
+Nicholas Ferguson <ncf423@gmail.com>

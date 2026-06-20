@@ -1,37 +1,24 @@
-# Claude Cortex Retained Snapshot
+# Claude Cortex Full Upstream Mirror
 
-Selective third-party custody for the NickCrew/Claude-Cortex upstream drain.
+Full third-party source custody mirror of the NickCrew/Claude-Cortex upstream.
 
 Pinned commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
 License: MIT
+Upstream repo: https://github.com/NickCrew/Claude-Cortex
 
-This snapshot retains the 18 Claude-Cortex skills projected into the
-marketplace across MARK-172, MARK-200, MARK-201, MARK-204, MARK-205,
-MARK-207, MARK-210, MARK-212, MARK-213, and MARK-214:
+## Mirror scope
 
-- `accessibility-audit`
-- `api-design-patterns`
-- `async-python-patterns`
-- `cqrs-event-sourcing`
-- `database-design-patterns`
-- `event-driven-architecture`
-- `interaction-design`
-- `openapi-specification`
-- `owasp-top-10`
-- `python-performance-optimization`
-- `python-testing-patterns`
-- `react-performance-optimization`
-- `secure-coding-practices`
-- `security-testing-patterns`
-- `threat-modeling-techniques`
-- `typescript-advanced-patterns`
-- `ux-review`
-- `webapp-testing`
+This directory contains the full upstream tree at the pinned commit,
+including all 149 skill directories, agent definitions, rules, hooks,
+Python CLI source, tests, documentation, schemas, and configuration files.
 
-All 18 retained skills are projected into canonical marketplace plugins
-(`codex-cortex`, `architecture-pack`, `api-contracts-pack`,
-`language-patterns-pack`, `security-pack`, `frontend-pack`). No other
-Claude-Cortex upstream skills are retained. Candidates not listed here
-were rejected for hard reasons (not in retained custody, duplicate
-existing authority, or violate durable-source doctrine) as recorded in
-`provenance/codex-cortex.md` under the MARK-279 child coverage map.
+## Projection status
+
+Skills from this custody are projected into canonical marketplace plugins
+under `codex-marketplace/plugins/`. See `provenance/codex-cortex.md` for
+the full projection inventory, retained-not-yet-projected list, and
+rejected candidates with hard reasons.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

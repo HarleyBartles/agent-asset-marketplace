@@ -1,76 +1,101 @@
 ---
 name: cqrs-event-sourcing
-description: >
-  Use when designing or reviewing CQRS and event sourcing systems that need
-  auditability, temporal reconstruction, separate read and write models, or
-  projection-based query handling.
+description: CQRS and Event Sourcing patterns for scalable, auditable systems with separated read/write models. Use when building audit-required systems, implementing temporal queries, or designing high-scale applications with complex domain logic.
 keywords:
   - CQRS
-  - event sourcing
   - aggregate root
-  - command
-  - query
-  - projection
+  - command query
+  - domain event
+  - event sourcing
   - event store
-  - temporal query
+  - event stream
+  - projection
+  - read model
+  - write model
 file_patterns:
-  - "**/*event_bus*.*"
-  - "**/cqrs/**"
-  - "**/event-sourcing/**"
-  - "**/eventsourcing/**"
+  - '**/*event_bus*.*'
+  - '**/cqrs/**'
+  - '**/event-sourcing/**'
+  - '**/eventsourcing/**'
 confidence: 0.9
 ---
 
-# CQRS and Event Sourcing
+# CQRS and Event Sourcing Patterns
 
-Use this skill for systems where:
+Expert guidance for implementing Command Query Responsibility Segregation (CQRS) and Event Sourcing patterns to build scalable, auditable systems with complete historical tracking and optimized read/write models.
 
-- commands should express intent and mutate state;
-- queries should read from purpose-built projections;
-- event history must be preserved for replay, audit, or temporal queries;
-- aggregate boundaries need to protect invariants; and
-- consistency can be split between immediate local rules and eventual read-model
-  updates.
+## When to Use This Skill
 
-## Core Model
+- Building systems requiring complete audit trails and compliance
+- Implementing temporal queries ("show me the state at time T")
+- Designing high-scale applications with complex domain logic
+- Creating systems with significantly different read and write patterns
+- Building event-driven architectures with historical replay capability
+- Implementing systems requiring multiple read model projections
+- Designing applications where understanding "what happened" is critical
+- Building collaborative systems with conflict resolution needs
 
-- Commands carry intent and are validated before they reach an aggregate.
-- Events are immutable facts in the past tense.
-- Aggregates enforce consistency boundaries.
-- Projections turn event streams into optimized read models.
-- Event stores keep append-only history that can be replayed.
+## Core Principles
 
-## When Not To Use
+### 1. Command Query Separation
+Separate operations that change state (commands) from operations that read state (queries).
 
-- simple CRUD systems with no audit or replay requirement;
-- broad distributed transactions that span many aggregates;
-- workflows that cannot tolerate eventual consistency in read models.
+| Commands (Write) | Queries (Read) |
+|-----------------|----------------|
+| Express intent (CreateOrder, UpdatePrice) | Return data, never change state |
+| Can be rejected (validation failures) | Can be cached and optimized |
+| Return success/failure, not data | Multiple models for different needs |
+| Change system state | Eventually consistent with writes |
+
+### 2. Events as Source of Truth
+Store state changes as immutable events rather than current state snapshots.
+
+**Traditional**: Store what IS → `UPDATE users SET email = 'new@email.com'`
+**Event Sourcing**: Store what HAPPENED → `APPEND UserEmailChanged event`
+
+**Result**: Complete history, temporal queries, audit trail
+
+### 3. Eventual Consistency
+Accept temporary inconsistency between write and read models for scalability.
+
+### 4. Domain-Driven Design Integration
+- Aggregates enforce business invariants
+- Events represent domain facts
+- Commands express domain operations
+- Bounded contexts define consistency boundaries
 
 ## Quick Reference
 
 | Task | Load reference |
 | --- | --- |
-| CQRS command/query separation | `references/cqrs-patterns.md` |
-| Event streams, snapshots, temporal reconstruction | `references/event-sourcing.md` |
-| Store and infrastructure trade-offs | `references/event-store-tech.md` |
-| Immediate and eventual consistency | `references/consistency-patterns.md` |
-| Implementation checklist | `references/best-practices.md` |
+| CQRS implementation patterns | `skills/cqrs-event-sourcing/references/cqrs-patterns.md` |
+| Event sourcing & snapshots | `skills/cqrs-event-sourcing/references/event-sourcing.md` |
+| EventStoreDB & Axon Framework | `skills/cqrs-event-sourcing/references/event-store-tech.md` |
+| Consistency patterns | `skills/cqrs-event-sourcing/references/consistency-patterns.md` |
+| Best practices checklist | `skills/cqrs-event-sourcing/references/best-practices.md` |
 
 ## Workflow
 
-1. Define the aggregate boundary that owns the invariant.
-2. Write commands that express the user or system intent.
-3. Emit immutable domain events in the past tense.
-4. Persist events in an append-only store.
-5. Build projections for the read paths that need them.
-6. Verify idempotency, versioning, and replay behavior.
+1. **Identify** if CQRS/ES is appropriate (high audit, temporal, or scale needs)
+2. **Design** commands expressing user intent
+3. **Define** events as immutable facts (past tense naming)
+4. **Implement** aggregates as consistency boundaries
+5. **Create** projections optimized for specific query needs
+6. **Handle** eventual consistency across bounded contexts
 
 ## Common Mistakes
 
-- using CQRS for a trivial CRUD feature;
-- making aggregates too large;
-- mutating published events;
-- skipping command validation;
-- ignoring versioning and idempotency in handlers;
-- coupling aggregates directly instead of by ID.
+- Using CQRS for simple CRUD applications (overkill)
+- Large aggregates that span multiple consistency boundaries
+- Modifying or deleting events after publication
+- Skipping command validation before aggregate processing
+- Missing idempotency in event handlers
+- No versioning strategy for event schema evolution
+- Tight coupling between aggregates (use ID references only)
 
+## Resources
+
+- **Books**: "Implementing Domain-Driven Design" (Vernon), "Event Sourcing & CQRS" (Betts et al)
+- **Sites**: cqrs.wordpress.com, eventstore.com/blog, axoniq.io/resources
+- **Tools**: EventStoreDB, Axon Framework, Marten, Eventuous
+- **Patterns**: Event Sourcing, CQRS, Process Manager, Saga, Snapshot

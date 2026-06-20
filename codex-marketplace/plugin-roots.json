@@ -172,6 +172,15 @@
       "plugin_root": "codex-marketplace/plugins/media-content-pack",
       "manifest_path": "codex-marketplace/plugins/media-content-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 19,
+      "name": "planning-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/planning-pack",
+      "plugin_root": "codex-marketplace/plugins/planning-pack",
+      "manifest_path": "codex-marketplace/plugins/planning-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

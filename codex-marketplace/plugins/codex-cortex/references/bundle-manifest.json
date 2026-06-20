@@ -20,8 +20,8 @@
       "source_root": "."
     }
   ],
-  "candidate_count": 100,
-  "imported_count": 100,
+  "candidate_count": 98,
+  "imported_count": 98,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -285,16 +285,6 @@
       "import_status": "imported",
       "content_mode": "verbatim",
       "adaptation_note": "Imported into the Codex Cortex custody plugin as the retained OpenAPI reference surface."
-    },
-    {
-      "snapshot_path": "skills/openapi-specification/validation/rubric.yaml",
-      "local_path": "skills/openapi-specification/validation/rubric.yaml",
-      "import_status": "imported",
-      "content_mode": "normalised",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/validation/rubric.yaml"
     },
     {
       "snapshot_path": "skills/secure-coding-practices/references/authentication.md",
@@ -715,16 +705,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/references/tools-and-process.md"
-    },
-    {
-      "snapshot_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
-      "local_path": "skills/threat-modeling-techniques/validation/rubric.yaml",
-      "import_status": "imported",
-      "content_mode": "normalised",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/validation/rubric.yaml"
     },
     {
       "snapshot_path": "skills/agent-architecture-audit/SKILL.md",

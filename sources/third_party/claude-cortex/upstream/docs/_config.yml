@@ -1,0 +1,24 @@
+title: Cortex
+description: Comprehensive context management plugin for Claude Code
+theme: minima
+markdown: kramdown
+kramdown:
+  input: GFM
+header_pages:
+  - index.md
+  - tutorials/index.md
+  - guides/getting-started.md
+  - guides/skills.md
+  - guides/commands.md
+  - guides/ai/README.md
+  - architecture/MASTER_ARCHITECTURE.md
+  - AI_INTELLIGENCE.md
+logo: /assets/images/cortex-social.png
+github:
+  repository_url: https://github.com/NickCrew/claude-cortex
+repository: NickCrew/claude-cortex
+url: https://cortex.atlascrew.dev
+baseurl: ""
+minima:
+  skin: dark
+  date_format: "%Y-%m-%d"

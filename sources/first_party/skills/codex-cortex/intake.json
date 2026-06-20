@@ -1,73 +1,200 @@
 {
-  "issue": "MARK-213",
+  "issue": "MARK-279",
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
   "retained_snapshot_root": "sources/third_party/claude-cortex/upstream",
+  "custody_scope": "full-upstream-mirror",
+  "custody_skill_count": 149,
   "imports": [
     {
       "source_id": "codex-cortex-cqrs-event-sourcing-v1",
       "public_name": "cqrs-event-sourcing",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["codex-cortex", "architecture-pack"]
     },
     {
       "source_id": "codex-cortex-event-driven-architecture-v1",
       "public_name": "event-driven-architecture",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["codex-cortex", "architecture-pack"]
     },
     {
       "source_id": "codex-cortex-database-design-patterns-v1",
       "public_name": "database-design-patterns",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["codex-cortex", "architecture-pack"]
     },
     {
       "source_id": "codex-cortex-api-design-patterns-v1",
       "public_name": "api-design-patterns",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["codex-cortex", "api-contracts-pack"]
     },
     {
       "source_id": "codex-cortex-openapi-specification-v1",
       "public_name": "openapi-specification",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["codex-cortex", "api-contracts-pack"]
     },
     {
       "source_id": "codex-cortex-secure-coding-practices-v1",
       "public_name": "secure-coding-practices",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["security-pack", "codex-cortex"]
     },
     {
       "source_id": "codex-cortex-owasp-top-10-v1",
       "public_name": "owasp-top-10",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["security-pack", "codex-cortex"]
     },
     {
       "source_id": "codex-cortex-security-testing-patterns-v1",
       "public_name": "security-testing-patterns",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["security-pack", "codex-cortex"]
     },
     {
       "source_id": "codex-cortex-threat-modeling-techniques-v1",
       "public_name": "threat-modeling-techniques",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
-      "status": "imported"
+      "status": "imported",
+      "projected_into": ["security-pack", "codex-cortex"]
+    },
+    {
+      "source_id": "codex-cortex-typescript-advanced-patterns-v1",
+      "public_name": "typescript-advanced-patterns",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
+      "status": "imported",
+      "projected_into": ["language-patterns-pack"]
+    },
+    {
+      "source_id": "codex-cortex-python-testing-patterns-v1",
+      "public_name": "python-testing-patterns",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/SKILL.md",
+      "status": "imported",
+      "projected_into": ["language-patterns-pack"]
+    },
+    {
+      "source_id": "codex-cortex-async-python-patterns-v1",
+      "public_name": "async-python-patterns",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns/SKILL.md",
+      "status": "imported",
+      "projected_into": ["language-patterns-pack"]
+    },
+    {
+      "source_id": "codex-cortex-python-performance-optimization-v1",
+      "public_name": "python-performance-optimization",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/SKILL.md",
+      "status": "imported",
+      "projected_into": ["language-patterns-pack"]
+    },
+    {
+      "source_id": "codex-cortex-react-performance-optimization-v1",
+      "public_name": "react-performance-optimization",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+      "status": "imported",
+      "projected_into": ["frontend-pack"]
+    },
+    {
+      "source_id": "codex-cortex-accessibility-audit-v1",
+      "public_name": "accessibility-audit",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+      "status": "imported",
+      "projected_into": ["frontend-pack"]
+    },
+    {
+      "source_id": "codex-cortex-ux-review-v1",
+      "public_name": "ux-review",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+      "status": "imported",
+      "projected_into": ["frontend-pack"]
+    },
+    {
+      "source_id": "codex-cortex-interaction-design-v1",
+      "public_name": "interaction-design",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+      "status": "imported",
+      "projected_into": ["frontend-pack"]
+    },
+    {
+      "source_id": "codex-cortex-webapp-testing-v1",
+      "public_name": "webapp-testing",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+      "status": "imported",
+      "projected_into": ["frontend-pack"]
+    },
+    {
+      "source_id": "codex-cortex-requirements-discovery-v1",
+      "public_name": "requirements-discovery",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery/SKILL.md",
+      "status": "imported",
+      "projected_into": ["planning-pack"]
+    },
+    {
+      "source_id": "codex-cortex-mermaid-diagramming-v1",
+      "public_name": "mermaid-diagramming",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming/SKILL.md",
+      "status": "imported",
+      "projected_into": ["planning-pack"]
+    },
+    {
+      "source_id": "codex-cortex-development-estimation-v1",
+      "public_name": "development-estimation",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation/SKILL.md",
+      "status": "imported",
+      "projected_into": ["planning-pack"]
+    },
+    {
+      "source_id": "codex-cortex-release-prep-v1",
+      "public_name": "release-prep",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep/SKILL.md",
+      "status": "imported",
+      "projected_into": ["planning-pack"]
+    },
+    {
+      "source_id": "codex-cortex-release-analysis-v1",
+      "public_name": "release-analysis",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis/SKILL.md",
+      "status": "imported",
+      "projected_into": ["planning-pack"]
+    }
+  ],
+  "retained_in_custody_not_projected_count": 126,
+  "rejected_with_hard_reasons": [
+    {
+      "source_id": "codex-cortex-codanna-codebase-intelligence-v1",
+      "public_name": "codanna-codebase-intelligence",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/codanna-codebase-intelligence/SKILL.md",
+      "status": "rejected",
+      "reason": "Violates durable-source doctrine: memory-first/tooling-dependent approach conflicts with repo-root AGENTS.md durable-source rule."
+    },
+    {
+      "source_id": "codex-cortex-knowledge-stack-v1",
+      "public_name": "knowledge-stack",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/knowledge-stack/SKILL.md",
+      "status": "rejected",
+      "reason": "Violates durable-source doctrine: memory-first approach conflicts with repo-root AGENTS.md durable-source rule."
     }
   ],
   "deferred": [],
   "notes": [
-    "Selective retained snapshot only.",
-    "The retained custody surface is the durable source home for the imported skills.",
-    "MARK-204 adds api-design-patterns as the umbrella contract-doctrine slice for the api-contracts-pack projection.",
-    "MARK-205 adds openapi-specification as the OpenAPI-specific companion slice for the api-contracts-pack projection.",
-    "MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns as the coding-security trio for the security-pack projection.",
-    "MARK-210 adds threat-modeling-techniques as the design-time security-framing slice for the security-pack projection.",
-    "MARK-213 expands the Python slice to include python-testing-patterns, async-python-patterns, and python-performance-optimization. The python-testing-patterns validation rubric remains retained source-only."
+    "MARK-279 mirrors the full Claude-Cortex upstream (149 skills) into source custody at sources/third_party/claude-cortex/upstream/.",
+    "23 of 149 skills are projected into canonical marketplace plugins.",
+    "126 of 149 skills are retained in source custody and not yet projected. They are available for future projection when a follow-up issue scopes them.",
+    "2 of 149 skills are rejected with hard reasons (durable-source doctrine violations).",
+    "The retained custody surface is the durable source home for all 149 upstream skills.",
+    "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns, MARK-210 adds threat-modeling-techniques, MARK-212 adds typescript-advanced-patterns, MARK-213 adds python-testing-patterns, async-python-patterns, and python-performance-optimization.",
+    "MARK-279 adds requirements-discovery, mermaid-diagramming, development-estimation, release-prep, and release-analysis projected into planning-pack.",
+    "Projected plugin copies were synced to match the full upstream mirror source where the upstream content differed from the previous selective snapshot."
   ]
 }
