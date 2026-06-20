@@ -1,7 +1,16 @@
 {
   "bundle_name": "game-studio",
   "bundle_version": "1.0.0",
+  "bundle_type": "third-party-codex-plugin-projection",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/game-studio",
+  "canonical_source_root": "sources/third_party/game-studio/upstream",
+  "source_custody_root": "sources/third_party/game-studio/upstream",
   "upstream_repo": "openai/plugins",
+  "upstream_author": "OpenAI",
+  "upstream_license": "MIT",
   "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
@@ -14,64 +23,109 @@
       "snapshot_path": "skills/game-playtest/SKILL.md",
       "local_path": "skills/game-playtest/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/game-studio/SKILL.md",
       "local_path": "skills/game-studio/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-studio/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/game-ui-frontend/SKILL.md",
       "local_path": "skills/game-ui-frontend/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/phaser-2d-game/SKILL.md",
       "local_path": "skills/phaser-2d-game/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/react-three-fiber-game/SKILL.md",
       "local_path": "skills/react-three-fiber-game/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/react-three-fiber-game/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/sprite-pipeline/SKILL.md",
       "local_path": "skills/sprite-pipeline/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/three-webgl-game/SKILL.md",
       "local_path": "skills/three-webgl-game/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/three-webgl-game/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/web-3d-asset-pipeline/SKILL.md",
       "local_path": "skills/web-3d-asset-pipeline/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     },
     {
       "snapshot_path": "skills/web-game-foundations/SKILL.md",
       "local_path": "skills/web-game-foundations/SKILL.md",
       "import_status": "imported",
-      "content_mode": "verbatim",
-      "adaptation_note": "Copied verbatim into its own plugin skill directory; normalized only for marketplace packaging and path stability."
+      "content_mode": "adapted",
+      "source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md",
+      "source_author": "OpenAI",
+      "source_license": "MIT",
+      "source_repo": "openai/plugins",
+      "adaptation_note": "Copied from the retained OpenAI plugins source into the dedicated game-studio plugin with added upstream authorship metadata frontmatter.",
+      "adapted_author": "Harley Bartles"
     }
   ],
   "provenance_refs": [

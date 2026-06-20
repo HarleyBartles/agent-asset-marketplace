@@ -1,6 +1,14 @@
 ---
 name: sprite-pipeline
 description: Generate and normalize 2D sprite animations. Use when the user asks for full-strip generation from approved source frames, consistent anchor and scale normalization, or preview assets for browser-game animation.
+metadata:
+  origin: third_party
+  source_author: OpenAI
+  source_license: MIT
+  source_repo: openai/plugins
+  source_path: sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Sprite Pipeline

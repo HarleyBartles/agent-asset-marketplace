@@ -1,13 +1,6 @@
 ---
 name: ai-first-engineering
 description: Engineering operating model for teams where AI agents generate a large share of implementation output.
-metadata:
-  origin: ECC
-  source_author: Affaan Mustafa
-  source_license: MIT
-  source_repo: https://github.com/affaan-m/ECC
-  source_path: sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md
-  content_mode: verbatim
 ---
 
 # AI-First Engineering

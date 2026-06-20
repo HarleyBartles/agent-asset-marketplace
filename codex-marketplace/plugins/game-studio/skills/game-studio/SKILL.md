@@ -1,6 +1,14 @@
 ---
 name: game-studio
 description: Route early browser-game work. Use when the user needs stack selection and workflow planning across design, implementation, assets, and playtesting before moving to a specialist skill.
+metadata:
+  origin: third_party
+  source_author: OpenAI
+  source_license: MIT
+  source_repo: openai/plugins
+  source_path: sources/third_party/game-studio/upstream/skills/game-studio/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Game Studio

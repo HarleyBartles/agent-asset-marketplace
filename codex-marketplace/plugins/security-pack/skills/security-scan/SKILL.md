@@ -3,6 +3,12 @@ name: security-scan
 description: Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks CLAUDE.md, settings.json, MCP servers, hooks, and agent definitions.
 metadata:
   origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/security-scan/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Security Scan Skill

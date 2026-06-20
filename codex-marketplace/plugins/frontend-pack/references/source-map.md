@@ -5,6 +5,10 @@ application skills from the retained `claude-cortex` custody root into a
 marketplace surface. The retained upstream skills keep their original bodies
 and are projected into `frontend-pack` with pack-relative references.
 
+The plugin shell is authored by Harley Bartles. The projected skill roots retain
+their upstream source author, source license, and source path in the bundle
+manifest and source map so verbatim content stays attributable.
+
 Retained custody evidence:
 
 - `sources/third_party/claude-cortex/upstream/README.md`
@@ -24,13 +28,13 @@ Retained custody evidence:
 
 Projected pack skills:
 
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| react-performance-optimization | `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/react-performance-optimization/SKILL.md` | Verbatim projection of React performance guidance. |
-| accessibility-audit | `sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/accessibility-audit/SKILL.md` | Verbatim projection of WCAG 2.2 AA triage guidance. |
-| ux-review | `sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/ux-review/SKILL.md` | Verbatim projection of the UX review workflow. |
-| interaction-design | `sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/interaction-design/SKILL.md` | Verbatim projection of the interaction design guidance and state-pattern reference. |
-| webapp-testing | `sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/SKILL.md` | Verbatim projection of the Playwright-based testing toolkit, scripts, and examples. |
+| Skill | Content mode | Source origin | Upstream author | Upstream license | Source path | Pack path | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| react-performance-optimization | adapted | Claude-Cortex | NickCrew | MIT | `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/react-performance-optimization/SKILL.md` | Adapted projection with upstream authorship metadata frontmatter for MARK-244 provenance compliance. Skill content body remains verbatim from upstream. |
+| accessibility-audit | adapted | Claude-Cortex | NickCrew | MIT | `sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/accessibility-audit/SKILL.md` | Adapted projection with upstream authorship metadata frontmatter for MARK-244 provenance compliance. Skill content body remains verbatim from upstream. |
+| ux-review | adapted | Claude-Cortex | NickCrew | MIT | `sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/ux-review/SKILL.md` | Adapted projection with upstream authorship metadata frontmatter for MARK-244 provenance compliance. Skill content body remains verbatim from upstream. |
+| interaction-design | adapted | Claude-Cortex | NickCrew | MIT | `sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/interaction-design/SKILL.md` | Adapted projection with upstream authorship metadata frontmatter for MARK-244 provenance compliance. Skill content body remains verbatim from upstream. |
+| webapp-testing | adapted | Claude-Cortex | NickCrew | MIT | `sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md` | `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/SKILL.md` | Adapted projection with upstream authorship metadata frontmatter for MARK-244 provenance compliance. Skill content body remains verbatim from upstream. |
 
 The pack root is an installable Codex plugin projection. It does not replace
 the retained `claude-cortex` custody snapshot.

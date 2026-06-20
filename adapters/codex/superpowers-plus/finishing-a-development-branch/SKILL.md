@@ -2,11 +2,13 @@
 name: finishing-a-development-branch
 description: Use when implementation is complete and you need to finish a development branch safely.
 metadata:
-  source_category: third_party
-  upstream_name: finishing-a-development-branch
-  upstream_version: v5.1.0
-  adaptation_overlay: adapters/codex/superpowers-plus/finishing-a-development-branch
-  projection_plugin: superpowers
+  origin: Obra AI
+  source_author: Obra AI
+  source_license: MIT
+  source_repo: https://github.com/obra-ai/obra-superpowers
+  source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Finishing a Development Branch

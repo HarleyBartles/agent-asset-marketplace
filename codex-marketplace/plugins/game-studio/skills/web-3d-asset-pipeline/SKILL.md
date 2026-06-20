@@ -1,6 +1,14 @@
 ---
 name: web-3d-asset-pipeline
 description: Prepare and optimize browser-game 3D assets. Use when the user asks for GLB or glTF shipping work, including Blender cleanup and export, collision or LOD setup, compression, texture packaging, and runtime validation.
+metadata:
+  origin: third_party
+  source_author: OpenAI
+  source_license: MIT
+  source_repo: openai/plugins
+  source_path: sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Web 3D Asset Pipeline

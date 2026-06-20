@@ -3,6 +3,12 @@ name: security-review
 description: Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
 metadata:
   origin: ECC
+  source_author: Affaan Mustafa
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  source_path: sources/third_party/ecc/upstream/skills/security-review/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Security Review Skill

@@ -43,11 +43,11 @@ First-party custody:
 
 Projected pack skill:
 
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| cqrs-event-sourcing | `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/cqrs-event-sourcing/SKILL.md` | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
-| event-driven-architecture | `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture/SKILL.md` | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
-| database-design-patterns | `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/SKILL.md` | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
+| Skill | Source path | Pack path | Upstream author | Upstream license | Notes |
+| --- | --- | --- | --- | --- | --- |
+| cqrs-event-sourcing | `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/cqrs-event-sourcing/SKILL.md` | NickCrew | MIT | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
+| event-driven-architecture | `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture/SKILL.md` | NickCrew | MIT | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
+| database-design-patterns | `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/SKILL.md` | `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/SKILL.md` | NickCrew | MIT | Mirrored unchanged from the Codex Cortex custody plugin into the installable Architecture Pack. |
 
 The pack root is an installable Codex plugin projection. It does not replace
 the `codex-cortex` custody plugin or the first-party import ledger.

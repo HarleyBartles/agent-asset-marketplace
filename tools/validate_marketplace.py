@@ -7,6 +7,8 @@ import json
 import re
 from pathlib import Path
 
+import yaml
+
 from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
     BUNDLE_MANIFEST_PATH,
@@ -346,33 +348,145 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
 
     content_mode = entry.get("content_mode")
     source_category = entry.get("source_category")
+    
+    # MARK-262: Strict validation - all entries must have authorship fields
+    for field_name in ("source_path", "source_author", "source_license", "source_repo"):
+        require_nonblank(field_name)
+    
     if content_mode == "verbatim":
         if source_category not in {"first_party", "third_party"}:
             raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
         if entry.get("adaptation_overlay_path") is not None:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_overlay_path")
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_overlay_path for verbatim content")
         if entry.get("adapted_author") is not None:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adapted_author")
-        for field_name in ("source_path", "source_author", "source_license", "source_repo"):
-            if field_name in entry:
-                require_nonblank(field_name)
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adapted_author for verbatim content")
+        if entry.get("adaptation_note") is not None:
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_note for verbatim content")
+        
+        # Ensure upstream author is not claimed as repo author for verbatim skills
+        source_author = entry.get("source_author")
+        if source_author and "Harley Bartles" in source_author and source_category == "third_party":
+            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
         return
 
     if content_mode != "adapted":
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has invalid content_mode")
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has invalid content_mode: {content_mode}")
     if not entry.get("adaptation_note"):
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note")
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note for adapted content")
+
+    # MARK-262: Adapted entries must have adapted_author
+    require_nonblank("adapted_author")
 
     if source_category == "third_party":
         require_nonblank("adaptation_overlay_path")
-        require_nonblank("adapted_author")
     elif source_category == "first_party":
+        # First-party adapted entries still need source attribution
         require_nonblank("source_path")
         require_nonblank("source_author")
         require_nonblank("source_license")
-        require_nonblank("adapted_author")
     else:
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category: {source_category}")
+
+
+def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, entry: dict) -> None:
+    """Validate that SKILL.md frontmatter has required metadata fields based on content_mode.
+    
+    MARK-262: Adapted skills must have complete metadata frontmatter. Verbatim skills should be byte-identical to upstream and should NOT have metadata.
+    """
+    skill_md = skill_path / "SKILL.md"
+    if not skill_md.is_file():
+        raise FileNotFoundError(skill_md)
+
+    content_mode = entry.get("content_mode")
+    canonical_name = entry.get("canonical_name") or skill_path.name
+
+    # For verbatim entries, SKILL.md should NOT have MARK-262 authorship metadata (byte-identical to upstream)
+    if content_mode == "verbatim":
+        frontmatter, _ = _split_skill_frontmatter_and_body(skill_md)
+        if frontmatter:
+            try:
+                parsed = yaml.safe_load(frontmatter)
+            except yaml.YAMLError as e:
+                raise ValueError(f"{skill_md} has invalid YAML frontmatter: {e}")
+            if isinstance(parsed, dict) and "metadata" in parsed:
+                metadata = parsed["metadata"]
+                if isinstance(metadata, dict):
+                    # Check for MARK-262 authorship fields that should not be in verbatim skills
+                    mark262_fields = ["origin", "source_author", "source_license", "source_repo", "source_path", "content_mode", "adapted_author"]
+                    if any(field in metadata for field in mark262_fields):
+                        raise ValueError(f"{bundle_name} skill {canonical_name} has MARK-262 authorship metadata but content_mode is verbatim - verbatim skills must be byte-identical to upstream")
+        return
+
+    # For adapted entries, metadata is required
+    frontmatter, _ = _split_skill_frontmatter_and_body(skill_md)
+    if not frontmatter:
+        raise ValueError(f"{skill_md} is missing frontmatter - required for adapted content")
+
+    # Parse frontmatter as YAML
+    try:
+        parsed = yaml.safe_load(frontmatter)
+    except yaml.YAMLError as e:
+        raise ValueError(f"{skill_md} has invalid YAML frontmatter: {e}")
+
+    if not isinstance(parsed, dict):
+        raise ValueError(f"{skill_md} frontmatter must be a mapping")
+
+    # MARK-262: Adapted skills must have metadata section
+    metadata = parsed.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"{skill_md} frontmatter is missing required metadata section for adapted content")
+
+    def require_metadata_field(field_name: str) -> None:
+        if field_name not in metadata or not metadata[field_name]:
+            raise ValueError(f"{bundle_name} skill {canonical_name} frontmatter metadata is missing {field_name}")
+
+    # Required fields for adapted skills
+    require_metadata_field("content_mode")
+    require_metadata_field("source_author")
+    require_metadata_field("source_license")
+    require_metadata_field("source_repo")
+    require_metadata_field("source_path")
+    require_metadata_field("adapted_author")
+
+    # Ensure content_mode in frontmatter matches bundle manifest
+    if metadata.get("content_mode") != content_mode:
+        raise ValueError(f"{bundle_name} skill {canonical_name} frontmatter content_mode '{metadata.get('content_mode')}' does not match bundle manifest '{content_mode}'")
+
+
+def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str) -> None:
+    """Validate that plugin-level authorship does not flatten skill-level attribution.
+    
+    MARK-262: Strict validation - all plugins must have proper plugin-level authorship.
+    """
+    plugin_author = bundle_manifest.get("plugin_author")
+    plugin_license = bundle_manifest.get("plugin_license")
+
+    # MARK-262: All plugins must declare plugin_author and plugin_license
+    if not plugin_author or not isinstance(plugin_author, str) or not plugin_author.strip():
+        raise ValueError(f"{bundle_name} bundle manifest is missing plugin_author")
+    if not plugin_license or not isinstance(plugin_license, str) or not plugin_license.strip():
+        raise ValueError(f"{bundle_name} bundle manifest is missing plugin_license")
+
+    # For repo-authored plugin shells, check standard authorship
+    if plugin_author == "Harley Bartles":
+        if plugin_license != "MIT":
+            raise ValueError(f"{bundle_name} plugin_author is Harley Bartles but plugin_license is not MIT")
+
+    # Check that individual skills retain their own upstream authorship
+    entries = bundle_manifest.get("entries", [])
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        canonical_name = entry.get("canonical_name")
+        content_mode = entry.get("content_mode")
+        source_author = entry.get("source_author")
+        source_category = entry.get("source_category")
+
+        if content_mode == "verbatim" and source_author:
+            # For verbatim third-party content, ensure upstream author is not overwritten
+            if plugin_author == "Harley Bartles" and "Harley Bartles" in source_author:
+                if source_category == "third_party":
+                    raise ValueError(f"{bundle_name} entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
 
 
 def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
@@ -798,6 +912,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
 
     _validate_superpowers_provenance_map(bundle_manifest, plugin_root)
     _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name="superpowers-plus", plugin_root=plugin_root)
+    _validate_plugin_level_authorship(bundle_manifest, bundle_name="superpowers-plus")
 
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
@@ -859,6 +974,8 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         source_path = ROOT / canonical_source_path
         local_full_path = ROOT / plugin_root / local_path
         validate_skill_markdown_frontmatter(local_full_path)
+        # Validate skill frontmatter metadata (only if entry has required fields)
+        _validate_skill_frontmatter_metadata(local_full_path, bundle_name="superpowers-plus", entry=entry)
         if source_path.is_dir():
             if content_mode == "verbatim":
                 if canonical_name == "ecc-superpowers":
@@ -1088,6 +1205,7 @@ def validate_skill_bundle_manifest(
             check_path_exists(vendor_root / source_root)
 
     _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name=bundle_name, plugin_root=plugin_root)
+    _validate_plugin_level_authorship(bundle_manifest, bundle_name=bundle_name)
 
     # Only validate entries/candidate_count for third-party import manifests
     entries = bundle_manifest.get("entries")
@@ -1149,10 +1267,15 @@ def validate_skill_bundle_manifest(
             assert entry_vendor_root is not None
             check_path_exists(entry_vendor_root / snapshot_path)
             content_mode = entry.get("content_mode")
+            # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
+            local_full_path = ROOT / plugin_root / local_path
+            # Only validate if the local path points to a SKILL.md file (not profiles or other files)
+            if local_full_path.name == "SKILL.md":
+                _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
             if content_mode not in {"verbatim", "adapted"}:
                 raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
-            if not entry.get("adaptation_note"):
-                raise ValueError(f"{bundle_name} bundle manifest imported entry requires an adaptation note")
+            if content_mode == "adapted" and not entry.get("adaptation_note"):
+                raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
             if content_mode == "verbatim":
                 source_path = entry_vendor_root / snapshot_path
                 projected_path = ROOT / plugin_root / local_path

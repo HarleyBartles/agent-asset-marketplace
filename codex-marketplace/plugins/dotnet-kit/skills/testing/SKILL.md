@@ -4,6 +4,14 @@ description: >
   Use when writing .NET tests, setting up test infrastructure, reviewing test
   coverage, or needing guidance on xUnit, WebApplicationFactory, Testcontainers,
   snapshot testing, the AAA pattern, WireMock, or FakeTimeProvider.
+metadata:
+  origin: dotnet-claude-kit
+  source_author: codewithmukesh
+  source_license: MIT
+  source_repo: https://github.com/codewithmukesh/dotnet-claude-kit
+  source_path: sources/third_party/dotnet-claude-kit/upstream/skills/testing/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
 
 # Testing (.NET 10)

@@ -7,6 +7,8 @@ MARK-207, and MARK-210 Codex Cortex custody surface for the retained Claude-Cort
 `openapi-specification` import, `secure-coding-practices`, `owasp-top-10`, and
 `security-testing-patterns` imports, and `threat-modeling-techniques` import.
 
+The plugin shell is authored by Harley Bartles. This is a custody plugin that retains canonical source copies from NickCrew/Claude-Cortex. The projected skill roots retain their upstream source author, source license, and source path in the bundle manifest and source map so verbatim content stays attributable.
+
 ## Upstream basis
 
 - Repo: `NickCrew/Claude-Cortex`

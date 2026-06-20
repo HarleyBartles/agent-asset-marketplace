@@ -17,7 +17,16 @@ file_patterns:
   - '**/test_*.py'
   - '**/tests/**/*.py'
 confidence: 0.85
+metadata:
+  origin: Claude-Cortex
+  source_author: NickCrew
+  source_license: MIT
+  source_repo: https://github.com/NickCrew/Claude-Cortex
+  source_path: sources/third_party/codex-cortex/upstream/skills/python-testing-patterns/SKILL.md
+  content_mode: adapted
+  adapted_author: Harley Bartles
 ---
+
 
 # Python Testing Patterns
 

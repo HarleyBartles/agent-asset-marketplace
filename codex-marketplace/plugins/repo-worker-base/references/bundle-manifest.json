@@ -2,6 +2,8 @@
   "bundle_name": "repo-worker-base",
   "bundle_version": "1.0.0",
   "bundle_type": "first-party-repo-worker-plugin",
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "plugin_root": "codex-marketplace/plugins/repo-worker-base",
   "skills_root": "codex-marketplace/plugins/repo-worker-base/skills",
   "control_plane_skill": {
@@ -34,5 +36,22 @@
   "provenance_refs": [
     "provenance/repo-worker-base.md"
   ],
-  "source_map": "references/source-map.md"
+  "source_map": "references/source-map.md",
+  "repo_index": {
+    "source_ledger": [
+      "sources/first_party/skills/repo-worker-base/SKILL.md",
+      "sources/first_party/core/boring-loop/SKILL.md",
+      "sources/first_party/core/connector-safety/SKILL.md",
+      "sources/first_party/core/github-operations/SKILL.md"
+    ],
+    "provenance_refs": [
+      "provenance/repo-worker-base.md",
+      "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

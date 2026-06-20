@@ -1,7 +1,7 @@
 # Source
 
-This Codex marketplace plugin is the repo-canonical copy of the locally created
-Repo Worker Base asset.
+This Codex marketplace plugin is a first-party plugin authored by Harley Bartles.
+It is the repo-canonical copy of the locally created Repo Worker Base asset.
 
 ## Local source
 
