@@ -303,13 +303,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19400,
-      "source_sha256": "b4ebeefc1013bd6bdc39e3757d13499f262ee7bb115b6dca87f1177c6be719c5",
+      "source_bytes": 19636,
+      "source_sha256": "b12695270572d91e1a6e9d0bb931d063f7e4e56d914767629e44e2a081118831",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8904,
-      "zip_sha256": "2feeaf75b27cbe9e2a755bf5261a9e7c2e1e4b2a5ea2b7cd29f3710fd7063bc6"
+      "zip_size_bytes": 9026,
+      "zip_sha256": "4891a00f635db732de3cb4d1b4bf676dd29cddfb0b666b1442bef75d68421f95"
     },
     {
       "pack": "api-contracts-pack",
@@ -319,13 +319,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 9291,
-      "source_sha256": "658ae34aa3d7b7916e7752aba2d4bca3693daea9e769e4c06428b9f853aec9f0",
+      "source_bytes": 9687,
+      "source_sha256": "9cf9855e93559574b300aef57c81f779bb59ed19b9d410437b11817dc5fdd27d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4390,
-      "zip_sha256": "05131aba6be8ee520ef214e8b726874b34551e0b66c82cf990c8d7b772055766"
+      "zip_size_bytes": 4570,
+      "zip_sha256": "ded1fd4c4443b27cb61d8373d0448b8ef960350307a567ead82c7e238a93e486"
     },
     {
       "pack": "architecture-pack",
@@ -607,13 +607,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19400,
-      "source_sha256": "b4ebeefc1013bd6bdc39e3757d13499f262ee7bb115b6dca87f1177c6be719c5",
+      "source_bytes": 19636,
+      "source_sha256": "b12695270572d91e1a6e9d0bb931d063f7e4e56d914767629e44e2a081118831",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8904,
-      "zip_sha256": "2feeaf75b27cbe9e2a755bf5261a9e7c2e1e4b2a5ea2b7cd29f3710fd7063bc6"
+      "zip_size_bytes": 9026,
+      "zip_sha256": "4891a00f635db732de3cb4d1b4bf676dd29cddfb0b666b1442bef75d68421f95"
     },
     {
       "pack": "codex-cortex",
@@ -735,13 +735,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 5807,
-      "source_sha256": "d6cb41ab5ef972f824ee180be481b52308c64ad4e77ca06135ee81210151a4c7",
+      "source_bytes": 6043,
+      "source_sha256": "b99a149347665e31f531395676ce29c5bed593d7981b78f8e44e3dca91d94081",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3992,
-      "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+      "zip_size_bytes": 4112,
+      "zip_sha256": "bf9fdb72d1dfc513d3bbbaf3bbd4a40c47933b12ea15bf656c5d4ef85be71ef6"
     },
     {
       "pack": "codex-cortex",
@@ -751,13 +751,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/database-design-patterns/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 26431,
-      "source_sha256": "6c4f180ae17e814dbe9738fe119d7d9032903bd9b61cee209c8ca3234c0ed395",
+      "source_bytes": 26672,
+      "source_sha256": "4ae90378aa3018b2a564bd931f1063cab3493c07cfaaea52d91fdde288eaa10b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12022,
-      "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
+      "zip_size_bytes": 12142,
+      "zip_sha256": "81b54eac49463c91ca65e2125ad73dd5520507b97a18b657323c415efa018e84"
     },
     {
       "pack": "codex-cortex",
@@ -799,13 +799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip",
       "source_file_count": 9,
-      "source_bytes": 31199,
-      "source_sha256": "dba9d1ea614d0b4165dcaef12d146e797ac9ef95e91c647766cf91e059e3d061",
+      "source_bytes": 31441,
+      "source_sha256": "fe67f1e9bb175f9e4c1b86a1993d397d9f86700a233626fefe7c1e15dd182274",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 14508,
-      "zip_sha256": "fdd992afa022bab17d77d673d7815185f2800b47b7937cbb9c19e9441cd61a76"
+      "zip_size_bytes": 14628,
+      "zip_sha256": "f97c8ec571510b4ba93303e1a954bb980f568dc3ff389281c2e596ceb4bc4a2e"
     },
     {
       "pack": "codex-cortex",
@@ -863,13 +863,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/openapi-specification/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 18349,
-      "source_sha256": "1789b674cb39d0fcd13347adb05e90068a0e2680f6a4154bdb5a874119ca6dda",
+      "source_bytes": 18587,
+      "source_sha256": "73b0a71125b9c1854ce9accfd8cd11785c4eb6670cb28131d6073e46cb77da5f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7037,
-      "zip_sha256": "5f0c80114c372e7e823f3d334860abf450f43a7a595c7bb22e5c91b02499dafd"
+      "zip_size_bytes": 7163,
+      "zip_sha256": "89143985c4e42ebbe910223ebff8e89bee78933c66bb20fe6a072e212d2eed92"
     },
     {
       "pack": "codex-cortex",
@@ -975,13 +975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/owasp-top-10/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 35401,
-      "source_sha256": "942e03aad63b17bb185fa5f053d6a87fc009e5d51ad80f4b81dd70e798b6cfd9",
+      "source_bytes": 35630,
+      "source_sha256": "21b8783581e849c17b085c3ca25ac959a6f8a9ceb520ee913b703c77724fbcc6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18445,
-      "zip_sha256": "11d9126dc9946eb88e291cde20157a3f4a1b39b3776ab89bbb7ba0fdecdb4c38"
+      "zip_size_bytes": 18566,
+      "zip_sha256": "86ddf77f1c88ddae44410aff0ef1eb226bb8e6b2a29272f110ce05b7b49c8b94"
     },
     {
       "pack": "codex-cortex",
@@ -1055,13 +1055,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/secure-coding-practices/skill.zip",
       "source_file_count": 9,
-      "source_bytes": 32682,
-      "source_sha256": "500d8feff249c6a208a88357d63242fc706aa05b0c546608c80383f2e1adcdb5",
+      "source_bytes": 32922,
+      "source_sha256": "4c9349f893ec06e0b10c62f4be52db04cef3d5e1a3ea0505acb4d466a1c9f27f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15730,
-      "zip_sha256": "96a0b47742229918325f787c8641925db9efe71a3d79524e901bef48a67f4da9"
+      "zip_size_bytes": 15850,
+      "zip_sha256": "48a5c36af308201a63d40e2bccb3895cc1aff16a1e2d8775df9cafb0740b0693"
     },
     {
       "pack": "codex-cortex",
@@ -1071,13 +1071,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/security-testing-patterns/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 36732,
-      "source_sha256": "903db4cfacd7d2296bdc1bd57dd15d30397657088efd008e50c1307ea743aafd",
+      "source_bytes": 36974,
+      "source_sha256": "18d9c7cd5f7b35878558ea82d3d9d0eb80726460334cd3325e199ae6fc9afa4e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16563,
-      "zip_sha256": "d9012b7580e27eb4b95f40b3aabdf32fc1e24fa96d204696b9f0073735c11c08"
+      "zip_size_bytes": 16678,
+      "zip_sha256": "ed9f95f4478dd2612519d57124d31f8b357e220cf591558f21290a7b34d71233"
     },
     {
       "pack": "codex-cortex",
@@ -1087,13 +1087,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 13849,
-      "source_sha256": "8ff4d57ec35f03e370535d2d999ba2f915e1eef4db25252d0eaac2b312b9631d",
+      "source_bytes": 14092,
+      "source_sha256": "ddfe764002e004e6c27535c6dcaaa54a46d1d2033e27a43513fdc904dcf676b1",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9153,
-      "zip_sha256": "aca1ffdff18e154d7a25b562f85b6b111f97c2a984c324eab8be8789a9b25099"
+      "zip_size_bytes": 9277,
+      "zip_sha256": "acc382688ad3887a2e1cf665d8d25f1c3cb5fd7777b86e7a839691c5c8bac4fa"
     },
     {
       "pack": "codex-cortex",
@@ -1391,13 +1391,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/agent-harness-construction/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2229,
-      "source_sha256": "f75c708bdd036a19161685163b90de35461383ea58fc96c48bae4b52a64f85f4",
+      "source_bytes": 2231,
+      "source_sha256": "4e4bf420cb17c2e4254ae606a22f9eaeb3bedd6c7580465fce4ab09c3ed30db5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1332,
-      "zip_sha256": "07772f40781c568a0054fa17616a4de823c74f236fb1af14c594c77b004b20b7"
+      "zip_sha256": "577a2df2007526488e32e109d1885b8abdc13abd95a4422851a046d978ad2c98"
     },
     {
       "pack": "everything-codex-code",
@@ -1407,13 +1407,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/ai-first-engineering/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 1559,
-      "source_sha256": "9ea2231dbd07457c99f3042d4634b2940fc969fab9cea8b811affff08af41f8d",
+      "source_bytes": 1561,
+      "source_sha256": "04f83904a8aad29dc50923951ae6bf686895ffde895754400903b00b8a539c2b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 993,
-      "zip_sha256": "8a1d264291dabf01edf352805e32bd607740ae2f23923b4ea35d11a86e650cec"
+      "zip_size_bytes": 996,
+      "zip_sha256": "528cfef75fae3a370e9883dfaf663fffc5bb89d4c9d94e56011a3762225663e5"
     },
     {
       "pack": "everything-codex-code",
@@ -1423,13 +1423,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/deployment-patterns/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 11222,
-      "source_sha256": "9052ad0dd5571ce2eea3e62ca136ca799ba91ca7c07835cca5bf7b566bd2e662",
+      "source_bytes": 11224,
+      "source_sha256": "d96302ceaf5e2840e1fcba897fbfa799586dd3cffc5a6c97ab2b03e7747d5f0c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4648,
-      "zip_sha256": "8667f8c1b789ca24b4fe9c63cbf2d352ab55d360e5aaa6bd1351e8f1cfee5ba1"
+      "zip_size_bytes": 4651,
+      "zip_sha256": "2943877ae30b9c4d722e21976ee68a3820d048b120e053e0f3b7203ca3a03561"
     },
     {
       "pack": "everything-codex-code",
@@ -1439,13 +1439,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/dmux-workflows/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6541,
-      "source_sha256": "2752b48ed3b54fbc5c941c203505aeff1d1e621a063b2ff2d251fec00567a8a5",
+      "source_bytes": 6543,
+      "source_sha256": "7a84e544b54f87136a1dab5769cf451a9b8f0db11b1b4d097061a579e7325511",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2938,
-      "zip_sha256": "b9ca7ec6122048ea53239a8f6cb1bed6e8b83bfac6c1fb8b84e9c25df57c9129"
+      "zip_size_bytes": 2940,
+      "zip_sha256": "254a72d9b311647a8d068961928d6a80984077fd76dd18a1fb7417752cd2a44a"
     },
     {
       "pack": "everything-codex-code",
@@ -1455,13 +1455,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/messages-ops/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3099,
-      "source_sha256": "4793d5b7ab9032c0a121ca41edb1202cb8e95d65ed720cde89a0ed48751eb453",
+      "source_bytes": 3101,
+      "source_sha256": "54993805b7c6986ad7232425c8fe5fd6cc795683ed59e5810aadf819ccf5cc0c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1551,
-      "zip_sha256": "ad1c210fb32dc9af560fc9635a70e2b77fd6cdec0e5ff6dcf3615c146aca1c03"
+      "zip_size_bytes": 1552,
+      "zip_sha256": "e99e96ea6e1c29e869be86b626ee72e62207fcc73d461ddd9e885fef00f0cf37"
     },
     {
       "pack": "everything-codex-code",
@@ -1471,13 +1471,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/ml-adoption-playbook/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3998,
-      "source_sha256": "c129da5b22a2d828d0983f1d8158a726f3010def1f6971804483f9b28970f9e1",
+      "source_bytes": 4002,
+      "source_sha256": "41c1032b34cec7c60b1ca60087bd20c03ecebd8071145286d6a5e926174fc22a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2135,
-      "zip_sha256": "b70ef7c079cbd2b4e609d6312dbe0af7f0ed783c315ee706fe58cd9e42416fe2"
+      "zip_size_bytes": 2138,
+      "zip_sha256": "3cd43307b89f836836f5efa676f53b6cfe6162d59ab4f5abcc617f2c2311db2e"
     },
     {
       "pack": "everything-codex-code",
@@ -1487,13 +1487,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/prediction-market-oracle-research/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2421,
-      "source_sha256": "af0dc74a63f6478dd3cd009a2d80481e0c61dd618f69d410180804511d2fa171",
+      "source_bytes": 2423,
+      "source_sha256": "b49ed8db29f9065a178fe492ab53b08126e508cbf5de7286123a9568ff642049",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1340,
-      "zip_sha256": "a7575acf2ff8ee01e50d42da2cbe3bcdd8c108b6978adc942868b9ccf9ca3fe9"
+      "zip_size_bytes": 1341,
+      "zip_sha256": "d8fde8618074705cda025ecdab6850ec8188682c82a043c83ad28836822e752d"
     },
     {
       "pack": "everything-codex-code",
@@ -1503,13 +1503,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/recursive-decision-ledger/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2750,
-      "source_sha256": "ca9fed8b0c1823e215f4bf194344699d966838d19e006b21675677926355efc9",
+      "source_bytes": 2752,
+      "source_sha256": "39bfb7dbd88d19f94ddc172c15cb146efa954bae2aecba93680f179821f248bb",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1550,
-      "zip_sha256": "882b6fcaa3360e9c49ac7993910b2e7fbc9df62c5d91d145ce8298e160d100aa"
+      "zip_size_bytes": 1551,
+      "zip_sha256": "184fe08158f0844569bdc9171ee35ef0d6bdb1071149b05ad44a84b09c419203"
     },
     {
       "pack": "everything-codex-code",
@@ -1519,13 +1519,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/research-ops/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3808,
-      "source_sha256": "a18d8374621829319df8f486c3ea57a834da50c2487b03f072a734ef2dc1fe9d",
+      "source_bytes": 3810,
+      "source_sha256": "2970576762498af8e1636e5933f2f6a2e8c39a06020d785ce569d6775d4f8458",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
       "zip_size_bytes": 1808,
-      "zip_sha256": "6f89f908cb80a9ab490dd47ae8530977faa304d3c07dab2d4a7f55f64ddca876"
+      "zip_sha256": "c6b4c321db46f252378a59109632d270d7db48b5cbcc0abda312f36525eb98fd"
     },
     {
       "pack": "everything-codex-code",
@@ -1535,13 +1535,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/safety-guard/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2148,
-      "source_sha256": "f0aba05a3d2eb138e1a0d9278acaac9cca7a48efb0bc0a3700439cbd0353c5da",
+      "source_bytes": 2150,
+      "source_sha256": "85982d335e1a263e95e4cd8843b93873ed1206d624dce137a57db5e50332efac",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1252,
-      "zip_sha256": "3ac05b535f5647888ef92a486048e91a69e332c0d2f8a69bf4e9a5eafe3c6b6b"
+      "zip_size_bytes": 1253,
+      "zip_sha256": "3ed02c430cf28cbcbba662fd31ca0655d7f75221b200e579dc01790dbd8a21f8"
     },
     {
       "pack": "everything-codex-code",
@@ -1551,13 +1551,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/search-first/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 8224,
-      "source_sha256": "c111355de1e91e988e1612ebdbedb55300d1c5d238902ea4718eae29d03c8e72",
+      "source_bytes": 8226,
+      "source_sha256": "cf04a4810d47040a583ccf5051448fd31c36c95817121147d008fe0edaedbaa4",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3343,
-      "zip_sha256": "a66533d7f0b941dfef534a3ac91f0c64d16c67cfddb63f75587c55f56ee821b8"
+      "zip_size_bytes": 3345,
+      "zip_sha256": "2555e950eabf0fc328d462d5f2f541d6df51c584324f35842dad31cbaece2e18"
     },
     {
       "pack": "everything-codex-code",
@@ -1567,13 +1567,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/team-agent-orchestration/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 4900,
-      "source_sha256": "a0ac057a75170d88bc3384122e7d1ceb57d1f707f8519788f7104a21e843f3ef",
+      "source_bytes": 4902,
+      "source_sha256": "23122d3b638e1b75bbc02b8cde27f5ea00d5035cff5647ac079ea1e0cff8a5b2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2411,
-      "zip_sha256": "feab6c8afe191d699857b1752fc6cf3b119e237b7e0ad9410b836c115c47c13d"
+      "zip_size_bytes": 2413,
+      "zip_sha256": "2d9ece545b3f3f229299f1b20126020bc86cfaa6a25087ddaa45a92b2913abee"
     },
     {
       "pack": "everything-codex-code",
@@ -1583,13 +1583,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/team-builder/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7395,
-      "source_sha256": "17159a413c64da8fa1a548ed444bda9f1b075d579d82b3334ebbbdaa748dc627",
+      "source_bytes": 7383,
+      "source_sha256": "030f236b0769cae2a3f2ead2de7eef061081ffea913b9b6b1d383e9d9f7a1ef3",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3240,
-      "zip_sha256": "e9ef229f98aa338c413bc1c6c0d799be63b736dd779e68a43bee256fd249fed1"
+      "zip_size_bytes": 3234,
+      "zip_sha256": "684a67feefe7285985b778fa9f79d5eb5f617c5720661f7cdf26b34b2526bdb5"
     },
     {
       "pack": "everything-codex-code",
@@ -1599,13 +1599,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/token-budget-advisor/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6336,
-      "source_sha256": "659728b526b5eb3b41e011390f8f2bc4495c7577fd7f36777b181eb84538e03c",
+      "source_bytes": 6324,
+      "source_sha256": "eb21fd751ba94deb4f45d3155f51ff5c45d50ef28ddd41916ee5b637a04993a7",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2795,
-      "zip_sha256": "b0ad67d3e5da0cd468526a2a087f37abbac8d39411a8dd1b4753964035033247"
+      "zip_size_bytes": 2788,
+      "zip_sha256": "bc0a56a2bacf6da60a20919bb51afb96dcb4475a8e2f80239e0b5c3725e5656a"
     },
     {
       "pack": "frontend-pack",
@@ -3247,13 +3247,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 20935,
-      "source_sha256": "b6e2f57774108b11d8b01dad7e7176d38a5319f786af6061a3b1168dfdf18ef6",
+      "source_bytes": 21417,
+      "source_sha256": "2058ca6f682643c597d29755da380a360e6642c8566683c20117a600a445d4b1",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10180,
-      "zip_sha256": "30ea755ead70af3d61b340d055e7bc9e38fedd5c3a771a13b5fe8895b0c19308"
+      "zip_size_bytes": 10418,
+      "zip_sha256": "52a8765afff755b63e4631f81606453becb87fcfc009317b15e444ccd52bef10"
     },
     {
       "pack": "language-patterns-pack",
@@ -3279,13 +3279,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 60600,
-      "source_sha256": "e33b919ca0ac328875a4c985df40f867556855aa76f4a7013f422964f9420b75",
+      "source_bytes": 60840,
+      "source_sha256": "e4f634a9271bdf29adf6575ed8cb0758021ed3ace0148c49f6133abd4214ce8b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 24183,
-      "zip_sha256": "273f63a6224eecc19e3b2cb389e62b3eba652641581ec782d6b45b71dc426da8"
+      "zip_size_bytes": 24297,
+      "zip_sha256": "1b14539a5ec724c407d9eb3b4e4efb5520a9e8b45e4401a4e9c736c9e868a849"
     },
     {
       "pack": "language-patterns-pack",
@@ -3439,13 +3439,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip",
       "source_file_count": 16,
-      "source_bytes": 29687,
-      "source_sha256": "a724d753c4645d42338474e37cb5cb81ec11929e1a021ba62ea34892c8df729d",
+      "source_bytes": 30096,
+      "source_sha256": "9018a38840c8275da0e05e9614feda260d0b0912a316f1b037b430afcc88d562",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15644,
-      "zip_sha256": "2f37c0b533e99417316f8afa070aa3a556b665ab46b4ab5d62629915040350d5"
+      "zip_size_bytes": 15840,
+      "zip_sha256": "3135fc7b24e162e5cdefddf719a70ca65a0ca36eab7a1140d59d748697c32dbe"
     },
     {
       "pack": "media-content-pack",
@@ -4783,13 +4783,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/agent-harness-construction/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2012,
-      "source_sha256": "10718895e33f64cc0cec9711edff624e9450aed7433de847404ea18085c0abe4",
+      "source_bytes": 2231,
+      "source_sha256": "4e4bf420cb17c2e4254ae606a22f9eaeb3bedd6c7580465fce4ab09c3ed30db5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1219,
-      "zip_sha256": "8206a2502a08396d81bc63c3cb487d74b1c3ae0b8026bcd20cff9a83c639576a"
+      "zip_size_bytes": 1332,
+      "zip_sha256": "577a2df2007526488e32e109d1885b8abdc13abd95a4422851a046d978ad2c98"
     },
     {
       "pack": "superpowers-ecc",
@@ -4799,13 +4799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/ai-first-engineering/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 1348,
-      "source_sha256": "6e6ccef79d8b1fa42fb58b241a85ab6c3ace24307d104722f84f2a3a3148718d",
+      "source_bytes": 1561,
+      "source_sha256": "04f83904a8aad29dc50923951ae6bf686895ffde895754400903b00b8a539c2b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 878,
-      "zip_sha256": "8be616c0cce1d26008370c3aefe4522e991e8a1833507cdd48effdbdc2785286"
+      "zip_size_bytes": 996,
+      "zip_sha256": "528cfef75fae3a370e9883dfaf663fffc5bb89d4c9d94e56011a3762225663e5"
     },
     {
       "pack": "superpowers-ecc",
@@ -4815,13 +4815,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/deployment-patterns/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 11012,
-      "source_sha256": "eb96b1d3f963ff02c84cf9d1394886aece11f60433bde2fc2c66462248a009b8",
+      "source_bytes": 11224,
+      "source_sha256": "d96302ceaf5e2840e1fcba897fbfa799586dd3cffc5a6c97ab2b03e7747d5f0c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4535,
-      "zip_sha256": "b479c83f9bd4e3a2a879e9263251db00aa07b33a51f321d4b4de5e3c3d2a2f3c"
+      "zip_size_bytes": 4651,
+      "zip_sha256": "2943877ae30b9c4d722e21976ee68a3820d048b120e053e0f3b7203ca3a03561"
     },
     {
       "pack": "superpowers-ecc",
@@ -4831,13 +4831,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/dmux-workflows/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6336,
-      "source_sha256": "60a12f9d8400cd14a99bc49e94d143ff54212a44a7f805aa78d9f0af54306ec9",
+      "source_bytes": 6543,
+      "source_sha256": "7a84e544b54f87136a1dab5769cf451a9b8f0db11b1b4d097061a579e7325511",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2833,
-      "zip_sha256": "416a0576eba43b7f561cbdb22efeed93b0c00a1ac4ded4bb2fd9a6dc8986e3ca"
+      "zip_size_bytes": 2940,
+      "zip_sha256": "254a72d9b311647a8d068961928d6a80984077fd76dd18a1fb7417752cd2a44a"
     },
     {
       "pack": "superpowers-ecc",
@@ -4847,13 +4847,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/messages-ops/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2896,
-      "source_sha256": "ba3d2dd7e72cc74671d15a2cfbb0edf7431af19af17a6e3c1d3cbd57277a59d1",
+      "source_bytes": 3101,
+      "source_sha256": "54993805b7c6986ad7232425c8fe5fd6cc795683ed59e5810aadf819ccf5cc0c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1436,
-      "zip_sha256": "16aaaef85eb89b9380f62a59cfce3c9e42960d49fe19575f825f5d388f3da348"
+      "zip_size_bytes": 1552,
+      "zip_sha256": "e99e96ea6e1c29e869be86b626ee72e62207fcc73d461ddd9e885fef00f0cf37"
     },
     {
       "pack": "superpowers-ecc",
@@ -4863,13 +4863,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/ml-adoption-playbook/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3787,
-      "source_sha256": "7492b4db25c3ca20512278dd220c837c4319f321488cf106bd2b2ca6ffaf48e3",
+      "source_bytes": 4002,
+      "source_sha256": "41c1032b34cec7c60b1ca60087bd20c03ecebd8071145286d6a5e926174fc22a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2013,
-      "zip_sha256": "af70e3d9fbc30e0b470b01dcb918ab096c42c150ed6f20516e15540d2d96b9bd"
+      "zip_size_bytes": 2138,
+      "zip_sha256": "3cd43307b89f836836f5efa676f53b6cfe6162d59ab4f5abcc617f2c2311db2e"
     },
     {
       "pack": "superpowers-ecc",
@@ -4879,13 +4879,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/prediction-market-oracle-research/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2197,
-      "source_sha256": "fa90b2e88487ab9e8bc5ca73ffac7c2ae981d8037ae3dc13662cd17c21324704",
+      "source_bytes": 2423,
+      "source_sha256": "b49ed8db29f9065a178fe492ab53b08126e508cbf5de7286123a9568ff642049",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1225,
-      "zip_sha256": "e2b4804294a18ac01d8886765a4f284a62ee3d7f27ca1c3e1322660d528e4f54"
+      "zip_size_bytes": 1341,
+      "zip_sha256": "d8fde8618074705cda025ecdab6850ec8188682c82a043c83ad28836822e752d"
     },
     {
       "pack": "superpowers-ecc",
@@ -4895,13 +4895,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/recursive-decision-ledger/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2534,
-      "source_sha256": "e82e1b0b032d539625dae67b62afd0b37ba7c630a55e90020916d8c674a1ba4e",
+      "source_bytes": 2752,
+      "source_sha256": "39bfb7dbd88d19f94ddc172c15cb146efa954bae2aecba93680f179821f248bb",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1434,
-      "zip_sha256": "e165e408d0d6b6df841226cff865f0e2e193f90910cba8c719f2f165e64b13e0"
+      "zip_size_bytes": 1551,
+      "zip_sha256": "184fe08158f0844569bdc9171ee35ef0d6bdb1071149b05ad44a84b09c419203"
     },
     {
       "pack": "superpowers-ecc",
@@ -4911,13 +4911,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/research-ops/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3605,
-      "source_sha256": "2226878c9ffd426404335868c9b41f241f92a7e7e5c90dd1a66ab5ea2892a3b8",
+      "source_bytes": 3810,
+      "source_sha256": "2970576762498af8e1636e5933f2f6a2e8c39a06020d785ce569d6775d4f8458",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1694,
-      "zip_sha256": "a97fa4203fa608a5c67b35e1ce727d1e767e4c5adbf7c92cc716fc1a0413fca1"
+      "zip_size_bytes": 1808,
+      "zip_sha256": "c6b4c321db46f252378a59109632d270d7db48b5cbcc0abda312f36525eb98fd"
     },
     {
       "pack": "superpowers-ecc",
@@ -4927,13 +4927,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/safety-guard/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 1945,
-      "source_sha256": "0cb777421d97d804362ee29173cecaa02d1ef2038bd1c934642189c78f114573",
+      "source_bytes": 2150,
+      "source_sha256": "85982d335e1a263e95e4cd8843b93873ed1206d624dce137a57db5e50332efac",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1142,
-      "zip_sha256": "c92df7d257c26bd659422967eda0ef38f5016536aee94e24dcf28fec63b849f5"
+      "zip_size_bytes": 1253,
+      "zip_sha256": "3ed02c430cf28cbcbba662fd31ca0655d7f75221b200e579dc01790dbd8a21f8"
     },
     {
       "pack": "superpowers-ecc",
@@ -4943,13 +4943,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/search-first/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 8021,
-      "source_sha256": "297f053580e42388699e756fcb440af786b490db9237b06aac2a633a72b14316",
+      "source_bytes": 8226,
+      "source_sha256": "cf04a4810d47040a583ccf5051448fd31c36c95817121147d008fe0edaedbaa4",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3233,
-      "zip_sha256": "d67a22fba46f829fae70e4c9e48956051eebbd68b9dfb7565217017407732d7d"
+      "zip_size_bytes": 3345,
+      "zip_sha256": "2555e950eabf0fc328d462d5f2f541d6df51c584324f35842dad31cbaece2e18"
     },
     {
       "pack": "superpowers-ecc",
@@ -4959,13 +4959,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/team-agent-orchestration/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 4685,
-      "source_sha256": "d04597f83804caab6f5504f407b5c9e747567d25c6b572b3f02bb5a6e7a58154",
+      "source_bytes": 4902,
+      "source_sha256": "23122d3b638e1b75bbc02b8cde27f5ea00d5035cff5647ac079ea1e0cff8a5b2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2300,
-      "zip_sha256": "18e687900483589ff51d2be2c1eb698ad4cada21967ce22ea62ac1be134106dd"
+      "zip_size_bytes": 2413,
+      "zip_sha256": "2d9ece545b3f3f229299f1b20126020bc86cfaa6a25087ddaa45a92b2913abee"
     },
     {
       "pack": "superpowers-ecc",
@@ -4975,13 +4975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/team-builder/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 7184,
-      "source_sha256": "ebe7867b2a8faac699be941bdc9197a23f925a7237514b238362ff15301b627e",
+      "source_bytes": 7383,
+      "source_sha256": "030f236b0769cae2a3f2ead2de7eef061081ffea913b9b6b1d383e9d9f7a1ef3",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3121,
-      "zip_sha256": "b371273876b1bf3528ff2438c5e62c9110cc4763f6cc3c5e989730adfd634b9d"
+      "zip_size_bytes": 3234,
+      "zip_sha256": "684a67feefe7285985b778fa9f79d5eb5f617c5720661f7cdf26b34b2526bdb5"
     },
     {
       "pack": "superpowers-ecc",
@@ -4991,13 +4991,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-ecc/token-budget-advisor/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6117,
-      "source_sha256": "d6ca2083364672399c8a3bbd4c4152a9c290bf0ea045e56eec525af27f4c0583",
+      "source_bytes": 6324,
+      "source_sha256": "eb21fd751ba94deb4f45d3155f51ff5c45d50ef28ddd41916ee5b637a04993a7",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2695,
-      "zip_sha256": "7726937afe89e515596bf4a99bea99b39103f78aecd62254731c3ca01c64657a"
+      "zip_size_bytes": 2788,
+      "zip_sha256": "bc0a56a2bacf6da60a20919bb51afb96dcb4475a8e2f80239e0b5c3725e5656a"
     },
     {
       "pack": "superpowers-plus",
@@ -5039,13 +5039,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/ecc-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3623,
-      "source_sha256": "c2529098b2683868153ccd32b5a516667a4c7d55689c6e711312a5bea9ba5c4b",
+      "source_bytes": 3726,
+      "source_sha256": "e89c481ed1413a4939b25bf5ce71296d42c1f216427dfc01e0561513f773d8c3",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1878,
-      "zip_sha256": "f4a107b694d99f3909ceb8497b494bf2890d56313269952741103e178e672135"
+      "zip_size_bytes": 1907,
+      "zip_sha256": "6b1f8008623f8f9b6e1e94d1eac781a1271fa261b6c70e3bd2e02c22a47e797a"
     },
     {
       "pack": "superpowers-plus",
@@ -5071,8 +5071,8 @@
       "overlay_path": "adapters/gpt/superpowers-plus/finishing-a-development-branch",
       "zip_path": "generated/skill-zips/superpowers-plus/finishing-a-development-branch/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 8989,
-      "source_sha256": "136632aadde6a0234156e2cdbde620428feaf4ed095d9e58f30d3d3a8ad9807e",
+      "source_bytes": 9090,
+      "source_sha256": "82fe8fe633640a03adcca31c930cddbe7c040e2df1b9742859452c09eb716d24",
       "overlay_file_count": 1,
       "overlay_bytes": 1200,
       "overlay_sha256": "62d75c2b0ed2c5d397b423c122734cfb7b19a2d37f22fdecfa5cde67b0cff9d8",
@@ -5199,8 +5199,8 @@
       "overlay_path": "adapters/gpt/superpowers-plus/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers-plus/using-superpowers/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 15714,
-      "source_sha256": "7bbff26635cb0f2d10f5a4192ade64a776f16c318c39425c7ddf26ae1e3a6989",
+      "source_bytes": 15810,
+      "source_sha256": "49ec2eea9c1970af4e5ff79d2b93597cee23397c262ee7a25454b78170a438c4",
       "overlay_file_count": 1,
       "overlay_bytes": 2619,
       "overlay_sha256": "a52131b85dde15a61ba740132a82dc7792e31f4af9263fcb680df4ad296d45b7",
@@ -5215,13 +5215,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5253,
-      "source_sha256": "c3689e1b07d2293ea547baac15e2bf819e2bdf324868f42c56a88ce4897f8482",
+      "source_bytes": 5349,
+      "source_sha256": "e663f9ef8f439af4df640c285b36ca9539b132c0699e5aa35dfdd3d9b544903c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2870,
-      "zip_sha256": "8279c5efb2549957aac0533fe6902698e877b4cc24306009355dba1b33a35c2f"
+      "zip_size_bytes": 2917,
+      "zip_sha256": "494b5ca9ad31f809257118dc4876a9d74d0e6aae1aa11e5191eb3a2d02e5bbbd"
     },
     {
       "pack": "superpowers-plus",
@@ -5263,13 +5263,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/unslop/unslop/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 59931,
-      "source_sha256": "8c73f5f9c8b44dbe1348053353ea38a30a35ff8c8faf9125490b05f4edfae9e1",
+      "source_bytes": 60038,
+      "source_sha256": "5b20b0f81c33fed8ed491d08250eb201b89cc8c4afbd3f1b40c3b054e87001bf",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 20962,
-      "zip_sha256": "a04d57600b20bbabe41b9b1e67573a8690bf594d766ea9c8e027b37d4db7166e"
+      "zip_size_bytes": 20993,
+      "zip_sha256": "b98ea209ffe6b95edca986ff97e9c060edabf8d29d5120f5399c6d0ca7d3cdf4"
     },
     {
       "pack": "wild-bunch-project-pack",

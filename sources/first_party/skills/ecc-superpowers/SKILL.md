@@ -11,6 +11,7 @@ metadata:
   source_path: sources/first_party/skills/ecc-superpowers/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
+  adaptation_note: First-party skill adapted for compositional routing in the agent-asset-marketplace.
 license: "MIT"
 ---
 # ECC Superpowers

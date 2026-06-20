@@ -9,6 +9,7 @@ metadata:
   source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
+  adaptation_note: Adapted from Obra Superpowers v5.1.0 for use in the agent-asset-marketplace.
 ---
 
 # Verification Before Completion

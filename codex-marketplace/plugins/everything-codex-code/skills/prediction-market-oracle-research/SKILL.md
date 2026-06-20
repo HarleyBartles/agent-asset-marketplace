@@ -7,7 +7,7 @@ metadata:
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
   source_path: sources/third_party/ecc/upstream/skills/prediction-market-oracle-research/SKILL.md
-  content_mode: verbatim
+  content_mode: normalised
 ---
 
 # Prediction Market Oracle Research

@@ -14,12 +14,12 @@ description: >-
   session (maintain it), the request is clearly a one-word answer, or
   "token" refers to auth/session/payment tokens rather than response size.
 metadata:
-  origin: community
-  source_author: Community contributors
+  origin: ECC
+  source_author: Affaan Mustafa
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
   source_path: sources/third_party/ecc/upstream/skills/token-budget-advisor/SKILL.md
-  content_mode: verbatim
+  content_mode: normalised
 ---
 
 # Token Budget Advisor (TBA)

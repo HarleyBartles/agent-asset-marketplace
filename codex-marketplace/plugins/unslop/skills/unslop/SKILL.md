@@ -8,6 +8,7 @@ metadata:
   source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
   source_path: sources/first_party/skills/unslop/SKILL.md
   adapted_author: Harley Bartles
+  adaptation_note: First-party skill for generating domain-specific anti-slop profiles from local samples.
 ---
 
 # Unslop

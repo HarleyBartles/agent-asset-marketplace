@@ -434,22 +434,39 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     if not isinstance(parsed, dict):
         raise ValueError(f"{skill_md} frontmatter must be a mapping")
 
-    # MARK-262: Adapted skills must have metadata section
+    # MARK-262: Adapted and normalised skills must have metadata section
+    # Verbatim skills may have optional metadata (e.g., origin field for provenance tracking)
     metadata = parsed.get("metadata")
-    if not isinstance(metadata, dict):
-        raise ValueError(f"{skill_md} frontmatter is missing required metadata section for adapted content")
+    
+    if content_mode in {"adapted", "normalised", "normalized"}:
+        if not isinstance(metadata, dict):
+            raise ValueError(f"{skill_md} frontmatter is missing required metadata section for {content_mode} content")
+    elif content_mode == "verbatim":
+        # Verbatim skills may have optional metadata, but it's not required
+        if metadata is not None and not isinstance(metadata, dict):
+            raise ValueError(f"{skill_md} frontmatter metadata must be a mapping if present")
+        # For verbatim, no further validation of metadata fields
+        return
 
     def require_metadata_field(field_name: str) -> None:
         if field_name not in metadata or not metadata[field_name]:
             raise ValueError(f"{bundle_name} skill {canonical_name} frontmatter metadata is missing {field_name}")
 
-    # Required fields for adapted skills
+    # Required fields for adapted and normalised skills
     require_metadata_field("content_mode")
     require_metadata_field("source_author")
     require_metadata_field("source_license")
     require_metadata_field("source_repo")
     require_metadata_field("source_path")
-    require_metadata_field("adapted_author")
+
+    # Adapted skills require adapted_author and adaptation_note
+    if content_mode == "adapted":
+        require_metadata_field("adapted_author")
+        require_metadata_field("adaptation_note")
+    # Normalised skills should NOT have adapted_author or adaptation_note
+    elif content_mode in {"normalised", "normalized"}:
+        if metadata.get("adapted_author") or metadata.get("adaptation_note"):
+            raise ValueError(f"{bundle_name} skill {canonical_name} normalised content should not have adapted_author or adaptation_note")
 
     # Ensure content_mode in frontmatter matches bundle manifest
     if metadata.get("content_mode") != content_mode:
@@ -1266,38 +1283,50 @@ def validate_skill_bundle_manifest(
             assert entry_vendor_root is not None
             check_path_exists(entry_vendor_root / snapshot_path)
             content_mode = entry.get("content_mode")
-            if bundle_name == "superpowers-ecc":
-                # MARK-262: Only require source fields for adapted entries, not verbatim
-                if content_mode == "adapted":
-                    for field in ("source_path", "source_author", "source_license", "source_repo"):
-                        if not isinstance(entry.get(field), str) or not entry.get(field):
-                            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
+            
             # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
             local_full_path = ROOT / plugin_root / local_path
             # Only validate if the local path points to a SKILL.md file (not profiles or other files)
             if local_full_path.name == "SKILL.md":
                 _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
-            if content_mode not in {"verbatim", "adapted"}:
+            
+            if content_mode not in {"verbatim", "normalised", "normalized", "adapted"}:
                 raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
+            
+            # For adapted and normalised entries, require source attribution fields
+            if content_mode in {"adapted", "normalised", "normalized"}:
+                for field in ("source_path", "source_author", "source_license", "source_repo"):
+                    if not isinstance(entry.get(field), str) or not entry.get(field):
+                        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
+            
+            if content_mode in {"normalised", "normalized"}:
+                # Normalised: substantive content unchanged, but projection is Codex/OpenAI-canonical
+                # Requires attribution but not adapted_author/adaptation_note
+                if entry.get("adapted_author") or entry.get("adaptation_note"):
+                    raise ValueError(f"{bundle_name} bundle manifest normalised entry should not have adapted_author or adaptation_note")
             if content_mode == "adapted" and not entry.get("adaptation_note"):
                 raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
             if content_mode == "verbatim":
                 source_path = entry_vendor_root / snapshot_path
                 projected_path = ROOT / plugin_root / local_path
-                if bundle_name == "superpowers-ecc":
-                    _, source_body = _split_skill_frontmatter_and_body(source_path)
-                    _, projected_body = _split_skill_frontmatter_and_body(projected_path)
-                    if source_body != projected_body:
-                        raise ValueError(
-                            f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
-                        )
-                else:
+                
+                if content_mode == "verbatim":
+                    # Verbatim: raw byte identity against retained source
                     source_bytes = source_path.read_bytes()
                     projected_bytes = projected_path.read_bytes()
                     if source_bytes != projected_bytes:
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
                         )
+                elif content_mode in {"normalised", "normalized"}:
+                    # Normalised: body-equivalence comparison ignoring projection-only metadata
+                    _, source_body = _split_skill_frontmatter_and_body(source_path)
+                    _, projected_body = _split_skill_frontmatter_and_body(projected_path)
+                    if source_body != projected_body:
+                        raise ValueError(
+                            f"{bundle_name} bundle manifest imported entry {local_path} substantive content drifted from retained snapshot"
+                        )
+                # For adapted entries, no content-equivalence check
             elif content_mode == "adapted" and not entry.get("adaptation_note"):
                 raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
 

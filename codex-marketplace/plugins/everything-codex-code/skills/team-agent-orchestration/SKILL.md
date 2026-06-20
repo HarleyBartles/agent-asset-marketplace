@@ -7,7 +7,7 @@ metadata:
   source_license: MIT
   source_repo: https://github.com/affaan-m/ECC
   source_path: sources/third_party/ecc/upstream/skills/team-agent-orchestration/SKILL.md
-  content_mode: verbatim
+  content_mode: normalised
 ---
 
 # Team Agent Orchestration
