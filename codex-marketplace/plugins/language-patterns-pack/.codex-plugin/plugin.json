@@ -1,14 +1,14 @@
 {
     "name":  "language-patterns-pack",
     "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for TypeScript and Python language, testing, async, and performance patterns projected from the retained Claude-Cortex custody plugin.",
+    "description":  "Codex marketplace bundle for language, testing, async, performance, and framework patterns projected from retained Claude-Cortex and ECC custody plugins.",
     "author":  {
                    "name":  "Harley Bartles"
                },
     "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "license":  "MIT",
-    "rights":  "Contains third-party Claude-Cortex-derived TypeScript and Python language/runtime guidance; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+    "rights":  "Contains third-party Claude-Cortex-derived TypeScript and Python language/runtime guidance and ECC-derived language/framework guidance; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
     "keywords":  [
                      "codex",
                      "marketplace",
@@ -28,8 +28,8 @@
     "skills":  "./skills/",
     "interface":  {
                       "displayName":  "Language Patterns Pack",
-                      "shortDescription":  "TypeScript and Python language, testing, async, and performance guidance",
-                      "longDescription":  "A repo-local Codex plugin bundle that projects the retained Claude-Cortex TypeScript and Python language/runtime skills into an installable marketplace shape for advanced TypeScript patterns, Python testing, Python async/concurrency, Python performance optimization, and maintainable runtime code.",
+                      "shortDescription":  "Language, testing, async, performance, and framework guidance across multiple runtimes",
+                      "longDescription":  "A repo-local Codex plugin bundle that projects retained Claude-Cortex TypeScript and Python language/runtime skills and ECC language/framework skills into an installable marketplace shape for advanced TypeScript patterns, Python testing, Python async/concurrency, Python performance optimization, and multi-language framework guidance.",
                       "developerName":  "Harley Bartles",
                       "category":  "Productivity",
                       "capabilities":  [
@@ -38,8 +38,8 @@
                                        ],
                       "defaultPrompt":  [
                                             "Inspect the Language Patterns Pack bundle and source map.",
-                                            "Use the bundle to review the TypeScript and Python skill projections.",
-                                            "Compare the bundle versioning against the retained Claude-Cortex custody surface."
+                                            "Use the bundle to review the TypeScript, Python, and multi-language framework skill projections.",
+                                            "Compare the bundle versioning against the retained Claude-Cortex and ECC custody surfaces."
                                         ],
                       "brandColor":  "#0284C7",
                       "composerIcon":  "./assets/icon.svg",

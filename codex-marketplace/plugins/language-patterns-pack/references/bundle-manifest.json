@@ -5,8 +5,8 @@
     "pinned_commit":  "7892d00e7cb6adf00144a535103b930c772fb2c0",
     "source_root":  ".",
     "path_semantics":  "retained-snapshot-relative",
-    "candidate_count":  34,
-    "imported_count":  34,
+    "candidate_count":  63,
+    "imported_count":  63,
     "skipped_count":  0,
     "blocked_count":  0,
     "entries":  [
@@ -247,11 +247,275 @@
                         "snapshot_path":  "skills/python-performance-optimization/references/string-io.md",
                         "local_path":  "skills/python-performance-optimization/references/string-io.md",
                         "import_status":  "imported"
+                    },
+                    {
+                        "snapshot_path":  "skills/bun-runtime/SKILL.md",
+                        "local_path":  "skills/bun-runtime/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/cpp-testing/SKILL.md",
+                        "local_path":  "skills/cpp-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/csharp-testing/SKILL.md",
+                        "local_path":  "skills/csharp-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/dart-flutter-patterns/SKILL.md",
+                        "local_path":  "skills/dart-flutter-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/django-celery/SKILL.md",
+                        "local_path":  "skills/django-celery/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/django-patterns/SKILL.md",
+                        "local_path":  "skills/django-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/django-tdd/SKILL.md",
+                        "local_path":  "skills/django-tdd/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/fastapi-patterns/SKILL.md",
+                        "local_path":  "skills/fastapi-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/flutter-dart-code-review/SKILL.md",
+                        "local_path":  "skills/flutter-dart-code-review/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/fsharp-testing/SKILL.md",
+                        "local_path":  "skills/fsharp-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/golang-testing/SKILL.md",
+                        "local_path":  "skills/golang-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/kotlin-coroutines-flows/SKILL.md",
+                        "local_path":  "skills/kotlin-coroutines-flows/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/kotlin-ktor-patterns/SKILL.md",
+                        "local_path":  "skills/kotlin-ktor-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/kotlin-testing/SKILL.md",
+                        "local_path":  "skills/kotlin-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/laravel-patterns/SKILL.md",
+                        "local_path":  "skills/laravel-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/laravel-plugin-discovery/SKILL.md",
+                        "local_path":  "skills/laravel-plugin-discovery/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/laravel-tdd/SKILL.md",
+                        "local_path":  "skills/laravel-tdd/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/nestjs-patterns/SKILL.md",
+                        "local_path":  "skills/nestjs-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/perl-testing/SKILL.md",
+                        "local_path":  "skills/perl-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/python-testing/SKILL.md",
+                        "local_path":  "skills/python-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/pytorch-patterns/SKILL.md",
+                        "local_path":  "skills/pytorch-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/quarkus-patterns/SKILL.md",
+                        "local_path":  "skills/quarkus-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/quarkus-tdd/SKILL.md",
+                        "local_path":  "skills/quarkus-tdd/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/rust-testing/SKILL.md",
+                        "local_path":  "skills/rust-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/springboot-patterns/SKILL.md",
+                        "local_path":  "skills/springboot-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/springboot-tdd/SKILL.md",
+                        "local_path":  "skills/springboot-tdd/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/swift-protocol-di-testing/SKILL.md",
+                        "local_path":  "skills/swift-protocol-di-testing/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/tinystruct-patterns/SKILL.md",
+                        "local_path":  "skills/tinystruct-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/tdd-workflow/SKILL.md",
+                        "local_path":  "skills/tdd-workflow/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "upstream_author":  "ECC (affaan-m/ECC)",
+                        "upstream_license":  "MIT",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Language Patterns Pack."
                     }
                 ],
     "notes":  [
-                  "Four-skill language/runtime pack covering TypeScript and Python.",
-                  "The retained upstream skills use plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
+                  "Thirty-three-skill language/framework pack covering TypeScript, Python, and other language/framework testing and pattern guidance.",
+                  "Four skills from Claude-Cortex retained custody: typescript-advanced-patterns, python-testing-patterns, async-python-patterns, python-performance-optimization.",
+                  "Twenty-nine skills from ECC retained custody: bun-runtime, cpp-testing, csharp-testing, dart-flutter-patterns, django-celery, django-patterns, django-tdd, fastapi-patterns, flutter-dart-code-review, fsharp-testing, golang-testing, kotlin-coroutines-flows, kotlin-ktor-patterns, kotlin-testing, laravel-patterns, laravel-plugin-discovery, laravel-tdd, nestjs-patterns, perl-testing, python-testing, pytorch-patterns, quarkus-patterns, quarkus-tdd, rust-testing, springboot-patterns, springboot-tdd, swift-protocol-di-testing, tinystruct-patterns, tdd-workflow.",
+                  "The retained Claude-Cortex upstream skills use plugin-root-relative reference paths; the projected pack normalizes them to skill-root-relative references and adds canonical agents/openai.yaml metadata.",
+                  "ECC skills are projected verbatim from retained ECC source custody with MIT license attribution to upstream author affaan-m/ECC.",
                   "The python-testing-patterns validation rubric remains retained source custody only and is not projected into the installable pack."
               ],
     "provenance_refs": [
