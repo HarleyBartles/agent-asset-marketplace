@@ -567,6 +567,9 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
     if upstream_repo == "combined-source":
         # Combined-source bundles aggregate from multiple upstreams; no single vendor root
         return None
+    if upstream_repo == "first-party":
+        # First-party source custody under sources/first_party/
+        return ROOT / "sources/first_party"
     raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
 
 
@@ -1199,25 +1202,36 @@ def validate_skill_bundle_manifest(
         if bundle_name == "superpowers-ecc":
             check_path_exists(ROOT / "sources/third_party/ecc/upstream/LICENSE")
 
-        if bundle_name == "security-pack" and isinstance(bundle_manifest.get("source_families"), list):
+        if bundle_name in ("security-pack", "unslop-plus") and isinstance(bundle_manifest.get("source_families"), list):
             source_family_roots = {}
             for family in bundle_manifest["source_families"]:
+                if isinstance(family, str):
+                    # Legacy string-list format: resolve via source_family_roots map
+                    family_name = family
+                    if family_name in source_family_roots:
+                        raise ValueError(f"{bundle_name} bundle manifest source_families entry name duplicated")
+                    roots_map = bundle_manifest.get("source_family_roots")
+                    if isinstance(roots_map, dict) and family_name in roots_map:
+                        resolved = ROOT / roots_map[family_name]
+                        check_path_exists(resolved)
+                        source_family_roots[family_name] = resolved
+                    continue
                 if not isinstance(family, dict):
-                    raise ValueError("security-pack bundle manifest source_families must contain objects")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families must contain objects or strings")
                 family_name = family.get("name")
                 family_upstream_repo = family.get("upstream_repo")
                 family_pinned_commit = family.get("pinned_commit")
                 family_source_root = family.get("source_root")
                 if not family_name or not isinstance(family_name, str):
-                    raise ValueError("security-pack bundle manifest source_families entry name mismatch")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families entry name mismatch")
                 if family_name in source_family_roots:
-                    raise ValueError("security-pack bundle manifest source_families entry name duplicated")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families entry name duplicated")
                 if not family_upstream_repo or not isinstance(family_upstream_repo, str):
-                    raise ValueError("security-pack bundle manifest source_families upstream_repo mismatch")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families upstream_repo mismatch")
                 if not family_pinned_commit or not isinstance(family_pinned_commit, str):
-                    raise ValueError("security-pack bundle manifest source_families pinned_commit mismatch")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families pinned_commit mismatch")
                 if not family_source_root or not isinstance(family_source_root, str):
-                    raise ValueError("security-pack bundle manifest source_families source_root mismatch")
+                    raise ValueError(f"{bundle_name} bundle manifest source_families source_root mismatch")
                 family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
                 if family_vendor_root is not None:
                     resolved_family_root = family_vendor_root / family_source_root
@@ -1278,13 +1292,14 @@ def validate_skill_bundle_manifest(
             entry_vendor_root = vendor_root
             if source_family_roots is not None:
                 source_family = entry.get("source_family")
-                if not source_family or not isinstance(source_family, str):
-                    raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a source_family")
-                entry_vendor_root = source_family_roots.get(source_family)
-                if entry_vendor_root is None:
-                    raise ValueError(
-                        f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
-                    )
+                if source_family and isinstance(source_family, str):
+                    entry_vendor_root = source_family_roots.get(source_family)
+                    if entry_vendor_root is None:
+                        raise ValueError(
+                            f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
+                        )
+                else:
+                    entry_vendor_root = None
             # For combined-source bundles, vendor_root may be None; skip snapshot path validation in that case
             if entry_vendor_root is not None:
                 check_path_exists(entry_vendor_root / snapshot_path)

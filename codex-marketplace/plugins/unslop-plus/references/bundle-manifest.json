@@ -1,0 +1,245 @@
+{
+  "bundle_name": "unslop-plus",
+  "bundle_version": "1.0.0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
+  "source_root": ".",
+  "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
+  "source_families": [
+    {
+      "name": "unslop-engine",
+      "upstream_repo": "mshumer/unslop",
+      "pinned_commit": "edcb62386d129c65e4395f0cfcc9168eb1ba2148",
+      "source_root": "."
+    },
+    {
+      "name": "first-party-profiles",
+      "upstream_repo": "first-party",
+      "pinned_commit": "local",
+      "source_root": "skills/unslop-plus"
+    }
+  ],
+  "candidate_count": 19,
+  "imported_count": 19,
+  "skipped_count": 0,
+  "blocked_count": 0,
+  "entries": [
+    {
+      "snapshot_path": "unslop.py",
+      "local_path": "skills/unslop-plus/scripts/unslop.py",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "source_family": "unslop-engine",
+      "adaptation_note": "Upstream unslop.py is a Claude Code CLI tool requiring the claude binary (shutil.which check at line 996), spawning claude -p subprocesses (line 407), with interactive TerminalUI spinners/progress bars (lines 30-170) and signal-based process management. Adapted to use Python standard library text analysis on local samples, removing Claude Code CLI dependency, interactive terminal UI, and subprocess process model. Upstream MIT license preserved in LICENSE.upstream.",
+      "adapted_author": "Harley Bartles",
+      "source_path": "unslop.py",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    },
+    {
+      "snapshot_path": "LICENSE",
+      "local_path": "skills/unslop-plus/LICENSE.upstream",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "unslop-engine",
+      "source_path": "LICENSE",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    },
+    {
+      "snapshot_path": "scripts/validate_package.py",
+      "local_path": "skills/unslop-plus/scripts/validate_package.py",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "scripts/validate_package.py",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "scripts/validate_unslop_output.py",
+      "local_path": "skills/unslop-plus/scripts/validate_unslop_output.py",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "scripts/validate_unslop_output.py",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/writing.md",
+      "local_path": "skills/unslop-plus/profiles/writing.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/writing.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/technical-writing.md",
+      "local_path": "skills/unslop-plus/profiles/technical-writing.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/technical-writing.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/implementation-plans.md",
+      "local_path": "skills/unslop-plus/profiles/implementation-plans.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/implementation-plans.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/code-review.md",
+      "local_path": "skills/unslop-plus/profiles/code-review.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/code-review.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/worker-returns.md",
+      "local_path": "skills/unslop-plus/profiles/worker-returns.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/worker-returns.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/debugging.md",
+      "local_path": "skills/unslop-plus/profiles/debugging.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/debugging.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/frontend-react.md",
+      "local_path": "skills/unslop-plus/profiles/frontend-react.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/frontend-react.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/frontend-ui.md",
+      "local_path": "skills/unslop-plus/profiles/frontend-ui.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/frontend-ui.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/api-design.md",
+      "local_path": "skills/unslop-plus/profiles/api-design.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/api-design.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/architecture.md",
+      "local_path": "skills/unslop-plus/profiles/architecture.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/architecture.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/testing.md",
+      "local_path": "skills/unslop-plus/profiles/testing.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/testing.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/security-review.md",
+      "local_path": "skills/unslop-plus/profiles/security-review.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/security-review.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "profiles/cleanup-custody.md",
+      "local_path": "skills/unslop-plus/profiles/cleanup-custody.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "profiles/cleanup-custody.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "SKILL.md",
+      "local_path": "skills/unslop-plus/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "agents/openai.yaml",
+      "local_path": "skills/unslop-plus/agents/openai.yaml",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_family": "first-party-profiles",
+      "source_path": "agents/openai.yaml",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    }
+  ],
+  "provenance_refs": [
+    "provenance/unslop.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
+}

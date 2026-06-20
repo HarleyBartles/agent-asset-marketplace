@@ -1,6 +1,0 @@
-interface:
-  display_name: "Unslop"
-  short_description: "Generate anti-slop profiles from local samples"
-  default_prompt: "Use $unslop to gather domain samples, run bundled text analysis, validate the generated profile, and report visual evidence status."
-  icon_small: "../../assets/icon.svg"
-  icon_large: "../../assets/icon.svg"
