@@ -382,5 +382,6 @@
   "source_family_roots": {
     "superpowers": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
     "house-skills": "sources/first_party"
-  }
+  },
+  "license": "MIT"
 }
