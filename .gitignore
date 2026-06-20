@@ -43,3 +43,7 @@ Thumbs.db
 !.env.example
 
 .codex/environments/environment.toml
+
+# Local Devin/Codex issue worktrees
+.worktrees/*
+!.worktrees/.gitkeep
