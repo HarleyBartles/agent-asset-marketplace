@@ -5,8 +5,8 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 71,
-  "imported_count": 71,
+  "candidate_count": 100,
+  "imported_count": 100,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -506,11 +506,273 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Imported into the Codex Cortex custody plugin as the threat-modeling validation rubric."
+    },
+    {
+      "snapshot_path": "skills/agent-architecture-audit/SKILL.md",
+      "local_path": "skills/agent-architecture-audit/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/agent-eval/SKILL.md",
+      "local_path": "skills/agent-eval/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/agent-self-evaluation/SKILL.md",
+      "local_path": "skills/agent-self-evaluation/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/agentic-engineering/SKILL.md",
+      "local_path": "skills/agentic-engineering/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/agentic-os/SKILL.md",
+      "local_path": "skills/agentic-os/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/ai-regression-testing/SKILL.md",
+      "local_path": "skills/ai-regression-testing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/autonomous-agent-harness/SKILL.md",
+      "local_path": "skills/autonomous-agent-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/autonomous-loops/SKILL.md",
+      "local_path": "skills/autonomous-loops/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/benchmark/SKILL.md",
+      "local_path": "skills/benchmark/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/benchmark-methodology/SKILL.md",
+      "local_path": "skills/benchmark-methodology/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/benchmark-optimization-loop/SKILL.md",
+      "local_path": "skills/benchmark-optimization-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/context-budget/SKILL.md",
+      "local_path": "skills/context-budget/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/continuous-agent-loop/SKILL.md",
+      "local_path": "skills/continuous-agent-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/dynamic-workflow-mode/SKILL.md",
+      "local_path": "skills/dynamic-workflow-mode/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/eval-harness/SKILL.md",
+      "local_path": "skills/eval-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/gan-style-harness/SKILL.md",
+      "local_path": "skills/gan-style-harness/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/gateguard/SKILL.md",
+      "local_path": "skills/gateguard/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/iterative-retrieval/SKILL.md",
+      "local_path": "skills/iterative-retrieval/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-add-feature/SKILL.md",
+      "local_path": "skills/orch-add-feature/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-build-mvp/SKILL.md",
+      "local_path": "skills/orch-build-mvp/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-change-feature/SKILL.md",
+      "local_path": "skills/orch-change-feature/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-fix-defect/SKILL.md",
+      "local_path": "skills/orch-fix-defect/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-pipeline/SKILL.md",
+      "local_path": "skills/orch-pipeline/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/orch-refine-code/SKILL.md",
+      "local_path": "skills/orch-refine-code/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/plan-orchestrate/SKILL.md",
+      "local_path": "skills/plan-orchestrate/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/prompt-optimizer/SKILL.md",
+      "local_path": "skills/prompt-optimizer/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/ralphinho-rfc-pipeline/SKILL.md",
+      "local_path": "skills/ralphinho-rfc-pipeline/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/santa-method/SKILL.md",
+      "local_path": "skills/santa-method/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
+    },
+    {
+      "snapshot_path": "skills/verification-loop/SKILL.md",
+      "local_path": "skills/verification-loop/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected from ECC custody under MARK-242."
     }
   ],
   "notes": [
-    "Six retained guidance skills.",
-    "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, the MARK-205 OpenAPI companion slice, and the MARK-210 security-framing slice.",
-    "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope."
+    "Nine retained guidance skills from Claude-Cortex plus 29 ECC agent/eval workflow skills projected under MARK-242.",
+    "The plugin is the custody home for the imported seed, follow-on architecture skills, the MARK-204 contract-doctrine slice, the MARK-205 OpenAPI companion slice, the MARK-210 security-framing slice, and the MARK-242 ECC agent/eval workflow skills.",
+    "Later Claude-Cortex candidates beyond the imported custody skills remain out of scope.",
+    "ECC skills beyond the 29 agent/eval workflow skills projected under MARK-242 remain out of scope."
   ]
 }
