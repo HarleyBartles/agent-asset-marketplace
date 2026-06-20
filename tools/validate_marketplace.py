@@ -414,7 +414,8 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
                 metadata = parsed["metadata"]
                 if isinstance(metadata, dict):
                     # Check for MARK-262 authorship fields that should not be in verbatim skills
-                    mark262_fields = ["origin", "source_author", "source_license", "source_repo", "source_path", "content_mode", "adapted_author"]
+                    # origin is allowed for tracking purposes, but authorship fields are not
+                    mark262_fields = ["source_author", "source_license", "source_repo", "source_path", "content_mode", "adapted_author"]
                     if any(field in metadata for field in mark262_fields):
                         raise ValueError(f"{bundle_name} skill {canonical_name} has MARK-262 authorship metadata but content_mode is verbatim - verbatim skills must be byte-identical to upstream")
         return
