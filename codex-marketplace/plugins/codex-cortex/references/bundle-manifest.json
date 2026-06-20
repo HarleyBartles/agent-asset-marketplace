@@ -1,10 +1,25 @@
 {
   "bundle_name": "codex-cortex",
   "bundle_version": "1.0.0",
-  "upstream_repo": "NickCrew/Claude-Cortex",
-  "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+  "upstream_repo": "combined-source",
+  "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
+  "source_families": [
+    {
+      "name": "claude-cortex",
+      "upstream_repo": "NickCrew/Claude-Cortex",
+      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
+      "source_root": "."
+    },
+    {
+      "name": "ecc",
+      "upstream_repo": "affaan-m/ECC",
+      "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+      "source_root": "."
+    }
+  ],
   "candidate_count": 100,
   "imported_count": 100,
   "skipped_count": 0,
@@ -854,10 +869,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/agent-eval/SKILL.md",
@@ -866,10 +878,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-eval/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/agent-self-evaluation/SKILL.md",
@@ -878,10 +887,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/agentic-engineering/SKILL.md",
@@ -890,10 +896,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/agentic-engineering/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/agentic-os/SKILL.md",
@@ -902,10 +905,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/agentic-os/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/ai-regression-testing/SKILL.md",
@@ -914,10 +914,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/ai-regression-testing/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/autonomous-agent-harness/SKILL.md",
@@ -926,10 +923,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/autonomous-loops/SKILL.md",
@@ -938,10 +932,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/autonomous-loops/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/benchmark/SKILL.md",
@@ -950,10 +941,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/benchmark/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/benchmark-methodology/SKILL.md",
@@ -962,10 +950,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/benchmark-methodology/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/benchmark-optimization-loop/SKILL.md",
@@ -974,10 +959,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/benchmark-optimization-loop/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/context-budget/SKILL.md",
@@ -986,10 +968,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/context-budget/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/continuous-agent-loop/SKILL.md",
@@ -998,10 +977,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/dynamic-workflow-mode/SKILL.md",
@@ -1010,10 +986,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/eval-harness/SKILL.md",
@@ -1022,10 +995,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/eval-harness/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/gan-style-harness/SKILL.md",
@@ -1034,10 +1004,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/gan-style-harness/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/gateguard/SKILL.md",
@@ -1046,10 +1013,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/gateguard/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/iterative-retrieval/SKILL.md",
@@ -1058,10 +1022,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/iterative-retrieval/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-add-feature/SKILL.md",
@@ -1070,10 +1031,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-add-feature/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-build-mvp/SKILL.md",
@@ -1082,10 +1040,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-build-mvp/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-change-feature/SKILL.md",
@@ -1094,10 +1049,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-change-feature/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-fix-defect/SKILL.md",
@@ -1106,10 +1058,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-fix-defect/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-pipeline/SKILL.md",
@@ -1118,10 +1067,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-pipeline/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/orch-refine-code/SKILL.md",
@@ -1130,10 +1076,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/orch-refine-code/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/plan-orchestrate/SKILL.md",
@@ -1142,10 +1085,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/plan-orchestrate/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/prompt-optimizer/SKILL.md",
@@ -1154,10 +1094,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/prompt-optimizer/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/ralphinho-rfc-pipeline/SKILL.md",
@@ -1166,10 +1103,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/ralphinho-rfc-pipeline/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/santa-method/SKILL.md",
@@ -1178,10 +1112,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/santa-method/SKILL.md"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/verification-loop/SKILL.md",
@@ -1190,10 +1121,7 @@
       "content_mode": "verbatim",
       "upstream_author": "ECC (affaan-m/ECC)",
       "upstream_license": "MIT",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_path": "sources/third_party/ecc/upstream/skills/verification-loop/SKILL.md"
+      "source_family": "ecc"
     }
   ],
   "notes": [

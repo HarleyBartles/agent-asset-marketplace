@@ -16,7 +16,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/modern-csharp/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     },
     {
       "snapshot_path": "skills/vertical-slice/SKILL.md",
@@ -24,7 +28,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/vertical-slice/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     },
     {
       "snapshot_path": "skills/clean-architecture/SKILL.md",
@@ -32,7 +40,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Removed advisor-specific trigger language and kept the clean architecture guidance.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/clean-architecture/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     },
     {
       "snapshot_path": "skills/ddd/SKILL.md",
@@ -40,7 +52,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Kept the DDD tactical guidance and normalized provider-specific wording.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/ddd/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     },
     {
       "snapshot_path": "skills/ef-core/SKILL.md",
@@ -48,7 +64,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Kept the EF Core guidance and removed provider-specific load assumptions.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/ef-core/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     },
     {
       "snapshot_path": "skills/testing/SKILL.md",
@@ -56,7 +76,11 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "Kept the testing guidance and removed provider-specific load assumptions.",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/testing/SKILL.md",
+      "source_author": "codewithmukesh",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit"
     }
   ],
   "notes": [

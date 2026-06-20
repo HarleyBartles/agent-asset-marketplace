@@ -35,7 +35,6 @@
       "local_path": "skills/agent-harness-construction/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -43,7 +42,6 @@
       "local_path": "skills/ai-first-engineering/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -51,7 +49,6 @@
       "local_path": "skills/deployment-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -59,7 +56,6 @@
       "local_path": "skills/dmux-workflows/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -67,7 +63,6 @@
       "local_path": "skills/messages-ops/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/messages-ops/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -75,7 +70,6 @@
       "local_path": "skills/ml-adoption-playbook/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/ml-adoption-playbook/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -83,7 +77,6 @@
       "local_path": "skills/prediction-market-oracle-research/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/prediction-market-oracle-research/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -91,7 +84,6 @@
       "local_path": "skills/recursive-decision-ledger/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/recursive-decision-ledger/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -99,7 +91,6 @@
       "local_path": "skills/research-ops/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/research-ops/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -107,7 +98,6 @@
       "local_path": "skills/safety-guard/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/safety-guard/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -115,7 +105,6 @@
       "local_path": "skills/search-first/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/search-first/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -123,7 +112,6 @@
       "local_path": "skills/team-agent-orchestration/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/team-agent-orchestration/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -131,7 +119,6 @@
       "local_path": "skills/team-builder/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/team-builder/SKILL.md",
       "source_family": "ecc"
     },
     {
@@ -139,7 +126,6 @@
       "local_path": "skills/token-budget-advisor/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_path": "sources/third_party/ecc/upstream/skills/token-budget-advisor/SKILL.md",
       "source_family": "ecc"
     }
   ],

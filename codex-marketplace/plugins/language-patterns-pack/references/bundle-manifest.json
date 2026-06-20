@@ -5,6 +5,7 @@
   "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
   "source_families": [
     {
       "name": "claude-cortex",
@@ -31,7 +32,11 @@
       "content_mode": "adapted",
       "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths.",
       "source_family": "claude-cortex",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/typescript-advanced-patterns/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "snapshot_path": "skills/typescript-advanced-patterns/references/advanced-generics.md",
@@ -138,7 +143,11 @@
       "local_path": "skills/python-testing-patterns/SKILL.md",
       "import_status": "imported",
       "source_family": "claude-cortex",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/python-testing-patterns/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "content_mode": "verbatim",
@@ -231,7 +240,11 @@
       "local_path": "skills/python-performance-optimization/SKILL.md",
       "import_status": "imported",
       "source_family": "claude-cortex",
-      "adapted_author": "Harley Bartles"
+      "adapted_author": "Harley Bartles",
+      "source_path": "skills/python-performance-optimization/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex"
     },
     {
       "content_mode": "verbatim",

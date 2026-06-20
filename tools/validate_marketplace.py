@@ -349,9 +349,11 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
     content_mode = entry.get("content_mode")
     source_category = entry.get("source_category")
     
-    # MARK-262: Strict validation - all entries must have authorship fields
-    for field_name in ("source_path", "source_author", "source_license", "source_repo"):
-        require_nonblank(field_name)
+    # MARK-262: Adapted entries must have source authorship fields
+    # Verbatim entries should NOT have these at entry level (byte-identical to upstream)
+    if content_mode == "adapted":
+        for field_name in ("source_path", "source_author", "source_license", "source_repo"):
+            require_nonblank(field_name)
     
     if content_mode == "verbatim":
         if source_category not in {"first_party", "third_party"}:
@@ -1251,9 +1253,11 @@ def validate_skill_bundle_manifest(
             if not snapshot_path or not isinstance(snapshot_path, str):
                 raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
             if bundle_name == "superpowers-ecc":
-                for field in ("source_path", "source_author", "source_license", "source_repo"):
-                    if not isinstance(entry.get(field), str) or not entry.get(field):
-                        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
+                # MARK-262: Only require source fields for adapted entries, not verbatim
+                if content_mode == "adapted":
+                    for field in ("source_path", "source_author", "source_license", "source_repo"):
+                        if not isinstance(entry.get(field), str) or not entry.get(field):
+                            raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
             entry_vendor_root = vendor_root
             if source_family_roots is not None:
                 source_family = entry.get("source_family")

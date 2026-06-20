@@ -295,5 +295,7 @@
     "Live skill roots are unversioned plugin folders under codex-marketplace/plugins/house-skills/skills/<skill-name>/.",
     "Historical version-package residue was folded into the live roots and skill-level notes.",
     "Includes the five hydrated Wild Bunch first-party roots as a separate lane."
-  ]
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
 }

@@ -5,6 +5,7 @@
   "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
   "source_families": [
     {
       "name": "claude-cortex",
@@ -183,72 +184,56 @@
       "local_path": "skills/architecture-decision-records/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/backend-patterns/SKILL.md",
       "local_path": "skills/backend-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/docker-patterns/SKILL.md",
       "local_path": "skills/docker-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/hexagonal-architecture/SKILL.md",
       "local_path": "skills/hexagonal-architecture/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/intent-driven-development/SKILL.md",
       "local_path": "skills/intent-driven-development/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/kubernetes-patterns/SKILL.md",
       "local_path": "skills/kubernetes-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/mcp-server-patterns/SKILL.md",
       "local_path": "skills/mcp-server-patterns/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     },
     {
       "snapshot_path": "skills/mle-workflow/SKILL.md",
       "local_path": "skills/mle-workflow/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
+      "source_family": "ecc"
     }
   ],
   "notes": [

@@ -5,6 +5,7 @@
   "pinned_commit": "mixed",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "combined-source",
   "source_families": [
     {
       "name": "claude-cortex",

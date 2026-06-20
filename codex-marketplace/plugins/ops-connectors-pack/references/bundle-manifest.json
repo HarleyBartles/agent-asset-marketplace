@@ -5,6 +5,7 @@
   "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
+  "content_mode": "verbatim",
   "candidate_count": 9,
   "imported_count": 9,
   "skipped_count": 0,
