@@ -207,6 +207,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "ops-connectors-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/ops-connectors-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "notes": [

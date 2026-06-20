@@ -1,0 +1,35 @@
+{
+    "bundle_name":  "ops-connectors-pack",
+    "bundle_version":  "1.0.0",
+    "upstream_repo":  "affaan-m/ECC",
+    "pinned_commit":  "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
+    "source_root":  ".",
+    "path_semantics":  "retained-snapshot-relative",
+    "candidate_count":  3,
+    "imported_count":  3,
+    "skipped_count":  0,
+    "blocked_count":  0,
+    "entries":  [
+                    {
+                        "snapshot_path":  "skills/automation-audit-ops/SKILL.md",
+                        "local_path":  "skills/automation-audit-ops/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/email-ops/SKILL.md",
+                        "local_path":  "skills/email-ops/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/jira-integration/SKILL.md",
+                        "local_path":  "skills/jira-integration/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
+                    }
+                ]
+}

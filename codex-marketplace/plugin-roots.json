@@ -154,6 +154,15 @@
       "plugin_root": "codex-marketplace/plugins/data-platform-pack",
       "manifest_path": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 17,
+      "name": "ops-connectors-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/ops-connectors-pack",
+      "plugin_root": "codex-marketplace/plugins/ops-connectors-pack",
+      "manifest_path": "codex-marketplace/plugins/ops-connectors-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }
