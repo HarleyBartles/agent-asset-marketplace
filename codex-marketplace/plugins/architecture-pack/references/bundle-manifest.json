@@ -5,8 +5,8 @@
   "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 22,
-  "imported_count": 22,
+  "candidate_count": 30,
+  "imported_count": 30,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -163,11 +163,84 @@
       "import_status": "imported",
       "content_mode": "verbatim",
       "adaptation_note": "Projected unchanged from the Codex Cortex custody plugin into the installable Architecture Pack."
+    },
+    {
+      "snapshot_path": "skills/architecture-decision-records/SKILL.md",
+      "local_path": "skills/architecture-decision-records/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/backend-patterns/SKILL.md",
+      "local_path": "skills/backend-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/docker-patterns/SKILL.md",
+      "local_path": "skills/docker-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/hexagonal-architecture/SKILL.md",
+      "local_path": "skills/hexagonal-architecture/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/intent-driven-development/SKILL.md",
+      "local_path": "skills/intent-driven-development/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/kubernetes-patterns/SKILL.md",
+      "local_path": "skills/kubernetes-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/mcp-server-patterns/SKILL.md",
+      "local_path": "skills/mcp-server-patterns/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
+    },
+    {
+      "snapshot_path": "skills/mle-workflow/SKILL.md",
+      "local_path": "skills/mle-workflow/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "upstream_author": "ECC (affaan-m/ECC)",
+      "upstream_license": "MIT",
+      "adaptation_note": "Projected verbatim from ECC custody into the installable Architecture Pack as part of MARK-241."
     }
   ],
   "notes": [
-    "Three retained architecture guidance skills.",
-    "The installable projection mirrors the Codex Cortex custody plugin.",
+    "Three retained architecture guidance skills from Codex Cortex custody.",
+    "Eight architecture skills from ECC (affaan-m/ECC) custody projected as part of MARK-241.",
+    "The installable projection mirrors the Codex Cortex custody plugin and ECC custody.",
     "Later Claude-Cortex candidates remain out of scope."
   ],
   "provenance_refs": [
