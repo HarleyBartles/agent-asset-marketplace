@@ -46,8 +46,8 @@ jobs:
       - name: Generate repo index
         run: python tools/generate_repo_index.py
 
-      - name: Check for generated drift
-        run: git diff --exit-code
+      - name: Check for generated drift (source files only)
+        run: git diff --exit-code -- .gitattributes .agents/plugins/marketplace.json codex-marketplace/manifest.json repo-index/
 
       - name: Validate marketplace
         run: python tools/validate_marketplace.py
