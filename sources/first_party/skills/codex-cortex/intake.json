@@ -3,60 +3,60 @@
   "upstream_repo": "NickCrew/Claude-Cortex",
   "upstream_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
   "license": "MIT",
-  "retained_snapshot_root": "sources/third_party/codex-cortex/upstream",
+  "retained_snapshot_root": "sources/third_party/claude-cortex/upstream",
   "imports": [
     {
       "source_id": "codex-cortex-cqrs-event-sourcing-v1",
       "public_name": "cqrs-event-sourcing",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-event-driven-architecture-v1",
       "public_name": "event-driven-architecture",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-database-design-patterns-v1",
       "public_name": "database-design-patterns",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/database-design-patterns/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-api-design-patterns-v1",
       "public_name": "api-design-patterns",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/api-design-patterns/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-openapi-specification-v1",
       "public_name": "openapi-specification",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/openapi-specification/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-secure-coding-practices-v1",
       "public_name": "secure-coding-practices",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-owasp-top-10-v1",
       "public_name": "owasp-top-10",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/owasp-top-10/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-security-testing-patterns-v1",
       "public_name": "security-testing-patterns",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md",
       "status": "imported"
     },
     {
       "source_id": "codex-cortex-threat-modeling-techniques-v1",
       "public_name": "threat-modeling-techniques",
-      "source_path": "sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
       "status": "imported"
     }
   ],
