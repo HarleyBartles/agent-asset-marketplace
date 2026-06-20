@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 339,
+  "artifact_count": 344,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -303,13 +303,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19636,
-      "source_sha256": "b12695270572d91e1a6e9d0bb931d063f7e4e56d914767629e44e2a081118831",
+      "source_bytes": 25429,
+      "source_sha256": "02555c39e3529a4bb690e7aa5592fca462867dc792cc13b58d4bcab9b7e2e919",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9026,
-      "zip_sha256": "4891a00f635db732de3cb4d1b4bf676dd29cddfb0b666b1442bef75d68421f95"
+      "zip_size_bytes": 11424,
+      "zip_sha256": "329eedb3d4c857052c8740fc1ff277d84d5c9fae237cb35322509dedb8dbe5c8"
     },
     {
       "pack": "api-contracts-pack",
@@ -318,14 +318,14 @@
       "source_path": "codex-marketplace/plugins/api-contracts-pack/skills/openapi-specification",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip",
-      "source_file_count": 3,
-      "source_bytes": 9687,
-      "source_sha256": "9cf9855e93559574b300aef57c81f779bb59ed19b9d410437b11817dc5fdd27d",
+      "source_file_count": 2,
+      "source_bytes": 7663,
+      "source_sha256": "be2a9ee69ea795dcb4c81c98025655ccc2391a6911038c17e9d3ffb08ef14373",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4570,
-      "zip_sha256": "ded1fd4c4443b27cb61d8373d0448b8ef960350307a567ead82c7e238a93e486"
+      "zip_size_bytes": 3542,
+      "zip_sha256": "b94dd12c2be63668323a8f01a2ed9eb1c7644ef366b72d03469d576b5fae14f5"
     },
     {
       "pack": "architecture-pack",
@@ -367,13 +367,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 5807,
-      "source_sha256": "d6cb41ab5ef972f824ee180be481b52308c64ad4e77ca06135ee81210151a4c7",
+      "source_bytes": 35415,
+      "source_sha256": "3bb60f14daa6e673b153b1a6e1721221c5bc1af10dbb50f8a9c7ed3d9960b839",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3992,
-      "zip_sha256": "f553a534f85acef6c431b19f80038a21d90ad4353138299c1fbe6fa0433ae3be"
+      "zip_size_bytes": 11760,
+      "zip_sha256": "5a0a5b24e91a7614390bff5dbc1e0c02d9504025f752183f82107f2cec3686d0"
     },
     {
       "pack": "architecture-pack",
@@ -607,13 +607,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/api-design-patterns/skill.zip",
       "source_file_count": 3,
-      "source_bytes": 19636,
-      "source_sha256": "b12695270572d91e1a6e9d0bb931d063f7e4e56d914767629e44e2a081118831",
+      "source_bytes": 25429,
+      "source_sha256": "02555c39e3529a4bb690e7aa5592fca462867dc792cc13b58d4bcab9b7e2e919",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9026,
-      "zip_sha256": "4891a00f635db732de3cb4d1b4bf676dd29cddfb0b666b1442bef75d68421f95"
+      "zip_size_bytes": 11424,
+      "zip_sha256": "329eedb3d4c857052c8740fc1ff277d84d5c9fae237cb35322509dedb8dbe5c8"
     },
     {
       "pack": "codex-cortex",
@@ -735,13 +735,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 6043,
-      "source_sha256": "b99a149347665e31f531395676ce29c5bed593d7981b78f8e44e3dca91d94081",
+      "source_bytes": 35516,
+      "source_sha256": "464e5e35f387ad0a58e41f7d2f90ede9cfe04b0503b2c59abc7da1227636c57d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4112,
-      "zip_sha256": "bf9fdb72d1dfc513d3bbbaf3bbd4a40c47933b12ea15bf656c5d4ef85be71ef6"
+      "zip_size_bytes": 11875,
+      "zip_sha256": "f2aa433352c3134a35389c8e1f826a04ee16f6d077be957d81e5593857daefc6"
     },
     {
       "pack": "codex-cortex",
@@ -862,14 +862,14 @@
       "source_path": "codex-marketplace/plugins/codex-cortex/skills/openapi-specification",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/openapi-specification/skill.zip",
-      "source_file_count": 3,
-      "source_bytes": 18587,
-      "source_sha256": "73b0a71125b9c1854ce9accfd8cd11785c4eb6670cb28131d6073e46cb77da5f",
+      "source_file_count": 2,
+      "source_bytes": 16563,
+      "source_sha256": "91b9cb8fcf1ae1c9b87c0d5eab916b8ce34164403d213100b58acb6ba6ab44c0",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7163,
-      "zip_sha256": "89143985c4e42ebbe910223ebff8e89bee78933c66bb20fe6a072e212d2eed92"
+      "zip_size_bytes": 6135,
+      "zip_sha256": "6089279b1853fdb9c853ded3091b57dfe375a10c255cd424c96cf8c1651d3a83"
     },
     {
       "pack": "codex-cortex",
@@ -1086,14 +1086,14 @@
       "source_path": "codex-marketplace/plugins/codex-cortex/skills/threat-modeling-techniques",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip",
-      "source_file_count": 13,
-      "source_bytes": 14092,
-      "source_sha256": "ddfe764002e004e6c27535c6dcaaa54a46d1d2033e27a43513fdc904dcf676b1",
+      "source_file_count": 12,
+      "source_bytes": 58688,
+      "source_sha256": "7496f7bff86847dbe00404cbd81c3a2e8b0dd04c36632ea45f1d4ea71644b871",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9277,
-      "zip_sha256": "acc382688ad3887a2e1cf665d8d25f1c3cb5fd7777b86e7a839691c5c8bac4fa"
+      "zip_size_bytes": 26571,
+      "zip_sha256": "e77c719d8e6f2b2a1e0b3f2a97e86e32666c9e4ef422942529fabb3bd8469664"
     },
     {
       "pack": "codex-cortex",
@@ -3752,6 +3752,86 @@
       "zip_sha256": "645f1507e63ddd9d582eccb101646fa01e591ce90f1a4de13c77fc1fb88e2176"
     },
     {
+      "pack": "planning-pack",
+      "skill": "development-estimation",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/planning-pack/skills/development-estimation",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/planning-pack/development-estimation/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 7153,
+      "source_sha256": "6d5b2aaf5e7de8cba72027e95ad9473b06e957fdf88e4016018bb3d21336857c",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 3039,
+      "zip_sha256": "5a0b38c8170f282d0a743711558cce6923f0ebcebcd43bc6b859af09c843b6b5"
+    },
+    {
+      "pack": "planning-pack",
+      "skill": "mermaid-diagramming",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/planning-pack/mermaid-diagramming/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 15742,
+      "source_sha256": "38d79f6893ee2cb94f144cd8149450442ff90ace5d18e1ed9983c6bbdbfdbc78",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 6870,
+      "zip_sha256": "7f6a9ef0b411ff28a34a17e6f204894aa756078e908831d6696866d9f7d89b2f"
+    },
+    {
+      "pack": "planning-pack",
+      "skill": "release-analysis",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/planning-pack/skills/release-analysis",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/planning-pack/release-analysis/skill.zip",
+      "source_file_count": 23,
+      "source_bytes": 180770,
+      "source_sha256": "4056a2484628b2f31c41537bc739d7b28b96cf5f42c52781a96c4a8e3e6548fd",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 71272,
+      "zip_sha256": "c961c5ee01f1451f6780c8bd9f57a7cf54cc7596cf4ac837fa8af2f624390725"
+    },
+    {
+      "pack": "planning-pack",
+      "skill": "release-prep",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/planning-pack/skills/release-prep",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/planning-pack/release-prep/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 6885,
+      "source_sha256": "5f1a751b92f4b89ebe73a7fea37c5c523f9075c0a72c4e8a02ba627fba07aac0",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 2971,
+      "zip_sha256": "d325c355b205a7a39746615e4a5b07c226a3eece1795f2ca7520b20b6d066909"
+    },
+    {
+      "pack": "planning-pack",
+      "skill": "requirements-discovery",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/planning-pack/skills/requirements-discovery",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/planning-pack/requirements-discovery/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 13495,
+      "source_sha256": "76bda166c1c8d9c3329aa77cae13406650af40b8d4240ea73e1d52d5d65b0176",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 5940,
+      "zip_sha256": "c7851e060d36183478b417c95fef8a8a0644e092d9df229bc7b89c1b9287f1fc"
+    },
+    {
       "pack": "repo-worker-base",
       "skill": "agent-introspection-debugging",
       "export_mode": "direct",
@@ -4766,14 +4846,14 @@
       "source_path": "codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip",
-      "source_file_count": 13,
-      "source_bytes": 14078,
-      "source_sha256": "afb180a684dae3aadd0ebc17c5f328cbaf0d296eae0881759f405d5add91084d",
+      "source_file_count": 12,
+      "source_bytes": 58688,
+      "source_sha256": "1481b5c45cc45082ce6e1e9c2b98a7244a5da0887b220d997f8c68f4b5e7ae76",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9259,
-      "zip_sha256": "9bda7ed873d5b6040c8f29407a8fa1402445986d594daad4201790e6086f7ee2"
+      "zip_size_bytes": 26571,
+      "zip_sha256": "061d423a26b98cb237c5fa07d81931ca9eef1b270bea01d8fdab0c77c8bce089"
     },
     {
       "pack": "superpowers-ecc",

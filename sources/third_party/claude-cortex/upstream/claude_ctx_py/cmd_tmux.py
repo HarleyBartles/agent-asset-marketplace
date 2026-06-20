@@ -1,0 +1,361 @@
+"""CLI parser and handler for ``cortex tmux`` subcommands.
+
+Delegates to :mod:`claude_ctx_py.tmux` for all domain logic.
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from typing import Any
+
+
+def build_tmux_parser(subparsers: argparse._SubParsersAction[Any]) -> None:
+    """Register the ``cortex tmux`` parser tree."""
+    tmux_parser = subparsers.add_parser(
+        "tmux", help="Tmux window management for agents"
+    )
+    tmux_sub = tmux_parser.add_subparsers(dest="tmux_command")
+
+    # --- list ---
+    tmux_sub.add_parser("list", help="List windows in session")
+
+    # --- sessions ---
+    tmux_sub.add_parser(
+        "sessions", help="List every tmux session with attached state"
+    )
+
+    # --- session-new ---
+    sn_parser = tmux_sub.add_parser(
+        "session-new", help="Idempotently create a tmux session"
+    )
+    sn_parser.add_argument(
+        "name",
+        nargs="?",
+        default=None,
+        help="Session name (default: $TMUX_SESSION or current directory)",
+    )
+    sn_parser.add_argument(
+        "--cwd",
+        default=None,
+        help="Working directory for the initial window (default: current dir)",
+    )
+    sn_parser.add_argument(
+        "--window",
+        default="shell",
+        help="Initial window name (default: shell)",
+    )
+
+    # --- session-kill ---
+    sk_parser = tmux_sub.add_parser(
+        "session-kill",
+        help="Kill a tmux session and every window in it",
+    )
+    sk_parser.add_argument(
+        "name",
+        nargs="?",
+        default=None,
+        help="Session name (default: $TMUX_SESSION or current directory)",
+    )
+
+    # --- attach ---
+    attach_parser = tmux_sub.add_parser(
+        "attach",
+        help="Attach to a session (switch-client if already inside tmux)",
+    )
+    attach_parser.add_argument(
+        "name",
+        nargs="?",
+        default=None,
+        help="Session name (default: $TMUX_SESSION or current directory)",
+    )
+    attach_parser.add_argument(
+        "--window",
+        default=None,
+        help="Window to select before attaching",
+    )
+
+    # --- snapshot ---
+    snap_parser = tmux_sub.add_parser(
+        "snapshot",
+        help="Multi-session digest with last N lines per window",
+    )
+    snap_parser.add_argument(
+        "--lines",
+        type=int,
+        default=10,
+        help="Lines of recent output to include per window (default: 10)",
+    )
+    snap_parser.add_argument(
+        "--session",
+        default=None,
+        help="Scope snapshot to a single session (default: all)",
+    )
+
+    # --- new ---
+    new_parser = tmux_sub.add_parser("new", help="Create a new window")
+    new_parser.add_argument("window", help="Window name")
+    new_parser.add_argument(
+        "--cwd",
+        default=None,
+        help="Working directory for the new window (default: current directory)",
+    )
+
+    # --- kill ---
+    kill_parser = tmux_sub.add_parser("kill", help="Kill a window")
+    kill_parser.add_argument("window", help="Window name")
+
+    # --- rename ---
+    rename_parser = tmux_sub.add_parser("rename", help="Rename a window")
+    rename_parser.add_argument("old", help="Existing window name")
+    rename_parser.add_argument("new", help="New window name")
+
+    # --- send ---
+    send_parser = tmux_sub.add_parser(
+        "send", help="Send command to window (presses Enter)"
+    )
+    send_parser.add_argument("window", help="Window name")
+    send_parser.add_argument(
+        "command_parts",
+        nargs="+",
+        metavar="command",
+        help="Command to send",
+    )
+
+    # --- say ---
+    say_parser = tmux_sub.add_parser(
+        "say",
+        help="Send a message to a TUI (text + settle + Enter, no C-c clear)",
+    )
+    say_parser.add_argument("window", help="Window name")
+    say_parser.add_argument(
+        "message_parts",
+        nargs="+",
+        metavar="message",
+        help="Message text",
+    )
+    say_parser.add_argument(
+        "--settle",
+        type=float,
+        default=0.5,
+        help="Seconds to pause before Enter (default: 0.5)",
+    )
+
+    # --- type ---
+    type_parser = tmux_sub.add_parser(
+        "type", help="Type text without pressing Enter"
+    )
+    type_parser.add_argument("window", help="Window name")
+    type_parser.add_argument("text", nargs="*", default=[], help="Text to type")
+
+    # --- keys ---
+    keys_parser = tmux_sub.add_parser(
+        "keys", help="Send key sequence (e.g. C-c, Enter, Up)"
+    )
+    keys_parser.add_argument("window", help="Window name")
+    keys_parser.add_argument("key_sequence", nargs="+", help="Keys to send")
+
+    # --- interrupt ---
+    int_parser = tmux_sub.add_parser("interrupt", help="Send Ctrl-C to window")
+    int_parser.add_argument("window", help="Window name")
+
+    # --- read / tail ---
+    read_parser = tmux_sub.add_parser(
+        "read", aliases=["tail"], help="Capture last N lines (default: 50)"
+    )
+    read_parser.add_argument("window", help="Window name")
+    read_parser.add_argument(
+        "lines", nargs="?", type=int, default=50, help="Number of lines"
+    )
+
+    # --- dump ---
+    dump_parser = tmux_sub.add_parser("dump", help="Dump entire scrollback buffer")
+    dump_parser.add_argument("window", help="Window name")
+
+    # --- status ---
+    status_parser = tmux_sub.add_parser(
+        "status", help="Check window exists and show last lines"
+    )
+    status_parser.add_argument("window", help="Window name")
+
+    # --- running ---
+    running_parser = tmux_sub.add_parser(
+        "running", help="Exit 0 if command running, 1 if at prompt"
+    )
+    running_parser.add_argument("window", help="Window name")
+
+    # --- wait ---
+    wait_parser = tmux_sub.add_parser(
+        "wait", help="Wait for command to complete (default: 60s)"
+    )
+    wait_parser.add_argument("window", help="Window name")
+    wait_parser.add_argument(
+        "timeout", nargs="?", type=int, default=60, help="Timeout in seconds"
+    )
+
+    # --- watch ---
+    watch_parser = tmux_sub.add_parser(
+        "watch", help="Wait for pattern to appear (or prompt if no pattern)"
+    )
+    watch_parser.add_argument("window", help="Window name")
+    watch_parser.add_argument("pattern", nargs="?", help="Pattern to match")
+    watch_parser.add_argument(
+        "--timeout", type=int, default=120, help="Timeout in seconds (default: 120)"
+    )
+
+    # --- justfile ---
+    jf_parser = tmux_sub.add_parser(
+        "justfile",
+        help="Generate Justfile service targets for this project",
+    )
+    jf_parser.add_argument(
+        "--dir",
+        "-d",
+        default=None,
+        help="Project directory (default: current directory)",
+    )
+    jf_parser.add_argument(
+        "--prefix",
+        "-p",
+        default="svc",
+        help="Target name prefix (default: svc)",
+    )
+
+
+def _print(text: str) -> None:
+    sys.stdout.write(text + "\n")
+
+
+def handle_tmux_command(args: argparse.Namespace) -> int:
+    """Dispatch ``cortex tmux <subcommand>``."""
+    from . import tmux
+
+    cmd = getattr(args, "tmux_command", None)
+
+    if cmd == "list":
+        code, msg = tmux.tmux_list()
+        _print(msg)
+        return code
+
+    if cmd == "sessions":
+        code, msg = tmux.tmux_sessions()
+        _print(msg)
+        return code
+
+    if cmd == "session-new":
+        cwd = args.cwd if args.cwd else os.getcwd()
+        code, msg = tmux.tmux_session_new(
+            args.name, cwd=cwd, window=args.window
+        )
+        _print(msg)
+        return code
+
+    if cmd == "session-kill":
+        code, msg = tmux.tmux_session_kill(args.name)
+        _print(msg)
+        return code
+
+    if cmd == "attach":
+        code, msg = tmux.tmux_attach(args.name, window=args.window)
+        if msg:
+            _print(msg)
+        return code
+
+    if cmd == "snapshot":
+        code, msg = tmux.tmux_snapshot(
+            lines=args.lines,
+            session=getattr(args, "session", None),
+        )
+        _print(msg)
+        return code
+
+    if cmd == "new":
+        cwd = args.cwd if args.cwd else os.getcwd()
+        code, msg = tmux.tmux_new(args.window, cwd=cwd)
+        _print(msg)
+        return code
+
+    if cmd == "kill":
+        code, msg = tmux.tmux_kill(args.window)
+        _print(msg)
+        return code
+
+    if cmd == "rename":
+        code, msg = tmux.tmux_rename(args.old, args.new)
+        _print(msg)
+        return code
+
+    if cmd == "send":
+        command_str = " ".join(args.command_parts)
+        code, msg = tmux.tmux_send(args.window, command_str)
+        _print(msg)
+        return code
+
+    if cmd == "say":
+        message_str = " ".join(args.message_parts)
+        code, msg = tmux.tmux_say(args.window, message_str, settle=args.settle)
+        _print(msg)
+        return code
+
+    if cmd == "type":
+        text_str = " ".join(args.text)
+        code, msg = tmux.tmux_type(args.window, text_str)
+        _print(msg)
+        return code
+
+    if cmd == "keys":
+        keys_str = " ".join(args.key_sequence)
+        code, msg = tmux.tmux_keys(args.window, keys_str)
+        _print(msg)
+        return code
+
+    if cmd == "interrupt":
+        code, msg = tmux.tmux_interrupt(args.window)
+        _print(msg)
+        return code
+
+    if cmd in ("read", "tail"):
+        code, msg = tmux.tmux_read(args.window, lines=args.lines)
+        _print(msg)
+        return code
+
+    if cmd == "dump":
+        code, msg = tmux.tmux_dump(args.window)
+        _print(msg)
+        return code
+
+    if cmd == "status":
+        code, msg = tmux.tmux_status(args.window)
+        _print(msg)
+        return code
+
+    if cmd == "running":
+        code, msg = tmux.tmux_running(args.window)
+        _print(msg)
+        return code
+
+    if cmd == "wait":
+        code, msg = tmux.tmux_wait(args.window, timeout=args.timeout)
+        _print(msg)
+        return code
+
+    if cmd == "watch":
+        code, msg = tmux.tmux_watch(
+            args.window,
+            pattern=getattr(args, "pattern", None),
+            timeout=getattr(args, "timeout", 120),
+        )
+        _print(msg)
+        return code
+
+    if cmd == "justfile":
+        code, msg = tmux.tmux_justfile(
+            directory=getattr(args, "dir", None),
+            prefix=getattr(args, "prefix", "svc"),
+        )
+        _print(msg)
+        return code
+
+    _print("Tmux subcommand required. Use 'cortex tmux --help' for options.")
+    return 1

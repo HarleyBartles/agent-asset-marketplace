@@ -1,0 +1,53 @@
+.TH CORTEX-INSTALL 1 "2026-05-02" "cortex-install 2.0.0" "User Commands"
+.SH NAME
+cortex-install \- Command-line tool
+.SH SYNOPSIS
+.B cortex-install
+[
+B-h
+    R | 
+        B--help
+               R]
+.br
+.B cortex-install
+
+ICOMMAND
+        R [
+           ISUBCOMMAND
+                      R] [
+                          IARGS
+                               R...]
+.SH DESCRIPTION
+.B cortex-install
+.SH COMMANDS
+Available commands:
+.TP
+.B manpage
+Install manpage files
+.TP
+.B link
+Symlink bundled content (agents, skills, rules, schemas) into ~/.claude
+.TP
+.B aliases
+Install cortex shell aliases (~/.cortex_aliases, sourced from rc)
+.TP
+.B statusline
+Configure Claude Code statusline to use cortex
+.TP
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show help message and exit
+.SH ENVIRONMENT
+.TP
+.B CLAUDE_PLUGIN_ROOT
+Override for context directory (set automatically by Claude Code when running plugin commands)
+.SH FILES
+.TP
+.B ~/.claude/
+Default context directory containing agents, modes, rules, and other configuration
+.SH SEE ALSO
+.BR cortex-install-tui (1),
+.BR cortex-install-workflow (1)
+.SH AUTHORS
+Nicholas Ferguson <ncf423@gmail.com>

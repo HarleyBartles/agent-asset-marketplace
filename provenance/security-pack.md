@@ -8,12 +8,12 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 
 ### Retained NickCrew/Claude-Cortex Upstream
 
-- **Upstream root**: `sources/third_party/codex-cortex/upstream/`
+- **Upstream root**: `sources/third_party/claude-cortex/upstream/`
 - **Retained skill roots**:
-  - `sources/third_party/codex-cortex/upstream/skills/secure-coding-practices/`
-  - `sources/third_party/codex-cortex/upstream/skills/owasp-top-10/`
-  - `sources/third_party/codex-cortex/upstream/skills/security-testing-patterns/`
-  - `sources/third_party/codex-cortex/upstream/skills/threat-modeling-techniques/`
+  - `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/`
+  - `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/`
+  - `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
 
 ### Retained ECC Upstream
 

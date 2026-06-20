@@ -1,22 +1,22 @@
 ---
 name: api-design-patterns
-description: Contract-first API design patterns for REST and GraphQL services, with versioning, pagination, error handling, generated-client expectations, and validation posture.
+description: Comprehensive REST and GraphQL API design patterns with versioning, pagination, error handling, and HATEOAS principles. Use when designing APIs, defining endpoints, or architecting service contracts requiring production-grade patterns.
 keywords:
   - API design
   - API versioning
-  - REST API
   - GraphQL
-  - contract-first
-  - pagination
+  - HATEOAS
+  - OpenAPI
+  - REST API
+  - endpoint design
   - error handling
-  - generated clients
+  - pagination
   - service contract
-  - contract validation
 file_patterns:
-  - "**/*.http"
-  - "**/api/**"
-  - "**/contracts/**"
-  - "**/schema/**"
+  - '**/*.http'
+  - '**/api/**'
+  - '**/openapi.*'
+  - '**/swagger.*'
 confidence: 0.86
 metadata:
   source_author: NickCrew
@@ -28,163 +28,530 @@ metadata:
 
 # API Design Patterns
 
-Use this skill when you are defining or reviewing a service contract that needs
-to stay predictable across clients, services, and releases.
+Expert guidance for designing scalable, maintainable REST and GraphQL APIs with industry-standard patterns for versioning, pagination, error handling, authentication, and service contracts.
 
 ## When to Use This Skill
 
-- designing a new REST or GraphQL API;
-- refactoring an existing contract for clarity or stability;
-- defining versioning rules for an externally or internally consumed service;
-- standardizing pagination, filtering, and field selection;
-- tightening error formats so clients can recover cleanly;
-- validating generated clients or contract tests; or
-- reviewing backend/frontend seams where payload shape matters.
+- Designing new REST or GraphQL APIs from scratch
+- Refactoring existing APIs for better scalability and consistency
+- Defining service contracts for microservices architectures
+- Implementing versioning strategies for API evolution
+- Standardizing error handling and response formats across services
+- Designing pagination for large datasets
+- Implementing HATEOAS or hypermedia-driven APIs
+- Creating API specifications (OpenAPI, GraphQL Schema)
 
 ## Quick Reference
 
 | Topic | Load reference |
 | --- | --- |
-| Contract design process and API evolution | `references/design-process.md` |
-| Contract quality rubric and validation posture | `validation/rubric.yaml` |
+| **Design Process** | `references/design-process.md` |
 
 ## Core Principles
 
-### 1. Treat the contract as the product
+### 1. Resource-Oriented Design (REST)
 
-- resource names, field names, and status codes are part of the public API;
-- clients should not depend on storage details, service internals, or framework
-  defaults;
-- every contract change should be judged by its effect on consumers, not just
-  the server implementation.
+**URLs represent resources, not actions:**
+```
+✓ GET    /users/123
+✓ POST   /users
+✓ PUT    /users/123
+✓ DELETE /users/123
 
-### 2. Keep the surface explicit and stable
-
-- prefer clear resource-oriented paths and predictable request/response shapes;
-- avoid hidden behavior that changes based on undocumented server heuristics;
-- keep input validation local to the boundary before domain work begins;
-- return the same shape for the same kind of error whenever possible.
-
-### 3. Make the lifecycle visible
-
-- use versioning rules that let old clients continue to function while new
-  clients adopt the next shape;
-- define deprecation, migration, and sunset expectations up front;
-- keep generated-client expectations and contract tests aligned with the live
-  service shape.
-
-## Resource-Oriented Design
-
-**Use nouns for resources and verbs for state transitions only when a resource
-cannot model the action cleanly.**
-
-```text
-GET    /users/123
-POST   /users
-PUT    /users/123
-PATCH  /users/123
-DELETE /users/123
+✗ GET    /getUser?id=123
+✗ POST   /createUser
+✗ POST   /deleteUser
 ```
 
-Prefer plural resource collections, nested resources only when they reflect a
-real ownership boundary, and sub-resources only when they make the contract
-clearer.
+**Use HTTP methods semantically:**
+- GET: Retrieve resource(s), idempotent, cacheable
+- POST: Create resource, non-idempotent
+- PUT: Replace entire resource, idempotent
+- PATCH: Partial update, idempotent
+- DELETE: Remove resource, idempotent
 
-## HTTP Status Codes
+### 2. Consistent Naming Conventions
 
-### Success
+```
+Resources:        /users, /orders, /products (plural nouns)
+Nested:           /users/123/orders
+Collections:      /users?status=active&page=2
+Sub-resources:    /users/123/settings
+Actions (rare):   /users/123/activate (POST)
+```
 
-- `200 OK`: standard successful response;
-- `201 Created`: resource created;
-- `202 Accepted`: asynchronous work started;
-- `204 No Content`: successful request with no body.
+### 3. HTTP Status Codes
 
-### Client Errors
+**Success:**
+- 200 OK: Standard response for GET, PUT, PATCH
+- 201 Created: Resource created (POST), return Location header
+- 202 Accepted: Async processing started
+- 204 No Content: Success with no response body (DELETE)
 
-- `400 Bad Request`: malformed or invalid request;
-- `401 Unauthorized`: authentication required or failed;
-- `403 Forbidden`: authenticated but not allowed;
-- `404 Not Found`: resource absent;
-- `409 Conflict`: state or version conflict;
-- `422 Unprocessable Entity`: semantic validation failure;
-- `429 Too Many Requests`: client exceeded rate limits.
+**Client Errors:**
+- 400 Bad Request: Invalid syntax or validation failure
+- 401 Unauthorized: Authentication required or failed
+- 403 Forbidden: Authenticated but insufficient permissions
+- 404 Not Found: Resource doesn't exist
+- 409 Conflict: State conflict (duplicate, version mismatch)
+- 422 Unprocessable Entity: Semantic validation failure
+- 429 Too Many Requests: Rate limit exceeded
 
-### Server Errors
+**Server Errors:**
+- 500 Internal Server Error: Unexpected server failure
+- 502 Bad Gateway: Upstream service failure
+- 503 Service Unavailable: Temporary overload or maintenance
+- 504 Gateway Timeout: Upstream timeout
 
-- `500 Internal Server Error`: unexpected failure;
-- `502 Bad Gateway`: upstream service failure;
-- `503 Service Unavailable`: temporary outage or maintenance;
-- `504 Gateway Timeout`: upstream timeout.
+## Versioning Strategies
 
-## Versioning and Compatibility
+### URI Versioning (Most Common)
+```
+GET /v1/users/123
+GET /v2/users/123
 
-- prefer additive changes inside a version;
-- introduce a new version for breaking contract changes;
-- document the migration path before the new shape ships;
-- keep deprecation headers, successor links, and release notes consistent;
-- make the compatibility rules obvious to generated clients and manual clients
-  alike.
+Pros: Clear, easy to route, browser-testable
+Cons: URL proliferation, cache fragmentation
+When: Public APIs, major breaking changes
+```
 
-## Pagination, Filtering, and Field Selection
+### Header Versioning
+```
+GET /users/123
+Accept: application/vnd.myapi.v2+json
 
-- use offset pagination when the dataset is small and stable;
-- use cursor or keyset pagination when consistency and scale matter;
-- include explicit next/previous links or cursors in the response;
-- support sparse fieldsets when payload size matters;
-- keep filters and sort parameters predictable and documented.
+Pros: Clean URLs, content negotiation
+Cons: Harder to test, caching complexity
+When: Internal APIs, minor version differences
+```
 
-## Errors and Validation
+### Query Parameter Versioning
+```
+GET /users/123?version=2
 
-- return a stable error envelope with a machine-readable code;
-- include a human-readable message and actionable field detail where relevant;
-- distinguish syntax errors from semantic validation errors;
-- keep request IDs or correlation IDs in the error payload when possible;
-- make generated clients able to branch on error shape without scraping text.
+Pros: Simple, backward compatible
+Cons: Pollutes query space, inconsistent
+When: Rare, legacy compatibility
+```
 
-## Authentication, Idempotency, and Caching
+### Deprecation Headers
+```http
+Sunset: Sat, 31 Dec 2024 23:59:59 GMT
+Deprecation: true
+Link: <https://api.example.com/v2/users/123>; rel="successor-version"
+```
 
-- choose the simplest authentication mechanism that fits the trust boundary;
-- require idempotency keys for non-safe operations that may be retried;
-- use ETags or equivalent validators when the client needs conditional reads;
-- set cache rules deliberately instead of inheriting defaults;
-- document rate-limit behavior and retry guidance.
+## Pagination Patterns
 
-## GraphQL Considerations
+### Offset-Based Pagination
+```
+GET /users?limit=20&offset=40
 
-- keep queries bounded and explicit;
-- prefer stable schemas and additive field changes;
-- return predictable error details for missing resources or invalid input;
-- make pagination and filtering rules obvious in the schema and resolver
-  behavior;
-- align GraphQL responses with the same contract discipline you would expect
-  from a REST surface.
+Response:
+{
+  "data": [...],
+  "pagination": {
+    "limit": 20,
+    "offset": 40,
+    "total": 1543
+  },
+  "links": {
+    "next": "/users?limit=20&offset=60",
+    "prev": "/users?limit=20&offset=20"
+  }
+}
 
-## Contract Testing and Validation
+Pros: Simple, predictable, supports total count
+Cons: Inconsistent with concurrent writes, performance degrades
+When: Small datasets, stable data, admin UIs
+```
 
-1. define the contract in one place;
-2. validate requests at the boundary;
-3. test success, validation failure, and version-compatibility cases;
-4. exercise generated clients against the contract;
-5. verify that breaking changes are blocked before release.
+### Cursor-Based Pagination
+```
+GET /users?limit=20&cursor=eyJpZCI6MTIzfQ
+
+Response:
+{
+  "data": [...],
+  "pagination": {
+    "next_cursor": "eyJpZCI6MTQzfQ",
+    "has_more": true
+  },
+  "links": {
+    "next": "/users?limit=20&cursor=eyJpZCI6MTQzfQ"
+  }
+}
+
+Pros: Consistent with writes, scalable, efficient
+Cons: No total count, can't jump to arbitrary page
+When: Large datasets, real-time feeds, infinite scroll
+```
+
+### Keyset Pagination (Seek Method)
+```
+GET /users?limit=20&after_id=123&created_after=2024-01-01T00:00:00Z
+
+Pros: Most performant, index-friendly
+Cons: Requires sortable field, complex queries
+When: Very large datasets, time-series data
+```
+
+## Error Response Format
+
+### Standard Error Schema
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Request validation failed",
+    "details": [
+      {
+        "field": "email",
+        "code": "INVALID_FORMAT",
+        "message": "Email format is invalid"
+      },
+      {
+        "field": "age",
+        "code": "OUT_OF_RANGE",
+        "message": "Age must be between 18 and 120"
+      }
+    ],
+    "request_id": "req_a3f7c9b2",
+    "timestamp": "2024-01-15T10:30:00Z",
+    "documentation_url": "https://docs.api.com/errors/VALIDATION_ERROR"
+  }
+}
+```
+
+### Error Code Patterns
+```
+Format: CATEGORY_SPECIFIC_REASON
+
+Authentication:
+- AUTH_MISSING_TOKEN
+- AUTH_INVALID_TOKEN
+- AUTH_EXPIRED_TOKEN
+
+Authorization:
+- AUTHZ_INSUFFICIENT_PERMISSIONS
+- AUTHZ_RESOURCE_FORBIDDEN
+
+Validation:
+- VALIDATION_MISSING_FIELD
+- VALIDATION_INVALID_FORMAT
+- VALIDATION_OUT_OF_RANGE
+
+Business Logic:
+- BUSINESS_DUPLICATE_EMAIL
+- BUSINESS_INSUFFICIENT_BALANCE
+- BUSINESS_OPERATION_NOT_ALLOWED
+
+System:
+- SYSTEM_INTERNAL_ERROR
+- SYSTEM_SERVICE_UNAVAILABLE
+- SYSTEM_RATE_LIMIT_EXCEEDED
+```
+
+## Filtering and Searching
+
+### Query Parameters for Filtering
+```
+GET /users?status=active&role=admin&created_after=2024-01-01
+
+GET /users?search=john&fields=name,email
+
+GET /users?sort=-created_at,name  # - prefix for descending
+```
+
+### Complex Filtering (FIQL/RSQL)
+```
+GET /users?filter=status==active;role==admin,role==moderator
+               # AND between semicolons, OR between commas
+
+GET /products?filter=price>100;price<500;category==electronics
+```
+
+### Full-Text Search
+```
+GET /users?q=john+smith&fields=name,bio,company
+
+Response includes relevance scoring:
+{
+  "data": [
+    {
+      "id": 123,
+      "name": "John Smith",
+      "_score": 0.95
+    }
+  ]
+}
+```
+
+## Field Selection (Sparse Fieldsets)
+
+```
+GET /users/123?fields=id,name,email
+
+Response:
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+
+# Nested resources
+GET /users/123?fields=id,name,profile(avatar,bio)
+
+Benefits:
+- Reduced payload size
+- Faster response times
+- Lower bandwidth consumption
+- Better mobile performance
+```
+
+## HATEOAS (Hypermedia)
+
+### HAL (Hypertext Application Language)
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "_links": {
+    "self": { "href": "/users/123" },
+    "orders": { "href": "/users/123/orders" },
+    "update": { "href": "/users/123", "method": "PUT" },
+    "delete": { "href": "/users/123", "method": "DELETE" }
+  },
+  "_embedded": {
+    "recent_orders": [
+      {
+        "id": 456,
+        "total": 99.99,
+        "_links": {
+          "self": { "href": "/orders/456" }
+        }
+      }
+    ]
+  }
+}
+```
+
+### JSON:API Format
+```json
+{
+  "data": {
+    "type": "users",
+    "id": "123",
+    "attributes": {
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "relationships": {
+      "orders": {
+        "links": {
+          "self": "/users/123/relationships/orders",
+          "related": "/users/123/orders"
+        }
+      }
+    },
+    "links": {
+      "self": "/users/123"
+    }
+  }
+}
+```
+
+## Rate Limiting Headers
+
+```http
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 742
+X-RateLimit-Reset: 1705320000
+Retry-After: 3600
+
+# Standard (RFC 6585)
+RateLimit-Limit: 1000
+RateLimit-Remaining: 742
+RateLimit-Reset: 3600
+```
+
+## Authentication Patterns
+
+### Bearer Token (OAuth 2.0, JWT)
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+Pros: Stateless, scalable, standard
+Cons: Token size, revocation complexity
+When: Modern APIs, microservices
+```
+
+### API Key
+```http
+X-API-Key: ak_live_a3f7c9b2d8e1f4g6h9
+
+Pros: Simple, server-side management
+Cons: Less secure, harder to scope
+When: Internal services, admin APIs
+```
+
+### Basic Auth
+```http
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+
+Pros: Simple, built-in browser support
+Cons: Credentials in every request
+When: Internal tools, development only
+```
+
+## Idempotency
+
+### Idempotency Keys (POST)
+```http
+POST /payments
+Idempotency-Key: a3f7c9b2-d8e1-4f6g-h9i0-j1k2l3m4n5o6
+Content-Type: application/json
+
+{
+  "amount": 100.00,
+  "currency": "USD",
+  "description": "Payment for order #123"
+}
+
+# Server stores key + response for 24 hours
+# Duplicate requests return cached response with 200 OK
+```
+
+### Natural Idempotency
+```
+PUT /users/123          # Always idempotent
+DELETE /users/123       # Idempotent (404 on repeat)
+POST /users/123/follow  # Use PUT for idempotency
+```
+
+## Caching Strategies
+
+### ETags (Conditional Requests)
+```http
+# Initial request
+GET /users/123
+ETag: "a3f7c9b2"
+
+# Subsequent request
+GET /users/123
+If-None-Match: "a3f7c9b2"
+
+# Response if unchanged:
+304 Not Modified
+```
+
+### Cache-Control Headers
+```http
+# Never cache
+Cache-Control: no-store
+
+# Cache for 1 hour, revalidate
+Cache-Control: max-age=3600, must-revalidate
+
+# Cache forever (immutable)
+Cache-Control: public, max-age=31536000, immutable
+```
+
+## GraphQL Patterns
+
+### Query Structure
+```graphql
+query GetUser($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    email
+    orders(first: 10) {
+      edges {
+        node {
+          id
+          total
+          status
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+```
+
+### Error Handling
+```json
+{
+  "data": {
+    "user": null
+  },
+  "errors": [
+    {
+      "message": "User not found",
+      "locations": [{ "line": 2, "column": 3 }],
+      "path": ["user"],
+      "extensions": {
+        "code": "NOT_FOUND",
+        "userId": "123"
+      }
+    }
+  ]
+}
+```
+
+### Mutation Patterns
+```graphql
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    user {
+      id
+      name
+      email
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+```
 
 ## Best Practices Summary
 
-1. keep the contract readable by humans and stable for machines;
-2. document versioning and migration rules before clients depend on them;
-3. make errors structured and recoverable;
-4. prefer explicit pagination, filtering, and field selection;
-5. treat generated clients and contract tests as first-class consumers.
+1. **Consistency**: Follow conventions across all endpoints
+2. **Versioning**: Plan deprecation strategy from day one
+3. **Documentation**: Use OpenAPI/GraphQL schemas, keep updated
+4. **Error Handling**: Detailed, actionable error messages with codes
+5. **Security**: Always use HTTPS, validate inputs, rate limit
+6. **Performance**: Implement caching, pagination, field selection
+7. **Monitoring**: Log request IDs, track latency and error rates
+8. **Backward Compatibility**: Additive changes only within versions
+9. **Testing**: Contract tests, integration tests, load tests
+10. **Documentation**: Interactive docs (Swagger UI, GraphQL Playground)
 
 ## Anti-Patterns to Avoid
 
-- leaking database or framework internals into the payload shape;
-- changing a field type or meaning without a new version;
-- returning inconsistent error envelopes across endpoints;
-- using ad hoc pagination that breaks under load;
-- allowing undocumented client dependence on incidental response order;
-- treating generated-client compatibility as optional.
+1. **Chatty APIs**: Too many round trips (use batching, GraphQL)
+2. **Over-fetching**: Returning unnecessary data (use field selection)
+3. **Under-fetching**: Requiring multiple calls (use includes/embeds)
+4. **Leaking Implementation**: Exposing DB structure in API
+5. **Poor Error Messages**: Generic errors without details
+6. **Breaking Changes**: Modifying existing fields without versioning
+7. **No Rate Limiting**: Allowing resource exhaustion
+8. **Missing Documentation**: Undocumented endpoints and parameters
+9. **Inconsistent Naming**: Mixed conventions across endpoints
+10. **Ignoring HTTP Semantics**: Misusing status codes and methods
 
 ## Resources
 
-- `references/design-process.md`
-- `validation/rubric.yaml`
+- **REST**: Roy Fielding's dissertation, RFC 7231 (HTTP semantics)
+- **OpenAPI**: https://spec.openapis.org/oas/latest.html
+- **GraphQL**: https://graphql.org/learn/
+- **HAL**: https://stateless.group/hal_specification.html
+- **JSON:API**: https://jsonapi.org/
+- **RFC 7807**: Problem Details for HTTP APIs
