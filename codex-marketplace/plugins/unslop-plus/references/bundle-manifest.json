@@ -6,7 +6,7 @@
   "source_root": ".",
   "path_semantics": "composed-projection",
   "candidate_count": 14,
-  "imported_count": 16,
+  "imported_count": 18,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -178,6 +178,28 @@
       "import_status": "imported",
       "content_mode": "adapted",
       "adaptation_note": "First-party portable profile derived from MARK-265 Linear issue requirements.",
+      "adapted_author": "Harley Bartles",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "skills/unslop-plus/SKILL.md",
+      "local_path": "skills/unslop-plus/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Composed skill bundling third-party Unslop engine with thirteen first-party portable profiles.",
+      "adapted_author": "Harley Bartles",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "snapshot_path": "skills/unslop-plus/agents/openai.yaml",
+      "local_path": "skills/unslop-plus/agents/openai.yaml",
+      "import_status": "imported",
+      "content_mode": "adapted",
+      "adaptation_note": "Agent configuration for the composed unslop-plus skill.",
       "adapted_author": "Harley Bartles",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
