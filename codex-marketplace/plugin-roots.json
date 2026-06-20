@@ -22,11 +22,11 @@
     },
     {
       "order": 2,
-      "name": "unslop",
+      "name": "unslop-plus",
       "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/unslop",
-      "plugin_root": "codex-marketplace/plugins/unslop",
-      "manifest_path": "codex-marketplace/plugins/unslop/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/unslop-plus",
+      "plugin_root": "codex-marketplace/plugins/unslop-plus",
+      "manifest_path": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
