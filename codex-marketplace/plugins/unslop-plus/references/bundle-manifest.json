@@ -6,10 +6,41 @@
   "source_root": ".",
   "path_semantics": "composed-projection",
   "candidate_count": 14,
-  "imported_count": 14,
+  "imported_count": 3,
   "skipped_count": 0,
   "blocked_count": 0,
-  "entries": [],
+  "entries": [
+    {
+      "snapshot_path": "skills/unslop/scripts/unslop.py",
+      "local_path": "skills/unslop-plus/scripts/unslop.py",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_path": "skills/unslop/scripts/unslop.py",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    },
+    {
+      "snapshot_path": "skills/unslop/scripts/validate_package.py",
+      "local_path": "skills/unslop-plus/scripts/validate_package.py",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_path": "skills/unslop/scripts/validate_package.py",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    },
+    {
+      "snapshot_path": "skills/unslop/scripts/validate_unslop_output.py",
+      "local_path": "skills/unslop-plus/scripts/validate_unslop_output.py",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "source_path": "skills/unslop/scripts/validate_unslop_output.py",
+      "source_author": "mshumer",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/mshumer/unslop"
+    }
+  ],
   "provenance_refs": [
     "provenance/unslop.md"
   ],
