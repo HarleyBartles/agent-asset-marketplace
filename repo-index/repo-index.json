@@ -593,6 +593,75 @@
         "note": null
       },
       "license_path": "codex-marketplace/plugins/frontend-pack/LICENSE"
+    },
+    {
+      "name": "data-platform-pack",
+      "plugin_root": "codex-marketplace/plugins/data-platform-pack",
+      "plugin_manifest": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md"
+      ],
+      "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
+      "provenance_refs": [
+        "provenance/data-platform-pack.md",
+        "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/data-platform-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "ops-connectors-pack",
+      "plugin_root": "codex-marketplace/plugins/ops-connectors-pack",
+      "plugin_manifest": "codex-marketplace/plugins/ops-connectors-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/ops-connectors-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md"
+      ],
+      "license_path": "codex-marketplace/plugins/ops-connectors-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/ops-connectors-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/ops-connectors-pack/skills",
+      "provenance_refs": [
+        "provenance/ops-connectors-pack.md",
+        "codex-marketplace/plugins/ops-connectors-pack/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/ops-connectors-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "media-content-pack",
+      "plugin_root": "codex-marketplace/plugins/media-content-pack",
+      "plugin_manifest": "codex-marketplace/plugins/media-content-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/media-content-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md"
+      ],
+      "license_path": "codex-marketplace/plugins/media-content-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/media-content-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/media-content-pack/skills",
+      "provenance_refs": [
+        "provenance/media-content-pack.md",
+        "codex-marketplace/plugins/media-content-pack/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/media-content-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
     }
   ]
 }

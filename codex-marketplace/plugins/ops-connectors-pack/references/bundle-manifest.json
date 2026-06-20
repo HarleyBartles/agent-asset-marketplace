@@ -31,5 +31,24 @@
                         "content_mode":  "verbatim",
                         "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Ops Connectors Pack."
                     }
-                ]
+                ],
+    "repo_index": {
+        "source_md": "codex-marketplace/plugins/ops-connectors-pack/SOURCE.md",
+        "source_ledger": [
+            "sources/third_party/ecc/upstream/LICENSE",
+            "sources/third_party/ecc/upstream/source-custody.md"
+        ],
+        "license_path": "codex-marketplace/plugins/ops-connectors-pack/LICENSE",
+        "bundle_manifest": "codex-marketplace/plugins/ops-connectors-pack/references/bundle-manifest.json",
+        "skills_path": "codex-marketplace/plugins/ops-connectors-pack/skills",
+        "provenance_refs": [
+            "provenance/ops-connectors-pack.md",
+            "codex-marketplace/plugins/ops-connectors-pack/references/source-map.md"
+        ],
+        "agents_md": null,
+        "registry_alignment": {
+            "status": "aligned",
+            "note": null
+        }
+    }
 }

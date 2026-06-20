@@ -182,6 +182,30 @@ SUPERPOWERS_ECC_ENTRY = {
     },
 }
 
+DATA_PLATFORM_PACK_ENTRY = {
+    "name": "data-platform-pack",
+    "plugin_root": "codex-marketplace/plugins/data-platform-pack",
+    "plugin_manifest": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
+    "source_ledger": [
+        "sources/third_party/ecc/upstream/LICENSE",
+        "sources/third_party/ecc/upstream/source-custody.md",
+    ],
+    "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
+    "provenance_refs": [
+        "provenance/data-platform-pack.md",
+        "codex-marketplace/plugins/data-platform-pack/references/source-map.md",
+    ],
+    "agents_md": None,
+    "registry_path": "./codex-marketplace/plugins/data-platform-pack",
+    "registry_alignment": {
+        "status": "aligned",
+        "note": None,
+    },
+}
+
 
 def _bundle_manifest_path(plugin_root: str) -> Path:
     return ROOT / plugin_root / "references" / "bundle-manifest.json"
