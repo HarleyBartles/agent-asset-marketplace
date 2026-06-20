@@ -5,14 +5,56 @@
     "pinned_commit":  "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
     "source_root":  ".",
     "path_semantics":  "retained-snapshot-relative",
-    "candidate_count":  5,
-    "imported_count":  5,
+    "candidate_count":  11,
+    "imported_count":  11,
     "skipped_count":  0,
     "blocked_count":  0,
     "entries":  [
                     {
+                        "snapshot_path":  "skills/clickhouse-io/SKILL.md",
+                        "local_path":  "skills/clickhouse-io/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/content-hash-cache-pattern/SKILL.md",
+                        "local_path":  "skills/content-hash-cache-pattern/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/dashboard-builder/SKILL.md",
+                        "local_path":  "skills/dashboard-builder/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/data-throughput-accelerator/SKILL.md",
+                        "local_path":  "skills/data-throughput-accelerator/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/database-migrations/SKILL.md",
+                        "local_path":  "skills/database-migrations/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
                         "snapshot_path":  "skills/postgres-patterns/SKILL.md",
                         "local_path":  "skills/postgres-patterns/SKILL.md",
+                        "import_status":  "imported",
+                        "content_mode":  "verbatim",
+                        "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."
+                    },
+                    {
+                        "snapshot_path":  "skills/pytorch-patterns/SKILL.md",
+                        "local_path":  "skills/pytorch-patterns/SKILL.md",
                         "import_status":  "imported",
                         "content_mode":  "verbatim",
                         "adaptation_note":  "Mirrored unchanged from the retained ECC snapshot into the installable Data Platform Pack."

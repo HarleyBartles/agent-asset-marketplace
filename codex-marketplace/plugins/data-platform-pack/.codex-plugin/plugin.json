@@ -1,7 +1,7 @@
 {
     "name":  "data-platform-pack",
     "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for data, database, analytics, ETL, and ML-platform skills projected from retained ECC custody.",
+    "description":  "Codex marketplace bundle for data, database, analytics, ETL, and ML-platform skills projected from retained ECC custody. Includes ClickHouse, cache patterns, dashboard builders, data throughput accelerators, database migrations, PostgreSQL patterns, PyTorch patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
     "author":  {
                    "name":  "Harley Bartles"
                },
@@ -18,7 +18,13 @@
                      "etl",
                      "ml",
                      "platform",
+                     "clickhouse",
+                     "cache",
+                     "dashboard",
+                     "throughput",
+                     "migrations",
                      "postgres",
+                     "pytorch",
                      "quality",
                      "scientific",
                      "pubmed",

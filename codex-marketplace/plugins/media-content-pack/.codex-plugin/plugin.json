@@ -1,7 +1,7 @@
 {
   "name": "media-content-pack",
   "version": "1.0.0",
-  "description": "Codex marketplace bundle for media, content, document, brand, and publishing skills projected from retained ECC custody.",
+  "description": "Codex marketplace bundle for media, content, document, brand, and publishing skills projected from retained ECC custody. Includes Fal.ai media operations, frontend slides, Manim video, Remotion video creation, video editing, VideoDB, nutrient document processing, Visa document translation, SEO optimization, and competitive report structure.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -18,7 +18,13 @@
     "brand",
     "publishing",
     "fal-ai",
+    "video",
+    "manim",
+    "remotion",
+    "videodb",
+    "translation",
     "seo",
+    "report",
     "skills",
     "projection"
   ],

@@ -1,7 +1,7 @@
 {
     "name":  "ops-connectors-pack",
     "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for connector, workspace operations, communication, and business-ops workflow skills projected from retained ECC custody.",
+    "description":  "Codex marketplace bundle for connector, workspace operations, communication, and business-ops workflow skills projected from retained ECC custody. Includes API connector builders, automation audit operations, email operations, Google Workspace operations, Jira integration, unified notifications, customer billing, and finance billing.",
     "author":  {
                    "name":  "Harley Bartles"
                },
@@ -19,8 +19,12 @@
                      "business-ops",
                      "automation",
                      "audit",
+                     "api",
                      "email",
+                     "google",
                      "jira",
+                     "notifications",
+                     "billing",
                      "integration",
                      "skills",
                      "projection"

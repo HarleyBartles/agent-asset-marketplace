@@ -5,11 +5,18 @@
   "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
   "source_root": ".",
   "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 2,
-  "imported_count": 2,
+  "candidate_count": 10,
+  "imported_count": 10,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
+    {
+      "snapshot_path": "skills/competitive-report-structure/SKILL.md",
+      "local_path": "skills/competitive-report-structure/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
     {
       "snapshot_path": "skills/fal-ai-media/SKILL.md",
       "local_path": "skills/fal-ai-media/SKILL.md",
@@ -18,8 +25,57 @@
       "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
     },
     {
+      "snapshot_path": "skills/frontend-slides/SKILL.md",
+      "local_path": "skills/frontend-slides/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/manim-video/SKILL.md",
+      "local_path": "skills/manim-video/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/nutrient-document-processing/SKILL.md",
+      "local_path": "skills/nutrient-document-processing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/remotion-video-creation/SKILL.md",
+      "local_path": "skills/remotion-video-creation/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
       "snapshot_path": "skills/seo/SKILL.md",
       "local_path": "skills/seo/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/visa-doc-translate/SKILL.md",
+      "local_path": "skills/visa-doc-translate/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/video-editing/SKILL.md",
+      "local_path": "skills/video-editing/SKILL.md",
+      "import_status": "imported",
+      "content_mode": "verbatim",
+      "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
+    },
+    {
+      "snapshot_path": "skills/videodb/SKILL.md",
+      "local_path": "skills/videodb/SKILL.md",
       "import_status": "imported",
       "content_mode": "verbatim",
       "adaptation_note": "Mirrored unchanged from the retained ECC snapshot into the installable Media Content Pack."
