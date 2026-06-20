@@ -1,2 +1,5 @@
 # Normalize line endings for generated JSON files
 generated/skill-zips/registry.json text eol=lf
+
+# Treat skill zips as binary to avoid line ending normalization
+generated/skill-zips/**/*.zip binary
