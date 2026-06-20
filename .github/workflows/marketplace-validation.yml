@@ -1,0 +1,54 @@
+name: Marketplace validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: marketplace-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  marketplace-validation:
+    name: marketplace-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate skill artifacts
+        run: python tools/update_skill_artifacts.py --all
+
+      - name: Generate marketplace
+        run: python tools/generate_marketplace.py
+
+      - name: Generate repo index
+        run: python tools/generate_repo_index.py
+
+      - name: Validate marketplace
+        run: python tools/validate_marketplace.py
+
+      - name: Validate repo index
+        run: python tools/validate_repo_index.py
+
+      - name: Validate skill zips
+        run: python tools/validate_skill_zips.py
+
+      - name: Check generated drift
+        run: git diff --exit-code
+
+      - name: Check whitespace
+        run: git diff --check
