@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 
-from materialize_superpowers_projection import reconcile_superpowers_projection
+from materialize_projection import reconcile_projection
 from skill_zip_artifacts import print_registry_receipt, synchronize_skill_zips, validate_skill_zip_registry
 from validate_generated_drift import validate_generated_drift
 
@@ -43,13 +43,13 @@ def main() -> int:
     args = _parse_args()
 
     if args.check:
-        reconcile_superpowers_projection(write=False)
+        reconcile_projection(write=False)
         registry = validate_skill_zip_registry()
         validate_generated_drift(base=args.base, full_regeneration=args.full_regeneration)
         print_registry_receipt(registry)
         return 0
 
-    reconcile_superpowers_projection(write=True)
+    reconcile_projection(write=True)
     if args.skill:
         registry = synchronize_skill_zips(skill=args.skill, write=True)
         validate_generated_drift(base=args.base, full_regeneration=False)

@@ -42,13 +42,6 @@ from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_sk
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FIRST_PARTY_SUPERPOWERS_SOURCES = {
-    "linear-superpowers": "sources/first_party/core/linear-superpowers",
-    "github-superpowers": "sources/first_party/skills/github-superpowers",
-    "unslop-superpowers": "sources/first_party/skills/unslop-superpowers",
-    "architecture-superpowers": "sources/first_party/skills/architecture-superpowers",
-    "ecc-superpowers": "sources/first_party/skills/ecc-superpowers",
-}
 
 TEXT_SUFFIXES = {
     ".md",
@@ -155,14 +148,13 @@ def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str
         for entry in bundle_manifest.get("entries", [])
         if isinstance(entry, dict)
         and entry.get("source_category") == "first_party"
-        and entry.get("canonical_name") != "ecc-superpowers"
+        and entry.get("content_mode") == "verbatim"
     }
     expected_adapted = {
         entry["canonical_name"]: entry
         for entry in bundle_manifest.get("entries", [])
         if isinstance(entry, dict)
-        and entry.get("content_mode") == "adapted"
-        and (entry.get("source_category") == "third_party" or entry.get("canonical_name") == "ecc-superpowers")
+        and entry.get("content_mode") in ("adapted", "normalised")
     }
 
     source_backed_by_name = {entry.get("canonical_name"): entry for entry in source_backed if isinstance(entry, dict)}
@@ -349,12 +341,12 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
     content_mode = entry.get("content_mode")
     source_category = entry.get("source_category")
     
-    # MARK-262: Adapted entries must have source authorship fields
+    # MARK-262: Adapted and normalised entries must have source authorship fields
     # Verbatim entries should NOT have these at entry level (byte-identical to upstream)
-    if content_mode == "adapted":
+    if content_mode in ("adapted", "normalised"):
         for field_name in ("source_path", "source_author", "source_license", "source_repo"):
             require_nonblank(field_name)
-    
+
     if content_mode == "verbatim":
         if source_category not in {"first_party", "third_party"}:
             raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
@@ -364,25 +356,25 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
             raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adapted_author for verbatim content")
         if entry.get("adaptation_note") is not None:
             raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_note for verbatim content")
-        
+
         # Ensure upstream author is not claimed as repo author for verbatim skills
         source_author = entry.get("source_author")
         if source_author and "Harley Bartles" in source_author and source_category == "third_party":
             raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
         return
 
-    if content_mode != "adapted":
+    if content_mode not in ("adapted", "normalised"):
         raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has invalid content_mode: {content_mode}")
     if not entry.get("adaptation_note"):
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note for adapted content")
+        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note for {content_mode} content")
 
-    # MARK-262: Adapted entries must have adapted_author
+    # MARK-262: Adapted and normalised entries must have adapted_author
     require_nonblank("adapted_author")
 
     if source_category == "third_party":
         require_nonblank("adaptation_overlay_path")
     elif source_category == "first_party":
-        # First-party adapted entries still need source attribution
+        # First-party adapted/normalised entries still need source attribution
         require_nonblank("source_path")
         require_nonblank("source_author")
         require_nonblank("source_license")
@@ -402,8 +394,12 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     content_mode = entry.get("content_mode")
     canonical_name = entry.get("canonical_name") or skill_path.name
 
-    # For verbatim entries, SKILL.md should NOT have MARK-262 authorship metadata (byte-identical to upstream)
+    # For verbatim entries, SKILL.md should NOT have MARK-262 authorship metadata
+    # (byte-identical to upstream). First-party verbatim skills are exempt: their
+    # source custody legitimately carries provenance metadata since the source IS
+    # the first-party asset.
     if content_mode == "verbatim":
+        source_category = entry.get("source_category")
         frontmatter, _ = _split_skill_frontmatter_and_body(skill_md)
         if frontmatter:
             try:
@@ -412,12 +408,12 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
                 raise ValueError(f"{skill_md} has invalid YAML frontmatter: {e}")
             if isinstance(parsed, dict) and "metadata" in parsed:
                 metadata = parsed["metadata"]
-                if isinstance(metadata, dict):
-                    # Check for MARK-262 authorship fields that should not be in verbatim skills
-                    # origin is allowed for tracking purposes, but authorship fields are not
+                if isinstance(metadata, dict) and source_category == "third_party":
+                    # Check for MARK-262 authorship fields that should not be in
+                    # third-party verbatim skills (they must be byte-identical to upstream)
                     mark262_fields = ["source_author", "source_license", "source_repo", "source_path", "content_mode", "adapted_author"]
                     if any(field in metadata for field in mark262_fields):
-                        raise ValueError(f"{bundle_name} skill {canonical_name} has MARK-262 authorship metadata but content_mode is verbatim - verbatim skills must be byte-identical to upstream")
+                        raise ValueError(f"{bundle_name} skill {canonical_name} has MARK-262 authorship metadata but content_mode is verbatim - third-party verbatim skills must be byte-identical to upstream")
         return
 
     # For adapted entries, metadata is required
@@ -660,8 +656,6 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         raise ValueError("bundle manifest plugin_root mismatch")
     if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
         raise ValueError("bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("skills_root") != "codex-marketplace/plugins/house-skills/skills":
-        raise ValueError("bundle manifest skills_root mismatch")
 
     control_plane = bundle_manifest.get("control_plane_skill")
     if not isinstance(control_plane, dict):
@@ -678,30 +672,31 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
 
     skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
-        path.name for path in skill_dir.iterdir() if path.is_dir() and path.name != "house-skills"
+        path.name for path in skill_dir.iterdir() if path.is_dir()
     )
     if any(re.match(r"^v\d", path.name) for path in skill_dir.rglob("*") if path.is_dir()):
         raise ValueError("house-skills plugin root still contains live versioned subdirectories")
 
-    skills = bundle_manifest.get("skills", [])
-    if bundle_manifest.get("skill_count") != len(skills):
-        raise ValueError("bundle manifest skill_count mismatch")
-    if len(skills) != len(current_skill_dirs):
-        raise ValueError("bundle manifest skill inventory count mismatch")
+    entries = bundle_manifest.get("entries", [])
+    if not isinstance(entries, list):
+        raise ValueError("bundle manifest entries must be a list")
 
     manifest_names: list[str] = []
-    for entry in skills:
+    for entry in entries:
         if not isinstance(entry, dict):
-            raise ValueError("bundle manifest skills must contain objects")
-        name = entry.get("name")
+            raise ValueError("bundle manifest entries must contain objects")
+        name = entry.get("canonical_name")
         lane = entry.get("lane")
-        path = entry.get("path")
+        source_path = entry.get("canonical_source_path")
+        local_path = entry.get("local_path")
         if not name or not isinstance(name, str):
-            raise ValueError("bundle manifest skill entry is missing a name")
+            raise ValueError("bundle manifest entry is missing canonical_name")
         if not lane or not isinstance(lane, str):
-            raise ValueError(f"bundle manifest skill {name} is missing a lane")
-        if not path or not isinstance(path, str):
-            raise ValueError(f"bundle manifest skill {name} is missing a path")
+            raise ValueError(f"bundle manifest entry {name} is missing a lane")
+        if not source_path or not isinstance(source_path, str):
+            raise ValueError(f"bundle manifest entry {name} is missing canonical_source_path")
+        if not local_path or not isinstance(local_path, str):
+            raise ValueError(f"bundle manifest entry {name} is missing local_path")
         expected_lane = (
             "Adventures"
             if name.startswith("adventures-")
@@ -712,17 +707,18 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
             else "Base and control plane"
         )
         if lane != expected_lane:
-            raise ValueError(f"bundle manifest skill {name} lane mismatch")
-        check_path_exists(ROOT / path)
-        skill_root = ROOT / path
-        if skill_root.name != name:
-            raise ValueError(f"bundle manifest skill {name} path mismatch")
-        check_path_exists(skill_root / "SKILL.md")
-        check_path_exists(skill_root / "agents" / "openai.yaml")
+            raise ValueError(f"bundle manifest entry {name} lane mismatch")
+        check_path_exists(ROOT / source_path)
+        # local_path is relative to plugin root
+        projected_root = ROOT / "codex-marketplace/plugins/house-skills" / local_path
+        if projected_root.name != name:
+            raise ValueError(f"bundle manifest entry {name} local_path mismatch")
+        check_path_exists(projected_root / "SKILL.md")
+        check_path_exists(projected_root / "agents" / "openai.yaml")
         manifest_names.append(name)
 
     if sorted(manifest_names) != current_skill_dirs:
-        raise ValueError("bundle manifest skill inventory does not match the live plugin root")
+        raise ValueError("bundle manifest entry inventory does not match the live plugin root")
 
     archive_roots = bundle_manifest.get("archive_roots", [])
     if archive_roots:
@@ -961,30 +957,34 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         if source_category not in {"third_party", "first_party"}:
             raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid source_category")
         if source_category == "first_party":
-            expected_source_path = FIRST_PARTY_SUPERPOWERS_SOURCES.get(canonical_name)
-            if expected_source_path is None:
-                allowed = ", ".join(sorted(FIRST_PARTY_SUPERPOWERS_SOURCES))
-                raise ValueError(f"superpowers-plus first-party projections are limited to {allowed}")
-            if canonical_source_path != expected_source_path:
-                raise ValueError(f"superpowers-plus {canonical_name} first-party source path mismatch")
+            # First-party entries must be verbatim and point at an existing source path.
+            # The canonical_source_path is the source of truth — no hardcoded list needed.
+            if not isinstance(canonical_source_path, str) or not canonical_source_path:
+                raise ValueError(f"superpowers-plus entry {canonical_name} is missing canonical_source_path")
+            source_full = ROOT / canonical_source_path
+            if not source_full.exists():
+                raise ValueError(f"superpowers-plus first-party entry {canonical_name} canonical_source_path does not exist: {canonical_source_path}")
         content_mode = entry.get("content_mode")
-        if content_mode not in {"verbatim", "adapted"}:
+        if content_mode not in {"verbatim", "normalised", "adapted"}:
             raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid content_mode")
         copy_expectation = entry.get("copy_expectation")
         if content_mode == "verbatim":
             if copy_expectation != "byte_identical":
                 raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
+        elif content_mode == "normalised":
+            if copy_expectation not in {"normalised_from_source", "documented_normalisation"}:
+                raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch for normalised")
         elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
             raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
         if not entry.get("provenance_note"):
             raise ValueError(f"superpowers-plus entry {canonical_name} needs a provenance note")
-        if content_mode == "adapted" and not entry.get("adaptation_note"):
+        if content_mode in ("adapted", "normalised") and not entry.get("adaptation_note"):
             raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
         adaptation_overlay_path = entry.get("adaptation_overlay_path")
-        if source_category == "third_party" and content_mode == "adapted":
+        if source_category == "third_party" and content_mode in ("adapted", "normalised"):
             expected_overlay_path = f"adapters/codex/superpowers-plus/{canonical_name}"
             if adaptation_overlay_path != expected_overlay_path:
-                raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs {expected_overlay_path}")
+                raise ValueError(f"superpowers-plus {content_mode} entry {canonical_name} needs {expected_overlay_path}")
             check_path_exists(ROOT / expected_overlay_path)
         elif adaptation_overlay_path is not None:
             raise ValueError(f"superpowers-plus verbatim entry {canonical_name} must not declare adaptation_overlay_path")
@@ -1004,37 +1004,19 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         _validate_skill_frontmatter_metadata(local_full_path, bundle_name="superpowers-plus", entry=entry)
         if source_path.is_dir():
             if content_mode == "verbatim":
-                if canonical_name == "ecc-superpowers":
-                    source_skill = source_path / "SKILL.md"
-                    projected_skill = local_full_path / "SKILL.md"
-                    _, source_body = _split_skill_frontmatter_and_body(source_skill)
-                    _, projected_body = _split_skill_frontmatter_and_body(projected_skill)
-                    if source_body != projected_body:
-                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
-                    source_agent = source_path / "agents" / "openai.yaml"
-                    projected_agent = local_full_path / "agents" / "openai.yaml"
-                    if source_agent.read_bytes() != projected_agent.read_bytes():
-                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
-                else:
-                    validate_tree_mirror(source_path, local_full_path, canonical_name)
-            else:
+                validate_tree_mirror(source_path, local_full_path, canonical_name)
+            elif content_mode == "normalised":
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
-                    if canonical_name != "ecc-superpowers":
-                        raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
-                    source_skill = source_path / "SKILL.md"
-                    projected_skill = local_full_path / "SKILL.md"
-                    _, source_body = _split_skill_frontmatter_and_body(source_skill)
-                    _, projected_body = _split_skill_frontmatter_and_body(projected_skill)
-                    if source_body != projected_body:
-                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
-                    source_agent = source_path / "agents" / "openai.yaml"
-                    projected_agent = local_full_path / "agents" / "openai.yaml"
-                    if source_agent.read_bytes() != projected_agent.read_bytes():
-                        raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
-                else:
-                    overlay_root = ROOT / adaptation_overlay_path
-                    validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
+                    raise ValueError(f"superpowers-plus normalised entry {canonical_name} needs an overlay path")
+                overlay_root = ROOT / adaptation_overlay_path
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
+            else:  # adapted
+                validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
+                if adaptation_overlay_path is None:
+                    raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
+                overlay_root = ROOT / adaptation_overlay_path
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
         else:
             if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")

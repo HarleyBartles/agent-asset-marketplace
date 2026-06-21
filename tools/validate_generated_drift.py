@@ -23,7 +23,7 @@ from marketplace_utils import load_json
 PACKAGING_TOOLING_PATHS = {
     "tools/skill_zip_artifacts.py",
     "tools/skill_gpt_exports.py",
-    "tools/materialize_superpowers_projection.py",
+    "tools/materialize_projection.py",
     "tools/update_skill_artifacts.py",
     "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/safe_skill_tree.py",
     "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_skill.py",

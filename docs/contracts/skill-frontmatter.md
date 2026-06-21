@@ -28,7 +28,7 @@ metadata:
 - The frontmatter must be a top-level mapping.
 - `name` is required and must be a nonblank string.
 - `description` is required and must be a nonblank string.
-- `metadata` is required for the current wrapper/projection set under `codex-marketplace/plugins/superpowers-plus/skills/{architecture-superpowers,ecc-superpowers,finishing-a-development-branch,github-superpowers,linear-superpowers,unslop-superpowers,using-superpowers,verification-before-completion}` and must be a mapping.
+- `metadata` is required for all skills projected via a bundle-manifest entry, and must be a mapping.
 - `metadata` is optional for non-projected source custody surfaces, but if present it must be a mapping.
 - Duplicate keys are rejected.
 - Frontmatter should not contain execution instructions.
@@ -40,5 +40,12 @@ metadata:
 ## Notes
 
 - `metadata` is the canonical place for provenance and adaptation notes.
+- `metadata.content_mode`, when present, must be one of `verbatim`,
+  `normalised`, or `adapted`. `verbatim` means the skill body is copied
+  unchanged from upstream. `normalised` means minimal compliance adaptation
+  (codex-safe shape, openai-spec compliance, rich metadata, repointing
+  moved-file links) with the skill body otherwise unchanged and ownership
+  staying with the upstream author. `adapted` means substantive editorial
+  adaptation beyond normalisation.
 - This contract is narrow: it covers the Superpowers adaptation seam and the
   installable skill projection shape, not every historical source snapshot.

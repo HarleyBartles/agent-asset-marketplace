@@ -4,7 +4,8 @@ This root is the Codex-facing marketplace projection of `obra/superpowers`
 `v5.1.0`, branded in the marketplace as `Superpowers+`, plus the
 source-backed House Skills `linear-superpowers`, `github-superpowers`,
 `unslop-superpowers`, and `architecture-superpowers` skills, plus the
-repo-authored `ecc-superpowers` router wrapper that points to `superpowers-ecc`.
+first-party `ecc-superpowers` router wrapper that points to `superpowers-ecc`,
+plus the first-party `inspecting-the-environment` skill.
 
 ## Layer Model
 
@@ -38,7 +39,8 @@ The split is deliberate:
   plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, `architecture-superpowers`, and `ecc-superpowers`.
+  `unslop-superpowers`, `architecture-superpowers`, `ecc-superpowers`, and
+  `inspecting-the-environment`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -54,7 +56,7 @@ The split is deliberate:
   `verification-before-completion` projections are materialized from source
   custody plus adaptation overlays; the upstream source snapshot remains
   verbatim.
-- `ecc-superpowers` is a repo-authored first-party wrapper projection that
+- `ecc-superpowers` is a verbatim first-party wrapper projection that
   routes to the dedicated `superpowers-ecc` pack without folding ECC doctrine
   into the upstream Superpowers source.
 - Any future first-party skill proposed for projection into `superpowers-plus`
@@ -70,6 +72,7 @@ The split is deliberate:
 - `skills/unslop-superpowers/`
 - `skills/architecture-superpowers/`
 - `skills/ecc-superpowers/`
+- `skills/inspecting-the-environment/`
 - `assets/app-icon.png`
 - `assets/superpowers-small.svg`
 - `LICENSE`
@@ -88,8 +91,10 @@ at `sources/first_party/skills/github-superpowers/`.
 at `sources/first_party/skills/unslop-superpowers/`.
 `skills/architecture-superpowers/` is copied from the canonical House Skills
 source at `sources/first_party/skills/architecture-superpowers/`.
-`skills/ecc-superpowers/` is copied from the canonical repo-authored source at
+`skills/ecc-superpowers/` is copied from the canonical first-party source at
 `sources/first_party/skills/ecc-superpowers/`.
+`skills/inspecting-the-environment/` is copied from the canonical first-party
+source at `sources/first_party/skills/inspecting-the-environment/`.
 
 Each first-party projection is a directory-level skill spec, so the copied
 tree includes both `SKILL.md` and `agents/openai.yaml` when the canonical

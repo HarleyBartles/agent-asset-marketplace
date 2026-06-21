@@ -135,6 +135,11 @@
           "reason": "This first-party projection is already GPT-safe as-is."
         },
         {
+          "skill": "inspecting-the-environment",
+          "export_mode": "direct",
+          "reason": "This first-party skill is cross-harness and GPT-safe with no Codex-specific execution assumptions."
+        },
+        {
           "skill": "unslop-superpowers",
           "export_mode": "direct",
           "reason": "This first-party projection is already GPT-safe as-is."
