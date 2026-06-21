@@ -4,8 +4,9 @@ This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
 Codex marketplace as `Superpowers+` and adds the first-party
 `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
 `architecture-superpowers` skills from House Skills as source-backed
-projections, plus the repo-authored `ecc-superpowers` routing wrapper that
-points to the dedicated `superpowers-ecc` pack.
+projections, plus the first-party `ecc-superpowers` routing wrapper that
+points to the dedicated `superpowers-ecc` pack, plus the first-party
+`inspecting-the-environment` skill.
 
 ## Projection contract
 
@@ -14,7 +15,8 @@ points to the dedicated `superpowers-ecc` pack.
   plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, `architecture-superpowers`, and `ecc-superpowers`.
+  `unslop-superpowers`, `architecture-superpowers`, `ecc-superpowers`, and
+  `inspecting-the-environment`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -45,6 +47,7 @@ points to the dedicated `superpowers-ecc` pack.
   `sources/first_party/skills/unslop-superpowers/`
   `sources/first_party/skills/architecture-superpowers/`
   `sources/first_party/skills/ecc-superpowers/`
+  `sources/first_party/skills/inspecting-the-environment/`
 
 ## Projected surface
 
@@ -58,6 +61,7 @@ points to the dedicated `superpowers-ecc` pack.
 - `skills/unslop-superpowers/`
 - `skills/architecture-superpowers/`
 - `skills/ecc-superpowers/`
+- `skills/inspecting-the-environment/`
 - `references/codex-marketplace-compatibility.md`
 - `references/source-map.md`
 
@@ -83,7 +87,8 @@ the top-level license and release notes) in third-party custody.
 `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
 `architecture-superpowers` stay editable in House Skills and are projected
 here as readable directory copies for the Superpowers bundle rather than as
-second source roots. `ecc-superpowers` is the repo-authored router wrapper
-that points to the dedicated `superpowers-ecc` pack. Each first-party
+second source roots. `ecc-superpowers` is the first-party router wrapper
+that points to the dedicated `superpowers-ecc` pack. `inspecting-the-environment`
+is the first-party environment-inspection skill. Each first-party
 projection is a directory-level skill spec that carries both `SKILL.md` and
 `agents/openai.yaml` under the same custody contract.

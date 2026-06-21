@@ -29,7 +29,8 @@ Projection contract:
   plugin.
 - The active plugin may contain upstream Superpowers skills plus the selected
   first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, `architecture-superpowers`, and `ecc-superpowers`.
+  `unslop-superpowers`, `architecture-superpowers`, `ecc-superpowers`, and
+  `inspecting-the-environment`.
 - Those first-party skills are compositional and complementary. They compose
   Superpowers workflow guidance with first-party expert skills that live
   outside the Superpowers plugin.
@@ -57,12 +58,15 @@ into `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/`
 and the first-party `architecture-superpowers` skill from
 `sources/first_party/skills/architecture-superpowers/`
 into `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/`
-and the repo-authored `ecc-superpowers` skill from
+and the first-party `ecc-superpowers` skill from
 `sources/first_party/skills/ecc-superpowers/`
 into `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/`
+and the first-party `inspecting-the-environment` skill from
+`sources/first_party/skills/inspecting-the-environment/`
+into `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, anti-slop, architecture, and ECC routing workflow skills without creating
-second editable source roots.
+GitHub, anti-slop, architecture, ECC routing, and environment-inspection
+workflow skills without creating second editable source roots.
 
 These first-party projections are directory-level skill specs with
 `SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
@@ -71,7 +75,7 @@ These first-party projections are directory-level skill specs with
 `ecc-superpowers` invoke `unslop-superpowers` when repo-specific anti-slop
 controls, profile-aware non-goals, or evidence requirements matter.
 
-`ecc-superpowers` is a repo-authored router wrapper that points to the
+`ecc-superpowers` is a verbatim first-party router wrapper that points to the
 dedicated `superpowers-ecc` pack. It is compositional, not a fork cue, and it
 keeps ECC workflow doctrine out of the upstream Superpowers snapshot.
 
