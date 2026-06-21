@@ -80,9 +80,9 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
         for field_name in ("source_path", "source_author", "source_license", "adapted_author"):
             if entry.get(field_name):
                 record[field_name] = entry[field_name]
-        if entry.get("source_category") == "first_party":
+        if entry.get("source_category") == "first_party" or entry.get("content_mode") == "verbatim":
             source_backed.append(record)
-        elif entry.get("content_mode") == "adapted":
+        elif entry.get("content_mode") in ("adapted", "normalised"):
             adapted.append(record)
 
     provenance_map = {
@@ -183,13 +183,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "core" / "linear-superpowers"
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "linear-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
             projected_skill_root = plugin_root / "skills" / "linear-superpowers"
             skill_md = _first_party_projection_frontmatter(
                 "linear-superpowers",
-                "sources/first_party/core/linear-superpowers/SKILL.md",
+                "sources/first_party/skills/linear-superpowers/SKILL.md",
                 "MARK-139 Linear Superpowers compositional skill",
                 "Use when the Linear packet needs the smallest applicable Superpowers router.",
             )
@@ -256,6 +256,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
@@ -287,7 +289,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "linear-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/core/linear-superpowers",
+                        "canonical_source_path": "sources/first_party/skills/linear-superpowers",
                         "local_path": "skills/linear-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
@@ -439,6 +441,10 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "content_mode": "adapted",
                 "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
                 "local_path": "skills/using-superpowers",
+                "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md",
+                "source_author": "obra",
+                "source_license": "MIT",
+                "source_repo": "https://github.com/obra/superpowers",
                 "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
                 "adapted_author": "Harley Bartles",
                 "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
@@ -456,6 +462,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
                 "source_author": "Harley Bartles",
                 "source_license": "MIT",
+                "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
                 "adapted_author": "Harley Bartles",
                 "provenance_note": "Projected from the repo-authored ECC Superpowers router skill.",
                 "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance.",
@@ -556,6 +563,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
@@ -765,6 +774,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
@@ -884,6 +895,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "source_tag": "v5.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
                     "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",

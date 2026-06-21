@@ -1,0 +1,177 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "accessibility-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
+      "local_path": "skills/accessibility-audit"
+    },
+    {
+      "canonical_name": "cqrs-event-sourcing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
+      "local_path": "skills/cqrs-event-sourcing"
+    },
+    {
+      "canonical_name": "database-design-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+      "local_path": "skills/database-design-patterns"
+    },
+    {
+      "canonical_name": "development-estimation",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
+      "local_path": "skills/development-estimation"
+    },
+    {
+      "canonical_name": "event-driven-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
+      "local_path": "skills/event-driven-architecture"
+    },
+    {
+      "canonical_name": "interaction-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
+      "local_path": "skills/interaction-design"
+    },
+    {
+      "canonical_name": "mermaid-diagramming",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+      "local_path": "skills/mermaid-diagramming"
+    },
+    {
+      "canonical_name": "react-performance-optimization",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
+      "local_path": "skills/react-performance-optimization"
+    },
+    {
+      "canonical_name": "release-analysis",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
+      "local_path": "skills/release-analysis"
+    },
+    {
+      "canonical_name": "release-prep",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
+      "local_path": "skills/release-prep"
+    },
+    {
+      "canonical_name": "requirements-discovery",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
+      "local_path": "skills/requirements-discovery"
+    },
+    {
+      "canonical_name": "ux-review",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
+      "local_path": "skills/ux-review"
+    },
+    {
+      "canonical_name": "webapp-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
+      "local_path": "skills/webapp-testing"
+    }
+  ],
+  "adapted_projections": [
+    {
+      "canonical_name": "api-design-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
+      "local_path": "skills/api-design-patterns",
+      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns"
+    },
+    {
+      "canonical_name": "async-python-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns",
+      "local_path": "skills/async-python-patterns",
+      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns"
+    },
+    {
+      "canonical_name": "openapi-specification",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
+      "local_path": "skills/openapi-specification",
+      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification"
+    },
+    {
+      "canonical_name": "owasp-top-10",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
+      "local_path": "skills/owasp-top-10",
+      "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10"
+    },
+    {
+      "canonical_name": "python-performance-optimization",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization",
+      "local_path": "skills/python-performance-optimization",
+      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-performance-optimization"
+    },
+    {
+      "canonical_name": "python-testing-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns",
+      "local_path": "skills/python-testing-patterns",
+      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns"
+    },
+    {
+      "canonical_name": "secure-coding-practices",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
+      "local_path": "skills/secure-coding-practices",
+      "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices"
+    },
+    {
+      "canonical_name": "security-testing-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
+      "local_path": "skills/security-testing-patterns",
+      "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns"
+    },
+    {
+      "canonical_name": "threat-modeling-techniques",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
+      "local_path": "skills/threat-modeling-techniques",
+      "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques"
+    },
+    {
+      "canonical_name": "typescript-advanced-patterns",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
+      "local_path": "skills/typescript-advanced-patterns",
+      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns"
+    }
+  ]
+}

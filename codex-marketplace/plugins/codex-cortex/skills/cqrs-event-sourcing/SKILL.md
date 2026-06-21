@@ -18,12 +18,6 @@ file_patterns:
   - '**/event-sourcing/**'
   - '**/eventsourcing/**'
 confidence: 0.9
-metadata:
-  source_author: NickCrew
-  source_license: MIT
-  source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md
-  content_mode: normalised
 ---
 
 # CQRS and Event Sourcing Patterns
@@ -74,11 +68,11 @@ Accept temporary inconsistency between write and read models for scalability.
 
 | Task | Load reference |
 | --- | --- |
-| CQRS implementation patterns | `references/cqrs-patterns.md` |
-| Event sourcing & snapshots | `references/event-sourcing.md` |
-| EventStoreDB & Axon Framework | `references/event-store-tech.md` |
-| Consistency patterns | `references/consistency-patterns.md` |
-| Best practices checklist | `references/best-practices.md` |
+| CQRS implementation patterns | `skills/cqrs-event-sourcing/references/cqrs-patterns.md` |
+| Event sourcing & snapshots | `skills/cqrs-event-sourcing/references/event-sourcing.md` |
+| EventStoreDB & Axon Framework | `skills/cqrs-event-sourcing/references/event-store-tech.md` |
+| Consistency patterns | `skills/cqrs-event-sourcing/references/consistency-patterns.md` |
+| Best practices checklist | `skills/cqrs-event-sourcing/references/best-practices.md` |
 
 ## Workflow
 

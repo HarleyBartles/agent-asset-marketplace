@@ -1,0 +1,68 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "game-playtest",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
+      "local_path": "skills/game-playtest"
+    },
+    {
+      "canonical_name": "game-studio",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-studio",
+      "local_path": "skills/game-studio"
+    },
+    {
+      "canonical_name": "game-ui-frontend",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend",
+      "local_path": "skills/game-ui-frontend"
+    },
+    {
+      "canonical_name": "phaser-2d-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
+      "local_path": "skills/phaser-2d-game"
+    },
+    {
+      "canonical_name": "react-three-fiber-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/react-three-fiber-game",
+      "local_path": "skills/react-three-fiber-game"
+    },
+    {
+      "canonical_name": "sprite-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
+      "local_path": "skills/sprite-pipeline"
+    },
+    {
+      "canonical_name": "three-webgl-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/three-webgl-game",
+      "local_path": "skills/three-webgl-game"
+    },
+    {
+      "canonical_name": "web-3d-asset-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline",
+      "local_path": "skills/web-3d-asset-pipeline"
+    },
+    {
+      "canonical_name": "web-game-foundations",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
+      "local_path": "skills/web-game-foundations"
+    }
+  ],
+  "adapted_projections": []
+}

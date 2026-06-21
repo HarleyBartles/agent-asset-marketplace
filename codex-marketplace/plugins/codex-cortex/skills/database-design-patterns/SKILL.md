@@ -18,12 +18,6 @@ file_patterns:
   - '**/migrations/**'
   - '**/schema/**'
 confidence: 0.86
-metadata:
-  source_author: NickCrew
-  source_license: MIT
-  source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md
-  content_mode: normalised
 ---
 
 # Database Design Patterns

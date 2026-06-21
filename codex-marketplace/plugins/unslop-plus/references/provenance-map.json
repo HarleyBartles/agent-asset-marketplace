@@ -1,0 +1,12 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "unslop-plus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-plus",
+      "local_path": "skills/unslop-plus"
+    }
+  ],
+  "adapted_projections": []
+}

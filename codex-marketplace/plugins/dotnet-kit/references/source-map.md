@@ -1,44 +1,12 @@
 # Dotnet Kit Source Map
 
-This bundle projects the MARK-166 approved `.NET` technical skills from a
-selective retained snapshot of `codewithmukesh/dotnet-claude-kit`.
+Generated from `codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json`.
 
-Retained upstream evidence:
-
-- `sources/third_party/dotnet-claude-kit/upstream/README.md`
-- `sources/third_party/dotnet-claude-kit/upstream/LICENSE`
-- `sources/third_party/dotnet-claude-kit/upstream/CLAUDE.md`
-- `sources/third_party/dotnet-claude-kit/upstream/.mcp.json`
-- `sources/third_party/dotnet-claude-kit/upstream/.claude-plugin/plugin.json`
-- `sources/third_party/dotnet-claude-kit/upstream/.claude-plugin/marketplace.json`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp/SKILL.md`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture/SKILL.md`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/ddd/SKILL.md`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/ef-core/SKILL.md`
-- `sources/third_party/dotnet-claude-kit/upstream/skills/testing/SKILL.md`
-
-First-party custody:
-
-- `sources/first_party/skills/dotnet-kit/decisions.md`
-- `sources/first_party/skills/dotnet-kit/decisions.json`
-- `sources/first_party/skills/dotnet-kit/intake.json`
-
-Projected pack skills:
-
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| modern-csharp | `sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/modern-csharp/SKILL.md` | Modern C# guidance kept, provider-specific load assumptions removed. |
-| vertical-slice | `sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/vertical-slice/SKILL.md` | Architecture guidance kept, dotnet-claude-kit framing removed. |
-| clean-architecture | `sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/clean-architecture/SKILL.md` | Architecture guidance kept, advisor-specific framing removed. |
-| ddd | `sources/third_party/dotnet-claude-kit/upstream/skills/ddd/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/ddd/SKILL.md` | Tactical DDD guidance kept, provider-specific triggers normalized. |
-| ef-core | `sources/third_party/dotnet-claude-kit/upstream/skills/ef-core/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/ef-core/SKILL.md` | EF Core guidance kept, provider-specific load assumptions removed. |
-| testing | `sources/third_party/dotnet-claude-kit/upstream/skills/testing/SKILL.md` | `codex-marketplace/plugins/dotnet-kit/skills/testing/SKILL.md` | Testing guidance kept, provider-specific load assumptions removed. |
-
-Deferred in this child:
-
-- `tdd`
-- `verify`
-
-The pack root is a documentation and registry surface. The six skills are the
-installable units.
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| clean-architecture | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture` | `codex-marketplace/plugins/dotnet-kit/skills/clean-architecture` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Removed advisor-specific trigger language and kept the clean architecture guidance. |
+| ddd | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/ddd` | `codex-marketplace/plugins/dotnet-kit/skills/ddd` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Kept the DDD tactical guidance and normalized provider-specific wording. |
+| ef-core | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/ef-core` | `codex-marketplace/plugins/dotnet-kit/skills/ef-core` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Kept the EF Core guidance and removed provider-specific load assumptions. |
+| modern-csharp | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp` | `codex-marketplace/plugins/dotnet-kit/skills/modern-csharp` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Reworded for Codex/GPT compatibility while preserving modern C# guidance and examples. |
+| testing | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/testing` | `codex-marketplace/plugins/dotnet-kit/skills/testing` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Kept the testing guidance and removed provider-specific load assumptions. |
+| vertical-slice | third_party | adapted | `sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice` | `codex-marketplace/plugins/dotnet-kit/skills/vertical-slice` | Adapted from the retained dotnet-claude-kit upstream for Codex/GPT compatibility. Adaptation: Removed dotnet-claude-kit-specific framing and kept the vertical-slice architecture guidance. |

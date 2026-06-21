@@ -52,6 +52,21 @@ jobs:
       - name: Validate marketplace
         run: python tools/validate_marketplace.py
 
+      - name: Check projection drift
+        run: python tools/materialize_projection.py --check
+
+      - name: Check mega-pack manifests
+        run: python tools/generate_mega_packs.py --check
+
+      - name: Check provenance maps
+        run: python tools/generate_provenance_maps.py --check
+
+      - name: Check source maps
+        run: python tools/generate_source_maps.py --check
+
+      - name: Validate generated drift
+        run: python tools/validate_generated_drift.py
+
       - name: Validate repo index
         run: python tools/validate_repo_index.py
 

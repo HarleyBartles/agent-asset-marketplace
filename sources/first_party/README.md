@@ -2,9 +2,8 @@
 
 Editable first-party source custody lives here.
 
-Use `first_party/core/` for generic reusable first-party skills that multiple
-marketplace projections consume.
-
-Use `first_party/skills/` for source-ledger material that describes the current
-first-party marketplace assets before projection, including bundle-specific or
-family-owned roots.
+Use `first_party/skills/` as the single tree for all first-party skills,
+including generic reusable worker machinery and family-owned or bundle-specific
+roots. Every directory under `skills/` must contain a `SKILL.md`; governance-only
+metadata (decisions, intake) for plugins that do not ship a skill lives under
+`provenance/<plugin>-governance/` instead.

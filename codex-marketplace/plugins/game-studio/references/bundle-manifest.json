@@ -1,72 +1,154 @@
 {
   "bundle_name": "game-studio",
   "bundle_version": "1.0.0",
-  "upstream_repo": "openai/plugins",
-  "pinned_commit": "c33199897758cab145bb7fdab1ca8fb1cbd9de50",
-  "source_root": ".",
-  "path_semantics": "retained-snapshot-relative",
-  "candidate_count": 9,
-  "imported_count": 9,
-  "skipped_count": 0,
-  "blocked_count": 0,
+  "bundle_type": "projection-lane",
+  "plugin_root": "codex-marketplace/plugins/game-studio",
+  "is_mega_pack": true,
+  "mega_pack_for": "game-studio",
+  "source_families": [
+    "game-studio"
+  ],
   "entries": [
     {
-      "snapshot_path": "skills/game-playtest/SKILL.md",
-      "local_path": "skills/game-playtest/SKILL.md",
+      "canonical_name": "game-playtest",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
+      "local_path": "skills/game-playtest",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-playtest/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/game-studio/SKILL.md",
-      "local_path": "skills/game-studio/SKILL.md",
+      "canonical_name": "game-studio",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-studio",
+      "local_path": "skills/game-studio",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-studio/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/game-ui-frontend/SKILL.md",
-      "local_path": "skills/game-ui-frontend/SKILL.md",
+      "canonical_name": "game-ui-frontend",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend",
+      "local_path": "skills/game-ui-frontend",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/phaser-2d-game/SKILL.md",
-      "local_path": "skills/phaser-2d-game/SKILL.md",
+      "canonical_name": "phaser-2d-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
+      "local_path": "skills/phaser-2d-game",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/react-three-fiber-game/SKILL.md",
-      "local_path": "skills/react-three-fiber-game/SKILL.md",
+      "canonical_name": "react-three-fiber-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/react-three-fiber-game",
+      "local_path": "skills/react-three-fiber-game",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/react-three-fiber-game/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/sprite-pipeline/SKILL.md",
-      "local_path": "skills/sprite-pipeline/SKILL.md",
+      "canonical_name": "sprite-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
+      "local_path": "skills/sprite-pipeline",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/three-webgl-game/SKILL.md",
-      "local_path": "skills/three-webgl-game/SKILL.md",
+      "canonical_name": "three-webgl-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/three-webgl-game",
+      "local_path": "skills/three-webgl-game",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/three-webgl-game/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/web-3d-asset-pipeline/SKILL.md",
-      "local_path": "skills/web-3d-asset-pipeline/SKILL.md",
+      "canonical_name": "web-3d-asset-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline",
+      "local_path": "skills/web-3d-asset-pipeline",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/web-game-foundations/SKILL.md",
-      "local_path": "skills/web-game-foundations/SKILL.md",
+      "canonical_name": "web-game-foundations",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
+      "local_path": "skills/web-game-foundations",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations/SKILL.md",
+      "source_author": "openai/plugins",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/openai/plugins",
+      "source_family": "game-studio",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Codex projection."
     }
   ],
-  "provenance_refs": [
-    "provenance/game-studio.md"
+  "notes": [
+    "Auto-generated mega-pack manifest for the game-studio custody root.",
+    "Curated cross-family entries are preserved from the prior manifest.",
+    "Regenerate with: py -3 tools/generate_mega_packs.py"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"

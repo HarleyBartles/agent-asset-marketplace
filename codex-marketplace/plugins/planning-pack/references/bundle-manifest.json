@@ -1,274 +1,112 @@
 {
-    "bundle_name":  "planning-pack",
-    "bundle_version":  "1.0.0",
-    "upstream_repo":  "NickCrew/Claude-Cortex",
-    "pinned_commit":  "7892d00e7cb6adf00144a535103b930c772fb2c0",
-    "source_root":  ".",
-    "path_semantics":  "retained-snapshot-relative",
-    "content_mode":  "combined-source",
-    "source_families":  [
-                            {
-                                "name":  "claude-cortex",
-                                "upstream_repo":  "NickCrew/Claude-Cortex",
-                                "pinned_commit":  "7892d00e7cb6adf00144a535103b930c772fb2c0",
-                                "source_root":  "."
-                            },
-                            {
-                                "name":  "ecc",
-                                "upstream_repo":  "affaan-m/ECC",
-                                "pinned_commit":  "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-                                "source_root":  "."
-                            }
-                        ],
-    "candidate_count":  31,
-    "imported_count":  31,
-    "skipped_count":  0,
-    "blocked_count":  0,
-    "entries":  [
-                    {
-                        "snapshot_path":  "skills/development-estimation/references/estimate.md",
-                        "local_path":  "skills/development-estimation/references/estimate.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/development-estimation/SKILL.md",
-                        "local_path":  "skills/development-estimation/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/mermaid-diagramming/references/diagram-types.md",
-                        "local_path":  "skills/mermaid-diagramming/references/diagram-types.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/mermaid-diagramming/SKILL.md",
-                        "local_path":  "skills/mermaid-diagramming/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/blueprint/mermaid-dark.json",
-                        "local_path":  "skills/release-analysis/assets/styles/blueprint/mermaid-dark.json",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/blueprint/mermaid-light.json",
-                        "local_path":  "skills/release-analysis/assets/styles/blueprint/mermaid-light.json",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/blueprint/style.css",
-                        "local_path":  "skills/release-analysis/assets/styles/blueprint/style.css",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/corporate/mermaid-dark.json",
-                        "local_path":  "skills/release-analysis/assets/styles/corporate/mermaid-dark.json",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/corporate/mermaid-light.json",
-                        "local_path":  "skills/release-analysis/assets/styles/corporate/mermaid-light.json",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/styles/corporate/style.css",
-                        "local_path":  "skills/release-analysis/assets/styles/corporate/style.css",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/assets/template.html",
-                        "local_path":  "skills/release-analysis/assets/template.html",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/citation-protocol.md",
-                        "local_path":  "skills/release-analysis/references/citation-protocol.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/docs-reconciliation.md",
-                        "local_path":  "skills/release-analysis/references/docs-reconciliation.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/mermaid-conventions.md",
-                        "local_path":  "skills/release-analysis/references/mermaid-conventions.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/mode-configuration-provenance.md",
-                        "local_path":  "skills/release-analysis/references/mode-configuration-provenance.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/mode-environment-matrix.md",
-                        "local_path":  "skills/release-analysis/references/mode-environment-matrix.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/mode-promotion-path.md",
-                        "local_path":  "skills/release-analysis/references/mode-promotion-path.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/mode-recovery-rollback.md",
-                        "local_path":  "skills/release-analysis/references/mode-recovery-rollback.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/report-template.md",
-                        "local_path":  "skills/release-analysis/references/report-template.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/subagent-dispatch.md",
-                        "local_path":  "skills/release-analysis/references/subagent-dispatch.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/synthesis-readme.md",
-                        "local_path":  "skills/release-analysis/references/synthesis-readme.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/references/verification-protocol.md",
-                        "local_path":  "skills/release-analysis/references/verification-protocol.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/scripts/compile-html.sh",
-                        "local_path":  "skills/release-analysis/scripts/compile-html.sh",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/scripts/compile-pdf.sh",
-                        "local_path":  "skills/release-analysis/scripts/compile-pdf.sh",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/scripts/render.sh",
-                        "local_path":  "skills/release-analysis/scripts/render.sh",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/scripts/verify-citations.sh",
-                        "local_path":  "skills/release-analysis/scripts/verify-citations.sh",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-analysis/SKILL.md",
-                        "local_path":  "skills/release-analysis/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-prep/references/prepare-release.md",
-                        "local_path":  "skills/release-prep/references/prepare-release.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/release-prep/SKILL.md",
-                        "local_path":  "skills/release-prep/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/requirements-discovery/references/elicitation-techniques.md",
-                        "local_path":  "skills/requirements-discovery/references/elicitation-techniques.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    },
-                    {
-                        "snapshot_path":  "skills/requirements-discovery/SKILL.md",
-                        "local_path":  "skills/requirements-discovery/SKILL.md",
-                        "import_status":  "imported",
-                        "content_mode":  "verbatim",
-                        "source_family":  "claude-cortex"
-                    }
-                ],
-    "notes":  [
-                  "Planning pack covering requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
-                  "The retained upstream skills keep their source-path references intact in the projected pack.",
-                  "All 5 skills are projected verbatim from Claude-Cortex custody."
-              ],
-    "repo_index":  {
-                       "source_md":  "codex-marketplace/plugins/planning-pack/SOURCE.md",
-                       "source_ledger":  [
-
-                                         ],
-                       "license_path":  "codex-marketplace/plugins/planning-pack/LICENSE",
-                       "bundle_manifest":  "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
-                       "skills_path":  "codex-marketplace/plugins/planning-pack/skills",
-                       "provenance_refs":  [
-                                               "provenance/planning-pack.md",
-                                               "codex-marketplace/plugins/planning-pack/references/source-map.md"
-                                           ],
-                       "agents_md":  null,
-                       "registry_alignment":  {
-                                                  "status":  "aligned",
-                                                  "note":  null
-                                              }
-                   },
-    "provenance_refs":  [
-                            "provenance/planning-pack.md"
-                        ],
-    "plugin_author":  "Harley Bartles",
-    "plugin_license":  "MIT"
+  "bundle_name": "planning-pack",
+  "bundle_version": "1.0.0",
+  "source_families": [
+    "claude-cortex"
+  ],
+  "notes": [
+    "Planning pack covering requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
+    "The retained upstream skills keep their source-path references intact in the projected pack.",
+    "All 5 skills are projected verbatim from Claude-Cortex custody."
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
+    "source_ledger": [],
+    "license_path": "codex-marketplace/plugins/planning-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/planning-pack/skills",
+    "provenance_refs": [
+      "provenance/planning-pack.md",
+      "codex-marketplace/plugins/planning-pack/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  },
+  "provenance_refs": [
+    "provenance/planning-pack.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "bundle_type": "projection-lane",
+  "is_mega_pack": false,
+  "entries": [
+    {
+      "canonical_name": "development-estimation",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
+      "local_path": "skills/development-estimation",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "mermaid-diagramming",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+      "local_path": "skills/mermaid-diagramming",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "release-analysis",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
+      "local_path": "skills/release-analysis",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "release-prep",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
+      "local_path": "skills/release-prep",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "requirements-discovery",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
+      "local_path": "skills/requirements-discovery",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    }
+  ]
 }

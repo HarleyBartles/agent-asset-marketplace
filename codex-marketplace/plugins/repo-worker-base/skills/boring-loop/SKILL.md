@@ -3,8 +3,8 @@ name: boring-loop
 description: Use when coordinating a boring work loop, picking the next smallest safe move, or preventing false-green repo work.
 metadata:
   source-id: boring-loop-v1
-  source-path: sources/first_party/core/boring-loop/SKILL.md
-  provenance-name: MARK-152 Boring Loop beta repo-worker-base projection
+  source-path: sources/first_party/skills/boring-loop/SKILL.md
+  provenance-name: MARK-152 Boring Loop beta first-party source
 license: "MIT"
 ---
 # Boring Loop
@@ -70,15 +70,16 @@ Do not leave a vague queue order that depends on memory.
 
 Route out instead of restating specialist procedure.
 
-- Linear issue shaping or issue-track control: `linear-superpowers` or `worker-dispatch-linear`
+- When readiness is uncertain or the work might be too broad or false-green: `boring-buster`
+- Linear issue shaping, issue-track shaping, or worker-packet shaping: `linear-superpowers`
+- Linear connector side effects, including issue create/update, comments, status, labels, assignments, or readback after mutation: `connector-safety`
 - Implementation planning: `writing-plans`
 - Code execution workflow: `executing-plans`
 - GitHub proof, review routing, or branch closeout: `github-operations` or `github-superpowers`
 - Verification before completion: `verification-before-completion`
-- Connector or tool safety: `connector-safety`
 - Repo-specific anti-slop controls: `unslop-superpowers`
 - Skill lifecycle work: `skill-validator`, `skill-packager`, `skill-installer`, `skill-handoff`
-- Long issue compaction: `linear-issue-compactor`
+- Dense issue bodies, connector-hostile content, or moving detail to attached Linear docs: `linear-issue-compactor`
 
 Use the specialist skill for the procedure. Use Boring Loop only to decide when to route there and what the next boring move is.
 
@@ -98,3 +99,4 @@ GPT-controller guidance:
 - ask for repair when the work is not yet boring enough.
 
 Both variants use the same first-party source and the same retained doctrine.
+

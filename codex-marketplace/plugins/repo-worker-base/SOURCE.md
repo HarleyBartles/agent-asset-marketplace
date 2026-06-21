@@ -15,9 +15,9 @@ Repo Worker Base asset.
 
 ### First-party core skills
 
-- `boring-loop` projected from `sources/first_party/core/boring-loop`
-- `connector-safety` projected from `sources/first_party/core/connector-safety`
-- `github-operations` projected from `sources/first_party/core/github-operations`
+- `boring-loop` projected from `sources/first_party/skills/boring-loop`
+- `connector-safety` projected from `sources/first_party/skills/connector-safety`
+- `github-operations` projected from `sources/first_party/skills/github-operations`
 
 ### ECC repo/operator skills
 
@@ -152,7 +152,7 @@ keeping work small, honest, and routed to the right specialist.
 The `connector-safety` and `github-operations` skills are projected as the
 generic safety/proof helper surfaces that no longer need House Skills as the
 install surface. Their canonical source roots live under
-`sources/first_party/core/<skill>/`.
+`sources/first_party/skills/<skill>/`.
 
 The 43 ECC repo/operator skills are projected verbatim from third-party custody
 under `sources/third_party/ecc/upstream/skills/` to provide repository and

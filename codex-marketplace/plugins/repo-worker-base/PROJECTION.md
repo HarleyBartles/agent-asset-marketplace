@@ -6,11 +6,11 @@ This root is the Codex-facing marketplace projection of repo worker base skills.
 
 This repository uses two distinct layers for the repo worker base bundle:
 
-- Source custody keeps the first-party core skills in `sources/first_party/core/`.
+- Source custody keeps the first-party core skills in `sources/first_party/skills/`.
 - Projection layer holds the source-controlled marketplace copy.
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The projected skills are materialized from `sources/first_party/core/...`.
+- The projected skills are materialized from `sources/first_party/skills/...`.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
@@ -23,7 +23,7 @@ The split is deliberate:
 ## Projection contract
 
 - `repo-worker-base` is the first-party plugin projection with core repo worker skills.
-- The active plugin contains `boring-loop`, `connector-safety`, and `github-operations` projected from `sources/first_party/core/`.
+- The active plugin contains `boring-loop`, `connector-safety`, and `github-operations` projected from `sources/first_party/skills/`.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface
@@ -38,4 +38,4 @@ The split is deliberate:
 
 ## Excluded from the active install surface
 
-- First-party source custody remains in `sources/first_party/core/` as the canonical source.
+- First-party source custody remains in `sources/first_party/skills/` as the canonical source.

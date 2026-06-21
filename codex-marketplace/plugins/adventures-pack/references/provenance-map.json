@@ -1,0 +1,124 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "adventures-asset-sheet-compiler",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-asset-sheet-compiler",
+      "local_path": "skills/adventures-asset-sheet-compiler"
+    },
+    {
+      "canonical_name": "adventures-bootstrap",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-bootstrap",
+      "local_path": "skills/adventures-bootstrap"
+    },
+    {
+      "canonical_name": "adventures-frame-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-frame-buster",
+      "local_path": "skills/adventures-frame-buster"
+    },
+    {
+      "canonical_name": "adventures-github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-github-operations",
+      "local_path": "skills/adventures-github-operations"
+    },
+    {
+      "canonical_name": "adventures-image-qa",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-image-qa",
+      "local_path": "skills/adventures-image-qa"
+    },
+    {
+      "canonical_name": "adventures-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-project-doctrine",
+      "local_path": "skills/adventures-project-doctrine"
+    },
+    {
+      "canonical_name": "adventures-storyboard-preflight",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-storyboard-preflight",
+      "local_path": "skills/adventures-storyboard-preflight"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-creator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-creator",
+      "local_path": "skills/adventures-visual-bible-creator"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-interpreter",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-interpreter",
+      "local_path": "skills/adventures-visual-bible-interpreter"
+    },
+    {
+      "canonical_name": "adventures-visual-preproduction",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-preproduction",
+      "local_path": "skills/adventures-visual-preproduction"
+    },
+    {
+      "canonical_name": "base-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/base-doctrine",
+      "local_path": "skills/base-doctrine"
+    },
+    {
+      "canonical_name": "connector-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/connector-safety",
+      "local_path": "skills/connector-safety"
+    },
+    {
+      "canonical_name": "don-logan-boundary",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/don-logan-boundary",
+      "local_path": "skills/don-logan-boundary"
+    },
+    {
+      "canonical_name": "linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear",
+      "local_path": "skills/linear"
+    },
+    {
+      "canonical_name": "tps-ingress",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-ingress",
+      "local_path": "skills/tps-ingress"
+    },
+    {
+      "canonical_name": "tps-reporting",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-reporting",
+      "local_path": "skills/tps-reporting"
+    },
+    {
+      "canonical_name": "worker-dispatch-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/worker-dispatch-linear",
+      "local_path": "skills/worker-dispatch-linear"
+    }
+  ],
+  "adapted_projections": []
+}

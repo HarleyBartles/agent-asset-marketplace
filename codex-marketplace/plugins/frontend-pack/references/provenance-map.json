@@ -1,0 +1,117 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "accessibility",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/accessibility",
+      "local_path": "skills/accessibility"
+    },
+    {
+      "canonical_name": "accessibility-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
+      "local_path": "skills/accessibility-audit"
+    },
+    {
+      "canonical_name": "angular-developer",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/angular-developer",
+      "local_path": "skills/angular-developer"
+    },
+    {
+      "canonical_name": "browser-qa",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/browser-qa",
+      "local_path": "skills/browser-qa"
+    },
+    {
+      "canonical_name": "design-system",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/design-system",
+      "local_path": "skills/design-system"
+    },
+    {
+      "canonical_name": "e2e-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/e2e-testing",
+      "local_path": "skills/e2e-testing"
+    },
+    {
+      "canonical_name": "interaction-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
+      "local_path": "skills/interaction-design"
+    },
+    {
+      "canonical_name": "make-interfaces-feel-better",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better",
+      "local_path": "skills/make-interfaces-feel-better"
+    },
+    {
+      "canonical_name": "react-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-patterns",
+      "local_path": "skills/react-patterns"
+    },
+    {
+      "canonical_name": "react-performance-optimization",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
+      "local_path": "skills/react-performance-optimization"
+    },
+    {
+      "canonical_name": "react-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-testing",
+      "local_path": "skills/react-testing"
+    },
+    {
+      "canonical_name": "swiftui-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/swiftui-patterns",
+      "local_path": "skills/swiftui-patterns"
+    },
+    {
+      "canonical_name": "ux-review",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
+      "local_path": "skills/ux-review"
+    },
+    {
+      "canonical_name": "vue-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/vue-patterns",
+      "local_path": "skills/vue-patterns"
+    },
+    {
+      "canonical_name": "webapp-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
+      "local_path": "skills/webapp-testing"
+    },
+    {
+      "canonical_name": "windows-desktop-e2e",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/windows-desktop-e2e",
+      "local_path": "skills/windows-desktop-e2e"
+    }
+  ],
+  "adapted_projections": []
+}

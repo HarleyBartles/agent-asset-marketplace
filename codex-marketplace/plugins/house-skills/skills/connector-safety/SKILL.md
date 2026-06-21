@@ -3,7 +3,7 @@ name: connector-safety
 description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify or step back up the connector discovery chain.
 metadata:
   source-id: connector-safety-v1.1
-  source-path: sources/first_party/core/connector-safety/SKILL.md
+  source-path: sources/first_party/skills/connector-safety/SKILL.md
   provenance-name: MARK-226 canonical first-party source for connector-safety
 license: "MIT"
 ---

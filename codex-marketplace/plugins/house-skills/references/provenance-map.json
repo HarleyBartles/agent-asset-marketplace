@@ -1,0 +1,446 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "adventures-asset-sheet-compiler",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-asset-sheet-compiler",
+      "local_path": "skills/adventures-asset-sheet-compiler"
+    },
+    {
+      "canonical_name": "adventures-bootstrap",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-bootstrap",
+      "local_path": "skills/adventures-bootstrap"
+    },
+    {
+      "canonical_name": "adventures-frame-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-frame-buster",
+      "local_path": "skills/adventures-frame-buster"
+    },
+    {
+      "canonical_name": "adventures-github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-github-operations",
+      "local_path": "skills/adventures-github-operations"
+    },
+    {
+      "canonical_name": "adventures-image-qa",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-image-qa",
+      "local_path": "skills/adventures-image-qa"
+    },
+    {
+      "canonical_name": "adventures-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-project-doctrine",
+      "local_path": "skills/adventures-project-doctrine"
+    },
+    {
+      "canonical_name": "adventures-storyboard-preflight",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-storyboard-preflight",
+      "local_path": "skills/adventures-storyboard-preflight"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-creator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-creator",
+      "local_path": "skills/adventures-visual-bible-creator"
+    },
+    {
+      "canonical_name": "adventures-visual-bible-interpreter",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-interpreter",
+      "local_path": "skills/adventures-visual-bible-interpreter"
+    },
+    {
+      "canonical_name": "adventures-visual-preproduction",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-preproduction",
+      "local_path": "skills/adventures-visual-preproduction"
+    },
+    {
+      "canonical_name": "ambiguity-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/ambiguity-buster",
+      "local_path": "skills/ambiguity-buster"
+    },
+    {
+      "canonical_name": "analogy-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/analogy-buster",
+      "local_path": "skills/analogy-buster"
+    },
+    {
+      "canonical_name": "asset-market",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/asset-market",
+      "local_path": "skills/asset-market"
+    },
+    {
+      "canonical_name": "base-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/base-doctrine",
+      "local_path": "skills/base-doctrine"
+    },
+    {
+      "canonical_name": "bootstrap-router",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/bootstrap-router",
+      "local_path": "skills/bootstrap-router"
+    },
+    {
+      "canonical_name": "boring-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/boring-buster",
+      "local_path": "skills/boring-buster"
+    },
+    {
+      "canonical_name": "boring-loop",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/boring-loop",
+      "local_path": "skills/boring-loop"
+    },
+    {
+      "canonical_name": "buster-framework",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/buster-framework",
+      "local_path": "skills/buster-framework"
+    },
+    {
+      "canonical_name": "canon-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/canon-buster",
+      "local_path": "skills/canon-buster"
+    },
+    {
+      "canonical_name": "cleanup-custody",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/cleanup-custody",
+      "local_path": "skills/cleanup-custody"
+    },
+    {
+      "canonical_name": "connector-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/connector-safety",
+      "local_path": "skills/connector-safety"
+    },
+    {
+      "canonical_name": "crew",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/crew",
+      "local_path": "skills/crew"
+    },
+    {
+      "canonical_name": "crew-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/crew-buster",
+      "local_path": "skills/crew-buster"
+    },
+    {
+      "canonical_name": "don-logan-boundary",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/don-logan-boundary",
+      "local_path": "skills/don-logan-boundary"
+    },
+    {
+      "canonical_name": "game-playtest",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
+      "local_path": "skills/game-playtest"
+    },
+    {
+      "canonical_name": "game-ui-frontend",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend",
+      "local_path": "skills/game-ui-frontend"
+    },
+    {
+      "canonical_name": "github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/github-operations",
+      "local_path": "skills/github-operations"
+    },
+    {
+      "canonical_name": "github-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/github-superpowers",
+      "local_path": "skills/github-superpowers"
+    },
+    {
+      "canonical_name": "house-skills",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/house-skills",
+      "local_path": "skills/house-skills"
+    },
+    {
+      "canonical_name": "invariant-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/invariant-buster",
+      "local_path": "skills/invariant-buster"
+    },
+    {
+      "canonical_name": "linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear",
+      "local_path": "skills/linear"
+    },
+    {
+      "canonical_name": "linear-issue-compactor",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear-issue-compactor",
+      "local_path": "skills/linear-issue-compactor"
+    },
+    {
+      "canonical_name": "linear-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
+      "local_path": "skills/linear-superpowers"
+    },
+    {
+      "canonical_name": "phaser-2d-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
+      "local_path": "skills/phaser-2d-game"
+    },
+    {
+      "canonical_name": "repo-worker-base",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "local_path": "skills/repo-worker-base"
+    },
+    {
+      "canonical_name": "rooms-ambiguity-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-ambiguity-buster",
+      "local_path": "skills/rooms-ambiguity-buster"
+    },
+    {
+      "canonical_name": "rooms-analogy-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-analogy-buster",
+      "local_path": "skills/rooms-analogy-buster"
+    },
+    {
+      "canonical_name": "rooms-bootstrap",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
+      "local_path": "skills/rooms-bootstrap"
+    },
+    {
+      "canonical_name": "rooms-canon-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-canon-buster",
+      "local_path": "skills/rooms-canon-buster"
+    },
+    {
+      "canonical_name": "rooms-character-investigation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-character-investigation",
+      "local_path": "skills/rooms-character-investigation"
+    },
+    {
+      "canonical_name": "rooms-image-sidecars",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-image-sidecars",
+      "local_path": "skills/rooms-image-sidecars"
+    },
+    {
+      "canonical_name": "rooms-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-project-doctrine",
+      "local_path": "skills/rooms-project-doctrine"
+    },
+    {
+      "canonical_name": "rooms-sheet-creator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-sheet-creator",
+      "local_path": "skills/rooms-sheet-creator"
+    },
+    {
+      "canonical_name": "rooms-source-partitioning",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
+      "local_path": "skills/rooms-source-partitioning"
+    },
+    {
+      "canonical_name": "rooms-zoom-outs-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
+      "local_path": "skills/rooms-zoom-outs-buster"
+    },
+    {
+      "canonical_name": "session-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/session-buster",
+      "local_path": "skills/session-buster"
+    },
+    {
+      "canonical_name": "session-buster-ingress",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/session-buster-ingress",
+      "local_path": "skills/session-buster-ingress"
+    },
+    {
+      "canonical_name": "skill-handoff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/skill-handoff",
+      "local_path": "skills/skill-handoff"
+    },
+    {
+      "canonical_name": "skill-installer",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/skill-installer",
+      "local_path": "skills/skill-installer"
+    },
+    {
+      "canonical_name": "skill-packager",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/skill-packager",
+      "local_path": "skills/skill-packager"
+    },
+    {
+      "canonical_name": "skill-validator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/skill-validator",
+      "local_path": "skills/skill-validator"
+    },
+    {
+      "canonical_name": "sprite-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
+      "local_path": "skills/sprite-pipeline"
+    },
+    {
+      "canonical_name": "tps-ingress",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-ingress",
+      "local_path": "skills/tps-ingress"
+    },
+    {
+      "canonical_name": "tps-reporting",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-reporting",
+      "local_path": "skills/tps-reporting"
+    },
+    {
+      "canonical_name": "unslop-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
+      "local_path": "skills/unslop-superpowers"
+    },
+    {
+      "canonical_name": "web-game-foundations",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
+      "local_path": "skills/web-game-foundations"
+    },
+    {
+      "canonical_name": "wild-bunch-browser-game",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
+      "local_path": "skills/wild-bunch-browser-game"
+    },
+    {
+      "canonical_name": "wild-bunch-domain-modeling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-domain-modeling",
+      "local_path": "skills/wild-bunch-domain-modeling"
+    },
+    {
+      "canonical_name": "wild-bunch-dotnet-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture",
+      "local_path": "skills/wild-bunch-dotnet-architecture"
+    },
+    {
+      "canonical_name": "wild-bunch-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
+      "local_path": "skills/wild-bunch-project-doctrine"
+    },
+    {
+      "canonical_name": "wild-bunch-worker-verification",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification",
+      "local_path": "skills/wild-bunch-worker-verification"
+    },
+    {
+      "canonical_name": "work-mode-router",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/work-mode-router",
+      "local_path": "skills/work-mode-router"
+    },
+    {
+      "canonical_name": "worker-dispatch-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/worker-dispatch-linear",
+      "local_path": "skills/worker-dispatch-linear"
+    }
+  ],
+  "adapted_projections": []
+}

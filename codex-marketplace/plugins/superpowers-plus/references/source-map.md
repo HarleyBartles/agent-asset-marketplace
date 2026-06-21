@@ -1,49 +1,26 @@
-# Superpowers+ Source Map
+# Superpowers Plus Source Map
 
-This bundle harmonizes the retained upstream `obra/superpowers` `v5.1.0`
-release with the repo-authored `ecc-superpowers` wrapper and the source-backed
-House Skills projections.
+Generated from `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json`.
 
-Harmonization notes:
-
-- `using-superpowers` stays as the adapted front-door router for workflow
-  selection.
-- `finishing-a-development-branch` stays as the adapted closeout gate.
-- `verification-before-completion` stays as the adapted completion backstop.
-- `linear-superpowers` stays at the Linear shaping layer.
-- `github-superpowers` stays at the GitHub proof and publication layer.
-- `unslop-superpowers` stays at the repo-specific anti-slop layer.
-- `architecture-superpowers` stays at the architecture review and composition
-  boundary layer.
-- `ecc-superpowers` stays as the thin router wrapper that points to the
-  dedicated `superpowers-ecc` pack.
-- Detailed file-level projections and source-file inventories are captured in
-  `references/bundle-manifest.json`.
-
-Retained third-party custody:
-
-- `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
-
-Retained first-party custody:
-
-- `sources/first_party/core/linear-superpowers/`
-- `sources/first_party/skills/github-superpowers/`
-- `sources/first_party/skills/unslop-superpowers/`
-- `sources/first_party/skills/architecture-superpowers/`
-- `sources/first_party/skills/ecc-superpowers/`
-
-Projected pack skills:
-
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| linear-superpowers | `sources/first_party/core/linear-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers/` | Source-backed first-party Linear shaping skill. |
-| github-superpowers | `sources/first_party/skills/github-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/github-superpowers/` | Source-backed first-party GitHub proof skill. |
-| unslop-superpowers | `sources/first_party/skills/unslop-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/` | Source-backed first-party anti-slop skill. |
-| architecture-superpowers | `sources/first_party/skills/architecture-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/` | Source-backed first-party architecture review skill. |
-| ecc-superpowers | `sources/first_party/skills/ecc-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/` | Repo-authored wrapper that routes ECC workflow-shaped work to `superpowers-ecc`. |
-| using-superpowers | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers/` | Adapted front-door router with marketplace-specific routing. |
-| finishing-a-development-branch | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch` | `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/` | Adapted closeout gate with marketplace-specific publication guidance. |
-| verification-before-completion | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion` | `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/` | Adapted completion backstop with plan/evidence reconciliation. |
-
-The bundle root is an installable Codex plugin projection. It does not replace
-the retained upstream snapshot or the dedicated `superpowers-ecc` pack.
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| architecture-superpowers | first_party | verbatim | `sources/first_party/skills/architecture-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers` | Projected as a directory-level first-party source-backed skill into the Superpowers bundle. |
+| brainstorming | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/brainstorming` | `codex-marketplace/plugins/superpowers-plus/skills/brainstorming` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| dispatching-parallel-agents | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/dispatching-parallel-agents` | `codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| ecc-superpowers | first_party | verbatim | `sources/first_party/skills/ecc-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers` | First-party skill projected verbatim into the Superpowers bundle. |
+| executing-plans | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/executing-plans` | `codex-marketplace/plugins/superpowers-plus/skills/executing-plans` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| finishing-a-development-branch | third_party | adapted | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch` | `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch` | Adapted for the Asset Marketplace publication gate so repo AGENTS, Linear, and GitHub PR state remain authoritative. Adaptation: Added Codex marketplace publication guidance and repo-specific precedence note. |
+| github-superpowers | first_party | verbatim | `sources/first_party/skills/github-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/github-superpowers` | Projected from the canonical House Skills source into the Superpowers bundle. |
+| inspecting-the-environment | first_party | verbatim | `sources/first_party/skills/inspecting-the-environment` | `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment` | First-party skill projected verbatim into the Superpowers bundle. |
+| linear-superpowers | first_party | verbatim | `sources/first_party/skills/linear-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers` | Projected from the canonical House Skills source into the Superpowers bundle. |
+| receiving-code-review | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/receiving-code-review` | `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| requesting-code-review | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/requesting-code-review` | `codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| subagent-driven-development | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/subagent-driven-development` | `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| systematic-debugging | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/systematic-debugging` | `codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| test-driven-development | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/test-driven-development` | `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| unslop-superpowers | first_party | verbatim | `sources/first_party/skills/unslop-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers` | Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle. |
+| using-git-worktrees | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-git-worktrees` | `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| using-superpowers | third_party | adapted | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers` | `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers` | Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions. Adaptation: Reworded instruction priority for Codex marketplace compatibility. |
+| verification-before-completion | third_party | adapted | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/verification-before-completion` | `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion` | Adapted for the Asset Marketplace verified-plan backstop so completion claims must reconcile plan checkboxes with evidence. Adaptation: Added plan-checkbox backstop language for completion, publication, and review claims. |
+| writing-plans | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-plans` | `codex-marketplace/plugins/superpowers-plus/skills/writing-plans` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |
+| writing-skills | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/writing-skills` | `codex-marketplace/plugins/superpowers-plus/skills/writing-skills` | Copied verbatim from the retained upstream v5.1.0 snapshot into the Codex projection. |

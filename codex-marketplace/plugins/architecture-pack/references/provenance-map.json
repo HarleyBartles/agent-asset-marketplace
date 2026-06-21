@@ -1,0 +1,82 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "architecture-decision-records",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records",
+      "local_path": "skills/architecture-decision-records"
+    },
+    {
+      "canonical_name": "backend-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/backend-patterns",
+      "local_path": "skills/backend-patterns"
+    },
+    {
+      "canonical_name": "cqrs-event-sourcing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
+      "local_path": "skills/cqrs-event-sourcing"
+    },
+    {
+      "canonical_name": "database-design-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+      "local_path": "skills/database-design-patterns"
+    },
+    {
+      "canonical_name": "docker-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/docker-patterns",
+      "local_path": "skills/docker-patterns"
+    },
+    {
+      "canonical_name": "event-driven-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
+      "local_path": "skills/event-driven-architecture"
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture"
+    },
+    {
+      "canonical_name": "intent-driven-development",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/intent-driven-development",
+      "local_path": "skills/intent-driven-development"
+    },
+    {
+      "canonical_name": "kubernetes-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/kubernetes-patterns",
+      "local_path": "skills/kubernetes-patterns"
+    },
+    {
+      "canonical_name": "mcp-server-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/mcp-server-patterns",
+      "local_path": "skills/mcp-server-patterns"
+    },
+    {
+      "canonical_name": "mle-workflow",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/mle-workflow",
+      "local_path": "skills/mle-workflow"
+    }
+  ],
+  "adapted_projections": []
+}

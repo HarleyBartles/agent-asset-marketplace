@@ -18,12 +18,6 @@ file_patterns:
   - '**/event-sourcing/**'
   - '**/eventsourcing/**'
 confidence: 0.84
-metadata:
-  source_author: NickCrew
-  source_license: MIT
-  source_repo: https://github.com/NickCrew/Claude-Cortex
-  source_path: sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md
-  content_mode: normalised
 ---
 
 # Event-Driven Architecture Patterns

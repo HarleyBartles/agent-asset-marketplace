@@ -1,0 +1,8 @@
+schema_version: 1
+deletes: []
+metadata:
+  source_category: third_party
+  upstream_name: messages-ops
+  adaptation_overlay: adapters/codex/superpowers-ecc/messages-ops
+  projection_plugin: superpowers-ecc
+  upstream_version: upstream

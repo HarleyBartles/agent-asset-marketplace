@@ -116,7 +116,7 @@
     },
     {
       "name": "first-party-boring-loop-ledger",
-      "path": "sources/first_party/core/boring-loop",
+      "path": "sources/first_party/skills/boring-loop",
       "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
       "surface_kind": "provenance",
       "nearest_scoped_agents_md": null,
@@ -243,7 +243,7 @@
         "sources/first_party/skills/house-skills/intake.json"
       ],
       "license_reference": "first-party license declared in codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-      "bundle_manifest": "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+      "bundle_manifest": "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/house-skills/skills",
       "provenance_refs": [
         "provenance/house-skills.md"
@@ -417,9 +417,9 @@
       "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
       "source_ledger": [
         "sources/first_party/skills/repo-worker-base/SKILL.md",
-        "sources/first_party/core/boring-loop/SKILL.md",
-        "sources/first_party/core/connector-safety/SKILL.md",
-        "sources/first_party/core/github-operations/SKILL.md"
+        "sources/first_party/skills/boring-loop/SKILL.md",
+        "sources/first_party/skills/connector-safety/SKILL.md",
+        "sources/first_party/skills/github-operations/SKILL.md"
       ],
       "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",
@@ -441,9 +441,9 @@
       "plugin_manifest": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/dotnet-kit/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/dotnet-kit/decisions.json",
-        "sources/first_party/skills/dotnet-kit/decisions.md",
-        "sources/first_party/skills/dotnet-kit/intake.json"
+        "provenance/dotnet-kit-governance/decisions.json",
+        "provenance/dotnet-kit-governance/decisions.md",
+        "provenance/dotnet-kit-governance/intake.json"
       ],
       "license_path": "codex-marketplace/plugins/dotnet-kit/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json",
@@ -465,9 +465,9 @@
       "plugin_manifest": "codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/codex-cortex/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/codex-cortex/intake.json",
-        "sources/first_party/skills/codex-cortex/decisions.json",
-        "sources/first_party/skills/codex-cortex/decisions.md"
+        "provenance/codex-cortex-governance/intake.json",
+        "provenance/codex-cortex-governance/decisions.json",
+        "provenance/codex-cortex-governance/decisions.md"
       ],
       "license_path": "codex-marketplace/plugins/codex-cortex/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/codex-cortex/references/bundle-manifest.json",
@@ -489,9 +489,9 @@
       "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/codex-cortex/intake.json",
-        "sources/first_party/skills/codex-cortex/decisions.json",
-        "sources/first_party/skills/codex-cortex/decisions.md"
+        "provenance/codex-cortex-governance/intake.json",
+        "provenance/codex-cortex-governance/decisions.json",
+        "provenance/codex-cortex-governance/decisions.md"
       ],
       "license_path": "codex-marketplace/plugins/api-contracts-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
@@ -513,9 +513,9 @@
       "plugin_manifest": "codex-marketplace/plugins/architecture-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/codex-cortex/intake.json",
-        "sources/first_party/skills/codex-cortex/decisions.json",
-        "sources/first_party/skills/codex-cortex/decisions.md"
+        "provenance/codex-cortex-governance/intake.json",
+        "provenance/codex-cortex-governance/decisions.json",
+        "provenance/codex-cortex-governance/decisions.md"
       ],
       "license_path": "codex-marketplace/plugins/architecture-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/architecture-pack/references/bundle-manifest.json",
@@ -537,9 +537,9 @@
       "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/codex-cortex/intake.json",
-        "sources/first_party/skills/codex-cortex/decisions.json",
-        "sources/first_party/skills/codex-cortex/decisions.md"
+        "provenance/codex-cortex-governance/intake.json",
+        "provenance/codex-cortex-governance/decisions.json",
+        "provenance/codex-cortex-governance/decisions.md"
       ],
       "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
@@ -561,9 +561,9 @@
       "plugin_manifest": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/security-pack/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/codex-cortex/intake.json",
-        "sources/first_party/skills/codex-cortex/decisions.json",
-        "sources/first_party/skills/codex-cortex/decisions.md"
+        "provenance/codex-cortex-governance/intake.json",
+        "provenance/codex-cortex-governance/decisions.json",
+        "provenance/codex-cortex-governance/decisions.md"
       ],
       "license_path": "codex-marketplace/plugins/security-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/security-pack/references/bundle-manifest.json",

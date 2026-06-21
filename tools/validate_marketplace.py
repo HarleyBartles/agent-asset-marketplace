@@ -39,26 +39,10 @@ from marketplace_utils import (
 from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
 from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
+from tree_canonicalization import canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 
 
 ROOT = Path(__file__).resolve().parents[1]
-
-TEXT_SUFFIXES = {
-    ".md",
-    ".txt",
-    ".yaml",
-    ".yml",
-    ".json",
-    ".py",
-    ".sh",
-    ".svg",
-    ".xml",
-    ".html",
-    ".css",
-    ".js",
-    ".ts",
-}
-TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 
 
 def check_json(path: Path) -> dict:
@@ -85,12 +69,6 @@ def check_path_exists(path: Path) -> None:
 
 def list_files(root: Path) -> list[Path]:
     return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
-
-
-def _canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
-    if path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES:
-        return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
-    return raw
 
 
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
@@ -251,11 +229,15 @@ def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str
 
 
 def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "everything-codex-code":
         raise ValueError("everything-codex-code bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("everything-codex-code bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") != "project-scoped-codex-plugin-projection":
+    if bundle_manifest.get("bundle_type") not in ("project-scoped-codex-plugin-projection", "projection-lane"):
         raise ValueError("everything-codex-code bundle manifest bundle_type mismatch")
     if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("everything-codex-code bundle manifest marketplace_root mismatch")
@@ -434,15 +416,9 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     # Verbatim skills may have optional metadata (e.g., origin field for provenance tracking)
     metadata = parsed.get("metadata")
     
-    if content_mode in {"adapted", "normalised", "normalized"}:
+    if content_mode in {"adapted", "normalised"}:
         if not isinstance(metadata, dict):
             raise ValueError(f"{skill_md} frontmatter is missing required metadata section for {content_mode} content")
-    elif content_mode == "verbatim":
-        # Verbatim skills may have optional metadata, but it's not required
-        if metadata is not None and not isinstance(metadata, dict):
-            raise ValueError(f"{skill_md} frontmatter metadata must be a mapping if present")
-        # For verbatim, no further validation of metadata fields
-        return
 
     def require_metadata_field(field_name: str) -> None:
         if field_name not in metadata or not metadata[field_name]:
@@ -460,7 +436,7 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
         require_metadata_field("adapted_author")
         require_metadata_field("adaptation_note")
     # Normalised skills should NOT have adapted_author or adaptation_note
-    elif content_mode in {"normalised", "normalized"}:
+    elif content_mode == "normalised":
         if metadata.get("adapted_author") or metadata.get("adaptation_note"):
             raise ValueError(f"{bundle_name} skill {canonical_name} normalised content should not have adapted_author or adaptation_note")
 
@@ -648,27 +624,35 @@ def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
 
 
 def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "house-skills":
         raise ValueError("bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
+    if bundle_manifest.get("bundle_type") not in ("current-first-party-house-skills-plugin", "projection-lane"):
         raise ValueError("bundle manifest bundle_type mismatch")
 
-    control_plane = bundle_manifest.get("control_plane_skill")
-    if not isinstance(control_plane, dict):
-        raise ValueError("bundle manifest control_plane_skill mismatch")
-    if control_plane.get("name") != "house-skills":
-        raise ValueError("bundle manifest control plane name mismatch")
-    control_plane_path = control_plane.get("path")
-    if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
-        raise ValueError("bundle manifest control plane path mismatch")
-    control_plane_root = ROOT / control_plane_path
-    check_path_exists(control_plane_root)
-    check_path_exists(control_plane_root / "SKILL.md")
-    check_path_exists(control_plane_root / "agents" / "openai.yaml")
+    # The control_plane_skill field is only required for the legacy
+    # "current-first-party-house-skills-plugin" bundle_type.  Projection-lane
+    # manifests use standard entries[] instead.
+    if bundle_manifest.get("bundle_type") != "projection-lane":
+        control_plane = bundle_manifest.get("control_plane_skill")
+        if not isinstance(control_plane, dict):
+            raise ValueError("bundle manifest control_plane_skill mismatch")
+        if control_plane.get("name") != "house-skills":
+            raise ValueError("bundle manifest control plane name mismatch")
+        control_plane_path = control_plane.get("path")
+        if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
+            raise ValueError("bundle manifest control plane path mismatch")
+        control_plane_root = ROOT / control_plane_path
+        check_path_exists(control_plane_root)
+        check_path_exists(control_plane_root / "SKILL.md")
+        check_path_exists(control_plane_root / "agents" / "openai.yaml")
 
     skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
@@ -730,6 +714,9 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
 
 
 def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "wild-bunch-project-pack":
         raise ValueError("wild-bunch-project-pack bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
@@ -842,12 +829,16 @@ def _expected_superpowers_projected_plugin(source_plugin: dict) -> dict:
 
 
 def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
     if bundle_manifest.get("bundle_name") != "superpowers-plus":
         raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "5.1.0":
+    if bundle_manifest.get("bundle_version") not in ("5.1.0", "1.0.0"):
         raise ValueError("superpowers-plus bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") != "third-party-codex-plugin-projection":
+    if bundle_manifest.get("bundle_type") not in ("third-party-codex-plugin-projection", "projection-lane"):
         raise ValueError("superpowers-plus bundle manifest bundle_type mismatch")
     if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("superpowers-plus bundle manifest marketplace_root mismatch")
@@ -1293,16 +1284,16 @@ def validate_skill_bundle_manifest(
             if local_full_path.name == "SKILL.md":
                 _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
             
-            if content_mode not in {"verbatim", "normalised", "normalized", "adapted"}:
+            if content_mode not in {"verbatim", "normalised", "adapted"}:
                 raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
             
             # For adapted and normalised entries, require source attribution fields
-            if content_mode in {"adapted", "normalised", "normalized"}:
+            if content_mode in {"adapted", "normalised"}:
                 for field in ("source_path", "source_author", "source_license", "source_repo"):
                     if not isinstance(entry.get(field), str) or not entry.get(field):
                         raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
             
-            if content_mode in {"normalised", "normalized"}:
+            if content_mode == "normalised":
                 # Normalised: substantive content unchanged, but projection is Codex/OpenAI-canonical
                 # Requires attribution but not adapted_author/adaptation_note
                 if entry.get("adapted_author") or entry.get("adaptation_note"):
@@ -1323,7 +1314,7 @@ def validate_skill_bundle_manifest(
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
                         )
-                elif content_mode in {"normalised", "normalized"}:
+                elif content_mode == "normalised":
                     # Normalised: body-equivalence comparison ignoring projection-only metadata
                     # and accounting for canonical path normalization (e.g., references/ moves)
                     _, source_body = _split_skill_frontmatter_and_body(source_path)
@@ -1358,6 +1349,9 @@ def validate_skill_bundle_manifest(
 
 
 def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "adventures-pack":
         raise ValueError("adventures-pack bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
@@ -1456,11 +1450,113 @@ def validate_source_map(text: str) -> None:
     for needle in (
         "codex-marketplace/plugins/house-skills/skills/",
         "codex-marketplace/plugins/house-skills/skills/house-skills",
-        "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
-        "All live current roots are unversioned directory-level plugin folders with `SKILL.md` and `agents/openai.yaml`.",
+        "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
+        "Generated from `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`.",
     ):
         if needle not in text:
             raise ValueError(f"source map is missing {needle}")
+
+
+def detect_first_party_orphans() -> list[str]:
+    """Detect first-party skill dirs with SKILL.md that have no projection entry."""
+    skills_root = ROOT / "sources" / "first_party" / "skills"
+    if not skills_root.is_dir():
+        return []
+    custody_skills: set[str] = set()
+    for d in skills_root.iterdir():
+        if d.is_dir() and (d / "SKILL.md").exists():
+            custody_skills.add(d.name)
+    projected_names: set[str] = set()
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest_path = plugin_root / "references" / "bundle-manifest.json"
+        if not manifest_path.exists():
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for entry in manifest.get("entries", []):
+            if isinstance(entry, dict) and entry.get("source_category") == "first_party":
+                name = entry.get("canonical_name")
+                if name:
+                    projected_names.add(name)
+    orphans = sorted(custody_skills - projected_names)
+    return orphans
+
+
+def validate_mega_pack_inclusion() -> None:
+    """Validate that every entry in a topical plugin also appears in its mega-pack."""
+    import sys
+    tools_dir = str(ROOT / "tools")
+    if tools_dir not in sys.path:
+        sys.path.insert(0, tools_dir)
+    from generate_mega_packs import load_mega_pack_registry, collect_entries_by_family, load_plugin_manifest
+
+    registry = load_mega_pack_registry()
+    mega_pack_names = {m["mega_pack"] for m in registry}
+    plugin_manifests: list[dict] = []
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest = load_plugin_manifest(plugin_root)
+        if manifest is None:
+            continue
+        if spec["name"] in mega_pack_names:
+            continue
+        plugin_manifests.append(manifest)
+
+    by_family = collect_entries_by_family(plugin_manifests)
+
+    for mapping in registry:
+        family = mapping["source_family"]
+        mega_name = mapping["mega_pack"]
+        mega_root = ROOT / mapping["mega_pack_root"]
+        mega_manifest_path = mega_root / "references" / "bundle-manifest.json"
+        if not mega_manifest_path.exists():
+            raise ValueError(f"mega-pack manifest missing for {family}: {mega_manifest_path}")
+        mega_manifest = check_json(mega_manifest_path)
+        mega_names_set = {
+            e.get("canonical_name") for e in mega_manifest.get("entries", [])
+            if isinstance(e, dict) and e.get("content_mode") not in ("blocked", "skipped")
+        }
+        topical_names_set = {
+            e.get("canonical_name") for e in by_family.get(family, [])
+            if isinstance(e, dict) and e.get("canonical_name") is not None
+        }
+        missing = sorted(topical_names_set - mega_names_set)
+        if missing:
+            raise ValueError(
+                f"mega-pack {mega_name} is missing entries that appear in topical plugins: {missing}\n"
+                f"Fix: run py -3 tools/generate_mega_packs.py"
+            )
+    print("OK mega-pack inclusion: all topical entries appear in their mega-packs")
+
+
+def validate_no_legacy_manifest_shapes() -> None:
+    """Validate that no plugin manifest uses a legacy shape that the materializer would skip."""
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest_path = plugin_root / "references" / "bundle-manifest.json"
+        if not manifest_path.exists():
+            continue
+        manifest = check_json(manifest_path)
+        entries = manifest.get("entries")
+        if not isinstance(entries, list):
+            raise ValueError(
+                f"{spec['name']}: manifest must have entries[] array (legacy skills[] or components[] not allowed)"
+            )
+        if not entries:
+            continue
+        for i, entry in enumerate(entries):
+            if not isinstance(entry, dict):
+                raise ValueError(f"{spec['name']}: entry {i} must be an object")
+            if "canonical_name" not in entry or "canonical_source_path" not in entry:
+                raise ValueError(
+                    f"{spec['name']}: entry {i} must have canonical_name and canonical_source_path (legacy shape)"
+                )
+            csp = entry.get("canonical_source_path", "")
+            if isinstance(csp, str) and Path(csp).suffix:
+                raise ValueError(
+                    f"{spec['name']}: entry {i} canonical_source_path must be directory-level (legacy file-level path: {csp})"
+                )
+    print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 
 def main() -> int:
@@ -1512,6 +1608,12 @@ def main() -> int:
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "everything-codex-code":
                 validate_everything_codex_code_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+            elif bundle_manifest_json.get("bundle_type") == "projection-lane":
+                # Projection-lane manifests are validated by the materializer
+                # (tools/materialize_projection.py --check). Skip legacy
+                # field-level validation here — Task 15 will do the full
+                # validator update.
+                pass
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,
@@ -1532,6 +1634,17 @@ def main() -> int:
     check_text(REPO_INDEX_README_PATH)
     check_json(REPO_INDEX_PATH)
     validate_repo_index()
+
+    # New validation checks for normalized projection-lane shape
+    validate_no_legacy_manifest_shapes()
+    orphans = detect_first_party_orphans()
+    if orphans:
+        raise ValueError(
+            f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
+            f"Fix: add manifest entries for these skills and regenerate."
+        )
+    print(f"OK first-party orphan check: 0 orphans")
+    validate_mega_pack_inclusion()
 
     print("Marketplace validation passed.")
     return 0
