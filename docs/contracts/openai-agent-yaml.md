@@ -45,7 +45,7 @@ policy:
 - The top level must be a mapping.
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
-- The current wrapper/projection set under `codex-marketplace/plugins/superpowers-plus/skills/{architecture-superpowers,ecc-superpowers,finishing-a-development-branch,github-superpowers,linear-superpowers,unslop-superpowers,using-superpowers,verification-before-completion}` must include `metadata`; source-custody snapshots can omit it.
+- All skills projected via a bundle-manifest entry must include `metadata`; source-custody snapshots can omit it.
 - When present, provenance keys such as `skill_name`, `plugin`,
   `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`,
   `projection_plugin`, `source-id`, `source-path`, `provenance-name`, `origin`,
@@ -57,6 +57,13 @@ policy:
   must be boolean when present.
 - `dependencies`, when present, must be a mapping, and `dependencies.tools`
   must be a list of mappings with nonblank `type` and `value`.
+- `content_mode`, when present under `metadata`, must be one of `verbatim`,
+  `normalised`, or `adapted`. `verbatim` means the skill body is copied
+  unchanged from upstream. `normalised` means minimal compliance adaptation
+  (codex-safe shape, openai-spec compliance, rich metadata, repointing
+  moved-file links) with the skill body otherwise unchanged and ownership
+  staying with the upstream author. `adapted` means substantive editorial
+  adaptation beyond normalisation.
 
 ## Notes
 
