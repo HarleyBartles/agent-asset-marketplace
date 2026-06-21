@@ -26,8 +26,16 @@ def _load_bundle_manifest(plugin_root: Path) -> dict[str, Any] | None:
     manifest = load_json(manifest_path)
     if not isinstance(manifest, dict):
         raise ValueError(f"{manifest_path} must contain a JSON object")
-    if not isinstance(manifest.get("entries"), list):
-        return None  # Not a projection-lane plugin (e.g. legacy shape)
+    entries = manifest.get("entries")
+    if not isinstance(entries, list):
+        return None  # Not a projection-lane plugin (e.g. legacy skills[] shape)
+    # Distinguish new-schema entries (canonical_name + source_category) from
+    # legacy entries (snapshot_path, no canonical_name). Only process new-schema
+    # plugins; legacy-schema plugins are migrated separately.
+    if entries:
+        first = entries[0]
+        if not isinstance(first, dict) or "canonical_name" not in first:
+            return None  # Legacy schema — skip until migrated
     return manifest
 
 
