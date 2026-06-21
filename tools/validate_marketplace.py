@@ -1490,6 +1490,12 @@ def main() -> int:
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "everything-codex-code":
                 validate_everything_codex_code_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+            elif bundle_manifest_json.get("bundle_type") == "projection-lane":
+                # Projection-lane manifests are validated by the materializer
+                # (tools/materialize_projection.py --check). Skip legacy
+                # field-level validation here — Task 15 will do the full
+                # validator update.
+                pass
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,

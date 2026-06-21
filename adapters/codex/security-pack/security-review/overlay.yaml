@@ -1,0 +1,9 @@
+schema_version: 1
+deletes:
+  - cloud-infrastructure-security.md
+metadata:
+  source_category: third_party
+  upstream_name: security-review
+  adaptation_overlay: adapters/codex/security-pack/security-review
+  projection_plugin: security-pack
+  upstream_version: upstream

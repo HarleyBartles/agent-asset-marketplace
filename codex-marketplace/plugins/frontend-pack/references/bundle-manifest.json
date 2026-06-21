@@ -1,164 +1,9 @@
 {
   "bundle_name": "frontend-pack",
   "bundle_version": "1.0.0",
-  "upstream_repo": "combined-source",
-  "pinned_commit": "mixed",
-  "source_root": ".",
-  "path_semantics": "retained-snapshot-relative",
-  "content_mode": "combined-source",
   "source_families": [
-    {
-      "name": "claude-cortex",
-      "upstream_repo": "NickCrew/Claude-Cortex",
-      "pinned_commit": "7892d00e7cb6adf00144a535103b930c772fb2c0",
-      "source_root": "."
-    },
-    {
-      "name": "ecc",
-      "upstream_repo": "affaan-m/ECC",
-      "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-      "source_root": "."
-    }
-  ],
-  "candidate_count": 16,
-  "imported_count": 16,
-  "skipped_count": 0,
-  "blocked_count": 0,
-  "entries": [
-    {
-      "snapshot_path": "skills/react-performance-optimization/SKILL.md",
-      "local_path": "skills/react-performance-optimization/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex"
-    },
-    {
-      "snapshot_path": "skills/accessibility-audit/SKILL.md",
-      "local_path": "skills/accessibility-audit/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex"
-    },
-    {
-      "snapshot_path": "skills/ux-review/SKILL.md",
-      "local_path": "skills/ux-review/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex"
-    },
-    {
-      "snapshot_path": "skills/interaction-design/SKILL.md",
-      "local_path": "skills/interaction-design/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex"
-    },
-    {
-      "snapshot_path": "skills/webapp-testing/SKILL.md",
-      "local_path": "skills/webapp-testing/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex"
-    },
-    {
-      "snapshot_path": "skills/accessibility/SKILL.md",
-      "local_path": "skills/accessibility/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/angular-developer/SKILL.md",
-      "local_path": "skills/angular-developer/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/browser-qa/SKILL.md",
-      "local_path": "skills/browser-qa/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/design-system/SKILL.md",
-      "local_path": "skills/design-system/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/e2e-testing/SKILL.md",
-      "local_path": "skills/e2e-testing/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/make-interfaces-feel-better/SKILL.md",
-      "local_path": "skills/make-interfaces-feel-better/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/react-patterns/SKILL.md",
-      "local_path": "skills/react-patterns/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/react-testing/SKILL.md",
-      "local_path": "skills/react-testing/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/swiftui-patterns/SKILL.md",
-      "local_path": "skills/swiftui-patterns/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/vue-patterns/SKILL.md",
-      "local_path": "skills/vue-patterns/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    },
-    {
-      "snapshot_path": "skills/windows-desktop-e2e/SKILL.md",
-      "local_path": "skills/windows-desktop-e2e/SKILL.md",
-      "import_status": "imported",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT"
-    }
+    "claude-cortex",
+    "ecc"
   ],
   "notes": [
     "Frontend application pack covering React performance, accessibility, UX review, interaction design, webapp testing, and ECC frontend skills.",
@@ -166,5 +11,249 @@
     "ECC skills (accessibility, angular-developer, browser-qa, design-system, e2e-testing, make-interfaces-feel-better, react-patterns, react-testing, swiftui-patterns, vue-patterns, windows-desktop-e2e) were added as part of MARK-245."
   ],
   "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT"
+  "plugin_license": "MIT",
+  "bundle_type": "projection-lane",
+  "is_mega_pack": false,
+  "entries": [
+    {
+      "canonical_name": "accessibility",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/accessibility",
+      "local_path": "skills/accessibility",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/accessibility/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "accessibility-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
+      "local_path": "skills/accessibility-audit",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "angular-developer",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/angular-developer",
+      "local_path": "skills/angular-developer",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/angular-developer/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "browser-qa",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/browser-qa",
+      "local_path": "skills/browser-qa",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/browser-qa/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "design-system",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/design-system",
+      "local_path": "skills/design-system",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/design-system/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "e2e-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/e2e-testing",
+      "local_path": "skills/e2e-testing",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/e2e-testing/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "interaction-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
+      "local_path": "skills/interaction-design",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "make-interfaces-feel-better",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better",
+      "local_path": "skills/make-interfaces-feel-better",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "react-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-patterns",
+      "local_path": "skills/react-patterns",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/react-patterns/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "react-performance-optimization",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
+      "local_path": "skills/react-performance-optimization",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "react-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-testing",
+      "local_path": "skills/react-testing",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/react-testing/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "swiftui-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/swiftui-patterns",
+      "local_path": "skills/swiftui-patterns",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/swiftui-patterns/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "ux-review",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
+      "local_path": "skills/ux-review",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "vue-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/vue-patterns",
+      "local_path": "skills/vue-patterns",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/vue-patterns/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "webapp-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
+      "local_path": "skills/webapp-testing",
+      "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "windows-desktop-e2e",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/windows-desktop-e2e",
+      "local_path": "skills/windows-desktop-e2e",
+      "import_status": "imported",
+      "source_path": "sources/third_party/ecc/upstream/skills/windows-desktop-e2e/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    }
+  ]
 }
