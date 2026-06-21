@@ -29,6 +29,10 @@ class TreeCanonicalizationTests(unittest.TestCase):
         result = canonicalize_tree_bytes(Path("manifest.json"), b'{"a":1}\r\n')
         self.assertEqual(result, b'{"a":1}\n')
 
+    def test_canonicalizes_tsx(self) -> None:
+        result = canonicalize_tree_bytes(Path("component.tsx"), b"export const x = 1;\r\n")
+        self.assertEqual(result, b"export const x = 1;\n")
+
     def test_canonicalizes_yaml(self) -> None:
         result = canonicalize_tree_bytes(Path("openai.yaml"), b"name: test\r\n")
         self.assertEqual(result, b"name: test\n")

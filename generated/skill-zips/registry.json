@@ -2799,13 +2799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/remotion-video-creation/skill.zip",
       "source_file_count": 32,
-      "source_bytes": 78335,
-      "source_sha256": "1d8261dcd7705b9a40961ece69c9f11ddecb5a1e021eb8609366fa873aabdae2",
+      "source_bytes": 77954,
+      "source_sha256": "e91d243056cea351817e9c63cfdcf5a80c76185cc9c752c547a3a809d6f1bcae",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 34917,
-      "zip_sha256": "d84cd1f33e721ece9047b0af10c284b1bfb5ea9ba252ad3a4c25f62a02c58796"
+      "zip_size_bytes": 34888,
+      "zip_sha256": "91545f86a63b111086a3a4b7a4c2f32487932172b7e64650f71b0c13b577b4a8"
     },
     {
       "pack": "everything-codex-code",
@@ -5391,13 +5391,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/media-content-pack/remotion-video-creation/skill.zip",
       "source_file_count": 32,
-      "source_bytes": 78335,
-      "source_sha256": "1d8261dcd7705b9a40961ece69c9f11ddecb5a1e021eb8609366fa873aabdae2",
+      "source_bytes": 77954,
+      "source_sha256": "e91d243056cea351817e9c63cfdcf5a80c76185cc9c752c547a3a809d6f1bcae",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 34917,
-      "zip_sha256": "d84cd1f33e721ece9047b0af10c284b1bfb5ea9ba252ad3a4c25f62a02c58796"
+      "zip_size_bytes": 34888,
+      "zip_sha256": "91545f86a63b111086a3a4b7a4c2f32487932172b7e64650f71b0c13b577b4a8"
     },
     {
       "pack": "media-content-pack",
