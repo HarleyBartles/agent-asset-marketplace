@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 418,
+  "artifact_count": 423,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -3561,6 +3561,38 @@
     },
     {
       "pack": "house-skills",
+      "skill": "game-playtest",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/game-playtest",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/game-playtest/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3137,
+      "source_sha256": "5ea18523dc313d526624c964d11c0eae80af8d75f2b474dbc7c6f48592780bfb",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1864,
+      "zip_sha256": "4015c9e26243520a5c639cfa1fdecb855790ee6b345889def34b9bc47448e735"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "game-ui-frontend",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/game-ui-frontend",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/game-ui-frontend/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 5292,
+      "source_sha256": "41cf619fed7ce944a89a79862e7c6f91de43c183d09cad0ac88d990c8fbf48ba",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 2754,
+      "zip_sha256": "714eb3a90cbf721cc225123ca6f112b088d5c32bc364b24e22d59a53952477a8"
+    },
+    {
+      "pack": "house-skills",
       "skill": "github-operations",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/house-skills/skills/github-operations",
@@ -3670,6 +3702,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 2242,
       "zip_sha256": "30d750ae57f08816b3ec1e4f73ffd1800f751cf3d2f572c0357727a6788ed95b"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "phaser-2d-game",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/phaser-2d-game",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/phaser-2d-game/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3395,
+      "source_sha256": "5483f07beb017dd3fa9ee489c7010d327d88d633850dfec6e9c827a10d81620d",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1951,
+      "zip_sha256": "467f1528fc8e217fded0823a7e1c5b071da0b1469ee83e0930399fb50c0febb6"
     },
     {
       "pack": "house-skills",
@@ -3929,6 +3977,22 @@
     },
     {
       "pack": "house-skills",
+      "skill": "sprite-pipeline",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/sprite-pipeline",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/sprite-pipeline/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3617,
+      "source_sha256": "e61dece19d36da25efe24b2935cec914dbd196fc01316968e9229baee230b08b",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 1891,
+      "zip_sha256": "7a4d477cb4f5b9d64b778117fa7c73bce429c266a5eeb4f2f171416c3d9cb1fb"
+    },
+    {
+      "pack": "house-skills",
       "skill": "tps-ingress",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/house-skills/skills/tps-ingress",
@@ -3974,6 +4038,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 2192,
       "zip_sha256": "acdce3f9f0675d6811bfb9b001a014b8d07deac8117a9a07dcfbd85e9a011bd4"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "web-game-foundations",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/web-game-foundations",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/web-game-foundations/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 4821,
+      "source_sha256": "0748a96033c00a0977db6ab3905541835ea2a16674bebcb746df302e80309e5c",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 2484,
+      "zip_sha256": "8e0b836e2cb6f5ca1f9ffeb10043f625d157b3948b651eae2d1ae413ace96c5d"
     },
     {
       "pack": "house-skills",

@@ -720,6 +720,9 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
 
 
 def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "wild-bunch-project-pack":
         raise ValueError("wild-bunch-project-pack bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
@@ -1352,6 +1355,9 @@ def validate_skill_bundle_manifest(
 
 
 def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "adventures-pack":
         raise ValueError("adventures-pack bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
