@@ -35,8 +35,8 @@
       "note": null
     }
   },
-  "candidate_count": 19,
-  "imported_count": 19,
+  "candidate_count": 20,
+  "imported_count": 20,
   "skipped_count": 0,
   "blocked_count": 0,
   "entries": [
@@ -128,6 +128,21 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
       "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
+    },
+    {
+      "canonical_name": "inspecting-the-environment",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+      "local_path": "skills/inspecting-the-environment",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/inspecting-the-environment/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
