@@ -1,7 +1,7 @@
 # Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
-`v5.1.0`, branded in the marketplace as `Superpowers+`, plus the
+`v6.0.3`, branded in the marketplace as `Superpowers+`, plus the
 source-backed House Skills `linear-superpowers`, `github-superpowers`,
 `unslop-superpowers`, and `architecture-superpowers` skills, plus the
 first-party `ecc-superpowers` router wrapper that points to `superpowers-ecc`,
@@ -18,7 +18,7 @@ This repository uses three distinct layers for the Superpowers bundle:
   is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The adapted Superpowers+ skills are materialized from
-  `sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/...` plus
+  `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/...` plus
   `adapters/codex/superpowers-plus/...`.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
@@ -112,5 +112,5 @@ source provides them.
 - `README.md`
 - `package.json`
 
-Those files remain in `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
+Those files remain in `sources/third_party/superpowers/obra-superpowers/v6.0.3/`
 as support provenance and retained source custody.
