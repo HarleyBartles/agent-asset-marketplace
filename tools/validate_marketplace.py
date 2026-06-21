@@ -416,15 +416,9 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     # Verbatim skills may have optional metadata (e.g., origin field for provenance tracking)
     metadata = parsed.get("metadata")
     
-    if content_mode in {"adapted", "normalised", "normalized"}:
+    if content_mode in {"adapted", "normalised"}:
         if not isinstance(metadata, dict):
             raise ValueError(f"{skill_md} frontmatter is missing required metadata section for {content_mode} content")
-    elif content_mode == "verbatim":
-        # Verbatim skills may have optional metadata, but it's not required
-        if metadata is not None and not isinstance(metadata, dict):
-            raise ValueError(f"{skill_md} frontmatter metadata must be a mapping if present")
-        # For verbatim, no further validation of metadata fields
-        return
 
     def require_metadata_field(field_name: str) -> None:
         if field_name not in metadata or not metadata[field_name]:
@@ -442,7 +436,7 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
         require_metadata_field("adapted_author")
         require_metadata_field("adaptation_note")
     # Normalised skills should NOT have adapted_author or adaptation_note
-    elif content_mode in {"normalised", "normalized"}:
+    elif content_mode == "normalised":
         if metadata.get("adapted_author") or metadata.get("adaptation_note"):
             raise ValueError(f"{bundle_name} skill {canonical_name} normalised content should not have adapted_author or adaptation_note")
 
@@ -1290,16 +1284,16 @@ def validate_skill_bundle_manifest(
             if local_full_path.name == "SKILL.md":
                 _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
             
-            if content_mode not in {"verbatim", "normalised", "normalized", "adapted"}:
+            if content_mode not in {"verbatim", "normalised", "adapted"}:
                 raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
             
             # For adapted and normalised entries, require source attribution fields
-            if content_mode in {"adapted", "normalised", "normalized"}:
+            if content_mode in {"adapted", "normalised"}:
                 for field in ("source_path", "source_author", "source_license", "source_repo"):
                     if not isinstance(entry.get(field), str) or not entry.get(field):
                         raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
             
-            if content_mode in {"normalised", "normalized"}:
+            if content_mode == "normalised":
                 # Normalised: substantive content unchanged, but projection is Codex/OpenAI-canonical
                 # Requires attribution but not adapted_author/adaptation_note
                 if entry.get("adapted_author") or entry.get("adaptation_note"):
@@ -1320,7 +1314,7 @@ def validate_skill_bundle_manifest(
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
                         )
-                elif content_mode in {"normalised", "normalized"}:
+                elif content_mode == "normalised":
                     # Normalised: body-equivalence comparison ignoring projection-only metadata
                     # and accounting for canonical path normalization (e.g., references/ moves)
                     _, source_body = _split_skill_frontmatter_and_body(source_path)
@@ -1478,7 +1472,7 @@ def detect_first_party_orphans() -> list[str]:
         manifest_path = plugin_root / "references" / "bundle-manifest.json"
         if not manifest_path.exists():
             continue
-        manifest = check_json(manifest_path)
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         for entry in manifest.get("entries", []):
             if isinstance(entry, dict) and entry.get("source_category") == "first_party":
                 name = entry.get("canonical_name")

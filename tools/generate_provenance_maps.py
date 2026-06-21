@@ -73,8 +73,8 @@ def generate_provenance_map(manifest: dict[str, Any]) -> dict[str, Any]:
         else:
             adapted.append(projected)
 
-    source_backed.sort(key=lambda e: e["canonical_name"])
-    adapted.sort(key=lambda e: e["canonical_name"])
+    source_backed.sort(key=lambda e: e.get("canonical_name") or "")
+    adapted.sort(key=lambda e: e.get("canonical_name") or "")
 
     return {
         "source_backed_projections": source_backed,

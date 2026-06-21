@@ -58,7 +58,11 @@ def _load_git_json(*args: str) -> dict[str, Any] | None:
     text = _git_text(*args)
     if text is None:
         return None
-    return json.loads(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as exc:
+        print(f"WARNING: failed to parse JSON from {' '.join(args)}: {exc}", file=sys.stderr)
+        return None
 
 
 def _path_changes(base: str) -> list[str]:

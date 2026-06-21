@@ -80,9 +80,9 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
         for field_name in ("source_path", "source_author", "source_license", "adapted_author"):
             if entry.get(field_name):
                 record[field_name] = entry[field_name]
-        if entry.get("source_category") == "first_party":
+        if entry.get("source_category") == "first_party" or entry.get("content_mode") == "verbatim":
             source_backed.append(record)
-        elif entry.get("content_mode") == "adapted":
+        elif entry.get("content_mode") in ("adapted", "normalised"):
             adapted.append(record)
 
     provenance_map = {
