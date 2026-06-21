@@ -39,26 +39,10 @@ from marketplace_utils import (
 from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
 from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
+from tree_canonicalization import canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 
 
 ROOT = Path(__file__).resolve().parents[1]
-
-TEXT_SUFFIXES = {
-    ".md",
-    ".txt",
-    ".yaml",
-    ".yml",
-    ".json",
-    ".py",
-    ".sh",
-    ".svg",
-    ".xml",
-    ".html",
-    ".css",
-    ".js",
-    ".ts",
-}
-TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 
 
 def check_json(path: Path) -> dict:
@@ -85,12 +69,6 @@ def check_path_exists(path: Path) -> None:
 
 def list_files(root: Path) -> list[Path]:
     return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
-
-
-def _canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
-    if path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES:
-        return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
-    return raw
 
 
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:

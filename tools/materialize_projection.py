@@ -9,6 +9,7 @@ from typing import Any
 
 from marketplace_utils import ROOT, load_plugin_root_inventory, load_json
 from skill_overlay_materializer import apply_overlay_tree, stage_overlay_tree
+from tree_canonicalization import compare_trees_canonicalized
 
 VALID_SOURCE_CATEGORIES = {"first_party", "third_party"}
 VALID_CONTENT_MODES = {"verbatim", "normalised", "adapted"}
@@ -109,18 +110,12 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
         apply_overlay_tree(source_root, overlay_root, destination_root)
         return
 
-    # check mode: stage reconstruction and compare
+    # check mode: stage reconstruction and compare (canonicalized, not raw bytes)
     if not destination_root.exists():
         raise FileNotFoundError(f"projection missing for {entry['canonical_name']}: {destination_root}")
     expected_root, tempdir = stage_overlay_tree(source_root, overlay_root)
     try:
-        expected_files = sorted(p.relative_to(expected_root).as_posix() for p in expected_root.rglob("*") if p.is_file())
-        actual_files = sorted(p.relative_to(destination_root).as_posix() for p in destination_root.rglob("*") if p.is_file())
-        if expected_files != actual_files:
-            raise ValueError(f"projection mismatch for {entry['canonical_name']}: file inventory differs")
-        for rel in expected_files:
-            if (expected_root / rel).read_bytes() != (destination_root / rel).read_bytes():
-                raise ValueError(f"projection mismatch for {entry['canonical_name']}: content differs at {rel}")
+        compare_trees_canonicalized(expected_root, destination_root)
     finally:
         tempdir.cleanup()
 
