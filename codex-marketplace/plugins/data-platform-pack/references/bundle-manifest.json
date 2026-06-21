@@ -1,102 +1,186 @@
 {
   "bundle_name": "data-platform-pack",
   "bundle_version": "1.0.0",
-  "upstream_repo": "affaan-m/ECC",
-  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-  "source_root": ".",
-  "path_semantics": "retained-snapshot-relative",
-  "content_mode": "verbatim",
-  "candidate_count": 11,
-  "imported_count": 11,
-  "skipped_count": 0,
-  "blocked_count": 0,
+  "bundle_type": "projection-lane",
+  "is_mega_pack": false,
+  "source_families": [
+    "ecc"
+  ],
   "entries": [
     {
-      "snapshot_path": "skills/clickhouse-io/SKILL.md",
-      "local_path": "skills/clickhouse-io/SKILL.md",
+      "canonical_name": "clickhouse-io",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/clickhouse-io",
+      "local_path": "skills/clickhouse-io",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/clickhouse-io/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/content-hash-cache-pattern/SKILL.md",
-      "local_path": "skills/content-hash-cache-pattern/SKILL.md",
+      "canonical_name": "content-hash-cache-pattern",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/content-hash-cache-pattern",
+      "local_path": "skills/content-hash-cache-pattern",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/content-hash-cache-pattern/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/dashboard-builder/SKILL.md",
-      "local_path": "skills/dashboard-builder/SKILL.md",
+      "canonical_name": "dashboard-builder",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/dashboard-builder",
+      "local_path": "skills/dashboard-builder",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/dashboard-builder/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/data-throughput-accelerator/SKILL.md",
-      "local_path": "skills/data-throughput-accelerator/SKILL.md",
+      "canonical_name": "data-throughput-accelerator",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/data-throughput-accelerator",
+      "local_path": "skills/data-throughput-accelerator",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/data-throughput-accelerator/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/database-migrations/SKILL.md",
-      "local_path": "skills/database-migrations/SKILL.md",
+      "canonical_name": "database-migrations",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/database-migrations",
+      "local_path": "skills/database-migrations",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/database-migrations/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/postgres-patterns/SKILL.md",
-      "local_path": "skills/postgres-patterns/SKILL.md",
+      "canonical_name": "postgres-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/postgres-patterns",
+      "local_path": "skills/postgres-patterns",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/postgres-patterns/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/pytorch-patterns/SKILL.md",
-      "local_path": "skills/pytorch-patterns/SKILL.md",
+      "canonical_name": "pytorch-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/pytorch-patterns",
+      "local_path": "skills/pytorch-patterns",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/pytorch-patterns/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/quality-nonconformance/SKILL.md",
-      "local_path": "skills/quality-nonconformance/SKILL.md",
+      "canonical_name": "quality-nonconformance",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/quality-nonconformance",
+      "local_path": "skills/quality-nonconformance",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/quality-nonconformance/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/scientific-db-pubmed-database/SKILL.md",
-      "local_path": "skills/scientific-db-pubmed-database/SKILL.md",
+      "canonical_name": "scientific-db-pubmed-database",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/scientific-db-pubmed-database",
+      "local_path": "skills/scientific-db-pubmed-database",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/scientific-db-pubmed-database/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/scientific-thinking-literature-review/SKILL.md",
-      "local_path": "skills/scientific-thinking-literature-review/SKILL.md",
+      "canonical_name": "scientific-thinking-literature-review",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review",
+      "local_path": "skills/scientific-thinking-literature-review",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/scientific-thinking-scholar-evaluation/SKILL.md",
-      "local_path": "skills/scientific-thinking-scholar-evaluation/SKILL.md",
+      "canonical_name": "scientific-thinking-scholar-evaluation",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation",
+      "local_path": "skills/scientific-thinking-scholar-evaluation",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
   ],
-  "repo_index": {
-    "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/ecc/upstream/LICENSE",
-      "sources/third_party/ecc/upstream/source-custody.md"
-    ],
-    "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
-    "provenance_refs": [
-      "provenance/data-platform-pack.md",
-      "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
-    ],
-    "agents_md": null,
-    "registry_alignment": {
-      "status": "aligned",
-      "note": null
-    }
-  },
+  "notes": [
+    "Data-platform skills pack projected from the retained ECC upstream snapshot.",
+    "Covers databases, scientific thinking, caching, dashboards, and throughput patterns."
+  ],
+  "provenance_refs": [
+    "provenance/data-platform-pack.md",
+    "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+  ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"
 }

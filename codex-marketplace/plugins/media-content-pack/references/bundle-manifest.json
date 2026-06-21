@@ -1,96 +1,171 @@
 {
   "bundle_name": "media-content-pack",
   "bundle_version": "1.0.0",
-  "upstream_repo": "affaan-m/ECC",
-  "pinned_commit": "ceca28852e5b31edbbf66ebccc8fd163dd14208e",
-  "source_root": ".",
-  "path_semantics": "retained-snapshot-relative",
-  "content_mode": "verbatim",
-  "candidate_count": 10,
-  "imported_count": 10,
-  "skipped_count": 0,
-  "blocked_count": 0,
+  "bundle_type": "projection-lane",
+  "is_mega_pack": false,
+  "source_families": [
+    "ecc"
+  ],
   "entries": [
     {
-      "snapshot_path": "skills/competitive-report-structure/SKILL.md",
-      "local_path": "skills/competitive-report-structure/SKILL.md",
+      "canonical_name": "competitive-report-structure",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/competitive-report-structure",
+      "local_path": "skills/competitive-report-structure",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/competitive-report-structure/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/fal-ai-media/SKILL.md",
-      "local_path": "skills/fal-ai-media/SKILL.md",
+      "canonical_name": "fal-ai-media",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/fal-ai-media",
+      "local_path": "skills/fal-ai-media",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/fal-ai-media/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/frontend-slides/SKILL.md",
-      "local_path": "skills/frontend-slides/SKILL.md",
+      "canonical_name": "frontend-slides",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/frontend-slides",
+      "local_path": "skills/frontend-slides",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/frontend-slides/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/manim-video/SKILL.md",
-      "local_path": "skills/manim-video/SKILL.md",
+      "canonical_name": "manim-video",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/manim-video",
+      "local_path": "skills/manim-video",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/manim-video/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/nutrient-document-processing/SKILL.md",
-      "local_path": "skills/nutrient-document-processing/SKILL.md",
+      "canonical_name": "nutrient-document-processing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/nutrient-document-processing",
+      "local_path": "skills/nutrient-document-processing",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/nutrient-document-processing/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/remotion-video-creation/SKILL.md",
-      "local_path": "skills/remotion-video-creation/SKILL.md",
+      "canonical_name": "remotion-video-creation",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/remotion-video-creation",
+      "local_path": "skills/remotion-video-creation",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/remotion-video-creation/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/seo/SKILL.md",
-      "local_path": "skills/seo/SKILL.md",
+      "canonical_name": "seo",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/seo",
+      "local_path": "skills/seo",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/seo/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/visa-doc-translate/SKILL.md",
-      "local_path": "skills/visa-doc-translate/SKILL.md",
+      "canonical_name": "video-editing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/video-editing",
+      "local_path": "skills/video-editing",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/video-editing/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/video-editing/SKILL.md",
-      "local_path": "skills/video-editing/SKILL.md",
+      "canonical_name": "videodb",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/videodb",
+      "local_path": "skills/videodb",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/videodb/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "snapshot_path": "skills/videodb/SKILL.md",
-      "local_path": "skills/videodb/SKILL.md",
+      "canonical_name": "visa-doc-translate",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/visa-doc-translate",
+      "local_path": "skills/visa-doc-translate",
       "import_status": "imported",
-      "content_mode": "verbatim"
+      "source_path": "sources/third_party/ecc/upstream/skills/visa-doc-translate/SKILL.md",
+      "source_author": "ECC (affaan-m/ECC)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
   ],
-  "repo_index": {
-    "source_md": "codex-marketplace/plugins/media-content-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/ecc/upstream/LICENSE",
-      "sources/third_party/ecc/upstream/source-custody.md"
-    ],
-    "license_path": "codex-marketplace/plugins/media-content-pack/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/media-content-pack/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/media-content-pack/skills",
-    "provenance_refs": [
-      "provenance/media-content-pack.md",
-      "codex-marketplace/plugins/media-content-pack/references/source-map.md"
-    ],
-    "agents_md": null,
-    "registry_alignment": {
-      "status": "aligned",
-      "note": null
-    }
-  },
+  "notes": [
+    "Media and content creation skills pack projected from the retained ECC upstream snapshot.",
+    "Covers video, SEO, slides, document processing, and media generation."
+  ],
+  "provenance_refs": [
+    "provenance/media-content-pack.md",
+    "codex-marketplace/plugins/media-content-pack/references/source-map.md"
+  ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"
 }
