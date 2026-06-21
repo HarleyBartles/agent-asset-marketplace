@@ -1463,6 +1463,107 @@ def validate_source_map(text: str) -> None:
             raise ValueError(f"source map is missing {needle}")
 
 
+def detect_first_party_orphans() -> list[str]:
+    """Detect first-party skill dirs with SKILL.md that have no projection entry."""
+    skills_root = ROOT / "sources" / "first_party" / "skills"
+    if not skills_root.is_dir():
+        return []
+    custody_skills: set[str] = set()
+    for d in skills_root.iterdir():
+        if d.is_dir() and (d / "SKILL.md").exists():
+            custody_skills.add(d.name)
+    projected_names: set[str] = set()
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest_path = plugin_root / "references" / "bundle-manifest.json"
+        if not manifest_path.exists():
+            continue
+        manifest = check_json(manifest_path)
+        for entry in manifest.get("entries", []):
+            if isinstance(entry, dict) and entry.get("source_category") == "first_party":
+                name = entry.get("canonical_name")
+                if name:
+                    projected_names.add(name)
+    orphans = sorted(custody_skills - projected_names)
+    return orphans
+
+
+def validate_mega_pack_inclusion() -> None:
+    """Validate that every entry in a topical plugin also appears in its mega-pack."""
+    import sys
+    tools_dir = str(ROOT / "tools")
+    if tools_dir not in sys.path:
+        sys.path.insert(0, tools_dir)
+    from generate_mega_packs import load_mega_pack_registry, collect_entries_by_family, _load_plugin_manifest
+
+    registry = load_mega_pack_registry()
+    mega_pack_names = {m["mega_pack"] for m in registry}
+    plugin_manifests: list[dict] = []
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest = _load_plugin_manifest(plugin_root)
+        if manifest is None:
+            continue
+        if spec["name"] in mega_pack_names:
+            continue
+        plugin_manifests.append(manifest)
+
+    by_family = collect_entries_by_family(plugin_manifests)
+
+    for mapping in registry:
+        family = mapping["source_family"]
+        mega_name = mapping["mega_pack"]
+        mega_root = ROOT / mapping["mega_pack_root"]
+        mega_manifest_path = mega_root / "references" / "bundle-manifest.json"
+        if not mega_manifest_path.exists():
+            raise ValueError(f"mega-pack manifest missing for {family}: {mega_manifest_path}")
+        mega_manifest = check_json(mega_manifest_path)
+        mega_names_set = {
+            e.get("canonical_name") for e in mega_manifest.get("entries", [])
+            if isinstance(e, dict) and e.get("content_mode") not in ("blocked", "skipped")
+        }
+        topical_names_set = {
+            e.get("canonical_name") for e in by_family.get(family, [])
+        }
+        missing = sorted(topical_names_set - mega_names_set)
+        if missing:
+            raise ValueError(
+                f"mega-pack {mega_name} is missing entries that appear in topical plugins: {missing}\n"
+                f"Fix: run py -3 tools/generate_mega_packs.py"
+            )
+    print("OK mega-pack inclusion: all topical entries appear in their mega-packs")
+
+
+def validate_no_legacy_manifest_shapes() -> None:
+    """Validate that no plugin manifest uses a legacy shape that the materializer would skip."""
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_root = ROOT / spec["plugin_root"]
+        manifest_path = plugin_root / "references" / "bundle-manifest.json"
+        if not manifest_path.exists():
+            continue
+        manifest = check_json(manifest_path)
+        entries = manifest.get("entries")
+        if not isinstance(entries, list):
+            raise ValueError(
+                f"{spec['name']}: manifest must have entries[] array (legacy skills[] or components[] not allowed)"
+            )
+        if not entries:
+            continue
+        first = entries[0]
+        if not isinstance(first, dict):
+            raise ValueError(f"{spec['name']}: first entry must be an object")
+        if "canonical_name" not in first or "canonical_source_path" not in first:
+            raise ValueError(
+                f"{spec['name']}: entries must have canonical_name and canonical_source_path (legacy shape)"
+            )
+        csp = first.get("canonical_source_path", "")
+        if isinstance(csp, str) and Path(csp).suffix:
+            raise ValueError(
+                f"{spec['name']}: canonical_source_path must be directory-level (legacy file-level path: {csp})"
+            )
+    print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
+
+
 def main() -> int:
     decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
@@ -1538,6 +1639,17 @@ def main() -> int:
     check_text(REPO_INDEX_README_PATH)
     check_json(REPO_INDEX_PATH)
     validate_repo_index()
+
+    # New validation checks for normalized projection-lane shape
+    validate_no_legacy_manifest_shapes()
+    orphans = detect_first_party_orphans()
+    if orphans:
+        raise ValueError(
+            f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
+            f"Fix: add manifest entries for these skills and regenerate."
+        )
+    print(f"OK first-party orphan check: 0 orphans")
+    validate_mega_pack_inclusion()
 
     print("Marketplace validation passed.")
     return 0
