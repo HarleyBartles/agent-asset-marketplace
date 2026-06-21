@@ -31,15 +31,18 @@ def _classify_entry(entry: dict[str, Any]) -> str | None:
     source_category = entry.get("source_category")
     if source_category == "first_party" or content_mode == "verbatim":
         return "source_backed"
+    # Warn about unknown content_mode to avoid silent drift
+    canonical_name = entry.get("canonical_name", "<unknown>")
+    print(f"WARNING: entry {canonical_name} has unknown content_mode: {content_mode}, skipping provenance map")
     return None
 
 
 def _project_entry(entry: dict[str, Any]) -> dict[str, Any]:
     """Project a manifest entry into the provenance-map subset."""
     projected: dict[str, Any] = {
-        "canonical_name": entry["canonical_name"],
-        "source_category": entry["source_category"],
-        "content_mode": entry["content_mode"],
+        "canonical_name": entry.get("canonical_name"),
+        "source_category": entry.get("source_category"),
+        "content_mode": entry.get("content_mode"),
         "canonical_source_path": entry.get("canonical_source_path"),
         "local_path": entry.get("local_path"),
     }

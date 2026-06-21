@@ -1494,14 +1494,14 @@ def validate_mega_pack_inclusion() -> None:
     tools_dir = str(ROOT / "tools")
     if tools_dir not in sys.path:
         sys.path.insert(0, tools_dir)
-    from generate_mega_packs import load_mega_pack_registry, collect_entries_by_family, _load_plugin_manifest
+    from generate_mega_packs import load_mega_pack_registry, collect_entries_by_family, load_plugin_manifest
 
     registry = load_mega_pack_registry()
     mega_pack_names = {m["mega_pack"] for m in registry}
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
-        manifest = _load_plugin_manifest(plugin_root)
+        manifest = load_plugin_manifest(plugin_root)
         if manifest is None:
             continue
         if spec["name"] in mega_pack_names:
@@ -1524,6 +1524,7 @@ def validate_mega_pack_inclusion() -> None:
         }
         topical_names_set = {
             e.get("canonical_name") for e in by_family.get(family, [])
+            if isinstance(e, dict) and e.get("canonical_name") is not None
         }
         missing = sorted(topical_names_set - mega_names_set)
         if missing:
@@ -1549,18 +1550,18 @@ def validate_no_legacy_manifest_shapes() -> None:
             )
         if not entries:
             continue
-        first = entries[0]
-        if not isinstance(first, dict):
-            raise ValueError(f"{spec['name']}: first entry must be an object")
-        if "canonical_name" not in first or "canonical_source_path" not in first:
-            raise ValueError(
-                f"{spec['name']}: entries must have canonical_name and canonical_source_path (legacy shape)"
-            )
-        csp = first.get("canonical_source_path", "")
-        if isinstance(csp, str) and Path(csp).suffix:
-            raise ValueError(
-                f"{spec['name']}: canonical_source_path must be directory-level (legacy file-level path: {csp})"
-            )
+        for i, entry in enumerate(entries):
+            if not isinstance(entry, dict):
+                raise ValueError(f"{spec['name']}: entry {i} must be an object")
+            if "canonical_name" not in entry or "canonical_source_path" not in entry:
+                raise ValueError(
+                    f"{spec['name']}: entry {i} must have canonical_name and canonical_source_path (legacy shape)"
+                )
+            csp = entry.get("canonical_source_path", "")
+            if isinstance(csp, str) and Path(csp).suffix:
+                raise ValueError(
+                    f"{spec['name']}: entry {i} canonical_source_path must be directory-level (legacy file-level path: {csp})"
+                )
     print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 

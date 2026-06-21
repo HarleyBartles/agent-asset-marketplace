@@ -24,7 +24,7 @@ def load_mega_pack_registry() -> list[dict[str, Any]]:
     return mappings
 
 
-def _load_plugin_manifest(plugin_root: Path) -> dict[str, Any] | None:
+def load_plugin_manifest(plugin_root: Path) -> dict[str, Any] | None:
     manifest_path = plugin_root / "references" / "bundle-manifest.json"
     if not manifest_path.exists():
         return None
@@ -124,7 +124,7 @@ def generate_all_mega_packs(*, write: bool) -> None:
     plugin_manifests: list[dict[str, Any]] = []
     for spec in inventory:
         plugin_root = ROOT / spec["plugin_root"]
-        manifest = _load_plugin_manifest(plugin_root)
+        manifest = load_plugin_manifest(plugin_root)
         if manifest is None:
             continue
         plugin_manifests.append(manifest)

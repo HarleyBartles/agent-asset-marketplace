@@ -66,6 +66,11 @@ def _validate_entry(entry: dict[str, Any]) -> None:
     for field in ("canonical_source_path", "local_path"):
         if not isinstance(entry.get(field), str) or not entry[field]:
             raise ValueError(f"entry {canonical_name} missing {field}")
+    # Guard against self-hosted projection (source == destination) to prevent data loss
+    source_root = (ROOT / str(entry["canonical_source_path"])).resolve()
+    destination_root = (ROOT / str(entry["local_path"])).resolve()
+    if source_root == destination_root:
+        raise ValueError(f"entry {canonical_name} source and destination are the same path: {source_root}")
     overlay_path = entry.get("adaptation_overlay_path")
     if source_category == "first_party":
         if content_mode != "verbatim":
@@ -86,6 +91,10 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
     destination_root = (plugin_root / str(entry["local_path"])).resolve()
     overlay_path = entry.get("adaptation_overlay_path")
     overlay_root = (ROOT / overlay_path).resolve() if overlay_path else None
+
+    # Re-validate source != destination in materialize (defensive)
+    if source_root == destination_root:
+        raise ValueError(f"entry {entry['canonical_name']} source and destination are the same path: {source_root}")
 
     # Active projection entries (verbatim/normalised/adapted) must have a
     # directory-level canonical_source_path. A non-directory path here means
