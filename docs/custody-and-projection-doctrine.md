@@ -73,6 +73,21 @@ Two mega-packs carry broad bundles:
 Mega-packs are inclusion rules, not exclusion rules. A skill appearing in a
 mega-pack may also appear in other plugins.
 
+### Self-hosted control-plane exception
+
+The `house-skills` control-plane skill (`house-skills/house-skills`) is a
+narrow historical exception: its SKILL.md custody lives in the projection root
+at `codex-marketplace/plugins/house-skills/skills/house-skills/`, not under
+`sources/first_party/`. This is because the control-plane skill manages the
+mega-pack itself — its decisions, intake, and inventory surfaces are
+co-located with the projection.
+
+This exception applies only to the `house-skills/house-skills` control-plane
+skill. It is **not** a general precedent for first-party source custody under
+plugin roots. Future ordinary first-party skills must still live under
+`sources/first_party/`. Moving the control-plane source to `sources/first_party/`
+if desired is follow-up work, not a current requirement.
+
 ## Projection layer model
 
 The flow is:

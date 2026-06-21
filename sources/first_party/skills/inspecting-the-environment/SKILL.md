@@ -71,9 +71,6 @@ Use `@connector-safety` before any mutation or blocked-write recovery,
 including GitHub writes, Linear writes, file mutations, or other high-risk
 operations discovered during environment inspection.
 
-Use `@verification-before-completion` before claiming that the environment
-inspection is complete or that constraints have been verified.
-
 Do not use this skill to replace `connector-safety`, GitHub proof skills,
 Linear shaping, or any specialist workflow. It discovers the operating surface;
 it does not execute the work itself.

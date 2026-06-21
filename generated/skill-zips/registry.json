@@ -5183,13 +5183,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/inspecting-the-environment/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5786,
-      "source_sha256": "79dfa839476140d19860544fc67ebff95626917bbdef8c4ffac729c03d896d2b",
+      "source_bytes": 5647,
+      "source_sha256": "38baabd10b4b0eaff255b9949c1fbc63b30213c3c563c211f78607eb8a7142b8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2796,
-      "zip_sha256": "974a556041749734107a9ef09189f4f68dd35ee767d8ffa0817ec948f6c77004"
+      "zip_size_bytes": 2753,
+      "zip_sha256": "edc693d7e6fe4357bae648d4db4d90887ecdcd2df97464867787fdc4debe61d8"
     },
     {
       "pack": "superpowers-plus",

@@ -31,15 +31,22 @@ def _load_bundle_manifest(plugin_root: Path) -> dict[str, Any] | None:
     if not isinstance(entries, list):
         return None  # Not a projection-lane plugin (e.g. legacy skills[] shape)
     # Distinguish new-schema entries (canonical_name + canonical_source_path +
-    # source_category) from legacy entries (snapshot_path, no canonical_name).
-    # Only process new-schema plugins; legacy-schema plugins are migrated
-    # separately.
+    # source_category, directory-level paths) from legacy entries. Legacy
+    # entries may use new-schema field names but with file-level paths (e.g.
+    # canonical_source_path ending in /SKILL.md). Only process new-schema
+    # plugins; legacy-schema plugins are migrated separately.
     if entries:
         first = entries[0]
         if not isinstance(first, dict):
             return None
         if "canonical_name" not in first or "canonical_source_path" not in first:
             return None  # Legacy schema — skip until migrated
+        # File-level paths (ending in a file extension) indicate a legacy
+        # hybrid shape that uses new-schema field names but file-level
+        # projection semantics. Skip until migrated to directory-level paths.
+        csp = first.get("canonical_source_path", "")
+        if isinstance(csp, str) and Path(csp).suffix:
+            return None  # Legacy file-level paths — skip until migrated
     return manifest
 
 
@@ -90,13 +97,13 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
             raise FileNotFoundError(f"self-hosted projection missing for {entry['canonical_name']}: {destination_root}")
         return
 
-    # Source must be a directory for tree materialization. Some legacy
-    # manifests point at SKILL.md files instead of directories — skip those
-    # entries with a warning rather than failing the entire run.
+    # Active projection entries (verbatim/normalised/adapted) must have a
+    # directory-level canonical_source_path. A non-directory path here means
+    # the manifest is broken — fail hard rather than silently skipping.
     if not source_root.is_dir():
-        import sys
-        print(f"WARNING: skipping {entry['canonical_name']} — canonical_source_path is not a directory: {source_root}", file=sys.stderr)
-        return
+        raise ValueError(
+            f"entry {entry['canonical_name']} canonical_source_path must be a directory: {source_root}"
+        )
 
     if write:
         apply_overlay_tree(source_root, overlay_root, destination_root)
