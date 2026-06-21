@@ -12,6 +12,7 @@ from skill_overlay_materializer import apply_overlay_tree, stage_overlay_tree
 
 VALID_SOURCE_CATEGORIES = {"first_party", "third_party"}
 VALID_CONTENT_MODES = {"verbatim", "normalised", "adapted"}
+SKIP_CONTENT_MODES = {"blocked", "skipped"}
 
 
 def _find_bundle_manifest(plugin_root: Path) -> Path | None:
@@ -29,12 +30,15 @@ def _load_bundle_manifest(plugin_root: Path) -> dict[str, Any] | None:
     entries = manifest.get("entries")
     if not isinstance(entries, list):
         return None  # Not a projection-lane plugin (e.g. legacy skills[] shape)
-    # Distinguish new-schema entries (canonical_name + source_category) from
-    # legacy entries (snapshot_path, no canonical_name). Only process new-schema
-    # plugins; legacy-schema plugins are migrated separately.
+    # Distinguish new-schema entries (canonical_name + canonical_source_path +
+    # source_category) from legacy entries (snapshot_path, no canonical_name).
+    # Only process new-schema plugins; legacy-schema plugins are migrated
+    # separately.
     if entries:
         first = entries[0]
-        if not isinstance(first, dict) or "canonical_name" not in first:
+        if not isinstance(first, dict):
+            return None
+        if "canonical_name" not in first or "canonical_source_path" not in first:
             return None  # Legacy schema — skip until migrated
     return manifest
 
@@ -47,6 +51,8 @@ def _validate_entry(entry: dict[str, Any]) -> None:
     if source_category not in VALID_SOURCE_CATEGORIES:
         raise ValueError(f"entry {canonical_name} invalid source_category: {source_category}")
     content_mode = entry.get("content_mode")
+    if content_mode in SKIP_CONTENT_MODES:
+        return  # Skip blocked/skipped entries — they are intentionally not projected
     if content_mode not in VALID_CONTENT_MODES:
         raise ValueError(f"entry {canonical_name} invalid content_mode: {content_mode}")
     for field in ("canonical_source_path", "local_path"):
@@ -82,6 +88,14 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
     if source_root == destination_root:
         if not write and not destination_root.exists():
             raise FileNotFoundError(f"self-hosted projection missing for {entry['canonical_name']}: {destination_root}")
+        return
+
+    # Source must be a directory for tree materialization. Some legacy
+    # manifests point at SKILL.md files instead of directories — skip those
+    # entries with a warning rather than failing the entire run.
+    if not source_root.is_dir():
+        import sys
+        print(f"WARNING: skipping {entry['canonical_name']} — canonical_source_path is not a directory: {source_root}", file=sys.stderr)
         return
 
     if write:
@@ -120,6 +134,8 @@ def reconcile_projection(*, write: bool, plugin_name: str | None = None) -> None
             if not isinstance(entry, dict):
                 raise ValueError(f"{spec['name']} bundle-manifest entry must be an object")
             _validate_entry(entry)
+            if entry.get("content_mode") in SKIP_CONTENT_MODES:
+                continue  # Blocked/skipped entries are not projected
             _materialize_entry(entry, plugin_root, write=write)
 
 

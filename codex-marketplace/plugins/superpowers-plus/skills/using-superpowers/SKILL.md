@@ -70,6 +70,7 @@ This projection is Asset Marketplace `Superpowers+` adaptation behavior, not ups
   `superpowers-ecc` pack.
 - Parallel agent dispatch or worktree setup when those are the smallest useful helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or `using-git-worktrees`.
 - Writing or updating skill content: use `writing-skills`.
+- Environment inspection before action when constraints matter: use `inspecting-the-environment`.
 
 Do not treat these wrapper routes as upstream doctrine. They are the Marketplace projection's adaptation layer for Asset Marketplace work, and they only refer to wrappers actually projected into `superpowers-plus`.
 

@@ -7,14 +7,10 @@ metadata:
   source-path: sources/first_party/skills/ecc-superpowers/SKILL.md
   provenance-name: MARK-244 ECC Superpowers compositional routing skill
   origin: first_party
-  content_mode: adapted
+  content_mode: verbatim
   source_author: Harley Bartles
   source_license: MIT
   source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  upstream_author: Affaan Mustafa
-  upstream_license: MIT
-  upstream_repo: https://github.com/affaan-m/ECC
-  adapted_author: Harley Bartles
 interface:
   display_name: ECC Superpowers
   short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.
