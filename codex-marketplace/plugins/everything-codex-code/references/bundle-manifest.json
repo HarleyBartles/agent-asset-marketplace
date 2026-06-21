@@ -41,6 +41,26 @@
       "provenance_note": "Normalised from the retained ECC upstream with metadata and source-path annotations."
     },
     {
+      "canonical_name": "agent-introspection-debugging",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-introspection-debugging",
+      "local_path": "skills/agent-introspection-debugging",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "agent-sort",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-sort",
+      "local_path": "skills/agent-sort",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "ai-first-engineering",
       "source_category": "third_party",
       "content_mode": "normalised",
@@ -55,6 +75,16 @@
       "source_family": "ecc",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained ECC upstream with metadata and source-path annotations."
+    },
+    {
+      "canonical_name": "android-clean-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/android-clean-architecture",
+      "local_path": "skills/android-clean-architecture",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "angular-developer",
@@ -162,6 +192,26 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "claude-devfleet",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/claude-devfleet",
+      "local_path": "skills/claude-devfleet",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "click-path-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/click-path-audit",
+      "local_path": "skills/click-path-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "clickhouse-io",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -175,6 +225,26 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "code-tour",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/code-tour",
+      "local_path": "skills/code-tour",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "codebase-onboarding",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/codebase-onboarding",
+      "local_path": "skills/codebase-onboarding",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "competitive-report-structure",
@@ -192,6 +262,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "config-gc",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/config-gc",
+      "local_path": "skills/config-gc",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "content-hash-cache-pattern",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -205,6 +285,26 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "cost-tracking",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/cost-tracking",
+      "local_path": "skills/cost-tracking",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "cpp-coding-standards",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/cpp-coding-standards",
+      "local_path": "skills/cpp-coding-standards",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "cpp-testing",
@@ -282,6 +382,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "data-scraper-agent",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/data-scraper-agent",
+      "local_path": "skills/data-scraper-agent",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "data-throughput-accelerator",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -310,6 +420,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "deep-research",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/deep-research",
+      "local_path": "skills/deep-research",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "defi-amm-security",
@@ -420,6 +540,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "django-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/django-verification",
+      "local_path": "skills/django-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "dmux-workflows",
       "source_category": "third_party",
       "content_mode": "normalised",
@@ -464,6 +594,26 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "ecc-guide",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ecc-guide",
+      "local_path": "skills/ecc-guide",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "ecc-tools-cost-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ecc-tools-cost-audit",
+      "local_path": "skills/ecc-tools-cost-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "email-ops",
@@ -526,6 +676,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "flox-environments",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/flox-environments",
+      "local_path": "skills/flox-environments",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "flutter-dart-code-review",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -571,6 +731,26 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "git-workflow",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/git-workflow",
+      "local_path": "skills/git-workflow",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "github-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/github-ops",
+      "local_path": "skills/github-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "golang-testing",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -601,6 +781,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "hermes-imports",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hermes-imports",
+      "local_path": "skills/hermes-imports",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "hexagonal-architecture",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -614,6 +804,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "inherit-legacy-style",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/inherit-legacy-style",
+      "local_path": "skills/inherit-legacy-style",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "intent-driven-development",
@@ -646,6 +846,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "knowledge-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/knowledge-ops",
+      "local_path": "skills/knowledge-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "kotlin-coroutines-flows",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -659,6 +869,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "kotlin-exposed-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/kotlin-exposed-patterns",
+      "local_path": "skills/kotlin-exposed-patterns",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "kotlin-ktor-patterns",
@@ -767,6 +987,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "laravel-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/laravel-verification",
+      "local_path": "skills/laravel-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "llm-trading-agent-security",
       "source_category": "third_party",
       "content_mode": "normalised",
@@ -811,6 +1041,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "market-research",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/market-research",
+      "local_path": "skills/market-research",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "mcp-server-patterns",
@@ -921,6 +1161,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "parallel-execution-optimizer",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/parallel-execution-optimizer",
+      "local_path": "skills/parallel-execution-optimizer",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "perl-security",
       "source_category": "third_party",
       "content_mode": "normalised",
@@ -997,6 +1247,26 @@
       "adaptation_overlay_path": "adapters/codex/security-pack/prediction-market-risk-review",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+    },
+    {
+      "canonical_name": "production-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/production-audit",
+      "local_path": "skills/production-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "project-flow-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/project-flow-ops",
+      "local_path": "skills/project-flow-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "python-testing",
@@ -1090,6 +1360,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "quarkus-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/quarkus-verification",
+      "local_path": "skills/quarkus-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "react-patterns",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -1103,6 +1383,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "react-performance",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-performance",
+      "local_path": "skills/react-performance",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "react-testing",
@@ -1151,6 +1441,16 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "repo-scan",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/repo-scan",
+      "local_path": "skills/repo-scan",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "research-ops",
       "source_category": "third_party",
       "content_mode": "normalised",
@@ -1165,6 +1465,16 @@
       "source_family": "ecc",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained ECC upstream with metadata and source-path annotations."
+    },
+    {
+      "canonical_name": "rules-distill",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/rules-distill",
+      "local_path": "skills/rules-distill",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "rust-testing",
@@ -1322,6 +1632,36 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "skill-comply",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-comply",
+      "local_path": "skills/skill-comply",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "skill-scout",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-scout",
+      "local_path": "skills/skill-scout",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "skill-stocktake",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-stocktake",
+      "local_path": "skills/skill-stocktake",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "springboot-patterns",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -1366,6 +1706,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "springboot-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/springboot-verification",
+      "local_path": "skills/springboot-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "swift-protocol-di-testing",
@@ -1443,6 +1793,16 @@
       "source_family": "ecc",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained ECC upstream with metadata and source-path annotations."
+    },
+    {
+      "canonical_name": "terminal-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/terminal-ops",
+      "local_path": "skills/terminal-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     },
     {
       "canonical_name": "tinystruct-patterns",
@@ -1564,6 +1924,16 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "workspace-surface-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/workspace-surface-audit",
+      "local_path": "skills/workspace-surface-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
     }
   ],
   "notes": [

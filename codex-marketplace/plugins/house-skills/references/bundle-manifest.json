@@ -477,6 +477,16 @@
       "source_family": "first_party"
     },
     {
+      "canonical_name": "repo-worker-base",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "local_path": "skills/repo-worker-base",
+      "lane": "Base",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
       "canonical_name": "rooms-ambiguity-buster",
       "source_category": "first_party",
       "content_mode": "verbatim",

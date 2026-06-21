@@ -1,384 +1,488 @@
 {
   "bundle_name": "repo-worker-base",
   "bundle_version": "1.0.0",
-  "bundle_type": "first-party-repo-worker-plugin",
+  "bundle_type": "projection-lane",
   "plugin_root": "codex-marketplace/plugins/repo-worker-base",
-  "skills_root": "codex-marketplace/plugins/repo-worker-base/skills",
-  "control_plane_skill": {
-    "name": "repo-worker-base",
-    "path": "codex-marketplace/plugins/repo-worker-base/skills/repo-worker-base"
-  },
-  "skill_count": 47,
-  "skills": [
-    {
-      "name": "repo-worker-base",
-      "lane": "Base",
-      "path": "sources/first_party/skills/repo-worker-base"
-    },
-    {
-      "name": "boring-loop",
-      "lane": "Base",
-      "path": "sources/first_party/skills/boring-loop"
-    },
-    {
-      "name": "connector-safety",
-      "lane": "Base",
-      "path": "sources/first_party/skills/connector-safety"
-    },
-    {
-      "name": "github-operations",
-      "lane": "Base",
-      "path": "sources/first_party/skills/github-operations"
-    },
-    {
-      "name": "agent-introspection-debugging",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/agent-introspection-debugging",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "agent-sort",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/agent-sort",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "android-clean-architecture",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/android-clean-architecture",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "api-connector-builder",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/api-connector-builder",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "claude-devfleet",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/claude-devfleet",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "click-path-audit",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/click-path-audit",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "code-tour",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/code-tour",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "codebase-onboarding",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/codebase-onboarding",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "competitive-report-structure",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/competitive-report-structure",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "config-gc",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/config-gc",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "cost-tracking",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/cost-tracking",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "cpp-coding-standards",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/cpp-coding-standards",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "data-scraper-agent",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/data-scraper-agent",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "deep-research",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/deep-research",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "django-verification",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/django-verification",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "ecc-guide",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/ecc-guide",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "ecc-tools-cost-audit",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/ecc-tools-cost-audit",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "flox-environments",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/flox-environments",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "git-workflow",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/git-workflow",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "github-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/github-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "google-workspace-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/google-workspace-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "hermes-imports",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/hermes-imports",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "inherit-legacy-style",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/inherit-legacy-style",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "knowledge-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/knowledge-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "kotlin-exposed-patterns",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/kotlin-exposed-patterns",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "laravel-verification",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/laravel-verification",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "market-research",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/market-research",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "parallel-execution-optimizer",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/parallel-execution-optimizer",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "production-audit",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/production-audit",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "project-flow-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/project-flow-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "quarkus-verification",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/quarkus-verification",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "react-performance",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/react-performance",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "repo-scan",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/repo-scan",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "rules-distill",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/rules-distill",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "security-bounty-hunter",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/security-bounty-hunter",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "security-scan",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/security-scan",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "skill-comply",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/skill-comply",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "skill-scout",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/skill-scout",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "skill-stocktake",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/skill-stocktake",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "springboot-verification",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/springboot-verification",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "terminal-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/terminal-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "unified-notifications-ops",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/unified-notifications-ops",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    },
-    {
-      "name": "workspace-surface-audit",
-      "lane": "ECC-repo-operator",
-      "path": "sources/third_party/ecc/upstream/skills/workspace-surface-audit",
-      "content_mode": "verbatim",
-      "upstream_author": "ECC (affaan-m/ECC)",
-      "upstream_license": "MIT"
-    }
-  ],
   "provenance_refs": [
     "provenance/repo-worker-base.md"
   ],
-  "source_map": "references/source-map.md",
   "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT"
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "repo-worker-base",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "local_path": "skills/repo-worker-base",
+      "lane": "Base",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "boring-loop",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/boring-loop",
+      "local_path": "skills/boring-loop",
+      "lane": "Base",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "connector-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/connector-safety",
+      "local_path": "skills/connector-safety",
+      "lane": "Base",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/github-operations",
+      "local_path": "skills/github-operations",
+      "lane": "Base",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "agent-introspection-debugging",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-introspection-debugging",
+      "local_path": "skills/agent-introspection-debugging",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "agent-sort",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-sort",
+      "local_path": "skills/agent-sort",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "android-clean-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/android-clean-architecture",
+      "local_path": "skills/android-clean-architecture",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "api-connector-builder",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/api-connector-builder",
+      "local_path": "skills/api-connector-builder",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "claude-devfleet",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/claude-devfleet",
+      "local_path": "skills/claude-devfleet",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "click-path-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/click-path-audit",
+      "local_path": "skills/click-path-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "code-tour",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/code-tour",
+      "local_path": "skills/code-tour",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "codebase-onboarding",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/codebase-onboarding",
+      "local_path": "skills/codebase-onboarding",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "competitive-report-structure",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/competitive-report-structure",
+      "local_path": "skills/competitive-report-structure",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "config-gc",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/config-gc",
+      "local_path": "skills/config-gc",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "cost-tracking",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/cost-tracking",
+      "local_path": "skills/cost-tracking",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "cpp-coding-standards",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/cpp-coding-standards",
+      "local_path": "skills/cpp-coding-standards",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "data-scraper-agent",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/data-scraper-agent",
+      "local_path": "skills/data-scraper-agent",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "deep-research",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/deep-research",
+      "local_path": "skills/deep-research",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "django-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/django-verification",
+      "local_path": "skills/django-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "ecc-guide",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ecc-guide",
+      "local_path": "skills/ecc-guide",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "ecc-tools-cost-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ecc-tools-cost-audit",
+      "local_path": "skills/ecc-tools-cost-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "flox-environments",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/flox-environments",
+      "local_path": "skills/flox-environments",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "git-workflow",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/git-workflow",
+      "local_path": "skills/git-workflow",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "github-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/github-ops",
+      "local_path": "skills/github-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "google-workspace-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/google-workspace-ops",
+      "local_path": "skills/google-workspace-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "hermes-imports",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hermes-imports",
+      "local_path": "skills/hermes-imports",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "inherit-legacy-style",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/inherit-legacy-style",
+      "local_path": "skills/inherit-legacy-style",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "knowledge-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/knowledge-ops",
+      "local_path": "skills/knowledge-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "kotlin-exposed-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/kotlin-exposed-patterns",
+      "local_path": "skills/kotlin-exposed-patterns",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "laravel-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/laravel-verification",
+      "local_path": "skills/laravel-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "market-research",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/market-research",
+      "local_path": "skills/market-research",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "parallel-execution-optimizer",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/parallel-execution-optimizer",
+      "local_path": "skills/parallel-execution-optimizer",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "production-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/production-audit",
+      "local_path": "skills/production-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "project-flow-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/project-flow-ops",
+      "local_path": "skills/project-flow-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "quarkus-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/quarkus-verification",
+      "local_path": "skills/quarkus-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "react-performance",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-performance",
+      "local_path": "skills/react-performance",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "repo-scan",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/repo-scan",
+      "local_path": "skills/repo-scan",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "rules-distill",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/rules-distill",
+      "local_path": "skills/rules-distill",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "security-bounty-hunter",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-bounty-hunter",
+      "local_path": "skills/security-bounty-hunter",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "security-scan",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-scan",
+      "local_path": "skills/security-scan",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "skill-comply",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-comply",
+      "local_path": "skills/skill-comply",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "skill-scout",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-scout",
+      "local_path": "skills/skill-scout",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "skill-stocktake",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/skill-stocktake",
+      "local_path": "skills/skill-stocktake",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "springboot-verification",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/springboot-verification",
+      "local_path": "skills/springboot-verification",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "terminal-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/terminal-ops",
+      "local_path": "skills/terminal-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "unified-notifications-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/unified-notifications-ops",
+      "local_path": "skills/unified-notifications-ops",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    },
+    {
+      "canonical_name": "workspace-surface-audit",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/workspace-surface-audit",
+      "local_path": "skills/workspace-surface-audit",
+      "lane": "ECC-repo-operator",
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+    }
+  ],
+  "is_mega_pack": false,
+  "source_families": [
+    "first_party",
+    "ecc"
+  ]
 }

@@ -99,3 +99,4 @@ GPT-controller guidance:
 - ask for repair when the work is not yet boring enough.
 
 Both variants use the same first-party source and the same retained doctrine.
+
