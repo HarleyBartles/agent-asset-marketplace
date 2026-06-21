@@ -28,6 +28,14 @@ Before creating, updating, moving, assigning, commenting, or deleting anything i
 
 For simple durable capture requests such as `side note for later`, a direct comment is allowed when the target issue/project is clear from the conversation.
 
+## Delegate-field invariant
+
+Never set the Linear `delegate` field unless Harley explicitly asks to use Linear delegation or explicitly says to delegate the issue to a named agent.
+
+Do not infer delegation from "send", "run", "worker-ready", "Devin-ready", "for Devin", "campaign-sized", "start", "worker", "agent", or similar wording. Assignment to Harley is the safe default. Agent-readiness belongs in issue body, labels, or documents, not in `delegate`.
+
+Default issue creation: `assignee: me`, with `delegate` omitted or null.
+
 ## Quick workflow
 
 1. Classify the Linear operation: read, shape, create, update, comment, relationship, project assignment, status change, cleanup, or summarize.

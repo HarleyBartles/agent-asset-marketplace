@@ -52,9 +52,11 @@ Nesting rule:
 
 ## Native Linear delegation guard
 
-Worker-send-ready issue creation is not Linear native delegation. Do not set Linear connector `delegate` or agent delegation fields unless the user explicitly asks to use Linear's native delegation mechanism for that issue.
+Worker-send-ready issue creation is not Linear native delegation. Do not set the Linear `delegate` field unless the user explicitly asks to use Linear delegation or explicitly says to delegate the issue to a named agent.
 
-Ambiguous phrases such as "dispatch a worker", "send to a worker", or "worker issue" should be treated as issue-shaping intent unless the user clearly authorizes Linear native delegation.
+Do not infer delegation from "send", "run", "worker-ready", "Devin-ready", "for Devin", "campaign-sized", "start", "worker", "agent", "dispatch a worker", "send to a worker", or similar wording. These authorize issue shaping only.
+
+Default issue creation: `assignee: me`, with `delegate` omitted or null. The full invariant and rationale are owned by the `linear` skill.
 
 Codex-from-Linear delegation is not part of the default workflow until separately promoted.
 

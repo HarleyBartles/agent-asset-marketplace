@@ -45,6 +45,8 @@ For GPT-native skill work, installed skills are deployment targets, not durable 
 
 For Codex worker enablement, prefer native plugin marketplaces and curated plugin bundles for generic worker capabilities. Use repo overlays only for project-specific domain, validation, and local runtime guidance that generic plugins cannot know.
 
+For the Linear `delegate` field invariant (never set `delegate` without explicit delegation language from Harley), the owning surface is the `linear` skill. See also `connector-safety` for the generic authority-gated field rule.
+
 ## No-Shit / entropy doctrine
 
 Across projects, smaller final surface is valuable only when evidence, provenance, ambiguity, authority, validation, and publication proof remain intact. Do not treat deletion, consolidation, or fewer files as inherently better.

@@ -142,6 +142,16 @@ Use stricter posture as side effects increase.
 - Medium-risk writes: issue status, assignment, labels, project moves, document renames, calendar drafts, email drafts. Separate fields and verify after mutation.
 - High-risk writes: sends, deletes, archives, merges, closes, publishes, permission changes, irreversible or externally visible actions. Require clear user authorization and do not retry ambiguously.
 
+## Authority-gated side-effect fields
+
+Some connector fields carry execution authority beyond their apparent scope. Setting such a field can authorize an external agent to start work, trigger automated workflows, or change access control.
+
+Do not set an authority-gated field unless the user explicitly authorizes that specific side effect. Do not infer authorization from readiness language, assignment, labeling, status changes, or similar indirect wording.
+
+Named example — Linear `delegate`: never set the `delegate` field unless the user explicitly asks to use Linear delegation or explicitly says to delegate the issue to a named agent. Do not infer delegation from "send", "run", "worker-ready", "Devin-ready", "for Devin", "campaign-sized", "start", "worker", "agent", or similar wording. Default issue creation uses `assignee`, with `delegate` omitted or null.
+
+When encountering an unfamiliar connector field that might carry authority, treat it as medium-risk or higher until the user clarifies.
+
 ## Exact-state guarded high-risk writes
 
 For high-risk connector writes such as merge, close, delete, publish, send, archive, or permission-changing actions, prefer an exact-state guard when the connector supports one.
