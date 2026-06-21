@@ -62,6 +62,7 @@ TEXT_SUFFIXES = {
     ".css",
     ".js",
     ".ts",
+    ".tsx",
 }
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)

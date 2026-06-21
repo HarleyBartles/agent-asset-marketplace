@@ -6,10 +6,10 @@ metadata:
   source_author: Obra AI
   source_license: MIT
   source_repo: https://github.com/obra-ai/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md
+  source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
-  adaptation_note: Adapted from Obra Superpowers v5.1.0 for use in the agent-asset-marketplace.
+  adaptation_note: Adapted from Obra Superpowers v6.0.3 for use in the agent-asset-marketplace.
 ---
 
 <SUBAGENT-STOP>

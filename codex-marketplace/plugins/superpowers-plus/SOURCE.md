@@ -1,6 +1,6 @@
 # Source
 
-This bundle projects the upstream `obra/superpowers` `v5.1.0` release into the
+This bundle projects the upstream `obra/superpowers` `v6.0.3` release into the
 Codex marketplace as `Superpowers+` and adds the first-party
 `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and
 `architecture-superpowers` skills from House Skills as source-backed
@@ -35,12 +35,12 @@ points to the dedicated `superpowers-ecc` pack, plus the first-party
 ## Canonical basis
 
 - Upstream repository: `https://github.com/obra/superpowers`
-- Release tag: `v5.1.0`
-- Resolved release commit: `f2cbfbefebbfef77321e4c9abc9e949826bea9d7`
-- Tag object: `ecbd610fce16d5faabcea997f17031129589b572`
+- Release tag: `v6.0.3`
+- Resolved release commit: `896224c4b1879920ab573417e68fd51d2ccc9072`
+- Tag object: `45c3cc5b66cfc5f147a7ddcfb86f7650e47a8ae0`
 - License: MIT
 - Retained source custody:
-  `sources/third_party/superpowers/obra-superpowers/v5.1.0/`
+  `sources/third_party/superpowers/obra-superpowers/v6.0.3/`
 - First-party source custody:
   `sources/first_party/skills/linear-superpowers/`
   `sources/first_party/skills/github-superpowers/`

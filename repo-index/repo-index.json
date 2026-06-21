@@ -167,8 +167,8 @@
     },
     {
       "name": "superpowers-custody",
-      "path": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-      "purpose": "Retained third-party source custody for the upstream obra/superpowers v5.1.0 release snapshot.",
+      "path": "sources/third_party/superpowers/obra-superpowers/v6.0.3",
+      "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.0.3 release snapshot.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",
@@ -342,10 +342,10 @@
       "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
       "source_ledger": [
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+        "sources/third_party/superpowers/obra-superpowers/v6.0.3/package.json",
+        "sources/third_party/superpowers/obra-superpowers/v6.0.3/README.md",
+        "sources/third_party/superpowers/obra-superpowers/v6.0.3/LICENSE",
+        "sources/third_party/superpowers/obra-superpowers/v6.0.3/AGENTS.md",
         "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
         "sources/first_party/skills/architecture-superpowers/SKILL.md",
         "sources/first_party/skills/ecc-superpowers/SKILL.md"

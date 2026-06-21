@@ -23,6 +23,7 @@ TEXT_SUFFIXES = {
     ".css",
     ".js",
     ".ts",
+    ".tsx",
 }
 
 

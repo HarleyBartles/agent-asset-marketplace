@@ -6,7 +6,7 @@ metadata:
   source_author: NickCrew
   source_license: MIT
   source_repo: https://github.com/NickCrew/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/finishing-a-development-branch/SKILL.md
+  source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/finishing-a-development-branch/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
   adaptation_note: Added Codex marketplace publication guidance and repo-specific precedence note.

@@ -2799,13 +2799,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/remotion-video-creation/skill.zip",
       "source_file_count": 32,
-      "source_bytes": 78335,
-      "source_sha256": "1d8261dcd7705b9a40961ece69c9f11ddecb5a1e021eb8609366fa873aabdae2",
+      "source_bytes": 77954,
+      "source_sha256": "e91d243056cea351817e9c63cfdcf5a80c76185cc9c752c547a3a809d6f1bcae",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 34917,
-      "zip_sha256": "d84cd1f33e721ece9047b0af10c284b1bfb5ea9ba252ad3a4c25f62a02c58796"
+      "zip_size_bytes": 34888,
+      "zip_sha256": "91545f86a63b111086a3a4b7a4c2f32487932172b7e64650f71b0c13b577b4a8"
     },
     {
       "pack": "everything-codex-code",
@@ -5391,13 +5391,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/media-content-pack/remotion-video-creation/skill.zip",
       "source_file_count": 32,
-      "source_bytes": 78335,
-      "source_sha256": "1d8261dcd7705b9a40961ece69c9f11ddecb5a1e021eb8609366fa873aabdae2",
+      "source_bytes": 77954,
+      "source_sha256": "e91d243056cea351817e9c63cfdcf5a80c76185cc9c752c547a3a809d6f1bcae",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 34917,
-      "zip_sha256": "d84cd1f33e721ece9047b0af10c284b1bfb5ea9ba252ad3a4c25f62a02c58796"
+      "zip_size_bytes": 34888,
+      "zip_sha256": "91545f86a63b111086a3a4b7a4c2f32487932172b7e64650f71b0c13b577b4a8"
     },
     {
       "pack": "media-content-pack",
@@ -6959,13 +6959,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/brainstorming",
       "zip_path": "generated/skill-zips/superpowers-plus/brainstorming/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 52331,
-      "source_sha256": "2b16c32bc2bc535b8609ee9228d238cda6bcb412ea5bdd5d21123239694e77f1",
+      "source_bytes": 75776,
+      "source_sha256": "2d4a047a96135d326facc05446bedd7c7ba6ce1d48367536505c7f688ad2afef",
       "overlay_file_count": 1,
       "overlay_bytes": 864,
       "overlay_sha256": "59cc54e40c7d1c5708aeef9e5157cd03f534fef81b22eefde0f642d29e865cd6",
-      "zip_size_bytes": 16920,
-      "zip_sha256": "5b9fdc9d4abc8f2d209a2b78c30eb787dcbffeafa557a4846f776ab20af5a0ec"
+      "zip_size_bytes": 25163,
+      "zip_sha256": "e819ad0ddf389cf716bfce12a8e8df12c9150c19aee8f34ab09777e3b65f5e24"
     },
     {
       "pack": "superpowers-plus",
@@ -6991,8 +6991,8 @@
       "overlay_path": "adapters/gpt/superpowers-plus/executing-plans",
       "zip_path": "generated/skill-zips/superpowers-plus/executing-plans/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 2469,
-      "source_sha256": "a464c71cc0c0463d90563233885b158d28301a7568c2429be1ec717d422bc5a5",
+      "source_bytes": 2600,
+      "source_sha256": "e4dbb7553c75cc1d35b9ab9ace3ce2fc07db0bc8da9b706d22001723a8ff1252",
       "overlay_file_count": 1,
       "overlay_bytes": 1091,
       "overlay_sha256": "2291ce6c6be5e80bc7c3459785b2f1524891a75ef4edf3d13ddc56d3a4f4b22d",
@@ -7008,12 +7008,12 @@
       "zip_path": "generated/skill-zips/superpowers-plus/finishing-a-development-branch/skill.zip",
       "source_file_count": 2,
       "source_bytes": 9090,
-      "source_sha256": "82fe8fe633640a03adcca31c930cddbe7c040e2df1b9742859452c09eb716d24",
+      "source_sha256": "7ab2710d64bcd490ccf88067086702dca87ae8f4964d74f4fa10e1a2b8860f39",
       "overlay_file_count": 1,
       "overlay_bytes": 1200,
       "overlay_sha256": "62d75c2b0ed2c5d397b423c122734cfb7b19a2d37f22fdecfa5cde67b0cff9d8",
       "zip_size_bytes": 1125,
-      "zip_sha256": "b220032a09a9b9fdd3f064c26d059b4b5ade8d70ffd2dd96af209bd8f8dfb0cd"
+      "zip_sha256": "71faafca238aae6ae4ea5b7d2f31dbd6cce3e5a742686480d43100a9d4426a26"
     },
     {
       "pack": "superpowers-plus",
@@ -7071,13 +7071,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/receiving-code-review/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 6314,
-      "source_sha256": "2a232ab3bc247c1c882bcfc9b65b52c1ec790b05b326f1889d428aa98fda2e0b",
+      "source_bytes": 6382,
+      "source_sha256": "691310889d7d5b2e9013cf0fffaf0ef3a6628727dcc439f996cae7dd8d8d855e",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2918,
-      "zip_sha256": "52571f27e0de116991149ad7b263d66c62e110cf631e914b0c4e326ebd760ce5"
+      "zip_size_bytes": 2944,
+      "zip_sha256": "d9c7212248c80f6eecd8d16a010d9496a618ddc730bc53d8084c30d403e6ee7a"
     },
     {
       "pack": "superpowers-plus",
@@ -7087,13 +7087,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/requesting-code-review",
       "zip_path": "generated/skill-zips/superpowers-plus/requesting-code-review/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 7610,
-      "source_sha256": "26505d926e31adaac0fe03200442fac177fd515c8559a2b37c4bb13b4c06dd16",
+      "source_bytes": 8039,
+      "source_sha256": "1edd6b31333def430e9497cb25329b147517982ac78ba059c5d0fa0f49a78646",
       "overlay_file_count": 1,
       "overlay_bytes": 799,
       "overlay_sha256": "0f4cf63211b7d4099e12c2d18e4eea90fda62564f61e8d9a622275ab340461e0",
-      "zip_size_bytes": 2941,
-      "zip_sha256": "5a66257d4bd88db7797d51fd1e8c9c4abe7a18d29907f446ad66d0e291d10456"
+      "zip_size_bytes": 3133,
+      "zip_sha256": "887f8a722ce37c456320a125e22a1c135310a149d2b70c880aa8734cb71cfeb0"
     },
     {
       "pack": "superpowers-plus",
@@ -7103,13 +7103,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/systematic-debugging/skill.zip",
       "source_file_count": 11,
-      "source_bytes": 40733,
-      "source_sha256": "94c6b37758b5a35606242c2006e3e85cb8b7587cf56803b479e8103cfb7019ff",
+      "source_bytes": 40734,
+      "source_sha256": "b3f8d0fcdc6383c36b047e9ef579775ccda514a7498d870cdd211108fa260a25",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 19285,
-      "zip_sha256": "762215f55dfe7e13e833583953b7c4c5ab7616b7952e0d2d6c80e817639346d0"
+      "zip_size_bytes": 19286,
+      "zip_sha256": "27ff33e8d156bc7e5df060643fda4251a1212dab8f70a8f98a3a98ef9310f8f6"
     },
     {
       "pack": "superpowers-plus",
@@ -7119,13 +7119,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/test-driven-development/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 18118,
-      "source_sha256": "f76f9dc2303ff982bde8fbd9c4ac0dd9f9c8401cc6eef1386deacc518a321421",
+      "source_bytes": 18145,
+      "source_sha256": "d82bc0a78a21e5cef2b2abecf4600aca626558f590d67a29b6cd218046f349b5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7704,
-      "zip_sha256": "0ca3fcf4bea3005ba4d3013755c93607418a4ee79a3f7f32b6c6c4f28bcd319c"
+      "zip_size_bytes": 7710,
+      "zip_sha256": "2e89733b69d6789e3484a59c3e440e9bbc50b1edf903ad2bf4ca11599d96ec87"
     },
     {
       "pack": "superpowers-plus",
@@ -7150,14 +7150,14 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers",
       "overlay_path": "adapters/gpt/superpowers-plus/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers-plus/using-superpowers/skill.zip",
-      "source_file_count": 5,
-      "source_bytes": 15908,
-      "source_sha256": "2ba26b5574ffaf528e841a87eee75dad561dcb777b25aac209f883aacb74a1b0",
+      "source_file_count": 8,
+      "source_bytes": 30415,
+      "source_sha256": "5b0771fc53f6d64afef8714736494e0b32f9498e75bed4ddf5182c2cf8e8d15b",
       "overlay_file_count": 1,
       "overlay_bytes": 2619,
       "overlay_sha256": "a52131b85dde15a61ba740132a82dc7792e31f4af9263fcb680df4ad296d45b7",
-      "zip_size_bytes": 5383,
-      "zip_sha256": "b9226e0cc724e4a85d6ced380a97d5ec64711214d1d56a863ff0370e37df4123"
+      "zip_size_bytes": 12471,
+      "zip_sha256": "e58589242352756778c429c6dc80a315b9a094589e33d71b2e3ee6a419ca663a"
     },
     {
       "pack": "superpowers-plus",
@@ -7168,12 +7168,12 @@
       "zip_path": "generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip",
       "source_file_count": 2,
       "source_bytes": 5349,
-      "source_sha256": "e663f9ef8f439af4df640c285b36ca9539b132c0699e5aa35dfdd3d9b544903c",
+      "source_sha256": "0082a0952eac288a46c1695deceb746d7fc7b363c4bd81ccf34afb0bce54034d",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2917,
-      "zip_sha256": "494b5ca9ad31f809257118dc4876a9d74d0e6aae1aa11e5191eb3a2d02e5bbbd"
+      "zip_size_bytes": 2918,
+      "zip_sha256": "82cd94a8b2089c2e58066d1b698bc55ba843a740eae66807e500b05c2f826398"
     },
     {
       "pack": "superpowers-plus",
@@ -7183,13 +7183,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/writing-plans",
       "zip_path": "generated/skill-zips/superpowers-plus/writing-plans/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 7814,
-      "source_sha256": "5cd6211ec599e20d392e2146d1b85ee4895a67d8c0ef4f88ed0bda6809b03b20",
+      "source_bytes": 8805,
+      "source_sha256": "0356a63c5f98b698df063ee26ea50ba756df2c922fa9fcdbeba6cfdc67214e76",
       "overlay_file_count": 1,
       "overlay_bytes": 2285,
       "overlay_sha256": "eced60825cde5b08b83f20a970194b2ac7a64d75b90a03133d6190855142de3b",
-      "zip_size_bytes": 2213,
-      "zip_sha256": "de291d36f6c6931b7e36027588e0edd2bcd8347670b3ad44771d289179bad1c0"
+      "zip_size_bytes": 2212,
+      "zip_sha256": "27e742e13efcf7e72bfd6a44b4477753082ea39d3ca91efafa5f5124d1f3c60f"
     },
     {
       "pack": "superpowers-plus",
@@ -7199,13 +7199,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/writing-skills",
       "zip_path": "generated/skill-zips/superpowers-plus/writing-skills/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 103331,
-      "source_sha256": "72fc414e7a8407bd438c366515d0566b259ead5602f2c9915d94805ed7d3dd49",
+      "source_bytes": 107929,
+      "source_sha256": "a89a8176907e2fd3dae40b2bed118b121f94f25102227e20af201f61cd3aeee1",
       "overlay_file_count": 1,
       "overlay_bytes": 803,
       "overlay_sha256": "f7ab4e5d644ea5d4d2259b19bb768240dc4ca719a4004f6b81db5f2c44608792",
-      "zip_size_bytes": 30497,
-      "zip_sha256": "74a6b7a0fd0b3b058fe24dc82fd8eb4b59b6309410e1a919b46aaa1fb235bdfe"
+      "zip_size_bytes": 30527,
+      "zip_sha256": "520222a393fe689d9e3adb8d1bd2242223c65d7d2b9ef76ce846c39f098cd1f1"
     },
     {
       "pack": "unslop-plus",
@@ -7392,8 +7392,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents",
       "overlay_path": null,
       "source_file_count": 1,
-      "source_bytes": 6441,
-      "source_sha256": "473dd145b98e2a53987d275733853fbff9dba5d89acac7cc62efa77ce2822f43",
+      "source_bytes": 6644,
+      "source_sha256": "e16156d5f484a2081fc30308c7826da6ab6c86e3c171862c0c65f0543f327028",
       "reason": "This skill depends on parallel subagents and is not safe to present as a raw GPT export."
     },
     {
@@ -7402,9 +7402,9 @@
       "export_mode": "excluded",
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "overlay_path": null,
-      "source_file_count": 4,
-      "source_bytes": 19883,
-      "source_sha256": "b09cb34ed060845094562eb591497ebb2ecda00a8975e2806305589d725f22ab",
+      "source_file_count": 6,
+      "source_bytes": 38534,
+      "source_sha256": "59f42aa5112ca3b6fbb9123bb2bdf3aa8097c7b654b3bd75b1aeffe6f8fd1bc6",
       "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
     },
     {
@@ -7414,8 +7414,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
       "overlay_path": null,
       "source_file_count": 1,
-      "source_bytes": 7983,
-      "source_sha256": "92257f8e0e1fe5dc2f073161d34c458572f21c44f9f63976a47d42c5b2ee2aea",
+      "source_bytes": 7472,
+      "source_sha256": "c677cfda5f2c1449099b6faa07d9bf285fdf91a9cce69392c0b33e4f929cd8cb",
       "reason": "This skill depends on local git worktree operations that should not be implied in a raw GPT export."
     }
   ]
