@@ -3,292 +3,751 @@
   "bundle_version": "1.0.0",
   "bundle_type": "current-first-party-house-skills-plugin",
   "plugin_root": "codex-marketplace/plugins/house-skills",
-  "skills_root": "codex-marketplace/plugins/house-skills/skills",
   "control_plane_skill": {
     "name": "house-skills",
     "path": "codex-marketplace/plugins/house-skills/skills/house-skills"
   },
-  "skill_count": 56,
-  "skills": [
+  "entries": [
     {
-      "name": "adventures-asset-sheet-compiler",
+      "canonical_name": "house-skills",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/house-skills",
+      "local_path": "skills/house-skills",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "canonical_name": "adventures-asset-sheet-compiler",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-asset-sheet-compiler",
+      "local_path": "skills/adventures-asset-sheet-compiler",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-asset-sheet-compiler"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-bootstrap",
+      "canonical_name": "adventures-bootstrap",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-bootstrap",
+      "local_path": "skills/adventures-bootstrap",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-bootstrap"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-bootstrap/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "bootstrap-router",
+      "canonical_name": "bootstrap-router",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/bootstrap-router",
+      "local_path": "skills/bootstrap-router",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/bootstrap-router"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/bootstrap-router/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-frame-buster",
+      "canonical_name": "adventures-frame-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-frame-buster",
+      "local_path": "skills/adventures-frame-buster",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-frame-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-frame-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-github-operations",
+      "canonical_name": "adventures-github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-github-operations",
+      "local_path": "skills/adventures-github-operations",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-github-operations"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-github-operations/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-image-qa",
+      "canonical_name": "adventures-image-qa",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-image-qa",
+      "local_path": "skills/adventures-image-qa",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-image-qa"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-image-qa/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-project-doctrine",
+      "canonical_name": "adventures-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-project-doctrine",
+      "local_path": "skills/adventures-project-doctrine",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-project-doctrine"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-project-doctrine/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-storyboard-preflight",
+      "canonical_name": "adventures-storyboard-preflight",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-storyboard-preflight",
+      "local_path": "skills/adventures-storyboard-preflight",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-storyboard-preflight"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-storyboard-preflight/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-visual-bible-creator",
+      "canonical_name": "adventures-visual-bible-creator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-creator",
+      "local_path": "skills/adventures-visual-bible-creator",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-visual-bible-creator"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-visual-bible-creator/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-visual-bible-interpreter",
+      "canonical_name": "adventures-visual-bible-interpreter",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-interpreter",
+      "local_path": "skills/adventures-visual-bible-interpreter",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-visual-bible-interpreter"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "adventures-visual-preproduction",
+      "canonical_name": "adventures-visual-preproduction",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/adventures-visual-preproduction",
+      "local_path": "skills/adventures-visual-preproduction",
       "lane": "Adventures",
-      "path": "sources/first_party/skills/adventures-visual-preproduction"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/adventures-visual-preproduction/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "ambiguity-buster",
+      "canonical_name": "ambiguity-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/ambiguity-buster",
+      "local_path": "skills/ambiguity-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/ambiguity-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/ambiguity-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "analogy-buster",
+      "canonical_name": "analogy-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/analogy-buster",
+      "local_path": "skills/analogy-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/analogy-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/analogy-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "boring-loop",
+      "canonical_name": "boring-loop",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/boring-loop",
+      "local_path": "skills/boring-loop",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/boring-loop"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/boring-loop/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "boring-buster",
+      "canonical_name": "boring-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/boring-buster",
+      "local_path": "skills/boring-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/boring-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/boring-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "buster-framework",
+      "canonical_name": "buster-framework",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/buster-framework",
+      "local_path": "skills/buster-framework",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/buster-framework"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/buster-framework/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "canon-buster",
+      "canonical_name": "canon-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/canon-buster",
+      "local_path": "skills/canon-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/canon-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/canon-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "cleanup-custody",
+      "canonical_name": "cleanup-custody",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/cleanup-custody",
+      "local_path": "skills/cleanup-custody",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/cleanup-custody"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/cleanup-custody/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "connector-safety",
+      "canonical_name": "connector-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/connector-safety",
+      "local_path": "skills/connector-safety",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/connector-safety"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/connector-safety/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "crew",
+      "canonical_name": "crew",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/crew",
+      "local_path": "skills/crew",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/crew"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/crew/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "crew-buster",
+      "canonical_name": "crew-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/crew-buster",
+      "local_path": "skills/crew-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/crew-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/crew-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "don-logan-boundary",
+      "canonical_name": "don-logan-boundary",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/don-logan-boundary",
+      "local_path": "skills/don-logan-boundary",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/don-logan-boundary"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/don-logan-boundary/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "base-doctrine",
+      "canonical_name": "base-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/base-doctrine",
+      "local_path": "skills/base-doctrine",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/base-doctrine"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/base-doctrine/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "invariant-buster",
+      "canonical_name": "invariant-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/invariant-buster",
+      "local_path": "skills/invariant-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/invariant-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/invariant-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "linear",
+      "canonical_name": "linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear",
+      "local_path": "skills/linear",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/linear"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/linear/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "linear-issue-compactor",
+      "canonical_name": "linear-issue-compactor",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear-issue-compactor",
+      "local_path": "skills/linear-issue-compactor",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/linear-issue-compactor"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/linear-issue-compactor/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "linear-superpowers",
+      "canonical_name": "linear-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/linear-superpowers",
+      "local_path": "skills/linear-superpowers",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/linear-superpowers"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/linear-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "github-operations",
+      "canonical_name": "github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/github-operations",
+      "local_path": "skills/github-operations",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/github-operations"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/github-operations/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "github-superpowers",
+      "canonical_name": "github-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/github-superpowers",
+      "local_path": "skills/github-superpowers",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/github-superpowers"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "unslop-superpowers",
+      "canonical_name": "unslop-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
+      "local_path": "skills/unslop-superpowers",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/unslop-superpowers"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-ambiguity-buster",
+      "canonical_name": "rooms-ambiguity-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-ambiguity-buster",
+      "local_path": "skills/rooms-ambiguity-buster",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-ambiguity-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-ambiguity-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-analogy-buster",
+      "canonical_name": "rooms-analogy-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-analogy-buster",
+      "local_path": "skills/rooms-analogy-buster",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-analogy-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-analogy-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-bootstrap",
+      "canonical_name": "rooms-bootstrap",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
+      "local_path": "skills/rooms-bootstrap",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-bootstrap"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-bootstrap/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-canon-buster",
+      "canonical_name": "rooms-canon-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-canon-buster",
+      "local_path": "skills/rooms-canon-buster",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-canon-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-canon-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-character-investigation",
+      "canonical_name": "rooms-character-investigation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-character-investigation",
+      "local_path": "skills/rooms-character-investigation",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-character-investigation"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-character-investigation/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-image-sidecars",
+      "canonical_name": "rooms-image-sidecars",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-image-sidecars",
+      "local_path": "skills/rooms-image-sidecars",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-image-sidecars"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-image-sidecars/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-project-doctrine",
+      "canonical_name": "rooms-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-project-doctrine",
+      "local_path": "skills/rooms-project-doctrine",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-project-doctrine"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-project-doctrine/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-sheet-creator",
+      "canonical_name": "rooms-sheet-creator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-sheet-creator",
+      "local_path": "skills/rooms-sheet-creator",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-sheet-creator"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-sheet-creator/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-source-partitioning",
+      "canonical_name": "rooms-source-partitioning",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
+      "local_path": "skills/rooms-source-partitioning",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-source-partitioning"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-source-partitioning/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "rooms-zoom-outs-buster",
+      "canonical_name": "rooms-zoom-outs-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
+      "local_path": "skills/rooms-zoom-outs-buster",
       "lane": "Rooms",
-      "path": "sources/first_party/skills/rooms-zoom-outs-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "session-buster",
+      "canonical_name": "session-buster",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/session-buster",
+      "local_path": "skills/session-buster",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/session-buster"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/session-buster/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "session-buster-ingress",
+      "canonical_name": "session-buster-ingress",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/session-buster-ingress",
+      "local_path": "skills/session-buster-ingress",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/session-buster-ingress"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/session-buster-ingress/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "skill-packager",
+      "canonical_name": "skill-packager",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/skill-packager",
+      "local_path": "skills/skill-packager",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/skill-packager"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/skill-packager/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "skill-validator",
+      "canonical_name": "skill-validator",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/skill-validator",
+      "local_path": "skills/skill-validator",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/skill-validator"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/skill-validator/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "tps-ingress",
+      "canonical_name": "tps-ingress",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-ingress",
+      "local_path": "skills/tps-ingress",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/tps-ingress"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/tps-ingress/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "tps-reporting",
+      "canonical_name": "tps-reporting",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/tps-reporting",
+      "local_path": "skills/tps-reporting",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/tps-reporting"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/tps-reporting/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "work-mode-router",
+      "canonical_name": "work-mode-router",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/work-mode-router",
+      "local_path": "skills/work-mode-router",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/work-mode-router"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/work-mode-router/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "worker-dispatch-linear",
+      "canonical_name": "worker-dispatch-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/worker-dispatch-linear",
+      "local_path": "skills/worker-dispatch-linear",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/worker-dispatch-linear"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/worker-dispatch-linear/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "asset-market",
+      "canonical_name": "asset-market",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/asset-market",
+      "local_path": "skills/asset-market",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/asset-market"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/asset-market/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "skill-handoff",
+      "canonical_name": "skill-handoff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/skill-handoff",
+      "local_path": "skills/skill-handoff",
       "lane": "Base and control plane",
-      "path": "sources/first_party/skills/skill-handoff"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/skill-handoff/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "skill-installer",
+      "canonical_name": "skill-installer",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/core/skill-installer",
+      "local_path": "skills/skill-installer",
       "lane": "Base and control plane",
-      "path": "sources/first_party/core/skill-installer"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/core/skill-installer/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "wild-bunch-project-doctrine",
+      "canonical_name": "wild-bunch-project-doctrine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
+      "local_path": "skills/wild-bunch-project-doctrine",
       "lane": "Wild Bunch",
-      "path": "sources/first_party/skills/wild-bunch-project-doctrine"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "wild-bunch-domain-modeling",
+      "canonical_name": "wild-bunch-domain-modeling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-domain-modeling",
+      "local_path": "skills/wild-bunch-domain-modeling",
       "lane": "Wild Bunch",
-      "path": "sources/first_party/skills/wild-bunch-domain-modeling"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "wild-bunch-dotnet-architecture",
+      "canonical_name": "wild-bunch-dotnet-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture",
+      "local_path": "skills/wild-bunch-dotnet-architecture",
       "lane": "Wild Bunch",
-      "path": "sources/first_party/skills/wild-bunch-dotnet-architecture"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "wild-bunch-browser-game",
+      "canonical_name": "wild-bunch-browser-game",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
+      "local_path": "skills/wild-bunch-browser-game",
       "lane": "Wild Bunch",
-      "path": "sources/first_party/skills/wild-bunch-browser-game"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "name": "wild-bunch-worker-verification",
+      "canonical_name": "wild-bunch-worker-verification",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification",
+      "local_path": "skills/wild-bunch-worker-verification",
       "lane": "Wild Bunch",
-      "path": "sources/first_party/skills/wild-bunch-worker-verification"
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     }
   ],
   "notes": [
