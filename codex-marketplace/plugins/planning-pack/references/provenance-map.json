@@ -1,0 +1,40 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "development-estimation",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
+      "local_path": "skills/development-estimation"
+    },
+    {
+      "canonical_name": "mermaid-diagramming",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+      "local_path": "skills/mermaid-diagramming"
+    },
+    {
+      "canonical_name": "release-analysis",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
+      "local_path": "skills/release-analysis"
+    },
+    {
+      "canonical_name": "release-prep",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
+      "local_path": "skills/release-prep"
+    },
+    {
+      "canonical_name": "requirements-discovery",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
+      "local_path": "skills/requirements-discovery"
+    }
+  ],
+  "adapted_projections": []
+}

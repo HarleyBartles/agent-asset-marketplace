@@ -1,43 +1,17 @@
 # Data Platform Pack Source Map
 
-This bundle projects the MARK-250 ECC data/platform skills slice from retained ECC custody into a marketplace surface. ECC skills are projected verbatim from retained ECC source custody with MIT license attribution to upstream author affaan-m/ECC.
+Generated from `codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json`.
 
-Retained custody evidence:
-
-### ECC
-
-- `sources/third_party/ecc/upstream/manifest.json`
-- `sources/third_party/ecc/upstream/skills/clickhouse-io/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/content-hash-cache-pattern/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/dashboard-builder/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/data-throughput-accelerator/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/database-migrations/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/postgres-patterns/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/pytorch-patterns/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/quality-nonconformance/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/scientific-db-pubmed-database/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review/SKILL.md`
-- `sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation/SKILL.md`
-
-First-party custody:
-
-### ECC
-
-- `docs/superpowers/plans/mark-241-skill-categorization.json`
-- `provenance/ecc.md`
-
-Projected pack skills:
-
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| clickhouse-io | `sources/third_party/ecc/upstream/skills/clickhouse-io/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/clickhouse-io/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| content-hash-cache-pattern | `sources/third_party/ecc/upstream/skills/content-hash-cache-pattern/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/content-hash-cache-pattern/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| dashboard-builder | `sources/third_party/ecc/upstream/skills/dashboard-builder/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/dashboard-builder/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| data-throughput-accelerator | `sources/third_party/ecc/upstream/skills/data-throughput-accelerator/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/data-throughput-accelerator/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| database-migrations | `sources/third_party/ecc/upstream/skills/database-migrations/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/database-migrations/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| postgres-patterns | `sources/third_party/ecc/upstream/skills/postgres-patterns/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/postgres-patterns/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| pytorch-patterns | `sources/third_party/ecc/upstream/skills/pytorch-patterns/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/pytorch-patterns/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| quality-nonconformance | `sources/third_party/ecc/upstream/skills/quality-nonconformance/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/quality-nonconformance/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| scientific-db-pubmed-database | `sources/third_party/ecc/upstream/skills/scientific-db-pubmed-database/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-db-pubmed-database/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| scientific-thinking-literature-review | `sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-literature-review/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
-| scientific-thinking-scholar-evaluation | `sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation/SKILL.md` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-scholar-evaluation/SKILL.md` | Verbatim projection from ECC custody with MIT license attribution to affaan-m/ECC. |
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| clickhouse-io | third_party | verbatim | `sources/third_party/ecc/upstream/skills/clickhouse-io` | `codex-marketplace/plugins/data-platform-pack/skills/clickhouse-io` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| content-hash-cache-pattern | third_party | verbatim | `sources/third_party/ecc/upstream/skills/content-hash-cache-pattern` | `codex-marketplace/plugins/data-platform-pack/skills/content-hash-cache-pattern` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| dashboard-builder | third_party | verbatim | `sources/third_party/ecc/upstream/skills/dashboard-builder` | `codex-marketplace/plugins/data-platform-pack/skills/dashboard-builder` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| data-throughput-accelerator | third_party | verbatim | `sources/third_party/ecc/upstream/skills/data-throughput-accelerator` | `codex-marketplace/plugins/data-platform-pack/skills/data-throughput-accelerator` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| database-migrations | third_party | verbatim | `sources/third_party/ecc/upstream/skills/database-migrations` | `codex-marketplace/plugins/data-platform-pack/skills/database-migrations` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| postgres-patterns | third_party | verbatim | `sources/third_party/ecc/upstream/skills/postgres-patterns` | `codex-marketplace/plugins/data-platform-pack/skills/postgres-patterns` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| pytorch-patterns | third_party | verbatim | `sources/third_party/ecc/upstream/skills/pytorch-patterns` | `codex-marketplace/plugins/data-platform-pack/skills/pytorch-patterns` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| quality-nonconformance | third_party | verbatim | `sources/third_party/ecc/upstream/skills/quality-nonconformance` | `codex-marketplace/plugins/data-platform-pack/skills/quality-nonconformance` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| scientific-db-pubmed-database | third_party | verbatim | `sources/third_party/ecc/upstream/skills/scientific-db-pubmed-database` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-db-pubmed-database` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| scientific-thinking-literature-review | third_party | verbatim | `sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-literature-review` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| scientific-thinking-scholar-evaluation | third_party | verbatim | `sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation` | `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-scholar-evaluation` | Copied verbatim from the retained upstream snapshot into the Codex projection. |

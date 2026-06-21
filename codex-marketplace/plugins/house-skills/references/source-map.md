@@ -1,74 +1,69 @@
 # House Skills Source Map
 
-The live House Skills plugin root is `codex-marketplace/plugins/house-skills/skills/`.
+Generated from `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`.
 
-Current control plane:
-
-- `codex-marketplace/plugins/house-skills/skills/house-skills`
-- `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
-- `codex-marketplace/plugins/house-skills/references/source-map.md`
-
-Current skill inventory:
-
-| Lane | Skill | Current path |
-| --- | --- | --- |
-| Base and control plane | ambiguity-buster | `sources/first_party/skills/ambiguity-buster` |
-| Base and control plane | analogy-buster | `sources/first_party/skills/analogy-buster` |
-| Base and control plane | boring-loop | `sources/first_party/skills/boring-loop` |
-| Base and control plane | boring-buster | `sources/first_party/skills/boring-buster` |
-| Base and control plane | buster-framework | `sources/first_party/skills/buster-framework` |
-| Base and control plane | canon-buster | `sources/first_party/skills/canon-buster` |
-| Base and control plane | cleanup-custody | `sources/first_party/skills/cleanup-custody` |
-| Base and control plane | connector-safety | `sources/first_party/skills/connector-safety` |
-| Base and control plane | crew | `sources/first_party/skills/crew` |
-| Base and control plane | crew-buster | `sources/first_party/skills/crew-buster` |
-| Base and control plane | don-logan-boundary | `sources/first_party/skills/don-logan-boundary` |
-| Base and control plane | base-doctrine | `sources/first_party/skills/base-doctrine` |
-| Base and control plane | invariant-buster | `sources/first_party/skills/invariant-buster` |
-| Base and control plane | linear | `sources/first_party/skills/linear` |
-| Base and control plane | session-buster | `sources/first_party/skills/session-buster` |
-| Base and control plane | session-buster-ingress | `sources/first_party/skills/session-buster-ingress` |
-| Base and control plane | skill-packager | `sources/first_party/skills/skill-packager` |
-| Base and control plane | skill-validator | `sources/first_party/skills/skill-validator` |
-| Base and control plane | asset-market | `sources/first_party/skills/asset-market` |
-| Base and control plane | linear-issue-compactor | `sources/first_party/skills/linear-issue-compactor` |
-| Base and control plane | linear-superpowers | `sources/first_party/skills/linear-superpowers` |
-| Base and control plane | github-operations | `sources/first_party/skills/github-operations` |
-| Base and control plane | github-superpowers | `sources/first_party/skills/github-superpowers` |
-| Base and control plane | unslop-superpowers | `sources/first_party/skills/unslop-superpowers` |
-| Base and control plane | skill-handoff | `sources/first_party/skills/skill-handoff` |
-| Base and control plane | skill-installer | `sources/first_party/skills/skill-installer` |
-| Base and control plane | tps-ingress | `sources/first_party/skills/tps-ingress` |
-| Base and control plane | tps-reporting | `sources/first_party/skills/tps-reporting` |
-| Base and control plane | work-mode-router | `sources/first_party/skills/work-mode-router` |
-| Base and control plane | worker-dispatch-linear | `sources/first_party/skills/worker-dispatch-linear` |
-| Adventures | adventures-asset-sheet-compiler | `sources/first_party/skills/adventures-asset-sheet-compiler` |
-| Adventures | adventures-bootstrap | `sources/first_party/skills/adventures-bootstrap` |
-| Base and control plane | bootstrap-router | `sources/first_party/skills/bootstrap-router` |
-| Adventures | adventures-frame-buster | `sources/first_party/skills/adventures-frame-buster` |
-| Adventures | adventures-github-operations | `sources/first_party/skills/adventures-github-operations` |
-| Adventures | adventures-image-qa | `sources/first_party/skills/adventures-image-qa` |
-| Adventures | adventures-project-doctrine | `sources/first_party/skills/adventures-project-doctrine` |
-| Adventures | adventures-storyboard-preflight | `sources/first_party/skills/adventures-storyboard-preflight` |
-| Adventures | adventures-visual-bible-creator | `sources/first_party/skills/adventures-visual-bible-creator` |
-| Adventures | adventures-visual-bible-interpreter | `sources/first_party/skills/adventures-visual-bible-interpreter` |
-| Adventures | adventures-visual-preproduction | `sources/first_party/skills/adventures-visual-preproduction` |
-| Rooms | rooms-ambiguity-buster | `sources/first_party/skills/rooms-ambiguity-buster` |
-| Rooms | rooms-analogy-buster | `sources/first_party/skills/rooms-analogy-buster` |
-| Rooms | rooms-bootstrap | `sources/first_party/skills/rooms-bootstrap` |
-| Rooms | rooms-canon-buster | `sources/first_party/skills/rooms-canon-buster` |
-| Rooms | rooms-character-investigation | `sources/first_party/skills/rooms-character-investigation` |
-| Rooms | rooms-image-sidecars | `sources/first_party/skills/rooms-image-sidecars` |
-| Rooms | rooms-project-doctrine | `sources/first_party/skills/rooms-project-doctrine` |
-| Rooms | rooms-sheet-creator | `sources/first_party/skills/rooms-sheet-creator` |
-| Rooms | rooms-source-partitioning | `sources/first_party/skills/rooms-source-partitioning` |
-| Rooms | rooms-zoom-outs-buster | `sources/first_party/skills/rooms-zoom-outs-buster` |
-| Wild Bunch | wild-bunch-browser-game | `sources/first_party/skills/wild-bunch-browser-game` |
-| Wild Bunch | wild-bunch-domain-modeling | `sources/first_party/skills/wild-bunch-domain-modeling` |
-| Wild Bunch | wild-bunch-dotnet-architecture | `sources/first_party/skills/wild-bunch-dotnet-architecture` |
-| Wild Bunch | wild-bunch-project-doctrine | `sources/first_party/skills/wild-bunch-project-doctrine` |
-| Wild Bunch | wild-bunch-worker-verification | `sources/first_party/skills/wild-bunch-worker-verification` |
-
-All live current roots are unversioned directory-level plugin folders with `SKILL.md` and `agents/openai.yaml`. Any historical `v*`
-package residue lives only in changelog notes and skill-level support files, not
-as an active skill root.
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| adventures-asset-sheet-compiler | first_party | verbatim | `sources/first_party/skills/adventures-asset-sheet-compiler` | `codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-bootstrap | first_party | verbatim | `sources/first_party/skills/adventures-bootstrap` | `codex-marketplace/plugins/house-skills/skills/adventures-bootstrap` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-frame-buster | first_party | verbatim | `sources/first_party/skills/adventures-frame-buster` | `codex-marketplace/plugins/house-skills/skills/adventures-frame-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-github-operations | first_party | verbatim | `sources/first_party/skills/adventures-github-operations` | `codex-marketplace/plugins/house-skills/skills/adventures-github-operations` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-image-qa | first_party | verbatim | `sources/first_party/skills/adventures-image-qa` | `codex-marketplace/plugins/house-skills/skills/adventures-image-qa` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-project-doctrine | first_party | verbatim | `sources/first_party/skills/adventures-project-doctrine` | `codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-storyboard-preflight | first_party | verbatim | `sources/first_party/skills/adventures-storyboard-preflight` | `codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-visual-bible-creator | first_party | verbatim | `sources/first_party/skills/adventures-visual-bible-creator` | `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-visual-bible-interpreter | first_party | verbatim | `sources/first_party/skills/adventures-visual-bible-interpreter` | `codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter` | First-party skill projected verbatim into the house-skills mega-pack. |
+| adventures-visual-preproduction | first_party | verbatim | `sources/first_party/skills/adventures-visual-preproduction` | `codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction` | First-party skill projected verbatim into the house-skills mega-pack. |
+| ambiguity-buster | first_party | verbatim | `sources/first_party/skills/ambiguity-buster` | `codex-marketplace/plugins/house-skills/skills/ambiguity-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| analogy-buster | first_party | verbatim | `sources/first_party/skills/analogy-buster` | `codex-marketplace/plugins/house-skills/skills/analogy-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| asset-market | first_party | verbatim | `sources/first_party/skills/asset-market` | `codex-marketplace/plugins/house-skills/skills/asset-market` | First-party skill projected verbatim into the house-skills mega-pack. |
+| base-doctrine | first_party | verbatim | `sources/first_party/skills/base-doctrine` | `codex-marketplace/plugins/house-skills/skills/base-doctrine` | First-party skill projected verbatim into the house-skills mega-pack. |
+| bootstrap-router | first_party | verbatim | `sources/first_party/skills/bootstrap-router` | `codex-marketplace/plugins/house-skills/skills/bootstrap-router` | First-party skill projected verbatim into the house-skills mega-pack. |
+| boring-buster | first_party | verbatim | `sources/first_party/skills/boring-buster` | `codex-marketplace/plugins/house-skills/skills/boring-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| boring-loop | first_party | verbatim | `sources/first_party/skills/boring-loop` | `codex-marketplace/plugins/house-skills/skills/boring-loop` | First-party skill projected verbatim into the house-skills mega-pack. |
+| buster-framework | first_party | verbatim | `sources/first_party/skills/buster-framework` | `codex-marketplace/plugins/house-skills/skills/buster-framework` | First-party skill projected verbatim into the house-skills mega-pack. |
+| canon-buster | first_party | verbatim | `sources/first_party/skills/canon-buster` | `codex-marketplace/plugins/house-skills/skills/canon-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| cleanup-custody | first_party | verbatim | `sources/first_party/skills/cleanup-custody` | `codex-marketplace/plugins/house-skills/skills/cleanup-custody` | First-party skill projected verbatim into the house-skills mega-pack. |
+| connector-safety | first_party | verbatim | `sources/first_party/skills/connector-safety` | `codex-marketplace/plugins/house-skills/skills/connector-safety` | First-party skill projected verbatim into the house-skills mega-pack. |
+| crew | first_party | verbatim | `sources/first_party/skills/crew` | `codex-marketplace/plugins/house-skills/skills/crew` | First-party skill projected verbatim into the house-skills mega-pack. |
+| crew-buster | first_party | verbatim | `sources/first_party/skills/crew-buster` | `codex-marketplace/plugins/house-skills/skills/crew-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| don-logan-boundary | first_party | verbatim | `sources/first_party/skills/don-logan-boundary` | `codex-marketplace/plugins/house-skills/skills/don-logan-boundary` | First-party skill projected verbatim into the house-skills mega-pack. |
+| game-playtest | third_party | verbatim | `sources/third_party/game-studio/upstream/skills/game-playtest` | `codex-marketplace/plugins/house-skills/skills/game-playtest` | Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack. |
+| game-ui-frontend | third_party | verbatim | `sources/third_party/game-studio/upstream/skills/game-ui-frontend` | `codex-marketplace/plugins/house-skills/skills/game-ui-frontend` | Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack. |
+| github-operations | first_party | verbatim | `sources/first_party/skills/github-operations` | `codex-marketplace/plugins/house-skills/skills/github-operations` | First-party skill projected verbatim into the house-skills mega-pack. |
+| github-superpowers | first_party | verbatim | `sources/first_party/skills/github-superpowers` | `codex-marketplace/plugins/house-skills/skills/github-superpowers` | First-party skill projected verbatim into the house-skills mega-pack. |
+| house-skills | first_party | verbatim | `sources/first_party/skills/house-skills` | `codex-marketplace/plugins/house-skills/skills/house-skills` | First-party skill projected verbatim into the house-skills mega-pack. |
+| invariant-buster | first_party | verbatim | `sources/first_party/skills/invariant-buster` | `codex-marketplace/plugins/house-skills/skills/invariant-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| linear | first_party | verbatim | `sources/first_party/skills/linear` | `codex-marketplace/plugins/house-skills/skills/linear` | First-party skill projected verbatim into the house-skills mega-pack. |
+| linear-issue-compactor | first_party | verbatim | `sources/first_party/skills/linear-issue-compactor` | `codex-marketplace/plugins/house-skills/skills/linear-issue-compactor` | First-party skill projected verbatim into the house-skills mega-pack. |
+| linear-superpowers | first_party | verbatim | `sources/first_party/skills/linear-superpowers` | `codex-marketplace/plugins/house-skills/skills/linear-superpowers` | First-party skill projected verbatim into the house-skills mega-pack. |
+| phaser-2d-game | third_party | verbatim | `sources/third_party/game-studio/upstream/skills/phaser-2d-game` | `codex-marketplace/plugins/house-skills/skills/phaser-2d-game` | Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack. |
+| repo-worker-base | first_party | verbatim | `sources/first_party/skills/repo-worker-base` | `codex-marketplace/plugins/house-skills/skills/repo-worker-base` | Skill projected verbatim into the repo-worker-base plugin. |
+| rooms-ambiguity-buster | first_party | verbatim | `sources/first_party/skills/rooms-ambiguity-buster` | `codex-marketplace/plugins/house-skills/skills/rooms-ambiguity-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-analogy-buster | first_party | verbatim | `sources/first_party/skills/rooms-analogy-buster` | `codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-bootstrap | first_party | verbatim | `sources/first_party/skills/rooms-bootstrap` | `codex-marketplace/plugins/house-skills/skills/rooms-bootstrap` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-canon-buster | first_party | verbatim | `sources/first_party/skills/rooms-canon-buster` | `codex-marketplace/plugins/house-skills/skills/rooms-canon-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-character-investigation | first_party | verbatim | `sources/first_party/skills/rooms-character-investigation` | `codex-marketplace/plugins/house-skills/skills/rooms-character-investigation` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-image-sidecars | first_party | verbatim | `sources/first_party/skills/rooms-image-sidecars` | `codex-marketplace/plugins/house-skills/skills/rooms-image-sidecars` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-project-doctrine | first_party | verbatim | `sources/first_party/skills/rooms-project-doctrine` | `codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-sheet-creator | first_party | verbatim | `sources/first_party/skills/rooms-sheet-creator` | `codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-source-partitioning | first_party | verbatim | `sources/first_party/skills/rooms-source-partitioning` | `codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning` | First-party skill projected verbatim into the house-skills mega-pack. |
+| rooms-zoom-outs-buster | first_party | verbatim | `sources/first_party/skills/rooms-zoom-outs-buster` | `codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| session-buster | first_party | verbatim | `sources/first_party/skills/session-buster` | `codex-marketplace/plugins/house-skills/skills/session-buster` | First-party skill projected verbatim into the house-skills mega-pack. |
+| session-buster-ingress | first_party | verbatim | `sources/first_party/skills/session-buster-ingress` | `codex-marketplace/plugins/house-skills/skills/session-buster-ingress` | First-party skill projected verbatim into the house-skills mega-pack. |
+| skill-handoff | first_party | verbatim | `sources/first_party/skills/skill-handoff` | `codex-marketplace/plugins/house-skills/skills/skill-handoff` | First-party skill projected verbatim into the house-skills mega-pack. |
+| skill-installer | first_party | verbatim | `sources/first_party/skills/skill-installer` | `codex-marketplace/plugins/house-skills/skills/skill-installer` | First-party skill projected verbatim into the house-skills mega-pack. |
+| skill-packager | first_party | verbatim | `sources/first_party/skills/skill-packager` | `codex-marketplace/plugins/house-skills/skills/skill-packager` | First-party skill projected verbatim into the house-skills mega-pack. |
+| skill-validator | first_party | verbatim | `sources/first_party/skills/skill-validator` | `codex-marketplace/plugins/house-skills/skills/skill-validator` | First-party skill projected verbatim into the house-skills mega-pack. |
+| sprite-pipeline | third_party | verbatim | `sources/third_party/game-studio/upstream/skills/sprite-pipeline` | `codex-marketplace/plugins/house-skills/skills/sprite-pipeline` | Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack. |
+| tps-ingress | first_party | verbatim | `sources/first_party/skills/tps-ingress` | `codex-marketplace/plugins/house-skills/skills/tps-ingress` | First-party skill projected verbatim into the house-skills mega-pack. |
+| tps-reporting | first_party | verbatim | `sources/first_party/skills/tps-reporting` | `codex-marketplace/plugins/house-skills/skills/tps-reporting` | First-party skill projected verbatim into the house-skills mega-pack. |
+| unslop-superpowers | first_party | verbatim | `sources/first_party/skills/unslop-superpowers` | `codex-marketplace/plugins/house-skills/skills/unslop-superpowers` | First-party skill projected verbatim into the house-skills mega-pack. |
+| web-game-foundations | third_party | verbatim | `sources/third_party/game-studio/upstream/skills/web-game-foundations` | `codex-marketplace/plugins/house-skills/skills/web-game-foundations` | Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack. |
+| wild-bunch-browser-game | first_party | verbatim | `sources/first_party/skills/wild-bunch-browser-game` | `codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game` | First-party skill projected verbatim into the house-skills mega-pack. |
+| wild-bunch-domain-modeling | first_party | verbatim | `sources/first_party/skills/wild-bunch-domain-modeling` | `codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling` | First-party skill projected verbatim into the house-skills mega-pack. |
+| wild-bunch-dotnet-architecture | first_party | verbatim | `sources/first_party/skills/wild-bunch-dotnet-architecture` | `codex-marketplace/plugins/house-skills/skills/wild-bunch-dotnet-architecture` | First-party skill projected verbatim into the house-skills mega-pack. |
+| wild-bunch-project-doctrine | first_party | verbatim | `sources/first_party/skills/wild-bunch-project-doctrine` | `codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine` | First-party skill projected verbatim into the house-skills mega-pack. |
+| wild-bunch-worker-verification | first_party | verbatim | `sources/first_party/skills/wild-bunch-worker-verification` | `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification` | First-party skill projected verbatim into the house-skills mega-pack. |
+| work-mode-router | first_party | verbatim | `sources/first_party/skills/work-mode-router` | `codex-marketplace/plugins/house-skills/skills/work-mode-router` | First-party skill projected verbatim into the house-skills mega-pack. |
+| worker-dispatch-linear | first_party | verbatim | `sources/first_party/skills/worker-dispatch-linear` | `codex-marketplace/plugins/house-skills/skills/worker-dispatch-linear` | First-party skill projected verbatim into the house-skills mega-pack. |

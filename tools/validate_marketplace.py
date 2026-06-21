@@ -1457,7 +1457,7 @@ def validate_source_map(text: str) -> None:
         "codex-marketplace/plugins/house-skills/skills/",
         "codex-marketplace/plugins/house-skills/skills/house-skills",
         "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
-        "All live current roots are unversioned directory-level plugin folders with `SKILL.md` and `agents/openai.yaml`.",
+        "Generated from `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`.",
     ):
         if needle not in text:
             raise ValueError(f"source map is missing {needle}")

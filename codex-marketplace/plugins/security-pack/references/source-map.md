@@ -1,77 +1,23 @@
 # Security Pack Source Map
 
-This bundle harmonizes retained Codex Cortex security foundations with retained
-ECC security-oriented skills into a marketplace surface.
+Generated from `codex-marketplace/plugins/security-pack/references/bundle-manifest.json`.
 
-Harmonization notes:
-
-- `secure-coding-practices` stays at the code-hardening layer.
-- `owasp-top-10` stays at the application-risk taxonomy layer.
-- `security-testing-patterns` stays at the validation and testing layer.
-- `threat-modeling-techniques` stays at the design-time risk-framing layer.
-- `security-review` stays distinct from `secure-coding-practices` and
-  `owasp-top-10`; it owns general review and cloud infrastructure security, and
-  its support doc is projected at
-  `codex-marketplace/plugins/security-pack/skills/security-review/references/cloud-infrastructure-security.md`.
-- All skills are projected as `normalised` - substantive content is unchanged,
-  with only path normalization, frontmatter enrichment, and MARK-262 metadata
-  added for Codex/OpenAI compatibility.
-- Detailed file-level projections and source-file inventories are captured in
-  `references/bundle-manifest.json`.
-
-Retained Codex Cortex custody:
-
-- `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/`
-- `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/`
-- `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
-- `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
-
-Retained ECC custody:
-
-- `sources/third_party/ecc/upstream/skills/defi-amm-security/`
-- `sources/third_party/ecc/upstream/skills/django-security/`
-- `sources/third_party/ecc/upstream/skills/laravel-security/`
-- `sources/third_party/ecc/upstream/skills/llm-trading-agent-security/`
-- `sources/third_party/ecc/upstream/skills/network-config-validation/`
-- `sources/third_party/ecc/upstream/skills/perl-security/`
-- `sources/third_party/ecc/upstream/skills/prediction-market-risk-review/`
-- `sources/third_party/ecc/upstream/skills/quarkus-security/`
-- `sources/third_party/ecc/upstream/skills/safety-guard/`
-- `sources/third_party/ecc/upstream/skills/security-bounty-hunter/`
-- `sources/third_party/ecc/upstream/skills/security-review/`
-- `sources/third_party/ecc/upstream/skills/security-review/cloud-infrastructure-security.md`
-- `sources/third_party/ecc/upstream/skills/security-scan/`
-- `sources/third_party/ecc/upstream/skills/springboot-security/`
-
-Projected pack skills:
-
-## Codex Cortex projection
-
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| secure-coding-practices | `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/` | `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/` | Retained code-hardening foundation, kept distinct from infrastructure review. |
-| owasp-top-10 | `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/` | `codex-marketplace/plugins/security-pack/skills/owasp-top-10/` | Retained OWASP taxonomy and remediation layer. |
-| security-testing-patterns | `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/` | `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/` | Retained security validation and testing layer. |
-| threat-modeling-techniques | `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/` | `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques/` | Retained design-time risk-framing layer. |
-
-## ECC projection
-
-| Skill | Source path | Pack path | Notes |
-| --- | --- | --- | --- |
-| defi-amm-security | `sources/third_party/ecc/upstream/skills/defi-amm-security/` | `codex-marketplace/plugins/security-pack/skills/defi-amm-security/` | Normalised projection as the DeFi AMM review slice. |
-| django-security | `sources/third_party/ecc/upstream/skills/django-security/` | `codex-marketplace/plugins/security-pack/skills/django-security/` | Normalised projection as the Django hardening slice. |
-| laravel-security | `sources/third_party/ecc/upstream/skills/laravel-security/` | `codex-marketplace/plugins/security-pack/skills/laravel-security/` | Normalised projection as the Laravel hardening slice. |
-| llm-trading-agent-security | `sources/third_party/ecc/upstream/skills/llm-trading-agent-security/` | `codex-marketplace/plugins/security-pack/skills/llm-trading-agent-security/` | Normalised projection as the LLM trading-agent guardrails slice. |
-| network-config-validation | `sources/third_party/ecc/upstream/skills/network-config-validation/` | `codex-marketplace/plugins/security-pack/skills/network-config-validation/` | Normalised projection as the network config validation slice. |
-| perl-security | `sources/third_party/ecc/upstream/skills/perl-security/` | `codex-marketplace/plugins/security-pack/skills/perl-security/` | Normalised projection as the Perl hardening slice. |
-| prediction-market-risk-review | `sources/third_party/ecc/upstream/skills/prediction-market-risk-review/` | `codex-marketplace/plugins/security-pack/skills/prediction-market-risk-review/` | Normalised projection as the prediction-market risk slice. |
-| quarkus-security | `sources/third_party/ecc/upstream/skills/quarkus-security/` | `codex-marketplace/plugins/security-pack/skills/quarkus-security/` | Normalised projection as the Quarkus hardening slice. |
-| safety-guard | `sources/third_party/ecc/upstream/skills/safety-guard/` | `codex-marketplace/plugins/security-pack/skills/safety-guard/` | Normalised projection as the safe-operation overlay. |
-| security-bounty-hunter | `sources/third_party/ecc/upstream/skills/security-bounty-hunter/` | `codex-marketplace/plugins/security-pack/skills/security-bounty-hunter/` | Normalised projection as the exploit-oriented review slice. |
-| security-review | `sources/third_party/ecc/upstream/skills/security-review/` | `codex-marketplace/plugins/security-pack/skills/security-review/` | Normalised projection as the general security review slice. |
-| security-review support doc | `sources/third_party/ecc/upstream/skills/security-review/cloud-infrastructure-security.md` | `codex-marketplace/plugins/security-pack/skills/security-review/references/cloud-infrastructure-security.md` | Projected through the skill-local `references/` adapter path. |
-| security-scan | `sources/third_party/ecc/upstream/skills/security-scan/` | `codex-marketplace/plugins/security-pack/skills/security-scan/` | Normalised projection as the configuration scanning slice. |
-| springboot-security | `sources/third_party/ecc/upstream/skills/springboot-security/` | `codex-marketplace/plugins/security-pack/skills/springboot-security/` | Normalised projection as the Spring Boot hardening slice. |
-
-The pack root is an installable Codex plugin projection. It does not replace
-either retained custody tree.
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| defi-amm-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/defi-amm-security` | `codex-marketplace/plugins/security-pack/skills/defi-amm-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| django-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/django-security` | `codex-marketplace/plugins/security-pack/skills/django-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| laravel-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/laravel-security` | `codex-marketplace/plugins/security-pack/skills/laravel-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| llm-trading-agent-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/llm-trading-agent-security` | `codex-marketplace/plugins/security-pack/skills/llm-trading-agent-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| network-config-validation | third_party | normalised | `sources/third_party/ecc/upstream/skills/network-config-validation` | `codex-marketplace/plugins/security-pack/skills/network-config-validation` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| owasp-top-10 | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/owasp-top-10` | `codex-marketplace/plugins/security-pack/skills/owasp-top-10` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| perl-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/perl-security` | `codex-marketplace/plugins/security-pack/skills/perl-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| prediction-market-risk-review | third_party | normalised | `sources/third_party/ecc/upstream/skills/prediction-market-risk-review` | `codex-marketplace/plugins/security-pack/skills/prediction-market-risk-review` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| quarkus-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/quarkus-security` | `codex-marketplace/plugins/security-pack/skills/quarkus-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| safety-guard | third_party | normalised | `sources/third_party/ecc/upstream/skills/safety-guard` | `codex-marketplace/plugins/security-pack/skills/safety-guard` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| secure-coding-practices | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices` | `codex-marketplace/plugins/security-pack/skills/secure-coding-practices` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| security-bounty-hunter | third_party | normalised | `sources/third_party/ecc/upstream/skills/security-bounty-hunter` | `codex-marketplace/plugins/security-pack/skills/security-bounty-hunter` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| security-review | third_party | normalised | `sources/third_party/ecc/upstream/skills/security-review` | `codex-marketplace/plugins/security-pack/skills/security-review` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| security-scan | third_party | normalised | `sources/third_party/ecc/upstream/skills/security-scan` | `codex-marketplace/plugins/security-pack/skills/security-scan` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| security-testing-patterns | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns` | `codex-marketplace/plugins/security-pack/skills/security-testing-patterns` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| springboot-security | third_party | normalised | `sources/third_party/ecc/upstream/skills/springboot-security` | `codex-marketplace/plugins/security-pack/skills/springboot-security` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| threat-modeling-techniques | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques` | `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
