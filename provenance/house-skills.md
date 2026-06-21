@@ -212,8 +212,8 @@
 - Structured registry mirror: `sources/first_party/skills/house-skills/decisions.json`
 - Plugin manifest: `codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json`
 - Bundle skill: `codex-marketplace/plugins/house-skills/skills/house-skills`
-- Bundle manifest: `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
-- Source map: `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
+- Bundle manifest: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
+- Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
 - Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the new `github-operations` and `github-superpowers` GitHub skills, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.

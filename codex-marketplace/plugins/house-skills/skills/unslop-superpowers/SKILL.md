@@ -1,4 +1,4 @@
-﻿---
+---
 name: unslop-superpowers
 description: Use when shaping Linear issues, GitHub proof, worker returns, or closeout language needs repo-specific anti-slop controls, profile discovery or refresh, concrete evidence requirements, or a narrow direct-to-main unslop profile update.
 metadata:

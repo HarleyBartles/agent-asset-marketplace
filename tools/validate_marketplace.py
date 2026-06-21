@@ -1434,7 +1434,7 @@ def validate_source_map(text: str) -> None:
     for needle in (
         "codex-marketplace/plugins/house-skills/skills/",
         "codex-marketplace/plugins/house-skills/skills/house-skills",
-        "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+        "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
         "All live current roots are unversioned directory-level plugin folders with `SKILL.md` and `agents/openai.yaml`.",
     ):
         if needle not in text:

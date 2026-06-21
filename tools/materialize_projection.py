@@ -87,17 +87,6 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
     overlay_path = entry.get("adaptation_overlay_path")
     overlay_root = (ROOT / overlay_path).resolve() if overlay_path else None
 
-    # Self-hosted projection: the canonical source custody *is* the projection
-    # root itself (e.g. the house-skills control plane skill, whose SKILL.md
-    # lives in the projection rather than under sources/). There is nothing to
-    # copy and a rmtree-then-copytree would destroy the projection, so skip
-    # materialization for these entries. In check mode we still confirm the
-    # destination exists.
-    if source_root == destination_root:
-        if not write and not destination_root.exists():
-            raise FileNotFoundError(f"self-hosted projection missing for {entry['canonical_name']}: {destination_root}")
-        return
-
     # Active projection entries (verbatim/normalised/adapted) must have a
     # directory-level canonical_source_path. A non-directory path here means
     # the manifest is broken — fail hard rather than silently skipping.

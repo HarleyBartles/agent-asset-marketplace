@@ -40,7 +40,7 @@ What lives here:
 - `CHANGELOG.md` records bundle-level shape changes.
 - `skills/house-skills/SKILL.md` explains the bundle control plane.
 - `skills/<skill-name>/` contains the real current first-party skill roots.
-- `skills/house-skills/references/bundle-manifest.json` captures the current skill inventory.
+- `references/bundle-manifest.json` captures the current skill inventory.
 - `provenance/house-skills.md` records the archive note and source-history context.
 - `tools/generate_marketplace.py` regenerates the marketplace export from the local plugin metadata.
 - `tools/validate_marketplace.py` checks the export, plugin manifest, bundle manifest, and current plugin-root path references.

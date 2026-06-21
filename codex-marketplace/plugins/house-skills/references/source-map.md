@@ -5,8 +5,8 @@ The live House Skills plugin root is `codex-marketplace/plugins/house-skills/ski
 Current control plane:
 
 - `codex-marketplace/plugins/house-skills/skills/house-skills`
-- `codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json`
-- `codex-marketplace/plugins/house-skills/skills/house-skills/references/source-map.md`
+- `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
+- `codex-marketplace/plugins/house-skills/references/source-map.md`
 
 Current skill inventory:
 

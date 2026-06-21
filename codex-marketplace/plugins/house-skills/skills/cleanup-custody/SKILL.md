@@ -1,4 +1,4 @@
----
+﻿---
 name: cleanup-custody
 description: Use this skill to classify whether a workspace or repository surface should stay live, move to cold store, move to governed trash, be deleted now, or block and route to an owning authority.
 metadata:
@@ -92,3 +92,4 @@ When applying this posture, report:
 - calling cleanup GREEN while residue or stale indexes remain;
 - calling issue-backed cleanup GREEN while observable repo/workspace state still contradicts the issue goal;
 - treating clean status, remote-head equality, changed-file lists, or validation claims as substitutes for issue-goal conformance.
+

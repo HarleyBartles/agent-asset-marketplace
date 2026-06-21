@@ -1,6 +1,13 @@
 ---
 name: wild-bunch-browser-game
 description: bridge Wild Bunch to browser-game implementation and QA when work touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, dev-server checks, screenshot QA, or agent-browser verification. Use to keep browser rendering as a presentation adapter over authoritative Wild Bunch game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend, game-playtest, and agent-browser where installed, and avoid turning UI or renderer code into domain truth.
+metadata:
+  origin: first_party
+  source_author: Harley Bartles
+  source_license: MIT
+  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
+  source_path: sources/first_party/skills/wild-bunch-browser-game/SKILL.md
+  content_mode: verbatim
 ---
 
 # Wild Bunch Browser Game

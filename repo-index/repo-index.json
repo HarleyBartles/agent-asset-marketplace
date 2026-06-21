@@ -243,7 +243,7 @@
         "sources/first_party/skills/house-skills/intake.json"
       ],
       "license_reference": "first-party license declared in codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-      "bundle_manifest": "codex-marketplace/plugins/house-skills/skills/house-skills/references/bundle-manifest.json",
+      "bundle_manifest": "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/house-skills/skills",
       "provenance_refs": [
         "provenance/house-skills.md"

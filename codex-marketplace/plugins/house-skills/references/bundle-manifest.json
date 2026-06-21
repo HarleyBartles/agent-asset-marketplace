@@ -12,11 +12,11 @@
       "canonical_name": "house-skills",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/house-skills/skills/house-skills",
+      "canonical_source_path": "sources/first_party/skills/house-skills",
       "local_path": "skills/house-skills",
       "lane": "Base and control plane",
       "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md",
+      "source_path": "sources/first_party/skills/house-skills/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
