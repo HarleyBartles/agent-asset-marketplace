@@ -1,45 +1,30 @@
 {
   "bundle_name": "superpowers-plus",
-  "bundle_version": "5.1.0",
-  "bundle_type": "third-party-codex-plugin-projection",
-  "marketplace_root": ".agents/plugins/marketplace.json",
+  "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-  "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-  "source_tag": "v5.1.0",
-  "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-  "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
-  "source_of_truth": [
-    "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-    "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-    "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-    "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-    "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json"
+  "is_mega_pack": true,
+  "mega_pack_for": "superpowers",
+  "source_families": [
+    "house-skills",
+    "superpowers"
   ],
-  "repo_index": {
-    "source_ledger": [
-      "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
-      "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-      "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-      "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-      "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-      "sources/first_party/skills/architecture-superpowers/SKILL.md",
-      "sources/first_party/skills/ecc-superpowers/SKILL.md"
-    ],
-    "provenance_refs": [
-      "provenance/superpowers-plus.md",
-      "codex-marketplace/plugins/superpowers-plus/references/provenance-map.json"
-    ],
-    "agents_md": null,
-    "registry_alignment": {
-      "status": "aligned",
-      "note": null
-    }
-  },
-  "candidate_count": 20,
-  "imported_count": 20,
-  "skipped_count": 0,
-  "blocked_count": 0,
   "entries": [
+    {
+      "canonical_name": "architecture-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
+      "local_path": "skills/architecture-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
+    },
     {
       "canonical_name": "brainstorming",
       "source_category": "third_party",
@@ -69,6 +54,21 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/obra-superpowers",
       "source_family": "superpowers"
+    },
+    {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "skills/ecc-superpowers",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "executing-plans",
@@ -104,21 +104,6 @@
       "source_family": "superpowers"
     },
     {
-      "canonical_name": "linear-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-      "local_path": "skills/linear-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/linear-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
       "canonical_name": "github-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -149,30 +134,15 @@
       "source_family": "house-skills"
     },
     {
-      "canonical_name": "unslop-superpowers",
+      "canonical_name": "linear-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-      "local_path": "skills/unslop-superpowers",
+      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
+      "local_path": "skills/linear-superpowers",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
-      "canonical_name": "architecture-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
-      "local_path": "skills/architecture-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
+      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/linear-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -254,6 +224,21 @@
       "source_family": "superpowers"
     },
     {
+      "canonical_name": "unslop-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
+      "local_path": "skills/unslop-superpowers",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
+    },
+    {
       "canonical_name": "using-git-worktrees",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -305,21 +290,6 @@
       "source_family": "superpowers"
     },
     {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "skills/ecc-superpowers",
-      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
       "canonical_name": "writing-plans",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -350,51 +320,11 @@
       "source_family": "superpowers"
     }
   ],
-  "excluded": [
-    {
-      "path": ".claude-plugin",
-      "reason": "Claude harness metadata stays in third-party source custody."
-    },
-    {
-      "path": ".cursor-plugin",
-      "reason": "Cursor harness metadata stays in third-party source custody."
-    },
-    {
-      "path": ".opencode",
-      "reason": "OpenCode harness metadata stays in third-party source custody."
-    },
-    {
-      "path": "gemini-extension.json",
-      "reason": "Gemini harness metadata stays in third-party source custody."
-    },
-    {
-      "path": "CLAUDE.md",
-      "reason": "Claude instructions stay in third-party source custody."
-    },
-    {
-      "path": "GEMINI.md",
-      "reason": "Gemini instructions stay in third-party source custody."
-    },
-    {
-      "path": "hooks",
-      "reason": "Hook definitions are source-only until Codex compatibility is proven."
-    }
-  ],
   "notes": [
-    "Dedicated Superpowers+ projection with the repo-authored ECC router wrapper.",
-    "The bundle keeps Superpowers+ broad while routing ECC workflow-shaped work to the dedicated superpowers-ecc pack.",
-    "The retained upstream snapshot and non-Codex harness surfaces remain in third-party source custody."
+    "Auto-generated mega-pack manifest for the superpowers custody root.",
+    "Curated cross-family entries are preserved from the prior manifest.",
+    "Regenerate with: py -3 tools/generate_mega_packs.py"
   ],
   "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
-  "content_mode": "combined-source",
-  "source_families": [
-    "superpowers",
-    "house-skills"
-  ],
-  "source_family_roots": {
-    "superpowers": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-    "house-skills": "sources/first_party"
-  },
-  "license": "MIT"
+  "plugin_license": "MIT"
 }

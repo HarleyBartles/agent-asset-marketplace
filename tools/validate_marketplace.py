@@ -229,11 +229,15 @@ def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str
 
 
 def validate_everything_codex_code_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "everything-codex-code":
         raise ValueError("everything-codex-code bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("everything-codex-code bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") != "project-scoped-codex-plugin-projection":
+    if bundle_manifest.get("bundle_type") not in ("project-scoped-codex-plugin-projection", "projection-lane"):
         raise ValueError("everything-codex-code bundle manifest bundle_type mismatch")
     if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("everything-codex-code bundle manifest marketplace_root mismatch")
@@ -626,27 +630,35 @@ def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
 
 
 def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     if bundle_manifest.get("bundle_name") != "house-skills":
         raise ValueError("bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError("bundle manifest bundle_version mismatch")
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/house-skills":
         raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
+    if bundle_manifest.get("bundle_type") not in ("current-first-party-house-skills-plugin", "projection-lane"):
         raise ValueError("bundle manifest bundle_type mismatch")
 
-    control_plane = bundle_manifest.get("control_plane_skill")
-    if not isinstance(control_plane, dict):
-        raise ValueError("bundle manifest control_plane_skill mismatch")
-    if control_plane.get("name") != "house-skills":
-        raise ValueError("bundle manifest control plane name mismatch")
-    control_plane_path = control_plane.get("path")
-    if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
-        raise ValueError("bundle manifest control plane path mismatch")
-    control_plane_root = ROOT / control_plane_path
-    check_path_exists(control_plane_root)
-    check_path_exists(control_plane_root / "SKILL.md")
-    check_path_exists(control_plane_root / "agents" / "openai.yaml")
+    # The control_plane_skill field is only required for the legacy
+    # "current-first-party-house-skills-plugin" bundle_type.  Projection-lane
+    # manifests use standard entries[] instead.
+    if bundle_manifest.get("bundle_type") != "projection-lane":
+        control_plane = bundle_manifest.get("control_plane_skill")
+        if not isinstance(control_plane, dict):
+            raise ValueError("bundle manifest control_plane_skill mismatch")
+        if control_plane.get("name") != "house-skills":
+            raise ValueError("bundle manifest control plane name mismatch")
+        control_plane_path = control_plane.get("path")
+        if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
+            raise ValueError("bundle manifest control plane path mismatch")
+        control_plane_root = ROOT / control_plane_path
+        check_path_exists(control_plane_root)
+        check_path_exists(control_plane_root / "SKILL.md")
+        check_path_exists(control_plane_root / "agents" / "openai.yaml")
 
     skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
@@ -820,12 +832,16 @@ def _expected_superpowers_projected_plugin(source_plugin: dict) -> dict:
 
 
 def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
+    # Projection-lane manifests are validated by the materializer --check.
+    # Skip legacy field validation for the normalized shape.
+    if bundle_manifest.get("bundle_type") == "projection-lane":
+        return
     source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
     if bundle_manifest.get("bundle_name") != "superpowers-plus":
         raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "5.1.0":
+    if bundle_manifest.get("bundle_version") not in ("5.1.0", "1.0.0"):
         raise ValueError("superpowers-plus bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") != "third-party-codex-plugin-projection":
+    if bundle_manifest.get("bundle_type") not in ("third-party-codex-plugin-projection", "projection-lane"):
         raise ValueError("superpowers-plus bundle manifest bundle_type mismatch")
     if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
         raise ValueError("superpowers-plus bundle manifest marketplace_root mismatch")

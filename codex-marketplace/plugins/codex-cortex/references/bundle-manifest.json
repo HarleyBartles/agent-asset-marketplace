@@ -373,7 +373,8 @@
   ],
   "notes": [
     "Auto-generated mega-pack manifest for the claude-cortex custody root.",
-    "Do not hand-edit. Regenerate with: py -3 tools/generate_mega_packs.py"
+    "Curated cross-family entries are preserved from the prior manifest.",
+    "Regenerate with: py -3 tools/generate_mega_packs.py"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"
