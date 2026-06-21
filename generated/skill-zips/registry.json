@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 344,
+  "artifact_count": 345,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -2431,13 +2431,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 19281,
-      "source_sha256": "a5fb3f4501f87fc11ff9d7cf2f9324a96f2b4966c4b01270287c8b6d3036d274",
+      "source_bytes": 46848,
+      "source_sha256": "f3f54b6d4847d30bd0c44ae12b5a0c06508ac70b190e42d732e88a9458eedc4c",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 4765,
-      "zip_sha256": "2abe0ad34d48bb250ebb58b943ebe07a948d8842017a29b53ad8d396f37fbdf6"
+      "zip_size_bytes": 5450,
+      "zip_sha256": "f820618f60e23c23a6186ced9dc194bffffd1f946c44a240c894bcf365819399"
     },
     {
       "pack": "house-skills",
@@ -5119,13 +5119,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/ecc-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3726,
-      "source_sha256": "e89c481ed1413a4939b25bf5ce71296d42c1f216427dfc01e0561513f773d8c3",
+      "source_bytes": 3440,
+      "source_sha256": "86e4da266688afa298b160f083289369d8910bfbe541b7634bab5f282ffdadca",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1907,
-      "zip_sha256": "6b1f8008623f8f9b6e1e94d1eac781a1271fa261b6c70e3bd2e02c22a47e797a"
+      "zip_size_bytes": 1831,
+      "zip_sha256": "d1a235a58cbb9188bbfdfe2084233f4166b21a84825b9b60064cdb8a0d9494a9"
     },
     {
       "pack": "superpowers-plus",
@@ -5174,6 +5174,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 1963,
       "zip_sha256": "a12f34160ec7844b79e45b9082633130616d05d874eb84c7af011be8e681abe5"
+    },
+    {
+      "pack": "superpowers-plus",
+      "skill": "inspecting-the-environment",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/superpowers-plus/inspecting-the-environment/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 5786,
+      "source_sha256": "79dfa839476140d19860544fc67ebff95626917bbdef8c4ffac729c03d896d2b",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 2796,
+      "zip_sha256": "974a556041749734107a9ef09189f4f68dd35ee767d8ffa0817ec948f6c77004"
     },
     {
       "pack": "superpowers-plus",
@@ -5279,8 +5295,8 @@
       "overlay_path": "adapters/gpt/superpowers-plus/using-superpowers",
       "zip_path": "generated/skill-zips/superpowers-plus/using-superpowers/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 15810,
-      "source_sha256": "49ec2eea9c1970af4e5ff79d2b93597cee23397c262ee7a25454b78170a438c4",
+      "source_bytes": 15908,
+      "source_sha256": "2ba26b5574ffaf528e841a87eee75dad561dcb777b25aac209f883aacb74a1b0",
       "overlay_file_count": 1,
       "overlay_bytes": 2619,
       "overlay_sha256": "a52131b85dde15a61ba740132a82dc7792e31f4af9263fcb680df4ad296d45b7",
