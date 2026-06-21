@@ -57,7 +57,7 @@
                     {
                         "issue":  "MARK-20",
                         "source_id":  "cleanup-custody-v0.1",
-                        "source_path":  "sources/first_party/core/cleanup-custody",
+                        "source_path":  "sources/first_party/skills/cleanup-custody",
                         "public_name":  "cleanup-custody",
                         "provenance_name":  "legacy profanity-bearing cleanup skill",
                         "scope":  "cleanup-custody"
@@ -65,7 +65,7 @@
                     {
                         "issue":  "MARK-21",
                         "source_id":  "skill-validator-v1",
-                        "source_path":  "sources/first_party/core/skill-validator",
+                        "source_path":  "sources/first_party/skills/skill-validator",
                         "public_name":  "skill-validator",
                         "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
                         "scope":  "skill validation"
@@ -73,7 +73,7 @@
                     {
                         "issue":  "MARK-21",
                         "source_id":  "skill-packager-v1",
-                        "source_path":  "sources/first_party/core/skill-packager",
+                        "source_path":  "sources/first_party/skills/skill-packager",
                         "public_name":  "skill-packager",
                         "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
                         "scope":  "skill packaging"
@@ -198,12 +198,12 @@
                     {
                         "issue":  "WILL-276",
                         "source_id":  "connector-safety-v1.1",
-                        "source_path":  "sources/first_party/core/connector-safety",
+                        "source_path":  "sources/first_party/skills/connector-safety",
                         "public_name":  "connector-safety",
                         "provenance_name":  "MARK-226 canonical first-party source for connector-safety",
                         "scope":  "connector and tool safety blocks, exact-state guarded writes, blocked-write recovery, narrow retries, invalid-attempt handling, and safe-action reporting",
                         "import_state":  "imported",
-                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/core/connector-safety/. House Skills is a projection surface only."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/connector-safety/. House Skills is a projection surface only."
                     },
                     {
                         "issue":  "MARK-30",
@@ -217,7 +217,7 @@
                     {
                         "issue":  "MARK-161",
                         "source_id":  "bootstrap-router-v1",
-                        "source_path":  "sources/first_party/core/bootstrap-router",
+                        "source_path":  "sources/first_party/skills/bootstrap-router",
                         "public_name":  "bootstrap-router",
                         "provenance_name":  "MARK-161 bootstrap-router seed contract",
                         "scope":  "project bootstrap routing and first-turn classification",
@@ -399,7 +399,7 @@
                     {
                         "issue":  "MARK-109",
                         "source_id":  "skill-installer-v1",
-                        "source_path":  "sources/first_party/core/skill-installer",
+                        "source_path":  "sources/first_party/skills/skill-installer",
                         "public_name":  "skill-installer",
                         "provenance_name":  "MARK-109 saved GPT skill zip source package",
                         "scope":  "skill installation handoff orchestration",
@@ -418,7 +418,7 @@
                     {
                         "issue":  "MARK-139",
                         "source_id":  "linear-superpowers-v1",
-                        "source_path":  "sources/first_party/core/linear-superpowers",
+                        "source_path":  "sources/first_party/skills/linear-superpowers",
                         "public_name":  "linear-superpowers",
                         "provenance_name":  "MARK-139 Linear Superpowers compositional skill",
                         "scope":  "Linear issue and track shaping with smallest-applicable workflow selection",
@@ -448,12 +448,12 @@
                     {
                         "issue":  "MARK-142",
                         "source_id":  "github-operations-v1",
-                        "source_path":  "sources/first_party/core/github-operations",
+                        "source_path":  "sources/first_party/skills/github-operations",
                         "public_name":  "github-operations",
                         "provenance_name":  "MARK-226 canonical first-party source for github-operations",
                         "scope":  "GitHub evidence, PR review routing, and publication proof",
                         "import_state":  "imported",
-                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/core/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
+                        "notes":  "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
                     },
                     {
                         "issue":  "MARK-85",

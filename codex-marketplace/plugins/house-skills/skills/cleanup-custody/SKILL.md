@@ -1,9 +1,9 @@
-﻿---
+---
 name: cleanup-custody
 description: Use this skill to classify whether a workspace or repository surface should stay live, move to cold store, move to governed trash, be deleted now, or block and route to an owning authority.
 metadata:
   source-id: cleanup-custody
-  source-path: sources/first_party/core/cleanup-custody/SKILL.md
+  source-path: sources/first_party/skills/cleanup-custody/SKILL.md
   provenance-name: legacy profanity-bearing cleanup skill
 license: "MIT"
 ---
@@ -19,11 +19,11 @@ If older `No Shit` or profanity-bearing naming appears in provenance, treat it a
 
 Use this ladder in order:
 
-1. `keep_live` â€” current source, active doctrine, active code, required index, publication proof, protected evidence, or authoritative operating material.
-2. `move_to_cold_store` â€” retained but inactive material with lawful custody and discoverability.
-3. `move_to_governed_trash` â€” reversible deletion-staging custody with a repo-visible sentinel.
-4. `delete_now` â€” exact disposable residue with no provenance, authority, or future retrieval value.
-5. `block_and_route` â€” protected, ambiguous, actor-owned, source-law-sensitive, or authority-sensitive surfaces.
+1. `keep_live` — current source, active doctrine, active code, required index, publication proof, protected evidence, or authoritative operating material.
+2. `move_to_cold_store` — retained but inactive material with lawful custody and discoverability.
+3. `move_to_governed_trash` — reversible deletion-staging custody with a repo-visible sentinel.
+4. `delete_now` — exact disposable residue with no provenance, authority, or future retrieval value.
+5. `block_and_route` — protected, ambiguous, actor-owned, source-law-sensitive, or authority-sensitive surfaces.
 
 ## Issue-goal conformance gate
 

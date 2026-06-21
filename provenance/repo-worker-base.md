@@ -13,13 +13,13 @@
   validation evidence, publication reporting, and the generic safety/proof
   helpers that repo-backed work needs.
 - `boring-loop` is projected here from the canonical first-party source at
-  `sources/first_party/core/boring-loop/` and keeps the same retained loop
+  `sources/first_party/skills/boring-loop/` and keeps the same retained loop
   cadence, readiness, queue grooming, and specialist-routing doctrine on the
   worker-facing plugin surface.
 - `connector-safety` is projected here from the canonical first-party source
-  at `sources/first_party/core/connector-safety/` so connector and tool
+  at `sources/first_party/skills/connector-safety/` so connector and tool
   writes stay narrow, auditable, and recoverable.
 - `github-operations` is projected here from the canonical first-party source
-  at `sources/first_party/core/github-operations/` so GitHub evidence,
+  at `sources/first_party/skills/github-operations/` so GitHub evidence,
   publication proof, and merge/readiness checks have a canonical non-House-Skills
   home.

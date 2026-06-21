@@ -3,7 +3,7 @@ name: connector-safety
 description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a write is blocked, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify or step back up the connector discovery chain.
 metadata:
   source-id: connector-safety-v1.1
-  source-path: sources/first_party/core/connector-safety/SKILL.md
+  source-path: sources/first_party/skills/connector-safety/SKILL.md
   provenance-name: MARK-226 canonical first-party source for connector-safety
 license: "MIT"
 ---
@@ -93,6 +93,25 @@ When creating child objects such as documents, comments, drafts, attachments, ta
 * Read back the parent or child after enrichment.
 
 This is safer than creating a large fully populated child object in one call because the parent binding and child identity are proven before the larger content mutation.
+
+## Blocked-write recovery ladder
+
+When a connector write is blocked, do not claim success. Follow this explicit recovery ladder:
+
+1. Do not claim success from a blocked write.
+2. Read the exact target if possible.
+3. Retry once only with a narrower one-field write.
+4. If blocked, step back to bounded parent discovery.
+5. Discover the target from that parent surface.
+6. Read the exact target.
+7. Read dependent connector vocabulary before writing: labels, statuses, projects, folders, users, branches, milestones, or other connector-owned values.
+8. Perform one bounded write using discovered stable values.
+9. Read back from the mutated target.
+10. Stop after repeated parent-discovered failure and report observed state.
+
+Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one-field write -> readback.
+
+Concrete Linear example: `Linear team discovery -> issue discovery from team -> exact issue read -> team label vocabulary read -> label-only write -> readback`.
 
 ## Upstream discovery fallback
 

@@ -8,10 +8,10 @@ deployment output.
 ## Layout
 
 - `first_party/` holds editable first-party source custody.
-- `first_party/core/` holds the generic reusable first-party skills that are
-  shared across marketplace projections.
-- `first_party/skills/<skill-name>/` holds canonical first-party skill roots when a
-  skill is owned outside the House Skills bundle.
+- `first_party/skills/<skill-name>/` is the single tree for all first-party
+  skills, including generic reusable worker machinery and family-owned or
+  bundle-specific roots. Every directory under `skills/` must contain a
+  `SKILL.md`.
 - `first_party/skills/house-skills/` is the current House Skills source ledger.
 - `third_party/` holds retained third-party source custody.
 - `third_party/unslop/`, `third_party/game-studio/`, `third_party/dotnet-claude-kit/`,

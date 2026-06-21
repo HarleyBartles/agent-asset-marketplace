@@ -3,7 +3,7 @@ name: github-operations
 description: Verify GitHub repository evidence without taking over coding workflow routing. Use after a Linear/Codex task has a GitHub PR, branch, commit, review, merge, status, or file-state question; when checking publication proof, PR diff scope, mergeability, CI/status evidence, final main state, or GitHub-specific closure proof. Do not use as the default issue/dispatch controller for coding work when Linear/Codex is available; route worker state and issue planning through the Linear/Codex control plane first.
 metadata:
   source-id: github-operations-v1
-  source-path: sources/first_party/core/github-operations/SKILL.md
+  source-path: sources/first_party/skills/github-operations/SKILL.md
   provenance-name: MARK-226 canonical first-party source for github-operations
 license: "MIT"
 ---

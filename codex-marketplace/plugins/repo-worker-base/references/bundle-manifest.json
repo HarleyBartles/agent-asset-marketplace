@@ -18,17 +18,17 @@
     {
       "name": "boring-loop",
       "lane": "Base",
-      "path": "sources/first_party/core/boring-loop"
+      "path": "sources/first_party/skills/boring-loop"
     },
     {
       "name": "connector-safety",
       "lane": "Base",
-      "path": "sources/first_party/core/connector-safety"
+      "path": "sources/first_party/skills/connector-safety"
     },
     {
       "name": "github-operations",
       "lane": "Base",
-      "path": "sources/first_party/core/github-operations"
+      "path": "sources/first_party/skills/github-operations"
     },
     {
       "name": "agent-introspection-debugging",

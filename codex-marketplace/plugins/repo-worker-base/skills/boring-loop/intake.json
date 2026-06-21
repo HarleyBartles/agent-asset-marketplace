@@ -19,3 +19,4 @@
   "gpt_overlay": "direct export by default",
   "notes": "Use a GPT overlay only if later validation shows a GPT runtime safety or behavior gap."
 }
+

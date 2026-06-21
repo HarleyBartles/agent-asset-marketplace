@@ -84,7 +84,7 @@ The split is deliberate:
 - `references/provenance-map.json`
 
 `skills/linear-superpowers/` is copied from the canonical House Skills source
-at `sources/first_party/core/linear-superpowers/`.
+at `sources/first_party/skills/linear-superpowers/`.
 `skills/github-superpowers/` is copied from the canonical House Skills source
 at `sources/first_party/skills/github-superpowers/`.
 `skills/unslop-superpowers/` is copied from the canonical House Skills source

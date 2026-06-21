@@ -1,7 +1,7 @@
-﻿{
+{
   "issue": "MARK-152",
   "skill": "boring-loop",
-  "canonical_source_path": "sources/first_party/core/boring-loop",
+  "canonical_source_path": "sources/first_party/skills/boring-loop",
   "public_name": "boring-loop",
   "provenance_name": "MARK-152 Boring Loop beta first-party source",
   "scope": [
@@ -13,10 +13,9 @@
     "route-to-specialist guidance"
   ],
   "projected_paths": [
-    "sources/first_party/core/boring-loop",
-    "sources/first_party/core/boring-loop"
+    "sources/first_party/skills/boring-loop",
+    "sources/first_party/skills/boring-loop"
   ],
   "gpt_overlay": "direct export by default",
   "notes": "Use a GPT overlay only if later validation shows a GPT runtime safety or behavior gap."
 }
-

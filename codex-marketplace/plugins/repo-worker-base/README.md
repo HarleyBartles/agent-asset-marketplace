@@ -26,7 +26,7 @@ generic repo-worker behavior plus the generic safety/proof helpers that repo
 work routinely needs.
 `boring-loop` is a projected first-party coordination skill for keeping work
 small, honest, and routed to the right specialist.
-`connector-safety` is projected from `sources/first_party/core/connector-safety/`
+`connector-safety` is projected from `sources/first_party/skills/connector-safety/`
 as the generic connector/tool safety surface.
-`github-operations` is projected from `sources/first_party/core/github-operations/`
+`github-operations` is projected from `sources/first_party/skills/github-operations/`
 as the generic GitHub proof surface.

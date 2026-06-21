@@ -5,9 +5,9 @@ This plugin keeps the repo-worker-base project thin and first-party while adding
 ## First-party source roots
 
 - `sources/first_party/skills/repo-worker-base/SKILL.md`
-- `sources/first_party/core/boring-loop/SKILL.md`
-- `sources/first_party/core/connector-safety/SKILL.md`
-- `sources/first_party/core/github-operations/SKILL.md`
+- `sources/first_party/skills/boring-loop/SKILL.md`
+- `sources/first_party/skills/connector-safety/SKILL.md`
+- `sources/first_party/skills/github-operations/SKILL.md`
 
 ## ECC third-party source roots
 
@@ -119,9 +119,9 @@ The following 43 skills are projected from ECC (affaan-m/ECC) third-party custod
 | Lane | Canonical name | Component version | Source path | Local path | Role |
 | --- | --- | --- | --- | --- | --- |
 | Base | repo-worker-base | 1.0.0 | `sources/first_party/skills/repo-worker-base/SKILL.md` | `skills/repo-worker-base/SKILL.md` | repo worker hygiene |
-| Dependency | boring-loop | v1 | `sources/first_party/core/boring-loop/SKILL.md` | `skills/boring-loop/SKILL.md` | boring loop routing |
-| Dependency | connector-safety | current | `sources/first_party/core/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
-| Dependency | github-operations | current | `sources/first_party/core/github-operations/SKILL.md` | `skills/github-operations/SKILL.md` | GitHub proof |
+| Dependency | boring-loop | v1 | `sources/first_party/skills/boring-loop/SKILL.md` | `skills/boring-loop/SKILL.md` | boring loop routing |
+| Dependency | connector-safety | current | `sources/first_party/skills/connector-safety/SKILL.md` | `skills/connector-safety/SKILL.md` | connector safety |
+| Dependency | github-operations | current | `sources/first_party/skills/github-operations/SKILL.md` | `skills/github-operations/SKILL.md` | GitHub proof |
 
 ### ECC components (verbatim)
 

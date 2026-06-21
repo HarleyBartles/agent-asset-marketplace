@@ -45,7 +45,7 @@ The bundle does not replace the archived source ledger. Current version lives in
 
 ## Shared loop control
 
-- `sources/first_party/core/boring-loop`
+- `sources/first_party/skills/boring-loop`
 
 Marketplace exports are generated, not hand-edited:
 

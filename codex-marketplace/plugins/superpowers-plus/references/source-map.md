@@ -26,7 +26,7 @@ Retained third-party custody:
 
 Retained first-party custody:
 
-- `sources/first_party/core/linear-superpowers/`
+- `sources/first_party/skills/linear-superpowers/`
 - `sources/first_party/skills/github-superpowers/`
 - `sources/first_party/skills/unslop-superpowers/`
 - `sources/first_party/skills/architecture-superpowers/`
@@ -36,7 +36,7 @@ Projected pack skills:
 
 | Skill | Source path | Pack path | Notes |
 | --- | --- | --- | --- |
-| linear-superpowers | `sources/first_party/core/linear-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers/` | Source-backed first-party Linear shaping skill. |
+| linear-superpowers | `sources/first_party/skills/linear-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers/` | Source-backed first-party Linear shaping skill. |
 | github-superpowers | `sources/first_party/skills/github-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/github-superpowers/` | Source-backed first-party GitHub proof skill. |
 | unslop-superpowers | `sources/first_party/skills/unslop-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/` | Source-backed first-party anti-slop skill. |
 | architecture-superpowers | `sources/first_party/skills/architecture-superpowers/` | `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/` | Source-backed first-party architecture review skill. |

@@ -183,13 +183,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "core" / "linear-superpowers"
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "linear-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
             projected_skill_root = plugin_root / "skills" / "linear-superpowers"
             skill_md = _first_party_projection_frontmatter(
                 "linear-superpowers",
-                "sources/first_party/core/linear-superpowers/SKILL.md",
+                "sources/first_party/skills/linear-superpowers/SKILL.md",
                 "MARK-139 Linear Superpowers compositional skill",
                 "Use when the Linear packet needs the smallest applicable Superpowers router.",
             )
@@ -287,7 +287,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "linear-superpowers",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/core/linear-superpowers",
+                        "canonical_source_path": "sources/first_party/skills/linear-superpowers",
                         "local_path": "skills/linear-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
