@@ -656,8 +656,6 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         raise ValueError("bundle manifest plugin_root mismatch")
     if bundle_manifest.get("bundle_type") != "current-first-party-house-skills-plugin":
         raise ValueError("bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("skills_root") != "codex-marketplace/plugins/house-skills/skills":
-        raise ValueError("bundle manifest skills_root mismatch")
 
     control_plane = bundle_manifest.get("control_plane_skill")
     if not isinstance(control_plane, dict):
@@ -674,30 +672,31 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
 
     skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
     current_skill_dirs = sorted(
-        path.name for path in skill_dir.iterdir() if path.is_dir() and path.name != "house-skills"
+        path.name for path in skill_dir.iterdir() if path.is_dir()
     )
     if any(re.match(r"^v\d", path.name) for path in skill_dir.rglob("*") if path.is_dir()):
         raise ValueError("house-skills plugin root still contains live versioned subdirectories")
 
-    skills = bundle_manifest.get("skills", [])
-    if bundle_manifest.get("skill_count") != len(skills):
-        raise ValueError("bundle manifest skill_count mismatch")
-    if len(skills) != len(current_skill_dirs):
-        raise ValueError("bundle manifest skill inventory count mismatch")
+    entries = bundle_manifest.get("entries", [])
+    if not isinstance(entries, list):
+        raise ValueError("bundle manifest entries must be a list")
 
     manifest_names: list[str] = []
-    for entry in skills:
+    for entry in entries:
         if not isinstance(entry, dict):
-            raise ValueError("bundle manifest skills must contain objects")
-        name = entry.get("name")
+            raise ValueError("bundle manifest entries must contain objects")
+        name = entry.get("canonical_name")
         lane = entry.get("lane")
-        path = entry.get("path")
+        source_path = entry.get("canonical_source_path")
+        local_path = entry.get("local_path")
         if not name or not isinstance(name, str):
-            raise ValueError("bundle manifest skill entry is missing a name")
+            raise ValueError("bundle manifest entry is missing canonical_name")
         if not lane or not isinstance(lane, str):
-            raise ValueError(f"bundle manifest skill {name} is missing a lane")
-        if not path or not isinstance(path, str):
-            raise ValueError(f"bundle manifest skill {name} is missing a path")
+            raise ValueError(f"bundle manifest entry {name} is missing a lane")
+        if not source_path or not isinstance(source_path, str):
+            raise ValueError(f"bundle manifest entry {name} is missing canonical_source_path")
+        if not local_path or not isinstance(local_path, str):
+            raise ValueError(f"bundle manifest entry {name} is missing local_path")
         expected_lane = (
             "Adventures"
             if name.startswith("adventures-")
@@ -708,17 +707,18 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
             else "Base and control plane"
         )
         if lane != expected_lane:
-            raise ValueError(f"bundle manifest skill {name} lane mismatch")
-        check_path_exists(ROOT / path)
-        skill_root = ROOT / path
-        if skill_root.name != name:
-            raise ValueError(f"bundle manifest skill {name} path mismatch")
-        check_path_exists(skill_root / "SKILL.md")
-        check_path_exists(skill_root / "agents" / "openai.yaml")
+            raise ValueError(f"bundle manifest entry {name} lane mismatch")
+        check_path_exists(ROOT / source_path)
+        # local_path is relative to plugin root
+        projected_root = ROOT / "codex-marketplace/plugins/house-skills" / local_path
+        if projected_root.name != name:
+            raise ValueError(f"bundle manifest entry {name} local_path mismatch")
+        check_path_exists(projected_root / "SKILL.md")
+        check_path_exists(projected_root / "agents" / "openai.yaml")
         manifest_names.append(name)
 
     if sorted(manifest_names) != current_skill_dirs:
-        raise ValueError("bundle manifest skill inventory does not match the live plugin root")
+        raise ValueError("bundle manifest entry inventory does not match the live plugin root")
 
     archive_roots = bundle_manifest.get("archive_roots", [])
     if archive_roots:

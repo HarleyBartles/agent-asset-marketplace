@@ -80,6 +80,34 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "source_family": "house-skills"
+    },
+    {
+      "canonical_name": "ecc-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
+      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
+    },
+    {
+      "canonical_name": "inspecting-the-environment",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/inspecting-the-environment/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
     }
   ],
   "adapted_projections": [
@@ -133,21 +161,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
-    },
-    {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers",
-      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "adapted_author": "Harley Bartles",
-      "copy_expectation": "adapted_from_source",
-      "provenance_note": "Projected as the repo-authored ECC Superpowers router wrapper that points to the dedicated superpowers-ecc pack.",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
     }
   ],
   "source_only_surfaces": [
@@ -182,7 +195,7 @@
   ],
   "notes": [
     "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
-    "The active projection adapts the using-superpowers, finishing-a-development-branch, and verification-before-completion workflows for Codex marketplace precedence, publication rules, and verified-plan backstop behavior, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, architecture-superpowers, and repo-authored ecc-superpowers projections.",
+    "The active projection adapts the using-superpowers, finishing-a-development-branch, and verification-before-completion workflows for Codex marketplace precedence, publication rules, and verified-plan backstop behavior, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, architecture-superpowers, ecc-superpowers, and inspecting-the-environment projections.",
     "The harness-specific surfaces remain preserved in third-party source custody.",
     "The retained snapshot keeps the broader package boundary for provenance and review."
   ]
