@@ -30,8 +30,16 @@ Bundle-manifest entries for imported or retained projection content must declare
 
 - `verbatim` means the retained source snapshot content and the projected plugin
   content must remain byte/hash equivalent.
-- `adapted` means equality is not expected, but the entry must carry an
-  explicit adaptation note and a provenance trail.
+- `normalised` means minimal compliance adaptation only (codex-safe shape,
+  openai-spec compliance, rich metadata, repointing moved-file links). The skill
+  body is unchanged beyond link repointing. Ownership stays with the upstream
+  author. The entry must carry an explicit adaptation note naming the
+  normalisation scope.
+- `adapted` means substantive skill body changes beyond compliance. Equality is
+  not expected, but the entry must carry an explicit adaptation note and a
+  provenance trail.
+- First-party entries are always `verbatim`. If a first-party skill needs to
+  change, fix the source under `sources/first_party/` and regenerate.
 - Projection roots under `codex-marketplace/plugins/` are not canonical source
   custody; they must stay aligned with the retained source/provenance contract
   declared in the manifest.
