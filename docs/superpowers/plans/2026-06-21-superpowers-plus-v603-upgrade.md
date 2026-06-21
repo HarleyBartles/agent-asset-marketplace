@@ -157,4 +157,3 @@ If any generator or validator command differs in the current repo, use the actua
 - [ ] **Step 3: Commit, push, and open a draft PR**
 
 Publish the branch with the implementation note included in the PR body, then return the PR URL, branch name, changed files by lane, validation results, and any remaining blockers.
-
