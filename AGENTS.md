@@ -49,6 +49,10 @@ Linear remains the control plane for issue state, worker state, review posture, 
 
 Generated artifacts are downstream outputs unless the repo explicitly says otherwise.
 
+## Custody and projection doctrine
+
+`docs/custody-and-projection-doctrine.md` is required reading for agents working in this repo. It defines source custody rules, the three provenance modes (`verbatim`, `normalised`, `adapted`), plugin curation rules, mega-pack inclusion rules, the projection layer model, the BAU workflow, first-party orphan detection, and the zip projection lanes. Read it before adding, updating, or projecting skills.
+
 ## Path meanings
 
 `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only.
