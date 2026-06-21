@@ -61,17 +61,30 @@ package mirrors. Harley curates which entries appear in which plugin.
 
 ## Mega-packs
 
-Two mega-packs carry broad bundles:
+Seven mega-packs carry broad bundles, one per custody root. The
+custody→mega-pack mapping is declared in
+`codex-marketplace/custody-mega-pack-registry.json` and drives automatic
+mega-pack manifest generation:
 
-- **`house-skills`** is the first-party mega-pack. Every first-party skill goes
-  in `house-skills` AND wherever else it is bundled. If a first-party skill is
-  projected into a topical plugin, it must also appear in `house-skills`.
-- **`superpowers-plus`** is the mega-pack for the obra/superpowers source
-  family. Superpowers-family entries are bundled there in addition to any
-  topical plugin they appear in.
+- **`house-skills`** — first-party mega-pack. Every first-party skill goes
+  in `house-skills` AND wherever else it is bundled.
+- **`codex-cortex`** — claude-cortex source family mega-pack.
+- **`everything-codex-code`** — ecc source family mega-pack.
+- **`superpowers-plus`** — superpowers source family mega-pack. Also
+  carries curated cross-family first-party projections.
+- **`game-studio`** — game-studio source family mega-pack.
+- **`dotnet-kit`** — dotnet-claude-kit source family mega-pack.
+- **`unslop-plus`** — unslop source family mega-pack.
+
+Mega-pack manifests are **generated**, not hand-edited. Run
+`py -3 tools/generate_mega_packs.py` to regenerate them from the union of
+plugin entries by custody root. The generator preserves curated cross-family
+entries (e.g. first-party skills projected into `superpowers-plus`).
 
 Mega-packs are inclusion rules, not exclusion rules. A skill appearing in a
-mega-pack may also appear in other plugins.
+mega-pack may also appear in other plugins. Validation
+(`validate_mega_pack_inclusion`) fails if a topical plugin entry is missing
+from its mega-pack.
 
 ## Projection layer model
 
@@ -90,15 +103,23 @@ drives projection.
 
 The business-as-usual target for adding or updating a skill is:
 
-1. **Write source** — add or edit the skill under `sources/first_party/` or
-   snapshot it under `sources/third_party/`.
-2. **Add manifest entry** — declare the entry in the marketplace manifest with
-   its provenance mode and target plugin(s).
-3. **Add GPT decision** — record the GPT export lane decision (see below).
-4. **Run one tool** — regenerate the projection with the designated tooling
+1. **Write source** — add or edit the skill under `sources/first_party/skills/`
+   or snapshot it under `sources/third_party/`.
+2. **Add manifest entry** — declare the entry in the plugin's
+   `references/bundle-manifest.json` with `canonical_name`,
+   `source_category`, `content_mode`, `source_family`,
+   `canonical_source_path` (directory-level), and `local_path`.
+3. **Regenerate mega-packs** — run `py -3 tools/generate_mega_packs.py` so
+   the entry appears in its custody root's mega-pack automatically.
+4. **Add GPT decision** — record the GPT export lane decision (see below).
+5. **Run one tool** — regenerate the projection with the designated tooling
    (e.g. `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`).
-5. **Validate** — run the repo validator and confirm the projection matches
-   custody and manifest.
+6. **Regenerate proof surfaces** — run
+   `py -3 tools/generate_provenance_maps.py` and
+   `py -3 tools/generate_source_maps.py`.
+7. **Validate** — run `py -3 tools/validate_marketplace.py` and
+   `py -3 tools/materialize_projection.py --check` to confirm the projection
+   matches custody and manifest.
 
 No Python edits for normal skill work. If the workflow requires editing Python
 to land a skill, that is a tooling gap to raise, not a step to silently absorb.
@@ -106,11 +127,27 @@ to land a skill, that is a tooling gap to raise, not a step to silently absorb.
 ## First-party orphan detection
 
 A first-party skill that exists in source custody but is missing from
-projection is an orphan. The tooling is expected to detect first-party
-orphans: skills present under `sources/first_party/` with no corresponding
-projection entry. Orphans should be surfaced by validation, not silently
-ignored. The fix is to add the manifest entry and regenerate, not to delete
-the source.
+projection is an orphan. The validator (`detect_first_party_orphans` in
+`tools/validate_marketplace.py`) scans `sources/first_party/skills/` for
+directories with `SKILL.md` and checks that each one appears as a
+`first_party` entry in some plugin manifest. Orphans cause validation to
+fail with a clear list of the missing skills. The fix is to add the manifest
+entry and regenerate, not to delete the source.
+
+## Manifest shape validation
+
+All 20 plugin manifests must use the directory-level `entries[]` projection-lane
+shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests
+with legacy shapes (`skills[]`, `components[]`, or file-level
+`canonical_source_path` ending in a file suffix). This ensures the materializer
+never silently skips a plugin.
+
+## Proof surface generation
+
+`provenance-map.json` and `source-map.md` are generated from bundle manifests,
+not hand-maintained. Run `py -3 tools/generate_provenance_maps.py` and
+`py -3 tools/generate_source_maps.py` to regenerate them. Both generators have
+`--check` mode that fails on drift.
 
 ## Zip projection lanes
 
