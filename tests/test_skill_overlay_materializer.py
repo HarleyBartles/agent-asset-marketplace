@@ -66,6 +66,55 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
             finally:
                 temp_handle.cleanup()
 
+    def test_stage_overlay_tree_applies_line_edits_and_detects_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write(
+                source_root / "SKILL.md",
+                "line 1\nline 2\nline 3\nline 4\nline 5\n",
+            )
+            _write(
+                overlay_root / "overlay.yaml",
+                (
+                    "schema_version: 2\n"
+                    "edits:\n"
+                    "  - path: SKILL.md\n"
+                    "    op: replace\n"
+                    "    start_line: 2\n"
+                    "    end_line: 3\n"
+                    "    expected_lines:\n"
+                    "      - line 2\n"
+                    "      - line 3\n"
+                    "    replace_lines:\n"
+                    "      - swapped 2\n"
+                    "      - swapped 3\n"
+                    "  - path: SKILL.md\n"
+                    "    op: insert_after\n"
+                    "    line: 4\n"
+                    "    anchor: line 4\n"
+                    "    insert_lines:\n"
+                    "      - inserted 4\n"
+                    "      - inserted 5\n"
+                ),
+            )
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                expected = "line 1\nswapped 2\nswapped 3\nline 4\ninserted 4\ninserted 5\nline 5\n"
+                self.assertEqual((expected_root / "SKILL.md").read_text(encoding="utf-8"), expected)
+                self.assertEqual((destination_root / "SKILL.md").read_text(encoding="utf-8"), expected)
+            finally:
+                temp_handle.cleanup()
+
+            _write(source_root / "SKILL.md", "line 1\nline 2\nchanged 3\nline 4\nline 5\n")
+            with self.assertRaises(ValueError):
+                stage_overlay_tree(source_root, overlay_root)
+
     def test_stage_overlay_tree_preserves_existing_line_endings(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
