@@ -1,0 +1,51 @@
+{
+  "bundle_name": "feature-sliced-design",
+  "bundle_version": "1.0.0",
+  "source_families": [
+    "feature-sliced"
+  ],
+  "notes": [
+    "Standalone FSD v2.1 skill for frontend architecture with layers, slices, and segments.",
+    "Vendored verbatim from feature-sliced/skills at commit 653e7f3187eac51311652bf787a72bcf56325eea.",
+    "Added as part of MARK-290."
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "bundle_type": "projection-lane",
+  "is_mega_pack": false,
+  "entries": [
+    {
+      "canonical_name": "feature-sliced-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+      "local_path": "skills/feature-sliced-design",
+      "import_status": "imported",
+      "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/feature-sliced/skills",
+      "source_family": "feature-sliced",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    }
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/feature-sliced-design/SOURCE.md",
+    "source_ledger": [
+      "sources/third_party/feature-sliced/upstream/LICENSE",
+      "sources/third_party/feature-sliced/upstream/source-custody.md"
+    ],
+    "license_path": "codex-marketplace/plugins/feature-sliced-design/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/feature-sliced-design/skills",
+    "provenance_refs": [
+      "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

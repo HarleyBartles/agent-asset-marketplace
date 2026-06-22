@@ -43,6 +43,13 @@
       "local_path": "skills/e2e-testing"
     },
     {
+      "canonical_name": "feature-sliced-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+      "local_path": "skills/feature-sliced-design"
+    },
+    {
       "canonical_name": "interaction-design",
       "source_category": "third_party",
       "content_mode": "verbatim",

@@ -181,6 +181,15 @@
       "plugin_root": "codex-marketplace/plugins/planning-pack",
       "manifest_path": "codex-marketplace/plugins/planning-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 20,
+      "name": "feature-sliced-design",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
+      "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
+      "manifest_path": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

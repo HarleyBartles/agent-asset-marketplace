@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 461,
+  "artifact_count": 463,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -3368,6 +3368,22 @@
       "zip_sha256": "f54cd490ff0b43483835a2c3f2b6621ca2e399a286e01c155b8da6c82e02c146"
     },
     {
+      "pack": "feature-sliced-design",
+      "skill": "feature-sliced-design",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/feature-sliced-design/skills/feature-sliced-design",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/feature-sliced-design/feature-sliced-design/skill.zip",
+      "source_file_count": 8,
+      "source_bytes": 103069,
+      "source_sha256": "db8f11035220665b7bca4f72acb261ee4b2fac94eb63bf7ac4724d13eabdca2e",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 39987,
+      "zip_sha256": "571d016aab8c5c36a73aceab799510cfbdf2cf16b140a39b9e5b0b05bdb6e419"
+    },
+    {
       "pack": "frontend-pack",
       "skill": "accessibility",
       "export_mode": "direct",
@@ -3462,6 +3478,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 3017,
       "zip_sha256": "b833de2f7b3204d99fef47798e289fa81eeab6d19c526da703d0aa80d4ef185c"
+    },
+    {
+      "pack": "frontend-pack",
+      "skill": "feature-sliced-design",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/frontend-pack/feature-sliced-design/skill.zip",
+      "source_file_count": 8,
+      "source_bytes": 103069,
+      "source_sha256": "db8f11035220665b7bca4f72acb261ee4b2fac94eb63bf7ac4724d13eabdca2e",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 39987,
+      "zip_sha256": "571d016aab8c5c36a73aceab799510cfbdf2cf16b140a39b9e5b0b05bdb6e419"
     },
     {
       "pack": "frontend-pack",

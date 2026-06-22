@@ -688,6 +688,28 @@
         "status": "aligned",
         "note": null
       }
+    },
+    {
+      "name": "feature-sliced-design",
+      "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
+      "plugin_manifest": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/feature-sliced-design/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/feature-sliced/upstream/LICENSE",
+        "sources/third_party/feature-sliced/upstream/source-custody.md"
+      ],
+      "license_path": "codex-marketplace/plugins/feature-sliced-design/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/feature-sliced-design/skills",
+      "provenance_refs": [
+        "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
     }
   ]
 }

@@ -3,12 +3,14 @@
   "bundle_version": "1.0.0",
   "source_families": [
     "claude-cortex",
-    "ecc"
+    "ecc",
+    "feature-sliced"
   ],
   "notes": [
     "Frontend application pack covering React performance, accessibility, UX review, interaction design, webapp testing, and ECC frontend skills.",
     "The retained upstream skills keep their source-path references intact in the projected pack.",
-    "ECC skills (accessibility, angular-developer, browser-qa, design-system, e2e-testing, make-interfaces-feel-better, react-patterns, react-testing, swiftui-patterns, vue-patterns, windows-desktop-e2e) were added as part of MARK-245."
+    "ECC skills (accessibility, angular-developer, browser-qa, design-system, e2e-testing, make-interfaces-feel-better, react-patterns, react-testing, swiftui-patterns, vue-patterns, windows-desktop-e2e) were added as part of MARK-245.",
+    "Feature-Sliced Design skill (feature-sliced-design) was added as part of MARK-290 from feature-sliced/skills upstream."
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -102,6 +104,21 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/affaan-m/ECC",
       "source_family": "ecc",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "feature-sliced-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+      "local_path": "skills/feature-sliced-design",
+      "import_status": "imported",
+      "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/feature-sliced/skills",
+      "source_family": "feature-sliced",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
