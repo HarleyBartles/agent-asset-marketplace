@@ -1,6 +1,6 @@
 # Source
 
-This pack projects the MARK-250 ECC data/platform skills slice from retained ECC source custody into a Codex marketplace pack.
+This pack projects the MARK-250 ECC data/platform skills slice plus an adapted PlanetScale PostgreSQL skill from retained source custody into a Codex marketplace pack.
 
 ## Source custody
 
@@ -13,6 +13,7 @@ This pack projects the MARK-250 ECC data/platform skills slice from retained ECC
   - `sources/third_party/ecc/upstream/skills/dashboard-builder/`
   - `sources/third_party/ecc/upstream/skills/data-throughput-accelerator/`
   - `sources/third_party/ecc/upstream/skills/database-migrations/`
+  - `sources/third_party/planetscale/database-skills/upstream/skills/postgres/`
   - `sources/third_party/ecc/upstream/skills/postgres-patterns/`
   - `sources/third_party/ecc/upstream/skills/pytorch-patterns/`
   - `sources/third_party/ecc/upstream/skills/quality-nonconformance/`
@@ -28,6 +29,13 @@ This pack projects the MARK-250 ECC data/platform skills slice from retained ECC
 - Categorization: `docs/superpowers/plans/mark-241-skill-categorization.json`
 - Provenance note: `provenance/ecc.md`
 
+### PlanetScale
+
+- Retained upstream root: `sources/third_party/planetscale/database-skills/upstream/`
+- Retained skill root:
+  - `sources/third_party/planetscale/database-skills/upstream/skills/postgres/`
+- Provenance note: `provenance/data-platform-pack.md`
+
 ## Projection surfaces
 
 - Codex plugin root: `codex-marketplace/plugins/data-platform-pack/`
@@ -38,6 +46,7 @@ This pack projects the MARK-250 ECC data/platform skills slice from retained ECC
   - `codex-marketplace/plugins/data-platform-pack/skills/dashboard-builder/`
   - `codex-marketplace/plugins/data-platform-pack/skills/data-throughput-accelerator/`
   - `codex-marketplace/plugins/data-platform-pack/skills/database-migrations/`
+  - `codex-marketplace/plugins/data-platform-pack/skills/postgres/`
   - `codex-marketplace/plugins/data-platform-pack/skills/postgres-patterns/`
   - `codex-marketplace/plugins/data-platform-pack/skills/pytorch-patterns/`
   - `codex-marketplace/plugins/data-platform-pack/skills/quality-nonconformance/`
@@ -61,4 +70,4 @@ This pack projects the MARK-250 ECC data/platform skills slice from retained ECC
 
 ## Boundary
 
-Only the retained data, database, analytics, ETL, and ML-platform guidance is kept here. The pack does not absorb language patterns, frontend, architecture, security, repo governance, CI, or generic engineering doctrine. The pack is a projection over retained ECC source custody, not a new source of truth.
+Only the retained data, database, analytics, ETL, and ML-platform guidance is kept here. The pack does not absorb language patterns, frontend, architecture, security, repo governance, CI, or generic engineering doctrine. The pack is a projection over retained ECC source custody plus the adapted PlanetScale PostgreSQL skill, not a new source of truth.

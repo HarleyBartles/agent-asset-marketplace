@@ -1,6 +1,6 @@
 # Data Platform Pack
 
-This plugin bundle projects retained ECC data/platform skills into an installable Codex marketplace pack.
+This plugin bundle projects retained ECC data/platform skills and an adapted PlanetScale PostgreSQL skill into an installable Codex marketplace pack.
 
 ## Bundle contents
 
@@ -10,6 +10,7 @@ This plugin bundle projects retained ECC data/platform skills into an installabl
   - `dashboard-builder`
   - `data-throughput-accelerator`
   - `database-migrations`
+  - `postgres`
   - `postgres-patterns`
   - `pytorch-patterns`
   - `quality-nonconformance`
@@ -27,6 +28,7 @@ This plugin bundle projects retained ECC data/platform skills into an installabl
 - `dashboard-builder` carries dashboard builder patterns.
 - `data-throughput-accelerator` carries data throughput acceleration patterns.
 - `database-migrations` carries database migration patterns.
+- `postgres` carries neutral PostgreSQL schema, indexing, MVCC, WAL, monitoring, and recovery guidance adapted from PlanetScale upstream.
 - `postgres-patterns` carries PostgreSQL database patterns and best practices.
 - `pytorch-patterns` carries PyTorch ML framework patterns.
 - `quality-nonconformance` carries quality nonconformance handling patterns and guidance.
@@ -46,6 +48,7 @@ The installable skill zips are generated under:
 - `generated/skill-zips/data-platform-pack/dashboard-builder/skill.zip`
 - `generated/skill-zips/data-platform-pack/data-throughput-accelerator/skill.zip`
 - `generated/skill-zips/data-platform-pack/database-migrations/skill.zip`
+- `generated/skill-zips/data-platform-pack/postgres/skill.zip`
 - `generated/skill-zips/data-platform-pack/postgres-patterns/skill.zip`
 - `generated/skill-zips/data-platform-pack/pytorch-patterns/skill.zip`
 - `generated/skill-zips/data-platform-pack/quality-nonconformance/skill.zip`

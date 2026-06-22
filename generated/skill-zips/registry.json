@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 463,
+  "artifact_count": 464,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -950,6 +950,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 4572,
       "zip_sha256": "242de99896ee8ae747ef3ee0e0f1e894d0fa38fcf6ce6fc5b1a1cc7fa046eab3"
+    },
+    {
+      "pack": "data-platform-pack",
+      "skill": "postgres",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/data-platform-pack/skills/postgres",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/data-platform-pack/postgres/skill.zip",
+      "source_file_count": 23,
+      "source_bytes": 60015,
+      "source_sha256": "59e94b7d11704a9472c7ad29c3e336619efd42625427294eb1fd7be950e329b1",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 31466,
+      "zip_sha256": "1076a80233fe265105980c564d7405f10af0caaccf7917cb46969f2e08812cc1"
     },
     {
       "pack": "data-platform-pack",

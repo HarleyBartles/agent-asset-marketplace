@@ -1,7 +1,7 @@
 {
     "name":  "data-platform-pack",
     "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for data, database, analytics, ETL, and ML-platform skills projected from retained ECC custody. Includes ClickHouse, cache patterns, dashboard builders, data throughput accelerators, database migrations, PostgreSQL patterns, PyTorch patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
+    "description":  "Codex marketplace bundle for data, database, analytics, ETL, and ML-platform skills projected from retained ECC custody plus an adapted PlanetScale PostgreSQL skill. Includes ClickHouse, cache patterns, dashboard builders, data throughput accelerators, database migrations, PostgreSQL guidance, PostgreSQL patterns, PyTorch patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
     "author":  {
                    "name":  "Harley Bartles"
                },
@@ -37,7 +37,7 @@
     "interface":  {
                       "displayName":  "Data Platform Pack",
                       "shortDescription":  "Data, database, analytics, ETL, and ML-platform guidance",
-                      "longDescription":  "A repo-local Codex plugin bundle that projects retained ECC data/platform skills into an installable marketplace shape for PostgreSQL patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
+                      "longDescription":  "A repo-local Codex plugin bundle that projects retained ECC data/platform skills plus an adapted PlanetScale PostgreSQL skill into an installable marketplace shape for PostgreSQL guidance, PostgreSQL patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
                       "developerName":  "Harley Bartles",
                       "category":  "Productivity",
                       "capabilities":  [
