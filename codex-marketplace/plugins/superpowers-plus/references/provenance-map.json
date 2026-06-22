@@ -36,6 +36,13 @@
       "local_path": "skills/executing-plans"
     },
     {
+      "canonical_name": "finishing-a-development-branch",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/finishing-a-development-branch",
+      "local_path": "skills/finishing-a-development-branch"
+    },
+    {
       "canonical_name": "github-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -106,6 +113,13 @@
       "local_path": "skills/using-git-worktrees"
     },
     {
+      "canonical_name": "verification-before-completion",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/verification-before-completion",
+      "local_path": "skills/verification-before-completion"
+    },
+    {
       "canonical_name": "writing-plans",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -122,28 +136,12 @@
   ],
   "adapted_projections": [
     {
-      "canonical_name": "finishing-a-development-branch",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/finishing-a-development-branch",
-      "local_path": "skills/finishing-a-development-branch",
-      "adaptation_overlay_path": "adapters/codex/superpowers-plus/finishing-a-development-branch"
-    },
-    {
       "canonical_name": "using-superpowers",
       "source_category": "third_party",
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers"
-    },
-    {
-      "canonical_name": "verification-before-completion",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/verification-before-completion",
-      "local_path": "skills/verification-before-completion",
-      "adaptation_overlay_path": "adapters/codex/superpowers-plus/verification-before-completion"
     }
   ]
 }
