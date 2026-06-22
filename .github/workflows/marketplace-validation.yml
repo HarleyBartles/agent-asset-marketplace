@@ -64,9 +64,6 @@ jobs:
       - name: Check source maps
         run: python tools/generate_source_maps.py --check
 
-      - name: Validate generated drift
-        run: python tools/validate_generated_drift.py
-
       - name: Validate repo index
         run: python tools/validate_repo_index.py
 

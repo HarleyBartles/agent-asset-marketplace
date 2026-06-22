@@ -1,0 +1,25 @@
+{
+  "source_repo": "https://github.com/feature-sliced/skills",
+  "source_commit": "653e7f3187eac51311652bf787a72bcf56325eea",
+  "source_branch": "master",
+  "source_license": "MIT",
+  "snapshot_date": "2026-06-22",
+  "issue": "MARK-290",
+  "skills": [
+    {
+      "name": "feature-sliced-design",
+      "path": "skills/feature-sliced-design",
+      "files": [
+        "skills/feature-sliced-design/SKILL.md",
+        "skills/feature-sliced-design/references/asset-handling.md",
+        "skills/feature-sliced-design/references/cross-import-patterns.md",
+        "skills/feature-sliced-design/references/excessive-entities.md",
+        "skills/feature-sliced-design/references/framework-integration.md",
+        "skills/feature-sliced-design/references/layer-structure.md",
+        "skills/feature-sliced-design/references/migration-guide.md",
+        "skills/feature-sliced-design/references/practical-examples.md"
+      ],
+      "content_mode": "verbatim"
+    }
+  ]
+}
