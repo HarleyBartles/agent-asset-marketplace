@@ -428,11 +428,11 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
             openai_yaml = overlay_root / OPENAI_AGENT_FILENAME
             if openai_yaml.exists():
                 validate_openai_agent_yaml(openai_yaml)
+            _apply_overlay_files(staged_root, overlay_root)
             if spec["schema_version"] == 1:
                 _apply_deletes(staged_root, overlay_root, spec["deletes"])
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
-            _apply_overlay_files(staged_root, overlay_root)
         shutil.copytree(staged_root, destination_root)
     finally:
         tempdir.cleanup()
@@ -456,11 +456,11 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
             openai_yaml = overlay_root / OPENAI_AGENT_FILENAME
             if openai_yaml.exists():
                 validate_openai_agent_yaml(openai_yaml)
+            _apply_overlay_files(staged_root, overlay_root)
             if spec["schema_version"] == 1:
                 _apply_deletes(staged_root, overlay_root, spec["deletes"])
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
-            _apply_overlay_files(staged_root, overlay_root)
     except Exception:
         tempdir.cleanup()
         raise

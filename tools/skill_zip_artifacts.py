@@ -67,6 +67,15 @@ TEXT_SUFFIXES = {
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 CANONICAL_ZIP_PERMISSIONS = 0o644
+PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {
+    "using-superpowers",
+}
+
+
+def _projected_skill_requires_metadata(skill_root: Path) -> bool:
+    return skill_root.name in PROJECTED_SKILL_METADATA_REQUIRED_NAMES
+
+
 def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     skill_md = skill_root / "SKILL.md"
     if not skill_md.is_file():
@@ -123,6 +132,8 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
     metadata = parsed_frontmatter.get("metadata")
+    if _projected_skill_requires_metadata(skill_root) and not isinstance(metadata, dict):
+        raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
     if metadata is not None and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
     if isinstance(metadata, dict):
