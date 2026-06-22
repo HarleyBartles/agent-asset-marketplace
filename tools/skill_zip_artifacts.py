@@ -67,22 +67,6 @@ TEXT_SUFFIXES = {
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 CANONICAL_ZIP_PERMISSIONS = 0o644
-PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {
-    "architecture-superpowers",
-    "ecc-superpowers",
-    "finishing-a-development-branch",
-    "github-superpowers",
-    "linear-superpowers",
-    "unslop-superpowers",
-    "using-superpowers",
-    "verification-before-completion",
-}
-
-
-def _projected_skill_requires_metadata(skill_root: Path) -> bool:
-    return skill_root.name in PROJECTED_SKILL_METADATA_REQUIRED_NAMES
-
-
 def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     skill_md = skill_root / "SKILL.md"
     if not skill_md.is_file():
@@ -139,10 +123,7 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
     metadata = parsed_frontmatter.get("metadata")
-    if _projected_skill_requires_metadata(skill_root):
-        if not isinstance(metadata, dict):
-            raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
-    elif metadata is not None and not isinstance(metadata, dict):
+    if metadata is not None and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
     if isinstance(metadata, dict):
         def require_string(field_names: tuple[str, ...], *, allow_empty: bool = False) -> None:
@@ -178,8 +159,8 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         )
         if metadata.get("source_category") and metadata["source_category"] not in {"first_party", "third_party"}:
             raise ValueError(f"{skill_md} frontmatter metadata source_category must be first_party or third_party")
-        if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "adapted"}:
-            raise ValueError(f"{skill_md} frontmatter metadata content_mode must be verbatim or adapted")
+        if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "normalised", "adapted"}:
+            raise ValueError(f"{skill_md} frontmatter metadata content_mode must be verbatim, normalised, or adapted")
         if metadata.get("source_category") == "third_party":
             for field_name in ("upstream_name", "upstream_version", "adaptation_overlay", "projection_plugin"):
                 require_string((field_name,))
@@ -190,6 +171,11 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
                     f"{skill_md} frontmatter metadata adapted projections must declare source_author and source_license"
                 )
             require_string(("source_author", "source_license"))
+        elif metadata.get("content_mode") == "normalised":
+            if metadata.get("adapted_author") or metadata.get("adaptation_note"):
+                raise ValueError(
+                    f"{skill_md} frontmatter metadata normalised projections must not declare adapted_author or adaptation_note"
+                )
 
 
 @dataclass(frozen=True)

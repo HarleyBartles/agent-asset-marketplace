@@ -138,8 +138,8 @@ def validate_openai_agent_yaml(agent_yaml_path: Path) -> None:
 
     if metadata.get("source_category") and metadata["source_category"] not in {"first_party", "third_party"}:
         raise ValueError(f"{agent_yaml_path} metadata source_category must be first_party or third_party")
-    if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "adapted"}:
-        raise ValueError(f"{agent_yaml_path} metadata content_mode must be verbatim or adapted")
+    if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "normalised", "adapted"}:
+        raise ValueError(f"{agent_yaml_path} metadata content_mode must be verbatim, normalised, or adapted")
 
     if metadata.get("source_category") == "third_party":
         for field_name in ("upstream_version", "adaptation_overlay"):

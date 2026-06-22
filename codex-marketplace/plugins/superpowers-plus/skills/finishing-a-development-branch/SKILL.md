@@ -1,15 +1,6 @@
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete and you need to finish a development branch safely.
-metadata:
-  origin: Obra AI
-  source_author: NickCrew
-  source_license: MIT
-  source_repo: https://github.com/NickCrew/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/finishing-a-development-branch/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
-  adaptation_note: Added Codex marketplace publication guidance and repo-specific precedence note.
+description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup
 ---
 
 # Finishing a Development Branch
@@ -18,14 +9,9 @@ metadata:
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
-**Core principle:** Verify tests -> Detect environment -> Present options -> Execute choice -> Clean up.
+**Core principle:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
-
-If the work used a written plan, run the verified-plan adapter backstop before
-presenting closeout options: reread the plan, confirm checked steps have
-evidence, confirm open steps are intentionally open or blocked, and refuse
-completion claims when the plan and evidence disagree.
 
 ## The Process
 
@@ -50,19 +36,6 @@ Cannot proceed with merge/PR until tests pass.
 Stop. Don't proceed to Step 2.
 
 **If tests pass:** Continue to Step 2.
-
-### Step 1b: Reconcile Plan Evidence
-
-If the work has a written plan, run the plan-checkbox backstop before
-presenting closeout options:
-
-- reread the plan if one exists;
-- verify checked `[x]` steps have matching evidence;
-- verify unchecked `[ ]` steps are intentionally open with an explanation or
-  are real blockers;
-- run the final validation ladder named by the plan or issue;
-- refuse completion, publication, or ready-for-review claims when plan boxes
-  and evidence disagree.
 
 ### Step 2: Detect Environment
 
@@ -92,7 +65,7 @@ Or ask: "This branch split from main - is that correct?"
 
 ### Step 4: Present Options
 
-**Normal repo and named-branch worktree - present exactly these 4 options:**
+**Normal repo and named-branch worktree — present exactly these 4 options:**
 
 ```
 Implementation complete. What would you like to do?
@@ -105,7 +78,7 @@ Implementation complete. What would you like to do?
 Which option?
 ```
 
-**Detached HEAD - present exactly these 3 options:**
+**Detached HEAD — present exactly these 3 options:**
 
 ```
 Implementation complete. You're on a detached HEAD (externally managed workspace).
@@ -128,7 +101,7 @@ Which option?
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 
-# Merge first - verify success before removing anything
+# Merge first — verify success before removing anything
 git checkout <base-branch>
 git pull
 git merge <feature-branch>
@@ -150,19 +123,9 @@ git branch -d <feature-branch>
 ```bash
 # Push branch
 git push -u origin <feature-branch>
-
-# Create PR
-gh pr create --title "<title>" --body "$(cat <<'EOF'
-## Summary
-<2-3 bullets of what changed>
-
-## Test Plan
-- [ ] <verification steps>
-EOF
-)"
 ```
 
-**Do NOT clean up worktree** - user needs it alive to iterate on PR feedback.
+**Do NOT clean up worktree** — user needs it alive to iterate on PR feedback.
 
 #### Option 3: Keep As-Is
 
@@ -207,7 +170,7 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 
 **If `GIT_DIR == GIT_COMMON`:** Normal repo, no worktree to clean up. Done.
 
-**If worktree path is under `.worktrees/`, `worktrees/`, or `~/.config/superpowers/worktrees/`:** Superpowers created this worktree - we own cleanup.
+**If worktree path is under `.worktrees/` or `worktrees/`:** Superpowers created this worktree — we own cleanup.
 
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
@@ -251,7 +214,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 
 **Cleaning up harness-owned worktrees**
 - **Problem:** Removing a worktree the harness created causes phantom state
-- **Fix:** Only clean up worktrees under `.worktrees/`, `worktrees/`, or `~/.config/superpowers/worktrees/`
+- **Fix:** Only clean up worktrees under `.worktrees/` or `worktrees/`
 
 **No confirmation for discard**
 - **Problem:** Accidentally delete work
@@ -276,23 +239,3 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Clean up worktree for Options 1 & 4 only
 - `cd` to main repo root before worktree removal
 - Run `git worktree prune` after removal
-
-## Quick Pattern
-
-1. Re-run the relevant tests or validations.
-2. Confirm the branch state and the base branch.
-3. Choose merge, PR, keep, or discard.
-4. Preserve the workspace if the work should stay available for follow-up.
-
-## Guardrails
-
-- Do not treat a branch as done until verification has been rerun.
-- Keep the closeout decision aligned with the repository's publication rules.
-- Do not delete work before the user has chosen that outcome.
-
-## Codex Marketplace Note
-
-For this repository's Codex projection, use
-`references/codex-marketplace-compatibility.md` as the override note for
-publication flow. Repo `AGENTS.md`, Linear, and GitHub-visible PR gates outrank
-the generic branch/merge cleanup guidance below whenever they differ.

@@ -1,15 +1,6 @@
 ---
 name: verification-before-completion
 description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
-metadata:
-  origin: Obra AI
-  source_author: Obra AI
-  source_license: MIT
-  source_repo: https://github.com/obra-ai/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/verification-before-completion/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
-  adaptation_note: Adapted from Obra Superpowers v6.0.3 for use in the agent-asset-marketplace.
 ---
 
 # Verification Before Completion
@@ -146,17 +137,3 @@ From 24 failure memories:
 Run the command. Read the output. THEN claim the result.
 
 This is non-negotiable.
-
-## Verified-Plan Adapter Backstop
-
-When a written plan exists, this skill is the closeout backstop before any
-completion, publication, PR-ready, ready-for-review, or success claim.
-
-Before making such a claim:
-
-1. Reread the plan.
-2. Verify checked `[x]` steps have matching evidence.
-3. Verify unchecked `[ ]` steps are intentionally open with an explanation or
-   are real blockers.
-4. Run the final validation ladder named by the plan or issue.
-5. Refuse the claim when checkbox state and evidence disagree.

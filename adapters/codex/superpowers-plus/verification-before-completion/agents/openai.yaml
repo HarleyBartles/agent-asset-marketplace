@@ -1,7 +1,0 @@
-version: 1
-metadata:
-  skill_name: verification-before-completion
-  plugin: superpowers
-  source_category: third_party
-  upstream_version: v6.0.3
-  adaptation_overlay: adapters/codex/superpowers-plus/verification-before-completion

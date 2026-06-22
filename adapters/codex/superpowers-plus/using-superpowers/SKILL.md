@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
+description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions
 metadata:
   origin: Obra AI
   source_author: Obra AI
@@ -9,7 +9,7 @@ metadata:
   source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
-  adaptation_note: Adapted from Obra Superpowers v6.0.3 for use in the agent-asset-marketplace.
+  adaptation_note: Added four Marketplace routing lines for Linear, GitHub, unslop, and environment inspection.
 ---
 
 <SUBAGENT-STOP>
@@ -52,27 +52,10 @@ Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-too
 
 ## Asset Marketplace Routing
 
-This projection is Asset Marketplace `Superpowers+` adaptation behavior, not upstream/base Superpowers doctrine. It only routes to wrapper skills that are actually projected into `superpowers-plus`.
-
-- Brainstorming and initial task framing: use `brainstorming`.
-- Plan-shaped work: use `writing-plans` to make the plan checkable, then `executing-plans` to update verified checkboxes as work lands, then `verification-before-completion` before any completion or ready-for-review claim.
-- Plan creation and plan execution: use `writing-plans` for route review and `executing-plans` for implementation.
-- Direct implementation work where test discipline matters: use `test-driven-development`.
-- Debugging, bug-finding, and unexpected behavior analysis: use `systematic-debugging`.
-- Validation, pass/fail claims, and completion assertions: use `verification-before-completion`.
-- Review and redline workflows: use `requesting-code-review` and `receiving-code-review`.
-- Branch completion and publication closeout: use `finishing-a-development-branch`.
 - Linear issue shaping and smallest-applicable workflow selection: use `linear-superpowers`.
 - GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`.
 - Repo-specific anti-slop or profile work: use `unslop-superpowers`.
-- Architecture review and composition boundaries: use `architecture-superpowers`.
-- ECC workflow-shaped work: use `ecc-superpowers` to route to the dedicated
-  `superpowers-ecc` pack.
-- Parallel agent dispatch or worktree setup when those are the smallest useful helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or `using-git-worktrees`.
-- Writing or updating skill content: use `writing-skills`.
 - Environment inspection before action when constraints matter: use `inspecting-the-environment`.
-
-Do not treat these wrapper routes as upstream doctrine. They are the Marketplace projection's adaptation layer for Asset Marketplace work, and they only refer to wrappers actually projected into `superpowers-plus`.
 
 # Using Skills
 

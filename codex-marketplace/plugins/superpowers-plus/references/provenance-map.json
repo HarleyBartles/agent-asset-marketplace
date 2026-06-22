@@ -140,7 +140,7 @@
     {
       "canonical_name": "verification-before-completion",
       "source_category": "third_party",
-      "content_mode": "adapted",
+      "content_mode": "normalised",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/verification-before-completion"
