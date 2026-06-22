@@ -1,4 +1,4 @@
-# Feature-Sliced Design Source Map
+# Feature Sliced Design Source Map
 
 Generated from `codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json`.
 
