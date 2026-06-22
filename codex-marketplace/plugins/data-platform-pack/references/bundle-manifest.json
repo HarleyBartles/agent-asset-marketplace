@@ -4,7 +4,8 @@
   "bundle_type": "projection-lane",
   "is_mega_pack": false,
   "source_families": [
-    "ecc"
+    "ecc",
+    "planetscale"
   ],
   "entries": [
     {
@@ -81,6 +82,22 @@
       "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "postgres",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
+      "local_path": "skills/postgres",
+      "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres",
+      "import_status": "imported",
+      "source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres/SKILL.md",
+      "source_author": "PlanetScale",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/planetscale/database-skills",
+      "source_family": "planetscale",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
     },
     {
       "canonical_name": "postgres-patterns",
@@ -174,8 +191,8 @@
     }
   ],
   "notes": [
-    "Data-platform skills pack projected from the retained ECC upstream snapshot.",
-    "Covers databases, scientific thinking, caching, dashboards, and throughput patterns."
+    "Data-platform skills pack projected from the retained ECC upstream snapshot plus an adapted PlanetScale PostgreSQL skill.",
+    "Covers databases, scientific thinking, caching, dashboards, throughput patterns, and neutral PostgreSQL guidance."
   ],
   "provenance_refs": [
     "provenance/data-platform-pack.md",

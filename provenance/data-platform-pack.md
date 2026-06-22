@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Data Platform Pack projects retained ECC data platform and scientific thinking skills into a Codex marketplace pack.
+The Data Platform Pack projects retained ECC data platform and scientific thinking skills into a Codex marketplace pack, plus an adapted PlanetScale PostgreSQL skill neutralized for marketplace use.
 
 ## Source Custody
 
@@ -17,6 +17,8 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
   - `sources/third_party/ecc/upstream/skills/realtime-analytics/`
   - `sources/third_party/ecc/upstream/skills/scientific-thinking-literature-review/`
   - `sources/third_party/ecc/upstream/skills/scientific-thinking-scholar-evaluation/`
+- **Retained PlanetScale upstream**:
+  - `sources/third_party/planetscale/database-skills/upstream/skills/postgres/`
 
 ### First-Party Ledgers
 
@@ -35,6 +37,7 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
 - `codex-marketplace/plugins/data-platform-pack/skills/dashboard-builder/`
 - `codex-marketplace/plugins/data-platform-pack/skills/kafka-integration/`
 - `codex-marketplace/plugins/data-platform-pack/skills/realtime-analytics/`
+- `codex-marketplace/plugins/data-platform-pack/skills/postgres/`
 - `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-literature-review/`
 - `codex-marketplace/plugins/data-platform-pack/skills/scientific-thinking-scholar-evaluation/`
 
@@ -46,8 +49,8 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
 - **Plugin name**: `data-platform-pack`
 - **Display name**: `Data Platform Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `verbatim` from ECC custody
-- **Adaptation note**: Projected from retained ECC custody with first-party selection ledger
+- **Content mode**: `verbatim` from ECC custody; `adapted` for PlanetScale Postgres
+- **Adaptation note**: Projected from retained ECC custody with first-party selection ledger and a PlanetScale overlay that removes product-default marketing copy
 
 ## Rights and Attribution
 
