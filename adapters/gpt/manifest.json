@@ -110,9 +110,8 @@
         },
         {
           "skill": "finishing-a-development-branch",
-          "export_mode": "overlay",
-          "overlay_path": "adapters/gpt/superpowers-plus/finishing-a-development-branch",
-          "reason": "The GPT export should keep the branch-closeout guidance but remove Codex-only publication assumptions."
+          "export_mode": "direct",
+          "reason": "This skill is already GPT-safe as-is."
         },
         {
           "skill": "architecture-superpowers",

@@ -1,7 +1,43 @@
-schema_version: 1
+schema_version: 2
 metadata:
   source_category: third_party
   upstream_name: using-superpowers
   upstream_version: v6.0.3
   adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers
   projection_plugin: superpowers-plus
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 1
+    end_line: 4
+    expected_lines:
+      - "---"
+      - "name: using-superpowers"
+      - "description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions"
+      - "---"
+    replace_lines:
+      - "---"
+      - "name: using-superpowers"
+      - "description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions"
+      - "metadata:"
+      - "  origin: Obra AI"
+      - "  source_author: Obra AI"
+      - "  source_license: MIT"
+      - "  source_repo: https://github.com/obra-ai/obra-superpowers"
+      - "  source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers/SKILL.md"
+      - "  content_mode: adapted"
+      - "  adapted_author: Harley Bartles"
+      - "  adaptation_note: Added four Marketplace routing lines for Linear, GitHub, unslop, and environment inspection."
+      - "---"
+  - path: SKILL.md
+    op: insert_after
+    line: 44
+    anchor: "Skills speak in actions (\"dispatch a subagent\", \"create a todo\", \"read a file\") rather than naming any one runtime's tools. For per-platform tool equivalents and instructions-file conventions, see [claude-code-tools.md](references/claude-code-tools.md), [codex-tools.md](references/codex-tools.md), [copilot-tools.md](references/copilot-tools.md), [gemini-tools.md](references/gemini-tools.md), [pi-tools.md](references/pi-tools.md), and [antigravity-tools.md](references/antigravity-tools.md). Gemini CLI users get the tool mapping loaded automatically via GEMINI.md."
+    insert_lines:
+      - ""
+      - "## Asset Marketplace Routing"
+      - ""
+      - "- Linear issue shaping and smallest-applicable workflow selection: use `linear-superpowers`."
+      - "- GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`."
+      - "- Repo-specific anti-slop or profile work: use `unslop-superpowers`."
+      - "- Environment inspection before action when constraints matter: use `inspecting-the-environment`."

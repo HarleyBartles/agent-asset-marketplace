@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
+description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions
 metadata:
   origin: Obra AI
   source_author: Obra AI
@@ -9,7 +9,7 @@ metadata:
   source_path: sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers/SKILL.md
   content_mode: adapted
   adapted_author: Harley Bartles
-  adaptation_note: Adapted from Obra Superpowers v6.0.3 for use in the agent-asset-marketplace.
+  adaptation_note: Added four Marketplace routing lines for Linear, GitHub, unslop, and environment inspection.
 ---
 
 <SUBAGENT-STOP>
@@ -26,21 +26,23 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## Instruction Priority
 
-System, developer, runtime policy, and repo-scoped instructions remain authoritative.
+Superpowers skills override default system prompt behavior, but **user instructions always take precedence**:
 
-Within that governing stack, explicit user instructions remain authoritative.
+1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) — highest priority
+2. **Superpowers skills** — override default system behavior where they conflict
+3. **Default system prompt** — lowest priority
 
-Superpowers skills are workflow guidance that operates inside those boundaries.
-
-If platform, repo, or user instructions conflict with a skill, follow the governing instruction.
-
-The skill shapes workflow. It does not overrule policy.
+If CLAUDE.md, GEMINI.md, or AGENTS.md says "don't use TDD" and a skill says "always use TDD," follow the user's instructions. The user is in control.
 
 ## How to Access Skills
 
-**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to youâ€”follow it directly. Never use the Read tool on skill files.
+**Never read skill files manually with file tools** — always use your platform's skill-loading mechanism so the skill is properly activated.
 
-**In Copilot CLI:** Use the `skill` tool. Skills are auto-discovered from installed plugins. The `skill` tool works the same as Claude Code's `Skill` tool.
+**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you — follow it directly.
+
+**In Codex:** Skills load natively. Follow the instructions presented when a skill activates.
+
+**In Copilot CLI:** Use the `skill` tool. Skills are auto-discovered from installed plugins.
 
 **In Gemini CLI:** Skills activate via the `activate_skill` tool. Gemini loads skill metadata at session start and activates the full content on demand.
 
@@ -48,31 +50,14 @@ The skill shapes workflow. It does not overrule policy.
 
 ## Platform Adaptation
 
-Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-tools.md` (Copilot CLI), `references/codex-tools.md` (Codex) for tool equivalents. Gemini CLI users get the tool mapping loaded automatically via GEMINI.md.
+Skills speak in actions ("dispatch a subagent", "create a todo", "read a file") rather than naming any one runtime's tools. For per-platform tool equivalents and instructions-file conventions, see [claude-code-tools.md](references/claude-code-tools.md), [codex-tools.md](references/codex-tools.md), [copilot-tools.md](references/copilot-tools.md), [gemini-tools.md](references/gemini-tools.md), [pi-tools.md](references/pi-tools.md), and [antigravity-tools.md](references/antigravity-tools.md). Gemini CLI users get the tool mapping loaded automatically via GEMINI.md.
 
 ## Asset Marketplace Routing
 
-This projection is Asset Marketplace `Superpowers+` adaptation behavior, not upstream/base Superpowers doctrine. It only routes to wrapper skills that are actually projected into `superpowers-plus`.
-
-- Brainstorming and initial task framing: use `brainstorming`.
-- Plan-shaped work: use `writing-plans` to make the plan checkable, then `executing-plans` to update verified checkboxes as work lands, then `verification-before-completion` before any completion or ready-for-review claim.
-- Plan creation and plan execution: use `writing-plans` for route review and `executing-plans` for implementation.
-- Direct implementation work where test discipline matters: use `test-driven-development`.
-- Debugging, bug-finding, and unexpected behavior analysis: use `systematic-debugging`.
-- Validation, pass/fail claims, and completion assertions: use `verification-before-completion`.
-- Review and redline workflows: use `requesting-code-review` and `receiving-code-review`.
-- Branch completion and publication closeout: use `finishing-a-development-branch`.
 - Linear issue shaping and smallest-applicable workflow selection: use `linear-superpowers`.
 - GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`.
 - Repo-specific anti-slop or profile work: use `unslop-superpowers`.
-- Architecture review and composition boundaries: use `architecture-superpowers`.
-- ECC workflow-shaped work: use `ecc-superpowers` to route to the dedicated
-  `superpowers-ecc` pack.
-- Parallel agent dispatch or worktree setup when those are the smallest useful helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or `using-git-worktrees`.
-- Writing or updating skill content: use `writing-skills`.
 - Environment inspection before action when constraints matter: use `inspecting-the-environment`.
-
-Do not treat these wrapper routes as upstream doctrine. They are the Marketplace projection's adaptation layer for Asset Marketplace work, and they only refer to wrappers actually projected into `superpowers-plus`.
 
 # Using Skills
 
@@ -83,36 +68,36 @@ Do not treat these wrapper routes as upstream doctrine. They are the Marketplace
 ```dot
 digraph skill_flow {
     "User message received" [shape=doublecircle];
-    "About to EnterPlanMode?" [shape=doublecircle];
+    "About to enter plan mode?" [shape=doublecircle];
     "Already brainstormed?" [shape=diamond];
     "Invoke brainstorming skill" [shape=box];
     "Might any skill apply?" [shape=diamond];
-    "Invoke Skill tool" [shape=box];
+    "Invoke the skill" [shape=box];
     "Announce: 'Using [skill] to [purpose]'" [shape=box];
     "Has checklist?" [shape=diamond];
-    "Create TodoWrite todo per item" [shape=box];
+    "Create a todo per item" [shape=box];
     "Follow skill exactly" [shape=box];
     "Respond (including clarifications)" [shape=doublecircle];
 
-    "About to EnterPlanMode?" -> "Already brainstormed?";
+    "About to enter plan mode?" -> "Already brainstormed?";
     "Already brainstormed?" -> "Invoke brainstorming skill" [label="no"];
     "Already brainstormed?" -> "Might any skill apply?" [label="yes"];
     "Invoke brainstorming skill" -> "Might any skill apply?";
 
     "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
+    "Might any skill apply?" -> "Invoke the skill" [label="yes, even 1%"];
     "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
-    "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
+    "Invoke the skill" -> "Announce: 'Using [skill] to [purpose]'";
     "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
+    "Has checklist?" -> "Create a todo per item" [label="yes"];
     "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create TodoWrite todo per item" -> "Follow skill exactly";
+    "Create a todo per item" -> "Follow skill exactly";
 }
 ```
 
 ## Red Flags
 
-These thoughts mean STOP - you're rationalizing:
+These thoughts mean STOP—you're rationalizing:
 
 | Thought | Reality |
 |---------|---------|
@@ -127,21 +112,21 @@ These thoughts mean STOP - you're rationalizing:
 | "The skill is overkill" | Simple things become complex. Use it. |
 | "I'll just do this one thing first" | Check BEFORE doing anything. |
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept != using the skill. Invoke it. |
+| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
 
 ## Skill Priority
 
 When multiple skills could apply, use this order:
 
-1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
+1. **Process skills first** (brainstorming, systematic-debugging) - these determine HOW to approach the task
 2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
 
-"Let's build X" -> brainstorming first, then implementation skills.
-"Fix this bug" -> debugging first, then domain-specific skills.
+"Let's build X" → brainstorming first, then implementation skills.
+"Fix this bug" → systematic-debugging first, then domain-specific skills.
 
 ## Skill Types
 
-**Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.
+**Rigid** (TDD, systematic-debugging): Follow exactly. Don't adapt away discipline.
 
 **Flexible** (patterns): Adapt principles to context.
 
@@ -150,23 +135,3 @@ The skill itself tells you which.
 ## User Instructions
 
 Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
-
-## Quick Pattern
-
-1. Read the current request and surrounding context.
-2. Choose the smallest skill that fits the moment.
-3. If the task is unclear, start with brainstorming.
-4. If a plan already exists, move to planning or execution.
-5. If the work is nearly done, switch to verification or closeout.
-
-## Guardrails
-
-- Do not skip the skill selection step.
-- Do not force one workflow onto every task.
-- Keep the chosen workflow aligned with the actual stage of work.
-
-## Codex Marketplace Compatibility
-
-In this projection, Superpowers skills are workflow guidance inside the normal
-instruction stack. They do not override system, developer, runtime, or repo
-instructions. See `references/codex-marketplace-compatibility.md`.

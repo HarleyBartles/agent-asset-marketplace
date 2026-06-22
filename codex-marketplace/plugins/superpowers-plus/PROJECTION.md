@@ -17,7 +17,7 @@ This repository uses three distinct layers for the Superpowers bundle:
 - Installation/export layer is derived from the projection plus overlays and
   is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The adapted Superpowers+ skills are materialized from
+- The adapted `using-superpowers` projection is materialized from
   `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/...` plus
   `adapters/codex/superpowers-plus/...`.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
@@ -52,10 +52,10 @@ The split is deliberate:
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or
   reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection
   wording.
-- The adapted `using-superpowers`, `finishing-a-development-branch`, and
-  `verification-before-completion` projections are materialized from source
-  custody plus adaptation overlays; the upstream source snapshot remains
-  verbatim.
+- The adapted `using-superpowers` projection is materialized from source
+  custody plus an adaptation overlay; `finishing-a-development-branch` and
+  `verification-before-completion` remain verbatim projections from source
+  custody.
 - `ecc-superpowers` is a verbatim first-party wrapper projection that
   routes to the dedicated `superpowers-ecc` pack without folding ECC doctrine
   into the upstream Superpowers source.

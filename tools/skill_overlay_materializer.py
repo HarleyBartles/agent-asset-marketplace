@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OVERLAY_FILENAME = "overlay.yaml"
 OPENAI_AGENT_FILENAME = Path("agents/openai.yaml")
 ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata"}
+ALLOWED_LINE_EDIT_OPS = {"insert_before", "insert_after", "replace", "delete"}
 UTF8_BOM = b"\xef\xbb\xbf"
 
 
@@ -71,33 +72,207 @@ def _validate_delete_path(delete_path: Any, *, overlay_root: Path) -> str:
     return candidate.as_posix()
 
 
+def _validate_relative_file_path(file_path: Any, *, overlay_root: Path) -> str:
+    if not isinstance(file_path, str) or not file_path.strip():
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit paths must be nonblank strings")
+    candidate = Path(file_path)
+    if candidate.is_absolute():
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit path must be relative: {file_path}")
+    if any(part == ".." for part in candidate.parts):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit path must not traverse upward: {file_path}")
+    if any(char in file_path for char in "*?[]"):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit path must not use globs: {file_path}")
+    if candidate.parts and candidate.name == "":
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit path must resolve to a file or leaf path: {file_path}")
+    return candidate.as_posix()
+
+
+def _validate_line_list(value: Any, *, overlay_root: Path, field_name: str) -> list[str]:
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} {field_name} must be a non-empty list")
+    normalized: list[str] = []
+    for item in value:
+        if not isinstance(item, str):
+            raise ValueError(f"{overlay_root / OVERLAY_FILENAME} {field_name} entries must be strings")
+        normalized.append(item)
+    return normalized
+
+
+def _validate_line_number(value: Any, *, overlay_root: Path, field_name: str) -> int:
+    if not isinstance(value, int) or value < 1:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} {field_name} must be a positive integer")
+    return value
+
+
+def _validate_line_edit(edit: Any, *, overlay_root: Path) -> dict[str, Any]:
+    if not isinstance(edit, dict):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edits must contain mapping entries")
+
+    unknown_keys = sorted(
+        set(edit)
+        - {
+            "path",
+            "op",
+            "line",
+            "start_line",
+            "end_line",
+            "anchor",
+            "expected_lines",
+            "insert_lines",
+            "replace_lines",
+        }
+    )
+    if unknown_keys:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit contains unsupported keys: {', '.join(unknown_keys)}")
+
+    path = _validate_relative_file_path(edit.get("path"), overlay_root=overlay_root)
+    op = edit.get("op")
+    if op not in ALLOWED_LINE_EDIT_OPS:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit op must be one of: {', '.join(sorted(ALLOWED_LINE_EDIT_OPS))}")
+
+    normalized: dict[str, Any] = {"path": path, "op": op}
+    if op in {"insert_before", "insert_after"}:
+        normalized["line"] = _validate_line_number(edit.get("line"), overlay_root=overlay_root, field_name="line")
+        anchor = edit.get("anchor")
+        if not isinstance(anchor, str) or not anchor.strip():
+            raise ValueError(f"{overlay_root / OVERLAY_FILENAME} insert edits require a nonblank anchor")
+        normalized["anchor"] = anchor
+        normalized["insert_lines"] = _validate_line_list(
+            edit.get("insert_lines"), overlay_root=overlay_root, field_name="insert_lines"
+        )
+        return normalized
+
+    start_line = _validate_line_number(edit.get("start_line"), overlay_root=overlay_root, field_name="start_line")
+    end_line = _validate_line_number(edit.get("end_line"), overlay_root=overlay_root, field_name="end_line")
+    if end_line < start_line:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} edit end_line must be greater than or equal to start_line")
+    normalized["start_line"] = start_line
+    normalized["end_line"] = end_line
+    normalized["expected_lines"] = _validate_line_list(
+        edit.get("expected_lines"), overlay_root=overlay_root, field_name="expected_lines"
+    )
+    if len(normalized["expected_lines"]) != end_line - start_line + 1:
+        raise ValueError(
+            f"{overlay_root / OVERLAY_FILENAME} expected_lines length must match the declared line range"
+        )
+    if op == "replace":
+        normalized["replace_lines"] = _validate_line_list(
+            edit.get("replace_lines"), overlay_root=overlay_root, field_name="replace_lines"
+        )
+    return normalized
+
+
 def load_overlay_spec(overlay_root: Path) -> dict[str, Any]:
     overlay_yaml = overlay_root / OVERLAY_FILENAME
     if not overlay_yaml.exists():
-        return {"deletes": [], "metadata": None}
+        return {"schema_version": 1, "deletes": [], "metadata": None}
 
     parsed = _load_yaml_mapping(overlay_yaml)
-    unknown_keys = sorted(set(parsed) - ALLOWED_OVERLAY_KEYS)
-    if unknown_keys:
-        raise ValueError(f"{overlay_yaml} contains unsupported keys: {', '.join(unknown_keys)}")
-    if parsed.get("schema_version") != 1:
-        raise ValueError(f"{overlay_yaml} schema_version must be 1")
+    schema_version = parsed.get("schema_version")
+    if schema_version == 1:
+        unknown_keys = sorted(set(parsed) - ALLOWED_OVERLAY_KEYS)
+        if unknown_keys:
+            raise ValueError(f"{overlay_yaml} contains unsupported keys: {', '.join(unknown_keys)}")
 
-    deletes = parsed.get("deletes", [])
-    if deletes is None:
-        deletes = []
-    if not isinstance(deletes, list):
-        raise ValueError(f"{overlay_yaml} deletes must be a list")
-    normalized_deletes = [_validate_delete_path(delete_path, overlay_root=overlay_root) for delete_path in deletes]
+        deletes = parsed.get("deletes", [])
+        if deletes is None:
+            deletes = []
+        if not isinstance(deletes, list):
+            raise ValueError(f"{overlay_yaml} deletes must be a list")
+        normalized_deletes = [_validate_delete_path(delete_path, overlay_root=overlay_root) for delete_path in deletes]
 
-    metadata = parsed.get("metadata")
-    if metadata is not None and not isinstance(metadata, dict):
-        raise ValueError(f"{overlay_yaml} metadata must be a mapping when present")
+        metadata = parsed.get("metadata")
+        if metadata is not None and not isinstance(metadata, dict):
+            raise ValueError(f"{overlay_yaml} metadata must be a mapping when present")
 
-    return {
-        "deletes": normalized_deletes,
-        "metadata": metadata,
-    }
+        return {
+            "schema_version": 1,
+            "deletes": normalized_deletes,
+            "metadata": metadata,
+        }
+
+    if schema_version == 2:
+        unknown_keys = sorted(set(parsed) - {"schema_version", "edits", "metadata"})
+        if unknown_keys:
+            raise ValueError(f"{overlay_yaml} contains unsupported keys: {', '.join(unknown_keys)}")
+        edits = parsed.get("edits")
+        if not isinstance(edits, list) or not edits:
+            raise ValueError(f"{overlay_yaml} edits must be a non-empty list")
+        normalized_edits = [_validate_line_edit(edit, overlay_root=overlay_root) for edit in edits]
+        metadata = parsed.get("metadata")
+        if metadata is not None and not isinstance(metadata, dict):
+            raise ValueError(f"{overlay_yaml} metadata must be a mapping when present")
+        return {
+            "schema_version": 2,
+            "edits": normalized_edits,
+            "metadata": metadata,
+        }
+
+    raise ValueError(f"{overlay_yaml} schema_version must be 1 or 2")
+
+
+def _apply_line_edits(staged_root: Path, overlay_root: Path, edits: list[dict[str, Any]]) -> None:
+    edits_by_path: dict[str, list[dict[str, Any]]] = {}
+    for edit in edits:
+        edits_by_path.setdefault(edit["path"], []).append(edit)
+
+    for rel_path, file_edits in edits_by_path.items():
+        target = staged_root / rel_path
+        if not target.exists():
+            raise FileNotFoundError(f"{overlay_root / OVERLAY_FILENAME} edit target does not exist: {rel_path}")
+        if target.is_dir():
+            raise ValueError(f"{overlay_root / OVERLAY_FILENAME} cannot edit directories: {rel_path}")
+
+        original_lines = target.read_text(encoding="utf-8").splitlines()
+        current_lines = original_lines[:]
+        ordered_edits = sorted(
+            file_edits,
+            key=lambda edit: (
+                -(edit.get("line") or edit.get("start_line") or 0),
+                0 if edit["op"] == "replace" else 1 if edit["op"] == "delete" else 2 if edit["op"] == "insert_after" else 3,
+            ),
+        )
+
+        for edit in ordered_edits:
+            op = edit["op"]
+            if op in {"insert_before", "insert_after"}:
+                line = edit["line"]
+                if line > len(original_lines):
+                    raise ValueError(
+                        f"{overlay_root / OVERLAY_FILENAME} insert edit line out of range for {rel_path}: {line}"
+                    )
+                anchor = edit["anchor"]
+                if original_lines[line - 1] != anchor:
+                    raise ValueError(
+                        f"{overlay_root / OVERLAY_FILENAME} insert edit anchor mismatch for {rel_path} line {line}"
+                    )
+                insert_at = line - 1 if op == "insert_before" else line
+                current_lines[insert_at:insert_at] = edit["insert_lines"]
+                continue
+
+            start_line = edit["start_line"]
+            end_line = edit["end_line"]
+            if end_line > len(original_lines):
+                raise ValueError(
+                    f"{overlay_root / OVERLAY_FILENAME} edit range out of range for {rel_path}: {start_line}-{end_line}"
+                )
+            original_slice = original_lines[start_line - 1 : end_line]
+            if original_slice != edit["expected_lines"]:
+                raise ValueError(
+                    f"{overlay_root / OVERLAY_FILENAME} edit expected lines mismatch for {rel_path} {start_line}-{end_line}"
+                )
+            current_slice = current_lines[start_line - 1 : end_line]
+            if current_slice != edit["expected_lines"]:
+                raise ValueError(
+                    f"{overlay_root / OVERLAY_FILENAME} edit target drifted for {rel_path} {start_line}-{end_line}"
+                )
+            if op == "delete":
+                del current_lines[start_line - 1 : end_line]
+            else:
+                current_lines[start_line - 1 : end_line] = edit["replace_lines"]
+
+        with target.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write("\n".join(current_lines) + ("\n" if current_lines else ""))
 
 
 def validate_openai_agent_yaml(agent_yaml_path: Path) -> None:
@@ -138,8 +313,8 @@ def validate_openai_agent_yaml(agent_yaml_path: Path) -> None:
 
     if metadata.get("source_category") and metadata["source_category"] not in {"first_party", "third_party"}:
         raise ValueError(f"{agent_yaml_path} metadata source_category must be first_party or third_party")
-    if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "adapted"}:
-        raise ValueError(f"{agent_yaml_path} metadata content_mode must be verbatim or adapted")
+    if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "normalised", "adapted"}:
+        raise ValueError(f"{agent_yaml_path} metadata content_mode must be verbatim, normalised, or adapted")
 
     if metadata.get("source_category") == "third_party":
         for field_name in ("upstream_version", "adaptation_overlay"):
@@ -253,8 +428,11 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
             openai_yaml = overlay_root / OPENAI_AGENT_FILENAME
             if openai_yaml.exists():
                 validate_openai_agent_yaml(openai_yaml)
-            _apply_deletes(staged_root, overlay_root, spec["deletes"])
             _apply_overlay_files(staged_root, overlay_root)
+            if spec["schema_version"] == 1:
+                _apply_deletes(staged_root, overlay_root, spec["deletes"])
+            else:
+                _apply_line_edits(staged_root, overlay_root, spec["edits"])
         shutil.copytree(staged_root, destination_root)
     finally:
         tempdir.cleanup()
@@ -278,8 +456,11 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
             openai_yaml = overlay_root / OPENAI_AGENT_FILENAME
             if openai_yaml.exists():
                 validate_openai_agent_yaml(openai_yaml)
-            _apply_deletes(staged_root, overlay_root, spec["deletes"])
             _apply_overlay_files(staged_root, overlay_root)
+            if spec["schema_version"] == 1:
+                _apply_deletes(staged_root, overlay_root, spec["deletes"])
+            else:
+                _apply_line_edits(staged_root, overlay_root, spec["edits"])
     except Exception:
         tempdir.cleanup()
         raise

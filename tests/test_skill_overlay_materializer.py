@@ -18,6 +18,7 @@ from skill_overlay_materializer import (  # noqa: E402
     stage_overlay_tree,
     validate_openai_agent_yaml,
 )
+from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
 
 
 def _write(path: Path, content: str) -> None:
@@ -63,6 +64,95 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 )
                 self.assertFalse((destination_root / "overlay.yaml").exists())
                 self.assertFalse((destination_root / "remove.txt").exists())
+            finally:
+                temp_handle.cleanup()
+
+    def test_stage_overlay_tree_applies_line_edits_and_detects_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write(
+                source_root / "SKILL.md",
+                "line 1\nline 2\nline 3\nline 4\nline 5\n",
+            )
+            _write(
+                overlay_root / "overlay.yaml",
+                (
+                    "schema_version: 2\n"
+                    "edits:\n"
+                    "  - path: SKILL.md\n"
+                    "    op: replace\n"
+                    "    start_line: 2\n"
+                    "    end_line: 3\n"
+                    "    expected_lines:\n"
+                    "      - line 2\n"
+                    "      - line 3\n"
+                    "    replace_lines:\n"
+                    "      - swapped 2\n"
+                    "      - swapped 3\n"
+                    "  - path: SKILL.md\n"
+                    "    op: insert_after\n"
+                    "    line: 4\n"
+                    "    anchor: line 4\n"
+                    "    insert_lines:\n"
+                    "      - inserted 4\n"
+                    "      - inserted 5\n"
+                ),
+            )
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                expected = "line 1\nswapped 2\nswapped 3\nline 4\ninserted 4\ninserted 5\nline 5\n"
+                self.assertEqual((expected_root / "SKILL.md").read_text(encoding="utf-8"), expected)
+                self.assertEqual((destination_root / "SKILL.md").read_text(encoding="utf-8"), expected)
+            finally:
+                temp_handle.cleanup()
+
+            _write(source_root / "SKILL.md", "line 1\nline 2\nchanged 3\nline 4\nline 5\n")
+            with self.assertRaises(ValueError):
+                stage_overlay_tree(source_root, overlay_root)
+
+    def test_stage_overlay_tree_applies_overlay_files_before_line_edits(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write(
+                source_root / "SKILL.md",
+                "line 1\nline 2\nline 3\n",
+            )
+            _write(
+                overlay_root / "SKILL.md",
+                "line 1\nline 2\nline 3\noverlay marker\n",
+            )
+            _write(
+                overlay_root / "overlay.yaml",
+                (
+                    "schema_version: 2\n"
+                    "edits:\n"
+                    "  - path: SKILL.md\n"
+                    "    op: replace\n"
+                    "    start_line: 2\n"
+                    "    end_line: 2\n"
+                    "    expected_lines:\n"
+                    "      - line 2\n"
+                    "    replace_lines:\n"
+                    "      - patched 2\n"
+                ),
+            )
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                expected = "line 1\npatched 2\nline 3\noverlay marker\n"
+                self.assertEqual((expected_root / "SKILL.md").read_text(encoding="utf-8"), expected)
+                self.assertEqual((destination_root / "SKILL.md").read_text(encoding="utf-8"), expected)
             finally:
                 temp_handle.cleanup()
 
@@ -193,6 +283,50 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
             )
             with self.assertRaises(ValueError):
                 validate_openai_agent_yaml(openai_yaml)
+
+    def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            skill_root = temp_root / "using-superpowers"
+            skill_md = skill_root / "SKILL.md"
+
+            _write(
+                skill_md,
+                (
+                    "---\n"
+                    "name: using-superpowers\n"
+                    "description: route workflow-sensitive work\n"
+                    "---\n"
+                    "\n"
+                    "body\n"
+                ),
+            )
+            with self.assertRaises(ValueError):
+                validate_skill_markdown_frontmatter(skill_root)
+
+            _write(
+                skill_md,
+                (
+                    "---\n"
+                    "name: using-superpowers\n"
+                    "description: route workflow-sensitive work\n"
+                    "metadata:\n"
+                    "  source_category: third_party\n"
+                    "  upstream_name: using-superpowers\n"
+                    "  upstream_version: v6.0.3\n"
+                    "  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers\n"
+                    "  projection_plugin: superpowers-plus\n"
+                    "  source_author: Obra AI\n"
+                    "  source_license: MIT\n"
+                    "  source_repo: https://github.com/obra-ai/obra-superpowers\n"
+                    "  content_mode: adapted\n"
+                    "  adapted_author: Harley Bartles\n"
+                    "---\n"
+                    "\n"
+                    "body\n"
+                ),
+            )
+            validate_skill_markdown_frontmatter(skill_root)
 
 
 if __name__ == "__main__":
