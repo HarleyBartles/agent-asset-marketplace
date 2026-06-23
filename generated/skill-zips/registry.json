@@ -4975,13 +4975,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/unslop-plus/unslop-plus/skill.zip",
       "source_file_count": 20,
-      "source_bytes": 87869,
-      "source_sha256": "18bd1472d80f3ae5a978185d66dcc540cb74c1c4787bf1aca49cb497b151e5a0",
+      "source_bytes": 87848,
+      "source_sha256": "43bb3f3a00403f6c68954b737ab2c48445eebad33dc9f029c95e686bb46057ab",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 35410,
-      "zip_sha256": "6b54ca331977cf23557ff989c1c26945e3c1d3c92459dc8aa1d941aed7ef63c5"
+      "zip_size_bytes": 35398,
+      "zip_sha256": "c5233cabc94814c80f6de0ebe2db9991b4e40e6df1a7118637b3a24017d7fd75"
     },
     {
       "pack": "wild-bunch-project-pack",

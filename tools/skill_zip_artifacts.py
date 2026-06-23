@@ -68,6 +68,7 @@ TEXT_SUFFIXES = {
     ".cts",
     ".mts",
     ".dot",
+    ".upstream",
     ".ts",
     ".tsx",
 }

@@ -53,6 +53,10 @@ class TreeCanonicalizationTests(unittest.TestCase):
         result = canonicalize_tree_bytes(Path("graphviz-conventions.dot"), b"digraph G {\r\n  a -> b\r\n}\r\n")
         self.assertEqual(result, b"digraph G {\n  a -> b\n}\n")
 
+    def test_canonicalizes_license_upstream_files(self) -> None:
+        result = canonicalize_tree_bytes(Path("LICENSE.upstream"), b"Upstream license text\r\n")
+        self.assertEqual(result, b"Upstream license text\n")
+
 
 if __name__ == "__main__":
     unittest.main()
