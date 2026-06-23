@@ -49,3 +49,6 @@ behavior.
 Targeted updates should use `py -3 tools/update_skill_artifacts.py --skill
 <pack>/<skill>`; `--all` is only for explicit full regeneration. Unrelated
 generated drift is not acceptable.
+Use `py -3 tools/generate_marketplace.py --check` and
+`py -3 tools/generate_repo_index.py --check` to prove the marketplace registry,
+Codex marketplace manifest, and repo index are current without rewriting them.

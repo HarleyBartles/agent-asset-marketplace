@@ -3039,13 +3039,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/everything-codex-code/skill-comply/skill.zip",
       "source_file_count": 21,
-      "source_bytes": 60267,
-      "source_sha256": "adae6af6dac5fb34032943ce3169b965cbfe776e76f50701509132a0bb72fd5e",
+      "source_bytes": 60244,
+      "source_sha256": "cd7f8e55727ca3c77eda1da4caa332c65fc386d908802d693bd9d4e1dff3a5c2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 23337,
-      "zip_sha256": "6ecb156cd904f2e80b6a355f9d30361fe6ef288b4d6e6b5501c85c5248f80655"
+      "zip_size_bytes": 23327,
+      "zip_sha256": "7581c88db6314a46c6e359baddc7667bda62e6355cd77b2aa1d98f32a7dabca9"
     },
     {
       "pack": "everything-codex-code",
@@ -6383,13 +6383,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/skill-comply/skill.zip",
       "source_file_count": 21,
-      "source_bytes": 60267,
-      "source_sha256": "adae6af6dac5fb34032943ce3169b965cbfe776e76f50701509132a0bb72fd5e",
+      "source_bytes": 60244,
+      "source_sha256": "cd7f8e55727ca3c77eda1da4caa332c65fc386d908802d693bd9d4e1dff3a5c2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 23337,
-      "zip_sha256": "6ecb156cd904f2e80b6a355f9d30361fe6ef288b4d6e6b5501c85c5248f80655"
+      "zip_size_bytes": 23327,
+      "zip_sha256": "7581c88db6314a46c6e359baddc7667bda62e6355cd77b2aa1d98f32a7dabca9"
     },
     {
       "pack": "repo-worker-base",
@@ -7007,13 +7007,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/brainstorming",
       "zip_path": "generated/skill-zips/superpowers-plus/brainstorming/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 75776,
-      "source_sha256": "2d4a047a96135d326facc05446bedd7c7ba6ce1d48367536505c7f688ad2afef",
+      "source_bytes": 75053,
+      "source_sha256": "9495c0947ea4a27254bff6a31f572209502a34c2f0c25c5eb959969c9829d4e8",
       "overlay_file_count": 1,
       "overlay_bytes": 864,
       "overlay_sha256": "59cc54e40c7d1c5708aeef9e5157cd03f534fef81b22eefde0f642d29e865cd6",
-      "zip_size_bytes": 25163,
-      "zip_sha256": "e819ad0ddf389cf716bfce12a8e8df12c9150c19aee8f34ab09777e3b65f5e24"
+      "zip_size_bytes": 25119,
+      "zip_sha256": "c8f911b2124f2d6e200e0ac62af1b492a2ebf0afaeed0b0affbc8ebd8befc7e3"
     },
     {
       "pack": "superpowers-plus",
@@ -7247,13 +7247,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/writing-skills",
       "zip_path": "generated/skill-zips/superpowers-plus/writing-skills/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 107929,
-      "source_sha256": "a89a8176907e2fd3dae40b2bed118b121f94f25102227e20af201f61cd3aeee1",
+      "source_bytes": 107758,
+      "source_sha256": "12e651072cc4dc4e2a9ca349e2ac311914c7fdf2c1af4c75cae1d572bebd14f9",
       "overlay_file_count": 1,
       "overlay_bytes": 803,
       "overlay_sha256": "f7ab4e5d644ea5d4d2259b19bb768240dc4ca719a4004f6b81db5f2c44608792",
-      "zip_size_bytes": 30527,
-      "zip_sha256": "520222a393fe689d9e3adb8d1bd2242223c65d7d2b9ef76ce846c39f098cd1f1"
+      "zip_size_bytes": 30512,
+      "zip_sha256": "4744b3a065ac9c9074f5fae58149766b80b6b61042eaeb901d6061383b720eec"
     },
     {
       "pack": "unslop-plus",
@@ -7263,13 +7263,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/unslop-plus/unslop-plus/skill.zip",
       "source_file_count": 20,
-      "source_bytes": 87869,
-      "source_sha256": "18bd1472d80f3ae5a978185d66dcc540cb74c1c4787bf1aca49cb497b151e5a0",
+      "source_bytes": 87848,
+      "source_sha256": "43bb3f3a00403f6c68954b737ab2c48445eebad33dc9f029c95e686bb46057ab",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 35410,
-      "zip_sha256": "6b54ca331977cf23557ff989c1c26945e3c1d3c92459dc8aa1d941aed7ef63c5"
+      "zip_size_bytes": 35398,
+      "zip_sha256": "c5233cabc94814c80f6de0ebe2db9991b4e40e6df1a7118637b3a24017d7fd75"
     },
     {
       "pack": "wild-bunch-project-pack",
@@ -7451,8 +7451,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "overlay_path": null,
       "source_file_count": 6,
-      "source_bytes": 38534,
-      "source_sha256": "59f42aa5112ca3b6fbb9123bb2bdf3aa8097c7b654b3bd75b1aeffe6f8fd1bc6",
+      "source_bytes": 38428,
+      "source_sha256": "ed264588234a40971224bf08f8e3669c5a53133d3d3e1a74899871e580331da4",
       "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
     },
     {

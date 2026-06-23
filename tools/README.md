@@ -4,14 +4,15 @@ Small helper scripts belong here.
 
 Current marketplace flow:
 
-- `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` from the local plugin bundle and source ledger.
+- `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` from the local plugin bundle and source ledger, and `--check` compares both files without writing.
 - `update_skill_artifacts.py` is the worker-facing entrypoint for targeted skill updates, pack updates, and explicit full regeneration.
 - `package_skill_zips.py` remains the thin lower-level wrapper over `skill_zip_artifacts.py`.
 - `validate_skill_zips.py` checks the canonical skill.zip surface and fails on stale, missing, malformed, or unregistered artifacts.
 - `validate_generated_drift.py` rejects generated zips or registry entries that changed without the matching source, overlay, or packaging-tooling change, unless full regeneration was explicitly declared.
 - `export_skill_zips.py` copies requested canonical artifacts into a manual GPT upload batch, writing `<out>/<skill-name>/skill.zip` plus `export-manifest.json`.
+- `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
 - `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, and local path references for the protected marketplace shape.
-- `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces.
+- `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces, but it is not the freshness proof for `repo-index/repo-index.json`.
 
 Codex plugin first; generated GPT-safe skill zips second.
 

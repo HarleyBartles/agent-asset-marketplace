@@ -31,6 +31,9 @@ The active marketplace root inventory is editable at
 the relevant source/projection files, and then run
 `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>` for a targeted
 refresh. Use `--all` only for an explicit full regeneration.
+Use `py -3 tools/generate_marketplace.py --check` and
+`py -3 tools/generate_repo_index.py --check` to prove the marketplace registry,
+Codex marketplace manifest, and repo index are current without mutating them.
 
 The boring goal for upstream drains is simple: take useful upstream plugin-market
 assets and put them into this repo's plugin market when rights and source shape

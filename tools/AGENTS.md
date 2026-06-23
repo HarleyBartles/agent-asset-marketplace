@@ -13,6 +13,11 @@ inventory that drives marketplace plugin ownership is
 `codex-marketplace/plugin-roots.json`, GPT overlay sources live under
 `adapters/gpt/`, and drift validation lives in
 `tools/validate_generated_drift.py`.
+The marketplace freshness proof is `py -3 tools/generate_marketplace.py --check`
+for `.agents/plugins/marketplace.json` and
+`codex-marketplace/manifest.json`, plus `py -3 tools/generate_repo_index.py
+--check` for `repo-index/repo-index.json`. `validate_repo_index.py` checks
+metadata alignment, not freshness by itself.
 
 ## Review guidelines
 
