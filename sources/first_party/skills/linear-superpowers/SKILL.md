@@ -25,7 +25,7 @@ Start with `/using-superpowers` as the workflow-selection entrypoint.
 
 When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `/writing-plans` for route review and `/executing-plans` as the outer execution workflow.
 
-Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. This is not optional background guidance.
+Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route into `/connector-safety` immediately instead of retrying from memory or paraphrasing the same payload.
 
 For any mention of Linear `delegate` or `!`-prefixed labels, defer to `/linear` as the owning connector surface and keep this skill focused on packet shape.
 
@@ -50,6 +50,7 @@ Nesting rule:
 - Prefer one Linear side effect per call.
 - Keep issue create, update, comment, status, label, project, and relation payloads narrow.
 - Treat blocked connector writes as a signal to narrow, verify, or stop, not as completion.
+- If a Linear write blocks, stop and use `/connector-safety` recovery before any retry.
 - Do not claim a Linear mutation succeeded unless the connector result or readback proves it.
 
 ## Native Linear delegation guard

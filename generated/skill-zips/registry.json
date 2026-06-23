@@ -207,13 +207,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/connector-safety/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 18719,
-      "source_sha256": "93389f4187483b81de8b9b44f1fd520f6a73bc18f2b987146a6503796548b42e",
+      "source_bytes": 19342,
+      "source_sha256": "18460bc987a862a7483117d603c347b95c83fa4deb6e6e3c4dcdd1ef5c3877d6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7921,
-      "zip_sha256": "44bcc7300b14c465ed12b24fb1d9b592ce4e25322d6eddd6572b347058b0caf7"
+      "zip_size_bytes": 8093,
+      "zip_sha256": "feb97058663a0e216226449ff5742b3e0189c714fc140788ddb3ade494f68b46"
     },
     {
       "pack": "adventures-pack",
@@ -287,13 +287,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/worker-dispatch-linear/skill.zip",
       "source_file_count": 11,
-      "source_bytes": 36389,
-      "source_sha256": "11ea6bd240c873f57e7df33486016c3edfd22b9fd2174f6a1ab92fe9cf9a3dbd",
+      "source_bytes": 36664,
+      "source_sha256": "ffa01c9eceb94d0c10d6af6f8fca9f92ee9e2f6ffbb89dc4df40774832922284",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16491,
-      "zip_sha256": "bdd94d054eb02a02fe1f2cda80b106066c381be394a961cdc6931cb8828298a3"
+      "zip_size_bytes": 16611,
+      "zip_sha256": "14875e73376ae723da237e62b25ae11d570f7580f6c1fdb52a4df52949de2cc1"
     },
     {
       "pack": "api-contracts-pack",
@@ -1919,13 +1919,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/connector-safety/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 18719,
-      "source_sha256": "93389f4187483b81de8b9b44f1fd520f6a73bc18f2b987146a6503796548b42e",
+      "source_bytes": 19342,
+      "source_sha256": "18460bc987a862a7483117d603c347b95c83fa4deb6e6e3c4dcdd1ef5c3877d6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7921,
-      "zip_sha256": "44bcc7300b14c465ed12b24fb1d9b592ce4e25322d6eddd6572b347058b0caf7"
+      "zip_size_bytes": 8093,
+      "zip_sha256": "feb97058663a0e216226449ff5742b3e0189c714fc140788ddb3ade494f68b46"
     },
     {
       "pack": "house-skills",
@@ -2111,13 +2111,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4448,
-      "source_sha256": "886e6db4176474dd6d0e84cc081df605c5087e4f22970b31d6f3c0a900a6a10c",
+      "source_bytes": 4913,
+      "source_sha256": "bf3d37229f8748b5b327b832f0068e55abf2500bebf679d5b2da32046a085c1f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2309,
-      "zip_sha256": "09b0ae143a519583c04158505bddb2ef5fc382530115dc7c3839bcce02c42444"
+      "zip_size_bytes": 2481,
+      "zip_sha256": "07b8a58e6b9ce5bb2f41b1d2b64c26f5113ec42ef8468e469dc1068891d8237f"
     },
     {
       "pack": "house-skills",
@@ -2527,13 +2527,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/worker-dispatch-linear/skill.zip",
       "source_file_count": 11,
-      "source_bytes": 36389,
-      "source_sha256": "11ea6bd240c873f57e7df33486016c3edfd22b9fd2174f6a1ab92fe9cf9a3dbd",
+      "source_bytes": 36664,
+      "source_sha256": "ffa01c9eceb94d0c10d6af6f8fca9f92ee9e2f6ffbb89dc4df40774832922284",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16491,
-      "zip_sha256": "bdd94d054eb02a02fe1f2cda80b106066c381be394a961cdc6931cb8828298a3"
+      "zip_size_bytes": 16611,
+      "zip_sha256": "14875e73376ae723da237e62b25ae11d570f7580f6c1fdb52a4df52949de2cc1"
     },
     {
       "pack": "language-patterns-pack",
@@ -3631,13 +3631,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/connector-safety/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 18719,
-      "source_sha256": "93389f4187483b81de8b9b44f1fd520f6a73bc18f2b987146a6503796548b42e",
+      "source_bytes": 19342,
+      "source_sha256": "18460bc987a862a7483117d603c347b95c83fa4deb6e6e3c4dcdd1ef5c3877d6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7921,
-      "zip_sha256": "44bcc7300b14c465ed12b24fb1d9b592ce4e25322d6eddd6572b347058b0caf7"
+      "zip_size_bytes": 8093,
+      "zip_sha256": "feb97058663a0e216226449ff5742b3e0189c714fc140788ddb3ade494f68b46"
     },
     {
       "pack": "repo-worker-base",
@@ -4815,13 +4815,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 4448,
-      "source_sha256": "886e6db4176474dd6d0e84cc081df605c5087e4f22970b31d6f3c0a900a6a10c",
+      "source_bytes": 4913,
+      "source_sha256": "bf3d37229f8748b5b327b832f0068e55abf2500bebf679d5b2da32046a085c1f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2309,
-      "zip_sha256": "09b0ae143a519583c04158505bddb2ef5fc382530115dc7c3839bcce02c42444"
+      "zip_size_bytes": 2481,
+      "zip_sha256": "07b8a58e6b9ce5bb2f41b1d2b64c26f5113ec42ef8468e469dc1068891d8237f"
     },
     {
       "pack": "superpowers-plus",
