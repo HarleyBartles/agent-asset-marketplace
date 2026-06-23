@@ -19,25 +19,6 @@ metadata:
   projection_plugin: superpowers-plus
 ```
 
-```yaml
-version: 1
-metadata:
-  source-id: ecc-superpowers
-  source-path: sources/first_party/skills/ecc-superpowers/SKILL.md
-  provenance-name: MARK-244 ECC Superpowers compositional routing skill
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  content_mode: adapted
-  adapted_author: Harley Bartles
-interface:
-  display_name: ECC Superpowers
-  short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.
-policy:
-  allow_implicit_invocation: true
-```
-
 ## Rules
 
 - The file must be UTF-8 without a BOM.

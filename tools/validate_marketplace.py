@@ -1580,7 +1580,7 @@ def main() -> int:
     if orphans:
         raise ValueError(
             f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
-            f"Fix: add manifest entries for these skills and regenerate."
+            f"Fix: add manifest entries for these skills and regenerate, or remove retired source custody that should not stay in the active first-party tree."
         )
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()

@@ -58,7 +58,7 @@ into `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/`
 and the first-party `architecture-superpowers` skill from
 `sources/first_party/skills/architecture-superpowers/`
 into `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/`
-and the first-party `ecc-superpowers` skill from
+and historically the first-party `ecc-superpowers` skill from
 `sources/first_party/skills/ecc-superpowers/`
 into `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/`
 and the first-party `inspecting-the-environment` skill from
@@ -75,9 +75,12 @@ These first-party projections are directory-level skill specs with
 `ecc-superpowers` invoke `unslop-superpowers` when repo-specific anti-slop
 controls, profile-aware non-goals, or evidence requirements matter.
 
-`ecc-superpowers` is a verbatim first-party router wrapper that points to the
-retired ECC routing path. It is compositional, not a fork cue, and it
-keeps the removed ECC routing doctrine out of the active Superpowers+ bundle.
+`ecc-superpowers` was a verbatim first-party router wrapper that MARK-295
+removed from both the active projection surface and source custody. It was
+compositional, not a fork cue, and it kept the removed ECC routing doctrine
+out of the active Superpowers+ bundle while leaving MARK-301 a deliberate
+path to reintroduce a refreshed projection after fresh source inspection and
+validator updates.
 
 ## Excluded from the active projection
 
