@@ -4719,13 +4719,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/brainstorming",
       "zip_path": "generated/skill-zips/superpowers-plus/brainstorming/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 75776,
-      "source_sha256": "2d4a047a96135d326facc05446bedd7c7ba6ce1d48367536505c7f688ad2afef",
+      "source_bytes": 75053,
+      "source_sha256": "9495c0947ea4a27254bff6a31f572209502a34c2f0c25c5eb959969c9829d4e8",
       "overlay_file_count": 1,
       "overlay_bytes": 864,
       "overlay_sha256": "59cc54e40c7d1c5708aeef9e5157cd03f534fef81b22eefde0f642d29e865cd6",
-      "zip_size_bytes": 25163,
-      "zip_sha256": "e819ad0ddf389cf716bfce12a8e8df12c9150c19aee8f34ab09777e3b65f5e24"
+      "zip_size_bytes": 25119,
+      "zip_sha256": "c8f911b2124f2d6e200e0ac62af1b492a2ebf0afaeed0b0affbc8ebd8befc7e3"
     },
     {
       "pack": "superpowers-plus",

@@ -63,6 +63,10 @@ TEXT_SUFFIXES = {
     ".html",
     ".css",
     ".js",
+    ".cjs",
+    ".mjs",
+    ".cts",
+    ".mts",
     ".ts",
     ".tsx",
 }
