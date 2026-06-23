@@ -49,6 +49,10 @@ class TreeCanonicalizationTests(unittest.TestCase):
         result = canonicalize_tree_bytes(Path("openai.yaml"), b"name: test\r\n")
         self.assertEqual(result, b"name: test\n")
 
+    def test_canonicalizes_dot_files(self) -> None:
+        result = canonicalize_tree_bytes(Path("graphviz-conventions.dot"), b"digraph G {\r\n  a -> b\r\n}\r\n")
+        self.assertEqual(result, b"digraph G {\n  a -> b\n}\n")
+
 
 if __name__ == "__main__":
     unittest.main()

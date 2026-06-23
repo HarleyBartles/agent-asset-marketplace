@@ -4959,13 +4959,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/writing-skills",
       "zip_path": "generated/skill-zips/superpowers-plus/writing-skills/skill.zip",
       "source_file_count": 7,
-      "source_bytes": 107929,
-      "source_sha256": "a89a8176907e2fd3dae40b2bed118b121f94f25102227e20af201f61cd3aeee1",
+      "source_bytes": 107758,
+      "source_sha256": "12e651072cc4dc4e2a9ca349e2ac311914c7fdf2c1af4c75cae1d572bebd14f9",
       "overlay_file_count": 1,
       "overlay_bytes": 803,
       "overlay_sha256": "f7ab4e5d644ea5d4d2259b19bb768240dc4ca719a4004f6b81db5f2c44608792",
-      "zip_size_bytes": 30527,
-      "zip_sha256": "520222a393fe689d9e3adb8d1bd2242223c65d7d2b9ef76ce846c39f098cd1f1"
+      "zip_size_bytes": 30512,
+      "zip_sha256": "4744b3a065ac9c9074f5fae58149766b80b6b61042eaeb901d6061383b720eec"
     },
     {
       "pack": "unslop-plus",

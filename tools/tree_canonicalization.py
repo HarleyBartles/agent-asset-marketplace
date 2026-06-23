@@ -27,6 +27,7 @@ TEXT_SUFFIXES = {
     ".mjs",
     ".cts",
     ".mts",
+    ".dot",
     ".ts",
     ".tsx",
 }
