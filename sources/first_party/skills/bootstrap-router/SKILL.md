@@ -37,7 +37,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 ## Routing map
 
 - `linear_codex_coding` -> `worker-dispatch-linear` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
-- `gpt_native_skillwork` -> `skill-validator`, then `skill-packager`, then `skill-handoff` when queue or handoff cadence matters. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
+- `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> `github-operations` after a GitHub artifact exists. Do not use GitHub Operations to decide worker state or issue routing.
 - `linear_control` -> `linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
 - `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as `tps-reporting` for report hygiene and proof packaging.
