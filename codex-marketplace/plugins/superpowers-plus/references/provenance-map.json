@@ -22,13 +22,6 @@
       "local_path": "skills/dispatching-parallel-agents"
     },
     {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "skills/ecc-superpowers"
-    },
-    {
       "canonical_name": "executing-plans",
       "source_category": "third_party",
       "content_mode": "verbatim",

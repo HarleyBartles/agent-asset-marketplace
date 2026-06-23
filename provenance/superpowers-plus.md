@@ -65,7 +65,7 @@ and the first-party `inspecting-the-environment` skill from
 `sources/first_party/skills/inspecting-the-environment/`
 into `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/`
 so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, anti-slop, architecture, ECC routing, and environment-inspection
+GitHub, anti-slop, architecture, environment-inspection, and other first-party routing helpers
 workflow skills without creating second editable source roots.
 
 These first-party projections are directory-level skill specs with
@@ -76,8 +76,8 @@ These first-party projections are directory-level skill specs with
 controls, profile-aware non-goals, or evidence requirements matter.
 
 `ecc-superpowers` is a verbatim first-party router wrapper that points to the
-dedicated `superpowers-ecc` pack. It is compositional, not a fork cue, and it
-keeps ECC workflow doctrine out of the upstream Superpowers snapshot.
+retired ECC routing path. It is compositional, not a fork cue, and it
+keeps the removed ECC routing doctrine out of the active Superpowers+ bundle.
 
 ## Excluded from the active projection
 

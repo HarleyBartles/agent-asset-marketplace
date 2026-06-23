@@ -2,11 +2,11 @@
 
 ## Summary
 
-The Data Platform Pack projects retained ECC data platform and scientific thinking skills into a Codex marketplace pack, plus an adapted PlanetScale PostgreSQL skill neutralized for marketplace use.
+The Data Platform Pack historically projected retained ECC data platform and scientific thinking skills into a Codex marketplace pack, plus an adapted PlanetScale PostgreSQL skill. MARK-295 removed the active ECC slice and left the PlanetScale skill in place.
 
 ## Source Custody
 
-### Retained ECC Upstream
+### Historical ECC Upstream
 
 - **Upstream root**: `sources/third_party/ecc/upstream/`
 - **Retained skill roots**:
@@ -30,7 +30,7 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
 
 ## Projection Surfaces
 
-### ECC Projection
+### Historical ECC Projection
 
 - `codex-marketplace/plugins/data-platform-pack/skills/clickhouse-io/`
 - `codex-marketplace/plugins/data-platform-pack/skills/content-hash-cache-pattern/`
@@ -49,12 +49,12 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
 - **Plugin name**: `data-platform-pack`
 - **Display name**: `Data Platform Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `verbatim` from ECC custody; `adapted` for PlanetScale Postgres
-- **Adaptation note**: Projected from retained ECC custody with first-party selection ledger and a PlanetScale overlay that removes product-default marketing copy
+- **Content mode**: `historical verbatim` from ECC custody; `adapted` for PlanetScale Postgres
+- **Adaptation note**: The ECC slice was removed in MARK-295; the remaining PlanetScale overlay stays in place
 
 ## Rights and Attribution
 
-### ECC Content
+### Historical ECC Content
 
 - **Upstream source**: ECC (Enterprise Contract Copilot)
 - **License**: Per ECC license terms
@@ -63,7 +63,7 @@ The Data Platform Pack projects retained ECC data platform and scientific thinki
 
 ## Boundary
 
-The bundle focuses on data platform engineering and scientific thinking skills from ECC custody:
+The bundle now focuses on the retained PlanetScale PostgreSQL skill; the removed ECC slice is recorded here for historical custody only:
 - Data storage and processing (ClickHouse, Kafka, realtime analytics)
 - Data visualization and dashboarding
 - Scientific literature review and scholar evaluation

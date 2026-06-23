@@ -32,7 +32,7 @@
 
 ## Boundary
 
-The ECC projection contributes security review, security scan, safe-operation,
+The historical ECC projection contributed security review, security scan, safe-operation,
 config validation, bounty-hunter, framework-specific security, and
-risk-review guidance to `security-pack`. Compliance-only or unrelated
+risk-review guidance to `security-pack`. MARK-295 removed the active ECC projections from all plugins; compliance-only or unrelated
 implementation skills stay out of this projection slice.

@@ -2,14 +2,11 @@
   "bundle_name": "architecture-pack",
   "bundle_version": "1.0.0",
   "source_families": [
-    "claude-cortex",
-    "ecc"
+    "claude-cortex"
   ],
   "notes": [
-    "Three retained architecture guidance skills from Codex Cortex custody.",
-    "Eight architecture skills from ECC (affaan-m/ECC) custody projected as part of MARK-241.",
-    "The installable projection mirrors the Codex Cortex custody plugin and ECC custody.",
-    "Later Claude-Cortex candidates remain out of scope."
+    "Architecture bundle projected from retained Codex Cortex custody only.",
+    "The ECC architecture slice has been removed from the active projection set."
   ],
   "provenance_refs": [
     "provenance/architecture-pack.md"
@@ -19,36 +16,6 @@
   "bundle_type": "projection-lane",
   "is_mega_pack": false,
   "entries": [
-    {
-      "canonical_name": "architecture-decision-records",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records",
-      "local_path": "skills/architecture-decision-records",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "backend-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/backend-patterns",
-      "local_path": "skills/backend-patterns",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/backend-patterns/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
     {
       "canonical_name": "cqrs-event-sourcing",
       "source_category": "third_party",
@@ -80,21 +47,6 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "canonical_name": "docker-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/docker-patterns",
-      "local_path": "skills/docker-patterns",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/docker-patterns/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
       "canonical_name": "event-driven-architecture",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -106,81 +58,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
       "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "hexagonal-architecture",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture",
-      "local_path": "skills/hexagonal-architecture",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "intent-driven-development",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/intent-driven-development",
-      "local_path": "skills/intent-driven-development",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/intent-driven-development/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "kubernetes-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/kubernetes-patterns",
-      "local_path": "skills/kubernetes-patterns",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/kubernetes-patterns/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "mcp-server-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/mcp-server-patterns",
-      "local_path": "skills/mcp-server-patterns",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/mcp-server-patterns/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "mle-workflow",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/mle-workflow",
-      "local_path": "skills/mle-workflow",
-      "import_status": "imported",
-      "source_path": "sources/third_party/ecc/upstream/skills/mle-workflow/SKILL.md",
-      "source_author": "ECC (affaan-m/ECC)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "source_family": "ecc",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }

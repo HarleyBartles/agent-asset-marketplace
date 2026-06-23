@@ -1167,6 +1167,18 @@ def validate_skill_bundle_manifest(
         if bundle_manifest.get("blocked_count") != len(blocked_entries):
             raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
 
+        ecc_entries = [
+            entry
+            for entry in imported_entries
+            if entry.get("source_family") == "ecc"
+            or entry.get("source_repo") == "https://github.com/affaan-m/ECC"
+        ]
+        if ecc_entries:
+            removed = ", ".join(
+                entry.get("canonical_name", "<unknown>") for entry in ecc_entries
+            )
+            raise ValueError(f"{bundle_name} bundle manifest still projects ECC skills: {removed}")
+
         skill_dir = ROOT / plugin_root / "skills"
         actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
         imported_skill_dirs = {

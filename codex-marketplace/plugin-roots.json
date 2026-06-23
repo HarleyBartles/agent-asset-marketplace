@@ -58,15 +58,6 @@
     },
     {
       "order": 6,
-      "name": "superpowers-ecc",
-      "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/superpowers-ecc",
-      "plugin_root": "codex-marketplace/plugins/superpowers-ecc",
-      "manifest_path": "codex-marketplace/plugins/superpowers-ecc/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 7,
       "name": "repo-worker-base",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/repo-worker-base",
@@ -75,7 +66,7 @@
       "enabled": true
     },
     {
-      "order": 8,
+      "order": 7,
       "name": "dotnet-kit",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/dotnet-kit",
@@ -84,7 +75,7 @@
       "enabled": true
     },
     {
-      "order": 9,
+      "order": 8,
       "name": "codex-cortex",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/codex-cortex",
@@ -93,7 +84,7 @@
       "enabled": true
     },
     {
-      "order": 10,
+      "order": 9,
       "name": "api-contracts-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
@@ -102,7 +93,7 @@
       "enabled": true
     },
     {
-      "order": 11,
+      "order": 10,
       "name": "architecture-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/architecture-pack",
@@ -111,7 +102,7 @@
       "enabled": true
     },
     {
-      "order": 12,
+      "order": 11,
       "name": "language-patterns-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
@@ -120,7 +111,7 @@
       "enabled": true
     },
     {
-      "order": 13,
+      "order": 12,
       "name": "security-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/security-pack",
@@ -129,7 +120,7 @@
       "enabled": true
     },
     {
-      "order": 14,
+      "order": 13,
       "name": "frontend-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/frontend-pack",
@@ -138,7 +129,7 @@
       "enabled": true
     },
     {
-      "order": 15,
+      "order": 14,
       "name": "data-platform-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/data-platform-pack",
@@ -147,25 +138,7 @@
       "enabled": true
     },
     {
-      "order": 16,
-      "name": "ops-connectors-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/ops-connectors-pack",
-      "plugin_root": "codex-marketplace/plugins/ops-connectors-pack",
-      "manifest_path": "codex-marketplace/plugins/ops-connectors-pack/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 17,
-      "name": "media-content-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/media-content-pack",
-      "plugin_root": "codex-marketplace/plugins/media-content-pack",
-      "manifest_path": "codex-marketplace/plugins/media-content-pack/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 18,
+      "order": 15,
       "name": "planning-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/planning-pack",
@@ -174,7 +147,7 @@
       "enabled": true
     },
     {
-      "order": 19,
+      "order": 16,
       "name": "feature-sliced-design",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/feature-sliced-design",

@@ -6,8 +6,7 @@
   "is_mega_pack": true,
   "mega_pack_for": "superpowers",
   "source_families": [
-    "house-skills",
-    "superpowers"
+    "first_party"
   ],
   "entries": [
     {
@@ -54,21 +53,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/obra-superpowers",
       "source_family": "superpowers"
-    },
-    {
-      "canonical_name": "ecc-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-      "local_path": "skills/ecc-superpowers",
-      "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
     },
     {
       "canonical_name": "executing-plans",
@@ -315,9 +299,8 @@
     }
   ],
   "notes": [
-    "Auto-generated mega-pack manifest for the superpowers custody root.",
-    "Curated cross-family entries are preserved from the prior manifest.",
-    "Regenerate with: py -3 tools/generate_mega_packs.py"
+    "Superpowers+ bundle projected from first-party workflow helpers only.",
+    "The ECC router wrapper has been removed from the active projection set."
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"

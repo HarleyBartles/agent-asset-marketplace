@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Security Pack projects retained NickCrew/Claude-Cortex security foundations and retained ECC security-oriented skills into a Codex marketplace pack.
+The Security Pack historically projected retained NickCrew/Claude-Cortex security foundations and retained ECC security-oriented skills into a Codex marketplace pack. MARK-295 removed the active ECC slice.
 
 ## Source Custody
 
@@ -15,7 +15,7 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
   - `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
   - `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
 
-### Retained ECC Upstream
+### Historical ECC Upstream
 
 - **Upstream root**: `sources/third_party/ecc/upstream/`
 - **Retained skill roots**:
@@ -51,7 +51,7 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 - `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/`
 - `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques/`
 
-### ECC Projection
+### Historical ECC Projection
 
 - `codex-marketplace/plugins/security-pack/skills/defi-amm-security/`
 - `codex-marketplace/plugins/security-pack/skills/django-security/`
@@ -78,7 +78,7 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 - **Content mode**: 
   - `normalised` from NickCrew/Claude-Cortex custody (path normalization, frontmatter enrichment, MARK-262 metadata)
   - `normalised` from ECC custody (frontmatter enrichment, MARK-262 metadata)
-- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex and ECC custody with first-party selection ledger; substantive content unchanged
+- **Adaptation note**: The ECC slice was removed in MARK-295; the remaining NickCrew/Claude-Cortex security foundations stay in place
 
 ## Rights and Attribution
 
@@ -88,7 +88,7 @@ The Security Pack projects retained NickCrew/Claude-Cortex security foundations 
 - **License**: MIT
 - **Redistribution rights**: Per upstream license terms with first-party selection provenance
 
-### ECC Content
+### Historical ECC Content
 
 - **Upstream source**: ECC (Enterprise Contract Copilot)
 - **License**: Per ECC license terms
@@ -103,6 +103,6 @@ The combined bundle keeps the source families distinct while letting them compos
 - `owasp-top-10` stays focused on application-risk taxonomy and remediation.
 - `security-testing-patterns` stays focused on validation, security testing strategy, and automation.
 - `threat-modeling-techniques` stays focused on pre-implementation risk framing, abuse cases, and trust boundaries.
-- ECC skills stay focused on their respective ECC-adapted review, safety, and hardening concerns.
+- ECC skills were removed from the active bundle in MARK-295; follow-up reprojection can reconsider the slice after fresh source inspection.
 - `security-review` stays distinct from `secure-coding-practices` and `owasp-top-10`: the pack uses it for general review and cloud infrastructure security, with the support doc projected at `skills/security-review/references/cloud-infrastructure-security.md`.
 - The bundle stays out of generic compliance theatre, repo governance, and unrelated implementation domains unless another issue explicitly composes them in.

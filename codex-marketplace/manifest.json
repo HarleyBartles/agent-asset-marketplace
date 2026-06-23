@@ -77,18 +77,6 @@
       "category": "Coding"
     },
     {
-      "name": "superpowers-ecc",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/superpowers-ecc"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    },
-    {
       "name": "repo-worker-base",
       "source": {
         "source": "local",
@@ -189,30 +177,6 @@
       "source": {
         "source": "local",
         "path": "./codex-marketplace/plugins/data-platform-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "ops-connectors-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/ops-connectors-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "media-content-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/media-content-pack"
       },
       "policy": {
         "installation": "AVAILABLE",
