@@ -36,13 +36,6 @@
       "local_path": "skills/database-migrations"
     },
     {
-      "canonical_name": "postgres",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
-      "local_path": "skills/postgres"
-    },
-    {
       "canonical_name": "postgres-patterns",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -92,12 +85,7 @@
       "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
       "local_path": "skills/postgres",
-      "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres",
-      "source_author": "PlanetScale",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/planetscale/database-skills",
-      "source_family": "planetscale",
-      "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
+      "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres"
     }
   ]
 }
