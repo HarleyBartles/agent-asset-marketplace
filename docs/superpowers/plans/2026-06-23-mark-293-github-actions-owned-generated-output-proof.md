@@ -25,7 +25,7 @@
 - Modify: `.github/workflows/marketplace-validation.yml`
 
 **Interfaces:**
-- Consumes: the existing check-capable scripts (`tools/update_skill_artifacts.py --check`, `tools/materialize_projection.py --check`, `tools/generate_mega_packs.py --check`, `tools/generate_provenance_maps.py --check`, `tools/generate_source_maps.py --check`, `tools/validate_marketplace.py`, `tools/validate_repo_index.py`, `tools/validate_skill_zips.py`).
+- Consumes: the existing check-capable scripts (`tools/update_skill_artifacts.py --check`, `tools/generate_marketplace.py --check`, `tools/generate_repo_index.py --check`, `tools/materialize_projection.py --check`, `tools/generate_mega_packs.py --check`, `tools/generate_provenance_maps.py --check`, `tools/generate_source_maps.py --check`, `tools/validate_marketplace.py`, `tools/validate_repo_index.py`, `tools/validate_skill_zips.py`).
 - Produces: a workflow that proves committed marketplace outputs are current without rewriting them in the runner workspace.
 
 - [ ] **Step 1: Replace the write-mode generator steps with explicit check-mode validation.**
@@ -35,6 +35,12 @@ Use a workflow shape like this:
 ```yaml
 - name: Check skill artifacts
   run: python tools/update_skill_artifacts.py --check
+
+- name: Check marketplace manifests
+  run: python tools/generate_marketplace.py --check
+
+- name: Check repo index
+  run: python tools/generate_repo_index.py --check
 
 - name: Check projection drift
   run: python tools/materialize_projection.py --check
@@ -67,12 +73,12 @@ Keep the existing checkout, Python setup, and dependency install steps. Remove t
 
 The step names should tell reviewers what is being proven:
 - skill artifacts
+- marketplace manifests
+- repo index
 - projection drift
 - mega-pack manifests
 - provenance maps
 - source maps
-- marketplace manifest surfaces
-- repo index
 - skill zip registry
 - whitespace safety
 
@@ -109,6 +115,8 @@ Document the matching local sequence in `py -3` form:
 
 ```text
 py -3 tools/update_skill_artifacts.py --check
+py -3 tools/generate_marketplace.py --check
+py -3 tools/generate_repo_index.py --check
 py -3 tools/materialize_projection.py --check
 py -3 tools/generate_mega_packs.py --check
 py -3 tools/generate_provenance_maps.py --check
