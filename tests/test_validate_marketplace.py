@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -179,6 +180,32 @@ SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
 
 
 class ValidateMarketplaceTests(unittest.TestCase):
+    def test_validate_marketplace_runs_projection_materializer_check(self) -> None:
+        with patch.object(
+            validate_marketplace.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["py"], 0),
+        ) as run_mock:
+            validate_marketplace.validate_projection_materializer()
+            run_mock.assert_called_once()
+            self.assertEqual(
+                run_mock.call_args.args[0],
+                [sys.executable, "tools/materialize_projection.py", "--check"],
+            )
+
+    def test_validate_marketplace_runs_ecc_bundle_manifest_check(self) -> None:
+        with patch.object(
+            validate_marketplace.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["py"], 0),
+        ) as run_mock:
+            validate_marketplace.validate_ecc_bundle_manifests()
+            run_mock.assert_called_once()
+            self.assertEqual(
+                run_mock.call_args.args[0],
+                [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
+            )
+
     def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -419,20 +446,21 @@ class ValidateMarketplaceTests(unittest.TestCase):
         )
         _validate_projection_entry_provenance(
             {
-                "canonical_name": "ecc-superpowers",
-                "source_category": "first_party",
-                "content_mode": "adapted",
-                "canonical_source_path": "sources/first_party/skills/ecc-superpowers",
-                "local_path": "skills/ecc-superpowers",
-                "source_path": "sources/first_party/skills/ecc-superpowers/SKILL.md",
-                "source_author": "Harley Bartles",
+                "canonical_name": "agent-self-evaluation",
+                "source_category": "third_party",
+                "content_mode": "normalised",
+                "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
+                "local_path": "skills/agent-self-evaluation",
+                "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md",
+                "source_author": "ECC",
                 "source_license": "MIT",
-                "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+                "source_repo": "https://github.com/affaan-m/ECC",
                 "adapted_author": "Harley Bartles",
-                "provenance_note": "Projected from the repo-authored ECC Superpowers router skill.",
-                "adaptation_note": "Added repo-authored wrapper attribution and explicit upstream author/license provenance.",
+                "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation",
+                "provenance_note": "Projected from the retained ECC evaluation skill with internal references normalized into the adapter tree.",
+                "adaptation_note": "Moved examples and template assets into canonical references/ folders and repointed the report template link.",
             },
-            bundle_name="superpowers-plus",
+            bundle_name="agentic-evaluation",
         )
 
     def test_validate_projection_entry_provenance_rejects_missing_adapted_author(self) -> None:

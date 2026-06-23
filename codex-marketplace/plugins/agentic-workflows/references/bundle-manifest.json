@@ -1,0 +1,126 @@
+{
+  "bundle_name": "agentic-workflows",
+  "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "plugin_root": "codex-marketplace/plugins/agentic-workflows",
+  "is_mega_pack": false,
+  "source_families": [
+    "ecc"
+  ],
+  "notes": [
+    "Agentic workflows pack groups the selected ECC workflow mechanics into one topical home.",
+    "The pack keeps the workflow-facing skills together so they can be projected as a complementary bundle instead of a superpowers-themed wrapper."
+  ],
+  "provenance_refs": [
+    "provenance/ecc-domain-packs.md",
+    "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "agent-harness-construction",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction",
+      "local_path": "skills/agent-harness-construction",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "agentic-os",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agentic-os",
+      "local_path": "skills/agentic-os",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/agentic-os/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "autonomous-agent-harness",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness",
+      "local_path": "skills/autonomous-agent-harness",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "continuous-agent-loop",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop",
+      "local_path": "skills/continuous-agent-loop",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "dmux-workflows",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows",
+      "local_path": "skills/dmux-workflows",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "dynamic-workflow-mode",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode",
+      "local_path": "skills/dynamic-workflow-mode",
+      "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
+      "source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
+    }
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",
+    "source_ledger": [
+      "sources/third_party/ecc/upstream/source-custody.md",
+      "sources/third_party/ecc/upstream/manifest.json",
+      "sources/third_party/ecc/upstream/LICENSE"
+    ],
+    "license_path": "codex-marketplace/plugins/agentic-workflows/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/agentic-workflows/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/agentic-workflows/skills",
+    "provenance_refs": [
+      "provenance/ecc-domain-packs.md",
+      "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

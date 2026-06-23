@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 import yaml
@@ -65,6 +67,24 @@ def check_path_exists(path: Path) -> None:
     if not path.exists():
         raise FileNotFoundError(path)
     print(f"OK path: {path.relative_to(ROOT)}")
+
+
+def _run_tool_check(command: list[str], label: str) -> None:
+    try:
+        subprocess.run(command, cwd=ROOT, check=True)
+    except subprocess.CalledProcessError as exc:  # pragma: no cover - exercised via integration checks
+        raise ValueError(f"{label} failed with exit code {exc.returncode}") from exc
+
+
+def validate_projection_materializer() -> None:
+    _run_tool_check([sys.executable, "tools/materialize_projection.py", "--check"], "projection materializer check")
+
+
+def validate_ecc_bundle_manifests() -> None:
+    _run_tool_check(
+        [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
+        "ECC bundle manifest generator check",
+    )
 
 
 def list_files(root: Path) -> list[Path]:
@@ -1097,9 +1117,6 @@ def validate_skill_bundle_manifest(
         vendor_root: Path | None = None
         source_family_roots: dict[str, Path] | None = None
 
-        if bundle_name == "superpowers-ecc":
-            check_path_exists(ROOT / "sources/third_party/ecc/upstream/LICENSE")
-
         if bundle_name in ("security-pack", "unslop-plus") and isinstance(bundle_manifest.get("source_families"), list):
             source_family_roots = {}
             for family in bundle_manifest["source_families"]:
@@ -1166,24 +1183,6 @@ def validate_skill_bundle_manifest(
             raise ValueError(f"{bundle_name} bundle manifest skipped count mismatch")
         if bundle_manifest.get("blocked_count") != len(blocked_entries):
             raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
-
-        # Temporary MARK-295 stale-projection guard:
-        # keep the removed ECC projection set out of active bundles until a
-        # deliberate MARK-301 validator and manifest update reintroduces it.
-        ecc_entries = [
-            entry
-            for entry in imported_entries
-            if entry.get("source_family") == "ecc"
-            or entry.get("source_repo") == "https://github.com/affaan-m/ECC"
-        ]
-        if ecc_entries:
-            removed = ", ".join(
-                entry.get("canonical_name", "<unknown>") for entry in ecc_entries
-            )
-            raise ValueError(
-                f"{bundle_name} bundle manifest still includes the MARK-295 stale ECC projection set: {removed}. "
-                "This guard blocks only the removed projection set; reintroduce deliberate ECC projections with the MARK-301 manifest, provenance, and validator update."
-            )
 
         skill_dir = ROOT / plugin_root / "skills"
         actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
@@ -1517,6 +1516,8 @@ def main() -> int:
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
     validate_skill_zip_registry()
+    validate_projection_materializer()
+    validate_ecc_bundle_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")

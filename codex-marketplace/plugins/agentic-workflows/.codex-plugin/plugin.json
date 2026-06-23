@@ -1,0 +1,41 @@
+{
+  "name": "agentic-workflows",
+  "version": "1.0.0",
+  "description": "ECC agentic workflow mechanics for Codex marketplace projection.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "ecc",
+    "agentic",
+    "workflow",
+    "harness",
+    "skills",
+    "projection"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agentic Workflows",
+    "shortDescription": "ECC agent workflow mechanics and harness design.",
+    "longDescription": "A repo-local Codex marketplace bundle that projects the retained ECC workflow mechanics into an installable home for harness construction, autonomous loops, dynamic workflow mode, and multi-agent dispatch.",
+    "developerName": "Harley Bartles",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Agentic Workflows bundle and source map.",
+      "Use the bundle to review the selected ECC workflow mechanics.",
+      "Compare the bundle against the retained ECC custody surface."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

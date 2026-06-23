@@ -11,7 +11,9 @@ Current marketplace flow:
 - `validate_generated_drift.py` rejects generated zips or registry entries that changed without the matching source, overlay, or packaging-tooling change, unless full regeneration was explicitly declared.
 - `export_skill_zips.py` copies requested canonical artifacts into a manual GPT upload batch, writing `<out>/<skill-name>/skill.zip` plus `export-manifest.json`.
 - `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
-- `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, and local path references for the protected marketplace shape.
+- `generate_ecc_pack_manifests.py` regenerates the selected ECC bundle-manifest surfaces and `--check` compares them without writing.
+- `materialize_projection.py` regenerates and validates projection-lane plugin skill trees and `--check` compares the materialized trees without writing.
+- `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, local path references, projection materialization, and selected ECC bundle-manifest freshness for the protected marketplace shape.
 - `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces, but it is not the freshness proof for `repo-index/repo-index.json`.
 
 Codex plugin first; generated GPT-safe skill zips second.

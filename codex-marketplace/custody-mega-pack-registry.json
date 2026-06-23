@@ -37,6 +37,12 @@
       "custody_root": "sources/third_party/unslop/upstream",
       "mega_pack": "unslop-plus",
       "mega_pack_root": "codex-marketplace/plugins/unslop-plus"
+    },
+    {
+      "source_family": "ecc",
+      "custody_root": "sources/third_party/ecc/upstream/skills",
+      "mega_pack": "everything-codex-code",
+      "mega_pack_root": "codex-marketplace/plugins/everything-codex-code"
     }
   ]
 }

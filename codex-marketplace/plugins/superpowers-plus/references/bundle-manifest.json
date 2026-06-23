@@ -6,7 +6,8 @@
   "is_mega_pack": true,
   "mega_pack_for": "superpowers",
   "source_families": [
-    "first_party"
+    "house-skills",
+    "superpowers"
   ],
   "entries": [
     {
@@ -299,8 +300,9 @@
     }
   ],
   "notes": [
-    "Superpowers+ bundle projected from first-party workflow helpers only.",
-    "The ECC router wrapper has been removed from the active projection set."
+    "Auto-generated mega-pack manifest for the superpowers custody root.",
+    "Curated cross-family entries are preserved from the prior manifest.",
+    "Regenerate with: py -3 tools/generate_mega_packs.py"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT"

@@ -21,6 +21,7 @@ from skill_zip_artifacts import (
 from marketplace_utils import load_json
 
 PACKAGING_TOOLING_PATHS = {
+    "tools/generate_ecc_pack_manifests.py",
     "tools/skill_zip_artifacts.py",
     "tools/skill_gpt_exports.py",
     "tools/materialize_projection.py",

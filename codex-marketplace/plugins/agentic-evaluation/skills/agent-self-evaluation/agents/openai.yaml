@@ -1,0 +1,18 @@
+version: 1
+metadata:
+  skill_name: agent-self-evaluation
+  plugin: agentic-evaluation
+  source_category: third_party
+  upstream_name: agent-self-evaluation
+  upstream_version: upstream
+  adaptation_overlay: adapters/codex/agentic-evaluation/agent-self-evaluation
+  projection_plugin: agentic-evaluation
+  content_mode: normalised
+  source_author: ECC
+  source_license: MIT
+  source_repo: https://github.com/affaan-m/ECC
+  adapted_author: Harley Bartles
+interface:
+  display_name: Agent Self-Evaluation
+  short_description: Score task outputs across accuracy, completeness, clarity, actionability, and conciseness with evidence-backed notes.
+  default_prompt: Use /agent-self-evaluation after a non-trivial task to produce an evidence-backed scorecard and improvement plan.

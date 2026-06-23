@@ -1,8 +1,0 @@
-schema_version: 1
-deletes: []
-metadata:
-  source_category: third_party
-  upstream_name: deployment-patterns
-  adaptation_overlay: adapters/codex/superpowers-ecc/deployment-patterns
-  projection_plugin: superpowers-ecc
-  upstream_version: upstream

@@ -185,6 +185,119 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
             finally:
                 temp_handle.cleanup()
 
+    def test_stage_overlay_tree_normalizes_examples_and_templates_into_references(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write(
+                source_root / "SKILL.md",
+                (
+                    "---\n"
+                    "name: agent-self-evaluation\n"
+                    "description: Evaluate task outputs\n"
+                    "---\n\n"
+                    "See `examples/high-score-example.md` and `templates/evaluation-report.md`.\n"
+                ),
+            )
+            _write(source_root / "examples" / "high-score-example.md", "# old example\n")
+            _write(source_root / "templates" / "evaluation-report.md", "# old template\n")
+            _write(source_root / "scripts" / "evaluate.py", "print('ok')\n")
+            _write(source_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: agent-self-evaluation}\n")
+
+            _write(
+                overlay_root / "overlay.yaml",
+                (
+                    "schema_version: 1\n"
+                    "deletes:\n"
+                    "  - examples/high-score-example.md\n"
+                    "  - templates/evaluation-report.md\n"
+                ),
+            )
+            _write(
+                overlay_root / "SKILL.md",
+                (
+                    "---\n"
+                    "name: agent-self-evaluation\n"
+                    "description: Evaluate task outputs\n"
+                    "---\n\n"
+                    "See `references/examples/high-score-example.md` and `references/templates/evaluation-report.md`.\n"
+                ),
+            )
+            _write(overlay_root / "references" / "examples" / "high-score-example.md", "# normalized example\n")
+            _write(overlay_root / "references" / "templates" / "evaluation-report.md", "# normalized template\n")
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                expected_files = sorted(path.relative_to(expected_root).as_posix() for path in expected_root.rglob("*") if path.is_file())
+                destination_files = sorted(
+                    path.relative_to(destination_root).as_posix() for path in destination_root.rglob("*") if path.is_file()
+                )
+                self.assertEqual(destination_files, expected_files)
+                self.assertFalse((destination_root / "examples" / "high-score-example.md").exists())
+                self.assertFalse((destination_root / "templates" / "evaluation-report.md").exists())
+                self.assertTrue((destination_root / "references" / "examples" / "high-score-example.md").exists())
+                self.assertTrue((destination_root / "references" / "templates" / "evaluation-report.md").exists())
+                self.assertEqual(
+                    (destination_root / "SKILL.md").read_text(encoding="utf-8"),
+                    (expected_root / "SKILL.md").read_text(encoding="utf-8"),
+                )
+            finally:
+                temp_handle.cleanup()
+
+    def test_stage_overlay_tree_normalizes_security_review_companion_into_references(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "source"
+            overlay_root = temp_root / "overlay"
+            destination_root = temp_root / "destination"
+
+            _write(
+                source_root / "SKILL.md",
+                (
+                    "---\n"
+                    "name: security-review\n"
+                    "description: Review sensitive code paths\n"
+                    "---\n\n"
+                    "See `cloud-infrastructure-security.md` for the companion guide.\n"
+                ),
+            )
+            _write(source_root / "cloud-infrastructure-security.md", "# old companion\n")
+
+            _write(
+                overlay_root / "overlay.yaml",
+                "schema_version: 1\ndeletes:\n  - cloud-infrastructure-security.md\n",
+            )
+            _write(
+                overlay_root / "SKILL.md",
+                (
+                    "---\n"
+                    "name: security-review\n"
+                    "description: Review sensitive code paths\n"
+                    "---\n\n"
+                    "See `references/cloud-infrastructure-security.md` for the companion guide.\n"
+                ),
+            )
+            _write(
+                overlay_root / "references" / "cloud-infrastructure-security.md",
+                "# normalized companion\n",
+            )
+
+            expected_root, temp_handle = stage_overlay_tree(source_root, overlay_root)
+            try:
+                apply_overlay_tree(source_root, overlay_root, destination_root)
+                self.assertFalse((destination_root / "cloud-infrastructure-security.md").exists())
+                self.assertTrue((destination_root / "references" / "cloud-infrastructure-security.md").exists())
+                self.assertEqual(
+                    (destination_root / "SKILL.md").read_text(encoding="utf-8"),
+                    (expected_root / "SKILL.md").read_text(encoding="utf-8"),
+                )
+            finally:
+                temp_handle.cleanup()
+
     def test_overlay_yaml_rejects_unknown_keys_and_bad_delete_paths(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -227,19 +340,24 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 (
                     "version: 1\n"
                     "metadata:\n"
-                    "  source-id: ecc-superpowers\n"
-                    "  source-path: sources/first_party/skills/ecc-superpowers/SKILL.md\n"
-                    "  provenance-name: MARK-244 ECC Superpowers compositional routing skill\n"
-                    "  origin: first_party\n"
-                    "  source_author: Harley Bartles\n"
+                    "  source_category: third_party\n"
+                    "  upstream_name: agent-self-evaluation\n"
+                    "  upstream_version: upstream\n"
+                    "  adaptation_overlay: adapters/codex/agentic-evaluation/agent-self-evaluation\n"
+                    "  projection_plugin: agentic-evaluation\n"
+                    "  source-id: agent-self-evaluation\n"
+                    "  source-path: sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md\n"
+                    "  provenance-name: MARK-301 Agentic evaluation normalization skill\n"
+                    "  origin: third_party\n"
+                    "  source_author: ECC\n"
                     "  source_license: MIT\n"
-                    "  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace\n"
-                    "  content_mode: adapted\n"
+                    "  source_repo: https://github.com/affaan-m/ECC\n"
+                    "  content_mode: normalised\n"
                     "  adapted_author: Harley Bartles\n"
                     "interface:\n"
-                    "  display_name: ECC Superpowers\n"
-                    "  short_description: Route ECC workflow-shaped work to the dedicated superpowers-ecc pack.\n"
-                    "  default_prompt: Use /ecc-superpowers to keep Superpowers+ thin.\n"
+                    "  display_name: Agentic Evaluation\n"
+                    "  short_description: Route evaluation-heavy work to the dedicated agentic-evaluation pack.\n"
+                    "  default_prompt: Use /agent-self-evaluation to keep evaluation assets internal.\n"
                     "policy:\n"
                     "  allow_implicit_invocation: true\n"
                     "  products:\n"

@@ -1,0 +1,12 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "research-ops",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/research-ops",
+      "local_path": "skills/research-ops"
+    }
+  ],
+  "adapted_projections": []
+}

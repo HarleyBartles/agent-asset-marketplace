@@ -239,7 +239,7 @@
       "name": "house-skills",
       "plugin_root": "codex-marketplace/plugins/house-skills",
       "plugin_manifest": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-      "source_md": null,
+      "source_md": "codex-marketplace/plugins/house-skills/SOURCE.md",
       "source_ledger": [
         "sources/first_party/skills/house-skills/decisions.json",
         "sources/first_party/skills/house-skills/decisions.md",
@@ -256,7 +256,8 @@
       "registry_alignment": {
         "status": "aligned",
         "note": null
-      }
+      },
+      "license_path": "codex-marketplace/plugins/house-skills/LICENSE"
     },
     {
       "name": "adventures-pack",
@@ -372,16 +373,18 @@
       "plugin_manifest": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/repo-worker-base/SKILL.md",
-        "sources/first_party/skills/boring-loop/SKILL.md",
-        "sources/first_party/skills/connector-safety/SKILL.md",
-        "sources/first_party/skills/github-operations/SKILL.md"
+        "sources/first_party/skills/repo-worker-base",
+        "sources/first_party/skills/boring-loop",
+        "sources/first_party/skills/connector-safety",
+        "sources/first_party/skills/github-operations",
+        "sources/third_party/ecc/upstream/source-custody.md"
       ],
       "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
       "provenance_refs": [
         "provenance/repo-worker-base.md",
+        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
       ],
       "agents_md": null,
@@ -517,15 +520,18 @@
       "plugin_manifest": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/security-pack/SOURCE.md",
       "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md"
+        "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
+        "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
+        "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
+        "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
+        "sources/third_party/ecc/upstream/source-custody.md"
       ],
       "license_path": "codex-marketplace/plugins/security-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/security-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/security-pack/skills",
       "provenance_refs": [
-        "provenance/codex-cortex.md",
+        "provenance/security-pack.md",
+        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/security-pack/references/source-map.md"
       ],
       "agents_md": null,
@@ -616,6 +622,119 @@
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "agentic-workflows",
+      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
+      "plugin_manifest": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/source-custody.md",
+        "sources/third_party/ecc/upstream/manifest.json",
+        "sources/third_party/ecc/upstream/LICENSE"
+      ],
+      "license_path": "codex-marketplace/plugins/agentic-workflows/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/agentic-workflows/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/agentic-workflows/skills",
+      "provenance_refs": [
+        "provenance/ecc-domain-packs.md",
+        "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "agentic-evaluation",
+      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
+      "plugin_manifest": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/agentic-evaluation/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/source-custody.md",
+        "sources/third_party/ecc/upstream/manifest.json",
+        "sources/third_party/ecc/upstream/LICENSE"
+      ],
+      "license_path": "codex-marketplace/plugins/agentic-evaluation/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/agentic-evaluation/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/agentic-evaluation/skills",
+      "provenance_refs": [
+        "provenance/ecc-domain-packs.md",
+        "codex-marketplace/plugins/agentic-evaluation/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "research-pack",
+      "plugin_root": "codex-marketplace/plugins/research-pack",
+      "plugin_manifest": "codex-marketplace/plugins/research-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/research-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/source-custody.md",
+        "sources/third_party/ecc/upstream/manifest.json",
+        "sources/third_party/ecc/upstream/LICENSE"
+      ],
+      "license_path": "codex-marketplace/plugins/research-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/research-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/research-pack/skills",
+      "provenance_refs": [
+        "provenance/ecc-domain-packs.md",
+        "codex-marketplace/plugins/research-pack/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/research-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "engineering-pack",
+      "plugin_root": "codex-marketplace/plugins/engineering-pack",
+      "plugin_manifest": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/engineering-pack/SOURCE.md",
+      "source_ledger": [
+        "sources/third_party/ecc/upstream/source-custody.md",
+        "sources/third_party/ecc/upstream/manifest.json",
+        "sources/third_party/ecc/upstream/LICENSE"
+      ],
+      "license_path": "codex-marketplace/plugins/engineering-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/engineering-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/engineering-pack/skills",
+      "provenance_refs": [
+        "provenance/ecc-domain-packs.md",
+        "codex-marketplace/plugins/engineering-pack/references/source-map.md"
+      ],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/engineering-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "everything-codex-code",
+      "plugin_root": "codex-marketplace/plugins/everything-codex-code",
+      "plugin_manifest": "codex-marketplace/plugins/everything-codex-code/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/everything-codex-code/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/everything-codex-code/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/everything-codex-code/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/everything-codex-code/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/everything-codex-code",
       "registry_alignment": {
         "status": "aligned",
         "note": null

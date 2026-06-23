@@ -1,6 +1,7 @@
 # Security Pack
 
-This bundle projects the retained Codex Cortex security foundations only.
+This bundle projects the retained Codex Cortex security foundations plus the
+selected ECC safety and security-review skills.
 
 ## Bundle contents
 ### Claude Cortex skills
@@ -9,14 +10,21 @@ This bundle projects the retained Codex Cortex security foundations only.
 - `security-testing-patterns`
 - `threat-modeling-techniques`
 
+### ECC complement
+- `safety-guard`
+- `security-review`
+
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- Only the retained security foundations and hardening guidance are projected.
-- The bundle stays out of generic compliance theatre, repo governance, and unrelated implementation domains unless another issue explicitly composes them in.
+- The retained security foundations stay projected alongside the complementary
+  ECC safety and security-review skills.
+- The bundle stays out of generic compliance theatre, repo governance, and
+  unrelated implementation domains unless another issue explicitly composes
+  them in.
 
 ## Install shape
 

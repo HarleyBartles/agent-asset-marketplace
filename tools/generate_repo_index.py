@@ -158,31 +158,6 @@ SUPERPOWERS_PLUS_ENTRY = {
     },
 }
 
-SUPERPOWERS_ECC_ENTRY = {
-    "name": "superpowers-ecc",
-    "plugin_root": "codex-marketplace/plugins/superpowers-ecc",
-    "plugin_manifest": "codex-marketplace/plugins/superpowers-ecc/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/superpowers-ecc/SOURCE.md",
-    "source_ledger": [
-        "sources/third_party/ecc/upstream/LICENSE",
-        "sources/third_party/ecc/upstream/source-custody.md",
-    ],
-    "license_path": "codex-marketplace/plugins/superpowers-ecc/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/superpowers-ecc/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/superpowers-ecc/skills",
-    "provenance_refs": [
-        "provenance/superpowers-ecc.md",
-        "codex-marketplace/plugins/superpowers-ecc/references/source-map.md",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/superpowers-ecc",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
-
 def _bundle_manifest_path(plugin_root: str) -> Path:
     return ROOT / plugin_root / "references" / "bundle-manifest.json"
 
@@ -245,6 +220,38 @@ def _metadata_driven_plugin_entry(
     return entry
 
 
+def _synthetic_plugin_spec(name: str, *, current_entry: dict[str, Any], category: str | None = None) -> dict[str, Any]:
+    plugin_root = current_entry.get("plugin_root") or f"codex-marketplace/plugins/{name}"
+    manifest_path = current_entry.get("plugin_manifest") or f"{plugin_root}/.codex-plugin/plugin.json"
+    registry_path = current_entry.get("registry_path") or f"./{plugin_root}"
+    return {
+        "name": name,
+        "category": category or "Productivity",
+        "registry_path": registry_path,
+        "plugin_root": plugin_root,
+        "manifest_path": ROOT / manifest_path,
+    }
+
+
+def _generic_plugin_entry(plugin: dict[str, Any], *, spec: dict[str, Any], current_entry: dict[str, Any] | None) -> dict[str, Any]:
+    plugin_root = spec["plugin_root"]
+    manifest_path = _plugin_manifest_path(spec["manifest_path"])
+    entry = dict(current_entry or {})
+    entry["name"] = spec["name"]
+    entry["plugin_root"] = plugin_root
+    entry["plugin_manifest"] = manifest_path
+    entry["source_md"] = entry.get("source_md") or f"{plugin_root}/SOURCE.md"
+    entry["source_ledger"] = list(entry.get("source_ledger", []))
+    entry["license_path"] = entry.get("license_path") or f"{plugin_root}/LICENSE"
+    entry["bundle_manifest"] = entry.get("bundle_manifest") or f"{plugin_root}/references/bundle-manifest.json"
+    entry["skills_path"] = entry.get("skills_path") or f"{plugin_root}/skills"
+    entry["provenance_refs"] = list(entry.get("provenance_refs", []))
+    entry["agents_md"] = entry.get("agents_md")
+    entry["registry_path"] = spec.get("registry_path") or plugin.get("source", {}).get("path") or f"./{plugin_root}"
+    entry["registry_alignment"] = dict(entry.get("registry_alignment", {"status": "aligned", "note": None}))
+    return entry
+
+
 def _normalize_zones(zones: list[dict]) -> list[dict]:
     normalized_zones: list[dict] = []
     for zone in zones:
@@ -277,7 +284,7 @@ def build_repo_index() -> dict:
         if name in current_plugins:
             spec = plugin_specs_by_name.get(name)
             if spec is None:
-                raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
+                spec = _synthetic_plugin_spec(name, current_entry=current_plugins[name], category=plugin.get("category"))
             plugin_manifest = load_json(spec["manifest_path"])
             if not isinstance(plugin_manifest, dict):
                 raise ValueError(f"{spec['manifest_path']} must contain a JSON object")
@@ -288,11 +295,11 @@ def build_repo_index() -> dict:
                 plugin_manifest=plugin_manifest,
                 bundle_manifest=bundle_manifest,
             )
-            ordered_plugins.append(metadata_entry or current_plugins[name])
+            ordered_plugins.append(metadata_entry or _generic_plugin_entry(plugin, spec=spec, current_entry=current_plugins[name]))
             continue
         spec = plugin_specs_by_name.get(name)
         if spec is None:
-            raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
+            spec = _synthetic_plugin_spec(name, current_entry=current_plugins.get(name, {}), category=plugin.get("category"))
         plugin_manifest = load_json(spec["manifest_path"])
         if not isinstance(plugin_manifest, dict):
             raise ValueError(f"{spec['manifest_path']} must contain a JSON object")
@@ -304,7 +311,7 @@ def build_repo_index() -> dict:
             bundle_manifest=bundle_manifest,
         )
         if metadata_entry is None:
-            raise ValueError(f"repo-index generator does not know how to synthesize marketplace plugin {name}")
+            metadata_entry = _generic_plugin_entry(plugin, spec=spec, current_entry=current_plugins.get(name))
         ordered_plugins.append(metadata_entry)
 
     repo_index["marketplace_plugins"] = ordered_plugins

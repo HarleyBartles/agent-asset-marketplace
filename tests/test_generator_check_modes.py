@@ -14,7 +14,9 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import generate_marketplace  # noqa: E402
+import generate_ecc_pack_manifests  # noqa: E402
 import generate_repo_index  # noqa: E402
+import materialize_projection  # noqa: E402
 
 
 class GeneratorCheckModeTests(unittest.TestCase):
@@ -134,6 +136,139 @@ class GeneratorCheckModeTests(unittest.TestCase):
             ):
                 with self.assertRaises(ValueError):
                     generate_repo_index.main()
+
+    def test_generate_ecc_pack_manifests_check_detects_stale_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+
+            pack = {
+                "bundle_name": "sample-pack",
+                "plugin_root": "codex-marketplace/plugins/sample-pack",
+                "bundle_version": "1.0.0",
+                "bundle_type": "projection-lane",
+                "is_mega_pack": False,
+                "notes": ["generated"],
+                "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                "provenance_refs": ["provenance/sample-pack.md"],
+                "entries": [
+                    {
+                        "canonical_name": "sample-skill",
+                        "source_category": "third_party",
+                        "source_family": "ecc",
+                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "local_path": "skills/sample-skill",
+                        "provenance_note": "Projected verbatim from retained ECC custody.",
+                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "ECC",
+                        "source_license": "MIT",
+                        "source_repo": "https://github.com/affaan-m/ECC",
+                    }
+                ],
+            }
+            expected_manifest = generate_ecc_pack_manifests._bundle_manifest(pack)
+            manifest_path.write_text(json.dumps(expected_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+            with (
+                patch.object(generate_ecc_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_ecc_pack_manifests, "PACKS", [pack]),
+                patch.object(sys, "argv", ["generate_ecc_pack_manifests.py", "--check"]),
+            ):
+                self.assertEqual(generate_ecc_pack_manifests.main(), 0)
+
+            manifest_path.write_text(
+                json.dumps({**expected_manifest, "notes": ["stale"]}, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            with (
+                patch.object(generate_ecc_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_ecc_pack_manifests, "PACKS", [pack]),
+                patch.object(sys, "argv", ["generate_ecc_pack_manifests.py", "--check"]),
+            ):
+                with self.assertRaises(ValueError):
+                    generate_ecc_pack_manifests.main()
+
+    def test_materialize_projection_check_detects_stale_projection(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
+            projected_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "sample-skill"
+            manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
+
+            source_root.mkdir(parents=True, exist_ok=True)
+            projected_root.mkdir(parents=True, exist_ok=True)
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+
+            (source_root / "SKILL.md").write_text("---\nname: sample-skill\ndescription: sample\n---\n\nbody\n", encoding="utf-8")
+            (projected_root / "SKILL.md").write_text("---\nname: sample-skill\ndescription: sample\n---\n\nbody\n", encoding="utf-8")
+
+            manifest = {
+                "bundle_name": "sample-pack",
+                "bundle_version": "1.0.0",
+                "bundle_type": "projection-lane",
+                "plugin_root": "codex-marketplace/plugins/sample-pack",
+                "is_mega_pack": False,
+                "source_families": ["ecc"],
+                "notes": ["generated"],
+                "provenance_refs": ["provenance/sample-pack.md"],
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
+                "entries": [
+                    {
+                        "canonical_name": "sample-skill",
+                        "source_category": "third_party",
+                        "content_mode": "verbatim",
+                        "source_family": "ecc",
+                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "local_path": "skills/sample-skill",
+                        "provenance_note": "Projected verbatim from retained ECC custody.",
+                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "ECC",
+                        "source_license": "MIT",
+                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "copy_expectation": "byte_identical",
+                    }
+                ],
+                "repo_index": {
+                    "source_md": "codex-marketplace/plugins/sample-pack/SOURCE.md",
+                    "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                    "license_path": "codex-marketplace/plugins/sample-pack/LICENSE",
+                    "bundle_manifest": "codex-marketplace/plugins/sample-pack/references/bundle-manifest.json",
+                    "skills_path": "codex-marketplace/plugins/sample-pack/skills",
+                    "provenance_refs": ["provenance/sample-pack.md"],
+                    "agents_md": None,
+                    "registry_alignment": {"status": "aligned", "note": None},
+                },
+            }
+            manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+            with (
+                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(
+                    materialize_projection,
+                    "load_plugin_root_inventory",
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                ),
+                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
+            ):
+                self.assertEqual(materialize_projection.main(), 0)
+
+            (projected_root / "SKILL.md").write_text(
+                "---\nname: sample-skill\ndescription: stale\n---\n\nbody\n",
+                encoding="utf-8",
+            )
+            with (
+                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(
+                    materialize_projection,
+                    "load_plugin_root_inventory",
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                ),
+                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
+            ):
+                with self.assertRaises(ValueError):
+                    materialize_projection.main()
 
 
 if __name__ == "__main__":

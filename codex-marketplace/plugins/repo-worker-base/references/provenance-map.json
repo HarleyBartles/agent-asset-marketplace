@@ -27,6 +27,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base"
+    },
+    {
+      "canonical_name": "search-first",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/search-first",
+      "local_path": "skills/search-first"
     }
   ],
   "adapted_projections": []
