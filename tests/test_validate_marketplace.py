@@ -190,7 +190,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             run_mock.assert_called_once()
             self.assertEqual(
                 run_mock.call_args.args[0],
-                ["py", "-3", "tools/materialize_projection.py", "--check"],
+                [sys.executable, "tools/materialize_projection.py", "--check"],
             )
 
     def test_validate_marketplace_runs_ecc_bundle_manifest_check(self) -> None:
@@ -203,7 +203,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             run_mock.assert_called_once()
             self.assertEqual(
                 run_mock.call_args.args[0],
-                ["py", "-3", "tools/generate_ecc_pack_manifests.py", "--check"],
+                [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
             )
 
     def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:

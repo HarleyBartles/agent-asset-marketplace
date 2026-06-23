@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 import yaml
@@ -76,12 +77,12 @@ def _run_tool_check(command: list[str], label: str) -> None:
 
 
 def validate_projection_materializer() -> None:
-    _run_tool_check(["py", "-3", "tools/materialize_projection.py", "--check"], "projection materializer check")
+    _run_tool_check([sys.executable, "tools/materialize_projection.py", "--check"], "projection materializer check")
 
 
 def validate_ecc_bundle_manifests() -> None:
     _run_tool_check(
-        ["py", "-3", "tools/generate_ecc_pack_manifests.py", "--check"],
+        [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
         "ECC bundle manifest generator check",
     )
 
