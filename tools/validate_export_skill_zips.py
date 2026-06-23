@@ -53,20 +53,21 @@ def test_pack_export_and_manifest() -> tuple[Path, dict]:
         out_dir.mkdir(parents=True, exist_ok=True)
         stale_file = out_dir / "stale.txt"
         stale_file.write_text("remove me", encoding="utf-8")
-        result = run_export(["--pack", "unslop", "--out", str(out_dir), "--clean-output"])
+        result = run_export(["--pack", "house-skills", "--out", str(out_dir), "--clean-output"])
         assert_ok(result)
 
-        zip_path = out_dir / "unslop" / "skill.zip"
         manifest_path = out_dir / "export-manifest.json"
-        assert zip_path.is_file()
         assert manifest_path.is_file()
         assert not stale_file.exists()
 
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         assert manifest["request"]["form"] == "pack"
-        assert manifest["request"]["value"] == "unslop"
-        assert manifest["resolved"][0]["output_path"] == "unslop/skill.zip"
-        assert manifest["copied"][0]["output_path"] == "unslop/skill.zip"
+        assert manifest["request"]["value"] == "house-skills"
+        assert manifest["resolved"]
+        assert manifest["copied"]
+        first_output = out_dir / manifest["resolved"][0]["output_path"]
+        assert first_output.is_file()
+        assert manifest["resolved"][0]["output_path"] == manifest["copied"][0]["output_path"]
         return out_dir, manifest
 
 
@@ -74,7 +75,7 @@ def test_from_file_export() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         request_file = tmp_path / "requested-skills.txt"
-        request_file.write_text("house-skills/skill-installer\nhouse-skills/skill-validator\n", encoding="utf-8")
+        request_file.write_text("house-skills/asset-market\nhouse-skills/boring-loop\n", encoding="utf-8")
 
         manifest = export_skill_zips(
             form="from-file",
@@ -84,29 +85,29 @@ def test_from_file_export() -> None:
             clean_output=True,
         )
 
-        assert (tmp_path / "from-file" / "skill-installer" / "skill.zip").is_file()
-        assert (tmp_path / "from-file" / "skill-validator" / "skill.zip").is_file()
+        assert (tmp_path / "from-file" / "asset-market" / "skill.zip").is_file()
+        assert (tmp_path / "from-file" / "boring-loop" / "skill.zip").is_file()
         assert manifest["request"]["form"] == "from-file"
-        assert manifest["request"]["value"] == ["house-skills/skill-installer", "house-skills/skill-validator"]
+        assert manifest["request"]["value"] == ["house-skills/asset-market", "house-skills/boring-loop"]
         assert manifest["request"]["source_file"] == str(request_file)
 
 
 def test_subset_export_and_bare_name_ambiguity() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         out_dir = Path(tmp) / "subset"
-        result = run_export(["--skills", "house-skills/skill-installer,house-skills/skill-validator", "--out", str(out_dir)])
+        result = run_export(["--skills", "house-skills/asset-market,house-skills/boring-loop", "--out", str(out_dir)])
         assert_ok(result)
-        assert (out_dir / "skill-installer" / "skill.zip").is_file()
-        assert (out_dir / "skill-validator" / "skill.zip").is_file()
+        assert (out_dir / "asset-market" / "skill.zip").is_file()
+        assert (out_dir / "boring-loop" / "skill.zip").is_file()
 
         bare_unique = export_skill_zips(
             form="skills",
-            values=["unslop"],
+            values=["asset-market"],
             out_dir=Path(tmp) / "bare-unique",
             clean_output=True,
         )
-        assert (Path(tmp) / "bare-unique" / "unslop" / "skill.zip").is_file()
-        assert bare_unique["request"]["value"] == ["unslop"]
+        assert (Path(tmp) / "bare-unique" / "asset-market" / "skill.zip").is_file()
+        assert bare_unique["request"]["value"] == ["asset-market"]
 
         ambiguous = run_export(["--skills", "linear", "--out", str(Path(tmp) / "ambiguous")])
         assert_failed(ambiguous, "<pack>/linear")
@@ -127,20 +128,20 @@ def test_missing_and_stale_artifact_failures() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         registry = _load_registry()
-        unslop_record = next(
-            record for record in registry["artifacts"] if record["pack"] == "unslop" and record["skill"] == "unslop"
+        asset_market_record = next(
+            record for record in registry["artifacts"] if record["pack"] == "house-skills" and record["skill"] == "asset-market"
         )
 
         missing_registry = json.loads(json.dumps(registry))
-        missing_record = json.loads(json.dumps(unslop_record))
-        missing_record["zip_path"] = "generated/skill-zips/unslop/unslop/missing-skill.zip"
-        missing_registry["artifacts"] = [missing_record if record is unslop_record else record for record in registry["artifacts"]]
+        missing_record = json.loads(json.dumps(asset_market_record))
+        missing_record["zip_path"] = "generated/skill-zips/house-skills/asset-market/missing-skill.zip"
+        missing_registry["artifacts"] = [missing_record if record is asset_market_record else record for record in registry["artifacts"]]
         missing_path = _write_temp_registry(tmp_path, missing_registry)
 
         try:
             export_skill_zips(
                 form="skills",
-                values=["unslop/unslop"],
+                values=["house-skills/asset-market"],
                 out_dir=tmp_path / "missing-out",
                 registry_path=missing_path,
             )
@@ -150,15 +151,15 @@ def test_missing_and_stale_artifact_failures() -> None:
             raise AssertionError("expected missing artifact failure")
 
         stale_registry = json.loads(json.dumps(registry))
-        stale_record = json.loads(json.dumps(unslop_record))
+        stale_record = json.loads(json.dumps(asset_market_record))
         stale_record["zip_sha256"] = "0" * 64
-        stale_registry["artifacts"] = [stale_record if record is unslop_record else record for record in registry["artifacts"]]
+        stale_registry["artifacts"] = [stale_record if record is asset_market_record else record for record in registry["artifacts"]]
         stale_path = _write_temp_registry(tmp_path, stale_registry)
 
         try:
             export_skill_zips(
                 form="skills",
-                values=["unslop/unslop"],
+                values=["house-skills/asset-market"],
                 out_dir=tmp_path / "stale-out",
                 registry_path=stale_path,
             )
@@ -183,10 +184,10 @@ def main() -> int:
     test_readme_mentions_worker_export_command()
     print("Receipt:")
     print("  commands run:")
-    print("    py -3 tools/export_skill_zips.py --pack unslop --out <temp>/batch --clean-output")
-    print("    py -3 tools/export_skill_zips.py --skills house-skills/skill-installer,house-skills/skill-validator --out <temp>/subset")
+    print("    py -3 tools/export_skill_zips.py --pack house-skills --out <temp>/batch --clean-output")
+    print("    py -3 tools/export_skill_zips.py --skills house-skills/asset-market,house-skills/boring-loop --out <temp>/subset")
     print("    py -3 tools/export_skill_zips.py --skills linear --out <temp>/ambiguous")
-    print("  sample export path: " + str(out_dir / "unslop" / "skill.zip"))
+    print("  sample export path: " + str(out_dir / manifest["resolved"][0]["output_path"]))
     print("  exported skills: " + ", ".join(f"{entry['pack']}/{entry['skill']}" for entry in manifest["resolved"]))
     print("  skipped entries: none")
     print("  ambiguous entries: none")
