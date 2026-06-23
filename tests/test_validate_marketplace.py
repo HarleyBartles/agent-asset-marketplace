@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -179,6 +180,32 @@ SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
 
 
 class ValidateMarketplaceTests(unittest.TestCase):
+    def test_validate_marketplace_runs_projection_materializer_check(self) -> None:
+        with patch.object(
+            validate_marketplace.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["py"], 0),
+        ) as run_mock:
+            validate_marketplace.validate_projection_materializer()
+            run_mock.assert_called_once()
+            self.assertEqual(
+                run_mock.call_args.args[0],
+                ["py", "-3", "tools/materialize_projection.py", "--check"],
+            )
+
+    def test_validate_marketplace_runs_ecc_bundle_manifest_check(self) -> None:
+        with patch.object(
+            validate_marketplace.subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(["py"], 0),
+        ) as run_mock:
+            validate_marketplace.validate_ecc_bundle_manifests()
+            run_mock.assert_called_once()
+            self.assertEqual(
+                run_mock.call_args.args[0],
+                ["py", "-3", "tools/generate_ecc_pack_manifests.py", "--check"],
+            )
+
     def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)

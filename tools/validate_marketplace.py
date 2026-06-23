@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from pathlib import Path
 
 import yaml
@@ -65,6 +66,24 @@ def check_path_exists(path: Path) -> None:
     if not path.exists():
         raise FileNotFoundError(path)
     print(f"OK path: {path.relative_to(ROOT)}")
+
+
+def _run_tool_check(command: list[str], label: str) -> None:
+    try:
+        subprocess.run(command, cwd=ROOT, check=True)
+    except subprocess.CalledProcessError as exc:  # pragma: no cover - exercised via integration checks
+        raise ValueError(f"{label} failed with exit code {exc.returncode}") from exc
+
+
+def validate_projection_materializer() -> None:
+    _run_tool_check(["py", "-3", "tools/materialize_projection.py", "--check"], "projection materializer check")
+
+
+def validate_ecc_bundle_manifests() -> None:
+    _run_tool_check(
+        ["py", "-3", "tools/generate_ecc_pack_manifests.py", "--check"],
+        "ECC bundle manifest generator check",
+    )
 
 
 def list_files(root: Path) -> list[Path]:
@@ -1496,6 +1515,8 @@ def main() -> int:
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
     validate_skill_zip_registry()
+    validate_projection_materializer()
+    validate_ecc_bundle_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
