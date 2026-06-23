@@ -20,6 +20,7 @@ from validate_marketplace import (  # noqa: E402
     _validate_projection_entry_provenance,
     _validate_repo_index_metadata,
     validate_everything_codex_code_bundle_manifest,
+    validate_skill_bundle_manifest,
     validate_superpowers_bundle_manifest,
 )
 
@@ -433,6 +434,62 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     plugin_root="codex-marketplace/plugins/everything-codex-code",
                 )
 
+    def test_validate_skill_bundle_manifest_normalizes_line_endings_for_verbatim_entries(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack"
+            source_root = temp_root / "sources" / "first_party"
+            projected_skill_dir = plugin_root / "skills"
+
+            source_file = source_root / "skills" / "line-ending-note.txt"
+            projected_file = plugin_root / "docs" / "line-endings.txt"
+
+            source_file.parent.mkdir(parents=True, exist_ok=True)
+            projected_file.parent.mkdir(parents=True, exist_ok=True)
+            projected_skill_dir.mkdir(parents=True, exist_ok=True)
+
+            source_file.write_bytes(b"alpha\r\nbeta\r\n")
+            projected_file.write_bytes(b"alpha\nbeta\n")
+
+            bundle_manifest = {
+                "bundle_name": "sample-pack",
+                "bundle_version": "1.0.0",
+                "bundle_type": "third-party-codex-plugin-projection",
+                "plugin_root": "codex-marketplace/plugins/sample-pack",
+                "upstream_repo": "first-party",
+                "pinned_commit": "ignored-for-first-party-root",
+                "source_root": "skills",
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
+                "repo_index": {
+                    "source_ledger": ["sources/first_party/skills/line-ending-note.txt"],
+                    "provenance_refs": ["provenance/sample-pack.md"],
+                    "agents_md": None,
+                    "registry_alignment": {"status": "aligned", "note": None},
+                },
+                "entries": [
+                    {
+                        "canonical_name": "line-ending-note",
+                        "source_category": "first_party",
+                        "content_mode": "verbatim",
+                        "import_status": "imported",
+                        "snapshot_path": "skills/line-ending-note.txt",
+                        "local_path": "docs/line-endings.txt",
+                    }
+                ],
+                "candidate_count": 1,
+                "imported_count": 1,
+                "skipped_count": 0,
+                "blocked_count": 0,
+            }
+
+            with patch.object(validate_marketplace, "ROOT", temp_root):
+                validate_skill_bundle_manifest(
+                    bundle_manifest,
+                    bundle_name="sample-pack",
+                    plugin_root="codex-marketplace/plugins/sample-pack",
+                )
+
     def test_validate_projection_entry_provenance_accepts_content_mode_matrix(self) -> None:
         _validate_projection_entry_provenance(
             {
@@ -646,10 +703,10 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            projected_skill_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "architecture-superpowers"
+            projected_skill_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "using-superpowers"
             _touch(
                 projected_skill_root / "SKILL.md",
-                "---\nname: architecture-superpowers\ndescription: Use when shaping architecture decisions and review packets that need a compositional gate over Superpowers instead of a new doctrine surface.\n---\nBody.\n",
+                "---\nname: using-superpowers\ndescription: Use when workflow-sensitive work needs Superpowers guidance.\n---\nBody.\n",
             )
 
             with patch("skill_zip_artifacts.ROOT", temp_root):
@@ -660,12 +717,12 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 projected_skill_root / "SKILL.md",
                 (
                     "---\n"
-                    "name: architecture-superpowers\n"
-                    "description: Use when shaping architecture decisions and review packets that need a compositional gate over Superpowers instead of a new doctrine surface.\n"
+                    "name: using-superpowers\n"
+                    "description: Use when workflow-sensitive work needs Superpowers guidance.\n"
                     "metadata:\n"
-                    "  source-id: architecture-superpowers\n"
-                    "  source-path: sources/first_party/skills/architecture-superpowers/SKILL.md\n"
-                    "  provenance-name: MARK-173 Architecture Superpowers compositional skill\n"
+                    "  source-id: using-superpowers\n"
+                    "  source-path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md\n"
+                    "  provenance-name: MARK-143 GitHub Superpowers compositional skill\n"
                     'license: "MIT"\n'
                     "---\n"
                     "Body.\n"
