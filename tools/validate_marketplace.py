@@ -110,6 +110,12 @@ def validate_tree_reconstruction(source_root: Path, overlay_root: Path | None, l
         tempdir.cleanup()
 
 
+def _files_match_canonicalized(source_path: Path, projected_path: Path) -> bool:
+    source_bytes = _canonicalize_tree_bytes(source_path, source_path.read_bytes())
+    projected_bytes = _canonicalize_tree_bytes(projected_path, projected_path.read_bytes())
+    return source_bytes == projected_bytes
+
+
 def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str) -> None:
     provenance_map = load_json(ROOT / plugin_root / "references" / "provenance-map.json")
     if not isinstance(provenance_map, dict):
@@ -793,7 +799,7 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
             raise ValueError(f"wild-bunch-project-pack entry {canonical_name} is missing local_path")
         check_path_exists(ROOT / canonical_source_path)
         check_path_exists(ROOT / plugin_root / local_path)
-        if (ROOT / canonical_source_path).read_bytes() != (ROOT / plugin_root / local_path).read_bytes():
+        if not _files_match_canonicalized(ROOT / canonical_source_path, ROOT / plugin_root / local_path):
             raise ValueError(f"wild-bunch-project-pack entry {canonical_name} drifted from its source copy")
 
     if len(blocked_entries) != 1:
@@ -876,9 +882,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         "assets/app-icon.png",
         "assets/superpowers-small.svg",
     ):
-        source_bytes = (source_root / relative_path).read_bytes()
-        projected_bytes = (ROOT / plugin_root / relative_path).read_bytes()
-        if source_bytes != projected_bytes:
+        if not _files_match_canonicalized(source_root / relative_path, ROOT / plugin_root / relative_path):
             raise ValueError(f"superpowers-plus projection drift at {relative_path}")
 
     entries = bundle_manifest.get("entries", [])
@@ -1009,7 +1013,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
                 overlay_root = ROOT / adaptation_overlay_path
                 validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
         else:
-            if content_mode == "verbatim" and source_path.read_bytes() != local_full_path.read_bytes():
+            if content_mode == "verbatim" and not _files_match_canonicalized(source_path, local_full_path):
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
 
     expected_support_paths = {
@@ -1307,10 +1311,8 @@ def validate_skill_bundle_manifest(
                 projected_path = ROOT / plugin_root / local_path
                 
                 if content_mode == "verbatim":
-                    # Verbatim: raw byte identity against retained source
-                    source_bytes = source_path.read_bytes()
-                    projected_bytes = projected_path.read_bytes()
-                    if source_bytes != projected_bytes:
+                    # Verbatim: canonicalized content identity against retained source
+                    if not _files_match_canonicalized(source_path, projected_path):
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
                         )
