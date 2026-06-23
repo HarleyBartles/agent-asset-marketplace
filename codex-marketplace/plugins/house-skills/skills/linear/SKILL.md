@@ -22,6 +22,16 @@ For coding work after Linear/Codex adoption:
 - Use the repo/GitHub proof surface after a GitHub PR, branch, commit, review, merge, status, or file-state question exists.
 - Do not revive GitHub issue or legacy dispatch doctrine from this skill.
 
+## Delegation and label authority
+
+Never set the Linear `delegate` field unless Harley explicitly asks to delegate the issue to a named agent or explicitly asks for Linear native delegation on that issue.
+
+Do not infer delegation from `send`, `run`, `worker-ready`, `Devin-ready`, `for Devin`, `campaign-sized`, `start`, `worker`, `agent`, or similar wording.
+
+Do not create, apply, or recommend Linear labels with a `!` prefix. In this marketplace those labels are reserved for Devin-style pickup and are off-limits unless Harley explicitly instructs otherwise.
+
+Assignment to Harley is the safe default. Agent-readiness belongs in issue body text, ordinary labels, or attached documents, not in `delegate`.
+
 ## Read-before-write rule
 
 Before creating, updating, moving, assigning, commenting, or deleting anything in Linear, inspect the smallest relevant Linear surface unless Harley supplies a current identifier and asks for a direct write.

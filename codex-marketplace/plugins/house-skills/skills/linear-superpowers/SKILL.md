@@ -27,6 +27,8 @@ When the Linear packet is plan-shaped and meant for a worker, instruct the packe
 
 Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. This is not optional background guidance.
 
+For any mention of Linear `delegate` or `!`-prefixed labels, defer to `/linear` as the owning connector surface and keep this skill focused on packet shape.
+
 Use `/linear-issue-compactor` when the issue body is long, dense, connector-hostile, or when source seams, plans, guardrails, validation, coverage maps, or evidence should move to attached Linear docs. Do not duplicate the full compactor procedure here.
 
 Use `/unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.

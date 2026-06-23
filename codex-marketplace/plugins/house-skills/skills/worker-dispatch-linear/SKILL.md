@@ -23,6 +23,14 @@ Linear is the durable issue/control plane. The boring default is:
 4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
 5. never claim execution, publication, merge, or closeout unless the target system proves it.
 
+## Native delegation guard
+
+Worker-ready and worker-send-ready issue shaping are not Linear native delegation. Do not set Linear `delegate` or any `!`-prefixed label unless Harley explicitly asks for Linear native delegation to a named agent on that issue.
+
+Do not infer delegation from `send`, `run`, `worker-ready`, `Devin-ready`, `for Devin`, `campaign-sized`, `start`, `worker`, or `agent`.
+
+For ordinary worker issues, keep the safe default as `assignee: me`, with `delegate` omitted or null.
+
 ## Linear Worker Issue Shaping Stack
 
 When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
