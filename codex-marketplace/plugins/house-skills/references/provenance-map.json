@@ -330,34 +330,6 @@
       "local_path": "skills/session-buster-ingress"
     },
     {
-      "canonical_name": "skill-handoff",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/skill-handoff",
-      "local_path": "skills/skill-handoff"
-    },
-    {
-      "canonical_name": "skill-installer",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/skill-installer",
-      "local_path": "skills/skill-installer"
-    },
-    {
-      "canonical_name": "skill-packager",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/skill-packager",
-      "local_path": "skills/skill-packager"
-    },
-    {
-      "canonical_name": "skill-validator",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/skill-validator",
-      "local_path": "skills/skill-validator"
-    },
-    {
       "canonical_name": "sprite-pipeline",
       "source_category": "third_party",
       "content_mode": "verbatim",

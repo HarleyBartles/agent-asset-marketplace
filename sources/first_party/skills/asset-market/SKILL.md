@@ -1,6 +1,6 @@
 ---
 name: asset-market
-description: Source-facing Asset Marketplace skill and pack acquisition with fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare, or prepare the latest GPT skill or bundled skill pack from the asset marketplace repo, especially phrases like "using asset-market", "from the repo", "latest marketplace version", "install @skill-name", "install the project pack", or "get @skill-name and install it with skill-installer". Owns connector-backed repo source resolution, exact source reconstruction, pack-to-per-skill install-unit expansion, source/projection ambiguity, and no-fidelity-loss handoff to skill-installer. Does not validate, package, present installable zips, or mutate the repo.
+description: Source-facing Asset Marketplace skill and pack acquisition with fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare, or prepare the latest GPT skill or bundled skill pack from the asset marketplace repo, especially phrases like "using asset-market", "from the repo", or "latest marketplace version". Owns connector-backed repo source resolution, exact source reconstruction, pack-to-per-skill install-unit expansion, and source/projection ambiguity. Does not validate, package, present installable zips, or mutate the repo.
 ---
 
 # Asset Market
@@ -26,7 +26,7 @@ Classify the request before source inspection:
 - `comparison`: Harley asks to compare repo source, installed skill state, package contents, or projections without installation.
 - `blocked_or_ambiguous`: the request could refer to multiple skills or packs and repo inspection cannot disambiguate.
 
-For GPT installation, a pack is not itself the install unit. A pack is a repo source catalog that expands into a queue of single-skill install units. `skill-installer` remains single-skill strict.
+For GPT installation, a pack is not itself the install unit. A pack is a repo source catalog that expands into a queue of single-skill install units.
 
 ## Single-skill workflow
 
@@ -38,7 +38,7 @@ For GPT installation, a pack is not itself the install unit. A pack is a repo so
    - `inferred`: path or ownership conclusions derived from inspected files.
    - `unavailable`: expected files or manifests the connector could not fetch.
 5. If any required file is missing, ambiguous, stale, duplicated, or only inferred, stop before installation handoff and report the blocker.
-6. Hand the staged source path and evidence packet to `skill-installer` when the user requested installation or packaging.
+6. Hand the staged source path and evidence packet to the appropriate downstream workflow when the user requested installation or packaging.
 
 ## Pack workflow
 
@@ -53,9 +53,9 @@ Use the pack workflow when Harley requests a project pack, plugin bundle, or all
 3. Expand the pack into install units. Each install unit must name one `target_skill` and one concrete skill folder under the inspected pack, usually `codex-marketplace/plugins/<pack>/skills/<skill-name>`.
 4. Do not stage or hand off the pack root itself as a GPT-installable skill unless the user explicitly asks to install the pack-router skill and the pack contains a normal `skills/<pack-name>/SKILL.md` unit.
 5. For each requested install unit, inspect the actual `SKILL.md` and any required sibling files before emitting a per-skill `asset_market_source_packet`.
-6. For an `all skills from pack` request, return an `asset_market_pack_packet` first, then process install units as a one-at-a-time queue through `skill-installer` / `skill-handoff` cadence. Do not claim the pack is installed because the queue was enumerated.
+6. For an `all skills from pack` request, return an `asset_market_pack_packet` first, then process install units as a one-at-a-time queue through the current install/projection lane. Do not claim the pack is installed because the queue was enumerated.
 
-## Handoff to skill-installer
+## Downstream transfer
 
 Use this handoff only after the staged source is complete and source fidelity is green:
 
@@ -71,10 +71,10 @@ asset_market_source_packet:
     - <path or []>
   unavailable_paths: []
   fidelity_status: green
-  next_required_step: skill-installer
+  next_required_step: downstream-workflow
 ```
 
-For pack enumeration, use this object before any per-skill installer handoff:
+For pack enumeration, use this object before any per-skill downstream handoff:
 
 ```yaml
 asset_market_pack_packet:
@@ -92,7 +92,7 @@ asset_market_pack_packet:
       projection_status: <projected | canonical | unknown>
   unavailable_paths: []
   fidelity_status: green
-  next_required_step: skill-installer_per_unit
+  next_required_step: downstream-workflow_per_unit
 ```
 
 If fidelity is not green, do not call the package path. Return:
@@ -112,7 +112,7 @@ For blocked pack requests, use the same blocked fields in `asset_market_pack_pac
 
 ## Adjacent-skill boundaries
 
-Use `skill-installer` after source acquisition when the user wants an installable package or install handoff. For a pack, hand off one green `asset_market_source_packet` per install unit; do not ask `skill-installer` to install the whole plugin or pack as one unit.
+Use the current install/projection lane after source acquisition when the user wants an installable package or install handoff. For a pack, hand off one green `asset_market_source_packet` per install unit; do not ask a pack-level workflow to install the whole plugin or pack as one unit.
 
 Use `skill-creator` only when Harley asks to create or modify skill content rather than reproduce the marketplace source exactly.
 

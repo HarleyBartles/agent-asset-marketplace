@@ -29,13 +29,33 @@ class TreeCanonicalizationTests(unittest.TestCase):
         result = canonicalize_tree_bytes(Path("manifest.json"), b'{"a":1}\r\n')
         self.assertEqual(result, b'{"a":1}\n')
 
+    def test_canonicalizes_jsonl(self) -> None:
+        result = canonicalize_tree_bytes(Path("trace.jsonl"), b'{"a":1}\r\n{"b":2}\r\n')
+        self.assertEqual(result, b'{"a":1}\n{"b":2}\n')
+
     def test_canonicalizes_tsx(self) -> None:
         result = canonicalize_tree_bytes(Path("component.tsx"), b"export const x = 1;\r\n")
         self.assertEqual(result, b"export const x = 1;\n")
 
+    def test_canonicalizes_cjs(self) -> None:
+        result = canonicalize_tree_bytes(Path("server.cjs"), b"module.exports = {}\r\n")
+        self.assertEqual(result, b"module.exports = {}\n")
+
+    def test_canonicalizes_shebang_scripts(self) -> None:
+        result = canonicalize_tree_bytes(Path("review-package"), b"#!/usr/bin/env bash\r\necho hi\r\n")
+        self.assertEqual(result, b"#!/usr/bin/env bash\necho hi\n")
+
     def test_canonicalizes_yaml(self) -> None:
         result = canonicalize_tree_bytes(Path("openai.yaml"), b"name: test\r\n")
         self.assertEqual(result, b"name: test\n")
+
+    def test_canonicalizes_dot_files(self) -> None:
+        result = canonicalize_tree_bytes(Path("graphviz-conventions.dot"), b"digraph G {\r\n  a -> b\r\n}\r\n")
+        self.assertEqual(result, b"digraph G {\n  a -> b\n}\n")
+
+    def test_canonicalizes_license_upstream_files(self) -> None:
+        result = canonicalize_tree_bytes(Path("LICENSE.upstream"), b"Upstream license text\r\n")
+        self.assertEqual(result, b"Upstream license text\n")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 {
   "schema_version": "skill-gpt-export-manifest.v1",
   "default_export_mode": "direct",
-  "notes": "Plugins not explicitly listed in this manifest use the default_export_mode of 'direct'. This includes adventures-pack, unslop-plus, game-studio, wild-bunch-project-pack, everything-codex-code, codex-cortex, repo-worker-base, dotnet-kit, api-contracts-pack, architecture-pack, language-patterns-pack, security-pack, and frontend-pack. These plugins have received first-pass analysis (no Skill tool dependencies found via grep) and are classified as direct export candidates pending full GPT QA.",
+  "notes": "Plugins not explicitly listed in this manifest use the default_export_mode of 'direct'. This includes adventures-pack, unslop-plus, game-studio, wild-bunch-project-pack, codex-cortex, repo-worker-base, dotnet-kit, api-contracts-pack, architecture-pack, language-patterns-pack, security-pack, and frontend-pack. These plugins have received first-pass analysis (no Skill tool dependencies found via grep) and are classified as direct export candidates pending full GPT QA.",
   "packs": [
     {
       "pack": "house-skills",
