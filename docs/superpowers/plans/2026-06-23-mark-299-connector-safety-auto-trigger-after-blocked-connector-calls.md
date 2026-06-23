@@ -64,7 +64,7 @@ Verify the final wording still reads as a safety/recovery skill, not a general-p
 **Files:**
 - Modify: `sources/first_party/skills/linear-superpowers/SKILL.md`
 - Modify: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
-- Modify: `sources/first_party/skills/worker-dispatch-linear/agents/openai.yaml`
+- Modify: `sources/first_party/skills/linear-superpowers/agents/openai.yaml`
 
 **Interfaces:**
 - Consumes: the current Linear shaping guidance, the current worker-dispatch control-plane wording, and the existing `connector-safety` reference.
@@ -78,9 +78,9 @@ Add or tighten the `linear-superpowers` wording so blocked Linear writes are tre
 
 Add matching language in `worker-dispatch-linear` so issue/comment/document shaping in Linear points to `connector-safety` when a write is blocked or rejected.
 
-- [ ] **Step 3: Update the worker-dispatch prompt overlay**
+- [ ] **Step 3: Update the Linear Superpowers prompt overlay**
 
-Carry the same cross-reference into `sources/first_party/skills/worker-dispatch-linear/agents/openai.yaml` so the visible prompt guidance matches the skill body.
+Carry the same cross-reference into `sources/first_party/skills/linear-superpowers/agents/openai.yaml` so the visible prompt guidance matches the skill body.
 
 - [ ] **Step 4: Check for overreach**
 

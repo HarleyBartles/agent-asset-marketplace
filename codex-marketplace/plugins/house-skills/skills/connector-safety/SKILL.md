@@ -117,17 +117,14 @@ This is safer than creating a large fully populated child object in one call bec
 When a connector write is blocked, do not claim success. Follow this explicit recovery ladder:
 
 1. Acknowledge that the mutation did not happen.
-2. Read the exact target if possible.
-3. Retry once only with a narrower one-field write.
-4. If blocked, step back to bounded parent discovery.
-5. Discover the target from that parent surface.
-6. Read the exact target.
-7. Read dependent connector vocabulary before writing: labels, statuses, projects, folders, users, branches, milestones, or other connector-owned values.
-8. Perform one bounded write using discovered stable values.
-9. Read back from the mutated target.
-10. Stop after repeated parent-discovered failure and report observed state.
+2. Step back to bounded parent discovery before any retry.
+3. Discover the target from that parent surface and read the exact target.
+4. Read dependent connector vocabulary before writing: labels, statuses, projects, folders, users, branches, milestones, or other connector-owned values.
+5. Retry once only with one narrower safer mutation using the discovered stable values.
+6. Read back from the mutated target.
+7. Stop after repeated parent-discovered failure and report observed state.
 
-Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one-field write -> readback.
+Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one narrower safer mutation -> readback.
 
 Concrete Linear example: `Linear team discovery -> project or issue discovery from team -> exact issue or project read -> label/status vocabulary read if needed -> one narrow write -> readback`.
 
