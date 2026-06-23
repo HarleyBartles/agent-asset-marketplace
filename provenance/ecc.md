@@ -34,5 +34,4 @@
 
 The historical ECC projection contributed security review, security scan, safe-operation,
 config validation, bounty-hunter, framework-specific security, and
-risk-review guidance to `security-pack`. MARK-295 removed the active ECC projections from all plugins; compliance-only or unrelated
-implementation skills stay out of this projection slice.
+risk-review guidance to `security-pack`. MARK-295 removed the active ECC projections from all plugins, but retained ECC custody stays available for deliberate follow-on reprojection work. MARK-301 is the place to reintroduce any fresh ECC-derived projections after source inspection, manifest updates, provenance updates, and validator updates. Compliance-only or unrelated implementation skills stay out of this projection slice.
