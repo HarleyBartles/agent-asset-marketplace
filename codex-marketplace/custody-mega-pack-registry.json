@@ -15,12 +15,6 @@
       "mega_pack_root": "codex-marketplace/plugins/codex-cortex"
     },
     {
-      "source_family": "ecc",
-      "custody_root": "sources/third_party/ecc/upstream",
-      "mega_pack": "everything-codex-code",
-      "mega_pack_root": "codex-marketplace/plugins/everything-codex-code"
-    },
-    {
       "source_family": "superpowers",
       "custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
       "mega_pack": "superpowers-plus",
