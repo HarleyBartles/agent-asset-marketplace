@@ -32,9 +32,13 @@ TEXT_SUFFIXES = {
 }
 
 
+def _is_text_file(path: Path, raw: bytes) -> bool:
+    return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES or raw.startswith(b"#!")
+
+
 def canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
     """Normalize CRLF/CR to LF for text files. Binary files are returned as-is."""
-    if path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES:
+    if _is_text_file(path, raw):
         return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
     return raw
 

@@ -250,8 +250,10 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _is_text_file(path: Path) -> bool:
-    return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES
+def _is_text_file(path: Path, raw: bytes | None = None) -> bool:
+    return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES or (
+        raw is not None and raw.startswith(b"#!")
+    )
 
 
 def _canonicalize_text_bytes(raw: bytes) -> bytes:
@@ -260,7 +262,7 @@ def _canonicalize_text_bytes(raw: bytes) -> bytes:
 
 def _read_canonical_file_bytes(path: Path) -> bytes:
     raw = path.read_bytes()
-    if _is_text_file(path):
+    if _is_text_file(path, raw):
         raw.decode("utf-8")
         if raw.startswith(b"\xef\xbb\xbf"):
             raw = raw[3:]

@@ -41,6 +41,10 @@ class TreeCanonicalizationTests(unittest.TestCase):
         result = canonicalize_tree_bytes(Path("server.cjs"), b"module.exports = {}\r\n")
         self.assertEqual(result, b"module.exports = {}\n")
 
+    def test_canonicalizes_shebang_scripts(self) -> None:
+        result = canonicalize_tree_bytes(Path("review-package"), b"#!/usr/bin/env bash\r\necho hi\r\n")
+        self.assertEqual(result, b"#!/usr/bin/env bash\necho hi\n")
+
     def test_canonicalizes_yaml(self) -> None:
         result = canonicalize_tree_bytes(Path("openai.yaml"), b"name: test\r\n")
         self.assertEqual(result, b"name: test\n")
