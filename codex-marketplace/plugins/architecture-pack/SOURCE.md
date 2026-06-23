@@ -1,50 +1,27 @@
 # Source
 
-This plugin projects the MARK-172 `cqrs-event-sourcing` seed, the MARK-200
-`event-driven-architecture` candidate, and the MARK-201
-`database-design-patterns` candidate from the retained Codex Cortex custody
-plugin into a Codex marketplace pack.
+This plugin projects the three retained Codex Cortex architecture skills only.
 
-It also projects 8 architecture skills from the ECC (affaan-m/ECC) upstream
-as part of MARK-241 ECC projection.
+## Source custody
+### Claude Cortex custody
+- `sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/`
+- `sources/third_party/claude-cortex/upstream/skills/database-design-patterns/`
+- `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/`
 
-## Source custody plugin (Codex Cortex)
-
-- Plugin root: `codex-marketplace/plugins/codex-cortex/`
-- Skill root: `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/`
-- Skill root: `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/`
-- Skill root: `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/`
-- Source map: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
-
-## First-party custody (Codex Cortex)
-
-- Selection/provenance ledger: `sources/first_party/skills/codex-cortex/decisions.json`
-- Human-readable ledger: `sources/first_party/skills/codex-cortex/decisions.md`
-- Intake record: `sources/first_party/skills/codex-cortex/intake.json`
-
-## Third-party custody (ECC)
-
-- Upstream repo: https://github.com/affaan-m/ECC
-- Upstream commit: ceca28852e5b31edbbf66ebccc8fd163dd14208e
-- Manifest: `sources/third_party/ecc/upstream/manifest.json`
-- Skill root: `sources/third_party/ecc/upstream/skills/`
-- Projected skills:
-  - architecture-decision-records
-  - backend-patterns
-  - docker-patterns
-  - hexagonal-architecture
-  - intent-driven-development
-  - kubernetes-patterns
-  - mcp-server-patterns
-  - mle-workflow
-
-## Pack shape
-
+## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/architecture-pack/`
 - Skill root: `codex-marketplace/plugins/architecture-pack/skills/`
-- Generated install units: `generated/skill-zips/architecture-pack/<skill-name>/skill.zip`
+- Skill roots:
+  - `codex-marketplace/plugins/architecture-pack/skills/cqrs-event-sourcing/`
+  - `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/`
+  - `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture/`
+
+## Generated install units
+- `generated/skill-zips/architecture-pack/cqrs-event-sourcing/skill.zip`
+- `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
+- `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
 
 ## Boundary
-
-Only the retained architecture skills are projected. Later Claude-Cortex
-candidates stay out of scope for MARK-172, MARK-200, and MARK-201.
+- Only the retained architecture skills from Codex Cortex are projected.
+- Later Claude-Cortex or ECC candidates stay out of scope until a follow-up issue rebuilds them from fresh source inspection.
+- The bundle is a projection over retained source custody, not a new source of truth.

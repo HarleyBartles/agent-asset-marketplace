@@ -142,7 +142,6 @@ SUPERPOWERS_PLUS_ENTRY = {
         "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
         "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
         "sources/first_party/skills/architecture-superpowers/SKILL.md",
-        "sources/first_party/skills/ecc-superpowers/SKILL.md",
     ],
     "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",

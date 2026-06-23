@@ -1,32 +1,23 @@
 # Repo Worker Base
 
-This plugin packages the thin, first-party repo hygiene skill for Codex workers
-in Harley's workspace and now carries the generic safety and GitHub proof
-helpers needed to keep repo-backed work self-contained.
+This bundle projects the first-party repo worker base skills only.
 
-## Contents
+## Bundle contents
+### First_Party skills
+- `repo-worker-base`
+- `boring-loop`
+- `connector-safety`
+- `github-operations`
 
-- one skill under `skills/repo-worker-base/`
-- the projected `boring-loop` skill under `skills/boring-loop/`
-- the projected `connector-safety` skill under `skills/connector-safety/`
-- the projected `github-operations` skill under `skills/github-operations/`
-- plugin metadata in `.codex-plugin/plugin.json`
-- provenance note in `SOURCE.md`
+### Documentation
+- provenance and source mapping in `SOURCE.md`
+- bundle inventory in `references/bundle-manifest.json`
 - canonical source mapping in `references/source-map.md`
-- MIT license in `LICENSE`
 
-## Source
+## Boundary
+- Only the first-party repo worker skills are projected.
+- The bundle stays narrow and does not absorb ECC workflow skills.
 
-The canonical source for this plugin was created locally at:
+## Install shape
 
-- `C:\Users\Harls\plugins\repo-worker-base`
-
-The vendored copy in this repository keeps the plugin thin and scoped to
-generic repo-worker behavior plus the generic safety/proof helpers that repo
-work routinely needs.
-`boring-loop` is a projected first-party coordination skill for keeping work
-small, honest, and routed to the right specialist.
-`connector-safety` is projected from `sources/first_party/skills/connector-safety/`
-as the generic connector/tool safety surface.
-`github-operations` is projected from `sources/first_party/skills/github-operations/`
-as the generic GitHub proof surface.
+The installable skill zips are generated under `generated/skill-zips/repo-worker-base/<skill-name>/skill.zip` and can be installed directly from those artifacts.

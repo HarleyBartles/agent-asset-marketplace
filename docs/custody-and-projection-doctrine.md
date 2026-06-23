@@ -131,8 +131,10 @@ projection is an orphan. The validator (`detect_first_party_orphans` in
 `tools/validate_marketplace.py`) scans `sources/first_party/skills/` for
 directories with `SKILL.md` and checks that each one appears as a
 `first_party` entry in some plugin manifest. Orphans cause validation to
-fail with a clear list of the missing skills. The fix is to add the manifest
-entry and regenerate, not to delete the source.
+fail with a clear list of the missing skills. MARK-295 removed the stale
+`ecc-superpowers` wrapper source along with its projection, so there is no
+retired-source exception to carry forward. For active skills, the fix is
+still to add the manifest entry and regenerate, not to delete the source.
 
 ## Manifest shape validation
 

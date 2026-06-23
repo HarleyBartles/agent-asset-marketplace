@@ -1,18 +1,18 @@
 # ECC Source Custody Record
 
-> Issue: MARK-235
+> Issue: MARK-295
 > Scope: third-party source custody for the upstream ECC skills inventory
 > Upstream repo: `https://github.com/affaan-m/ECC/tree/main/skills`
-> Upstream commit inspected: `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
+> Upstream commit inspected: `71d22d0a77b7e0684f4e51cba03749b788993cdb`
 > Upstream license: `MIT` (`sources/third_party/ecc/upstream/LICENSE`)
 > Total skills inspected: `271`
 
-This record is the promoted ECC inventory source-custody surface for MARK-238.
+This record is the refreshed ECC inventory source-custody surface for MARK-295.
 The deleted `docs/inventory/ecc-agent-first-workflow-skills.md` report has been
 retired in favor of this third-party custody copy so future drain workers can
 use one durable upstream reference.
 
-As of MARK-240, the full upstream ECC skill tree is mirrored verbatim under
+As of MARK-295, the full upstream ECC skill tree is mirrored verbatim under
 `sources/third_party/ecc/upstream/skills/`, and the machine-readable custody
 manifest lives at `sources/third_party/ecc/upstream/manifest.json`.
 

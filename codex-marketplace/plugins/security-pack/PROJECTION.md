@@ -1,31 +1,20 @@
 # Projection
 
-This root is the Codex-facing marketplace projection of selected Codex Cortex and ECC security skills.
+This root is the Codex-facing marketplace projection of the retained Codex Cortex security foundations only.
 
 ## Layer Model
 
-This repository uses two distinct layers for the security bundle:
-
-- Source custody keeps the retained third-party Claude-Cortex and ECC snapshots verbatim.
-- Projection layer holds the source-controlled marketplace copy with first-party selection decisions.
+- Source custody keeps the retained upstream snapshots.
+- Projection layer holds the source-controlled marketplace copy.
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The projected security skills are materialized from `sources/third_party/claude-cortex/upstream/skills/...` and `sources/third_party/ecc/upstream/skills/...` per the first-party selection ledger.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
-The split is deliberate:
-
-- Do not apply Codex-safe wording or marketplace adaptation inside the third-party source custody roots.
-- Do apply projection-layer adaptations in the marketplace copy where they can be reviewed, documented, and regenerated.
-- Do treat generated zips, registry entries, and GPT exports as derived install surfaces, not hand-edited sources.
-
 ## Projection contract
-
-- `security-pack` is the third-party plugin projection with selected Claude-Cortex and ECC security skills per the first-party selection ledger.
-- The active plugin contains Codex Cortex security foundations and ECC security-oriented skills.
+- `security-pack` is the marketplace projection for the retained skills listed in `references/bundle-manifest.json`.
+- The active plugin contains `owasp-top-10`, `secure-coding-practices`, `security-testing-patterns`, `threat-modeling-techniques`.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
-- First-party selection decisions are recorded in `sources/first_party/skills/codex-cortex/decisions.json` and `decisions.md`.
 
 ## Included in the active install surface
 
@@ -40,5 +29,5 @@ The split is deliberate:
 
 ## Excluded from the active install surface
 
-- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/claude-cortex/upstream/` and `sources/third_party/ecc/upstream/` as support provenance and retained source custody.
-- Other Claude-Cortex and ECC skills remain in source custody only.
+- Upstream harness surfaces, tests, docs, and package metadata remain in source custody as support provenance and retained source custody.
+- Removed ECC router or projection material stays out of this bundle.

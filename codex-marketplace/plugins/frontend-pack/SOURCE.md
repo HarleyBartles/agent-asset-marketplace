@@ -1,88 +1,37 @@
 # Source
 
-This plugin packages frontend skills from three upstream sources:
-1. The retained `NickCrew/Claude-Cortex` frontend application skills from the retained `claude-cortex` custody root
-2. The retained `affaan-m/ECC` frontend skills from the retained `ecc` custody root
-3. The retained `feature-sliced/skills` FSD architecture skill from the retained `feature-sliced` custody root
+This plugin projects the retained NickCrew/Claude-Cortex frontend skills and the retained feature-sliced design skill.
 
-These are projected as a market-facing Codex plugin focused on React and frontend implementation guidance.
+## Source custody
+### Claude Cortex custody
+- `sources/third_party/claude-cortex/upstream/skills/accessibility-audit/`
+- `sources/third_party/claude-cortex/upstream/skills/interaction-design/`
+- `sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/`
+- `sources/third_party/claude-cortex/upstream/skills/ux-review/`
+- `sources/third_party/claude-cortex/upstream/skills/webapp-testing/`
 
-## Upstream basis
+### Feature Sliced custody
+- `sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/`
 
-### NickCrew/Claude-Cortex
+## Projection surfaces
+- Codex plugin root: `codex-marketplace/plugins/frontend-pack/`
+- Skill root: `codex-marketplace/plugins/frontend-pack/skills/`
+- Skill roots:
+  - `codex-marketplace/plugins/frontend-pack/skills/accessibility-audit/`
+  - `codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design/`
+  - `codex-marketplace/plugins/frontend-pack/skills/interaction-design/`
+  - `codex-marketplace/plugins/frontend-pack/skills/react-performance-optimization/`
+  - `codex-marketplace/plugins/frontend-pack/skills/ux-review/`
+  - `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/`
 
-- Repo: `NickCrew/Claude-Cortex`
-- URL: <https://github.com/NickCrew/Claude-Cortex.git>
-- Pinned commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
-- License: `MIT`
+## Generated install units
+- `generated/skill-zips/frontend-pack/accessibility-audit/skill.zip`
+- `generated/skill-zips/frontend-pack/feature-sliced-design/skill.zip`
+- `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
+- `generated/skill-zips/frontend-pack/react-performance-optimization/skill.zip`
+- `generated/skill-zips/frontend-pack/ux-review/skill.zip`
+- `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
 
-### affaan-m/ECC
-
-- Repo: `affaan-m/ECC`
-- URL: <https://github.com/affaan-m/ECC.git>
-- Pinned commit: `ceca28852e5b31edbbf66ebccc8fd163dd14208e`
-- License: `MIT`
-
-### feature-sliced/skills
-
-- Repo: `feature-sliced/skills`
-- URL: <https://github.com/feature-sliced/skills>
-- Pinned commit: `653e7f3187eac51311652bf787a72bcf56325eea`
-- License: `MIT`
-
-## Source surfaces copied
-
-### From NickCrew/Claude-Cortex
-
-- `.codex-plugin/plugin.json`
-- `assets/icon.svg`
-- `references`
-- `skills/accessibility-audit`
-- `skills/interaction-design`
-- `skills/react-performance-optimization`
-- `skills/ux-review`
-- `skills/webapp-testing`
-
-### From affaan-m/ECC
-
-- `skills/accessibility`
-- `skills/angular-developer`
-- `skills/browser-qa`
-- `skills/design-system`
-- `skills/e2e-testing`
-- `skills/make-interfaces-feel-better`
-- `skills/react-patterns`
-- `skills/react-testing`
-- `skills/swiftui-patterns`
-- `skills/vue-patterns`
-- `skills/windows-desktop-e2e`
-
-### From feature-sliced/skills
-
-- `skills/feature-sliced-design` (includes `references/` subdirectory)
-
-## Marketplace adaptation
-
-- Status: `imported`
-- Plugin name: `frontend-pack`
-- Display name: `Frontend Pack`
-- Marketplace category normalized to `Productivity`
-- Icon paths normalized to `./assets/icon.svg`
-- Projected the retained `NickCrew/Claude-Cortex` frontend application, accessibility, UX review, interaction design, and browser testing guidance into the market-facing `frontend-pack` surface.
-- Projected the retained `affaan-m/ECC` frontend skills (accessibility, angular-developer, browser-qa, design-system, e2e-testing, make-interfaces-feel-better, react-patterns, react-testing, swiftui-patterns, vue-patterns, windows-desktop-e2e) into the market-facing `frontend-pack` surface as part of MARK-245.
-- Projected the retained `feature-sliced/skills` FSD architecture skill (feature-sliced-design) into the market-facing `frontend-pack` surface as part of MARK-290.
-- Kept the pack boundary narrow and imported only the exact MARK-214 frontend candidates from Claude-Cortex, MARK-245 frontend candidates from ECC, and MARK-290 FSD skill from feature-sliced/skills.
-- Generated a marketplace README wrapper because the upstream root did not provide one.
-- Generated a root LICENSE notice because the upstream root did not provide a root license file.
-- Added a bundle-manifest inventory for the copied skill directories.
-
-## Notes
-
-The retained upstream snapshots now live under:
-- `sources/third_party/claude-cortex/upstream/`
-- `sources/third_party/ecc/upstream/`
-- `sources/third_party/feature-sliced/upstream/`
-
-The project intentionally keeps the source-custody record separate from the
-installable marketplace root so the bundle can be regenerated from live source
-bytes.
+## Boundary
+- Only the retained frontend, UX, testing, and feature-sliced guidance is projected.
+- The pack does not absorb architecture, security, repo governance, or other non-frontend guidance.

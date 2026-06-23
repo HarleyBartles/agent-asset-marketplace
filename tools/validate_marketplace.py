@@ -1167,6 +1167,24 @@ def validate_skill_bundle_manifest(
         if bundle_manifest.get("blocked_count") != len(blocked_entries):
             raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
 
+        # Temporary MARK-295 stale-projection guard:
+        # keep the removed ECC projection set out of active bundles until a
+        # deliberate MARK-301 validator and manifest update reintroduces it.
+        ecc_entries = [
+            entry
+            for entry in imported_entries
+            if entry.get("source_family") == "ecc"
+            or entry.get("source_repo") == "https://github.com/affaan-m/ECC"
+        ]
+        if ecc_entries:
+            removed = ", ".join(
+                entry.get("canonical_name", "<unknown>") for entry in ecc_entries
+            )
+            raise ValueError(
+                f"{bundle_name} bundle manifest still includes the MARK-295 stale ECC projection set: {removed}. "
+                "This guard blocks only the removed projection set; reintroduce deliberate ECC projections with the MARK-301 manifest, provenance, and validator update."
+            )
+
         skill_dir = ROOT / plugin_root / "skills"
         actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
         imported_skill_dirs = {
@@ -1562,7 +1580,7 @@ def main() -> int:
     if orphans:
         raise ValueError(
             f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
-            f"Fix: add manifest entries for these skills and regenerate."
+            f"Fix: add manifest entries for these skills and regenerate, or remove retired source custody that should not stay in the active first-party tree."
         )
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()

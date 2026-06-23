@@ -2,84 +2,12 @@
   "source_backed_projections": [],
   "adapted_projections": [
     {
-      "canonical_name": "defi-amm-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/defi-amm-security",
-      "local_path": "skills/defi-amm-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/defi-amm-security"
-    },
-    {
-      "canonical_name": "django-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/django-security",
-      "local_path": "skills/django-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/django-security"
-    },
-    {
-      "canonical_name": "laravel-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/laravel-security",
-      "local_path": "skills/laravel-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/laravel-security"
-    },
-    {
-      "canonical_name": "llm-trading-agent-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/llm-trading-agent-security",
-      "local_path": "skills/llm-trading-agent-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/llm-trading-agent-security"
-    },
-    {
-      "canonical_name": "network-config-validation",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/network-config-validation",
-      "local_path": "skills/network-config-validation",
-      "adaptation_overlay_path": "adapters/codex/security-pack/network-config-validation"
-    },
-    {
       "canonical_name": "owasp-top-10",
       "source_category": "third_party",
       "content_mode": "normalised",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
       "local_path": "skills/owasp-top-10",
       "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10"
-    },
-    {
-      "canonical_name": "perl-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/perl-security",
-      "local_path": "skills/perl-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/perl-security"
-    },
-    {
-      "canonical_name": "prediction-market-risk-review",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/prediction-market-risk-review",
-      "local_path": "skills/prediction-market-risk-review",
-      "adaptation_overlay_path": "adapters/codex/security-pack/prediction-market-risk-review"
-    },
-    {
-      "canonical_name": "quarkus-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/quarkus-security",
-      "local_path": "skills/quarkus-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/quarkus-security"
-    },
-    {
-      "canonical_name": "safety-guard",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/safety-guard",
-      "local_path": "skills/safety-guard",
-      "adaptation_overlay_path": "adapters/codex/security-pack/safety-guard"
     },
     {
       "canonical_name": "secure-coding-practices",
@@ -90,44 +18,12 @@
       "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices"
     },
     {
-      "canonical_name": "security-bounty-hunter",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-bounty-hunter",
-      "local_path": "skills/security-bounty-hunter",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-bounty-hunter"
-    },
-    {
-      "canonical_name": "security-review",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
-      "local_path": "skills/security-review",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-review"
-    },
-    {
-      "canonical_name": "security-scan",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-scan",
-      "local_path": "skills/security-scan",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-scan"
-    },
-    {
       "canonical_name": "security-testing-patterns",
       "source_category": "third_party",
       "content_mode": "normalised",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
       "local_path": "skills/security-testing-patterns",
       "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns"
-    },
-    {
-      "canonical_name": "springboot-security",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/springboot-security",
-      "local_path": "skills/springboot-security",
-      "adaptation_overlay_path": "adapters/codex/security-pack/springboot-security"
     },
     {
       "canonical_name": "threat-modeling-techniques",
