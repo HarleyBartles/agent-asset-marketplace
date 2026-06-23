@@ -9,6 +9,7 @@ TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE"
 TEXT_SUFFIXES = {
     ".md",
     ".txt",
+    ".jsonl",
     ".yaml",
     ".yml",
     ".json",

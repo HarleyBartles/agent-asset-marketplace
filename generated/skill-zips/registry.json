@@ -4095,13 +4095,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/skill-comply/skill.zip",
       "source_file_count": 21,
-      "source_bytes": 60252,
-      "source_sha256": "e84e0b5ffb521cf70a979b4f35f08f088dae0069ba1d87ff0b3fc87099c8b6c6",
+      "source_bytes": 60244,
+      "source_sha256": "cd7f8e55727ca3c77eda1da4caa332c65fc386d908802d693bd9d4e1dff3a5c2",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 23330,
-      "zip_sha256": "b29aa2ee00861b216e5d5ab98886519c3eb61169c659a89dcd5d41dd21888f20"
+      "zip_size_bytes": 23327,
+      "zip_sha256": "7581c88db6314a46c6e359baddc7667bda62e6355cd77b2aa1d98f32a7dabca9"
     },
     {
       "pack": "repo-worker-base",

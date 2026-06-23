@@ -51,6 +51,7 @@ FORBIDDEN_FILE_NAMES = {
 TEXT_SUFFIXES = {
     ".md",
     ".txt",
+    ".jsonl",
     ".yaml",
     ".yml",
     ".json",
