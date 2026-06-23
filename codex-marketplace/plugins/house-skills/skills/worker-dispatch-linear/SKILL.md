@@ -23,6 +23,8 @@ Linear is the durable issue/control plane. The boring default is:
 4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
 5. never claim execution, publication, merge, or closeout unless the target system proves it.
 
+If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route the recovery into `/connector-safety` immediately. Do not paraphrase the payload from memory or retry the same mutation shape from the same surface.
+
 ## Native delegation guard
 
 Worker-ready and worker-send-ready issue shaping are not Linear native delegation. Do not set Linear `delegate` or any `!`-prefixed label unless Harley explicitly asks for Linear native delegation to a named agent on that issue.
