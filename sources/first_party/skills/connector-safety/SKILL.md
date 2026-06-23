@@ -17,6 +17,16 @@ Treat connector or tool safety blocks as signals to narrow, clarify, verify, or 
 
 A blocked mutation is not proof that the mutation happened. A planned mutation is not proof of authorization. A retry is lawful only when it is materially safer, narrower, clearer, or more auditable than the failed call.
 
+## Authority-gated side-effect fields
+
+Some connectors expose fields that change execution authority, handoff control, or who can act next. Treat those fields as high-risk side effects even when the surrounding write looks routine.
+
+For Linear, `delegate` is one such field. Only write it when Harley explicitly asks to delegate the issue to a named agent or explicitly asks for Linear native delegation on that issue.
+
+Do not infer `delegate` from `send`, `run`, `worker-ready`, `Devin-ready`, `for Devin`, `campaign-sized`, `start`, `worker`, `agent`, or similar wording.
+
+Do not use `!`-prefixed labels as a proxy for delegation or worker pickup.
+
 ## Discovery-before-mutation rule
 
 For side-effecting connector work, use the connector itself to discover the narrowest safe mutation target before writing.
