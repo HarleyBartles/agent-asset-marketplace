@@ -18,6 +18,11 @@ The marketplace plugin roots are the canonical install surface. Generated
 `skill.zip` files under `generated/skill-zips/` are downstream GPT exports, and
 `adapters/gpt/manifest.json` decides whether each one is `direct`, `overlay`,
 or `excluded`.
+Use `py -3 tools/generate_marketplace.py --check` to prove
+`.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` are
+current, and `py -3 tools/generate_repo_index.py --check` to prove
+`repo-index/repo-index.json` is current. `validate_repo_index.py` remains
+alignment validation, not the freshness proof.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.

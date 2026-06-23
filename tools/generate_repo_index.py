@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Any
@@ -310,15 +311,35 @@ def build_repo_index() -> dict:
     repo_index["marketplace_plugins"] = ordered_plugins
     repo_index["zones"] = _normalize_zones(list(repo_index.get("zones", [])))
     validation = dict(repo_index.get("validation", {}))
+    validation["marketplace_generate"] = "py -3 tools/generate_marketplace.py"
+    validation["marketplace_check"] = "py -3 tools/generate_marketplace.py --check"
     validation["repo_index_generate"] = "py -3 tools/generate_repo_index.py"
+    validation["repo_index_check"] = "py -3 tools/generate_repo_index.py --check"
     repo_index["validation"] = validation
     return repo_index
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Generate or validate the repo navigation index")
+    parser.add_argument("--check", action="store_true", help="validate without writing")
+    args = parser.parse_args()
+
     repo_index = build_repo_index()
     rendered = json.dumps(repo_index, indent=2, ensure_ascii=False)
-    REPO_INDEX_PATH.write_text(rendered + "\n", encoding="utf-8")
+    rendered += "\n"
+
+    if args.check:
+        if not REPO_INDEX_PATH.exists():
+            raise FileNotFoundError(REPO_INDEX_PATH)
+        current = REPO_INDEX_PATH.read_text(encoding="utf-8")
+        if current != rendered:
+            raise ValueError(f"{REPO_INDEX_PATH.relative_to(ROOT)} is stale; run py -3 tools/generate_repo_index.py")
+        print(f"OK {REPO_INDEX_PATH.relative_to(ROOT)}")
+        print("OK repo-index: repo-index/repo-index.json is current")
+        return 0
+
+    with REPO_INDEX_PATH.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(rendered)
     print(f"Wrote {REPO_INDEX_PATH.relative_to(ROOT)}")
     return 0
 

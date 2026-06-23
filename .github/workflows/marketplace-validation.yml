@@ -37,17 +37,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generate skill artifacts
-        run: python tools/update_skill_artifacts.py --all --base origin/main
+      - name: Check skill artifacts
+        run: python tools/update_skill_artifacts.py --check
 
-      - name: Generate marketplace
-        run: python tools/generate_marketplace.py
+      - name: Check marketplace manifests
+        run: python tools/generate_marketplace.py --check
 
-      - name: Generate repo index
-        run: python tools/generate_repo_index.py
-
-      - name: Check for generated drift (source files only)
-        run: git diff --exit-code -- .gitattributes .agents/plugins/marketplace.json codex-marketplace/manifest.json repo-index/
+      - name: Check repo index
+        run: python tools/generate_repo_index.py --check
 
       - name: Validate marketplace
         run: python tools/validate_marketplace.py

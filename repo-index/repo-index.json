@@ -12,7 +12,10 @@
     "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
     "skill_zips_check": "py -3 tools/validate_skill_zips.py",
     "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main",
-    "repo_index_generate": "py -3 tools/generate_repo_index.py"
+    "repo_index_generate": "py -3 tools/generate_repo_index.py",
+    "marketplace_generate": "py -3 tools/generate_marketplace.py",
+    "marketplace_check": "py -3 tools/generate_marketplace.py --check",
+    "repo_index_check": "py -3 tools/generate_repo_index.py --check"
   },
   "zones": [
     {
