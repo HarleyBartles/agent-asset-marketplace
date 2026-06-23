@@ -154,6 +154,51 @@
       "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
       "manifest_path": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 17,
+      "name": "agentic-workflows",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
+      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
+      "manifest_path": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "agentic-evaluation",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
+      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
+      "manifest_path": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 19,
+      "name": "research-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/research-pack",
+      "plugin_root": "codex-marketplace/plugins/research-pack",
+      "manifest_path": "codex-marketplace/plugins/research-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 20,
+      "name": "engineering-pack",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/engineering-pack",
+      "plugin_root": "codex-marketplace/plugins/engineering-pack",
+      "manifest_path": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 21,
+      "name": "everything-codex-code",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/everything-codex-code",
+      "plugin_root": "codex-marketplace/plugins/everything-codex-code",
+      "manifest_path": "codex-marketplace/plugins/everything-codex-code/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

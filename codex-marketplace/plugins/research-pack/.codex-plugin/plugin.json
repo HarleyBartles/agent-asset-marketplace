@@ -1,0 +1,41 @@
+{
+  "name": "research-pack",
+  "version": "1.0.0",
+  "description": "ECC research workflows for Codex marketplace projection.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "ecc",
+    "research",
+    "evidence",
+    "source",
+    "skills",
+    "projection"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Research Pack",
+    "shortDescription": "ECC evidence-first research workflows.",
+    "longDescription": "A repo-local Codex marketplace bundle that projects the retained ECC research workflow into a compact home for source-first research and evidence gathering.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the Research Pack bundle and source map.",
+      "Use the bundle to review the selected ECC research skill.",
+      "Compare the bundle against the retained ECC custody surface."
+    ],
+    "brandColor": "#16A34A",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

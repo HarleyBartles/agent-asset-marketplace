@@ -3,22 +3,23 @@
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
   "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+  "is_mega_pack": false,
+  "source_families": [
+    "ecc",
+    "first_party"
+  ],
+  "notes": [
+    "Repo worker base bundle combines first-party repo hygiene skills with the selected ECC search-first skill.",
+    "The bundle keeps the first-party core intact while projecting the complementary ECC search workflow into the same home."
+  ],
   "provenance_refs": [
-    "provenance/repo-worker-base.md"
+    "provenance/repo-worker-base.md",
+    "provenance/ecc-domain-packs.md",
+    "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-    {
-      "canonical_name": "repo-worker-base",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
-      "local_path": "skills/repo-worker-base",
-      "lane": "Base",
-      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
-    },
     {
       "canonical_name": "boring-loop",
       "source_category": "first_party",
@@ -26,8 +27,8 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/boring-loop",
       "local_path": "skills/boring-loop",
-      "lane": "Base",
-      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+      "provenance_note": "Projected verbatim from the first-party boring-loop skill.",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "connector-safety",
@@ -36,8 +37,8 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/connector-safety",
       "local_path": "skills/connector-safety",
-      "lane": "Base",
-      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+      "provenance_note": "Projected verbatim from the first-party connector-safety skill.",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "github-operations",
@@ -46,16 +47,55 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/github-operations",
       "local_path": "skills/github-operations",
-      "lane": "Base",
-      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+      "provenance_note": "Projected verbatim from the first-party github-operations skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "repo-worker-base",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "local_path": "skills/repo-worker-base",
+      "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "search-first",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/search-first",
+      "local_path": "skills/search-first",
+      "provenance_note": "Projected verbatim from retained ECC custody as a complementary repo-first research skill.",
+      "source_path": "sources/third_party/ecc/upstream/skills/search-first/SKILL.md",
+      "source_author": "Affaan Mustafa",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
+      "copy_expectation": "byte_identical"
     }
   ],
-  "is_mega_pack": false,
-  "source_families": [
-    "first_party"
-  ],
-  "notes": [
-    "Repo worker base bundle projected from first-party custody only.",
-    "The ECC repo/operator slice has been removed from the active projection set."
-  ]
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
+    "source_ledger": [
+      "sources/first_party/skills/repo-worker-base",
+      "sources/first_party/skills/boring-loop",
+      "sources/first_party/skills/connector-safety",
+      "sources/first_party/skills/github-operations",
+      "sources/third_party/ecc/upstream/source-custody.md"
+    ],
+    "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
+    "provenance_refs": [
+      "provenance/repo-worker-base.md",
+      "provenance/ecc-domain-packs.md",
+      "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

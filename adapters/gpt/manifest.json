@@ -14,81 +14,6 @@
       ]
     },
     {
-      "pack": "superpowers-ecc",
-      "skills": [
-        {
-          "skill": "agent-harness-construction",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "ai-first-engineering",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "deployment-patterns",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "dmux-workflows",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "messages-ops",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "ml-adoption-playbook",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "prediction-market-oracle-research",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "recursive-decision-ledger",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "research-ops",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "safety-guard",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "search-first",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "team-agent-orchestration",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "team-builder",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        },
-        {
-          "skill": "token-budget-advisor",
-          "export_mode": "direct",
-          "reason": "This ECC skill is already GPT-safe as-is."
-        }
-      ]
-    },
-    {
       "pack": "superpowers-plus",
       "skills": [
         {
@@ -117,11 +42,6 @@
           "skill": "architecture-superpowers",
           "export_mode": "direct",
           "reason": "This first-party projection is GPT-safe as a compositional architecture router and gate."
-        },
-        {
-          "skill": "ecc-superpowers",
-          "export_mode": "direct",
-          "reason": "This repo-authored router wrapper is GPT-safe and only points to the dedicated superpowers-ecc pack."
         },
         {
           "skill": "linear-superpowers",

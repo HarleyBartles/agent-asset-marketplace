@@ -11,15 +11,19 @@ convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/game-studio/`,
 `codex-marketplace/plugins/wild-bunch-project-pack/`,
 `codex-marketplace/plugins/superpowers-plus/`,
-`codex-marketplace/plugins/superpowers-ecc/`,
 `codex-marketplace/plugins/repo-worker-base/`,
 `codex-marketplace/plugins/dotnet-kit/`,
 `codex-marketplace/plugins/codex-cortex/`,
 `codex-marketplace/plugins/api-contracts-pack/`,
 `codex-marketplace/plugins/architecture-pack/`,
-`codex-marketplace/plugins/language-patterns-pack/`, and
+`codex-marketplace/plugins/language-patterns-pack/`,
 `codex-marketplace/plugins/security-pack/`,
-`codex-marketplace/plugins/frontend-pack/`, in that order, with the source
+`codex-marketplace/plugins/frontend-pack/`,
+`codex-marketplace/plugins/agentic-workflows/`,
+`codex-marketplace/plugins/agentic-evaluation/`,
+`codex-marketplace/plugins/research-pack/`,
+`codex-marketplace/plugins/engineering-pack/`, and
+`codex-marketplace/plugins/everything-codex-code/`, in that order, with the source
 manifest exposing only those roots and no legacy marketplace roots beside them.
 
 Editable source custody lives under `sources/first_party/` and

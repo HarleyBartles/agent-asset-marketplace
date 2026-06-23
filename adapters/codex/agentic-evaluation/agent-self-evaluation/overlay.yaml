@@ -1,0 +1,11 @@
+schema_version: 1
+deletes:
+  - examples/high-score-example.md
+  - examples/low-score-example.md
+  - templates/evaluation-report.md
+metadata:
+  source_category: third_party
+  upstream_name: agent-self-evaluation
+  adaptation_overlay: adapters/codex/agentic-evaluation/agent-self-evaluation
+  projection_plugin: agentic-evaluation
+  upstream_version: upstream

@@ -1,8 +1,0 @@
-schema_version: 1
-deletes: []
-metadata:
-  source_category: third_party
-  upstream_name: ml-adoption-playbook
-  adaptation_overlay: adapters/codex/superpowers-ecc/ml-adoption-playbook
-  projection_plugin: superpowers-ecc
-  upstream_version: upstream
