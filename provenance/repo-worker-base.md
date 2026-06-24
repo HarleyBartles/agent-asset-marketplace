@@ -2,13 +2,13 @@
 
 ## Origin
 
-- Local source path: `C:\Users\Harls\plugins\repo-worker-base`
-- Scope: first-party repo hygiene plugin for Codex workers in Harley's workspace
+- Local source path: `sources/first_party/skills/repo-worker-base`
+- Scope: first-party repo hygiene entrypoint for Codex workers in Harley's workspace
 
 ## Preservation notes
 
-- The vendored marketplace asset keeps the plugin thin and market-canonical.
-- No upstream third-party source was imported for this plugin.
+- The marketplace projection keeps the plugin thin and market-canonical.
+- No upstream third-party source is imported into the baseline bundle.
 - The plugin content is limited to fresh-main discipline, worker branching,
   validation evidence, publication reporting, and the generic safety/proof
   helpers that repo-backed work needs.

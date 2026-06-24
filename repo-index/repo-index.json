@@ -376,15 +376,13 @@
         "sources/first_party/skills/repo-worker-base",
         "sources/first_party/skills/boring-loop",
         "sources/first_party/skills/connector-safety",
-        "sources/first_party/skills/github-operations",
-        "sources/third_party/ecc/upstream/source-custody.md"
+        "sources/first_party/skills/github-operations"
       ],
       "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
       "provenance_refs": [
         "provenance/repo-worker-base.md",
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/repo-worker-base/references/source-map.md"
       ],
       "agents_md": null,
