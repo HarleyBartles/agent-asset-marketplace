@@ -32,6 +32,12 @@
 - Current Wild Bunch plugin source of truth: `codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json`
 - Current deterministic projection tooling already present: `tools/materialize_projection.py`, `tools/update_skill_artifacts.py`, `tools/generate_marketplace.py`, `tools/generate_repo_index.py`, `tools/generate_provenance_maps.py`, `tools/generate_source_maps.py`, `tools/validate_marketplace.py`, `tools/validate_repo_index.py`, `tools/validate_skill_zips.py`
 
+## Phase Marker
+
+- Phase 1: committed preflight and plan for review on this branch/PR.
+- Phase 2: starts only after approval and implements the Wild Bunch-only changes on the same branch/PR.
+- When Phase 2 begins, update the PR body so reviewers can separate plan approval evidence from implementation evidence.
+
 ## Preflight Findings
 
 ### Current Wild Bunch surfaces
