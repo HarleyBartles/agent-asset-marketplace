@@ -271,6 +271,77 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     materialize_projection.main()
 
+    def test_materialize_projection_check_fails_on_stale_skill_roots(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
+            projected_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "sample-skill"
+            stale_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "retired-skill"
+            manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
+
+            source_root.mkdir(parents=True, exist_ok=True)
+            projected_root.mkdir(parents=True, exist_ok=True)
+            stale_root.mkdir(parents=True, exist_ok=True)
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+
+            (source_root / "SKILL.md").write_text("---\nname: sample-skill\ndescription: sample\n---\n\nbody\n", encoding="utf-8")
+            (projected_root / "SKILL.md").write_text("---\nname: sample-skill\ndescription: sample\n---\n\nbody\n", encoding="utf-8")
+            (stale_root / "SKILL.md").write_text("---\nname: retired-skill\ndescription: stale\n---\n\nbody\n", encoding="utf-8")
+
+            manifest = {
+                "bundle_name": "sample-pack",
+                "bundle_version": "1.0.0",
+                "bundle_type": "projection-lane",
+                "plugin_root": "codex-marketplace/plugins/sample-pack",
+                "is_mega_pack": False,
+                "source_families": ["ecc"],
+                "notes": ["generated"],
+                "provenance_refs": ["provenance/sample-pack.md"],
+                "plugin_author": "Harley Bartles",
+                "plugin_license": "MIT",
+                "entries": [
+                    {
+                        "canonical_name": "sample-skill",
+                        "source_category": "third_party",
+                        "content_mode": "verbatim",
+                        "source_family": "ecc",
+                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "local_path": "skills/sample-skill",
+                        "provenance_note": "Projected verbatim from retained ECC custody.",
+                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "ECC",
+                        "source_license": "MIT",
+                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "copy_expectation": "byte_identical",
+                    }
+                ],
+                "repo_index": {
+                    "source_md": "codex-marketplace/plugins/sample-pack/SOURCE.md",
+                    "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                    "license_path": "codex-marketplace/plugins/sample-pack/LICENSE",
+                    "bundle_manifest": "codex-marketplace/plugins/sample-pack/references/bundle-manifest.json",
+                    "skills_path": "codex-marketplace/plugins/sample-pack/skills",
+                    "provenance_refs": ["provenance/sample-pack.md"],
+                    "agents_md": None,
+                    "registry_alignment": {"status": "aligned", "note": None},
+                },
+            }
+            manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+            with (
+                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(
+                    materialize_projection,
+                    "load_plugin_root_inventory",
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                ),
+                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
+            ):
+                with self.assertRaises(ValueError) as ctx:
+                    materialize_projection.main()
+
+            self.assertIn("retired-skill", str(ctx.exception))
+
     def test_materialize_projection_write_prunes_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)

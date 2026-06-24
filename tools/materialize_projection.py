@@ -127,6 +127,18 @@ def _prune_obsolete_projection_roots(plugin_root: Path, expected_roots: set[str]
         shutil.rmtree(child)
 
 
+def _find_obsolete_projection_roots(plugin_root: Path, expected_roots: set[str]) -> list[str]:
+    skills_root = plugin_root / "skills"
+    if not skills_root.is_dir():
+        return []
+
+    obsolete_roots: list[str] = []
+    for child in skills_root.iterdir():
+        if child.is_dir() and child.name not in expected_roots:
+            obsolete_roots.append(child.name)
+    return sorted(obsolete_roots)
+
+
 def reconcile_projection(*, write: bool, plugin_name: str | None = None) -> None:
     inventory = load_plugin_root_inventory()
     for spec in inventory:
@@ -154,6 +166,13 @@ def reconcile_projection(*, write: bool, plugin_name: str | None = None) -> None
             _materialize_entry(entry, plugin_root, write=write)
         if write:
             _prune_obsolete_projection_roots(plugin_root, expected_roots)
+        else:
+            obsolete_roots = _find_obsolete_projection_roots(plugin_root, expected_roots)
+            if obsolete_roots:
+                raise ValueError(
+                    f"{spec['name']} bundle-manifest has stale projected roots under "
+                    f"{plugin_root / 'skills'}: {', '.join(obsolete_roots)}"
+                )
 
 
 def main() -> int:
