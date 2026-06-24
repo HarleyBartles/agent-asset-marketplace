@@ -1,25 +1,21 @@
 # Source
 
-This bundle packages the hydrated Wild Bunch first-party skills together with the selected browser-game helper skills as a self-contained Codex plugin.
+This bundle packages the Wild Bunch first-party skills together with curated support skills from retained `game-studio`, `dotnet-claude-kit`, `ecc`, and `claude-cortex` custody as a self-contained Codex plugin.
 
 ## Canonical basis
 
-- First-party Wild Bunch source custody: `sources/first_party/skills/`
+- First-party Wild Bunch and control-plane source custody: `sources/first_party/skills/`
 - Third-party browser-game source custody: `sources/third_party/game-studio/upstream/skills/`
+- Third-party .NET source custody: `sources/third_party/dotnet-claude-kit/upstream/skills/`
+- Third-party ECC source custody: `sources/third_party/ecc/upstream/skills/`
+- Third-party Claude-Cortex source custody: `sources/third_party/claude-cortex/upstream/skills/`
 - License posture: mixed first-party and third-party custody
 
 ## Source roots copied
 
-- `skills/wild-bunch-browser-game/SKILL.md`
-- `skills/wild-bunch-domain-modeling/SKILL.md`
-- `skills/wild-bunch-dotnet-architecture/SKILL.md`
-- `skills/wild-bunch-project-doctrine/SKILL.md`
-- `skills/wild-bunch-worker-verification/SKILL.md`
-- `skills/web-game-foundations/SKILL.md`
-- `skills/phaser-2d-game/SKILL.md`
-- `skills/game-ui-frontend/SKILL.md`
-- `skills/game-playtest/SKILL.md`
-- `skills/sprite-pipeline/SKILL.md`
+- `references/bundle-manifest.json`
+- `references/source-map.md`
+- `references/provenance-map.json`
 - `hooks/`
 
 ## Marketplace adaptation
@@ -34,5 +30,5 @@ This bundle packages the hydrated Wild Bunch first-party skills together with th
 
 ## Notes
 
-The active projection inventory now lives in `codex-marketplace/plugins/wild-bunch-project-pack/skills/`.
+The active projection inventory lives in `references/bundle-manifest.json` and `references/source-map.md`.
 Pack-local Codex hooks live under `hooks/` and are advisory only; they do not become part of GPT skill exports.

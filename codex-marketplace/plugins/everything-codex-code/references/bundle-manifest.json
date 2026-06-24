@@ -10,6 +10,17 @@
   ],
   "entries": [
     {
+      "canonical_name": "accessibility",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/accessibility",
+      "local_path": "skills/accessibility",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
       "canonical_name": "agent-architecture-audit",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -97,6 +108,17 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "architecture-decision-records",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records",
+      "local_path": "skills/architecture-decision-records",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
       "canonical_name": "autonomous-agent-harness",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -109,6 +131,28 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/affaan-m/ECC",
       "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "backend-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/backend-patterns",
+      "local_path": "skills/backend-patterns",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "browser-qa",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/browser-qa",
+      "local_path": "skills/browser-qa",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
     },
     {
       "canonical_name": "continuous-agent-loop",
@@ -139,6 +183,17 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "design-system",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/design-system",
+      "local_path": "skills/design-system",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
       "canonical_name": "dmux-workflows",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -153,6 +208,17 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "docker-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/docker-patterns",
+      "local_path": "skills/docker-patterns",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
       "canonical_name": "dynamic-workflow-mode",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -165,6 +231,61 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/affaan-m/ECC",
       "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "e2e-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/e2e-testing",
+      "local_path": "skills/e2e-testing",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "make-interfaces-feel-better",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better",
+      "local_path": "skills/make-interfaces-feel-better",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "react-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-patterns",
+      "local_path": "skills/react-patterns",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
+    },
+    {
+      "canonical_name": "react-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "source_family": "ecc",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-testing",
+      "local_path": "skills/react-testing",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from retained ECC custody into the Wild Bunch pack."
     },
     {
       "canonical_name": "research-ops",
@@ -215,15 +336,12 @@
       "source_family": "ecc",
       "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
       "local_path": "skills/security-review",
-      "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under references/.",
-      "source_path": "sources/third_party/ecc/upstream/skills/security-review/SKILL.md",
-      "source_author": "ECC",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adapted_author": "Harley Bartles",
+      "import_status": "imported",
+      "copy_expectation": "normalised_from_source",
+      "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under canonical references/.",
       "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
-      "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference.",
-      "copy_expectation": "normalised_from_source"
+      "adapted_author": "Harley Bartles",
+      "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference."
     }
   ],
   "notes": [

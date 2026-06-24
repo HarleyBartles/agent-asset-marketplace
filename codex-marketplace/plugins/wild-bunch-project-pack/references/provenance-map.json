@@ -1,11 +1,102 @@
 {
   "source_backed_projections": [
     {
+      "canonical_name": "accessibility",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/accessibility",
+      "local_path": "skills/accessibility"
+    },
+    {
+      "canonical_name": "architecture-decision-records",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records",
+      "local_path": "skills/architecture-decision-records"
+    },
+    {
+      "canonical_name": "backend-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/backend-patterns",
+      "local_path": "skills/backend-patterns"
+    },
+    {
+      "canonical_name": "boring-loop",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/boring-loop",
+      "local_path": "skills/boring-loop"
+    },
+    {
+      "canonical_name": "browser-qa",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/browser-qa",
+      "local_path": "skills/browser-qa"
+    },
+    {
+      "canonical_name": "connector-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/connector-safety",
+      "local_path": "skills/connector-safety"
+    },
+    {
+      "canonical_name": "crew",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/crew",
+      "local_path": "skills/crew"
+    },
+    {
+      "canonical_name": "database-design-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+      "local_path": "skills/database-design-patterns"
+    },
+    {
+      "canonical_name": "design-system",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/design-system",
+      "local_path": "skills/design-system"
+    },
+    {
+      "canonical_name": "docker-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/docker-patterns",
+      "local_path": "skills/docker-patterns"
+    },
+    {
+      "canonical_name": "e2e-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/e2e-testing",
+      "local_path": "skills/e2e-testing"
+    },
+    {
+      "canonical_name": "event-driven-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
+      "local_path": "skills/event-driven-architecture"
+    },
+    {
       "canonical_name": "game-playtest",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
       "local_path": "skills/game-playtest"
+    },
+    {
+      "canonical_name": "game-studio",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-studio",
+      "local_path": "skills/game-studio"
     },
     {
       "canonical_name": "game-ui-frontend",
@@ -15,11 +106,67 @@
       "local_path": "skills/game-ui-frontend"
     },
     {
+      "canonical_name": "github-operations",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/github-operations",
+      "local_path": "skills/github-operations"
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture"
+    },
+    {
+      "canonical_name": "interaction-design",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
+      "local_path": "skills/interaction-design"
+    },
+    {
+      "canonical_name": "make-interfaces-feel-better",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better",
+      "local_path": "skills/make-interfaces-feel-better"
+    },
+    {
       "canonical_name": "phaser-2d-game",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
       "local_path": "skills/phaser-2d-game"
+    },
+    {
+      "canonical_name": "react-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-patterns",
+      "local_path": "skills/react-patterns"
+    },
+    {
+      "canonical_name": "react-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-testing",
+      "local_path": "skills/react-testing"
+    },
+    {
+      "canonical_name": "react-three-fiber-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/react-three-fiber-game",
+      "local_path": "skills/react-three-fiber-game"
+    },
+    {
+      "canonical_name": "repo-worker-base",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "local_path": "skills/repo-worker-base"
     },
     {
       "canonical_name": "sprite-pipeline",
@@ -29,11 +176,39 @@
       "local_path": "skills/sprite-pipeline"
     },
     {
+      "canonical_name": "three-webgl-game",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/three-webgl-game",
+      "local_path": "skills/three-webgl-game"
+    },
+    {
+      "canonical_name": "ux-review",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
+      "local_path": "skills/ux-review"
+    },
+    {
+      "canonical_name": "web-3d-asset-pipeline",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-3d-asset-pipeline",
+      "local_path": "skills/web-3d-asset-pipeline"
+    },
+    {
       "canonical_name": "web-game-foundations",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
       "local_path": "skills/web-game-foundations"
+    },
+    {
+      "canonical_name": "webapp-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
+      "local_path": "skills/webapp-testing"
     },
     {
       "canonical_name": "wild-bunch-browser-game",
@@ -71,5 +246,110 @@
       "local_path": "skills/wild-bunch-worker-verification"
     }
   ],
-  "adapted_projections": []
+  "adapted_projections": [
+    {
+      "canonical_name": "api-design-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
+      "local_path": "skills/api-design-patterns",
+      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns"
+    },
+    {
+      "canonical_name": "clean-architecture",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/clean-architecture",
+      "local_path": "skills/clean-architecture",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/clean-architecture"
+    },
+    {
+      "canonical_name": "ddd",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/ddd",
+      "local_path": "skills/ddd",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/ddd"
+    },
+    {
+      "canonical_name": "ef-core",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/ef-core",
+      "local_path": "skills/ef-core",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/ef-core"
+    },
+    {
+      "canonical_name": "modern-csharp",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/modern-csharp",
+      "local_path": "skills/modern-csharp",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/modern-csharp"
+    },
+    {
+      "canonical_name": "openapi-specification",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
+      "local_path": "skills/openapi-specification",
+      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification"
+    },
+    {
+      "canonical_name": "owasp-top-10",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
+      "local_path": "skills/owasp-top-10",
+      "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10"
+    },
+    {
+      "canonical_name": "secure-coding-practices",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
+      "local_path": "skills/secure-coding-practices",
+      "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices"
+    },
+    {
+      "canonical_name": "security-review",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
+      "local_path": "skills/security-review",
+      "adaptation_overlay_path": "adapters/codex/security-pack/security-review"
+    },
+    {
+      "canonical_name": "security-testing-patterns",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
+      "local_path": "skills/security-testing-patterns",
+      "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns"
+    },
+    {
+      "canonical_name": "testing",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/testing",
+      "local_path": "skills/testing",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/testing"
+    },
+    {
+      "canonical_name": "threat-modeling-techniques",
+      "source_category": "third_party",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
+      "local_path": "skills/threat-modeling-techniques",
+      "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques"
+    },
+    {
+      "canonical_name": "vertical-slice",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice",
+      "local_path": "skills/vertical-slice",
+      "adaptation_overlay_path": "adapters/codex/dotnet-kit/vertical-slice"
+    }
+  ]
 }

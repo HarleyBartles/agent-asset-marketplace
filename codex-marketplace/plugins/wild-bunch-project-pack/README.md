@@ -1,9 +1,9 @@
 # Wild Bunch Project Pack
 
-Marketplace wrapper for the hydrated Wild Bunch skills and the retained browser-game helper skills.
+Marketplace wrapper for the manifest-driven Wild Bunch project pack.
 
-- First-party Wild Bunch skills are hydrated from attached authoritative zip files.
-- Third-party browser-game helper skills are copied verbatim from retained `game-studio` custody.
-- `agent-browser` is intentionally excluded because this repo does not retain an approved marketplace projection for it.
+- The exact install inventory lives in `references/bundle-manifest.json` and `references/source-map.md`.
+- The pack combines first-party Wild Bunch skills with curated support skills from retained `game-studio`, `dotnet-claude-kit`, `ecc`, and `claude-cortex` custody.
+- `agent-browser` remains excluded because this repo does not retain an approved source-copy path for it.
 
 See `SOURCE.md` for provenance and `PROJECTION.md` for the bundle shape.

@@ -22,6 +22,11 @@ bundle-manifest surfaces are proven by `py -3 tools/generate_ecc_pack_manifests.
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself.
 
+Deterministic pack rule: if a skillset pack or projection lane lacks a
+manifest-driven generator/validator path, add one to `tools/` and wire it into
+the standard update/check entrypoints. Do not paper over missing pipeline
+support with a pack-specific one-off script or a hand-edited output surface.
+
 ## Review guidelines
 
 - Flag validators that can pass while indexed paths, plugin manifests, or
