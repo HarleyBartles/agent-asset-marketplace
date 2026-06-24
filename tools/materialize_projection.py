@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -113,6 +114,19 @@ def _materialize_entry(entry: dict[str, Any], plugin_root: Path, *, write: bool)
         tempdir.cleanup()
 
 
+def _prune_obsolete_projection_roots(plugin_root: Path, expected_roots: set[str]) -> None:
+    skills_root = plugin_root / "skills"
+    if not skills_root.is_dir():
+        return
+
+    for child in skills_root.iterdir():
+        if not child.is_dir():
+            continue
+        if child.name in expected_roots:
+            continue
+        shutil.rmtree(child)
+
+
 def reconcile_projection(*, write: bool, plugin_name: str | None = None) -> None:
     inventory = load_plugin_root_inventory()
     for spec in inventory:
@@ -125,13 +139,21 @@ def reconcile_projection(*, write: bool, plugin_name: str | None = None) -> None
         entries = manifest["entries"]
         if not entries:
             raise ValueError(f"{spec['name']} bundle-manifest entries must be non-empty")
+        expected_roots: set[str] = set()
         for entry in entries:
             if not isinstance(entry, dict):
                 raise ValueError(f"{spec['name']} bundle-manifest entry must be an object")
             _validate_entry(entry)
             if entry.get("content_mode") in SKIP_CONTENT_MODES:
                 continue  # Blocked/skipped entries are not projected
+            local_path = entry.get("local_path")
+            if isinstance(local_path, str):
+                parts = Path(local_path).parts
+                if len(parts) >= 2 and parts[0] == "skills":
+                    expected_roots.add(parts[1])
             _materialize_entry(entry, plugin_root, write=write)
+        if write:
+            _prune_obsolete_projection_roots(plugin_root, expected_roots)
 
 
 def main() -> int:

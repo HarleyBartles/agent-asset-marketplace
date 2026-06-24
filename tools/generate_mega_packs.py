@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate mega-pack manifests from the union of plugin entries by custody root."""
+"""Generate mega-pack manifests from source custody and curated projections."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from marketplace_utils import ROOT, load_plugin_root_inventory, load_json
 
 REGISTRY_PATH = ROOT / "codex-marketplace/custody-mega-pack-registry.json"
 SKIP_CONTENT_MODES = {"blocked", "skipped"}
+FIRST_PARTY_SOURCE_ROOT = ROOT / "sources" / "first_party" / "skills"
 
 
 def load_mega_pack_registry() -> list[dict[str, Any]]:
@@ -55,8 +56,132 @@ def collect_entries_by_family(plugin_manifests: list[dict[str, Any]]) -> dict[st
     return by_family
 
 
+def _skill_lane(canonical_name: str) -> str:
+    if canonical_name.startswith("adventures-"):
+        return "Adventures"
+    if canonical_name.startswith("rooms-"):
+        return "Rooms"
+    return "Base and control plane"
+
+
+def _load_first_party_source_dirs() -> list[Path]:
+    if not FIRST_PARTY_SOURCE_ROOT.is_dir():
+        return []
+    return sorted(
+        path
+        for path in FIRST_PARTY_SOURCE_ROOT.iterdir()
+        if path.is_dir() and (path / "SKILL.md").exists()
+    )
+
+
+def _collect_first_party_mega_pack_entries(existing_manifest: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """Build first-party mega-pack entries from active source custody."""
+
+    existing_by_name: dict[str, dict[str, Any]] = {}
+    if existing_manifest is not None:
+        for entry in existing_manifest.get("entries", []):
+            if not isinstance(entry, dict):
+                continue
+            if entry.get("source_category") != "first_party":
+                continue
+            name = entry.get("canonical_name")
+            if isinstance(name, str) and name:
+                existing_by_name[name] = entry
+
+    entries: list[dict[str, Any]] = []
+    for skill_dir in _load_first_party_source_dirs():
+        name = skill_dir.name
+        entry = dict(existing_by_name.get(name, {}))
+        entry.update(
+            {
+                "canonical_name": name,
+                "source_category": "first_party",
+                "content_mode": "verbatim",
+                "source_family": "first_party",
+                "canonical_source_path": f"sources/first_party/skills/{name}",
+                "local_path": f"skills/{name}",
+                "lane": entry.get("lane") or _skill_lane(name),
+                "provenance_note": entry.get("provenance_note")
+                or "First-party skill projected verbatim into the house-skills mega-pack.",
+                "source_path": entry.get("source_path") or f"sources/first_party/skills/{name}/SKILL.md",
+                "source_author": entry.get("source_author") or "Harley Bartles",
+                "source_license": entry.get("source_license") or "MIT",
+                "source_repo": entry.get("source_repo") or "https://github.com/HarleyBartles/agent-asset-marketplace",
+                "copy_expectation": "byte_identical",
+            }
+        )
+        entries.append(entry)
+    return entries
+
+
+def _preserved_house_skills_entries(existing_manifest: dict[str, Any] | None) -> list[dict[str, Any]]:
+    if existing_manifest is None:
+        return []
+
+    preserved: list[dict[str, Any]] = []
+    for entry in existing_manifest.get("entries", []):
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("source_category") == "first_party":
+            continue
+        if entry.get("content_mode") in SKIP_CONTENT_MODES:
+            continue
+        preserved.append(dict(entry))
+    return preserved
+
+
+def generate_first_party_mega_pack_manifest(
+    *,
+    mega_pack_name: str,
+    mega_pack_root: str,
+    existing_manifest: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Generate the first-party mega-pack from active source custody."""
+
+    seen: dict[str, dict[str, Any]] = {}
+    for entry in _collect_first_party_mega_pack_entries(existing_manifest) + _preserved_house_skills_entries(existing_manifest):
+        name = entry.get("canonical_name")
+        if not isinstance(name, str) or not name or name in seen:
+            continue
+        mega_entry = dict(entry)
+        mega_entry["local_path"] = f"skills/{name}"
+        seen[name] = mega_entry
+
+    entries = sorted(seen.values(), key=lambda e: e["canonical_name"])
+    source_families = sorted({entry["source_family"] for entry in entries if entry.get("source_family")})
+
+    manifest = dict(existing_manifest or {})
+    manifest.update(
+        {
+            "bundle_name": mega_pack_name,
+            "bundle_version": "1.0.0",
+            "bundle_type": "projection-lane",
+            "plugin_root": mega_pack_root,
+            "is_mega_pack": True,
+            "mega_pack_for": "first_party",
+            "source_families": source_families,
+            "entries": entries,
+        }
+    )
+    manifest.setdefault(
+        "notes",
+        [
+            "Auto-generated mega-pack manifest for the first-party custody root.",
+            "Curated non-first-party entries are preserved from the prior manifest.",
+            "Regenerate with: py -3 tools/generate_mega_packs.py",
+        ],
+    )
+    manifest.setdefault("plugin_author", "Harley Bartles")
+    manifest.setdefault("plugin_license", "MIT")
+    return manifest
+
+
 def generate_mega_pack_manifest(
-    *, mega_pack_name: str, mega_pack_root: str, source_family: str, entries: list[dict[str, Any]],
+    *,
+    mega_pack_name: str,
+    mega_pack_root: str,
+    source_family: str,
+    entries: list[dict[str, Any]],
     existing_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Generate a mega-pack manifest from collected entries.
@@ -135,13 +260,6 @@ def generate_all_mega_packs(*, write: bool) -> None:
         family = mapping["source_family"]
         mega_name = mapping["mega_pack"]
         mega_root = mapping["mega_pack_root"]
-        entries = by_family.get(family, [])
-        if not entries:
-            # No normalized entries for this family yet (topical plugins
-            # still use legacy shapes).  Skip — do not clobber the existing
-            # manifest with an empty generated one.
-            print(f"SKIP {mega_name}: no normalized entries for family '{family}' yet")
-            continue
         manifest_path = ROOT / mega_root / "references" / "bundle-manifest.json"
         existing_manifest: dict[str, Any] | None = None
         if manifest_path.exists():
@@ -149,13 +267,30 @@ def generate_all_mega_packs(*, write: bool) -> None:
                 existing_manifest = load_json(manifest_path)
             except Exception:
                 existing_manifest = None
-        manifest = generate_mega_pack_manifest(
-            mega_pack_name=mega_name,
-            mega_pack_root=mega_root,
-            source_family=family,
-            entries=entries,
-            existing_manifest=existing_manifest,
-        )
+
+        if family == "first_party":
+            manifest = generate_first_party_mega_pack_manifest(
+                mega_pack_name=mega_name,
+                mega_pack_root=mega_root,
+                existing_manifest=existing_manifest,
+            )
+            entries = manifest.get("entries", [])
+        else:
+            entries = by_family.get(family, [])
+            if not entries:
+                # No normalized entries for this family yet (topical plugins
+                # still use legacy shapes).  Skip - do not clobber the existing
+                # manifest with an empty generated one.
+                print(f"SKIP {mega_name}: no normalized entries for family '{family}' yet")
+                continue
+            manifest = generate_mega_pack_manifest(
+                mega_pack_name=mega_name,
+                mega_pack_root=mega_root,
+                source_family=family,
+                entries=entries,
+                existing_manifest=existing_manifest,
+            )
+
         if write:
             manifest_path.parent.mkdir(parents=True, exist_ok=True)
             with manifest_path.open("w", encoding="utf-8", newline="\n") as f:

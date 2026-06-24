@@ -1,7 +1,7 @@
 # House Skills Plugin Bundle
 
 This plugin is the current first-party House Skills plugin root.
-It exposes the 52 first-party skill roots as real plugin folders under
+It exposes the 51 first-party skill roots as real plugin folders under
 `skills/<skill-name>/`, with each current skill root carrying its own
 references, assets, scripts, and changelog notes.
 It is first-party Harley-owned source prepared to stay clean enough for a future

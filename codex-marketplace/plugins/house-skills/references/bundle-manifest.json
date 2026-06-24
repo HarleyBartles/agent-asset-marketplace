@@ -21,7 +21,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-bootstrap",
@@ -35,7 +36,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-frame-buster",
@@ -49,7 +51,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-github-operations",
@@ -63,7 +66,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-image-qa",
@@ -77,7 +81,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-project-doctrine",
@@ -91,7 +96,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-storyboard-preflight",
@@ -105,7 +111,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-visual-bible-creator",
@@ -119,7 +126,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-visual-bible-interpreter",
@@ -133,7 +141,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "adventures-visual-preproduction",
@@ -147,7 +156,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "ambiguity-buster",
@@ -161,7 +171,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "analogy-buster",
@@ -175,7 +186,23 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "architecture-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
+      "local_path": "skills/architecture-superpowers",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "asset-market",
@@ -189,7 +216,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "base-doctrine",
@@ -203,7 +231,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "bootstrap-router",
@@ -217,7 +246,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "boring-buster",
@@ -231,7 +261,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "boring-loop",
@@ -245,7 +276,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "buster-framework",
@@ -259,7 +291,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "canon-buster",
@@ -273,7 +306,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "cleanup-custody",
@@ -287,7 +321,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "connector-safety",
@@ -301,7 +336,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "crew",
@@ -315,7 +351,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "crew-buster",
@@ -329,7 +366,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "don-logan-boundary",
@@ -343,7 +381,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "game-playtest",
@@ -379,7 +418,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "github-superpowers",
@@ -393,7 +433,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "house-skills",
@@ -407,7 +448,23 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "inspecting-the-environment",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+      "local_path": "skills/inspecting-the-environment",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/inspecting-the-environment/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "invariant-buster",
@@ -421,7 +478,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "linear",
@@ -435,21 +493,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
-    },
-    {
-      "canonical_name": "linear-issue-compactor",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-issue-compactor",
-      "local_path": "skills/linear-issue-compactor",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/linear-issue-compactor/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "linear-superpowers",
@@ -463,7 +508,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "phaser-2d-game",
@@ -484,7 +530,12 @@
       "canonical_source_path": "sources/first_party/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base",
       "lane": "Base",
-      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin."
+      "provenance_note": "Skill projected verbatim into the repo-worker-base plugin.",
+      "source_path": "sources/first_party/skills/repo-worker-base/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-ambiguity-buster",
@@ -498,7 +549,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-analogy-buster",
@@ -512,7 +564,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-bootstrap",
@@ -526,7 +579,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-canon-buster",
@@ -540,7 +594,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-character-investigation",
@@ -554,7 +609,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-image-sidecars",
@@ -568,7 +624,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-project-doctrine",
@@ -582,7 +639,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-sheet-creator",
@@ -596,7 +654,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-source-partitioning",
@@ -610,7 +669,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "rooms-zoom-outs-buster",
@@ -624,7 +684,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "session-buster",
@@ -638,7 +699,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "session-buster-ingress",
@@ -652,7 +714,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "sprite-pipeline",
@@ -677,7 +740,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "tps-reporting",
@@ -691,7 +755,23 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "unslop-plus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/unslop-plus",
+      "local_path": "skills/unslop-plus",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/unslop-plus/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "unslop-superpowers",
@@ -705,7 +785,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "web-game-foundations",
@@ -730,7 +811,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "wild-bunch-domain-modeling",
@@ -744,7 +826,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "wild-bunch-dotnet-architecture",
@@ -758,7 +841,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "wild-bunch-project-doctrine",
@@ -772,7 +856,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "wild-bunch-worker-verification",
@@ -786,7 +871,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "work-mode-router",
@@ -800,7 +886,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     },
     {
       "canonical_name": "worker-dispatch-linear",
@@ -814,7 +901,8 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party"
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical"
     }
   ],
   "notes": [

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-24
+
+- Added the MARK-300 compact worker issue-shape doctrine: issue body as control surface, dense docs for implementation detail and evidence, and one constant Preflight document for non-trivial worker issues.
+- Added `references/compact-issue-shape.md` as the durable reference for compact Linear worker packet shaping.
+- Updated `SKILL.md` and the OpenAI agent prompt to point worker-ready issue shaping at the compact issue-shape reference directly.
+
 ## 2026-06-20
 
 - Landed the MARK-278 Devin campaign issue profile and mandatory worktree isolation gate: added `references/devin-campaign-shape.md` with issue-type classification, Devin campaign issue profile, split conditions, worktree isolation gate language, launch/resume templates, and self-checks.

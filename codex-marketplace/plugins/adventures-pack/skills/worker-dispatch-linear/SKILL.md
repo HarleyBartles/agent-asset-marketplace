@@ -51,6 +51,19 @@ Return to this skill after those gates to write or update the Linear issue only 
 
 Do not require this full stack for parent trackers, product notes, research/discovery issues, or planning-only issues unless Harley asks to make them worker-send-ready.
 
+## Compact Worker Issue Shape
+
+For worker-ready implementation issues, keep the issue body compact and treat it as the control surface:
+
+- goal and repo target stay in the issue body;
+- dense scope, implementation detail, validation, and return evidence move into attached Linear documents;
+- a single Preflight document is required for non-trivial repo/code issues;
+- Preflight contains only investigation seams and understanding questions that prove the worker has the right shape before planning;
+- do not turn Preflight into a readiness state or a second plan;
+- do not keep a separate compactor trigger for normal worker issue shaping.
+
+Use `references/compact-issue-shape.md` for the full worker issue-shape pattern when preparing or reviewing a worker-ready Linear packet.
+
 ## Issue-type classification
 
 Classify the request before shaping so it gets the right size and return contract. Read `references/devin-campaign-shape.md` for the full profile.

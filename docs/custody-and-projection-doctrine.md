@@ -77,9 +77,12 @@ mega-pack manifest generation:
 - **`unslop-plus`** — unslop source family mega-pack.
 
 Mega-pack manifests are **generated**, not hand-edited. Run
-`py -3 tools/generate_mega_packs.py` to regenerate them from the union of
-plugin entries by custody root. The generator preserves curated cross-family
-entries (e.g. first-party skills projected into `superpowers-plus`).
+`py -3 tools/generate_mega_packs.py` to regenerate them. First-party mega-packs
+such as `house-skills` are rebuilt from active first-party source custody under
+`sources/first_party/skills/`, while non-first-party mega-packs are rebuilt from
+the union of selected plugin entries by custody root. The generator preserves
+curated cross-family entries (e.g. first-party skills projected into
+`superpowers-plus`).
 
 Mega-packs are inclusion rules, not exclusion rules. A skill appearing in a
 mega-pack may also appear in other plugins. Validation
@@ -110,7 +113,10 @@ The business-as-usual target for adding or updating a skill is:
    `source_category`, `content_mode`, `source_family`,
    `canonical_source_path` (directory-level), and `local_path`.
 3. **Regenerate mega-packs** — run `py -3 tools/generate_mega_packs.py` so
-   the entry appears in its custody root's mega-pack automatically.
+   the entry appears in its custody root's mega-pack automatically. For
+   first-party skill adds/removals, the first-party mega-pack is rebuilt from
+   `sources/first_party/skills/`; curated non-first-party mega-packs still
+   follow their selected-entry unions.
 4. **Add GPT decision** — record the GPT export lane decision (see below).
 5. **Run one tool** — regenerate the projection with the designated tooling
    (e.g. `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`).

@@ -5,7 +5,7 @@ Small helper scripts belong here.
 Current marketplace flow:
 
 - `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` from the local plugin bundle and source ledger, and `--check` compares both files without writing.
-- `update_skill_artifacts.py` is the worker-facing entrypoint for targeted skill updates, pack updates, and explicit full regeneration.
+- `update_skill_artifacts.py` is the worker-facing entrypoint for targeted skill updates, pack updates, and explicit full regeneration. It refreshes the mega-pack manifests before projection and zips so first-party removals and additions prune cleanly.
 - `package_skill_zips.py` remains the thin lower-level wrapper over `skill_zip_artifacts.py`.
 - `validate_skill_zips.py` checks the canonical skill.zip surface and fails on stale, missing, malformed, or unregistered artifacts.
 - `validate_generated_drift.py` rejects generated zips or registry entries that changed without the matching source, overlay, or packaging-tooling change, unless full regeneration was explicitly declared.
