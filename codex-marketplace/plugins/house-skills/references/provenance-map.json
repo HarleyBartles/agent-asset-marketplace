@@ -85,6 +85,13 @@
       "local_path": "skills/analogy-buster"
     },
     {
+      "canonical_name": "architecture-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
+      "local_path": "skills/architecture-superpowers"
+    },
+    {
       "canonical_name": "asset-market",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -204,6 +211,13 @@
       "local_path": "skills/house-skills"
     },
     {
+      "canonical_name": "inspecting-the-environment",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+      "local_path": "skills/inspecting-the-environment"
+    },
+    {
       "canonical_name": "invariant-buster",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -216,13 +230,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/linear",
       "local_path": "skills/linear"
-    },
-    {
-      "canonical_name": "linear-issue-compactor",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-issue-compactor",
-      "local_path": "skills/linear-issue-compactor"
     },
     {
       "canonical_name": "linear-superpowers",
@@ -349,6 +356,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/tps-reporting",
       "local_path": "skills/tps-reporting"
+    },
+    {
+      "canonical_name": "unslop-plus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-plus",
+      "local_path": "skills/unslop-plus"
     },
     {
       "canonical_name": "unslop-superpowers",

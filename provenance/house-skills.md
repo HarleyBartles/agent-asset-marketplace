@@ -86,9 +86,9 @@
 
 - Source path: `sources/first_party/skills/linear-issue-compactor`
 - Public identity: `linear-issue-compactor`
-- Provenance/history: MARK-135 Linear issue compactor skill
+- Provenance/history only: MARK-135 Linear issue compactor skill
 - Scope: Linear issue compaction and connector-readable issue bodies
-- Notes: Repo-backed first-party Linear compaction skill for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity.
+- Notes: Historical/provenance-only record for the retired Linear compaction skill. The active compact issue-shape doctrine now lives in `worker-dispatch-linear`, and any remaining mention here exists only so the retired source path and decision can be audited.
 
 ## boring-loop
 
@@ -106,7 +106,7 @@
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `/linear-issue-compactor`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
+- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it now owns compact issue shaping directly while composing `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `worker-dispatch-linear`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
 
 ## github-operations
 

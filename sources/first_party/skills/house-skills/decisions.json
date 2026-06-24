@@ -462,16 +462,6 @@
     "import_state": "imported"
   },
   {
-    "issue": "MARK-135",
-    "source_id": "linear-issue-compactor-v1",
-    "source_path": "sources/first_party/skills/linear-issue-compactor",
-    "public_name": "linear-issue-compactor",
-    "provenance_name": "MARK-135 Linear issue compactor skill",
-    "scope": "Linear issue compaction and connector-readable issue bodies",
-    "import_state": "imported",
-    "notes": "Imported as the Linear compaction surface for splitting oversized issue bodies into attached documents plus a compact TOC body while preserving issue fidelity."
-  },
-  {
     "issue": "MARK-139",
     "source_id": "linear-superpowers-v1",
     "source_path": "sources/first_party/skills/linear-superpowers",
@@ -479,7 +469,7 @@
     "provenance_name": "MARK-139 Linear Superpowers compositional skill",
     "scope": "Linear issue and track shaping with smallest-applicable workflow selection",
     "import_state": "imported",
-    "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, @linear-issue-compactor, and @unslop-superpowers without introducing a second source of truth."
+    "notes": "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes @using-superpowers, @writing-plans, @executing-plans, @connector-safety, and @unslop-superpowers without introducing a second source of truth. It now owns compact issue shaping directly and routes worker-ready packets through worker-dispatch-linear."
   },
   {
     "issue": "MARK-143",
