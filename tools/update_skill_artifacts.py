@@ -8,6 +8,9 @@ source plus any repo-owned GPT overlay.
 from __future__ import annotations
 
 import argparse
+import subprocess
+import sys
+from pathlib import Path
 
 from generate_mega_packs import generate_all_mega_packs, load_mega_pack_registry
 from materialize_projection import reconcile_projection
@@ -28,6 +31,32 @@ def _pack_requires_mega_pack_regeneration(pack: str | None) -> bool:
         return True
     registry = load_mega_pack_registry()
     return any(mapping.get("mega_pack") == pack for mapping in registry)
+
+
+def _run_tool(script_name: str, *args: str) -> None:
+    """Run a sibling generator script with the current Python interpreter."""
+    script_path = Path(__file__).resolve().with_name(script_name)
+    subprocess.run([sys.executable, str(script_path), *args], check=True)
+
+
+def _run_full_regeneration_checks() -> None:
+    """Run the repo-wide generated-surface checks for a full refresh."""
+    _run_tool("generate_marketplace.py", "--check")
+    _run_tool("generate_repo_index.py", "--check")
+    generate_all_mega_packs(write=False)
+    reconcile_projection(write=False)
+    _run_tool("generate_provenance_maps.py", "--check")
+    _run_tool("generate_source_maps.py", "--check")
+
+
+def _run_full_regeneration_writes(selected_pack: str | None) -> None:
+    """Run every deterministic writer that participates in a full regen."""
+    _run_tool("generate_marketplace.py")
+    _run_tool("generate_repo_index.py")
+    generate_all_mega_packs(write=True)
+    reconcile_projection(write=True, plugin_name=selected_pack)
+    _run_tool("generate_provenance_maps.py")
+    _run_tool("generate_source_maps.py")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -60,17 +89,18 @@ def main() -> int:
     selected_pack = _selected_pack(args)
 
     if args.check:
-        generate_all_mega_packs(write=False)
-        reconcile_projection(write=False)
+        _run_full_regeneration_checks()
         registry = validate_skill_zip_registry()
         validate_generated_drift(base=args.base, full_regeneration=args.full_regeneration)
         print_registry_receipt(registry)
         return 0
 
-    if _pack_requires_mega_pack_regeneration(selected_pack):
-        generate_all_mega_packs(write=True)
-
-    reconcile_projection(write=True, plugin_name=selected_pack)
+    if args.all or args.full_regeneration:
+        _run_full_regeneration_writes(selected_pack)
+    else:
+        if _pack_requires_mega_pack_regeneration(selected_pack):
+            generate_all_mega_packs(write=True)
+        reconcile_projection(write=True, plugin_name=selected_pack)
 
     if args.skill:
         registry = synchronize_skill_zips(skill=args.skill, write=True)

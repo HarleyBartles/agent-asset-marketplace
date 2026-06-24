@@ -1,6 +1,13 @@
 {
   "source_backed_projections": [
     {
+      "canonical_name": "accessibility",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/accessibility",
+      "local_path": "skills/accessibility"
+    },
+    {
       "canonical_name": "agent-architecture-audit",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -36,11 +43,32 @@
       "local_path": "skills/ai-first-engineering"
     },
     {
+      "canonical_name": "architecture-decision-records",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/architecture-decision-records",
+      "local_path": "skills/architecture-decision-records"
+    },
+    {
       "canonical_name": "autonomous-agent-harness",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness",
       "local_path": "skills/autonomous-agent-harness"
+    },
+    {
+      "canonical_name": "backend-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/backend-patterns",
+      "local_path": "skills/backend-patterns"
+    },
+    {
+      "canonical_name": "browser-qa",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/browser-qa",
+      "local_path": "skills/browser-qa"
     },
     {
       "canonical_name": "continuous-agent-loop",
@@ -57,6 +85,13 @@
       "local_path": "skills/deployment-patterns"
     },
     {
+      "canonical_name": "design-system",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/design-system",
+      "local_path": "skills/design-system"
+    },
+    {
       "canonical_name": "dmux-workflows",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -64,11 +99,53 @@
       "local_path": "skills/dmux-workflows"
     },
     {
+      "canonical_name": "docker-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/docker-patterns",
+      "local_path": "skills/docker-patterns"
+    },
+    {
       "canonical_name": "dynamic-workflow-mode",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode",
       "local_path": "skills/dynamic-workflow-mode"
+    },
+    {
+      "canonical_name": "e2e-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/e2e-testing",
+      "local_path": "skills/e2e-testing"
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture"
+    },
+    {
+      "canonical_name": "make-interfaces-feel-better",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/make-interfaces-feel-better",
+      "local_path": "skills/make-interfaces-feel-better"
+    },
+    {
+      "canonical_name": "react-patterns",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-patterns",
+      "local_path": "skills/react-patterns"
+    },
+    {
+      "canonical_name": "react-testing",
+      "source_category": "third_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/third_party/ecc/upstream/skills/react-testing",
+      "local_path": "skills/react-testing"
     },
     {
       "canonical_name": "research-ops",
