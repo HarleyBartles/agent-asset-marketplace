@@ -1,20 +1,17 @@
 # Projection
 
-This root is the Codex-facing marketplace projection of repo worker base skills
-plus the complementary ECC search-first skill.
+This root is the Codex-facing marketplace projection of repo worker base skills.
 
 ## Layer Model
 
 This repository uses two distinct layers for the repo worker base bundle:
 
 - Source custody keeps the first-party core skills in
-  `sources/first_party/skills/` and the complementary ECC search-first source
-  in `sources/third_party/ecc/upstream/skills/`.
+  `sources/first_party/skills/`.
 - Projection layer holds the source-controlled marketplace copy.
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The projected skills are materialized from `sources/first_party/skills/...`
-  plus `sources/third_party/ecc/upstream/skills/search-first`.
+- The projected skills are materialized from `sources/first_party/skills/...`.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
@@ -27,9 +24,9 @@ The split is deliberate:
 ## Projection contract
 
 - `repo-worker-base` is the first-party plugin projection with core repo worker
-  skills and the complementary ECC search-first workflow.
-- The active plugin contains `boring-loop`, `connector-safety`,
-  `github-operations`, and `search-first`.
+  skills and its compositional entrypoint.
+- The active plugin contains `boring-loop`, `connector-safety`, and
+  `github-operations` alongside `repo-worker-base`.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface

@@ -1,11 +1,19 @@
 ---
 name: repo-worker-base
-description: Base repo hygiene for Codex workers in Harley's workspace. Use when a Codex worker is working in any repository in Harley's workspace, especially when starting repo work, editing files, creating or updating a branch, preparing a PR, reporting validation, handling mergeability, or returning work evidence.
+description: Thin repo hygiene entrypoint for Codex workers in Harley's workspace. Use when a Codex worker is working in any repository in Harley's workspace and needs fresh-main discipline, worktree isolation, branch and PR hygiene, validation evidence, or publication proof.
 ---
 
 # Repo Worker Base
 
-This skill applies to repo-backed worker tasks in Harley's workspace.
+This skill is the compositional entrypoint for repo-backed worker tasks in Harley's workspace.
+
+Use it to establish the boring repo baseline, then route out to the supporting skills that own the narrower concerns:
+
+- `boring-loop` for queue discipline and the next smallest safe move;
+- `connector-safety` for blocked, sensitive, or permission-changing connector writes;
+- `github-operations` for PR, branch, commit, status, merge, publication, and main-state proof.
+
+Keep this skill thin. Do not absorb broad process doctrine that belongs in the supporting skills.
 
 ## Fresh-main invariant
 
