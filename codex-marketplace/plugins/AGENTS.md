@@ -20,6 +20,12 @@ controls whether a skill is exported direct, via overlay, or excluded.
 Everything else in this tree is support custody or historical source material,
 not part of the active marketplace inventory for the normalized root pass.
 
+Deterministic pack rule: plugin-root membership must come from the central
+manifest and the checked-in generator/validator pipeline. Do not hand-edit
+projected skill trees, source maps, provenance maps, or bundle-manifest
+membership lists, and do not create plugin-specific one-off scripts when the
+existing deterministic path can be extended instead.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

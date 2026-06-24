@@ -24,6 +24,12 @@ current, and `py -3 tools/generate_repo_index.py --check` to prove
 `repo-index/repo-index.json` is current. `validate_repo_index.py` remains
 alignment validation, not the freshness proof.
 
+Deterministic pack rule: when a plugin root is driven by a manifest, regenerate
+the projection and export surfaces from the checked-in tooling. Do not
+hand-edit bundle manifests, projected skill trees, source maps, provenance
+maps, or zip artifacts, and do not introduce plugin-specific one-off scripts
+when the existing pipeline can be extended or reused.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

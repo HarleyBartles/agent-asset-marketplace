@@ -30,6 +30,13 @@ from marketplace source custody plus any repo-owned GPT overlay declared under
 `adapters/gpt/`, with direct exports for GPT-safe skills and explicit
 exclusions for skills that should not be exported raw.
 
+Deterministic pack rule: if a repo-installed skillset pack or plugin projection
+needs a manifest-driven pipeline, extend or reuse the checked-in generators and
+validators under `tools/` and wire them into the standard flow. Do not
+hand-edit projected skill trees, source maps, provenance maps, registry
+surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
+when a generic deterministic path is required.
+
 Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
 canonical install surface. Treat `generated/skill-zips/` as a derived GPT
 export corpus, not canonical source. GPT overlays can make a generated export

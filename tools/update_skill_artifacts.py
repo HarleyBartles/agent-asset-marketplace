@@ -9,10 +9,25 @@ from __future__ import annotations
 
 import argparse
 
-from generate_mega_packs import generate_all_mega_packs
+from generate_mega_packs import generate_all_mega_packs, load_mega_pack_registry
 from materialize_projection import reconcile_projection
 from skill_zip_artifacts import print_registry_receipt, synchronize_skill_zips, validate_skill_zip_registry
 from validate_generated_drift import validate_generated_drift
+
+
+def _selected_pack(args: argparse.Namespace) -> str | None:
+    if args.pack:
+        return args.pack
+    if args.skill:
+        return args.skill.split("/", 1)[0]
+    return None
+
+
+def _pack_requires_mega_pack_regeneration(pack: str | None) -> bool:
+    if pack is None:
+        return True
+    registry = load_mega_pack_registry()
+    return any(mapping.get("mega_pack") == pack for mapping in registry)
 
 
 def _parse_args() -> argparse.Namespace:
@@ -42,6 +57,7 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = _parse_args()
+    selected_pack = _selected_pack(args)
 
     if args.check:
         generate_all_mega_packs(write=False)
@@ -51,8 +67,11 @@ def main() -> int:
         print_registry_receipt(registry)
         return 0
 
-    generate_all_mega_packs(write=True)
-    reconcile_projection(write=True)
+    if _pack_requires_mega_pack_regeneration(selected_pack):
+        generate_all_mega_packs(write=True)
+
+    reconcile_projection(write=True, plugin_name=selected_pack)
+
     if args.skill:
         registry = synchronize_skill_zips(skill=args.skill, write=True)
         validate_generated_drift(base=args.base, full_regeneration=False)

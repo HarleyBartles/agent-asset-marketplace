@@ -1,14 +1,14 @@
 {
   "name": "wild-bunch-project-pack",
   "version": "1.0.0",
-  "description": "Wild Bunch project workflow bundle with hydrated first-party skills and retained browser-game helpers.",
+  "description": "Wild Bunch project workflow bundle generated from the central pack manifest.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "mixed",
-  "rights": "Contains first-party Harley-owned Wild Bunch skills and retained third-party game-studio skills; see SOURCE.md and references/provenance-map.json for the component-level provenance.",
+  "rights": "Contains first-party Harley-owned Wild Bunch and control-plane skills plus retained third-party game-studio, dotnet-claude-kit, ECC, and Claude-Cortex skills; see SOURCE.md and references/provenance-map.json for the component-level provenance.",
   "keywords": [
     "codex",
     "marketplace",
@@ -20,8 +20,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Wild Bunch Project Pack",
-    "shortDescription": "Wild Bunch project and browser-game workflow skills",
-    "longDescription": "A repo-local Codex plugin bundle that projects the five hydrated first-party Wild Bunch skills together with the approved retained browser-game helper skills in one self-contained copy bundle.",
+    "shortDescription": "Manifest-driven Wild Bunch project and support workflow skills",
+    "longDescription": "A repo-local Codex plugin bundle generated from the Wild Bunch bundle-manifest. The exact install surface is projected from the manifest and source map; see SOURCE.md and references/source-map.md.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -30,8 +30,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Wild Bunch project pack bundle and source map.",
-      "Use the bundle to install the hydrated Wild Bunch projection.",
-      "Compare bundle versioning against the current Wild Bunch and game-studio sources."
+      "Use the bundle to install the manifest-driven Wild Bunch projection.",
+      "Compare bundle versioning against the current source custody roots."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",
