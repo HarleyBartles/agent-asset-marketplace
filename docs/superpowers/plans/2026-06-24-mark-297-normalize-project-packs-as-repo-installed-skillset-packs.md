@@ -4,7 +4,7 @@
 
 **Goal:** Normalize the Wild Bunch project pack so Codex receives a manifest-driven, installable plugin projection from a single central pack definition, with any repo-local `.agents/skills` projection generated from the same source rather than treated as canonical.
 
-**Architecture:** The repository already has a deterministic projection pipeline built around `references/bundle-manifest.json`, `tools/materialize_projection.py`, `tools/update_skill_artifacts.py`, `tools/generate_marketplace.py`, `tools/generate_repo_index.py`, `tools/generate_provenance_maps.py`, and `tools/generate_source_maps.py`. MARK-297 should reuse that pipeline if the new repo-skillset manifest pattern from MARK-298 lands cleanly; if it does not, the work must add deterministic generator/validator tooling and wire it into the standard pipeline rather than introducing a one-off Wild Bunch script. The Wild Bunch pack must remain plugin-first, generated from a central manifest, and must not depend on hand-rolled file copies or hard-coded membership lists.
+**Architecture:** The repository already has a deterministic projection pipeline built around `references/bundle-manifest.json`, `tools/materialize_projection.py`, `tools/update_skill_artifacts.py`, `tools/generate_marketplace.py`, `tools/generate_repo_index.py`, `tools/generate_provenance_maps.py`, and `tools/generate_source_maps.py`. MARK-297 should reuse that pipeline if the new repo-skillset manifest pattern from MARK-298 lands cleanly; if it does not, the work must add deterministic generator/validator tooling and wire it into the standard pipeline rather than introducing a one-off Wild Bunch script. The Wild Bunch pack must remain plugin-first, generated from a central manifest, and must not depend on hand-rolled file copies or hard-coded membership lists. `MARK-298` is a dependency gate only; MARK-297 is the Wild Bunch normalization issue and must not drift into repo-skillset manifest implementation for other packs.
 
 **Tech Stack:** Markdown plans, Linear issue and document contracts, Codex marketplace bundle manifests, Python `py -3` generator/validator tooling, PowerShell, Git, GitHub PR publication.
 
@@ -20,6 +20,7 @@
 - The repo currently has no checked-in `.agents/skills` tree at the root; if a repo-local projection is introduced, it must be generated from the same manifest/source and not become source truth.
 - Preserve the plugin-first posture already documented in `docs/custody-and-projection-doctrine.md` and `codex-marketplace/README.md`.
 - Update the repo guidance in the relevant `AGENTS.md` files so future workers do not reintroduce hand-edited pack files, hard-coded membership, or one-off scripts when the deterministic tooling pipeline already exists or needs to be created.
+- This implementation is Wild Bunch-only. Adventures and Rooms are deferred unless source inspection proves they must be touched to support the Wild Bunch pack contract.
 
 ## Worktree Preflight Evidence
 
@@ -43,6 +44,77 @@
 - Current provenance map: `codex-marketplace/plugins/wild-bunch-project-pack/references/provenance-map.json`
 - Current projected skills: `wild-bunch-project-doctrine`, `wild-bunch-domain-modeling`, `wild-bunch-dotnet-architecture`, `wild-bunch-browser-game`, `wild-bunch-worker-verification`, `web-game-foundations`, `phaser-2d-game`, `game-ui-frontend`, `game-playtest`, `sprite-pipeline`
 
+### Controlling membership contract
+
+The attached document `Implementation detail — Wild Bunch project pack plugin normalization` is the controlling keep/remove contract for this issue. If any repo file and that document disagree, the implementation must bring the repo into line with the attached contract or stop and report the discrepancy.
+
+#### Keep
+
+- `wild-bunch-project-doctrine`
+- `wild-bunch-domain-modeling`
+- `wild-bunch-dotnet-architecture`
+- `wild-bunch-browser-game`
+- `wild-bunch-worker-verification`
+- `web-game-foundations`
+- `phaser-2d-game`
+- `game-ui-frontend`
+- `game-playtest`
+- `sprite-pipeline`
+- `game-studio`
+- `react-three-fiber-game`
+- `three-webgl-game`
+- `web-3d-asset-pipeline`
+- `repo-worker-base`
+- `boring-loop`
+- `connector-safety`
+- `github-operations`
+- `crew`
+- `clean-architecture`
+- `ddd`
+- `ef-core`
+- `modern-csharp`
+- `testing`
+- `vertical-slice`
+- `accessibility`
+- `browser-qa`
+- `design-system`
+- `e2e-testing`
+- `make-interfaces-feel-better`
+- `react-patterns`
+- `react-testing`
+- `ux-review`
+- `interaction-design`
+- `webapp-testing`
+- `api-design-patterns`
+- `openapi-specification`
+- `architecture-decision-records`
+- `backend-patterns`
+- `database-design-patterns`
+- `event-driven-architecture`
+- `hexagonal-architecture`
+- `docker-patterns`
+- `secure-coding-practices`
+- `owasp-top-10`
+- `security-review`
+- `security-testing-patterns`
+- `threat-modeling-techniques`
+
+#### Remove
+
+- `github-superpowers`
+- `linear-superpowers`
+- `unslop-superpowers`
+- `session-buster`
+- `session-buster-ingress`
+- `linear-issue-compactor`
+- `worker-dispatch-linear`
+- `buster-framework`
+- `ambiguity-buster`
+- `invariant-buster`
+- `crew-buster`
+- `security-scan`
+- `linear`
+
 ### Relevant repo-resident skills discovered
 
 - `sources/first_party/skills/repo-worker-base/SKILL.md`
@@ -53,7 +125,7 @@
 
 ### Dependency state
 
-- `MARK-298` is still the repo-skillset manifest-pattern dependency gate.
+- `MARK-298` is still the repo-skillset manifest-pattern dependency gate only.
 - The repo already has manifest-driven marketplace projection tooling, but it does not yet prove the new repo-skillset manifest pattern that MARK-297 wants for the Wild Bunch pack.
 - Because `.agents/skills` is absent in this checkout, the implementation must decide whether the first repo-local projection should create it or leave it intentionally absent and documented until MARK-298 lands.
 
@@ -144,12 +216,10 @@ Expected result:
 
 - [ ] **Step 1: Encode the keep/remove policy in the manifest, not in generated files**
 
-Update the Wild Bunch manifest so the final membership matches the issue brief:
+Update the Wild Bunch manifest so the final membership matches the controlling membership contract above:
 
-- keep the Wild Bunch doctrine skills;
-- keep the browser-game/game-studio helpers needed for the pack;
-- keep the retained control-plane skills named in the brief;
-- remove the skills that the brief says should not stay in the pack.
+- keep the exact skills listed under `Keep`;
+- remove the exact skills listed under `Remove`.
 
 Expected result:
 
@@ -268,7 +338,7 @@ Expected result:
 - repo guidance stays aligned with the implementation plan
 - future pack work is steered back into the deterministic pipeline instead of bespoke edits
 
-### Task 6: Validate, search, and publish the plan PR
+### Task 6: Validate, search, and keep the draft PR published
 
 **Files:**
 - None beyond the generated surfaces and the plan file
@@ -293,11 +363,9 @@ Expected result:
 - generated surfaces are current
 - there is no hidden manual step left in the pack flow
 
-- [ ] **Step 2: Publish the plan-only PR against `main`**
+- [ ] **Step 2: Keep the draft PR published against `main` and wait for approval**
 
-Commit the plan file on the dedicated MARK-297 branch, push it, and open a PR targeting `main`.
-
-Do not start implementation until the plan is approved.
+The plan-only PR is already open and must remain the publication surface for this preflight stage. Keep it on `main`, do not begin source changes, and wait for approval before implementation starts.
 
 Expected result:
 
