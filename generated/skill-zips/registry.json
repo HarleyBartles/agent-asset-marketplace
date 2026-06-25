@@ -2159,13 +2159,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 91298,
-      "source_sha256": "dd5309390ed8da7c2668816ff14097b79977a36470811383ac3e5ee8f5116c91",
+      "source_bytes": 93271,
+      "source_sha256": "e89ce222cb30123c47e0bf6969c25460f68195f3052a62925b6fe9feeaedcf92",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16457,
-      "zip_sha256": "0d2840063489cc3ae4fcef01a61a48ce40b7d2a0f53de7a183ac20753c704a59"
+      "zip_size_bytes": 16945,
+      "zip_sha256": "d5cd09b2f847a838ca741d8ab9bf32f1c4ca8d0b9b97335f879ad0d2b7f76cd9"
     },
     {
       "pack": "house-skills",

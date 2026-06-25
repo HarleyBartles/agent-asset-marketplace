@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,16 @@ from tree_canonicalization import compare_trees_canonicalized
 VALID_SOURCE_CATEGORIES = {"first_party", "third_party"}
 VALID_CONTENT_MODES = {"verbatim", "normalised", "adapted"}
 SKIP_CONTENT_MODES = {"blocked", "skipped"}
+
+
+def _as_windows_long_path(path: Path) -> str:
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text
 
 
 def _find_bundle_manifest(plugin_root: Path) -> Path | None:
@@ -124,7 +135,7 @@ def _prune_obsolete_projection_roots(plugin_root: Path, expected_roots: set[str]
             continue
         if child.name in expected_roots:
             continue
-        shutil.rmtree(child)
+        shutil.rmtree(_as_windows_long_path(child))
 
 
 def _find_obsolete_projection_roots(plugin_root: Path, expected_roots: set[str]) -> list[str]:
