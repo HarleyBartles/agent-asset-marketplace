@@ -688,6 +688,21 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "safe-large-file-writing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/safe-large-file-writing",
+      "local_path": "skills/safe-large-file-writing",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/safe-large-file-writing/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "session-buster",
       "source_category": "first_party",
       "content_mode": "verbatim",

@@ -323,6 +323,13 @@
       "local_path": "skills/rooms-zoom-outs-buster"
     },
     {
+      "canonical_name": "safe-large-file-writing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/safe-large-file-writing",
+      "local_path": "skills/safe-large-file-writing"
+    },
+    {
       "canonical_name": "session-buster",
       "source_category": "first_party",
       "content_mode": "verbatim",

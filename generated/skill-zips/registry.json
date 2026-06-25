@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 251,
+  "artifact_count": 252,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -2422,6 +2422,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 8378,
       "zip_sha256": "acf0750133d95a0a4921d9caf44a4fc23001e10aab61f650c03d55637f4f1184"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "safe-large-file-writing",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/safe-large-file-writing",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/safe-large-file-writing/skill.zip",
+      "source_file_count": 2,
+      "source_bytes": 3691,
+      "source_sha256": "597f79ab5d0a0852019917a7355decf66cf57566b24a5bb3eb3eaf1146167723",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 2029,
+      "zip_sha256": "a42728e581bc69ccc66f94cdd053c8015b35f79e9e0c6b1b031ccc91c9f04ee6"
     },
     {
       "pack": "house-skills",
