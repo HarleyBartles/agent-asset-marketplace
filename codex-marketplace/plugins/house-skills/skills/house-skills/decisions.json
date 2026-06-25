@@ -492,6 +492,16 @@
     "notes": "First-party Harley-owned source custody for a compositional anti-slop guard skill. Composes @using-superpowers and @unslop, turns profile findings into non-goals and evidence requirements, and preserves the narrow direct-to-main escape hatch for profile-only updates."
   },
   {
+    "issue": "MARK-302",
+    "source_id": "safe-large-file-writing-v1",
+    "source_path": "sources/first_party/skills/safe-large-file-writing",
+    "public_name": "safe-large-file-writing",
+    "provenance_name": "MARK-302 safe large file writing first-party skill",
+    "scope": "large text write safety and atomic replacement",
+    "import_state": "imported",
+    "notes": "First-party Harley-owned source custody for safe large text writes. The canonical source is a directory-level skill spec with SKILL.md and agents/openai.yaml, and it teaches branch-before-write large-file handling for Devin/Desktop and other editors."
+  },
+  {
     "issue": "MARK-142",
     "source_id": "github-operations-v1",
     "source_path": "sources/first_party/skills/github-operations",

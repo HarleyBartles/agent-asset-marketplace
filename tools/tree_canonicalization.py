@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE", "SOURCE.md", "PROJECTION.md"}
@@ -34,6 +35,16 @@ TEXT_SUFFIXES = {
 }
 
 
+def _as_windows_long_path(path: Path) -> str:
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text
+
+
 def _is_text_file(path: Path, raw: bytes) -> bool:
     return path.name in TEXT_FILENAMES or path.suffix.lower() in TEXT_SUFFIXES or raw.startswith(b"#!")
 
@@ -48,11 +59,16 @@ def canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
 def canonicalize_tree(root: Path) -> dict[str, bytes]:
     """Read all files under root and return a dict of rel-path -> canonicalized bytes."""
     result: dict[str, bytes] = {}
-    for path in sorted(root.rglob("*")):
-        if not path.is_file():
-            continue
-        rel = path.relative_to(root).as_posix()
-        result[rel] = canonicalize_tree_bytes(path, path.read_bytes())
+    root = root.resolve()
+    root_text = _as_windows_long_path(root)
+    for current, dirnames, filenames in os.walk(root_text):
+        dirnames.sort()
+        filenames.sort()
+        current_path = Path(current)
+        for filename in filenames:
+            path = current_path / filename
+            rel = str(path)[len(root_text) + 1 :].replace("\\", "/")
+            result[rel] = canonicalize_tree_bytes(path, Path(_as_windows_long_path(path)).read_bytes())
     return result
 
 

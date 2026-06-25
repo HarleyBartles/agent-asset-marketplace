@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import shutil
 import tempfile
 from pathlib import Path
@@ -18,6 +19,16 @@ OPENAI_AGENT_FILENAME = Path("agents/openai.yaml")
 ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata"}
 ALLOWED_LINE_EDIT_OPS = {"insert_before", "insert_after", "replace", "delete"}
 UTF8_BOM = b"\xef\xbb\xbf"
+
+
+def _as_windows_long_path(path: Path) -> str:
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text
 
 
 def _ensure_unique_keys(node: MappingNode | SequenceNode, *, path: Path) -> None:
@@ -412,13 +423,13 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
         raise NotADirectoryError(source_root)
 
     if destination_root.exists():
-        shutil.rmtree(destination_root)
+        shutil.rmtree(_as_windows_long_path(destination_root))
     destination_root.parent.mkdir(parents=True, exist_ok=True)
 
     tempdir = tempfile.TemporaryDirectory()
     staged_root = Path(tempdir.name) / source_root.name
     try:
-        shutil.copytree(source_root, staged_root)
+        shutil.copytree(_as_windows_long_path(source_root), staged_root)
         if overlay_root is not None:
             if not overlay_root.exists():
                 raise FileNotFoundError(overlay_root)
@@ -433,7 +444,7 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
                 _apply_deletes(staged_root, overlay_root, spec["deletes"])
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
-        shutil.copytree(staged_root, destination_root)
+        shutil.copytree(staged_root, _as_windows_long_path(destination_root))
     finally:
         tempdir.cleanup()
 
@@ -446,7 +457,7 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
     tempdir: tempfile.TemporaryDirectory[str] = tempfile.TemporaryDirectory()
     staged_root = Path(tempdir.name) / source_root.name
     try:
-        shutil.copytree(source_root, staged_root)
+        shutil.copytree(_as_windows_long_path(source_root), staged_root)
         if overlay_root is not None:
             if not overlay_root.exists():
                 raise FileNotFoundError(overlay_root)

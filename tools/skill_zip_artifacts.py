@@ -80,6 +80,33 @@ PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {
 }
 
 
+def _as_windows_long_path(path: Path) -> str:
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text
+
+
+def _relative_path(path: Path, root: Path) -> str:
+    path_text = _as_windows_long_path(path)
+    root_text = _as_windows_long_path(root)
+    if os.name == "nt":
+        if not path_text.startswith("\\\\?\\"):
+            path_text = "\\\\?\\" + path_text
+        if not root_text.startswith("\\\\?\\"):
+            root_text = "\\\\?\\" + root_text
+        prefix = root_text + "\\"
+        if path_text.startswith(prefix):
+            return path_text[len(prefix) :].replace("\\", "/")
+    try:
+        return path.resolve(strict=False).relative_to(root.resolve(strict=False)).as_posix()
+    except ValueError:
+        return str(path).replace("\\", "/")
+
+
 def _projected_skill_requires_metadata(skill_root: Path) -> bool:
     return skill_root.name in PROJECTED_SKILL_METADATA_REQUIRED_NAMES
 
@@ -89,7 +116,7 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     if not skill_md.is_file():
         raise FileNotFoundError(skill_md)
 
-    raw = skill_md.read_bytes()
+    raw = Path(_as_windows_long_path(skill_md)).read_bytes()
     if raw.startswith(b"\xef\xbb\xbf"):
         raise ValueError(f"{skill_md} begins with a UTF-8 BOM")
 
@@ -209,13 +236,13 @@ class SkillTarget:
 
     @property
     def source_path(self) -> str:
-        return self.skill_root.relative_to(ROOT).as_posix()
+        return _relative_path(self.skill_root, ROOT)
 
     @property
     def overlay_path(self) -> str | None:
         if self.overlay_root is None:
             return None
-        return self.overlay_root.relative_to(ROOT).as_posix()
+        return _relative_path(self.overlay_root, ROOT)
 
     @property
     def zip_path(self) -> Path:
@@ -246,7 +273,7 @@ def _sha256_bytes(data: bytes) -> str:
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
+    with Path(_as_windows_long_path(path)).open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
@@ -263,7 +290,7 @@ def _canonicalize_text_bytes(raw: bytes) -> bytes:
 
 
 def _read_canonical_file_bytes(path: Path) -> bytes:
-    raw = path.read_bytes()
+    raw = Path(_as_windows_long_path(path)).read_bytes()
     if _is_text_file(path, raw):
         raw.decode("utf-8")
         if raw.startswith(b"\xef\xbb\xbf"):
@@ -288,7 +315,7 @@ def _write_canonical_zip_tree(
     archive_root_name: str,
 ) -> None:
     for file_path in files:
-        rel = file_path.relative_to(root).as_posix()
+        rel = _relative_path(file_path, root)
         archive.writestr(_zip_info_for_arcname(f"{archive_root_name}/{rel}"), _read_canonical_file_bytes(file_path))
 
 
@@ -395,22 +422,23 @@ def scan_skill_tree(skill_root: Path) -> tuple[list[Path], list[str]]:
         raise FileNotFoundError(skill_root)
     if not skill_root.is_dir():
         raise NotADirectoryError(skill_root)
+    skill_root_str = _as_windows_long_path(skill_root)
 
     packaged_files: list[Path] = []
     forbidden_paths: list[str] = []
-    for current, dirnames, filenames in os.walk(skill_root):
+    for current, dirnames, filenames in os.walk(skill_root_str):
         current_path = Path(current)
         dirnames.sort()
         filenames.sort()
         for dirname in list(dirnames):
             candidate = current_path / dirname
-            rel = candidate.relative_to(skill_root)
+            rel = Path(str(candidate)[len(skill_root_str) + 1 :])
             if candidate.is_symlink():
                 forbidden_paths.append(rel.as_posix())
 
         for filename in filenames:
             candidate = current_path / filename
-            rel = candidate.relative_to(skill_root)
+            rel = Path(str(candidate)[len(skill_root_str) + 1 :])
             if candidate.is_symlink():
                 forbidden_paths.append(rel.as_posix())
                 continue
@@ -421,17 +449,18 @@ def scan_skill_tree(skill_root: Path) -> tuple[list[Path], list[str]]:
                 continue
             packaged_files.append(candidate)
 
-    packaged_files.sort(key=lambda path: path.relative_to(skill_root).as_posix())
+    packaged_files.sort(key=lambda path: str(path)[len(skill_root_str) + 1 :])
     forbidden_paths = sorted(dict.fromkeys(forbidden_paths))
     return packaged_files, forbidden_paths
 
 
 def compute_source_fingerprint(skill_root: Path) -> tuple[str, int, int, list[Path], list[str]]:
     packaged_files, forbidden_paths = scan_skill_tree(skill_root)
+    skill_root_str = _as_windows_long_path(skill_root.resolve())
     digest = hashlib.sha256()
     total_bytes = 0
     for path in packaged_files:
-        rel = path.relative_to(skill_root).as_posix()
+        rel = str(path)[len(skill_root_str) + 1 :].replace("\\", "/")
         raw = _read_canonical_file_bytes(path)
         file_digest = _sha256_bytes(raw)
         total_bytes += len(raw)
@@ -471,7 +500,7 @@ def _build_artifact(
         export_mode=target.export_mode,
         source_path=target.source_path,
         overlay_path=target.overlay_path,
-        zip_path=zip_path.relative_to(ROOT).as_posix(),
+        zip_path=_relative_path(zip_path, ROOT),
         source_file_count=source_file_count,
         source_bytes=source_bytes,
         source_sha256=source_sha256,
@@ -721,19 +750,19 @@ def _discover_generated_surface_files() -> list[Path]:
     if not GENERATED_SKILL_ZIPS_ROOT.exists():
         return []
     files = [path for path in GENERATED_SKILL_ZIPS_ROOT.rglob("*") if path.is_file()]
-    files.sort(key=lambda path: path.relative_to(ROOT).as_posix())
+    files.sort(key=lambda path: _relative_path(path, ROOT))
     return files
 
 
 def validate_generated_surface(expected_records: list[SkillArtifact]) -> None:
     expected_zip_paths = {
-        (ROOT / record.zip_path).resolve().relative_to(ROOT).as_posix()
+        _relative_path((ROOT / record.zip_path).resolve(), ROOT)
         for record in expected_records
     }
     unexpected_files: list[str] = []
     actual_zip_paths: set[str] = set()
     for path in _discover_generated_surface_files():
-        rel = path.relative_to(ROOT).as_posix()
+        rel = _relative_path(path, ROOT)
         if path.resolve() == GENERATED_SKILL_ZIPS_REGISTRY_PATH.resolve():
             continue
         if path.name == "skill.zip":
@@ -755,11 +784,11 @@ def validate_generated_surface(expected_records: list[SkillArtifact]) -> None:
 
 def cleanup_generated_surface(expected_records: list[SkillArtifact]) -> None:
     expected_zip_paths = {
-        (ROOT / record.zip_path).resolve().relative_to(ROOT).as_posix()
+        _relative_path((ROOT / record.zip_path).resolve(), ROOT)
         for record in expected_records
     }
     for path in _discover_generated_surface_files():
-        rel = path.relative_to(ROOT).as_posix()
+        rel = _relative_path(path, ROOT)
         if path.resolve() == GENERATED_SKILL_ZIPS_REGISTRY_PATH.resolve():
             continue
         if path.name != "skill.zip":
@@ -844,10 +873,10 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
         raise FileNotFoundError(zip_path)
     if zip_path.name != "skill.zip":
         raise ValueError(f"{target.pack}/{target.skill} archive filename mismatch")
-    if artifact.zip_path != target.zip_path.relative_to(ROOT).as_posix():
+    if artifact.zip_path != _relative_path(target.zip_path, ROOT):
         raise ValueError(
             f"{scope_label} artifact for {target.pack}/{target.skill} points at {artifact.zip_path} "
-            f"instead of {target.zip_path.relative_to(ROOT).as_posix()}"
+            f"instead of {_relative_path(target.zip_path, ROOT)}"
         )
     if artifact.export_mode != target.export_mode:
         raise ValueError(
@@ -917,7 +946,7 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
                     f"generated/{artifact.zip_path} staged export contains forbidden source paths: "
                     f"{', '.join(staged_forbidden_paths)}"
                 )
-            expected_names = [f"{target.skill}/{path.relative_to(staged_root).as_posix()}" for path in staged_files]
+            expected_names = [f"{target.skill}/{_relative_path(path, staged_root)}" for path in staged_files]
             if extracted_names != expected_names:
                 raise ValueError(
                     f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
@@ -1082,7 +1111,7 @@ def registry_summary(registry: dict[str, Any]) -> str:
     )
     return (
         f"artifact_count={registry.get('artifact_count')}, "
-        f"registry_path={GENERATED_SKILL_ZIPS_REGISTRY_PATH.relative_to(ROOT).as_posix()}, "
+        f"registry_path={_relative_path(GENERATED_SKILL_ZIPS_REGISTRY_PATH, ROOT)}, "
         f"excluded={exclusion_summary}"
     )
 
@@ -1093,7 +1122,7 @@ def print_registry_receipt(registry: dict[str, Any]) -> None:
     direct_count = sum(1 for artifact in registry.get("artifacts", []) if artifact.get("export_mode", "direct") == "direct")
     overlay_count = sum(1 for artifact in registry.get("artifacts", []) if artifact.get("export_mode") == "overlay")
     packs = sorted({artifact.get("pack") for artifact in registry.get("artifacts", []) if artifact.get("pack")})
-    print(f"OK skill-zips registry: {GENERATED_SKILL_ZIPS_REGISTRY_PATH.relative_to(ROOT).as_posix()}")
+    print(f"OK skill-zips registry: {_relative_path(GENERATED_SKILL_ZIPS_REGISTRY_PATH, ROOT)}")
     print(f"OK generated artifacts: {artifact_count}")
     print(f"OK direct exports: {direct_count}")
     print(f"OK overlay exports: {overlay_count}")

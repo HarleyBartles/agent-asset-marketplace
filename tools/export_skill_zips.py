@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import shutil
 import sys
@@ -24,6 +25,16 @@ from skill_zip_artifacts import (
     validate_package_matches_source,
     validate_skill_zip_registry,
 )
+
+
+def _as_windows_long_path(path: Path) -> str:
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text
 
 
 @dataclass(frozen=True)
@@ -185,7 +196,7 @@ def _ensure_clean_output(out_dir: Path, clean_output: bool) -> None:
         raise ValueError("refusing to export directly into the repository root")
     if out_dir.exists():
         if clean_output:
-            shutil.rmtree(out_dir)
+            shutil.rmtree(_as_windows_long_path(out_dir))
         elif any(out_dir.iterdir()):
             raise ValueError(f"output directory is not clean: {out_dir}")
 

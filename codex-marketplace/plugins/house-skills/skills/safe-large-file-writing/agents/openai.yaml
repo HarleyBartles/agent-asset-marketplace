@@ -1,0 +1,11 @@
+interface:
+  display_name: Safe Large File Writing
+  short_description: Avoid editor OOM paths when writing large text files.
+  default_prompt: Use /safe-large-file-writing when a text write may exceed the safe threshold. Estimate line count and byte size before writing, use a simple temp-file write for small payloads, use chunked append or streaming writes for large payloads, validate the completed temp file, and atomically replace the target only after validation.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
