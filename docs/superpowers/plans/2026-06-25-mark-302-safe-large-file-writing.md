@@ -54,20 +54,7 @@ Add `SKILL.md` with explicit trigger language for creating, replacing, appending
 
 - [ ] **Step 2: Include Windows-friendly safe-write examples**
 
-Show a Python temp-file pattern the worker can copy without guessing:
-
-```python
-from pathlib import Path
-
-target = Path("output.md")
-tmp = target.with_suffix(target.suffix + ".tmp")
-payload = "# content\n"
-
-tmp.write_text(payload, encoding="utf-8", newline="\n")
-if len(payload.splitlines()) > 300 or tmp.stat().st_size > 256_000:
-    raise RuntimeError("switch to a safer chunked write path")
-tmp.replace(target)
-```
+Show the same branch-before-write pattern used later in the implementation task: estimate line count and byte size first, use a temp-file path only for small payloads, use chunked append for large payloads, validate the completed temp file, then atomically replace the target. Do not include a write-first example anywhere in the plan.
 
 Add a short PowerShell example only if it keeps the skill usable on Windows without turning the skill into a shell cookbook.
 
@@ -197,6 +184,7 @@ Run:
 ```bash
 py -3 tools/materialize_projection.py --check
 py -3 tools/update_skill_artifacts.py --check
+py -3 tools/validate_skill_zips.py
 py -3 tools/generate_marketplace.py --check
 py -3 tools/generate_repo_index.py --check
 py -3 tools/validate_marketplace.py
@@ -207,6 +195,7 @@ Treat the checks as follows:
 
 - `materialize_projection.py --check` proves the projection matches the source and manifest shape.
 - `update_skill_artifacts.py --check` proves the generated skill zip registry is consistent for the updated skill surface.
+- `validate_skill_zips.py` proves the generated installable zip surface is valid.
 - `generate_marketplace.py --check` and `generate_repo_index.py --check` prove the marketplace and repo index surfaces are current.
 - `validate_marketplace.py` proves the repository-wide marketplace invariants.
 - `git diff --check` catches whitespace and patch-shape issues.
