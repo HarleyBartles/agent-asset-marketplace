@@ -4,7 +4,7 @@
 
 **Goal:** Add an installable first-party `safe-large-file-writing` skill that keeps Devin/Desktop agents off the interactive editor OOM path for large text writes.
 
-**Architecture:** Put the authoritative skill body in first-party source custody under `sources/first_party/skills/safe-large-file-writing/`. Project that source into the current first-party marketplace bundles that carry worker workflow skills (`house-skills` and `superpowers-plus`) by updating the source-ledger entries and regenerating bundle manifests, source maps, provenance maps, and skill zips through the repo generators. Keep the content compact and operational: detect likely large writes first, route to script/CLI/temp-file/atomic-replace flows, validate size and line count before swap, and keep Windows/Python examples in the skill itself.
+**Architecture:** Put the authoritative skill body in first-party source custody under `sources/first_party/skills/safe-large-file-writing/`. Project that source into the first-party `house-skills` marketplace surface and its generated `skill.zip` / registry outputs by updating the source-ledger entries and regenerating the bundle manifest, source map, provenance, and zip surfaces through the repo generators. Keep the content compact and operational: detect likely large writes first, route to script/CLI/temp-file/atomic-replace flows, validate size and line count before swap, and keep Windows/Python examples in the skill itself.
 
 **Tech Stack:** Markdown skill source, YAML agent metadata, JSON ledgers/manifests, Python generator/validation scripts, generated `skill.zip` artifacts, PowerShell/Python execution examples.
 
@@ -84,19 +84,14 @@ Append the new source root to the house-skills decision/intake/provenance record
 **Files:**
 - Modify: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
 - Modify: `codex-marketplace/plugins/house-skills/references/source-map.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json`
-- Modify: `codex-marketplace/plugins/superpowers-plus/references/source-map.md`
 - Regenerated: `codex-marketplace/plugins/house-skills/skills/safe-large-file-writing/SKILL.md`
 - Regenerated: `codex-marketplace/plugins/house-skills/skills/safe-large-file-writing/agents/openai.yaml`
-- Regenerated: `codex-marketplace/plugins/superpowers-plus/skills/safe-large-file-writing/SKILL.md`
-- Regenerated: `codex-marketplace/plugins/superpowers-plus/skills/safe-large-file-writing/agents/openai.yaml`
 - Regenerated: `generated/skill-zips/house-skills/safe-large-file-writing/skill.zip`
-- Regenerated: `generated/skill-zips/superpowers-plus/safe-large-file-writing/skill.zip`
 - Regenerated: `generated/skill-zips/registry.json`
 
 **Interfaces:**
-- Consumes: the source skill from Task 1 and the current bundle manifests.
-- Produces: installable marketplace projections and direct skill zips for both bundles.
+- Consumes: the source skill from Task 1 and the current `house-skills` bundle manifest.
+- Produces: installable `house-skills` projections and the corresponding generated skill zip / registry entries.
 
 - [ ] **Step 1: Materialize the House Skills projection**
 
@@ -106,55 +101,129 @@ Run:
 py -3 tools/update_skill_artifacts.py --skill house-skills/safe-large-file-writing
 ```
 
-Expected: the House Skills projection surface and `generated/skill-zips/house-skills/safe-large-file-writing/skill.zip` are refreshed from source custody, not hand-copied.
+Expected: the `house-skills` projection surface and `generated/skill-zips/house-skills/safe-large-file-writing/skill.zip` are refreshed from source custody, not hand-copied.
 
-- [ ] **Step 2: Materialize the Superpowers+ projection**
+- [ ] **Step 2: Review the generated surfaces**
 
-Run:
+Confirm the regenerated `house-skills` bundle manifest, source map, and zip registry show only the new `safe-large-file-writing` entries plus the mechanical projection outputs. Do not broaden the diff into unrelated bundle churn.
 
-```bash
-py -3 tools/update_skill_artifacts.py --skill superpowers-plus/safe-large-file-writing
-```
-
-Expected: the Superpowers+ projection surface and `generated/skill-zips/superpowers-plus/safe-large-file-writing/skill.zip` match the same first-party source skill.
-
-- [ ] **Step 3: Review the generated surfaces**
-
-Confirm the regenerated bundle manifests and source maps show only the new `safe-large-file-writing` entries plus the mechanical projection outputs. Do not broaden the diff into unrelated bundle churn.
-
-### Task 3: Validate, commit, and publish the plan branch
+### Task 3: Publish the plan branch and wait for approval
 
 **Files:**
-- No new files; validate and publish the plan branch after the diff is checked.
+- No new files; the plan branch is already published as a draft PR and now serves as the approval gate.
 
 **Interfaces:**
-- Consumes: the regenerated marketplace outputs from Task 2.
-- Produces: a committed plan branch and draft PR against `main`, ready for approval before implementation starts.
+- Consumes: the plan document and the draft PR on this branch.
+- Produces: an approved execution gate for the implementation tasks below.
 
-- [ ] **Step 1: Run the repo validation ladder**
+- [ ] **Step 1: Keep the plan-only PR open**
+
+Do not start implementation until approval lands. The existing draft PR is the publication surface for this plan-only handoff.
+
+- [ ] **Step 2: Record the pre-implementation baseline**
+
+Note the known unrelated `adventures-pack` asset gap if it is still present. That blocker stays outside MARK-302 unless a later validation step proves it must be resolved first.
+
+### Task 4: Implement the skill and finish the branch
+
+**Files:**
+- Create: `sources/first_party/skills/safe-large-file-writing/SKILL.md`
+- Create: `sources/first_party/skills/safe-large-file-writing/agents/openai.yaml`
+- Modify: `sources/first_party/skills/house-skills/decisions.json`
+- Modify: `sources/first_party/skills/house-skills/decisions.md`
+- Modify: `sources/first_party/skills/house-skills/intake.json`
+- Modify: `provenance/house-skills.md`
+- Modify: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
+- Modify: `codex-marketplace/plugins/house-skills/references/source-map.md`
+- Regenerated: `codex-marketplace/plugins/house-skills/skills/safe-large-file-writing/SKILL.md`
+- Regenerated: `codex-marketplace/plugins/house-skills/skills/safe-large-file-writing/agents/openai.yaml`
+- Regenerated: `generated/skill-zips/house-skills/safe-large-file-writing/skill.zip`
+- Regenerated: `generated/skill-zips/registry.json`
+
+**Interfaces:**
+- Consumes: the approved plan, the source skill edits from Task 1, and the `house-skills` projection surfaces.
+- Produces: an installable first-party skill in `house-skills`, generated zip/registry updates, and implementation evidence for MARK-302 closeout.
+
+- [ ] **Step 1: Write the safe branching pattern into the skill**
+
+Use a branching-first pattern that estimates size before writing and only chooses a simple temp-file path for small payloads:
+
+```python
+from pathlib import Path
+
+def iter_text_chunks(text: str, chunk_size: int = 8_192):
+    for start in range(0, len(text), chunk_size):
+        yield text[start:start + chunk_size]
+
+def write_large_text(target: Path, text: str) -> None:
+    lines = text.splitlines()
+    byte_size = len(text.encode("utf-8"))
+    is_large = len(lines) > 300 or byte_size > 256_000
+
+    tmp = target.with_suffix(target.suffix + ".tmp")
+
+    if is_large:
+        with tmp.open("w", encoding="utf-8", newline="\n") as handle:
+            for chunk in iter_text_chunks(text, chunk_size=8_192):
+                handle.write(chunk)
+    else:
+        tmp.write_text(text, encoding="utf-8", newline="\n")
+
+    completed = tmp.read_text(encoding="utf-8")
+    if completed != text:
+        raise RuntimeError("temp file validation failed")
+    if len(completed.splitlines()) != len(lines) or tmp.stat().st_size != byte_size:
+        raise RuntimeError("validated size mismatch")
+
+    tmp.replace(target)
+```
+
+Keep the helper small and explicit. The point is to branch before the write path, not to build a general-purpose file writer.
+
+- [ ] **Step 2: Regenerate the `house-skills` projection**
 
 Run:
 
 ```bash
+py -3 tools/update_skill_artifacts.py --skill house-skills/safe-large-file-writing
+```
+
+Expected: the `house-skills` source-backed projection and `generated/skill-zips/house-skills/safe-large-file-writing/skill.zip` are regenerated from the edited source.
+
+- [ ] **Step 3: Run the full implementation validation ladder**
+
+Run:
+
+```bash
+py -3 tools/materialize_projection.py --check
+py -3 tools/update_skill_artifacts.py --check
 py -3 tools/generate_marketplace.py --check
 py -3 tools/generate_repo_index.py --check
 py -3 tools/validate_marketplace.py
 git diff --check
 ```
 
-If `validate_marketplace.py` still fails on the pre-existing `adventures-pack` asset gap, record it as an unrelated baseline blocker and do not expand MARK-302.
+Treat the checks as follows:
 
-- [ ] **Step 2: Commit the plan**
+- `materialize_projection.py --check` proves the projection matches the source and manifest shape.
+- `update_skill_artifacts.py --check` proves the generated skill zip registry is consistent for the updated skill surface.
+- `generate_marketplace.py --check` and `generate_repo_index.py --check` prove the marketplace and repo index surfaces are current.
+- `validate_marketplace.py` proves the repository-wide marketplace invariants.
+- `git diff --check` catches whitespace and patch-shape issues.
+- If `validate_marketplace.py` still fails on the pre-existing `adventures-pack` asset gap, record that as a baseline blocker and keep MARK-302 scoped to the skill work.
 
-Commit only the plan document and any required metadata updates from Task 1, keeping the commit message scoped to MARK-302.
+- [ ] **Step 4: Commit the implementation**
 
-- [ ] **Step 3: Push a draft PR and stop**
+Commit the implemented skill source, the `house-skills` projection updates, and the generated skill zip / registry outputs in a focused MARK-302 commit.
 
-Push the branch and open a draft PR targeting `main`. Do not start implementation until approval lands; the PR is the publication surface for the plan-only handoff.
+- [ ] **Step 5: Push the updated branch and update the PR**
+
+Push the updated branch and update the existing PR so it now carries the implementation diff and validation evidence. Do not open a second PR.
 
 ### Coverage Check
 
 - Source skill and metadata: Task 1
-- Marketplace projections and generated zips: Task 2
-- Validation and publication proof: Task 3
+- Marketplace projections and generated zips: Task 2 and Task 4
+- Approval gate: Task 3
+- Validation and publication proof: Task 4 and Task 5
 - Known unrelated baseline blocker: pre-existing `adventures-pack` validation failure noted above
