@@ -7,6 +7,6 @@
     "provenance_name": "MARK-226 canonical first-party source for github-operations",
     "import_state": "canonical",
     "scope": "GitHub evidence, PR review routing, and publication proof",
-    "notes": "Canonical first-party source for github-operations. Projects into House Skills and repo-worker-base; House Skills is a projection surface only."
+    "notes": "Canonical first-party source for github-operations. Projects into House Skills and repo-worker-pack; House Skills is a projection surface only."
   }
 ]

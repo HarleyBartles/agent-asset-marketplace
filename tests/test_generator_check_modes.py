@@ -14,10 +14,12 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import generate_marketplace  # noqa: E402
-import generate_ecc_pack_manifests  # noqa: E402
+import generate_pack_manifests  # noqa: E402
 import generate_repo_index  # noqa: E402
 import materialize_projection  # noqa: E402
 import update_skill_artifacts  # noqa: E402
+import validate_generated_drift  # noqa: E402
+from skill_zip_artifacts import SkillArtifact, artifact_to_record  # noqa: E402
 
 
 class GeneratorCheckModeTests(unittest.TestCase):
@@ -138,7 +140,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     generate_repo_index.main()
 
-    def test_generate_ecc_pack_manifests_check_detects_stale_file(self) -> None:
+    def test_generate_pack_manifests_check_detects_stale_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
@@ -168,27 +170,27 @@ class GeneratorCheckModeTests(unittest.TestCase):
                     }
                 ],
             }
-            expected_manifest = generate_ecc_pack_manifests._bundle_manifest(pack)
+            expected_manifest = generate_pack_manifests._bundle_manifest(pack)
             manifest_path.write_text(json.dumps(expected_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
             with (
-                patch.object(generate_ecc_pack_manifests, "ROOT", temp_root),
-                patch.object(generate_ecc_pack_manifests, "PACKS", [pack]),
-                patch.object(sys, "argv", ["generate_ecc_pack_manifests.py", "--check"]),
+                patch.object(generate_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_pack_manifests, "PACKS", [pack]),
+                patch.object(sys, "argv", ["generate_pack_manifests.py", "--check"]),
             ):
-                self.assertEqual(generate_ecc_pack_manifests.main(), 0)
+                self.assertEqual(generate_pack_manifests.main(), 0)
 
             manifest_path.write_text(
                 json.dumps({**expected_manifest, "notes": ["stale"]}, indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
             with (
-                patch.object(generate_ecc_pack_manifests, "ROOT", temp_root),
-                patch.object(generate_ecc_pack_manifests, "PACKS", [pack]),
-                patch.object(sys, "argv", ["generate_ecc_pack_manifests.py", "--check"]),
+                patch.object(generate_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_pack_manifests, "PACKS", [pack]),
+                patch.object(sys, "argv", ["generate_pack_manifests.py", "--check"]),
             ):
                 with self.assertRaises(ValueError):
-                    generate_ecc_pack_manifests.main()
+                    generate_pack_manifests.main()
 
     def test_materialize_projection_check_detects_stale_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -445,6 +447,62 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 ("print_registry_receipt", {"registry": {"registry": True}}),
             ],
         )
+
+    def test_validate_generated_drift_allows_rename_paths_for_generated_artifacts(self) -> None:
+        current_artifact = SkillArtifact(
+            pack="repo-worker-pack",
+            skill="base-doctrine",
+            export_mode="direct",
+            source_path="sources/first_party/skills/base-doctrine",
+            overlay_path=None,
+            zip_path="generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip",
+            source_file_count=1,
+            source_bytes=1,
+            source_sha256="a" * 64,
+            overlay_file_count=0,
+            overlay_bytes=0,
+            overlay_sha256=None,
+            zip_size_bytes=1,
+            zip_sha256="b" * 64,
+        )
+        base_artifact = SkillArtifact(
+            pack="adventures-pack",
+            skill="base-doctrine",
+            export_mode="direct",
+            source_path="sources/first_party/skills/base-doctrine",
+            overlay_path=None,
+            zip_path="generated/skill-zips/adventures-pack/base-doctrine/skill.zip",
+            source_file_count=1,
+            source_bytes=1,
+            source_sha256="a" * 64,
+            overlay_file_count=0,
+            overlay_bytes=0,
+            overlay_sha256=None,
+            zip_size_bytes=1,
+            zip_sha256="b" * 64,
+        )
+        current_registry = {"artifacts": [artifact_to_record(current_artifact)], "excluded": []}
+        base_registry = {"artifacts": [artifact_to_record(base_artifact)], "excluded": []}
+
+        with (
+            patch.object(validate_generated_drift, "validate_skill_zip_registry", return_value=None),
+            patch.object(validate_generated_drift, "load_registry", return_value=current_registry),
+            patch.object(validate_generated_drift, "_load_git_json", return_value=base_registry),
+            patch.object(
+                validate_generated_drift,
+                "_generated_changes",
+                return_value=[
+                    ("R100", "generated/skill-zips/adventures-pack/base-doctrine/skill.zip"),
+                    ("R100", "generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip"),
+                ],
+            ),
+            patch.object(
+                validate_generated_drift,
+                "_source_changes",
+                return_value=["tools/generate_pack_manifests.py"],
+            ),
+        ):
+            validate_generated_drift.validate_generated_drift(base="origin/main", full_regeneration=False)
 
 
 if __name__ == "__main__":

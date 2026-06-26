@@ -14,5 +14,5 @@
     "sources/first_party/skills/github-operations"
   ],
   "gpt_overlay": "direct export by default",
-  "notes": "House Skills and repo-worker-base are projection surfaces only."
+  "notes": "House Skills and repo-worker-pack are projection surfaces only."
 }

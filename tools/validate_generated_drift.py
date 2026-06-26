@@ -21,7 +21,7 @@ from skill_zip_artifacts import (
 from marketplace_utils import load_json
 
 PACKAGING_TOOLING_PATHS = {
-    "tools/generate_ecc_pack_manifests.py",
+    "tools/generate_pack_manifests.py",
     "tools/skill_zip_artifacts.py",
     "tools/skill_gpt_exports.py",
     "tools/materialize_projection.py",
@@ -225,6 +225,8 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
                 )
             continue
         if artifact is None:
+            if status.startswith(("R", "C")) and base_artifact is not None:
+                continue
             raise ValueError(f"generated artifact diff references missing registry entry: {path}")
         if not full_regeneration and not packaging_tooling_changed and not _artifact_changed(source_changes, artifact):
             raise ValueError(

@@ -9,6 +9,9 @@ How to use these skills:
   repo evidence.
 - Use `repo-worker-base` for fresh-main, worktree, branch, PR, validation, and
   publication hygiene.
+- Use `base-doctrine` for cross-project doctrine, source-evidence posture, and
+  output-shape authority questions that need a broader contract than the worker
+  baseline.
 - Use `linear-issue-shaping` for Linear packet shaping and worker-readiness
   handling after route classification.
 - Use `boring-loop` to keep the next move small and falsifiable.

@@ -7,6 +7,6 @@
     "provenance_name": "MARK-152 Boring Loop beta first-party source",
     "import_state": "canonical",
     "scope": "loop cadence and boring work routing",
-    "notes": "Canonical first-party source for the beta Boring Loop skill. Projects into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required."
+    "notes": "Canonical first-party source for the beta Boring Loop skill. Projects into House Skills and repo-worker-pack. Direct GPT export is the default unless a later validation proves an overlay is required."
   }
 ]

@@ -17,8 +17,8 @@ The marketplace freshness proof is `py -3 tools/generate_marketplace.py --check`
 for `.agents/plugins/marketplace.json` and
 `codex-marketplace/manifest.json`, plus `py -3 tools/generate_repo_index.py
 --check` for `repo-index/repo-index.json`. Projection-lane freshness is
-proven by `py -3 tools/materialize_projection.py --check`, and the selected ECC
-bundle-manifest surfaces are proven by `py -3 tools/generate_ecc_pack_manifests.py
+proven by `py -3 tools/materialize_projection.py --check`, and the selected
+pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests.py
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself.
 
