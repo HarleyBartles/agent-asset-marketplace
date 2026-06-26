@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Generate deterministic ECC projection bundle manifests.
+"""Generate deterministic pack bundle manifests.
 
-This tool writes the bundle-manifest.json surfaces for the selected ECC pack
-set. The pack definitions live in this script so the manifests can be
-regenerated from one source of truth instead of being hand-edited.
+This tool writes the bundle-manifest.json surfaces for the selected pack set.
+The pack definitions live in this script so the manifests can be regenerated
+from one source of truth instead of being hand-edited.
 """
 
 from __future__ import annotations
@@ -786,19 +786,19 @@ def generate(*, write: bool) -> None:
             raise FileNotFoundError(manifest_path)
         current = json.loads(manifest_path.read_text(encoding="utf-8"))
         if current != manifest:
-            raise ValueError(f"{manifest_path.relative_to(ROOT)} is stale; run py -3 tools/generate_ecc_pack_manifests.py")
+            raise ValueError(f"{manifest_path.relative_to(ROOT)} is stale; run py -3 tools/generate_pack_manifests.py")
         print(f"OK   {manifest_path.relative_to(ROOT)}")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate or validate the selected ECC bundle manifests")
+    parser = argparse.ArgumentParser(description="Generate or validate the selected pack bundle manifests")
     parser.add_argument("--check", action="store_true", help="validate without writing")
     args = parser.parse_args()
     generate(write=not args.check)
     if args.check:
-        print("OK ECC bundle manifests: current")
+        print("OK pack manifests: current")
     else:
-        print("OK ECC bundle manifests: generated")
+        print("OK pack manifests: generated")
     return 0
 
 

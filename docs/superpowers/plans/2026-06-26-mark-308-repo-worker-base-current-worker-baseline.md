@@ -246,3 +246,8 @@ Expected: no implementation proceeds until the scope question is resolved explic
 - [x] The plan does not rely on manual edits to generated zips or registry files.
 - [x] The plan clearly separates the plan-only PR from the later implementation PR.
 - [x] The plan requires the checked-off plan file to ride in the implementation PR.
+
+## Execution Receipt
+
+- The implementation branch now uses the canonical `tools/generate_pack_manifests.py` generator name instead of the ECC-specific script name.
+- The checked-off plan file remains part of the execution PR so the durable receipt travels with the implementation.

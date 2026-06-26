@@ -80,10 +80,10 @@ def validate_projection_materializer() -> None:
     _run_tool_check([sys.executable, "tools/materialize_projection.py", "--check"], "projection materializer check")
 
 
-def validate_ecc_bundle_manifests() -> None:
+def validate_pack_manifests() -> None:
     _run_tool_check(
-        [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
-        "ECC bundle manifest generator check",
+        [sys.executable, "tools/generate_pack_manifests.py", "--check"],
+        "pack manifest generator check",
     )
 
 
@@ -1517,7 +1517,7 @@ def main() -> int:
     validate_active_plugin_tree()
     validate_skill_zip_registry()
     validate_projection_materializer()
-    validate_ecc_bundle_manifests()
+    validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
