@@ -7,6 +7,7 @@ Start here:
 
 - [Skill index](skills/INDEX.md)
 - [Skill usage and update rules](skills/AGENTS.md)
+- [Marketplace worker doctrine](docs/marketplace-worker-doctrine.md)
 - [Repo AGENTS](../AGENTS.md)
 
 The canonical durable classifier for worker starts is `work-mode-router`.

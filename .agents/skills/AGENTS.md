@@ -33,3 +33,5 @@ Boundary:
 - This folder supports repo workers.
 - It does not replace `/using-superpowers`.
 - It does not replace the canonical source skill custody under `sources/`.
+
+For the durable marketplace execution model, read [Marketplace worker doctrine](../docs/marketplace-worker-doctrine.md) and compose it with the root [AGENTS.md](../../AGENTS.md).

@@ -47,6 +47,14 @@ Use `boring-buster` to decide whether the issue is bounded, lawful, route-suitab
 
 Use the route-state block and compact packet shape to check or repair the implementation-plan shape: one observable goal, likely files or source seams, small executable steps or chosen implementation route, explicit validation commands, no placeholders, and no hidden replanning requirement. Keep plan PRs and implementation PRs distinct in the packet language.
 
+For preflight docs, allow investigation seams and understanding questions plus the compact route-state block. The route-state block is a control/index surface, not the implementation plan. Preflight docs must not become the full implementation plan.
+
+Approved plans live in the repo under `docs/superpowers/plans/`. After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
+
+If the approved plan is stale but the drift is repairable and stays inside the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and include the repaired plan in the execution PR. If the drift changes scope materially, invalidates the approved direction, or makes execution unsafe, stop for human review.
+
+Every execution PR must include the updated repo-resident plan file with checked boxes. If the plan was stale, the execution PR must include the repaired plan plus implementation. If the plan was fresh, the execution PR must still include the updated checked-off plan.
+
 Return to this skill after those gates to write or update the Linear issue only when the latest user turn authorizes mutation.
 
 Do not require this full stack for parent trackers, product notes, research/discovery issues, or planning-only issues unless Harley asks to make them worker-send-ready.
