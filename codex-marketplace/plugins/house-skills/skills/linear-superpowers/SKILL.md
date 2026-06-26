@@ -20,17 +20,37 @@ Shape boring, worker-send-ready Linear issues and issue tracks so they say:
 3. what evidence will prove the workflow was followed.
 4. what durable route-state block the worker must read before any implementation lane is selected.
 
+## Worker route state
+
+Use this compact block when a worker packet needs durable route state:
+
+```text
+## Worker route state
+Route status: preflight-needed | preflight-complete-pending-approval | approved-plan-execution-ready | stale-plan-repair-needed | blocked-ambiguous | executed | superseded
+Plan PR: none | <url>
+Plan repo path: none | docs/superpowers/plans/<file>.md
+Plan approved: yes | no | unknown
+Plan merged to main: yes | no | unknown
+Approved plan commit: none | <sha>
+Last staleness check: none | <sha/date/result>
+Execution PR: none | <url>
+```
+
 ## Composition
 
 Start with `/using-superpowers` as the workflow-selection entrypoint.
 
 When the Linear packet is plan-shaped and meant for a worker, keep the route-state block as the compact control/index surface and hand the packet to `/using-superpowers` for lane choice. Do not make this skill choose between planning and execution lanes itself.
 
+If the route state is `stale-plan-repair-needed` and the drift is repairable within the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and continue execution in the same PR. If the drift changes scope or makes execution unsafe, stop and request human review.
+
+Every execution PR must include the updated repo-resident plan file with checked boxes. The plan file is the execution receipt: if the plan was fresh, include the checked-off plan; if the plan was stale, include the repaired plan plus implementation.
+
 Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route into `/connector-safety` immediately instead of retrying from memory or paraphrasing the same payload.
 
 For any mention of Linear `delegate` or `!`-prefixed labels, defer to `/linear` as the owning connector surface and keep this skill focused on packet shape.
 
-For normal Linear packets that are long, dense, connector-hostile, or need attached docs for source seams, plans, guardrails, validation, coverage maps, or evidence, compact the issue directly in place and keep the issue body as the TOC/control surface. For worker-ready repo tasks, route the packet through `worker-dispatch-linear` and follow its compact worker issue-shape reference. Do not duplicate the compact issue-shape procedure here.
+For normal Linear packets that are long, dense, connector-hostile, or need attached docs for source seams, plans, guardrails, validation, coverage maps, or evidence, compact the issue directly in place and keep the issue body as the TOC/control surface. For worker-ready repo tasks, route the packet through `linear-issue-shaping` and follow its compact worker issue-shape reference. Do not duplicate the compact issue-shape procedure here.
 
 Use `/unslop-superpowers` when the Linear packet needs repo-specific anti-slop controls, profile-aware non-goals, or evidence requirements.
 
@@ -49,6 +69,7 @@ Nesting rule:
 - Prefer vertical slices of provable value over horizontal component slices.
 - Require read-before-write on the smallest relevant Linear surface when practical.
 - Prefer one Linear side effect per call.
+- After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
 - Keep issue create, update, comment, status, label, project, and relation payloads narrow.
 - Treat blocked connector writes as a signal to narrow, verify, or stop, not as completion.
 - If a Linear write blocks, stop and use `/connector-safety` recovery before any retry.

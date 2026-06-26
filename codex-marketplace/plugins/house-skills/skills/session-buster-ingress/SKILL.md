@@ -50,7 +50,7 @@ Check Linear when the buster names a Linear issue, project, Codex worker, worker
 - Codex task links;
 - PR attachments or `Created pull request` comments.
 
-Interpret the state through `worker-dispatch-linear`:
+Interpret the state through `linear-issue-shaping`:
 
 - `planned`: issue exists, not delegated.
 - `delegated/running`: Codex delegate/thread exists, no completion comment.

@@ -55,7 +55,7 @@
 - Public identity: `bootstrap-router`
 - Provenance/history: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
 - Scope: first-turn bootstrap routing and request classification
-- Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through worker-dispatch-linear.
+- Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping.
 
 ## rooms-image-sidecars
 
@@ -88,7 +88,7 @@
 - Public identity: `linear-issue-compactor`
 - Provenance/history only: MARK-135 Linear issue compactor skill
 - Scope: Linear issue compaction and connector-readable issue bodies
-- Notes: Historical/provenance-only record for the retired Linear compaction skill. The active compact issue-shape doctrine now lives in `worker-dispatch-linear`, and any remaining mention here exists only so the retired source path and decision can be audited.
+- Notes: Historical/provenance-only record for the retired Linear compaction skill. The active compact issue-shape doctrine now lives in `linear-issue-shaping`, and any remaining mention here exists only so the retired source path and decision can be audited.
 
 ## boring-loop
 
@@ -106,7 +106,7 @@
 - Provenance/history: MARK-139 Linear Superpowers compositional skill
 - Ownership: Harley-owned first-party House skill
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it now owns compact issue shaping directly while composing `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `worker-dispatch-linear`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
+- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it now owns compact issue shaping directly while composing `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `linear-issue-shaping`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
 
 ## github-operations
 
@@ -235,7 +235,7 @@
 - `don-logan-boundary-v1` - `sources/first_party/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
 - `base-doctrine` - `sources/first_party/skills/base-doctrine`
 - `work-mode-router-v1` - `sources/first_party/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
-- `worker-dispatch-linear-v2` - `sources/first_party/skills/worker-dispatch-linear`
+- `linear-issue-shaping-v1` - `sources/first_party/skills/linear-issue-shaping`
 - `linear-v1.1` - `sources/first_party/skills/linear`
 - `tps-reporting-v1` - `sources/first_party/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
 - `tps-ingress-v1` - `sources/first_party/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`

@@ -37,24 +37,29 @@ Do not use `!`-prefixed labels as a proxy for delegation or worker pickup.
 
 ## Discovery-before-mutation rule
 
-For side-effecting connector work, use the connector itself to discover the narrowest safe mutation target before writing.
+For side-effecting connector work, use the connector itself to discover the narrowest safe mutation target before writing, then rediscover and read back the mutated target before the next mutation.
 
-Default sequence:
+Default mutation law:
 
-1. Discover the bounded surface with read-only calls.
+1. Discover the bounded parent surface with read-only calls.
    * Find the team, project, repository, folder, calendar, draft, issue, PR, document, or parent object using the narrowest available filters.
    * Prefer exact slugs, keys, IDs, team filters, project filters, owner filters, and limits.
    * Do not jump from session memory or chat knowledge straight to a write when a connector read can cheaply confirm the target.
-2. Read the target object using the discovered stable identifier.
+2. Read the exact target object using the discovered stable identifier.
    * Read the exact issue, document, PR, draft, event, file, or record that will be mutated.
    * Confirm current state, relations, attachments, documents, comments, or equivalent context where relevant.
 3. Write one bounded mutation using the discovered identifier.
    * Use one side effect per call.
    * Use narrow payloads.
    * Do not bundle status, assignment, body rewrite, comments, relations, or document creation unless the connector requires it.
-4. Verify after writing.
-   * Prefer readback of the target object or created/updated child object.
+4. Rediscover the mutated thing from the parent identifier or a bounded search.
+   * Treat the mutation as incomplete until the changed object is found again from durable connector state.
+   * Use the parent surface, exact IDs, or bounded search to find the fresh target state.
+5. Read back the freshly discovered target.
+   * Confirm the post-mutation state before the next write.
    * Claim success only from the mutation result or readback.
+
+This is the normal BAU loop, not just blocked-write recovery. The recovery ladder below adds the extra steps needed when a call is rejected or safety-filtered.
 
 Even when the user or prior chat provides likely correct values, perform read-only discovery when practical. The discovery calls are part of the safety proof.
 
@@ -124,9 +129,19 @@ When a connector write is blocked, do not claim success. Follow this explicit re
 6. Read back from the mutated target.
 7. Stop after repeated parent-discovered failure and report observed state.
 
-Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one narrower safer mutation -> readback.
+Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one narrower safer mutation -> rediscover mutated thing -> readback.
 
-Concrete Linear example: `Linear team discovery -> project or issue discovery from team -> exact issue or project read -> label/status vocabulary read if needed -> one narrow write -> readback`.
+Concrete Linear examples:
+
+- issue mutation: `Linear team discovery -> issue discovery from team -> exact issue read -> one narrow issue field mutation -> rediscover the issue from the team or issue key -> read back`
+- project mutation: `Linear team or workspace discovery -> project discovery -> exact project read -> one narrow project mutation -> rediscover the project -> read back`
+- document mutation: `Linear team or workspace discovery -> document discovery -> exact document read -> one narrow document mutation -> rediscover the document -> read back`
+- milestone mutation: `Linear team discovery -> milestone discovery -> exact milestone read -> one narrow milestone mutation -> rediscover the milestone -> read back`
+- relation or blocker mutation: `Linear team discovery -> source issue discovery -> target issue discovery -> exact relation or blocker read if available -> one narrow relation mutation -> rediscover the source issue or relation from the team -> read back`
+- label mutation: `Linear team discovery -> label discovery -> exact label read -> one narrow label mutation -> rediscover the label from the team -> read back`
+- status mutation: `Linear team discovery -> status vocabulary discovery -> exact status read -> one narrow status mutation -> rediscover the status from the team -> read back`
+- comment mutation: `Linear issue discovery -> exact issue read -> one narrow comment mutation -> rediscover the issue comment thread -> read back`
+- assignee mutation: `Linear team discovery -> issue discovery -> user vocabulary discovery if needed -> exact issue read -> one narrow assignee mutation -> rediscover the issue from the team -> read back`
 
 ## Upstream discovery fallback
 

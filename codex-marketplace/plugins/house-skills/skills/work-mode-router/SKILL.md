@@ -19,6 +19,29 @@ Bootstrap is orientation and classification, not source inspection. A project-re
 
 Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `/using-superpowers` with the discovered mode from this skill and let `/using-superpowers` choose the implementation lane. `work-mode-router` only classifies the mode from durable evidence.
 
+For worker starts, classify the durable route state before any implementation lane choice. A prompt such as `Pick up {{issue.identifier}} from Linear. Start with /work-mode-router.` must be enough to infer one of the worker route states below from durable Linear/repo evidence.
+
+### Worker route states
+
+Inspect these durable markers when classifying worker route state:
+
+- route-state block in the Linear preflight or implementation brief;
+- plan PR URL and current PR state;
+- plan repo path under `docs/superpowers/plans/`;
+- plan approval and merge evidence;
+- approved plan commit;
+- last staleness-check evidence.
+
+| Route state | Durable markers | Meaning | Action |
+| --- | --- | --- | --- |
+| `preflight_needed` | Route-state block says preflight or is absent, and there is no approved plan PR, merged plan, approved plan commit, or fresh staleness evidence. | The issue still needs preflight shape. | Hand the discovered mode to `/using-superpowers` with preflight context. The worker should inspect current source, produce or repair the repo-resident plan, open a plan-only PR, update Linear route state with plan path/PR/status, and stop before implementation. `/using-superpowers` owns lane selection; `work-mode-router` must not choose the Superpowers lane itself. |
+| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, and approval or merge evidence is absent. | The plan is ready for approval but not execution. | Stop and report pending approval. Hand the discovered mode to `/using-superpowers` only as stopping context. Do not select an implementation lane. |
+| `approved_plan_execution_ready` | Approved plan is merged to `main`, plan path/PR/commit evidence exists, and the staleness check passes against current source. | The approved plan is ready to execute. | Hand the discovered mode to `/using-superpowers` with execution context. `/using-superpowers` owns Superpowers lane choice. |
+| `stale_plan_repair_needed` | Approved plan exists, plan PR or merge evidence exists, and the staleness check fails but the drift is repairable inside the approved scope. | The plan is stale but repairable in the execution branch. | Hand the discovered mode to `/using-superpowers` with repair context. Repair stays in the execution branch unless the scope changes materially. |
+| `blocked_ambiguous` | Durable markers conflict, are missing, or cannot prove approval, merge, or current staleness state. | The worker cannot route safely from durable evidence. | Stop and report blocked or ambiguous. Do not select an implementation lane. |
+
+`work-mode-router` must not choose `/writing-plans`, `/executing-plans`, SDD, TDD, or any other implementation lane itself. It classifies the durable state and hands that discovered mode to `/using-superpowers`; `/using-superpowers` owns the Superpowers implementation-lane choice.
+
 Gates are backstops, not the primary teaching surface. Future GPT should understand why a workflow gate exists before the gate has to catch a failure. Breaking a gate is bad because it may spend scarce resources, mutate protected source, collapse ambiguity, launder reports into truth, create false closure, or push work away from the correct production boundary.
 
 ## First classification
@@ -90,7 +113,7 @@ Never load a project-specific wrapper skill unless its project matches the activ
 
 A project wrapper with a similar function name is not a fallback. Wrong-project doctrine is noise and may create false constraints.
 
-Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `worker-dispatch-linear`.
+Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `linear-issue-shaping`.
 
 ## Reference loading
 
