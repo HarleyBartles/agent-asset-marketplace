@@ -74,8 +74,8 @@ For worker-ready implementation issues, keep the issue body compact and treat it
 - goal and repo target stay in the issue body;
 - dense scope, implementation detail, validation, and return evidence move into attached Linear documents;
 - a single Preflight document is required for non-trivial repo/code issues;
-- Preflight contains only investigation seams and understanding questions that prove the worker has the right shape before planning;
-- do not turn Preflight into a readiness state or a second plan;
+- Preflight contains investigation seams and understanding questions plus the compact route-state block; it must not become the full implementation plan;
+- do not turn Preflight into a second plan or implementation readiness claim; use the route-state block only as the control/index surface;
 - do not keep a separate compactor trigger for normal worker issue shaping.
 
 Use `references/compact-issue-shape.md` for the full worker issue-shape pattern when preparing or reviewing a worker-ready Linear packet.
