@@ -85,9 +85,9 @@ Completed audit:
 | Skill name | Source path | Relevant section or grep hit | Classification | Reason |
 | --- | --- | --- | --- | --- |
 | `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | `Core posture`, `First classification`, `Routing map`, `Golden-gate reminder`, `Bounded skill-read stop rule` | Update in MARK-305 | This is the front-door classifier for the preflight/execution split. It still routes by broad request mode and does not yet require durable route-state evidence or the five route states the user specified. |
-| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Checked compatible / no update | It already keeps worker-ready as issue-ready only, forbids claiming execution without proof, and routes worker packets through Linear/Codex and GitHub evidence. The durable route-state block belongs in the front-door router, not here. |
-| `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Checked compatible / no update | It already shapes Linear packets, tells plan-shaped packets to use `/writing-plans` and `/executing-plans`, and defers worker dispatch to `worker-dispatch-linear`. No conflicting route-state doctrine appears in the current wording. |
-| `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Checked compatible / no update | It already prevents false-green and routes to the right specialist. It does not decide durable route state, so it does not need MARK-305 updates. |
+| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Update in MARK-305 | It already keeps worker-ready as issue-ready only, but it does not define the durable route-state block or an execution-ready/stale-plan decision tree. MARK-305 needs that route-state guidance in the worker packet owner, not only in the front-door router. |
+| `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Update in MARK-305 | It already shapes Linear packets, but it does not carry the route-state block or the one-prompt preflight/pending-approval/execution-ready/stale/blocked branching the user asked to prove. |
+| `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Update in MARK-305 | It already prevents false-green, but it does not yet name the route-state block or the staleness-check gate that distinguishes execution-ready from stale-plan repair. |
 | `repo-worker-base` | `sources/first_party/skills/repo-worker-base/SKILL.md` | `Fresh-main invariant`, `Worktree isolation gate`, `Branch and PR discipline`, `GREEN gate` | Checked compatible / no update | It already requires fresh-main discipline, worktree isolation, PR evidence, and explicit blockers. The route-state split is upstream of this skill, so no change is required. |
 | `github-operations` | `sources/first_party/skills/github-operations/SKILL.md` | `Default coding workflow boundary`, `Verification workflow`, `Publication proof`, `Issue-goal conformance` | Checked compatible / no update | It already keeps GitHub evidence separate from routing and does not own dispatch. It is compatible with the plan/approval/execution split as written. |
 | `connector-safety` | `sources/first_party/skills/connector-safety/SKILL.md` | `Automatic trigger`, `Discovery-before-mutation rule`, `Blocked-write recovery ladder`, `Handoff and evidence` | Checked compatible / no update | It narrows side effects and handles blocked writes safely, but it does not set or interpret the preflight route states. |
@@ -110,9 +110,9 @@ Final MARK-305 source-update set:
 | File | Decision | Why |
 | --- | --- | --- |
 | `sources/first_party/skills/work-mode-router/SKILL.md` | Update | It must classify preflight, pending approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence. |
-| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | No update | Current wording already treats worker-ready as issue-ready only and defers execution proof to the target systems. |
-| `sources/first_party/skills/linear-superpowers/SKILL.md` | No update | Current wording already routes plan-shaped packets to `/writing-plans` and `/executing-plans` while delegating worker state to `worker-dispatch-linear`. |
-| `sources/first_party/skills/boring-loop/SKILL.md` | No update | Current wording already handles smallest-safe-move selection and false-green prevention. |
+| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | Update | It must carry the worker-facing route-state block and the execution-ready versus stale-plan repair decision path in the Linear packet/worker handoff surface. |
+| `sources/first_party/skills/linear-superpowers/SKILL.md` | Update | It must carry the route-state block for plan-shaped packets so the worker-facing Linear shape already names the durable states and the approval boundary. |
+| `sources/first_party/skills/boring-loop/SKILL.md` | Update | It must explicitly pair false-green prevention with the route-state block and the stale-plan repair split instead of only naming the general small-safe-move loop. |
 | `sources/first_party/skills/repo-worker-base/SKILL.md` | No update | Current wording already enforces fresh-main, worktree, branch, PR, and validation discipline. |
 | `sources/first_party/skills/github-operations/SKILL.md` | No update | Current wording already owns GitHub proof only after a GitHub artifact exists. |
 | `sources/first_party/skills/connector-safety/SKILL.md` | No update | Current wording already keeps connector-side effects narrow and auditable. |
@@ -139,6 +139,9 @@ Prefer skills that help workers:
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
 - Modify: `sources/first_party/skills/work-mode-router/SKILL.md`
+- Modify: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Modify: `sources/first_party/skills/linear-superpowers/SKILL.md`
+- Modify: `sources/first_party/skills/boring-loop/SKILL.md`
 
 **Interfaces:**
 - Consumes: the audit from Task 1.
@@ -204,9 +207,19 @@ blocked_ambiguous
 
 It must preserve the rule that a merged plan is an approved starting point, not current source truth. Execution still requires a staleness check against current source before edits.
 
-Do not modify `worker-dispatch-linear`, `linear-superpowers`, or the other checked-compatible skills in MARK-305. The audit above shows their current wording already aligns with the durable route-state model; execution should consume that approved list rather than discovering scope later.
+The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` do not yet fully carry the route-state block and stale-plan split the user asked us to prove, so they belong in the MARK-305 execution update set with `work-mode-router`.
 
-- [x] **Step 5: State the install/projection rule**
+- [x] **Step 5: End-to-end route scenario**
+
+| Start state from short prompt | Durable markers the worker reads | Owning skill | Worker action |
+| --- | --- | --- | --- |
+| `preflight_needed` | No approved plan commit, no approved plan PR state, route-state block absent or says preflight, no fresh staleness evidence, Linear issue still points at the problem and not a ready execution packet. | `work-mode-router` | Read Linear issue, linked docs, and repo source; classify as preflight; write/revise the plan; stop before execution. |
+| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, but approval/merge evidence is absent. | `linear-superpowers` | Shape the Linear packet, keep the worker-facing route-state block visible, and wait for approval rather than mutating repo code. |
+| `approved_plan_execution_ready` | Approved plan commit exists, plan PR/merge evidence exists, current `main` has been checked, and the last staleness check is fresh. | `worker-dispatch-linear` | Treat the worker packet as execution-ready, keep the route-state block intact, and move into the approved implementation route. |
+| `stale_plan_repair_needed` | Approved plan exists, but current `main` has moved or the last staleness check is stale relative to the approved plan commit. | `repo-worker-base` | Refresh from current `origin/main`, update or rebase the branch, rerun the staleness check, and do not start implementation until the plan is current again. |
+| `blocked_ambiguous` | Durable markers disagree, approval state is unclear, plan path is missing, or the route-state block does not resolve to a legal next step. | `boring-loop` | Narrow the queue, identify the smallest safe next check, and stop at ambiguity instead of laundering it into execution. |
+
+- [x] **Step 6: State the install/projection rule**
 
 The repo-local `.agents/skills` surface should be built by copying the approved skill directories from durable source custody into `.agents/skills/<skill>/` with the same directory names and the same skill file layout, not by hand-editing or dumping arbitrary folders.
 
