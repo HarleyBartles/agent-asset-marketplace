@@ -18,12 +18,13 @@ Shape boring, worker-send-ready Linear issues and issue tracks so they say:
 1. which workflow skill is the smallest applicable fit;
 2. why that skill applies;
 3. what evidence will prove the workflow was followed.
+4. what durable route-state block the worker must read before any implementation lane is selected.
 
 ## Composition
 
 Start with `/using-superpowers` as the workflow-selection entrypoint.
 
-When the Linear packet is plan-shaped and meant for a worker, instruct the packet to use `/writing-plans` for route review and `/executing-plans` as the outer execution workflow.
+When the Linear packet is plan-shaped and meant for a worker, keep the route-state block as the compact control/index surface and hand the packet to `/using-superpowers` for lane choice. Do not make this skill choose between planning and execution lanes itself.
 
 Use `/connector-safety` as mandatory for Linear connector writes and blocked-write recovery, including issue create or update, comments, status changes, labels, relations or blockers, documents, assignments, and project moves. If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route into `/connector-safety` immediately instead of retrying from memory or paraphrasing the same payload.
 

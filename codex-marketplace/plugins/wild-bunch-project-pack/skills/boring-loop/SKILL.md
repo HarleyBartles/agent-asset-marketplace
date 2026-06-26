@@ -45,6 +45,14 @@ Treat these as warning signs:
 
 If the work looks too broad, narrow it before continuing.
 
+Route-state false greens to name explicitly:
+
+- executing without a fresh staleness check against current source;
+- treating an unmerged plan PR as if it were approved execution authority;
+- relying on chat memory instead of durable Linear/repo evidence;
+- missing plan path, plan commit, or plan PR evidence;
+- laundering ambiguous or contradictory route state into execution.
+
 ## Parent and child coverage
 
 When a parent issue exists, the parent owns the full boring definition of done.
@@ -99,4 +107,3 @@ GPT-controller guidance:
 - ask for repair when the work is not yet boring enough.
 
 Both variants use the same first-party source and the same retained doctrine.
-

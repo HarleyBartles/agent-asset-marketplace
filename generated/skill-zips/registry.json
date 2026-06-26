@@ -271,13 +271,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/worker-dispatch-linear/skill.zip",
       "source_file_count": 12,
-      "source_bytes": 39540,
-      "source_sha256": "d5ca9bd7b4f99e370222c88ea1024de7cbffd788b982da4cb698d9bae2eb2a9b",
+      "source_bytes": 39705,
+      "source_sha256": "6291ed8508031260f1cc6fee37e1ab8ffce90825e6526f5b9d5bc6c3f83a0724",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18007,
-      "zip_sha256": "30145151544d242e762b750111fbb1f8b51c648bf2b0d9c61a9c014ba7e92a82"
+      "zip_size_bytes": 18073,
+      "zip_sha256": "11047236461f416dc47307b570f839645eda664b4a502fb8f2135b33338e1ab8"
     },
     {
       "pack": "agentic-evaluation",
@@ -1967,13 +1967,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/boring-loop/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 5810,
-      "source_sha256": "7746086e2ed78e6e2163cac5c08c446f40616a90f4b4aa0498cdc258dbcbc1db",
+      "source_bytes": 6188,
+      "source_sha256": "f3104f636c275f5bcc996f81015fbac927ef1103e192e92f350a41e1f7390a66",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3518,
-      "zip_sha256": "5c96f390dc131a59de98602cbb0bf5d247e4789a50ea7975d2782d37a51aff48"
+      "zip_size_bytes": 3673,
+      "zip_sha256": "b5bcc3c95736b7d85c1ebff05270834ed09eb539311e45ad268264d299ca955a"
     },
     {
       "pack": "house-skills",
@@ -2223,13 +2223,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5102,
-      "source_sha256": "de0d241b673477754884b81c3d2e1b1f1e4139e1bc3c69d4c86dec8f19672f8d",
+      "source_bytes": 5284,
+      "source_sha256": "2553f7923e1c22869fcbc2284420f3af3aad99d61b07d6be1cf22ec90228fa31",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2542,
-      "zip_sha256": "a3cce9a73cc33dc175944e9f65d801d44f1b8cb363309f59251b9cf92f4df224"
+      "zip_size_bytes": 2614,
+      "zip_sha256": "99f5865c0c043ee706e382fc9190290f1d2ef5e585bca8c173ebd48b205b7878"
     },
     {
       "pack": "house-skills",
@@ -2655,13 +2655,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 14425,
-      "source_sha256": "4f14406e961996464c617d294d24722e0bed14df9a0c267090804922c1cd9adf",
+      "source_bytes": 14594,
+      "source_sha256": "401d1c23347289b556820ab3691f65eefda8b49c1bac9b0852ce42939788ad1f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 6940,
-      "zip_sha256": "a93dd6bd8b224e8f68681710956efc14cf7292a8609b055eb57f64778c4110ff"
+      "zip_size_bytes": 6990,
+      "zip_sha256": "50a37302ae3285d5364ef646374218b0ead5ee1e26c7bf059a73b0b7536a4e19"
     },
     {
       "pack": "house-skills",
@@ -2671,13 +2671,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/worker-dispatch-linear/skill.zip",
       "source_file_count": 12,
-      "source_bytes": 39540,
-      "source_sha256": "d5ca9bd7b4f99e370222c88ea1024de7cbffd788b982da4cb698d9bae2eb2a9b",
+      "source_bytes": 39705,
+      "source_sha256": "6291ed8508031260f1cc6fee37e1ab8ffce90825e6526f5b9d5bc6c3f83a0724",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18007,
-      "zip_sha256": "30145151544d242e762b750111fbb1f8b51c648bf2b0d9c61a9c014ba7e92a82"
+      "zip_size_bytes": 18073,
+      "zip_sha256": "11047236461f416dc47307b570f839645eda664b4a502fb8f2135b33338e1ab8"
     },
     {
       "pack": "language-patterns-pack",
@@ -2831,13 +2831,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-base/boring-loop/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 5810,
-      "source_sha256": "7746086e2ed78e6e2163cac5c08c446f40616a90f4b4aa0498cdc258dbcbc1db",
+      "source_bytes": 6188,
+      "source_sha256": "f3104f636c275f5bcc996f81015fbac927ef1103e192e92f350a41e1f7390a66",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3518,
-      "zip_sha256": "5c96f390dc131a59de98602cbb0bf5d247e4789a50ea7975d2782d37a51aff48"
+      "zip_size_bytes": 3673,
+      "zip_sha256": "b5bcc3c95736b7d85c1ebff05270834ed09eb539311e45ad268264d299ca955a"
     },
     {
       "pack": "repo-worker-base",
@@ -3103,13 +3103,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/linear-superpowers/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 5102,
-      "source_sha256": "de0d241b673477754884b81c3d2e1b1f1e4139e1bc3c69d4c86dec8f19672f8d",
+      "source_bytes": 5284,
+      "source_sha256": "2553f7923e1c22869fcbc2284420f3af3aad99d61b07d6be1cf22ec90228fa31",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2542,
-      "zip_sha256": "a3cce9a73cc33dc175944e9f65d801d44f1b8cb363309f59251b9cf92f4df224"
+      "zip_size_bytes": 2614,
+      "zip_sha256": "99f5865c0c043ee706e382fc9190290f1d2ef5e585bca8c173ebd48b205b7878"
     },
     {
       "pack": "superpowers-plus",
@@ -3343,13 +3343,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/boring-loop/skill.zip",
       "source_file_count": 5,
-      "source_bytes": 5810,
-      "source_sha256": "7746086e2ed78e6e2163cac5c08c446f40616a90f4b4aa0498cdc258dbcbc1db",
+      "source_bytes": 6188,
+      "source_sha256": "f3104f636c275f5bcc996f81015fbac927ef1103e192e92f350a41e1f7390a66",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3518,
-      "zip_sha256": "5c96f390dc131a59de98602cbb0bf5d247e4789a50ea7975d2782d37a51aff48"
+      "zip_size_bytes": 3673,
+      "zip_sha256": "b5bcc3c95736b7d85c1ebff05270834ed09eb539311e45ad268264d299ca955a"
     },
     {
       "pack": "wild-bunch-project-pack",

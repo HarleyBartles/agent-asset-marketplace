@@ -1,6 +1,6 @@
 ﻿---
 name: work-mode-router
-description: cross-runtime bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
+description: cross-runtime bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to /using-superpowers with the discovered mode instead of legacy dispatch stacks.
 metadata:
   source-id: work-mode-router
   source-path: sources/first_party/skills/work-mode-router/SKILL.md
@@ -11,13 +11,13 @@ license: "MIT"
 
 Use this skill as the cross-runtime bootstrap router for new project sessions and workflow-sensitive starts. It classifies the current request, preserves an ordinary-chat escape hatch, and routes to the smallest controlling skill surface before substantive work.
 
-This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `worker-dispatch-linear`, GitHub proof skills, artifact skills, or package skills.
+This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `/using-superpowers`, GitHub proof skills, artifact skills, or package skills.
 
 ## Core posture
 
 Bootstrap is orientation and classification, not source inspection. A project-relevant bootstrap is mandatory once at new-session start when a project context is active or the first user task is project-scoped. Bootstrap must classify the current request before evidence-route, connector, mutation, artifact, worker, or downstream skill decisions.
 
-Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `worker-dispatch-linear` and let its golden gate decide whether Codex Cloud is executable, GPT-native skillwork must stay in the skill stack, or legacy fallback is actually needed.
+Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `/using-superpowers` with the discovered mode from this skill and let `/using-superpowers` choose the implementation lane. `work-mode-router` only classifies the mode from durable evidence.
 
 Gates are backstops, not the primary teaching surface. Future GPT should understand why a workflow gate exists before the gate has to catch a failure. Breaking a gate is bad because it may spend scarce resources, mutate protected source, collapse ambiguity, launder reports into truth, create false closure, or push work away from the correct production boundary.
 
@@ -40,7 +40,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 
 ## Routing map
 
-- `linear_codex_coding` -> `worker-dispatch-linear` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
+- `linear_codex_coding` -> `/using-superpowers` with the discovered mode. `work-mode-router` only supplies the durable mode classification; `/using-superpowers` owns the workflow-lane choice after that. Do not hard-route to `/writing-plans`, `/executing-plans`, or any other Superpowers lane here.
 - `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> the repo/GitHub proof surface after a GitHub artifact exists. Do not use repo/GitHub proof to decide worker state or issue routing.
 - `linear_control` -> `linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.

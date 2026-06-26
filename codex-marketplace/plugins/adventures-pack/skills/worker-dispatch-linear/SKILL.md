@@ -38,14 +38,14 @@ For ordinary worker issues, keep the safe default as `assignee: me`, with `deleg
 When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
 
 ```text
-worker-dispatch-linear -> boring-buster -> writing-plans -> worker-dispatch-linear
+work-mode-router -> /using-superpowers -> worker-dispatch-linear -> boring-buster
 ```
 
 Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.
 
 Use `boring-buster` to decide whether the issue is bounded, lawful, route-suitable, and boring enough for the selected worker lane.
 
-Use `writing-plans` to check or repair the implementation-plan shape: one observable goal, likely files or source seams, small executable steps or chosen implementation route, explicit validation commands, no placeholders, and no hidden replanning requirement.
+Use the route-state block and compact packet shape to check or repair the implementation-plan shape: one observable goal, likely files or source seams, small executable steps or chosen implementation route, explicit validation commands, no placeholders, and no hidden replanning requirement. Keep plan PRs and implementation PRs distinct in the packet language.
 
 Return to this skill after those gates to write or update the Linear issue only when the latest user turn authorizes mutation.
 
@@ -145,7 +145,7 @@ After this skill classifies the route, do not read old dispatch or issue-managem
 
 - worker-send-ready boring/readiness verdict: use `boring-buster`;
 - Devin campaign issue profile, worktree isolation gate, launch/resume templates, and self-checks: read `references/devin-campaign-shape.md`;
-- implementation-plan shape for worker coding issues: use `writing-plans`;
+- implementation-plan shape for worker coding issues: use the compact worker issue-shape reference and keep the route-state block explicit;
 - skill creation/update/package work: use the skill-maintenance stack;
 - GitHub PR/repo proof: use GitHub verification tooling;
 - validation choice after code/PR/package evidence exists: use validation guidance;
