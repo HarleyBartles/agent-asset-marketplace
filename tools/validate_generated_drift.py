@@ -225,6 +225,8 @@ def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> N
                 )
             continue
         if artifact is None:
+            if status.startswith(("R", "C")) and base_artifact is not None:
+                continue
             raise ValueError(f"generated artifact diff references missing registry entry: {path}")
         if not full_regeneration and not packaging_tooling_changed and not _artifact_changed(source_changes, artifact):
             raise ValueError(
