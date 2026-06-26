@@ -25,8 +25,9 @@ The split is deliberate:
 
 - `repo-worker-base` is the first-party plugin projection with core repo worker
   skills and its compositional entrypoint.
-- The active plugin contains `boring-loop`, `connector-safety`, and
-  `github-operations` alongside `repo-worker-base`.
+- The active plugin contains `work-mode-router`, `linear-issue-shaping`,
+  `boring-loop`, `connector-safety`, `github-operations`, `unslop-plus`, and
+  `safe-large-file-writing` alongside `repo-worker-base`.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface

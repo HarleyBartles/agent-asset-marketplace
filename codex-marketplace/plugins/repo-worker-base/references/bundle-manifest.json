@@ -49,6 +49,16 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "linear-issue-shaping",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+      "local_path": "skills/linear-issue-shaping",
+      "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "repo-worker-base",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -57,15 +67,49 @@
       "local_path": "skills/repo-worker-base",
       "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
       "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "safe-large-file-writing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/safe-large-file-writing",
+      "local_path": "skills/safe-large-file-writing",
+      "provenance_note": "Projected verbatim from the first-party safe-large-file-writing skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "unslop-plus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/unslop-plus",
+      "local_path": "skills/unslop-plus",
+      "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "work-mode-router",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/work-mode-router",
+      "local_path": "skills/work-mode-router",
+      "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
+      "copy_expectation": "byte_identical"
     }
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
     "source_ledger": [
       "sources/first_party/skills/repo-worker-base",
+      "sources/first_party/skills/work-mode-router",
+      "sources/first_party/skills/linear-issue-shaping",
       "sources/first_party/skills/boring-loop",
       "sources/first_party/skills/connector-safety",
-      "sources/first_party/skills/github-operations"
+      "sources/first_party/skills/github-operations",
+      "sources/first_party/skills/unslop-plus",
+      "sources/first_party/skills/safe-large-file-writing"
     ],
     "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",

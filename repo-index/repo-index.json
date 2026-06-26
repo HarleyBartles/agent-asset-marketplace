@@ -374,9 +374,13 @@
       "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
       "source_ledger": [
         "sources/first_party/skills/repo-worker-base",
+        "sources/first_party/skills/work-mode-router",
+        "sources/first_party/skills/linear-issue-shaping",
         "sources/first_party/skills/boring-loop",
         "sources/first_party/skills/connector-safety",
-        "sources/first_party/skills/github-operations"
+        "sources/first_party/skills/github-operations",
+        "sources/first_party/skills/unslop-plus",
+        "sources/first_party/skills/safe-large-file-writing"
       ],
       "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/repo-worker-base/references/bundle-manifest.json",

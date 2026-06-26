@@ -9,9 +9,13 @@ This skill is the compositional entrypoint for repo-backed worker tasks in Harle
 
 Use it to establish the boring repo baseline, then route out to the supporting skills that own the narrower concerns:
 
+- `work-mode-router` for durable route classification before repo work begins;
+- `linear-issue-shaping` for worker-ready Linear issue shaping and route-state handling;
 - `boring-loop` for queue discipline and the next smallest safe move;
 - `connector-safety` for blocked, sensitive, or permission-changing connector writes;
 - `github-operations` for PR, branch, commit, status, merge, publication, and main-state proof.
+- `unslop-plus` for worker-facing anti-slop profiles when a repo task needs tighter plan, review, or return discipline;
+- `safe-large-file-writing` for safer large text writes and atomic replacement paths.
 
 Keep this skill thin. Do not absorb broad process doctrine that belongs in the supporting skills.
 

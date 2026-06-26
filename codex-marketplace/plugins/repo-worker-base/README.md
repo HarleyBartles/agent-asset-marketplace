@@ -4,10 +4,14 @@ This bundle projects the first-party repo worker base skills.
 
 ## Bundle contents
 ### First_Party skills
+- `work-mode-router`
+- `linear-issue-shaping`
 - `repo-worker-base`
 - `boring-loop`
 - `connector-safety`
 - `github-operations`
+- `unslop-plus`
+- `safe-large-file-writing`
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -17,8 +21,9 @@ This bundle projects the first-party repo worker base skills.
 ## Boundary
 - The first-party repo worker skills stay projected alongside the
   compositional repo-worker entrypoint and supporting workflow skills.
-- The bundle stays narrow, first-party only, and does not absorb broader ECC
-  workflow packs.
+- The bundle stays narrow, first-party only, and tracks the current eight-skill
+  repo worker baseline without absorbing broader Superpowers+ or other workflow
+  packs.
 
 ## Install shape
 
