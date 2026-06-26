@@ -1,6 +1,6 @@
 # MARK-304 safe-large-file-writing pre-composition context-pressure implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a pre-composition context-pressure rule to the first-party `safe-large-file-writing` skill so agents stop before they inline-compose a large document in a low-context session and instead route to a clean-context worker/subagent or bounded append path.
 
@@ -63,6 +63,8 @@ Replace the current decision test with:
 ```markdown
 ## Decision test
 
+If you would be tempted to say "write first, check size later," stop and branch to the large-write path before any write starts.
+
 If you would be tempted to compose a large document inline in the main session context, stop and route to a clean-context worker/subagent or section-by-section append path before composition starts.
 ```
 
@@ -110,7 +112,7 @@ py -3 tools/validate_marketplace.py
 git diff --check
 ```
 
-Expected result: the projected skill tree, generated zip registry, marketplace manifest, repo index, and whitespace/pattern checks all pass. If `validate_marketplace.py` still reports the known unrelated `adventures-pack` asset gap from earlier `safe-large-file-writing` work, record it as a baseline blocker instead of widening the scope.
+Expected result: the projected skill tree, generated zip registry, marketplace manifest, repo index, and whitespace/pattern checks all pass. If `validate_marketplace.py` fails, first compare the result against current `main` or another clean baseline before classifying it as unrelated.
 
 ### Coverage Check
 
