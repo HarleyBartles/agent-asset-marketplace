@@ -214,7 +214,7 @@ The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `
 | Start state from short prompt | Durable markers the worker reads | Owning skill | Worker action |
 | --- | --- | --- | --- |
 | `preflight_needed` | No approved repo-resident plan exists, route-state block says preflight or is absent, and there is no approved plan commit or fresh staleness evidence. | `work-mode-router` | Classify preflight, route to `/using-superpowers` with preflight context, produce the plan-only PR, update Linear route state, and stop before implementation. |
-| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, but approval/merge evidence is absent. | `work-mode-router` | Classify pending approval, route to `/using-superpowers` with pending-approval context, and stop. |
+| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, but approval/merge evidence is absent. | `work-mode-router` | Classify pending approval and stop/report pending approval. No implementation lane should be selected. |
 | `approved_plan_execution_ready` | Approved plan is merged to `main`, plan path/commit/PR evidence exists, and the staleness check passes against current source. | `work-mode-router` | Classify execution-ready, route to `/using-superpowers` with execution context, and execute from the approved plan. |
 | `stale_plan_repair_needed` | Approved merged plan exists, but current source drift makes the plan stale. | `work-mode-router` | Classify stale-plan repair, route to `/using-superpowers` with repair-then-execute context, repair the plan in the execution branch if the drift stays within scope, and publish the repaired plan with the implementation. |
 | `blocked_ambiguous` | Durable markers disagree, plan path is missing, approval evidence is unclear, PR state cannot be proven, or the route state cannot be classified safely. | `work-mode-router` | Classify blocked/ambiguous, stop, and report the exact missing or contradictory durable evidence. |
@@ -307,6 +307,34 @@ MARK-306 consumes the final approved MARK-305 set and the source evidence collec
 - [x] **Step 3: Add the plan-artifact invariant**
 
 Every execution PR must include the updated repo-resident plan file with checkboxes checked to reflect completed work. If the plan was stale, the execution PR must include the repaired plan plus the implementation. If the plan was fresh, the execution PR must still include the updated checked-off plan.
+
+### Task 6: Record the execution pass
+
+**Files:**
+- Modified: `sources/first_party/skills/work-mode-router/SKILL.md`
+- Modified: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Modified: `sources/first_party/skills/linear-superpowers/SKILL.md`
+- Modified: `sources/first_party/skills/boring-loop/SKILL.md`
+- Created: `.agents/INDEX.md`
+- Created: `.agents/skills/INDEX.md`
+- Created: `.agents/skills/AGENTS.md`
+- Projected: `.agents/skills/<approved-skill>/...` from the approved source custody
+
+**Interfaces:**
+- Consumes: the approved MARK-305 execution set and the repo-local projection rules.
+- Produces: the repo-local worker surface and the source updates that make the route boundary durable.
+
+- [x] **Step 1: Project the approved skill set**
+
+The approved worker skills were copied into `.agents/skills` from the canonical source custody and indexed with source paths.
+
+- [x] **Step 2: Update the source custody**
+
+`work-mode-router`, `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` were updated to reflect the durable route-state boundary and the `/using-superpowers` handoff model.
+
+- [x] **Step 3: Create the worker-facing repo guidance**
+
+`.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` were added so workers can discover and maintain the local skill surface.
 
 ## Review Check
 
