@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
+**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-305 also has to update the route-state doctrine in `work-mode-router` so the preflight/execution split is sourced from durable markers, not chat memory. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
 
 **Architecture:** Treat `sources/first_party/skills/` as canonical source custody and `.agents/skills/` as an immediate repo-local install/projection surface. The installed tree should be sourced from durable repo skill custody, not copied as a raw dump, and each installed entry should remain traceable back to an exact canonical source path. Keep the recommended set narrow: only worker control-plane, safety, publication, and anti-slop skills that materially help repo workers in this repository.
 
@@ -14,6 +14,7 @@
 - Worker-facing guidance must live in the repo at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md`.
 - Do not vendor core Superpowers+ skills into the repo-local worker set.
 - Keep the recommended set narrow and worker-facing.
+- Treat `work-mode-router` as both a worker install candidate and a source-update target because it must classify preflight, approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence.
 - Use exact source paths for every included skill.
 - MARK-306 owns canonicalizing the approved set as `marketplace-project-pack`; MARK-305 must leave clean evidence, not finish canonicalization.
 - There is no dedicated `.agents/skills` validator in this repo yet; use the best available source-grounded checks rather than pretending `git diff --check` proves projection correctness.
@@ -26,6 +27,7 @@
 - Inspect: `sources/first_party/skills/work-mode-router/SKILL.md`
 - Inspect: `sources/first_party/skills/repo-worker-base/SKILL.md`
 - Inspect: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Inspect: `sources/first_party/skills/linear-superpowers/SKILL.md`
 - Inspect: `sources/first_party/skills/boring-loop/SKILL.md`
 - Inspect: `sources/first_party/skills/connector-safety/SKILL.md`
 - Inspect: `sources/first_party/skills/github-operations/SKILL.md`
@@ -54,7 +56,42 @@ Confirm the relevant source files and repo guidance before proposing anything:
 rg -n "worker-dispatch-linear|repo-worker-base|work-mode-router|boring-loop|connector-safety|github-operations|unslop-plus|safe-large-file-writing|using-superpowers|linear-superpowers|writing-plans|executing-plans|inspecting-the-environment|unslop-superpowers|crew-buster|bootstrap-router" sources\first_party\skills sources\third_party\superpowers\obra-superpowers\v6.0.3\skills AGENTS.md docs\AGENTS.md docs\custody-and-projection-doctrine.md
 ```
 
-- [x] **Step 2: Classify each skill by worker value**
+- [ ] **Step 2: Audit for route-state conflicts**
+
+Search the broader marketplace skill surface, including first-party source custody and projected/pack mirrors, for anything that could conflict with or bypass the durable preflight/execution split. Use the current repo source plus projected marketplace mirrors and search for at least these terms:
+
+```text
+preflight
+execution
+route state
+worker route
+plan PR
+plan-only PR
+approved plan
+merged plan
+staleness check
+stale plan
+current main
+fresh main
+chat memory
+false green
+worker dispatch
+repo-resident plan
+docs/superpowers/plans
+```
+
+Produce an audit table with:
+
+| Skill name | Source path | Relevant section or grep hit | Classification | Reason |
+| --- | --- | --- | --- | --- |
+
+Use these classifications:
+
+1. Must update in MARK-305 because it would otherwise conflict with or fail to route the new preflight/execution split.
+2. No update needed, but explicitly compatible.
+3. Out of scope, with reason.
+
+- [ ] **Step 3: Classify each skill by worker value**
 
 Use three buckets:
 
@@ -64,7 +101,7 @@ excluded because supplied by core Superpowers+
 excluded as tempting but not appropriate for the narrow repo worker baseline
 ```
 
-- [x] **Step 3: Keep the local set narrow**
+- [x] **Step 4: Keep the local set narrow**
 
 Prefer skills that help workers:
 
@@ -82,10 +119,13 @@ Prefer skills that help workers:
 
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
+- Modify: `sources/first_party/skills/work-mode-router/SKILL.md`
+- Modify: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Modify: `sources/first_party/skills/linear-superpowers/SKILL.md`
 
 **Interfaces:**
 - Consumes: the audit from Task 1.
-- Produces: a repo-local worker set recommendation plus a classification table and source-grounded install rules.
+- Produces: a repo-local worker set recommendation plus a classification table, source-grounded install rules, and route-state doctrine that matches the durable preflight/execution split.
 
 - [x] **Step 1: Include the repo-local baseline**
 
@@ -122,7 +162,34 @@ Recommended core set for `.agents/skills`:
 | `base-doctrine` | Cross-project doctrine store, not a repo-local worker baseline skill. |
 | `bootstrap-router` | Global bootstrap router, but too broad for the narrow `.agents/skills` worker set. |
 
-- [x] **Step 4: State the install/projection rule**
+- [x] **Step 4: Update the route-state doctrine**
+
+Revise `work-mode-router` to classify from durable markers only, not chat memory. It should inspect or require evidence for:
+
+```text
+- route-state block in the Linear preflight/implementation brief;
+- plan PR URL and current PR state;
+- plan repo path under docs/superpowers/plans/;
+- plan approval and merge evidence;
+- approved plan commit;
+- last staleness-check evidence.
+```
+
+It should route to the same route states used by `worker-dispatch-linear`:
+
+```text
+preflight_needed
+preflight_complete_pending_approval
+approved_plan_execution_ready
+stale_plan_repair_needed
+blocked_ambiguous
+```
+
+It must preserve the rule that a merged plan is an approved starting point, not current source truth. Execution still requires a staleness check against current source before edits.
+
+Update `worker-dispatch-linear` and `linear-superpowers` only if the audit shows their current wording would conflict with the durable route-state model or fail to carry the route-state block cleanly. If they remain compatible, document that explicitly in the audit table and do not broaden the source-update scope beyond the evidence.
+
+- [x] **Step 5: State the install/projection rule**
 
 The repo-local `.agents/skills` surface should be built by copying the approved skill directories from durable source custody into `.agents/skills/<skill>/` with the same directory names and the same skill file layout, not by hand-editing or dumping arbitrary folders.
 
@@ -190,11 +257,30 @@ If the projection includes a repo-local manifest or source map file, compare its
 
 `py -3 tools/validate_marketplace.py` remains useful for marketplace surfaces, but it does not prove `.agents/skills` source grounding by itself. Use it only as a supporting check if the broader repo surface changes.
 
+### Task 5: Publish the audit and keep MARK-306 clean
+
+**Files:**
+- Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
+
+**Interfaces:**
+- Consumes: the audit table from Task 1 and the route-state doctrine from Task 2.
+- Produces: an approval-ready plan that leaves MARK-306 with clean source evidence and no canonicalization spillover.
+
+- [ ] **Step 1: Record the audit outcome explicitly**
+
+If the audit finds no additional required updates beyond the ones already named, say that with the evidence. If it finds more required updates, fold them into MARK-305 before execution and call them out in the plan.
+
+- [ ] **Step 2: Keep MARK-306 scoped correctly**
+
+MARK-306 consumes the final approved MARK-305 set and the source evidence collected here. MARK-305 should not design the canonical marketplace plugin beyond the evidence needed to support MARK-306.
+
 ## Review Check
 
 - [x] The recommended local set matches the user-corrected baseline.
 - [x] The excluded set separates core Superpowers+ skills from narrow repo worker skills.
 - [x] The plan now says `.agents/skills` is an immediate projection surface, not canonical source.
 - [x] The plan now includes repo-facing `.agents` guidance files for discoverability and composition.
+- [x] The plan now requires a route-state audit across first-party source custody and projected mirrors before finalizing the recommendation.
+- [x] The plan now treats `work-mode-router` as a source-update target, not just a local install candidate.
 - [x] The plan now routes MARK-306 as the canonicalization follow-up.
 - [x] The plan names the best available checks because no dedicated `.agents/skills` validator exists yet.
