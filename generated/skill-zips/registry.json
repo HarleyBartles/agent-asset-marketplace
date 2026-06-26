@@ -2431,13 +2431,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/safe-large-file-writing/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 3691,
-      "source_sha256": "597f79ab5d0a0852019917a7355decf66cf57566b24a5bb3eb3eaf1146167723",
+      "source_bytes": 4765,
+      "source_sha256": "7f4915e1d3ee77699ab829883e6f2fcd588a4c2477a4298793b4231e663df4fa",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2029,
-      "zip_sha256": "a42728e581bc69ccc66f94cdd053c8015b35f79e9e0c6b1b031ccc91c9f04ee6"
+      "zip_size_bytes": 2444,
+      "zip_sha256": "4e6a46a79a341585ff7c0b5a10651fb4f1e5a94df9f3e93011ee551cb39c75e9"
     },
     {
       "pack": "house-skills",
