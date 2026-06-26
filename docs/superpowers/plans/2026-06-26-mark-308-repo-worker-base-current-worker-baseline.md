@@ -206,9 +206,36 @@ Expected: the branch has a single plan-only commit ready for draft PR publicatio
 
 - [ ] **Step 3: Open a draft PR targeting `main`**
 
-Create the draft PR from the committed plan branch, keep it on the same branch for later implementation, and report the PR URL plus head SHA in the worker handoff.
+Create the draft PR from the committed plan branch and keep it plan-only. The plan PR is reviewed and merged first. After approval and merge, implementation starts from latest `main` in a fresh branch/PR, and the implementation worker performs a staleness check against the approved plan before changing files. Only combine plan and implementation in one PR if the issue explicitly authorizes that exception.
 
-Expected: the plan PR exists, targets `main`, and becomes the later implementation PR after approval.
+Expected: the plan PR exists, targets `main`, and remains a plan-only review surface until it is approved and merged.
+
+### Task 5: Preserve the execution receipt in the implementation PR
+
+**Files:**
+- Update during execution: `docs/superpowers/plans/2026-06-26-mark-308-repo-worker-base-current-worker-baseline.md`
+
+**Interfaces:**
+- Consumes: the approved and merged plan file from Task 4, plus the implementation branch's current source state.
+- Produces: an execution PR that carries both the implementation changes and the checked-off repo-resident plan file when scope remains within the approved plan.
+
+- [ ] **Step 1: Require the plan file in the execution branch**
+
+Add the repo-resident plan file to the implementation branch and check off completed steps before publication.
+
+Expected: the execution PR includes the plan file with completed checkboxes, so the durable receipt travels with the implementation.
+
+- [ ] **Step 2: Repair stale plans only when the drift stays in scope**
+
+If the approved plan is stale but the drift is repairable inside the approved scope, repair the plan in the execution branch, then execute against the repaired plan.
+
+Expected: the execution PR includes the repaired checked-off plan plus implementation, and the branch stays within the approved scope.
+
+- [ ] **Step 3: Stop when drift changes the shape materially**
+
+If the drift changes scope materially, stop for human review instead of broadening the implementation or silently re-planning.
+
+Expected: no implementation proceeds until the scope question is resolved explicitly.
 
 ## Self-Review
 
@@ -217,3 +244,5 @@ Expected: the plan PR exists, targets `main`, and becomes the later implementati
 - [ ] The plan excludes `worker-dispatch-linear` from active surfaces.
 - [ ] The plan gives exact files and exact commands for regeneration and validation.
 - [ ] The plan does not rely on manual edits to generated zips or registry files.
+- [ ] The plan clearly separates the plan-only PR from the later implementation PR.
+- [ ] The plan requires the checked-off plan file to ride in the implementation PR.
