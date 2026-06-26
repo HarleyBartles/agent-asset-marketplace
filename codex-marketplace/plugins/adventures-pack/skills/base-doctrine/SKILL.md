@@ -39,7 +39,7 @@ Use the most specific project skill, workflow skill, plugin, repo skill, or repo
 
 ## Linear/Codex and agent-asset source boundary
 
-For coding work, Linear/Codex is now the default workflow control plane when available; use `worker-dispatch-linear` for dispatch, worker state, PR-gate handling, and golden-gate routing. This base skill does not manage coding workflow state.
+For coding work, Linear/Codex is now the default workflow control plane when available; use `linear-issue-shaping` for dispatch, worker state, PR-gate handling, and golden-gate routing. This base skill does not manage coding workflow state.
 
 For GPT-native skill work, installed skills are deployment targets, not durable source truth when a canonical repo source exists. The durable source should be the versioned agent asset repository or other named source artifact, then package/install through the native skill stack. Do not claim an installed skill is canonical merely because it is available in this session.
 

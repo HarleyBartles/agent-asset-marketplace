@@ -76,7 +76,7 @@ User approval can resolve user preference, but it does not erase system, safety,
 
 Route narrowly:
 
-- Worker status, PR-gate, and Linear issue event-state questions -> `worker-dispatch-linear`.
+- Worker status, PR-gate, and Linear issue event-state questions -> `linear-issue-shaping`.
 - GitHub PR, commit, branch, status, review-thread, merge, or main proof -> the repo/GitHub proof surface.
 - Validation adequacy after changed surfaces or validation claims exist -> the validation decision surface.
 - Package archive handoff/skill package evidence -> skill packager/buster stack.

@@ -187,15 +187,15 @@
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "canonical_name": "worker-dispatch-linear",
+      "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/worker-dispatch-linear",
-      "local_path": "skills/worker-dispatch-linear",
+      "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+      "local_path": "skills/linear-issue-shaping",
       "lane": "dependency",
       "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
-      "source_path": "sources/first_party/skills/worker-dispatch-linear/SKILL.md",
+      "source_path": "sources/first_party/skills/linear-issue-shaping/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"

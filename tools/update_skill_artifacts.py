@@ -43,6 +43,7 @@ def _run_full_regeneration_checks() -> None:
     """Run the repo-wide generated-surface checks for a full refresh."""
     _run_tool("generate_marketplace.py", "--check")
     _run_tool("generate_repo_index.py", "--check")
+    _run_tool("generate_adventures_pack_manifest.py", "--check")
     generate_all_mega_packs(write=False)
     reconcile_projection(write=False)
     _run_tool("generate_provenance_maps.py", "--check")
@@ -53,6 +54,7 @@ def _run_full_regeneration_writes(selected_pack: str | None) -> None:
     """Run every deterministic writer that participates in a full regen."""
     _run_tool("generate_marketplace.py")
     _run_tool("generate_repo_index.py")
+    _run_tool("generate_adventures_pack_manifest.py")
     generate_all_mega_packs(write=True)
     reconcile_projection(write=True, plugin_name=selected_pack)
     _run_tool("generate_provenance_maps.py")

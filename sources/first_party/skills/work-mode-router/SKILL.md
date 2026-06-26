@@ -113,7 +113,7 @@ Never load a project-specific wrapper skill unless its project matches the activ
 
 A project wrapper with a similar function name is not a fallback. Wrong-project doctrine is noise and may create false constraints.
 
-Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `worker-dispatch-linear`.
+Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `linear-issue-shaping`.
 
 ## Reference loading
 

@@ -9,7 +9,7 @@ How to use these skills:
   repo evidence.
 - Use `repo-worker-base` for fresh-main, worktree, branch, PR, validation, and
   publication hygiene.
-- Use `worker-dispatch-linear` for Linear packet shaping and worker-readiness
+- Use `linear-issue-shaping` for Linear packet shaping and worker-readiness
   handling after route classification.
 - Use `boring-loop` to keep the next move small and falsifiable.
 - Use `connector-safety` for any blocked or sensitive connector write.

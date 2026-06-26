@@ -29,9 +29,9 @@ Linear/Codex is the normal coding implementation route. Crew-buster may recommen
 
 Before recommending implementation delegation, run the route question through the current golden gate:
 
-  - `linear_codex_candidate`: repo-backed coding work that Codex Cloud can execute from an accessible repo environment. Next owner: `worker-dispatch-linear`.
+  - `linear_codex_candidate`: repo-backed coding work that Codex Cloud can execute from an accessible repo environment. Next owner: `linear-issue-shaping`.
   - `gpt_native_skillwork`: installed ChatGPT skill or doctrine work not proven repo-backed. Next owner: `skill-creator` for authored content, then `writing-skills` for cross-repo wording and doctrine checks when relevant.
-  - `repo_backed_skill_source`: skill/plugin/source work in a known editable repo. Next owner: `worker-dispatch-linear` only after repo path, publication path, and validation route are known.
+  - `repo_backed_skill_source`: skill/plugin/source work in a known editable repo. Next owner: `linear-issue-shaping` only after repo path, publication path, and validation route are known.
 - `github_proof`: PR, commit, branch, status, review, or main-state question. Next owner: the repo/GitHub proof surface.
 - `legacy_plan_b`: non-Linear worker packet only when Linear/Codex is unavailable, unsuitable, or explicitly rejected. Next owner: legacy dispatch skills.
 
@@ -83,7 +83,7 @@ Do not use dispatch-shaped YAML unless the user explicitly asks for a worker dis
 
 Defer to specialist skills instead of absorbing their work:
 
-- Use `worker-dispatch-linear` for normal coding dispatch, Codex worker status, Linear issue handoff, PR-gate handling, and Linear/Codex state checks.
+- Use `linear-issue-shaping` for normal coding dispatch, Codex worker status, Linear issue handoff, PR-gate handling, and Linear/Codex state checks.
 - Use `boring-buster` when the task is to judge one issue/proposal as boring, red, blocked, or ready.
 - Use the current dispatch gate only when proving a non-Linear worker packet after Plan B is selected.
 - Use `ambiguity-buster` for unresolved actor, scope, source, terminology, or success-condition ambiguity.

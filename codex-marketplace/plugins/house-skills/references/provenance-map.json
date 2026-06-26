@@ -232,6 +232,13 @@
       "local_path": "skills/linear"
     },
     {
+      "canonical_name": "linear-issue-shaping",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+      "local_path": "skills/linear-issue-shaping"
+    },
+    {
       "canonical_name": "linear-superpowers",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -426,13 +433,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/work-mode-router",
       "local_path": "skills/work-mode-router"
-    },
-    {
-      "canonical_name": "worker-dispatch-linear",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/worker-dispatch-linear",
-      "local_path": "skills/worker-dispatch-linear"
     }
   ],
   "adapted_projections": []

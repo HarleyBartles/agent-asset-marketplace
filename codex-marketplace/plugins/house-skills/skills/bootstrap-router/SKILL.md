@@ -1,19 +1,19 @@
 ---
 name: bootstrap-router
-description: Bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to worker-dispatch-linear instead of legacy dispatch stacks.
+description: Bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping instead of legacy dispatch stacks.
 ---
 
 # Bootstrap Router
 
 Use this skill as the bootstrap router for new project sessions and workflow-sensitive starts. It classifies the current request, preserves an ordinary-chat escape hatch, and routes to the smallest controlling skill surface before substantive work.
 
-This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `worker-dispatch-linear`, GitHub proof skills, artifact skills, or package skills.
+This skill is not a doctrine store and does not execute project work. It does not replace project bootstrap skills, project doctrine skills, source-specific skills, `linear-issue-shaping`, GitHub proof skills, artifact skills, or package skills.
 
 ## Core posture
 
 Bootstrap is orientation and classification, not source inspection. A project-relevant bootstrap is mandatory once at new-session start when a project context is active or the first user task is project-scoped. Bootstrap must classify the current request before evidence-route, connector, mutation, artifact, worker, or downstream skill decisions.
 
-Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `worker-dispatch-linear` and let its golden gate decide whether Codex is executable, GPT-native skillwork must stay in the skill stack, or legacy fallback is actually needed.
+Normal coding work now routes through Linear/Codex by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because the user says `dispatch`; route coding work to `linear-issue-shaping` and let its golden gate decide whether Codex is executable, GPT-native skillwork must stay in the skill stack, or legacy fallback is actually needed.
 
 Gates are backstops, not the primary teaching surface. Future GPT should understand why a workflow gate exists before the gate has to catch a failure. Breaking a gate is bad because it may spend scarce resources, mutate protected source, collapse ambiguity, launder reports into truth, create false closure, or push work away from the correct production boundary.
 
@@ -36,7 +36,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 
 ## Routing map
 
-- `linear_codex_coding` -> `worker-dispatch-linear` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
+- `linear_codex_coding` -> `linear-issue-shaping` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
 - `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> `github-operations` after a GitHub artifact exists. Do not use GitHub Operations to decide worker state or issue routing.
 - `linear_control` -> `linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
@@ -86,7 +86,7 @@ Never load a project-specific wrapper skill unless its project matches the activ
 
 A project wrapper with a similar function name is not a fallback. Wrong-project doctrine is noise and may create false constraints.
 
-Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `worker-dispatch-linear`.
+Project-specific skills must not own generic dispatch doctrine after Linear/Codex adoption. They should add local domain constraints, validation preferences, protected surfaces, and source-truth posture, then route worker control through cross-runtime `linear-issue-shaping`.
 
 ## Reference loading
 

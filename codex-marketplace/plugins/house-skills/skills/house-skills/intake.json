@@ -125,9 +125,9 @@
                     },
                     {
                         "issue":  "MARK-30",
-                        "source_id":  "worker-dispatch-linear-v2",
-                        "source_path":  "sources/first_party/skills/worker-dispatch-linear",
-                        "public_name":  "worker-dispatch-linear",
+                        "source_id":  "linear-issue-shaping-v1",
+                        "source_path":  "sources/first_party/skills/linear-issue-shaping",
+                        "public_name":  "linear-issue-shaping",
                         "provenance_name":  "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
                         "scope":  "Linear issue dispatch and work packet control plane",
                         "import_state":  "imported"
@@ -222,7 +222,7 @@
                         "provenance_name":  "MARK-161 bootstrap-router seed contract",
                         "scope":  "project bootstrap routing and first-turn classification",
                         "import_state":  "imported",
-                        "notes":  "Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through worker-dispatch-linear."
+                        "notes":  "Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping."
                     },
                     {
                         "issue":  "MARK-30",
@@ -413,7 +413,7 @@
                         "provenance_name":  "MARK-139 Linear Superpowers compositional skill",
                         "scope":  "Linear issue and track shaping with smallest-applicable workflow selection",
                         "import_state":  "imported",
-                        "notes":  "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes /using-superpowers, /writing-plans, /executing-plans, /connector-safety, and /unslop-superpowers without introducing a second source of truth. It now owns compact issue shaping directly and routes worker-ready packets through worker-dispatch-linear."
+                        "notes":  "First-party Harley-owned source custody for compositional Linear issue and track shaping. Composes /using-superpowers, /writing-plans, /executing-plans, /connector-safety, and /unslop-superpowers without introducing a second source of truth. It now owns compact issue shaping directly and routes worker-ready packets through linear-issue-shaping."
                     },
                     {
                         "issue":  "MARK-143",

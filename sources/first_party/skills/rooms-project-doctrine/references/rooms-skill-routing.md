@@ -14,7 +14,7 @@ Use the most specific skill.
 - `rooms-character-investigation-v1`: broad repo lookup and source-partitioned investigation packets.
 - `rooms-sheet-creator-v1`: prompt, peek, and recall sheet creation from investigation packets.
 - `rooms-image-sidecars-v0.1`: image-sidecar prep packets before Albert/Pit ingestion.
-- `worker-dispatch-linear-v2`: Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
+- `linear-issue-shaping-v1`: Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
 - `tps-reporting-v1`: generic report partitioning and report hygiene.
 - `tps-ingress-v1`: report ingress and review-comment verification.
 - `repo/GitHub proof surface`: repo, wrapper, gitlink, publication, and worker-return verification.

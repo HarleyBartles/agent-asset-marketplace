@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-305 also has to update the route-state doctrine in `work-mode-router` so the preflight/execution split is sourced from durable markers, not chat memory, and so `/using-superpowers` receives the discovered mode context as the workflow-lane chooser. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
+**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-305 also has to update the route-state doctrine in `work-mode-router` so the preflight/execution split is sourced from durable markers, not chat memory, and so `/using-superpowers` receives the discovered mode context as the workflow-lane chooser. MARK-303 is folded into this same execution pass by renaming the Linear shaping control-plane skill to `linear-issue-shaping`, repointing active references, and promoting connector-safe Linear shaping BAU. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
 
 **Architecture:** Treat `sources/first_party/skills/` as canonical source custody and `.agents/skills/` as an immediate repo-local install/projection surface. The installed tree should be sourced from durable repo skill custody, not copied as a raw dump, and each installed entry should remain traceable back to an exact canonical source path. Keep the recommended set narrow: only worker control-plane, safety, publication, and anti-slop skills that materially help repo workers in this repository.
 
@@ -26,7 +26,7 @@
 **Files:**
 - Inspect: `sources/first_party/skills/work-mode-router/SKILL.md`
 - Inspect: `sources/first_party/skills/repo-worker-base/SKILL.md`
-- Inspect: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Inspect: `sources/first_party/skills/linear-issue-shaping/SKILL.md`
 - Inspect: `sources/first_party/skills/linear-superpowers/SKILL.md`
 - Inspect: `sources/first_party/skills/boring-loop/SKILL.md`
 - Inspect: `sources/first_party/skills/connector-safety/SKILL.md`
@@ -53,7 +53,7 @@
 Confirm the relevant source files and repo guidance before proposing anything:
 
 ```powershell
-rg -n "worker-dispatch-linear|repo-worker-base|work-mode-router|boring-loop|connector-safety|github-operations|unslop-plus|safe-large-file-writing|using-superpowers|linear-superpowers|writing-plans|executing-plans|inspecting-the-environment|unslop-superpowers|crew-buster|bootstrap-router" sources\first_party\skills sources\third_party\superpowers\obra-superpowers\v6.0.3\skills AGENTS.md docs\AGENTS.md docs\custody-and-projection-doctrine.md
+rg -n "worker-dispatch-linear|linear-issue-shaping|repo-worker-base|work-mode-router|boring-loop|connector-safety|github-operations|unslop-plus|safe-large-file-writing|using-superpowers|linear-superpowers|writing-plans|executing-plans|inspecting-the-environment|unslop-superpowers|crew-buster|bootstrap-router" sources\first_party\skills sources\third_party\superpowers\obra-superpowers\v6.0.3\skills AGENTS.md docs\AGENTS.md docs\custody-and-projection-doctrine.md
 ```
 
 - [x] **Step 2: Complete the route-state audit**
@@ -85,7 +85,7 @@ Completed audit:
 | Skill name | Source path | Relevant section or grep hit | Classification | Reason |
 | --- | --- | --- | --- | --- |
 | `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | `Core posture`, `First classification`, `Routing map`, `Golden-gate reminder`, `Bounded skill-read stop rule` | Update in MARK-305 | This is the canonical worker entrypoint for durable mode classification. It must classify route state from Linear/repo evidence and hand off the discovered mode to `/using-superpowers`, not pick the implementation lane itself. |
-| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Update in MARK-305 | It already keeps worker-ready as issue-ready only, but it must also keep the worker packet/readiness doctrine aligned with the route-state model and avoid confusing plan PRs with implementation PRs. |
+| `linear-issue-shaping` | `sources/first_party/skills/linear-issue-shaping/SKILL.md` | `description`, `Connector-safe Linear shaping BAU`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Update in MARK-305 | It is the renamed Linear shaping control-plane skill. MARK-303 folds into MARK-305 so the active references point at `linear-issue-shaping`, the connector-safe discover/read/mutate/discover/readback law is explicit, and the worker packet/readiness doctrine stays aligned with the route-state model. |
 | `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Update in MARK-305 | It already shapes Linear packets, but it must define and carry the compact Linear route-state block instead of directing workers into a Superpowers implementation lane from the plan-shaping surface. |
 | `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Update in MARK-305 | It already prevents false-green, but it must name the route-state false greens and the stale-plan repair split explicitly so route safety is visible in the worker loop. |
 | `repo-worker-base` | `sources/first_party/skills/repo-worker-base/SKILL.md` | `Fresh-main invariant`, `Worktree isolation gate`, `Branch and PR discipline`, `GREEN gate` | Checked compatible / no update | It already requires fresh-main discipline, worktree isolation, PR evidence, and explicit blockers. The route-state split is upstream of this skill, so no change is required. |
@@ -110,7 +110,7 @@ Final MARK-305 source-update set:
 | File | Decision | Why |
 | --- | --- | --- |
 | `sources/first_party/skills/work-mode-router/SKILL.md` | Update | It must classify preflight, pending approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence, then hand off to `/using-superpowers` with the discovered mode. |
-| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | Update | It must carry the worker-facing route-state/readiness doctrine and keep plan PRs distinct from implementation PRs. |
+| `sources/first_party/skills/linear-issue-shaping/SKILL.md` | Update | It must carry the worker-facing route-state/readiness doctrine and keep plan PRs distinct from implementation PRs. |
 | `sources/first_party/skills/linear-superpowers/SKILL.md` | Update | It must carry the compact Linear route-state block as the control/index surface rather than a Superpowers lane chooser. |
 | `sources/first_party/skills/boring-loop/SKILL.md` | Update | It must explicitly name the route-state false greens and the stale-plan repair split instead of only the general small-safe-move loop. |
 | `sources/first_party/skills/repo-worker-base/SKILL.md` | No update | Current wording already enforces fresh-main, worktree, branch, PR, and validation discipline. |
@@ -139,7 +139,7 @@ Prefer skills that help workers:
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
 - Modify: `sources/first_party/skills/work-mode-router/SKILL.md`
-- Modify: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Modify: `sources/first_party/skills/linear-issue-shaping/SKILL.md`
 - Modify: `sources/first_party/skills/linear-superpowers/SKILL.md`
 - Modify: `sources/first_party/skills/boring-loop/SKILL.md`
 
@@ -155,7 +155,7 @@ Recommended core set for `.agents/skills`:
 | --- | --- | --- |
 | `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | Session bootstrap and route classification before any repo action. |
 | `repo-worker-base` | `sources/first_party/skills/repo-worker-base/SKILL.md` | Fresh-main, worktree, branch, and PR hygiene for repo work. |
-| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | Worker readiness, Linear state handling, and preflight/execution split. |
+| `linear-issue-shaping` | `sources/first_party/skills/linear-issue-shaping/SKILL.md` | Worker readiness, Linear state handling, and the connector-safe shaping split. |
 | `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | Smallest safe move selection and false-green prevention. |
 | `connector-safety` | `sources/first_party/skills/connector-safety/SKILL.md` | Safe Linear/GitHub writes and blocked-write recovery. |
 | `github-operations` | `sources/first_party/skills/github-operations/SKILL.md` | PR, branch, merge, and publication proof. |
@@ -195,7 +195,7 @@ Revise `work-mode-router` to classify from durable markers only, not chat memory
 - last staleness-check evidence.
 ```
 
-It should route to the same route states used by `worker-dispatch-linear`:
+It should route to the same route states used by `linear-issue-shaping`:
 
 ```text
 preflight_needed
@@ -207,7 +207,7 @@ blocked_ambiguous
 
 It must preserve the rule that a merged plan is an approved starting point, not current source truth. Execution still requires a staleness check against current source before edits.
 
-The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` do not yet fully carry the route-state block, false-green naming, and stale-plan split the user asked us to prove, so they belong in the MARK-305 execution update set with `work-mode-router`.
+The audit above shows that `linear-issue-shaping`, `linear-superpowers`, and `boring-loop` do not yet fully carry the route-state block, false-green naming, and stale-plan split the user asked us to prove, so they belong in the MARK-305 execution update set with `work-mode-router`. MARK-303 folds into the same execution pass through `linear-issue-shaping`, so execution should update that source file together with the route-state doctrine rather than treating the rename as a separate surface.
 
 - [x] **Step 5: End-to-end route scenario**
 
@@ -223,7 +223,7 @@ The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `
 
 The repo-local `.agents/skills` surface should be built by copying the approved skill directories from durable source custody into `.agents/skills/<skill>/` with the same directory names and the same skill file layout, not by hand-editing or dumping arbitrary folders.
 
-The plan should leave a source-grounded manifest or source map in the repo-local surface that records the exact canonical source path for each installed skill, so later workers can verify where each local folder came from.
+The plan should leave a source-grounded manifest or source map in the repo-local surface that records the exact canonical source path for each installed skill, so later workers can verify where each local folder came from. The Adventures Pack bundle manifest is now regenerated by the canonical update stack via `tools/generate_adventures_pack_manifest.py`, which `tools/update_skill_artifacts.py` calls before projection so the pack is not a manual one-off.
 
 ### Task 3: Define the execution phase after approval
 
@@ -298,7 +298,7 @@ If the projection includes a repo-local manifest or source map file, compare its
 
 - [x] **Step 1: Record the audit outcome explicitly**
 
-The audit found four required source updates: `work-mode-router`, `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop`. All other named candidates and adjacent routing/proof skills listed above are checked compatible or out of scope, so execution should not rediscover scope.
+The audit found four required source updates: `work-mode-router`, `linear-issue-shaping`, `linear-superpowers`, and `boring-loop`. MARK-303 folds into the same execution pass through `linear-issue-shaping`; all other named candidates and adjacent routing/proof skills listed above are checked compatible or out of scope, so execution should not rediscover scope.
 
 - [x] **Step 2: Keep MARK-306 scoped correctly**
 
@@ -312,7 +312,7 @@ Every execution PR must include the updated repo-resident plan file with checkbo
 
 **Files:**
 - Modified: `sources/first_party/skills/work-mode-router/SKILL.md`
-- Modified: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
+- Modified: `sources/first_party/skills/linear-issue-shaping/SKILL.md`
 - Modified: `sources/first_party/skills/linear-superpowers/SKILL.md`
 - Modified: `sources/first_party/skills/boring-loop/SKILL.md`
 - Created: `.agents/INDEX.md`
@@ -330,7 +330,7 @@ The approved worker skills were copied into `.agents/skills` from the canonical 
 
 - [x] **Step 2: Update the source custody**
 
-`work-mode-router`, `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` were updated to reflect the durable route-state boundary and the `/using-superpowers` handoff model.
+`work-mode-router`, `linear-issue-shaping`, `linear-superpowers`, and `boring-loop` were updated to reflect the durable route-state boundary, the connector-safe Linear shaping rename from MARK-303, and the `/using-superpowers` handoff model.
 
 - [x] **Step 3: Create the worker-facing repo guidance**
 
