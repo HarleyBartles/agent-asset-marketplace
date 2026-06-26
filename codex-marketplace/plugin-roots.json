@@ -58,11 +58,11 @@
     },
     {
       "order": 6,
-      "name": "repo-worker-base",
+      "name": "repo-worker-pack",
       "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/repo-worker-base",
-      "plugin_root": "codex-marketplace/plugins/repo-worker-base",
-      "manifest_path": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+      "manifest_path": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
       "enabled": true
     },
     {

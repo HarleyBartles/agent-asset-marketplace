@@ -27,15 +27,10 @@ The Adventures Pack is a first-party project-scoped Codex plugin that packages t
 - `sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md`
 - `sources/first_party/skills/adventures-frame-buster/SKILL.md`
 
-### Generic Dependencies (7 skills)
+### Generic Dependencies (2 skills)
 
 - `sources/first_party/skills/don-logan-boundary/SKILL.md`
-- `sources/first_party/skills/base-doctrine/SKILL.md`
-- `sources/first_party/skills/linear-issue-shaping/SKILL.md`
-- `sources/first_party/skills/connector-safety/SKILL.md`
 - `sources/first_party/skills/linear/SKILL.md`
-- `sources/first_party/skills/tps-reporting/SKILL.md`
-- `sources/first_party/skills/tps-ingress/SKILL.md`
 
 ## Marketplace Adaptation
 
@@ -49,7 +44,7 @@ The Adventures Pack is a first-party project-scoped Codex plugin that packages t
 ## Bundle Inventory
 
 - Clean active Adventures skills projected: 10
-- Generic dependencies projected: 7
+- Generic dependencies projected: 2
 - Historical v1 imports projected as active inventory: 0
 
 ## Notes

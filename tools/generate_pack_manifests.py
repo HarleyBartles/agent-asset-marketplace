@@ -83,17 +83,18 @@ def _repo_index(plugin_root: str, *, source_ledger: list[str], provenance_refs: 
 
 PACKS: list[dict[str, Any]] = [
     {
-        "bundle_name": "repo-worker-base",
-        "plugin_root": "codex-marketplace/plugins/repo-worker-base",
+        "bundle_name": "repo-worker-pack",
+        "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
         "bundle_version": "1.0.0",
         "bundle_type": "projection-lane",
         "is_mega_pack": False,
         "notes": [
-            "Repo worker base bundle combines first-party repo hygiene skills into a compositional baseline.",
+            "Repo worker pack combines first-party repo hygiene skills into a compositional baseline.",
             "The bundle stays first-party only and keeps the repo-worker entrypoint thin and complementary.",
         ],
         "source_ledger": [
             "sources/first_party/skills/repo-worker-base",
+            "sources/first_party/skills/base-doctrine",
             "sources/first_party/skills/work-mode-router",
             "sources/first_party/skills/linear-issue-shaping",
             "sources/first_party/skills/boring-loop",
@@ -103,8 +104,8 @@ PACKS: list[dict[str, Any]] = [
             "sources/first_party/skills/safe-large-file-writing",
         ],
         "provenance_refs": [
-            "provenance/repo-worker-base.md",
-            "codex-marketplace/plugins/repo-worker-base/references/source-map.md",
+            "provenance/repo-worker-pack.md",
+            "codex-marketplace/plugins/repo-worker-pack/references/source-map.md",
         ],
         "entries": [
             _entry(
@@ -114,6 +115,14 @@ PACKS: list[dict[str, Any]] = [
                 canonical_source_path="sources/first_party/skills/repo-worker-base",
                 local_path="skills/repo-worker-base",
                 provenance_note="Projected verbatim from the first-party repo worker base skill.",
+            ),
+            _entry(
+                "base-doctrine",
+                source_category="first_party",
+                source_family="first_party",
+                canonical_source_path="sources/first_party/skills/base-doctrine",
+                local_path="skills/base-doctrine",
+                provenance_note="Projected verbatim from the first-party base-doctrine skill.",
             ),
             _entry(
                 "work-mode-router",

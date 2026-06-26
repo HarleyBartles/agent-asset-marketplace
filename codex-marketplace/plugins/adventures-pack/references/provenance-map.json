@@ -71,20 +71,6 @@
       "local_path": "skills/adventures-visual-preproduction"
     },
     {
-      "canonical_name": "base-doctrine",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/base-doctrine",
-      "local_path": "skills/base-doctrine"
-    },
-    {
-      "canonical_name": "connector-safety",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/connector-safety",
-      "local_path": "skills/connector-safety"
-    },
-    {
       "canonical_name": "don-logan-boundary",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -97,27 +83,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/linear",
       "local_path": "skills/linear"
-    },
-    {
-      "canonical_name": "linear-issue-shaping",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
-      "local_path": "skills/linear-issue-shaping"
-    },
-    {
-      "canonical_name": "tps-ingress",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-ingress",
-      "local_path": "skills/tps-ingress"
-    },
-    {
-      "canonical_name": "tps-reporting",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-reporting",
-      "local_path": "skills/tps-reporting"
     }
   ],
   "adapted_projections": []

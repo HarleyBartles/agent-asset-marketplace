@@ -77,10 +77,10 @@
       "category": "Coding"
     },
     {
-      "name": "repo-worker-base",
+      "name": "repo-worker-pack",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/repo-worker-base"
+        "path": "./codex-marketplace/plugins/repo-worker-pack"
       },
       "policy": {
         "installation": "AVAILABLE",

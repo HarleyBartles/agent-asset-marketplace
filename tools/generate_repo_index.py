@@ -12,18 +12,18 @@ from marketplace_utils import MARKETPLACE_PATH, MARKETPLACE_PLUGIN_SPECS, REPO_I
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO_WORKER_BASE_ENTRY = {
-    "name": "repo-worker-base",
-    "plugin_root": "codex-marketplace/plugins/repo-worker-base",
-    "plugin_manifest": "codex-marketplace/plugins/repo-worker-base/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/repo-worker-base/SOURCE.md",
+REPO_WORKER_PACK_ENTRY = {
+    "name": "repo-worker-pack",
+    "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+    "plugin_manifest": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
+    "source_md": "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
     "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/repo-worker-base/LICENSE",
+    "license_path": "codex-marketplace/plugins/repo-worker-pack/LICENSE",
     "bundle_manifest": None,
-    "skills_path": "codex-marketplace/plugins/repo-worker-base/skills",
-    "provenance_refs": ["provenance/repo-worker-base.md"],
+    "skills_path": "codex-marketplace/plugins/repo-worker-pack/skills",
+    "provenance_refs": ["provenance/repo-worker-pack.md"],
     "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/repo-worker-base",
+    "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
     "registry_alignment": {
         "status": "aligned",
         "note": None,

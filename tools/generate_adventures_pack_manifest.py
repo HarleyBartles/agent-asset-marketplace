@@ -2,8 +2,7 @@
 """Generate the Adventures Pack bundle manifest from the checked-in source surface.
 
 This keeps the project-scoped Adventures projection on the same deterministic
-regen path as the rest of the marketplace surfaces so skill renames do not
-become a manual special case.
+regen path as the rest of the marketplace surfaces.
 """
 
 from __future__ import annotations
@@ -17,29 +16,10 @@ from marketplace_utils import ROOT, load_json
 
 MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json"
 SOURCE_MD_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/SOURCE.md"
-RENAME_MAP = {
-    "worker-dispatch-linear": "linear-issue-shaping",
-}
 
 
 def _render_manifest(manifest: dict[str, Any]) -> str:
     return json.dumps(manifest, indent=2) + "\n"
-
-
-def _rewrite_component(component: dict[str, Any]) -> dict[str, Any]:
-    canonical_name = component.get("canonical_name")
-    if canonical_name not in RENAME_MAP:
-        return component
-
-    renamed = dict(component)
-    new_name = RENAME_MAP[str(canonical_name)]
-    renamed["canonical_name"] = new_name
-    renamed["canonical_source_path"] = f"sources/first_party/skills/{new_name}"
-    renamed["local_path"] = f"skills/{new_name}"
-    source_path = renamed.get("source_path")
-    if isinstance(source_path, str) and source_path.endswith("/SKILL.md"):
-        renamed["source_path"] = f"sources/first_party/skills/{new_name}/SKILL.md"
-    return renamed
 
 
 def build_expected_manifest() -> dict[str, Any]:
@@ -56,14 +36,8 @@ def build_expected_manifest() -> dict[str, Any]:
     if not isinstance(entries, list) or not entries:
         raise ValueError(f"{MANIFEST_PATH} must contain a non-empty entries list")
 
-    rewritten_entries: list[dict[str, Any]] = []
-    for entry in entries:
-        if not isinstance(entry, dict):
-            raise ValueError(f"{MANIFEST_PATH} entries must contain objects")
-        rewritten_entries.append(_rewrite_component(entry))
-
     expected = dict(manifest)
-    expected["entries"] = rewritten_entries
+    expected["entries"] = entries
     return expected
 
 
