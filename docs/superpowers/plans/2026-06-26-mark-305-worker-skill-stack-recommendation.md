@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-305 also has to update the route-state doctrine in `work-mode-router` so the preflight/execution split is sourced from durable markers, not chat memory. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
+**Goal:** Preflight a narrow repo-local `.agents/skills` worker set for `agent-asset-marketplace`, publish the approved recommendation in MARK-305, and then install/project that approved set into this repository's `.agents/skills` surface after approval so workers benefit immediately. The repo must also carry worker-facing guidance at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md` so the local worker set is discoverable and maintainable. MARK-305 also has to update the route-state doctrine in `work-mode-router` so the preflight/execution split is sourced from durable markers, not chat memory, and so `/using-superpowers` receives the discovered mode context as the workflow-lane chooser. MARK-306 will canonicalize the same approved set as the `marketplace-project-pack` plugin after MARK-305 lands.
 
 **Architecture:** Treat `sources/first_party/skills/` as canonical source custody and `.agents/skills/` as an immediate repo-local install/projection surface. The installed tree should be sourced from durable repo skill custody, not copied as a raw dump, and each installed entry should remain traceable back to an exact canonical source path. Keep the recommended set narrow: only worker control-plane, safety, publication, and anti-slop skills that materially help repo workers in this repository.
 
@@ -14,7 +14,7 @@
 - Worker-facing guidance must live in the repo at `.agents/INDEX.md`, `.agents/skills/INDEX.md`, and `.agents/skills/AGENTS.md`.
 - Do not vendor core Superpowers+ skills into the repo-local worker set.
 - Keep the recommended set narrow and worker-facing.
-- Treat `work-mode-router` as both a worker install candidate and a source-update target because it must classify preflight, approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence.
+- Treat `work-mode-router` as the canonical worker entrypoint for durable mode classification. It classifies route state from Linear/repo evidence and hands off the discovered mode to `/using-superpowers`; it does not choose the Superpowers implementation lane itself.
 - Use exact source paths for every included skill.
 - MARK-306 owns canonicalizing the approved set as `marketplace-project-pack`; MARK-305 must leave clean evidence, not finish canonicalization.
 - There is no dedicated `.agents/skills` validator in this repo yet; use the best available source-grounded checks rather than pretending `git diff --check` proves projection correctness.
@@ -84,10 +84,10 @@ Completed audit:
 
 | Skill name | Source path | Relevant section or grep hit | Classification | Reason |
 | --- | --- | --- | --- | --- |
-| `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | `Core posture`, `First classification`, `Routing map`, `Golden-gate reminder`, `Bounded skill-read stop rule` | Update in MARK-305 | This is the front-door classifier for the preflight/execution split. It still routes by broad request mode and does not yet require durable route-state evidence or the five route states the user specified. |
-| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Update in MARK-305 | It already keeps worker-ready as issue-ready only, but it does not define the durable route-state block or an execution-ready/stale-plan decision tree. MARK-305 needs that route-state guidance in the worker packet owner, not only in the front-door router. |
-| `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Update in MARK-305 | It already shapes Linear packets, but it does not carry the route-state block or the one-prompt preflight/pending-approval/execution-ready/stale/blocked branching the user asked to prove. |
-| `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Update in MARK-305 | It already prevents false-green, but it does not yet name the route-state block or the staleness-check gate that distinguishes execution-ready from stale-plan repair. |
+| `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | `Core posture`, `First classification`, `Routing map`, `Golden-gate reminder`, `Bounded skill-read stop rule` | Update in MARK-305 | This is the canonical worker entrypoint for durable mode classification. It must classify route state from Linear/repo evidence and hand off the discovered mode to `/using-superpowers`, not pick the implementation lane itself. |
+| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Update in MARK-305 | It already keeps worker-ready as issue-ready only, but it must also keep the worker packet/readiness doctrine aligned with the route-state model and avoid confusing plan PRs with implementation PRs. |
+| `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Update in MARK-305 | It already shapes Linear packets, but it must define and carry the compact Linear route-state block instead of directing workers into a Superpowers implementation lane from the plan-shaping surface. |
+| `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Update in MARK-305 | It already prevents false-green, but it must name the route-state false greens and the stale-plan repair split explicitly so route safety is visible in the worker loop. |
 | `repo-worker-base` | `sources/first_party/skills/repo-worker-base/SKILL.md` | `Fresh-main invariant`, `Worktree isolation gate`, `Branch and PR discipline`, `GREEN gate` | Checked compatible / no update | It already requires fresh-main discipline, worktree isolation, PR evidence, and explicit blockers. The route-state split is upstream of this skill, so no change is required. |
 | `github-operations` | `sources/first_party/skills/github-operations/SKILL.md` | `Default coding workflow boundary`, `Verification workflow`, `Publication proof`, `Issue-goal conformance` | Checked compatible / no update | It already keeps GitHub evidence separate from routing and does not own dispatch. It is compatible with the plan/approval/execution split as written. |
 | `connector-safety` | `sources/first_party/skills/connector-safety/SKILL.md` | `Automatic trigger`, `Discovery-before-mutation rule`, `Blocked-write recovery ladder`, `Handoff and evidence` | Checked compatible / no update | It narrows side effects and handles blocked writes safely, but it does not set or interpret the preflight route states. |
@@ -109,10 +109,10 @@ Final MARK-305 source-update set:
 
 | File | Decision | Why |
 | --- | --- | --- |
-| `sources/first_party/skills/work-mode-router/SKILL.md` | Update | It must classify preflight, pending approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence. |
-| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | Update | It must carry the worker-facing route-state block and the execution-ready versus stale-plan repair decision path in the Linear packet/worker handoff surface. |
-| `sources/first_party/skills/linear-superpowers/SKILL.md` | Update | It must carry the route-state block for plan-shaped packets so the worker-facing Linear shape already names the durable states and the approval boundary. |
-| `sources/first_party/skills/boring-loop/SKILL.md` | Update | It must explicitly pair false-green prevention with the route-state block and the stale-plan repair split instead of only naming the general small-safe-move loop. |
+| `sources/first_party/skills/work-mode-router/SKILL.md` | Update | It must classify preflight, pending approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence, then hand off to `/using-superpowers` with the discovered mode. |
+| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | Update | It must carry the worker-facing route-state/readiness doctrine and keep plan PRs distinct from implementation PRs. |
+| `sources/first_party/skills/linear-superpowers/SKILL.md` | Update | It must carry the compact Linear route-state block as the control/index surface rather than a Superpowers lane chooser. |
+| `sources/first_party/skills/boring-loop/SKILL.md` | Update | It must explicitly name the route-state false greens and the stale-plan repair split instead of only the general small-safe-move loop. |
 | `sources/first_party/skills/repo-worker-base/SKILL.md` | No update | Current wording already enforces fresh-main, worktree, branch, PR, and validation discipline. |
 | `sources/first_party/skills/github-operations/SKILL.md` | No update | Current wording already owns GitHub proof only after a GitHub artifact exists. |
 | `sources/first_party/skills/connector-safety/SKILL.md` | No update | Current wording already keeps connector-side effects narrow and auditable. |
@@ -207,17 +207,17 @@ blocked_ambiguous
 
 It must preserve the rule that a merged plan is an approved starting point, not current source truth. Execution still requires a staleness check against current source before edits.
 
-The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` do not yet fully carry the route-state block and stale-plan split the user asked us to prove, so they belong in the MARK-305 execution update set with `work-mode-router`.
+The audit above shows that `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop` do not yet fully carry the route-state block, false-green naming, and stale-plan split the user asked us to prove, so they belong in the MARK-305 execution update set with `work-mode-router`.
 
 - [x] **Step 5: End-to-end route scenario**
 
 | Start state from short prompt | Durable markers the worker reads | Owning skill | Worker action |
 | --- | --- | --- | --- |
-| `preflight_needed` | No approved plan commit, no approved plan PR state, route-state block absent or says preflight, no fresh staleness evidence, Linear issue still points at the problem and not a ready execution packet. | `work-mode-router` | Read Linear issue, linked docs, and repo source; classify as preflight; write/revise the plan; stop before execution. |
-| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, but approval/merge evidence is absent. | `linear-superpowers` | Shape the Linear packet, keep the worker-facing route-state block visible, and wait for approval rather than mutating repo code. |
-| `approved_plan_execution_ready` | Approved plan commit exists, plan PR/merge evidence exists, current `main` has been checked, and the last staleness check is fresh. | `worker-dispatch-linear` | Treat the worker packet as execution-ready, keep the route-state block intact, and move into the approved implementation route. |
-| `stale_plan_repair_needed` | Approved plan exists, but current `main` has moved or the last staleness check is stale relative to the approved plan commit. | `repo-worker-base` | Refresh from current `origin/main`, update or rebase the branch, rerun the staleness check, and do not start implementation until the plan is current again. |
-| `blocked_ambiguous` | Durable markers disagree, approval state is unclear, plan path is missing, or the route-state block does not resolve to a legal next step. | `boring-loop` | Narrow the queue, identify the smallest safe next check, and stop at ambiguity instead of laundering it into execution. |
+| `preflight_needed` | No approved repo-resident plan exists, route-state block says preflight or is absent, and there is no approved plan commit or fresh staleness evidence. | `work-mode-router` | Classify preflight, route to `/using-superpowers` with preflight context, produce the plan-only PR, update Linear route state, and stop before implementation. |
+| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, but approval/merge evidence is absent. | `work-mode-router` | Classify pending approval, route to `/using-superpowers` with pending-approval context, and stop. |
+| `approved_plan_execution_ready` | Approved plan is merged to `main`, plan path/commit/PR evidence exists, and the staleness check passes against current source. | `work-mode-router` | Classify execution-ready, route to `/using-superpowers` with execution context, and execute from the approved plan. |
+| `stale_plan_repair_needed` | Approved merged plan exists, but current source drift makes the plan stale. | `work-mode-router` | Classify stale-plan repair, route to `/using-superpowers` with repair-then-execute context, repair the plan in the execution branch if the drift stays within scope, and publish the repaired plan with the implementation. |
+| `blocked_ambiguous` | Durable markers disagree, plan path is missing, approval evidence is unclear, PR state cannot be proven, or the route state cannot be classified safely. | `work-mode-router` | Classify blocked/ambiguous, stop, and report the exact missing or contradictory durable evidence. |
 
 - [x] **Step 6: State the install/projection rule**
 
@@ -298,11 +298,15 @@ If the projection includes a repo-local manifest or source map file, compare its
 
 - [x] **Step 1: Record the audit outcome explicitly**
 
-The audit found exactly one required source update: `work-mode-router`. All other named candidates and adjacent routing/proof skills listed above are checked compatible or out of scope, so execution should not rediscover scope.
+The audit found four required source updates: `work-mode-router`, `worker-dispatch-linear`, `linear-superpowers`, and `boring-loop`. All other named candidates and adjacent routing/proof skills listed above are checked compatible or out of scope, so execution should not rediscover scope.
 
 - [x] **Step 2: Keep MARK-306 scoped correctly**
 
 MARK-306 consumes the final approved MARK-305 set and the source evidence collected here. MARK-305 should not design the canonical marketplace plugin beyond the evidence needed to support MARK-306.
+
+- [x] **Step 3: Add the plan-artifact invariant**
+
+Every execution PR must include the updated repo-resident plan file with checkboxes checked to reflect completed work. If the plan was stale, the execution PR must include the repaired plan plus the implementation. If the plan was fresh, the execution PR must still include the updated checked-off plan.
 
 ## Review Check
 
