@@ -56,9 +56,9 @@ Confirm the relevant source files and repo guidance before proposing anything:
 rg -n "worker-dispatch-linear|repo-worker-base|work-mode-router|boring-loop|connector-safety|github-operations|unslop-plus|safe-large-file-writing|using-superpowers|linear-superpowers|writing-plans|executing-plans|inspecting-the-environment|unslop-superpowers|crew-buster|bootstrap-router" sources\first_party\skills sources\third_party\superpowers\obra-superpowers\v6.0.3\skills AGENTS.md docs\AGENTS.md docs\custody-and-projection-doctrine.md
 ```
 
-- [ ] **Step 2: Audit for route-state conflicts**
+- [x] **Step 2: Complete the route-state audit**
 
-Search the broader marketplace skill surface, including first-party source custody and projected/pack mirrors, for anything that could conflict with or bypass the durable preflight/execution split. Use the current repo source plus projected marketplace mirrors and search for at least these terms:
+Search terms used during preflight:
 
 ```text
 preflight
@@ -80,26 +80,45 @@ repo-resident plan
 docs/superpowers/plans
 ```
 
-Produce an audit table with:
+Completed audit:
 
 | Skill name | Source path | Relevant section or grep hit | Classification | Reason |
 | --- | --- | --- | --- | --- |
+| `work-mode-router` | `sources/first_party/skills/work-mode-router/SKILL.md` | `Core posture`, `First classification`, `Routing map`, `Golden-gate reminder`, `Bounded skill-read stop rule` | Update in MARK-305 | This is the front-door classifier for the preflight/execution split. It still routes by broad request mode and does not yet require durable route-state evidence or the five route states the user specified. |
+| `worker-dispatch-linear` | `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | `description`, `Core posture`, `Issue-type classification`, `Worker event-log handling`, `Route classification` | Checked compatible / no update | It already keeps worker-ready as issue-ready only, forbids claiming execution without proof, and routes worker packets through Linear/Codex and GitHub evidence. The durable route-state block belongs in the front-door router, not here. |
+| `linear-superpowers` | `sources/first_party/skills/linear-superpowers/SKILL.md` | `Core job`, `Composition`, `Linear shaping rules`, `Authority split` | Checked compatible / no update | It already shapes Linear packets, tells plan-shaped packets to use `/writing-plans` and `/executing-plans`, and defers worker dispatch to `worker-dispatch-linear`. No conflicting route-state doctrine appears in the current wording. |
+| `boring-loop` | `sources/first_party/skills/boring-loop/SKILL.md` | `Readiness`, `False-green prevention`, `Route to specialist skills`, `Variant boundary` | Checked compatible / no update | It already prevents false-green and routes to the right specialist. It does not decide durable route state, so it does not need MARK-305 updates. |
+| `repo-worker-base` | `sources/first_party/skills/repo-worker-base/SKILL.md` | `Fresh-main invariant`, `Worktree isolation gate`, `Branch and PR discipline`, `GREEN gate` | Checked compatible / no update | It already requires fresh-main discipline, worktree isolation, PR evidence, and explicit blockers. The route-state split is upstream of this skill, so no change is required. |
+| `github-operations` | `sources/first_party/skills/github-operations/SKILL.md` | `Default coding workflow boundary`, `Verification workflow`, `Publication proof`, `Issue-goal conformance` | Checked compatible / no update | It already keeps GitHub evidence separate from routing and does not own dispatch. It is compatible with the plan/approval/execution split as written. |
+| `connector-safety` | `sources/first_party/skills/connector-safety/SKILL.md` | `Automatic trigger`, `Discovery-before-mutation rule`, `Blocked-write recovery ladder`, `Handoff and evidence` | Checked compatible / no update | It narrows side effects and handles blocked writes safely, but it does not set or interpret the preflight route states. |
+| `unslop-plus` | `sources/first_party/skills/unslop-plus/SKILL.md` | `Available Profiles`, `Profile Selection Guide`, `Deliverable` | Checked compatible / no update | It provides anti-slop profiles for planning and worker returns, which supports the plan but does not govern route-state doctrine. |
+| `safe-large-file-writing` | `sources/first_party/skills/safe-large-file-writing/SKILL.md` | `Core rule`, `Safe sequence`, `Decision test` | Checked compatible / no update | It reduces write risk for large docs and generated payloads. It is orthogonal to route-state selection and approval flow. |
+| `tps-reporting` | `sources/first_party/skills/tps-reporting/SKILL.md` | `Linear/Codex boundary`, `Compact coding report shape`, `Report laundering hard stops` | Checked compatible / no update | It is a report-partitioning skill that keeps claims separate from evidence. It explicitly defers dispatch and proof to the control-plane skills, so it does not need a MARK-305 update. |
+| `crew-buster` | `sources/first_party/skills/crew-buster/SKILL.md` | `description`, `route interrogation`, `do not use dispatch-shaped YAML` | Out of scope | It is a pre-action Crew lens for route/authority/fallback reasoning, but it is not the repo-local worker baseline and it does not own the durable router update. |
+| `crew` | `sources/first_party/skills/crew/SKILL.md` | `description`, `doctrine source`, `not an execution surface` | Out of scope | It is a general Crew doctrine source, not a worker-installed repo skill for MARK-305. |
+| `using-superpowers` | `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/using-superpowers/SKILL.md` | `implementation skills second` and workflow entrypoint content | Out of scope | It is a core Superpowers+ environment capability, not a repo-local install candidate. |
+| `writing-plans` | `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/writing-plans/SKILL.md` | `Save plans to`, `After saving the plan, offer execution choice` | Out of scope | It is a core planning skill already available in the worker environment and not part of the repo-local baseline. |
+| `executing-plans` | `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/executing-plans/SKILL.md` | execution-workflow content | Out of scope | It is the core execution companion to `writing-plans`, so it is intentionally not vendored into `.agents/skills`. |
+| `inspecting-the-environment` | `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/inspecting-the-environment/SKILL.md` | environment/branch/worktree inspection content | Out of scope | It is a core environment-check capability already present in the worker environment, not a repo-local install target. |
+| `unslop-superpowers` | `sources/third_party/superpowers/obra-superpowers/v6.0.3/skills/unslop-superpowers/SKILL.md` | anti-slop doctrine content | Out of scope | Do not substitute it for `unslop-plus` without separate proof that it is the correct repo-local surface. |
+| `bootstrap-router` | `sources/first_party/skills/bootstrap-router/SKILL.md` | bootstrap and routing doctrine content | Out of scope | It is broader bootstrap doctrine and does not own the repo-local durable route-state split. |
 
-Use these classifications:
+- [x] **Step 3: Freeze the source-update set**
 
-1. Must update in MARK-305 because it would otherwise conflict with or fail to route the new preflight/execution split.
-2. No update needed, but explicitly compatible.
-3. Out of scope, with reason.
+Final MARK-305 source-update set:
 
-- [ ] **Step 3: Classify each skill by worker value**
-
-Use three buckets:
-
-```text
-included in .agents/skills
-excluded because supplied by core Superpowers+
-excluded as tempting but not appropriate for the narrow repo worker baseline
-```
+| File | Decision | Why |
+| --- | --- | --- |
+| `sources/first_party/skills/work-mode-router/SKILL.md` | Update | It must classify preflight, pending approval, execution-ready, stale-plan repair, and blocked/ambiguous routes from durable evidence. |
+| `sources/first_party/skills/worker-dispatch-linear/SKILL.md` | No update | Current wording already treats worker-ready as issue-ready only and defers execution proof to the target systems. |
+| `sources/first_party/skills/linear-superpowers/SKILL.md` | No update | Current wording already routes plan-shaped packets to `/writing-plans` and `/executing-plans` while delegating worker state to `worker-dispatch-linear`. |
+| `sources/first_party/skills/boring-loop/SKILL.md` | No update | Current wording already handles smallest-safe-move selection and false-green prevention. |
+| `sources/first_party/skills/repo-worker-base/SKILL.md` | No update | Current wording already enforces fresh-main, worktree, branch, PR, and validation discipline. |
+| `sources/first_party/skills/github-operations/SKILL.md` | No update | Current wording already owns GitHub proof only after a GitHub artifact exists. |
+| `sources/first_party/skills/connector-safety/SKILL.md` | No update | Current wording already keeps connector-side effects narrow and auditable. |
+| `sources/first_party/skills/unslop-plus/SKILL.md` | No update | Current wording already supplies anti-slop profiles without controlling route state. |
+| `sources/first_party/skills/safe-large-file-writing/SKILL.md` | No update | Current wording already covers safe write mechanics only. |
+| `sources/first_party/skills/tps-reporting/SKILL.md` | No update | Current wording already partitions claims from evidence and defers dispatch to other skills. |
 
 - [x] **Step 4: Keep the local set narrow**
 
@@ -120,12 +139,10 @@ Prefer skills that help workers:
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
 - Modify: `sources/first_party/skills/work-mode-router/SKILL.md`
-- Modify: `sources/first_party/skills/worker-dispatch-linear/SKILL.md`
-- Modify: `sources/first_party/skills/linear-superpowers/SKILL.md`
 
 **Interfaces:**
 - Consumes: the audit from Task 1.
-- Produces: a repo-local worker set recommendation plus a classification table, source-grounded install rules, and route-state doctrine that matches the durable preflight/execution split.
+- Produces: a repo-local worker set recommendation plus a completed classification table, source-grounded install rules, and route-state doctrine that matches the durable preflight/execution split.
 
 - [x] **Step 1: Include the repo-local baseline**
 
@@ -187,7 +204,7 @@ blocked_ambiguous
 
 It must preserve the rule that a merged plan is an approved starting point, not current source truth. Execution still requires a staleness check against current source before edits.
 
-Update `worker-dispatch-linear` and `linear-superpowers` only if the audit shows their current wording would conflict with the durable route-state model or fail to carry the route-state block cleanly. If they remain compatible, document that explicitly in the audit table and do not broaden the source-update scope beyond the evidence.
+Do not modify `worker-dispatch-linear`, `linear-superpowers`, or the other checked-compatible skills in MARK-305. The audit above shows their current wording already aligns with the durable route-state model; execution should consume that approved list rather than discovering scope later.
 
 - [x] **Step 5: State the install/projection rule**
 
@@ -257,7 +274,7 @@ If the projection includes a repo-local manifest or source map file, compare its
 
 `py -3 tools/validate_marketplace.py` remains useful for marketplace surfaces, but it does not prove `.agents/skills` source grounding by itself. Use it only as a supporting check if the broader repo surface changes.
 
-### Task 5: Publish the audit and keep MARK-306 clean
+### Task 5: Keep MARK-306 clean
 
 **Files:**
 - Modify: `docs/superpowers/plans/2026-06-26-mark-305-worker-skill-stack-recommendation.md`
@@ -266,11 +283,11 @@ If the projection includes a repo-local manifest or source map file, compare its
 - Consumes: the audit table from Task 1 and the route-state doctrine from Task 2.
 - Produces: an approval-ready plan that leaves MARK-306 with clean source evidence and no canonicalization spillover.
 
-- [ ] **Step 1: Record the audit outcome explicitly**
+- [x] **Step 1: Record the audit outcome explicitly**
 
-If the audit finds no additional required updates beyond the ones already named, say that with the evidence. If it finds more required updates, fold them into MARK-305 before execution and call them out in the plan.
+The audit found exactly one required source update: `work-mode-router`. All other named candidates and adjacent routing/proof skills listed above are checked compatible or out of scope, so execution should not rediscover scope.
 
-- [ ] **Step 2: Keep MARK-306 scoped correctly**
+- [x] **Step 2: Keep MARK-306 scoped correctly**
 
 MARK-306 consumes the final approved MARK-305 set and the source evidence collected here. MARK-305 should not design the canonical marketplace plugin beyond the evidence needed to support MARK-306.
 
