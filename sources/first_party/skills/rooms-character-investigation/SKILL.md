@@ -1,11 +1,24 @@
-﻿---
+---
 name: rooms-character-investigation
-description: rooms character and subject investigations with source partitioning for prompt, peek, and recall handoffs.
+description: Use when rooms character and subject investigations with source partitioning
+  for prompt, peek, and recall handoffs.
 metadata:
   source-id: rooms-character-investigation
   source-path: sources/first_party/skills/rooms-character-investigation/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Character Investigation first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms character and subject investigations with source partitioning
+    for prompt, peek, and recall handoffs.
+  use_when:
+  - Use when rooms character and subject investigations with source partitioning for
+    prompt, peek, and recall handoffs.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/rooms-character-investigation
+license: MIT
 ---
 # Rooms Character Investigation
 

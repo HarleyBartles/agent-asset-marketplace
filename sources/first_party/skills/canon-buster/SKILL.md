@@ -1,11 +1,24 @@
-﻿---
+---
 name: canon-buster
-description: Use this skill before making, changing, summarizing, publishing, dispatching, or relying on a durable canon claim.
+description: Use when use this skill before making, changing, summarizing, publishing,
+  dispatching, or relying on a durable canon claim.
 metadata:
   source-id: canon-buster
   source-path: sources/first_party/skills/canon-buster/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Canon Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill before making, changing, summarizing, publishing,
+    dispatching, or relying on a durable canon claim.
+  use_when:
+  - Use when use this skill before making, changing, summarizing, publishing, dispatching,
+    or relying on a durable canon claim.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/canon-buster
+license: MIT
 ---
 # Canon Buster
 

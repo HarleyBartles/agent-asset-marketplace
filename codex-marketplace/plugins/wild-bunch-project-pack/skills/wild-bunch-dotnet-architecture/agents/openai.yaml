@@ -3,8 +3,6 @@ interface:
   short_description: Apply Wild Bunch .NET architecture guardrails
   default_prompt: Keep Wild Bunch domain rules protected while choosing a pragmatic
     .NET architecture.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
 policy:
   products:
   - chatgpt

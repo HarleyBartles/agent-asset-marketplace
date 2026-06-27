@@ -1,11 +1,27 @@
-﻿---
+---
 name: buster-framework
-description: 'Use this skill when designing, running, repairing, or interpreting a buster: a pre-action review gate that exposes hidden risk before GPT acts, dispatches, mutates a durable surface, or treats a claim as resolved.'
+description: 'Use when use this skill when designing, running, repairing, or interpreting
+  a buster: a pre-action review gate that exposes hidden risk before GPT acts, dispatches,
+  mutates a durable surface, or treats a claim as resolved.'
 metadata:
   source-id: buster-framework
   source-path: sources/first_party/skills/buster-framework/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Buster Framework first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: 'Use when use this skill when designing, running, repairing, or interpreting
+    a buster: a pre-action review gate that exposes hidden risk before GPT acts, dispatches,
+    mutates a durable surface, or treats a claim as resolved.'
+  use_when:
+  - 'Use when use this skill when designing, running, repairing, or interpreting a
+    buster: a pre-action review gate that exposes hidden risk before GPT acts, dispatches,
+    mutates a durable surface, or treats a claim as resolved.'
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/buster-framework
+license: MIT
 ---
 # Buster Framework
 

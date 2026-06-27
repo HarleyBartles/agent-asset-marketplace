@@ -1,6 +1,34 @@
 ---
 name: adventures-asset-sheet-compiler
-description: compile Adventures asset sheets through deterministic no-credit template work. Use when Harley asks to compile, assemble, lay out, inspect, package, or QA externally accepted source images on an approved template, or to author a blank reusable asset-sheet template package using bundled PIL tooling. Do not treat PIG self-QA as acceptance.
+description: Use when compile Adventures asset sheets through deterministic no-credit
+  template work. Use when Harley asks to compile, assemble, lay out, inspect, package,
+  or QA externally accepted source images on an approved template, or to author a
+  blank reusable asset-sheet template package using bundled PIL tooling. Do not treat
+  PIG self-QA as acceptance.
+metadata:
+  source-id: adventures-asset-sheet-compiler
+  source-path: sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md
+  provenance-name: Adventures Asset Sheet Compiler first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when compile Adventures asset sheets through deterministic no-credit
+    template work. Use when Harley asks to compile, assemble, lay out, inspect, package,
+    or QA externally accepted source images on an approved template, or to author
+    a blank reusable asset-sheet template package using bundled PIL tooling. Do not
+    treat PIG self-QA as acceptance.
+  use_when:
+  - Use when compile Adventures asset sheets through deterministic no-credit template
+    work. Use when Harley asks to compile, assemble, lay out, inspect, package, or
+    QA externally accepted source images on an approved template, or to author a blank
+    reusable asset-sheet template package using bundled PIL tooling. Do not treat
+    PIG self-QA as acceptance.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/adventures-asset-sheet-compiler
+  - codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler
+license: MIT
 ---
 
 # Adventures Asset Sheet Compiler

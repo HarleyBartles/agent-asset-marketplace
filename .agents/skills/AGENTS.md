@@ -17,7 +17,7 @@ How to use these skills:
 - Use `boring-loop` to keep the next move small and falsifiable.
 - Use `connector-safety` for any blocked or sensitive connector write.
 - Use `github-operations` only after a GitHub artifact exists.
-- Use `unslop-plus` and `safe-large-file-writing` as support skills when the
+- Use `unslop-plus` and `context-safety` as support skills when the
   workflow needs anti-slop or safer large text writes.
 
 Update rules:

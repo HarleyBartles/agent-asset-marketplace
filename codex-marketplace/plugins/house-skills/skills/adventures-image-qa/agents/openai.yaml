@@ -2,10 +2,9 @@ interface:
   display_name: Adventures Image QA
   short_description: QA Adventures generated images across scene, asset, and reference
     lanes.
-  icon: assets/icon.svg
-  primary_color: '#17B1A6'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-image-qa when review adventures generated candidates
+    and compiled assets against source constraints and acceptance criteria, while
+    keeping qa separate from image generation or editing authority.
 policy:
   products:
   - chatgpt

@@ -1,11 +1,24 @@
-﻿---
+---
 name: rooms-sheet-creator
-description: create Rooms prompt, peek, and recall sheets from character-investigation packets.
+description: Use when create Rooms prompt, peek, and recall sheets from character-investigation
+  packets.
 metadata:
   source-id: rooms-sheet-creator
   source-path: sources/first_party/skills/rooms-sheet-creator/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Sheet Creator first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when create Rooms prompt, peek, and recall sheets from character-investigation
+    packets.
+  use_when:
+  - Use when create Rooms prompt, peek, and recall sheets from character-investigation
+    packets.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/rooms-sheet-creator
+license: MIT
 ---
 # Rooms Sheet Creator
 

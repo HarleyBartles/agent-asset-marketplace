@@ -2,8 +2,12 @@ interface:
   display_name: Crew
   short_description: GPT-wide Crew thinking doctrine for route, authority, fallback,
     and receipt reasoning.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /crew when gpt-wide doctrine for the crew thinking roles. use
+    when another skill or user request needs route, authority, fallback, or receipt
+    reasoning, when a plan or claimed green needs a dependency check, or when the
+    task needs a clean crew lens before action. do not use as the execution surface
+    for linear dispatch, github proof, validation, reporting, or skill packaging;
+    specialist skills own those actions.
 policy:
   products:
   - chatgpt

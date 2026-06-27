@@ -1,11 +1,30 @@
-﻿---
+---
 name: adventures-project-doctrine
-description: Shared Adventures doctrine for repo truth, source packages, bundle projection, and stage-boundary discipline across planning, source discovery, QA, image readiness, generation/editing, asset compilation, deck/package work, and acceptance.
+description: Use when shared Adventures doctrine for repo truth, source packages,
+  bundle projection, and stage-boundary discipline across planning, source discovery,
+  QA, image readiness, generation/editing, asset compilation, deck/package work, and
+  acceptance.
 metadata:
   source-id: adventures-project-doctrine
   source-path: sources/first_party/skills/adventures-project-doctrine/SKILL.md
-  provenance-name: MARK-22 prep payload for Adventures House Skills survivor import
-license: "MIT"
+  provenance-name: Adventures Project Doctrine first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when shared Adventures doctrine for repo truth, source packages, bundle
+    projection, and stage-boundary discipline across planning, source discovery, QA,
+    image readiness, generation/editing, asset compilation, deck/package work, and
+    acceptance.
+  use_when:
+  - Use when shared Adventures doctrine for repo truth, source packages, bundle projection,
+    and stage-boundary discipline across planning, source discovery, QA, image readiness,
+    generation/editing, asset compilation, deck/package work, and acceptance.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/adventures-project-doctrine
+  - codex-marketplace/plugins/house-skills/skills/adventures-project-doctrine
+license: MIT
 ---
 # Adventures Project Doctrine
 

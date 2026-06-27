@@ -1,11 +1,22 @@
-﻿---
+---
 name: rooms-zoom-outs-buster
-description: rooms zoom-out compression checks against artifacts and source surfaces.
+description: Use when rooms zoom-out compression checks against artifacts and source
+  surfaces.
 metadata:
   source-id: rooms-zoom-outs-buster
   source-path: sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Zoom Outs Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms zoom-out compression checks against artifacts and source surfaces.
+  use_when:
+  - Use when rooms zoom-out compression checks against artifacts and source surfaces.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/rooms-zoom-outs-buster
+license: MIT
 ---
 # Rooms Zoom Outs Buster
 

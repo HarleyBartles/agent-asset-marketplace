@@ -1,11 +1,40 @@
-﻿---
+---
 name: linear
-description: 'Use for Linear connector mechanics: reading, creating, updating, commenting, and organizing Linear issues, projects, documents, labels, and statuses. Use when the user asks to inspect or mutate Linear objects, capture side notes durably, create planning issues/projects, or recover from Linear connector quirks. Do not use as the coding dispatch control plane: Linear/Codex worker routing, Codex status checks, PR-gate handling, and dispatch decisions belong to linear-issue-shaping; GitHub proof belongs to the repo/GitHub proof surface.'
+description: 'Use when Linear connector mechanics: reading, creating, updating, commenting,
+  and organizing Linear issues, projects, documents, labels, and statuses. Use when
+  the user asks to inspect or mutate Linear objects, capture side notes durably, create
+  planning issues/projects, or recover from Linear connector quirks. Do not use as
+  the coding dispatch control plane: Linear/Codex worker routing, Codex status checks,
+  PR-gate handling, and dispatch decisions belong to linear-issue-shaping; GitHub
+  proof belongs to the repo/GitHub proof surface.'
 metadata:
   source-id: linear
   source-path: sources/first_party/skills/linear/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "Apache-2.0"
+  provenance-name: Linear first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: 'Use when Linear connector mechanics: reading, creating, updating, commenting,
+    and organizing Linear issues, projects, documents, labels, and statuses. Use when
+    the user asks to inspect or mutate Linear objects, capture side notes durably,
+    create planning issues/projects, or recover from Linear connector quirks. Do not
+    use as the coding dispatch control plane: Linear/Codex worker routing, Codex status
+    checks, PR-gate handling, and dispatch decisions belong to linear-issue-shaping;
+    GitHub proof belongs to the repo/GitHub proof surface.'
+  use_when:
+  - 'Use when Linear connector mechanics: reading, creating, updating, commenting,
+    and organizing Linear issues, projects, documents, labels, and statuses. Use when
+    the user asks to inspect or mutate Linear objects, capture side notes durably,
+    create planning issues/projects, or recover from Linear connector quirks. Do not
+    use as the coding dispatch control plane: Linear/Codex worker routing, Codex status
+    checks, PR-gate handling, and dispatch decisions belong to linear-issue-shaping;
+    GitHub proof belongs to the repo/GitHub proof surface.'
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/linear
+  - codex-marketplace/plugins/house-skills/skills/linear
+license: Apache-2.0
 ---
 # Linear
 

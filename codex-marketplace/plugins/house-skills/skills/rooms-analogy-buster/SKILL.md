@@ -1,11 +1,21 @@
-﻿---
+---
 name: rooms-analogy-buster
-description: rooms-specific analogy buster for the black box theatre analogy.
+description: Use when rooms-specific analogy buster for the black box theatre analogy.
 metadata:
   source-id: rooms-analogy-buster
   source-path: sources/first_party/skills/rooms-analogy-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Analogy Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms-specific analogy buster for the black box theatre analogy.
+  use_when:
+  - Use when rooms-specific analogy buster for the black box theatre analogy.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/rooms-analogy-buster
+license: MIT
 ---
 # Rooms Analogy Buster
 

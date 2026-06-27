@@ -1,6 +1,39 @@
 ---
 name: bootstrap-router
-description: Bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping instead of legacy dispatch stacks.
+description: Use when bootstrap router for new project sessions and workflow-sensitive
+  starts after Linear/Codex adoption. Use when a project context begins, a session
+  resumes, or a request may involve continuity ingress, repo/source evidence, coding
+  dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package
+  work, mutation, or publication. Owns first classification, ordinary-chat escape
+  hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping
+  instead of legacy dispatch stacks.
+metadata:
+  source-id: bootstrap-router
+  source-path: sources/first_party/skills/bootstrap-router/SKILL.md
+  provenance-name: Bootstrap Router first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when bootstrap router for new project sessions and workflow-sensitive
+    starts after Linear/Codex adoption. Use when a project context begins, a session
+    resumes, or a request may involve continuity ingress, repo/source evidence, coding
+    dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package
+    work, mutation, or publication. Owns first classification, ordinary-chat escape
+    hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping
+    instead of legacy dispatch stacks.
+  use_when:
+  - Use when bootstrap router for new project sessions and workflow-sensitive starts
+    after Linear/Codex adoption. Use when a project context begins, a session resumes,
+    or a request may involve continuity ingress, repo/source evidence, coding dispatch,
+    Codex workers, Linear issues, artifacts, verification, issue work, skill/package
+    work, mutation, or publication. Owns first classification, ordinary-chat escape
+    hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping
+    instead of legacy dispatch stacks.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/bootstrap-router
+license: MIT
 ---
 
 # Bootstrap Router

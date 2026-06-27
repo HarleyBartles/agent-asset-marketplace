@@ -1,11 +1,28 @@
-﻿---
+---
 name: adventures-frame-buster
-description: Route Adventures frame-readiness checks as deterministic source-bound work before storyboard, preproduction, or package production, without invoking image-generation authority.
+description: Use when route Adventures frame-readiness checks as deterministic source-bound
+  work before storyboard, preproduction, or package production, without invoking image-generation
+  authority.
 metadata:
   source-id: adventures-frame-buster
   source-path: sources/first_party/skills/adventures-frame-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Frame Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when route Adventures frame-readiness checks as deterministic source-bound
+    work before storyboard, preproduction, or package production, without invoking
+    image-generation authority.
+  use_when:
+  - Use when route Adventures frame-readiness checks as deterministic source-bound
+    work before storyboard, preproduction, or package production, without invoking
+    image-generation authority.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/adventures-frame-buster
+  - codex-marketplace/plugins/house-skills/skills/adventures-frame-buster
+license: MIT
 ---
 # Adventures Frame Buster
 

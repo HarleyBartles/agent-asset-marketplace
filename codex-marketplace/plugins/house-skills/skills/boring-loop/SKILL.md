@@ -1,11 +1,27 @@
 ---
 name: boring-loop
-description: Use when coordinating a boring work loop, picking the next smallest safe move, or preventing false-green repo work.
+description: Use when coordinating a boring work loop, picking the next smallest safe
+  move, or preventing false-green repo work.
 metadata:
-  source-id: boring-loop-v1
+  source-id: boring-loop
   source-path: sources/first_party/skills/boring-loop/SKILL.md
-  provenance-name: MARK-152 Boring Loop beta first-party source
-license: "MIT"
+  provenance-name: Boring Loop first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when coordinating a boring work loop, picking the next smallest safe
+    move, or preventing false-green repo work.
+  use_when:
+  - Use when coordinating a boring work loop, picking the next smallest safe move,
+    or preventing false-green repo work.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - .agents/skills/boring-loop
+  - codex-marketplace/plugins/house-skills/skills/boring-loop
+  - codex-marketplace/plugins/repo-worker-pack/skills/boring-loop
+  - codex-marketplace/plugins/wild-bunch-project-pack/skills/boring-loop
+license: MIT
 ---
 # Boring Loop
 

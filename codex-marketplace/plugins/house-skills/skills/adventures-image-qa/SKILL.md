@@ -1,11 +1,28 @@
-﻿---
+---
 name: adventures-image-qa
-description: Review Adventures generated candidates and compiled assets against source constraints and acceptance criteria, while keeping QA separate from image generation or editing authority.
+description: Use when review Adventures generated candidates and compiled assets against
+  source constraints and acceptance criteria, while keeping QA separate from image
+  generation or editing authority.
 metadata:
   source-id: adventures-image-qa
   source-path: sources/first_party/skills/adventures-image-qa/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Image Qa first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when review Adventures generated candidates and compiled assets against
+    source constraints and acceptance criteria, while keeping QA separate from image
+    generation or editing authority.
+  use_when:
+  - Use when review Adventures generated candidates and compiled assets against source
+    constraints and acceptance criteria, while keeping QA separate from image generation
+    or editing authority.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/adventures-image-qa
+  - codex-marketplace/plugins/house-skills/skills/adventures-image-qa
+license: MIT
 ---
 # Adventures Image Qa
 

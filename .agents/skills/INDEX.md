@@ -13,7 +13,7 @@ source custody path for each one.
 | `connector-safety` | [connector-safety/SKILL.md](connector-safety/SKILL.md) | `sources/first_party/skills/connector-safety/SKILL.md` |
 | `github-operations` | [github-operations/SKILL.md](github-operations/SKILL.md) | `sources/first_party/skills/github-operations/SKILL.md` |
 | `unslop-plus` | [unslop-plus/SKILL.md](unslop-plus/SKILL.md) | `sources/first_party/skills/unslop-plus/SKILL.md` |
-| `safe-large-file-writing` | [safe-large-file-writing/SKILL.md](safe-large-file-writing/SKILL.md) | `sources/first_party/skills/safe-large-file-writing/SKILL.md` |
+| `context-safety` | [context-safety/SKILL.md](context-safety/SKILL.md) | `sources/first_party/skills/context-safety/SKILL.md` |
 
 Keep this index aligned with the installed folder set. If a skill is added,
 removed, or reprojected, update this file in the same change.

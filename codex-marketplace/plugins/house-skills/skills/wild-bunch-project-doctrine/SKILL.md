@@ -1,13 +1,34 @@
 ---
 name: wild-bunch-project-doctrine
-description: bootstrap the wild bunch repo posture before any repo-sensitive change. use when work touches harleybartles/wild-bunch, worker dispatch, worker return verification, source-truth claims, issue-goal conformance, world setup, seeded setup, difficulty, entropy, or when chat summaries, session busters, worker reports, or issue comments might be mistaken for live repo truth.
+description: Use when bootstrap the wild bunch repo posture before any repo-sensitive
+  change. use when work touches harleybartles/wild-bunch, worker dispatch, worker
+  return verification, source-truth claims, issue-goal conformance, world setup, seeded
+  setup, difficulty, entropy, or when chat summaries, session busters, worker reports,
+  or issue comments might be mistaken for live repo truth.
 metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md
-  content_mode: verbatim
+  source-id: wild-bunch-project-doctrine
+  source-path: sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md
+  provenance-name: Wild Bunch Project Doctrine first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when bootstrap the wild bunch repo posture before any repo-sensitive
+    change. use when work touches harleybartles/wild-bunch, worker dispatch, worker
+    return verification, source-truth claims, issue-goal conformance, world setup,
+    seeded setup, difficulty, entropy, or when chat summaries, session busters, worker
+    reports, or issue comments might be mistaken for live repo truth.
+  use_when:
+  - Use when bootstrap the wild bunch repo posture before any repo-sensitive change.
+    use when work touches harleybartles/wild-bunch, worker dispatch, worker return
+    verification, source-truth claims, issue-goal conformance, world setup, seeded
+    setup, difficulty, entropy, or when chat summaries, session busters, worker reports,
+    or issue comments might be mistaken for live repo truth.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/wild-bunch-project-doctrine
+  - codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine
+license: MIT
 ---
 
 # Wild Bunch Project Doctrine

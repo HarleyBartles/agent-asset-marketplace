@@ -1,9 +1,13 @@
 interface:
   display_name: Linear Control Plane
   short_description: Safely use Linear as an issue and planning control surface.
-  color: '#5E6AD2'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: 'Use /linear when use for linear connector mechanics: reading, creating,
+    updating, commenting, and organizing linear issues, projects, documents, labels,
+    and statuses. use when the user asks to inspect or mutate linear objects, capture
+    side notes durably, create planning issues/projects, or recover from linear connector
+    quirks. do not use as the coding dispatch control plane: linear/codex worker routing,
+    codex status checks, pr-gate handling, and dispatch decisions belong to linear-issue-shaping;
+    github proof belongs to the repo/github proof surface.'
 policy:
   products:
   - chatgpt

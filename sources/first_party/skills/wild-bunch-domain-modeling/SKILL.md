@@ -1,13 +1,40 @@
 ---
 name: wild-bunch-domain-modeling
-description: apply Wild Bunch project-scoped domain guidance when work touches DDD tactical modeling, GameSession Aggregate Root boundaries, player wallet or inventory, clue or journal flows, wanted posters, hidden culprit truth, horse and saddle rules, water handling, town or trail travel, journey state, or trail-day progression. Use to keep C#/.NET game-domain modeling aligned with live repo source and to prevent policy, service, database, or travel abstractions from flattening Wild Bunch-specific design.
+description: Use when apply Wild Bunch project-scoped domain guidance when work touches
+  DDD tactical modeling, GameSession Aggregate Root boundaries, player wallet or inventory,
+  clue or journal flows, wanted posters, hidden culprit truth, horse and saddle rules,
+  water handling, town or trail travel, journey state, or trail-day progression. Use
+  to keep C#/.NET game-domain modeling aligned with live repo source and to prevent
+  policy, service, database, or travel abstractions from flattening Wild Bunch-specific
+  design.
 metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md
-  content_mode: verbatim
+  source-id: wild-bunch-domain-modeling
+  source-path: sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md
+  provenance-name: Wild Bunch Domain Modeling first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when apply Wild Bunch project-scoped domain guidance when work touches
+    DDD tactical modeling, GameSession Aggregate Root boundaries, player wallet or
+    inventory, clue or journal flows, wanted posters, hidden culprit truth, horse
+    and saddle rules, water handling, town or trail travel, journey state, or trail-day
+    progression. Use to keep C#/.NET game-domain modeling aligned with live repo source
+    and to prevent policy, service, database, or travel abstractions from flattening
+    Wild Bunch-specific design.
+  use_when:
+  - Use when apply Wild Bunch project-scoped domain guidance when work touches DDD
+    tactical modeling, GameSession Aggregate Root boundaries, player wallet or inventory,
+    clue or journal flows, wanted posters, hidden culprit truth, horse and saddle
+    rules, water handling, town or trail travel, journey state, or trail-day progression.
+    Use to keep C#/.NET game-domain modeling aligned with live repo source and to
+    prevent policy, service, database, or travel abstractions from flattening Wild
+    Bunch-specific design.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/wild-bunch-domain-modeling
+  - codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-domain-modeling
+license: MIT
 ---
 
 # Wild Bunch Domain Modeling

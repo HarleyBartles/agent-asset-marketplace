@@ -1,26 +1,25 @@
 ---
 name: architecture-superpowers
-description: >
-  Use when shaping architecture decisions and review packets that need a
-  compositional gate over Superpowers instead of a new doctrine surface.
+description: Use when shaping architecture decisions and review packets that need
+  a compositional gate over Superpowers instead of a new doctrine surface.
 metadata:
   source-id: architecture-superpowers
   source-path: sources/first_party/skills/architecture-superpowers/SKILL.md
-  provenance-name: MARK-173 Architecture Superpowers compositional skill
-  license: "MIT"
-keywords:
-  - architecture
-  - routing
-  - CQRS
-  - event sourcing
-  - event-driven architecture
-  - database design
-  - DDD
-  - domain modeling
-file_patterns:
-  - "**/architecture/**"
-  - "**/*architecture*.*"
-confidence: 0.84
+  provenance-name: Architecture Superpowers first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when shaping architecture decisions and review packets that need a compositional
+    gate over Superpowers instead of a new doctrine surface.
+  use_when:
+  - Use when shaping architecture decisions and review packets that need a compositional
+    gate over Superpowers instead of a new doctrine surface.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/architecture-superpowers
+  - codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers
+license: MIT
 ---
 
 # Architecture Superpowers

@@ -2,9 +2,10 @@ interface:
   display_name: Adventures Project Doctrine
   short_description: Shared Adventures of Patch repo, Patch, source-package, proof-run,
     and skill-routing doctrine.
-  icon: assets/icon.svg
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-project-doctrine when shared adventures doctrine
+    for repo truth, source packages, bundle projection, and stage-boundary discipline
+    across planning, source discovery, qa, image readiness, generation/editing, asset
+    compilation, deck/package work, and acceptance.
 policy:
   products:
   - chatgpt

@@ -1,16 +1,40 @@
 ---
-name: safe-large-file-writing
-description: Use when writing or editing large text files and you need to avoid editor OOM paths or unsafe partial writes.
+name: context-safety
+description: Use when large or context-heavy text writes need bounded composition,
+  safe staging, and atomic replacement. Use when a write may exceed the safe threshold
+  or when inline composition risks exhausting context.
 metadata:
-  source-id: safe-large-file-writing-v1
-  source-path: sources/first_party/skills/safe-large-file-writing/SKILL.md
-  provenance-name: MARK-302 safe large file writing first-party skill
-license: "MIT"
+  source-id: context-safety
+  source-path: sources/first_party/skills/context-safety/SKILL.md
+  provenance-name: Context Safety first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: large text write safety, bounded composition, and atomic replacement
+  use_when:
+  - Use when composing or editing large text files
+  - Use when inline composition would risk consuming the remaining context
+  - Use when safe staging and atomic replacement are required
+  do_not_use_when:
+  - Do not use when the change is small and can be written directly
+  - Do not use when the task is unrelated to large or context-heavy text writes
+  related_skills:
+  - repo-worker-base
+  - connector-safety
+  notes:
+  - Historical name safe-large-file-writing is quarantined to provenance and archive
+    surfaces only.
+  projection_targets:
+  - .agents/skills/context-safety
+  - codex-marketplace/plugins/house-skills/skills/context-safety
+  - codex-marketplace/plugins/repo-worker-pack/skills/context-safety
+license: MIT
 ---
 
-# Safe Large File Writing
+# Context Safety
 
-Use this skill when a text write may be large enough to make a normal editor write path brittle.
+Use this skill when a text write may be large enough to make a normal editor write path brittle, or when inline composition would risk exhausting the remaining session context.
+Use when a document may exceed the safe threshold or when the main session should not carry the whole composition inline.
 
 ## Core rule
 

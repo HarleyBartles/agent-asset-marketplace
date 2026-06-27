@@ -2,10 +2,8 @@ interface:
   display_name: Rooms Sheet Creator
   short_description: Create Rooms prompt, peek, and recall sheets from investigation
     packets.
-  icon: assets/icon.svg
-  brand_color: '#5d4a8e'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /rooms-sheet-creator when create rooms prompt, peek, and recall
+    sheets from character-investigation packets.
 policy:
   products:
   - chatgpt

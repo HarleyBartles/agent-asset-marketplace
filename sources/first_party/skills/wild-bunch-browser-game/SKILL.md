@@ -1,13 +1,40 @@
 ---
 name: wild-bunch-browser-game
-description: bridge Wild Bunch to browser-game implementation and QA when work touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, dev-server checks, screenshot QA, or agent-browser verification. Use to keep browser rendering as a presentation adapter over authoritative Wild Bunch game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend, game-playtest, and agent-browser where installed, and avoid turning UI or renderer code into domain truth.
+description: Use when bridge Wild Bunch to browser-game implementation and QA when
+  work touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays,
+  playtest evidence, dev-server checks, screenshot QA, or agent-browser verification.
+  Use to keep browser rendering as a presentation adapter over authoritative Wild
+  Bunch game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend,
+  game-playtest, and agent-browser where installed, and avoid turning UI or renderer
+  code into domain truth.
 metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/wild-bunch-browser-game/SKILL.md
-  content_mode: verbatim
+  source-id: wild-bunch-browser-game
+  source-path: sources/first_party/skills/wild-bunch-browser-game/SKILL.md
+  provenance-name: Wild Bunch Browser Game first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when bridge Wild Bunch to browser-game implementation and QA when work
+    touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest
+    evidence, dev-server checks, screenshot QA, or agent-browser verification. Use
+    to keep browser rendering as a presentation adapter over authoritative Wild Bunch
+    game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend,
+    game-playtest, and agent-browser where installed, and avoid turning UI or renderer
+    code into domain truth.
+  use_when:
+  - Use when bridge Wild Bunch to browser-game implementation and QA when work touches
+    browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence,
+    dev-server checks, screenshot QA, or agent-browser verification. Use to keep browser
+    rendering as a presentation adapter over authoritative Wild Bunch game state,
+    compose with web-game-foundations, phaser-2d-game, game-ui-frontend, game-playtest,
+    and agent-browser where installed, and avoid turning UI or renderer code into
+    domain truth.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/wild-bunch-browser-game
+  - codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-browser-game
+license: MIT
 ---
 
 # Wild Bunch Browser Game

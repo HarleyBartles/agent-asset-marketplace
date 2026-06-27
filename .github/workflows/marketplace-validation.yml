@@ -40,6 +40,9 @@ jobs:
       - name: Check skill artifacts
         run: python tools/update_skill_artifacts.py --check
 
+      - name: Check first-party skill source normalization
+        run: python tools/normalize_first_party_skill_sources.py --check
+
       - name: Check marketplace manifests
         run: python tools/generate_marketplace.py --check
 
@@ -60,6 +63,9 @@ jobs:
 
       - name: Check source maps
         run: python tools/generate_source_maps.py --check
+
+      - name: Check first-party skill catalog
+        run: python tools/generate_first_party_skill_catalog.py --check
 
       - name: Validate repo index
         run: python tools/validate_repo_index.py

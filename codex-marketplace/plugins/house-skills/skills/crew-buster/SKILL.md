@@ -1,11 +1,36 @@
-﻿---
+---
 name: crew-buster
-description: apply Crew thinking roles to a concrete plan, route choice, issue shape, skill update, failure-mode question, or durable-fix prompt. use when you need a pre-action Crew read on route, authority, fallback, or proof boundaries before the downstream owner is chosen. owns planning and route interrogation only: preserve the linear/codex default coding workflow, route gpt-native skillwork to the skill stack, and defer execution/proof to specialist skills.
+description: 'Use when apply Crew thinking roles to a concrete plan, route choice,
+  issue shape, skill update, failure-mode question, or durable-fix prompt. use when
+  you need a pre-action Crew read on route, authority, fallback, or proof boundaries
+  before the downstream owner is chosen. owns planning and route interrogation only:
+  preserve the linear/codex default coding workflow, route gpt-native skillwork to
+  the skill stack, and defer execution/proof to specialist skills.'
 metadata:
   source-id: crew-buster
   source-path: sources/first_party/skills/crew-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Crew Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: 'Use when apply Crew thinking roles to a concrete plan, route choice, issue
+    shape, skill update, failure-mode question, or durable-fix prompt. use when you
+    need a pre-action Crew read on route, authority, fallback, or proof boundaries
+    before the downstream owner is chosen. owns planning and route interrogation only:
+    preserve the linear/codex default coding workflow, route gpt-native skillwork
+    to the skill stack, and defer execution/proof to specialist skills.'
+  use_when:
+  - 'Use when apply Crew thinking roles to a concrete plan, route choice, issue shape,
+    skill update, failure-mode question, or durable-fix prompt. use when you need
+    a pre-action Crew read on route, authority, fallback, or proof boundaries before
+    the downstream owner is chosen. owns planning and route interrogation only: preserve
+    the linear/codex default coding workflow, route gpt-native skillwork to the skill
+    stack, and defer execution/proof to specialist skills.'
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/crew-buster
+license: MIT
 ---
 # Crew Buster
 

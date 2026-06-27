@@ -1,8 +1,14 @@
 interface:
   display_name: Asset Market
   short_description: Fetch exact marketplace skill source for installation handoff.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /asset-market when source-facing asset marketplace skill and
+    pack acquisition with fidelity control. use when harley asks to get, pull, fetch,
+    install, update, compare, or prepare the latest gpt skill or bundled skill pack
+    from the asset marketplace repo, especially phrases like "using asset-market",
+    "from the repo", or "latest marketplace version". owns connector-backed repo source
+    resolution, exact source reconstruction, pack-to-per-skill install-unit expansion,
+    and source/projection ambiguity. does not validate, package, present installable
+    zips, or mutate the repo.
 policy:
   products:
   - chatgpt

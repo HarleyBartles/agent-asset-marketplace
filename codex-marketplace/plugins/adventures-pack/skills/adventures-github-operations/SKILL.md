@@ -1,11 +1,31 @@
-﻿---
+---
 name: adventures-github-operations
-description: Use Adventures GitHub proof work for branch, PR, issue, and evidence handling after the generic `github-operations` proof skill has already handled review routing; keep it focused on repository proof surfaces and avoid visual or creative authority.
+description: Use when use Adventures GitHub proof work for branch, PR, issue, and
+  evidence handling after the generic `github-operations` proof skill has already
+  handled review routing; keep it focused on repository proof surfaces and avoid visual
+  or creative authority.
 metadata:
   source-id: adventures-github-operations
   source-path: sources/first_party/skills/adventures-github-operations/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Github Operations first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use Adventures GitHub proof work for branch, PR, issue, and evidence
+    handling after the generic `github-operations` proof skill has already handled
+    review routing; keep it focused on repository proof surfaces and avoid visual
+    or creative authority.
+  use_when:
+  - Use when use Adventures GitHub proof work for branch, PR, issue, and evidence
+    handling after the generic `github-operations` proof skill has already handled
+    review routing; keep it focused on repository proof surfaces and avoid visual
+    or creative authority.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/adventures-pack/skills/adventures-github-operations
+  - codex-marketplace/plugins/house-skills/skills/adventures-github-operations
+license: MIT
 ---
 # Adventures Github Operations
 

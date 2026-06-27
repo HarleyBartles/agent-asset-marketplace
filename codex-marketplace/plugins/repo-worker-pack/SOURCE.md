@@ -13,7 +13,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/connector-safety/`
 - `sources/first_party/skills/github-operations/`
 - `sources/first_party/skills/unslop-plus/`
-- `sources/first_party/skills/safe-large-file-writing/`
+- `sources/first_party/skills/context-safety/`
 
 ## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/repo-worker-pack/`
@@ -27,7 +27,7 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/github-operations/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/safe-large-file-writing/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/context-safety/`
 
 ## Generated install units
 - `generated/skill-zips/repo-worker-pack/repo-worker-base/skill.zip`
@@ -38,7 +38,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/repo-worker-pack/connector-safety/skill.zip`
 - `generated/skill-zips/repo-worker-pack/github-operations/skill.zip`
 - `generated/skill-zips/repo-worker-pack/unslop-plus/skill.zip`
-- `generated/skill-zips/repo-worker-pack/safe-large-file-writing/skill.zip`
+- `generated/skill-zips/repo-worker-pack/context-safety/skill.zip`
 
 ## Boundary
 - The first-party repo worker skills stay projected alongside the

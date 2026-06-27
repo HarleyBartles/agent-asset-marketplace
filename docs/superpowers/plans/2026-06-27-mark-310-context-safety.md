@@ -34,7 +34,7 @@
 - Consumes: the current `safe-large-file-writing` skill body, its agent prompt, and the repo-worker support references that still point at the old skill name.
 - Produces: a canonical `context-safety` skill source, updated repo-worker guidance, and a local skill index that resolves the new public name.
 
-- [ ] **Step 1: Rewrite the canonical skill metadata and body**
+- [x] **Step 1: Rewrite the canonical skill metadata and body**
 
 Rename the skill identity to `context-safety` in frontmatter and update the body so it leads with context safety, not only large-file safety. Keep the existing large-file write sequence, but add explicit guidance for:
 
@@ -43,12 +43,13 @@ Rename the skill identity to `context-safety` in frontmatter and update the body
 - tool-call boundaries as the place to pause and checkpoint;
 - `/compact` only at deliberate phase boundaries after durable state has been preserved;
 - large-file writing as a subsection of the broader context-safety posture.
+- Apply the same richer canonical metadata shape to every active first-party skill under `sources/first_party/skills/*`, not just the renamed skill, so the repo does not keep a grab bag of metadata formats.
 
-- [ ] **Step 2: Update repo-worker support references**
+- [x] **Step 2: Update repo-worker support references**
 
 Replace the old support-skill mentions in `sources/first_party/skills/repo-worker-base/SKILL.md`, `sources/first_party/skills/repo-worker-base/agents/openai.yaml`, `.agents/skills/AGENTS.md`, and `.agents/skills/INDEX.md` so they point at `/context-safety` and the renamed source path instead of `safe-large-file-writing`.
 
-- [ ] **Step 3: Keep the active skill surface free of stale identity**
+- [x] **Step 3: Keep the active skill surface free of stale identity**
 
 Make sure the active source tree and local skill index present `context-safety` as the public name and do not leave a second active first-party name behind.
 
@@ -64,15 +65,15 @@ Make sure the active source tree and local skill index present `context-safety` 
 - Consumes: the renamed canonical source path and the existing house-skills source inventory for MARK-302.
 - Produces: generator input that points at `context-safety`, plus source-led inventory records that no longer advertise the old name as active.
 
-- [ ] **Step 1: Move the pack manifest inputs to the renamed source**
+- [x] **Step 1: Move the pack manifest inputs to the renamed source**
 
 Update `tools/generate_pack_manifests.py` so the house-skills and repo-worker-pack entries reference `sources/first_party/skills/context-safety` and the `context-safety` canonical name instead of the old path/name pair.
 
-- [ ] **Step 2: Update the first-party source inventory records**
+- [x] **Step 2: Update the first-party source inventory records**
 
 Adjust the house-skills intake and decisions ledgers so the active source inventory records the new public name and source path, while keeping the historical MARK-302 provenance intact.
 
-- [ ] **Step 3: Preserve the rename decision in source-facing metadata**
+- [x] **Step 3: Preserve the rename decision in source-facing metadata**
 
 Make sure the source-facing metadata reflects that this is a broadened safety skill, not a brand-new unrelated import.
 
@@ -100,15 +101,15 @@ Make sure the source-facing metadata reflects that this is a broadened safety sk
 - Consumes: the renamed canonical source and the updated pack-manifest generator inputs.
 - Produces: fully regenerated marketplace projections, matching generated zips, and a registry/index set that exposes `context-safety` as the active skill identity.
 
-- [ ] **Step 1: Regenerate from source instead of patching projections**
+- [x] **Step 1: Regenerate from source instead of patching projections**
 
 Run the repo tooling so the projected skill trees, bundle manifests, source maps, provenance maps, and skill zips are rebuilt from the renamed source and generator inputs.
 
-- [ ] **Step 2: Verify the old name is gone from active projections**
+- [x] **Step 2: Verify the old name is gone from active projections**
 
 Confirm the regenerated `house-skills` and `repo-worker-pack` surfaces no longer expose `safe-large-file-writing` as an active skill entry, zip path, or registry item.
 
-- [ ] **Step 3: Confirm marketplace and repo-index freshness**
+- [x] **Step 3: Confirm marketplace and repo-index freshness**
 
 Ensure the generated marketplace manifest, plugin marketplace registry, and repo index all stay in sync with the rename.
 
@@ -123,7 +124,7 @@ Ensure the generated marketplace manifest, plugin marketplace registry, and repo
 - Consumes: the active first-party source tree, the renamed `context-safety` surfaces, the generated pack/projection inventory already validated in this repo, and the repo references discoverable from manifests, maps, registry surfaces, and docs.
 - Produces: tooling that generates a durable repo-resident map of all first-party skills with canonical source locations, active projection or vendoring surfaces, generated artifacts, manifest/source-map touch points, workflow/doc references, and the validation path that should catch stale references after a rename.
 
-- [ ] **Step 1: Build the catalog generator from repo truth, not memory**
+- [x] **Step 1: Build the catalog generator from repo truth, not memory**
 
 Implement a catalog generator that derives every first-party skill row from repo truth:
 
@@ -134,21 +135,25 @@ Implement a catalog generator that derives every first-party skill row from repo
 - repo docs, prompts, workflow text, or skill references that use the skill by name;
 - the command or validation path that should catch stale references after a rename.
 
-- [ ] **Step 2: Keep the catalog bounded and useful**
+- [x] **Step 2: Keep the catalog bounded and useful**
 
 Group the generated entries so the file is easy to scan, but do not collapse it into a vague inventory dump. If a field cannot be derived reliably yet, either omit it, mark it as unresolved from inspected source, or place it in a clearly separated bounded notes section. The catalog should make future first-party renames boring without requiring another wide search.
 
-- [ ] **Step 3: Check the catalog against the active first-party tree**
+- [x] **Step 3: Check the catalog against the active first-party tree**
 
-Manually compare `sources/first_party/skills/*` against `provenance/first-party-skills.md` so every active first-party skill has a catalog row and the catalog does not become a one-off stale note. If the repo later grows a validator for this surface, wire it in here; for this issue, the documented manual check is the required proof.
+The generator/check mode must verify catalog completeness by comparing discovered `sources/first_party/skills/*` entries against the generated catalog. `--check` fails if any active first-party skill is missing, stale, or has mismatched generated rows.
 
-- [ ] **Step 4: Add write and check modes for the catalog**
+- [x] **Step 4: Add write and check modes for the catalog**
 
 Add a write mode that refreshes `provenance/first-party-skills.md` from the current repo truth, and a `--check` mode that fails if the committed catalog is stale.
 
-- [ ] **Step 5: Put the catalog check in CI**
+- [x] **Step 5: Put the catalog check in CI**
 
 Add the catalog generator check to `.github/workflows/marketplace-validation.yml` so the same validator that guards the PR also runs in CI. If any additional validator or catalog-related check is introduced for this issue, wire it into that workflow as well.
+
+- [x] **Step 6: Normalize all active first-party skill sources**
+
+Add a repo tool that rewrites every active first-party `SKILL.md` and existing `agents/openai.yaml` to the canonical rich metadata shape, then run it across the active first-party skill tree. The tool must have a `--check` mode, and that check must also run in CI.
 
 ### Task 5: Validate cleanup and publish the plan-only branch
 
@@ -164,11 +169,12 @@ Add the catalog generator check to `.github/workflows/marketplace-validation.yml
 - Consumes: the regenerated outputs from Task 3.
 - Produces: validation evidence that the rename is coherent and the stale-name cleanup is real.
 
-- [ ] **Step 1: Run the repo's marketplace and zip validations**
+- [x] **Step 1: Run the repo's marketplace and zip validations**
 
 Run:
 
 ```powershell
+py -3 tools/normalize_first_party_skill_sources.py --check
 py -3 tools/update_skill_artifacts.py --check
 py -3 tools/generate_first_party_skill_catalog.py --check
 py -3 tools/generate_marketplace.py --check
@@ -185,6 +191,6 @@ git diff --check
 
 Expected result: the active surfaces validate, the generated zips and registries agree, the provenance and source maps are current, and `safe-large-file-writing` is absent from the active rename surfaces.
 
-- [ ] **Step 2: Keep any remaining old-name text quarantined**
+- [x] **Step 2: Keep any remaining old-name text quarantined**
 
 If `safe-large-file-writing` still appears, it must be in historical plan text or other intentionally archival surfaces, not in the active skill tree, manifest, registry, or repo-worker baseline.

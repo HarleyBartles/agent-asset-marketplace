@@ -36,6 +36,6 @@
 - `unslop-plus` is projected here from the canonical first-party source at
   `sources/first_party/skills/unslop-plus/` so worker-facing anti-slop profiles
   are available on the repo baseline surface.
-- `safe-large-file-writing` is projected here from the canonical first-party
-  source at `sources/first_party/skills/safe-large-file-writing/` so safer
+- `context-safety` is projected here from the canonical first-party
+  source at `sources/first_party/skills/context-safety/` so safer
   large text write guidance rides with the repo baseline.

@@ -1,11 +1,36 @@
-﻿---
+---
 name: tps-ingress
-description: verify review, verifier, worker, issue, PR, automated-check, or external feedback before it becomes action, scope, evidence, closure posture, or worker instruction. use after Linear/Codex or GitHub feedback appears and the question is whether to accept, clarify, reject, route, or block it; do not use for ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub proof already owned by linear-issue-shaping and the repo/GitHub proof surface.
+description: Use when verify review, verifier, worker, issue, PR, automated-check,
+  or external feedback before it becomes action, scope, evidence, closure posture,
+  or worker instruction. use after Linear/Codex or GitHub feedback appears and the
+  question is whether to accept, clarify, reject, route, or block it; do not use for
+  ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub proof
+  already owned by linear-issue-shaping and the repo/GitHub proof surface.
 metadata:
   source-id: tps-ingress
   source-path: sources/first_party/skills/tps-ingress/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Tps Ingress first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when verify review, verifier, worker, issue, PR, automated-check, or
+    external feedback before it becomes action, scope, evidence, closure posture,
+    or worker instruction. use after Linear/Codex or GitHub feedback appears and the
+    question is whether to accept, clarify, reject, route, or block it; do not use
+    for ordinary worker-status polling, PR-gate detection, dispatch routing, or GitHub
+    proof already owned by linear-issue-shaping and the repo/GitHub proof surface.
+  use_when:
+  - Use when verify review, verifier, worker, issue, PR, automated-check, or external
+    feedback before it becomes action, scope, evidence, closure posture, or worker
+    instruction. use after Linear/Codex or GitHub feedback appears and the question
+    is whether to accept, clarify, reject, route, or block it; do not use for ordinary
+    worker-status polling, PR-gate detection, dispatch routing, or GitHub proof already
+    owned by linear-issue-shaping and the repo/GitHub proof surface.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/tps-ingress
+license: MIT
 ---
 # Tps Ingress
 

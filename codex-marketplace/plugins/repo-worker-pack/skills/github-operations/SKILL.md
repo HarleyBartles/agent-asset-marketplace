@@ -1,11 +1,42 @@
 ---
 name: github-operations
-description: Verify GitHub repository evidence without taking over coding workflow routing. Use after a Linear/Codex task has a GitHub PR, branch, commit, review, merge, status, or file-state question; when checking publication proof, PR diff scope, mergeability, CI/status evidence, final main state, or GitHub-specific closure proof. Do not use as the default issue/dispatch controller for coding work when Linear/Codex is available; route worker state and issue planning through the Linear/Codex control plane first.
+description: Use when verify GitHub repository evidence without taking over coding
+  workflow routing. Use after a Linear/Codex task has a GitHub PR, branch, commit,
+  review, merge, status, or file-state question; when checking publication proof,
+  PR diff scope, mergeability, CI/status evidence, final main state, or GitHub-specific
+  closure proof. Do not use as the default issue/dispatch controller for coding work
+  when Linear/Codex is available; route worker state and issue planning through the
+  Linear/Codex control plane first.
 metadata:
-  source-id: github-operations-v1
+  source-id: github-operations
   source-path: sources/first_party/skills/github-operations/SKILL.md
-  provenance-name: MARK-226 canonical first-party source for github-operations
-license: "MIT"
+  provenance-name: Github Operations first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when verify GitHub repository evidence without taking over coding workflow
+    routing. Use after a Linear/Codex task has a GitHub PR, branch, commit, review,
+    merge, status, or file-state question; when checking publication proof, PR diff
+    scope, mergeability, CI/status evidence, final main state, or GitHub-specific
+    closure proof. Do not use as the default issue/dispatch controller for coding
+    work when Linear/Codex is available; route worker state and issue planning through
+    the Linear/Codex control plane first.
+  use_when:
+  - Use when verify GitHub repository evidence without taking over coding workflow
+    routing. Use after a Linear/Codex task has a GitHub PR, branch, commit, review,
+    merge, status, or file-state question; when checking publication proof, PR diff
+    scope, mergeability, CI/status evidence, final main state, or GitHub-specific
+    closure proof. Do not use as the default issue/dispatch controller for coding
+    work when Linear/Codex is available; route worker state and issue planning through
+    the Linear/Codex control plane first.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - .agents/skills/github-operations
+  - codex-marketplace/plugins/house-skills/skills/github-operations
+  - codex-marketplace/plugins/repo-worker-pack/skills/github-operations
+  - codex-marketplace/plugins/wild-bunch-project-pack/skills/github-operations
+license: MIT
 ---
 
 # GitHub Operations

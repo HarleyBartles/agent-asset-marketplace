@@ -1,6 +1,33 @@
 ---
 name: unslop-plus
-description: Apply domain-specific anti-slop profiles for common software development workflows, with thirteen portable profiles for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, and cleanup-custody.
+description: Use when apply domain-specific anti-slop profiles for common software
+  development workflows, with thirteen portable profiles for writing, technical-writing,
+  implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui,
+  api-design, architecture, testing, security-review, and cleanup-custody.
+metadata:
+  source-id: unslop-plus
+  source-path: sources/first_party/skills/unslop-plus/SKILL.md
+  provenance-name: Unslop Plus first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when apply domain-specific anti-slop profiles for common software development
+    workflows, with thirteen portable profiles for writing, technical-writing, implementation-plans,
+    code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design,
+    architecture, testing, security-review, and cleanup-custody.
+  use_when:
+  - Use when apply domain-specific anti-slop profiles for common software development
+    workflows, with thirteen portable profiles for writing, technical-writing, implementation-plans,
+    code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design,
+    architecture, testing, security-review, and cleanup-custody.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - .agents/skills/unslop-plus
+  - codex-marketplace/plugins/house-skills/skills/unslop-plus
+  - codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus
+  - codex-marketplace/plugins/unslop-plus/skills/unslop-plus
+license: MIT
 ---
 
 # Unslop+

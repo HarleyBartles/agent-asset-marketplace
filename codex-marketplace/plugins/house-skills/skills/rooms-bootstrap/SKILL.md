@@ -1,11 +1,30 @@
-﻿---
+---
 name: rooms-bootstrap
-description: Bootstrap Rooms, Mostly sessions through one-time project arrival, request classification, continuity ingress routing, and doctrine/task handoff without treating connector presence as a task signal or doing source-route selection from the entrypoint.
+description: Use when bootstrap Rooms, Mostly sessions through one-time project arrival,
+  request classification, continuity ingress routing, and doctrine/task handoff without
+  treating connector presence as a task signal or doing source-route selection from
+  the entrypoint.
 metadata:
   source-id: rooms-bootstrap
   source-path: sources/first_party/skills/rooms-bootstrap/SKILL.md
-  provenance-name: "MARK-97 rooms bootstrap zip update"
-license: "MIT"
+  provenance-name: Rooms Bootstrap first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when bootstrap Rooms, Mostly sessions through one-time project arrival,
+    request classification, continuity ingress routing, and doctrine/task handoff
+    without treating connector presence as a task signal or doing source-route selection
+    from the entrypoint.
+  use_when:
+  - Use when bootstrap Rooms, Mostly sessions through one-time project arrival, request
+    classification, continuity ingress routing, and doctrine/task handoff without
+    treating connector presence as a task signal or doing source-route selection from
+    the entrypoint.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/rooms-bootstrap
+license: MIT
 ---
 # Rooms Bootstrap
 

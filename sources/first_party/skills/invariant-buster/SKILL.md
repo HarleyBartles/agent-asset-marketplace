@@ -1,11 +1,24 @@
-﻿---
+---
 name: invariant-buster
-description: Use this skill before an action, answer, plan, dispatch, or durable mutation when binding constraints may be violated.
+description: Use when use this skill before an action, answer, plan, dispatch, or
+  durable mutation when binding constraints may be violated.
 metadata:
   source-id: invariant-buster
   source-path: sources/first_party/skills/invariant-buster/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Invariant Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill before an action, answer, plan, dispatch, or durable
+    mutation when binding constraints may be violated.
+  use_when:
+  - Use when use this skill before an action, answer, plan, dispatch, or durable mutation
+    when binding constraints may be violated.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - codex-marketplace/plugins/house-skills/skills/invariant-buster
+license: MIT
 ---
 # Invariant Buster
 

@@ -1,11 +1,35 @@
-﻿---
+---
 name: linear-issue-shaping
-description: Use for Linear-backed issue, project, and document shaping: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch workers, delegate execution, or assume any execution lane; treat worker-ready as issue-ready only.
+description: 'Use when Linear-backed issue, project, and document shaping: create
+  or update worker-ready Linear issues, inspect Linear comments/attachments/state,
+  prepare paste-ready worker handoffs when explicitly requested, and route GitHub
+  PR proof after a PR exists. Do not launch workers, delegate execution, or assume
+  any execution lane; treat worker-ready as issue-ready only.'
 metadata:
-  source-id: linear-issue-shaping-v1
+  source-id: linear-issue-shaping
   source-path: sources/first_party/skills/linear-issue-shaping/SKILL.md
-  provenance-name: "MARK-303 Linear issue shaping rename and connector BAU"
-license: "MIT"
+  provenance-name: Linear Issue Shaping first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: 'Use when Linear-backed issue, project, and document shaping: create or update
+    worker-ready Linear issues, inspect Linear comments/attachments/state, prepare
+    paste-ready worker handoffs when explicitly requested, and route GitHub PR proof
+    after a PR exists. Do not launch workers, delegate execution, or assume any execution
+    lane; treat worker-ready as issue-ready only.'
+  use_when:
+  - 'Use when Linear-backed issue, project, and document shaping: create or update
+    worker-ready Linear issues, inspect Linear comments/attachments/state, prepare
+    paste-ready worker handoffs when explicitly requested, and route GitHub PR proof
+    after a PR exists. Do not launch workers, delegate execution, or assume any execution
+    lane; treat worker-ready as issue-ready only.'
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+  projection_targets:
+  - .agents/skills/linear-issue-shaping
+  - codex-marketplace/plugins/house-skills/skills/linear-issue-shaping
+  - codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping
+license: MIT
 ---
 # Linear Issue Shaping
 

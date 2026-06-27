@@ -2,10 +2,9 @@ interface:
   display_name: Adventures Visual Bible Interpreter
   short_description: Interprets repo-indexed Adventures visual bibles into prompt,
     QA, and repair constraints.
-  icon: assets/icon.svg
-  icon_background: '#1D2B3A'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-visual-bible-interpreter when read the adventures
+    visual bible and extract concrete constraints, acceptance notes, and downstream
+    lane boundaries without turning interpretation into generation authority.
 policy:
   products:
   - chatgpt
