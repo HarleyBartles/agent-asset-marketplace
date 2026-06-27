@@ -8,10 +8,6 @@ This bundle is an installable bridge/overlay projection of the Wild Bunch projec
 - See `references/source-map.md` for the rendered keep/remove membership and source/projection paths.
 - Dependency plugins stay separate install surfaces. This pack only carries the Wild Bunch bridge/native skills.
 
-## Excluded skill
-
-- `agent-browser` is excluded because this repository does not retain an approved projection copy for it.
-
 ## Projection rule
 
 - Copy the retained component trees, with any declared manifest normalization, into this plugin root.

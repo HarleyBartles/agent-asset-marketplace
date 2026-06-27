@@ -2287,13 +2287,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-browser-game/skill.zip",
       "source_file_count": 4,
-      "source_bytes": 6281,
-      "source_sha256": "90959c8bbe70204663f51001fc19cea28509a86eeef2a7481b97c2f9c58145af",
+      "source_bytes": 6227,
+      "source_sha256": "b1ab83b9666c72de48814569a2bd070c38f3cfe92713b011c44958b5e48a0229",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3222,
-      "zip_sha256": "037c4275666cb65bc3bcdf4391eaa1b2e6de9ed3bf5143c4890b43236a4d822b"
+      "zip_size_bytes": 3206,
+      "zip_sha256": "4571fed0710995ad061ce0f8ed3cfbce4c983f1ca671f9d4193ad2da681161c8"
     },
     {
       "pack": "wild-bunch-project-pack",

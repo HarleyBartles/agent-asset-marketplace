@@ -23,7 +23,7 @@ This bundle packages the Wild Bunch first-party bridge/native skills as a Codex 
 - Marketplace category normalized to `Productivity`
 - Icon paths normalized to `./assets/icon.svg`
 - The pack installs as a bridge/overlay surface and keeps dependency plugins separate.
-- `agent-browser` was reviewed and intentionally excluded because the repo does not retain an approved projection copy for it.
+- Browser verification stays in the browser-game bridge skill and installed tooling.
 
 ## Notes
 

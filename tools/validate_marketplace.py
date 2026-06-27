@@ -860,10 +860,9 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
         raise ValueError("wild-bunch-project-pack bundle manifest candidate count mismatch")
 
     imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
-    blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
     if bundle_manifest.get("imported_count") != len(imported_entries):
         raise ValueError("wild-bunch-project-pack bundle manifest imported count mismatch")
-    if bundle_manifest.get("blocked_count") != len(blocked_entries):
+    if bundle_manifest.get("blocked_count") != 0:
         raise ValueError("wild-bunch-project-pack bundle manifest blocked count mismatch")
     if bundle_manifest.get("skipped_count") != 0:
         raise ValueError("wild-bunch-project-pack bundle manifest skipped count mismatch")
@@ -907,25 +906,10 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
         if projected_root.name != canonical_name:
             raise ValueError(f"wild-bunch-project-pack entry {canonical_name} drifted from its source copy")
 
-    if len(blocked_entries) != 1:
-        raise ValueError("wild-bunch-project-pack bundle manifest must contain one blocked entry")
-    blocked = blocked_entries[0]
-    if blocked.get("canonical_name") != "agent-browser":
-        raise ValueError("wild-bunch-project-pack blocked entry must be agent-browser")
-    if blocked.get("local_path") is not None:
-        raise ValueError("wild-bunch-project-pack blocked entry must not expose a local path")
-    if blocked.get("canonical_source_path") is not None:
-        raise ValueError("wild-bunch-project-pack blocked entry must not expose a canonical source path")
-    if blocked.get("copy_expectation") != "not_copied":
-        raise ValueError("wild-bunch-project-pack blocked entry copy expectation mismatch")
-    if not blocked.get("provenance_note"):
-        raise ValueError("wild-bunch-project-pack blocked entry needs a provenance note")
-
     notes = bundle_manifest.get("notes", [])
     if notes != [
         "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
         "Selected-skill projections are explicit and rare; this pack currently has none.",
-        "agent-browser remains excluded because the repository does not retain an approved source-copy path.",
     ]:
         raise ValueError("wild-bunch-project-pack bundle manifest notes mismatch")
 

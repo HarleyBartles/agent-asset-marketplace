@@ -4,7 +4,7 @@
 
 **Goal:** Reshape `wild-bunch-project-pack` so it keeps only Wild Bunch native skills and thin bridge/overlay skills, while dependency plugins such as `game-studio`, `dotnet-kit`, `architecture-pack`, `frontend-pack`, `security-pack`, `api-contracts-pack`, and `repo-worker-pack` are consumed as separate install surfaces by the repo that needs them.
 
-**Architecture:** The Wild Bunch pack should become an overlay and bridge surface, not a copy of whole plugin inventories. Keep the project-pack source of truth in the central bundle manifest, regenerate the projected plugin surfaces from repo tooling, and add a validation guard that detects when a project pack has silently absorbed an entire dependency plugin. `game-studio` stays a standalone plugin; `agent-browser` remains a plugin-level source-custody blocker rather than a Wild Bunch exception.
+**Architecture:** The Wild Bunch pack should become an overlay and bridge surface, not a copy of whole plugin inventories. Keep the project-pack source of truth in the central bundle manifest, regenerate the projected plugin surfaces from repo tooling, and add a validation guard that detects when a project pack has silently absorbed an entire dependency plugin. `game-studio` stays a standalone plugin, and browser verification stays outside the Wild Bunch pack surface.
 
 **Tech Stack:** Markdown plans, Linear, Git worktrees, PowerShell, Codex marketplace manifests, Python `py -3` generator/validator tooling, and the repository's existing projection/index/validation scripts.
 
@@ -53,7 +53,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 - `security-pack`: `owasp-top-10`, `safety-guard`, `secure-coding-practices`, `security-review`, `security-testing-patterns`, `threat-modeling-techniques`
 - `api-contracts-pack`: `api-design-patterns`, `openapi-specification`
 - `repo-worker-pack`: `base-doctrine`, `boring-loop`, `connector-safety`, `context-safety`, `github-operations`, `linear-issue-shaping`, `repo-worker-base`, `unslop-plus`, `work-mode-router`
-- `wild-bunch-project-pack`: 48 installed skills in `references/bundle-manifest.json` plus one blocked `agent-browser` entry in the manifest
+- `wild-bunch-project-pack`: 5 installed skills in `references/bundle-manifest.json`
 
 ### Current duplication shape in `wild-bunch-project-pack`
 
@@ -64,7 +64,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 - `repo-worker-pack` is partially duplicated as a baseline subset: `repo-worker-base`, `boring-loop`, `connector-safety`, and `github-operations` are embedded in the project pack, while `base-doctrine`, `context-safety`, `linear-issue-shaping`, `unslop-plus`, and `work-mode-router` remain outside that subset in the separate pack.
 - `frontend-pack` overlaps only partially; the project pack also carries extra frontend/UI/QA skills beyond the current pack inventory.
 - `security-pack` is nearly duplicated; the project pack appears to carry the full surface except `safety-guard`.
-- `agent-browser` is not present in the retained `sources/third_party/game-studio/upstream/skills/` tree and is intentionally blocked at the marketplace projection level.
+- browser verification stays outside the retained Wild Bunch pack surface.
 
 ### Bridge decisions
 
@@ -95,7 +95,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 - `codex-marketplace/plugins/wild-bunch-project-pack/skills/**`: generated projection tree for the corrected pack membership.
 - `codex-marketplace/plugins/frontend-pack/skills/INDEX.md`: expand or normalize only if the frontend/UI/QA slice belongs there.
 - `codex-marketplace/plugins/frontend-pack/SOURCE.md`: document any frontend-pack normalization decision.
-- `codex-marketplace/plugins/game-studio/SOURCE.md`: record the plugin-level `agent-browser` blocker if the current source-custody review still requires it.
+- `codex-marketplace/plugins/game-studio/SOURCE.md`: record the plugin-level browser verification posture if the current source-custody review still requires it.
 - `tools/update_skill_artifacts.py`: use the existing deterministic update entrypoint.
 - `tools/generate_marketplace.py`: regenerate marketplace manifests and plugin registries.
 - `tools/generate_repo_index.py`: regenerate the repo index.
@@ -136,7 +136,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 
 - [ ] Confirm the exact keep/remove boundary for `wild-bunch-project-pack` from the live source tree and the attached Linear brief.
 - [ ] Confirm whether `frontend-pack` should absorb the current Wild Bunch-only frontend/UI/QA skills or whether those skills should be removed from the pack entirely.
-- [ ] Confirm whether `game-studio` needs any plugin-level `SOURCE.md` or `PROJECTION.md` note beyond the existing blocker posture for `agent-browser`.
+- [ ] Confirm whether `game-studio` needs any plugin-level `SOURCE.md` or `PROJECTION.md` note beyond the existing browser verification posture.
 
 ### Task 2: Move the Superpowers docs surface under `.agents/docs/superpowers/`
 
@@ -177,7 +177,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 - Modify: `codex-marketplace/plugins/game-studio/README.md` if the source-custody note needs to be surfaced there
 
 - [x] Decide whether the current Wild Bunch-only frontend/UI/QA skills belong in `frontend-pack`: keep `frontend-pack` unchanged and do not absorb the Wild Bunch slice there.
-- [x] Keep `game-studio` complete as its own plugin and document the `agent-browser` decision at the plugin level only if the existing source/projection notes are not already sufficient.
+- [x] Keep `game-studio` complete as its own plugin and document the browser verification decision at the plugin level only if the existing source/projection notes are not already sufficient.
 - [x] Avoid moving any game-studio gap into the Wild Bunch pack as a workaround.
 
 ### Task 5: Add validation that prevents whole-plugin inventory duplication
@@ -247,7 +247,7 @@ Expected result:
 
 - the Wild Bunch pack no longer embeds whole dependency-plugin inventories
 - the final pack surface is explainable as native Wild Bunch skills plus thin bridges
-- `game-studio` remains a standalone plugin with `agent-browser` blocked at the plugin/source-custody boundary, not hidden inside Wild Bunch
+- `game-studio` remains a standalone plugin with browser verification handled at the plugin/source-custody boundary, not hidden inside Wild Bunch
 
 ## Self-Review
 
@@ -256,7 +256,7 @@ Expected result:
 1. Inspect current source and durable issue state - Worktree Preflight Evidence, Preflight Findings
 2. Separate Wild Bunch native skills from dependency plugins - Task 2
 3. Normalize `frontend-pack` only if the current Wild Bunch frontend slice belongs there - Task 3
-4. Keep `game-studio` complete at the plugin level and treat `agent-browser` as a plugin/source-custody decision - Preflight Findings, Task 3
+4. Keep `game-studio` complete at the plugin level and treat browser verification as a plugin/source-custody decision - Preflight Findings, Task 3
 5. Add validation that blocks future whole-plugin duplication in project packs - Task 4
 6. Regenerate the marketplace and export surfaces from tooling - Task 5
 7. Publish the plan-only PR and durable route state before implementation - Task 6

@@ -2,11 +2,10 @@
 name: wild-bunch-browser-game
 description: Use when bridge Wild Bunch to browser-game implementation and QA when
   work touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays,
-  playtest evidence, dev-server checks, screenshot QA, or agent-browser verification.
+  playtest evidence, dev-server checks, screenshot QA, or installed browser verification tooling.
   Use to keep browser rendering as a presentation adapter over authoritative Wild
   Bunch game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend,
-  game-playtest, and agent-browser where installed, and avoid turning UI or renderer
-  code into domain truth.
+  and game-playtest, and avoid turning UI or renderer code into domain truth.
 metadata:
   source-id: wild-bunch-browser-game
   source-path: sources/first_party/skills/wild-bunch-browser-game/SKILL.md
@@ -16,19 +15,17 @@ metadata:
   owner: Harley Bartles
   scope: Use when bridge Wild Bunch to browser-game implementation and QA when work
     touches browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest
-    evidence, dev-server checks, screenshot QA, or agent-browser verification. Use
+    evidence, dev-server checks, screenshot QA, or installed browser verification tooling. Use
     to keep browser rendering as a presentation adapter over authoritative Wild Bunch
     game state, compose with web-game-foundations, phaser-2d-game, game-ui-frontend,
-    game-playtest, and agent-browser where installed, and avoid turning UI or renderer
-    code into domain truth.
+    and game-playtest, and avoid turning UI or renderer code into domain truth.
   use_when:
   - Use when bridge Wild Bunch to browser-game implementation and QA when work touches
     browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence,
-    dev-server checks, screenshot QA, or agent-browser verification. Use to keep browser
+    dev-server checks, screenshot QA, or installed browser verification tooling. Use to keep browser
     rendering as a presentation adapter over authoritative Wild Bunch game state,
-    compose with web-game-foundations, phaser-2d-game, game-ui-frontend, game-playtest,
-    and agent-browser where installed, and avoid turning UI or renderer code into
-    domain truth.
+    compose with web-game-foundations, phaser-2d-game, game-ui-frontend, and game-playtest,
+    and avoid turning UI or renderer code into domain truth.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
 license: MIT
@@ -55,7 +52,7 @@ Use these supporting skills or marketplace-derived capabilities when the current
 - `phaser-2d-game` for the 2D Phaser implementation shape.
 - `game-ui-frontend` for HUD, menu, overlay, and frontend interaction direction.
 - `game-playtest` for browser playtest expectations and evidence.
-- `agent-browser` for dev-server verification and screenshot-based QA where installed.
+- browser verification tooling for dev-server verification and screenshot-based QA where installed.
 
 Do not read supporting skills just because this skill is active. Load only the specific adjacent surface that owns the unresolved browser-game decision.
 

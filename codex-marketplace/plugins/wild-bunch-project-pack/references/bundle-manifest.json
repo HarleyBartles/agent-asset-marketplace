@@ -18,10 +18,10 @@
   "source_families": [
     "first_party"
   ],
-  "candidate_count": 6,
+  "candidate_count": 5,
   "imported_count": 5,
   "skipped_count": 0,
-  "blocked_count": 1,
+  "blocked_count": 0,
   "dependency_topology": [
     {
       "plugin": "game-studio",
@@ -117,23 +117,11 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party wild-bunch-worker-verification skill."
-    },
-    {
-      "canonical_name": "agent-browser",
-      "source_category": "third_party",
-      "content_mode": "blocked",
-      "source_family": "game-studio",
-      "canonical_source_path": null,
-      "local_path": null,
-      "import_status": "blocked",
-      "copy_expectation": "not_copied",
-      "provenance_note": "Excluded because this repository does not retain an approved source-copy path for agent-browser in the current marketplace projection surfaces."
     }
   ],
   "notes": [
     "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
-    "Selected-skill projections are explicit and rare; this pack currently has none.",
-    "agent-browser remains excluded because the repository does not retain an approved source-copy path."
+    "Selected-skill projections are explicit and rare; this pack currently has none."
   ],
   "provenance_refs": [
     "provenance/wild-bunch-project-pack.md"
