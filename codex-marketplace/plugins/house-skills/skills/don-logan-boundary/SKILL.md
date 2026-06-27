@@ -29,9 +29,6 @@ metadata:
     prep, missing authority, unclear scope, real blockers, or protected-surface conflicts.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/don-logan-boundary
-  - codex-marketplace/plugins/house-skills/skills/don-logan-boundary
 license: MIT
 ---
 # Don Logan Boundary

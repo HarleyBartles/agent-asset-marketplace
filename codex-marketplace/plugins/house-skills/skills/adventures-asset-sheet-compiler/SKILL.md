@@ -25,9 +25,6 @@ metadata:
     PIG self-QA as acceptance.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-asset-sheet-compiler
-  - codex-marketplace/plugins/house-skills/skills/adventures-asset-sheet-compiler
 license: MIT
 ---
 

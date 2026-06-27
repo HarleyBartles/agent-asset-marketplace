@@ -16,6 +16,7 @@ REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
 REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/references/bundle-manifest.json"
+REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "codex-marketplace/repo-local-marketplace-policy.json"
 ADVENTURES_PACK_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json"
 ADVENTURES_PACK_SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/source-map.md"
 ADVENTURES_PACK_SKILL_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/skills/adventures-pack/SKILL.md"
@@ -32,6 +33,57 @@ MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",
     "Active marketplace plugins are limited to the protected plugin roots only.",
 ]
+
+
+def load_repo_local_marketplace_policy() -> dict[str, Any]:
+    policy = json.loads(REPO_LOCAL_MARKETPLACE_POLICY_PATH.read_text(encoding="utf-8"))
+    if not isinstance(policy, dict):
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: policy must be a mapping")
+
+    defaults = policy.get("defaults", {})
+    if not isinstance(defaults, dict):
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: defaults must be a mapping")
+    installation = defaults.get("installation", "AVAILABLE")
+    authentication = defaults.get("authentication", "ON_INSTALL")
+    if not isinstance(installation, str) or not installation:
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: defaults.installation must be a string")
+    if not isinstance(authentication, str) or not authentication:
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: defaults.authentication must be a string")
+
+    install_defaults = policy.get("install_defaults", [])
+    if not isinstance(install_defaults, list):
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: install_defaults must be a list")
+    category_overrides = policy.get("category_overrides", {})
+    if not isinstance(category_overrides, dict):
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: category_overrides must be a mapping")
+    exclusions = policy.get("exclusions", [])
+    if not isinstance(exclusions, list):
+        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: exclusions must be a list")
+
+    return {
+        "marketplace_name": policy.get("marketplace_name", "agent-asset-marketplace"),
+        "display_name": policy.get("display_name", "Agent Asset Marketplace"),
+        "defaults": {
+            "installation": installation,
+            "authentication": authentication,
+        },
+        "install_defaults": tuple(str(item) for item in install_defaults if str(item).strip()),
+        "category_overrides": {
+            str(key): str(value)
+            for key, value in category_overrides.items()
+            if str(key).strip() and str(value).strip()
+        },
+        "exclusions": tuple(str(item) for item in exclusions if str(item).strip()),
+    }
+
+
+REPO_LOCAL_MARKETPLACE_POLICY = load_repo_local_marketplace_policy()
+
+
+def _installation_policy_for_plugin(plugin_name: str) -> str:
+    if plugin_name in REPO_LOCAL_MARKETPLACE_POLICY["install_defaults"]:
+        return "INSTALLED_BY_DEFAULT"
+    return REPO_LOCAL_MARKETPLACE_POLICY["defaults"]["installation"]
 
 EXPECTED_PLUGIN_NAME = "house-skills"
 EXPECTED_PLUGIN_VERSION = "1.0.0"
@@ -132,9 +184,9 @@ PROTECTED_MARKETPLACE_PLUGIN_ROOTS = tuple(spec["plugin_root"] for spec in MARKE
 PROTECTED_MARKETPLACE_PLUGIN_MANIFESTS = tuple(spec["manifest_path"] for spec in MARKETPLACE_PLUGIN_SPECS)
 
 EXPECTED_MARKETPLACE = {
-    "name": "agent-asset-marketplace",
+    "name": REPO_LOCAL_MARKETPLACE_POLICY["marketplace_name"],
     "interface": {
-        "displayName": "Agent Asset Marketplace",
+        "displayName": REPO_LOCAL_MARKETPLACE_POLICY["display_name"],
     },
     "plugins": [
         {
@@ -144,12 +196,13 @@ EXPECTED_MARKETPLACE = {
                 "path": spec["registry_path"],
             },
             "policy": {
-                "installation": "AVAILABLE",
+                "installation": _installation_policy_for_plugin(spec["name"]),
                 "authentication": "ON_INSTALL",
             },
-            "category": spec["category"],
+            "category": REPO_LOCAL_MARKETPLACE_POLICY["category_overrides"].get(spec["name"], spec["category"]),
         }
         for spec in MARKETPLACE_PLUGIN_SPECS
+        if spec["name"] not in REPO_LOCAL_MARKETPLACE_POLICY["exclusions"]
     ],
     "notes": MARKETPLACE_NOTES,
 }
@@ -268,6 +321,8 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
     registry_paths = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_name = spec["name"]
+        if plugin_name in REPO_LOCAL_MARKETPLACE_POLICY["exclusions"]:
+            continue
         plugin_manifest = plugin_manifest_by_name.get(plugin_name)
         if not plugin_manifest:
             raise ValueError(f"Missing plugin manifest for protected marketplace root {plugin_name}")
@@ -283,10 +338,10 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
                     "path": plugin_path,
                 },
                 "policy": {
-                    "installation": "AVAILABLE",
-                    "authentication": "ON_INSTALL",
+                    "installation": _installation_policy_for_plugin(plugin_name),
+                    "authentication": REPO_LOCAL_MARKETPLACE_POLICY["defaults"]["authentication"],
                 },
-                "category": spec["category"],
+                "category": REPO_LOCAL_MARKETPLACE_POLICY["category_overrides"].get(plugin_name, spec["category"]),
             }
         )
 

@@ -19,9 +19,6 @@ metadata:
     and acceptance.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-visual-bible-creator
-  - codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-creator
 license: MIT
 ---
 # Adventures Visual Bible Creator

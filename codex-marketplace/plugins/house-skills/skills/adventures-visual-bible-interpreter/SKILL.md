@@ -19,9 +19,6 @@ metadata:
     authority.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-visual-bible-interpreter
-  - codex-marketplace/plugins/house-skills/skills/adventures-visual-bible-interpreter
 license: MIT
 ---
 # Adventures Visual Bible Interpreter

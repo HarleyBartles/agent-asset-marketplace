@@ -19,8 +19,6 @@ metadata:
     mutates a durable surface, or treats a claim as resolved.'
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/buster-framework
 license: MIT
 ---
 # Buster Framework

@@ -19,9 +19,6 @@ metadata:
     requests before routing to required doctrine or task skills.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-bootstrap
-  - codex-marketplace/plugins/house-skills/skills/adventures-bootstrap
 license: MIT
 ---
 # Adventures Bootstrap

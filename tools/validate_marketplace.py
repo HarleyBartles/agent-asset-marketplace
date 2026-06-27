@@ -37,6 +37,7 @@ from marketplace_utils import (
     normalize_decision_record,
     normalize_decision_row,
     parse_top_markdown_table,
+    _installation_policy_for_plugin,
 )
 from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
@@ -515,7 +516,7 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
             raise ValueError(f"Marketplace registry {name} plugin path mismatch")
         if plugin.get("source", {}).get("source") != "local":
             raise ValueError(f"Marketplace registry {name} plugin source kind mismatch")
-        if plugin.get("policy", {}).get("installation") != "AVAILABLE":
+        if plugin.get("policy", {}).get("installation") != _installation_policy_for_plugin(name):
             raise ValueError(f"Marketplace registry {name} installation policy mismatch")
         if plugin.get("policy", {}).get("authentication") != "ON_INSTALL":
             raise ValueError(f"Marketplace registry {name} authentication policy mismatch")

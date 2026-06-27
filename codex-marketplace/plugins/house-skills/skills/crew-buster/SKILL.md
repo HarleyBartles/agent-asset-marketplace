@@ -28,8 +28,6 @@ metadata:
     stack, and defer execution/proof to specialist skills.'
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/crew-buster
 license: MIT
 ---
 # Crew Buster

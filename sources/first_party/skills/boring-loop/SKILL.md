@@ -16,11 +16,6 @@ metadata:
     or preventing false-green repo work.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/boring-loop
-  - codex-marketplace/plugins/house-skills/skills/boring-loop
-  - codex-marketplace/plugins/repo-worker-pack/skills/boring-loop
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/boring-loop
 license: MIT
 ---
 # Boring Loop

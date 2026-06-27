@@ -28,10 +28,6 @@ metadata:
     attention guards, and lower-skill format conflicts.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/base-doctrine
-  - codex-marketplace/plugins/house-skills/skills/base-doctrine
-  - codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine
 license: MIT
 ---
 # Base Doctrine

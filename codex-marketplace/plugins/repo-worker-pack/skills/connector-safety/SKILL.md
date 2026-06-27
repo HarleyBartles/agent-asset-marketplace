@@ -28,11 +28,6 @@ metadata:
     back up the connector discovery chain.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/connector-safety
-  - codex-marketplace/plugins/house-skills/skills/connector-safety
-  - codex-marketplace/plugins/repo-worker-pack/skills/connector-safety
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/connector-safety
 license: MIT
 ---
 # Connector Safety

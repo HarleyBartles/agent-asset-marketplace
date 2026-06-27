@@ -16,8 +16,6 @@ metadata:
     when binding constraints may be violated.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/invariant-buster
 license: MIT
 ---
 # Invariant Buster

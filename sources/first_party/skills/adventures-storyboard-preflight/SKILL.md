@@ -23,9 +23,6 @@ metadata:
     packets before image generation; never grants image-generation authority.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-storyboard-preflight
-  - codex-marketplace/plugins/house-skills/skills/adventures-storyboard-preflight
 license: MIT
 ---
 # Adventures Storyboard Preflight

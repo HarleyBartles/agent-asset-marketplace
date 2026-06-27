@@ -37,7 +37,7 @@ hand-edit projected skill trees, source maps, provenance maps, registry
 surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
 when a generic deterministic path is required.
 
-Repo-local worker doctrine lives in [.agents/docs/marketplace-worker-doctrine.md](.agents/docs/marketplace-worker-doctrine.md) and is linked from [.agents/skills/AGENTS.md](.agents/skills/AGENTS.md). Read it before editing marketplace projection surfaces.
+Repo-local worker doctrine lives in [.agents/docs/marketplace-worker-doctrine.md](.agents/docs/marketplace-worker-doctrine.md). Read it before editing marketplace projection surfaces.
 
 Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
 canonical install surface. Treat `generated/skill-zips/` as a derived GPT

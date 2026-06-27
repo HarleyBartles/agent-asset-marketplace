@@ -31,11 +31,6 @@ metadata:
     the Linear/Codex control plane first.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/github-operations
-  - codex-marketplace/plugins/house-skills/skills/github-operations
-  - codex-marketplace/plugins/repo-worker-pack/skills/github-operations
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/github-operations
 license: MIT
 ---
 

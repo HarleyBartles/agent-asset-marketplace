@@ -25,10 +25,6 @@ metadata:
     lane; treat worker-ready as issue-ready only.'
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/linear-issue-shaping
-  - codex-marketplace/plugins/house-skills/skills/linear-issue-shaping
-  - codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping
 license: MIT
 ---
 # Linear Issue Shaping

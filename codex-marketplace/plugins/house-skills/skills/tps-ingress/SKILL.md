@@ -28,8 +28,6 @@ metadata:
     owned by linear-issue-shaping and the repo/GitHub proof surface.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/tps-ingress
 license: MIT
 ---
 # Tps Ingress

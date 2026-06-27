@@ -19,9 +19,6 @@ metadata:
     publication proof, and final main-state verification bound to github-operations.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/github-superpowers
-  - codex-marketplace/plugins/superpowers-plus/skills/github-superpowers
 license: MIT
 ---
 # GitHub Superpowers

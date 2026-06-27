@@ -22,9 +22,6 @@ metadata:
     or creative authority.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-github-operations
-  - codex-marketplace/plugins/house-skills/skills/adventures-github-operations
 license: MIT
 ---
 # Adventures Github Operations

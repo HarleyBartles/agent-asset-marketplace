@@ -25,8 +25,6 @@ metadata:
     a task needs the right Rooms doctrine-bearing skill before action.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine
 license: MIT
 ---
 # Rooms Project Doctrine

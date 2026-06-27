@@ -28,9 +28,6 @@ metadata:
     worker summaries from being treated as proof.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-worker-verification
 license: MIT
 ---
 

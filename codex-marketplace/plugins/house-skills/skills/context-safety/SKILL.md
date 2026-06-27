@@ -1,8 +1,9 @@
 ---
 name: context-safety
 description: Use when large or context-heavy text writes need bounded composition,
-  safe staging, and atomic replacement. Use when a write may exceed the safe threshold
-  or when inline composition risks exhausting context.
+  deliberate compaction boundaries, safe staging, and atomic replacement. Use when
+  a write may exceed the safe threshold or when inline composition risks exhausting
+  context.
 metadata:
   source-id: context-safety
   source-path: sources/first_party/skills/context-safety/SKILL.md
@@ -10,10 +11,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: large text write safety, bounded composition, and atomic replacement
+  scope: large text write safety, bounded composition, compaction boundaries, and atomic replacement
   use_when:
   - Use when composing or editing large text files
   - Use when inline composition would risk consuming the remaining context
+  - Use when tool-call boundaries are the right checkpoint for preserving durable state
+  - Use when `/compact` should happen only after durable state has been preserved
   - Use when safe staging and atomic replacement are required
   do_not_use_when:
   - Do not use when the change is small and can be written directly
@@ -21,13 +24,6 @@ metadata:
   related_skills:
   - repo-worker-base
   - connector-safety
-  notes:
-  - Historical name safe-large-file-writing is quarantined to provenance and archive
-    surfaces only.
-  projection_targets:
-  - .agents/skills/context-safety
-  - codex-marketplace/plugins/house-skills/skills/context-safety
-  - codex-marketplace/plugins/repo-worker-pack/skills/context-safety
 license: MIT
 ---
 
@@ -45,6 +41,18 @@ If the payload is large, switch to a chunked temp-file write path before any byt
 Validate the temp file after the write completes, then atomically replace the target.
 
 Do not write the whole payload to the temp file first and decide later.
+
+## Tool-call boundaries
+
+Treat each tool call as a checkpoint. Before a large read, write, or composition step, preserve the durable state that the next tool call will need.
+
+If the next step would require a lot of inline context, stop at the boundary and move the work into a fresh bounded write, a clean-context subagent, or a sectioned append path.
+
+## Compaction boundaries
+
+Use `/compact` only at deliberate phase boundaries after the durable state for the current phase has been preserved.
+
+Do not treat `/compact` as a universal rescue button. If compaction is needed in the middle of active composition, checkpoint the inputs and end the current phase first.
 
 ## Pre-composition context pressure
 

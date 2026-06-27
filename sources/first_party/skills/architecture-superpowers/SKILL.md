@@ -16,9 +16,6 @@ metadata:
     gate over Superpowers instead of a new doctrine surface.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/architecture-superpowers
-  - codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers
 license: MIT
 ---
 

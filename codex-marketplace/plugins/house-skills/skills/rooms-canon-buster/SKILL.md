@@ -16,8 +16,6 @@ metadata:
     for canon, gaps, ambiguity, and layer mismatches.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/rooms-canon-buster
 license: MIT
 ---
 # Rooms Canon Buster

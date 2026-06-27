@@ -19,9 +19,6 @@ metadata:
     planning separate from downstream production.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-visual-preproduction
-  - codex-marketplace/plugins/house-skills/skills/adventures-visual-preproduction
 license: MIT
 ---
 # Adventures Visual Preproduction

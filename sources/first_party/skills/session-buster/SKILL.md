@@ -31,8 +31,6 @@ metadata:
     surface and session busters are fallback continuity.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/session-buster
 license: MIT
 ---
 # Session Buster

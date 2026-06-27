@@ -32,8 +32,6 @@ metadata:
     safe directive without mutating repos, issues, packages, or worker state.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/session-buster-ingress
 license: MIT
 ---
 # Session Buster Ingress

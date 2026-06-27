@@ -19,9 +19,6 @@ metadata:
     or editing authority.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/adventures-image-qa
-  - codex-marketplace/plugins/house-skills/skills/adventures-image-qa
 license: MIT
 ---
 # Adventures Image Qa

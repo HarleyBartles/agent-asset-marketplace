@@ -28,9 +28,6 @@ metadata:
     those actions.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/crew
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/crew
 license: MIT
 ---
 # Crew

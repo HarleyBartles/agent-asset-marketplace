@@ -31,9 +31,6 @@ metadata:
     GitHub proof belongs to the repo/GitHub proof surface.'
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/adventures-pack/skills/linear
-  - codex-marketplace/plugins/house-skills/skills/linear
 license: Apache-2.0
 ---
 # Linear

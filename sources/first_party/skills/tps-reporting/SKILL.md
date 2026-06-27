@@ -31,8 +31,6 @@ metadata:
     Operations after a PR or repo artifact exists.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/tps-reporting
 license: MIT
 ---
 # Tps Reporting

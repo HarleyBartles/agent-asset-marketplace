@@ -14,8 +14,6 @@ import yaml
 from marketplace_utils import ROOT
 
 SOURCE_ROOT = ROOT / "sources/first_party/skills"
-AGENTS_ROOT = ROOT / ".agents/skills"
-PLUGIN_SKILLS_ROOT = ROOT / "codex-marketplace/plugins"
 
 
 def _read_frontmatter(path: Path) -> tuple[dict[str, Any], str]:
@@ -192,21 +190,6 @@ def _normalize_condition(value: str, *, prefix: str) -> str:
     return f"{prefix[0].upper() + prefix[1:]} {text}".strip()
 
 
-def _discover_projection_targets(skill_name: str) -> list[str]:
-    targets: set[str] = set()
-
-    agents_skill_root = AGENTS_ROOT / skill_name
-    if agents_skill_root.is_dir():
-        targets.add(agents_skill_root.relative_to(ROOT).as_posix())
-
-    for plugin_root in sorted(PLUGIN_SKILLS_ROOT.glob("*/skills"), key=lambda path: path.as_posix()):
-        candidate = plugin_root / skill_name
-        if candidate.is_dir():
-            targets.add(candidate.relative_to(ROOT).as_posix())
-
-    return sorted(targets)
-
-
 def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
     frontmatter, body = _read_frontmatter(skill_md)
 
@@ -254,12 +237,6 @@ def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
     for key in ("related_skills", "notes"):
         if key in metadata and metadata.get(key) is not None:
             normalized_metadata[key] = metadata[key]
-
-    projection_targets = _discover_projection_targets(name)
-    if projection_targets:
-        normalized_metadata["projection_targets"] = projection_targets
-    elif "projection_targets" in metadata and metadata.get("projection_targets") is not None:
-        normalized_metadata["projection_targets"] = metadata["projection_targets"]
 
     normalized_frontmatter: dict[str, Any] = {
         "name": name,

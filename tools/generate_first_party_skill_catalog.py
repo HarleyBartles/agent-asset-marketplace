@@ -18,8 +18,6 @@ PLUGIN_MANIFESTS_ROOT = ROOT / "codex-marketplace/plugins"
 GENERATED_REGISTRY_PATH = ROOT / "generated/skill-zips/registry.json"
 
 REFERENCE_SURFACES = (
-    ROOT / ".agents/skills/INDEX.md",
-    ROOT / ".agents/skills/AGENTS.md",
     ROOT / "sources/first_party/skills/house-skills/decisions.md",
     ROOT / "sources/first_party/skills/house-skills/decisions.json",
     ROOT / "sources/first_party/skills/house-skills/intake.json",

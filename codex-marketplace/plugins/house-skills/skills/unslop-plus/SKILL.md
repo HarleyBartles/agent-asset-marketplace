@@ -22,11 +22,6 @@ metadata:
     architecture, testing, security-review, and cleanup-custody.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/unslop-plus
-  - codex-marketplace/plugins/house-skills/skills/unslop-plus
-  - codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus
-  - codex-marketplace/plugins/unslop-plus/skills/unslop-plus
 license: MIT
 ---
 

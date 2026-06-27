@@ -22,11 +22,6 @@ metadata:
     evidence, or publication proof.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/repo-worker-base
-  - codex-marketplace/plugins/house-skills/skills/repo-worker-base
-  - codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base
-  - codex-marketplace/plugins/wild-bunch-project-pack/skills/repo-worker-base
 license: MIT
 ---
 

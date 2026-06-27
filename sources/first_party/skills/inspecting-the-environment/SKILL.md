@@ -21,9 +21,6 @@ metadata:
     auth, connectors, mutation authority, and protected surfaces before proceeding.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - codex-marketplace/plugins/house-skills/skills/inspecting-the-environment
-  - codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment
 license: MIT
 ---
 # Inspecting the Environment

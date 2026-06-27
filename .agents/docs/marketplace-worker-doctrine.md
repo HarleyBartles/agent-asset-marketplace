@@ -1,8 +1,8 @@
 # Marketplace Worker Doctrine
 
 This is the durable repo-local worker doctrine for `agent-asset-marketplace`.
-Read it with the root [AGENTS.md](../AGENTS.md) and the installed-skill guidance in
-[.agents/skills/AGENTS.md](../skills/AGENTS.md).
+Read it with the root [AGENTS.md](../AGENTS.md) and the repo-local marketplace
+registry in [plugins/marketplace.json](../plugins/marketplace.json).
 
 ## Execution model
 

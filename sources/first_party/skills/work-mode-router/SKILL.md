@@ -31,10 +31,6 @@ metadata:
     with the discovered mode instead of legacy dispatch stacks.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
-  projection_targets:
-  - .agents/skills/work-mode-router
-  - codex-marketplace/plugins/house-skills/skills/work-mode-router
-  - codex-marketplace/plugins/repo-worker-pack/skills/work-mode-router
 license: MIT
 ---
 # Work Mode Router
