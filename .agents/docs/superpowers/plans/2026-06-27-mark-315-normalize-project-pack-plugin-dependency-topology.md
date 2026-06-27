@@ -188,7 +188,7 @@ Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 - Modify: `tools/update_skill_artifacts.py` if the new guard must be called from the update path
 - Create: `tools/validate_project_pack_topology.py` only if the existing validation chain cannot express the required guard deterministically
 
-- [x] Compute the project pack skill set and compare it against the declared dependency-plugin inventories with explicit bridge/rationale metadata.
+- [x] Compare the project pack skill set against every active marketplace plugin inventory, and require explicit bridge/rationale metadata for any material overlap.
 - [x] Fail or warn when a project pack contains 100% of another dependency plugin's skill set.
 - [x] Fail or warn when a project pack contains a substantial partial dependency-plugin inventory without an explicit bridge skill and manifest rationale.
 - [x] Fail or warn when a project pack is missing a required dependency-plugin skill that the bridge/dependency model says must come from the dependency plugin rather than from ad hoc projection.
