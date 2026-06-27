@@ -10,5 +10,7 @@
     "superpowers-plus"
   ],
   "category_overrides": {},
-  "exclusions": []
+  "exclusions": [
+    "house-skills"
+  ]
 }

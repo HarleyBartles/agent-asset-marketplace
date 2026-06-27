@@ -207,6 +207,9 @@ EXPECTED_MARKETPLACE = {
     "notes": MARKETPLACE_NOTES,
 }
 
+EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_SPECS = tuple(EXPECTED_MARKETPLACE["plugins"])
+EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES = tuple(plugin["name"] for plugin in EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_SPECS)
+
 
 def parse_top_markdown_table(path: Path) -> list[dict[str, str]]:
     lines = load_text(path).splitlines()

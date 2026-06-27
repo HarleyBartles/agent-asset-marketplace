@@ -14,6 +14,7 @@ import yaml
 from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
     BUNDLE_MANIFEST_PATH,
+    EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES,
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
@@ -504,9 +505,13 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
         raise ValueError("Marketplace registry display name mismatch")
 
     plugins_by_name = {plugin.get("name"): plugin for plugin in registry.get("plugins", [])}
-    expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
+    expected_plugins = {
+        spec["name"]: spec["registry_path"]
+        for spec in MARKETPLACE_PLUGIN_SPECS
+        if spec["name"] in EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES
+    }
     actual_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
-    if actual_plugin_names != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
+    if actual_plugin_names != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("Marketplace registry plugin order does not match the protected marketplace shape")
     for name, path in expected_plugins.items():
         plugin = plugins_by_name.get(name)
