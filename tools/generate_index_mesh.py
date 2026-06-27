@@ -74,7 +74,7 @@ def dir_link(current: Path, child: Path) -> str | None:
 def render_index(path: Path) -> str:
     dirs = []
     files = []
-    for entry in sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.casefold(), p.name)):
+    for entry in sorted(path.iterdir(), key=lambda p: (not p.is_dir(), p.name.casefold(), p.name)):
         if entry.name == "INDEX.md":
             continue
         if entry.is_dir():
