@@ -42,7 +42,7 @@ Use this compact block when a worker packet needs durable route state:
 ## Worker route state
 Route status: preflight-needed | preflight-complete-pending-approval | approved-plan-execution-ready | stale-plan-repair-needed | blocked-ambiguous | executed | superseded
 Plan PR: none | <url>
-Plan repo path: none | docs/superpowers/plans/<file>.md
+Plan repo path: none | .agents/docs/superpowers/plans/<file>.md
 Plan approved: yes | no | unknown
 Plan merged to main: yes | no | unknown
 Approved plan commit: none | <sha>
