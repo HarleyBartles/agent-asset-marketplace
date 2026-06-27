@@ -74,7 +74,7 @@ def dir_link(current: Path, child: Path) -> str | None:
 def render_index(path: Path) -> str:
     dirs = []
     files = []
-    for entry in sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.lower())):
+    for entry in sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.casefold(), p.name)):
         if entry.name == "INDEX.md":
             continue
         if entry.is_dir():
@@ -158,7 +158,10 @@ def walk_index_targets() -> list[IndexTarget]:
     targets: list[IndexTarget] = []
     for dirpath, dirnames, _filenames in os.walk(ROOT):
         current = Path(dirpath)
-        dirnames[:] = [name for name in dirnames if should_descend(current / name)]
+        dirnames[:] = sorted(
+            (name for name in dirnames if should_descend(current / name)),
+            key=lambda name: (name.casefold(), name),
+        )
         if should_index(current):
             targets.append(IndexTarget(path=current / "INDEX.md", lines=render_index(current).splitlines()))
     return targets
