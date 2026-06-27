@@ -25,8 +25,12 @@ agent-facing infrastructure.
 
 ## 4. Mesh self-healing
 
-If a worker finds stale or misleading mesh law or navigation while working in
-scope, repair it in the same PR.
-If the repair is outside scope, return AMBER with the exact deferred mesh
-repair.
-
+If a worker finds stale or misleading authored mesh law (`AGENTS.md`,
+`README.md`, or other agent-facing doctrine docs), repair it in scope or return
+AMBER with the exact deferred repair.
+If a worker finds stale generated `INDEX.md` navigation, repair it by
+regenerating the whole index mesh through tooling.
+If whole-mesh regeneration does not produce a valid mesh, fix the generator,
+exclusion policy, or source inputs.
+Do not hand-edit individual generated `INDEX.md` files or regenerate only a
+subtree to satisfy CI.

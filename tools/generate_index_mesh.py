@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -21,6 +22,9 @@ SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
 class IndexTarget:
     path: Path
     lines: list[str]
+
+
+LINK_PATTERN = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 
 def is_skill_root(path: Path) -> bool:
@@ -109,6 +113,47 @@ def render_index(path: Path) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def normalize_text(text: str) -> str:
+    return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
+def resolve_link_target(current: Path, target: str) -> Path | None:
+    if target.startswith(("http://", "https://", "mailto:")):
+        return None
+    clean_target = target.split("#", 1)[0]
+    if not clean_target:
+        return None
+    candidates = [
+        (current.parent / clean_target).resolve(),
+        (ROOT / clean_target).resolve(),
+    ]
+    for resolved in candidates:
+        if not is_under(resolved, ROOT):
+            continue
+        if target.endswith("/"):
+            if resolved.is_dir():
+                return resolved
+            continue
+        if resolved.exists():
+            return resolved
+    return None
+
+
+def validate_rendered_links(path: Path, rendered: str) -> list[str]:
+    failures: list[str] = []
+    for label, raw_target in LINK_PATTERN.findall(rendered):
+        resolved = resolve_link_target(path, raw_target)
+        if resolved is None:
+            continue
+        if raw_target.endswith("/"):
+            if not resolved.is_dir():
+                failures.append(f"broken-link: {path.relative_to(ROOT)} -> {raw_target}")
+            continue
+        if not resolved.exists():
+            failures.append(f"broken-link: {path.relative_to(ROOT)} -> {raw_target}")
+    return failures
+
+
 def walk_index_targets() -> list[IndexTarget]:
     targets: list[IndexTarget] = []
     for dirpath, dirnames, _filenames in os.walk(ROOT):
@@ -143,10 +188,11 @@ def main() -> int:
             if not target.path.exists():
                 mismatches.append(f"missing: {target.path.relative_to(ROOT)}")
                 continue
-            current = target.path.read_text(encoding="utf-8")
+            current = normalize_text(target.path.read_text(encoding="utf-8"))
             rendered = "\n".join(target.lines).rstrip() + "\n"
             if current != rendered:
                 mismatches.append(f"stale: {target.path.relative_to(ROOT)}")
+            mismatches.extend(validate_rendered_links(target.path, rendered))
         if unexpected:
             mismatches.extend(f"unexpected: {path.relative_to(ROOT)}" for path in unexpected)
         if missing:
@@ -163,6 +209,16 @@ def main() -> int:
         with target.path.open("w", encoding="utf-8", newline="\n") as handle:
             handle.write(rendered)
         written += 1
+
+    obsolete = sorted(path for path in actual_paths if path not in expected_paths)
+    for path in obsolete:
+        path.unlink()
+    link_failures: list[str] = []
+    for target in targets:
+        rendered = "\n".join(target.lines).rstrip() + "\n"
+        link_failures.extend(validate_rendered_links(target.path, rendered))
+    if link_failures:
+        raise ValueError("INDEX mesh produced broken links:\n" + "\n".join(link_failures))
     print(f"Wrote index mesh: {written} files")
     return 0
 
