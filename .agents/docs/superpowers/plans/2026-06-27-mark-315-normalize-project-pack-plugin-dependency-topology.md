@@ -24,8 +24,8 @@
 ## Worker Route State
 
 ```text
-Route status: preflight-needed
-Plan PR: none
+Route status: preflight-complete-pending-approval
+Plan PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 Plan repo path: .agents/docs/superpowers/plans/2026-06-27-mark-315-normalize-project-pack-plugin-dependency-topology.md
 Plan approved: no
 Plan merged to main: no
@@ -59,9 +59,9 @@ Execution PR: none
 
 - Whole `game-studio` inventory is embedded in the project pack.
 - Whole `dotnet-kit` inventory is embedded in the project pack.
-- Whole `architecture-pack` inventory is embedded in the project pack.
+- `architecture-pack` is partially duplicated: `database-design-patterns` and `event-driven-architecture` are embedded in the project pack, while required `cqrs-event-sourcing` still belongs in the dependency-plugin model.
 - Whole `api-contracts-pack` inventory is embedded in the project pack.
-- Whole `repo-worker-pack` inventory is embedded in the project pack.
+- `repo-worker-pack` is partially duplicated as a baseline subset: `repo-worker-base`, `boring-loop`, `connector-safety`, and `github-operations` are embedded in the project pack, while `base-doctrine`, `context-safety`, `linear-issue-shaping`, `unslop-plus`, and `work-mode-router` remain outside that subset in the separate pack.
 - `frontend-pack` overlaps only partially; the project pack also carries extra frontend/UI/QA skills beyond the current pack inventory.
 - `security-pack` is nearly duplicated; the project pack appears to carry the full surface except `safety-guard`.
 - `agent-browser` is not present in the retained `sources/third_party/game-studio/upstream/skills/` tree and is intentionally blocked at the marketplace projection level.
@@ -189,8 +189,10 @@ Execution PR: none
 - Create: `tools/validate_project_pack_topology.py` only if the existing validation chain cannot express the required guard deterministically
 
 - [ ] Compute the skill set for each project pack and compare it against every other plugin inventory in the repo.
-- [ ] Fail or warn when a project pack contains 100% of another plugin’s skill set.
+- [ ] Fail or warn when a project pack contains 100% of another plugin's skill set.
 - [ ] Fail or warn when a project pack contains a substantial partial plugin inventory without an explicit bridge skill and manifest rationale.
+- [ ] Fail or warn when a project pack is missing a required dependency-plugin skill that the bridge/dependency model says must come from the dependency plugin rather than from ad hoc projection.
+- [ ] Allow explicit selected-skill projection only when the manifest explains why installing the whole plugin would be excessive.
 - [ ] Keep the guard generic so it applies to future project packs, not just `wild-bunch-project-pack`.
 
 ### Task 6: Regenerate the marketplace and export surfaces from tooling
