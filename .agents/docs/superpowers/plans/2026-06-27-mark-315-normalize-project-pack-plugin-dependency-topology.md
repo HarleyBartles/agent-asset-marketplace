@@ -24,14 +24,14 @@
 ## Worker Route State
 
 ```text
-Route status: preflight-complete-pending-approval
+Route status: execution-in-progress
 Plan PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 Plan repo path: .agents/docs/superpowers/plans/2026-06-27-mark-315-normalize-project-pack-plugin-dependency-topology.md
-Plan approved: no
+Plan approved: yes
 Plan merged to main: no
-Approved plan commit: none
-Last staleness check: none
-Execution PR: none
+Approved plan commit: 56354c72a546a2014a42c803a2bc19522ad355e9
+Last staleness check: current origin/main checked before implementation
+Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/171
 ```
 
 ## Worktree Preflight Evidence
@@ -147,9 +147,9 @@ Execution PR: none
 - Modify: `.agents/docs/superpowers/plans/**/*.md` if any stale `docs/superpowers/` references remain in the plan corpus
 - Modify: any other repo file that still points at `docs/superpowers/` instead of `.agents/docs/superpowers/`
 
-- [ ] Repoint the repo-local Superpowers docs navigation so the canonical docs home is `.agents/docs/superpowers/` and the old `docs/superpowers/` wording is treated as stale.
-- [ ] Update the Superpowers plan and spec indexes so they continue to enumerate the current docs corpus after the move.
-- [ ] Keep the plan corpus, route-state references, and docs navigation aligned with the relocated docs surface.
+- [x] Repoint the repo-local Superpowers docs navigation so the canonical docs home is `.agents/docs/superpowers/` and the old `docs/superpowers/` wording is treated as stale.
+- [x] Update the Superpowers plan and spec indexes so they continue to enumerate the current docs corpus after the move.
+- [x] Keep the plan corpus, route-state references, and docs navigation aligned with the relocated docs surface.
 
 ### Task 3: Reshape the Wild Bunch pack to native skills plus bridge skills
 
@@ -164,9 +164,9 @@ Execution PR: none
 - Modify: `codex-marketplace/plugins/wild-bunch-project-pack/references/provenance-map.json`
 - Modify: `codex-marketplace/plugins/wild-bunch-project-pack/skills/**`
 
-- [ ] Remove the whole embedded `game-studio`, `dotnet-kit`, `architecture-pack`, `api-contracts-pack`, and `repo-worker-pack` inventories from the Wild Bunch pack projection.
-- [ ] Keep the Wild Bunch native/bridge skills only, and keep any selected projections explicit rather than inheriting them through duplicated plugin inventories.
-- [ ] Normalize the pack prose so it reads as an installable bridge/overlay surface rather than a self-contained dump of other plugins.
+- [x] Remove the whole embedded `game-studio`, `dotnet-kit`, `architecture-pack`, `api-contracts-pack`, and `repo-worker-pack` inventories from the Wild Bunch pack projection.
+- [x] Keep the Wild Bunch native/bridge skills only, and keep any selected projections explicit rather than inheriting them through duplicated plugin inventories.
+- [x] Normalize the pack prose so it reads as an installable bridge/overlay surface rather than a self-contained dump of other plugins.
 
 ### Task 4: Normalize dependency plugins where the issue scope requires it
 
@@ -176,9 +176,9 @@ Execution PR: none
 - Modify: `codex-marketplace/plugins/game-studio/SOURCE.md`
 - Modify: `codex-marketplace/plugins/game-studio/README.md` if the source-custody note needs to be surfaced there
 
-- [ ] Decide whether the current Wild Bunch-only frontend/UI/QA skills belong in `frontend-pack` and expand or normalize that pack if they do.
-- [ ] Keep `game-studio` complete as its own plugin and document the `agent-browser` decision at the plugin level only if the existing source/projection notes are not already sufficient.
-- [ ] Avoid moving any game-studio gap into the Wild Bunch pack as a workaround.
+- [x] Decide whether the current Wild Bunch-only frontend/UI/QA skills belong in `frontend-pack`: keep `frontend-pack` unchanged and do not absorb the Wild Bunch slice there.
+- [x] Keep `game-studio` complete as its own plugin and document the `agent-browser` decision at the plugin level only if the existing source/projection notes are not already sufficient.
+- [x] Avoid moving any game-studio gap into the Wild Bunch pack as a workaround.
 
 ### Task 5: Add validation that prevents whole-plugin inventory duplication
 
@@ -188,12 +188,12 @@ Execution PR: none
 - Modify: `tools/update_skill_artifacts.py` if the new guard must be called from the update path
 - Create: `tools/validate_project_pack_topology.py` only if the existing validation chain cannot express the required guard deterministically
 
-- [ ] Compute the skill set for each project pack and compare it against every other plugin inventory in the repo.
-- [ ] Fail or warn when a project pack contains 100% of another plugin's skill set.
-- [ ] Fail or warn when a project pack contains a substantial partial plugin inventory without an explicit bridge skill and manifest rationale.
-- [ ] Fail or warn when a project pack is missing a required dependency-plugin skill that the bridge/dependency model says must come from the dependency plugin rather than from ad hoc projection.
-- [ ] Allow explicit selected-skill projection only when the manifest explains why installing the whole plugin would be excessive.
-- [ ] Keep the guard generic so it applies to future project packs, not just `wild-bunch-project-pack`.
+- [x] Compute the project pack skill set and compare it against the declared dependency-plugin inventories with explicit bridge/rationale metadata.
+- [x] Fail or warn when a project pack contains 100% of another dependency plugin's skill set.
+- [x] Fail or warn when a project pack contains a substantial partial dependency-plugin inventory without an explicit bridge skill and manifest rationale.
+- [x] Fail or warn when a project pack is missing a required dependency-plugin skill that the bridge/dependency model says must come from the dependency plugin rather than from ad hoc projection.
+- [x] Allow explicit selected-skill projection only when the manifest explains why installing the whole plugin would be excessive.
+- [x] Keep the guard generic so it applies to future project packs, not just `wild-bunch-project-pack`.
 
 ### Task 6: Regenerate the marketplace and export surfaces from tooling
 
@@ -205,9 +205,9 @@ Execution PR: none
 - Modify: `repo-index/repo-index.json`
 - Modify: any generated `codex-marketplace/plugins/wild-bunch-project-pack/**` proof files produced by tooling
 
-- [ ] Regenerate the corrected pack through the existing deterministic pipeline instead of hand-editing downstream outputs.
-- [ ] Re-run the marketplace and repo-index generators after the pack shape changes.
-- [ ] Confirm the generated export corpus, source maps, and provenance maps all agree on the final membership.
+- [x] Regenerate the corrected pack through the existing deterministic pipeline instead of hand-editing downstream outputs.
+- [x] Re-run the marketplace and repo-index generators after the pack shape changes.
+- [x] Confirm the generated export corpus, source maps, and provenance maps all agree on the final membership.
 
 ### Task 7: Validate, publish, and record the durable route state
 
@@ -215,10 +215,10 @@ Execution PR: none
 - Modify: `.agents/docs/superpowers/plans/2026-06-27-mark-315-normalize-project-pack-plugin-dependency-topology.md`
 - Modify: the Linear issue route-state comment or body entry for `MARK-315`
 
-- [ ] Run the repository's marketplace and topology validation commands, plus a targeted duplicate-inventory search over the plugin `skills/INDEX.md` files.
-- [ ] Fully regenerate the repo-wide index mesh with `py -3 tools/generate_index_mesh.py` during execution so the Superpowers docs move and any follow-on docs/index updates are reflected across the whole mesh.
-- [ ] Publish the plan-only PR against `main` and keep implementation paused until the plan is approved.
-- [ ] Update the durable Linear route state with the plan path and plan PR once the plan PR exists.
+- [x] Run the repository's marketplace and topology validation commands, plus a targeted duplicate-inventory search over the plugin `skills/INDEX.md` files.
+- [x] Fully regenerate the repo-wide index mesh with `py -3 tools/generate_index_mesh.py` during execution so the Superpowers docs move and any follow-on docs/index updates are reflected across the whole mesh.
+- [x] Publish the plan-only PR against `main` and keep implementation paused until the plan is approved.
+- [x] Update the durable Linear route state with the plan path and plan PR once the plan PR exists.
 
 ## Validation Plan
 
