@@ -10,6 +10,8 @@ Codex plugin first; generated GPT-safe skill zips second.
 
 The current market-facing route is `codex-marketplace/` and `.agents/plugins/` unless repo conventions explicitly change. Market work should land as vendored or adapted assets on those surfaces, with provenance attached as support evidence.
 
+The tracked agent mesh lives under `.agents/` and is projected at the repo root through `AGENTS.md` and `INDEX.md`. Root `AGENTS.md` is the local law node and root `INDEX.md` is the top-level navigation node. `.agents/INDEX.md` is the compact repo-local doctrine index.
+
 Durable assets in this repo may include:
 
 - GPT-native skill sources under `gpt-skills/`, but `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only;
@@ -37,7 +39,7 @@ hand-edit projected skill trees, source maps, provenance maps, registry
 surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
 when a generic deterministic path is required.
 
-Repo-local worker doctrine lives in [.agents/docs/marketplace-worker-doctrine.md](.agents/docs/marketplace-worker-doctrine.md). Read it before editing marketplace projection surfaces.
+Repo-local worker doctrine lives in [.agents/INDEX.md](.agents/INDEX.md) and the docs under [.agents/docs/](.agents/docs/). Read them before editing marketplace projection surfaces.
 
 Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
 canonical install surface. Treat `generated/skill-zips/` as a derived GPT

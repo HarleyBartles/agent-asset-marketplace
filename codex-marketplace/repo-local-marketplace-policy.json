@@ -6,7 +6,8 @@
     "authentication": "ON_INSTALL"
   },
   "install_defaults": [
-    "repo-worker-pack"
+    "repo-worker-pack",
+    "superpowers-plus"
   ],
   "category_overrides": {},
   "exclusions": []
