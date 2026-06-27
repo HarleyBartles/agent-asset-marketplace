@@ -1,6 +1,7 @@
 # Generated outputs
 generated/*
 !generated/.gitignore
+!generated/INDEX.md
 !generated/reports/
 !generated/reports/.gitignore
 
