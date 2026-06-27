@@ -92,7 +92,6 @@ The Wild Bunch Project Pack packages Wild Bunch first-party skills together with
 - **Content modes**: `verbatim`, `normalised`, and `adapted` as declared in the bundle manifest
 - **Adaptation notes**:
   - The pack is self-contained at install time and does not depend on another plugin bundle
-  - `agent-browser` was reviewed and intentionally excluded because the repo does not retain an approved source-copy path for it
   - Icon paths normalized to `./assets/icon.svg` for validator compatibility
 
 ## Rights and Attribution

@@ -1,14 +1,14 @@
 {
   "name": "wild-bunch-project-pack",
   "version": "1.0.0",
-  "description": "Wild Bunch project workflow bundle generated from the central pack manifest.",
+  "description": "Wild Bunch bridge/native workflow bundle generated from the central pack manifest.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "mixed",
-  "rights": "Contains first-party Harley-owned Wild Bunch and control-plane skills plus retained third-party game-studio, dotnet-claude-kit, ECC, and Claude-Cortex skills; see SOURCE.md and references/provenance-map.json for the component-level provenance.",
+  "rights": "Contains first-party Harley-owned Wild Bunch bridge/native skills; dependency plugins remain separate install surfaces; see SOURCE.md and references/provenance-map.json for the component-level provenance.",
   "keywords": [
     "codex",
     "marketplace",
@@ -20,8 +20,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Wild Bunch Project Pack",
-    "shortDescription": "Manifest-driven Wild Bunch project and support workflow skills",
-    "longDescription": "A repo-local Codex plugin bundle generated from the Wild Bunch bundle-manifest. The exact install surface is projected from the manifest and source map; see SOURCE.md and references/source-map.md.",
+    "shortDescription": "Manifest-driven Wild Bunch bridge/native workflow skills",
+    "longDescription": "A repo-local Codex plugin bundle generated from the Wild Bunch bundle-manifest. The exact install surface is projected from the manifest and source map, with dependency plugins kept separate; see SOURCE.md, references/source-map.md, and the dependency topology in bundle-manifest.json.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -29,9 +29,9 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Inspect the Wild Bunch project pack bundle and source map.",
+      "Inspect the Wild Bunch project pack bundle, source map, and dependency topology.",
       "Use the bundle to install the manifest-driven Wild Bunch projection.",
-      "Compare bundle versioning against the current source custody roots."
+      "Compare bundle versioning against the current first-party source custody roots."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",
