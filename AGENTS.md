@@ -54,8 +54,9 @@ Targeted skill updates should use `py -3 tools/update_skill_artifacts.py --skill
 Use `py -3 tools/generate_marketplace.py --check` and
 `py -3 tools/generate_repo_index.py --check` as freshness proof for
 `.agents/plugins/marketplace.json`, `codex-marketplace/manifest.json`, and
-`repo-index/repo-index.json`. `validate_repo_index.py` is metadata validation,
-not the freshness proof for that surface.
+`repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
+as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
+is metadata validation, not the freshness proof for that surface.
 
 ## Source-of-truth split
 

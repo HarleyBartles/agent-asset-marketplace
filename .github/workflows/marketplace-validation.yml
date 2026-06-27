@@ -49,6 +49,9 @@ jobs:
       - name: Check repo index
         run: python tools/generate_repo_index.py --check
 
+      - name: Check index mesh
+        run: python tools/generate_index_mesh.py --check
+
       - name: Validate marketplace
         run: python tools/validate_marketplace.py
 
