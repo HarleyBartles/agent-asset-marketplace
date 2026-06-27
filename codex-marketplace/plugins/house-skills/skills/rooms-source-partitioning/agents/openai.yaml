@@ -1,10 +1,10 @@
 interface:
   display_name: Rooms Source Partitioning
   short_description: Label source basis and evidence state.
-  icon: assets/icon.svg
-  brand_color: '#111827'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /rooms-source-partitioning when label rooms, mostly claims by
+    source basis and evidence state. use when answers, reports, closure notes, doctrine
+    takeaways, cleanup claims, or repo/canon/archive/manuscript assertions could blur
+    inspected evidence, inference, conversation, reports, or unavailable sources.
 policy:
   products:
   - chatgpt

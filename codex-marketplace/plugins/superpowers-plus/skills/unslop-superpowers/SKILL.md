@@ -1,11 +1,25 @@
 ---
 name: unslop-superpowers
-description: Use when shaping Linear issues, GitHub proof, worker returns, or closeout language needs repo-specific anti-slop controls, profile discovery or refresh, concrete evidence requirements, or a narrow direct-to-main unslop profile update.
+description: Use when shaping Linear issues, GitHub proof, worker returns, or closeout
+  language needs repo-specific anti-slop controls, profile discovery or refresh, concrete
+  evidence requirements, or a narrow direct-to-main unslop profile update.
 metadata:
   source-id: unslop-superpowers
   source-path: sources/first_party/skills/unslop-superpowers/SKILL.md
-  provenance-name: MARK-144 Unslop Superpowers compositional guard skill
-license: "MIT"
+  provenance-name: Unslop Superpowers first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when shaping Linear issues, GitHub proof, worker returns, or closeout
+    language needs repo-specific anti-slop controls, profile discovery or refresh,
+    concrete evidence requirements, or a narrow direct-to-main unslop profile update.
+  use_when:
+  - Use when shaping Linear issues, GitHub proof, worker returns, or closeout language
+    needs repo-specific anti-slop controls, profile discovery or refresh, concrete
+    evidence requirements, or a narrow direct-to-main unslop profile update.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Unslop Superpowers
 

@@ -2,8 +2,13 @@ interface:
   display_name: Don Logan Boundary
   short_description: Bound live-worker correction when a lawful task is known but
     execution is drifting into process instead of completion.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /don-logan-boundary when apply a gpt-wide live-worker correction
+    boundary when a running or just-returned worker has a known lawful task, route,
+    constraints, and success condition but is substituting process, reports, rediscovery,
+    justification, or refusal-shaped circling for execution. use for don logan nudges
+    or follow-ups, repeated worker evasion, and stop-circling corrections; do not
+    use for ordinary urgency, bad dispatch prep, missing authority, unclear scope,
+    real blockers, or protected-surface conflicts.
 policy:
   products:
   - chatgpt

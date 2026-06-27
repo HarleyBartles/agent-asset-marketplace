@@ -1,6 +1,28 @@
 ---
 name: repo-worker-base
-description: Thin repo hygiene entrypoint for Codex workers in Harley's workspace. Use when a Codex worker is working in any repository in Harley's workspace and needs fresh-main discipline, worktree isolation, branch and PR hygiene, validation evidence, or publication proof.
+description: Use when thin repo hygiene entrypoint for Codex workers in Harley's workspace.
+  Use when a Codex worker is working in any repository in Harley's workspace and needs
+  fresh-main discipline, worktree isolation, branch and PR hygiene, validation evidence,
+  or publication proof.
+metadata:
+  source-id: repo-worker-base
+  source-path: sources/first_party/skills/repo-worker-base/SKILL.md
+  provenance-name: Repo Worker Base first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when thin repo hygiene entrypoint for Codex workers in Harley's workspace.
+    Use when a Codex worker is working in any repository in Harley's workspace and
+    needs fresh-main discipline, worktree isolation, branch and PR hygiene, validation
+    evidence, or publication proof.
+  use_when:
+  - Use when thin repo hygiene entrypoint for Codex workers in Harley's workspace.
+    Use when a Codex worker is working in any repository in Harley's workspace and
+    needs fresh-main discipline, worktree isolation, branch and PR hygiene, validation
+    evidence, or publication proof.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 
 # Repo Worker Base
@@ -15,7 +37,7 @@ Use it to establish the boring repo baseline, then route out to the supporting s
 - `connector-safety` for blocked, sensitive, or permission-changing connector writes;
 - `github-operations` for PR, branch, commit, status, merge, publication, and main-state proof.
 - `unslop-plus` for worker-facing anti-slop profiles when a repo task needs tighter plan, review, or return discipline;
-- `safe-large-file-writing` for safer large text writes and atomic replacement paths.
+- `context-safety` for safer large text writes, bounded composition, and atomic replacement paths.
 
 Keep this skill thin. Do not absorb broad process doctrine that belongs in the supporting skills.
 

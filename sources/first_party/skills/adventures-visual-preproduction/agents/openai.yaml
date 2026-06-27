@@ -1,8 +1,9 @@
 interface:
   display_name: Adventures Visual Preproduction
   short_description: Prepare Adventures visual asset packages before PPTX production.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-visual-preproduction when prepare source-first adventures
+    visual planning packets, frame breakdowns, and readiness checks before image generation
+    or editing, keeping deterministic planning separate from downstream production.
 policy:
   products:
   - chatgpt

@@ -1,8 +1,10 @@
 interface:
   display_name: Adventures Bootstrap
   short_description: Bootstrap Adventures sessions and route requests.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-bootstrap when bootstrap adventures of patch sessions
+    by classifying project work, handoffs, deck, asset, issue, dispatch, receipt,
+    skill-update, visual-production, and repo-sensitive requests before routing to
+    required doctrine or task skills.
 policy:
   products:
   - chatgpt

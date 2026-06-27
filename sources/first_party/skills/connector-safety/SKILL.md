@@ -1,11 +1,34 @@
 ---
 name: connector-safety
-description: use this skill to keep connector and tool-side-effect work safe, auditable, and boring when a connector or tool call is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, when a planned action could be sensitive, destructive, permission-changing, or easy to over-bundle, or when mutation work should follow discover -> read -> write -> verify or step back up the connector discovery chain.
+description: Use when use this skill to keep connector and tool-side-effect work safe,
+  auditable, and boring when a connector or tool call is blocked, rejected, safety-filtered,
+  permission-rejected, schema-rejected, or validation-rejected, when a planned action
+  could be sensitive, destructive, permission-changing, or easy to over-bundle, or
+  when mutation work should follow discover -> read -> write -> verify or step back
+  up the connector discovery chain.
 metadata:
-  source-id: connector-safety-v1.1
+  source-id: connector-safety
   source-path: sources/first_party/skills/connector-safety/SKILL.md
-  provenance-name: MARK-226 canonical first-party source for connector-safety
-license: "MIT"
+  provenance-name: Connector Safety first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill to keep connector and tool-side-effect work safe,
+    auditable, and boring when a connector or tool call is blocked, rejected, safety-filtered,
+    permission-rejected, schema-rejected, or validation-rejected, when a planned action
+    could be sensitive, destructive, permission-changing, or easy to over-bundle,
+    or when mutation work should follow discover -> read -> write -> verify or step
+    back up the connector discovery chain.
+  use_when:
+  - Use when use this skill to keep connector and tool-side-effect work safe, auditable,
+    and boring when a connector or tool call is blocked, rejected, safety-filtered,
+    permission-rejected, schema-rejected, or validation-rejected, when a planned action
+    could be sensitive, destructive, permission-changing, or easy to over-bundle,
+    or when mutation work should follow discover -> read -> write -> verify or step
+    back up the connector discovery chain.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Connector Safety
 

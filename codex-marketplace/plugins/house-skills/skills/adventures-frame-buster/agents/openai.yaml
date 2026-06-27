@@ -2,9 +2,9 @@ version: 1
 interface:
   display_name: Adventures Frame Buster
   short_description: Routes Adventures framing checks and readiness gates.
-  icon: assets/icon.svg
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-frame-buster when route adventures frame-readiness
+    checks as deterministic source-bound work before storyboard, preproduction, or
+    package production, without invoking image-generation authority.
 policy:
   products:
   - chatgpt

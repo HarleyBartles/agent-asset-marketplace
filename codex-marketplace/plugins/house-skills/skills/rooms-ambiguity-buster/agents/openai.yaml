@@ -1,10 +1,8 @@
 interface:
   display_name: Rooms Ambiguity Discipline
   short_description: Preserve uncertainty and ambiguity.
-  icon: assets/icon.svg
-  brand_color: '#111827'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /rooms-ambiguity-buster when preserve rooms ambiguity for identity,
+    motive, authorship, archive gaps, narration, and disappearance.
 policy:
   products:
   - chatgpt

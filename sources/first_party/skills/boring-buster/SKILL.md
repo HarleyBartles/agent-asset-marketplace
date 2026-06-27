@@ -1,11 +1,25 @@
-﻿---
+---
 name: boring-buster
-description: Use this skill before planning, dispatching, or implementing work when success depends on the work being small, dull, explicit, falsifiable, and ready for ordinary execution.
+description: Use when use this skill before planning, dispatching, or implementing
+  work when success depends on the work being small, dull, explicit, falsifiable,
+  and ready for ordinary execution.
 metadata:
   source-id: boring-buster
   source-path: sources/first_party/skills/boring-buster/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Boring Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill before planning, dispatching, or implementing work
+    when success depends on the work being small, dull, explicit, falsifiable, and
+    ready for ordinary execution.
+  use_when:
+  - Use when use this skill before planning, dispatching, or implementing work when
+    success depends on the work being small, dull, explicit, falsifiable, and ready
+    for ordinary execution.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Boring Buster
 

@@ -10,6 +10,11 @@ Codex plugin first; generated GPT-safe skill zips second.
 
 The current market-facing route is `codex-marketplace/` and `.agents/plugins/` unless repo conventions explicitly change. Market work should land as vendored or adapted assets on those surfaces, with provenance attached as support evidence.
 
+The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local
+law node, and `.agents/AGENTS.md` plus `.agents/docs/mesh-policy.md` carry the
+repo-local mesh doctrine. Root `INDEX.md` is the top-level navigation node, and
+the generated `INDEX.md` mesh is the coverage surface.
+
 Durable assets in this repo may include:
 
 - GPT-native skill sources under `gpt-skills/`, but `gpt-skills/house-skills/` is reserved for Harley-authored first-party GPT skills only;
@@ -37,7 +42,10 @@ hand-edit projected skill trees, source maps, provenance maps, registry
 surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
 when a generic deterministic path is required.
 
-Repo-local worker doctrine lives in [.agents/docs/marketplace-worker-doctrine.md](.agents/docs/marketplace-worker-doctrine.md) and is linked from [.agents/skills/AGENTS.md](.agents/skills/AGENTS.md). Read it before editing marketplace projection surfaces.
+Repo-local worker doctrine lives in [.agents/AGENTS.md](.agents/AGENTS.md),
+[.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md), and the docs under
+[.agents/docs/](.agents/docs/). Read them before editing marketplace projection
+surfaces.
 
 Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
 canonical install surface. Treat `generated/skill-zips/` as a derived GPT
@@ -52,8 +60,9 @@ Targeted skill updates should use `py -3 tools/update_skill_artifacts.py --skill
 Use `py -3 tools/generate_marketplace.py --check` and
 `py -3 tools/generate_repo_index.py --check` as freshness proof for
 `.agents/plugins/marketplace.json`, `codex-marketplace/manifest.json`, and
-`repo-index/repo-index.json`. `validate_repo_index.py` is metadata validation,
-not the freshness proof for that surface.
+`repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
+as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
+is metadata validation, not the freshness proof for that surface.
 
 ## Source-of-truth split
 

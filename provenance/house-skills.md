@@ -135,14 +135,14 @@
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
 - Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@using-superpowers`, `@connector-safety`, and `@unslop` without replacing the underlying profile-generation engine.
 
-## safe-large-file-writing
+## context-safety
 
-- Source path: `sources/first_party/skills/safe-large-file-writing`
-- Public identity: `safe-large-file-writing`
-- Provenance/history: MARK-302 safe large file writing first-party skill
+- Source path: `sources/first_party/skills/context-safety`
+- Public identity: `context-safety`
+- Provenance/history: MARK-310 context safety first-party skill
 - Ownership: Harley-owned first-party House skill
-- Scope: large text write safety and atomic replacement
-- Notes: First-party safety skill for large generated or edited text files. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it teaches branch-before-write large-file handling for Devin/Desktop and other editors.
+- Scope: large text write safety, bounded composition, and atomic replacement
+- Notes: First-party safety skill for large generated or edited text files. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it teaches bounded composition, safe staging, and atomic replacement for large writes.
 
 ## skill-handoff
 

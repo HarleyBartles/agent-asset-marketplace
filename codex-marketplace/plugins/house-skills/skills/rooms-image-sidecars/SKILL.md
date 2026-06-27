@@ -1,11 +1,34 @@
-﻿---
+---
 name: rooms-image-sidecars
-description: Prepare GPT-native semantic starter sidecars for Rooms image evidence batches before Albert/Pit ingestion. Use when a user supplies screenshots, image batches, or a zip/folder of images and wants GPT to inspect them visually, generate non-authoritative room/entity/message candidates, known-character hints, tags, DB query suggestions, and an Albert-ready sidecar packet without mutating repos or treating observations as canon.
+description: Use when prepare GPT-native semantic starter sidecars for Rooms image
+  evidence batches before Albert/Pit ingestion. Use when a user supplies screenshots,
+  image batches, or a zip/folder of images and wants GPT to inspect them visually,
+  generate non-authoritative room/entity/message candidates, known-character hints,
+  tags, DB query suggestions, and an Albert-ready sidecar packet without mutating
+  repos or treating observations as canon.
 metadata:
   source-id: rooms-image-sidecars
   source-path: sources/first_party/skills/rooms-image-sidecars/SKILL.md
-  provenance-name: MARK-23 prep payload for Rooms House Skills survivor import
-license: "MIT"
+  provenance-name: Rooms Image Sidecars first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when prepare GPT-native semantic starter sidecars for Rooms image evidence
+    batches before Albert/Pit ingestion. Use when a user supplies screenshots, image
+    batches, or a zip/folder of images and wants GPT to inspect them visually, generate
+    non-authoritative room/entity/message candidates, known-character hints, tags,
+    DB query suggestions, and an Albert-ready sidecar packet without mutating repos
+    or treating observations as canon.
+  use_when:
+  - Use when prepare GPT-native semantic starter sidecars for Rooms image evidence
+    batches before Albert/Pit ingestion. Use when a user supplies screenshots, image
+    batches, or a zip/folder of images and wants GPT to inspect them visually, generate
+    non-authoritative room/entity/message candidates, known-character hints, tags,
+    DB query suggestions, and an Albert-ready sidecar packet without mutating repos
+    or treating observations as canon.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Rooms Image Sidecars
 

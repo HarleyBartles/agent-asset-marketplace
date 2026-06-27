@@ -1,11 +1,25 @@
-﻿---
+---
 name: adventures-bootstrap
-description: Bootstrap Adventures of Patch sessions by classifying project work, handoffs, deck, asset, issue, dispatch, receipt, skill-update, visual-production, and repo-sensitive requests before routing to required doctrine or task skills.
+description: Use when bootstrap Adventures of Patch sessions by classifying project
+  work, handoffs, deck, asset, issue, dispatch, receipt, skill-update, visual-production,
+  and repo-sensitive requests before routing to required doctrine or task skills.
 metadata:
   source-id: adventures-bootstrap
   source-path: sources/first_party/skills/adventures-bootstrap/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Bootstrap first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when bootstrap Adventures of Patch sessions by classifying project work,
+    handoffs, deck, asset, issue, dispatch, receipt, skill-update, visual-production,
+    and repo-sensitive requests before routing to required doctrine or task skills.
+  use_when:
+  - Use when bootstrap Adventures of Patch sessions by classifying project work, handoffs,
+    deck, asset, issue, dispatch, receipt, skill-update, visual-production, and repo-sensitive
+    requests before routing to required doctrine or task skills.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Adventures Bootstrap
 

@@ -22,6 +22,13 @@
       "local_path": "skills/connector-safety"
     },
     {
+      "canonical_name": "context-safety",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/context-safety",
+      "local_path": "skills/context-safety"
+    },
+    {
       "canonical_name": "github-operations",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -41,13 +48,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base"
-    },
-    {
-      "canonical_name": "safe-large-file-writing",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/safe-large-file-writing",
-      "local_path": "skills/safe-large-file-writing"
     },
     {
       "canonical_name": "unslop-plus",

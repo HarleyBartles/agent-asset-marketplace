@@ -1,11 +1,31 @@
-﻿---
+---
 name: linear-issue-shaping
-description: Use for Linear-backed issue, project, and document shaping: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch workers, delegate execution, or assume any execution lane; treat worker-ready as issue-ready only.
+description: 'Use when Linear-backed issue, project, and document shaping: create
+  or update worker-ready Linear issues, inspect Linear comments/attachments/state,
+  prepare paste-ready worker handoffs when explicitly requested, and route GitHub
+  PR proof after a PR exists. Do not launch workers, delegate execution, or assume
+  any execution lane; treat worker-ready as issue-ready only.'
 metadata:
-  source-id: linear-issue-shaping-v1
+  source-id: linear-issue-shaping
   source-path: sources/first_party/skills/linear-issue-shaping/SKILL.md
-  provenance-name: "MARK-303 Linear issue shaping rename and connector BAU"
-license: "MIT"
+  provenance-name: Linear Issue Shaping first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: 'Use when Linear-backed issue, project, and document shaping: create or update
+    worker-ready Linear issues, inspect Linear comments/attachments/state, prepare
+    paste-ready worker handoffs when explicitly requested, and route GitHub PR proof
+    after a PR exists. Do not launch workers, delegate execution, or assume any execution
+    lane; treat worker-ready as issue-ready only.'
+  use_when:
+  - 'Use when Linear-backed issue, project, and document shaping: create or update
+    worker-ready Linear issues, inspect Linear comments/attachments/state, prepare
+    paste-ready worker handoffs when explicitly requested, and route GitHub PR proof
+    after a PR exists. Do not launch workers, delegate execution, or assume any execution
+    lane; treat worker-ready as issue-ready only.'
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Linear Issue Shaping
 
@@ -57,7 +77,7 @@ Use the route-state block and compact packet shape to check or repair the implem
 
 For preflight docs, allow investigation seams and understanding questions plus the compact route-state block. The route-state block is a control/index surface, not the implementation plan. Preflight docs must not become the full implementation plan.
 
-Approved plans live in the repo under `docs/superpowers/plans/`. After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
+Approved plans live in the repo under `.agents/docs/superpowers/plans/`. After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
 
 If the approved plan is stale but the drift is repairable and stays inside the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and include the repaired plan in the execution PR. If the drift changes scope materially, invalidates the approved direction, or makes execution unsafe, stop for human review.
 

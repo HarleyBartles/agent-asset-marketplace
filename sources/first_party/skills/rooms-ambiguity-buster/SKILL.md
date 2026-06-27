@@ -1,11 +1,22 @@
-﻿---
+---
 name: rooms-ambiguity-buster
-description: preserve rooms ambiguity for identity, motive, authorship, archive gaps, narration, and disappearance.
+description: Use when preserve rooms ambiguity for identity, motive, authorship, archive
+  gaps, narration, and disappearance.
 metadata:
   source-id: rooms-ambiguity-buster
   source-path: sources/first_party/skills/rooms-ambiguity-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Ambiguity Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when preserve rooms ambiguity for identity, motive, authorship, archive
+    gaps, narration, and disappearance.
+  use_when:
+  - Use when preserve rooms ambiguity for identity, motive, authorship, archive gaps,
+    narration, and disappearance.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Rooms Ambiguity Buster
 

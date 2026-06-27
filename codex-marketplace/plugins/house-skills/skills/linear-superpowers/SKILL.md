@@ -1,11 +1,25 @@
 ---
 name: linear-superpowers
-description: Use when shaping Linear issues, issue tracks, and worker packets so they name the smallest applicable Superpowers workflow skill, explain why it applies, and name the evidence required to prove it was followed.
+description: Use when shaping Linear issues, issue tracks, and worker packets so they
+  name the smallest applicable Superpowers workflow skill, explain why it applies,
+  and name the evidence required to prove it was followed.
 metadata:
   source-id: linear-superpowers
   source-path: sources/first_party/skills/linear-superpowers/SKILL.md
-  provenance-name: MARK-139 Linear Superpowers compositional skill
-license: "MIT"
+  provenance-name: Linear Superpowers first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when shaping Linear issues, issue tracks, and worker packets so they
+    name the smallest applicable Superpowers workflow skill, explain why it applies,
+    and name the evidence required to prove it was followed.
+  use_when:
+  - Use when shaping Linear issues, issue tracks, and worker packets so they name
+    the smallest applicable Superpowers workflow skill, explain why it applies, and
+    name the evidence required to prove it was followed.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Linear Superpowers
 
@@ -28,7 +42,7 @@ Use this compact block when a worker packet needs durable route state:
 ## Worker route state
 Route status: preflight-needed | preflight-complete-pending-approval | approved-plan-execution-ready | stale-plan-repair-needed | blocked-ambiguous | executed | superseded
 Plan PR: none | <url>
-Plan repo path: none | docs/superpowers/plans/<file>.md
+Plan repo path: none | .agents/docs/superpowers/plans/<file>.md
 Plan approved: yes | no | unknown
 Plan merged to main: yes | no | unknown
 Approved plan commit: none | <sha>

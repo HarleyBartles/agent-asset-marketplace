@@ -1,11 +1,37 @@
-﻿---
+---
 name: work-mode-router
-description: cross-runtime bootstrap router for new project sessions and workflow-sensitive starts after Linear/Codex adoption. Use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. Owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to /using-superpowers with the discovered mode instead of legacy dispatch stacks.
+description: Use when cross-runtime bootstrap router for new project sessions and
+  workflow-sensitive starts after Linear/Codex adoption. Use when a project context
+  begins, a session resumes, or a request may involve continuity ingress, repo/source
+  evidence, coding dispatch, Codex workers, Linear issues, artifacts, verification,
+  issue work, skill/package work, mutation, or publication. Owns first classification,
+  ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding
+  work to /using-superpowers with the discovered mode instead of legacy dispatch stacks.
 metadata:
   source-id: work-mode-router
   source-path: sources/first_party/skills/work-mode-router/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Work Mode Router first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when cross-runtime bootstrap router for new project sessions and workflow-sensitive
+    starts after Linear/Codex adoption. Use when a project context begins, a session
+    resumes, or a request may involve continuity ingress, repo/source evidence, coding
+    dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package
+    work, mutation, or publication. Owns first classification, ordinary-chat escape
+    hatch, bounded skill-read stop rules, and routing normal coding work to /using-superpowers
+    with the discovered mode instead of legacy dispatch stacks.
+  use_when:
+  - Use when cross-runtime bootstrap router for new project sessions and workflow-sensitive
+    starts after Linear/Codex adoption. Use when a project context begins, a session
+    resumes, or a request may involve continuity ingress, repo/source evidence, coding
+    dispatch, Codex workers, Linear issues, artifacts, verification, issue work, skill/package
+    work, mutation, or publication. Owns first classification, ordinary-chat escape
+    hatch, bounded skill-read stop rules, and routing normal coding work to /using-superpowers
+    with the discovered mode instead of legacy dispatch stacks.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Work Mode Router
 
@@ -27,7 +53,7 @@ Inspect these durable markers when classifying worker route state:
 
 - route-state block in the Linear preflight or implementation brief;
 - plan PR URL and current PR state;
-- plan repo path under `docs/superpowers/plans/`;
+- plan repo path under `.agents/docs/superpowers/plans/`;
 - plan approval and merge evidence;
 - approved plan commit;
 - last staleness-check evidence.
@@ -35,7 +61,7 @@ Inspect these durable markers when classifying worker route state:
 | Route state | Durable markers | Meaning | Action |
 | --- | --- | --- | --- |
 | `preflight_needed` | Route-state block says preflight or is absent, and there is no approved plan PR, merged plan, approved plan commit, or fresh staleness evidence. | The issue still needs preflight shape. | Hand the discovered mode to `/using-superpowers` with preflight context. The worker should inspect current source, produce or repair the repo-resident plan, open a plan-only PR, update Linear route state with plan path/PR/status, and stop before implementation. `/using-superpowers` owns lane selection; `work-mode-router` must not choose the Superpowers lane itself. |
-| `preflight_complete_pending_approval` | Plan file exists under `docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, and approval or merge evidence is absent. | The plan is ready for approval but not execution. | Stop and report pending approval. Hand the discovered mode to `/using-superpowers` only as stopping context. Do not select an implementation lane. |
+| `preflight_complete_pending_approval` | Plan file exists under `.agents/docs/superpowers/plans/`, plan PR exists, route-state block says pending approval, and approval or merge evidence is absent. | The plan is ready for approval but not execution. | Stop and report pending approval. Hand the discovered mode to `/using-superpowers` only as stopping context. Do not select an implementation lane. |
 | `approved_plan_execution_ready` | Approved plan is merged to `main`, plan path/PR/commit evidence exists, and the staleness check passes against current source. | The approved plan is ready to execute. | Hand the discovered mode to `/using-superpowers` with execution context. `/using-superpowers` owns Superpowers lane choice. |
 | `stale_plan_repair_needed` | Approved plan exists, plan PR or merge evidence exists, and the staleness check fails but the drift is repairable inside the approved scope. | The plan is stale but repairable in the execution branch. | Hand the discovered mode to `/using-superpowers` with repair context. Repair stays in the execution branch unless the scope changes materially. |
 | `blocked_ambiguous` | Durable markers conflict, are missing, or cannot prove approval, merge, or current staleness state. | The worker cannot route safely from durable evidence. | Stop and report blocked or ambiguous. Do not select an implementation lane. |

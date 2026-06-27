@@ -1,13 +1,34 @@
 ---
 name: wild-bunch-worker-verification
-description: Verify Wild Bunch worker returns, PRs, commits, validation notes, and closure claims against issue goals, source changes, publication evidence, browser/UI screenshots when relevant, and verified mainline state before completion is accepted. Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue conformance, deciding Green/Amber/Red status, or preventing tests, reports, or worker summaries from being treated as proof.
+description: Use when verify Wild Bunch worker returns, PRs, commits, validation notes,
+  and closure claims against issue goals, source changes, publication evidence, browser/UI
+  screenshots when relevant, and verified mainline state before completion is accepted.
+  Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue conformance,
+  deciding Green/Amber/Red status, or preventing tests, reports, or worker summaries
+  from being treated as proof.
 metadata:
-  origin: first_party
-  source_author: Harley Bartles
-  source_license: MIT
-  source_repo: https://github.com/HarleyBartles/agent-asset-marketplace
-  source_path: sources/first_party/skills/wild-bunch-worker-verification/SKILL.md
-  content_mode: verbatim
+  source-id: wild-bunch-worker-verification
+  source-path: sources/first_party/skills/wild-bunch-worker-verification/SKILL.md
+  provenance-name: Wild Bunch Worker Verification first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when verify Wild Bunch worker returns, PRs, commits, validation notes,
+    and closure claims against issue goals, source changes, publication evidence,
+    browser/UI screenshots when relevant, and verified mainline state before completion
+    is accepted. Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub
+    issue conformance, deciding Green/Amber/Red status, or preventing tests, reports,
+    or worker summaries from being treated as proof.
+  use_when:
+  - Use when verify Wild Bunch worker returns, PRs, commits, validation notes, and
+    closure claims against issue goals, source changes, publication evidence, browser/UI
+    screenshots when relevant, and verified mainline state before completion is accepted.
+    Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue
+    conformance, deciding Green/Amber/Red status, or preventing tests, reports, or
+    worker summaries from being treated as proof.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 
 # Wild Bunch Worker Verification

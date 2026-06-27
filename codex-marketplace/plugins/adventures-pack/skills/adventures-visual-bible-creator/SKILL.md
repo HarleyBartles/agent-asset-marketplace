@@ -1,11 +1,25 @@
-﻿---
+---
 name: adventures-visual-bible-creator
-description: Create and maintain the Adventures visual bible as a source-backed planning artifact with explicit stage boundaries between planning, generation, editing, and acceptance.
+description: Use when create and maintain the Adventures visual bible as a source-backed
+  planning artifact with explicit stage boundaries between planning, generation, editing,
+  and acceptance.
 metadata:
   source-id: adventures-visual-bible-creator
   source-path: sources/first_party/skills/adventures-visual-bible-creator/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Visual Bible Creator first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when create and maintain the Adventures visual bible as a source-backed
+    planning artifact with explicit stage boundaries between planning, generation,
+    editing, and acceptance.
+  use_when:
+  - Use when create and maintain the Adventures visual bible as a source-backed planning
+    artifact with explicit stage boundaries between planning, generation, editing,
+    and acceptance.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Adventures Visual Bible Creator
 

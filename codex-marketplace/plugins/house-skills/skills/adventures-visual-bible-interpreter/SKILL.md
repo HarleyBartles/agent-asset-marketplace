@@ -1,11 +1,25 @@
-﻿---
+---
 name: adventures-visual-bible-interpreter
-description: Read the Adventures visual bible and extract concrete constraints, acceptance notes, and downstream lane boundaries without turning interpretation into generation authority.
+description: Use when read the Adventures visual bible and extract concrete constraints,
+  acceptance notes, and downstream lane boundaries without turning interpretation
+  into generation authority.
 metadata:
   source-id: adventures-visual-bible-interpreter
   source-path: sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Visual Bible Interpreter first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when read the Adventures visual bible and extract concrete constraints,
+    acceptance notes, and downstream lane boundaries without turning interpretation
+    into generation authority.
+  use_when:
+  - Use when read the Adventures visual bible and extract concrete constraints, acceptance
+    notes, and downstream lane boundaries without turning interpretation into generation
+    authority.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Adventures Visual Bible Interpreter
 

@@ -1,11 +1,37 @@
-﻿---
+---
 name: session-buster
-description: create compact YAML continuity exports for future ChatGPT sessions while avoiding stale-state laundering. use when Harley asks for a session buster, continuity export, handoff, next-session block, or session closeout. when a dominant handoff focus exists, include a suggested next session name for navigation only. for coding work, preserve durable Linear issue IDs, Codex state, PR IDs, and next verification checks instead of bulky dispatch packets; Linear/Codex is the normal workflow surface and session busters are fallback continuity.
+description: Use when create compact YAML continuity exports for future ChatGPT sessions
+  while avoiding stale-state laundering. use when Harley asks for a session buster,
+  continuity export, handoff, next-session block, or session closeout. when a dominant
+  handoff focus exists, include a suggested next session name for navigation only.
+  for coding work, preserve durable Linear issue IDs, Codex state, PR IDs, and next
+  verification checks instead of bulky dispatch packets; Linear/Codex is the normal
+  workflow surface and session busters are fallback continuity.
 metadata:
   source-id: session-buster
   source-path: sources/first_party/skills/session-buster/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Session Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when create compact YAML continuity exports for future ChatGPT sessions
+    while avoiding stale-state laundering. use when Harley asks for a session buster,
+    continuity export, handoff, next-session block, or session closeout. when a dominant
+    handoff focus exists, include a suggested next session name for navigation only.
+    for coding work, preserve durable Linear issue IDs, Codex state, PR IDs, and next
+    verification checks instead of bulky dispatch packets; Linear/Codex is the normal
+    workflow surface and session busters are fallback continuity.
+  use_when:
+  - Use when create compact YAML continuity exports for future ChatGPT sessions while
+    avoiding stale-state laundering. use when Harley asks for a session buster, continuity
+    export, handoff, next-session block, or session closeout. when a dominant handoff
+    focus exists, include a suggested next session name for navigation only. for coding
+    work, preserve durable Linear issue IDs, Codex state, PR IDs, and next verification
+    checks instead of bulky dispatch packets; Linear/Codex is the normal workflow
+    surface and session busters are fallback continuity.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Session Buster
 

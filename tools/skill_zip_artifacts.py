@@ -9,6 +9,7 @@ import json
 import os
 import tempfile
 import zipfile
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
@@ -547,17 +548,19 @@ def package_skill_target(target: SkillTarget) -> SkillArtifact:
         dest = _create_zip_path(target)
         if dest.exists():
             dest.unlink()
+        dest.parent.mkdir(parents=True, exist_ok=True)
 
-        tmp_path: Path | None = None
+        tmp_path = dest.parent / f"{target.skill}-{os.getpid()}-{uuid.uuid4().hex}.tmp"
+        tmp_path_text = _as_windows_long_path(tmp_path)
+        dest_text = _as_windows_long_path(dest)
         try:
-            with tempfile.NamedTemporaryFile(delete=False, dir=dest.parent, prefix=f"{target.skill}-", suffix=".tmp") as tmp:
-                tmp_path = Path(tmp.name)
-            with zipfile.ZipFile(tmp_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-                _write_canonical_zip_tree(archive, staged_files, root=staged_root, archive_root_name=target.skill)
-            tmp_path.replace(dest)
+            with Path(tmp_path_text).open("wb") as handle:
+                with zipfile.ZipFile(handle, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+                    _write_canonical_zip_tree(archive, staged_files, root=staged_root, archive_root_name=target.skill)
+            os.replace(tmp_path_text, dest_text)
         except Exception:
-            if tmp_path and tmp_path.exists():
-                tmp_path.unlink(missing_ok=True)
+            if Path(tmp_path_text).exists():
+                Path(tmp_path_text).unlink(missing_ok=True)
             raise
     finally:
         tempdir.cleanup()

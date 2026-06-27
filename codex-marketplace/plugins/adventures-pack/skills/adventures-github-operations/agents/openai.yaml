@@ -1,10 +1,10 @@
 interface:
   display_name: Adventures GitHub Operations
   short_description: Verify Adventures repo, asset, deck, receipt, and issue evidence.
-  icon: assets/icon.svg
-  accent_color: '#4F46E5'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-github-operations when use adventures github proof
+    work for branch, pr, issue, and evidence handling after the generic `github-operations`
+    proof skill has already handled review routing; keep it focused on repository
+    proof surfaces and avoid visual or creative authority.
 policy:
   products:
   - chatgpt

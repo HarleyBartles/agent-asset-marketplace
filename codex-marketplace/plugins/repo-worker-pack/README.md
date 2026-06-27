@@ -12,7 +12,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `connector-safety`
 - `github-operations`
 - `unslop-plus`
-- `safe-large-file-writing`
+- `context-safety`
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`

@@ -1,11 +1,25 @@
-﻿---
+---
 name: analogy-buster
-description: Use this skill before relying on an analogy, metaphor, comparison, role model, frame, or project-specific shorthand to answer, plan, dispatch, or make a durable decision.
+description: Use when use this skill before relying on an analogy, metaphor, comparison,
+  role model, frame, or project-specific shorthand to answer, plan, dispatch, or make
+  a durable decision.
 metadata:
   source-id: analogy-buster
   source-path: sources/first_party/skills/analogy-buster/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Analogy Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill before relying on an analogy, metaphor, comparison,
+    role model, frame, or project-specific shorthand to answer, plan, dispatch, or
+    make a durable decision.
+  use_when:
+  - Use when use this skill before relying on an analogy, metaphor, comparison, role
+    model, frame, or project-specific shorthand to answer, plan, dispatch, or make
+    a durable decision.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Analogy Buster
 

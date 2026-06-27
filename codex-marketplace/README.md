@@ -4,6 +4,14 @@ Canonical source location for Codex marketplace assets.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
+The marketplace subtree follows the repo-wide index mesh rooted at
+[../INDEX.md](../INDEX.md).
+
+Repo-local marketplace posture lives in
+[../.agents/plugins/marketplace.json](../.agents/plugins/marketplace.json) and
+`repo-local-marketplace-policy.json`; the generator keeps those surfaces
+current.
+
 This repo now keeps the active Codex plugin bundles to one protected
 convention: `codex-marketplace/plugins/house-skills/`,
 `codex-marketplace/plugins/adventures-pack/`,

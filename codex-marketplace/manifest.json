@@ -5,18 +5,6 @@
   },
   "plugins": [
     {
-      "name": "house-skills",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/house-skills"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "adventures-pack",
       "source": {
         "source": "local",
@@ -71,7 +59,7 @@
         "path": "./codex-marketplace/plugins/superpowers-plus"
       },
       "policy": {
-        "installation": "AVAILABLE",
+        "installation": "INSTALLED_BY_DEFAULT",
         "authentication": "ON_INSTALL"
       },
       "category": "Coding"
@@ -83,7 +71,7 @@
         "path": "./codex-marketplace/plugins/repo-worker-pack"
       },
       "policy": {
-        "installation": "AVAILABLE",
+        "installation": "INSTALLED_BY_DEFAULT",
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"

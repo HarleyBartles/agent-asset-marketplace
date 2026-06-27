@@ -1,11 +1,31 @@
 ---
 name: house-skills
-description: Repo-local Codex marketplace bundle for the current House Skills plugin root. Use this bundle when you need the installable current roots, bundle version, or source map for the House Skills marketplace surface. Treat the live plugin root as the source of truth for current skills and the archive ledger as historical custody.
+description: Use when repo-local Codex marketplace bundle for the current House Skills
+  plugin root. Use this bundle when you need the installable current roots, bundle
+  version, or source map for the House Skills marketplace surface. Treat the live
+  plugin root as the source of truth for current skills and the archive ledger as
+  historical custody.
 metadata:
   source-id: house-skills
   source-path: sources/first_party/skills/house-skills/SKILL.md
-  provenance-name: House Skills current root migration
-license: "MIT"
+  provenance-name: House Skills first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when repo-local Codex marketplace bundle for the current House Skills
+    plugin root. Use this bundle when you need the installable current roots, bundle
+    version, or source map for the House Skills marketplace surface. Treat the live
+    plugin root as the source of truth for current skills and the archive ledger as
+    historical custody.
+  use_when:
+  - Use when repo-local Codex marketplace bundle for the current House Skills plugin
+    root. Use this bundle when you need the installable current roots, bundle version,
+    or source map for the House Skills marketplace surface. Treat the live plugin
+    root as the source of truth for current skills and the archive ledger as historical
+    custody.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # House Skills Bundle
 

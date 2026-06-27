@@ -8,6 +8,9 @@ profile or guidance material.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+Mesh policy for the repo lives at `.agents/docs/mesh-policy.md`; docs under
+`docs/` should stay guidance-oriented, not operative source custody.
+
 ## Review guidelines
 
 - Treat docs under `docs/` as discovery and guidance surfaces, not canonical

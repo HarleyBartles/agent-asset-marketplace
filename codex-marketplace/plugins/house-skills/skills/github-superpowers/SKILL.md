@@ -1,11 +1,25 @@
 ---
 name: github-superpowers
-description: Use when shaping GitHub-facing work so it starts with @using-superpowers, selects the smallest applicable specialist workflow, and keeps GitHub proof, review routing, publication proof, and final main-state verification bound to github-operations.
+description: Use when shaping GitHub-facing work so it starts with @using-superpowers,
+  selects the smallest applicable specialist workflow, and keeps GitHub proof, review
+  routing, publication proof, and final main-state verification bound to github-operations.
 metadata:
   source-id: github-superpowers
   source-path: sources/first_party/skills/github-superpowers/SKILL.md
-  provenance-name: MARK-143 GitHub Superpowers compositional skill
-license: "MIT"
+  provenance-name: Github Superpowers first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when shaping GitHub-facing work so it starts with @using-superpowers,
+    selects the smallest applicable specialist workflow, and keeps GitHub proof, review
+    routing, publication proof, and final main-state verification bound to github-operations.
+  use_when:
+  - Use when shaping GitHub-facing work so it starts with @using-superpowers, selects
+    the smallest applicable specialist workflow, and keeps GitHub proof, review routing,
+    publication proof, and final main-state verification bound to github-operations.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # GitHub Superpowers
 

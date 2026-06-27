@@ -7,6 +7,9 @@ This scope covers provenance notes, trust records, and custody evidence.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+Provenance is evidence, not navigation or source custody. Keep mesh repairs in
+the relevant scoped law node or mesh policy doc, not in provenance records.
+
 ## Review guidelines
 
 - Flag provenance claims that do not match the actual repository paths or

@@ -1,11 +1,24 @@
-﻿---
+---
 name: ambiguity-buster
-description: Use this skill before acting when unresolved ambiguity could cause the wrong scope, target, source route, authority, artifact, worker handoff, or answer.
+description: Use when use this skill before acting when unresolved ambiguity could
+  cause the wrong scope, target, source route, authority, artifact, worker handoff,
+  or answer.
 metadata:
   source-id: ambiguity-buster
   source-path: sources/first_party/skills/ambiguity-buster/SKILL.md
-  provenance-name: MARK-19 core generic buster House Skills source slice
-license: "MIT"
+  provenance-name: Ambiguity Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when use this skill before acting when unresolved ambiguity could cause
+    the wrong scope, target, source route, authority, artifact, worker handoff, or
+    answer.
+  use_when:
+  - Use when use this skill before acting when unresolved ambiguity could cause the
+    wrong scope, target, source route, authority, artifact, worker handoff, or answer.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Ambiguity Buster
 

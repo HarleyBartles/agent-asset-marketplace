@@ -1,11 +1,25 @@
-﻿---
+---
 name: adventures-visual-preproduction
-description: Prepare source-first Adventures visual planning packets, frame breakdowns, and readiness checks before image generation or editing, keeping deterministic planning separate from downstream production.
+description: Use when prepare source-first Adventures visual planning packets, frame
+  breakdowns, and readiness checks before image generation or editing, keeping deterministic
+  planning separate from downstream production.
 metadata:
   source-id: adventures-visual-preproduction
   source-path: sources/first_party/skills/adventures-visual-preproduction/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Visual Preproduction first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when prepare source-first Adventures visual planning packets, frame breakdowns,
+    and readiness checks before image generation or editing, keeping deterministic
+    planning separate from downstream production.
+  use_when:
+  - Use when prepare source-first Adventures visual planning packets, frame breakdowns,
+    and readiness checks before image generation or editing, keeping deterministic
+    planning separate from downstream production.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Adventures Visual Preproduction
 

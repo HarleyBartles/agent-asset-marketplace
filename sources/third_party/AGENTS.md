@@ -8,6 +8,10 @@ retained third-party evidence tree.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+Third-party custody is retained source, not repo doctrine. Keep any scoped
+guidance here limited to custody and evidence rules for the retained snapshot
+tree.
+
 ## Manifest guidance
 
 Where a retained third-party snapshot feeds a marketplace projection, the

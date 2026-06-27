@@ -2,9 +2,9 @@ interface:
   display_name: Adventures Visual Bible Creator
   short_description: Create standardized Adventures visual bibles with prompt and
     QA blocks.
-  icon: assets/icon.svg
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-visual-bible-creator when create and maintain the
+    adventures visual bible as a source-backed planning artifact with explicit stage
+    boundaries between planning, generation, editing, and acceptance.
 policy:
   products:
   - chatgpt

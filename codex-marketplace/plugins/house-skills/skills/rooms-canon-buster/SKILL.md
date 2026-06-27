@@ -1,11 +1,22 @@
-﻿---
+---
 name: rooms-canon-buster
-description: Rooms canon pressure checks and lawful canon/item adjustment routing for canon, gaps, ambiguity, and layer mismatches.
+description: Use when rooms canon pressure checks and lawful canon/item adjustment
+  routing for canon, gaps, ambiguity, and layer mismatches.
 metadata:
   source-id: rooms-canon-buster
   source-path: sources/first_party/skills/rooms-canon-buster/SKILL.md
-  provenance-name: MARK-97 attached rooms canon buster zip update
-license: "MIT"
+  provenance-name: Rooms Canon Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms canon pressure checks and lawful canon/item adjustment routing
+    for canon, gaps, ambiguity, and layer mismatches.
+  use_when:
+  - Use when rooms canon pressure checks and lawful canon/item adjustment routing
+    for canon, gaps, ambiguity, and layer mismatches.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Rooms Canon Buster
 

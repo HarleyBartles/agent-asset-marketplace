@@ -1,11 +1,31 @@
-﻿---
+---
 name: rooms-project-doctrine
-description: route shared Rooms project doctrine without duplicating detailed law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity, actor/domain boundaries, report hygiene, GitHub publication or issue closure posture, and when a task needs the right Rooms doctrine-bearing skill before action.
+description: Use when route shared Rooms project doctrine without duplicating detailed
+  law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named
+  Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity,
+  actor/domain boundaries, report hygiene, GitHub publication or issue closure posture,
+  and when a task needs the right Rooms doctrine-bearing skill before action.
 metadata:
   source-id: rooms-project-doctrine
   source-path: sources/first_party/skills/rooms-project-doctrine/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Project Doctrine first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when route shared Rooms project doctrine without duplicating detailed
+    law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named
+    Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity,
+    actor/domain boundaries, report hygiene, GitHub publication or issue closure posture,
+    and when a task needs the right Rooms doctrine-bearing skill before action.
+  use_when:
+  - Use when route shared Rooms project doctrine without duplicating detailed law.
+    use for Rooms bootstrap follow-up, project-level doctrine orientation, named Rooms
+    truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity, actor/domain
+    boundaries, report hygiene, GitHub publication or issue closure posture, and when
+    a task needs the right Rooms doctrine-bearing skill before action.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Rooms Project Doctrine
 

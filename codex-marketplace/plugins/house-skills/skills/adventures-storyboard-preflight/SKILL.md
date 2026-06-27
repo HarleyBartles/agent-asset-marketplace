@@ -1,11 +1,29 @@
-﻿---
+---
 name: adventures-storyboard-preflight
-description: prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic visual planning. use when Harley asks ordinary GPT to storyboard frames, make prompt boards, map slide visuals, preflight story beats, or produce visual planning packets before image generation; never grants image-generation authority.
+description: Use when prepare GPT/project-side Adventures storyboards, prompt boards,
+  and deterministic visual planning. use when Harley asks ordinary GPT to storyboard
+  frames, make prompt boards, map slide visuals, preflight story beats, or produce
+  visual planning packets before image generation; never grants image-generation authority.
 metadata:
   source-id: adventures-storyboard-preflight
   source-path: sources/first_party/skills/adventures-storyboard-preflight/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Adventures"
-license: "MIT"
+  provenance-name: Adventures Storyboard Preflight first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when prepare GPT/project-side Adventures storyboards, prompt boards,
+    and deterministic visual planning. use when Harley asks ordinary GPT to storyboard
+    frames, make prompt boards, map slide visuals, preflight story beats, or produce
+    visual planning packets before image generation; never grants image-generation
+    authority.
+  use_when:
+  - Use when prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic
+    visual planning. use when Harley asks ordinary GPT to storyboard frames, make
+    prompt boards, map slide visuals, preflight story beats, or produce visual planning
+    packets before image generation; never grants image-generation authority.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Adventures Storyboard Preflight
 

@@ -1,6 +1,39 @@
 ---
 name: asset-market
-description: Source-facing Asset Marketplace skill and pack acquisition with fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare, or prepare the latest GPT skill or bundled skill pack from the asset marketplace repo, especially phrases like "using asset-market", "from the repo", or "latest marketplace version". Owns connector-backed repo source resolution, exact source reconstruction, pack-to-per-skill install-unit expansion, and source/projection ambiguity. Does not validate, package, present installable zips, or mutate the repo.
+description: Use when source-facing Asset Marketplace skill and pack acquisition with
+  fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare,
+  or prepare the latest GPT skill or bundled skill pack from the asset marketplace
+  repo, especially phrases like "using asset-market", "from the repo", or "latest
+  marketplace version". Owns connector-backed repo source resolution, exact source
+  reconstruction, pack-to-per-skill install-unit expansion, and source/projection
+  ambiguity. Does not validate, package, present installable zips, or mutate the repo.
+metadata:
+  source-id: asset-market
+  source-path: sources/first_party/skills/asset-market/SKILL.md
+  provenance-name: Asset Market first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when source-facing Asset Marketplace skill and pack acquisition with
+    fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare,
+    or prepare the latest GPT skill or bundled skill pack from the asset marketplace
+    repo, especially phrases like "using asset-market", "from the repo", or "latest
+    marketplace version". Owns connector-backed repo source resolution, exact source
+    reconstruction, pack-to-per-skill install-unit expansion, and source/projection
+    ambiguity. Does not validate, package, present installable zips, or mutate the
+    repo.
+  use_when:
+  - Use when source-facing Asset Marketplace skill and pack acquisition with fidelity
+    control. Use when Harley asks to get, pull, fetch, install, update, compare, or
+    prepare the latest GPT skill or bundled skill pack from the asset marketplace
+    repo, especially phrases like "using asset-market", "from the repo", or "latest
+    marketplace version". Owns connector-backed repo source resolution, exact source
+    reconstruction, pack-to-per-skill install-unit expansion, and source/projection
+    ambiguity. Does not validate, package, present installable zips, or mutate the
+    repo.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 
 # Asset Market

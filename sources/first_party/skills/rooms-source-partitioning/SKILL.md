@@ -1,11 +1,28 @@
-﻿---
+---
 name: rooms-source-partitioning
-description: Label Rooms, Mostly claims by source basis and evidence state. Use when answers, reports, closure notes, doctrine takeaways, cleanup claims, or repo/canon/archive/manuscript assertions could blur inspected evidence, inference, conversation, reports, or unavailable sources.
+description: Use when label Rooms, Mostly claims by source basis and evidence state.
+  Use when answers, reports, closure notes, doctrine takeaways, cleanup claims, or
+  repo/canon/archive/manuscript assertions could blur inspected evidence, inference,
+  conversation, reports, or unavailable sources.
 metadata:
   source-id: rooms-source-partitioning
   source-path: sources/first_party/skills/rooms-source-partitioning/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D Rooms"
-license: "MIT"
+  provenance-name: Rooms Source Partitioning first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when label Rooms, Mostly claims by source basis and evidence state. Use
+    when answers, reports, closure notes, doctrine takeaways, cleanup claims, or repo/canon/archive/manuscript
+    assertions could blur inspected evidence, inference, conversation, reports, or
+    unavailable sources.
+  use_when:
+  - Use when label Rooms, Mostly claims by source basis and evidence state. Use when
+    answers, reports, closure notes, doctrine takeaways, cleanup claims, or repo/canon/archive/manuscript
+    assertions could blur inspected evidence, inference, conversation, reports, or
+    unavailable sources.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Rooms Source Partitioning
 

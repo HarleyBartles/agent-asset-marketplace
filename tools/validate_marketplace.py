@@ -14,6 +14,7 @@ import yaml
 from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
     BUNDLE_MANIFEST_PATH,
+    EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES,
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
@@ -37,6 +38,7 @@ from marketplace_utils import (
     normalize_decision_record,
     normalize_decision_row,
     parse_top_markdown_table,
+    _installation_policy_for_plugin,
 )
 from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
@@ -503,9 +505,13 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
         raise ValueError("Marketplace registry display name mismatch")
 
     plugins_by_name = {plugin.get("name"): plugin for plugin in registry.get("plugins", [])}
-    expected_plugins = {spec["name"]: spec["registry_path"] for spec in MARKETPLACE_PLUGIN_SPECS}
+    expected_plugins = {
+        spec["name"]: spec["registry_path"]
+        for spec in MARKETPLACE_PLUGIN_SPECS
+        if spec["name"] in EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES
+    }
     actual_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
-    if actual_plugin_names != list(PROTECTED_MARKETPLACE_PLUGIN_NAMES):
+    if actual_plugin_names != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("Marketplace registry plugin order does not match the protected marketplace shape")
     for name, path in expected_plugins.items():
         plugin = plugins_by_name.get(name)
@@ -515,7 +521,7 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
             raise ValueError(f"Marketplace registry {name} plugin path mismatch")
         if plugin.get("source", {}).get("source") != "local":
             raise ValueError(f"Marketplace registry {name} plugin source kind mismatch")
-        if plugin.get("policy", {}).get("installation") != "AVAILABLE":
+        if plugin.get("policy", {}).get("installation") != _installation_policy_for_plugin(name):
             raise ValueError(f"Marketplace registry {name} installation policy mismatch")
         if plugin.get("policy", {}).get("authentication") != "ON_INSTALL":
             raise ValueError(f"Marketplace registry {name} authentication policy mismatch")

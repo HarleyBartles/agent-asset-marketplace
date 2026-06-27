@@ -1,8 +1,11 @@
 interface:
   display_name: Adventures Asset Sheet Compiler
   short_description: Compile approved Patch assets onto canonical sheets deterministically.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
+  default_prompt: Use /adventures-asset-sheet-compiler when compile adventures asset
+    sheets through deterministic no-credit template work. use when harley asks to
+    compile, assemble, lay out, inspect, package, or qa externally accepted source
+    images on an approved template, or to author a blank reusable asset-sheet template
+    package using bundled pil tooling. do not treat pig self-qa as acceptance.
 policy:
   products:
   - chatgpt

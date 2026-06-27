@@ -28,7 +28,7 @@ The split is deliberate:
 - The active plugin contains `repo-worker-base`, `base-doctrine`,
   `work-mode-router`, `linear-issue-shaping`, `boring-loop`,
   `connector-safety`, `github-operations`, `unslop-plus`, and
-  `safe-large-file-writing` alongside the pack entrypoint.
+  `context-safety` alongside the pack entrypoint.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface

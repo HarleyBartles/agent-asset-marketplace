@@ -4,8 +4,6 @@ interface:
     contract
   default_prompt: Check Wild Bunch changes against the issue goal and report the result
     with publication evidence.
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
 policy:
   products:
   - chatgpt

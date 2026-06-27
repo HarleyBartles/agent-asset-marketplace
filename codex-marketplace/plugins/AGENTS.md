@@ -7,6 +7,10 @@ marketplace source tree.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
+This scope is projection law, not source custody. Keep the plugin-root
+inventory, manifest exports, and generated navigation aligned, but do not add
+manual `INDEX.md` files inside skill roots or overlay roots.
+
 The active installable roots under this directory are defined by
 `codex-marketplace/plugin-roots.json` and validated against the protected
 marketplace manifests and registry surfaces.

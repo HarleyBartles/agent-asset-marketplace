@@ -1,11 +1,38 @@
-﻿---
+---
 name: session-buster-ingress
-description: ingest session busters, continuity exports, resume packets, package queues, and handoff blocks without laundering stale state. use after bootstrap and before acting on continuity fields, especially Linear/Codex worker state, PR-gate claims, GitHub heads, package installs, GPT-native skill queues, or legacy dispatch packets. treat suggested_next_session_name as navigation metadata only. partitions verified, fallback-only, unavailable, contradicted, and blocked claims; extracts the next safe directive without mutating repos, issues, packages, or worker state.
+description: Use when ingest session busters, continuity exports, resume packets,
+  package queues, and handoff blocks without laundering stale state. use after bootstrap
+  and before acting on continuity fields, especially Linear/Codex worker state, PR-gate
+  claims, GitHub heads, package installs, GPT-native skill queues, or legacy dispatch
+  packets. treat suggested_next_session_name as navigation metadata only. partitions
+  verified, fallback-only, unavailable, contradicted, and blocked claims; extracts
+  the next safe directive without mutating repos, issues, packages, or worker state.
 metadata:
   source-id: session-buster-ingress
   source-path: sources/first_party/skills/session-buster-ingress/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Session Buster Ingress first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when ingest session busters, continuity exports, resume packets, package
+    queues, and handoff blocks without laundering stale state. use after bootstrap
+    and before acting on continuity fields, especially Linear/Codex worker state,
+    PR-gate claims, GitHub heads, package installs, GPT-native skill queues, or legacy
+    dispatch packets. treat suggested_next_session_name as navigation metadata only.
+    partitions verified, fallback-only, unavailable, contradicted, and blocked claims;
+    extracts the next safe directive without mutating repos, issues, packages, or
+    worker state.
+  use_when:
+  - Use when ingest session busters, continuity exports, resume packets, package queues,
+    and handoff blocks without laundering stale state. use after bootstrap and before
+    acting on continuity fields, especially Linear/Codex worker state, PR-gate claims,
+    GitHub heads, package installs, GPT-native skill queues, or legacy dispatch packets.
+    treat suggested_next_session_name as navigation metadata only. partitions verified,
+    fallback-only, unavailable, contradicted, and blocked claims; extracts the next
+    safe directive without mutating repos, issues, packages, or worker state.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Session Buster Ingress
 

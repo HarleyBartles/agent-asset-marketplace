@@ -1,11 +1,37 @@
-﻿---
+---
 name: tps-reporting
-description: partition reports, worker returns, Linear/Codex status notes, issue comments, verification summaries, publication notes, and continuity notes so claims do not become truth. Use when drafting or reviewing language that could mix source evidence, Codex/worker claims, Linear state, GitHub proof, inference, validation, closure posture, or next action. Do not use for ordinary coding dispatch routing; Linear/Codex state checks belong to the dispatch front door, and GitHub proof belongs to GitHub Operations after a PR or repo artifact exists.
+description: Use when partition reports, worker returns, Linear/Codex status notes,
+  issue comments, verification summaries, publication notes, and continuity notes
+  so claims do not become truth. Use when drafting or reviewing language that could
+  mix source evidence, Codex/worker claims, Linear state, GitHub proof, inference,
+  validation, closure posture, or next action. Do not use for ordinary coding dispatch
+  routing; Linear/Codex state checks belong to the dispatch front door, and GitHub
+  proof belongs to GitHub Operations after a PR or repo artifact exists.
 metadata:
   source-id: tps-reporting
   source-path: sources/first_party/skills/tps-reporting/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Tps Reporting first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when partition reports, worker returns, Linear/Codex status notes, issue
+    comments, verification summaries, publication notes, and continuity notes so claims
+    do not become truth. Use when drafting or reviewing language that could mix source
+    evidence, Codex/worker claims, Linear state, GitHub proof, inference, validation,
+    closure posture, or next action. Do not use for ordinary coding dispatch routing;
+    Linear/Codex state checks belong to the dispatch front door, and GitHub proof
+    belongs to GitHub Operations after a PR or repo artifact exists.
+  use_when:
+  - Use when partition reports, worker returns, Linear/Codex status notes, issue comments,
+    verification summaries, publication notes, and continuity notes so claims do not
+    become truth. Use when drafting or reviewing language that could mix source evidence,
+    Codex/worker claims, Linear state, GitHub proof, inference, validation, closure
+    posture, or next action. Do not use for ordinary coding dispatch routing; Linear/Codex
+    state checks belong to the dispatch front door, and GitHub proof belongs to GitHub
+    Operations after a PR or repo artifact exists.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Tps Reporting
 

@@ -49,6 +49,7 @@ def _run_full_regeneration_checks() -> None:
     reconcile_projection(write=False)
     _run_tool("generate_provenance_maps.py", "--check")
     _run_tool("generate_source_maps.py", "--check")
+    _run_tool("generate_first_party_skill_catalog.py", "--check")
 
 
 def _run_full_regeneration_writes(selected_pack: str | None) -> None:
@@ -61,6 +62,7 @@ def _run_full_regeneration_writes(selected_pack: str | None) -> None:
     reconcile_projection(write=True, plugin_name=selected_pack)
     _run_tool("generate_provenance_maps.py")
     _run_tool("generate_source_maps.py")
+    _run_tool("generate_first_party_skill_catalog.py")
 
 
 def _parse_args() -> argparse.Namespace:

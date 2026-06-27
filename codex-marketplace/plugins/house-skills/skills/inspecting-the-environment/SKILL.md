@@ -1,11 +1,27 @@
 ---
 name: inspecting-the-environment
-description: Use when about to take action and environment constraints could change the next step — discovers shell syntax, worktree state, repo state, path style, CLI availability, auth, connectors, mutation authority, and protected surfaces before proceeding.
+description: Use when about to take action and environment constraints could change
+  the next step — discovers shell syntax, worktree state, repo state, path style,
+  CLI availability, auth, connectors, mutation authority, and protected surfaces before
+  proceeding.
 metadata:
   source-id: inspecting-the-environment
   source-path: sources/first_party/skills/inspecting-the-environment/SKILL.md
-  provenance-name: MARK-283 inspecting-the-environment first-party Superpowers+ skill
-license: "MIT"
+  provenance-name: Inspecting The Environment first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when about to take action and environment constraints could change the
+    next step — discovers shell syntax, worktree state, repo state, path style, CLI
+    availability, auth, connectors, mutation authority, and protected surfaces before
+    proceeding.
+  use_when:
+  - Use when about to take action and environment constraints could change the next
+    step — discovers shell syntax, worktree state, repo state, path style, CLI availability,
+    auth, connectors, mutation authority, and protected surfaces before proceeding.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Inspecting the Environment
 

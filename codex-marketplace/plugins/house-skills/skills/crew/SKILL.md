@@ -1,11 +1,34 @@
-﻿---
+---
 name: crew
-description: gpt-wide doctrine for the Crew thinking roles. use when another skill or user request needs route, authority, fallback, or receipt reasoning, when a plan or claimed green needs a dependency check, or when the task needs a clean Crew lens before action. do not use as the execution surface for linear dispatch, github proof, validation, reporting, or skill packaging; specialist skills own those actions.
+description: Use when gpt-wide doctrine for the Crew thinking roles. use when another
+  skill or user request needs route, authority, fallback, or receipt reasoning, when
+  a plan or claimed green needs a dependency check, or when the task needs a clean
+  Crew lens before action. do not use as the execution surface for linear dispatch,
+  github proof, validation, reporting, or skill packaging; specialist skills own those
+  actions.
 metadata:
   source-id: crew
   source-path: sources/first_party/skills/crew/SKILL.md
-  provenance-name: "MARK-9 chunk ledger \xC3\xA2\xE2\u201A\xAC\xE2\u20AC\x9D base and control plane"
-license: "MIT"
+  provenance-name: Crew first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when gpt-wide doctrine for the Crew thinking roles. use when another
+    skill or user request needs route, authority, fallback, or receipt reasoning,
+    when a plan or claimed green needs a dependency check, or when the task needs
+    a clean Crew lens before action. do not use as the execution surface for linear
+    dispatch, github proof, validation, reporting, or skill packaging; specialist
+    skills own those actions.
+  use_when:
+  - Use when gpt-wide doctrine for the Crew thinking roles. use when another skill
+    or user request needs route, authority, fallback, or receipt reasoning, when a
+    plan or claimed green needs a dependency check, or when the task needs a clean
+    Crew lens before action. do not use as the execution surface for linear dispatch,
+    github proof, validation, reporting, or skill packaging; specialist skills own
+    those actions.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Crew
 
