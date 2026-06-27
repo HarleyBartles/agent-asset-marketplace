@@ -117,6 +117,7 @@ Ensure the generated marketplace manifest, plugin marketplace registry, and repo
 **Files:**
 - Create: `provenance/first-party-skills.md`
 - Create: `tools/generate_first_party_skill_catalog.py`
+- Modify: `.github/workflows/marketplace-validation.yml`
 
 **Interfaces:**
 - Consumes: the active first-party source tree, the renamed `context-safety` surfaces, the generated pack/projection inventory already validated in this repo, and the repo references discoverable from manifests, maps, registry surfaces, and docs.
@@ -144,6 +145,10 @@ Manually compare `sources/first_party/skills/*` against `provenance/first-party-
 - [ ] **Step 4: Add write and check modes for the catalog**
 
 Add a write mode that refreshes `provenance/first-party-skills.md` from the current repo truth, and a `--check` mode that fails if the committed catalog is stale.
+
+- [ ] **Step 5: Put the catalog check in CI**
+
+Add the catalog generator check to `.github/workflows/marketplace-validation.yml` so the same validator that guards the PR also runs in CI. If any additional validator or catalog-related check is introduced for this issue, wire it into that workflow as well.
 
 ### Task 5: Validate cleanup and publish the plan-only branch
 
