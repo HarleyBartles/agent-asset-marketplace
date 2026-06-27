@@ -136,6 +136,10 @@ List every first-party skill in the repo with:
 
 Group the entries so the file is easy to scan, but do not collapse it into a vague inventory dump. The catalog should make future first-party renames boring without requiring another wide search.
 
+- [ ] **Step 3: Check the catalog against the active first-party tree**
+
+Manually compare `sources/first_party/skills/*` against `provenance/first-party-skills.md` so every active first-party skill has a catalog row and the catalog does not become a one-off stale note. If the repo later grows a validator for this surface, wire it in here; for this issue, the documented manual check is the required proof.
+
 ### Task 5: Validate cleanup and publish the plan-only branch
 
 **Files:**
@@ -155,15 +159,20 @@ Group the entries so the file is easy to scan, but do not collapse it into a vag
 Run:
 
 ```powershell
-py -3 tools/update_skill_artifacts.py --all
+py -3 tools/update_skill_artifacts.py --check
 py -3 tools/generate_marketplace.py --check
 py -3 tools/generate_repo_index.py --check
-py -3 tools/validate_skill_zips.py
 py -3 tools/validate_marketplace.py
+py -3 tools/materialize_projection.py --check
+py -3 tools/generate_mega_packs.py --check
+py -3 tools/generate_provenance_maps.py --check
+py -3 tools/generate_source_maps.py --check
+py -3 tools/validate_repo_index.py
+py -3 tools/validate_skill_zips.py
 git diff --check
 ```
 
-Expected result: the active surfaces validate, the generated zips and registries agree, and `safe-large-file-writing` is absent from the active rename surfaces.
+Expected result: the active surfaces validate, the generated zips and registries agree, the provenance and source maps are current, and `safe-large-file-writing` is absent from the active rename surfaces.
 
 - [ ] **Step 2: Keep any remaining old-name text quarantined**
 
