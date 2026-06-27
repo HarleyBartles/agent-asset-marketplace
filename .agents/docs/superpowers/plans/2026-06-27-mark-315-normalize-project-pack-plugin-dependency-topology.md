@@ -214,6 +214,7 @@ Execution PR: none
 - Modify: the Linear issue route-state comment or body entry for `MARK-315`
 
 - [ ] Run the repository's marketplace and topology validation commands, plus a targeted duplicate-inventory search over the plugin `skills/INDEX.md` files.
+- [ ] Fully regenerate the repo-wide index mesh with `py -3 tools/generate_index_mesh.py` during execution so the Superpowers docs move and any follow-on docs/index updates are reflected across the whole mesh.
 - [ ] Publish the plan-only PR against `main` and keep implementation paused until the plan is approved.
 - [ ] Update the durable Linear route state with the plan path and plan PR once the plan PR exists.
 
@@ -225,6 +226,7 @@ Planned validation commands for the implementation branch after approval:
 py -3 tools/update_skill_artifacts.py --skill wild-bunch-project-pack
 py -3 tools/generate_marketplace.py --check
 py -3 tools/generate_repo_index.py --check
+py -3 tools/generate_index_mesh.py --check
 py -3 tools/validate_marketplace.py
 py -3 tools/validate_repo_index.py
 py -3 tools/validate_skill_zips.py
