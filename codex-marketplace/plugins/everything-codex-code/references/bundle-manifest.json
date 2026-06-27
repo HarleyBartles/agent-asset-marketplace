@@ -336,12 +336,15 @@
       "source_family": "ecc",
       "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
       "local_path": "skills/security-review",
-      "import_status": "imported",
-      "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under canonical references/.",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
+      "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under references/.",
+      "source_path": "sources/third_party/ecc/upstream/skills/security-review/SKILL.md",
+      "source_author": "ECC",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/affaan-m/ECC",
       "adapted_author": "Harley Bartles",
-      "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference."
+      "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
+      "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference.",
+      "copy_expectation": "normalised_from_source"
     }
   ],
   "notes": [
