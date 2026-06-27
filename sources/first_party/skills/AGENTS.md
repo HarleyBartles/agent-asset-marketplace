@@ -36,8 +36,9 @@ Use these rules when editing or adding a first-party skill under
   - `use_when`
   - `do_not_use_when`
   - `related_skills`
-  - `projection_targets`
   - `notes`
+- Do not write projection-target state back into canonical source frontmatter;
+  projection surfaces belong in catalog or generator outputs.
 
 ## `agents/openai.yaml`
 
@@ -58,3 +59,4 @@ Use these rules when editing or adding a first-party skill under
 - Active generated surfaces must stay in sync with the canonical source.
 - If a historical name remains anywhere, it must be quarantined to provenance
   or archive material.
+- Skill-root `INDEX.md` files do not belong in this tree.

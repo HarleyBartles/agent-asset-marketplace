@@ -1,20 +1,32 @@
 # Mesh Policy
 
-## Canonical mesh law
+## 1. `AGENTS.md` mesh
 
-- `.agents/` is the tracked home for agent-facing doctrine, outputs, local
-  plugin posture, and other agent work surfaces.
-- `AGENTS.md` files outside `.agents/` are scoped law projections.
-- `INDEX.md` files outside `.agents/` are navigation and full-coverage
-  projections.
-- Human `README.md` files may explain the mesh, but they are not the only place
-  operative agent law lives.
+`AGENTS.md` files are authored scoped law.
+The nearest scoped `AGENTS.md` applies naturally to the subtree an agent is
+working in, with root law inherited unless a nearer node adds a local delta.
+`AGENTS.md` should explain rules, boundaries, and source/projection
+distinctions, not directory navigation.
 
-## Mesh self-healing
+## 2. `INDEX.md` mesh
 
-- If a worker reads stale or misleading mesh guidance, the worker should repair
-  the relevant mesh in the same PR when the fix is inside scope.
-- If the fix is out of scope, return AMBER with the exact deferred repair.
-- Remove copied plugin skill snapshots from `.agents/skills/` when the plugin
-  already supplies the skills.
+`INDEX.md` files are generated navigation and coverage surfaces.
+They tell agents and humans what exists in a subtree and where to go next.
+They must not carry operative law.
+They must not be inserted into skill roots or adapter overlay roots.
+
+## 3. `.agents/` tree
+
+`.agents/` is the tracked repo-resident home for agent-facing doctrine, local
+plugin posture, agent work surfaces, and output/evidence conventions.
+It is not disposable cache.
+It is not the home for ordinary product/source work unless that source is
+agent-facing infrastructure.
+
+## 4. Mesh self-healing
+
+If a worker finds stale or misleading mesh law or navigation while working in
+scope, repair it in the same PR.
+If the repair is outside scope, return AMBER with the exact deferred mesh
+repair.
 

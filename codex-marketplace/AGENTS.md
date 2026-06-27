@@ -7,6 +7,10 @@ manifest and the plugin source tree beneath it.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
+Mesh-wise, this scope owns marketplace source/projection law, not repo-wide
+navigation. Keep `AGENTS.md` compact and let generated `INDEX.md` files carry
+tree coverage.
+
 The active plugin roots in this scope are defined by
 `codex-marketplace/plugin-roots.json` and validated against the protected
 marketplace manifests and registry surfaces.
@@ -22,7 +26,8 @@ Use `py -3 tools/generate_marketplace.py --check` to prove
 `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` are
 current, and `py -3 tools/generate_repo_index.py --check` to prove
 `repo-index/repo-index.json` is current. `validate_repo_index.py` remains
-alignment validation, not the freshness proof.
+alignment validation, not the freshness proof. Use
+`py -3 tools/generate_index_mesh.py --check` for the repo-wide navigation mesh.
 
 Deterministic pack rule: when a plugin root is driven by a manifest, regenerate
 the projection and export surfaces from the checked-in tooling. Do not

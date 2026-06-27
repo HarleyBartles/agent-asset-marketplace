@@ -20,9 +20,8 @@ for `.agents/plugins/marketplace.json` and
 proven by `py -3 tools/materialize_projection.py --check`, and the selected
 pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests.py
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
-itself.
-The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
---check`.
+itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
+--check`, and mesh law lives in `.agents/docs/mesh-policy.md`.
 
 Deterministic pack rule: if a skillset pack or projection lane lacks a
 manifest-driven generator/validator path, add one to `tools/` and wire it into

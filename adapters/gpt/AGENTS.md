@@ -6,6 +6,9 @@ This scope covers source-owned GPT export overlays for generated skill zips.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
+Overlay roots are projections, not source custody, and they do not get manual
+`INDEX.md` insertion inside skill or overlay roots.
+
 Overlay files in this tree are not the Codex plugin projection and not the
 generated artifact surface. They are the source input for GPT-ready exports.
 

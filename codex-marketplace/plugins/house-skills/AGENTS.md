@@ -7,6 +7,10 @@ This scope covers the current first-party House Skills plugin root.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+This root is the active current install surface for `house-skills`. Keep the
+scope focused on the live root and its generated projections; do not treat it
+like a versioned snapshot tree.
+
 ## Review guidelines
 
 - Flag mismatches between `.codex-plugin/plugin.json`, `README.md`, the bundle
@@ -26,6 +30,7 @@ rules, and upstream-drain policy.
 - Update the live skill root and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.
 - Project-scoped bundles, such as an Adventures pack, should point at explicit canonical source paths when they are meant to be projections.
+- Navigation belongs in generated container indexes, not in this skill root.
 
 ## Maintenance responsibility
 
