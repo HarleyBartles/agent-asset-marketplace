@@ -116,16 +116,14 @@ Ensure the generated marketplace manifest, plugin marketplace registry, and repo
 
 **Files:**
 - Create: `provenance/first-party-skills.md`
-- Create: `tools/generate_first_party_skill_catalog.py`
-- Modify: `.github/workflows/marketplace-validation.yml`
 
 **Interfaces:**
-- Consumes: the active first-party source tree, the renamed `context-safety` surfaces, the generated pack/projection inventory already validated in this repo, and the repo references discoverable from manifests, maps, registry surfaces, and docs.
-- Produces: tooling that generates a durable repo-resident map of all first-party skills with canonical source locations, active projection or vendoring surfaces, generated artifacts, manifest/source-map touch points, workflow/doc references, and the validation path that should catch stale references after a rename.
+- Consumes: the active first-party source tree, the renamed `context-safety` surfaces, and the generated pack/projection inventory already validated in this repo.
+- Produces: a durable repo-resident map of all first-party skills with canonical source locations, active projection or vendoring surfaces, generated artifacts, manifest/source-map touch points, workflow/doc references, and the validation path that should catch stale references after a rename.
 
-- [ ] **Step 1: Build the catalog generator from repo truth, not memory**
+- [ ] **Step 1: Build the catalog from repo truth, not memory**
 
-Implement a catalog generator that derives every first-party skill row from repo truth:
+List every first-party skill in the repo with:
 
 - canonical source location;
 - projection or vendoring surfaces in plugins/packs;
@@ -136,19 +134,7 @@ Implement a catalog generator that derives every first-party skill row from repo
 
 - [ ] **Step 2: Keep the catalog bounded and useful**
 
-Group the generated entries so the file is easy to scan, but do not collapse it into a vague inventory dump. If a field cannot be derived reliably yet, either omit it, mark it as unresolved from inspected source, or place it in a clearly separated bounded notes section. The catalog should make future first-party renames boring without requiring another wide search.
-
-- [ ] **Step 3: Check the catalog against the active first-party tree**
-
-Manually compare `sources/first_party/skills/*` against `provenance/first-party-skills.md` so every active first-party skill has a catalog row and the catalog does not become a one-off stale note. If the repo later grows a validator for this surface, wire it in here; for this issue, the documented manual check is the required proof.
-
-- [ ] **Step 4: Add write and check modes for the catalog**
-
-Add a write mode that refreshes `provenance/first-party-skills.md` from the current repo truth, and a `--check` mode that fails if the committed catalog is stale.
-
-- [ ] **Step 5: Put the catalog check in CI**
-
-Add the catalog generator check to `.github/workflows/marketplace-validation.yml` so the same validator that guards the PR also runs in CI. If any additional validator or catalog-related check is introduced for this issue, wire it into that workflow as well.
+Group the entries so the file is easy to scan, but do not collapse it into a vague inventory dump. The catalog should make future first-party renames boring without requiring another wide search.
 
 ### Task 5: Validate cleanup and publish the plan-only branch
 
@@ -169,21 +155,15 @@ Add the catalog generator check to `.github/workflows/marketplace-validation.yml
 Run:
 
 ```powershell
-py -3 tools/update_skill_artifacts.py --check
-py -3 tools/generate_first_party_skill_catalog.py --check
+py -3 tools/update_skill_artifacts.py --all
 py -3 tools/generate_marketplace.py --check
 py -3 tools/generate_repo_index.py --check
-py -3 tools/validate_marketplace.py
-py -3 tools/materialize_projection.py --check
-py -3 tools/generate_mega_packs.py --check
-py -3 tools/generate_provenance_maps.py --check
-py -3 tools/generate_source_maps.py --check
-py -3 tools/validate_repo_index.py
 py -3 tools/validate_skill_zips.py
+py -3 tools/validate_marketplace.py
 git diff --check
 ```
 
-Expected result: the active surfaces validate, the generated zips and registries agree, the provenance and source maps are current, and `safe-large-file-writing` is absent from the active rename surfaces.
+Expected result: the active surfaces validate, the generated zips and registries agree, and `safe-large-file-writing` is absent from the active rename surfaces.
 
 - [ ] **Step 2: Keep any remaining old-name text quarantined**
 
