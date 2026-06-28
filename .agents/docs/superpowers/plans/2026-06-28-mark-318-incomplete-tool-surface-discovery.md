@@ -31,10 +31,10 @@
 - Consumes: current skill wording, existing environment-inspection guidance, projection mapping.
 - Produces: a concrete insertion point for the invariant and a decision on whether it belongs in a new subsection or an integrated paragraph.
 
-- [ ] Read the current source and projected copy side by side.
-- [ ] Identify the smallest place where incomplete-surface guidance fits without broadening the skill.
-- [ ] Read the upstream Superpowers `CLAUDE.md` contribution constraints and apply the ones that matter here: real experienced failure, one narrow problem per change, avoid tool-specific core doctrine, adversarial pressure testing with before/after eval evidence, and minimal churn to tuned skill wording.
-- [ ] Confirm the change stays generic and does not introduce Linear/GitHub/MCP-only doctrine.
+- [x] Read the current source and projected copy side by side.
+- [x] Identify the smallest place where incomplete-surface guidance fits without broadening the skill.
+- [x] Read the upstream Superpowers `CLAUDE.md` contribution constraints and apply the ones that matter here: real experienced failure, one narrow problem per change, avoid tool-specific core doctrine, adversarial pressure testing with before/after eval evidence, and minimal churn to tuned skill wording.
+- [x] Confirm the change stays generic and does not introduce Linear/GitHub/MCP-only doctrine.
 
 ### Task 2: Add the incomplete-surface invariant to the source skill
 
@@ -45,10 +45,10 @@
 - Consumes: the existing `Environment dimensions`, `Inspection rules`, and `Authority split` sections.
 - Produces: one concise rule that tells agents to keep searching when a surface may be truncated, paginated, filtered, or scoped.
 
-- [ ] Add a compact paragraph or subsection that says incomplete tool and connector listings are not negative evidence.
-- [ ] Require continuation/readback or focused rediscovery before declaring a capability unavailable.
-- [ ] Require search by action families rather than one guessed name.
-- [ ] Preserve uncertainty when the full relevant surface has not been proven complete.
+- [x] Add a compact paragraph or subsection that says incomplete tool and connector listings are not negative evidence.
+- [x] Require continuation/readback or focused rediscovery before declaring a capability unavailable.
+- [x] Require search by action families rather than one guessed name.
+- [x] Preserve uncertainty when the full relevant surface has not been proven complete.
 
 Proposed wording shape:
 
@@ -67,9 +67,9 @@ Tool and connector listings may be truncated, paginated, filtered, or scoped. Ab
 - Consumes: the updated first-party source skill.
 - Produces: the projected marketplace copy and generated skill zip that match the source update.
 
-- [ ] Run `py -3 tools/update_skill_artifacts.py --skill superpowers-plus/inspecting-the-environment`.
-- [ ] Verify the generated outputs only reflect the intended skill change.
-- [ ] Confirm the registry entry updates cleanly if the skill zip hash changes.
+- [x] Run `py -3 tools/update_skill_artifacts.py --skill superpowers-plus/inspecting-the-environment`.
+- [x] Verify the generated outputs only reflect the intended skill change.
+- [x] Confirm the registry entry updates cleanly if the skill zip hash changes.
 
 ### Task 4: Document and verify the adversarial eval scenarios
 
@@ -80,27 +80,30 @@ Tool and connector listings may be truncated, paginated, filtered, or scoped. Ab
 - Consumes: the updated skill wording.
 - Produces: documented before/after eval cases that prove the invariant covers truncation, focused discovery, and unexpected naming.
 
-- [ ] Record the truncated-list case where mutation tools are hidden until continuation or focused search is used.
-- [ ] Record the focused-discovery case where only read/query tools exist after the narrower search.
-- [ ] Record the unexpected-naming case where the needed action is found by family search rather than the first guessed name.
-- [ ] For each scenario, capture the expected behavior before the skill change, the expected behavior after the skill change, and the observed/manual evaluation result.
+- [x] Record the truncated-list case where mutation tools are hidden until continuation or focused search is used.
+- [x] Record the focused-discovery case where only read/query tools exist after the narrower search.
+- [x] Record the unexpected-naming case where the needed action is found by family search rather than the first guessed name.
+- [x] For each scenario, capture the expected behavior before the skill change, the expected behavior after the skill change, and the observed/manual evaluation result.
 
 Eval cases to keep in the implementation record:
 
 1. **Truncated list hides mutation tools**
    - Bad behavior: the agent says no update or save tools exist after reading only the visible truncated portion.
    - Expected behavior: the agent notices truncation, continues discovery, and keeps searching for mutation tools before concluding anything.
-   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
+   - Before/after evidence: before the edit, the skill had no explicit truncation safeguard; after the edit, it tells agents to continue discovery and preserve uncertainty.
+   - Observed/manual result: manual read-through confirms the new subsection blocks the "visible list is complete" inference.
 
 2. **Focused discovery proves only read tools exist**
    - Bad behavior: the agent jumps from a partial list to "no mutation tool exists."
    - Expected behavior: the agent reports "no mutation tool found after focused discovery" and preserves uncertainty if the surface is still not proven complete.
-   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
+   - Before/after evidence: before the edit, the skill did not require action-family search; after the edit, it explicitly does.
+   - Observed/manual result: manual read-through confirms the text distinguishes focused discovery from a premature absence claim.
 
 3. **Unexpected tool naming**
    - Bad behavior: the agent stops after the first guessed name does not match.
    - Expected behavior: the agent searches action families such as read/query and mutation names until the capability is found or bounded uncertainty remains.
-   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
+   - Before/after evidence: before the edit, the skill lacked an explicit action-family search requirement; after the edit, it names that requirement directly.
+   - Observed/manual result: manual read-through confirms the new bullet list covers alternate names and read-vs-mutation differentiation.
 
 ## Validation
 
