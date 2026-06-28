@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  marketplace-validation:
-    name: marketplace-validation
+  skill-surface-validation:
+    name: skill-surface-validation
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -46,11 +46,64 @@ jobs:
       - name: Check marketplace manifests
         run: python tools/generate_marketplace.py --check
 
+  index-validation:
+    name: index-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch origin/main
+        run: git fetch origin main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
       - name: Check repo index
         run: python tools/generate_repo_index.py --check
 
       - name: Check index mesh
         run: python tools/generate_index_mesh.py --check
+
+      - name: Validate repo index
+        run: python tools/validate_repo_index.py
+
+      - name: Validate skill zips
+        run: python tools/validate_skill_zips.py
+
+      - name: Check whitespace
+        run: git diff --check
+
+  marketplace-integrity:
+    name: marketplace-integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch origin/main
+        run: git fetch origin main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Validate marketplace
         run: python tools/validate_marketplace.py
@@ -69,12 +122,3 @@ jobs:
 
       - name: Check first-party skill catalog
         run: python tools/generate_first_party_skill_catalog.py --check
-
-      - name: Validate repo index
-        run: python tools/validate_repo_index.py
-
-      - name: Validate skill zips
-        run: python tools/validate_skill_zips.py
-
-      - name: Check whitespace
-        run: git diff --check

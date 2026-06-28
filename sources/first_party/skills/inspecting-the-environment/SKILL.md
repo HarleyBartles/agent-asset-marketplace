@@ -79,6 +79,24 @@ dimensions that are clearly irrelevant.
   changes. Generated surfaces are downstream outputs; source custody is the
   edit point.
 
+## Capability surface discovery
+
+Tool, connector, and capability listings may be truncated, paginated,
+filtered, or scoped. Absence from the visible portion is not proof that a
+capability is unavailable.
+
+If the needed tool is not visible, continue discovery before concluding it is
+missing:
+
+- inspect any continuation, truncation, or readback surface;
+- retry with a narrower server, namespace, connector, label, or query;
+- search likely action families instead of one guessed name;
+- distinguish read/query tools from mutation tools when the surface mixes
+  both.
+
+Only report a capability as unavailable after focused discovery has actually
+tested the relevant surface. Otherwise preserve uncertainty.
+
 ## Composition
 
 Start with `@using-superpowers` as the workflow-selection entrypoint.
