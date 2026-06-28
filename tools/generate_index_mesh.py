@@ -117,6 +117,17 @@ def normalize_text(text: str) -> str:
     return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
+def detect_newline_style(path: Path) -> str:
+    if not path.exists():
+        return "\n"
+    raw = path.read_bytes()
+    if b"\r\n" in raw:
+        return "\r\n"
+    if b"\r" in raw:
+        return "\r"
+    return "\n"
+
+
 def resolve_link_target(current: Path, target: str) -> Path | None:
     if target.startswith(("http://", "https://", "mailto:")):
         return None
@@ -208,9 +219,10 @@ def main() -> int:
     written = 0
     for target in targets:
         rendered = "\n".join(target.lines).rstrip() + "\n"
+        newline_style = detect_newline_style(target.path)
         target.path.parent.mkdir(parents=True, exist_ok=True)
-        with target.path.open("w", encoding="utf-8", newline="\n") as handle:
-            handle.write(rendered)
+        with target.path.open("w", encoding="utf-8", newline="") as handle:
+            handle.write(rendered.replace("\n", newline_style))
         written += 1
 
     obsolete = sorted(path for path in actual_paths if path not in expected_paths)
