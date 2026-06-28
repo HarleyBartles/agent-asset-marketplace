@@ -1,6 +1,6 @@
 # MARK-318 incomplete tool-surface discovery Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans or superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:writing-skills for the skill-edit design/eval posture; use superpowers:executing-plans as the execution wrapper if needed. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a compact invariant to `inspecting-the-environment` that prevents agents from treating truncated or partial tool/capability listings as proof that a capability is unavailable.
 
@@ -25,6 +25,7 @@
 - Read: `sources/first_party/skills/inspecting-the-environment/SKILL.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/references/source-map.md`
+- Read: `sources/third_party/superpowers/obra-superpowers/v6.0.3/CLAUDE.md`
 
 **Interfaces:**
 - Consumes: current skill wording, existing environment-inspection guidance, projection mapping.
@@ -32,6 +33,7 @@
 
 - [ ] Read the current source and projected copy side by side.
 - [ ] Identify the smallest place where incomplete-surface guidance fits without broadening the skill.
+- [ ] Read the upstream Superpowers `CLAUDE.md` contribution constraints and apply the ones that matter here: real experienced failure, one narrow problem per change, avoid tool-specific core doctrine, adversarial pressure testing with before/after eval evidence, and minimal churn to tuned skill wording.
 - [ ] Confirm the change stays generic and does not introduce Linear/GitHub/MCP-only doctrine.
 
 ### Task 2: Add the incomplete-surface invariant to the source skill
@@ -81,20 +83,24 @@ Tool and connector listings may be truncated, paginated, filtered, or scoped. Ab
 - [ ] Record the truncated-list case where mutation tools are hidden until continuation or focused search is used.
 - [ ] Record the focused-discovery case where only read/query tools exist after the narrower search.
 - [ ] Record the unexpected-naming case where the needed action is found by family search rather than the first guessed name.
+- [ ] For each scenario, capture the expected behavior before the skill change, the expected behavior after the skill change, and the observed/manual evaluation result.
 
 Eval cases to keep in the implementation record:
 
 1. **Truncated list hides mutation tools**
    - Bad behavior: the agent says no update or save tools exist after reading only the visible truncated portion.
    - Expected behavior: the agent notices truncation, continues discovery, and keeps searching for mutation tools before concluding anything.
+   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
 
 2. **Focused discovery proves only read tools exist**
    - Bad behavior: the agent jumps from a partial list to "no mutation tool exists."
    - Expected behavior: the agent reports "no mutation tool found after focused discovery" and preserves uncertainty if the surface is still not proven complete.
+   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
 
 3. **Unexpected tool naming**
    - Bad behavior: the agent stops after the first guessed name does not match.
    - Expected behavior: the agent searches action families such as read/query and mutation names until the capability is found or bounded uncertainty remains.
+   - Before/after evidence: record the pre-change expectation, the post-change expectation, and the observed/manual evaluation result.
 
 ## Validation
 
