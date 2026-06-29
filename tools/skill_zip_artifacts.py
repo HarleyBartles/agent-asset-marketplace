@@ -17,7 +17,12 @@ from typing import Any, Iterable
 import yaml
 from yaml.nodes import MappingNode, ScalarNode, SequenceNode
 
-from marketplace_utils import CODEX_MARKETPLACE_MANIFEST_PATH, MARKETPLACE_PATH, load_json
+from marketplace_utils import (
+    CODEX_MARKETPLACE_MANIFEST_PATH,
+    MARKETPLACE_PATH,
+    load_json,
+    load_plugin_root_inventory,
+)
 from skill_gpt_exports import resolve_gpt_export_policy, stage_skill_tree
 
 
@@ -329,22 +334,17 @@ def load_marketplace_definition() -> dict[str, Any]:
 
 
 def discover_skill_targets() -> list[SkillTarget]:
-    marketplace = load_marketplace_definition()
+    # Validate the active marketplace manifests first, but discover zip targets
+    # from the enabled plugin-root inventory so retained first-party roots such as
+    # house-skills can still generate installable zips even when marketplace
+    # exposure policy excludes them from direct plugin publication.
+    load_marketplace_definition()
     targets: list[SkillTarget] = []
-    for plugin in marketplace.get("plugins", []):
-        if not isinstance(plugin, dict):
-            raise ValueError("marketplace manifest contains a malformed plugin entry")
-        plugin_name = plugin.get("name")
-        source = plugin.get("source", {})
-        if not isinstance(plugin_name, str) or not plugin_name:
-            raise ValueError("marketplace manifest contains a plugin without a name")
-        if not isinstance(source, dict) or source.get("source") != "local":
-            raise ValueError(f"marketplace plugin {plugin_name} must use a local source")
-        source_path = source.get("path")
-        if not isinstance(source_path, str) or not source_path:
-            raise ValueError(f"marketplace plugin {plugin_name} is missing a source path")
-
-        plugin_root = (ROOT / source_path.removeprefix("./")).resolve()
+    for plugin in load_plugin_root_inventory():
+        if not plugin["enabled"]:
+            continue
+        plugin_name = plugin["name"]
+        plugin_root = (ROOT / plugin["plugin_root"]).resolve()
         plugin_manifest_path = plugin_root / ".codex-plugin/plugin.json"
         if not plugin_manifest_path.exists():
             raise FileNotFoundError(plugin_manifest_path)
@@ -676,7 +676,7 @@ def validate_package_matches_source(target: SkillTarget, artifact: SkillArtifact
                     f"{artifact.pack}/{artifact.skill} staged export contains forbidden source paths: "
                     f"{', '.join(staged_forbidden_paths)}"
                 )
-            expected_names = [f"{target.skill}/{path.relative_to(staged_root).as_posix()}" for path in staged_files]
+            expected_names = [f"{target.skill}/{_relative_path(path, staged_root)}" for path in staged_files]
             if extracted_names != expected_names:
                 raise ValueError(f"{artifact.pack}/{artifact.skill} archive file inventory mismatch")
             for name in extracted_names:
