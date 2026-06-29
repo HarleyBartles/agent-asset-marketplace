@@ -27,13 +27,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
       "local_path": "skills/wild-bunch-project-doctrine"
-    },
-    {
-      "canonical_name": "wild-bunch-worker-verification",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification",
-      "local_path": "skills/wild-bunch-worker-verification"
     }
   ],
   "adapted_projections": []

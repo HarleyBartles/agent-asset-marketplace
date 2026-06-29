@@ -29,9 +29,9 @@
 - Consumes: the current router and Linear shaping wording plus the route-state rules already in repo truth.
 - Produces: a small router/control-plane refresh that teaches campaign-shaped defaults, durable route-state handling, and provider-neutral terminology without becoming a doctrine dump.
 
-- [ ] Update `work-mode-router` so it classifies the durable state from Linear/repo evidence and hands off the discovered mode without provider-branded route identity.
-- [ ] Update `linear-issue-shaping` so it teaches campaign-shaped worker issue shaping by default while preserving compact bodies, docs, route-state blocks, and plan/execution PR separation.
-- [ ] Keep both skills short, router-shaped, and evidence-first.
+- [x] Update `work-mode-router` so it classifies the durable state from Linear/repo evidence and hands off the discovered mode without provider-branded route identity.
+- [x] Update `linear-issue-shaping` so it teaches campaign-shaped worker issue shaping by default while preserving compact bodies, docs, route-state blocks, and plan/execution PR separation.
+- [x] Keep both skills short, router-shaped, and evidence-first.
 
 ### Task 2: Promote generic worker verification and deprecate thin project-pack wrappers
 
@@ -45,12 +45,12 @@
 - Consumes: the current Wild Bunch verification wording and project-pack dependency topology.
 - Produces: a generic `worker-verification` surface, a deprecation or folding path for thin project-pack verification/crew wrappers, and a project-pack manifest/validator that no longer advertises the removed exposures.
 
-- [ ] Update the Wild Bunch verification source so generic verification law is either promoted into generic `worker-verification` wording or clearly separated from Wild Bunch-only falsification law.
-- [ ] Deprecate `crew` from project-pack exposure while retaining it where approved, such as `house-skills`, without changing `sources/first_party/skills/crew/SKILL.md` unless the issue discoverably needs terminology cleanup there.
-- [ ] Remove `wild-bunch-worker-verification` from the project-pack `source_of_truth` list if it is no longer a real project-pack dependency.
-- [ ] Remove any project-pack bridge entry that exists only to pull thin verification or crew wrappers into the project pack.
-- [ ] Update the hardcoded validation expectations so the project-pack shape matches the reduced inventory.
-- [ ] Keep the pack description honest about the remaining bridge/native skill set without overexplaining the deprecation.
+- [x] Update the Wild Bunch verification source so generic verification law is either promoted into generic `worker-verification` wording or clearly separated from Wild Bunch-only falsification law.
+- [x] Deprecate `crew` from project-pack exposure while retaining it where approved, such as `house-skills`, without changing `sources/first_party/skills/crew/SKILL.md` unless the issue discoverably needs terminology cleanup there.
+- [x] Remove `wild-bunch-worker-verification` from the project-pack `source_of_truth` list if it is no longer a real project-pack dependency.
+- [x] Remove any project-pack bridge entry that exists only to pull thin verification or crew wrappers into the project pack.
+- [x] Update the hardcoded validation expectations so the project-pack shape matches the reduced inventory.
+- [x] Keep the pack description honest about the remaining bridge/native skill set without overexplaining the deprecation.
 
 ### Task 3: Regenerate the retained house-skills and derived marketplace surfaces
 
@@ -75,10 +75,10 @@
 - Consumes: the updated source skills and the revised project-pack manifest.
 - Produces: aligned house-skills and project-pack projections, plus the catalog and registry surfaces that describe where the skills now live.
 
-- [ ] Regenerate the house-skills projection so the retained copies match the cleaned-up source wording.
-- [ ] Regenerate the project-pack projection so the removed skill and crew exposures disappear from the project-pack tree and zip where appropriate.
-- [ ] Refresh the first-party catalog and generated registry so the retained skills show only their approved surfaces.
-- [ ] Confirm no other plugin projections picked up the removed exposures by accident.
+- [x] Regenerate the house-skills projection so the retained copies match the cleaned-up source wording.
+- [x] Regenerate the project-pack projection so the removed skill and crew exposures disappear from the project-pack tree and zip where appropriate.
+- [x] Refresh the first-party catalog and generated registry so the retained skills show only their approved surfaces.
+- [x] Confirm no other plugin projections picked up the removed exposures by accident.
 
 ### Task 4: Add durable repo guidance for manifest/projection discovery
 
@@ -90,11 +90,11 @@
 - Consumes: the learning from the workflow normalization pass and the existing custody/projection doctrine.
 - Produces: durable repo guidance that tells future agents where to look before changing a generated plugin projection and what the update sequence is.
 
-- [ ] Add a concise note that generated plugin projections are downstream outputs, not the discovery starting point.
-- [ ] Spell out that projection changes begin with source custody or the source-of-truth manifest, then regenerate the derived surfaces.
-- [ ] Capture the exact surfaces future agents should inspect first: source skill, bundle manifest, validator, generated projection tree, generated zips, catalog/registry evidence, and the repo guidance that points at them.
-- [ ] Include the project-pack exposure rules and the crew retention rule so future agents know what belongs only in `house-skills`.
-- [ ] Keep the guidance short enough that future agents can actually use it as a shortcut.
+- [x] Add a concise note that generated plugin projections are downstream outputs, not the discovery starting point.
+- [x] Spell out that projection changes begin with source custody or the source-of-truth manifest, then regenerate the derived surfaces.
+- [x] Capture the exact surfaces future agents should inspect first: source skill, bundle manifest, validator, generated projection tree, generated zips, catalog/registry evidence, and the repo guidance that points at them.
+- [x] Include the project-pack exposure rules and the crew retention rule so future agents know what belongs only in `house-skills`.
+- [x] Keep the guidance short enough that future agents can actually use it as a shortcut.
 
 ### Task 5: Validate the normalization slice and write the Linear route update
 
@@ -108,10 +108,10 @@
 - Consumes: the edited source skills, the reduced project-pack manifest, and the regenerated projection surfaces.
 - Produces: proof that the retained skills are projected where approved and that the project-pack no longer advertises the removed exposures.
 
-- [ ] Search for stale terminology in the touched workflow, verification, and project-pack surfaces and classify any remaining hits as intentional compatibility, provider-specific wording, project-specific wording, or approved house-skills retention.
-- [ ] Run the marketplace validator and the relevant skill-artifact regeneration checks.
-- [ ] Update Linear route state with the plan path, plan PR, status, repair status, and the explicit split condition only for any work genuinely outside the MARK-319 contract.
-- [ ] Stop at the plan-only boundary until approval arrives.
+- [x] Search for stale terminology in the touched workflow, verification, and project-pack surfaces and classify any remaining hits as intentional compatibility, provider-specific wording, project-specific wording, or approved house-skills retention.
+- [x] Run the marketplace validator and the relevant skill-artifact regeneration checks.
+- [x] Update Linear route state with the plan path, plan PR, status, repair status, and the explicit split condition only for any work genuinely outside the MARK-319 contract.
+- [x] Stop at the plan-only boundary until approval arrives.
 
 ## Validation
 

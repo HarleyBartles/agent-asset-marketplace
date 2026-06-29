@@ -433,6 +433,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/work-mode-router",
       "local_path": "skills/work-mode-router"
+    },
+    {
+      "canonical_name": "worker-verification",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/worker-verification",
+      "local_path": "skills/worker-verification"
     }
   ],
   "adapted_projections": []

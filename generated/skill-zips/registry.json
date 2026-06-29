@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 147,
+  "artifact_count": 146,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1839,13 +1839,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/linear-issue-shaping/skill.zip",
       "source_file_count": 12,
-      "source_bytes": 43245,
-      "source_sha256": "ed1e7a14876f6122f65ce70aed7d6b19b1736e89e3f039c5d6b81a6f2271dd5f",
+      "source_bytes": 43284,
+      "source_sha256": "247f2e2863d904118a2ab9cc386f0e332cba9f3a5e9e74972ddfc8d5b3f4c2a9",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18938,
-      "zip_sha256": "38ffb0325973808aeef61994826e1144e945fc91afd79658333b6f484b0617e6"
+      "zip_size_bytes": 18931,
+      "zip_sha256": "0c5127cbeb5f3c95cc34c25216061dc2fe7fb0fcea7c1b01d3fb83fea9f225f4"
     },
     {
       "pack": "repo-worker-pack",
@@ -1887,13 +1887,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 19441,
-      "source_sha256": "212acad8a6985bc2f47259139bec41a98ff7b35fc298062beeae12b63676aaba",
+      "source_bytes": 19431,
+      "source_sha256": "4d537c95a842886d8d285930cb6d162da7e7366d9afbfd6cc8c1ae4bd214c517",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8217,
-      "zip_sha256": "361fba12554f1b014ead9a8ec90e592db8250b9d904ad14d6acefd86d60a1513"
+      "zip_size_bytes": 8225,
+      "zip_sha256": "3a52eba62caeb5c4f9cb0206feaaa178fa1ca928f5966d1dd93c22b4f246eed0"
     },
     {
       "pack": "research-pack",
@@ -2342,22 +2342,6 @@
       "overlay_sha256": null,
       "zip_size_bytes": 4168,
       "zip_sha256": "83b4bd8caeba320b622d15bcd4ca009877dbb3ee4d35476878d02fa0de33983e"
-    },
-    {
-      "pack": "wild-bunch-project-pack",
-      "skill": "wild-bunch-worker-verification",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-worker-verification",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-worker-verification/skill.zip",
-      "source_file_count": 4,
-      "source_bytes": 6074,
-      "source_sha256": "0df7f4caa904a0590469368fba34bb531923178b64f97ee211c08f11af3b75ca",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 3111,
-      "zip_sha256": "716eb547aa9418c597a81833c1fcc0788ce68c12941a86cef22477171bfaa0c7"
     }
   ],
   "excluded": [

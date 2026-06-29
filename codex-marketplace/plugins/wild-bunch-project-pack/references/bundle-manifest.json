@@ -11,15 +11,14 @@
     "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
     "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
     "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
-    "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
-    "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md"
+    "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
   ],
-  "projection_policy": "Project only the five Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest.",
+  "projection_policy": "Project only the four Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest.",
   "source_families": [
     "first_party"
   ],
-  "candidate_count": 5,
-  "imported_count": 5,
+  "candidate_count": 4,
+  "imported_count": 4,
   "skipped_count": 0,
   "blocked_count": 0,
   "dependency_topology": [
@@ -51,15 +50,6 @@
       ],
       "selected_skills": [],
       "rationale": "cqrs-event-sourcing stays on architecture-pack as a required dependency skill."
-    },
-    {
-      "plugin": "repo-worker-pack",
-      "bridge_skills": [
-        "wild-bunch-worker-verification"
-      ],
-      "required_skills": [],
-      "selected_skills": [],
-      "rationale": "Install repo-worker-pack separately; worker verification bridges repo-worker posture instead of duplicating the pack."
     }
   ],
   "entries": [
@@ -106,17 +96,6 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party wild-bunch-browser-game skill."
-    },
-    {
-      "canonical_name": "wild-bunch-worker-verification",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification",
-      "local_path": "skills/wild-bunch-worker-verification",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party wild-bunch-worker-verification skill."
     }
   ],
   "notes": [

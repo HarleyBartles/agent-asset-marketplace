@@ -845,11 +845,10 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
         "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
         "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
         "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
-        "sources/first_party/skills/wild-bunch-worker-verification/SKILL.md",
     ]:
         raise ValueError("wild-bunch-project-pack bundle manifest source_of_truth mismatch")
     if bundle_manifest.get("projection_policy") != (
-        "Project only the five Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest."
+        "Project only the four Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest."
     ):
         raise ValueError("wild-bunch-project-pack bundle manifest projection_policy mismatch")
     if bundle_manifest.get("source_families") != ["first_party"]:
