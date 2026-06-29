@@ -1838,14 +1838,14 @@
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/linear-issue-shaping/skill.zip",
-      "source_file_count": 12,
-      "source_bytes": 43284,
-      "source_sha256": "247f2e2863d904118a2ab9cc386f0e332cba9f3a5e9e74972ddfc8d5b3f4c2a9",
+      "source_file_count": 13,
+      "source_bytes": 49913,
+      "source_sha256": "f462e5c9a06da11c083d7fafcf352980d3ecdbce2aecbb54662bfe7f9b78146b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 18931,
-      "zip_sha256": "0c5127cbeb5f3c95cc34c25216061dc2fe7fb0fcea7c1b01d3fb83fea9f225f4"
+      "zip_size_bytes": 21407,
+      "zip_sha256": "0703f4fcf11b84b36524122918e8c66273abed6e0e2014e059885f0fb2c56d5b"
     },
     {
       "pack": "repo-worker-pack",
@@ -1887,13 +1887,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 19431,
-      "source_sha256": "4d537c95a842886d8d285930cb6d162da7e7366d9afbfd6cc8c1ae4bd214c517",
+      "source_bytes": 19436,
+      "source_sha256": "1c8aae8629e011dcd736a7ff1bfb27b47cc1dc3c8a6895e6ec2b2f01c7d717e5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8225,
-      "zip_sha256": "3a52eba62caeb5c4f9cb0206feaaa178fa1ca928f5966d1dd93c22b4f246eed0"
+      "zip_size_bytes": 8227,
+      "zip_sha256": "0004121cd5d9737c6e24845c656d0da7df6e2aa638299183c01952312ee3e847"
     },
     {
       "pack": "research-pack",

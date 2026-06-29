@@ -91,7 +91,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 ## Routing map
 
 - `repo_worker_coding` -> `/using-superpowers` with the discovered mode. `work-mode-router` only supplies the durable mode classification; `/using-superpowers` owns the workflow-lane choice after that. Do not hard-route to `/writing-plans`, `/executing-plans`, or any other Superpowers lane here.
-- `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
+- `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to a cloud agent unless the editable source is known to live in a worker-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> the repo/GitHub proof surface after a GitHub artifact exists. Do not use repo/GitHub proof to decide worker state or issue routing.
 - `linear_control` -> `linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
 - `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as the validation decision surface, `tps-ingress`, or `tps-reporting`.
@@ -109,7 +109,7 @@ Before worker delegation or legacy packet creation, require a surface check:
 4. Is this implementation work, GPT-native skillwork, research, connector/UI setup, or side discovery?
 5. Is the normal Linear-backed worker route available and suitable?
 
-If the target is ChatGPT-native installed skill state, account/UI settings, plugin marketplace selection, or pure planning, do not send it to Codex Cloud as a repo worker task unless there is a separate repo-backed source target.
+If the target is ChatGPT-native installed skill state, account/UI settings, plugin marketplace selection, or pure planning, do not send it to a cloud agent as a repo worker task unless there is a separate repo-backed source target.
 
 ## Output-shape attention guard
 

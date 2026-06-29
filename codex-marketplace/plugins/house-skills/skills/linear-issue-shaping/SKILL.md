@@ -102,7 +102,7 @@ Use `references/compact-issue-shape.md` for the full worker issue-shape pattern 
 
 ## Issue-type classification
 
-Classify the request before shaping so it gets the right size and return contract. Read `references/devin-campaign-shape.md` for the full profile.
+Classify the request before shaping so it gets the right size and return contract. Read `references/campaign-shape.md` for the full profile.
 
 - `small worker-ready issue`: one bounded Linear issue with a compact DOD and standard worker return.
 - `campaign_shape`: one durable Linear parent issue with a clear repo target, Linear documents as lane/subtask packets where a chunky campaign needs multiple seams, one PR unless a split condition triggers, and stronger return evidence.
@@ -114,7 +114,7 @@ Do not route GPT-native skillwork to a worker execution lane merely because it t
 
 ## Worker worktree isolation gate
 
-For any repo-backed task, the issue body, launch handoff, resume nudge, and return contract must require a fresh dedicated worktree based on current `main` or the issue-specified base before mutation. Read `references/devin-campaign-shape.md` for the exact gate language and templates.
+For any repo-backed task, the issue body, launch handoff, resume nudge, and return contract must require a fresh dedicated worktree based on current `main` or the issue-specified base before mutation. Read `references/campaign-shape.md` for the exact gate language and templates.
 
 The gate requires the worker to report, before any file mutation:
 
@@ -142,7 +142,7 @@ Do not infer active/running state from phrases such as `worker-send-ready`, `wor
 Classify the latest request before acting:
 
 - `issue_shape`: create or update a Linear issue so a future worker can execute it. Classify the issue type first (see Issue-type classification above).
-- `campaign_shape`: shape a chunky repo campaign as a campaign issue with one PR preference, lane-document option, split conditions, and the worktree isolation gate. Read `references/devin-campaign-shape.md`.
+- `campaign_shape`: shape a chunky repo campaign as a campaign issue with one PR preference, lane-document option, split conditions, and the worktree isolation gate. Read `references/campaign-shape.md`.
 - `worker_handoff_text`: draft a paste-ready worker handoff without mutating execution state. For repo work, include the worktree isolation gate.
 - `status_check`: inspect Linear issue state, comments, and attachments.
 - `pr_verification`: inspect GitHub only after a PR URL/number, branch, commit, or merged state exists.
@@ -152,7 +152,7 @@ Phrases such as `worker ready`, `worker send ready`, `send-ready issue`, `worker
 
 ## Normal workflow
 
-1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker. For a campaign-shaped repo issue, also read `references/devin-campaign-shape.md` and include the campaign shape, lane-document option, one-PR preference, split conditions, and worktree isolation gate.
+1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker. For a campaign-shaped repo issue, also read `references/campaign-shape.md` and include the campaign shape, lane-document option, one-PR preference, split conditions, and worktree isolation gate.
 2. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
 3. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized. For repo work, include the worktree isolation gate in the launch handoff and resume nudge.
 4. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
@@ -180,7 +180,7 @@ Do not use Linear comments, worker reports, validation summaries, local paths, o
 After this skill classifies the route, do not read old dispatch or issue-management skills merely for comfort. Load another skill only for a named unresolved decision that this skill does not own:
 
 - worker-send-ready boring/readiness verdict: use `boring-buster`;
-- campaign issue profile, worktree isolation gate, launch/resume templates, and self-checks: read `references/devin-campaign-shape.md`;
+- campaign issue profile, worktree isolation gate, launch/resume templates, and self-checks: read `references/campaign-shape.md`;
 - implementation-plan shape for worker coding issues: use the compact worker issue-shape reference and keep the route-state block explicit;
 - skill creation/update/package work: use the skill-maintenance stack;
 - GitHub PR/repo proof: use GitHub verification tooling;
