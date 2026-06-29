@@ -41,10 +41,37 @@ def _assert_excluded_skill_present(registry: dict) -> None:
         raise AssertionError("excluded skill should explain the subagent limitation")
 
 
+def _assert_house_skills_exports_present(registry: dict) -> None:
+    worker_verification = next(
+        record
+        for record in registry["artifacts"]
+        if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
+    )
+    crew = next(
+        record
+        for record in registry["artifacts"]
+        if record["pack"] == "house-skills" and record["skill"] == "crew"
+    )
+
+    if worker_verification["export_mode"] not in {"direct", "overlay"}:
+        raise AssertionError("house-skills/worker-verification should export as an installable zip")
+    if crew["export_mode"] not in {"direct", "overlay"}:
+        raise AssertionError("house-skills/crew should export as an installable zip")
+
+    if any(
+        record["skill"] == "worker-verification" and record["pack"] == "wild-bunch-project-pack"
+        for record in registry["artifacts"]
+    ):
+        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
+    if any(record["skill"] == "crew" and record["pack"] == "wild-bunch-project-pack" for record in registry["artifacts"]):
+        raise AssertionError("crew must not be exposed through wild-bunch-project-pack")
+
+
 def main() -> int:
     registry = load_registry()
     _assert_verbatim_export_present(registry)
     _assert_excluded_skill_present(registry)
+    _assert_house_skills_exports_present(registry)
     registry = validate_skill_zip_registry()
     print_registry_receipt(registry)
     return 0
