@@ -1,49 +1,55 @@
-# Wild Bunch Worker Verification Deprecation Plan
+# MARK-319 Workflow Skill Normalization and Deprecation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Deprecate `wild-bunch-worker-verification` from the Wild Bunch project pack, keep the house-skills projection current, and normalize the surviving skill wording to the new human/agents/worker/GPT standard without broadening the broader workflow-skill campaign.
+**Goal:** Normalize the generic repo agent workflow skills to the new human/agents/worker/GPT standard, deprecate thin project-pack verification and crew exposures where appropriate, and keep the surviving house-skills and repo guidance current without broadening beyond the durable MARK-319 contract.
 
-**Architecture:** Treat `sources/first_party/skills/wild-bunch-worker-verification/` as the only source-of-truth edit point for the skill wording. Remove the project-pack bridge exposure from `codex-marketplace/plugins/wild-bunch-project-pack/` and update the marketplace validator so the remaining projection inventory is explicit and boring. Regenerate the projected house-skills copy and the derived catalog/zip surfaces so the remaining house-skills exposure stays aligned with source custody.
+**Architecture:** Keep the changes centered on the first-party skill sources, their projected marketplace surfaces, and the repo guidance that teaches future agents how to navigate them. Update `work-mode-router` and `linear-issue-shaping` without turning them into doctrine dumps, add or promote a generic `worker-verification` surface, fold or deprecate thin project-pack verification wrappers, and keep `crew` only where it belongs, such as `house-skills`. Regenerate the derived projections and validation surfaces from the source and manifest changes.
 
 **Tech Stack:** Markdown skill source, marketplace bundle manifests, deterministic projection/zip regeneration, Python validation scripts, Linear route state, GitHub draft PRs.
 
 ## Global Constraints
 
-- Keep this slice narrow: only `wild-bunch-worker-verification` and the Wild Bunch project-pack exposure for that skill are in scope.
-- Leave `crew` alone; it is a later deprecation target and does not need an edit in this slice.
-- Do not widen into `work-mode-router`, `linear-issue-shaping`, `repo-worker-base`, or `linear` unless the deprecation changes reveal a hard dependency.
-- Keep the Wild Bunch skill in `house-skills`; remove it from the project-pack plugin and its generated export surfaces.
-- Add durable repo guidance that teaches future agents how to discover source custody, bundle manifests, validation rules, and generated projections before editing a generated plugin surface.
+- Keep this slice aligned with the full MARK-319 contract: `work-mode-router`, `linear-issue-shaping`, generic `worker-verification`, durable repo guidance, provider-neutral terminology, and the deprecation or folding of thin project-pack verification/crew exposures where appropriate.
+- Keep `wild-bunch-worker-verification` in `house-skills`; remove it from project-pack plugin exposure unless the manifest or docs justify a narrow retained bridge.
+- Deprecate `crew` from project-pack plugin exposure except where `house-skills` or another explicitly approved project-specific surface retains it.
+- Do not turn `work-mode-router` or `linear-issue-shaping` into doctrine dumps; keep them as routers/control surfaces that point at the right workflow and evidence boundaries.
+- Keep the wording cleanup sane and direct; do not invent a sprawling new taxonomy, but do include boring generic worker-verification doctrine where the issue asks for it.
+- Add durable repo guidance that teaches future agents how to discover source custody, bundle manifests, validation rules, generated projections, and the update sequence before editing generated surfaces.
 - Do not hand-edit generated skill trees, source maps, provenance maps, or zip artifacts.
-- Keep the wording cleanup sane and direct; do not invent a new generic worker-verification taxonomy for this slice.
-- Preserve project-specific Wild Bunch setup/entropy falsification where it still matters.
+- Preserve project-specific Wild Bunch setup/entropy falsification where it still matters, but move generic verification law into the generic worker-verification surface.
 
-### Task 1: Clean up the Wild Bunch verification source wording
+### Task 1: Update the workflow routers without expanding them into doctrine dumps
+
+**Files:**
+- Modify: `sources/first_party/skills/work-mode-router/SKILL.md`
+- Modify: `sources/first_party/skills/linear-issue-shaping/SKILL.md`
+
+**Interfaces:**
+- Consumes: the current router and Linear shaping wording plus the route-state rules already in repo truth.
+- Produces: a small router/control-plane refresh that teaches campaign-shaped defaults, durable route-state handling, and provider-neutral terminology without becoming a doctrine dump.
+
+- [ ] Update `work-mode-router` so it classifies the durable state from Linear/repo evidence and hands off the discovered mode without provider-branded route identity.
+- [ ] Update `linear-issue-shaping` so it teaches campaign-shaped worker issue shaping by default while preserving compact bodies, docs, route-state blocks, and plan/execution PR separation.
+- [ ] Keep both skills short, router-shaped, and evidence-first.
+
+### Task 2: Promote generic worker verification and deprecate thin project-pack wrappers
 
 **Files:**
 - Modify: `sources/first_party/skills/wild-bunch-worker-verification/SKILL.md`
-
-**Interfaces:**
-- Consumes: the current Wild Bunch verification wording and its existing falsification rule.
-- Produces: a cleaner skill body that keeps the Wild Bunch-specific verification value while using the new human/agents/worker/GPT wording consistently.
-
-- [ ] Tighten the frontmatter description and body wording so it reads naturally with the new terminology standard.
-- [ ] Keep the falsification rule for Wild Bunch setup/entropy/seeded behavior intact where it is still relevant.
-- [ ] Avoid adding new generic control-plane doctrine or a new generic verification skill in this slice.
-
-### Task 2: Remove the project-pack exposure and update the validator
-
-**Files:**
+- Modify: `sources/first_party/skills/crew/SKILL.md`
 - Modify: `codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json`
+- Modify: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
 - Modify: `tools/validate_marketplace.py`
 
 **Interfaces:**
-- Consumes: the current Wild Bunch project-pack source-of-truth list and dependency-topology checks.
-- Produces: a project-pack manifest and validator that no longer advertise `wild-bunch-worker-verification` as part of the project-pack inventory.
+- Consumes: the current Wild Bunch verification wording, crew wording, and project-pack dependency topology.
+- Produces: a generic `worker-verification` surface, a deprecation or folding path for thin project-pack verification/crew wrappers, and a project-pack manifest/validator that no longer advertises the removed exposures.
 
-- [ ] Remove `wild-bunch-worker-verification` from the project-pack `source_of_truth` list.
-- [ ] Remove the `repo-worker-pack` bridge entry that exists only to pull that skill into the project-pack.
+- [ ] Update the Wild Bunch verification source so generic verification law is either promoted into generic `worker-verification` wording or clearly separated from Wild Bunch-only falsification law.
+- [ ] Deprecate `crew` from project-pack exposure while retaining it where approved, such as `house-skills`.
+- [ ] Remove `wild-bunch-worker-verification` from the project-pack `source_of_truth` list if it is no longer a real project-pack dependency.
+- [ ] Remove any project-pack bridge entry that exists only to pull thin verification or crew wrappers into the project pack.
 - [ ] Update the hardcoded validation expectations so the project-pack shape matches the reduced inventory.
 - [ ] Keep the pack description honest about the remaining bridge/native skill set without overexplaining the deprecation.
 
@@ -53,10 +59,13 @@
 - Regenerated: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
 - Regenerated: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Regenerated: `codex-marketplace/plugins/house-skills/references/provenance-map.json`
+- Regenerated: `codex-marketplace/plugins/house-skills/skills/crew/**`
 - Regenerated: `codex-marketplace/plugins/house-skills/skills/wild-bunch-worker-verification/**`
+- Regenerated: `generated/skill-zips/house-skills/crew/**`
 - Regenerated: `generated/skill-zips/house-skills/wild-bunch-worker-verification/**`
 - Regenerated: `sources/first_party/skills/INDEX.md`
 - Regenerated: `provenance/first-party-skills.md`
+- Regenerated: `codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json`
 - Regenerated: `codex-marketplace/plugins/wild-bunch-project-pack/references/source-map.md`
 - Regenerated: `codex-marketplace/plugins/wild-bunch-project-pack/references/provenance-map.json`
 - Regenerated: `codex-marketplace/plugins/wild-bunch-project-pack/skills/**`
@@ -64,13 +73,13 @@
 - Regenerated: `generated/skill-zips/registry.json`
 
 **Interfaces:**
-- Consumes: the updated source skill and the revised project-pack manifest.
-- Produces: aligned house-skills and project-pack projections, plus the catalog and registry surfaces that describe where the skill now lives.
+- Consumes: the updated source skills and the revised project-pack manifest.
+- Produces: aligned house-skills and project-pack projections, plus the catalog and registry surfaces that describe where the skills now live.
 
-- [ ] Regenerate the house-skills projection so the retained copy matches the cleaned-up source wording.
-- [ ] Regenerate the project-pack projection so the removed skill disappears from the project-pack tree and zip.
-- [ ] Refresh the first-party catalog and generated registry so `wild-bunch-worker-verification` shows only the retained house-skills projection.
-- [ ] Confirm no other plugin projections picked up the skill by accident.
+- [ ] Regenerate the house-skills projection so the retained copies match the cleaned-up source wording.
+- [ ] Regenerate the project-pack projection so the removed skill and crew exposures disappear from the project-pack tree and zip where appropriate.
+- [ ] Refresh the first-party catalog and generated registry so the retained skills show only their approved surfaces.
+- [ ] Confirm no other plugin projections picked up the removed exposures by accident.
 
 ### Task 4: Add durable repo guidance for manifest/projection discovery
 
@@ -79,15 +88,16 @@
 - Modify: `docs/custody-and-projection-doctrine.md`
 
 **Interfaces:**
-- Consumes: the learning from the Wild Bunch projection removal and the existing custody/projection doctrine.
+- Consumes: the learning from the workflow normalization pass and the existing custody/projection doctrine.
 - Produces: durable repo guidance that tells future agents where to look before changing a generated plugin projection and what the update sequence is.
 
 - [ ] Add a concise note that generated plugin projections are downstream outputs, not the discovery starting point.
 - [ ] Spell out that projection changes begin with source custody or the source-of-truth manifest, then regenerate the derived surfaces.
-- [ ] Capture the exact surfaces future agents should inspect first: source skill, bundle manifest, validator, generated projection tree, generated zips, and catalog/registry evidence.
+- [ ] Capture the exact surfaces future agents should inspect first: source skill, bundle manifest, validator, generated projection tree, generated zips, catalog/registry evidence, and the repo guidance that points at them.
+- [ ] Include the project-pack exposure rules and the crew retention rule so future agents know what belongs only in `house-skills`.
 - [ ] Keep the guidance short enough that future agents can actually use it as a shortcut.
 
-### Task 5: Validate the deprecation slice and write the Linear route update
+### Task 5: Validate the normalization slice and write the Linear route update
 
 **Files:**
 - Validate: `sources/first_party/skills/wild-bunch-worker-verification/SKILL.md`
@@ -96,18 +106,19 @@
 - Validate: `generated/skill-zips/registry.json`
 
 **Interfaces:**
-- Consumes: the edited source skill, the reduced project-pack manifest, and the regenerated projection surfaces.
-- Produces: proof that the skill is only retained in house-skills and that the project-pack no longer advertises it.
+- Consumes: the edited source skills, the reduced project-pack manifest, and the regenerated projection surfaces.
+- Produces: proof that the retained skills are projected where approved and that the project-pack no longer advertises the removed exposures.
 
-- [ ] Search for stale terminology in the touched Wild Bunch verification surfaces and classify any remaining hits as intentional compatibility or project-specific wording.
+- [ ] Search for stale terminology in the touched workflow, verification, and project-pack surfaces and classify any remaining hits as intentional compatibility, provider-specific wording, project-specific wording, or approved house-skills retention.
 - [ ] Run the marketplace validator and the relevant skill-artifact regeneration checks.
-- [ ] Update Linear route state with the plan path, plan PR, status, discovered scope shift, and the explicit split condition that keeps the broader router/crew cleanup out of this slice.
+- [ ] Update Linear route state with the plan path, plan PR, status, repair status, and the explicit split condition only for any work genuinely outside the MARK-319 contract.
 - [ ] Stop at the plan-only boundary until approval arrives.
 
 ## Validation
 
-- `rg -n "wild-bunch-worker-verification|Harley|user|worker ready|worker-send-ready|Codex|Linear/Codex|Devin campaign" sources/first_party/skills/wild-bunch-worker-verification codex-marketplace/plugins/wild-bunch-project-pack tools`
+- `rg -n "wild-bunch-worker-verification|crew|Harley|user|worker ready|worker-send-ready|Codex|Linear/Codex|Devin campaign" sources/first_party/skills codex-marketplace/plugins/wild-bunch-project-pack tools docs`
 - `py -3 tools/update_skill_artifacts.py --skill house-skills/wild-bunch-worker-verification`
+- `py -3 tools/update_skill_artifacts.py --skill house-skills/crew`
 - `py -3 tools/update_skill_artifacts.py --pack wild-bunch-project-pack`
 - `py -3 tools/validate_marketplace.py`
 - `git diff --check`
@@ -118,7 +129,7 @@ When this plan is executed, return:
 
 - the exact files changed;
 - the wording changes made to `wild-bunch-worker-verification`;
-- the exact project-pack membership removed;
+- the exact project-pack membership removed or retained with reason;
 - the validation output;
 - the Linear route-state update;
 - any remaining deprecation follow-up that was intentionally deferred.
