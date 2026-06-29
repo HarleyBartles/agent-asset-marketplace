@@ -1,4 +1,4 @@
-# MARK-319 Workflow Skill Normalization and Deprecation Plan
+# MARK-319 Workflow Skill Normalization and Project-Pack Deprecations Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -37,17 +37,16 @@
 
 **Files:**
 - Modify: `sources/first_party/skills/wild-bunch-worker-verification/SKILL.md`
-- Modify: `sources/first_party/skills/crew/SKILL.md`
 - Modify: `codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json`
 - Modify: `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`
 - Modify: `tools/validate_marketplace.py`
 
 **Interfaces:**
-- Consumes: the current Wild Bunch verification wording, crew wording, and project-pack dependency topology.
+- Consumes: the current Wild Bunch verification wording and project-pack dependency topology.
 - Produces: a generic `worker-verification` surface, a deprecation or folding path for thin project-pack verification/crew wrappers, and a project-pack manifest/validator that no longer advertises the removed exposures.
 
 - [ ] Update the Wild Bunch verification source so generic verification law is either promoted into generic `worker-verification` wording or clearly separated from Wild Bunch-only falsification law.
-- [ ] Deprecate `crew` from project-pack exposure while retaining it where approved, such as `house-skills`.
+- [ ] Deprecate `crew` from project-pack exposure while retaining it where approved, such as `house-skills`, without changing `sources/first_party/skills/crew/SKILL.md` unless the issue discoverably needs terminology cleanup there.
 - [ ] Remove `wild-bunch-worker-verification` from the project-pack `source_of_truth` list if it is no longer a real project-pack dependency.
 - [ ] Remove any project-pack bridge entry that exists only to pull thin verification or crew wrappers into the project pack.
 - [ ] Update the hardcoded validation expectations so the project-pack shape matches the reduced inventory.
