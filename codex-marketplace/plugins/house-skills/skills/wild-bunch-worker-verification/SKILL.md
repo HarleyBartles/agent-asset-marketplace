@@ -1,11 +1,9 @@
 ---
 name: wild-bunch-worker-verification
-description: Use when verify Wild Bunch worker returns, PRs, commits, validation notes,
-  and closure claims against issue goals, source changes, publication evidence, browser/UI
-  screenshots when relevant, and verified mainline state before completion is accepted.
-  Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue conformance,
-  deciding Green/Amber/Red status, or preventing tests, reports, or worker summaries
-  from being treated as proof.
+description: Use when Wild Bunch-specific setup, difficulty, entropy, or seeded-world
+  claims need falsification on top of generic worker verification. Use when reviewing
+  or finishing Wild Bunch work that depends on project doctrine, or when a generic
+  worker-verification pass needs Wild Bunch-specific context.
 metadata:
   source-id: wild-bunch-worker-verification
   source-path: sources/first_party/skills/wild-bunch-worker-verification/SKILL.md
@@ -13,19 +11,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when verify Wild Bunch worker returns, PRs, commits, validation notes,
-    and closure claims against issue goals, source changes, publication evidence,
-    browser/UI screenshots when relevant, and verified mainline state before completion
-    is accepted. Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub
-    issue conformance, deciding Green/Amber/Red status, or preventing tests, reports,
-    or worker summaries from being treated as proof.
+  scope: Use when Wild Bunch-specific setup, difficulty, entropy, or seeded-world
+    claims need falsification on top of generic worker verification. Use when reviewing
+    or finishing Wild Bunch work that depends on project doctrine, or when a generic
+    worker-verification pass needs Wild Bunch-specific context.
   use_when:
-  - Use when verify Wild Bunch worker returns, PRs, commits, validation notes, and
-    closure claims against issue goals, source changes, publication evidence, browser/UI
-    screenshots when relevant, and verified mainline state before completion is accepted.
-    Use when reviewing or finishing Wild Bunch work, checking Linear/GitHub issue
-    conformance, deciding Green/Amber/Red status, or preventing tests, reports, or
-    worker summaries from being treated as proof.
+  - Use when Wild Bunch-specific setup, difficulty, entropy, or seeded-world claims
+    need falsification on top of generic worker verification. Use when reviewing or
+    finishing Wild Bunch work that depends on project doctrine, or when a generic worker-verification
+    pass needs Wild Bunch-specific context.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
 license: MIT
@@ -33,22 +27,18 @@ license: MIT
 
 # Wild Bunch Worker Verification
 
-Use this skill when finishing or reviewing Wild Bunch work. Passing tests are not the same thing as issue-goal conformance.
+Use this skill when finishing or reviewing Wild Bunch work that needs project-specific falsification beyond the generic `worker-verification` skill. Passing tests are not the same thing as issue-goal conformance.
 
 ## Workflow
 
 1. Identify the issue, PR, branch, commit, changed files, validation evidence, and claimed completion state.
-2. Compare the changed source against the Linear or GitHub issue goal.
-3. Falsify likely misses before accepting the return.
-4. Report validation commands run and their results.
-5. Include branch, commit SHA, PR URL or number, and a concise touched-files summary.
+2. Compare the changed source against the current Wild Bunch issue goal and the live repo state.
+3. If the task touches world setup, seed identity, difficulty, entropy, or random selection, read `wild-bunch-project-doctrine` before deciding the falsification pass.
+4. Falsify likely misses before accepting any Wild Bunch-specific return.
+5. Use generic `worker-verification` for branch, PR, commit, validation, and mainline proof.
 6. For browser or UI work, require screenshot evidence or state why it is unavailable.
 7. Do not claim landed or mainline state unless it is verified after merge.
 8. If a PR changes variable gameplay outcomes or initial setup, verify difficulty, entropy, and seeded setup handling or an explicit deferral.
-9. Use the installed `wild-bunch-project-doctrine` skill reference when verification needs the seeded setup doctrine.
-
-Read `references/verification-checklist.md` only when building or checking a verification report, closure recommendation, or Green/Amber/Red status. After reading it once for the current verification, do not reread it unless the task changes.
-Consult the installed `wild-bunch-project-doctrine` skill reference when the verification needs a falsification pass for setup or entropy handling.
 
 ## Rules
 

@@ -42,6 +42,23 @@ hand-edit projected skill trees, source maps, provenance maps, registry
 surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
 when a generic deterministic path is required.
 
+Discovery shortcut for generated projections: inspect the source skill under
+`sources/first_party/skills/` or `sources/third_party/`, then the owning
+plugin manifest in `codex-marketplace/plugins/<pack>/references/bundle-manifest.json`,
+then the relevant validator in `tools/`, then the generated projection tree and
+zip surfaces. If the source or manifest changes, regenerate the derived surfaces
+instead of editing generated output by hand.
+
+If drift shows up across multiple generated surfaces, regenerate the whole
+market surface set before iterating on validator failures. Do not chase the
+validator one stale file at a time when a broad regeneration is the faster,
+safer fix.
+
+`house-skills` keeps every first-party skill, including `crew`, while project
+pack exposure should stay explicit and narrowly justified in the manifest.
+Removing a skill from a project pack does not require removing it from
+`house-skills` when the repo still wants the retained first-party source.
+
 Repo-local worker doctrine lives in [.agents/AGENTS.md](.agents/AGENTS.md),
 [.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md), and the docs under
 [.agents/docs/](.agents/docs/). Read them before editing marketplace projection

@@ -102,6 +102,16 @@ The flow is:
 Projection is generated, not hand-edited. The manifest is the edit surface that
 drives projection.
 
+Projection discovery shortcut: when a generated plugin projection needs to
+change, start at the source skill, then the plugin manifest, then the relevant
+validator, then the generated projection tree, then the zips and registry
+surfaces. If the source or manifest changes, regenerate the derived outputs
+instead of hand-editing the generated tree.
+
+When a change touches multiple generated surfaces, prefer regenerating the full
+market surface set before chasing validator failures one artifact at a time.
+The validator is a proof gate, not a replacement for regeneration.
+
 ## BAU workflow
 
 The business-as-usual target for adding or updating a skill is:
@@ -126,6 +136,12 @@ The business-as-usual target for adding or updating a skill is:
 7. **Validate** — run `py -3 tools/validate_marketplace.py` and
    `py -3 tools/materialize_projection.py --check` to confirm the projection
    matches custody and manifest.
+
+If a first-party skill is removed from a project pack but remains approved in
+`house-skills`, keep the source in custody and regenerate the projections so
+only the project pack loses the exposure. `crew` is one example of a skill that
+may stay in `house-skills` while being absent from project-pack exposure unless
+the manifest explicitly justifies a project-specific appearance.
 
 No Python edits for normal skill work. If the workflow requires editing Python
 to land a skill, that is a tooling gap to raise, not a step to silently absorb.
