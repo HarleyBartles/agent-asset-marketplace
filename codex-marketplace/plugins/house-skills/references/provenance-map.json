@@ -232,13 +232,6 @@
       "local_path": "skills/invariant-buster"
     },
     {
-      "canonical_name": "linear",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear",
-      "local_path": "skills/linear"
-    },
-    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -384,6 +377,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
       "local_path": "skills/unslop-superpowers"
+    },
+    {
+      "canonical_name": "using-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "local_path": "skills/using-linear"
     },
     {
       "canonical_name": "web-game-foundations",

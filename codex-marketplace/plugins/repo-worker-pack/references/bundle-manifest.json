@@ -99,6 +99,16 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "using-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "local_path": "skills/using-linear",
+      "provenance_note": "Projected verbatim from the first-party using-linear skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "work-mode-router",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -116,6 +126,7 @@
       "sources/first_party/skills/base-doctrine",
       "sources/first_party/skills/work-mode-router",
       "sources/first_party/skills/linear-issue-shaping",
+      "sources/first_party/skills/using-linear",
       "sources/first_party/skills/boring-loop",
       "sources/first_party/skills/connector-safety",
       "sources/first_party/skills/github-operations",

@@ -30,7 +30,7 @@ The Adventures Pack is a first-party project-scoped Codex plugin that packages t
 ### Generic Dependencies (2 skills)
 
 - `sources/first_party/skills/don-logan-boundary/SKILL.md`
-- `sources/first_party/skills/linear/SKILL.md`
+- `sources/first_party/skills/using-linear/SKILL.md`
 
 ## Marketplace Adaptation
 

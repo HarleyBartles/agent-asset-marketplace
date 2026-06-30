@@ -78,11 +78,11 @@
       "local_path": "skills/don-logan-boundary"
     },
     {
-      "canonical_name": "linear",
+      "canonical_name": "using-linear",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear",
-      "local_path": "skills/linear"
+      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "local_path": "skills/using-linear"
     }
   ],
   "adapted_projections": []
