@@ -166,13 +166,13 @@
   },
   {
     "issue": "MARK-30",
-    "source_id": "linear-v1.1",
-    "source_path": "sources/first_party/skills/linear",
-    "public_name": "linear",
+    "source_id": "using-linear-v1",
+    "source_path": "sources/first_party/skills/using-linear",
+    "public_name": "using-linear",
     "provenance_name": "MARK-9 chunk ledger base and control plane",
     "import_state": "imported",
-    "scope": "Linear object mechanics and working-state surfaces",
-    "notes": "Imported as the Linear-side skill for issues, documents, comments, labels, statuses, relationships, attachments, and other durable working-state surfaces."
+    "scope": "Linear connector surface routing by intent",
+    "notes": "Imported as the Linear-side skill for connector surface selection, intent routing, and the `save_*` mutation taxonomy."
   },
   {
     "issue": "MARK-30",

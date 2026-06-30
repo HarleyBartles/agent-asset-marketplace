@@ -25,7 +25,7 @@ project-scoped Codex plugin.
 ## Generic dependencies
 
 - `sources/first_party/skills/don-logan-boundary/SKILL.md`
-- `sources/first_party/skills/linear/SKILL.md`
+- `sources/first_party/skills/using-linear/SKILL.md`
 
 ## Outcome
 
