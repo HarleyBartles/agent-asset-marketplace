@@ -3,6 +3,10 @@
 
 Current scope: GPT-ready packaging of Codex plugin skills from marketplace
 source plus any repo-owned GPT overlay.
+
+Use `tools/rebuild_marketplace.py` for the canonical full regeneration and
+validation gate. The partial update modes in this script are repair-oriented
+fallbacks.
 """
 
 from __future__ import annotations
@@ -68,8 +72,8 @@ def _run_full_regeneration_writes(selected_pack: str | None) -> None:
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Update or validate canonical skill.zip artifacts")
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--skill", help="update one installable skill as <pack>/<skill>")
-    group.add_argument("--pack", help="update every installable skill in a single marketplace pack")
+    group.add_argument("--skill", help="fallback: update one installable skill as <pack>/<skill>")
+    group.add_argument("--pack", help="fallback: update every installable skill in a single marketplace pack")
     group.add_argument("--all", action="store_true", help="regenerate every installable skill")
     parser.add_argument(
         "--full-regeneration",

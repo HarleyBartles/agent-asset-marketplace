@@ -80,6 +80,13 @@ Use `py -3 tools/generate_marketplace.py --check` and
 `repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
 as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
 is metadata validation, not the freshness proof for that surface.
+The canonical full rebuild and validation gate is
+`py -3 tools/rebuild_marketplace.py`.
+Any change to source custody, adapter files, projection plugin shapes, bundle
+manifests, source maps, provenance maps, or generated zips must be followed by
+a full regeneration and validation pass before a PR may be returned as green.
+Partial regeneration remains a fallback-only repair path; it is not an
+acceptable completion path for source-changing work.
 
 ## Source-of-truth split
 

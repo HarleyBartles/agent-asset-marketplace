@@ -22,6 +22,21 @@ pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
 --check`, and mesh law lives in `.agents/docs/mesh-policy.md`.
+The canonical full rebuild and validation entrypoint is
+`py -3 tools/rebuild_marketplace.py`.
+
+Policy for agent work:
+
+- Any change to source custody, adapter files, projection plugin shapes, bundle manifests,
+  source maps, provenance maps, or generated zips requires a full market regeneration
+  followed by validation before a PR may be called green.
+- The canonical completion path is the full regeneration stack, not a partial refresh.
+- Partial regeneration paths are fallback-only repair tools and should not be
+  advertised as a normal completion route.
+- The expected green-path proof is `py -3 tools/rebuild_marketplace.py`, plus
+  any issue-specific follow-up checks that the wrapper does not already cover.
+- If a worker cannot run the full stack, it must say so explicitly instead of
+  assuming CI will catch the missing regeneration.
 
 Deterministic pack rule: if a skillset pack or projection lane lacks a
 manifest-driven generator/validator path, add one to `tools/` and wire it into
