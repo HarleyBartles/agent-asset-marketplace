@@ -1,6 +1,8 @@
 ---
 name: using-linear
-description: Use when working with the Linear connector surface, choosing the right tool call, or finding create/update tools exposed under `save_*` rather than `create_*` or `update_*`.
+description: Use when working with the Linear connector surface, choosing the right
+  tool call, or finding create/update tools exposed under `save_*` rather than `create_*`
+  or `update_*`.
 metadata:
   source-id: using-linear
   source-path: sources/first_party/skills/using-linear/SKILL.md
@@ -8,11 +10,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when working with the Linear connector surface, choosing the right tool call, or finding create/update tools exposed under save_* rather than create_* or update_*.
+  scope: Use when working with the Linear connector surface, choosing the right tool
+    call, or finding create/update tools exposed under save_* rather than create_*
+    or update_*.
   use_when:
-  - Use when working with the Linear connector surface, choosing the right tool call, or finding create/update tools exposed under save_* rather than create_* or update_*.
+  - Use when working with the Linear connector surface, choosing the right tool call,
+    or finding create/update tools exposed under save_* rather than create_* or update_*.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
+license: MIT
 ---
 # Using Linear
 

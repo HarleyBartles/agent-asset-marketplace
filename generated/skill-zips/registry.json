@@ -191,13 +191,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/using-linear/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 13816,
-      "source_sha256": "1d9a18e7579a9bb05cf77da363c3cf9e436b71440e624eaab85cce7b9bfdd969",
+      "source_bytes": 13845,
+      "source_sha256": "1ebb91237ec6056f6918f59554ca7c9c56faf7414418852792c60c7bc4473a4a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7079,
-      "zip_sha256": "5c816ac981bd37570170af4bd9ca935851bdc5f8bab14e2dc67bb7fe795abda4"
+      "zip_size_bytes": 7112,
+      "zip_sha256": "6b0b8a251985cdbbe7bc79419fd26faa0cfceb9dbdc3859001635d26eb8f48ab"
     },
     {
       "pack": "agentic-evaluation",
@@ -2479,13 +2479,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/using-linear/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 13816,
-      "source_sha256": "1d9a18e7579a9bb05cf77da363c3cf9e436b71440e624eaab85cce7b9bfdd969",
+      "source_bytes": 13845,
+      "source_sha256": "1ebb91237ec6056f6918f59554ca7c9c56faf7414418852792c60c7bc4473a4a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7079,
-      "zip_sha256": "5c816ac981bd37570170af4bd9ca935851bdc5f8bab14e2dc67bb7fe795abda4"
+      "zip_size_bytes": 7112,
+      "zip_sha256": "6b0b8a251985cdbbe7bc79419fd26faa0cfceb9dbdc3859001635d26eb8f48ab"
     },
     {
       "pack": "house-skills",
