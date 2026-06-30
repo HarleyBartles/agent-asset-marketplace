@@ -497,21 +497,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "linear",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear",
-      "local_path": "skills/linear",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/linear/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -816,6 +801,21 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "source_family": "first_party",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "using-linear",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "local_path": "skills/using-linear",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/using-linear/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical"
     },
     {

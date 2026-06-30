@@ -173,15 +173,15 @@
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
-      "canonical_name": "linear",
+      "canonical_name": "using-linear",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/linear",
-      "local_path": "skills/linear",
+      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "local_path": "skills/using-linear",
       "lane": "dependency",
       "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
-      "source_path": "sources/first_party/skills/linear/SKILL.md",
+      "source_path": "sources/first_party/skills/using-linear/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"

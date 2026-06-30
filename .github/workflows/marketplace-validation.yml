@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  skill-surface-validation:
-    name: skill-surface-validation
+  marketplace-validation:
+    name: marketplace-validation
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -37,88 +37,5 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Check skill artifacts
-        run: python tools/update_skill_artifacts.py --check
-
-      - name: Check first-party skill source normalization
-        run: python tools/normalize_first_party_skill_sources.py --check
-
-      - name: Check marketplace manifests
-        run: python tools/generate_marketplace.py --check
-
-  index-validation:
-    name: index-validation
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch origin/main
-        run: git fetch origin main
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Check repo index
-        run: python tools/generate_repo_index.py --check
-
-      - name: Check index mesh
-        run: python tools/generate_index_mesh.py --check
-
-      - name: Validate repo index
-        run: python tools/validate_repo_index.py
-
-      - name: Validate skill zips
-        run: python tools/validate_skill_zips.py
-
-      - name: Check whitespace
-        run: git diff --check
-
-  marketplace-integrity:
-    name: marketplace-integrity
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch origin/main
-        run: git fetch origin main
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Validate marketplace
-        run: python tools/validate_marketplace.py
-
-      - name: Check projection drift
-        run: python tools/materialize_projection.py --check
-
-      - name: Check mega-pack manifests
-        run: python tools/generate_mega_packs.py --check
-
-      - name: Check provenance maps
-        run: python tools/generate_provenance_maps.py --check
-
-      - name: Check source maps
-        run: python tools/generate_source_maps.py --check
-
-      - name: Check first-party skill catalog
-        run: python tools/generate_first_party_skill_catalog.py --check
+      - name: Marketplace check
+        run: python tools/check_marketplace.py
