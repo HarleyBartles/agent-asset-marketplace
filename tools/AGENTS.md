@@ -24,6 +24,7 @@ itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_m
 --check`, and mesh law lives in `.agents/docs/mesh-policy.md`.
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
+The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.
 
 Policy for agent work:
 
@@ -33,8 +34,10 @@ Policy for agent work:
 - The canonical completion path is the full regeneration stack, not a partial refresh.
 - Partial regeneration paths are fallback-only repair tools and should not be
   advertised as a normal completion route.
-- The expected green-path proof is `py -3 tools/rebuild_marketplace.py`, plus
-  any issue-specific follow-up checks that the wrapper does not already cover.
+- The expected local green-path proof is `py -3 tools/rebuild_marketplace.py`.
+- The expected CI green-path proof is `py -3 tools/check_marketplace.py`.
+- Both commands must be aligned so check mode fails if regeneration would be
+  needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of
   assuming CI will catch the missing regeneration.
 

@@ -23,7 +23,8 @@ Codex plugin first; generated GPT-safe skill zips second.
 Current scope note: `generated/skill-zips/` is the GPT-ready export surface for
 skill zips. It packages marketplace source plus any repo-owned GPT overlay
 declared in `gpt-overlays/`.
-`py -3 tools/rebuild_marketplace.py` is the canonical full reconciliation and validation entrypoint. It runs the full generator stack and the matching validators before a worker should return green.
+`py -3 tools/rebuild_marketplace.py` is the canonical local full reconciliation and validation entrypoint. It runs the full generator stack and the matching validators before a worker should return green.
+`py -3 tools/check_marketplace.py` is the canonical CI gate. It runs the non-mutating checks and fails if the committed tree would need regeneration.
 
 Common worker update command:
 
@@ -31,7 +32,7 @@ Common worker update command:
 py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>
 ```
 
-Use `--pack` when the whole pack is wanted, `--all` or `--full-regeneration` for a repair-oriented explicit full refresh, and `--check` to validate the current generated surface without rewriting it. Prefer the wrapper above for normal completion.
+Use `--pack` when the whole pack is wanted, `--all` or `--full-regeneration` for a repair-oriented explicit full refresh, and `--check` to validate the current generated surface without rewriting it. Prefer the wrapper above for normal completion and the check wrapper for CI verification.
 
 The export helper still exists for manual GPT upload batches:
 

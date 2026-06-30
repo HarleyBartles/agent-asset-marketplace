@@ -80,13 +80,17 @@ Use `py -3 tools/generate_marketplace.py --check` and
 `repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
 as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
 is metadata validation, not the freshness proof for that surface.
-The canonical full rebuild and validation gate is
+The canonical local full rebuild and validation gate is
 `py -3 tools/rebuild_marketplace.py`.
+The canonical CI/check gate is `py -3 tools/check_marketplace.py`.
 Any change to source custody, adapter files, projection plugin shapes, bundle
 manifests, source maps, provenance maps, or generated zips must be followed by
 a full regeneration and validation pass before a PR may be returned as green.
 Partial regeneration remains a fallback-only repair path; it is not an
 acceptable completion path for source-changing work.
+CI must run the check gate and must not mutate the working tree. Local workers
+must run the rebuild gate, commit the generated tree, and only then rely on CI
+to verify the committed state.
 
 ## Source-of-truth split
 

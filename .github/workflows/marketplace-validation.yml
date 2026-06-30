@@ -37,8 +37,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Full marketplace rebuild and validation
-        run: python tools/rebuild_marketplace.py
+      - name: Marketplace check
+        run: python tools/check_marketplace.py
 
   index-validation:
     name: index-validation
@@ -62,8 +62,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Full marketplace rebuild and validation
-        run: python tools/rebuild_marketplace.py
+      - name: Marketplace check
+        run: python tools/check_marketplace.py
 
   marketplace-integrity:
     name: marketplace-integrity
@@ -87,5 +87,5 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Full marketplace rebuild and validation
-        run: python tools/rebuild_marketplace.py
+      - name: Marketplace check
+        run: python tools/check_marketplace.py
