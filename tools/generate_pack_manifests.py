@@ -97,6 +97,7 @@ PACKS: list[dict[str, Any]] = [
             "sources/first_party/skills/base-doctrine",
             "sources/first_party/skills/work-mode-router",
             "sources/first_party/skills/linear-issue-shaping",
+            "sources/first_party/skills/using-linear",
             "sources/first_party/skills/boring-loop",
             "sources/first_party/skills/connector-safety",
             "sources/first_party/skills/github-operations",
@@ -139,6 +140,14 @@ PACKS: list[dict[str, Any]] = [
                 canonical_source_path="sources/first_party/skills/linear-issue-shaping",
                 local_path="skills/linear-issue-shaping",
                 provenance_note="Projected verbatim from the first-party linear-issue-shaping skill.",
+            ),
+            _entry(
+                "using-linear",
+                source_category="first_party",
+                source_family="first_party",
+                canonical_source_path="sources/first_party/skills/using-linear",
+                local_path="skills/using-linear",
+                provenance_note="Projected verbatim from the first-party using-linear skill.",
             ),
             _entry(
                 "boring-loop",

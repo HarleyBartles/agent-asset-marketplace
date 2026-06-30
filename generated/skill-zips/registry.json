@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 209,
+  "artifact_count": 210,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -190,14 +190,14 @@
       "source_path": "codex-marketplace/plugins/adventures-pack/skills/using-linear",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/using-linear/skill.zip",
-      "source_file_count": 10,
-      "source_bytes": 13845,
-      "source_sha256": "1ebb91237ec6056f6918f59554ca7c9c56faf7414418852792c60c7bc4473a4a",
+      "source_file_count": 13,
+      "source_bytes": 19961,
+      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7112,
-      "zip_sha256": "6b0b8a251985cdbbe7bc79419fd26faa0cfceb9dbdc3859001635d26eb8f48ab"
+      "zip_size_bytes": 9828,
+      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
     },
     {
       "pack": "agentic-evaluation",
@@ -2478,14 +2478,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/using-linear",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/using-linear/skill.zip",
-      "source_file_count": 10,
-      "source_bytes": 13845,
-      "source_sha256": "1ebb91237ec6056f6918f59554ca7c9c56faf7414418852792c60c7bc4473a4a",
+      "source_file_count": 13,
+      "source_bytes": 19961,
+      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 7112,
-      "zip_sha256": "6b0b8a251985cdbbe7bc79419fd26faa0cfceb9dbdc3859001635d26eb8f48ab"
+      "zip_size_bytes": 9828,
+      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
     },
     {
       "pack": "house-skills",
@@ -2886,6 +2886,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 35605,
       "zip_sha256": "5932e01b272ab8de8391c082c640bce9a6fcefe5fb1e8d65eff83f70f80c207d"
+    },
+    {
+      "pack": "repo-worker-pack",
+      "skill": "using-linear",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-linear",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-pack/using-linear/skill.zip",
+      "source_file_count": 13,
+      "source_bytes": 19961,
+      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 9828,
+      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
     },
     {
       "pack": "repo-worker-pack",

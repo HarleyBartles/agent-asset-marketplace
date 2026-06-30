@@ -4,38 +4,69 @@ This is the at-a-glance inventory. Use the intent files for the actual tool guid
 
 ## Discover and inspect
 
-- `_search`
-- `_list_issues`
-- `_list_projects`
-- `_list_documents`
-- `_list_comments`
-- `_list_teams`
-- `_get_team`
-- `_list_users`
+- `search`
+- `fetch`
+- `list_issues`
+- `get_issue`
+- `list_projects`
+- `get_project`
+- `list_documents`
+- `get_document`
+- `list_initiatives`
+- `get_initiative`
+- `list_comments`
+- `list_teams`
+- `get_team`
+- `list_users`
+- `get_user`
 
-## Metadata and lookup
+## Diff and review
 
-- `_list_issue_labels`
-- `_list_project_labels`
-- `_list_issue_statuses`
-- `_list_cycles`
-- `_list_milestones`
-- `_get_status_updates`
+- `list_diffs`
+- `get_diff`
+- `get_diff_threads`
+
+## Metadata and admin
+
+- `list_issue_labels`
+- `create_issue_label`
+- `list_project_labels`
+- `list_issue_statuses`
+- `get_issue_status`
+- `list_cycles`
+- `list_milestones`
+- `get_milestone`
+- `get_status_updates`
+- `save_status_update`
 
 ## Create and update
 
-- `_save_issue`
-- `_save_project`
-- `_save_document`
-- `_save_comment`
-- `_save_status_update`
-- `_save_milestone`
-- `_save_initiative`
-- `_save_customer`
-- `_save_customer_need`
-- `_create_issue_label`
+- `save_issue`
+- `save_project`
+- `save_document`
+- `save_comment`
+- `save_milestone`
+- `save_initiative`
 
-## Delete
+## Customers
 
-- `_delete_status_update`
+- `list_customers`
+- `save_customer`
+- `save_customer_need`
 
+## Attachments and docs help
+
+- `prepare_attachment_upload`
+- `create_attachment_from_upload`
+- `create_attachment`
+- `get_attachment`
+- `delete_attachment`
+- `extract_images`
+- `search_documentation`
+
+## Destructive
+
+- `delete_status_update`
+- `delete_comment`
+- `delete_customer`
+- `delete_customer_need`
