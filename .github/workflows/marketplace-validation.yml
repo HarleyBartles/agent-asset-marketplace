@@ -15,58 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  skill-surface-validation:
-    name: skill-surface-validation
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch origin/main
-        run: git fetch origin main
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Marketplace check
-        run: python tools/check_marketplace.py
-
-  index-validation:
-    name: index-validation
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch origin/main
-        run: git fetch origin main
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Marketplace check
-        run: python tools/check_marketplace.py
-
-  marketplace-integrity:
-    name: marketplace-integrity
+  marketplace-validation:
+    name: marketplace-validation
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
