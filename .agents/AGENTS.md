@@ -19,3 +19,6 @@ Navigation stays in generated `INDEX.md` files.
   self-describing through generated indexes and scoped law.
 - Flag mesh-law drift when a `.agents/` file starts repeating root doctrine
   instead of stating the local delta.
+- Treat `.agents/playbooks/` and `.agents/runbooks/` as the canonical home for
+  reusable workflow guidance. Use playbooks for scenario routing and runbooks
+  for deterministic procedures.
