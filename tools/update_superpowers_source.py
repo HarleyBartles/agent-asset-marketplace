@@ -118,15 +118,6 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
     new_root = f"sources/third_party/superpowers/obra-superpowers/{new_version}"
     old_version = superpowers_source_tag(bundle_manifest)
 
-    bundle_manifest["canonical_source_root"] = new_root
-    bundle_manifest["source_tag"] = new_version
-    bundle_manifest["source_commit"] = new_commit
-
-    source_of_truth = []
-    for name in (".codex-plugin/plugin.json", "LICENSE", "README.md", "AGENTS.md", "package.json"):
-        source_of_truth.append(f"{new_root}/{name}")
-    bundle_manifest["source_of_truth"] = source_of_truth
-
     for entry in bundle_manifest.get("entries", []):
         if not isinstance(entry, dict):
             continue

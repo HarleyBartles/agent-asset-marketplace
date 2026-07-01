@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_root
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -18,6 +20,36 @@ def _run_tool(script_name: str, *args: str) -> None:
 
 def _run_git(*args: str) -> None:
     subprocess.run(["git", *args], cwd=ROOT, check=True)
+
+
+def _git_output(*args: str) -> str:
+    completed = subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True)
+    return completed.stdout
+
+
+def _retained_verbatim_paths() -> set[str]:
+    bundle_manifest = load_superpowers_bundle_manifest()
+    source_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
+    skip_paths: set[str] = set()
+    for entry in bundle_manifest.get("entries", []):
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("source_category") != "third_party" or entry.get("content_mode") != "verbatim":
+            continue
+        canonical_source_path = entry.get("canonical_source_path")
+        if isinstance(canonical_source_path, str) and canonical_source_path.strip():
+            skip_paths.add(canonical_source_path)
+            skip_paths.add(f"{canonical_source_path}/SKILL.md")
+        source_path = entry.get("source_path")
+        if isinstance(source_path, str) and source_path.strip():
+            skip_paths.add(source_path)
+        local_path = entry.get("local_path")
+        if isinstance(local_path, str) and local_path.strip():
+            skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}")
+            skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}/SKILL.md")
+    skip_paths.add(source_root)
+    skip_paths.add(f"{source_root}/AGENTS.md")
+    return skip_paths
 
 
 def _parse_args() -> argparse.Namespace:
@@ -39,7 +71,14 @@ def main() -> int:
     _run_tool("generate_first_party_skill_catalog.py", "--check")
     _run_tool("validate_repo_index.py")
     _run_tool("validate_skill_zips.py")
-    _run_git("diff", "--check")
+    skip_paths = _retained_verbatim_paths()
+    changed_paths = [path for path in _git_output("diff", "--name-only", "HEAD").splitlines() if path and path not in skip_paths]
+    if changed_paths:
+        # Retained third-party source custody intentionally preserves upstream byte
+        # fidelity, including whitespace that would be a false-positive in a generic
+        # working-tree diff check. The projection mirror for those verbatim entries
+        # is skipped here as well so the gate stays aligned with the custody model.
+        _run_git("diff", "--check", "HEAD", "--", *changed_paths)
     return 0
 
 
