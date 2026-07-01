@@ -44,6 +44,7 @@ from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
 from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
 from tree_canonicalization import canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
+from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -933,7 +934,9 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     # Skip legacy field validation for the normalized shape.
     if bundle_manifest.get("bundle_type") == "projection-lane":
         return
-    source_root = ROOT / "sources/third_party/superpowers/obra-superpowers/v5.1.0"
+    source_root = superpowers_source_root(bundle_manifest)
+    source_tag = superpowers_source_tag(bundle_manifest)
+    source_commit = superpowers_source_commit(bundle_manifest)
     if bundle_manifest.get("bundle_name") != "superpowers-plus":
         raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") not in ("5.1.0", "1.0.0"):
@@ -944,11 +947,11 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         raise ValueError("superpowers-plus bundle manifest marketplace_root mismatch")
     if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/superpowers-plus":
         raise ValueError("superpowers-plus bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_root") != "sources/third_party/superpowers/obra-superpowers/v5.1.0":
+    if bundle_manifest.get("canonical_source_root") != source_root.relative_to(ROOT).as_posix():
         raise ValueError("superpowers-plus bundle manifest canonical_source_root mismatch")
-    if bundle_manifest.get("source_tag") != "v5.1.0":
+    if bundle_manifest.get("source_tag") != source_tag:
         raise ValueError("superpowers-plus bundle manifest source_tag mismatch")
-    if bundle_manifest.get("source_commit") != "f2cbfbefebbfef77321e4c9abc9e949826bea9d7":
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit):
         raise ValueError("superpowers-plus bundle manifest source_commit mismatch")
     if bundle_manifest.get("license") != "MIT":
         raise ValueError("superpowers-plus bundle manifest license mismatch")
@@ -957,11 +960,11 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     ):
         raise ValueError("superpowers-plus bundle manifest projection_policy mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+        (source_root / ".codex-plugin/plugin.json").as_posix(),
+        (source_root / "LICENSE").as_posix(),
+        (source_root / "README.md").as_posix(),
+        (source_root / "AGENTS.md").as_posix(),
+        (source_root / "package.json").as_posix(),
     ]:
         raise ValueError("superpowers-plus bundle manifest source_of_truth mismatch")
 

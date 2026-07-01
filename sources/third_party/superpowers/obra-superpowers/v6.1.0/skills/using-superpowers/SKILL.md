@@ -1,15 +1,6 @@
 ---
 name: using-superpowers
 description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions
-metadata:
-  origin: Obra AI
-  source_author: Obra AI
-  source_license: MIT
-  source_repo: https://github.com/obra-ai/obra-superpowers
-  source_path: sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md
-  content_mode: adapted
-  adapted_author: Harley Bartles
-  adaptation_note: Added four Marketplace routing lines for Linear, GitHub, unslop, and environment inspection.
 ---
 
 <SUBAGENT-STOP>
@@ -65,13 +56,6 @@ If your harness appears here, read its reference file for special instructions:
 - Codex: `references/codex-tools.md`
 - Pi: `references/pi-tools.md`
 - Antigravity: `references/antigravity-tools.md`
-
-## Asset Marketplace Routing
-
-- Linear issue shaping and smallest-applicable workflow selection: use `linear-superpowers`.
-- GitHub-facing proof, PRs, branches, commits, and publication state: use `github-superpowers`.
-- Repo-specific anti-slop or profile work: use `unslop-superpowers`.
-- Environment inspection before action when constraints matter: use `inspecting-the-environment`.
 
 ## User Instructions
 

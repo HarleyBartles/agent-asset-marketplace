@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from marketplace_utils import MARKETPLACE_PATH, MARKETPLACE_PLUGIN_SPECS, REPO_INDEX_PATH, load_json
+from superpowers_source import superpowers_source_ledger, superpowers_source_root, superpowers_source_tag
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,10 +137,7 @@ SUPERPOWERS_PLUS_ENTRY = {
     "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
     "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
     "source_ledger": [
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-        "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
+        *superpowers_source_ledger(),
         "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
         "sources/first_party/skills/architecture-superpowers/SKILL.md",
     ],
@@ -247,6 +245,8 @@ def _generic_plugin_entry(plugin: dict[str, Any], *, spec: dict[str, Any], curre
     entry["skills_path"] = entry.get("skills_path") or f"{plugin_root}/skills"
     entry["provenance_refs"] = list(entry.get("provenance_refs", []))
     entry["agents_md"] = entry.get("agents_md")
+    if spec["name"] == "superpowers-plus":
+        entry["source_ledger"] = superpowers_source_ledger()
     entry["registry_path"] = spec.get("registry_path") or plugin.get("source", {}).get("path") or f"./{plugin_root}"
     entry["registry_alignment"] = dict(entry.get("registry_alignment", {"status": "aligned", "note": None}))
     return entry
@@ -254,6 +254,8 @@ def _generic_plugin_entry(plugin: dict[str, Any], *, spec: dict[str, Any], curre
 
 def _normalize_zones(zones: list[dict]) -> list[dict]:
     normalized_zones: list[dict] = []
+    superpowers_root = superpowers_source_root().relative_to(ROOT).as_posix()
+    superpowers_version = superpowers_source_tag()
     for zone in zones:
         if not isinstance(zone, dict):
             normalized_zones.append(zone)
@@ -263,6 +265,14 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone["name"] = "superpowers-plus-marketplace"
             updated_zone["path"] = "codex-marketplace/plugins/superpowers-plus"
             updated_zone["purpose"] = "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+."
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "superpowers-custody":
+            updated_zone = dict(zone)
+            updated_zone["path"] = superpowers_root
+            updated_zone["purpose"] = (
+                f"Retained third-party source custody for the upstream obra/superpowers {superpowers_version} release snapshot."
+            )
             normalized_zones.append(updated_zone)
             continue
         normalized_zones.append(zone)

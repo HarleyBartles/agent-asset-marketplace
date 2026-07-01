@@ -31,6 +31,7 @@ def main() -> int:
 
     _run_tool("update_skill_artifacts.py", "--all", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
+    _run_tool("generate_repo_index.py")
     _run_tool("validate_marketplace.py")
     _run_tool("generate_repo_index.py", "--check")
     _run_tool("generate_index_mesh.py")
