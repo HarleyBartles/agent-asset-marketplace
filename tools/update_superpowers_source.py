@@ -137,6 +137,7 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
             if isinstance(value, str):
                 updated = value.replace(old_root, new_root).replace(old_version, new_version)
                 entry[field] = updated
+        entry["source_repo"] = UPSTREAM_REPO
 
     SUPERPOWERS_BUNDLE_MANIFEST_PATH.write_text(
         json.dumps(bundle_manifest, indent=2, ensure_ascii=False) + "\n",
@@ -174,6 +175,8 @@ def _adapter_staleness() -> list[str]:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream version")
     if target_root not in overlay_text:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still references an older source root")
+    if f"source_repo: {UPSTREAM_REPO}" not in overlay_text:
+        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream repository")
     if not isinstance(openai_doc, dict) or openai_doc.get("metadata", {}).get("upstream_version") != target_version:
         issues.append(f"{SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} still points at an older upstream version")
     return issues

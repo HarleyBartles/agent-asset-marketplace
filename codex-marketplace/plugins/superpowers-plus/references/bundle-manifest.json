@@ -37,7 +37,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -52,7 +52,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/dispatching-parallel-agents/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -67,7 +67,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -82,7 +82,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -142,7 +142,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/receiving-code-review/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -157,7 +157,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -172,7 +172,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -187,7 +187,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -202,7 +202,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -232,7 +232,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -250,7 +250,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -265,7 +265,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/verification-before-completion/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -280,7 +280,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     },
     {
@@ -295,7 +295,7 @@
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-skills/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/obra-superpowers",
+      "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
     }
   ],
