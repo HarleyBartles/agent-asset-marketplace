@@ -3,15 +3,15 @@
 ## Source anchor
 
 - Upstream repository: `https://github.com/obra/superpowers`
-- Release tag: `v6.0.3`
-- Release commit: `896224c4b1879920ab573417e68fd51d2ccc9072`
-- Tag object: `45c3cc5b66cfc5f147a7ddcfb86f7650e47a8ae0`
+- Release tag: `v6.1.0`
+- Release commit: `f268f7c953744036f0fa7e9d4b73535c04e57cb8`
+- Tag object: `61fd6f0ebbb6c6ff58d8cc61ada4073a8df8c35e`
 - License: MIT
 
 ## Custody
 
 The upstream release snapshot is retained in third-party source custody at
-`sources/third_party/superpowers/obra-superpowers/v6.0.3/`.
+`sources/third_party/superpowers/obra-superpowers/v6.1.0/`.
 
 ## Marketplace projection
 

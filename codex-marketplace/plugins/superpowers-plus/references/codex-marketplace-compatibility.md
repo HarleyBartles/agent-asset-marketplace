@@ -14,8 +14,10 @@ This note applies to the active Codex projection of `obra/superpowers`.
 - The active plugin contains the first-party wrapper skills `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`.
 - Those first-party skills are compositional and complementary. They compose Superpowers workflow guidance with first-party expert skills that live outside the Superpowers plugin.
 - The repo-specific adaptation for `using-superpowers` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
+- When `using-superpowers` changes upstream, update the Codex adapter overlay and its `agents/openai.yaml` companion before regenerating. The reusable source updater will flag those files as stale if they still point at the old upstream version.
 - The retired ECC router wrapper previously pointed to a dedicated ECC pack; that routing path is now deferred to follow-up reprojection work.
 - Source custody remains a verbatim upstream snapshot. Do not fold Codex-safe wording, frontmatter normalization, marketplace policy, or adaptation overlays into the retained source tree.
+- Keep only the latest retained upstream source snapshot in custody. Older version directories are replaced, not accumulated.
 - Installation and export artifacts are derived from the projection layer plus overlays. Do not hand-edit generated zips or registry entries.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
