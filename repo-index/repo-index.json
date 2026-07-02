@@ -322,10 +322,10 @@
       "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
       "source_ledger": [
-        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/codex-superpowers-v6-1-0/sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
-        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/codex-superpowers-v6-1-0/sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/codex-superpowers-v6-1-0/sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/codex-superpowers-v6-1-0/sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md"
+        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/mark-322-wild-bunch-skills/sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
+        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/mark-322-wild-bunch-skills/sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/mark-322-wild-bunch-skills/sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
+        "C:/WORK/repo-workspace/agent-asset-marketplace/.worktrees/mark-322-wild-bunch-skills/sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md"
       ],
       "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
