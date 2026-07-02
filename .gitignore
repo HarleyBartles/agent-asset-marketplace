@@ -46,5 +46,5 @@ Thumbs.db
 .codex/environments/environment.toml
 
 # Local Devin/Codex issue worktrees
-.worktrees/
-!.worktrees/.gitkeep
+.worktrees/*
+!.worktrees/AGENTS.md

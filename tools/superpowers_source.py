@@ -89,8 +89,8 @@ def superpowers_source_commit(bundle_manifest: dict[str, Any] | None = None) -> 
 def superpowers_source_ledger() -> list[str]:
     source_root = superpowers_source_root()
     return [
-        (source_root / "package.json").as_posix(),
-        (source_root / "README.md").as_posix(),
-        (source_root / "LICENSE").as_posix(),
-        (source_root / "AGENTS.md").as_posix(),
+        (source_root / "package.json").relative_to(ROOT).as_posix(),
+        (source_root / "README.md").relative_to(ROOT).as_posix(),
+        (source_root / "LICENSE").relative_to(ROOT).as_posix(),
+        (source_root / "AGENTS.md").relative_to(ROOT).as_posix(),
     ]
