@@ -54,7 +54,7 @@ Execution PR: none
 
 - [ ] **Step 1: Verify the four wrapper skills are still thin routing shells**
 
-Confirm that `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` only exist to route to other skills or workflow gates, and record whether they should be retired from first-party custody or only dropped from `superpowers-plus`.
+Confirm that `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` only exist to route to other skills or workflow gates. If live inspection confirms they are router-only wrappers, retire them from first-party custody and all projections. If any one of them contains independent durable skill payload, stop for review and report the contradiction instead of taking a weaker retention path.
 
 - [ ] **Step 2: Confirm the retained `superpowers-plus` core**
 
@@ -125,15 +125,19 @@ Regenerate the first-party skill index and any source notes that enumerate activ
 
 Run the repo tooling that updates the bundle manifests, source/provenance maps, projected skills, and generated skill zips from source custody.
 
-- [ ] **Step 2: Confirm the active `superpowers-plus` contents**
+- [ ] **Step 2: Refresh the overlay and provenance wording to match the trimmed shape**
+
+Update the adapted `using-superpowers` overlay text, the generated `superpowers-plus` manifest/provenance/source-map text, and the bundle docs so they describe core `using-superpowers` plus `/inspecting-the-environment` only, with no compositional `*-superpowers` routing additions.
+
+- [ ] **Step 3: Confirm the active `superpowers-plus` contents**
 
 Verify that `superpowers-plus` keeps the upstream Superpowers core plus `/inspecting-the-environment`, and that the removed wrapper-only skills no longer appear in the active bundle inventory.
 
-- [ ] **Step 3: Confirm the `house-skills` spillover is consistent**
+- [ ] **Step 4: Confirm the `house-skills` spillover is consistent**
 
 If the wrapper source folders were retired, verify that `house-skills` also dropped the retired wrapper entries and that no stale source-map or provenance entries remain.
 
-### Task 4: Validate the trim, publish the plan, and update Linear route state
+### Task 4: Validate the trim, publish the implementation PR, and update Linear route state
 
 **Files:**
 - Validate: `sources/first_party/skills/INDEX.md`
@@ -146,7 +150,7 @@ If the wrapper source folders were retired, verify that `house-skills` also drop
 
 **Interfaces:**
 - Consumes: the regenerated projections and the trimmed source custody.
-- Produces: validation evidence, a plan-only publication surface, and a Linear route-state update that points at the plan file and PR.
+- Produces: validation evidence, an execution publication surface, and a Linear route-state update that points at the plan file and implementation PR.
 
 - [ ] **Step 1: Run the full marketplace rebuild and check gates**
 
@@ -156,9 +160,9 @@ Run the repo's current full regeneration and validation path, then run the non-m
 
 Run a targeted stale-reference search for `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` across active source, marketplace, generated registry, and index surfaces.
 
-- [ ] **Step 3: Publish the plan-only PR and update Linear**
+- [ ] **Step 3: Publish the implementation PR and update Linear**
 
-Commit the plan and the regenerated indexes, open the plan-only PR, then update `MARK-324` with the route-state block, plan path, PR URL, and preflight status. Stop before implementation until approval arrives.
+Commit the implementation changes, open the implementation PR, then update `MARK-324` with the route-state block, plan path, implementation PR URL, and preflight status. Keep the checked-off plan file in the execution receipt. Stop before implementation until approval arrives.
 
 ## Validation
 
@@ -177,4 +181,5 @@ When this plan is executed, return:
 - the regenerated bundle and registry surfaces;
 - the validation output;
 - the Linear route-state update;
-- the PR URL and head SHA for the plan-only publication surface.
+- the implementation PR URL and head SHA;
+- the checked-off plan file;
