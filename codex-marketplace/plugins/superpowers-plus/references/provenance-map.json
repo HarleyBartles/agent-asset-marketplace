@@ -1,13 +1,6 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "architecture-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
-      "local_path": "skills/architecture-superpowers"
-    },
-    {
       "canonical_name": "brainstorming",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -36,25 +29,11 @@
       "local_path": "skills/finishing-a-development-branch"
     },
     {
-      "canonical_name": "github-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/github-superpowers",
-      "local_path": "skills/github-superpowers"
-    },
-    {
       "canonical_name": "inspecting-the-environment",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
       "local_path": "skills/inspecting-the-environment"
-    },
-    {
-      "canonical_name": "linear-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-      "local_path": "skills/linear-superpowers"
     },
     {
       "canonical_name": "receiving-code-review",
@@ -90,13 +69,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development",
       "local_path": "skills/test-driven-development"
-    },
-    {
-      "canonical_name": "unslop-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-      "local_path": "skills/unslop-superpowers"
     },
     {
       "canonical_name": "using-git-worktrees",

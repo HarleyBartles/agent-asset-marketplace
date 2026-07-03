@@ -85,13 +85,6 @@
       "local_path": "skills/analogy-buster"
     },
     {
-      "canonical_name": "architecture-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
-      "local_path": "skills/architecture-superpowers"
-    },
-    {
       "canonical_name": "asset-market",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -204,13 +197,6 @@
       "local_path": "skills/github-operations"
     },
     {
-      "canonical_name": "github-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/github-superpowers",
-      "local_path": "skills/github-superpowers"
-    },
-    {
       "canonical_name": "house-skills",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -237,13 +223,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
       "local_path": "skills/linear-issue-shaping"
-    },
-    {
-      "canonical_name": "linear-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-      "local_path": "skills/linear-superpowers"
     },
     {
       "canonical_name": "phaser-2d-game",
@@ -370,13 +349,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-plus",
       "local_path": "skills/unslop-plus"
-    },
-    {
-      "canonical_name": "unslop-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-      "local_path": "skills/unslop-superpowers"
     },
     {
       "canonical_name": "using-linear",

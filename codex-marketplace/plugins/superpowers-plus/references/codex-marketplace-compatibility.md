@@ -11,8 +11,8 @@ This note applies to the active Codex projection of `obra/superpowers`.
 ## Projection contract
 
 - `superpowers` is a third-party plugin projection with selected first-party compositional skills projected into the vendored marketplace plugin.
-- The active plugin contains the first-party wrapper skills `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`.
-- Those first-party skills are compositional and complementary. They compose Superpowers workflow guidance with first-party expert skills that live outside the Superpowers plugin.
+- The active plugin keeps the first-party `inspecting-the-environment` helper and the upstream Superpowers core; the router-only wrapper skills have been retired from the active projection.
+- The remaining first-party helper is compositional and complementary. It keeps Superpowers workflow guidance narrow by adding environment inspection only.
 - The repo-specific adaptation for `using-superpowers` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
 - When `using-superpowers` changes upstream, update the Codex adapter overlay and its `agents/openai.yaml` companion before regenerating. The reusable source updater will flag those files as stale if they still point at the old upstream version.
 - The retired ECC router wrapper previously pointed to a dedicated ECC pack; that routing path is now deferred to follow-up reprojection work.

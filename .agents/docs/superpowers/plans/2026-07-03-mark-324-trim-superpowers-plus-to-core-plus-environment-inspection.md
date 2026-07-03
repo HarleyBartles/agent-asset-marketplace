@@ -20,13 +20,13 @@
 ## Worker route state
 
 ```text
-Route status: preflight-needed
-Plan PR: none
+Route status: execution-in-progress
+Plan PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/178
 Plan repo path: .agents/docs/superpowers/plans/2026-07-03-mark-324-trim-superpowers-plus-to-core-plus-environment-inspection.md
-Plan approved: no
+Plan approved: yes
 Plan merged to main: no
-Approved plan commit: none
-Last staleness check: none
+Approved plan commit: d9623c754761540f64abfb40f1a45fc896b4c2df
+Last staleness check: 2026-07-03
 Execution PR: none
 ```
 
@@ -52,15 +52,15 @@ Execution PR: none
 - Read: `codex-marketplace/plugins/superpowers-plus/references/provenance-map.json`
 - Read: `adapters/codex/superpowers-plus/using-superpowers/overlay.yaml`
 
-- [ ] **Step 1: Verify the four wrapper skills are still thin routing shells**
+- [x] **Step 1: Verify the four wrapper skills are still thin routing shells**
 
 Confirm that `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` only exist to route to other skills or workflow gates. If live inspection confirms they are router-only wrappers, retire them from first-party custody and all projections. If any one of them contains independent durable skill payload, stop for review and report the contradiction instead of taking a weaker retention path.
 
-- [ ] **Step 2: Confirm the retained `superpowers-plus` core**
+- [x] **Step 2: Confirm the retained `superpowers-plus` core**
 
 Verify that the bundle still needs the upstream Superpowers core set plus `/inspecting-the-environment`, and that `using-superpowers` is the only remaining adapted wrapper that should survive the trim.
 
-- [ ] **Step 3: Capture the exact dependency surfaces**
+- [x] **Step 3: Capture the exact dependency surfaces**
 
 Record the downstream files that will need regeneration if the wrappers are retired from first-party custody, including `house-skills`, `superpowers-plus`, the generated skill zips, and the repo-wide index/registry surfaces.
 
@@ -80,15 +80,15 @@ Record the downstream files that will need regeneration if the wrappers are reti
 - Consumes: the current wrapper source bodies, the adapted `using-superpowers` overlay, and the first-party source index.
 - Produces: a trimmed source-custody shape where the wrapper-only routers are gone or clearly retired, and the adapted `using-superpowers` overlay no longer names removed wrapper skills.
 
-- [ ] **Step 1: Remove the wrapper-only source folders if source inspection still classifies them as pure routers**
+- [x] **Step 1: Remove the wrapper-only source folders if source inspection still classifies them as pure routers**
 
 Delete the four `*-superpowers` wrapper source folders only if the live source inspection confirms they are thin routing shells with no independent skill payload.
 
-- [ ] **Step 2: Rewrite the adapted `using-superpowers` overlay**
+- [x] **Step 2: Rewrite the adapted `using-superpowers` overlay**
 
 Remove the overlay lines that route to `linear-superpowers`, `github-superpowers`, `unslop-superpowers`, and any other removed wrapper skills. Keep the upstream `using-superpowers` body intact and keep `/inspecting-the-environment` as the only remembered extra if the source still needs an adapted branch.
 
-- [ ] **Step 3: Update the first-party skill index and any local custody notes**
+- [x] **Step 3: Update the first-party skill index and any local custody notes**
 
 Regenerate the first-party skill index and any source notes that enumerate active first-party skills so they no longer advertise retired wrapper-only source custody.
 
@@ -121,19 +121,19 @@ Regenerate the first-party skill index and any source notes that enumerate activ
 - Consumes: the retired wrapper source state and the revised `using-superpowers` overlay.
 - Produces: aligned first-party and marketplace projections with the trimmed `superpowers-plus` shape and no stale wrapper-only router surfaces.
 
-- [ ] **Step 1: Regenerate the first-party and marketplace bundles**
+- [x] **Step 1: Regenerate the first-party and marketplace bundles**
 
 Run the repo tooling that updates the bundle manifests, source/provenance maps, projected skills, and generated skill zips from source custody.
 
-- [ ] **Step 2: Refresh the overlay and provenance wording to match the trimmed shape**
+- [x] **Step 2: Refresh the overlay and provenance wording to match the trimmed shape**
 
 Update the adapted `using-superpowers` overlay text, the generated `superpowers-plus` manifest/provenance/source-map text, and the bundle docs so they describe core `using-superpowers` plus `/inspecting-the-environment` only, with no compositional `*-superpowers` routing additions.
 
-- [ ] **Step 3: Confirm the active `superpowers-plus` contents**
+- [x] **Step 3: Confirm the active `superpowers-plus` contents**
 
 Verify that `superpowers-plus` keeps the upstream Superpowers core plus `/inspecting-the-environment`, and that the removed wrapper-only skills no longer appear in the active bundle inventory.
 
-- [ ] **Step 4: Confirm the `house-skills` spillover is consistent**
+- [x] **Step 4: Confirm the `house-skills` spillover is consistent**
 
 If the wrapper source folders were retired, verify that `house-skills` also dropped the retired wrapper entries and that no stale source-map or provenance entries remain.
 
@@ -152,17 +152,17 @@ If the wrapper source folders were retired, verify that `house-skills` also drop
 - Consumes: the regenerated projections and the trimmed source custody.
 - Produces: validation evidence, an execution publication surface, and a Linear route-state update that points at the plan file and implementation PR.
 
-- [ ] **Step 1: Run the full marketplace rebuild and check gates**
+- [x] **Step 1: Run the full marketplace rebuild and check gates**
 
 Run the repo's current full regeneration and validation path, then run the non-mutating check gate so the plan-ready tree is provably fresh before publication.
 
-- [ ] **Step 2: Search for stale wrapper references**
+- [x] **Step 2: Search for stale wrapper references**
 
 Run a targeted stale-reference search for `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` across active source, marketplace, generated registry, and index surfaces.
 
 - [ ] **Step 3: Publish the implementation PR and update Linear**
 
-Commit the implementation changes, open the implementation PR, then update `MARK-324` with the route-state block, plan path, implementation PR URL, and preflight status. Keep the checked-off plan file in the execution receipt. Stop before implementation until approval arrives.
+Commit the implementation changes, update `MARK-324` with the route-state block, plan path, implementation PR URL, and preflight status, then keep the checked-off plan file in the execution receipt.
 
 ## Validation
 

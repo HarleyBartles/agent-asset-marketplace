@@ -190,21 +190,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "architecture-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
-      "local_path": "skills/architecture-superpowers",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "asset-market",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -437,21 +422,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "github-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/github-superpowers",
-      "local_path": "skills/github-superpowers",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "house-skills",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -509,21 +479,6 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "linear-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-      "local_path": "skills/linear-superpowers",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/linear-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
       "copy_expectation": "byte_identical"
     },
     {
@@ -786,21 +741,6 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "unslop-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-      "local_path": "skills/unslop-superpowers",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
       "copy_expectation": "byte_identical"
     },
     {

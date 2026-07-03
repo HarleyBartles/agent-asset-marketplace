@@ -13,7 +13,7 @@ This root is the Codex-facing marketplace projection of the first-party Superpow
 
 ## Projection contract
 - `superpowers-plus` is the marketplace projection for the retained skills listed in `references/bundle-manifest.json`.
-- The active plugin contains `architecture-superpowers`, `brainstorming`, `dispatching-parallel-agents`, `executing-plans`, `finishing-a-development-branch`, `github-superpowers`, `inspecting-the-environment`, `linear-superpowers`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `unslop-superpowers`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-plans`, `writing-skills`.
+- The active plugin contains `brainstorming`, `dispatching-parallel-agents`, `executing-plans`, `finishing-a-development-branch`, `inspecting-the-environment`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-plans`, and `writing-skills`.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface

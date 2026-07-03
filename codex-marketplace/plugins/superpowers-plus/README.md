@@ -4,11 +4,7 @@ This bundle projects the first-party Superpowers+ workflow and routing helpers o
 
 ## Bundle contents
 ### House Skills skills
-- `architecture-superpowers`
-- `github-superpowers`
 - `inspecting-the-environment`
-- `linear-superpowers`
-- `unslop-superpowers`
 
 ### Superpowers skills
 - `brainstorming`

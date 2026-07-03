@@ -24,16 +24,10 @@ source custody.
 
 Projection contract:
 
-- `superpowers-plus` is the third-party plugin projection with selected
-  first-party compositional skills projected into the vendored marketplace
-  plugin.
-- The active plugin may contain upstream Superpowers skills plus the selected
-  first-party wrapper skills `linear-superpowers`, `github-superpowers`,
-  `unslop-superpowers`, `architecture-superpowers`, `ecc-superpowers`, and
-  `inspecting-the-environment`.
-- Those first-party skills are compositional and complementary. They compose
-  Superpowers workflow guidance with first-party expert skills that live
-  outside the Superpowers plugin.
+- `superpowers-plus` is the third-party plugin projection with the upstream
+  Superpowers core plus the first-party `inspecting-the-environment` helper.
+- The first-party helper is compositional and complementary. It keeps
+  Superpowers workflow guidance narrow by adding environment inspection only.
 - Do not place first-party expert or domain skills directly in the Superpowers
   plugin.
 - Do not use this plugin as a dumping ground for House Skills, project doctrine,
@@ -46,41 +40,11 @@ Projection contract:
   must be justified as a compositional wrapper over Superpowers, not as an
   expert skill being relocated into the third-party plugin.
 
-The bundle also projects the first-party `linear-superpowers` skill from
-`sources/first_party/skills/linear-superpowers/`
-into `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers/`
-and the first-party `github-superpowers` skill from
-`sources/first_party/skills/github-superpowers/`
-into `codex-marketplace/plugins/superpowers-plus/skills/github-superpowers/`
-and the first-party `unslop-superpowers` skill from
-`sources/first_party/skills/unslop-superpowers/`
-into `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/`
-and the first-party `architecture-superpowers` skill from
-`sources/first_party/skills/architecture-superpowers/`
-into `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/`
-and historically the first-party `ecc-superpowers` skill from
-`sources/first_party/skills/ecc-superpowers/`
-into `codex-marketplace/plugins/superpowers-plus/skills/ecc-superpowers/`
-and the first-party `inspecting-the-environment` skill from
+The bundle projects the first-party `inspecting-the-environment` skill from
 `sources/first_party/skills/inspecting-the-environment/`
 into `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/`
-so the Superpowers plugin surface shows Harley's compositional Linear,
-GitHub, anti-slop, architecture, environment-inspection, and other first-party routing helpers
-workflow skills without creating second editable source roots.
-
-These first-party projections are directory-level skill specs with
-`SKILL.md` and `agents/openai.yaml` under the same source/projection contract.
-
-`linear-superpowers`, `github-superpowers`, `architecture-superpowers`, and
-`ecc-superpowers` invoke `unslop-superpowers` when repo-specific anti-slop
-controls, profile-aware non-goals, or evidence requirements matter.
-
-`ecc-superpowers` was a verbatim first-party router wrapper that MARK-295
-removed from both the active projection surface and source custody. It was
-compositional, not a fork cue, and it kept the removed ECC routing doctrine
-out of the active Superpowers+ bundle while leaving MARK-301 a deliberate
-path to reintroduce a refreshed projection after fresh source inspection and
-validator updates.
+so the Superpowers plugin surface retains the environment-inspection helper
+without introducing second editable source roots.
 
 ## Excluded from the active projection
 

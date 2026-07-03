@@ -11,21 +11,6 @@
   ],
   "entries": [
     {
-      "canonical_name": "architecture-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/architecture-superpowers",
-      "local_path": "skills/architecture-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory-level first-party source-backed skill into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/architecture-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
       "canonical_name": "brainstorming",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -86,21 +71,6 @@
       "source_family": "superpowers"
     },
     {
-      "canonical_name": "github-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/github-superpowers",
-      "local_path": "skills/github-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/github-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
       "canonical_name": "inspecting-the-environment",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -110,21 +80,6 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
       "source_path": "sources/first_party/skills/inspecting-the-environment/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
-      "canonical_name": "linear-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-      "local_path": "skills/linear-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected from the canonical House Skills source into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/linear-superpowers/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -206,21 +161,6 @@
       "source_family": "superpowers"
     },
     {
-      "canonical_name": "unslop-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-      "local_path": "skills/unslop-superpowers",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Projected as a directory mirror from the canonical House Skills source into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/unslop-superpowers/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
-    },
-    {
       "canonical_name": "using-git-worktrees",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -245,8 +185,8 @@
       "adapted_author": "Harley Bartles",
       "import_status": "imported",
       "copy_expectation": "adapted_from_source",
-      "provenance_note": "Adapted to add four Marketplace routing lines while keeping the upstream skill otherwise intact.",
-      "adaptation_note": "Added Linear, GitHub, unslop, and environment-inspection routing lines.",
+      "provenance_note": "Adapted to keep core Superpowers plus environment inspection only.",
+      "adaptation_note": "Trimmed to core Superpowers plus environment inspection only.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
