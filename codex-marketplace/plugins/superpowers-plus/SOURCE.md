@@ -4,11 +4,7 @@ This plugin projects the first-party Superpowers+ workflow and routing helpers o
 
 ## Source custody
 ### House Skills custody
-- `sources/first_party/skills/architecture-superpowers/`
-- `sources/first_party/skills/github-superpowers/`
 - `sources/first_party/skills/inspecting-the-environment/`
-- `sources/first_party/skills/linear-superpowers/`
-- `sources/first_party/skills/unslop-superpowers/`
 
 ### Superpowers custody
 - `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/`
@@ -30,20 +26,16 @@ This plugin projects the first-party Superpowers+ workflow and routing helpers o
 - Codex plugin root: `codex-marketplace/plugins/superpowers-plus/`
 - Skill root: `codex-marketplace/plugins/superpowers-plus/skills/`
 - Skill roots:
-  - `codex-marketplace/plugins/superpowers-plus/skills/architecture-superpowers/`
   - `codex-marketplace/plugins/superpowers-plus/skills/brainstorming/`
   - `codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/`
   - `codex-marketplace/plugins/superpowers-plus/skills/executing-plans/`
   - `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/`
-  - `codex-marketplace/plugins/superpowers-plus/skills/github-superpowers/`
   - `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/`
-  - `codex-marketplace/plugins/superpowers-plus/skills/linear-superpowers/`
   - `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/`
   - `codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/`
   - `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/`
   - `codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/`
   - `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/`
-  - `codex-marketplace/plugins/superpowers-plus/skills/unslop-superpowers/`
   - `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/`
   - `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers/`
   - `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/`
@@ -51,20 +43,16 @@ This plugin projects the first-party Superpowers+ workflow and routing helpers o
   - `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/`
 
 ## Generated install units
-- `generated/skill-zips/superpowers-plus/architecture-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/brainstorming/skill.zip`
 - `generated/skill-zips/superpowers-plus/dispatching-parallel-agents/skill.zip`
 - `generated/skill-zips/superpowers-plus/executing-plans/skill.zip`
 - `generated/skill-zips/superpowers-plus/finishing-a-development-branch/skill.zip`
-- `generated/skill-zips/superpowers-plus/github-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/inspecting-the-environment/skill.zip`
-- `generated/skill-zips/superpowers-plus/linear-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/receiving-code-review/skill.zip`
 - `generated/skill-zips/superpowers-plus/requesting-code-review/skill.zip`
 - `generated/skill-zips/superpowers-plus/subagent-driven-development/skill.zip`
 - `generated/skill-zips/superpowers-plus/systematic-debugging/skill.zip`
 - `generated/skill-zips/superpowers-plus/test-driven-development/skill.zip`
-- `generated/skill-zips/superpowers-plus/unslop-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/using-git-worktrees/skill.zip`
 - `generated/skill-zips/superpowers-plus/using-superpowers/skill.zip`
 - `generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip`
