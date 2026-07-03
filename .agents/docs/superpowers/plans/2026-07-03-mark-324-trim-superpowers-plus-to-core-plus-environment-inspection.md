@@ -20,14 +20,15 @@
 ## Worker route state
 
 ```text
-Route status: execution-in-progress
+Route status: execution-published
 Plan PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/178
 Plan repo path: .agents/docs/superpowers/plans/2026-07-03-mark-324-trim-superpowers-plus-to-core-plus-environment-inspection.md
 Plan approved: yes
 Plan merged to main: no
 Approved plan commit: d9623c754761540f64abfb40f1a45fc896b4c2df
 Last staleness check: 2026-07-03
-Execution PR: none
+Execution PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/178
+Execution head SHA: df1c9dff4166a6583d2a12f62b050b74cb309f01
 ```
 
 ---
@@ -160,7 +161,7 @@ Run the repo's current full regeneration and validation path, then run the non-m
 
 Run a targeted stale-reference search for `architecture-superpowers`, `github-superpowers`, `linear-superpowers`, and `unslop-superpowers` across active source, marketplace, generated registry, and index surfaces.
 
-- [ ] **Step 3: Publish the implementation PR and update Linear**
+- [x] **Step 3: Publish the implementation PR and update Linear**
 
 Commit the implementation changes, update `MARK-324` with the route-state block, plan path, implementation PR URL, and preflight status, then keep the checked-off plan file in the execution receipt.
 
