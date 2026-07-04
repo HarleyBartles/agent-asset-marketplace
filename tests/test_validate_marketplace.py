@@ -385,6 +385,41 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 plugin_root="codex-marketplace/plugins/superpowers-plus",
             )
 
+    def test_context_safety_skill_requires_target_200_and_limit_400(self) -> None:
+        source_skill = ROOT / "sources" / "first_party" / "skills" / "context-safety" / "SKILL.md"
+        projected_skill = (
+            ROOT
+            / "codex-marketplace"
+            / "plugins"
+            / "repo-worker-pack"
+            / "skills"
+            / "context-safety"
+            / "SKILL.md"
+        )
+        source_agent = ROOT / "sources" / "first_party" / "skills" / "context-safety" / "agents" / "openai.yaml"
+        projected_agent = (
+            ROOT
+            / "codex-marketplace"
+            / "plugins"
+            / "repo-worker-pack"
+            / "skills"
+            / "context-safety"
+            / "agents"
+            / "openai.yaml"
+        )
+
+        for skill_path in (source_skill, projected_skill):
+            text = skill_path.read_text(encoding="utf-8")
+            self.assertIn("target 200 lines per chunk", text)
+            self.assertIn("absolute red limit max 400 lines per chunk", text)
+            self.assertIn("300 line cutoff", text)
+
+        for agent_path in (source_agent, projected_agent):
+            text = agent_path.read_text(encoding="utf-8")
+            self.assertIn("200 lines per chunk as the target", text)
+            self.assertIn("400 lines per chunk as the absolute red limit", text)
+            self.assertIn("writes expected to land around 300 lines or more", text)
+
     def test_validate_skill_bundle_manifest_normalizes_line_endings_for_verbatim_entries(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
