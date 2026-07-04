@@ -107,6 +107,7 @@ def iter_line_chunks(lines: list[str], chunk_lines: int = 200):
 def write_large_text(target: Path, text: str) -> None:
     lines = text.splitlines()
     byte_size = len(text.encode("utf-8"))
+    ends_with_newline = text.endswith("\n")
     chunk_lines = 150 if len(lines) >= 300 else 200 if len(lines) > 200 else len(lines)
     is_large = len(lines) > 200 or byte_size > 256_000
 
@@ -114,11 +115,13 @@ def write_large_text(target: Path, text: str) -> None:
 
     if is_large:
         with tmp.open("w", encoding="utf-8", newline="\n") as handle:
-            for chunk in iter_line_chunks(lines, chunk_lines=chunk_lines):
+            for chunk_index, chunk in enumerate(iter_line_chunks(lines, chunk_lines=chunk_lines)):
                 if len(chunk) > 400:
                     raise RuntimeError("chunk exceeds the absolute 400-line limit")
                 handle.write("\n".join(chunk))
-                handle.write("\n")
+                is_last_chunk = chunk_index == ((len(lines) - 1) // chunk_lines)
+                if not is_last_chunk or ends_with_newline:
+                    handle.write("\n")
     else:
         tmp.write_text(text, encoding="utf-8", newline="\n")
 
