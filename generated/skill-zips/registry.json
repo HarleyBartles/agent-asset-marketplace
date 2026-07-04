@@ -2976,12 +2976,12 @@
       "zip_path": "generated/skill-zips/superpowers-plus/brainstorming/skill.zip",
       "source_file_count": 11,
       "source_bytes": 86058,
-      "source_sha256": "571f278b676ac6a7d32f67b7496bbd2f45af4c7195d23b03ac9d60e71836cfbd",
+      "source_sha256": "e8d0a0d33bd08a54e8a78ddbf03ffde4b1e1af80f639c6d4aa0e6adc0d67eab1",
       "overlay_file_count": 1,
       "overlay_bytes": 864,
       "overlay_sha256": "59cc54e40c7d1c5708aeef9e5157cd03f534fef81b22eefde0f642d29e865cd6",
-      "zip_size_bytes": 29269,
-      "zip_sha256": "00abfdd61df353630ad8f2fbf3001b0d5af2535c7915279bf3898d559a4358e5"
+      "zip_size_bytes": 29143,
+      "zip_sha256": "101f54f5b2003fafd50d469e0a2f4b4fc821d9dd69fd9e300da5826652881eaf"
     },
     {
       "pack": "superpowers-plus",
@@ -3072,12 +3072,12 @@
       "zip_path": "generated/skill-zips/superpowers-plus/systematic-debugging/skill.zip",
       "source_file_count": 13,
       "source_bytes": 42840,
-      "source_sha256": "2e2906d7aec78a7a845c02d6b3b1ce3cba46fe1e11a93cd4034856d578b94f45",
+      "source_sha256": "032cf2547af6bb0941677be7da47272769a840c981c317e9e52d0375613388e4",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 20630,
-      "zip_sha256": "5f0182dec2b0101e9e707edb44e83463d9e48bd97204bb3944d96d6362f4a311"
+      "zip_size_bytes": 20550,
+      "zip_sha256": "e956aeaca3f659a502fa51c40532c899fdca06dc7f1d2c82d063bf14c3a477ea"
     },
     {
       "pack": "superpowers-plus",
@@ -3258,9 +3258,9 @@
       "export_mode": "excluded",
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "overlay_path": null,
-      "source_file_count": 13,
-      "source_bytes": 47450,
-      "source_sha256": "54c0c01b9603e9b3d7341f1f42ebfa208483641fd6621660b2d27cd71d7e163e",
+      "source_file_count": 10,
+      "source_bytes": 44110,
+      "source_sha256": "076c13c402ae2ed00da54363bf83e07fa71ac0853bc71bf27bcfac077108887e",
       "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
     },
     {

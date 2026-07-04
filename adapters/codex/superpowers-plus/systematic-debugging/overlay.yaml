@@ -7,4 +7,4 @@ metadata:
   projection_plugin: superpowers-plus
 generated_files:
   - source: adapters/codex/superpowers-plus/script-shell-selection.md
-    path: skills/systematic-debugging/AGENTS.md
+    path: scripts/AGENTS.md
