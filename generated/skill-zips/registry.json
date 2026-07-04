@@ -3258,9 +3258,9 @@
       "export_mode": "excluded",
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "overlay_path": null,
-      "source_file_count": 13,
-      "source_bytes": 47450,
-      "source_sha256": "54c0c01b9603e9b3d7341f1f42ebfa208483641fd6621660b2d27cd71d7e163e",
+      "source_file_count": 14,
+      "source_bytes": 48302,
+      "source_sha256": "fc774d426e06fc68bb5b697a0b73553dea9567fe3b2b8aeb20f0d0286fcb8578",
       "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
     },
     {

@@ -7,7 +7,9 @@ Read it with the root [AGENTS.md](../AGENTS.md), the local mesh policy in
 
 ## Execution model
 
-- Edit first-party source files, third-party adapters, and plugin or manifest source surfaces as the source of truth.
+- Edit first-party source files directly when first-party behavior changes.
+- Treat third-party source custody as immutable; do not edit `sources/third_party/**` to change behavior. Use the relevant adapter under `adapters/**` and regenerate the projection instead.
+- Edit third-party adapters, and plugin or manifest source surfaces, as the source of truth for projected behavior.
 - Reproject the marketplace and generated outputs with the checked-in deterministic tooling.
 - Reproject the repo-wide `INDEX.md` mesh with the checked-in deterministic
   tooling.
