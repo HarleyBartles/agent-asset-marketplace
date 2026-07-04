@@ -1951,13 +1951,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/context-safety/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 6655,
-      "source_sha256": "7853fc1d0e6dd4292a65b0b6dd520b13fbb60a510ee868c1c1593a7727a73bdf",
+      "source_bytes": 7713,
+      "source_sha256": "95ca93bbee69e289fe9ef681178bd31b0c5e1fc9efae492430a9d1a3d9c4e499",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3000,
-      "zip_sha256": "2880e2870281cb9a57651ac4041fac192cd22602a63cbcc45292ee024b4375e3"
+      "zip_size_bytes": 3361,
+      "zip_sha256": "0bb355bc01cc4722a61ff56f371914a613b7407c61ebb7647106ccec1333610a"
     },
     {
       "pack": "house-skills",
@@ -2751,13 +2751,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/context-safety/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 6655,
-      "source_sha256": "7853fc1d0e6dd4292a65b0b6dd520b13fbb60a510ee868c1c1593a7727a73bdf",
+      "source_bytes": 7713,
+      "source_sha256": "95ca93bbee69e289fe9ef681178bd31b0c5e1fc9efae492430a9d1a3d9c4e499",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3000,
-      "zip_sha256": "2880e2870281cb9a57651ac4041fac192cd22602a63cbcc45292ee024b4375e3"
+      "zip_size_bytes": 3361,
+      "zip_sha256": "0bb355bc01cc4722a61ff56f371914a613b7407c61ebb7647106ccec1333610a"
     },
     {
       "pack": "repo-worker-pack",
