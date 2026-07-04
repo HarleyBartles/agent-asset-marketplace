@@ -6,7 +6,10 @@ param(
   [Parameter(Position = 1, Mandatory = $true)]
   [string]$Head,
 
-  [Parameter(Position = 2)]
+  [Parameter(Position = 2, Mandatory = $true)]
+  [string]$PlanFile,
+
+  [Parameter(Position = 3)]
   [string]$OutFile = ''
 )
 
@@ -24,9 +27,14 @@ if ($LASTEXITCODE -ne 0) {
   exit 2
 }
 
+if (-not (Test-Path -LiteralPath $PlanFile)) {
+  Write-Error "bad PLAN_FILE: $PlanFile"
+  exit 2
+}
+
 $scriptDir = Split-Path -Parent $PSCommandPath
 if ([string]::IsNullOrWhiteSpace($OutFile)) {
-  $workspace = & (Join-Path $scriptDir 'sdd-workspace.ps1')
+  $workspace = & (Join-Path $scriptDir 'sdd-workspace.ps1') $PlanFile
   $baseShort = (& git rev-parse --short $Base).Trim()
   $headShort = (& git rev-parse --short $Head).Trim()
   $OutFile = Join-Path $workspace ("review-{0}..{1}.diff" -f $baseShort, $headShort)
