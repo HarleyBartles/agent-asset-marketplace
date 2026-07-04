@@ -420,6 +420,44 @@ class ValidateMarketplaceTests(unittest.TestCase):
             self.assertIn("400 lines per chunk as the absolute red limit", text)
             self.assertIn("writes expected to land around 300 lines or more", text)
 
+    def test_superpowers_script_adapters_project_scripts_at_the_skill_root(self) -> None:
+        cases = {
+            "brainstorming": ["start-server.ps1", "stop-server.ps1"],
+            "systematic-debugging": ["find-polluter.ps1"],
+            "subagent-driven-development": [
+                "AGENTS.md",
+                "review-package",
+                "review-package.ps1",
+                "sdd-workspace",
+                "sdd-workspace.ps1",
+                "task-brief",
+                "task-brief.ps1",
+            ],
+        }
+
+        for skill_name, expected_files in cases.items():
+            adapter_script_root = (
+                ROOT / "adapters" / "codex" / "superpowers-plus" / skill_name / "scripts"
+            )
+            projected_skill_root = (
+                ROOT
+                / "codex-marketplace"
+                / "plugins"
+                / "superpowers-plus"
+                / "skills"
+                / skill_name
+            )
+            projected_script_root = projected_skill_root / "scripts"
+
+            self.assertTrue(adapter_script_root.is_dir(), skill_name)
+            self.assertTrue(projected_script_root.is_dir(), skill_name)
+            self.assertFalse((adapter_script_root / "skills").exists(), skill_name)
+            self.assertFalse((projected_skill_root / "skills").exists(), skill_name)
+
+            for rel_path in expected_files:
+                self.assertTrue((adapter_script_root / rel_path).is_file(), f"{skill_name}/{rel_path}")
+                self.assertTrue((projected_script_root / rel_path).is_file(), f"{skill_name}/{rel_path}")
+
     def test_validate_skill_bundle_manifest_normalizes_line_endings_for_verbatim_entries(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
