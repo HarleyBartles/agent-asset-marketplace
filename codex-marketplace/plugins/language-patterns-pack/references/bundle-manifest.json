@@ -89,13 +89,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
-    "provenance_refs": [
-      "provenance/language-patterns-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

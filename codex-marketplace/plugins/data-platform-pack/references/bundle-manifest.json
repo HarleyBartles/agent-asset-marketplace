@@ -38,14 +38,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
-    "provenance_refs": [
-      "provenance/data-platform-pack.md",
-      "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

@@ -188,18 +188,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/adventures-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/first_party/skills/house-skills/decisions.json",
-      "sources/first_party/skills/house-skills/decisions.md",
-      "sources/first_party/skills/house-skills/intake.json",
-      "provenance/house-skills.md"
-    ],
-    "license_path": "codex-marketplace/plugins/adventures-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/adventures-pack/skills",
-    "provenance_refs": [
-      "provenance/adventures-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

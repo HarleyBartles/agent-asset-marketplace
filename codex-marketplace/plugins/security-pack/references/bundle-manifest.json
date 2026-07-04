@@ -123,21 +123,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/security-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-      "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
-      "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
-      "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
-      "sources/third_party/ecc/upstream/source-custody.md"
-    ],
-    "license_path": "codex-marketplace/plugins/security-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/security-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/security-pack/skills",
-    "provenance_refs": [
-      "provenance/security-pack.md",
-      "provenance/ecc-domain-packs.md",
-      "codex-marketplace/plugins/security-pack/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

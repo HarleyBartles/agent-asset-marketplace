@@ -66,13 +66,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/architecture-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/architecture-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/architecture-pack/skills",
-    "provenance_refs": [
-      "provenance/architecture-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

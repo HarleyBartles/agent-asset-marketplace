@@ -122,25 +122,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/first_party/skills/repo-worker-base",
-      "sources/first_party/skills/base-doctrine",
-      "sources/first_party/skills/work-mode-router",
-      "sources/first_party/skills/linear-issue-shaping",
-      "sources/first_party/skills/using-linear",
-      "sources/first_party/skills/boring-loop",
-      "sources/first_party/skills/connector-safety",
-      "sources/first_party/skills/github-operations",
-      "sources/first_party/skills/unslop-plus",
-      "sources/first_party/skills/context-safety"
-    ],
-    "license_path": "codex-marketplace/plugins/repo-worker-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/repo-worker-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/repo-worker-pack/skills",
-    "provenance_refs": [
-      "provenance/repo-worker-pack.md",
-      "codex-marketplace/plugins/repo-worker-pack/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

@@ -68,14 +68,11 @@ def _entry(
     return entry
 
 
-def _repo_index(plugin_root: str, *, source_ledger: list[str], provenance_refs: list[str], agents_md: str | None = None) -> dict[str, Any]:
+def _repo_index(plugin_root: str, *, agents_md: str | None = None) -> dict[str, Any]:
     return {
         "source_md": f"{plugin_root}/SOURCE.md",
-        "source_ledger": source_ledger,
-        "license_path": f"{plugin_root}/LICENSE",
         "bundle_manifest": f"{plugin_root}/references/bundle-manifest.json",
         "skills_path": f"{plugin_root}/skills",
-        "provenance_refs": provenance_refs,
         "agents_md": agents_md,
         "registry_alignment": {
             "status": "aligned",
@@ -130,8 +127,6 @@ def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
     if not pack.get("is_mega_pack"):
         manifest["repo_index"] = _repo_index(
             pack["plugin_root"],
-            source_ledger=pack["source_ledger"],
-            provenance_refs=pack["provenance_refs"],
         )
     if pack.get("mega_pack_for") is not None:
         manifest["mega_pack_for"] = pack["mega_pack_for"]

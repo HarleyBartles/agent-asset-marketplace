@@ -65,18 +65,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/wild-bunch-project-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
-      "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
-      "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
-      "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
-    ],
-    "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills",
-    "provenance_refs": [
-      "provenance/wild-bunch-project-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

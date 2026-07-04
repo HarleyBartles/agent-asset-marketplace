@@ -110,11 +110,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/frontend-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/frontend-pack/skills",
-    "provenance_refs": [],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

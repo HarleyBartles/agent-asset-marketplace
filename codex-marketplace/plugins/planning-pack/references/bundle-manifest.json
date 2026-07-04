@@ -97,13 +97,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/planning-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/planning-pack/skills",
-    "provenance_refs": [
-      "provenance/planning-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

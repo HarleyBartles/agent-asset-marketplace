@@ -5,155 +5,252 @@ from __future__ import annotations
 
 import argparse
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
 from marketplace_utils import MARKETPLACE_PATH, MARKETPLACE_PLUGIN_SPECS, REPO_INDEX_PATH, load_json
-from superpowers_source import superpowers_source_ledger, superpowers_source_root, superpowers_source_tag
+from superpowers_source import superpowers_source_root, superpowers_source_tag
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO_WORKER_PACK_ENTRY = {
-    "name": "repo-worker-pack",
-    "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
-    "plugin_manifest": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/repo-worker-pack/LICENSE",
-    "bundle_manifest": None,
-    "skills_path": "codex-marketplace/plugins/repo-worker-pack/skills",
-    "provenance_refs": ["provenance/repo-worker-pack.md"],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
+DEFAULT_REPO_INDEX = {
+    "schema_version": 1,
+    "repo_name": "agent-asset-marketplace",
+    "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
+    "marketplace_root_inventory_path": "codex-marketplace/plugin-roots.json",
+    "marketplace_registry_path": ".agents/plugins/marketplace.json",
+    "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
+    "validation": {
+        "marketplace": "py -3 tools/validate_marketplace.py",
+        "repo_index": "py -3 tools/validate_repo_index.py",
+        "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
+        "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
+        "skill_zips_check": "py -3 tools/validate_skill_zips.py",
+        "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main",
+        "repo_index_generate": "py -3 tools/generate_repo_index.py",
+        "marketplace_generate": "py -3 tools/generate_marketplace.py",
+        "marketplace_check": "py -3 tools/generate_marketplace.py --check",
+        "repo_index_check": "py -3 tools/generate_repo_index.py --check",
     },
+    "zones": [
+        {
+            "name": "runtime-registry",
+            "path": ".agents/plugins",
+            "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "codex-marketplace-root",
+            "path": "codex-marketplace",
+            "purpose": "Codex marketplace source root and export manifest surface.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "marketplace-root-inventory",
+            "path": "codex-marketplace/plugin-roots.json",
+            "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
+            "surface_kind": "hand-authored",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "codex-marketplace-plugins",
+            "path": "codex-marketplace/plugins",
+            "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "wild-bunch-project-pack",
+            "path": "codex-marketplace/plugins/wild-bunch-project-pack",
+            "purpose": "Self-contained Wild Bunch project pack projection with hydrated first-party skills and retained browser-game helpers.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "frontend-pack",
+            "path": "codex-marketplace/plugins/frontend-pack",
+            "purpose": "Browser frontend implementation guidance with shared architecture, DOM UI, React-hosted 3D, and frontend QA surfaces.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "superpowers-plus-marketplace",
+            "path": "codex-marketplace/plugins/superpowers-plus",
+            "purpose": "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+                "tools/package_skill_zips.py",
+            ],
+        },
+        {
+            "name": "house-skills-bundle",
+            "path": "codex-marketplace/plugins/house-skills",
+            "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
+            "surface_kind": "runtime-facing",
+            "nearest_scoped_agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "first-party-house-skills-ledger",
+            "path": "sources/first_party/skills/house-skills",
+            "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
+            "surface_kind": "provenance",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+            ],
+        },
+        {
+            "name": "first-party-boring-loop-ledger",
+            "path": "sources/first_party/skills/boring-loop",
+            "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
+            "surface_kind": "provenance",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/update_skill_artifacts.py",
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "third-party-custody",
+            "path": "sources/third_party",
+            "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, dotnet-claude-kit, claude-cortex, and ecc upstream snapshots. The unslop engine is projected into the unslop-plus combined-source plugin.",
+            "surface_kind": "vendored",
+            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "guidance_scope": "repo-owned-guidance",
+            "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+                "tools/validate_marketplace.py",
+            ],
+        },
+        {
+            "name": "ecc-custody",
+            "path": "sources/third_party/ecc/upstream",
+            "purpose": "Retained third-party source custody for the promoted ECC upstream skills inventory and adoption-target notes.",
+            "surface_kind": "vendored",
+            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "guidance_scope": "repo-owned-guidance",
+            "notes": "Third-party inventory truth is preserved here after MARK-238 promotion from docs/inventory/.",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+                "tools/validate_marketplace.py",
+            ],
+        },
+        {
+            "name": "claude-cortex-custody",
+            "path": "sources/third_party/claude-cortex/upstream",
+            "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, database-design-patterns import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210.",
+            "surface_kind": "vendored",
+            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "guidance_scope": "repo-owned-guidance",
+            "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+                "tools/validate_marketplace.py",
+            ],
+        },
+        {
+            "name": "superpowers-custody",
+            "path": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+            "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.1.0 release snapshot.",
+            "surface_kind": "vendored",
+            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "guidance_scope": "repo-owned-guidance",
+            "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "provenance",
+            "path": "provenance",
+            "purpose": "Retained provenance notes, trust records, and custody evidence.",
+            "surface_kind": "provenance",
+            "nearest_scoped_agents_md": "provenance/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "docs-unslop-profile",
+            "path": "docs/unslop/profile.md",
+            "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
+            "surface_kind": "hand-authored",
+            "nearest_scoped_agents_md": "docs/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "docs-superpowers-plans",
+            "path": ".agents/docs/superpowers/plans",
+            "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
+            "surface_kind": "hand-authored",
+            "nearest_scoped_agents_md": ".agents/docs/superpowers/plans/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
+            "name": "tools",
+            "path": "tools",
+            "purpose": "Repository validation and generation scripts.",
+            "surface_kind": "hand-authored",
+            "nearest_scoped_agents_md": "tools/AGENTS.md",
+            "key_validation_scripts": [
+                "tools/validate_marketplace.py",
+                "tools/validate_repo_index.py",
+                "tools/generate_marketplace.py",
+            ],
+        },
+        {
+            "name": "repo-index",
+            "path": "repo-index",
+            "purpose": "Navigation metadata for repo traversal and future corpus preparation.",
+            "surface_kind": "generated",
+            "nearest_scoped_agents_md": None,
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+            ],
+        },
+    ],
 }
-
-DOTNET_KIT_ENTRY = {
-    "name": "dotnet-kit",
-    "plugin_root": "codex-marketplace/plugins/dotnet-kit",
-    "plugin_manifest": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/dotnet-kit/SOURCE.md",
-    "source_ledger": [
-        "provenance/dotnet-kit-governance/decisions.json",
-        "provenance/dotnet-kit-governance/decisions.md",
-        "provenance/dotnet-kit-governance/intake.json",
-    ],
-    "license_path": "codex-marketplace/plugins/dotnet-kit/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/dotnet-kit/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/dotnet-kit/skills",
-    "provenance_refs": [
-        "provenance/dotnet-claude-kit.md",
-        "codex-marketplace/plugins/dotnet-kit/references/source-map.md",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/dotnet-kit",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
-CODEX_CORTEX_ENTRY = {
-    "name": "codex-cortex",
-    "plugin_root": "codex-marketplace/plugins/codex-cortex",
-    "plugin_manifest": "codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/codex-cortex/SOURCE.md",
-    "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md",
-    ],
-    "license_path": "codex-marketplace/plugins/codex-cortex/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/codex-cortex/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/codex-cortex/skills",
-    "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/codex-cortex/references/source-map.md",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/codex-cortex",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
-API_CONTRACTS_PACK_ENTRY = {
-    "name": "api-contracts-pack",
-    "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
-    "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
-    "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md",
-    ],
-    "license_path": "codex-marketplace/plugins/api-contracts-pack/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/api-contracts-pack/skills",
-    "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/api-contracts-pack/references/source-map.md",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
-LANGUAGE_PATTERNS_PACK_ENTRY = {
-    "name": "language-patterns-pack",
-    "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
-    "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
-    "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md",
-    ],
-    "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
-    "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/language-patterns-pack/references/source-map.md",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
-SUPERPOWERS_PLUS_ENTRY = {
-    "name": "superpowers-plus",
-    "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-    "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
-    "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
-    "source_ledger": [
-        *superpowers_source_ledger(),
-    ],
-    "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
-    "provenance_refs": [
-        "provenance/superpowers-plus.md",
-        "codex-marketplace/plugins/superpowers-plus/references/provenance-map.json",
-    ],
-    "agents_md": None,
-    "registry_path": "./codex-marketplace/plugins/superpowers-plus",
-    "registry_alignment": {
-        "status": "aligned",
-        "note": None,
-    },
-}
-
 def _bundle_manifest_path(plugin_root: str) -> Path:
     return ROOT / plugin_root / "references" / "bundle-manifest.json"
 
@@ -198,13 +295,10 @@ def _metadata_driven_plugin_entry(
     entry["plugin_root"] = plugin_root
     entry["plugin_manifest"] = _plugin_manifest_path(plugin["manifest_path"])
     entry["source_md"] = repo_index.get("source_md") or entry.get("source_md") or f"{plugin_root}/SOURCE.md"
-    entry["source_ledger"] = list(repo_index.get("source_ledger", entry.get("source_ledger", [])))
-    entry["license_path"] = repo_index.get("license_path") or entry.get("license_path") or f"{plugin_root}/LICENSE"
     entry["bundle_manifest"] = repo_index.get("bundle_manifest") or f"{plugin_root}/references/bundle-manifest.json"
     entry["skills_path"] = repo_index.get("skills_path") or entry.get("skills_path") or _default_skills_path(
         plugin_root, plugin_manifest
     )
-    entry["provenance_refs"] = list(repo_index.get("provenance_refs", entry.get("provenance_refs", [])))
     entry["agents_md"] = repo_index.get("agents_md", entry.get("agents_md"))
     entry["registry_path"] = plugin["registry_path"]
     entry["registry_alignment"] = dict(
@@ -213,6 +307,8 @@ def _metadata_driven_plugin_entry(
             entry.get("registry_alignment", {"status": "aligned", "note": None}),
         )
     )
+    for field_name in ("source_ledger", "license_path", "license_reference", "provenance_refs"):
+        entry.pop(field_name, None)
     return entry
 
 
@@ -237,16 +333,13 @@ def _generic_plugin_entry(plugin: dict[str, Any], *, spec: dict[str, Any], curre
     entry["plugin_root"] = plugin_root
     entry["plugin_manifest"] = manifest_path
     entry["source_md"] = entry.get("source_md") or f"{plugin_root}/SOURCE.md"
-    entry["source_ledger"] = list(entry.get("source_ledger", []))
-    entry["license_path"] = entry.get("license_path") or f"{plugin_root}/LICENSE"
     entry["bundle_manifest"] = entry.get("bundle_manifest") or f"{plugin_root}/references/bundle-manifest.json"
     entry["skills_path"] = entry.get("skills_path") or f"{plugin_root}/skills"
-    entry["provenance_refs"] = list(entry.get("provenance_refs", []))
     entry["agents_md"] = entry.get("agents_md")
-    if spec["name"] == "superpowers-plus":
-        entry["source_ledger"] = superpowers_source_ledger()
     entry["registry_path"] = spec.get("registry_path") or plugin.get("source", {}).get("path") or f"./{plugin_root}"
     entry["registry_alignment"] = dict(entry.get("registry_alignment", {"status": "aligned", "note": None}))
+    for field_name in ("source_ledger", "license_path", "license_reference", "provenance_refs"):
+        entry.pop(field_name, None)
     return entry
 
 
@@ -279,7 +372,12 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
 
 def build_repo_index() -> dict:
     marketplace = load_json(MARKETPLACE_PATH)
-    repo_index = load_json(REPO_INDEX_PATH)
+    if REPO_INDEX_PATH.exists():
+        repo_index = load_json(REPO_INDEX_PATH)
+        if not isinstance(repo_index, dict) or repo_index.get("schema_version") != 1:
+            repo_index = deepcopy(DEFAULT_REPO_INDEX)
+    else:
+        repo_index = deepcopy(DEFAULT_REPO_INDEX)
     plugin_specs_by_name = {spec["name"]: spec for spec in MARKETPLACE_PLUGIN_SPECS}
 
     current_plugins = {entry["name"]: entry for entry in repo_index.get("marketplace_plugins", [])}

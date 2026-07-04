@@ -35,14 +35,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/feature-sliced-design/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/feature-sliced/upstream/LICENSE",
-      "sources/third_party/feature-sliced/upstream/source-custody.md"
-    ],
-    "license_path": "codex-marketplace/plugins/feature-sliced-design/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/feature-sliced-design/skills",
-    "provenance_refs": [],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

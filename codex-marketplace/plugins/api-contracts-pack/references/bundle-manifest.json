@@ -56,13 +56,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/api-contracts-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/api-contracts-pack/skills",
-    "provenance_refs": [
-      "provenance/api-contracts-pack.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

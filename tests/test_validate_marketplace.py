@@ -347,8 +347,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_validate_repo_index_metadata_accepts_current_shape(self) -> None:
         _validate_repo_index_metadata(
             {
-                "source_ledger": ["sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md"],
-                "provenance_refs": ["provenance/superpowers-plus.md"],
+                "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+                "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+                "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
                 "agents_md": None,
                 "registry_alignment": {"status": "aligned", "note": None},
             },
@@ -360,10 +361,25 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             _validate_repo_index_metadata(
                 {
-                    "source_ledger": "nope",
-                    "provenance_refs": ["provenance/superpowers-plus.md"],
-                    "agents_md": None,
+                    "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+                    "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+                    "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+                    "agents_md": "",
                     "registry_alignment": {"status": "aligned", "note": None},
+                },
+                bundle_name="superpowers-plus",
+                plugin_root="codex-marketplace/plugins/superpowers-plus",
+            )
+
+    def test_validate_repo_index_metadata_rejects_bad_registry_alignment(self) -> None:
+        with self.assertRaises(ValueError):
+            _validate_repo_index_metadata(
+                {
+                    "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+                    "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+                    "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+                    "agents_md": None,
+                    "registry_alignment": {"status": "intentional-delta", "note": ""},
                 },
                 bundle_name="superpowers-plus",
                 plugin_root="codex-marketplace/plugins/superpowers-plus",

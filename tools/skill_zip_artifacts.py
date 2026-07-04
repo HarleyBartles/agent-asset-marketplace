@@ -824,7 +824,7 @@ def _select_targets(targets: list[SkillTarget], pack: str | None, skill: str | N
 
 def load_registry() -> dict[str, Any]:
     if not GENERATED_SKILL_ZIPS_REGISTRY_PATH.exists():
-        raise FileNotFoundError(GENERATED_SKILL_ZIPS_REGISTRY_PATH)
+        return build_registry([])
     return load_json(GENERATED_SKILL_ZIPS_REGISTRY_PATH)
 
 

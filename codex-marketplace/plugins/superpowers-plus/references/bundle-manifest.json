@@ -260,19 +260,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
-      "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-      "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-      "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md"
-    ],
-    "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
-    "provenance_refs": [
-      "provenance/superpowers-plus.md",
-      "codex-marketplace/plugins/superpowers-plus/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

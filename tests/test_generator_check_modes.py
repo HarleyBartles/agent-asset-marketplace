@@ -235,11 +235,8 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 ],
                 "repo_index": {
                     "source_md": "codex-marketplace/plugins/sample-pack/SOURCE.md",
-                    "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
-                    "license_path": "codex-marketplace/plugins/sample-pack/LICENSE",
                     "bundle_manifest": "codex-marketplace/plugins/sample-pack/references/bundle-manifest.json",
                     "skills_path": "codex-marketplace/plugins/sample-pack/skills",
-                    "provenance_refs": ["provenance/sample-pack.md"],
                     "agents_md": None,
                     "registry_alignment": {"status": "aligned", "note": None},
                 },

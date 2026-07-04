@@ -227,14 +227,6 @@ def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, 
     if not isinstance(repo_index, dict):
         raise ValueError(f"{bundle_name} bundle manifest repo_index must be a mapping")
 
-    for field_name in ("source_ledger", "provenance_refs"):
-        value = repo_index.get(field_name)
-        if not isinstance(value, list):
-            raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a list")
-        for item in value:
-            if not isinstance(item, str) or not item.strip():
-                raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must contain nonblank strings")
-
     agents_md = repo_index.get("agents_md")
     if agents_md is not None and (not isinstance(agents_md, str) or not agents_md.strip()):
         raise ValueError(f"{bundle_name} bundle manifest repo_index agents_md must be a nonblank string or null")
