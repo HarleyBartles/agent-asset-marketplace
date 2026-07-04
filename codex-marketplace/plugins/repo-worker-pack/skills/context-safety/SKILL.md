@@ -1,9 +1,9 @@
 ---
 name: context-safety
 description: Use when large or context-heavy text writes need bounded composition,
-  deliberate compaction boundaries, safe staging, and atomic replacement. Use when
-  a write may exceed the safe threshold or when inline composition risks exhausting
-  context.
+  chunked append paths, deliberate compaction boundaries, safe staging, and atomic
+  replacement. Use when a write may exceed the safe threshold or when inline
+  composition risks exhausting context.
 metadata:
   source-id: context-safety
   source-path: sources/first_party/skills/context-safety/SKILL.md
@@ -60,21 +60,21 @@ Before composing a large document, decide whether the composition itself will ex
 
 Treat a write as context-risky when either of these is true:
 
-- the output is likely to exceed about 300 lines;
+- the output is likely to exceed about 400 lines;
 - the session has already accumulated significant subagent output, research, or file reads in context.
 
 When context-risky:
 
 1. Do not compose the whole document as one inline string in the main session.
 2. Prefer a clean-context worker/subagent write with only the required inputs.
-3. Or generate the document in bounded sections with sequential append calls, keeping each section below the existing large-write threshold.
+3. Or generate the document in bounded sections with sequential append calls, aiming for about 200 lines per chunk and never exceeding 400 lines in any one chunk.
 4. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
 
 ## Large-write threshold
 
 Treat a write as large when either of these is true:
 
-- more than 300 lines;
+- more than 400 lines;
 - more than 256 KB of UTF-8 text.
 
 The exact threshold can be adjusted for a repository, but the decision must happen before the write starts.
@@ -84,7 +84,7 @@ The exact threshold can be adjusted for a repository, but the decision must happ
 1. Estimate line count and byte size from the content in memory.
 2. Choose the write path before opening the temp file.
 3. For small payloads, write the whole content to a temp file in one shot.
-4. For large payloads, write the temp file in chunks or append loops.
+4. For large payloads, write the temp file in chunks or append loops, keeping each chunk under 400 lines and targeting about 200 lines.
 5. Re-open and validate the completed temp file.
 6. Atomically replace the target only after validation passes.
 
