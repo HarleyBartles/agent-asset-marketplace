@@ -29,11 +29,14 @@ current, and `py -3 tools/generate_repo_index.py --check` to prove
 alignment validation, not the freshness proof. Use
 `py -3 tools/generate_index_mesh.py --check` for the repo-wide navigation mesh.
 
-Deterministic pack rule: when a plugin root is driven by a manifest, regenerate
-the projection and export surfaces from the checked-in tooling. Do not
-hand-edit bundle manifests, projected skill trees, source maps, provenance
-maps, or zip artifacts, and do not introduce plugin-specific one-off scripts
-when the existing pipeline can be extended or reused.
+Deterministic pack rule: the editable registry files
+`codex-marketplace/custody-pack-registry.json` and
+`codex-marketplace/custody-mega-pack-registry.json` drive the projection-lane
+and mega-pack generators. Regenerate the projection and export surfaces from
+the checked-in tooling. Do not hand-edit bundle manifests, projected skill
+trees, source maps, provenance maps, or zip artifacts, and do not introduce
+plugin-specific one-off scripts when the existing pipeline can be extended or
+reused.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.

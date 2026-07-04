@@ -2,8 +2,9 @@
 """Generate deterministic pack bundle manifests.
 
 This tool writes the bundle-manifest.json surfaces for the selected pack set.
-The pack definitions live in this script so the manifests can be regenerated
-from one source of truth instead of being hand-edited.
+The editable pack registry lives in `codex-marketplace/custody-pack-registry.json`
+so the manifests can be regenerated from one source of truth instead of being
+hand-edited.
 """
 
 from __future__ import annotations
@@ -13,8 +14,11 @@ import json
 from pathlib import Path
 from typing import Any
 
-from marketplace_utils import ROOT
+from marketplace_utils import ROOT, load_json
 from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_ledger
+
+
+PACK_REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 
 
 def _entry(
@@ -784,6 +788,19 @@ PACKS: list[dict[str, Any]] = [
 ]
 
 
+def load_pack_registry() -> list[dict[str, Any]]:
+    registry = load_json(PACK_REGISTRY_PATH)
+    if registry.get("schema_version") != 1:
+        raise ValueError(f"{PACK_REGISTRY_PATH}: schema_version must be 1")
+    packs = registry.get("packs")
+    if not isinstance(packs, list) or not packs:
+        raise ValueError(f"{PACK_REGISTRY_PATH}: packs must be a non-empty list")
+    normalized = [pack for pack in packs if isinstance(pack, dict)]
+    if len(normalized) != len(packs):
+        raise ValueError(f"{PACK_REGISTRY_PATH}: packs must contain objects")
+    return normalized
+
+
 def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
     entries = sorted(pack["entries"], key=lambda item: item["canonical_name"])
     source_families = sorted({entry["source_family"] for entry in entries})
@@ -817,7 +834,7 @@ def _write_manifest(path: Path, manifest: dict[str, Any]) -> None:
 
 
 def generate(*, write: bool) -> None:
-    for pack in PACKS:
+    for pack in load_pack_registry():
         if pack.get("is_mega_pack"):
             continue
         manifest = _bundle_manifest(pack)

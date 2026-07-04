@@ -41,6 +41,9 @@ are the installable projections.
 The editable active-root inventory is `codex-marketplace/plugin-roots.json`.
 The manifest export and the protected-root validators derive their active root
 set from that file instead of duplicating the active roots in Python constants.
+Pack bundle-manifest generation is driven by
+`codex-marketplace/custody-pack-registry.json`, while mega-pack generation is
+driven by `codex-marketplace/custody-mega-pack-registry.json`.
 
 Repo-resident canonical `skill.zip` artifacts are published separately under
 `generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip`, with
