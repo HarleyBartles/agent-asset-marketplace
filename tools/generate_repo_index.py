@@ -138,8 +138,6 @@ SUPERPOWERS_PLUS_ENTRY = {
     "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
     "source_ledger": [
         *superpowers_source_ledger(),
-        "codex-marketplace/plugins/house-skills/skills/linear-superpowers/SKILL.md",
-        "sources/first_party/skills/architecture-superpowers/SKILL.md",
     ],
     "license_path": "codex-marketplace/plugins/superpowers-plus/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",

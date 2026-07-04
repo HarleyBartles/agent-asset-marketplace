@@ -1584,10 +1584,15 @@ def validate_mega_pack_inclusion() -> None:
     tools_dir = str(ROOT / "tools")
     if tools_dir not in sys.path:
         sys.path.insert(0, tools_dir)
-    from generate_mega_packs import load_mega_pack_registry, collect_entries_by_family, load_plugin_manifest
+    from generate_mega_packs import _entry_matches_selection, collect_entries_by_family, load_mega_pack_registry, load_plugin_manifest
 
     registry = load_mega_pack_registry()
     mega_pack_names = {m["mega_pack"] for m in registry}
+    selection_by_family = {
+        mapping["source_family"]: mapping.get("entry_selection")
+        for mapping in registry
+        if mapping.get("entry_selection") is not None
+    }
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
@@ -1598,7 +1603,7 @@ def validate_mega_pack_inclusion() -> None:
             continue
         plugin_manifests.append(manifest)
 
-    by_family = collect_entries_by_family(plugin_manifests)
+    by_family = collect_entries_by_family(plugin_manifests, selection_by_family=selection_by_family)
 
     for mapping in registry:
         family = mapping["source_family"]
@@ -1614,7 +1619,9 @@ def validate_mega_pack_inclusion() -> None:
         }
         topical_names_set = {
             e.get("canonical_name") for e in by_family.get(family, [])
-            if isinstance(e, dict) and e.get("canonical_name") is not None
+            if isinstance(e, dict)
+            and e.get("canonical_name") is not None
+            and _entry_matches_selection(e, mapping.get("entry_selection"))
         }
         missing = sorted(topical_names_set - mega_names_set)
         if missing:

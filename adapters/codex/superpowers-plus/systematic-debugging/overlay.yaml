@@ -5,3 +5,6 @@ metadata:
   upstream_version: v6.1.0
   adaptation_overlay: adapters/codex/superpowers-plus/systematic-debugging
   projection_plugin: superpowers-plus
+generated_files:
+  - source: adapters/codex/superpowers-plus/script-shell-selection.md
+    path: skills/systematic-debugging/AGENTS.md

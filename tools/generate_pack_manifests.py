@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from marketplace_utils import ROOT
+from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_ledger
 
 
 def _entry(
@@ -78,6 +79,30 @@ def _repo_index(plugin_root: str, *, source_ledger: list[str], provenance_refs: 
             "status": "aligned",
             "note": None,
         },
+    }
+
+
+def _superpowers_plus_pack() -> dict[str, Any]:
+    bundle_manifest = load_superpowers_bundle_manifest()
+    entries = [dict(entry) for entry in bundle_manifest.get("entries", []) if isinstance(entry, dict)]
+    return {
+        "bundle_name": "superpowers-plus",
+        "plugin_root": "codex-marketplace/plugins/superpowers-plus",
+        "bundle_version": "1.0.0",
+        "bundle_type": "projection-lane",
+        "is_mega_pack": False,
+        "notes": [
+            "Superpowers+ is the mixed projection-lane bundle for the retained Superpowers workflow skills.",
+            "The bundle mixes first-party helpers, third-party verbatim skills, and adapter-backed projections.",
+        ],
+        "source_ledger": [
+            *superpowers_source_ledger(),
+        ],
+        "provenance_refs": [
+            "provenance/superpowers-plus.md",
+            "codex-marketplace/plugins/superpowers-plus/references/source-map.md",
+        ],
+        "entries": entries,
     }
 
 
@@ -191,6 +216,7 @@ PACKS: list[dict[str, Any]] = [
             ),
         ],
     },
+    _superpowers_plus_pack(),
     {
         "bundle_name": "security-pack",
         "plugin_root": "codex-marketplace/plugins/security-pack",

@@ -17,8 +17,16 @@
     {
       "source_family": "superpowers",
       "custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-      "mega_pack": "superpowers-plus",
-      "mega_pack_root": "codex-marketplace/plugins/superpowers-plus"
+      "mega_pack": "superpowers-mega-pack",
+      "mega_pack_root": "codex-marketplace/plugins/superpowers-mega-pack",
+      "entry_selection": {
+        "source_categories": [
+          "third_party"
+        ],
+        "content_modes": [
+          "verbatim"
+        ]
+      }
     },
     {
       "source_family": "game-studio",

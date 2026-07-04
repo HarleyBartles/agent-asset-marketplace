@@ -1,6 +1,6 @@
 # Superpowers+
 
-This bundle projects the first-party Superpowers+ workflow and routing helpers only.
+This bundle projects the mixed Superpowers+ workflow and routing helpers.
 
 ## Bundle contents
 ### House Skills skills
@@ -28,8 +28,8 @@ This bundle projects the first-party Superpowers+ workflow and routing helpers o
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- Only the first-party Superpowers+ helper and router skills are projected.
-- ECC-specific routing has been removed from this bundle and will be reconsidered in a follow-up reprojection issue if needed.
+- This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
+- The pure third-party mega pack for the same source family is `superpowers-mega-pack`.
 
 ## Install shape
 

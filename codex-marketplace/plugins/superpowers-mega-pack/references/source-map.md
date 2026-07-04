@@ -1,0 +1,16 @@
+# Superpowers Mega Pack Source Map
+
+Generated from `codex-marketplace/plugins/superpowers-mega-pack/references/bundle-manifest.json`.
+
+| Skill | Source category | Content mode | Canonical source path | Local path | Notes |
+| --- | --- | --- | --- | --- | --- |
+| dispatching-parallel-agents | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/dispatching-parallel-agents` | `codex-marketplace/plugins/superpowers-mega-pack/skills/dispatching-parallel-agents` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| executing-plans | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans` | `codex-marketplace/plugins/superpowers-mega-pack/skills/executing-plans` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| finishing-a-development-branch | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch` | `codex-marketplace/plugins/superpowers-mega-pack/skills/finishing-a-development-branch` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| receiving-code-review | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/receiving-code-review` | `codex-marketplace/plugins/superpowers-mega-pack/skills/receiving-code-review` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| requesting-code-review | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review` | `codex-marketplace/plugins/superpowers-mega-pack/skills/requesting-code-review` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| test-driven-development | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development` | `codex-marketplace/plugins/superpowers-mega-pack/skills/test-driven-development` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| using-git-worktrees | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees` | `codex-marketplace/plugins/superpowers-mega-pack/skills/using-git-worktrees` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| verification-before-completion | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/verification-before-completion` | `codex-marketplace/plugins/superpowers-mega-pack/skills/verification-before-completion` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| writing-plans | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans` | `codex-marketplace/plugins/superpowers-mega-pack/skills/writing-plans` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |
+| writing-skills | third_party | verbatim | `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-skills` | `codex-marketplace/plugins/superpowers-mega-pack/skills/writing-skills` | Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection. |

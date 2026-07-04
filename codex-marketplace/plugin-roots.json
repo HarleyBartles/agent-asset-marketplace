@@ -199,6 +199,15 @@
       "plugin_root": "codex-marketplace/plugins/everything-codex-code",
       "manifest_path": "codex-marketplace/plugins/everything-codex-code/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 22,
+      "name": "superpowers-mega-pack",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/superpowers-mega-pack",
+      "plugin_root": "codex-marketplace/plugins/superpowers-mega-pack",
+      "manifest_path": "codex-marketplace/plugins/superpowers-mega-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

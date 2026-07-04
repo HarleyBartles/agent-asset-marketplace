@@ -332,7 +332,7 @@
       "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
       "provenance_refs": [
         "provenance/superpowers-plus.md",
-        "codex-marketplace/plugins/superpowers-plus/references/provenance-map.json"
+        "codex-marketplace/plugins/superpowers-plus/references/source-map.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/superpowers-plus",
@@ -713,6 +713,23 @@
       "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/everything-codex-code",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "superpowers-mega-pack",
+      "plugin_root": "codex-marketplace/plugins/superpowers-mega-pack",
+      "plugin_manifest": "codex-marketplace/plugins/superpowers-mega-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/superpowers-mega-pack/SOURCE.md",
+      "source_ledger": [],
+      "license_path": "codex-marketplace/plugins/superpowers-mega-pack/LICENSE",
+      "bundle_manifest": "codex-marketplace/plugins/superpowers-mega-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/superpowers-mega-pack/skills",
+      "provenance_refs": [],
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/superpowers-mega-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null

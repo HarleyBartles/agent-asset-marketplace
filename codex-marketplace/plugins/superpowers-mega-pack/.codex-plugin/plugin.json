@@ -1,0 +1,48 @@
+{
+  "name": "superpowers-mega-pack",
+  "version": "1.0.0",
+  "description": "Pure third-party Superpowers workflow mega pack.",
+  "author": {
+    "name": "Jesse Vincent",
+    "email": "jesse@fsck.com",
+    "url": "https://github.com/obra"
+  },
+  "homepage": "https://github.com/obra/superpowers",
+  "repository": "https://github.com/obra/superpowers",
+  "license": "MIT",
+  "keywords": [
+    "brainstorming",
+    "subagent-driven-development",
+    "skills",
+    "planning",
+    "tdd",
+    "debugging",
+    "code-review",
+    "workflow",
+    "mega-pack"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Superpowers Mega Pack",
+    "shortDescription": "Pure third-party Superpowers workflow mega pack",
+    "longDescription": "Codex marketplace mega pack for the retained Superpowers skills projected verbatim from third-party source custody.",
+    "developerName": "Jesse Vincent",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "I've got an idea for something I'd like to build.",
+      "Let's add a feature to this project."
+    ],
+    "websiteURL": "https://github.com/obra/superpowers",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "brandColor": "#F59E0B",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}
