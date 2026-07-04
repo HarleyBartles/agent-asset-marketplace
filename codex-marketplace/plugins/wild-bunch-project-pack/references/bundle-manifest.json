@@ -4,65 +4,30 @@
   "bundle_type": "projection-lane",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
-  "canonical_source_roots": [
-    "sources/first_party/skills"
-  ],
-  "source_of_truth": [
-    "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
-    "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
-    "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
-    "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
-  ],
-  "projection_policy": "Project only the four Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest.",
+  "is_mega_pack": false,
   "source_families": [
     "first_party"
   ],
-  "candidate_count": 4,
-  "imported_count": 4,
-  "skipped_count": 0,
-  "blocked_count": 0,
-  "dependency_topology": [
-    {
-      "plugin": "game-studio",
-      "bridge_skills": [
-        "wild-bunch-browser-game"
-      ],
-      "required_skills": [],
-      "selected_skills": [],
-      "rationale": "Install game-studio separately; the browser-game bridge only coordinates against that dependency plugin."
-    },
-    {
-      "plugin": "dotnet-kit",
-      "bridge_skills": [
-        "wild-bunch-dotnet-architecture"
-      ],
-      "required_skills": [],
-      "selected_skills": [],
-      "rationale": "Install dotnet-kit separately; the dotnet architecture bridge does not copy the dependency inventory."
-    },
-    {
-      "plugin": "architecture-pack",
-      "bridge_skills": [
-        "wild-bunch-dotnet-architecture"
-      ],
-      "required_skills": [
-        "cqrs-event-sourcing"
-      ],
-      "selected_skills": [],
-      "rationale": "cqrs-event-sourcing stays on architecture-pack as a required dependency skill."
-    }
+  "notes": [
+    "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
+    "Selected-skill projections are explicit and rare; this pack currently has none."
   ],
+  "provenance_refs": [
+    "provenance/wild-bunch-project-pack.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "wild-bunch-project-doctrine",
+      "canonical_name": "wild-bunch-browser-game",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
-      "local_path": "skills/wild-bunch-project-doctrine",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
+      "local_path": "skills/wild-bunch-browser-game",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party wild-bunch-project-doctrine skill."
+      "provenance_note": "Projected verbatim from the first-party wild-bunch-browser-game skill."
     },
     {
       "canonical_name": "wild-bunch-domain-modeling",
@@ -87,25 +52,35 @@
       "provenance_note": "Projected verbatim from the first-party wild-bunch-dotnet-architecture skill."
     },
     {
-      "canonical_name": "wild-bunch-browser-game",
+      "canonical_name": "wild-bunch-project-doctrine",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
-      "local_path": "skills/wild-bunch-browser-game",
+      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
+      "local_path": "skills/wild-bunch-project-doctrine",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party wild-bunch-browser-game skill."
+      "provenance_note": "Projected verbatim from the first-party wild-bunch-project-doctrine skill."
     }
   ],
-  "notes": [
-    "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
-    "Selected-skill projections are explicit and rare; this pack currently has none."
-  ],
-  "provenance_refs": [
-    "provenance/wild-bunch-project-pack.md"
-  ],
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT",
-  "is_mega_pack": false
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/wild-bunch-project-pack/SOURCE.md",
+    "source_ledger": [
+      "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
+      "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
+      "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
+      "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
+    ],
+    "license_path": "codex-marketplace/plugins/wild-bunch-project-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills",
+    "provenance_refs": [
+      "provenance/wild-bunch-project-pack.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

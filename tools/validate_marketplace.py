@@ -709,172 +709,21 @@ def _normalize_string_list(value: object, *, context: str, field_name: str, allo
     return tuple(normalized)
 
 
-def _normalize_dependency_topology(bundle_manifest: dict, *, bundle_name: str) -> tuple[dict[str, object], ...]:
-    topology = bundle_manifest.get("dependency_topology", [])
-    if not isinstance(topology, list):
-        raise ValueError(f"{bundle_name} bundle manifest dependency_topology must be a list")
-    if not topology:
-        raise ValueError(f"{bundle_name} bundle manifest dependency_topology must be non-empty")
-
-    normalized: list[dict[str, object]] = []
-    seen_plugins: set[str] = set()
-    for index, entry in enumerate(topology):
-        if not isinstance(entry, dict):
-            raise ValueError(f"{bundle_name} bundle manifest dependency_topology entry {index} must be an object")
-        plugin = entry.get("plugin")
-        if not isinstance(plugin, str) or not plugin.strip():
-            raise ValueError(f"{bundle_name} bundle manifest dependency_topology entry {index} needs a plugin name")
-        if plugin in seen_plugins:
-            raise ValueError(f"{bundle_name} bundle manifest dependency_topology entry duplicated: {plugin}")
-        seen_plugins.add(plugin)
-
-        bridge_skills = _normalize_string_list(
-            entry.get("bridge_skills"),
-            context=f"{bundle_name} bundle manifest dependency_topology entry {plugin}",
-            field_name="bridge_skills",
-            allow_empty=False,
-        )
-        required_skills = _normalize_string_list(
-            entry.get("required_skills", []),
-            context=f"{bundle_name} bundle manifest dependency_topology entry {plugin}",
-            field_name="required_skills",
-            allow_empty=True,
-        )
-        selected_skills = _normalize_string_list(
-            entry.get("selected_skills", []),
-            context=f"{bundle_name} bundle manifest dependency_topology entry {plugin}",
-            field_name="selected_skills",
-            allow_empty=True,
-        )
-        rationale = entry.get("rationale")
-        if not isinstance(rationale, str) or not rationale.strip():
-            raise ValueError(f"{bundle_name} bundle manifest dependency_topology entry {plugin} needs a rationale")
-        normalized.append(
-            {
-                "plugin": plugin,
-                "bridge_skills": bridge_skills,
-                "required_skills": required_skills,
-                "selected_skills": selected_skills,
-                "rationale": rationale,
-            }
-        )
-
-    return tuple(normalized)
-
-
-def _validate_project_pack_dependency_topology(bundle_manifest: dict, *, bundle_name: str, plugin_root: str) -> None:
-    topology = _normalize_dependency_topology(bundle_manifest, bundle_name=bundle_name)
-    contracts_by_plugin = {entry["plugin"]: entry for entry in topology}
-    project_skill_names = _load_skill_inventory(plugin_root)
-
-    def warn(message: str) -> None:
-        print(f"WARN {message}")
-
-    for spec in MARKETPLACE_PLUGIN_SPECS:
-        if spec["plugin_root"] == plugin_root:
-            continue
-        if spec["name"] == "house-skills":
-            # The Wild Bunch project pack is intentionally projected from the
-            # first-party source surface, so overlap with house-skills is a
-            # source-mirror relationship rather than a dependency topology bug.
-            continue
-
-        plugin_name = spec["name"]
-        plugin_skill_names = _load_skill_inventory(spec["plugin_root"])
-        overlap = project_skill_names & plugin_skill_names
-        if not overlap:
-            continue
-
-        contract = contracts_by_plugin.get(plugin_name)
-        if contract is None:
-            warn(
-                f"{bundle_name} bundle manifest has material overlap with active marketplace plugin {plugin_name} without dependency topology: {sorted(overlap)}"
-            )
-            continue
-
-        if overlap == plugin_skill_names:
-            warn(f"{bundle_name} bundle manifest duplicates the entire {plugin_name} inventory")
-
-        bridge_skills = set(contract["bridge_skills"])
-        required_skills = set(contract["required_skills"])
-        selected_skills = set(contract["selected_skills"])
-
-        missing_required = required_skills - plugin_skill_names
-        if missing_required:
-            warn(
-                f"{bundle_name} bundle manifest dependency topology for {plugin_name} is missing required dependency-plugin skills: {sorted(missing_required)}"
-            )
-
-        copied_required = required_skills & project_skill_names
-        if copied_required:
-            warn(
-                f"{bundle_name} bundle manifest dependency topology for {plugin_name} copies required dependency-plugin skills into the project pack: {sorted(copied_required)}"
-            )
-
-        missing_bridges = bridge_skills - project_skill_names
-        if missing_bridges:
-            warn(
-                f"{bundle_name} bundle manifest dependency topology for {plugin_name} is missing bridge skills: {sorted(missing_bridges)}"
-            )
-
-        if overlap:
-            if not bridge_skills:
-                warn(
-                    f"{bundle_name} bundle manifest dependency topology for {plugin_name} needs a bridge skill when projected skills overlap the dependency plugin"
-                )
-            if selected_skills != overlap:
-                warn(
-                    f"{bundle_name} bundle manifest dependency topology for {plugin_name} must list the exact selected-skill projection that overlaps the dependency plugin"
-                )
-        elif selected_skills:
-            warn(
-                f"{bundle_name} bundle manifest dependency topology for {plugin_name} declares selected skills that are not present in the project pack: {sorted(selected_skills)}"
-            )
-
-
-def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
-    # Projection-lane manifests are validated by the materializer --check, but
-    # Wild Bunch still needs topology validation here so dependency-plugin drift
-    # is caught in the repo-facing validation path.
-    if bundle_manifest.get("bundle_name") != "wild-bunch-project-pack":
-        raise ValueError("wild-bunch-project-pack bundle manifest bundle_name mismatch")
+def validate_projection_pack_manifest(bundle_manifest: dict, *, bundle_name: str, plugin_root: str) -> None:
+    if bundle_manifest.get("bundle_name") != bundle_name:
+        raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError("wild-bunch-project-pack bundle manifest bundle_version mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
     if bundle_manifest.get("bundle_type") not in {"projection-lane", "project-scoped-codex-plugin-projection"}:
-        raise ValueError("wild-bunch-project-pack bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
-        raise ValueError("wild-bunch-project-pack bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/wild-bunch-project-pack":
-        raise ValueError("wild-bunch-project-pack bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_roots") != [
-        "sources/first_party/skills",
-    ]:
-        raise ValueError("wild-bunch-project-pack bundle manifest canonical_source_roots mismatch")
-    if bundle_manifest.get("source_of_truth") != [
-        "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
-        "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
-        "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
-        "sources/first_party/skills/wild-bunch-browser-game/SKILL.md",
-    ]:
-        raise ValueError("wild-bunch-project-pack bundle manifest source_of_truth mismatch")
-    if bundle_manifest.get("projection_policy") != (
-        "Project only the four Wild Bunch native and bridge skills and keep dependency plugins installed separately. Any selected-skill projection must be explicit, narrow, and justified in the manifest."
-    ):
-        raise ValueError("wild-bunch-project-pack bundle manifest projection_policy mismatch")
-    if bundle_manifest.get("source_families") != ["first_party"]:
-        raise ValueError("wild-bunch-project-pack bundle manifest source_families mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest bundle_type mismatch")
+    if bundle_manifest.get("plugin_root") != plugin_root:
+        raise ValueError(f"{bundle_name} bundle manifest plugin_root mismatch")
 
     entries = bundle_manifest.get("entries", [])
-    if bundle_manifest.get("candidate_count") != len(entries):
-        raise ValueError("wild-bunch-project-pack bundle manifest candidate count mismatch")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"{bundle_name} bundle manifest entries must be a non-empty list")
 
-    imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
-    if bundle_manifest.get("imported_count") != len(imported_entries):
-        raise ValueError("wild-bunch-project-pack bundle manifest imported count mismatch")
-    if bundle_manifest.get("blocked_count") != 0:
-        raise ValueError("wild-bunch-project-pack bundle manifest blocked count mismatch")
-    if bundle_manifest.get("skipped_count") != 0:
-        raise ValueError("wild-bunch-project-pack bundle manifest skipped count mismatch")
+    imported_entries = entries
 
     skill_dir = ROOT / plugin_root / "skills"
     actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
@@ -886,43 +735,66 @@ def validate_wild_bunch_bundle_manifest(bundle_manifest: dict, plugin_root: str)
         and len(Path(entry["local_path"]).parts) >= 2
     )
     if actual_skill_dirs != imported_skill_dirs:
-        raise ValueError("wild-bunch-project-pack bundle manifest imported skill inventory mismatch")
+        raise ValueError(f"{bundle_name} bundle manifest imported skill inventory mismatch")
+
+    source_families = bundle_manifest.get("source_families")
+    if not isinstance(source_families, list) or not source_families:
+        raise ValueError(f"{bundle_name} bundle manifest source_families must be a non-empty list")
+    expected_source_families = sorted({entry.get("source_family") for entry in imported_entries if isinstance(entry.get("source_family"), str)})
+    if sorted(source_families) != expected_source_families:
+        raise ValueError(f"{bundle_name} bundle manifest source_families mismatch")
 
     for entry in imported_entries:
         canonical_name = entry.get("canonical_name")
         if not canonical_name or not isinstance(canonical_name, str):
-            raise ValueError("wild-bunch-project-pack imported entry is missing canonical_name")
+            raise ValueError(f"{bundle_name} imported entry is missing canonical_name")
         if entry.get("source_category") not in {"first_party", "third_party"}:
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} has an invalid source_category")
-        if entry.get("content_mode") != "verbatim":
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} must be verbatim")
-        if entry.get("copy_expectation") != "byte_identical":
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} copy expectation mismatch")
+            raise ValueError(f"{bundle_name} entry {canonical_name} has an invalid source_category")
+        content_mode = entry.get("content_mode")
+        if content_mode not in {"verbatim", "normalised", "adapted"}:
+            raise ValueError(f"{bundle_name} entry {canonical_name} has an invalid content_mode")
+        expected_copy_expectation = {
+            "verbatim": "byte_identical",
+            "normalised": "normalised_from_source",
+            "adapted": "adapted_from_source",
+        }[content_mode]
+        if entry.get("copy_expectation") != expected_copy_expectation:
+            raise ValueError(f"{bundle_name} entry {canonical_name} copy expectation mismatch")
         if not entry.get("provenance_note"):
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} needs a provenance note")
+            raise ValueError(f"{bundle_name} entry {canonical_name} needs a provenance note")
+        adaptation_overlay_path = entry.get("adaptation_overlay_path")
+        if content_mode == "verbatim" and adaptation_overlay_path is not None:
+            raise ValueError(f"{bundle_name} verbatim entry {canonical_name} must not declare adaptation_overlay_path")
+        if content_mode in {"normalised", "adapted"} and not isinstance(adaptation_overlay_path, str):
+            raise ValueError(f"{bundle_name} entry {canonical_name} needs an adaptation overlay path")
+        if isinstance(adaptation_overlay_path, str):
+            check_path_exists(ROOT / adaptation_overlay_path)
 
         canonical_source_path = entry.get("canonical_source_path")
         local_path = entry.get("local_path")
         if not isinstance(canonical_source_path, str) or not canonical_source_path:
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} is missing canonical_source_path")
+            raise ValueError(f"{bundle_name} entry {canonical_name} is missing canonical_source_path")
         if not isinstance(local_path, str) or not local_path:
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} is missing local_path")
+            raise ValueError(f"{bundle_name} entry {canonical_name} is missing local_path")
         source_root = ROOT / canonical_source_path
         projected_root = ROOT / plugin_root / local_path
         check_path_exists(source_root)
         check_path_exists(projected_root)
-        _trees_match_canonicalized(source_root, projected_root)
+        if source_root.is_dir():
+            if content_mode == "verbatim":
+                validate_tree_mirror(source_root, projected_root, canonical_name)
+            else:
+                overlay_root = ROOT / adaptation_overlay_path  # type: ignore[arg-type]
+                validate_tree_reconstruction(source_root, overlay_root, projected_root, canonical_name)
+        else:
+            if not _files_match_canonicalized(source_root, projected_root):
+                raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
         if projected_root.name != canonical_name:
-            raise ValueError(f"wild-bunch-project-pack entry {canonical_name} drifted from its source copy")
+            raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
 
     notes = bundle_manifest.get("notes", [])
-    if notes != [
-        "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
-        "Selected-skill projections are explicit and rare; this pack currently has none.",
-    ]:
-        raise ValueError("wild-bunch-project-pack bundle manifest notes mismatch")
-
-    _validate_project_pack_dependency_topology(bundle_manifest, bundle_name="wild-bunch-project-pack", plugin_root=plugin_root)
+    if not isinstance(notes, list) or not notes:
+        raise ValueError(f"{bundle_name} bundle manifest notes mismatch")
 
 
 def normalize_superpowers_projection_text(text: str) -> str:
@@ -1722,16 +1594,19 @@ def main() -> int:
             bundle_manifest_json = check_json(bundle_path)
             if spec["name"] == "adventures-pack":
                 validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
-            elif spec["name"] == "wild-bunch-project-pack":
-                validate_wild_bunch_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif spec["name"] == "superpowers-plus":
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif bundle_manifest_json.get("bundle_type") == "projection-lane":
-                # Projection-lane manifests are validated by the materializer
-                # (tools/materialize_projection.py --check). Skip legacy
-                # field-level validation here — Task 15 will do the full
-                # validator update.
-                pass
+                if "entries" in bundle_manifest_json:
+                    validate_projection_pack_manifest(
+                        bundle_manifest_json,
+                        bundle_name=spec["name"],
+                        plugin_root=spec["plugin_root"],
+                    )
+                elif "components" in bundle_manifest_json:
+                    validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
+                else:
+                    raise ValueError(f"{spec['name']} projection-lane bundle manifest has no recognized payload shape")
             else:
                 validate_skill_bundle_manifest(
                     bundle_manifest_json,

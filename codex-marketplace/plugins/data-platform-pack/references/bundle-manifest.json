@@ -2,10 +2,22 @@
   "bundle_name": "data-platform-pack",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/data-platform-pack",
   "is_mega_pack": false,
   "source_families": [
     "planetscale"
   ],
+  "notes": [
+    "Data-platform bundle projected from retained PlanetScale custody only.",
+    "The ECC data-platform slice has been removed from the active projection set."
+  ],
+  "provenance_refs": [
+    "provenance/data-platform-pack.md",
+    "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "entries": [
     {
       "canonical_name": "postgres",
@@ -24,14 +36,20 @@
       "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
     }
   ],
-  "notes": [
-    "Data-platform bundle projected from retained PlanetScale custody only.",
-    "The ECC data-platform slice has been removed from the active projection set."
-  ],
-  "provenance_refs": [
-    "provenance/data-platform-pack.md",
-    "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
-  ],
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT"
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
+    "source_ledger": [],
+    "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
+    "provenance_refs": [
+      "provenance/data-platform-pack.md",
+      "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

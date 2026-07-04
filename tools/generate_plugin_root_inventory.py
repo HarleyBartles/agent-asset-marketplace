@@ -37,7 +37,7 @@ def load_pack_registry() -> list[dict[str, Any]]:
     return packs
 
 
-def _registry_root_record(pack: dict[str, Any], *, index: int) -> tuple[str, str]:
+def _registry_root_record(pack: dict[str, Any], *, index: int) -> tuple[str, str, str]:
     is_mega_pack = pack.get("is_mega_pack") is True
     name_field = "mega_pack" if is_mega_pack else "bundle_name"
     root_field = "mega_pack_root" if is_mega_pack else "plugin_root"
@@ -47,27 +47,12 @@ def _registry_root_record(pack: dict[str, Any], *, index: int) -> tuple[str, str
         path=PACK_REGISTRY_PATH,
         field_name=f"packs[{index}].{root_field}",
     )
-    return name, plugin_root
-
-
-def _plugin_manifest_path(plugin_root: str) -> Path:
-    return ROOT / plugin_root / ".codex-plugin" / "plugin.json"
-
-
-def _load_plugin_category(name: str, plugin_root: str) -> str:
-    manifest_path = _plugin_manifest_path(plugin_root)
-    manifest = load_json(manifest_path)
-    manifest_name = _require_nonblank_string(
-        manifest.get("name"),
-        path=manifest_path,
-        field_name="name",
+    category = _require_nonblank_string(
+        pack.get("category"),
+        path=PACK_REGISTRY_PATH,
+        field_name=f"packs[{index}].category",
     )
-    if manifest_name != name:
-        raise ValueError(f"{manifest_path}: name must match registry root name {name}")
-    interface = manifest.get("interface")
-    if not isinstance(interface, dict):
-        raise ValueError(f"{manifest_path}: interface must be an object")
-    return _require_nonblank_string(interface.get("category"), path=manifest_path, field_name="interface.category")
+    return name, plugin_root, category
 
 
 def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
@@ -75,7 +60,7 @@ def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
     seen_names: set[str] = set()
     seen_plugin_roots: set[str] = set()
     for index, pack in enumerate(load_pack_registry()):
-        name, plugin_root = _registry_root_record(pack, index=index)
+        name, plugin_root, category = _registry_root_record(pack, index=index)
         if name in seen_names:
             raise ValueError(f"{PACK_REGISTRY_PATH}: duplicate active root name {name}")
         if plugin_root in seen_plugin_roots:
@@ -86,7 +71,7 @@ def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
             {
                 "order": index,
                 "name": name,
-                "category": _load_plugin_category(name, plugin_root),
+                "category": category,
                 "registry_path": f"./{plugin_root}",
                 "plugin_root": plugin_root,
                 "manifest_path": f"{plugin_root}/.codex-plugin/plugin.json",

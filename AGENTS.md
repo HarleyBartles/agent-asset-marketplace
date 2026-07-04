@@ -41,6 +41,11 @@ validators under `tools/` and wire them into the standard flow. Do not
 hand-edit projected skill trees, source maps, provenance maps, registry
 surfaces, or zip artifacts, and do not introduce pack-specific one-off scripts
 when a generic deterministic path is required.
+The editable custody inputs for marketplace generation and validation are the
+source trees, adapter/overlay trees, and the pack registry. Generated surfaces
+must stay derived from those inputs; do not invent extra pack-specific
+conventions in the outputs when the registry plus generators can express the
+shape.
 
 Discovery shortcut for generated projections: inspect the source skill under
 `sources/first_party/skills/` or `sources/third_party/`, then the owning

@@ -240,11 +240,18 @@
       "plugin_root": "codex-marketplace/plugins/adventures-pack",
       "plugin_manifest": "codex-marketplace/plugins/adventures-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/adventures-pack/SOURCE.md",
-      "source_ledger": [],
+      "source_ledger": [
+        "sources/first_party/skills/house-skills/decisions.json",
+        "sources/first_party/skills/house-skills/decisions.md",
+        "sources/first_party/skills/house-skills/intake.json",
+        "provenance/house-skills.md"
+      ],
       "license_reference": null,
       "bundle_manifest": "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/adventures-pack/skills",
-      "provenance_refs": [],
+      "provenance_refs": [
+        "provenance/adventures-pack.md"
+      ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/adventures-pack",
       "registry_alignment": {
@@ -297,16 +304,16 @@
       "plugin_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/wild-bunch-project-pack/SOURCE.md",
       "source_ledger": [
-        "sources/first_party/skills/house-skills/decisions.json",
-        "sources/first_party/skills/house-skills/decisions.md",
-        "sources/first_party/skills/house-skills/intake.json"
+        "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
+        "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
+        "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
+        "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
       ],
       "license_reference": null,
       "bundle_manifest": "codex-marketplace/plugins/wild-bunch-project-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/wild-bunch-project-pack/skills",
       "provenance_refs": [
-        "provenance/house-skills.md",
-        "codex-marketplace/plugins/wild-bunch-project-pack/references/provenance-map.json"
+        "provenance/wild-bunch-project-pack.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/wild-bunch-project-pack",
@@ -425,17 +432,12 @@
       "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
       "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
-      "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md"
-      ],
+      "source_ledger": [],
       "license_path": "codex-marketplace/plugins/api-contracts-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/api-contracts-pack/skills",
       "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/api-contracts-pack/references/source-map.md"
+        "provenance/api-contracts-pack.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
@@ -449,17 +451,12 @@
       "plugin_root": "codex-marketplace/plugins/architecture-pack",
       "plugin_manifest": "codex-marketplace/plugins/architecture-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",
-      "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md"
-      ],
+      "source_ledger": [],
       "license_path": "codex-marketplace/plugins/architecture-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/architecture-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/architecture-pack/skills",
       "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/architecture-pack/references/source-map.md"
+        "provenance/architecture-pack.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/architecture-pack",
@@ -473,17 +470,12 @@
       "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
       "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
-      "source_ledger": [
-        "provenance/codex-cortex-governance/intake.json",
-        "provenance/codex-cortex-governance/decisions.json",
-        "provenance/codex-cortex-governance/decisions.md"
-      ],
+      "source_ledger": [],
       "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
       "provenance_refs": [
-        "provenance/codex-cortex.md",
-        "codex-marketplace/plugins/language-patterns-pack/references/source-map.md"
+        "provenance/language-patterns-pack.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
@@ -528,10 +520,7 @@
       "license_reference": null,
       "bundle_manifest": "codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/frontend-pack/skills",
-      "provenance_refs": [
-        "provenance/frontend-pack.md",
-        "codex-marketplace/plugins/frontend-pack/references/source-map.md"
-      ],
+      "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/frontend-pack",
       "registry_alignment": {
@@ -545,10 +534,7 @@
       "plugin_root": "codex-marketplace/plugins/data-platform-pack",
       "plugin_manifest": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/LICENSE",
-        "sources/third_party/ecc/upstream/source-custody.md"
-      ],
+      "source_ledger": [],
       "license_path": "codex-marketplace/plugins/data-platform-pack/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/data-platform-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/data-platform-pack/skills",
@@ -573,8 +559,7 @@
       "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/planning-pack/skills",
       "provenance_refs": [
-        "provenance/planning-pack.md",
-        "codex-marketplace/plugins/planning-pack/references/source-map.md"
+        "provenance/planning-pack.md"
       ],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/planning-pack",
@@ -595,9 +580,7 @@
       "license_path": "codex-marketplace/plugins/feature-sliced-design/LICENSE",
       "bundle_manifest": "codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json",
       "skills_path": "codex-marketplace/plugins/feature-sliced-design/skills",
-      "provenance_refs": [
-        "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
-      ],
+      "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
       "registry_alignment": {
@@ -713,23 +696,6 @@
       "provenance_refs": [],
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/everything-codex-code",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "superpowers-mega-pack",
-      "plugin_root": "codex-marketplace/plugins/superpowers-mega-pack",
-      "plugin_manifest": "codex-marketplace/plugins/superpowers-mega-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/superpowers-mega-pack/SOURCE.md",
-      "source_ledger": [],
-      "license_path": "codex-marketplace/plugins/superpowers-mega-pack/LICENSE",
-      "bundle_manifest": "codex-marketplace/plugins/superpowers-mega-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/superpowers-mega-pack/skills",
-      "provenance_refs": [],
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/superpowers-mega-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null

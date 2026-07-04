@@ -98,6 +98,12 @@ def load_pack_registry() -> list[dict[str, Any]]:
 
 
 PACKS = [pack for pack in load_pack_registry() if not pack.get("is_mega_pack")]
+OPTIONAL_MANIFEST_FIELDS = (
+    "marketplace_root",
+    "canonical_source_roots",
+    "source_of_truth",
+    "projection_policy",
+)
 
 
 def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
@@ -107,6 +113,7 @@ def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
         "bundle_name": pack["bundle_name"],
         "bundle_version": pack["bundle_version"],
         "bundle_type": pack["bundle_type"],
+        "marketplace_root": ".agents/plugins/marketplace.json",
         "plugin_root": pack["plugin_root"],
         "is_mega_pack": pack["is_mega_pack"],
         "source_families": source_families,
@@ -116,6 +123,10 @@ def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
         "plugin_license": "MIT",
         "entries": entries,
     }
+    for field_name in OPTIONAL_MANIFEST_FIELDS:
+        value = pack.get(field_name)
+        if value is not None:
+            manifest[field_name] = value
     if not pack.get("is_mega_pack"):
         manifest["repo_index"] = _repo_index(
             pack["plugin_root"],

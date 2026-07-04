@@ -51,3 +51,42 @@
 - Current branch state is not yet globally consistent with the new deterministic inventory/prune contract.
 - `custody-pack-registry.json` no longer lists several legacy plugin roots, but downstream generators and checks still assume at least `adventures-pack` exists.
 - Because another task owns the registry/docs cleanup lane, I restored all non-task verification residue and did not commit generated marketplace/tree changes outside this task's owned files.
+
+---
+
+## 2026-07-04 follow-up: registry-owned category reconciliation fix
+
+### What I changed
+
+- Updated `tools/generate_plugin_root_inventory.py` so inventory reconciliation no longer reads category from projected `.codex-plugin/plugin.json` files.
+- Required `packs[*].category` directly on each active record in `codex-marketplace/custody-pack-registry.json`, including mega-pack records.
+- Kept the emitted `plugin-roots.json` shape, ordering, and `manifest_path` field unchanged so the existing reconcile/check wiring still consumes the same inventory structure.
+- Preserved clear registry-scoped failures by raising `ValueError` messages of the form:
+  - `codex-marketplace/custody-pack-registry.json: packs[N].category must be a non-empty string`
+
+### Tests run
+
+- `py -3 tools/generate_plugin_root_inventory.py --check`
+  - Result: failed as expected against the current live registry because `codex-marketplace/custody-pack-registry.json` does not yet include `packs[0].category`.
+  - Error: `C:\WORK\repo-workspace\agent-asset-marketplace\.worktrees\codex-superpowers-powershell-adapter\codex-marketplace\custody-pack-registry.json: packs[0].category must be a non-empty string`
+- Temporary inline Python verification using a copied registry with synthetic `category` values on every pack record
+  - Result: passed.
+  - Verified that `reconcile_plugin_root_inventory()` uses registry-owned category values directly and does not need projected plugin manifests to produce inventory rows.
+- Temporary inline Python verification removing `category` from the first copied pack record
+  - Result: passed.
+  - Verified the missing-field failure path is explicit and names the registry temp path plus `packs[0].category`.
+
+### Results
+
+- Task-1 category reconciliation is now registry-owned inside the generator instead of being derived from generated plugin manifests.
+- The current live worktree still cannot pass the inventory `--check` gate until the parallel registry repair lands, because the live `custody-pack-registry.json` in this branch is still missing the required `category` fields.
+
+### Files changed
+
+- `tools/generate_plugin_root_inventory.py`
+- `.superpowers/sdd/task-1-report.md`
+
+### Concerns
+
+- I did not touch `codex-marketplace/custody-pack-registry.json`, per task instructions.
+- The live branch still has pre-existing registry/inventory drift owned by the parallel worker, so only the focused generator checks are green right now.

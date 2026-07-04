@@ -45,6 +45,12 @@ Deterministic pack rule: if a skillset pack or projection lane lacks a
 manifest-driven generator/validator path, add one to `tools/` and wire it into
 the standard update/check entrypoints. Do not paper over missing pipeline
 support with a pack-specific one-off script or a hand-edited output surface.
+The editable source custody for marketplace generation is the trio of source
+trees, adapters/overlays, and `codex-marketplace/custody-pack-registry.json`.
+Treat generated manifests, projection trees, source maps, provenance maps, and
+zip artifacts as derived outputs only. If a convention can be expressed in the
+registry and generator, do that instead of hand-rolling per-pack output
+conventions in the generated surfaces.
 
 ## Review guidelines
 

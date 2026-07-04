@@ -1,6 +1,10 @@
 {
   "bundle_name": "architecture-pack",
   "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/architecture-pack",
+  "is_mega_pack": false,
   "source_families": [
     "claude-cortex"
   ],
@@ -13,8 +17,6 @@
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "bundle_type": "projection-lane",
-  "is_mega_pack": false,
   "entries": [
     {
       "canonical_name": "cqrs-event-sourcing",
@@ -61,5 +63,20 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
-  ]
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",
+    "source_ledger": [],
+    "license_path": "codex-marketplace/plugins/architecture-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/architecture-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/architecture-pack/skills",
+    "provenance_refs": [
+      "provenance/architecture-pack.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

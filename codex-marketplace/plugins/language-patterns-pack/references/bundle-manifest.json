@@ -1,6 +1,10 @@
 {
   "bundle_name": "language-patterns-pack",
   "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
+  "is_mega_pack": false,
   "source_families": [
     "claude-cortex"
   ],
@@ -13,8 +17,6 @@
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "bundle_type": "projection-lane",
-  "is_mega_pack": false,
   "entries": [
     {
       "canonical_name": "async-python-patterns",
@@ -84,5 +86,20 @@
       "adapted_author": "Harley Bartles",
       "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
     }
-  ]
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
+    "source_ledger": [],
+    "license_path": "codex-marketplace/plugins/language-patterns-pack/LICENSE",
+    "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
+    "provenance_refs": [
+      "provenance/language-patterns-pack.md"
+    ],
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

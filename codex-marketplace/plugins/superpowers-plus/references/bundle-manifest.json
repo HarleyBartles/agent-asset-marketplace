@@ -2,6 +2,7 @@
   "bundle_name": "superpowers-plus",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
   "is_mega_pack": false,
   "source_families": [
