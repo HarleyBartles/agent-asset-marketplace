@@ -1,0 +1,7 @@
+schema_version: 1
+metadata:
+  source_category: third_party
+  upstream_name: brainstorming
+  upstream_version: v6.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/brainstorming
+  projection_plugin: superpowers-plus

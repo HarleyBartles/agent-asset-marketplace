@@ -1,13 +1,6 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "brainstorming",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
-      "local_path": "skills/brainstorming"
-    },
-    {
       "canonical_name": "dispatching-parallel-agents",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -50,20 +43,6 @@
       "local_path": "skills/requesting-code-review"
     },
     {
-      "canonical_name": "subagent-driven-development",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development",
-      "local_path": "skills/subagent-driven-development"
-    },
-    {
-      "canonical_name": "systematic-debugging",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging",
-      "local_path": "skills/systematic-debugging"
-    },
-    {
       "canonical_name": "test-driven-development",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -100,6 +79,30 @@
     }
   ],
   "adapted_projections": [
+    {
+      "canonical_name": "brainstorming",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
+      "local_path": "skills/brainstorming",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/brainstorming"
+    },
+    {
+      "canonical_name": "subagent-driven-development",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development",
+      "local_path": "skills/subagent-driven-development",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/subagent-driven-development"
+    },
+    {
+      "canonical_name": "systematic-debugging",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging",
+      "local_path": "skills/systematic-debugging",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/systematic-debugging"
+    },
     {
       "canonical_name": "using-superpowers",
       "source_category": "third_party",
