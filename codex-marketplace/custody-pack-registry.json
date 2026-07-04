@@ -3,71 +3,186 @@
   "description": "Editable inventory for deterministic projection-lane and mega-pack generation.",
   "packs": [
     {
-      "bundle_name": "repo-worker-pack",
-      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+      "source_family": "first_party",
+      "custody_root": "sources/first_party/skills",
+      "mega_pack": "house-skills",
+      "mega_pack_root": "codex-marketplace/plugins/house-skills",
+      "category": "Productivity",
+      "is_mega_pack": true
+    },
+    {
+      "bundle_name": "adventures-pack",
+      "plugin_root": "codex-marketplace/plugins/adventures-pack",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Repo worker pack combines first-party repo hygiene skills into a compositional baseline.",
-        "The bundle stays first-party only and keeps the repo-worker entrypoint thin and complementary."
+        "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle."
       ],
       "source_ledger": [
-        "sources/first_party/skills/repo-worker-base",
-        "sources/first_party/skills/base-doctrine",
-        "sources/first_party/skills/work-mode-router",
-        "sources/first_party/skills/linear-issue-shaping",
-        "sources/first_party/skills/using-linear",
-        "sources/first_party/skills/boring-loop",
-        "sources/first_party/skills/connector-safety",
-        "sources/first_party/skills/github-operations",
-        "sources/first_party/skills/unslop-plus",
-        "sources/first_party/skills/context-safety"
+        "sources/first_party/skills/house-skills/decisions.json",
+        "sources/first_party/skills/house-skills/decisions.md",
+        "sources/first_party/skills/house-skills/intake.json",
+        "provenance/house-skills.md"
       ],
       "provenance_refs": [
-        "provenance/repo-worker-pack.md",
-        "codex-marketplace/plugins/repo-worker-pack/references/source-map.md"
+        "provenance/adventures-pack.md"
       ],
       "entries": [
         {
-          "canonical_name": "repo-worker-base",
+          "canonical_name": "adventures-project-doctrine",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/repo-worker-base",
-          "local_path": "skills/repo-worker-base",
-          "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/adventures-project-doctrine",
+          "local_path": "skills/adventures-project-doctrine",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-project-doctrine/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
         },
         {
-          "canonical_name": "base-doctrine",
+          "canonical_name": "adventures-bootstrap",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/base-doctrine",
-          "local_path": "skills/base-doctrine",
-          "provenance_note": "Projected verbatim from the first-party base-doctrine skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/adventures-bootstrap",
+          "local_path": "skills/adventures-bootstrap",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-bootstrap/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
         },
         {
-          "canonical_name": "work-mode-router",
+          "canonical_name": "adventures-github-operations",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/work-mode-router",
-          "local_path": "skills/work-mode-router",
-          "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/adventures-github-operations",
+          "local_path": "skills/adventures-github-operations",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-github-operations/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
         },
         {
-          "canonical_name": "linear-issue-shaping",
+          "canonical_name": "adventures-visual-preproduction",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
-          "local_path": "skills/linear-issue-shaping",
-          "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/adventures-visual-preproduction",
+          "local_path": "skills/adventures-visual-preproduction",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-visual-preproduction/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-storyboard-preflight",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-storyboard-preflight",
+          "local_path": "skills/adventures-storyboard-preflight",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-storyboard-preflight/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-visual-bible-creator",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-creator",
+          "local_path": "skills/adventures-visual-bible-creator",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-visual-bible-creator/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-visual-bible-interpreter",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-visual-bible-interpreter",
+          "local_path": "skills/adventures-visual-bible-interpreter",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-image-qa",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-image-qa",
+          "local_path": "skills/adventures-image-qa",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-image-qa/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-asset-sheet-compiler",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-asset-sheet-compiler",
+          "local_path": "skills/adventures-asset-sheet-compiler",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "adventures-frame-buster",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/adventures-frame-buster",
+          "local_path": "skills/adventures-frame-buster",
+          "lane": "adventures",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/adventures-frame-buster/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        },
+        {
+          "canonical_name": "don-logan-boundary",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/don-logan-boundary",
+          "local_path": "skills/don-logan-boundary",
+          "lane": "dependency",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/don-logan-boundary/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
         },
         {
           "canonical_name": "using-linear",
@@ -76,58 +191,95 @@
           "source_family": "first_party",
           "canonical_source_path": "sources/first_party/skills/using-linear",
           "local_path": "skills/using-linear",
-          "provenance_note": "Projected verbatim from the first-party using-linear skill.",
-          "copy_expectation": "byte_identical"
-        },
+          "lane": "dependency",
+          "provenance_note": "First-party skill projected verbatim into the adventures-pack plugin.",
+          "source_path": "sources/first_party/skills/using-linear/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+        }
+      ]
+    },
+    {
+      "source_family": "unslop",
+      "custody_root": "sources/third_party/unslop/upstream",
+      "mega_pack": "unslop-plus",
+      "mega_pack_root": "codex-marketplace/plugins/unslop-plus",
+      "category": "Productivity",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "game-studio",
+      "custody_root": "sources/third_party/game-studio/upstream",
+      "mega_pack": "game-studio",
+      "mega_pack_root": "codex-marketplace/plugins/game-studio",
+      "category": "Productivity",
+      "is_mega_pack": true
+    },
+    {
+      "bundle_name": "wild-bunch-project-pack",
+      "plugin_root": "codex-marketplace/plugins/wild-bunch-project-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Wild Bunch keeps only native and bridge skills; dependency plugins install separately.",
+        "Selected-skill projections are explicit and rare; this pack currently has none."
+      ],
+      "source_ledger": [
+        "sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md",
+        "sources/first_party/skills/wild-bunch-domain-modeling/SKILL.md",
+        "sources/first_party/skills/wild-bunch-dotnet-architecture/SKILL.md",
+        "sources/first_party/skills/wild-bunch-browser-game/SKILL.md"
+      ],
+      "provenance_refs": [
+        "provenance/wild-bunch-project-pack.md"
+      ],
+      "entries": [
         {
-          "canonical_name": "boring-loop",
+          "canonical_name": "wild-bunch-project-doctrine",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/boring-loop",
-          "local_path": "skills/boring-loop",
-          "provenance_note": "Projected verbatim from the first-party boring-loop skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
+          "local_path": "skills/wild-bunch-project-doctrine",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party wild-bunch-project-doctrine skill."
         },
         {
-          "canonical_name": "connector-safety",
+          "canonical_name": "wild-bunch-domain-modeling",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/connector-safety",
-          "local_path": "skills/connector-safety",
-          "provenance_note": "Projected verbatim from the first-party connector-safety skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/wild-bunch-domain-modeling",
+          "local_path": "skills/wild-bunch-domain-modeling",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party wild-bunch-domain-modeling skill."
         },
         {
-          "canonical_name": "github-operations",
+          "canonical_name": "wild-bunch-dotnet-architecture",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/github-operations",
-          "local_path": "skills/github-operations",
-          "provenance_note": "Projected verbatim from the first-party github-operations skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture",
+          "local_path": "skills/wild-bunch-dotnet-architecture",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party wild-bunch-dotnet-architecture skill."
         },
         {
-          "canonical_name": "unslop-plus",
+          "canonical_name": "wild-bunch-browser-game",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/unslop-plus",
-          "local_path": "skills/unslop-plus",
-          "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "context-safety",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/context-safety",
-          "local_path": "skills/context-safety",
-          "provenance_note": "Projected verbatim from the first-party context-safety skill.",
-          "copy_expectation": "byte_identical"
+          "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
+          "local_path": "skills/wild-bunch-browser-game",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party wild-bunch-browser-game skill."
         }
       ]
     },
@@ -136,6 +288,7 @@
       "plugin_root": "codex-marketplace/plugins/superpowers-plus",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Coding",
       "is_mega_pack": false,
       "notes": [
         "Superpowers+ is the mixed projection-lane bundle for the retained Superpowers workflow skills.",
@@ -392,10 +545,359 @@
       ]
     },
     {
+      "bundle_name": "repo-worker-pack",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Repo worker pack combines first-party repo hygiene skills into a compositional baseline.",
+        "The bundle stays first-party only and keeps the repo-worker entrypoint thin and complementary."
+      ],
+      "source_ledger": [
+        "sources/first_party/skills/repo-worker-base",
+        "sources/first_party/skills/base-doctrine",
+        "sources/first_party/skills/work-mode-router",
+        "sources/first_party/skills/linear-issue-shaping",
+        "sources/first_party/skills/using-linear",
+        "sources/first_party/skills/boring-loop",
+        "sources/first_party/skills/connector-safety",
+        "sources/first_party/skills/github-operations",
+        "sources/first_party/skills/unslop-plus",
+        "sources/first_party/skills/context-safety"
+      ],
+      "provenance_refs": [
+        "provenance/repo-worker-pack.md",
+        "codex-marketplace/plugins/repo-worker-pack/references/source-map.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "repo-worker-base",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+          "local_path": "skills/repo-worker-base",
+          "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "base-doctrine",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/base-doctrine",
+          "local_path": "skills/base-doctrine",
+          "provenance_note": "Projected verbatim from the first-party base-doctrine skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "work-mode-router",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/work-mode-router",
+          "local_path": "skills/work-mode-router",
+          "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "linear-issue-shaping",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+          "local_path": "skills/linear-issue-shaping",
+          "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "using-linear",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/using-linear",
+          "local_path": "skills/using-linear",
+          "provenance_note": "Projected verbatim from the first-party using-linear skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "boring-loop",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/boring-loop",
+          "local_path": "skills/boring-loop",
+          "provenance_note": "Projected verbatim from the first-party boring-loop skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "connector-safety",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/connector-safety",
+          "local_path": "skills/connector-safety",
+          "provenance_note": "Projected verbatim from the first-party connector-safety skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "github-operations",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/github-operations",
+          "local_path": "skills/github-operations",
+          "provenance_note": "Projected verbatim from the first-party github-operations skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "unslop-plus",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/unslop-plus",
+          "local_path": "skills/unslop-plus",
+          "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "context-safety",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/context-safety",
+          "local_path": "skills/context-safety",
+          "provenance_note": "Projected verbatim from the first-party context-safety skill.",
+          "copy_expectation": "byte_identical"
+        }
+      ]
+    },
+    {
+      "source_family": "dotnet-claude-kit",
+      "custody_root": "sources/third_party/dotnet-claude-kit/upstream",
+      "mega_pack": "dotnet-kit",
+      "mega_pack_root": "codex-marketplace/plugins/dotnet-kit",
+      "category": "Productivity",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "claude-cortex",
+      "custody_root": "sources/third_party/claude-cortex/upstream",
+      "mega_pack": "codex-cortex",
+      "mega_pack_root": "codex-marketplace/plugins/codex-cortex",
+      "category": "Productivity",
+      "is_mega_pack": true
+    },
+    {
+      "bundle_name": "api-contracts-pack",
+      "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Two-slice contract-doctrine pack.",
+        "The bundle projects the retained api-design-patterns guidance and the narrower openapi-specification companion slice into an installable marketplace shape.",
+        "openapi-specification composes with api-design-patterns and stays within the OpenAPI-specific boundary."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [
+        "provenance/api-contracts-pack.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "api-design-patterns",
+          "source_category": "third_party",
+          "content_mode": "normalised",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
+          "local_path": "skills/api-design-patterns",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns",
+          "copy_expectation": "normalised_from_source",
+          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+        },
+        {
+          "canonical_name": "openapi-specification",
+          "source_category": "third_party",
+          "content_mode": "adapted",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
+          "local_path": "skills/openapi-specification",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification",
+          "copy_expectation": "adapted_from_source",
+          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
+          "adapted_author": "Harley Bartles",
+          "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
+        }
+      ]
+    },
+    {
+      "bundle_name": "architecture-pack",
+      "plugin_root": "codex-marketplace/plugins/architecture-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Architecture bundle projected from retained Codex Cortex custody only.",
+        "The ECC architecture slice has been removed from the active projection set."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [
+        "provenance/architecture-pack.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "cqrs-event-sourcing",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
+          "local_path": "skills/cqrs-event-sourcing",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "database-design-patterns",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+          "local_path": "skills/database-design-patterns",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "event-driven-architecture",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
+          "local_path": "skills/event-driven-architecture",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        }
+      ]
+    },
+    {
+      "bundle_name": "language-patterns-pack",
+      "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Language-patterns bundle projected from retained Claude-Cortex custody only.",
+        "The ECC language/framework slice has been removed from the active projection set."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [
+        "provenance/language-patterns-pack.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "async-python-patterns",
+          "source_category": "third_party",
+          "content_mode": "normalised",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns",
+          "local_path": "skills/async-python-patterns",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns",
+          "copy_expectation": "normalised_from_source",
+          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+        },
+        {
+          "canonical_name": "python-performance-optimization",
+          "source_category": "third_party",
+          "content_mode": "adapted",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization",
+          "local_path": "skills/python-performance-optimization",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-performance-optimization",
+          "copy_expectation": "adapted_from_source",
+          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
+          "adapted_author": "Harley Bartles",
+          "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata."
+        },
+        {
+          "canonical_name": "python-testing-patterns",
+          "source_category": "third_party",
+          "content_mode": "normalised",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns",
+          "local_path": "skills/python-testing-patterns",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns",
+          "copy_expectation": "normalised_from_source",
+          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+        },
+        {
+          "canonical_name": "typescript-advanced-patterns",
+          "source_category": "third_party",
+          "content_mode": "adapted",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
+          "local_path": "skills/typescript-advanced-patterns",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns",
+          "copy_expectation": "adapted_from_source",
+          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
+          "adapted_author": "Harley Bartles",
+          "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
+        }
+      ]
+    },
+    {
       "bundle_name": "security-pack",
       "plugin_root": "codex-marketplace/plugins/security-pack",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
         "Security pack combines the retained Claude Cortex security foundations with the selected ECC safety and security-review skills.",
@@ -516,10 +1018,281 @@
       ]
     },
     {
+      "bundle_name": "frontend-pack",
+      "plugin_root": "codex-marketplace/plugins/frontend-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Frontend bundle projected from retained NickCrew/Claude-Cortex and feature-sliced custody only.",
+        "The ECC frontend slice has been removed from the active projection set."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [],
+      "entries": [
+        {
+          "canonical_name": "accessibility-audit",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
+          "local_path": "skills/accessibility-audit",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "feature-sliced-design",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+          "local_path": "skills/feature-sliced-design",
+          "import_status": "imported",
+          "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+          "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/feature-sliced/skills",
+          "source_family": "feature-sliced",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "interaction-design",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
+          "local_path": "skills/interaction-design",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "react-performance-optimization",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
+          "local_path": "skills/react-performance-optimization",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "ux-review",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
+          "local_path": "skills/ux-review",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "webapp-testing",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
+          "local_path": "skills/webapp-testing",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        }
+      ]
+    },
+    {
+      "bundle_name": "data-platform-pack",
+      "plugin_root": "codex-marketplace/plugins/data-platform-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Data-platform bundle projected from retained PlanetScale custody only.",
+        "The ECC data-platform slice has been removed from the active projection set."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [
+        "provenance/data-platform-pack.md",
+        "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "postgres",
+          "source_category": "third_party",
+          "content_mode": "adapted",
+          "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
+          "local_path": "skills/postgres",
+          "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres",
+          "import_status": "imported",
+          "source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres/SKILL.md",
+          "source_author": "PlanetScale",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/planetscale/database-skills",
+          "source_family": "planetscale",
+          "copy_expectation": "adapted_from_source",
+          "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
+        }
+      ]
+    },
+    {
+      "bundle_name": "planning-pack",
+      "plugin_root": "codex-marketplace/plugins/planning-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Productivity",
+      "is_mega_pack": false,
+      "notes": [
+        "Planning pack covering requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
+        "The retained upstream skills keep their source-path references intact in the projected pack.",
+        "All 5 skills are projected verbatim from Claude-Cortex custody."
+      ],
+      "source_ledger": [],
+      "provenance_refs": [
+        "provenance/planning-pack.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "development-estimation",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
+          "local_path": "skills/development-estimation",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "mermaid-diagramming",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+          "local_path": "skills/mermaid-diagramming",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "release-analysis",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
+          "local_path": "skills/release-analysis",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "release-prep",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
+          "local_path": "skills/release-prep",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "requirements-discovery",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
+          "local_path": "skills/requirements-discovery",
+          "import_status": "imported",
+          "source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery/SKILL.md",
+          "source_author": "NickCrew",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "source_family": "claude-cortex",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        }
+      ]
+    },
+    {
+      "bundle_name": "feature-sliced-design",
+      "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
+      "category": "Coding",
+      "is_mega_pack": false,
+      "notes": [
+        "Standalone FSD v2.1 skill for frontend architecture with layers, slices, and segments.",
+        "Vendored verbatim from feature-sliced/skills at commit 653e7f3187eac51311652bf787a72bcf56325eea.",
+        "Added as part of MARK-290."
+      ],
+      "source_ledger": [
+        "sources/third_party/feature-sliced/upstream/LICENSE",
+        "sources/third_party/feature-sliced/upstream/source-custody.md"
+      ],
+      "provenance_refs": [],
+      "entries": [
+        {
+          "canonical_name": "feature-sliced-design",
+          "source_category": "third_party",
+          "content_mode": "verbatim",
+          "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+          "local_path": "skills/feature-sliced-design",
+          "import_status": "imported",
+          "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+          "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/feature-sliced/skills",
+          "source_family": "feature-sliced",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        }
+      ]
+    },
+    {
       "bundle_name": "agentic-workflows",
       "plugin_root": "codex-marketplace/plugins/agentic-workflows",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Coding",
       "is_mega_pack": false,
       "notes": [
         "Agentic workflows pack groups the selected ECC workflow mechanics into one topical home.",
@@ -626,6 +1399,7 @@
       "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Coding",
       "is_mega_pack": false,
       "notes": [
         "Agentic evaluation pack groups the scoring and audit skills that help decide whether an agent workflow is actually earning its keep.",
@@ -693,6 +1467,7 @@
       "plugin_root": "codex-marketplace/plugins/research-pack",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
         "Research pack keeps the evidence-first research workflow as its own domain home.",
@@ -729,6 +1504,7 @@
       "plugin_root": "codex-marketplace/plugins/engineering-pack",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
+      "category": "Coding",
       "is_mega_pack": false,
       "notes": [
         "Engineering pack groups the selected ECC implementation and deployment skills into a practical delivery home.",
@@ -775,60 +1551,11 @@
       ]
     },
     {
-      "source_family": "first_party",
-      "custody_root": "sources/first_party/skills",
-      "mega_pack": "house-skills",
-      "mega_pack_root": "codex-marketplace/plugins/house-skills",
-      "is_mega_pack": true
-    },
-    {
-      "source_family": "claude-cortex",
-      "custody_root": "sources/third_party/claude-cortex/upstream",
-      "mega_pack": "codex-cortex",
-      "mega_pack_root": "codex-marketplace/plugins/codex-cortex",
-      "is_mega_pack": true
-    },
-    {
-      "source_family": "superpowers",
-      "custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-      "mega_pack": "superpowers-mega-pack",
-      "mega_pack_root": "codex-marketplace/plugins/superpowers-mega-pack",
-      "is_mega_pack": true,
-      "entry_selection": {
-        "source_categories": [
-          "third_party"
-        ],
-        "content_modes": [
-          "verbatim"
-        ]
-      }
-    },
-    {
-      "source_family": "game-studio",
-      "custody_root": "sources/third_party/game-studio/upstream",
-      "mega_pack": "game-studio",
-      "mega_pack_root": "codex-marketplace/plugins/game-studio",
-      "is_mega_pack": true
-    },
-    {
-      "source_family": "dotnet-claude-kit",
-      "custody_root": "sources/third_party/dotnet-claude-kit/upstream",
-      "mega_pack": "dotnet-kit",
-      "mega_pack_root": "codex-marketplace/plugins/dotnet-kit",
-      "is_mega_pack": true
-    },
-    {
-      "source_family": "unslop",
-      "custody_root": "sources/third_party/unslop/upstream",
-      "mega_pack": "unslop-plus",
-      "mega_pack_root": "codex-marketplace/plugins/unslop-plus",
-      "is_mega_pack": true
-    },
-    {
       "source_family": "ecc",
       "custody_root": "sources/third_party/ecc/upstream/skills",
       "mega_pack": "everything-codex-code",
       "mega_pack_root": "codex-marketplace/plugins/everything-codex-code",
+      "category": "Coding",
       "is_mega_pack": true
     }
   ]

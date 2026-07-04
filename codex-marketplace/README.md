@@ -12,27 +12,12 @@ Repo-local marketplace posture lives in
 `repo-local-marketplace-policy.json`; the generator keeps those surfaces
 current.
 
-This repo now keeps the active Codex plugin bundles to one protected
-convention: `codex-marketplace/plugins/house-skills/`,
-`codex-marketplace/plugins/adventures-pack/`,
-`codex-marketplace/plugins/unslop/`,
-`codex-marketplace/plugins/game-studio/`,
-`codex-marketplace/plugins/wild-bunch-project-pack/`,
-`codex-marketplace/plugins/superpowers-plus/`,
-`codex-marketplace/plugins/repo-worker-pack/`,
-`codex-marketplace/plugins/dotnet-kit/`,
-`codex-marketplace/plugins/codex-cortex/`,
-`codex-marketplace/plugins/api-contracts-pack/`,
-`codex-marketplace/plugins/architecture-pack/`,
-`codex-marketplace/plugins/language-patterns-pack/`,
-`codex-marketplace/plugins/security-pack/`,
-`codex-marketplace/plugins/frontend-pack/`,
-`codex-marketplace/plugins/agentic-workflows/`,
-`codex-marketplace/plugins/agentic-evaluation/`,
-`codex-marketplace/plugins/research-pack/`,
-`codex-marketplace/plugins/engineering-pack/`, and
-`codex-marketplace/plugins/everything-codex-code/`, in that order, with the source
-manifest exposing only those roots and no legacy marketplace roots beside them.
+This repo keeps the active Codex plugin bundles under
+`codex-marketplace/plugins/`, and the authoritative active-root list lives in
+`codex-marketplace/custody-pack-registry.json` and the derived
+`codex-marketplace/plugin-roots.json`. `superpowers-plus` is the retained mixed
+projection-lane bundle over Superpowers source; `superpowers-mega-pack` is not
+an active maintained marketplace root.
 
 Editable source custody lives under `sources/first_party/` and
 `sources/third_party/`. The marketplace roots under `codex-marketplace/plugins/`
@@ -40,8 +25,9 @@ are the installable projections.
 
 The editable active-root inventory is `codex-marketplace/plugin-roots.json`.
 The manifest export and the protected-root validators derive their active root
-set from that file instead of duplicating the active roots in Python constants.
-Pack bundle-manifest generation and mega-pack generation are both driven by
+set from that generated file instead of duplicating the active roots in Python
+constants. Pack bundle-manifest generation, active-root generation, and any
+remaining mega-pack generation are driven by
 `codex-marketplace/custody-pack-registry.json`; mega-pack nodes are marked with
 `is_mega_pack: true`.
 

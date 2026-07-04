@@ -61,4 +61,6 @@ This plugin projects the mixed Superpowers+ workflow and routing helpers.
 
 ## Boundary
 - This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
-- The pure third-party mega pack for this source family is `superpowers-mega-pack`.
+- `superpowers-plus` is the retained mixed projection-lane bundle for this source family.
+- `codex-marketplace/custody-pack-registry.json` determines whether any Superpowers-derived root is actively projected.
+- `superpowers-mega-pack` is not a maintained active marketplace bundle.
