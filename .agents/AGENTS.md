@@ -22,3 +22,7 @@ Navigation stays in generated `INDEX.md` files.
 - Treat `.agents/playbooks/` and `.agents/runbooks/` as the canonical home for
   reusable workflow guidance. Use playbooks for scenario routing and runbooks
   for deterministic procedures.
+- Treat `sources/first_party/**` as mutable source custody: edit the source
+  directly when the skill or asset changes, then regenerate projections.
+- Treat `sources/third_party/**` as immutable custody: do not edit it directly;
+  express behavior changes through `adapters/**` and regenerate the projection.

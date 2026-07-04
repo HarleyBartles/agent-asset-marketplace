@@ -16,6 +16,7 @@ EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__"}
 EXCLUDED_FILE_NAMES = {".git"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
+SUPERPOWERS_SDD_ROOT = ROOT / ".superpowers" / "sdd"
 
 
 @dataclass(frozen=True)
@@ -41,6 +42,7 @@ def should_descend(child: Path) -> bool:
         and not is_skill_root(child)
         and (child == THIRD_PARTY_ROOT or not is_under(child, THIRD_PARTY_ROOT))
         and not is_under(child, SKILL_ZIPS_ROOT)
+        and not is_under(child, SUPERPOWERS_SDD_ROOT)
     )
 
 
@@ -192,6 +194,7 @@ def main() -> int:
         and path.name == "INDEX.md"
         and (not is_under(path, THIRD_PARTY_ROOT) or path == THIRD_PARTY_ROOT / "INDEX.md")
         and not is_under(path, SKILL_ZIPS_ROOT)
+        and not is_under(path, SUPERPOWERS_SDD_ROOT)
     }
     unexpected = sorted(path for path in actual_paths if path not in expected_paths)
     missing = sorted(path for path in expected_paths if path not in actual_paths)

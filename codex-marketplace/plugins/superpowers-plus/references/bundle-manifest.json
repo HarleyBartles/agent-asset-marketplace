@@ -2,23 +2,36 @@
   "bundle_name": "superpowers-plus",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-  "is_mega_pack": true,
-  "mega_pack_for": "superpowers",
+  "is_mega_pack": false,
   "source_families": [
     "house-skills",
     "superpowers"
   ],
+  "notes": [
+    "Superpowers+ is the mixed projection-lane bundle for the retained Superpowers workflow skills.",
+    "The bundle mixes first-party helpers, third-party verbatim skills, and adapter-backed projections."
+  ],
+  "provenance_refs": [
+    "provenance/superpowers-plus.md",
+    "codex-marketplace/plugins/superpowers-plus/references/source-map.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
   "entries": [
     {
       "canonical_name": "brainstorming",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
       "local_path": "skills/brainstorming",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/brainstorming",
+      "adapted_author": "Harley Bartles",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_note": "Kept bash helpers as the primary surface and added sibling PowerShell script versions.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
@@ -118,12 +131,15 @@
     {
       "canonical_name": "subagent-driven-development",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development",
       "local_path": "skills/subagent-driven-development",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/subagent-driven-development",
+      "adapted_author": "Harley Bartles",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_note": "Kept bash helpers as the primary surface, added sibling PowerShell versions, and scoped SDD output by plan.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
@@ -133,12 +149,15 @@
     {
       "canonical_name": "systematic-debugging",
       "source_category": "third_party",
-      "content_mode": "verbatim",
+      "content_mode": "adapted",
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
       "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/systematic-debugging",
+      "adapted_author": "Harley Bartles",
+      "copy_expectation": "adapted_from_source",
+      "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
+      "adaptation_note": "Kept the bash helper as the primary surface and added a sibling PowerShell version.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
@@ -239,11 +258,14 @@
       "source_family": "superpowers"
     }
   ],
-  "notes": [
-    "Auto-generated mega-pack manifest for the superpowers custody root.",
-    "Curated cross-family entries are preserved from the prior manifest.",
-    "Regenerate with: py -3 tools/generate_mega_packs.py"
-  ],
-  "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT"
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

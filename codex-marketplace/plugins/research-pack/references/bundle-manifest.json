@@ -2,6 +2,7 @@
   "bundle_name": "research-pack",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/research-pack",
   "is_mega_pack": false,
   "source_families": [
@@ -35,18 +36,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/research-pack/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/ecc/upstream/source-custody.md",
-      "sources/third_party/ecc/upstream/manifest.json",
-      "sources/third_party/ecc/upstream/LICENSE"
-    ],
-    "license_path": "codex-marketplace/plugins/research-pack/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/research-pack/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/research-pack/skills",
-    "provenance_refs": [
-      "provenance/ecc-domain-packs.md",
-      "codex-marketplace/plugins/research-pack/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

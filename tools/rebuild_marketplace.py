@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -11,6 +13,8 @@ from pathlib import Path
 from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_root
 
 ROOT = Path(__file__).resolve().parent.parent
+PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace/plugins"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 
 
 def _run_tool(script_name: str, *args: str) -> None:
@@ -25,6 +29,35 @@ def _run_git(*args: str) -> None:
 def _git_output(*args: str) -> str:
     completed = subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True)
     return completed.stdout
+
+
+def _load_active_plugin_root_names() -> set[str]:
+    inventory = json.loads(PLUGIN_ROOT_INVENTORY_PATH.read_text(encoding="utf-8"))
+    roots = inventory.get("roots")
+    if not isinstance(roots, list):
+        raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: roots must be a list")
+    active_names: set[str] = set()
+    for entry in roots:
+        if not isinstance(entry, dict):
+            raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: roots must contain objects")
+        if entry.get("enabled") is False:
+            continue
+        name = entry.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(f"{PLUGIN_ROOT_INVENTORY_PATH}: enabled roots require a non-empty name")
+        active_names.add(name)
+    return active_names
+
+
+def _prune_stale_projected_plugin_roots() -> None:
+    active_names = _load_active_plugin_root_names()
+    for child in sorted(PLUGIN_ROOTS_PATH.iterdir(), key=lambda path: path.name):
+        if not child.is_dir() or child.name in active_names:
+            continue
+        if not (child / ".codex-plugin" / "plugin.json").is_file():
+            continue
+        shutil.rmtree(child)
+        print(f"Pruned stale projected plugin root {child.relative_to(ROOT)}")
 
 
 def _retained_verbatim_paths() -> set[str]:
@@ -61,6 +94,8 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
+    _run_tool("generate_plugin_root_inventory.py")
+    _prune_stale_projected_plugin_roots()
     _run_tool("update_skill_artifacts.py", "--all", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("generate_repo_index.py")

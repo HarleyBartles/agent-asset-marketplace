@@ -16,7 +16,7 @@ from yaml.nodes import MappingNode, ScalarNode, SequenceNode
 ROOT = Path(__file__).resolve().parents[1]
 OVERLAY_FILENAME = "overlay.yaml"
 OPENAI_AGENT_FILENAME = Path("agents/openai.yaml")
-ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata"}
+ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata", "generated_files"}
 ALLOWED_LINE_EDIT_OPS = {"insert_before", "insert_after", "replace", "delete"}
 UTF8_BOM = b"\xef\xbb\xbf"
 
@@ -98,6 +98,24 @@ def _validate_relative_file_path(file_path: Any, *, overlay_root: Path) -> str:
     return candidate.as_posix()
 
 
+def _validate_repo_relative_source_path(file_path: Any, *, overlay_root: Path) -> str:
+    if not isinstance(file_path, str) or not file_path.strip():
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source paths must be nonblank strings")
+    candidate = Path(file_path)
+    if candidate.is_absolute():
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source path must be relative: {file_path}")
+    if any(part == ".." for part in candidate.parts):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source path must not traverse upward: {file_path}")
+    if any(char in file_path for char in "*?[]"):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source path must not use globs: {file_path}")
+    resolved = ROOT / candidate
+    if not resolved.exists():
+        raise FileNotFoundError(f"{overlay_root / OVERLAY_FILENAME} generated source path does not exist: {file_path}")
+    if not resolved.is_file():
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source path must resolve to a file: {file_path}")
+    return candidate.as_posix()
+
+
 def _validate_line_list(value: Any, *, overlay_root: Path, field_name: str) -> list[str]:
     if not isinstance(value, list) or not value:
         raise ValueError(f"{overlay_root / OVERLAY_FILENAME} {field_name} must be a non-empty list")
@@ -107,6 +125,17 @@ def _validate_line_list(value: Any, *, overlay_root: Path, field_name: str) -> l
             raise ValueError(f"{overlay_root / OVERLAY_FILENAME} {field_name} entries must be strings")
         normalized.append(item)
     return normalized
+
+
+def _validate_generated_file(entry: Any, *, overlay_root: Path) -> dict[str, Any]:
+    if not isinstance(entry, dict):
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated_files entries must contain mappings")
+    unknown_keys = sorted(set(entry) - {"source", "path"})
+    if unknown_keys:
+        raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated_files entry contains unsupported keys: {', '.join(unknown_keys)}")
+    source = _validate_repo_relative_source_path(entry.get("source"), overlay_root=overlay_root)
+    path = _validate_relative_file_path(entry.get("path"), overlay_root=overlay_root)
+    return {"source": source, "path": path}
 
 
 def _validate_line_number(value: Any, *, overlay_root: Path, field_name: str) -> int:
@@ -176,7 +205,7 @@ def _validate_line_edit(edit: Any, *, overlay_root: Path) -> dict[str, Any]:
 def load_overlay_spec(overlay_root: Path) -> dict[str, Any]:
     overlay_yaml = overlay_root / OVERLAY_FILENAME
     if not overlay_yaml.exists():
-        return {"schema_version": 1, "deletes": [], "metadata": None}
+        return {"schema_version": 1, "deletes": [], "metadata": None, "generated_files": []}
 
     parsed = _load_yaml_mapping(overlay_yaml)
     schema_version = parsed.get("schema_version")
@@ -191,6 +220,14 @@ def load_overlay_spec(overlay_root: Path) -> dict[str, Any]:
         if not isinstance(deletes, list):
             raise ValueError(f"{overlay_yaml} deletes must be a list")
         normalized_deletes = [_validate_delete_path(delete_path, overlay_root=overlay_root) for delete_path in deletes]
+        generated_files = parsed.get("generated_files", [])
+        if generated_files is None:
+            generated_files = []
+        if not isinstance(generated_files, list):
+            raise ValueError(f"{overlay_yaml} generated_files must be a list")
+        normalized_generated_files = [
+            _validate_generated_file(generated_file, overlay_root=overlay_root) for generated_file in generated_files
+        ]
 
         metadata = parsed.get("metadata")
         if metadata is not None and not isinstance(metadata, dict):
@@ -200,16 +237,25 @@ def load_overlay_spec(overlay_root: Path) -> dict[str, Any]:
             "schema_version": 1,
             "deletes": normalized_deletes,
             "metadata": metadata,
+            "generated_files": normalized_generated_files,
         }
 
     if schema_version == 2:
-        unknown_keys = sorted(set(parsed) - {"schema_version", "edits", "metadata"})
+        unknown_keys = sorted(set(parsed) - {"schema_version", "edits", "metadata", "generated_files"})
         if unknown_keys:
             raise ValueError(f"{overlay_yaml} contains unsupported keys: {', '.join(unknown_keys)}")
         edits = parsed.get("edits")
         if not isinstance(edits, list) or not edits:
             raise ValueError(f"{overlay_yaml} edits must be a non-empty list")
         normalized_edits = [_validate_line_edit(edit, overlay_root=overlay_root) for edit in edits]
+        generated_files = parsed.get("generated_files", [])
+        if generated_files is None:
+            generated_files = []
+        if not isinstance(generated_files, list):
+            raise ValueError(f"{overlay_yaml} generated_files must be a list")
+        normalized_generated_files = [
+            _validate_generated_file(generated_file, overlay_root=overlay_root) for generated_file in generated_files
+        ]
         metadata = parsed.get("metadata")
         if metadata is not None and not isinstance(metadata, dict):
             raise ValueError(f"{overlay_yaml} metadata must be a mapping when present")
@@ -217,6 +263,7 @@ def load_overlay_spec(overlay_root: Path) -> dict[str, Any]:
             "schema_version": 2,
             "edits": normalized_edits,
             "metadata": metadata,
+            "generated_files": normalized_generated_files,
         }
 
     raise ValueError(f"{overlay_yaml} schema_version must be 1 or 2")
@@ -284,6 +331,21 @@ def _apply_line_edits(staged_root: Path, overlay_root: Path, edits: list[dict[st
 
         with target.open("w", encoding="utf-8", newline="\n") as handle:
             handle.write("\n".join(current_lines) + ("\n" if current_lines else ""))
+
+
+def _apply_generated_files(staged_root: Path, overlay_root: Path, generated_files: list[dict[str, Any]]) -> None:
+    for generated_file in generated_files:
+        source = ROOT / generated_file["source"]
+        rel_path = generated_file["path"]
+        target = staged_root / rel_path
+        if not source.exists():
+            raise FileNotFoundError(f"{overlay_root / OVERLAY_FILENAME} generated source missing: {generated_file['source']}")
+        if source.is_dir():
+            raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated source must be a file: {generated_file['source']}")
+        if target.exists() and target.is_dir():
+            raise ValueError(f"{overlay_root / OVERLAY_FILENAME} generated target cannot be a directory: {rel_path}")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
 
 
 def validate_openai_agent_yaml(agent_yaml_path: Path) -> None:
@@ -444,6 +506,7 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
                 _apply_deletes(staged_root, overlay_root, spec["deletes"])
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
+            _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
         shutil.copytree(staged_root, _as_windows_long_path(destination_root))
     finally:
         tempdir.cleanup()
@@ -472,6 +535,7 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
                 _apply_deletes(staged_root, overlay_root, spec["deletes"])
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
+            _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
     except Exception:
         tempdir.cleanup()
         raise

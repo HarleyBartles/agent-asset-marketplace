@@ -1,6 +1,6 @@
 # Source
 
-This plugin projects the first-party Superpowers+ workflow and routing helpers only.
+This plugin projects the mixed Superpowers+ workflow and routing helpers.
 
 ## Source custody
 ### House Skills custody
@@ -60,5 +60,7 @@ This plugin projects the first-party Superpowers+ workflow and routing helpers o
 - `generated/skill-zips/superpowers-plus/writing-skills/skill.zip`
 
 ## Boundary
-- Only the first-party Superpowers+ helper and router skills are projected.
-- ECC-specific routing has been removed from this bundle and will be reconsidered in a follow-up reprojection issue if needed.
+- This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
+- `superpowers-plus` is the retained mixed projection-lane bundle for this source family.
+- `codex-marketplace/custody-pack-registry.json` determines whether any Superpowers-derived root is actively projected.
+- `superpowers-mega-pack` is not a maintained active marketplace bundle.

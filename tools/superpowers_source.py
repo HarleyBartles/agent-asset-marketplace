@@ -13,7 +13,7 @@ from marketplace_utils import load_json
 ROOT = Path(__file__).resolve().parents[1]
 SUPERPOWERS_FAMILY_ROOT = ROOT / "sources/third_party/superpowers/obra-superpowers"
 SUPERPOWERS_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json"
-SUPERPOWERS_CUSTODY_REGISTRY_PATH = ROOT / "codex-marketplace/custody-mega-pack-registry.json"
+SUPERPOWERS_CUSTODY_REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 SUPERPOWERS_PROVENANCE_PATH = ROOT / "provenance/superpowers-plus.md"
 SUPERPOWERS_SOURCE_MD_PATH = ROOT / "codex-marketplace/plugins/superpowers-plus/SOURCE.md"
 SUPERPOWERS_ADAPTER_OVERLAY_PATH = ROOT / "adapters/codex/superpowers-plus/using-superpowers/overlay.yaml"
@@ -31,8 +31,10 @@ def superpowers_custody_root_from_registry() -> str:
     registry = load_json(SUPERPOWERS_CUSTODY_REGISTRY_PATH)
     if not isinstance(registry, dict):
         raise ValueError(f"{SUPERPOWERS_CUSTODY_REGISTRY_PATH}: registry must be a mapping")
-    for mapping in registry.get("mappings", []):
-        if isinstance(mapping, dict) and mapping.get("source_family") == "superpowers":
+    for mapping in registry.get("packs", []):
+        if not isinstance(mapping, dict) or not mapping.get("is_mega_pack"):
+            continue
+        if mapping.get("source_family") == "superpowers":
             custody_root = mapping.get("custody_root")
             if isinstance(custody_root, str) and custody_root.strip():
                 return custody_root

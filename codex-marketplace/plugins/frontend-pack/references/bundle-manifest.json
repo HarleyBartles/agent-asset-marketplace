@@ -1,6 +1,10 @@
 {
   "bundle_name": "frontend-pack",
   "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/frontend-pack",
+  "is_mega_pack": false,
   "source_families": [
     "claude-cortex",
     "feature-sliced"
@@ -9,10 +13,9 @@
     "Frontend bundle projected from retained NickCrew/Claude-Cortex and feature-sliced custody only.",
     "The ECC frontend slice has been removed from the active projection set."
   ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "bundle_type": "projection-lane",
-  "is_mega_pack": false,
   "entries": [
     {
       "canonical_name": "accessibility-audit",
@@ -104,5 +107,15 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
-  ]
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/frontend-pack/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

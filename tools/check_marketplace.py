@@ -29,6 +29,7 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
+    _run_tool("generate_plugin_root_inventory.py", "--check")
     _run_tool("update_skill_artifacts.py", "--check", "--full-regeneration", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("validate_marketplace.py")

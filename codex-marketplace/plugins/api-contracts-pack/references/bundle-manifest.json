@@ -1,6 +1,10 @@
 {
   "bundle_name": "api-contracts-pack",
   "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
+  "is_mega_pack": false,
   "source_families": [
     "claude-cortex"
   ],
@@ -14,8 +18,6 @@
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "bundle_type": "projection-lane",
-  "is_mega_pack": false,
   "entries": [
     {
       "canonical_name": "api-design-patterns",
@@ -51,5 +53,15 @@
       "adapted_author": "Harley Bartles",
       "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
     }
-  ]
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/api-contracts-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/api-contracts-pack/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

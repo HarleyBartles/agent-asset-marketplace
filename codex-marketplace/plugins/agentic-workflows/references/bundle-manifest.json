@@ -2,6 +2,7 @@
   "bundle_name": "agentic-workflows",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/agentic-workflows",
   "is_mega_pack": false,
   "source_families": [
@@ -105,18 +106,8 @@
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",
-    "source_ledger": [
-      "sources/third_party/ecc/upstream/source-custody.md",
-      "sources/third_party/ecc/upstream/manifest.json",
-      "sources/third_party/ecc/upstream/LICENSE"
-    ],
-    "license_path": "codex-marketplace/plugins/agentic-workflows/LICENSE",
     "bundle_manifest": "codex-marketplace/plugins/agentic-workflows/references/bundle-manifest.json",
     "skills_path": "codex-marketplace/plugins/agentic-workflows/skills",
-    "provenance_refs": [
-      "provenance/ecc-domain-packs.md",
-      "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
-    ],
     "agents_md": null,
     "registry_alignment": {
       "status": "aligned",

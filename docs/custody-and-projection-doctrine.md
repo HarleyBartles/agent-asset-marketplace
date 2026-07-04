@@ -61,17 +61,19 @@ package mirrors. Harley curates which entries appear in which plugin.
 
 ## Mega-packs
 
-Seven mega-packs carry broad bundles, one per custody root. The
-custody→mega-pack mapping is declared in
-`codex-marketplace/custody-mega-pack-registry.json` and drives automatic
-mega-pack manifest generation:
+Six maintained mega-packs carry the remaining broad custody-root bundles. The
+editable pack registry in `codex-marketplace/custody-pack-registry.json`
+declares both projection-lane pack nodes and mega-pack nodes; mega-pack nodes
+set `is_mega_pack: true`, while the registry as a whole decides which plugin
+roots are actively projected:
 
 - **`house-skills`** — first-party mega-pack. Every first-party skill goes
   in `house-skills` AND wherever else it is bundled.
 - **`codex-cortex`** — claude-cortex source family mega-pack.
 - **`everything-codex-code`** — ecc source family mega-pack.
-- **`superpowers-plus`** — superpowers source family mega-pack. Also
-  carries curated cross-family first-party projections.
+- **`superpowers-plus`** — retained mixed projection-lane bundle over the
+  Superpowers source family. It also carries curated cross-family first-party
+  projections and is not a maintained mega-pack root.
 - **`game-studio`** — game-studio source family mega-pack.
 - **`dotnet-kit`** — dotnet-claude-kit source family mega-pack.
 - **`unslop-plus`** — unslop source family mega-pack.
@@ -81,8 +83,8 @@ Mega-pack manifests are **generated**, not hand-edited. Run
 such as `house-skills` are rebuilt from active first-party source custody under
 `sources/first_party/skills/`, while non-first-party mega-packs are rebuilt from
 the union of selected plugin entries by custody root. The generator preserves
-curated cross-family entries (e.g. first-party skills projected into
-`superpowers-plus`).
+curated cross-family entries where a retained projection-lane bundle mixes
+families, such as the first-party helper carried in `superpowers-plus`.
 
 Mega-packs are inclusion rules, not exclusion rules. A skill appearing in a
 mega-pack may also appear in other plugins. Validation

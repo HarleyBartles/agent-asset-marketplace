@@ -10,7 +10,7 @@ from typing import Any
 
 from marketplace_utils import ROOT, load_plugin_root_inventory, load_json
 
-REGISTRY_PATH = ROOT / "codex-marketplace/custody-mega-pack-registry.json"
+REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 SKIP_CONTENT_MODES = {"blocked", "skipped"}
 FIRST_PARTY_SOURCE_ROOT = ROOT / "sources" / "first_party" / "skills"
 
@@ -19,9 +19,12 @@ def load_mega_pack_registry() -> list[dict[str, Any]]:
     registry = load_json(REGISTRY_PATH)
     if registry.get("schema_version") != 1:
         raise ValueError(f"{REGISTRY_PATH}: schema_version must be 1")
-    mappings = registry.get("mappings")
-    if not isinstance(mappings, list) or not mappings:
-        raise ValueError(f"{REGISTRY_PATH}: mappings must be a non-empty list")
+    packs = registry.get("packs")
+    if not isinstance(packs, list) or not packs:
+        raise ValueError(f"{REGISTRY_PATH}: packs must be a non-empty list")
+    mappings = [pack for pack in packs if isinstance(pack, dict) and pack.get("is_mega_pack")]
+    if not mappings:
+        raise ValueError(f"{REGISTRY_PATH}: packs must contain at least one mega-pack node")
     return mappings
 
 
@@ -37,7 +40,29 @@ def load_plugin_manifest(plugin_root: Path) -> dict[str, Any] | None:
     return manifest
 
 
-def collect_entries_by_family(plugin_manifests: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+def _entry_matches_selection(entry: dict[str, Any], selection: dict[str, Any] | None) -> bool:
+    if selection is None:
+        return True
+    source_categories = selection.get("source_categories")
+    if source_categories is not None:
+        if not isinstance(source_categories, list) or not all(isinstance(item, str) for item in source_categories):
+            raise ValueError("entry_selection.source_categories must be a list of strings")
+        if source_categories and entry.get("source_category") not in source_categories:
+            return False
+    content_modes = selection.get("content_modes")
+    if content_modes is not None:
+        if not isinstance(content_modes, list) or not all(isinstance(item, str) for item in content_modes):
+            raise ValueError("entry_selection.content_modes must be a list of strings")
+        if content_modes and entry.get("content_mode") not in content_modes:
+            return False
+    return True
+
+
+def collect_entries_by_family(
+    plugin_manifests: list[dict[str, Any]],
+    *,
+    selection_by_family: dict[str, dict[str, Any] | None] | None = None,
+) -> dict[str, list[dict[str, Any]]]:
     """Collect all active entries from all plugin manifests, grouped by source_family."""
     by_family: dict[str, list[dict[str, Any]]] = {}
     for manifest in plugin_manifests:
@@ -51,6 +76,9 @@ def collect_entries_by_family(plugin_manifests: list[dict[str, Any]]) -> dict[st
                 continue
             family = entry.get("source_family")
             if not family:
+                continue
+            selection = None if selection_by_family is None else selection_by_family.get(family)
+            if not _entry_matches_selection(entry, selection):
                 continue
             by_family.setdefault(family, []).append(entry)
     return by_family
@@ -182,6 +210,7 @@ def generate_mega_pack_manifest(
     mega_pack_root: str,
     source_family: str,
     entries: list[dict[str, Any]],
+    entry_selection: dict[str, Any] | None = None,
     existing_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Generate a mega-pack manifest from collected entries.
@@ -190,13 +219,17 @@ def generate_mega_pack_manifest(
     *different* ``source_family`` than ``source_family`` are preserved
     as curated cross-family projections (e.g. first-party skills projected
     into the superpowers-plus mega-pack).  Entries with the matching
-    ``source_family`` are fully replaced by the generated set.
+    ``source_family`` are fully replaced by the generated set. When
+    ``entry_selection`` is provided, only entries matching that selection
+    are included.
     """
     # Deduplicate generated entries by canonical_name
     seen: dict[str, dict[str, Any]] = {}
     for entry in entries:
         name = entry.get("canonical_name")
         if not name:
+            continue
+        if not _entry_matches_selection(entry, entry_selection):
             continue
         if name not in seen:
             mega_entry = dict(entry)
@@ -210,7 +243,12 @@ def generate_mega_pack_manifest(
             if not isinstance(entry, dict):
                 continue
             ef = entry.get("source_family")
-            if ef and ef != source_family and entry.get("content_mode") not in SKIP_CONTENT_MODES:
+            if (
+                ef
+                and ef != source_family
+                and entry.get("content_mode") not in SKIP_CONTENT_MODES
+                and _entry_matches_selection(entry, entry_selection)
+            ):
                 name = entry.get("canonical_name")
                 if name and name not in seen:
                     mega_entry = dict(entry)
@@ -255,6 +293,13 @@ def generate_all_mega_packs(*, write: bool) -> None:
         plugin_manifests.append(manifest)
 
     by_family = collect_entries_by_family(plugin_manifests)
+    selection_by_family = {
+        mapping["source_family"]: mapping.get("entry_selection")
+        for mapping in registry
+        if mapping.get("entry_selection") is not None
+    }
+    if selection_by_family:
+        by_family = collect_entries_by_family(plugin_manifests, selection_by_family=selection_by_family)
 
     for mapping in registry:
         family = mapping["source_family"]
@@ -288,6 +333,7 @@ def generate_all_mega_packs(*, write: bool) -> None:
                 mega_pack_root=mega_root,
                 source_family=family,
                 entries=entries,
+                entry_selection=mapping.get("entry_selection"),
                 existing_manifest=existing_manifest,
             )
 

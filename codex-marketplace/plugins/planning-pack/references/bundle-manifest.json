@@ -1,6 +1,10 @@
 {
   "bundle_name": "planning-pack",
   "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/planning-pack",
+  "is_mega_pack": false,
   "source_families": [
     "claude-cortex"
   ],
@@ -9,29 +13,11 @@
     "The retained upstream skills keep their source-path references intact in the projected pack.",
     "All 5 skills are projected verbatim from Claude-Cortex custody."
   ],
-  "repo_index": {
-    "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
-    "source_ledger": [],
-    "license_path": "codex-marketplace/plugins/planning-pack/LICENSE",
-    "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
-    "skills_path": "codex-marketplace/plugins/planning-pack/skills",
-    "provenance_refs": [
-      "provenance/planning-pack.md",
-      "codex-marketplace/plugins/planning-pack/references/source-map.md"
-    ],
-    "agents_md": null,
-    "registry_alignment": {
-      "status": "aligned",
-      "note": null
-    }
-  },
   "provenance_refs": [
     "provenance/planning-pack.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "bundle_type": "projection-lane",
-  "is_mega_pack": false,
   "entries": [
     {
       "canonical_name": "development-estimation",
@@ -108,5 +94,15 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
-  ]
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/planning-pack/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

@@ -222,20 +222,8 @@ def validate_repo_index() -> dict:
                 raise ValueError(f"repo-index marketplace plugin {name} needs an intentional-delta explanation")
 
         source_md = _validate_optional_string_field(entry, "source_md")
-        source_ledger = _validate_optional_list_field(entry, "source_ledger")
-        if source_md is None and not source_ledger:
-            raise ValueError(f"repo-index marketplace plugin {name} needs source_md or source_ledger")
         if source_md is not None:
             check_path_exists(_resolved_path(source_md))
-        for source_path in source_ledger:
-            check_path_exists(_resolved_path(source_path))
-
-        license_path = _validate_optional_string_field(entry, "license_path")
-        license_reference = _validate_optional_string_field(entry, "license_reference")
-        if license_path is None and license_reference is None:
-            raise ValueError(f"repo-index marketplace plugin {name} needs license_path or license_reference")
-        if license_path is not None:
-            check_path_exists(_resolved_path(license_path))
 
         bundle_manifest = _validate_optional_string_field(entry, "bundle_manifest")
         if bundle_manifest is not None:
@@ -253,10 +241,6 @@ def validate_repo_index() -> dict:
             actual_skills_path = _resolved_path(skills_path).resolve()
             if actual_skills_path != expected_skills_path:
                 raise ValueError(f"repo-index marketplace plugin {name} skills_path mismatch")
-
-        provenance_refs = _validate_optional_list_field(entry, "provenance_refs")
-        for reference in provenance_refs:
-            check_path_exists(_resolved_path(reference))
 
         agents_md = _validate_optional_string_field(entry, "agents_md")
         if agents_md is not None:
