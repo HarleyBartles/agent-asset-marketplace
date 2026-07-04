@@ -10,7 +10,7 @@ from typing import Any
 
 from marketplace_utils import ROOT, load_plugin_root_inventory, load_json
 
-REGISTRY_PATH = ROOT / "codex-marketplace/custody-mega-pack-registry.json"
+REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 SKIP_CONTENT_MODES = {"blocked", "skipped"}
 FIRST_PARTY_SOURCE_ROOT = ROOT / "sources" / "first_party" / "skills"
 
@@ -19,9 +19,12 @@ def load_mega_pack_registry() -> list[dict[str, Any]]:
     registry = load_json(REGISTRY_PATH)
     if registry.get("schema_version") != 1:
         raise ValueError(f"{REGISTRY_PATH}: schema_version must be 1")
-    mappings = registry.get("mappings")
-    if not isinstance(mappings, list) or not mappings:
-        raise ValueError(f"{REGISTRY_PATH}: mappings must be a non-empty list")
+    packs = registry.get("packs")
+    if not isinstance(packs, list) or not packs:
+        raise ValueError(f"{REGISTRY_PATH}: packs must be a non-empty list")
+    mappings = [pack for pack in packs if isinstance(pack, dict) and pack.get("is_mega_pack")]
+    if not mappings:
+        raise ValueError(f"{REGISTRY_PATH}: packs must contain at least one mega-pack node")
     return mappings
 
 

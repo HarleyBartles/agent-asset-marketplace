@@ -61,10 +61,10 @@ package mirrors. Harley curates which entries appear in which plugin.
 
 ## Mega-packs
 
-Seven mega-packs carry broad bundles, one per custody root. The
-custody→mega-pack mapping is declared in
-`codex-marketplace/custody-mega-pack-registry.json` and drives automatic
-mega-pack manifest generation:
+Seven mega-packs carry broad bundles, one per custody root. The editable pack
+registry in `codex-marketplace/custody-pack-registry.json` declares both pack
+nodes and mega-pack nodes; mega-pack nodes set `is_mega_pack: true` and drive
+automatic mega-pack manifest generation:
 
 - **`house-skills`** — first-party mega-pack. Every first-party skill goes
   in `house-skills` AND wherever else it is bundled.

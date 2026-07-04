@@ -29,12 +29,12 @@ current, and `py -3 tools/generate_repo_index.py --check` to prove
 alignment validation, not the freshness proof. Use
 `py -3 tools/generate_index_mesh.py --check` for the repo-wide navigation mesh.
 
-Deterministic pack rule: the editable registry files
-`codex-marketplace/custody-pack-registry.json` and
-`codex-marketplace/custody-mega-pack-registry.json` drive the projection-lane
-and mega-pack generators. Regenerate the projection and export surfaces from
-the checked-in tooling. Do not hand-edit bundle manifests, projected skill
-trees, source maps, provenance maps, or zip artifacts, and do not introduce
+Deterministic pack rule: the editable registry file
+`codex-marketplace/custody-pack-registry.json` drives both projection-lane and
+mega-pack generation. Nodes declare `is_mega_pack: true` when they belong to
+the mega-pack lane. Regenerate the projection and export surfaces from the
+checked-in tooling. Do not hand-edit bundle manifests, projected skill trees,
+source maps, provenance maps, or zip artifacts, and do not introduce
 plugin-specific one-off scripts when the existing pipeline can be extended or
 reused.
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Editable inventory for deterministic projection-lane pack generation.",
+  "description": "Editable inventory for deterministic projection-lane and mega-pack generation.",
   "packs": [
     {
       "bundle_name": "repo-worker-pack",
@@ -775,243 +775,61 @@
       ]
     },
     {
-      "bundle_name": "everything-codex-code",
-      "plugin_root": "codex-marketplace/plugins/everything-codex-code",
-      "bundle_version": "1.0.0",
-      "bundle_type": "projection-lane",
+      "source_family": "first_party",
+      "custody_root": "sources/first_party/skills",
+      "mega_pack": "house-skills",
+      "mega_pack_root": "codex-marketplace/plugins/house-skills",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "claude-cortex",
+      "custody_root": "sources/third_party/claude-cortex/upstream",
+      "mega_pack": "codex-cortex",
+      "mega_pack_root": "codex-marketplace/plugins/codex-cortex",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "superpowers",
+      "custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+      "mega_pack": "superpowers-mega-pack",
+      "mega_pack_root": "codex-marketplace/plugins/superpowers-mega-pack",
       "is_mega_pack": true,
-      "mega_pack_for": "ecc",
-      "notes": [
-        "Mega pack containing every selected ECC skill projected into the marketplace this issue.",
-        "This pack exists as a reference bundle for the full selected ECC slice, not as a replacement for the topical packs."
-      ],
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/source-custody.md",
-        "sources/third_party/ecc/upstream/manifest.json",
-        "sources/third_party/ecc/upstream/LICENSE"
-      ],
-      "provenance_refs": [
-        "provenance/ecc-domain-packs.md",
-        "codex-marketplace/plugins/everything-codex-code/references/source-map.md"
-      ],
-      "entries": [
-        {
-          "canonical_name": "agent-harness-construction",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction",
-          "local_path": "skills/agent-harness-construction",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "autonomous-agent-harness",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness",
-          "local_path": "skills/autonomous-agent-harness",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "continuous-agent-loop",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop",
-          "local_path": "skills/continuous-agent-loop",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "dynamic-workflow-mode",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode",
-          "local_path": "skills/dynamic-workflow-mode",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "dmux-workflows",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows",
-          "local_path": "skills/dmux-workflows",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "agentic-os",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agentic-os",
-          "local_path": "skills/agentic-os",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agentic-os/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "agent-self-evaluation",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
-          "local_path": "skills/agent-self-evaluation",
-          "provenance_note": "Normalised from retained ECC custody by moving examples and templates into canonical references/ folders.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md",
-          "source_author": "ECC",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation",
-          "adaptation_note": "Move examples/ and templates/ into references/ and repoint the evaluation report template link to the internal references folder.",
-          "copy_expectation": "normalised_from_source"
-        },
-        {
-          "canonical_name": "agent-eval",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-eval",
-          "local_path": "skills/agent-eval",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-eval/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "agent-architecture-audit",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit",
-          "local_path": "skills/agent-architecture-audit",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "research-ops",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/research-ops",
-          "local_path": "skills/research-ops",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/research-ops/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "ai-first-engineering",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering",
-          "local_path": "skills/ai-first-engineering",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "deployment-patterns",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns",
-          "local_path": "skills/deployment-patterns",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "search-first",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/search-first",
-          "local_path": "skills/search-first",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/search-first/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "safety-guard",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/safety-guard",
-          "local_path": "skills/safety-guard",
-          "provenance_note": "Projected verbatim from retained ECC custody into the everything-codex-code mega pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/safety-guard/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "security-review",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
-          "local_path": "skills/security-review",
-          "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under references/.",
-          "source_path": "sources/third_party/ecc/upstream/skills/security-review/SKILL.md",
-          "source_author": "ECC",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
-          "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference.",
-          "copy_expectation": "normalised_from_source"
-        }
-      ]
+      "entry_selection": {
+        "source_categories": [
+          "third_party"
+        ],
+        "content_modes": [
+          "verbatim"
+        ]
+      }
+    },
+    {
+      "source_family": "game-studio",
+      "custody_root": "sources/third_party/game-studio/upstream",
+      "mega_pack": "game-studio",
+      "mega_pack_root": "codex-marketplace/plugins/game-studio",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "dotnet-claude-kit",
+      "custody_root": "sources/third_party/dotnet-claude-kit/upstream",
+      "mega_pack": "dotnet-kit",
+      "mega_pack_root": "codex-marketplace/plugins/dotnet-kit",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "unslop",
+      "custody_root": "sources/third_party/unslop/upstream",
+      "mega_pack": "unslop-plus",
+      "mega_pack_root": "codex-marketplace/plugins/unslop-plus",
+      "is_mega_pack": true
+    },
+    {
+      "source_family": "ecc",
+      "custody_root": "sources/third_party/ecc/upstream/skills",
+      "mega_pack": "everything-codex-code",
+      "mega_pack_root": "codex-marketplace/plugins/everything-codex-code",
+      "is_mega_pack": true
     }
   ]
 }
