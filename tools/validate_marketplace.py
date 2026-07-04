@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import importlib
 import json
 import re
 import subprocess
@@ -11,43 +12,51 @@ from pathlib import Path
 
 import yaml
 
-from marketplace_utils import (
-    CODEX_MARKETPLACE_MANIFEST_PATH,
-    BUNDLE_MANIFEST_PATH,
-    EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES,
-    EXPECTED_MARKETPLACE,
-    MARKETPLACE_PATH,
-    MARKETPLACE_PLUGIN_SPECS,
-    PROTECTED_MARKETPLACE_PLUGIN_NAMES,
-    PLUGIN_README_PATH,
-    PLUGIN_SKILL_PATH,
-    PROVENANCE_PATH,
-    PLUGIN_BUNDLE_AGENTS_PATH,
-    ADVENTURES_PACK_BUNDLE_MANIFEST_PATH,
-    ADVENTURES_PACK_SOURCE_MAP_PATH,
-    ADVENTURES_PACK_SKILL_PATH,
-    SOURCE_DECISIONS_JSON_PATH,
-    SOURCE_DECISIONS_MD_PATH,
-    SOURCE_INTAKE_JSON_PATH,
-    SOURCE_MAP_PATH,
-    PLUGIN_ROOT_INVENTORY_PATH,
-    REPO_INDEX_PATH,
-    REPO_INDEX_README_PATH,
-    build_marketplace_manifest,
-    load_json,
-    normalize_decision_record,
-    normalize_decision_row,
-    parse_top_markdown_table,
-    _installation_policy_for_plugin,
-)
-from validate_repo_index import validate_repo_index
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
-from skill_zip_artifacts import validate_skill_markdown_frontmatter, validate_skill_zip_registry
 from tree_canonicalization import canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _bootstrap_marketplace_dependencies() -> None:
+    marketplace_utils = importlib.import_module("marketplace_utils")
+    for name in (
+        "CODEX_MARKETPLACE_MANIFEST_PATH",
+        "BUNDLE_MANIFEST_PATH",
+        "EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES",
+        "EXPECTED_MARKETPLACE",
+        "MARKETPLACE_PATH",
+        "MARKETPLACE_PLUGIN_SPECS",
+        "PROTECTED_MARKETPLACE_PLUGIN_NAMES",
+        "PLUGIN_README_PATH",
+        "PLUGIN_SKILL_PATH",
+        "PROVENANCE_PATH",
+        "PLUGIN_BUNDLE_AGENTS_PATH",
+        "ADVENTURES_PACK_BUNDLE_MANIFEST_PATH",
+        "ADVENTURES_PACK_SOURCE_MAP_PATH",
+        "ADVENTURES_PACK_SKILL_PATH",
+        "SOURCE_DECISIONS_JSON_PATH",
+        "SOURCE_DECISIONS_MD_PATH",
+        "SOURCE_INTAKE_JSON_PATH",
+        "SOURCE_MAP_PATH",
+        "PLUGIN_ROOT_INVENTORY_PATH",
+        "REPO_INDEX_PATH",
+        "REPO_INDEX_README_PATH",
+        "build_marketplace_manifest",
+        "load_json",
+        "normalize_decision_record",
+        "normalize_decision_row",
+        "parse_top_markdown_table",
+        "_installation_policy_for_plugin",
+    ):
+        globals()[name] = getattr(marketplace_utils, name)
+
+    globals()["validate_repo_index"] = importlib.import_module("validate_repo_index").validate_repo_index
+    skill_zip_artifacts = importlib.import_module("skill_zip_artifacts")
+    globals()["validate_skill_markdown_frontmatter"] = skill_zip_artifacts.validate_skill_markdown_frontmatter
+    globals()["validate_skill_zip_registry"] = skill_zip_artifacts.validate_skill_zip_registry
 
 
 def check_json(path: Path) -> dict:
@@ -1663,6 +1672,12 @@ def validate_no_legacy_manifest_shapes() -> None:
 
 
 def main() -> int:
+    _run_tool_check(
+        [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
+        "plugin root inventory check",
+    )
+    _bootstrap_marketplace_dependencies()
+
     decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
