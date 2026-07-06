@@ -1,0 +1,26 @@
+schema_version: 2
+metadata:
+  source_category: third_party
+  upstream_name: writing-plans
+  upstream_version: v6.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/writing-plans
+  projection_plugin: superpowers-plus
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 18
+    end_line: 19
+    expected_lines:
+      - "**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`"
+      - "- (User preferences for plan location override this default)"
+    replace_lines:
+      - "**Save plans to:** `.agents/superpowers/plans/YYYY-MM-DD-<feature-name>.md`"
+      - "- (User preferences for plan location override this default)"
+  - path: SKILL.md
+    op: replace
+    start_line: 160
+    end_line: 160
+    expected_lines:
+      - "**\"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**"
+    replace_lines:
+      - "**\"Plan complete and saved to `.agents/superpowers/plans/<filename>.md`. Two execution options:**"

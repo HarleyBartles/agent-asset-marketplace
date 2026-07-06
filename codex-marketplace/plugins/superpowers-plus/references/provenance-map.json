@@ -36,13 +36,6 @@
       "local_path": "skills/receiving-code-review"
     },
     {
-      "canonical_name": "requesting-code-review",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review",
-      "local_path": "skills/requesting-code-review"
-    },
-    {
       "canonical_name": "test-driven-development",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -64,13 +57,6 @@
       "local_path": "skills/verification-before-completion"
     },
     {
-      "canonical_name": "writing-plans",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans",
-      "local_path": "skills/writing-plans"
-    },
-    {
       "canonical_name": "writing-skills",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -86,6 +72,14 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
       "local_path": "skills/brainstorming",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/brainstorming"
+    },
+    {
+      "canonical_name": "requesting-code-review",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review",
+      "local_path": "skills/requesting-code-review",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/requesting-code-review"
     },
     {
       "canonical_name": "subagent-driven-development",
@@ -110,6 +104,14 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers"
+    },
+    {
+      "canonical_name": "writing-plans",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans",
+      "local_path": "skills/writing-plans",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/writing-plans"
     }
   ]
 }
