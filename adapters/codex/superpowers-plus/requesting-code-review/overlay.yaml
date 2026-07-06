@@ -1,0 +1,16 @@
+schema_version: 2
+metadata:
+  source_category: third_party
+  upstream_name: requesting-code-review
+  upstream_version: v6.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/requesting-code-review
+  projection_plugin: superpowers-plus
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 60
+    end_line: 60
+    expected_lines:
+      - "  PLAN_OR_REQUIREMENTS: Task 2 from docs/superpowers/plans/deployment-plan.md"
+    replace_lines:
+      - "  PLAN_OR_REQUIREMENTS: Task 2 from .agents/superpowers/plans/deployment-plan.md"
