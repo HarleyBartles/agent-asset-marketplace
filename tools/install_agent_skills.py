@@ -6,12 +6,15 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 from marketplace_utils import ROOT, MARKETPLACE_PATH, load_json
 
 AGENTS_SKILLS_PATH = ROOT / ".agents/skills"
+PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
 
 
 def _load_marketplace_config() -> dict[str, Any]:
@@ -20,6 +23,32 @@ def _load_marketplace_config() -> dict[str, Any]:
     if not isinstance(config, dict):
         raise ValueError(f"{MARKETPLACE_PATH}: must contain a JSON object")
     return config
+
+
+def _get_marketplace_manifest_sha() -> str:
+    """Get the current marketplace manifest SHA for provenance tracking."""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        # Fallback: use marketplace.json modification time
+        return MARKETPLACE_PATH.stat().st_mtime.isoformat()
+
+
+def _load_provenance() -> dict[str, Any] | None:
+    """Load existing provenance data."""
+    if not PROVENANCE_PATH.exists():
+        return None
+    try:
+        return load_json(PROVENANCE_PATH)
+    except (json.JSONDecodeError, ValueError):
+        return None
 
 
 def _get_installed_plugins(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -107,7 +136,7 @@ def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
     return False
 
 
-def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> bool:
+def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, synced_skill_names: set[str] | None = None) -> bool:
     """Install skills from a single plugin."""
     skills_path = _get_plugin_skills_path(plugin)
     if skills_path is None:
@@ -116,7 +145,10 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> 
     plugin_name = plugin.get("name", "unknown")
     if not isinstance(plugin_name, str):
         return False
-    
+
+    if synced_skill_names is None:
+        synced_skill_names = set()
+
     installed_any = False
     for skill_dir in sorted(skills_path.iterdir()):
         if not skill_dir.is_dir():
@@ -124,6 +156,12 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> 
         
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
         
+        # Collision guard: if two plugins project a skill with the same name,
+        # the first one wins and a warning is emitted.
+        if skill_dir.name in synced_skill_names:
+            print(f"WARNING: Skill '{skill_dir.name}' (from plugin '{plugin_name}') collides with an already-synced skill of the same name; keeping the first copy.")
+            continue
+
         if check_mode:
             # In check mode, verify if skills would need installation
             if not dest_skill.exists():
@@ -136,31 +174,25 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> 
             if _skill_needs_update(skill_dir, dest_skill):
                 _copy_skill_directory(skill_dir, dest_skill)
                 installed_any = True
-    
+                synced_skill_names.add(skill_dir.name)
+
     return installed_any
 
 
-def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bool = False) -> bool:
+def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bool = False, synced_skill_names: set[str] | None = None) -> bool:
     """Remove skills that don't belong to any installed plugin."""
     if not AGENTS_SKILLS_PATH.exists():
         return False
-    
-    # Collect all skill names from installed plugins
-    installed_skill_names = set()
-    for plugin in installed_plugins:
-        skills_path = _get_plugin_skills_path(plugin)
-        if skills_path is None:
-            continue
-        for skill_dir in skills_path.iterdir():
-            if skill_dir.is_dir():
-                installed_skill_names.add(skill_dir.name)
-    
+
+    if synced_skill_names is None:
+        synced_skill_names = set()
+
     cleaned_any = False
     for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
         if not skill_dir.is_dir():
             continue
-        
-        if skill_dir.name not in installed_skill_names:
+
+        if skill_dir.name not in synced_skill_names:
             if check_mode:
                 print(f"CHECK: Would remove orphan skill: {skill_dir.relative_to(ROOT)}")
                 cleaned_any = True
@@ -168,8 +200,22 @@ def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bo
                 shutil.rmtree(skill_dir)
                 print(f"Removed orphan skill: {skill_dir.relative_to(ROOT)}")
                 cleaned_any = True
-    
+
     return cleaned_any
+
+
+def _write_provenance(manifest_sha: str, synced_plugins: list[str], synced_skill_count: int) -> None:
+    """Write provenance data."""
+    provenance = {
+        "manifestSha": manifest_sha,
+        "syncedAt": datetime.now().isoformat(),
+        "syncedPlugins": synced_plugins,
+        "syncedSkills": synced_skill_count,
+        "source": "HarleyBartles/agent-asset-marketplace",
+        "sourcePath": "codex-marketplace/plugins",
+        "marketplaceFile": ".agents/plugins/marketplace.json"
+    }
+    PROVENANCE_PATH.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -180,6 +226,11 @@ def _parse_args() -> argparse.Namespace:
         "--check",
         action="store_true",
         help="Check mode: report what would change without making changes"
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force refresh even when provenance matches"
     )
     return parser.parse_args()
 
@@ -194,25 +245,49 @@ def main() -> int:
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
     
+    # Get current provenance and manifest SHA
+    existing_provenance = _load_provenance()
+    current_manifest_sha = _get_marketplace_manifest_sha()
+
+    # Check if refresh is needed based on provenance
+    if not args.force and existing_provenance:
+        if existing_provenance.get("manifestSha") == current_manifest_sha:
+            has_skill_dirs = AGENTS_SKILLS_PATH.exists() and any(
+                AGENTS_SKILLS_PATH.iterdir()
+            )
+            if has_skill_dirs:
+                print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
+                print(f"Synced skills: {existing_provenance.get('syncedSkills')} from {existing_provenance.get('syncedPlugins')} plugins.")
+                return 0
+
     print(f"Found {len(installed_plugins)} installed plugin(s)")
-    
+
     # Ensure .agents/skills directory exists
     if not args.check:
         AGENTS_SKILLS_PATH.mkdir(parents=True, exist_ok=True)
-    
+
     # Install skills from each plugin
     changes_made = False
+    synced_skill_names = set()
+    synced_plugin_names = []
+
     for plugin in installed_plugins:
         plugin_name = plugin.get("name", "unknown")
         print(f"\nProcessing plugin: {plugin_name}")
-        if _install_plugin_skills(plugin, check_mode=args.check):
+        if _install_plugin_skills(plugin, check_mode=args.check, synced_skill_names=synced_skill_names):
             changes_made = True
-    
+            synced_plugin_names.append(plugin_name)
+
     # Clean orphan skills
     print("\nChecking for orphan skills...")
-    if _clean_orphan_skills(installed_plugins, check_mode=args.check):
+    if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names):
         changes_made = True
     
+    # Write provenance if changes were made
+    if not args.check and (changes_made or args.force):
+        _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))
+        print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
+
     if args.check:
         if changes_made:
             print("\nCHECK: Changes would be made")
@@ -222,7 +297,7 @@ def main() -> int:
             return 0
     else:
         if changes_made:
-            print("\nSkills installed/refreshed successfully")
+            print(f"\nSkills installed/refreshed successfully ({len(synced_skill_names)} skills from {len(synced_plugin_names)} plugins)")
         else:
             print("\nNo changes needed")
         return 0
