@@ -22,6 +22,9 @@ pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
 --check`, and mesh law lives in `.agents/docs/mesh-policy.md`.
+Agent skills installation is handled by `py -3 tools/install_agent_skills.py`,
+which deterministically installs/refreshes skills in `.agents/skills` based on
+plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.

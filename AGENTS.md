@@ -85,6 +85,9 @@ Use `py -3 tools/generate_marketplace.py --check` and
 `repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
 as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
 is metadata validation, not the freshness proof for that surface.
+Agent skills in `.agents/skills` are installed deterministically from
+marketplace plugins using `py -3 tools/install_agent_skills.py`, which respects
+the `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
 The canonical local full rebuild and validation gate is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical CI/check gate is `py -3 tools/check_marketplace.py`.
@@ -185,6 +188,10 @@ Do not invent broad new structure when a small existing surface can carry the as
 ## Shared local worker checkout start gate
 
 Workers must normalize the shared checkout before editing: fetch, switch to `main`, fast-forward pull `origin/main`, confirm clean status, then branch from fresh `main`. Workers must not assume the workspace is already on the correct branch. Dirty state must be reported, not overwritten.
+
+## Worktree location
+
+Worktrees for this repo should be placed in `../_agent-worktrees/agent-asset-marketplace` (centralized location outside the repo, relative to repo root). This follows the general pattern for repos in Harley's workspace where worktrees use the centralized location `../_agent-worktrees/<repo-name>`. This is a declared preference that should be respected by the using-git-worktrees skill.
 
 ## PR mergeability responsibility
 
