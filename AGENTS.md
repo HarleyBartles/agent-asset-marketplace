@@ -85,6 +85,9 @@ Use `py -3 tools/generate_marketplace.py --check` and
 `repo-index/repo-index.json`. Use `py -3 tools/generate_index_mesh.py --check`
 as freshness proof for the repo-wide `INDEX.md` mesh. `validate_repo_index.py`
 is metadata validation, not the freshness proof for that surface.
+Agent skills in `.agents/skills` are installed deterministically from
+marketplace plugins using `py -3 tools/install_agent_skills.py`, which respects
+the `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
 The canonical local full rebuild and validation gate is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical CI/check gate is `py -3 tools/check_marketplace.py`.

@@ -98,6 +98,7 @@ def main() -> int:
     _prune_stale_projected_plugin_roots()
     _run_tool("update_skill_artifacts.py", "--all", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
+    _run_tool("install_agent_skills.py")
     _run_tool("generate_repo_index.py")
     _run_tool("validate_marketplace.py")
     _run_tool("generate_repo_index.py", "--check")
