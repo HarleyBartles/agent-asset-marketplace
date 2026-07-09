@@ -69,6 +69,44 @@ def _copy_skill_directory(source_skill: Path, dest_skill: Path) -> None:
     print(f"Installed skill: {dest_skill.relative_to(ROOT)}")
 
 
+def _files_are_identical(source: Path, dest: Path) -> bool:
+    """Check if two files have identical content."""
+    if not source.exists() or not dest.exists():
+        return False
+    return source.read_bytes() == dest.read_bytes()
+
+
+def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
+    """Check if a skill needs to be updated."""
+    if not dest_skill.exists():
+        return True
+
+    # Check if all files exist and have identical content
+    for source_file in source_skill.rglob("*"):
+        if not source_file.is_file():
+            continue
+        relative_path = source_file.relative_to(source_skill)
+        dest_file = dest_skill / relative_path
+
+        if not dest_file.exists():
+            return True
+
+        if not _files_are_identical(source_file, dest_file):
+            return True
+
+    # Check if there are any extra files in dest
+    for dest_file in dest_skill.rglob("*"):
+        if not dest_file.is_file():
+            continue
+        relative_path = dest_file.relative_to(dest_skill)
+        source_file = source_skill / relative_path
+
+        if not source_file.exists():
+            return True
+
+    return False
+
+
 def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> bool:
     """Install skills from a single plugin."""
     skills_path = _get_plugin_skills_path(plugin)
@@ -91,16 +129,13 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False) -> 
             if not dest_skill.exists():
                 print(f"CHECK: Would install skill: {dest_skill.relative_to(ROOT)}")
                 installed_any = True
-            else:
-                # Compare directory contents
-                source_files = set(f.name for f in skill_dir.rglob("*") if f.is_file())
-                dest_files = set(f.name for f in dest_skill.rglob("*") if f.is_file())
-                if source_files != dest_files:
-                    print(f"CHECK: Skill {dest_skill.relative_to(ROOT)} would be updated")
-                    installed_any = True
+            elif _skill_needs_update(skill_dir, dest_skill):
+                print(f"CHECK: Skill {dest_skill.relative_to(ROOT)} would be updated")
+                installed_any = True
         else:
-            _copy_skill_directory(skill_dir, dest_skill)
-            installed_any = True
+            if _skill_needs_update(skill_dir, dest_skill):
+                _copy_skill_directory(skill_dir, dest_skill)
+                installed_any = True
     
     return installed_any
 

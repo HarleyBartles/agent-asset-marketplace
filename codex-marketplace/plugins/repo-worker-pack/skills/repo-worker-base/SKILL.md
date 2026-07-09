@@ -63,6 +63,34 @@ For Devin-backed repo tasks, work in a fresh dedicated worktree based on current
 
 Do not overwrite pre-existing dirty state. Report it. This gate composes with the fresh-main invariant; it does not replace it.
 
+### Worktree verification gate
+
+After creating a worktree, the worker must verify they are working in the correct location before any file mutation. Before editing files, verify:
+
+1. **Current working directory**: Confirm the working directory matches the worktree path (not the main checkout)
+2. **Git worktree status**: Run `git worktree list` to confirm the current directory is a worktree, not the main checkout
+3. **Branch verification**: Confirm the current branch matches the intended worker branch
+4. **Path verification**: Confirm file paths resolve to the worktree location, not the main repo root
+
+**Verification commands**:
+```bash
+pwd  # Should show worktree path, not main repo path
+git worktree list  # Should show current directory as a worktree
+git branch --show-current  # Should show worker branch
+git status --short  # Should show clean state in worktree
+```
+
+**Stop signs for worktree verification**:
+- If the current working directory is the main repo root instead of the worktree
+- If `git worktree list` shows the current directory is not a worktree
+- If the current branch is `main` instead of the worker branch
+- If file paths resolve to the main checkout instead of the worktree
+
+**Recovery procedure**:
+If verification fails, stop and report the exact mismatch. Do not proceed with file edits until the working directory is corrected to the worktree location. Use `cd` to navigate to the worktree path before continuing.
+
+This gate is mandatory for all Devin-backed repo tasks and must be completed before any file mutation begins.
+
 ### Repo-specific worktree locations
 
 For repos in Harley's workspace, worktrees should be placed in the centralized location `../_agent-worktrees/<repo-name>` (relative to the repo root) where `<repo-name>` is the name of the repository (e.g., `../_agent-worktrees/wild-bunch`, `../_agent-worktrees/agent-asset-marketplace`).
