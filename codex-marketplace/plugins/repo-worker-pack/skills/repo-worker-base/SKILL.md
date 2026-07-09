@@ -69,6 +69,40 @@ For repos in Harley's workspace, worktrees should be placed in the centralized l
 
 This centralized location keeps worktrees outside the repo directories and is the preferred location for these projects. Individual repos may document this preference in their AGENTS.md as a declared preference that should be respected by the using-git-worktrees skill.
 
+## Scratch folder usage
+
+For temporary work files that should not be committed, use the centralized scratch folder at `../_agent-scratch/<repo-name>/<branch-name>` (relative to the repo root).
+
+### Scratch folder properties
+
+- **Disposable**: Not persistent beyond the agent's session
+- **Outside repo**: Prevents accidental commits
+- **Per-branch**: Matches worktree/branch name for isolation
+- **Auto-cleanup**: Agents must clean up scratch folder when cleaning up worktree
+- **Not for durable work**: Use the repo for persistent changes
+
+### Scratch folder structure
+
+- **Scratch root**: `../_agent-scratch/`
+- **Per-repo**: `../_agent-scratch/<repo-name>/`
+- **Per-branch**: `../_agent-scratch/<repo-name>/<branch-name>/`
+
+### Examples
+
+- For wild-bunch on branch `bunch-123-feature`: `../_agent-scratch/wild-bunch/bunch-123-feature/`
+- For agent-asset-marketplace on branch `main`: `../_agent-scratch/agent-asset-marketplace/main/`
+
+### Usage guidance
+
+- Use scratch folders for temporary files, logs, intermediate outputs, or disposable workspace
+- Create scratch folders when needed, but ensure cleanup when work is complete
+- Scratch folder creation failures should not block work (fallback to in-repo temp if needed)
+- Do not use scratch folders for durable changes that should be committed to the repo
+
+### Cleanup contract
+
+Agents must clean up their scratch folder when cleaning up their worktree. This ensures the scratch space remains clean and does not accumulate orphaned temporary files across sessions.
+
 ## Branch and PR discipline
 
 Use a task branch for repo work. Do not treat direct push to `main` as the normal path.
