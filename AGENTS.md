@@ -186,6 +186,10 @@ Do not invent broad new structure when a small existing surface can carry the as
 
 Workers must normalize the shared checkout before editing: fetch, switch to `main`, fast-forward pull `origin/main`, confirm clean status, then branch from fresh `main`. Workers must not assume the workspace is already on the correct branch. Dirty state must be reported, not overwritten.
 
+## Worktree location
+
+Worktrees for this repo should be placed in `../_agent-worktrees/agent-asset-marketplace` (centralized location outside the repo, relative to repo root). This follows the general pattern for repos in Harley's workspace where worktrees use the centralized location `../_agent-worktrees/<repo-name>`. This is a declared preference that should be respected by the using-git-worktrees skill.
+
 ## PR mergeability responsibility
 
 A worker returning a PR must make the PR mergeable against current `main` before claiming readiness. PR-created is not enough when GitHub reports `CONFLICTING`, `DIRTY`, `UNKNOWN` after settling, or otherwise not mergeable. If mergeability cannot be achieved, return the exact blocker and conflict files.
