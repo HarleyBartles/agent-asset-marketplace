@@ -28,7 +28,7 @@ Scripts: `scripts/postgres-dev.ps1`, `scripts/dev-servers.ps1`, `scripts/generat
 
 Skills: all 22 skills referenced in the skill-routing doc exist under `.agents/skills/` at that commit.
 
-**Deviation from source:** Two intentional deviations from the source AGENTS.md content:
+**Deviation from source:** Three intentional deviations from the source AGENTS.md content:
 1. The `/using-superpowers` trigger is narrowed from "starting any conversation" to "workflow-sensitive project/repo work" to preserve the ordinary-chat escape hatch.
 2. The statement "The skills and ADRs are the authority, not the repo's current code" is removed. Current live source is truth about current behaviour; skills and ADRs provide constraints and intended architecture, and their freshness must be checked against source and current requirements.
 3. The claim that "The aggregate root enforces invariants and returns Result objects for failures" is removed unless verified against Wild Bunch source. The DDD skill description is shortened to remove this unsupported detail.
