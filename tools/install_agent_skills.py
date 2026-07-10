@@ -170,11 +170,12 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
             elif _skill_needs_update(skill_dir, dest_skill):
                 print(f"CHECK: Skill {dest_skill.relative_to(ROOT)} would be updated")
                 installed_any = True
+            synced_skill_names.add(skill_dir.name)
         else:
             if _skill_needs_update(skill_dir, dest_skill):
                 _copy_skill_directory(skill_dir, dest_skill)
                 installed_any = True
-                synced_skill_names.add(skill_dir.name)
+            synced_skill_names.add(skill_dir.name)
 
     return installed_any
 
