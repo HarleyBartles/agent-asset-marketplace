@@ -6,7 +6,32 @@
 
 **Source issue:** [MARK-330](https://linear.app/harleys-workspace/issue/MARK-330)
 
-**Source material:** `Z:\wild-bunch\AGENTS.md` (118 lines) — the current wild-bunch repo root AGENTS.md. All paths in the reference docs below are relative to the wild-bunch repo root (where the skill gets installed), not this marketplace repo.
+## Source evidence pin
+
+**Source repo:** `HarleyBartles/wild-bunch`
+**Pinned commit:** `a65ca6c2` — "Implementation: Town hub deterministic layout resolver and salt controls (#159)" on `main`
+**Source file:** `AGENTS.md` (94 lines at that commit)
+
+**Sections being consolidated:**
+- `## Required Working Knowledge` (lines 11-31) — worktree/scratch locations, script discovery, required reading before specific work types
+- `## Required Skills - Workflow Routing` (lines 33-79) — session bootstrap, Linear/GitHub, anti-slop/quality, planning/execution, repo-specific, architecture skills
+- `## Script Discovery` (lines 81-92) — script routing for PostgreSQL, dev servers, index mesh, skill sync, image assets
+- `## Specialist Skill Discovery` (lines 94-100) — inspect source first, use skill discovery, skills catalog reference
+- `## Policy Reference` (lines 102-115) — workflow, validation, artifact, architecture guardrails, coding discipline, worker environment, repo-skills, mesh policy, guides
+- `## ADR Log Freshness` (lines 117-118) — ADR freshness requirement
+
+**Pre-implementation check (Step 0):** Before writing any reference doc content, verify that every referenced script, guide, policy, ADR, and skill exists at commit `a65ca6c2`. The following 21 docs and 8 scripts have been verified to exist at that commit:
+
+Docs: `scripts/AGENTS.md`, `.agents/docs/architecture-hygiene.md`, `.agents/unslop/backend-architecture.md`, `.agents/docs/architecture-guardrails.md`, `docs/adr/ADR-0036-dev-enabled-action-pattern.md`, `.agents/docs/coding-discipline.md`, `.agents/docs/frontend-standards.md`, `.agents/docs/validation-policy.md`, `.agents/docs/guides/design-guide.md`, `.agents/docs/guides/implementing-guide.md`, `.agents/docs/guides/planning-guide.md`, `.agents/docs/guides/code-review-guide.md`, `src/WildBunch.Web/AGENTS.md`, `src/WildBunch.Web/.agents/unslop/play-surface-ui.md`, `.agents/docs/dev-overlay-doctrine.md`, `.agents/unslop/dev-overlay.md`, `.agents/docs/workflow-policy.md`, `.agents/docs/artifact-policy.md`, `.agents/docs/worker-environment.md`, `.agents/docs/repo-skills-policy.md`, `.agents/docs/mesh-policy.md`, `.agents/docs/skills-catalog.md`
+
+Scripts: `scripts/postgres-dev.ps1`, `scripts/dev-servers.ps1`, `scripts/generate_index_mesh.py`, `scripts/generate_index_mesh.ps1`, `scripts/install_agent_skills.py`, `scripts/install_agent_skills.ps1`, `scripts/image_asset_pipeline.py`, `scripts/image_asset_pipeline.ps1`
+
+Skills: all 22 skills referenced in the skill-routing doc exist under `.agents/skills/` at that commit.
+
+**Deviation from source:** Two intentional deviations from the source AGENTS.md content:
+1. The `/using-superpowers` trigger is narrowed from "starting any conversation" to "workflow-sensitive project/repo work" to preserve the ordinary-chat escape hatch.
+2. The statement "The skills and ADRs are the authority, not the repo's current code" is removed. Current live source is truth about current behaviour; skills and ADRs provide constraints and intended architecture, and their freshness must be checked against source and current requirements.
+3. The claim that "The aggregate root enforces invariants and returns Result objects for failures" is removed unless verified against Wild Bunch source. The DDD skill description is shortened to remove this unsupported detail.
 
 ## Scope boundaries
 
@@ -16,6 +41,7 @@
 
 ## Plan
 
+- [ ] Step 0: Pre-implementation source evidence check
 - [ ] Step 1: Replace SKILL.md frontmatter and body
 - [ ] Step 2: Create `references/working-knowledge.md`
 - [ ] Step 3: Create `references/skill-routing.md`
@@ -26,9 +52,24 @@
 
 ---
 
+## Step 0: Pre-implementation source evidence check
+
+Before writing any reference doc content, verify that every path referenced in the plan exists at the pinned wild-bunch commit `a65ca6c2`. Run:
+
+```bash
+cd Z:\wild-bunch
+git ls-tree --name-only a65ca6c2 -- <path>
+```
+
+for each path listed in the "Source evidence pin" section above. If any path is missing, stop and update the plan before proceeding. All 21 docs, 8 scripts, and 22 skills have been pre-verified as of plan creation, but the implementing agent must re-verify in case the wild-bunch repo has been rebased or force-pushed.
+
+- [ ] Step 0 complete
+
+---
+
 ## Step 1: Replace SKILL.md frontmatter and body
 
-Replace the entire contents of `sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md` with the following. This expands the frontmatter with rich `use_when` triggers, adds specific `do_not_use_when` entries, adds two new rules (script discovery and specialist skill discovery), and replaces the References section with routing for all 5 reference docs.
+Replace the entire contents of `sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md` with the following. This expands the frontmatter with rich `use_when` triggers, adds `do_not_use_when` entries that preserve the doctrine skill's bootstrap role (it establishes posture then routes to specialists — it is not excluded when a specialist subsequently owns the task), adds two new rules, and replaces the References section with routing for all 5 reference docs.
 
 **File:** `sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md`
 
@@ -38,13 +79,16 @@ Replace the entire contents of `sources/first_party/skills/wild-bunch-project-do
 ---
 name: wild-bunch-project-doctrine
 description: Use when bootstrapping the Wild Bunch repo posture before any repo-sensitive
-  change. Covers worker dispatch, worker return verification, source-truth claims, issue-goal
-  conformance, world setup, seeded identity, difficulty, entropy, working knowledge (worktree
-  and scratch locations, script discovery), skill routing (session bootstrap, Linear/GitHub,
-  anti-slop, planning/execution, repo-specific, architecture), and policy references (workflow,
-  validation, artifact, architecture guardrails, coding discipline, worker environment, mesh,
-  guides, ADR freshness). Use when chat summaries, session busters, worker reports, or issue
-  comments might be mistaken for live repo truth.
+  change. Establishes source-truth posture, worker dispatch and return verification,
+  issue-goal conformance, world setup, seeded identity, difficulty, entropy, working
+  knowledge (worktree and scratch locations, script discovery), skill routing (session
+  bootstrap, Linear/GitHub, anti-slop, planning/execution, repo-specific, architecture),
+  and policy references (workflow, validation, artifact, architecture guardrails,
+  coding discipline, worker environment, mesh, guides, ADR freshness). Use when chat
+  summaries, session busters, worker reports, or issue comments might be mistaken
+  for live repo truth. This skill establishes posture first, then routes to specialist
+  skills (wild-bunch-dotnet-architecture, wild-bunch-domain-modeling, wild-bunch-browser-game)
+  for domain-specific work.
 metadata:
   source-id: wild-bunch-project-doctrine
   source-path: sources/first_party/skills/wild-bunch-project-doctrine/SKILL.md
@@ -53,14 +97,16 @@ metadata:
   status: active
   owner: Harley Bartles
   scope: Use when bootstrapping the Wild Bunch repo posture before any repo-sensitive
-    change. Covers worker dispatch, worker return verification, source-truth claims,
+    change. Establishes source-truth posture, worker dispatch and return verification,
     issue-goal conformance, world setup, seeded identity, difficulty, entropy, working
     knowledge (worktree and scratch locations, script discovery), skill routing (session
     bootstrap, Linear/GitHub, anti-slop, planning/execution, repo-specific, architecture),
     and policy references (workflow, validation, artifact, architecture guardrails,
     coding discipline, worker environment, mesh, guides, ADR freshness). Use when chat
     summaries, session busters, worker reports, or issue comments might be mistaken
-    for live repo truth.
+    for live repo truth. This skill establishes posture first, then routes to specialist
+    skills (wild-bunch-dotnet-architecture, wild-bunch-domain-modeling, wild-bunch-browser-game)
+    for domain-specific work.
   use_when:
   - Use when bootstrapping the Wild Bunch repo posture before any repo-sensitive change.
   - Use when work touches HarleyBartles/wild-bunch, worker dispatch, worker return
@@ -78,20 +124,19 @@ metadata:
   - Use when chat summaries, session busters, worker reports, or issue comments might
     be mistaken for live repo truth.
   do_not_use_when:
-  - Do not use when wild-bunch-dotnet-architecture owns the task (GameSession live-play
-    flows, persistence, CQRS/read models).
-  - Do not use when wild-bunch-domain-modeling owns the task (DDD tactical modeling,
-    GameSession boundaries, player wallet/inventory, travel rules).
-  - Do not use when wild-bunch-browser-game owns the task (browser delivery, HUD design,
-    Phaser/TypeScript/Vite, DOM overlays, playtest evidence).
-  - Do not use when a more specific specialist skill (ddd, cqrs-event-sourcing, ef-core,
-    clean-architecture, etc.) owns the architecture or domain task.
+  - Do not use for ordinary chat or questions that do not touch repo-sensitive work.
+  - Do not use as a substitute for the specialist skill that owns the actual task
+    (wild-bunch-dotnet-architecture, wild-bunch-domain-modeling, wild-bunch-browser-game,
+    ddd, cqrs-event-sourcing, ef-core, clean-architecture, etc.). Establish posture
+    with this skill, then invoke the specialist for the domain-specific work.
 license: MIT
 ---
 
 # Wild Bunch Project Doctrine
 
 Use this skill first when working on `HarleyBartles/wild-bunch`, or when a task needs the Wild Bunch setup doctrine. The live repo state on current `main` is the source of truth. Chat summaries, issue comments, session busters, and worker reports are support material only.
+
+This skill establishes posture and then routes to specialist skills for domain-specific work. It does not replace `wild-bunch-dotnet-architecture`, `wild-bunch-domain-modeling`, `wild-bunch-browser-game`, or other specialist skills — it precedes them.
 
 ## Rules
 
@@ -131,7 +176,7 @@ Create a new reference doc consolidating the "Required Working Knowledge" sectio
 ```markdown
 # Working Knowledge
 
-Consolidated from the Wild Bunch repo root `AGENTS.md`. All paths are relative to the wild-bunch repo root.
+Consolidated from the Wild Bunch repo root `AGENTS.md` at commit `a65ca6c2`. All paths are relative to the wild-bunch repo root.
 
 ## Worktree and Scratch locations
 
@@ -166,7 +211,10 @@ Before reporting environmental issues (PostgreSQL not running, dev servers not s
 
 ## Step 3: Create `references/skill-routing.md`
 
-Create a new reference doc consolidating the "Required Skills - Workflow Routing" section from the wild-bunch AGENTS.md.
+Create a new reference doc consolidating the "Required Skills - Workflow Routing" section from the wild-bunch AGENTS.md. Three intentional deviations from the source (documented in the "Source evidence pin" section above):
+1. `/using-superpowers` trigger narrowed from "starting any conversation" to "workflow-sensitive project/repo work" to preserve the ordinary-chat escape hatch.
+2. The statement "The skills and ADRs are the authority, not the repo's current code" is removed. Current live source is truth about current behaviour; skills and ADRs provide constraints and intended architecture whose freshness must be checked against source.
+3. The claim that "The aggregate root enforces invariants and returns Result objects for failures" is removed as unsupported Wild Bunch-specific doctrine. The DDD skill description is shortened to tactical patterns only.
 
 **File:** `sources/first_party/skills/wild-bunch-project-doctrine/references/skill-routing.md`
 
@@ -175,11 +223,11 @@ Create a new reference doc consolidating the "Required Skills - Workflow Routing
 ```markdown
 # Skill Routing
 
-Consolidated from the Wild Bunch repo root `AGENTS.md`. Invoke these skills before relevant work. `/using-superpowers` is the primary workflow entrypoint and routes to specialist skills.
+Consolidated from the Wild Bunch repo root `AGENTS.md` at commit `a65ca6c2`. Invoke these skills before relevant work. `/using-superpowers` is the primary workflow entrypoint and routes to specialist skills.
 
 ## Session Bootstrap
 
-- `/using-superpowers` — Use when starting any conversation. Establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions.
+- `/using-superpowers` — Use for workflow-sensitive project/repo work. Establishes how to find and use skills, requiring skill invocation before repo-sensitive responses. Not required for ordinary chat or questions that do not touch repo work.
 - `/work-mode-router` — Use when a project context begins, a session resumes, or a request may involve coding dispatch, workers, issues, artifacts, verification, or publication.
 - `/inspecting-the-environment` — Use when about to take action and environment constraints could change the next step. Discovers shell syntax, worktree state, repo state, path style, CLI availability, auth, connectors, mutation authority, and protected surfaces before proceeding.
 - `/using-git-worktrees` — Use when starting feature work that needs isolation from current workspace or before executing implementation plans.
@@ -208,7 +256,7 @@ Consolidated from the Wild Bunch repo root `AGENTS.md`. Invoke these skills befo
 
 ## Repo-Specific Skills
 
-- `/wild-bunch-project-doctrine` — Use before any repo-sensitive change, when work touches worker dispatch, worker return verification, source-truth claims, or issue-goal conformance.
+- `/wild-bunch-project-doctrine` — Use before any repo-sensitive change, when work touches worker dispatch, worker return verification, source-truth claims, or issue-goal conformance. Establishes posture first, then routes to specialist skills.
 - `/repo-worker-base` — Use for fresh-main discipline, worktree isolation, branch and PR hygiene, validation evidence, or publication proof.
 - `/wild-bunch-dotnet-architecture` — Use when applying Wild Bunch .NET architecture guardrails for C#/.NET repo work touching GameSession live-play flows, persistence, or CQRS/read models.
 - `/wild-bunch-domain-modeling` — Use when applying Wild Bunch project-scoped domain guidance for DDD tactical modeling, GameSession boundaries, player wallet or inventory, or travel rules.
@@ -218,14 +266,14 @@ Consolidated from the Wild Bunch repo root `AGENTS.md`. Invoke these skills befo
 
 ## Architecture Skills (must invoke before touching domain, persistence, or command/query handlers)
 
-- `/ddd` — DDD tactical patterns: aggregates, value objects, domain events, strongly-typed IDs. The aggregate root enforces invariants and returns Result objects for failures.
+- `/ddd` — DDD tactical patterns: aggregates, value objects, domain events, strongly-typed IDs.
 - `/cqrs-event-sourcing` — CQRS and Event Sourcing patterns: command/query separation, events as source of truth, projections for reads.
 - `/event-driven-architecture` — Event-driven architecture patterns for domain events and projections.
 - `/clean-architecture` — Layered .NET system structure: Domain, Application, Infrastructure, Api projects, dependency inversion.
 - `/wild-bunch-dotnet-architecture` — Wild Bunch-specific .NET architecture guardrails: GameSession as aggregate root, event-sourced command flows, JSON snapshot cache, persistence boundaries.
 - `/wild-bunch-domain-modeling` — Wild Bunch domain modeling: GameSession boundaries, player wallet/inventory, travel rules, clue/journal flows, hidden culprit truth.
 - `/ef-core` — Entity Framework Core patterns when persistence work touches DbContext, migrations, or queries.
-- For architecture work, inspect current source and canonical repo decisions, then invoke the smallest relevant specialist skill above. **Do not hand-roll non-DDD, non-CQRS, or non-event-sourced solutions. The skills and ADRs are the authority, not the repo's current code.**
+- For architecture work, inspect current source and canonical repo decisions, then invoke the smallest relevant specialist skill above. Do not hand-roll non-DDD, non-CQRS, or non-event-sourced solutions. Current live source is truth about current behaviour; skills and ADRs provide constraints and intended architecture whose freshness must be checked against source and current requirements.
 
 ## Specialist Skill Discovery
 
@@ -252,7 +300,7 @@ Create a new reference doc consolidating the "Script Discovery", "Policy Referen
 ```markdown
 # Policy References
 
-Consolidated from the Wild Bunch repo root `AGENTS.md`. All paths are relative to the wild-bunch repo root.
+Consolidated from the Wild Bunch repo root `AGENTS.md` at commit `a65ca6c2`. All paths are relative to the wild-bunch repo root.
 
 ## Script Discovery
 
@@ -363,7 +411,7 @@ policy:
 
 ## Step 7: Regenerate marketplace projections and run full rebuild + validation
 
-After all source edits are complete, regenerate the marketplace projections and run the full rebuild + validation gate.
+After all source edits are complete, regenerate the marketplace projections and run the full rebuild + validation gate. Final completion requires both commands to succeed with no unresolved drift.
 
 **Commands:**
 ```bash
@@ -371,13 +419,15 @@ py -3 tools/rebuild_marketplace.py
 py -3 tools/check_marketplace.py
 ```
 
-**Expected output:**
-- Marketplace validation passed
+**Completion criteria (all must be met):**
+- `rebuild_marketplace.py` exits 0 with all validation lines reporting OK
+- `check_marketplace.py` exits 0 — this includes `git diff --exit-code` passing, which means all generated surfaces are committed and there is no drift between source and generated state
 - Repo index validation passed
-- Index mesh current
+- Index mesh current (no stale INDEX.md files)
 - All projection-lane plugins validated
 - No drift between source and generated surfaces
-- The `git diff --exit-code` at the end of `check_marketplace.py` will fail because there are uncommitted changes — that is expected mid-work. The validation lines above it must all say OK.
+
+If `check_marketplace.py` fails on `git diff --exit-code`, it means generated files were not committed. Stage and commit the regenerated files, then re-run `check_marketplace.py` until it exits 0. A failing `git diff --exit-code` is not an acceptable final result.
 
 **Verify the projected skill reflects changes:**
 After rebuild, confirm that `codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine/SKILL.md` contains the expanded frontmatter and reference routing, and that the `references/` directory there contains the 4 reference files (working-knowledge.md, skill-routing.md, policy-references.md, repo-posture.md) plus the existing difficulty-entropy-seeded-world-setup.md.
@@ -388,13 +438,15 @@ After rebuild, confirm that `codex-marketplace/plugins/wild-bunch-project-pack/s
 
 ## Verification checklist
 
-- [ ] SKILL.md frontmatter has 7 `use_when` entries and 4 `do_not_use_when` entries
+- [ ] Step 0: Pre-implementation source evidence check completed (all paths verified at `a65ca6c2`)
+- [ ] SKILL.md frontmatter has 7 `use_when` entries and 2 `do_not_use_when` entries that preserve the bootstrap-then-route contract
 - [ ] SKILL.md body has 2 new rules (script discovery, specialist skill discovery)
 - [ ] SKILL.md References section routes to all 5 reference docs
 - [ ] `references/working-knowledge.md` exists with worktree/scratch locations and required reading list
-- [ ] `references/skill-routing.md` exists with all 6 skill routing categories + specialist discovery
+- [ ] `references/skill-routing.md` exists with all 6 skill routing categories + specialist discovery, with narrowed `/using-superpowers` trigger, removed "authority not repo code" claim, and removed unsupported "returns Result objects" detail
 - [ ] `references/policy-references.md` exists with script discovery, policy reference map, and ADR freshness
 - [ ] `references/repo-posture.md` updated with script discovery, specialist skill discovery, and companion references
 - [ ] `agents/openai.yaml` updated with expanded scope language
-- [ ] `py -3 tools/rebuild_marketplace.py` passes (all validation OK)
+- [ ] `py -3 tools/rebuild_marketplace.py` exits 0 (all validation OK)
+- [ ] `py -3 tools/check_marketplace.py` exits 0 (all validation OK, `git diff --exit-code` passes — no drift)
 - [ ] Projected skill in `codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine/` reflects all changes
