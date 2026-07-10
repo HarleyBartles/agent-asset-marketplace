@@ -1,0 +1,37 @@
+## Summary
+
+### Canonical MARK-329 Source Edits (3 files)
+- **sources/first_party/skills/work-mode-router/SKILL.md**
+  - Updated durable markers reference to remove "preflight or implementation brief" → "route-state block in the Linear issue body or attached document"
+  - Updated Worker route states table to add Workflow Phase column and new route states for 5-phase workflow
+  - Added "Working Mode Phases" section documenting the structured workflow with sign-off gates
+  - Added "Superpowers Workflow Mapping" section with phase-to-skill routing
+  - Updated Routing map with phase-based skill routing
+  - Added "Workflow Enforcement" section with phase classification and gate enforcement
+  - Reconciled doctrine: work-mode-router classifies workflow phase and may identify phase-appropriate workflow skill (design, planning, code review), but does not choose implementation-lane strategy (SDD, TDD, or direct implementation) where /using-superpowers owns that decision
+
+- **sources/first_party/skills/linear-issue-shaping/SKILL.md**
+  - Removed "preflight" terminology from route-state block guidance
+  - Updated "Compact Worker Issue Shape" section to replace Preflight document with route-state block
+  - Updated Skill-read stop rule to emphasize workflow phase classification
+
+- **sources/first_party/skills/linear-issue-shaping/references/compact-issue-shape.md**
+  - Replaced "Preflight document" section with "Route-state block" section
+  - Updated anti-patterns to reference route-state block instead of Preflight
+
+### Generated Marketplace Projections
+- Full marketplace rebuild regenerated all projections from canonical source edits
+- Bundle manifests, provenance maps, source maps, and skill-zips updated
+- Index mesh regenerated (159 indexes)
+
+### Repo-Installed .agents/skills/** Surface
+- The rebuild restored the expected repo-installed skill surface (25 skills from 2 plugins: superpowers-plus, repo-worker-pack)
+- These installed skill copies were absent from origin/main and are now present as deterministic projections from the current plugin/source state
+- No local-only or stale MARK-328 residue - all installed skills are current projections from the marketplace
+
+#### Test plan
+- Ran py -3 tools/rebuild_marketplace.py - validation passed
+- All marketplace projections regenerated successfully
+- 25 skills installed from 2 plugins
+
+Generated with Devin https://devin.ai
