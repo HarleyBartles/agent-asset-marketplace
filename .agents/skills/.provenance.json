@@ -1,8 +1,11 @@
 {
-  "manifestSha": "e7e08f3211b7a025c4fb8276e9d91c92660d2c04",
-  "syncedAt": "2026-07-09T09:50:05.956055",
-  "syncedPlugins": [],
-  "syncedSkills": 0,
+  "manifestSha": "5102332560b1c3e547cbc50b1031de3340f53392",
+  "syncedAt": "2026-07-10T14:48:30.578490",
+  "syncedPlugins": [
+    "superpowers-plus",
+    "repo-worker-pack"
+  ],
+  "syncedSkills": 25,
   "source": "HarleyBartles/agent-asset-marketplace",
   "sourcePath": "codex-marketplace/plugins",
   "marketplaceFile": ".agents/plugins/marketplace.json"
