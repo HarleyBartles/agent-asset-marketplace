@@ -1,8 +1,8 @@
 # AGENTS.md
 
-Scope: `docs/superpowers/plans/`
+Scope: `.agents/superpowers/plans/`
 
-Defer to the repository root [AGENTS.md](../../AGENTS.md) for global repo and
+Defer to the repository root [AGENTS.md](../../../AGENTS.md) for global repo and
 publication rules.
 
 - Agents must check off completed plan steps before publishing a completed

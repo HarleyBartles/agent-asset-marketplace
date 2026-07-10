@@ -29,9 +29,9 @@ Every implementation plan in this repo must contain:
 
 ## Plan Artifact Placement
 
-Plans go in `.agents/docs/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`).
+Plans go in `.agents/superpowers/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`).
 
-Session artifacts (task briefs, reports, review diffs) go in `.agents/docs/sdd/<plan-name>/`.
+Session artifacts (task briefs, reports, review diffs) go in `.agents/superpowers/sdd/<plan-name>/`.
 
 Do not create loose files at repo root. Do not place agent-generated artifacts under `docs/` or product source folders.
 
