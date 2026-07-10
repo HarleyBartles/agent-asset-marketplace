@@ -41,14 +41,14 @@ Skills: all 22 skills referenced in the skill-routing doc exist under `.agents/s
 
 ## Plan
 
-- [ ] Step 0: Pre-implementation source evidence check
-- [ ] Step 1: Replace SKILL.md frontmatter and body
-- [ ] Step 2: Create `references/working-knowledge.md`
-- [ ] Step 3: Create `references/skill-routing.md`
-- [ ] Step 4: Create `references/policy-references.md`
-- [ ] Step 5: Update `references/repo-posture.md`
-- [ ] Step 6: Update `agents/openai.yaml`
-- [ ] Step 7: Regenerate marketplace projections and run full rebuild + validation
+- [x] Step 0: Pre-implementation source evidence check
+- [x] Step 1: Replace SKILL.md frontmatter and body
+- [x] Step 2: Create `references/working-knowledge.md`
+- [x] Step 3: Create `references/skill-routing.md`
+- [x] Step 4: Create `references/policy-references.md`
+- [x] Step 5: Update `references/repo-posture.md`
+- [x] Step 6: Update `agents/openai.yaml`
+- [x] Step 7: Regenerate marketplace projections and run full rebuild + validation
 
 ---
 
@@ -63,7 +63,7 @@ git ls-tree --name-only a65ca6c2 -- <path>
 
 for each path listed in the "Source evidence pin" section above. If any path is missing, stop and update the plan before proceeding. All 21 docs, 8 scripts, and 22 skills have been pre-verified as of plan creation, but the implementing agent must re-verify in case the wild-bunch repo has been rebased or force-pushed.
 
-- [ ] Step 0 complete
+- [x] Step 0 complete
 
 ---
 
@@ -161,7 +161,7 @@ Read [Policy References](references/policy-references.md) when a task needs the 
 Read [Difficulty, Entropy, and Seeded Setup Doctrine](references/difficulty-entropy-seeded-world-setup.md) when a task needs world-start setup, seeded world identity, entropy, or difficulty posture.
 ```
 
-- [ ] Step 1 complete
+- [x] Step 1 complete
 
 ---
 
@@ -205,7 +205,7 @@ Before reporting environmental issues (PostgreSQL not running, dev servers not s
 - Dev overlay work: `.agents/docs/dev-overlay-doctrine.md`, `.agents/unslop/dev-overlay.md`
 ```
 
-- [ ] Step 2 complete
+- [x] Step 2 complete
 
 ---
 
@@ -285,7 +285,7 @@ When work touches architecture, domain modeling, persistence, frontend, browser-
 For the complete skills inventory, see `.agents/docs/skills-catalog.md` in the wild-bunch repo.
 ```
 
-- [ ] Step 3 complete
+- [x] Step 3 complete
 
 ---
 
@@ -336,7 +336,7 @@ Use these reference files when working in specific areas:
 The ADR log at `docs/adr/` must represent the system as it exists today. See [`.agents/docs/workflow-policy.md`](.agents/docs/workflow-policy.md) for freshness check requirements.
 ```
 
-- [ ] Step 4 complete
+- [x] Step 4 complete
 
 ---
 
@@ -376,7 +376,7 @@ For specialist work (architecture, domain modeling, browser delivery, testing, e
 - [Difficulty, Entropy, and Seeded Setup Doctrine](difficulty-entropy-seeded-world-setup.md) — world-start setup, seeded identity, entropy, difficulty.
 ```
 
-- [ ] Step 5 complete
+- [x] Step 5 complete
 
 ---
 
@@ -405,7 +405,7 @@ policy:
   allow_implicit_invocation: true
 ```
 
-- [ ] Step 6 complete
+- [x] Step 6 complete
 
 ---
 
@@ -432,21 +432,21 @@ If `check_marketplace.py` fails on `git diff --exit-code`, it means generated fi
 **Verify the projected skill reflects changes:**
 After rebuild, confirm that `codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine/SKILL.md` contains the expanded frontmatter and reference routing, and that the `references/` directory there contains the 4 reference files (working-knowledge.md, skill-routing.md, policy-references.md, repo-posture.md) plus the existing difficulty-entropy-seeded-world-setup.md.
 
-- [ ] Step 7 complete
+- [x] Step 7 complete
 
 ---
 
 ## Verification checklist
 
-- [ ] Step 0: Pre-implementation source evidence check completed (all paths verified at `a65ca6c2`)
-- [ ] SKILL.md frontmatter has 7 `use_when` entries and 2 `do_not_use_when` entries that preserve the bootstrap-then-route contract
-- [ ] SKILL.md body has 2 new rules (script discovery, specialist skill discovery)
-- [ ] SKILL.md References section routes to all 5 reference docs
-- [ ] `references/working-knowledge.md` exists with worktree/scratch locations and required reading list
-- [ ] `references/skill-routing.md` exists with all 6 skill routing categories + specialist discovery, with narrowed `/using-superpowers` trigger, removed "authority not repo code" claim, and removed unsupported "returns Result objects" detail
-- [ ] `references/policy-references.md` exists with script discovery, policy reference map, and ADR freshness
-- [ ] `references/repo-posture.md` updated with script discovery, specialist skill discovery, and companion references
-- [ ] `agents/openai.yaml` updated with expanded scope language
-- [ ] `py -3 tools/rebuild_marketplace.py` exits 0 (all validation OK)
-- [ ] `py -3 tools/check_marketplace.py` exits 0 (all validation OK, `git diff --exit-code` passes — no drift)
-- [ ] Projected skill in `codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine/` reflects all changes
+- [x] Step 0: Pre-implementation source evidence check completed (all paths verified at `a65ca6c2`)
+- [x]SKILL.md frontmatter has 7 `use_when` entries and 2 `do_not_use_when` entries that preserve the bootstrap-then-route contract
+- [x]SKILL.md body has 2 new rules (script discovery, specialist skill discovery)
+- [x]SKILL.md References section routes to all 5 reference docs
+- [x]`references/working-knowledge.md` exists with worktree/scratch locations and required reading list
+- [x]`references/skill-routing.md` exists with all 6 skill routing categories + specialist discovery, with narrowed `/using-superpowers` trigger, removed "authority not repo code" claim, and removed unsupported "returns Result objects" detail
+- [x]`references/policy-references.md` exists with script discovery, policy reference map, and ADR freshness
+- [x]`references/repo-posture.md` updated with script discovery, specialist skill discovery, and companion references
+- [x]`agents/openai.yaml` updated with expanded scope language
+- [x]`py -3 tools/rebuild_marketplace.py` exits 0 (all validation OK)
+- [x]`py -3 tools/check_marketplace.py` exits 0 (all validation OK, `git diff --exit-code` passes — no drift)
+- [x]Projected skill in `codex-marketplace/plugins/wild-bunch-project-pack/skills/wild-bunch-project-doctrine/` reflects all changes
