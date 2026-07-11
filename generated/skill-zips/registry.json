@@ -2495,13 +2495,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/wild-bunch-project-doctrine/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 25351,
-      "source_sha256": "57ff3814c6836d32358c88f3cfee2ad229d86e4df2654da1f0f36a1b2a592654",
+      "source_bytes": 24917,
+      "source_sha256": "3d9c14b1ee4a07b5e4a0a346eb61ffd433a433e7bfae2d997df3aec166f1060f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 11398,
-      "zip_sha256": "1515eb57abcf7772cc88c011ff2c2a0eb924a7d4e2b994be12d51ce31a66cb44"
+      "zip_size_bytes": 11347,
+      "zip_sha256": "b029000463526e3ec5fdf48614d6f9d802421807183bd8d09264244adb985507"
     },
     {
       "pack": "house-skills",
@@ -3231,13 +3231,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/wild-bunch-project-pack/wild-bunch-project-doctrine/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 25351,
-      "source_sha256": "57ff3814c6836d32358c88f3cfee2ad229d86e4df2654da1f0f36a1b2a592654",
+      "source_bytes": 24917,
+      "source_sha256": "3d9c14b1ee4a07b5e4a0a346eb61ffd433a433e7bfae2d997df3aec166f1060f",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 11398,
-      "zip_sha256": "1515eb57abcf7772cc88c011ff2c2a0eb924a7d4e2b994be12d51ce31a66cb44"
+      "zip_size_bytes": 11347,
+      "zip_sha256": "b029000463526e3ec5fdf48614d6f9d802421807183bd8d09264244adb985507"
     }
   ],
   "excluded": [
