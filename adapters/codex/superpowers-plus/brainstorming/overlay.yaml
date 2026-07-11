@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 metadata:
   source_category: third_party
   upstream_name: brainstorming
@@ -8,3 +8,28 @@ metadata:
 generated_files:
   - source: adapters/codex/superpowers-plus/script-shell-selection.md
     path: scripts/AGENTS.md
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 29
+    end_line: 29
+    expected_lines:
+      - "6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit"
+    replace_lines:
+      - "6. **Write design doc** — save to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit"
+  - path: SKILL.md
+    op: replace
+    start_line: 106
+    end_line: 106
+    expected_lines:
+      - "- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`"
+    replace_lines:
+      - "- Write the validated design (spec) to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md`"
+  - path: spec-document-reviewer-prompt.md
+    op: replace
+    start_line: 7
+    end_line: 7
+    expected_lines:
+      - "**Dispatch after:** Spec document is written to docs/superpowers/specs/"
+    replace_lines:
+      - "**Dispatch after:** Spec document is written to .agents/superpowers/specs/"

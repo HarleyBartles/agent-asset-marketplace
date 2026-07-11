@@ -202,11 +202,11 @@
       ]
     },
     {
-      "name": "docs-superpowers-plans",
-      "path": ".agents/docs/superpowers/plans",
+      "name": "superpowers-plans",
+      "path": ".agents/superpowers/plans",
       "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
       "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".agents/docs/superpowers/plans/AGENTS.md",
+      "nearest_scoped_agents_md": ".agents/superpowers/plans/AGENTS.md",
       "key_validation_scripts": [
         "tools/validate_repo_index.py"
       ]

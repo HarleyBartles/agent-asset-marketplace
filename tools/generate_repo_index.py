@@ -218,11 +218,11 @@ DEFAULT_REPO_INDEX = {
             ],
         },
         {
-            "name": "docs-superpowers-plans",
-            "path": ".agents/docs/superpowers/plans",
+            "name": "superpowers-plans",
+            "path": ".agents/superpowers/plans",
             "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".agents/docs/superpowers/plans/AGENTS.md",
+            "nearest_scoped_agents_md": ".agents/superpowers/plans/AGENTS.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],
@@ -364,6 +364,13 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone["purpose"] = (
                 f"Retained third-party source custody for the upstream obra/superpowers {superpowers_version} release snapshot."
             )
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "docs-superpowers-plans":
+            updated_zone = dict(zone)
+            updated_zone["name"] = "superpowers-plans"
+            updated_zone["path"] = ".agents/superpowers/plans"
+            updated_zone["nearest_scoped_agents_md"] = ".agents/superpowers/plans/AGENTS.md"
             normalized_zones.append(updated_zone)
             continue
         normalized_zones.append(zone)
