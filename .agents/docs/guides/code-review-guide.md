@@ -80,6 +80,7 @@ Key validation checks:
 - **CI validation:** Did the work pass `py -3 tools/check_marketplace.py`?
 - **Skill installation:** Did the work refresh installed skills via `py -3 tools/install_agent_skills.py` when skills changed?
 - **Index mesh:** Did the work regenerate the index mesh via `py -3 tools/generate_index_mesh.py` when files were added/removed?
+- **Published vendored output:** If the PR claims to update a vendored asset or projection, verify the generated or installed vendored output changed on the PR head. An overlay, generator tweak, or manifest edit is not sufficient by itself if the published asset still matches the stale behavior.
 
 ## 9. Publication Proof
 
@@ -97,6 +98,7 @@ Reviewers must verify that the work actually delivers what the Linear issue requ
 
 - Read the Linear issue's goal and scope
 - Compare the final repo state against the issue's requirements
+- If the issue targets a vendored or projected asset, inspect the published asset itself. If the overlay changed but the vendored output did not, that is a failed implementation, not a pass.
 - If the work diverged from the issue's scope, verify the divergence is documented in the PR body and the issue is updated
 - If the work is incomplete or missing key deliverables, flag it as a finding
 
