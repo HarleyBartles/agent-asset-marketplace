@@ -33,6 +33,12 @@ existing deterministic path can be extended instead.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+## Routing pointers
+
+- `../AGENTS.md` before plugin-root or bundle-manifest changes
+- `../../tools/AGENTS.md` before changing projection or validation behavior
+- `../../docs/custody-and-projection-doctrine.md` before any projection or provenance claim changes
+
 ## Manifest guidance
 
 Bundle-manifest entries for imported or retained projection content must declare

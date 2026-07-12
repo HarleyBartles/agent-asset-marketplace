@@ -6,7 +6,7 @@ This scope covers repo-local agent doctrine, mesh policy, and other
 agent-facing docs under `.agents/docs/`.
 
 Defer to the repository root `AGENTS.md` for global repo doctrine and to
-`.agents/docs/mesh-policy.md` for the canonical mesh statement.
+`mesh-policy.md` for the canonical mesh statement.
 
 Keep these docs compact. They should describe scoped law, not directory
 navigation.
@@ -14,3 +14,10 @@ navigation.
 When documenting reusable workflow patterns, point agents at
 `.agents/playbooks/`, `.agents/runbooks/`, and this docs-owned doctrine surface
 instead of restating procedural steps here.
+
+## Routing pointers
+
+- `mesh-policy.md` for the canonical mesh statement
+- `INDEX.md` for docs-owned doctrine surfaces
+- `guides/AGENTS.md` for guide-stage routing
+- `../../docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target

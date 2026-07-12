@@ -3270,8 +3270,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
       "overlay_path": null,
       "source_file_count": 1,
-      "source_bytes": 7472,
-      "source_sha256": "c677cfda5f2c1449099b6faa07d9bf285fdf91a9cce69392c0b33e4f929cd8cb",
+      "source_bytes": 7769,
+      "source_sha256": "c8b4f4a0ae7a80aa0c945626777b3e47fda7aabed1dec0835bf73b8e35a5435f",
       "reason": "This skill depends on local git worktree operations that should not be implied in a raw GPT export."
     }
   ]
