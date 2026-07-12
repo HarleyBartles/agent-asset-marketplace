@@ -33,6 +33,7 @@ Before claiming work is done, verify:
 
 - **All validation passes:** `py -3 tools/check_marketplace.py` for CI validation
 - **Marketplace regeneration succeeds:** `py -3 tools/rebuild_marketplace.py` for local rebuild
+- **Vendored output changed as intended:** If the task claims to update a vendored asset or projection, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
 - **Build succeeds:** All Python scripts run without errors
 - **No flaky tests:** Run validation multiple times to ensure consistent results
 - **Workspace clean:** No phantom files, no stray debug artifacts, no uncommitted scratch files
