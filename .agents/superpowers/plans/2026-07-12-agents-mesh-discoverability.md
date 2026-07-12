@@ -40,10 +40,10 @@ The generated navigation surfaces that will change are:
 
 ## Plan
 
-- [ ] Step 0: Verify the live routing seams before writing files
-- [ ] Step 1: Rewrite the canonical mesh policy and trim the root routing nodes
-- [ ] Step 2: Add scoped routing nodes for guides and contracts, and tighten the existing subtree nodes
-- [ ] Step 3: Regenerate the index mesh and validate the generated navigation
+- [x] Step 0: Verify the live routing seams before writing files
+- [x] Step 1: Rewrite the canonical mesh policy and trim the root routing nodes
+- [x] Step 2: Add scoped routing nodes for guides and contracts, and tighten the existing subtree nodes
+- [x] Step 3: Regenerate the index mesh and validate the generated navigation
 
 ---
 
@@ -268,15 +268,15 @@ Spot-check the generated indexes to confirm:
 
 ## Verification Checklist
 
-- [ ] `.agents/docs/mesh-policy.md` defines AGENTS vs INDEX vs docs/README roles clearly
-- [ ] Root `AGENTS.md` retains only the explicit pointer block and the minimal repo-purpose/source-truth/publication sections
-- [ ] `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, and `docs/AGENTS.md` route to the exact target docs named in this plan and do not repeat long doctrine
-- [ ] `.agents/docs/guides/AGENTS.md` exists and routes by work stage
-- [ ] `docs/contracts/AGENTS.md` exists and routes contract-doc work to the right files
-- [ ] `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `adapters/AGENTS.md`, `sources/AGENTS.md`, and `provenance/AGENTS.md` all point agents at the right doctrine before work starts
-- [ ] The generated `INDEX.md` files reflect the new routing nodes
-- [ ] `py -3 tools/generate_index_mesh.py --check` passes
-- [ ] `git diff --check` passes
+- [x] `.agents/docs/mesh-policy.md` defines AGENTS vs INDEX vs docs/README roles clearly
+- [x] Root `AGENTS.md` retains only the explicit pointer block and the minimal repo-purpose/source-truth/publication sections
+- [x] `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, and `docs/AGENTS.md` route to the exact target docs named in this plan and do not repeat long doctrine
+- [x] `.agents/docs/guides/AGENTS.md` exists and routes by work stage
+- [x] `docs/contracts/AGENTS.md` exists and routes contract-doc work to the right files
+- [x] `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `adapters/AGENTS.md`, `sources/AGENTS.md`, and `provenance/AGENTS.md` all point agents at the right doctrine before work starts
+- [x] The generated `INDEX.md` files reflect the new routing nodes
+- [x] `py -3 tools/generate_index_mesh.py --check` passes
+- [x] `git diff --check` passes
 
 ## Self-Review
 

@@ -6,10 +6,17 @@ This scope covers the tracked agent-facing home for repo doctrine, local plugin
 posture, work surfaces, and output/evidence conventions.
 
 Defer to the repository root `AGENTS.md` for global repo doctrine and to
-`.agents/docs/mesh-policy.md` for mesh-specific law.
+`docs/mesh-policy.md` for mesh-specific law.
 
 Keep this scope short. It owns local agent-facing law, not directory navigation.
 Navigation stays in generated `INDEX.md` files.
+
+## Routing pointers
+
+- `docs/mesh-policy.md` for the canonical mesh contract
+- `docs/INDEX.md` for tracked docs under `.agents/docs/`
+- `docs/guides/AGENTS.md` for stage-aware docs guidance
+- `../docs/AGENTS.md` for docs-owned guidance when the work moves into `docs/`
 
 ## Review guidelines
 

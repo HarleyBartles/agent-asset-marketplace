@@ -33,3 +33,8 @@ implicit.
 
 Do not insert `INDEX.md` into skill roots or overlay roots. Use generated
 navigation only at container boundaries.
+
+## Routing pointers
+
+- `../docs/custody-and-projection-doctrine.md` before adapter or overlay work
+- `../.agents/docs/mesh-policy.md` before changing adapter routing or generated navigation assumptions

@@ -19,6 +19,12 @@ the relevant scoped law node or mesh policy doc, not in provenance records.
 - Flag provenance prose that implies repo completion without a corresponding
   marketplace asset, manifest, or validation hook.
 
+## Routing pointers
+
+- `../docs/custody-and-projection-doctrine.md` before provenance or trust-record edits
+- `../.agents/docs/mesh-policy.md` before changing how evidence surfaces are routed
+- `../docs/AGENTS.md` before docs-owned evidence surfaces are changed
+
 ## Maintenance responsibility
 
 This file must stay aligned with the repo's provenance and custody evidence

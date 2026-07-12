@@ -43,6 +43,13 @@ existing pipeline can be extended or reused.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
+## Routing pointers
+
+- `../docs/custody-and-projection-doctrine.md` before marketplace source/projection changes
+- `../.agents/docs/mesh-policy.md` before changing marketplace routing or mesh references
+- `../tools/AGENTS.md` before changing generators, validators, or regeneration assumptions
+- `plugins/AGENTS.md` before plugin-root changes
+
 ## Review guidelines
 
 - Treat `codex-marketplace/manifest.json` and `.agents/plugins/marketplace.json`
