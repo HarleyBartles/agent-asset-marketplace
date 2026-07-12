@@ -43,13 +43,6 @@
       "local_path": "skills/test-driven-development"
     },
     {
-      "canonical_name": "using-git-worktrees",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees",
-      "local_path": "skills/using-git-worktrees"
-    },
-    {
       "canonical_name": "verification-before-completion",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -96,6 +89,14 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/systematic-debugging"
+    },
+    {
+      "canonical_name": "using-git-worktrees",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees",
+      "local_path": "skills/using-git-worktrees",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-git-worktrees"
     },
     {
       "canonical_name": "using-superpowers",
