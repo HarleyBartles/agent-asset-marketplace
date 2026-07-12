@@ -4,7 +4,7 @@ Scope: `.agents/docs/guides/`
 
 This scope covers the repo's guide surfaces for stage-based agent routing.
 
-Defer to `../mesh-policy.md` for mesh law and to `../INDEX.md`
+Defer to `../mesh-policy.md` for mesh law and to `INDEX.md`
 for the generated guide inventory.
 
 Keep this scope short. It owns guide-stage routing, not doctrine.
