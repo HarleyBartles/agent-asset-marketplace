@@ -1,0 +1,67 @@
+schema_version: 2
+metadata:
+  source_category: third_party
+  upstream_name: using-git-worktrees
+  upstream_version: v6.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/using-git-worktrees
+  projection_plugin: superpowers-plus
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 65
+    end_line: 76
+    expected_lines:
+      - "Follow this priority order. Explicit user preference always beats observed filesystem state."
+      - ""
+      - "1. **Check your instructions for a declared worktree directory preference.** If the user has already specified one, use it without asking."
+      - ""
+      - "2. **Check for an existing project-local worktree directory:**"
+      - "   ```bash"
+      - "   ls -d .worktrees 2>/dev/null     # Preferred (hidden)"
+      - "   ls -d worktrees 2>/dev/null      # Alternative"
+      - "   ```"
+      - "   If found, use it. If both exist, `.worktrees` wins."
+      - ""
+      - "3. **If there is no other guidance available**, default to `.worktrees/` at the project root."
+    replace_lines:
+      - "Follow this priority order. Explicit user preference always beats observed filesystem state."
+      - ""
+      - "1. **Check your instructions for a declared worktree directory preference.** If the user has already specified one, use it without asking."
+      - ""
+      - "2. **If the repo instructions declare a canonical sibling-folder worktree root, use that location.** For example, use `../_agent-worktrees/<repo-name>` when the repo's AGENTS file names that path."
+      - ""
+      - "3. **Otherwise, check for an existing project-local worktree directory:**"
+      - "   ```bash"
+      - "   ls -d .worktrees 2>/dev/null     # Preferred (hidden)"
+      - "   ls -d worktrees 2>/dev/null      # Alternative"
+      - "   ```"
+      - "   If found, use it. If both exist, `.worktrees` wins."
+      - ""
+      - "4. **If there is no other guidance available**, default to `.worktrees/` at the project root."
+  - path: SKILL.md
+    op: replace
+    start_line: 144
+    end_line: 153
+    expected_lines:
+      - "| Situation | Action |"
+      - "|-----------|--------|"
+      - "| Already in linked worktree | Skip creation (Step 0) |"
+      - "| In a submodule | Treat as normal repo (Step 0 guard) |"
+      - "| Native worktree tool available | Use it (Step 1a) |"
+      - "| No native tool | Git worktree fallback (Step 1b) |"
+      - "| `.worktrees/` exists | Use it (verify ignored) |"
+      - "| `worktrees/` exists | Use it (verify ignored) |"
+      - "| Both exist | Use `.worktrees/` |"
+      - "| Neither exists | Check instruction file, then default `.worktrees/` |"
+    replace_lines:
+      - "| Situation | Action |"
+      - "|-----------|--------|"
+      - "| Already in linked worktree | Skip creation (Step 0) |"
+      - "| In a submodule | Treat as normal repo (Step 0 guard) |"
+      - "| Native worktree tool available | Use it (Step 1a) |"
+      - "| No native tool | Git worktree fallback (Step 1b) |"
+      - "| Repo declares canonical sibling-folder root | Use `../_agent-worktrees/<repo-name>` |"
+      - "| `.worktrees/` exists | Use it (verify ignored) |"
+      - "| `worktrees/` exists | Use it (verify ignored) |"
+      - "| Both exist | Use `.worktrees/` |"
+      - "| Neither exists | Check instruction file, then default `.worktrees/` |"

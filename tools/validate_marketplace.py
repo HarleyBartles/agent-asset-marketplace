@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
-from tree_canonicalization import canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
+from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
 
 
@@ -100,7 +100,7 @@ def validate_pack_manifests() -> None:
 
 
 def list_files(root: Path) -> list[Path]:
-    return sorted(path.relative_to(root) for path in root.rglob("*") if path.is_file())
+    return [Path(rel_path) for rel_path in sorted(canonicalize_tree(root))]
 
 
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
@@ -122,22 +122,30 @@ def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
     return frontmatter, body
 
 
-def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str) -> None:
-    source_files = list_files(source_root)
-    local_files = list_files(local_root)
+def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str, bundle_name: str) -> None:
+    source_tree = canonicalize_tree(source_root)
+    local_tree = canonicalize_tree(local_root)
+    source_files = sorted(source_tree)
+    local_files = sorted(local_tree)
     if source_files != local_files:
-        raise ValueError(f"adventures-pack component {component_name} file inventory mismatch")
+        raise ValueError(f"{bundle_name} component {component_name} file inventory mismatch")
     for rel_path in source_files:
-        source_bytes = _canonicalize_tree_bytes(source_root / rel_path, (source_root / rel_path).read_bytes())
-        local_bytes = _canonicalize_tree_bytes(local_root / rel_path, (local_root / rel_path).read_bytes())
+        source_bytes = source_tree[rel_path]
+        local_bytes = local_tree[rel_path]
         if source_bytes != local_bytes:
-            raise ValueError(f"adventures-pack component {component_name} file content mismatch at {rel_path}")
+            raise ValueError(f"{bundle_name} component {component_name} file content mismatch at {rel_path}")
 
 
-def validate_tree_reconstruction(source_root: Path, overlay_root: Path | None, local_root: Path, component_name: str) -> None:
+def validate_tree_reconstruction(
+    source_root: Path,
+    overlay_root: Path | None,
+    local_root: Path,
+    component_name: str,
+    bundle_name: str,
+) -> None:
     expected_root, tempdir = stage_overlay_tree(source_root, overlay_root)
     try:
-        validate_tree_mirror(expected_root, local_root, component_name)
+        validate_tree_mirror(expected_root, local_root, component_name, bundle_name)
     finally:
         tempdir.cleanup()
 
@@ -774,10 +782,10 @@ def validate_projection_pack_manifest(bundle_manifest: dict, *, bundle_name: str
         check_path_exists(projected_root)
         if source_root.is_dir():
             if content_mode == "verbatim":
-                validate_tree_mirror(source_root, projected_root, canonical_name)
+                validate_tree_mirror(source_root, projected_root, canonical_name, bundle_name)
             else:
                 overlay_root = ROOT / adaptation_overlay_path  # type: ignore[arg-type]
-                validate_tree_reconstruction(source_root, overlay_root, projected_root, canonical_name)
+                validate_tree_reconstruction(source_root, overlay_root, projected_root, canonical_name, bundle_name)
         else:
             if not _files_match_canonicalized(source_root, projected_root):
                 raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
@@ -969,19 +977,19 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         _validate_skill_frontmatter_metadata(local_full_path, bundle_name="superpowers-plus", entry=entry)
         if source_path.is_dir():
             if content_mode == "verbatim":
-                validate_tree_mirror(source_path, local_full_path, canonical_name)
+                validate_tree_mirror(source_path, local_full_path, canonical_name, bundle_name)
             elif content_mode == "normalised":
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus normalised entry {canonical_name} needs an overlay path")
                 overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, bundle_name)
             else:  # adapted
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
                 overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name)
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, bundle_name)
         else:
             if content_mode == "verbatim" and not _files_match_canonicalized(source_path, local_full_path):
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
@@ -1387,7 +1395,7 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
         local_md = ROOT / plugin_root / local_path
         check_path_exists(source_md)
         check_path_exists(local_md)
-        validate_tree_mirror(source_md.parent, local_md.parent, canonical_name)
+        validate_tree_mirror(source_md.parent, local_md.parent, canonical_name, bundle_name)
 
         if role == "adventures":
             adventure_count += 1
