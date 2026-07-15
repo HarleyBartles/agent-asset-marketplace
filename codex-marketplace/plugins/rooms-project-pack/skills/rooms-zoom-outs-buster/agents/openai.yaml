@@ -1,0 +1,12 @@
+interface:
+  display_name: Rooms Zoom Outs Buster
+  short_description: Test Rooms zoom-outs against artifact behaviour.
+  default_prompt: Use /rooms-zoom-outs-buster when rooms zoom-out compression checks
+    against artifacts and source surfaces.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

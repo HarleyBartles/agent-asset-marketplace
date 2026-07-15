@@ -1,0 +1,15 @@
+interface:
+  display_name: Rooms Bootstrap
+  short_description: Routes first-turn Rooms work through classification and required
+    doctrine.
+  default_prompt: Use /rooms-bootstrap when bootstrap rooms, mostly sessions through
+    one-time project arrival, request classification, continuity ingress routing,
+    and doctrine/task handoff without treating connector presence as a task signal
+    or doing source-route selection from the entrypoint.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

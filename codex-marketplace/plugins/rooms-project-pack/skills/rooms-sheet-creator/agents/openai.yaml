@@ -1,0 +1,13 @@
+interface:
+  display_name: Rooms Sheet Creator
+  short_description: Create Rooms prompt, peek, and recall sheets from investigation
+    packets.
+  default_prompt: Use /rooms-sheet-creator when create rooms prompt, peek, and recall
+    sheets from character-investigation packets.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
