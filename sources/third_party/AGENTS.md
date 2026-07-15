@@ -12,6 +12,11 @@ Third-party custody is retained source, not repo doctrine. Keep any scoped
 guidance here limited to custody and evidence rules for the retained snapshot
 tree.
 
+Default custody shape: retain the upstream skill tree only. Treat any extra
+upstream scaffolding at the root of a third-party snapshot as exceptional and
+remove it unless a live projection, validator, or adapter explicitly requires
+it.
+
 ## Manifest guidance
 
 Where a retained third-party snapshot feeds a marketplace projection, the

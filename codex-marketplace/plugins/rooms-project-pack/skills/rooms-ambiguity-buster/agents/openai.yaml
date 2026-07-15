@@ -1,0 +1,12 @@
+interface:
+  display_name: Rooms Ambiguity Discipline
+  short_description: Preserve uncertainty and ambiguity.
+  default_prompt: Use /rooms-ambiguity-buster when preserve rooms ambiguity for identity,
+    motive, authorship, archive gaps, narration, and disappearance.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -1,0 +1,12 @@
+interface:
+  display_name: Rooms Analogy Buster
+  short_description: Rooms binding for the project analogy buster pattern.
+  default_prompt: Use /rooms-analogy-buster when rooms-specific analogy buster for
+    the black box theatre analogy.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

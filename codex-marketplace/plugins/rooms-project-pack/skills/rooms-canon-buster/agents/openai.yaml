@@ -1,0 +1,14 @@
+version: 1
+interface:
+  display_name: Rooms Canon Buster
+  short_description: Checks Rooms canon pressure and lawful canon/item adjustment
+    paths.
+  default_prompt: Use /rooms-canon-buster when rooms canon pressure checks and lawful
+    canon/item adjustment routing for canon, gaps, ambiguity, and layer mismatches.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

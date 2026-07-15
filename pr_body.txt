@@ -34,4 +34,15 @@
 - All marketplace projections regenerated successfully
 - 25 skills installed from 2 plugins
 
+## Summary
+
+- Added a new `rooms-project-pack` plugin with the Rooms-specific skill set plus `database-design-patterns`.
+- Added provenance and plugin metadata for the new pack.
+- Updated `sources/third_party/AGENTS.md` and `sources/third_party/README.md` to make the third-party custody rule explicit: upstream snapshots are retained as skill-tree custody by default, not full package scaffolding.
+- Updated the Linear issue and attached matrix document so MARK-333 now reflects the expanded scope instead of reading like a pure proposal-only Rooms pack task.
+
+## Validation
+
+- `py -3 -c "import json, pathlib; json.load(open('codex-marketplace/custody-pack-registry.json', encoding='utf-8')); print('registry ok')"`
+
 Generated with Devin https://devin.ai

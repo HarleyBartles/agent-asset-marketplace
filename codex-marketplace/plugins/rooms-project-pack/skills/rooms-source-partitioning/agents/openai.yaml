@@ -1,0 +1,14 @@
+interface:
+  display_name: Rooms Source Partitioning
+  short_description: Label source basis and evidence state.
+  default_prompt: Use /rooms-source-partitioning when label rooms, mostly claims by
+    source basis and evidence state. use when answers, reports, closure notes, doctrine
+    takeaways, cleanup claims, or repo/canon/archive/manuscript assertions could blur
+    inspected evidence, inference, conversation, reports, or unavailable sources.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

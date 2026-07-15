@@ -1,0 +1,13 @@
+interface:
+  display_name: Rooms Image Sidecar Prep
+  short_description: Prepare semantic starter sidecars for Rooms image evidence batches
+  default_prompt: Use $rooms-image-sidecars to inspect image batches and produce Albert-ready
+    semantic sidecar packets with provisional room, entity, message, relationship,
+    and DB query hints.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
