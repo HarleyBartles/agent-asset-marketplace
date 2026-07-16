@@ -130,4 +130,4 @@ with:
 - `invariant-buster` for protected surfaces, authority, and repo/governance invariants.
 - `linear-issue-shaping` if worker execution is needed.
 
-Do not simulate Brian, Albert, Derek, Chris, or Will. Do not mutate repos from chat.
+Do not simulate World, Pit, Manuscript, project-local governance, or workspace governance. Do not mutate repos from chat.

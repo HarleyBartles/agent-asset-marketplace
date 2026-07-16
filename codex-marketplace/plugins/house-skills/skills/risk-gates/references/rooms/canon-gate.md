@@ -75,7 +75,7 @@ Use or defer to:
 - `rooms-zoom-outs-buster-v1` when the full frame is getting lost;
 - `rooms-character-investigation-v1` for broad source lookup and source-partitioned investigation packets;
 - `rooms-sheet-creator-v1` for prompt, peek, and recall sheet creation from durable packets;
-- `rooms-image-sidecars-v0.1` for image evidence starter packets before Albert/Pit ingestion;
+- `rooms-image-sidecars-v0.1` for image evidence starter packets before Pit/archive ingestion;
 - `linear-issue-shaping-v1` for Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
 
 ## Green Outcomes
