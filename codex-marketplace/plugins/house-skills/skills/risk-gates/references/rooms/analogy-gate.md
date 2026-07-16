@@ -107,7 +107,7 @@ When the analogy touches other Rooms truth domains, route or compose as needed:
   conversation-derived material.
 - Use `rooms-ambiguity-buster` when the analogy risks overresolving identity, motive, witness status, disappearance,
   reconstruction, or manuscript uncertainty.
-- Use `base-doctrine-v1.1` when your human partner asks for named Rooms facts, character/world/canon claims, or repo-grounded
+- Use `base-doctrine` when your human partner asks for named Rooms facts, character/world/canon claims, or repo-grounded
   answers.
 - Use the current dispatch gate before any worker-facing dispatch that relies on the analogy.
 

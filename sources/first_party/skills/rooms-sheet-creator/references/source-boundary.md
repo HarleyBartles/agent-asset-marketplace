@@ -1,9 +1,9 @@
 # Source boundary
 
-`rooms-sheet-creator-v1` should normally consume a `rooms-character-investigation-v1` packet instead of doing broad repo
+`rooms-sheet-creator` should normally consume a `rooms-character-investigation` packet instead of doing broad repo
 lookup itself.
 
-If broad discovery is missing, route back to `rooms-character-investigation-v1`.
+If broad discovery is missing, route back to `rooms-character-investigation`.
 
 ## Required file_search binding gate
 

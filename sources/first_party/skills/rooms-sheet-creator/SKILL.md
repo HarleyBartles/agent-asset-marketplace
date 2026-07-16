@@ -20,7 +20,7 @@ license: MIT
 ---
 # Rooms Sheet Creator
 
-Create participant-facing Rooms sheets from a `rooms-character-investigation-v1` packet and your human partner's approved direction.
+Create participant-facing Rooms sheets from a `rooms-character-investigation` packet and your human partner's approved direction.
 
 This Skill owns sheet creation. It does not own broad repo lookup, character investigation, canon decisions, archive
 extraction, or manuscript drafting.
@@ -47,7 +47,7 @@ Use these lane names:
   drama, reputation pattern, reveal, fallout, or community impact.
 
 If your human partner asks for a character investigation, summary, or source scan rather than sheet text, route to
-`rooms-character-investigation-v1` first.
+`rooms-character-investigation` first.
 
 ## Required composition
 
@@ -63,7 +63,7 @@ Compose with these Skills when available:
 ## Core workflow
 
 1. Identify the requested lane: `prompt`, `peek`, or `recall`.
-2. Confirm there is a sufficient `rooms-character-investigation-v1` packet. If not, run or request that investigation
+2. Confirm there is a sufficient `rooms-character-investigation` packet. If not, run or request that investigation
    first. Do not redo broad repo lookup inside this Skill.
 3. If broad discovery is unexpectedly needed, enforce the `file_search` binding gate in `references/source-
 boundary.md`.
@@ -75,7 +75,7 @@ boundary.md`.
 ## Investigation packet requirement
 
 For important, existing, sensitive, or harm-bearing subjects, do not draft from memory alone. Use a packet from
-`rooms-character-investigation-v1` containing:
+`rooms-character-investigation` containing:
 
 - respondent and subject;
 - intended sheet lane;

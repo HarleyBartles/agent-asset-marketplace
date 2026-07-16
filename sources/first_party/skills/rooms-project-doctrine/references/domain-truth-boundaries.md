@@ -1,6 +1,6 @@
 # Domain truth boundaries
 
-Use the `domain-truth-boundaries` guidance under `rooms-project-doctrine-v1` when a claim or action crosses archive,
+Use the `domain-truth-boundaries` guidance under `rooms-project-doctrine` when a claim or action crosses archive,
 canon, manuscript, report, conversation, or machine-truth layers.
 
 Core boundaries:

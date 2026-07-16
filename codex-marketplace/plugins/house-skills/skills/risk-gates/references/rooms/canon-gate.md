@@ -71,12 +71,12 @@ Use or defer to:
 - `rooms-project-doctrine` for source routing, truth boundaries, publication, and report hygiene;
 - `rooms-project-doctrine` (source-partitioning reference) to separate evidence, report, synthesis, inference, missing data, and conversation-derived material;
 - `rooms-ambiguity-buster` when identity, motive, authorship, witness status, narrator knowledge, reconstruction, or disappearance could be overresolved;
-- `rooms-analogy-buster-v1` when analogy is doing too much work;
-- `rooms-zoom-outs-buster-v1` when the full frame is getting lost;
-- `rooms-character-investigation-v1` for broad source lookup and source-partitioned investigation packets;
-- `rooms-sheet-creator-v1` for prompt, peek, and recall sheet creation from durable packets;
-- `rooms-image-sidecars-v0.1` for image evidence starter packets before Pit/archive ingestion;
-- `linear-issue-shaping-v1` for Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
+- `rooms-analogy-buster` when analogy is doing too much work;
+- `rooms-zoom-outs-buster` when the full frame is getting lost;
+- `rooms-character-investigation` for broad source lookup and source-partitioned investigation packets;
+- `rooms-sheet-creator` for prompt, peek, and recall sheet creation from durable packets;
+- `rooms-image-sidecars` for image evidence starter packets before Pit/archive ingestion;
+- `linear-issue-shaping` for Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
 
 ## Green Outcomes
 

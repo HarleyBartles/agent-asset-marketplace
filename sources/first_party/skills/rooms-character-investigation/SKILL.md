@@ -24,7 +24,7 @@ Investigate Rooms, Mostly people, handles, rooms, events, reputation patterns, a
 repo/source surfaces, then return a source-partitioned investigation packet.
 
 This Skill owns broad repo lookup and source partitioning. It does not create participant sheets. Use
-`rooms-sheet-creator-v1` to turn the investigation packet into a participant-facing prompt, peek, or recall sheet.
+`rooms-sheet-creator` to turn the investigation packet into a participant-facing prompt, peek, or recall sheet.
 
 ## Required composition
 
@@ -35,7 +35,7 @@ Compose with these Skills when available:
   narrator, actor, or repo-structure claims and the related truth-boundary references.
 - `risk-gates` (rooms ambiguity gate) when identity, motive, authorship, witness status, archive gaps, relationship meaning,
   disappearance, room history, or emotional cost could be overresolved.
-- `rooms-sheet-creator-v1` after the investigation packet when your human partner wants a participant-facing sheet.
+- `rooms-sheet-creator` after the investigation packet when your human partner wants a participant-facing sheet.
 
 ## Core workflow
 
@@ -45,7 +45,7 @@ Compose with these Skills when available:
 3. Inspect source surfaces using `references/source-routing.md`.
 4. Partition claims using the source-basis labels below.
 5. Produce the requested investigation lane using `references/output-lanes.md`.
-6. Include a handoff section for `rooms-sheet-creator-v1` when the next step is a prompt, peek, or recall sheet.
+6. Include a handoff section for `rooms-sheet-creator` when the next step is a prompt, peek, or recall sheet.
 7. If source access is partial, state what is unavailable rather than filling gaps from memory.
 
 ## GitHub source-route discipline
@@ -77,9 +77,9 @@ Use these modes:
   creation. Produce a dense source-partitioned investigation packet.
 - `summary`: default when your human partner asks for a character summary or "what do we know about X?" without asking for deep
   detail.
-- `sheet_precursor`: focused packet for `rooms-sheet-creator-v1` when your human partner already knows the sheet lane.
+- `sheet_precursor`: focused packet for `rooms-sheet-creator` when your human partner already knows the sheet lane.
 
-Sheet lanes are not produced here. Use `rooms-sheet-creator-v1` for:
+Sheet lanes are not produced here. Use `rooms-sheet-creator` for:
 
 - `prompt`: participant memory prompt sheet about the respondent's own participation.
 - `peek`: participant-facing character-read preview about the respondent.
@@ -87,7 +87,7 @@ Sheet lanes are not produced here. Use `rooms-sheet-creator-v1` for:
   drama, reputation pattern, reveal, fallout, or community impact.
 
 If the user asks directly for a sheet and the investigation is already done in the conversation, hand off the packet
-summary to `rooms-sheet-creator-v1`. If the investigation is not done, do the investigation first.
+summary to `rooms-sheet-creator`. If the investigation is not done, do the investigation first.
 
 ## Source basis labels
 
@@ -113,7 +113,7 @@ reports, or partner narrative do not become canon by being included in a charact
 
 ## Sheet handoff contract
 
-When the investigation will feed sheet creation, end with a compact handoff packet for `rooms-sheet-creator-v1`:
+When the investigation will feed sheet creation, end with a compact handoff packet for `rooms-sheet-creator`:
 
 - target subject and respondent, if different;
 - intended sheet lane: `prompt`, `peek`, or `recall`;

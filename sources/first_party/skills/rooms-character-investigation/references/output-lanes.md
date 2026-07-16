@@ -6,7 +6,7 @@ dispatch, canon review, or major character decisions.
 ## Full detail lane
 
 Use this for deep character, participant, room, event, reputation, or community-impact work. It is the normal precursor
-for `rooms-sheet-creator-v1` when the subject is important, existing, sensitive, or harm-bearing.
+for `rooms-sheet-creator` when the subject is important, existing, sensitive, or harm-bearing.
 
 Recommended sections:
 
@@ -48,7 +48,7 @@ reports, or participant accounts as canon.
 
 Use when your human partner asks for a prompt, peek, or recall sheet and the job is to prepare the investigation packet.
 
-Return a concise but sufficient packet for `rooms-sheet-creator-v1`:
+Return a concise but sufficient packet for `rooms-sheet-creator`:
 
 - `sheet_lane`: `prompt`, `peek`, or `recall`.
 - `respondent`: who the sheet is for.
