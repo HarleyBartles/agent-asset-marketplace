@@ -1,3 +1,5 @@
+> Paths like `rooms-world/`, `rooms-pit/`, `rooms-manuscript/` refer to external repos in the Rooms-mostly ecosystem, not paths in this marketplace repo.
+
 # Source routing
 
 Use the narrowest relevant source first. Search is discovery; fetched or inspected files are grounding.
@@ -140,3 +142,25 @@ without bounded grounding when repo access exists.
 Full-detail and sheet-precursor modes should inspect all materially relevant available families above.
 
 For recall sheets, inspect both the subject and the likely respondent context when known.
+
+## Source basis labels
+
+Use these labels explicitly when source basis matters:
+
+- `world-derived`: character, room, system, or non-insight research surfaces from `rooms-world`.
+- `insight-derived`: World/canon insight surfaces, registries, room/entity insights, or explicit insight files.
+- `transcript-derived`: rendered Pit transcript surfaces, including group DM, one-to-one DM, and future DB-backed
+  tweet-chain/public-thread transcripts.
+- `exchange-derived`: public correspondence, letter/exchange style guides, exchange dynamics, manuscript-support
+  bridges, manuscript synopses, or derived exchange documents.
+- `pit-derived`: bounded archive/evidence outputs from `rooms-pit`.
+- `participant-account-derived`: existing prompt sheets, recall sheets, sneak peeks, or participant accounts.
+- `manuscript-derived`: manuscript surfaces or synopses not already covered by exchange-derived material.
+- `ledger-derived`: governed resolved account/entity ledger surfaces once available.
+- `partner-narrative`: your human partner's current framing, relationship knowledge, sensitivity guidance, or outreach context.
+- `inferred`: GPT synthesis from inspected material.
+- `candidate`: plausible but not confirmed by the inspected source set.
+- `not checked` or `unavailable`: relevant surfaces not inspected or inaccessible.
+
+Never let a label launder a claim into truth. Counts, transcript density, archive richness, participant accounts,
+reports, or partner narrative do not become canon by being included in a character investigation.

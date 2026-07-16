@@ -1,3 +1,5 @@
+> Paths like `rooms-world/` refer to external repos in the Rooms-mostly ecosystem, not paths in this marketplace repo.
+
 # Direct landing
 
 GPT direct landing is allowed only where a repo-resident governance surface has established a narrow lane.
