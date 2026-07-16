@@ -115,10 +115,6 @@ def render_index(path: Path) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def normalize_text(text: str) -> str:
-    return text.replace("\r\n", "\n").replace("\r", "\n")
-
-
 def resolve_link_target(current: Path, target: str) -> Path | None:
     if target.startswith(("http://", "https://", "mailto:")):
         return None
@@ -198,7 +194,7 @@ def main() -> int:
             if b"\r" in raw:
                 mismatches.append(f"stale: {target.path.relative_to(ROOT)} (CRLF line endings, needs LF normalization)")
                 continue
-            current = normalize_text(raw.decode("utf-8"))
+            current = raw.decode("utf-8")
             rendered = "\n".join(target.lines).rstrip() + "\n"
             if current != rendered:
                 mismatches.append(f"stale: {target.path.relative_to(ROOT)}")

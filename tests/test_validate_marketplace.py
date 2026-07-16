@@ -15,6 +15,7 @@ if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
 import validate_marketplace  # noqa: E402
+import superpowers_source  # noqa: E402
 import skill_zip_artifacts  # noqa: E402
 from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
 from validate_marketplace import (  # noqa: E402
@@ -52,7 +53,7 @@ def _third_party_projection_frontmatter(name: str, upstream_name: str, overlay: 
         "metadata:\n"
         "  source_category: third_party\n"
         f"  upstream_name: {upstream_name}\n"
-        "  upstream_version: v5.1.0\n"
+        "  upstream_version: v6.1.0\n"
         f"  adaptation_overlay: {overlay}\n"
         "  projection_plugin: superpowers-plus\n"
         "---\n"
@@ -88,15 +89,15 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
 
     provenance_map = {
         "bundle_name": "superpowers-plus",
-        "bundle_version": "5.1.0",
+        "bundle_version": "6.1.0",
         "upstream": {
             "repository": "https://github.com/obra/superpowers",
-            "release_tag": "v5.1.0",
+            "release_tag": "v6.1.0",
             "release_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
             "tag_object": "ecbd610fce16d5faabcea997f17031129589b572",
             "license": "MIT",
         },
-        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
+        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
         "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
         "codex_surface": {
             "plugin_manifest": ".codex-plugin/plugin.json",
@@ -147,7 +148,7 @@ def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) ->
 SUPERPOWERS_PROJECTION_DOC = """# Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
-`v5.1.0`, plus the source-backed House Skills `linear-superpowers`,
+`v6.1.0`, plus the source-backed House Skills `linear-superpowers`,
 `github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`
 skills.
 
@@ -180,6 +181,11 @@ SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
 
 
 class ValidateMarketplaceTests(unittest.TestCase):
+    def setUp(self) -> None:
+        # Bootstrap lazy imports so individual validator functions can be
+        # called directly without running the full validate_marketplace flow.
+        validate_marketplace._bootstrap_marketplace_dependencies()
+
     def test_validate_marketplace_runs_projection_materializer_check(self) -> None:
         with patch.object(
             validate_marketplace.subprocess,
@@ -193,23 +199,23 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 [sys.executable, "tools/materialize_projection.py", "--check"],
             )
 
-    def test_validate_marketplace_runs_ecc_bundle_manifest_check(self) -> None:
+    def test_validate_marketplace_runs_pack_manifest_check(self) -> None:
         with patch.object(
             validate_marketplace.subprocess,
             "run",
             return_value=subprocess.CompletedProcess(["py"], 0),
         ) as run_mock:
-            validate_marketplace.validate_ecc_bundle_manifests()
+            validate_marketplace.validate_pack_manifests()
             run_mock.assert_called_once()
             self.assertEqual(
                 run_mock.call_args.args[0],
-                [sys.executable, "tools/generate_ecc_pack_manifests.py", "--check"],
+                [sys.executable, "tools/generate_pack_manifests.py", "--check"],
             )
 
     def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "skills" / "linear-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
@@ -275,28 +281,28 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "5.1.0",
+                "bundle_version": "6.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-                "source_tag": "v5.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+                "source_tag": "v6.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
                 ],
                 "repo_index": {
                     "source_ledger": [
-                        "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
-                        "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
+                        "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
+                        "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
                     ],
                     "provenance_refs": [
                         "provenance/superpowers-plus.md",
@@ -335,7 +341,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             }
             _write_superpowers_provenance_map(plugin_root, bundle_manifest)
 
-            with patch("validate_marketplace.ROOT", temp_root):
+            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
@@ -507,7 +513,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "blocked_count": 0,
             }
 
-            with patch.object(validate_marketplace, "ROOT", temp_root):
+            with patch.object(validate_marketplace, "ROOT", temp_root), patch.object(superpowers_source, "ROOT", temp_root):
                 validate_skill_bundle_manifest(
                     bundle_manifest,
                     bundle_name="sample-pack",
@@ -520,9 +526,9 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "canonical_name": "using-superpowers",
                 "source_category": "third_party",
                 "content_mode": "adapted",
-                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
+                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
                 "local_path": "skills/using-superpowers",
-                "source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md",
+                "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md",
                 "source_author": "obra",
                 "source_license": "MIT",
                 "source_repo": "https://github.com/obra/superpowers",
@@ -559,7 +565,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     "canonical_name": "using-superpowers",
                     "source_category": "third_party",
                     "content_mode": "adapted",
-                    "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
+                    "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
                     "local_path": "skills/using-superpowers",
                     "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
                     "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
@@ -571,7 +577,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_superpowers_bundle_accepts_first_party_github_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "skills" / "github-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
@@ -637,23 +643,23 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "5.1.0",
+                "bundle_version": "6.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-                "source_tag": "v5.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+                "source_tag": "v6.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
                 ],
                 "candidate_count": 1,
                 "imported_count": 1,
@@ -683,7 +689,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             }
             _write_superpowers_provenance_map(plugin_root, bundle_manifest)
 
-            with patch("validate_marketplace.ROOT", temp_root):
+            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
@@ -746,7 +752,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     "description: Use when workflow-sensitive work needs Superpowers guidance.\n"
                     "metadata:\n"
                     "  source-id: using-superpowers\n"
-                    "  source-path: sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers/SKILL.md\n"
+                    "  source-path: sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md\n"
                     "  provenance-name: MARK-143 GitHub Superpowers compositional skill\n"
                     'license: "MIT"\n'
                     "---\n"
@@ -782,7 +788,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_superpowers_bundle_accepts_first_party_unslop_superpowers_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
             source_skill_root = temp_root / "sources" / "first_party" / "skills" / "unslop-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
@@ -848,23 +854,23 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "5.1.0",
+                "bundle_version": "6.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-                "source_tag": "v5.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+                "source_tag": "v6.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
                 ],
                 "candidate_count": 1,
                 "imported_count": 1,
@@ -894,7 +900,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             }
             _write_superpowers_provenance_map(plugin_root, bundle_manifest)
 
-            with patch("validate_marketplace.ROOT", temp_root):
+            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 try:
                     validate_superpowers_bundle_manifest(
                         bundle_manifest,
@@ -906,7 +912,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_superpowers_bundle_rejects_adapted_third_party_entry_without_overlay_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v5.1.0"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
             source_skill_root = source_root / "skills" / "using-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
             projected_skill_root = plugin_root / "skills" / "using-superpowers"
@@ -969,23 +975,23 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "5.1.0",
+                "bundle_version": "6.1.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
-                "source_tag": "v5.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+                "source_tag": "v6.1.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
                 "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v5.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
                 ],
                 "candidate_count": 1,
                 "imported_count": 1,
@@ -996,7 +1002,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "canonical_name": "using-superpowers",
                         "source_category": "third_party",
                         "content_mode": "adapted",
-                        "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
+                        "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
                         "local_path": "skills/using-superpowers",
                         "import_status": "imported",
                         "copy_expectation": "adapted_from_source",
@@ -1020,15 +1026,15 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 json.dumps(
                     {
                         "bundle_name": "superpowers-plus",
-                        "bundle_version": "5.1.0",
+                        "bundle_version": "6.1.0",
                         "upstream": {
                             "repository": "https://github.com/obra/superpowers",
-                            "release_tag": "v5.1.0",
+                            "release_tag": "v6.1.0",
                             "release_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                             "tag_object": "ecbd610fce16d5faabcea997f17031129589b572",
                             "license": "MIT",
                         },
-                        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v5.1.0",
+                        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
                         "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
                         "codex_surface": {
                             "plugin_manifest": ".codex-plugin/plugin.json",
@@ -1050,7 +1056,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                                 "canonical_name": "using-superpowers",
                                 "source_category": "third_party",
                                 "content_mode": "adapted",
-                                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v5.1.0/skills/using-superpowers",
+                                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
                                 "local_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers",
                                 "copy_expectation": "adapted_from_source",
                                 "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
@@ -1076,7 +1082,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             )
             _touch(plugin_root / "references" / "bundle-manifest.json", json.dumps(bundle_manifest, indent=2))
 
-            with patch("validate_marketplace.ROOT", temp_root):
+            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 with self.assertRaisesRegex(
                     ValueError,
                     r"superpowers-plus adapted entry using-superpowers needs adapters/codex/superpowers-plus/using-superpowers",

@@ -82,123 +82,144 @@ def _heal_overlay(
     if not edits:
         return changes
 
-    healed_edits: list[dict[str, Any]] = []
-    edits_by_path: dict[str, list[dict[str, Any]]] = {}
-    for edit in edits:
-        edits_by_path.setdefault(edit["path"], []).append(edit)
+    # Cache source file lines by relative path to avoid re-reading
+    source_lines_cache: dict[str, list[str]] = {}
 
-    for rel_path, file_edits in edits_by_path.items():
+    def _get_source_lines(rel_path: str) -> list[str] | None:
+        if rel_path in source_lines_cache:
+            return source_lines_cache[rel_path]
         source_file = source_root / rel_path
         if not source_file.exists():
+            return None
+        lines = source_file.read_text(encoding="utf-8").splitlines()
+        source_lines_cache[rel_path] = lines
+        return lines
+
+    healed_edits: list[dict[str, Any]] = []
+    actually_healed = False
+
+    for edit in edits:
+        rel_path = edit["path"]
+        op = edit.get("op", "replace")
+
+        source_lines = _get_source_lines(rel_path)
+        if source_lines is None:
             changes.append(f"  WARNING: source file missing: {rel_path}")
-            healed_edits.extend(file_edits)
+            healed_edits.append(dict(edit))
             continue
 
-        source_lines = source_file.read_text(encoding="utf-8").splitlines()
-
-        for edit in file_edits:
-            op = edit.get("op", "replace")
-            if op in {"insert_before", "insert_after"}:
-                # Anchor-based edits: heal the anchor line
-                anchor = edit.get("anchor", "")
-                line = edit.get("line", 0)
-                healed = dict(edit)
-
-                # Try original line first
-                if 0 < line <= len(source_lines):
-                    if source_lines[line - 1].rstrip() == anchor.rstrip():
-                        # Exact match at original line — check if anchor needs whitespace update
-                        if source_lines[line - 1] != anchor:
-                            healed["anchor"] = source_lines[line - 1]
-                            changes.append(
-                                f"  {rel_path}:{line} anchor whitespace healed"
-                            )
-                        healed_edits.append(healed)
-                        continue
-
-                # Search for anchor in full file
-                anchor_stripped = anchor.rstrip()
-                found = False
-                for i, src_line in enumerate(source_lines):
-                    if src_line.rstrip() == anchor_stripped:
-                        healed["line"] = i + 1
-                        if src_line != anchor:
-                            healed["anchor"] = src_line
-                        changes.append(
-                            f"  {rel_path} insert anchor moved {line}→{i+1}"
-                        )
-                        found = True
-                        break
-
-                if not found:
-                    changes.append(f"  {rel_path} insert anchor NOT FOUND")
-                healed_edits.append(healed)
-                continue
-
-            # replace / delete edits
-            start_line = edit.get("start_line", 0)
-            end_line = edit.get("end_line", 0)
-            expected_lines = edit.get("expected_lines", [])
+        if op in {"insert_before", "insert_after"}:
+            # Anchor-based edits: heal the anchor line
+            anchor = edit.get("anchor", "")
+            line = edit.get("line", 0)
             healed = dict(edit)
 
-            if not expected_lines:
-                healed_edits.append(healed)
-                continue
-
-            # Check if expected_lines match at original location (exact)
-            orig_start_0 = start_line - 1
-            orig_end_0 = end_line
-            if orig_end_0 <= len(source_lines):
-                orig_slice = source_lines[orig_start_0:orig_end_0]
-                if orig_slice == expected_lines:
-                    # Exact match — no healing needed
+            # Try original line first
+            if 0 < line <= len(source_lines):
+                if source_lines[line - 1].rstrip() == anchor.rstrip():
+                    if source_lines[line - 1] != anchor:
+                        healed["anchor"] = source_lines[line - 1]
+                        changes.append(f"  {rel_path}:{line} anchor whitespace healed")
+                        actually_healed = True
                     healed_edits.append(healed)
                     continue
 
-            # Search for content (whitespace-insensitive)
-            found = _find_content(source_lines, expected_lines, start_line)
-            if found is None:
-                changes.append(
-                    f"  {rel_path} {start_line}-{end_line} content NOT FOUND — manual fix needed"
-                )
+            # Search for anchor in full file
+            anchor_stripped = anchor.rstrip()
+            found = False
+            for i, src_line in enumerate(source_lines):
+                if src_line.rstrip() == anchor_stripped:
+                    healed["line"] = i + 1
+                    if src_line != anchor:
+                        healed["anchor"] = src_line
+                    changes.append(f"  {rel_path} insert anchor moved {line}->{i+1}")
+                    actually_healed = True
+                    found = True
+                    break
+
+            if not found:
+                changes.append(f"  {rel_path} insert anchor NOT FOUND")
+            healed_edits.append(healed)
+            continue
+
+        # replace / delete edits
+        start_line = edit.get("start_line", 0)
+        end_line = edit.get("end_line", 0)
+        expected_lines = edit.get("expected_lines", [])
+        healed = dict(edit)
+
+        if not expected_lines:
+            healed_edits.append(healed)
+            continue
+
+        # Check if expected_lines match at original location (exact)
+        orig_start_0 = start_line - 1
+        orig_end_0 = end_line
+        if orig_end_0 <= len(source_lines):
+            orig_slice = source_lines[orig_start_0:orig_end_0]
+            if orig_slice == expected_lines:
+                # Exact match — no healing needed
                 healed_edits.append(healed)
                 continue
 
-            new_start, new_end = found
-            # Get the exact source lines at the found location (with original whitespace)
-            exact_lines = source_lines[new_start - 1 : new_end]
-
-            if new_start != start_line or new_end != end_line:
-                changes.append(
-                    f"  {rel_path} lines healed {start_line}-{end_line}→{new_start}-{new_end}"
-                )
-                healed["start_line"] = new_start
-                healed["end_line"] = new_end
-
-            # Update expected_lines to exact source content (handles whitespace normalization)
-            if exact_lines != expected_lines:
-                healed["expected_lines"] = exact_lines
-                if new_start == start_line and new_end == end_line:
-                    changes.append(
-                        f"  {rel_path}:{start_line} expected_lines whitespace healed"
-                    )
-
-            # Check if the edit is now a no-op (replace with identical content)
-            replace_lines = edit.get("replace_lines", [])
-            if op == "replace" and replace_lines == exact_lines:
-                changes.append(
-                    f"  {rel_path}:{new_start} replace is now a no-op — removing"
-                )
-                continue  # Skip this edit entirely
-
+        # Search for content (whitespace-insensitive)
+        found = _find_content(source_lines, expected_lines, start_line)
+        if found is None:
+            changes.append(
+                f"  {rel_path} {start_line}-{end_line} content NOT FOUND — manual fix needed"
+            )
             healed_edits.append(healed)
+            continue
 
-    if changes:
+        new_start, new_end = found
+        exact_lines = source_lines[new_start - 1 : new_end]
+
+        if new_start != start_line or new_end != end_line:
+            changes.append(f"  {rel_path} lines healed {start_line}-{end_line}->{new_start}-{new_end}")
+            healed["start_line"] = new_start
+            healed["end_line"] = new_end
+            actually_healed = True
+
+        # Update expected_lines to exact source content (handles whitespace normalization)
+        if exact_lines != expected_lines:
+            healed["expected_lines"] = exact_lines
+            if new_start == start_line and new_end == end_line:
+                changes.append(f"  {rel_path}:{start_line} expected_lines whitespace healed")
+            actually_healed = True
+
+        # Check if the edit is now a no-op (replace with identical content)
+        replace_lines = edit.get("replace_lines", [])
+        if op == "replace" and replace_lines == exact_lines:
+            changes.append(f"  {rel_path}:{new_start} replace is now a no-op — removing")
+            actually_healed = True
+            continue  # Skip this edit entirely
+
+        healed_edits.append(healed)
+
+    # Only write if at least one edit was actually healed (not just warnings)
+    if actually_healed:
         spec["edits"] = healed_edits
         if write:
             _save_yaml(overlay_path, spec)
 
     return changes
+
+
+def _infer_source_root(overlay_path: Path) -> Path | None:
+    """Infer source root from overlay directory structure when bundle manifest
+    doesn't have an explicit entry.
+
+    adapters/codex/<pack>/<skill>/overlay.yaml
+    -> sources/third_party/<upstream>/upstream/skills/<skill>
+    """
+    parts = overlay_path.relative_to(ADAPTERS_ROOT).parts
+    if len(parts) < 3:
+        return None
+    skill_name = parts[-2]
+    for candidate in (ROOT / "sources/third_party").rglob(f"skills/{skill_name}"):
+        if candidate.is_dir():
+            return candidate
+    return None
 
 
 def _discover_overlays() -> list[tuple[Path, Path]]:
@@ -214,23 +235,10 @@ def _discover_overlays() -> list[tuple[Path, Path]]:
         if source_category != "third_party":
             continue
 
-        # Find the source root from the bundle manifest
-        # The overlay's metadata has adaptation_overlay and projection_plugin
-        # We need to find the matching bundle manifest entry to get canonical_source_path
         overlay_rel = overlay_path.relative_to(ROOT).as_posix()
         source_root = _find_source_root_for_overlay(overlay_rel)
         if source_root is None:
-            # Try to infer from the overlay directory structure
-            # adapters/codex/<pack>/<skill>/overlay.yaml
-            # source is typically sources/third_party/<upstream>/upstream/skills/<skill>
-            parts = overlay_path.relative_to(ADAPTERS_ROOT).parts
-            if len(parts) >= 3:
-                skill_name = parts[-2]
-                # Search for this skill in third_party sources
-                for candidate in (ROOT / "sources/third_party").rglob(f"skills/{skill_name}"):
-                    if candidate.is_dir():
-                        source_root = candidate
-                        break
+            source_root = _infer_source_root(overlay_path)
 
         if source_root is None:
             print(f"  WARNING: could not find source root for {overlay_rel}")
@@ -275,14 +283,7 @@ def main() -> int:
             return 1
         source_root = _find_source_root_for_overlay(args.overlay)
         if source_root is None:
-            # Try inference
-            parts = overlay_path.relative_to(ADAPTERS_ROOT).parts
-            if len(parts) >= 3:
-                skill_name = parts[-2]
-                for candidate in (ROOT / "sources/third_party").rglob(f"skills/{skill_name}"):
-                    if candidate.is_dir():
-                        source_root = candidate
-                        break
+            source_root = _infer_source_root(overlay_path)
         if source_root is None:
             print(f"ERROR: could not find source root for {args.overlay}")
             return 1

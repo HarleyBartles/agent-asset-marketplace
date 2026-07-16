@@ -165,7 +165,7 @@ def _trees_match_canonicalized(source_root: Path, projected_root: Path) -> None:
 
 
 def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str) -> None:
-    provenance_map = load_json(ROOT / plugin_root / "references" / "provenance-map.json")
+    provenance_map = json.loads((ROOT / plugin_root / "references" / "provenance-map.json").read_text(encoding="utf-8"))
     if not isinstance(provenance_map, dict):
         raise ValueError("superpowers-plus provenance-map.json must contain an object")
 
@@ -820,7 +820,7 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     source_commit = superpowers_source_commit(bundle_manifest)
     if bundle_manifest.get("bundle_name") != "superpowers-plus":
         raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") not in ("5.1.0", "1.0.0"):
+    if bundle_manifest.get("bundle_version") not in ("5.1.0", "6.1.0", "1.0.0"):
         raise ValueError("superpowers-plus bundle manifest bundle_version mismatch")
     if bundle_manifest.get("bundle_type") not in ("third-party-codex-plugin-projection", "projection-lane"):
         raise ValueError("superpowers-plus bundle manifest bundle_type mismatch")
@@ -841,11 +841,11 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     ):
         raise ValueError("superpowers-plus bundle manifest projection_policy mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        (source_root / ".codex-plugin/plugin.json").as_posix(),
-        (source_root / "LICENSE").as_posix(),
-        (source_root / "README.md").as_posix(),
-        (source_root / "AGENTS.md").as_posix(),
-        (source_root / "package.json").as_posix(),
+        (source_root / ".codex-plugin/plugin.json").relative_to(ROOT).as_posix(),
+        (source_root / "LICENSE").relative_to(ROOT).as_posix(),
+        (source_root / "README.md").relative_to(ROOT).as_posix(),
+        (source_root / "AGENTS.md").relative_to(ROOT).as_posix(),
+        (source_root / "package.json").relative_to(ROOT).as_posix(),
     ]:
         raise ValueError("superpowers-plus bundle manifest source_of_truth mismatch")
 
@@ -977,19 +977,19 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
         _validate_skill_frontmatter_metadata(local_full_path, bundle_name="superpowers-plus", entry=entry)
         if source_path.is_dir():
             if content_mode == "verbatim":
-                validate_tree_mirror(source_path, local_full_path, canonical_name, bundle_name)
+                validate_tree_mirror(source_path, local_full_path, canonical_name, "superpowers-plus")
             elif content_mode == "normalised":
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus normalised entry {canonical_name} needs an overlay path")
                 overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, bundle_name)
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, "superpowers-plus")
             else:  # adapted
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
                 overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, bundle_name)
+                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, "superpowers-plus")
         else:
             if content_mode == "verbatim" and not _files_match_canonicalized(source_path, local_full_path):
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
