@@ -120,7 +120,7 @@ blocked or amber with the exact missing QA route.
 
 ## Operator-context quarantine
 
-Visual preproduction consumes the task directive, not the session machinery. Bootstrap text, session busters, repo
+Visual preproduction consumes the task directive, not the session machinery. Bootstrap text, continuity exports, repo
 rollups, source-zip rebuild notes, skill install lists, commit references, and next-session instructions are operator
 context. Do not put them in prompts, generated labels, asset sheets, or deck visuals unless Harley explicitly asks for
 a status or continuity artifact.
