@@ -30,16 +30,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "boring-loop",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/boring-loop",
-      "local_path": "skills/boring-loop",
-      "provenance_note": "Projected verbatim from the first-party boring-loop skill.",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "cleanup-custody",
       "source_category": "first_party",
       "content_mode": "verbatim",

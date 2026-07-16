@@ -8,18 +8,11 @@
       "local_path": "skills/database-design-patterns"
     },
     {
-      "canonical_name": "rooms-ambiguity-buster",
+      "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-ambiguity-buster",
-      "local_path": "skills/rooms-ambiguity-buster"
-    },
-    {
-      "canonical_name": "rooms-analogy-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-analogy-buster",
-      "local_path": "skills/rooms-analogy-buster"
+      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "local_path": "skills/risk-gates"
     },
     {
       "canonical_name": "rooms-bootstrap",
@@ -27,13 +20,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
       "local_path": "skills/rooms-bootstrap"
-    },
-    {
-      "canonical_name": "rooms-canon-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-canon-buster",
-      "local_path": "skills/rooms-canon-buster"
     },
     {
       "canonical_name": "rooms-character-investigation",
@@ -69,13 +55,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
       "local_path": "skills/rooms-source-partitioning"
-    },
-    {
-      "canonical_name": "rooms-zoom-outs-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
-      "local_path": "skills/rooms-zoom-outs-buster"
     }
   ],
   "adapted_projections": []

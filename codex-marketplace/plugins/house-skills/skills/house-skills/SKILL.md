@@ -37,7 +37,7 @@ Use it when you need to understand:
 - the plugin identity and current shape;
 - where the local marketplace entry lives;
 - which current skill roots live in the plugin tree;
-- the `github-operations`, `asset-market`, `linear-issue-shaping`, and `boring-loop` roots that now live as current control-plane skills;
+- the `github-operations`, `asset-market`, `linear-issue-shaping`, and `verification-before-completion` roots that now live as current control-plane skills;
 - how to separate historical archive custody from the live plugin surface.
 
 ## Bundle contract
@@ -65,7 +65,7 @@ The bundle does not replace the archived source ledger. Current version lives in
 
 ## Shared loop control
 
-- `sources/first_party/skills/boring-loop`
+- `sources/first_party/skills/verification-before-completion`
 
 Marketplace exports are generated, not hand-edited:
 
@@ -91,6 +91,6 @@ The bundle intentionally groups the current House Skills in the same three borin
 
 The base/control-plane lane also carries the shared `connector-safety` component so connector and tool work stays narrow, recoverable, and auditable.
 
-The Rooms lane also carries `rooms-canon-buster` as the Rooms canon-pressure overlay alongside the existing Rooms project and source-routing skills.
+The Rooms lane also carries `risk-gates` (rooms canon gate) as the Rooms canon-pressure overlay alongside the existing Rooms project and source-routing skills.
 
 For the exact current component list, open `references/bundle-manifest.json` or `references/source-map.md`.

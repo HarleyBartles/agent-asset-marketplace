@@ -8,13 +8,6 @@
       "local_path": "skills/base-doctrine"
     },
     {
-      "canonical_name": "boring-loop",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/boring-loop",
-      "local_path": "skills/boring-loop"
-    },
-    {
       "canonical_name": "cleanup-custody",
       "source_category": "first_party",
       "content_mode": "verbatim",

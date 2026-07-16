@@ -117,7 +117,7 @@ Repo-specific guides (`.agents/docs/guides/design-guide.md`, `.agents/docs/guide
 Classify the current request into the smallest sufficient mode:
 
 - `ordinary_chat`: acknowledgement, ping, lightweight preference discussion, side chat, or meta that does not require source evidence.
-- `continuity_ingress`: session buster, continuity export, resume packet, or next-session block.
+- `continuity_ingress`: continuity export, resume packet, or next-session block.
 - `repo_worker_coding`: coding implementation, repo-backed worker work, issue handoff, PR-gate, PR-created, landed, or wording such as dispatch/worker/agent for coding work.
 - `gpt_native_skillwork`: create, update, validate, package, install, or troubleshoot ChatGPT-native skills in the current chat.
 - `repo_or_source_evidence`: repository, file, commit, PR, source-truth, publication, or current-state claims.
@@ -176,9 +176,9 @@ If the target is ChatGPT-native installed skill state, account/UI settings, plug
 
 At bootstrap time, preserve workspace-reserved artifact shapes. Output form can imply authority.
 
-When the active project or workspace reserves a shape, lower workflow skills must yield to that rule. In worker-control contexts, YAML-shaped blocks are reserved for lawful send-ready legacy dispatches, session busters, and user-explicit YAML artifacts. Do not use YAML blocks for ordinary assessments, plans, buster summaries, status notes, or conversational analysis. Use prose, a small markdown table, a JSON code block, or another clearly non-dispatch shape instead.
+When the active project or workspace reserves a shape, lower workflow skills must yield to that rule. In worker-control contexts, YAML-shaped blocks are reserved for lawful send-ready legacy dispatches, continuity artifacts, and user-explicit YAML artifacts. Do not use YAML blocks for ordinary assessments, plans, gate summaries, status notes, or conversational analysis. Use prose, a small markdown table, a JSON code block, or another clearly non-dispatch shape instead.
 
-This guard is not a ban on structure. It prevents attention and copy/paste failures where a non-dispatch assessment looks like something a worker should execute, or where a non-continuity note looks like a session buster.
+This guard is not a ban on structure. It prevents attention and copy/paste failures where a non-dispatch assessment looks like something a worker should execute, or where a non-continuity note looks like a continuity artifact.
 
 ## Bounded skill-read stop rule
 
@@ -226,9 +226,9 @@ System prompts should:
 
 ## Session handoff posture
 
-When your human partner provides a session buster, continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant session-buster ingress skill. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
+When your human partner provides a continuity export, resume packet, or next-session block, run the project bootstrap first when applicable, then route the block through the relevant continuity ingress surface. Do not act directly on recommended next actions until ingress separates verified state, fallback state, source claims, open queues, and user instructions.
 
-For coding work, prefer durable Linear issue IDs, worker state, PR IDs, and next checks over bulky packet prose. Linear, GitHub, and repo guidance are the normal continuity surfaces; session busters are fallback continuity.
+For coding work, prefer durable Linear issue IDs, worker state, PR IDs, and next checks over bulky packet prose. Linear, GitHub, and repo guidance are the normal continuity surfaces; continuity exports are fallback continuity.
 
 ## Output behavior
 

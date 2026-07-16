@@ -14,7 +14,7 @@
     "id": "global.mark-19.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-19 originally imported exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. Those six records are now retired and consolidated into the single risk-gates-v1 source record. No unrelated House Skills, plugin projections, ChatGPT skill ZIPs, or renamed busters are imported in this slice.",
+    "decision": "MARK-19 imports exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. Those six records are now retired and consolidated into the single risk-gates-v1 source record. No unrelated House Skills, plugin projections, ChatGPT skill ZIPs, or renamed busters are imported in this slice.",
     "retired_source_paths": [
       "sources/first_party/skills/buster-framework/v1/buster-framework-v1/SKILL.md",
       "sources/first_party/skills/ambiguity-buster/v1/ambiguity-buster-v1/SKILL.md",

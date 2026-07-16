@@ -93,5 +93,5 @@ For skill packages, publication requires exact package evidence and a valid assi
 - Treating validation selection as proof that validation ran.
 - Treating validation success as closure without checking the goal.
 - Writing publication language without remote-visible proof.
-- Treating a session buster as current repo or issue truth.
+- Treating a continuity export as current repo or issue truth.
 - Letting project-specific report law leak into GPT-wide reporting hygiene.

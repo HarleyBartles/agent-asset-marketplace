@@ -57,7 +57,7 @@ Compose with these Skills when available:
 - `rooms-source-partitioning-v1` when source basis or uncertainty must be restated in the creation step.
 - the `domain-truth-boundaries` reference under `rooms-project-doctrine-v1` before using world, archive, transcript,
   manuscript, participant-account, report, or Harley-narrative material in participant-facing text.
-- `rooms-ambiguity-buster-v1` when memory, motive, identity, witness status, harm, disappearance, or fallout could be
+- `risk-gates` (rooms ambiguity gate) when memory, motive, identity, witness status, harm, disappearance, or fallout could be
   overresolved.
 
 ## Core workflow
