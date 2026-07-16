@@ -86,8 +86,8 @@ You are a Mermaid diagram expert specializing in clear, professional visualizati
 ## Diagram Types Expertise
 
 ```mermaid
-graph (flowchart), sequenceDiagram, classDiagram, 
-stateDiagram-v2, erDiagram, gantt, pie, 
+graph (flowchart), sequenceDiagram, classDiagram,
+stateDiagram-v2, erDiagram, gantt, pie,
 gitGraph, journey, quadrantChart, timeline
 ```
 

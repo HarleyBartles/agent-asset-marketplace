@@ -102,7 +102,7 @@ cmd_send() {
   [[ -z "$cmd" ]] && { echo "error: command required" >&2; exit 1; }
   ensure_session
   ensure_window "$window"
-  
+
   # Clear any partial input first
   tmux send-keys -t "$SESSION:$window" C-c 2>/dev/null || true
   sleep 0.1
@@ -167,7 +167,7 @@ cmd_status() {
   [[ -z "$window" ]] && { echo "error: window name required" >&2; exit 1; }
   ensure_session
   ensure_window "$window"
-  
+
   echo "window: $window"
   echo "last output:"
   tmux capture-pane -t "$SESSION:$window" -p -S -3 | tail -3
@@ -179,10 +179,10 @@ cmd_running() {
   [[ -z "$window" ]] && { echo "error: window name required" >&2; exit 1; }
   ensure_session
   ensure_window "$window"
-  
+
   local last_line
   last_line=$(tmux capture-pane -t "$SESSION:$window" -p | grep -v '^$' | tail -1)
-  
+
   # Check for common prompt patterns
   if [[ "$last_line" =~ (\$|❯|›|>|#)[[:space:]]*$ ]]; then
     # Looks like a prompt
@@ -203,10 +203,10 @@ cmd_wait() {
   [[ -z "$window" ]] && { echo "error: window name required" >&2; exit 1; }
   ensure_session
   ensure_window "$window"
-  
+
   local elapsed=0
   local interval=1
-  
+
   while (( elapsed < timeout )); do
     if ! cmd_running "$window" 2>/dev/null; then
       echo "command completed in ${elapsed}s"
@@ -215,7 +215,7 @@ cmd_wait() {
     sleep "$interval"
     (( elapsed += interval ))
   done
-  
+
   echo "timeout after ${timeout}s (command may still be running)" >&2
   return 1
 }
@@ -228,14 +228,14 @@ cmd_watch() {
   [[ -z "$window" ]] && { echo "error: window name required" >&2; exit 1; }
   ensure_session
   ensure_window "$window"
-  
+
   local elapsed=0
   local interval=1
-  
+
   while (( elapsed < timeout )); do
     local output
     output=$(tmux capture-pane -t "$SESSION:$window" -p -S -20)
-    
+
     if [[ -n "$pattern" ]]; then
       if echo "$output" | grep -q "$pattern"; then
         echo "pattern '$pattern' found after ${elapsed}s"
@@ -248,21 +248,21 @@ cmd_watch() {
         return 0
       fi
     fi
-    
+
     sleep "$interval"
     (( elapsed += interval ))
   done
-  
+
   echo "timeout after ${timeout}s" >&2
   return 1
 }
 
 main() {
   [[ $# -lt 1 ]] && usage
-  
+
   local cmd="$1"
   shift
-  
+
   case "$cmd" in
     list)       cmd_list "$@" ;;
     new)        cmd_new "$@" ;;

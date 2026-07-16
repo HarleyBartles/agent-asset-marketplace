@@ -5,7 +5,7 @@ Manpages for `cortex` are **auto-generated** from the CLI argparse definitions.
 ## 📄 Generated Files
 
 - `cortex.1` - Main command reference
-- `cortex-tui.1` - TUI subcommand reference  
+- `cortex-tui.1` - TUI subcommand reference
 - `cortex-workflow.1` - Workflow subcommand reference
 
 ## 🔄 Regeneration

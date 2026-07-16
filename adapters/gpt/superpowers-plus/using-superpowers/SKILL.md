@@ -57,4 +57,3 @@ adapter path: `writing-plans` -> `executing-plans` ->
 - Do not skip the skill selection step.
 - Do not force one workflow onto every task.
 - Keep the chosen workflow aligned with the actual stage of work.
-

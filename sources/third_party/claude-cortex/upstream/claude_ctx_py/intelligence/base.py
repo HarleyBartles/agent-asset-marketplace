@@ -585,7 +585,7 @@ class PatternLearner:
         perf_dirs = [
             "/perf/", "/benchmark/", "/profiling/", "/optimization/",
         ]
-        
+
         has_perf_signal = (
             context.has_database
             or context.has_api
@@ -594,7 +594,7 @@ class PatternLearner:
             # Large changesets often have perf implications
             or len(context.files_changed) >= 10
         )
-        
+
         if has_perf_signal:
             # Higher confidence if explicit perf keywords found
             confidence = 0.85 if has_any(["performance", "perf", "benchmark", "latency"]) else 0.7

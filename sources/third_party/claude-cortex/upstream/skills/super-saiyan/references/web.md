@@ -25,11 +25,11 @@ import { motion } from "framer-motion";
 ## Tailwind Patterns
 ```tsx
 // Card with hover
-<div className="bg-white rounded-lg shadow-md p-6 
+<div className="bg-white rounded-lg shadow-md p-6
   hover:shadow-lg transition-shadow duration-200">
 
 // Button
-<button className="bg-blue-500 hover:bg-blue-600 text-white 
+<button className="bg-blue-500 hover:bg-blue-600 text-white
   px-4 py-2 rounded-md transition-colors duration-150">
 
 // Loading skeleton
@@ -41,11 +41,11 @@ import { motion } from "framer-motion";
 // Success
 <span className="text-green-500">✓</span>
 
-// Error  
+// Error
 <span className="text-red-500">✗</span>
 
 // Loading
-<div className="animate-spin h-5 w-5 border-2 border-blue-500 
+<div className="animate-spin h-5 w-5 border-2 border-blue-500
   border-t-transparent rounded-full">
 ```
 

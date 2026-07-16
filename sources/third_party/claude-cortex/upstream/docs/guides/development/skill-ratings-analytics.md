@@ -90,7 +90,7 @@ cortex skills ratings owasp-top-10
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Average Rating: ⭐⭐⭐⭐⭐ (4.8/5.0)
 # Total Ratings: 127
-# 
+#
 # Distribution:
 # 5★ ████████████████████ 89 (70%)
 # 4★ ████████             24 (19%)
@@ -226,7 +226,7 @@ cortex skills trending --days 30
 #    📈 +89% growth (12 → 23 uses)
 #    ⭐ 4.9 rating (new skill)
 #
-# 🔥 gitops-workflows  
+# 🔥 gitops-workflows
 #    📈 +67% growth (18 → 30 uses)
 #    ⭐ 4.7 rating
 #

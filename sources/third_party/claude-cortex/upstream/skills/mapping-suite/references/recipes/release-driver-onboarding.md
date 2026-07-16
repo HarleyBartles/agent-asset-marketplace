@@ -25,7 +25,7 @@ steps:
     invocation_prompt: |
       Run release-analysis against <target_repo> using the suite scope at
       docs/<suite-date>-suite/suite-scope.md.
-      
+
       The target is a release-driver tool — scope_shape: driver-only (or
       driver+kube if the tool also ships itself via Eve). No prior
       architectural-analysis to ingest unless the user supplied one;

@@ -485,7 +485,7 @@ Context Analysis
   ├─ Pattern Learning (always runs)
   ├─ Semantic Matching (if enabled)
   └─ LLM Analysis (if enabled and low confidence)
-  
+
   Combine all and sort by confidence
 ```
 
@@ -639,21 +639,21 @@ Sample files: oauth.py, jwt.py, auth_handler.py
 ai:
   # Semantic matching
   semantic_enabled: true
-  
+
   # LLM Intelligence
   use_llm: true                           # Enable LLM
   use_llm_in_watch_mode: false            # Disable in watch (frequent checks)
-  
+
   # LLM Thresholds & Control
   llm_threshold: 0.5                      # Call LLM if confidence < 50%
   llm_budget_limit: 10.00                 # Monthly limit ($)
   llm_budget_period: monthly              # Reset period
-  
+
   # Model & Performance
   llm_model: claude-sonnet-4-20250514    # Model to use
   llm_temperature: 0.3                    # Reasoning determinism (0.0-1.0)
   llm_max_tokens: 1024                    # Max response length
-  
+
   # Auto-activation
   auto_activate: true                     # Auto-activate high-confidence
   auto_activate_threshold: 0.8            # Minimum confidence for auto-activate

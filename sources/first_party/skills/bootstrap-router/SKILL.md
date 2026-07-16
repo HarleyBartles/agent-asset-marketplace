@@ -155,5 +155,3 @@ For explicit audits, system-prompt work, or bootstrap-skill updates, report in p
 ## Boundaries
 
 Do not use this skill to execute project work directly. Do not mutate repos, post comments, generate or edit images, build artifacts, create dispatches, delegate Codex, or close issues from bootstrap alone. Use the specific skill that owns the task.
-
-

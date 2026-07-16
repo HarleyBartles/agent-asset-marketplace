@@ -1,7 +1,7 @@
 # TUI Architecture: Comprehensive Guide
 
-**Version**: 1.0  
-**Last Updated**: 2025-12-05  
+**Version**: 1.0
+**Last Updated**: 2025-12-05
 **Status**: Current
 
 ---
@@ -128,12 +128,12 @@ from textual.reactive import Reactive
 
 class ClaudeCtxApp(App):
     """Main TUI application."""
-    
+
     # Reactive properties - UI updates automatically
     active_agents: Reactive[List[str]] = Reactive([])
     active_modes: Reactive[List[str]] = Reactive([])
     current_view: Reactive[str] = Reactive("overview")
-    
+
     def watch_active_agents(self, new_value: List[str]) -> None:
         """Called automatically when active_agents changes."""
         self.notify(f"{len(new_value)} agents active")
@@ -154,7 +154,7 @@ All views share the same window with view switching:
 def switch_to_view(self, view_name: str) -> None:
     """Switch to a different view."""
     self.current_view = view_name  # Triggers reactive update
-    
+
     if view_name == "agents":
         self.load_agents_view()
     elif view_name == "modes":
@@ -200,15 +200,15 @@ The central application class that orchestrates all views and state:
 ```python
 class ClaudeCtxApp(App):
     \"\"\"Main TUI application for cortex management.\"\"\"
-    
+
     CSS_PATH = "styles.tcss"
     TITLE = "Cortex Manager"
-    
+
     # Reactive state
     active_agents: Reactive[List[str]] = Reactive([])
     active_modes: Reactive[List[str]] = Reactive([])
     current_view: Reactive[str] = Reactive("overview")
-    
+
     # Key bindings
     BINDINGS = [
         ("1", "view_overview", "Overview"),
@@ -217,7 +217,7 @@ class ClaudeCtxApp(App):
         ("ctrl+p", "command_palette", "Command Palette"),
         ("q", "quit", "Quit"),
     ]
-    
+
     def compose(self) -> ComposeResult:
         \"\"\"Create child widgets.\"\"\"
         yield Header()
@@ -226,7 +226,7 @@ class ClaudeCtxApp(App):
             id="main-container"
         )
         yield AdaptiveFooter()
-    
+
     def on_mount(self) -> None:
         \"\"\"Initialize on startup.\"\"\"
         self.load_core_modules()
@@ -354,36 +354,36 @@ Each view follows a consistent lifecycle pattern:
 ```python
 class AgentsView(Container):
     \"\"\"Agents management view.\"\"\"
-    
+
     def __init__(self, app: ClaudeCtxApp):
         super().__init__()
         self.app = app
         self.agents_data: List[Agent] = []
         self.table: Optional[DataTable] = None
-    
+
     def compose(self) -> ComposeResult:
         \"\"\"Create child widgets.\"\"\"
         yield DataTable(id="agents-table")
         yield Static("Loading agents...", id="status")
-    
+
     async def on_mount(self) -> None:
         \"\"\"Initialize on mount.\"\"\"
         # 1. Get reference to widgets
         self.table = self.query_one(DataTable)
-        
+
         # 2. Load data
         await self.load_agents()
-        
+
         # 3. Setup UI
         self.setup_table()
-        
+
         # 4. Start refresh timer
         self.set_interval(5.0, self.refresh_data)
-    
+
     async def load_agents(self) -> None:
         \"\"\"Load agents from core module.\"\"\"
         self.agents_data = await self.app.core.agents.list_all()
-    
+
     def setup_table(self) -> None:
         \"\"\"Setup data table.\"\"\"
         self.table.add_columns(
@@ -396,7 +396,7 @@ class AgentsView(Container):
                 ", ".join(agent.dependencies),
                 agent.category
             )
-    
+
     async def on_key(self, event: events.Key) -> None:
         \"\"\"Handle key presses.\"\"\"
         if event.key == "enter":
@@ -622,13 +622,13 @@ async def on_key(self, event: events.Key) -> None:
 async def activate_selected_agent(self) -> None:
     selected_row = self.table.cursor_row
     agent_name = self.agents_data[selected_row].name
-    
+
     # 4. Call core business logic
     result = await self.app.core.agents.activate(agent_name)
-    
+
     # 5. Update reactive state
     self.app.active_agents = result.active_agents
-    
+
     # 6. Notification
     self.notify(f"Activated: {agent_name}")
 
@@ -651,19 +651,19 @@ Fuzzy search across all TUI commands:
 ```python
 class CommandPalette:
     \"\"\"Fuzzy search command palette.\"\"\"
-    
+
     def compose(self) -> ComposeResult:
         yield Static("🔍 Command Palette", id="palette-title")
         yield Input(placeholder="Type to search...", id="palette-input")
         yield DataTable(id="palette-results")
         yield Static("Enter=Execute | Esc=Close", id="palette-help")
-    
+
     def on_input_changed(self, event: Input.Changed) -> None:
         \"\"\"Filter commands as user types.\"\"\"
         query = event.value.lower()
         matches = self.fuzzy_match(query, ALL_COMMANDS)
         self.update_results(matches)
-    
+
     def fuzzy_match(self, query: str, commands: List[Command]) -> List[Command]:
         \"\"\"Simple fuzzy matching.\"\"\"
         return [
@@ -687,7 +687,7 @@ Context-aware help display:
 ```python
 class AdaptiveFooter(Static):
     \"\"\"Footer that shows context-specific keybindings.\"\"\"
-    
+
     def update_for_view(self, view_name: str) -> None:
         \"\"\"Update help text for current view.\"\"\"
         bindings = VIEW_BINDINGS.get(view_name, [])
@@ -775,19 +775,19 @@ def load_myview(self) -> None:
     \"\"\"Load my custom view.\"\"\"
     # Clear current view
     self.clear_view_container()
-    
+
     # Create table
     table = DataTable()
     table.add_columns("Column 1", "Column 2")
-    
+
     # Load data
     data = self.load_my_data()
     for item in data:
         table.add_row(item.col1, item.col2)
-    
+
     # Add to container
     self.view_container.mount(table)
-    
+
     # Update state
     self.current_view = "myview"
 ```
@@ -819,11 +819,11 @@ from rich.text import Text
 
 class StatusIndicator(Static):
     \"\"\"Custom status indicator widget.\"\"\"
-    
+
     def __init__(self, status: str):
         super().__init__()
         self.status = status
-    
+
     def render(self) -> Text:
         \"\"\"Render the status indicator.\"\"\"
         icons = {
@@ -894,7 +894,7 @@ def on_input_changed(self, event: Input.Changed) -> None:
     # Cancel previous timer
     if hasattr(self, "_search_timer"):
         self._search_timer.stop()
-    
+
     # Start new timer (300ms delay)
     self._search_timer = self.set_timer(
         0.3,
@@ -995,5 +995,5 @@ Fresh screenshots available in `docs/assets/images/screenshots/december-2025/`:
 
 ---
 
-**Document Status**: ✅ Current  
+**Document Status**: ✅ Current
 **Maintainer**: Core Team

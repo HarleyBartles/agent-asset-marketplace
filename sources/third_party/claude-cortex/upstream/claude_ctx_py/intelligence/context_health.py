@@ -28,11 +28,11 @@ class ContextHealth:
 
         # 1. Check Language Alignment
         extensions = {os.path.splitext(f)[1] for f in recent_files}
-        
+
         if ".py" in extensions and "python-pro" not in active_agents:
             issues.append("Editing Python files but 'python-pro' agent is inactive.")
             score -= 15
-        
+
         if (".ts" in extensions or ".tsx" in extensions) and "typescript-pro" not in active_agents:
             issues.append("Editing TypeScript files but 'typescript-pro' agent is inactive.")
             score -= 15
@@ -47,7 +47,7 @@ class ContextHealth:
         # If touching sensitive files without Security Audit
         sensitive_keywords = ["auth", "secret", "password", "key", "token"]
         sensitive_files = [f for f in recent_files if any(k in f.lower() for k in sensitive_keywords)]
-        
+
         if sensitive_files and "Security_Audit" not in active_modes:
              issues.append(f"Editing sensitive files ({len(sensitive_files)}) without 'Security Audit' mode.")
              score -= 25
@@ -59,7 +59,7 @@ class ContextHealth:
 
         # 5. Stale Agent Detection (Recommending DISABLE)
         recommendations = []
-        
+
         # Check for unused language agents
         if "python-pro" in active_agents and ".py" not in extensions:
             issues.append("Agent 'python-pro' is active but no Python files are being edited.")

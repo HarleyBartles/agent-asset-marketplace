@@ -9,7 +9,7 @@ The API Contracts Pack projects the MARK-204 `api-design-patterns` contract-doct
 ### Source Custody Plugin
 
 - **Plugin root**: `codex-marketplace/plugins/codex-cortex/`
-- **Skill roots**: 
+- **Skill roots**:
   - `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/`
   - `codex-marketplace/plugins/codex-cortex/skills/openapi-specification/`
 - **Source map**: `codex-marketplace/plugins/codex-cortex/references/source-map.md`

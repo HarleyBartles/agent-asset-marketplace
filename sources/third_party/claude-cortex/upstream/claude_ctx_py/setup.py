@@ -26,14 +26,14 @@ def _get_rules_source() -> Optional[Path]:
 
 def _symlink_rules(source_dir: Path, target_dir: Path, console: Console) -> Tuple[int, int]:
     """Symlink rule files from source to target directory.
-    
+
     Returns (success_count, error_count)
     """
     target_dir.mkdir(parents=True, exist_ok=True)
-    
+
     success = 0
     errors = 0
-    
+
     for rule_file in source_dir.glob("*.md"):
         target_link = target_dir / rule_file.name
         try:
@@ -42,14 +42,14 @@ def _symlink_rules(source_dir: Path, target_dir: Path, console: Console) -> Tupl
             elif target_link.exists():
                 console.print(f"  [yellow]Skipped {rule_file.name} (file exists)[/yellow]")
                 continue
-            
+
             target_link.symlink_to(rule_file.resolve())
             console.print(f"  [green]✓[/green] {rule_file.name}")
             success += 1
         except OSError as e:
             console.print(f"  [red]✗[/red] {rule_file.name}: {e}")
             errors += 1
-    
+
     return success, errors
 
 
@@ -57,27 +57,27 @@ def setup(console: Optional[Console] = None) -> Tuple[int, str]:
     """Run cortex setup - symlink rules to ~/.claude/rules/cortex/"""
     if console is None:
         console = Console()
-    
+
     console.print()
     console.print("[bold]Cortex Setup[/bold]")
     console.print("-" * 40)
-    
+
     # Find rules source
     rules_source = _get_rules_source()
     if rules_source is None:
         return 1, "Rules directory not found"
-    
+
     rule_count = len(list(rules_source.glob("*.md")))
     console.print(f"Found {rule_count} rules in {rules_source}")
-    
+
     # Target directory
     target_dir = Path.home() / ".claude" / "rules" / "cortex"
     console.print(f"Target: {target_dir}")
     console.print()
-    
+
     if not Confirm.ask("Symlink rules to ~/.claude/rules/cortex/?", default=True, console=console):
         return 1, "Setup cancelled"
-    
+
     console.print()
     success, errors = _symlink_rules(rules_source, target_dir, console)
 

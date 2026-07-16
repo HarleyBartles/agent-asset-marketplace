@@ -54,7 +54,7 @@ Every enhancement must maintain or improve accessibility:
 - Screen reader friendly markup
 - High contrast color choices
 
-#### 2. **Performance Always** 🚀  
+#### 2. **Performance Always** 🚀
 
 Visual enhancements must be lightweight:
 
@@ -89,7 +89,7 @@ Works everywhere, enhanced where possible:
 
 ```
 Primary (Blue #3b82f6)    → Main actions, headers, borders
-Accent (Cyan #06b6d4)     → Highlights, hover states, focus indicators  
+Accent (Cyan #06b6d4)     → Highlights, hover states, focus indicators
 Success (Green #10b981)   → Completed items, positive trends
 Warning (Yellow #f59e0b)  → In-progress items, caution states
 Error (Red #ef4444)       → Failed items, errors, dangers
@@ -245,7 +245,7 @@ SuperSaiyanCard:hover {
 ```python
 class SuperSaiyanCard(Static):
     """Beautiful metric card with smooth animations and rich styling."""
-    
+
     def __init__(
         self,
         title: str,
@@ -257,17 +257,17 @@ class SuperSaiyanCard(Static):
         content = Text()
         content.append(f"{title}\n", style="dim cyan")
         content.append(f"{value}\n", style="bold white")
-        
+
         if trend:
             style = "green" if "+" in trend else "red" if "-" in trend else "yellow"
             content.append(f"{trend} ", style=style)
-        
+
         if sparkline:
             content.append(sparkline, style="bright_blue")
-        
+
         panel = Panel(content, border_style="bright_blue", padding=(1, 2))
         super().__init__(panel, **kwargs)
-    
+
     def on_mount(self) -> None:
         """Trigger fade-in animation on mount."""
         self.add_class("mounted")
@@ -333,7 +333,7 @@ def add_status_row(self, name: str, status: str, progress: int, duration: str) -
     filled = int(progress / 10)
     empty = 10 - filled
     progress_bar = f"[cyan]{'█' * filled}{'░' * empty}[/cyan] {progress}%"
-    
+
     status_formatted = status_map.get(status.lower(), status)
     self.add_row(name, status_formatted, progress_bar, duration)
 ```
@@ -465,7 +465,7 @@ def update_payload(self, **kwargs) -> None:
     self.view = kwargs["view"]
     self.message = kwargs["message"]
     # ... more properties ...
-    
+
     # Cycle through wave frames
     self.wave_phase = (self.wave_phase + 1) % len(self._WAVE_FRAMES)
 ```
@@ -477,7 +477,7 @@ def render(self) -> str:
     agent_text = f"[cyan]{self.agent_active}/{self.agent_total} agents"
     task_text = f"[green]{self.task_active} active tasks"
     wave = self._WAVE_FRAMES[self.wave_phase]
-    
+
     return (
         f"[bold]{self.view}[/bold] {self.message} [dim]│[/dim] "
         f"{agent_text} [dim]│[/dim] {task_text} [dim]│[/dim] "
@@ -766,7 +766,7 @@ _WAVE_FRAMES = ("≈~~~~", "~≈~~~", "~~≈~~", "~~~≈~", "~~≈~~", "~≈~~~"
 def update_payload(self, **kwargs) -> None:
     # Cycle through frames
     self.wave_phase = (self.wave_phase + 1) % len(self._WAVE_FRAMES)
-    
+
     # Trigger re-render
     self.refresh()
 
@@ -782,11 +782,11 @@ def generate_sparkline(data: list[float]) -> str:
     """Generate ASCII sparkline from data points."""
     if not data:
         return ""
-    
+
     chars = "▁▂▃▄▅▆▇█"
     min_val, max_val = min(data), max(data)
     range_val = max_val - min_val or 1
-    
+
     return "".join(
         chars[int((v - min_val) / range_val * (len(chars) - 1))]
         for v in data
@@ -844,7 +844,7 @@ from ..tui_supersaiyan import (
 class AgentTUI(App[None]):
     def compose(self) -> ComposeResult:
         yield Header()
-        
+
         # Dashboard with cards
         with Container(classes="dashboard"):
             data = [1, 2, 3, 5, 6, 8]
@@ -854,14 +854,14 @@ class AgentTUI(App[None]):
                 trend="+3",
                 sparkline=generate_sparkline(data)
             )
-        
+
         # Content panel with table
         with SuperSaiyanPanel():
             table = SuperSaiyanTable()
             table.add_columns("Name", "Status", "Progress", "Time")
             table.add_status_row("agent-1", "active", 80, "2.5s")
             yield table
-        
+
         # Status bar
         yield SuperSaiyanStatusBar(id="status-bar")
         yield Footer()
@@ -875,7 +875,7 @@ def refresh_status_bar(self) -> None:
         status_bar = self.query_one(SuperSaiyanStatusBar)
     except Exception:
         return
-    
+
     status_bar.update_payload(
         view=self.current_view.title(),
         message=self.status_message,
@@ -915,29 +915,29 @@ class SuperSaiyanDemo(App):
         Binding("r", "refresh", "Refresh"),
         Binding("?", "help", "Help"),
     ]
-    
+
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
-        
+
         # Dashboard cards
         with Container(classes="dashboard"):
             yield SuperSaiyanCard("Active Agents", "12", trend="+3", ...)
             yield SuperSaiyanCard("Tasks Complete", "847", trend="+124", ...)
             yield SuperSaiyanCard("Success Rate", "94%", trend="+2%", ...)
-        
+
         # Table with data
         with SuperSaiyanPanel():
             table = SuperSaiyanTable()
             table.add_status_row("code-reviewer", "active", 80, "2.5s")
             # ... more rows ...
             yield table
-        
+
         # Action buttons
         with Container(classes="button-group"):
             yield SuperSaiyanButton("Activate", classes="primary")
             yield SuperSaiyanButton("Export", classes="success")
             yield SuperSaiyanButton("Deactivate", classes="danger")
-        
+
         yield SuperSaiyanStatusBar()
         yield Footer()
 ```
@@ -952,10 +952,10 @@ from textual.reactive import reactive
 
 class SuperSaiyanCustom(Static):
     """Custom Super Saiyan component."""
-    
+
     # Define reactive properties
     value = reactive(0)
-    
+
     DEFAULT_CSS = """
     SuperSaiyanCustom {
         border: solid $primary;
@@ -964,28 +964,28 @@ class SuperSaiyanCustom(Static):
         opacity: 0;
         transition: opacity 300ms;
     }
-    
+
     SuperSaiyanCustom.mounted {
         opacity: 1;
     }
-    
+
     SuperSaiyanCustom:hover {
         border: tall $accent;
     }
     """
-    
+
     def __init__(self, initial_value: int = 0, **kwargs):
         super().__init__(**kwargs)
         self.value = initial_value
-    
+
     def render(self) -> str:
         """Render component content."""
         return f"Value: {self.value}"
-    
+
     def on_mount(self) -> None:
         """Trigger entrance animation."""
         self.add_class("mounted")
-    
+
     def watch_value(self, value: int) -> None:
         """Re-render when value changes."""
         self.refresh()
@@ -1051,7 +1051,7 @@ class SuperSaiyanCard(Static):
         # Only render when visible
         if not self.is_visible:
             return Panel("")
-        
+
         # Expensive rendering
         content = self._build_content()
         return Panel(content, ...)
@@ -1067,7 +1067,7 @@ def debounce(wait: float):
     """Debounce decorator to limit function calls."""
     def decorator(func):
         last_call = 0
-        
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             nonlocal last_call
@@ -1075,7 +1075,7 @@ def debounce(wait: float):
             if now - last_call >= wait:
                 last_call = now
                 return func(*args, **kwargs)
-        
+
         return wrapper
     return decorator
 
@@ -1092,7 +1092,7 @@ async def load_data_async(self):
     """Load data without blocking UI."""
     # Heavy computation off main thread
     data = await asyncio.to_thread(expensive_operation)
-    
+
     # Update UI on main thread
     self.query_one(SuperSaiyanTable).update(data)
 ```
@@ -1107,7 +1107,7 @@ class SuperSaiyanCard(Static):
         """Initialize resources."""
         self._cache = {}
         self.add_class("mounted")
-    
+
     def on_unmount(self) -> None:
         """Cleanup resources."""
         self._cache.clear()
@@ -1124,7 +1124,7 @@ class SuperSaiyanTable(DataTable):
         super().__init__(**kwargs)
         self._render_cache = OrderedDict()
         self._max_cache_size = 100
-    
+
     def _cache_render(self, key, value):
         if len(self._render_cache) >= self._max_cache_size:
             self._render_cache.popitem(last=False)  # Remove oldest
@@ -1182,7 +1182,7 @@ from textual.reactive import reactive
 
 class SuperSaiyanMetric(Static):
     value = reactive(0)
-    
+
     def watch_value(self, new_value: int) -> None:
         """Auto-refresh when value changes."""
         self.refresh()
@@ -1215,7 +1215,7 @@ async def test_card_animation():
     """Test fade-in animation."""
     card = SuperSaiyanCard("Test", "100")
     assert "mounted" not in card.classes
-    
+
     card.on_mount()
     assert "mounted" in card.classes
 ```
@@ -1230,7 +1230,7 @@ async def test_status_bar_updates():
     app = AgentTUI()
     async with AppTest(app) as pilot:
         status_bar = app.query_one(SuperSaiyanStatusBar)
-        
+
         # Update status
         status_bar.update_payload(
             view="Agents",
@@ -1240,7 +1240,7 @@ async def test_status_bar_updates():
             agent_total=10,
             task_active=2
         )
-        
+
         # Verify updates
         assert status_bar.view == "Agents"
         assert status_bar.agent_active == 5
@@ -1339,6 +1339,6 @@ SuperSaiyanButton:hover {
 
 ---
 
-**Document Maintainer**: Cortex Plugin Team  
-**Last Review**: December 6, 2025  
+**Document Maintainer**: Cortex Plugin Team
+**Last Review**: December 6, 2025
 **Next Review**: March 2026

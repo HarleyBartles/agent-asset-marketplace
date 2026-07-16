@@ -154,7 +154,7 @@ Scenario: Successful upgrade flow
   When I click "Upgrade to Pro" in the nav bar
   Then I should see the upgrade modal with pricing details
   And the modal should pre-fill my account email
-  
+
 Scenario: Failed payment
   Given I am on the upgrade modal
   When I submit payment with a declined card

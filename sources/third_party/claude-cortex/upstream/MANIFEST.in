@@ -84,8 +84,8 @@ global-exclude .claude
 global-exclude .githooks
 global-exclude .github
 global-exclude .codacy
-global-exclude coverage.xml 
-global-exclude AGENTS.md GEMINI.md CLAUDE.md 
+global-exclude coverage.xml
+global-exclude AGENTS.md GEMINI.md CLAUDE.md
 global-exclude .claudeignore
 global-exclude .codannaignore
 global-exclude *.ini

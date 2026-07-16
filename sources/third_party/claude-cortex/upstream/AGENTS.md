@@ -153,5 +153,3 @@ These guides cover:
 - MCP tools reference
 
 You MUST read the overview resource to understand the complete workflow. The information is NOT summarized here.
-
-

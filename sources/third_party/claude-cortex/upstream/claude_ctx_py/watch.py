@@ -156,7 +156,7 @@ def _load_skill_rules() -> List[Dict[str, Any]]:
         _resolve_cortex_root() / "skills" / "skill-rules.json",
         Path.home() / ".claude" / "skills" / "skill-rules.json",
     ]
-    
+
     for path in candidates:
         if path and path.exists():
             try:
@@ -169,60 +169,60 @@ def _load_skill_rules() -> List[Dict[str, Any]]:
 
 def _extract_file_context(files: List[Path]) -> Set[str]:
     """Extract contextual keywords from file paths.
-    
+
     Uses file patterns, directory names, and extensions to derive
     additional keywords beyond just the filename.
-    
+
     Args:
         files: List of file paths
-        
+
     Returns:
         Set of derived keywords
     """
     import re
-    
+
     keywords: Set[str] = set()
-    
+
     for file_path in files:
         path_str = str(file_path).lower()
         filename = file_path.name.lower()
-        
+
         # Check file patterns (regex)
         for pattern, pattern_keywords in FILE_PATTERNS.items():
             if re.search(pattern, path_str, re.IGNORECASE):
                 keywords.update(pattern_keywords)
-        
+
         # Check directory names
         for part in file_path.parts:
             part_lower = part.lower()
             if part_lower in DIR_PATTERNS:
                 keywords.update(DIR_PATTERNS[part_lower])
-        
+
         # Check file extension
         ext = file_path.suffix.lower()
         if ext in EXT_PATTERNS:
             keywords.update(EXT_PATTERNS[ext])
-        
+
         # Add filename words (split on common separators)
         name_parts = re.split(r'[_\-./]', file_path.stem.lower())
         keywords.update(p for p in name_parts if len(p) > 2)
-    
+
     return keywords
 
 
 def _get_git_context(directories: List[Path]) -> Set[str]:
     """Extract keywords from recent git activity.
-    
+
     Args:
         directories: Directories to check for git repos
-        
+
     Returns:
         Set of keywords from commit messages and branch names
     """
     import subprocess
-    
+
     keywords: Set[str] = set()
-    
+
     for directory in directories:
         # Get current branch name
         try:
@@ -241,7 +241,7 @@ def _get_git_context(directories: List[Path]) -> Set[str]:
                 keywords.update(p for p in parts if len(p) > 2 and p not in ('feature', 'fix', 'bug', 'hotfix', 'release', 'main', 'master', 'develop'))
         except (subprocess.TimeoutExpired, OSError):
             pass
-        
+
         # Get last few commit messages
         try:
             result = subprocess.run(
@@ -261,7 +261,7 @@ def _get_git_context(directories: List[Path]) -> Set[str]:
                     keywords.update(w for w in words if w not in skip)
         except (subprocess.TimeoutExpired, OSError):
             pass
-    
+
     return keywords
 
 
@@ -294,11 +294,11 @@ def _match_skills(
 
     # Gather all context keywords
     context_keywords = _extract_file_context(files)
-    
+
     # Add git context if directories provided
     if directories:
         context_keywords.update(_get_git_context(directories))
-    
+
     # Build searchable text from files (original behavior)
     file_text = " ".join(f.name.lower() for f in files)
     dir_text = " ".join(p.parent.name.lower() for p in files if p.parent.name)
@@ -916,7 +916,7 @@ class WatchMode:
         if recs_changed or skills_changed:
             self.last_recommendations = recommendations
             self.last_skill_suggestions = skill_suggestions
-            
+
             if recs_changed:
                 self.recommendations_made += 1
             if skills_changed and skill_suggestions:

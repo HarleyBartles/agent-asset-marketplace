@@ -19,7 +19,7 @@ Ask in clusters, not all at once. Most users have ready answers for some cluster
    - Categorically distinct from competitor vocabulary
    - Structurally tied to product metaphor
    - Single syllable / short / verb-able
-   
+
    If the user can't name one yet, this is the most-important blocker — work with them to find it. A brand without an owned verb has no voice.
 
 6. **Durable noun** — the *thing* the user builds / has / does with the product. Facet's "model" (not profile / data / story). Stripe's "integration" (not setup / config). Should be the noun that pairs naturally with the brand verb.
@@ -57,7 +57,7 @@ Ask in clusters, not all at once. Most users have ready answers for some cluster
     - **MIT** — most permissive. Good when adoption matters more than reciprocity.
     - **BSD** variants — similar to MIT.
     - **Source-available / proprietary** — not OSS; skip CONTRIBUTING / CODE_OF_CONDUCT.
-    
+
     See `license-considerations.md` for which conventions ship per license.
 
 15. **Pricing model**:
@@ -66,7 +66,7 @@ Ask in clusters, not all at once. Most users have ready answers for some cluster
     - **Freemium** — free baseline + paid tier. Specify: what's free, what's paid, paid pricing.
     - **Free / OSS-only** — no paid product. Skip PRICING.md; adapt FAQ pricing answer.
     - **Open-core** — OSS core + commercial extensions. Specify which features are commercial.
-    
+
     See `pricing-models.md` for the PRICING.md template variants per model.
 
 ### Cluster 5: State and distribution
@@ -75,7 +75,7 @@ Ask in clusters, not all at once. Most users have ready answers for some cluster
     - "Currently preparing for public launch" language in BIOS / press kit
     - Deferral of customer testimonials, coverage clips, hosted screenshots
     - Whether public-URL references work or need "coming soon" annotations
-    
+
     See `pre-launch-deferrals.md` for the full list.
 
 17. **Distribution domain for public docs** — where MANIFESTO / PRICING / press will eventually live as URLs (`{{DOMAIN}}/manifesto`, `{{DOMAIN}}/pricing`, `{{DOMAIN}}/press`). Even if the URLs don't exist yet, commit to the convention so brand assets can reference them post-launch.

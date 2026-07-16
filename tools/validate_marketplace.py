@@ -289,7 +289,7 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
 
     content_mode = entry.get("content_mode")
     source_category = entry.get("source_category")
-    
+
     # MARK-262: Adapted and normalised entries must have source authorship fields
     # Verbatim entries should NOT have these at entry level (byte-identical to upstream)
     if content_mode in ("adapted", "normalised"):
@@ -333,7 +333,7 @@ def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> N
 
 def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, entry: dict) -> None:
     """Validate that SKILL.md frontmatter has required metadata fields based on content_mode.
-    
+
     MARK-262: Adapted skills must have complete metadata frontmatter. Verbatim skills should be byte-identical to upstream and should NOT have metadata.
     """
     skill_md = skill_path / "SKILL.md"
@@ -382,7 +382,7 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     # MARK-262: Adapted and normalised skills must have metadata section
     # Verbatim skills may have optional metadata (e.g., origin field for provenance tracking)
     metadata = parsed.get("metadata")
-    
+
     if content_mode in {"adapted", "normalised"}:
         if not isinstance(metadata, dict):
             raise ValueError(f"{skill_md} frontmatter is missing required metadata section for {content_mode} content")
@@ -414,7 +414,7 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
 
 def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str) -> None:
     """Validate that plugin-level authorship does not flatten skill-level attribution.
-    
+
     MARK-262: Strict validation - all plugins must have proper plugin-level authorship.
     """
     plugin_author = bundle_manifest.get("plugin_author")
@@ -1062,7 +1062,7 @@ def validate_skill_bundle_manifest(
         raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
     if bundle_manifest.get("bundle_version") != "1.0.0":
         raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
-    
+
     # First-party bundles have specific structure requirements
     bundle_type = bundle_manifest.get("bundle_type")
     if bundle_type and "first-party" in bundle_type:
@@ -1071,7 +1071,7 @@ def validate_skill_bundle_manifest(
             raise ValueError(f"{bundle_name} bundle manifest plugin_root missing")
         if not bundle_manifest.get("skills_root"):
             raise ValueError(f"{bundle_name} bundle manifest skills_root missing")
-        
+
         # Validate control_plane_skill for first-party bundles
         control_plane = bundle_manifest.get("control_plane_skill")
         if not isinstance(control_plane, dict):
@@ -1080,24 +1080,24 @@ def validate_skill_bundle_manifest(
             raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.name missing")
         if not control_plane.get("path"):
             raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.path missing")
-        
+
         # Validate skills array
         skills = bundle_manifest.get("skills")
         if not isinstance(skills, list):
             raise ValueError(f"{bundle_name} bundle manifest skills missing or not array")
-        
+
         # Validate skill_count matches skills array length
         skill_count = bundle_manifest.get("skill_count")
         if skill_count != len(skills):
             raise ValueError(f"{bundle_name} bundle manifest skill_count mismatch")
-        
+
         # Validate each skill has required fields
         for skill in skills:
             if not skill.get("name"):
                 raise ValueError(f"{bundle_name} bundle manifest skill missing name")
             if not skill.get("path"):
                 raise ValueError(f"{bundle_name} bundle manifest skill missing path")
-        
+
         # Validate plugin_root exists
         plugin_root_path = ROOT / bundle_manifest["plugin_root"]
         check_path_exists(plugin_root_path)
@@ -1256,22 +1256,22 @@ def validate_skill_bundle_manifest(
             if entry_vendor_root is not None:
                 check_path_exists(entry_vendor_root / snapshot_path)
             content_mode = entry.get("content_mode")
-            
+
             # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
             local_full_path = ROOT / plugin_root / local_path
             # Only validate if the local path points to a SKILL.md file (not profiles or other files)
             if local_full_path.name == "SKILL.md":
                 _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
-            
+
             if content_mode not in {"verbatim", "normalised", "adapted"}:
                 raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
-            
+
             # For adapted and normalised entries, require source attribution fields
             if content_mode in {"adapted", "normalised"}:
                 for field in ("source_path", "source_author", "source_license", "source_repo"):
                     if not isinstance(entry.get(field), str) or not entry.get(field):
                         raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
-            
+
             if content_mode == "normalised":
                 # Normalised: substantive content unchanged, but projection is Codex/OpenAI-canonical
                 # Requires attribution but not adapted_author/adaptation_note
@@ -1279,12 +1279,12 @@ def validate_skill_bundle_manifest(
                     raise ValueError(f"{bundle_name} bundle manifest normalised entry should not have adapted_author or adaptation_note")
             if content_mode == "adapted" and not entry.get("adaptation_note"):
                 raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
-            
+
             # Content-equivalence checks (only if vendor_root is available)
             if entry_vendor_root is not None:
                 source_path = entry_vendor_root / snapshot_path
                 projected_path = ROOT / plugin_root / local_path
-                
+
                 if content_mode == "verbatim":
                     # Verbatim: canonicalized content identity against retained source
                     if not _files_match_canonicalized(source_path, projected_path):
@@ -1296,7 +1296,7 @@ def validate_skill_bundle_manifest(
                     # and accounting for canonical path normalization (e.g., references/ moves)
                     _, source_body = _split_skill_frontmatter_and_body(source_path)
                     _, projected_body = _split_skill_frontmatter_and_body(projected_path)
-                    
+
                     # For combined-source bundles, canonicalize path references in the body
                     # to account for projection-only path normalization (e.g., skills/x/references/ -> references/)
                     if bundle_manifest.get("content_mode") == "combined-source":
@@ -1307,11 +1307,11 @@ def validate_skill_bundle_manifest(
                             skill_name = parts[1]
                             # Normalize path references from skills/<skill>/references/ to references/
                             source_body = source_body.replace(f"skills/{skill_name}/references/", "references/")
-                    
+
                     # Normalize line endings for comparison (CRLF vs LF)
                     source_body = source_body.replace('\r\n', '\n')
                     projected_body = projected_body.replace('\r\n', '\n')
-                    
+
                     if source_body != projected_body:
                         raise ValueError(
                             f"{bundle_name} bundle manifest imported entry {local_path} substantive content drifted from retained snapshot"

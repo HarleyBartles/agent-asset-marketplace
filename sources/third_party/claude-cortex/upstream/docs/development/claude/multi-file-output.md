@@ -61,7 +61,7 @@ Instruct users to:
 The write_files.sh script includes the following enhancements:
 - Stylized output with color-coded and emoji status indicators
 - Compact progress display with timestamp and elapsed time
-- Green circle (🟢) for success items  
+- Green circle (🟢) for success items
 - White circle (⚪) for neutral items
 - Red circle (🔴) for error conditions
 - Calendar emoji (📅) for timestamps

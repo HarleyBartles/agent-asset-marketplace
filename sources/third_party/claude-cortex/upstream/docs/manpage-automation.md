@@ -12,7 +12,7 @@ Manpages for `cortex` are now **automatically generated** from the CLI's argpars
 - Easily became outdated when CLI changed
 - Last update dates: Nov 12, 2025 (workflow), Dec 6, 2025 (main/tui)
 
-### After  
+### After
 
 - Manpages auto-generated from `claude_ctx_py/cli.py`
 - Always reflect current CLI structure

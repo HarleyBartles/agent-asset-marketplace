@@ -101,6 +101,10 @@ def main() -> int:
 
     _run_tool("generate_plugin_root_inventory.py")
     _prune_stale_projected_plugin_roots()
+    # Self-heal overlay.yaml line edits before projection so that source
+    # normalization (CRLF→LF, trailing whitespace) doesn't break line-based
+    # overlay edits. Runs in write mode during the canonical full rebuild.
+    _run_tool("heal_overlays.py")
     _run_tool("update_skill_artifacts.py", "--all", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py")
@@ -119,7 +123,21 @@ def main() -> int:
         # fidelity, including whitespace that would be a false-positive in a generic
         # working-tree diff check. The projection mirror for those verbatim entries
         # is skipped here as well so the gate stays aligned with the custody model.
-        _run_git("diff", "--check", "HEAD", "--", *changed_paths)
+        # Batch the pathspec to stay under the Windows command-line length limit
+        # (~32 KB) when a large normalization pass changes thousands of files.
+        _MAX_CMD_CHARS = 28000
+        batch: list[str] = []
+        batch_len = 0
+        for path in changed_paths:
+            path_len = len(path) + 4  # path + space + 2 quotes + separator
+            if batch and batch_len + path_len > _MAX_CMD_CHARS:
+                _run_git("diff", "--check", "HEAD", "--", *batch)
+                batch = []
+                batch_len = 0
+            batch.append(path)
+            batch_len += path_len
+        if batch:
+            _run_git("diff", "--check", "HEAD", "--", *batch)
     return 0
 
 

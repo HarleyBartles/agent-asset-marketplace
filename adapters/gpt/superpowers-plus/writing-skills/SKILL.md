@@ -22,4 +22,3 @@ check that the new wording actually changes behavior.
 - Use clear triggering language in the description.
 - Keep the skill focused on one pattern or technique.
 - Remove loopholes if the wording still leaves an easy escape hatch.
-

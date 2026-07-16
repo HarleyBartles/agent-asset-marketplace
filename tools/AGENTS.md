@@ -28,6 +28,12 @@ plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.
+Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
+adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
+trailing whitespace stripping) shifts line numbers or whitespace. It runs
+automatically in write mode during `rebuild_marketplace.py` and in check mode
+during `check_marketplace.py`. If `heal_overlays.py --check` fails, run
+`py -3 tools/rebuild_marketplace.py` to auto-heal stale overlays.
 
 ## Routing pointers
 

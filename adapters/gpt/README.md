@@ -18,4 +18,3 @@ The generated surface remains `generated/skill-zips/`.
 
 Overlays exist to make the generated GPT export safe and installable without
 changing the behavior or custody of the Codex plugin roots.
-

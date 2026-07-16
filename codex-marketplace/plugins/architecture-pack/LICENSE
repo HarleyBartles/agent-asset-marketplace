@@ -29,4 +29,3 @@ This bundle contains skill content derived from third-party sources:
 The third-party skill content is projected under MIT license terms consistent
 with the upstream licenses. See bundle-manifest.json for individual skill
 provenance and content_mode declarations.
-

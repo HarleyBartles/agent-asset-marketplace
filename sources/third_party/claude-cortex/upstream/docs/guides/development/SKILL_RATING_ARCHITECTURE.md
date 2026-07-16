@@ -1,7 +1,7 @@
 # Skill Rating & Feedback System: Technical Architecture
 
-**Version**: 1.0  
-**Last Updated**: 2025-12-06  
+**Version**: 1.0
+**Last Updated**: 2025-12-06
 **Status**: Current
 
 ---
@@ -155,7 +155,7 @@ Main API for rating operations:
 ```python
 class SkillRatingCollector:
     """Collect and aggregate skill ratings."""
-    
+
     def __init__(self, home: Path | None = None):
         self.home = _resolve_claude_dir(home)
         self.db_path = self.home / "data" / "skill-ratings.db"
@@ -175,14 +175,14 @@ def record_rating(
     project_type: Optional[str] = None,
 ) -> SkillRating:
     """Record user rating for a skill."""
-    
+
     # Validate stars
     if not 1 <= stars <= 5:
         raise ValueError(f"Stars must be 1-5, got {stars}")
-    
+
     # Generate anonymous user hash
     user_hash = self._get_user_hash()
-    
+
     # Create rating
     rating = SkillRating(
         skill_name=skill,
@@ -194,7 +194,7 @@ def record_rating(
         was_helpful=helpful,
         task_succeeded=task_succeeded,
     )
-    
+
     # Store in DB
     with sqlite3.connect(self.db_path) as conn:
         conn.execute("""
@@ -204,10 +204,10 @@ def record_rating(
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (...))
         conn.commit()
-    
+
     # Update metrics
     self._update_metrics(skill)
-    
+
     return rating
 ```
 
@@ -222,16 +222,16 @@ def record_usage(
     tokens_saved: Optional[float] = None,
 ) -> None:
     """Record skill usage for success correlation."""
-    
+
     with sqlite3.connect(self.db_path) as conn:
         conn.execute("""
             INSERT INTO skill_usage
             (skill_name, timestamp, succeeded, duration_minutes, tokens_saved)
             VALUES (?, ?, ?, ?, ?)
-        """, (skill, datetime.now(timezone.utc).isoformat(), 
+        """, (skill, datetime.now(timezone.utc).isoformat(),
               succeeded, duration_minutes, tokens_saved))
         conn.commit()
-    
+
     # Update metrics to reflect new usage
     self._update_metrics(skill)
 ```
@@ -241,7 +241,7 @@ def record_usage(
 ```python
 def get_skill_score(self, skill: str) -> Optional[SkillQualityMetrics]:
     """Get aggregated quality metrics for a skill."""
-    
+
     with sqlite3.connect(self.db_path) as conn:
         row = conn.execute("""
             SELECT avg_rating, total_ratings, helpful_percentage,
@@ -250,10 +250,10 @@ def get_skill_score(self, skill: str) -> Optional[SkillQualityMetrics]:
             FROM skill_quality_metrics
             WHERE skill_name = ?
         """, (skill,)).fetchone()
-        
+
         if not row:
             return None
-        
+
         return SkillQualityMetrics(
             skill_name=skill,
             avg_rating=row[0],
@@ -284,7 +284,7 @@ Intelligent prompt orchestration:
 ```python
 class SkillRatingPromptManager:
     """Detect which skills should prompt for ratings."""
-    
+
     PROMPT_COOLDOWN_HOURS = 24        # Min time between prompts
     RATING_FRESHNESS_DAYS = 14        # Recently rated threshold
     ACTIVATION_LOOKBACK_HOURS = 12    # Usage window
@@ -295,10 +295,10 @@ class SkillRatingPromptManager:
 ```python
 def detect_due_prompts(self, limit: int = 3) -> List[RatingPrompt]:
     """Return up to `limit` skills that should be rated."""
-    
+
     # 1. Gather recent usage (last 12 hours)
     usage_map = self._gather_recent_usage()
-    
+
     # 2. Filter by prompt eligibility
     prompts = []
     for skill, info in usage_map.items():
@@ -311,7 +311,7 @@ def detect_due_prompts(self, limit: int = 3) -> List[RatingPrompt]:
                 success_rate=info.get("success_rate"),
             )
             prompts.append(prompt)
-    
+
     # 3. Sort by recency, limit results
     prompts.sort(key=lambda p: p.last_used, reverse=True)
     return prompts[:limit]
@@ -322,17 +322,17 @@ def detect_due_prompts(self, limit: int = 3) -> List[RatingPrompt]:
 ```python
 def _should_prompt(self, skill: str, usage_info: Dict[str, Any]) -> bool:
     """Determine if skill should prompt for rating."""
-    
+
     # Must have been used
     if usage_info.get("count", 0) == 0:
         return False
-    
+
     # Check cooldown (24 hours since last prompt)
     now = datetime.now(timezone.utc)
     last_prompted = self._get_last_prompted(skill)
     if last_prompted and now - last_prompted < timedelta(hours=24):
         return False  # Too soon
-    
+
     # Check existing rating
     rating = self._get_user_rating(skill)
     if rating:
@@ -340,7 +340,7 @@ def _should_prompt(self, skill: str, usage_info: Dict[str, Any]) -> bool:
         if now - rating.timestamp < timedelta(days=14):
             if usage_info.get("count", 0) < 3:
                 return False  # Not enough new usage
-    
+
     return True
 ```
 
@@ -349,47 +349,47 @@ def _should_prompt(self, skill: str, usage_info: Dict[str, Any]) -> bool:
 ```python
 def _gather_recent_usage(self) -> Dict[str, Dict[str, Any]]:
     """Aggregate activation data within lookback window."""
-    
+
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(hours=12)  # 12hr lookback
     usage = {}
-    
+
     # Load activation log
     detailed = self._load_activation_log()
     for activation in detailed:
         skill = activation.get("skill_name")
         ts = parse_timestamp(activation.get("timestamp"))
-        
+
         if not ts or ts < cutoff:
             continue
-        
+
         info = usage.setdefault(skill, {
             "count": 0,
             "last_used": ts,
             "successes": [],
             "task_types": set(),
         })
-        
+
         info["count"] += 1
         if ts > info["last_used"]:
             info["last_used"] = ts
-        
+
         # Track success
         success = activation.get("metrics", {}).get("success")
         if success is not None:
             info["successes"].append(bool(success))
-        
+
         # Track task type
         task_type = activation.get("context", {}).get("task_type")
         if task_type:
             info["task_types"].add(task_type)
-    
+
     # Calculate success rates
     for info in usage.values():
         successes = info.get("successes", [])
         if successes:
             info["success_rate"] = sum(successes) / len(successes)
-    
+
     return usage
 ```
 
@@ -398,25 +398,25 @@ def _gather_recent_usage(self) -> Dict[str, Dict[str, Any]]:
 ```python
 def _build_reason(self, usage_info: Dict[str, Any]) -> str:
     """Generate human-readable reason for prompt."""
-    
+
     count = usage_info.get("count", 0)
     success_rate = usage_info.get("success_rate")
     task_types = usage_info.get("task_types") or []
     last_used = usage_info.get("last_used")
-    
+
     parts = [f"Used {count} time{'s' if count != 1 else ''} recently"]
-    
+
     if task_types:
         parts.append(f"Tasks: {', '.join(sorted(task_types))}")
-    
+
     if success_rate is not None:
         parts.append(f"Success rate {success_rate * 100:.0f}%")
-    
+
     if isinstance(last_used, datetime):
         elapsed = datetime.now(timezone.utc) - last_used
         hours = max(1, int(elapsed.total_seconds() // 3600))
         parts.append(f"Last used ~{hours}h ago")
-    
+
     return " · ".join(parts)
 ```
 
@@ -435,9 +435,9 @@ def _build_reason(self, usage_info: Dict[str, Any]) -> str:
 @dataclass
 class SkillQualityMetrics:
     """Automated quality metrics for a skill."""
-    
+
     skill_name: str
-    
+
     # Core metrics
     avg_rating: float              # 0.0-5.0 average
     total_ratings: int             # Number of ratings
@@ -445,14 +445,14 @@ class SkillQualityMetrics:
     success_correlation: float     # % tasks succeeded
     token_efficiency: Optional[float]  # Avg tokens saved
     usage_count: int               # Times activated
-    
+
     # Star distribution
     stars_5: int
     stars_4: int
     stars_3: int
     stars_2: int
     stars_1: int
-    
+
     last_updated: datetime
 ```
 
@@ -467,7 +467,7 @@ WHERE skill_name = ?
 
 **Helpful Percentage**:
 ```sql
-SELECT 
+SELECT
     SUM(CASE WHEN was_helpful = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
 FROM skill_ratings
 WHERE skill_name = ?
@@ -475,7 +475,7 @@ WHERE skill_name = ?
 
 **Success Correlation**:
 ```sql
-SELECT 
+SELECT
     SUM(CASE WHEN succeeded = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*)
 FROM skill_usage
 WHERE skill_name = ?
@@ -498,7 +498,7 @@ WHERE skill_name = ?
 ```python
 def _update_metrics(self, skill: str) -> None:
     """Update aggregated metrics for a skill."""
-    
+
     with sqlite3.connect(self.db_path) as conn:
         # Calculate all metrics in one query
         rating_stats = conn.execute("""
@@ -514,7 +514,7 @@ def _update_metrics(self, skill: str) -> None:
             FROM skill_ratings
             WHERE skill_name = ?
         """, (skill,)).fetchone()
-        
+
         usage_stats = conn.execute("""
             SELECT
                 COUNT(*) as total_usage,
@@ -523,7 +523,7 @@ def _update_metrics(self, skill: str) -> None:
             FROM skill_usage
             WHERE skill_name = ?
         """, (skill,)).fetchone()
-        
+
         # Upsert aggregated metrics
         conn.execute("""
             INSERT OR REPLACE INTO skill_quality_metrics
@@ -643,17 +643,17 @@ async def on_mount(self) -> None:
     # Check for due prompts
     prompt_mgr = SkillRatingPromptManager()
     prompts = prompt_mgr.detect_due_prompts(limit=1)
-    
+
     if prompts:
         prompt = prompts[0]
-        
+
         # Show non-intrusive notification
         self.notify(
             f"💭 Rate '{prompt.skill}'? {prompt.reason}",
             title="Skill Feedback",
             timeout=10,
         )
-        
+
         # Mark as prompted
         prompt_mgr.mark_prompted(prompt.skill)
 ```
@@ -666,12 +666,12 @@ async def on_mount(self) -> None:
 
 ```python
 def get_top_rated(
-    self, 
-    category: Optional[str] = None, 
+    self,
+    category: Optional[str] = None,
     limit: int = 10
 ) -> List[Tuple[str, SkillQualityMetrics]]:
     """Get top-rated skills."""
-    
+
     with sqlite3.connect(self.db_path) as conn:
         rows = conn.execute("""
             SELECT skill_name, avg_rating, total_ratings, helpful_percentage,
@@ -681,7 +681,7 @@ def get_top_rated(
             ORDER BY avg_rating DESC, total_ratings DESC
             LIMIT ?
         """, (limit,)).fetchall()
-        
+
         return [(row[0], SkillQualityMetrics(...)) for row in rows]
 ```
 
@@ -703,12 +703,12 @@ TOP RATED SKILLS
 
 ```python
 def get_recent_reviews(
-    self, 
-    skill: str, 
+    self,
+    skill: str,
     limit: int = 5
 ) -> List[Dict[str, Any]]:
     """Get recent reviews for a skill."""
-    
+
     with sqlite3.connect(self.db_path) as conn:
         rows = conn.execute("""
             SELECT stars, review, timestamp, was_helpful
@@ -717,12 +717,12 @@ def get_recent_reviews(
             ORDER BY timestamp DESC
             LIMIT ?
         """, (skill, limit)).fetchall()
-        
+
         reviews = []
         for row in rows:
             ts = datetime.fromisoformat(row[2])
             time_ago = calculate_time_ago(ts)
-            
+
             reviews.append({
                 "stars": row[0],
                 "review": row[1],
@@ -730,7 +730,7 @@ def get_recent_reviews(
                 "time_ago": time_ago,  # "2 days ago"
                 "was_helpful": row[3],
             })
-        
+
         return reviews
 ```
 
@@ -738,14 +738,14 @@ def get_recent_reviews(
 
 ```python
 def export_ratings(
-    self, 
+    self,
     skill: Optional[str] = None
 ) -> Dict[str, Any]:
     """Export ratings data for analysis."""
-    
+
     # Fetch all ratings (or filter by skill)
     # Fetch all metrics
-    
+
     return {
         "export_date": datetime.now(timezone.utc).isoformat(),
         "ratings": rating_data,      # List of individual ratings
@@ -766,16 +766,16 @@ def _get_user_hash(self) -> str:
     """Generate anonymous user hash."""
     import getpass
     import platform
-    
+
     # Combine machine ID and username
     user_id = f"{platform.node()}-{getpass.getuser()}"
-    
+
     # SHA256 hash
     hash_full = hashlib.sha256(user_id.encode()).hexdigest()
-    
+
     # Truncate to 16 chars
     return hash_full[:16]
-    
+
 # Example outputs:
 # Machine 1: "a3f8d2e1c4b9f7e6"
 # Machine 2: "b7d4f9a2e8c1d6b3"
@@ -860,14 +860,14 @@ ADD COLUMN custom_metric REAL;
 ```python
 def _update_metrics(self, skill: str) -> None:
     # ... existing metrics
-    
+
     # NEW: Calculate custom metric
     custom_value = conn.execute("""
         SELECT AVG(your_calculation)
         FROM skill_usage
         WHERE skill_name = ?
     """, (skill,)).fetchone()[0]
-    
+
     # Include in upsert
     conn.execute("""
         INSERT OR REPLACE INTO skill_quality_metrics
@@ -890,7 +890,7 @@ class SkillQualityMetrics:
 def test_record_rating(tmp_path):
     """Test rating recording."""
     collector = SkillRatingCollector(home=tmp_path)
-    
+
     rating = collector.record_rating(
         skill="test-skill",
         stars=5,
@@ -899,11 +899,11 @@ def test_record_rating(tmp_path):
         review="Great skill!",
         project_type="python-fastapi",
     )
-    
+
     assert rating.stars == 5
     assert rating.was_helpful
     assert rating.review == "Great skill!"
-    
+
     # Verify in DB
     metrics = collector.get_skill_score("test-skill")
     assert metrics is not None
@@ -929,5 +929,5 @@ def test_record_rating(tmp_path):
 
 ---
 
-**Document Status**: ✅ Current  
+**Document Status**: ✅ Current
 **Maintainer**: Core Team

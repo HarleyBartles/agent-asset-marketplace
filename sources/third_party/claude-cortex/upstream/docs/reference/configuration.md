@@ -13,9 +13,9 @@ This guide covers the configuration files and resolution rules used by the curre
 
 Cortex resolves two different roots:
 
-1. **Asset root** (CORTEX_ROOT, or `--cortex-root`)  
+1. **Asset root** (CORTEX_ROOT, or `--cortex-root`)
    Used for bundled assets and watch defaults.
-2. **Claude directory** (from `--scope` / CORTEX_SCOPE)  
+2. **Claude directory** (from `--scope` / CORTEX_SCOPE)
    Used for user/project state under `.claude/`.
 
 `--scope` supports `auto`, `project`, and `global`.

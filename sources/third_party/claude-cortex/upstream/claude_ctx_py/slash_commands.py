@@ -40,11 +40,11 @@ def scan_slash_commands(
     skills_dir: Path, *, home_dir: Optional[Path] = None
 ) -> List[SlashCommandInfo]:
     """Scan a skills directory and return parsed slash command metadata.
-    
+
     Scans for SKILL.md files in the skills directory. Supports both:
     - Flat skills: skills/foo/SKILL.md → /ctx:foo
     - Nested skills: skills/namespace/foo/SKILL.md → /namespace:foo
-    
+
     The command can be overridden via front matter `command:` field.
     """
     if home_dir is None:
@@ -143,7 +143,7 @@ def _parse_skill_command(
 
 def _derive_command_from_path(path: Path, skills_dir: Path) -> tuple[str, str]:
     """Derive namespace and slug from skill path.
-    
+
     Examples:
         skills/foo/SKILL.md → ("ctx", "foo")
         skills/collaboration/pre_mortem/SKILL.md → ("collaboration", "pre-mortem")

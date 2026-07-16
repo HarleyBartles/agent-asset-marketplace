@@ -18,4 +18,3 @@
 - Do not make `house-skills` a repo-local marketplace dependency or
   default-install.
 - Use exclusions and overrides only for intentional local policy choices.
-

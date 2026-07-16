@@ -267,4 +267,3 @@ class SkillRatingPromptManager:
 
     def _now_iso(self) -> str:
         return datetime.now(timezone.utc).isoformat()
-

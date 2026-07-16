@@ -195,7 +195,7 @@ class DashboardCard:
             Formatted card lines
         """
         lines = []
-        
+
         # Determine color/icon based on score
         if score >= 80:
             color = "green"
@@ -221,7 +221,7 @@ class DashboardCard:
         visible_score_len = Text.from_markup(f"Score: {score_text}").cell_len
         score_padding = max(0, width - visible_score_len - 3)
         lines.append(f"│ Score: {score_text}{' ' * score_padding}│")
-        
+
         # Progress Bar
         bar_width = width - 4
         filled = int((score / 100) * bar_width)
@@ -236,7 +236,7 @@ class DashboardCard:
                 max_len = width - 6
                 issue_text = (issue[:max_len-3] + "...") if len(issue) > max_len else issue
                 lines.append(f"│ [{color}]•[/] {issue_text}{' ' * (width - len(issue_text) - 5)}│")
-            
+
             if len(issues) > 2:
                 more = f"...and {len(issues) - 2} more"
                 lines.append(f"│ [dim italic]{more}[/dim italic]{' ' * (width - len(more) - 4)}│")
@@ -245,21 +245,21 @@ class DashboardCard:
         if recommendations:
             lines.append(f"│ [dim]{'─' * (width - 4)}[/dim] │")
             lines.append(f"│ [bold]Recommendations:[/bold]{' ' * (width - 19)}│")
-            
+
             for rec in recommendations[:2]:
                 target = rec.get("target", "Unknown")
                 rec_type = rec.get("type", "info")
-                
+
                 if rec_type == "disable":
                     # Red highlight for disable actions
                     rec_text = f"[red bold]DISABLE[/] {target}"
                 else:
                     rec_text = f"[green]ENABLE[/] {target}"
-                
+
                 # Calculate visible length properly using rich
                 visible_len = Text.from_markup(rec_text).cell_len
                 padding = max(0, width - visible_len - 3)
-                
+
                 lines.append(f"│ {rec_text}{' ' * padding}│")
 
 

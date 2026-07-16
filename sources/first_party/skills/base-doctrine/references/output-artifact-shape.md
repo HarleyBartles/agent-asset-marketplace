@@ -36,4 +36,3 @@ Examples:
 When output shape is wrong but content is useful, repair the shape before emission. Do not treat shape repair as a blocker if the safer shape is clear and lawful.
 
 If the user explicitly asks for a reserved shape for non-reserved content, confirm or clearly label the artifact so it cannot be mistaken for execution or continuity authority.
-

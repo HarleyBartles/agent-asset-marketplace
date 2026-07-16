@@ -145,9 +145,9 @@ class EnhancedOverview:
             mem_color = "green" if mem_pct < 80 else "yellow" if mem_pct < 90 else "red"
             cpu_color = "green" if cpu < 80 else "yellow" if cpu < 90 else "red"
             disk_color = "green" if disk_pct < 80 else "yellow" if disk_pct < 90 else "red"
-            
+
             mem_status = "normal" if mem_pct < 80 else "high"
-            
+
             health = f"""
 [bold green]✓ SYSTEM HEALTH[/bold green]
 [dim]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/dim]
@@ -217,10 +217,10 @@ class EnhancedOverview:
             context_limit = int(os.environ.get("CORTEX_CONTEXT_LIMIT", 200000))
         except (ValueError, TypeError):
             context_limit = 200000
-        
+
         # Guard against division by zero
         context_limit = max(1, context_limit)
-        
+
         usage_pct = (total_stats.tokens / context_limit) * 100
         if usage_pct < 25:
             usage_color = "green"
@@ -239,7 +239,7 @@ class EnhancedOverview:
         usage_bar = f"[{usage_color}]{'█' * usage_bar_width}[/{usage_color}][dim]{'░' * (20 - usage_bar_width)}[/dim]"
 
         category_breakdown = "\n".join(lines) if lines else "  [dim]No active context files[/dim]"
-        
+
         limit_formatted = f"{context_limit // 1000}K" if context_limit >= 1000 else str(context_limit)
 
         token_display = f"""

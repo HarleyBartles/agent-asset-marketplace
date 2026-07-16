@@ -123,12 +123,12 @@ python3 -c "import ast; ast.parse(open('claude_ctx_py/tui/main.py').read())"
 Created user guide: `docs/guides/tui/copy-definition-feature.md`
 
 ## Key Features
-✅ Works across 5 different view types  
-✅ Consistent user experience  
-✅ Cross-platform clipboard support  
-✅ Path validation for security  
-✅ Comprehensive error handling  
-✅ User-friendly notifications  
+✅ Works across 5 different view types
+✅ Consistent user experience
+✅ Cross-platform clipboard support
+✅ Path validation for security
+✅ Comprehensive error handling
+✅ User-friendly notifications
 
 ## Future Enhancements
 - [ ] Copy as JSON/YAML option

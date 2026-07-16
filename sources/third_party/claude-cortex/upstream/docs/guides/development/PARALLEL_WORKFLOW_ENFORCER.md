@@ -29,34 +29,34 @@ The Parallel Workflow Enforcer is a strict supervisor hook that transforms Claud
 graph TD
     A[User Request] --> B{Planning Phase}
     B -->|Build Graph| C[Dependency Graph]
-    
+
     subgraph Execution [Parallel Execution Phase]
         D[Stream I: Implementation]
         E[Stream T: Test Writing]
     end
-    
+
     C --> D
     C --> E
-    
+
     D --> F{Sync Point: Validation}
     E --> F
-    
+
     F -->|Pass| G[Parallel Review Phase]
     F -->|Fail| D
-    
+
     subgraph Review [Parallel Review & Remediation]
         H[Quality Engineer]
         I[Code Reviewer]
         J[Security Auditor]
-        
+
         H & I & J --> K{Remediation}
         K -->|P0-P2 Fixes| L[Parallel Fixes]
     end
-    
+
     G --> H
     G --> I
     G --> J
-    
+
     L --> M[Final Docs Phase]
     M --> N[Release/Complete]
 ```

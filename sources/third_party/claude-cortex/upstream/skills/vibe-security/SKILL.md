@@ -113,14 +113,14 @@ For **every data point and action** that requires authentication:
 # Pseudocode for secure resource access
 function getResource(resourceId, currentUser):
     resource = database.find(resourceId)
-    
+
     if resource is null:
         return 404  # Don't reveal if resource exists
-    
+
     if resource.ownerId != currentUser.id:
         if not currentUser.hasOrgAccess(resource.orgId):
             return 404  # Return 404, not 403, to prevent enumeration
-    
+
     return resource
 ```
 
@@ -169,7 +169,7 @@ Every input controllable by the user—whether directly or indirectly—must be 
 
 2. **Content Security Policy (CSP)**
    ```
-   Content-Security-Policy: 
+   Content-Security-Policy:
      default-src 'self';
      script-src 'self';
      style-src 'self' 'unsafe-inline';
@@ -316,7 +316,7 @@ Any endpoint accepting a URL for redirection must be protected against open redi
 1. **Allowlist Validation**
    ```
    allowed_domains = ['yourdomain.com', 'app.yourdomain.com']
-   
+
    function isValidRedirect(url):
        parsed = parseUrl(url)
        return parsed.hostname in allowed_domains
@@ -651,14 +651,14 @@ import os
 def safe_join(base_directory, user_path):
     # Ensure base is absolute and normalized
     base = os.path.abspath(os.path.realpath(base_directory))
-    
+
     # Join and then resolve the result
     target = os.path.abspath(os.path.realpath(os.path.join(base, user_path)))
-    
+
     # Ensure the commonpath is the base directory
     if os.path.commonpath([base, target]) != base:
         raise ValueError("Error!")
-    
+
     return target
 ```
 
@@ -713,22 +713,22 @@ JWT misconfigurations can lead to full authentication bypass and token forgery.
 ```javascript
 // 1. SIGNING
 // Always use environment variables for secrets
-const secret = process.env.JWT_SECRET; 
+const secret = process.env.JWT_SECRET;
 
 const token = jwt.sign({
   sub: userId,
   iat: Math.floor(Date.now() / 1000),
   exp: Math.floor(Date.now() / 1000) + (15 * 60), // 15 mins (Short-lived)
   jti: crypto.randomUUID() // Unique ID for revocation/blacklisting
-}, secret, { 
-  algorithm: 'HS256' 
+}, secret, {
+  algorithm: 'HS256'
 });
 
 // 2. SENDING (Cookie Best Practices)
 // Protect against XSS and CSRF
 res.cookie('token', token, {
-  httpOnly: true, 
-  secure: true,    
+  httpOnly: true,
+  secure: true,
   sameSite: 'strict'
 });
 
