@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -335,14 +336,47 @@ class HealOverlayTests(unittest.TestCase):
             self.assertEqual(overlay_path.read_text(encoding="utf-8"), original)
 
 
+class FindSourceRootTests(unittest.TestCase):
+    def test_finds_source_root_from_bundle_manifest(self) -> None:
+        # Bundle manifests store adaptation_overlay_path as the directory,
+        # while heal_overlays is passed the full overlay.yaml path. The
+        # lookup must compare the overlay's parent directory to the manifest.
+        with tempfile.TemporaryDirectory() as td:
+            temp = Path(td)
+            source_root = temp / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0" / "skills" / "sample-skill"
+            source_root.mkdir(parents=True)
+            (source_root / "SKILL.md").write_text("content\n", encoding="utf-8")
+
+            plugin_dir = temp / "codex-marketplace" / "plugins" / "superpowers-plus" / "references"
+            plugin_dir.mkdir(parents=True)
+            manifest = {
+                "entries": [
+                    {
+                        "canonical_name": "sample-skill",
+                        "adaptation_overlay_path": "adapters/codex/superpowers-plus/sample-skill",
+                        "canonical_source_path": str(source_root.relative_to(temp).as_posix()),
+                    }
+                ]
+            }
+            (plugin_dir / "bundle-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+            original_root = heal_overlays.ROOT
+            try:
+                heal_overlays.ROOT = temp
+                result = heal_overlays._find_source_root_for_overlay(
+                    "adapters/codex/superpowers-plus/sample-skill/overlay.yaml"
+                )
+                self.assertEqual(result, source_root)
+            finally:
+                heal_overlays.ROOT = original_root
+
+
 class InferSourceRootTests(unittest.TestCase):
     def test_returns_none_for_short_path(self) -> None:
         # _infer_source_root expects paths under adapters/ — a path with
         # fewer than 3 parts relative to ADAPTERS_ROOT returns None.
         # We test the internal logic directly by mocking the relative_to call.
         with tempfile.TemporaryDirectory() as td:
-            # Create a path that mimics adapters/codex/pack/skill/overlay.yaml
-            # but in a temp dir, then patch ADAPTERS_ROOT
             fake_adapters = Path(td) / "adapters"
             overlay_path = fake_adapters / "codex" / "pack" / "skill" / "overlay.yaml"
             overlay_path.parent.mkdir(parents=True, exist_ok=True)
@@ -355,6 +389,63 @@ class InferSourceRootTests(unittest.TestCase):
                 result = heal_overlays._infer_source_root(overlay_path)
                 # No sources/third_party dir exists, so should return None
                 self.assertIsNone(result)
+            finally:
+                heal_overlays.ADAPTERS_ROOT = original_adapters
+                heal_overlays.ROOT = original_root
+
+    def test_prefers_upstream_version_when_multiple_candidates(self) -> None:
+        # Multiple upstreams can contain a skill with the same name. The
+        # fallback must use overlay metadata to disambiguate instead of taking
+        # the first filesystem-ordered rglob match.
+        with tempfile.TemporaryDirectory() as td:
+            temp = Path(td)
+            # Two upstreams both have the same skill name
+            superpowers = temp / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0" / "skills" / "sample-skill"
+            cortex = temp / "sources" / "third_party" / "claude-cortex" / "upstream" / "skills" / "sample-skill"
+            superpowers.mkdir(parents=True)
+            cortex.mkdir(parents=True)
+            (superpowers / "SKILL.md").write_text("superpowers\n", encoding="utf-8")
+            (cortex / "SKILL.md").write_text("cortex\n", encoding="utf-8")
+
+            overlay_path = temp / "adapters" / "codex" / "superpowers-plus" / "sample-skill" / "overlay.yaml"
+            overlay_path.parent.mkdir(parents=True)
+            overlay_path.write_text(
+                "schema_version: 2\nmetadata:\n  source_category: third_party\n  upstream_name: sample-skill\n  upstream_version: v6.1.0\nedits: []\n",
+                encoding="utf-8",
+            )
+
+            original_adapters = heal_overlays.ADAPTERS_ROOT
+            original_root = heal_overlays.ROOT
+            try:
+                heal_overlays.ADAPTERS_ROOT = temp / "adapters"
+                heal_overlays.ROOT = temp
+                result = heal_overlays._infer_source_root(overlay_path)
+                self.assertEqual(result, superpowers)
+            finally:
+                heal_overlays.ADAPTERS_ROOT = original_adapters
+                heal_overlays.ROOT = original_root
+
+    def test_raises_when_ambiguous_candidates(self) -> None:
+        # If overlay metadata cannot disambiguate, fail loudly rather than
+        # silently picking a filesystem-dependent match.
+        with tempfile.TemporaryDirectory() as td:
+            temp = Path(td)
+            one = temp / "sources" / "third_party" / "superpowers" / "v6.1.0" / "skills" / "sample-skill"
+            two = temp / "sources" / "third_party" / "claude-cortex" / "upstream" / "skills" / "sample-skill"
+            one.mkdir(parents=True)
+            two.mkdir(parents=True)
+
+            overlay_path = temp / "adapters" / "codex" / "pack" / "sample-skill" / "overlay.yaml"
+            overlay_path.parent.mkdir(parents=True)
+            overlay_path.write_text("schema_version: 2\nmetadata:\n  source_category: third_party\n  upstream_name: sample-skill\nedits: []\n", encoding="utf-8")
+
+            original_adapters = heal_overlays.ADAPTERS_ROOT
+            original_root = heal_overlays.ROOT
+            try:
+                heal_overlays.ADAPTERS_ROOT = temp / "adapters"
+                heal_overlays.ROOT = temp
+                with self.assertRaises(RuntimeError):
+                    heal_overlays._infer_source_root(overlay_path)
             finally:
                 heal_overlays.ADAPTERS_ROOT = original_adapters
                 heal_overlays.ROOT = original_root

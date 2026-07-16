@@ -231,16 +231,53 @@ def _infer_source_root(overlay_path: Path) -> Path | None:
     doesn't have an explicit entry.
 
     adapters/codex/<pack>/<skill>/overlay.yaml
-    -> sources/third_party/<upstream>/upstream/skills/<skill>
+    -> sources/third_party/<upstream>/<upstream>/skills/<skill>
+
+    If multiple upstream snapshots contain the same skill name, this function
+    uses the overlay's ``upstream_name`` and ``upstream_version`` metadata to
+    disambiguate. It raises if the metadata cannot uniquely identify the source
+    root, because silently picking the first filesystem-ordered ``rglob`` match
+    is non-deterministic across platforms.
     """
     parts = overlay_path.relative_to(ADAPTERS_ROOT).parts
     if len(parts) < 3:
         return None
     skill_name = parts[-2]
-    for candidate in (ROOT / "sources/third_party").rglob(f"skills/{skill_name}"):
-        if candidate.is_dir():
-            return candidate
-    return None
+    candidates = [
+        candidate
+        for candidate in (ROOT / "sources/third_party").rglob(f"skills/{skill_name}")
+        if candidate.is_dir()
+    ]
+    if not candidates:
+        return None
+    if len(candidates) == 1:
+        return candidates[0]
+
+    # Multiple candidates: use overlay metadata to disambiguate.
+    spec = _load_yaml(overlay_path)
+    metadata = spec.get("metadata", {})
+    upstream_name = metadata.get("upstream_name", "")
+    upstream_version = metadata.get("upstream_version", "")
+
+    def _matches(candidate: Path) -> bool:
+        lowered = candidate.as_posix().casefold()
+        name_ok = not upstream_name or upstream_name.casefold() in lowered
+        version_ok = not upstream_version or upstream_version.casefold() in lowered
+        return name_ok and version_ok
+
+    matches = [c for c in candidates if _matches(c)]
+    if len(matches) == 1:
+        return matches[0]
+
+    overlay_rel = overlay_path.relative_to(ROOT).as_posix()
+    if len(matches) > 1:
+        raise RuntimeError(
+            f"Ambiguous source root for {overlay_rel}: multiple candidates {matches}"
+        )
+    raise RuntimeError(
+        f"Could not infer source root for {overlay_rel}: none of {candidates} "
+        f"matched upstream_name={upstream_name!r} upstream_version={upstream_version!r}"
+    )
 
 
 def _discover_overlays() -> list[tuple[Path, Path]]:
@@ -271,7 +308,18 @@ def _discover_overlays() -> list[tuple[Path, Path]]:
 
 
 def _find_source_root_for_overlay(overlay_rel: str) -> Path | None:
-    """Find the source root for an overlay by searching bundle manifests."""
+    """Find the source root for an overlay by searching bundle manifests.
+
+    Bundle manifests store ``adaptation_overlay_path`` as the directory
+    containing ``overlay.yaml``, so we compare the overlay's parent directory
+    to that value.
+    """
+    overlay_ref = Path(overlay_rel)
+    if overlay_ref.name == OVERLAY_FILENAME:
+        overlay_dir = overlay_ref.parent.as_posix()
+    else:
+        overlay_dir = overlay_ref.as_posix()
+
     for manifest_path in (ROOT / "codex-marketplace/plugins").rglob("bundle-manifest.json"):
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -280,7 +328,7 @@ def _find_source_root_for_overlay(overlay_rel: str) -> Path | None:
         for entry in manifest.get("entries", []):
             if not isinstance(entry, dict):
                 continue
-            if entry.get("adaptation_overlay_path") == overlay_rel:
+            if entry.get("adaptation_overlay_path") == overlay_dir:
                 csp = entry.get("canonical_source_path")
                 if csp:
                     source_root = ROOT / csp
