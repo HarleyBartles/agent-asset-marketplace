@@ -78,3 +78,14 @@ python scripts/build_sidecar_packet.py \
 The helper copies images into `raw/` with sequence prefixes, computes hashes, writes `starter_manifest.json`, and includes the supplied packet-root sidecar files plus any `db_promotion_companion/` folder before writing the zip.
 
 The helper does not analyze images. GPT performs the visual analysis before invoking it.
+
+## Source partition labels
+
+Use these labels consistently to keep provenance clear in sidecar claims:
+
+- `image-visible`: directly visible in one or more images.
+- `conversation-derived`: supplied by your human partner in chat, not durable evidence by itself.
+- `repo-grounded`: checked against repo/file surfaces in the current session.
+- `worker-report`: from a worker return or report, not independently revalidated unless inspected.
+- `synthesis`: GPT reasoning from the above.
+- `missing-or-unchecked`: relevant surface not inspected or not found.

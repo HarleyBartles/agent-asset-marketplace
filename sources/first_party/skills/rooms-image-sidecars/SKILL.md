@@ -26,14 +26,16 @@ Use this Skill to create a GPT-side starter packet for image evidence before Pit
 
 ## Core rule
 
-Treat the sidecar as `starter_guidance`, not truth. Every observation must remain verifiable by the archive lane before becoming custody evidence, reconstructed fact, or canon.## Required outputs
+Treat the sidecar as `starter_guidance`, not truth. Every observation must remain verifiable by the archive lane before becoming custody evidence, reconstructed fact, or canon.
+
+## Required outputs
 
 For a supplied image batch, produce an archive-ready packet:
 
 - `raw/` with images in stable sequence order when available.
 - `batch.intake.json` with operational intake metadata.
 - `semantic_sidecar.json` and `semantic_sidecar.md` at the packet root (see `references/semantic_sidecar_schema.md`).
-- optionally `image_observation_table.csv` for quick scanning.
+- optionally `image_observation_table.csv` for scanning.
 - when downstream work includes Pit/ProjectDB promotion, `db_promotion_companion/` CSVs (see `references/db_mutation_proposal_csvs.md`).
 - `README_FOR_ARCHIVE.md` explaining source partition, sidecar status, and verification requirements.
 
@@ -52,11 +54,13 @@ See `references/workflow.md` for the full procedure and `references/semantic_sid
 
 ## Source partition and confidence labels
 
-Use source partition labels (`image-visible`, `conversation-derived`, `repo-grounded`, `worker-report`, `synthesis`, `missing-or-unchecked`) and starter confidence labels (`starter-high`, `starter-medium`, `starter-low`). Never use `confirmed`, `canon`, or `true` for sidecar claims. See `references/semantic_sidecar_schema.md` for full definitions.
+Use source partition labels (`image-visible`, `conversation-derived`, `repo-grounded`, `worker-report`, `synthesis`, `missing-or-unchecked`) and starter confidence labels (`starter-high`, `starter-medium`, `starter-low`). Never use `confirmed`, `canon`, or `true` for sidecar claims. See `references/workflow.md` for label definitions.
 
 ## DB-promotion companion rules
 
-When an image pack will feed Pit/ProjectDB promotion, produce a `db_promotion_companion/` folder with CSVs proposing where extracted data should land. Required after your human partner finishes identifying accounts or room relationships. Do not generate raw SQL as authority or treat CSVs as evidence. See `references/db_mutation_proposal_csvs.md` for required files, columns, provenance layers, and quality rules.## Rooms-specific rules
+When an image pack will feed Pit/ProjectDB promotion, produce a `db_promotion_companion/` folder with CSVs proposing where extracted data should land. Required after your human partner finishes identifying accounts or room relationships. Do not generate raw SQL as authority or treat CSVs as evidence. See `references/db_mutation_proposal_csvs.md` for required files, columns, provenance layers, and quality rules.
+
+## Rooms-specific rules
 
 - Convert room-title screenshots into candidate group DM/room records with title variants, member lists, and next DB queries.
 - Preserve exact visible strings including jokes, misspellings, and truncated text.
