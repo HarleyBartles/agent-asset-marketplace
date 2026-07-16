@@ -6,16 +6,16 @@ The rooms-* skills carry retired named-agent bindings (Chris, Albert, Brian, Der
 
 ## Scope
 
-All 10 rooms-* skills under `sources/first_party/skills/rooms-*/`:
+10 rooms-* skills under `sources/first_party/skills/rooms-*/`, merging to 8:
 - rooms-ambiguity-buster
 - rooms-analogy-buster
-- rooms-bootstrap
+- rooms-bootstrap → **merged into rooms-project-doctrine**
 - rooms-canon-buster
 - rooms-character-investigation
 - rooms-image-sidecars
-- rooms-project-doctrine
+- rooms-project-doctrine (absorbs bootstrap + source-partitioning)
 - rooms-sheet-creator
-- rooms-source-partitioning
+- rooms-source-partitioning → **merged into rooms-project-doctrine**
 - rooms-zoom-outs-buster
 
 Plus their `references/` files and the `docs/skill-standards-policy.md` update for the human-operator naming standard.
@@ -78,11 +78,18 @@ Replace generic "Do not use when another more specific skill owns this task." wi
 
 ### 6. Word count trimming
 
-Trim to under 500 words (body excluding frontmatter):
-- `rooms-bootstrap` (~550 → <500): Move domain reminder details to a new `references/domain-reminders.md` file.
-- `rooms-canon-buster` (~600 → <500): Move detailed canon-check steps to a new `references/canon-check-steps.md` file.
-- `rooms-character-investigation` (~550 → <500): Move source-routing details to existing `references/source-routing.md` file.
-- `rooms-zoom-outs-buster` (~550 → <500): Move failure mode details to existing `references/zoom-out-failure-modes.md` file.
+Only 3 skills exceed 500 words (body excluding frontmatter):
+- `rooms-canon-buster` (561 → <500): Move detailed canon-check steps to a new `references/canon-check-steps.md` file.
+- `rooms-character-investigation` (523 → <500): Move source-routing details to existing `references/source-routing.md` file.
+- `rooms-image-sidecars` (501 → <500): Trim verbose description and move DB companion details to existing `references/db_mutation_proposal_csvs.md`.
+
+### What stays unchanged
+
+- Skill names, directory names, frontmatter `name` fields
+- `owner: Harley Bartles` in frontmatter metadata (identity field, not agent binding)
+- `version-history.md` files (historical provenance records, not current cross-references)
+- Plugin membership, bundle manifests
+- The actual domain guidance content — only the agent-name wrapping changes
 
 ### 7. Skill-standards-policy update
 
@@ -90,6 +97,48 @@ Add "Referring to the human operator" section to `docs/skill-standards-policy.md
 - Use "your human partner" when referring to the person the agent is working with.
 - Do not use "user", "Harley", or other named individuals.
 - Keeps skills portable across operators.
+
+Add ordering and composition trigger fields to the metadata standard:
+- `use_before` — ordering: this skill should fire before the listed skills (produces an artifact they consume).
+- `use_after` — ordering: this skill should fire after the listed skills (consumes an artifact they produce).
+- `use_with` — composition: these skills should run alongside this skill in the same turn.
+- `use_instead` — routing: prefer the listed skills for specific sub-tasks where they are better suited. Pair with `do_not_use_when` entries explaining the specific cases.
+
+### 8. Trigger field updates on rooms-* skills
+
+Apply the new trigger vocabulary to rooms-* skills:
+
+- `rooms-character-investigation`: add `use_before: [rooms-sheet-creator]`
+- `rooms-sheet-creator`: add `use_after: [rooms-character-investigation]`
+- `rooms-canon-buster`: add `use_with: [rooms-project-doctrine]` (after merge, source-partitioning is a reference doc within project-doctrine)
+- `rooms-ambiguity-buster`: add `use_instead: [rooms-canon-buster]` for canon resolution tasks
+- `rooms-analogy-buster`: add `use_instead: [rooms-canon-buster]` for canon validation tasks
+- Other skills: add `use_with` / `use_instead` where the audit found "compose with" or routing relationships in the body text.
+
+### 9. Skill merge: bootstrap + project-doctrine + source-partitioning → rooms-project-doctrine
+
+Merge three orientation skills into one `rooms-project-doctrine` skill:
+
+**Rationale:**
+- Project-doctrine at 162 words is almost entirely a router to references.
+- Bootstrap already routes to project-doctrine, which routes to source-partitioning — a chain of "load this next" that can be one entry point.
+- Source-partitioning is referenced as a composition partner by other skills, but always as "use source-partitioning when evidence classes mix," which works equally well as a reference doc.
+
+**Structure:**
+- Skill body: compact router (under 500 words) covering first-turn arrival, doctrine lookup, and source-basis labeling.
+- `references/bootstrap-posture.md`: first-turn arrival and request classification (from rooms-bootstrap body).
+- `references/source-partitioning.md`: source-basis labeling rules (from rooms-source-partitioning body).
+- Existing references from rooms-project-doctrine and rooms-bootstrap remain.
+
+**Retired skills:**
+- `rooms-bootstrap` — content absorbed into merged skill and `references/bootstrap-posture.md`.
+- `rooms-source-partitioning` — content absorbed into `references/source-partitioning.md`.
+- Their `version-history.md` files move to the merged skill's references as historical provenance.
+
+**Cross-reference updates:**
+- All skills that reference `rooms-bootstrap` → `rooms-project-doctrine`.
+- All skills that reference `rooms-source-partitioning` → `rooms-project-doctrine` (or `references/source-partitioning.md` for direct source-basis guidance).
+- `rooms-project-doctrine/references/rooms-skill-routing.md` updated to remove the two merged entries.
 
 ## What stays unchanged
 
