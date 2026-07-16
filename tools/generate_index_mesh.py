@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__"}
+EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__", ".pytest_cache"}
 EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__"}
 EXCLUDED_FILE_NAMES = {".git"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
