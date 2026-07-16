@@ -80,6 +80,11 @@ def _retained_verbatim_paths() -> set[str]:
         if isinstance(local_path, str) and local_path.strip():
             skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}")
             skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}/SKILL.md")
+            # The .agents/skills/ install mirror copies the same verbatim bytes,
+            # so pre-existing upstream trailing whitespace surfaces there too.
+            skill_name = local_path.split("/")[-1]
+            skip_paths.add(f".agents/skills/{skill_name}")
+            skip_paths.add(f".agents/skills/{skill_name}/SKILL.md")
     skip_paths.add(source_root)
     skip_paths.add(f"{source_root}/AGENTS.md")
     return skip_paths

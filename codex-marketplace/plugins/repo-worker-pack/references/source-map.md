@@ -6,6 +6,7 @@ Generated from `codex-marketplace/plugins/repo-worker-pack/references/bundle-man
 | --- | --- | --- | --- | --- | --- |
 | base-doctrine | first_party | verbatim | `sources/first_party/skills/base-doctrine` | `codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine` | Projected verbatim from the first-party base-doctrine skill. |
 | boring-loop | first_party | verbatim | `sources/first_party/skills/boring-loop` | `codex-marketplace/plugins/repo-worker-pack/skills/boring-loop` | Projected verbatim from the first-party boring-loop skill. |
+| cleanup-custody | first_party | verbatim | `sources/first_party/skills/cleanup-custody` | `codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody` | Projected verbatim from the first-party cleanup-custody skill. |
 | connector-safety | first_party | verbatim | `sources/first_party/skills/connector-safety` | `codex-marketplace/plugins/repo-worker-pack/skills/connector-safety` | Projected verbatim from the first-party connector-safety skill. |
 | context-safety | first_party | verbatim | `sources/first_party/skills/context-safety` | `codex-marketplace/plugins/repo-worker-pack/skills/context-safety` | Projected verbatim from the first-party context-safety skill. |
 | github-operations | first_party | verbatim | `sources/first_party/skills/github-operations` | `codex-marketplace/plugins/repo-worker-pack/skills/github-operations` | Projected verbatim from the first-party github-operations skill. |

@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 213,
+  "artifact_count": 214,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -2726,6 +2726,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 3757,
       "zip_sha256": "3c6aa21ab1aedfea31f7f926d3a53e4b5b354a5bf70e1545ca6993aefb5d7bcb"
+    },
+    {
+      "pack": "repo-worker-pack",
+      "skill": "cleanup-custody",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-pack/cleanup-custody/skill.zip",
+      "source_file_count": 4,
+      "source_bytes": 6561,
+      "source_sha256": "4e8f89ff2409183db40f8a21709eb4ab3ae8a0101fa3bc272d8c1b0b632db706",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 3390,
+      "zip_sha256": "82271926b4f43555e3c6429518642afaccd6264dbe19cf7978b7a9a2b400a461"
     },
     {
       "pack": "repo-worker-pack",

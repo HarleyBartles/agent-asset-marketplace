@@ -43,7 +43,7 @@ def _load_registry() -> dict:
 
 def _write_temp_registry(tmp: Path, registry: dict) -> Path:
     path = tmp / "registry.json"
-    path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
     return path
 
 

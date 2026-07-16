@@ -39,3 +39,7 @@
 - `context-safety` is projected here from the canonical first-party
   source at `sources/first_party/skills/context-safety/` so safer
   large text write guidance rides with the repo baseline.
+- `cleanup-custody` is projected here from the canonical first-party
+  source at `sources/first_party/skills/cleanup-custody/` so workspace
+  and repository surface custody classification rides with the repo
+  baseline.

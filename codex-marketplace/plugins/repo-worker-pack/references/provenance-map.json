@@ -15,6 +15,13 @@
       "local_path": "skills/boring-loop"
     },
     {
+      "canonical_name": "cleanup-custody",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/cleanup-custody",
+      "local_path": "skills/cleanup-custody"
+    },
+    {
       "canonical_name": "connector-safety",
       "source_category": "first_party",
       "content_mode": "verbatim",
