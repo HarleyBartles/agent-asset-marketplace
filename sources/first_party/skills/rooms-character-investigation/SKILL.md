@@ -30,8 +30,8 @@ This Skill owns broad repo lookup and source partitioning. It does not create pa
 
 Compose with these Skills when available:
 
-- `rooms-source-partitioning-v1` for source-basis separation.
-- `base-doctrine-v1.1` and `rooms-project-doctrine-v1` for named Rooms character, world, canon, archive, room,
+- `rooms-project-doctrine` (source-partitioning reference) for source-basis separation.
+- `base-doctrine` and `rooms-project-doctrine` for named Rooms character, world, canon, archive, room,
   narrator, actor, or repo-structure claims and the related truth-boundary references.
 - `risk-gates` (rooms ambiguity gate) when identity, motive, authorship, witness status, archive gaps, relationship meaning,
   disappearance, room history, or emotional cost could be overresolved.

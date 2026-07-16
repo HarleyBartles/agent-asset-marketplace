@@ -1,6 +1,23 @@
-# Rooms Analogy Gate
+---
+name: rooms-analogy-buster
+description: Use when rooms-specific analogy buster for the black box theatre analogy.
+metadata:
+  source-id: rooms-analogy-buster
+  source-path: sources/first_party/skills/rooms-analogy-buster/SKILL.md
+  provenance-name: Rooms Analogy Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms-specific analogy buster for the black box theatre analogy.
+  use_when:
+  - Use when rooms-specific analogy buster for the black box theatre analogy.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
+---
+# Rooms Analogy Buster
 
-Use this gate as the Rooms-specific binding for the cross-runtime analogy gate pattern. The analogy method is cross-runtime;
+Use this Skill as the Rooms-specific binding for the cross-runtime `analogy-buster` pattern. The analogy method is cross-runtime;
 the Rooms analogy itself lives in the repo.
 
 ## Authoritative analogy surface
@@ -15,10 +32,7 @@ Wrapper path when accessed through the Rooms-Mostly stack:
 
 This World Systems surface is the project authority for the Rooms, Mostly black box theatre / rag-tag pop-up theatre
 collective analogy. Do not rely on memory alone when a durable Rooms claim, dispatch, canon/world decision, manuscript
-decision, or gate queue depends on the analogy.
-
-Use this binding only as a binding note. Do not duplicate the full analogy into the gate. The repo surface remains
-the source that should evolve when Harley or Brian updates the analogy.
+decision, or buster queue depends on the analogy.
 
 ## GitHub source-route discipline
 
@@ -40,40 +54,29 @@ making affirmative repo-grounded claims.
 Treat the analogy as:
 
 - a working interpretive analogy supplied by Harley and persisted in World;
-- useful for lived-experience framing, discussion, gate checks, and craft reasoning;
+- useful for lived-experience framing, discussion, buster checks, and craft reasoning;
 - not archive evidence;
 - not canon fact by itself;
 - not machine truth;
 - not literal platform mechanics;
 - not a total explanation of the book.
 
-## Intended use
-
-Use the GPT-wide analogy gate pattern to test whether the Rooms analogy clarifies a current discussion, plan, claim,
-dispatch, or persistence decision. For Rooms, the analogy is not free-floating memory; it is a World Systems reference
-surface.
-
-## Non-authority rule
-
-The analogy can guide interpretation and craft framing. It must not outrank archive evidence, machine truth, reviewed
-World canon/state, manuscript ownership, source partitioning, or Harley's live direction.
-
 ## Workflow
 
-1. Invoke or follow cross-runtime analogy gate mechanics first: internal mode when clear, interactive queue when Harley
-   must resolve amber items, and useful-break handling when the analogy clarifies by failing.
+1. Invoke or follow cross-runtime `analogy-buster` mechanics first: internal mode when clear, interactive queue when Harley
+must resolve amber items, and useful-break handling when the analogy clarifies by failing.
 2. If the task is Rooms-specific and the analogy matters, use the World Systems analogy surface as the active project
-   analogy.
+analogy.
 3. If repo access is unavailable, say the analogy is not freshly repo-grounded. Use only explicitly provided fallback
-   text or previously verified path knowledge, and mark the basis.
+text or previously verified path knowledge, and mark the basis.
 4. Check whether the analogy is helping the lived experience of the book, or whether it is overfitting, flattening, or
-   smuggling in false structure.
+smuggling in false structure.
 5. Pull back when the analogy drifts into platform realism, access-control machinery, technical infrastructure,
-   totalizing system explanation, or canon/source authority.
+totalizing system explanation, or canon/source authority.
 
 ## Rooms-specific green outcomes
 
-A Rooms analogy gate result can be green in either direction:
+A Rooms analogy-buster result can be green in either direction:
 
 - `green_holds`: the theatre / backstage / VHS analogy clarifies the current Rooms question.
 - `green_breaks_usefully`: the analogy breaks here, and that break protects a useful boundary.
@@ -98,11 +101,11 @@ Check for these risks before using the analogy in Rooms reasoning:
 
 When the analogy touches other Rooms truth domains, route or compose as needed:
 
-- Use the `domain-truth-boundaries` reference under `rooms-project-doctrine-v1` when analogy might cross archive,
+- Use the `domain-truth-boundaries` reference under `rooms-project-doctrine` when analogy might cross archive,
   canon, manuscript, machine-truth, report, or conversation-derived boundaries.
-- Use `rooms-source-partitioning-v1` when an answer mixes repo evidence, analogy, inference, report, and
+- Use `rooms-project-doctrine` (source-partitioning reference) when an answer mixes repo evidence, analogy, inference, report, and
   conversation-derived material.
-- Use the rooms ambiguity gate when the analogy risks overresolving identity, motive, witness status, disappearance,
+- Use `rooms-ambiguity-buster` when the analogy risks overresolving identity, motive, witness status, disappearance,
   reconstruction, or manuscript uncertainty.
 - Use `base-doctrine-v1.1` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
   answers.
@@ -110,7 +113,7 @@ When the analogy touches other Rooms truth domains, route or compose as needed:
 
 ## Interactive queue posture
 
-If unresolved analogy risks remain and Harley's decision is needed, present a short gate queue using the gate
+If unresolved analogy risks remain and Harley's decision is needed, present a short buster queue using the buster
 framework style. Default to at most five items. Each item should include:
 
 - what analogy use is under review;
@@ -123,7 +126,7 @@ positive approval such as "go," "proceed," "accepted," "agreed," or a thumbs-up.
 
 ## Output basis labels
 
-When answering after using this gate, label the basis where it matters:
+When answering after using this Skill, label the basis where it matters:
 
 - `repo analogy`: based on the World Systems analogy surface;
 - `analogy application`: GPT applying the persisted analogy to the current question;

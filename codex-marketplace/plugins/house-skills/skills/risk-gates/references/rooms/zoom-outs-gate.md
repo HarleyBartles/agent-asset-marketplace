@@ -1,6 +1,24 @@
-# Rooms Zoom Outs Gate
+---
+name: rooms-zoom-outs-buster
+description: Use when rooms zoom-out compression checks against artifacts and source
+  surfaces.
+metadata:
+  source-id: rooms-zoom-outs-buster
+  source-path: sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md
+  provenance-name: Rooms Zoom Outs Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when rooms zoom-out compression checks against artifacts and source surfaces.
+  use_when:
+  - Use when rooms zoom-out compression checks against artifacts and source surfaces.
+  do_not_use_when:
+  - Do not use when another more specific skill owns this task.
+license: MIT
+---
+# Rooms Zoom Outs Buster
 
-Use this gate for Rooms, Mostly zoom-out checks. A zoom-out is a compressed behavioural, emotional, structural, or
+Use this Skill for Rooms, Mostly zoom-out checks. A zoom-out is a compressed behavioural, emotional, structural, or
 interaction model for a character, room, event, or system.
 
 This is not generic character analysis, thematic essay writing, lore summary, psychological diagnosis, or symbolic
@@ -23,8 +41,8 @@ structural role.
 4. Zoom back in: test the model against relevant artifacts, voice surfaces, room/system docs, canon/world surfaces,
 manuscript excerpts, or archive-derived evidence when lawful and needed.
 5. Mark status using the readiness levels below.
-6. If the model is a persistence candidate, compose with `rooms-source-partitioning-v1`, the canon gate,
-the rooms ambiguity gate, and the invariant gate before dispatch or canon/world persistence.
+6. If the model is a persistence candidate, compose with `rooms-project-doctrine`, `canon-buster`,
+`rooms-ambiguity-buster`, and `invariant-buster` before dispatch or canon/world persistence.
 
 ## Status levels
 
@@ -81,8 +99,9 @@ them as artifact-verified.
 ## Interactive mode
 
 Use an interactive queue when Harley must decide among real modelling or persistence choices. Inherit visible queue
-mechanics and conversational item formatting from the gate framework. Domain-specific zoom-out item content should
-include the proposed compression, artifact gap or failure risk, green condition, and GPT's strong recommendation.
+mechanics and conversational item formatting from `buster-framework`. Domain-specific zoom-out item content should
+include the proposed compression, artifact gap or failure risk, green condition, and GPT's strong recommendation. See
+`references/queue-patterns.md`.
 
 ## Internal Misalignment Green
 
@@ -92,23 +111,23 @@ Use `green_internal_misalignment` for this pattern.
 
 ## Failure modes
 
-Consult `zoom-outs-failure-modes.md` when judging flattening, overresolution, externalising, symbolic drift,
+Consult `references/zoom-out-failure-modes.md` when judging flattening, overresolution, externalising, symbolic drift,
 or regeneration failure.
 
 ## Event and lifecycle modelling
 
 Zoom-outs apply to events and rooms as well as characters. Event models must regenerate artifact structure, timing,
-boundary conditions, and lifecycle phases. See `zoom-outs-compression-validity.md`.
+boundary conditions, and lifecycle phases. See `references/compression-validity-test.md`.
 
 ## Persistence boundary
 
-This gate does not persist canon. A verified zoom-out may become a persistence candidate. Before persistence, compose
+This Skill does not persist canon. A verified zoom-out may become a persistence candidate. Before persistence, compose
 with:
 
-- `rooms-source-partitioning-v1` for evidence/conversation/report/canon separation.
-- the canon gate for canon pressure.
-- the rooms ambiguity gate for unresolved scope, source, actor, or terminology ambiguity.
-- the invariant gate for protected surfaces, authority, and repo/governance invariants.
+- `rooms-project-doctrine` for evidence/conversation/report/canon separation.
+- `canon-buster` for canon pressure.
+- `rooms-ambiguity-buster` for unresolved scope, source, actor, or terminology ambiguity.
+- `invariant-buster` for protected surfaces, authority, and repo/governance invariants.
 - `linear-issue-shaping` if worker execution is needed.
 
 Do not simulate Brian, Albert, Derek, Chris, or Will. Do not mutate repos from chat.
