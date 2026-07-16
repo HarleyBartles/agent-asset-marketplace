@@ -3042,10 +3042,10 @@
       "source_bytes": 8811,
       "source_sha256": "e6b64cbc68c05890a992047d2683020227565c9853d8cdb920ff272d5eb05d44",
       "overlay_file_count": 1,
-      "overlay_bytes": 2281,
-      "overlay_sha256": "8133d26f811748d32a8fa0baeae7581e675ce14fc5fcbbd2cf46e4236593505e",
+      "overlay_bytes": 2275,
+      "overlay_sha256": "2178507171423931ed88d126a638f3e80c1e04625b13d068d92373d224abdd56",
       "zip_size_bytes": 2209,
-      "zip_sha256": "b9e281611c6cccfcb323d3df60fca07b3ac1aaf4ccac9627b9aeb7f31ef96918"
+      "zip_sha256": "274f4a26e38bee061050ab93178e9704e17e71891dcc2c82b8f417883d66a66e"
     },
     {
       "pack": "superpowers-plus",

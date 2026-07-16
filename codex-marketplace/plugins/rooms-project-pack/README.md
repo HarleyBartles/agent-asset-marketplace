@@ -8,12 +8,9 @@ Marketplace wrapper for the Rooms project pack.
 - `rooms-bootstrap`
 - `rooms-project-doctrine`
 - `rooms-source-partitioning`
-- `rooms-ambiguity-buster`
-- `rooms-analogy-buster`
-- `rooms-zoom-outs-buster`
+- `risk-gates`
 - `rooms-character-investigation`
 - `rooms-sheet-creator`
-- `rooms-canon-buster`
 - `rooms-image-sidecars`
 
 ### Generic database guidance
@@ -39,12 +36,9 @@ The installable skill zips are generated under:
 - `generated/skill-zips/rooms-project-pack/rooms-bootstrap/skill.zip`
 - `generated/skill-zips/rooms-project-pack/rooms-project-doctrine/skill.zip`
 - `generated/skill-zips/rooms-project-pack/rooms-source-partitioning/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-ambiguity-buster/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-analogy-buster/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-zoom-outs-buster/skill.zip`
+- `generated/skill-zips/rooms-project-pack/risk-gates/skill.zip`
 - `generated/skill-zips/rooms-project-pack/rooms-character-investigation/skill.zip`
 - `generated/skill-zips/rooms-project-pack/rooms-sheet-creator/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-canon-buster/skill.zip`
 - `generated/skill-zips/rooms-project-pack/rooms-image-sidecars/skill.zip`
 - `generated/skill-zips/rooms-project-pack/database-design-patterns/skill.zip`
 

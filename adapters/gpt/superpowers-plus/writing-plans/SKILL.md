@@ -14,7 +14,7 @@ stay open with a short reason.
 
 ## Linear worker issue shaping
 
-When composing with `linear-issue-shaping` and `boring-buster`, this skill
+When composing with `linear-issue-shaping` and `risk-gates`, this skill
 owns only the implementation-plan shape. It does not decide Linear state,
 labels, assignment, worker activity, GitHub proof, or the boring verdict.
 
@@ -52,5 +52,5 @@ issue as discovery/planning, not worker-ready.
 - Do not mix unrelated work into the same task.
 - Do not turn a product decision into an implementation plan until the decision
   is settled.
-- Do not claim worker-readiness; hand that verdict back to `boring-buster` and
+- Do not claim worker-readiness; hand that verdict back to `risk-gates` and
   `linear-issue-shaping`.
