@@ -9,7 +9,6 @@ This bundle projects the first-party repo worker baseline skills.
 - `linear-issue-shaping`
 - `using-linear`
 - `repo-worker-base`
-- `boring-loop`
 - `connector-safety`
 - `github-operations`
 - `unslop-plus`
@@ -23,7 +22,7 @@ This bundle projects the first-party repo worker baseline skills.
 ## Boundary
 - The first-party repo worker skills stay projected alongside the
   compositional repo-worker entrypoint and supporting workflow skills.
-- The bundle stays narrow, first-party only, and tracks the current ten-skill
+- The bundle stays narrow, first-party only, and tracks the current nine-skill
   repo worker baseline without absorbing broader Superpowers+ or other workflow
   packs.
 
