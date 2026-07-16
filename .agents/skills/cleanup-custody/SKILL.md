@@ -106,4 +106,3 @@ When applying this posture, report:
 - calling cleanup GREEN while residue or stale indexes remain;
 - calling issue-backed cleanup GREEN while observable repo/workspace state still contradicts the issue goal;
 - treating clean status, remote-head equality, changed-file lists, or validation claims as substitutes for issue-goal conformance.
-
