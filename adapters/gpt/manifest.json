@@ -4,16 +4,6 @@
   "notes": "Plugins not explicitly listed in this manifest use the default_export_mode of 'direct'. This includes adventures-pack, unslop-plus, game-studio, wild-bunch-project-pack, codex-cortex, repo-worker-base, dotnet-kit, api-contracts-pack, architecture-pack, language-patterns-pack, security-pack, and frontend-pack. These plugins have received first-pass analysis (no Skill tool dependencies found via grep) and are classified as direct export candidates pending full GPT QA.",
   "packs": [
     {
-      "pack": "house-skills",
-      "skills": [
-        {
-          "skill": "linear-superpowers",
-          "export_mode": "direct",
-          "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
-        }
-      ]
-    },
-    {
       "pack": "superpowers-plus",
       "skills": [
         {
@@ -39,29 +29,9 @@
           "reason": "This skill is already GPT-safe as-is."
         },
         {
-          "skill": "architecture-superpowers",
-          "export_mode": "direct",
-          "reason": "This first-party projection is GPT-safe as a compositional architecture router and gate."
-        },
-        {
-          "skill": "linear-superpowers",
-          "export_mode": "direct",
-          "reason": "The portable /skill-name invoker is shared across GPT and Codex exports."
-        },
-        {
-          "skill": "github-superpowers",
-          "export_mode": "direct",
-          "reason": "This first-party projection is already GPT-safe as-is."
-        },
-        {
           "skill": "inspecting-the-environment",
           "export_mode": "direct",
           "reason": "This first-party skill is cross-harness and GPT-safe with no Codex-specific execution assumptions."
-        },
-        {
-          "skill": "unslop-superpowers",
-          "export_mode": "direct",
-          "reason": "This first-party projection is already GPT-safe as-is."
         },
         {
           "skill": "receiving-code-review",

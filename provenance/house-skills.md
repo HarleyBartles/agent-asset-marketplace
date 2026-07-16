@@ -99,15 +99,6 @@
 - Scope: loop cadence, readiness and false-green prevention, parent/child DoD coverage, queue grooming, next boring move selection, route-to-specialist guidance
 - Notes: Canonical source lives at `sources/first_party/skills/boring-loop/` and is projected into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required.
 
-## linear-superpowers
-
-- Source path: `sources/first_party/skills/linear-superpowers`
-- Public identity: `linear-superpowers`
-- Provenance/history: MARK-139 Linear Superpowers compositional skill
-- Ownership: Harley-owned first-party House skill
-- Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: New first-party compositional Linear workflow skill for naming the smallest applicable workflow skill, explaining why it applies, and listing the evidence required to prove it was followed. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it now owns compact issue shaping directly while composing `/using-superpowers`, `/writing-plans`, `/executing-plans`, `/connector-safety`, `linear-issue-shaping`, and `/unslop-superpowers` without creating a second source of truth or requiring a GPT-only overlay.
-
 ## github-operations
 
 - Source path: `sources/first_party/skills/github-operations`
@@ -117,23 +108,29 @@
 - Scope: GitHub evidence, PR review routing, and publication proof
 - Notes: First-party GitHub proof skill for verifying GitHub repository evidence, publication proof, mergeability, and closure claims. The native review write reference keeps same-account connector use on `COMMENT` reviews instead of trying to force `REQUEST_CHANGES`. The canonical first-party source now lives in `sources/first_party/skills/github-operations/`; House Skills projects that source rather than owning it.
 
+## linear-superpowers
+
+- Source path: `sources/first_party/skills/linear-superpowers`
+- Public identity: `linear-superpowers`
+- Provenance/history only: MARK-139 Linear Superpowers compositional skill
+- Scope: Linear issue and track shaping with smallest-applicable workflow selection
+- Notes: Retired first-party compositional router. The active compact issue-shape doctrine and Linear routing now live in `linear-issue-shaping`, and the workflow-selection behavior is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
+
 ## github-superpowers
 
 - Source path: `sources/first_party/skills/github-superpowers`
 - Public identity: `github-superpowers`
-- Provenance/history: MARK-143 GitHub Superpowers compositional skill
-- Ownership: Harley-owned first-party House skill
+- Provenance/history only: MARK-143 GitHub Superpowers compositional skill
 - Scope: GitHub-facing workflow selection, proof boundaries, and branch-closeout routing
-- Notes: First-party compositional GitHub workflow skill for naming the smallest applicable specialist workflow, preserving `github-operations` as the GitHub proof and review-write boundary skill, and keeping GitHub proof, publication, merge, and final-main verification narrow. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@unslop-superpowers` when repo-specific anti-slop controls or evidence requirements matter.
+- Notes: Retired first-party compositional router. GitHub proof, publication, merge, and final-main verification remain in `github-operations`, and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
 
 ## unslop-superpowers
 
 - Source path: `sources/first_party/skills/unslop-superpowers`
 - Public identity: `unslop-superpowers`
-- Provenance/history: MARK-144 Unslop Superpowers compositional guard skill
-- Ownership: Harley-owned first-party House skill
+- Provenance/history only: MARK-144 Unslop Superpowers compositional guard skill
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
-- Notes: First-party compositional anti-slop guard skill for turning repo unslop profile findings into non-goals, evidence requirements, and review controls. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it composes `@using-superpowers`, `@connector-safety`, and `@unslop` without replacing the underlying profile-generation engine.
+- Notes: Retired first-party compositional guard. Repo-specific anti-slop profile work is now routed to `unslop-plus` or `unslop`, and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
 
 ## context-safety
 
@@ -225,8 +222,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the new `github-operations` and `github-superpowers` GitHub skills, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `github-superpowers` is projected here as the GitHub-facing compositional workflow skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `github-operations` GitHub proof skill, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 
