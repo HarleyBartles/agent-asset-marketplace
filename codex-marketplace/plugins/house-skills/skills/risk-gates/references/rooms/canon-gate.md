@@ -15,7 +15,11 @@ metadata:
   - Use when rooms canon pressure checks and lawful canon/item adjustment routing
     for canon, gaps, ambiguity, and layer mismatches.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is ambiguity preservation rather than canon resolution
+    — use rooms-ambiguity-buster instead.
+  - Do not use when the task is analogy validation — use rooms-analogy-buster instead.
+  use_with:
+  - rooms-project-doctrine
 license: MIT
 ---
 # Rooms Canon Buster

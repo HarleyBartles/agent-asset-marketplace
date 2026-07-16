@@ -1,10 +1,7 @@
 ---
 name: rooms-project-doctrine
-description: Use this skill before working in Rooms — for project arrival, doctrine
-  lookup, or source-basis labeling. Routes first-turn bootstrap, shared project doctrine,
-  source partitioning, ambiguity, actor/domain boundaries, report hygiene, and GitHub
-  publication or issue closure posture to the right Rooms doctrine-bearing skill before
-  action.
+description: Use before working in Rooms — for project arrival, doctrine lookup, source-basis
+  labeling, and routing to specialist Rooms skills.
 metadata:
   source-id: rooms-project-doctrine
   source-path: sources/first_party/skills/rooms-project-doctrine/SKILL.md
@@ -12,11 +9,8 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use this skill before working in Rooms — for project arrival, doctrine lookup,
-    or source-basis labeling. Routes first-turn bootstrap, shared project doctrine,
-    source partitioning, ambiguity, actor/domain boundaries, report hygiene, and GitHub
-    publication or issue closure posture to the right Rooms doctrine-bearing skill
-    before action.
+  scope: Use before working in Rooms — for project arrival, doctrine lookup, source-basis
+    labeling, and routing to specialist Rooms skills.
   use_when:
   - Use before working in Rooms when first-turn project arrival, request classification,
     or continuity ingress routing is needed.
@@ -25,7 +19,10 @@ metadata:
     or GitHub publication/issue closure posture.
   - Use when a task needs the right Rooms doctrine-bearing skill before action.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when a specialist Rooms skill owns the specific task — route to that
+    skill instead.
+  - Do not use for ordinary conversation without source, canon, archive, or repo
+    claims.
   use_with:
   - work-mode-router for cross-runtime first-turn bootstrap routing.
 license: MIT

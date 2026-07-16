@@ -15,7 +15,11 @@ metadata:
   - Use when rooms character and subject investigations with source partitioning for
     prompt, peek, and recall handoffs.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is sheet creation rather than character investigation
+    — use rooms-sheet-creator instead.
+  - Do not use when the task is canon resolution — use rooms-canon-buster instead.
+  use_before:
+  - rooms-sheet-creator
 license: MIT
 ---
 # Rooms Character Investigation

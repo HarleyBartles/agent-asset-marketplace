@@ -1,6 +1,7 @@
 ---
 name: rooms-analogy-buster
-description: Use when rooms-specific analogy buster for the black box theatre analogy.
+description: Use when validating rooms-specific interpretive analogies against the
+  black box theatre analogy before binding them to world canon.
 metadata:
   source-id: rooms-analogy-buster
   source-path: sources/first_party/skills/rooms-analogy-buster/SKILL.md
@@ -8,11 +9,19 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when rooms-specific analogy buster for the black box theatre analogy.
+  scope: Use when validating rooms-specific interpretive analogies against the black
+    box theatre analogy before binding them to world canon.
   use_when:
-  - Use when rooms-specific analogy buster for the black box theatre analogy.
+  - Use when validating rooms-specific interpretive analogies against the black box
+    theatre analogy before binding them to world canon.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is canon validation rather than analogy validation —
+    use rooms-canon-buster instead.
+  - Do not use when the task is ambiguity preservation — use rooms-ambiguity-buster
+    instead.
+  use_instead:
+  - rooms-canon-buster
+  - rooms-ambiguity-buster
 license: MIT
 ---
 # Rooms Analogy Buster

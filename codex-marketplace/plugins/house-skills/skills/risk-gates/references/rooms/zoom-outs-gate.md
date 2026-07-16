@@ -13,7 +13,10 @@ metadata:
   use_when:
   - Use when rooms zoom-out compression checks against artifacts and source surfaces.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is canon resolution rather than zoom-out compression
+    — use rooms-canon-buster instead.
+  - Do not use when the task is ambiguity preservation — use rooms-ambiguity-buster
+    instead.
 license: MIT
 ---
 # Rooms Zoom Outs Buster

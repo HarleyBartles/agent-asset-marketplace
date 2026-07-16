@@ -1,11 +1,7 @@
 ---
 name: rooms-image-sidecars
-description: Use when prepare GPT-native semantic starter sidecars for Rooms image
-  evidence batches before Pit/archive ingestion. Use when your human partner supplies screenshots,
-  image batches, or a zip/folder of images and wants GPT to inspect them visually,
-  generate non-authoritative room/entity/message candidates, known-character hints,
-  tags, DB query suggestions, and an archive-ready sidecar packet without mutating
-  repos or treating observations as canon.
+description: Use when preparing GPT-native semantic starter sidecars for Rooms image
+  evidence batches before Pit/archive ingestion.
 metadata:
   source-id: rooms-image-sidecars
   source-path: sources/first_party/skills/rooms-image-sidecars/SKILL.md
@@ -13,21 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when prepare GPT-native semantic starter sidecars for Rooms image evidence
-    batches before Pit/archive ingestion. Use when your human partner supplies screenshots, image
-    batches, or a zip/folder of images and wants GPT to inspect them visually, generate
-    non-authoritative room/entity/message candidates, known-character hints, tags,
-    DB query suggestions, and an archive-ready sidecar packet without mutating repos
-    or treating observations as canon.
+  scope: Use when preparing GPT-native semantic starter sidecars for Rooms image evidence
+    batches before Pit/archive ingestion.
   use_when:
-  - Use when prepare GPT-native semantic starter sidecars for Rooms image evidence
-    batches before Pit/archive ingestion. Use when your human partner supplies screenshots, image
-    batches, or a zip/folder of images and wants GPT to inspect them visually, generate
-    non-authoritative room/entity/message candidates, known-character hints, tags,
-    DB query suggestions, and an archive-ready sidecar packet without mutating repos
-    or treating observations as canon.
+  - Use when preparing GPT-native semantic starter sidecars for Rooms image evidence
+    batches before Pit/archive ingestion.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is character investigation rather than image sidecar
+    preparation — use rooms-character-investigation instead.
+  - Do not use when the task is canon resolution — use rooms-canon-buster instead.
 license: MIT
 ---
 # Rooms Image Sidecars

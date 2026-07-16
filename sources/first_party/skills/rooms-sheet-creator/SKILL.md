@@ -15,7 +15,12 @@ metadata:
   - Use when create Rooms prompt, peek, and recall sheets from character-investigation
     packets.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when the task is character investigation rather than sheet creation
+    — use rooms-character-investigation instead.
+  - Do not use when no investigation packet exists — run rooms-character-investigation
+    first.
+  use_after:
+  - rooms-character-investigation
 license: MIT
 ---
 # Rooms Sheet Creator
