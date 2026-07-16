@@ -28,6 +28,12 @@ plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.
+Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
+adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
+trailing whitespace stripping) shifts line numbers or whitespace. It runs
+automatically in write mode during `rebuild_marketplace.py` and in check mode
+during `check_marketplace.py`. If `heal_overlays.py --check` fails, run
+`py -3 tools/rebuild_marketplace.py` to auto-heal stale overlays.
 
 ## Routing pointers
 
@@ -62,6 +68,31 @@ Treat generated manifests, projection trees, source maps, provenance maps, and
 zip artifacts as derived outputs only. If a convention can be expressed in the
 registry and generator, do that instead of hand-rolling per-pack output
 conventions in the generated surfaces.
+
+## Line-ending policy for generated files
+
+This repo normalizes to LF. `core.autocrlf` is `false` so git does not
+translate line endings. Generators and agents that write text files must
+write LF explicitly, not the platform default (CRLF on Windows).
+
+When using `Path.write_text()`, always pass `newline="\n"`:
+```python
+path.write_text(content, encoding="utf-8", newline="\n")
+```
+
+When using `open("w")`, always pass `newline="\n"` (or `newline=""` if the
+text already contains explicit `\n` and you want no translation):
+```python
+with path.open("w", encoding="utf-8", newline="\n") as f:
+    f.write(content)
+```
+
+Without the explicit `newline` parameter, Python translates `\n` to
+`os.linesep` (CRLF on Windows), which `git diff --check` flags as trailing
+whitespace and which churns every generated file on every rebuild.
+
+Do not add CRLF detection or preservation logic to generators. Always
+write LF.
 
 ## Review guidelines
 

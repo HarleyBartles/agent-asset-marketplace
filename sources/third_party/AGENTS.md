@@ -17,6 +17,17 @@ upstream scaffolding at the root of a third-party snapshot as exceptional and
 remove it unless a live projection, validator, or adapter explicitly requires
 it.
 
+## Line-ending normalization exception
+
+In a one-time authorized pass, CRLF line endings were normalized to LF and
+trailing whitespace was stripped across all third-party source custody files.
+This was an explicit exception to the default immutability rule for third-party
+source, authorized to eliminate cross-platform line-ending inconsistency that
+was causing `git diff --check` failures and generator output drift. The
+immutability rule still holds for content changes — only line endings and
+trailing whitespace were affected, not skill content. Future agents should not
+treat this as precedent for editing third-party source content.
+
 ## Manifest guidance
 
 Where a retained third-party snapshot feeds a marketplace projection, the

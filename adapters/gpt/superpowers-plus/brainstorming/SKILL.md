@@ -23,4 +23,3 @@ implementation code.
 - Keep the design short when the task is simple.
 - Prefer explicit trade-offs over vague optimism.
 - Split large work into smaller subproblems before planning.
-

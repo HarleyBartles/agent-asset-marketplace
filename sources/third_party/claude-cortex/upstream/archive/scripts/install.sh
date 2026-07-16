@@ -58,16 +58,16 @@ EXAMPLES:
     $0 --system-install     # Install system-wide (not editable)
     $0                      # Install package only in editable mode
     $0 --
-    $0 --shell zsh   # Install in editable mode with all 
+    $0 --shell zsh   # Install in editable mode with all
                               shell integrations, docs, etc.
 
 
 NOTES:
-    > The default installation mode is editable and 
+    > The default installation mode is editable and
       only links an executable to  ~/.local
-    > The system (global) install mode  is NOT editable, 
+    > The system (global) install mode  is NOT editable,
       requires sudo privileges and installs to /usr/local
-    > The user install mode is NOT editable and 
+    > The user install mode is NOT editable and
       installs to ~/.local
     > Any manpages, docs or shell integrations use the same
       base install path, e.g. ~/.local/man for user mode
@@ -112,7 +112,7 @@ check_path() {
   test -d "$1" && return 0
 
   # Check for automatic directory creation enabled
-  if [[ "$MKDIRS" != "true" ]]; 
+  if [[ "$MKDIRS" != "true" ]];
   then
     echo "$1 does not exist. Use --mkdirs to create automatically"
     return 1
@@ -120,15 +120,15 @@ check_path() {
 
   # Check if the user has permission to create the directory
   base_path=$(echo "$1" | cut -d '/' -f1-3)
-  if [[  -w "$base_path" ]]; 
+  if [[  -w "$base_path" ]];
   then
-    # User can write 
+    # User can write
     mkdir -p "$1"
   else
     # Try with sudo
     echo "No permissions to write in ${base_path}."
     echo "Trying with sudo..."
-    sudo mkdir -p "$1" 
+    sudo mkdir -p "$1"
   fi
 
   # Confirm creation
@@ -140,10 +140,10 @@ check_path() {
   return 1
 }
 
-check_manpath() { 
+check_manpath() {
   local target="$1"
   local rc_files=">> ${HOME}/.bashrc >> $ZDOTDIR/.zshrc >> ${CONFIG_DIR}/fish/config.fish"
-  
+
   if manpath | grep -q "$target" ; then return 0; fi
 
   log_warn "$target not found in MANPATH"
@@ -162,18 +162,18 @@ print_dirs() {
 
 set_install_paths() {
 
-  if [[ "${OSTYPE}" == "darwin"* ]]; 
+  if [[ "${OSTYPE}" == "darwin"* ]];
   then
     DATA_DIR="${HOME}/.local/share"
     DOC_DIR="${HOME}/Library/Documentation/cortex"
     MAN_DIR="${DATA_DIR}/man/man1"
     return 0
   fi
-  
+
   [[ "${OSTYPE}" != "linux-gnu"* ]] && (log_error "Unsupported OS: $OSTYPE"; return 1)
 
 
-  if [[ "${SYSTEM_INSTALL" == "true" ]]; then 
+  if [[ "${SYSTEM_INSTALL" == "true" ]]; then
     DATA_DIR=/usr/local/share
     CONFIG_PATH="/etc/cortex"
   fi
@@ -183,7 +183,7 @@ set_install_paths() {
 
 
   return 0
-      
+
 }
 
 install_package() {
@@ -315,12 +315,12 @@ install_fish_completions() {
 
 install_manpage() {
     log_info "Generating manpages..."
-    
+
     # Generate fresh manpages from CLI definitions
     python3 "${SCRIPT_DIR}/../generate-manpages.py" || {
         log_warn "Manpage generation failed, using existing manpages"
     }
-    
+
     log_info "Installing manpage(s)..."
 
     local manpage_dir="${PROJECT_ROOT}/docs/reference"
@@ -453,7 +453,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --system-install)
             EDITABLE_MODE=false
-            if [[ "$OS" != "darwin" ]]; then 
+            if [[ "$OS" != "darwin" ]]; then
               DATA_DIR="/usr/local/share"
             fi
             shift

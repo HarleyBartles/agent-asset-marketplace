@@ -581,7 +581,7 @@ PR should be ready for Codex review and manual review.
 
 ## Self-Review
 
-**1. Spec coverage:** 
+**1. Spec coverage:**
 - Audited all active marketplace plugins ✓
 - Fixed bundle-manifest authorship fields ✓
 - Fixed source-map attribution ✓
@@ -589,12 +589,12 @@ PR should be ready for Codex review and manual review.
 - Updated validator to enforce standards ✓
 - Ran full validation ladder ✓
 
-**2. Placeholder scan:** 
+**2. Placeholder scan:**
 - No TBD, TODO, or placeholder text found ✓
 - All steps contain specific file paths and content ✓
 - All validation commands are specified ✓
 
-**3. Type consistency:** 
+**3. Type consistency:**
 - Field names consistent across bundle manifests ✓
 - Frontmatter metadata structure consistent ✓
 - Validation function names consistent ✓

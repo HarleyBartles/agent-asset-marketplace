@@ -21,7 +21,7 @@ By the end of this tutorial, you'll be able to:
 - Export context bundles
 - Use CLI commands for advanced operations
 
-**⏱️ Time Estimate:** 20-30 minutes  
+**⏱️ Time Estimate:** 20-30 minutes
 **💻 Prerequisites:** Python 3.8+, basic terminal familiarity
 
 ## 🎯 What You'll Build
@@ -739,7 +739,7 @@ Watch mode monitors file changes and recommends agents in real-time!
 
 #### TUI Not Responding
 
-**Symptom:** Keys don't work  
+**Symptom:** Keys don't work
 **Fix:**
 
 1. Press `Esc` to clear any active mode
@@ -748,7 +748,7 @@ Watch mode monitors file changes and recommends agents in real-time!
 
 #### Filters Not Clearing
 
-**Symptom:** View shows limited items  
+**Symptom:** View shows limited items
 **Fix:**
 
 1. Press `Esc` to clear filter
@@ -757,7 +757,7 @@ Watch mode monitors file changes and recommends agents in real-time!
 
 #### Details Panel Stuck Open
 
-**Symptom:** Can't close details panel  
+**Symptom:** Can't close details panel
 **Fix:**
 
 1. Press `Esc`
@@ -766,7 +766,7 @@ Watch mode monitors file changes and recommends agents in real-time!
 
 #### Status Bar Missing Metrics
 
-**Symptom:** No memory/CPU shown  
+**Symptom:** No memory/CPU shown
 **Fix:** Install psutil:
 
 ```bash
@@ -908,7 +908,7 @@ man cortex-workflow  # Workflow orchestration
    ```bash
    # Terminal 1: AI Watch Mode (CLI-only)
    cortex ai watch
-   
+
    # Terminal 2: TUI for quick adjustments
    cortex tui
    ```
@@ -927,7 +927,7 @@ man cortex-workflow  # Workflow orchestration
    # Quick clipboard export (TUI)
    cortex tui
    # Press E, then x (clipboard)
-   
+
    # Or CLI for automation
    cortex export context - | pbcopy  # macOS
    cortex export context - | xclip   # Linux

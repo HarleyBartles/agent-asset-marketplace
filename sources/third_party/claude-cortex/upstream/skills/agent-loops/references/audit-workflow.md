@@ -119,7 +119,7 @@ For each critical function, imagine these mutations and ask if any test would ca
 
 Total behaviors identified: N
 - ✅ Covered: N
-- ⚠️ Shallow: N  
+- ⚠️ Shallow: N
 - ❌ Missing: N
 
 ---

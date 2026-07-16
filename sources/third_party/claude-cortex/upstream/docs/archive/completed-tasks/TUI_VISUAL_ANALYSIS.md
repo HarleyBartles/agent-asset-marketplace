@@ -126,7 +126,7 @@ Status Colors:
   - Category: Standard text
   - Tier: Standard text
   - Requires: Dependencies list
-  
+
 **Features**:
 
 - Selected row highlighted with `reverse` style
@@ -697,7 +697,7 @@ def create_layout(self) -> Layout:
     )
     layout["header"].update(self.create_header())
     layout["footer"].update(self.create_footer())
-    
+
     # Route to view-specific renderer
     if self.state.current_view == "agents":
         if self.state.show_details:

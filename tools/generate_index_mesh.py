@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__"}
+EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__", ".pytest_cache"}
 EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__"}
 EXCLUDED_FILE_NAMES = {".git"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
@@ -115,21 +115,6 @@ def render_index(path: Path) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def normalize_text(text: str) -> str:
-    return text.replace("\r\n", "\n").replace("\r", "\n")
-
-
-def detect_newline_style(path: Path) -> str:
-    if not path.exists():
-        return "\n"
-    raw = path.read_bytes()
-    if b"\r\n" in raw:
-        return "\r\n"
-    if b"\r" in raw:
-        return "\r"
-    return "\n"
-
-
 def resolve_link_target(current: Path, target: str) -> Path | None:
     if target.startswith(("http://", "https://", "mailto:")):
         return None
@@ -205,7 +190,11 @@ def main() -> int:
             if not target.path.exists():
                 mismatches.append(f"missing: {target.path.relative_to(ROOT)}")
                 continue
-            current = normalize_text(target.path.read_text(encoding="utf-8"))
+            raw = target.path.read_bytes()
+            if b"\r" in raw:
+                mismatches.append(f"stale: {target.path.relative_to(ROOT)} (CRLF line endings, needs LF normalization)")
+                continue
+            current = raw.decode("utf-8")
             rendered = "\n".join(target.lines).rstrip() + "\n"
             if current != rendered:
                 mismatches.append(f"stale: {target.path.relative_to(ROOT)}")
@@ -222,10 +211,9 @@ def main() -> int:
     written = 0
     for target in targets:
         rendered = "\n".join(target.lines).rstrip() + "\n"
-        newline_style = detect_newline_style(target.path)
         target.path.parent.mkdir(parents=True, exist_ok=True)
-        with target.path.open("w", encoding="utf-8", newline="") as handle:
-            handle.write(rendered.replace("\n", newline_style))
+        with target.path.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(rendered)
         written += 1
 
     obsolete = sorted(path for path in actual_paths if path not in expected_paths)

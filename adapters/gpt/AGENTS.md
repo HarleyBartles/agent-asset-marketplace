@@ -30,4 +30,3 @@ This file must stay aligned with `adapters/gpt/manifest.json`. When adding or
 removing overlays, update the manifest first and ensure this AGENTS.md reflects
 the current overlay strategy. Review this file when GPT export behavior changes
 or when new overlay patterns are introduced.
-

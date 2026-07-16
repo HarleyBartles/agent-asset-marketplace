@@ -204,4 +204,3 @@ fields:
 #   - YAML schema to be translated into JSON Schema for automated checks.
 #   - Interim tooling: `cortex agent validate <file>` should enforce the
 #     required keys and surface descriptive errors.
-

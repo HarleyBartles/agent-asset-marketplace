@@ -302,14 +302,14 @@ fn test_auth_failure_includes_identity() {
 async fn test_forward_proxy_accepts_connect() {
     let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
     let addr = listener.local_addr().unwrap();
-    
+
     // Start proxy in background
     let proxy = tokio::spawn(async move { run_proxy(listener).await });
-    
+
     // Connect as client
     let mut client = TcpStream::connect(addr).await.unwrap();
     client.write_all(b"CONNECT example.com:443 HTTP/1.1\r\n\r\n").await.unwrap();
-    
+
     let mut buf = [0u8; 256];
     let n = client.read(&mut buf).await.unwrap();
     let response = std::str::from_utf8(&buf[..n]).unwrap();
@@ -375,11 +375,11 @@ test('tunnel events API returns events filtered by domain', async () => {
         { domain: 'api.anthropic.com', bytes: 2048 },
         { domain: 'api.openai.com', bytes: 512 },
     ]);
-    
+
     const response = await request(app)
         .get('/api/tunnel-events?domain=api.openai.com')
         .expect(200);
-    
+
     expect(response.body.events).toHaveLength(2);
     expect(response.body.events.every(e => e.domain === 'api.openai.com')).toBe(true);
     expect(response.body.totalBytes).toBe(1536);

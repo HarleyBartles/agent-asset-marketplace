@@ -402,4 +402,3 @@ tui:
 3. **Performance**: Render time < 100ms
 4. **Customization**: 5+ built-in themes available
 5. **Adoption**: Configuration file usage rate
-

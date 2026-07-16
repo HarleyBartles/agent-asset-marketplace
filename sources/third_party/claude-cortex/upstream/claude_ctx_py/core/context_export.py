@@ -349,7 +349,7 @@ def export_context(
         if include_categories and category not in include_categories:
             skipped_count += len(components.get(category, {}))
             continue
-        
+
         # If category is in exclude list, skip it
         if category in exclude_categories:
             skipped_count += len(components.get(category, {}))

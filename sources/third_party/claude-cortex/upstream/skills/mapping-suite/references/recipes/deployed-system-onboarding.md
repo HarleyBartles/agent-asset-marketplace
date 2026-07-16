@@ -25,7 +25,7 @@ steps:
     invocation_prompt: |
       Run architectural-analysis against <target_repo> using the suite
       scope at docs/<suite-date>-suite/suite-scope.md.
-      
+
       Use the full mode set unless the user named a subset. Phase 2's
       doc-led workflow (the rewrite from commit 3f3376d) treats in-tree
       docs as the spine of the report; Phase 5b's gap-first synthesis
@@ -56,7 +56,7 @@ steps:
     invocation_prompt: |
       Run release-analysis against <target_repo> using the suite scope
       at docs/<suite-date>-suite/suite-scope.md.
-      
+
       Phase 0 should detect the prior arch-analysis at
       docs/architecture/<date>/ (from step 1) and inherit its scope and
       doc-map automatically. Detect the release shape (compose-only,
@@ -82,7 +82,7 @@ steps:
     invocation_prompt: |
       Run wiring-audit against <target_repo> using the suite scope at
       docs/<suite-date>-suite/suite-scope.md.
-      
+
       Pass docs/architecture/<date>/ui-surfaces/ and integrations/ as
       priors so the audit can skip rediscovery and focus on diff.
     expected_output: docs/audits/<date>/

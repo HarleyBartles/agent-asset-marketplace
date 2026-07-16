@@ -20,7 +20,7 @@ def should_run_wizard() -> bool:
         return False
     if not sys.stdin.isatty():
         return False
-    
+
     # Check if content is already linked (dir symlink, per-file symlinks, or cortex subdir)
     claude_home = Path.home() / ".claude"
     claude_rules = claude_home / "rules"
@@ -43,22 +43,22 @@ def should_run_wizard() -> bool:
 def _symlink_rules(console: Console, dry_run: bool = False) -> Tuple[int, str]:
     """Symlink content directories to ~/.claude/."""
     from .installer import link_content
-    
+
     if dry_run:
         return link_content(dry_run=True)
-    
+
     return link_content(force=False)
 
 
 def run_wizard(console: Optional[Console] = None) -> Tuple[int, str]:
     """Run first-time setup.
-    
+
     1. Symlink rules to ~/.claude/rules/cortex/
     2. Optionally install shell completions/aliases
     """
     if console is None:
         console = Console()
-    
+
     console.print()
     console.print(Panel(
         "[bold]Cortex Setup[/bold]\n\n"
@@ -68,27 +68,27 @@ def run_wizard(console: Optional[Console] = None) -> Tuple[int, str]:
         border_style="cyan",
     ))
     console.print()
-    
+
     if not Confirm.ask("Continue?", default=True, console=console):
         return 1, "Setup cancelled"
-    
+
     # 1. Symlink rules
     code, msg = _symlink_rules(console)
     console.print(msg)
     if code != 0:
         return code, msg
-    
+
     # 2. Shell integration (optional)
     console.print()
     try:
         detected_shell, rc_path = shell_integration.detect_shell()
         console.print(f"Detected shell: [cyan]{detected_shell}[/cyan]")
-        
+
         if Confirm.ask("Install shell completions?", default=True, console=console):
             from . import installer
             code, msg = installer.install_completions(shell=detected_shell)
             console.print(msg.split('\n')[0])  # Just first line
-        
+
         if Confirm.ask("Install shell aliases (ctx, ctx-copy)?", default=True, console=console):
             code, msg = shell_integration.install_aliases(
                 shell=detected_shell,
@@ -118,7 +118,7 @@ def run_wizard(console: Optional[Console] = None) -> Tuple[int, str]:
         "Run [cyan]cortex agent list[/cyan] to see available agents.",
         border_style="green",
     ))
-    
+
     return 0, "Setup complete"
 
 

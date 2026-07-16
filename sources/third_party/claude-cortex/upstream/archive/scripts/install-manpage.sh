@@ -16,7 +16,7 @@ _validate_path() {
   fi
 }
 
-_usage() { 
+_usage() {
   echo "Usage: $0 [OPTIONS]"
   echo ""
   echo "Options:"
@@ -33,7 +33,7 @@ _usage() {
   echo ""
   echo "Example:"
   echo "  $0 --user"
-  echo "  $0 --path 
+  echo "  $0 --path
   echo ""
   echo "Notes:"
   echo "    - Ensure that the installation path is included in your MANPATH environment variable."
@@ -88,7 +88,7 @@ _LOCAL_SHARE_DIR="${HOME}/.local/share"
 _SYSTEM_SHARE_DIR="/usr/local/share"
 
 # Set the install path
-if [[ -z "$1" ]]; 
+if [[ -z "$1" ]];
 then
   # User provided a custom path
   PATH_PREFIX="${_LOCAL_SHARE_DIR}/man"
@@ -102,11 +102,11 @@ else
     _usage
     exit 1
   # User install path
-  elif [[ "$1" == "--user" ]]; 
+  elif [[ "$1" == "--user" ]];
   then
     PATH_PREFIX="${_LOCAL_SHARE_DIR}/man"
   # System install path
-  elif [[ "$1" == "--system" ]]; 
+  elif [[ "$1" == "--system" ]];
   then
     PATH_PREFIX="${_LOCAL_SHARE_DIR}/man"
   # Invalid argumennt
@@ -126,7 +126,7 @@ fi
 
 
 
-  
+
 if [[ ${#MANPAGE_SOURCES[@]} -eq 0 ]]; then
     echo "Error: No manpage sources found under docs/reference" >&2
     exit 1
@@ -142,7 +142,7 @@ then
     # macOS
 elif [[ "${OSTYPE}" == "linux-gnu"* ]];
 then
-    
+
 
 # Ensure the target exsists in the MANPATH
 if  $MANPATH | grep -q "${DEST}"; then
@@ -155,7 +155,7 @@ fi
 MAN_DIR="${DEST}/man1"
 
 # Create the target if needed
-if [[ ! -d "${MAN_DIR}" ]]; 
+if [[ ! -d "${MAN_DIR}" ]];
 then
   echo "${MAN_DIR} does not exist. Creating..."
   mkdir -m 644 -p "${MAN_DIR}"

@@ -76,7 +76,7 @@ def _replace_text(path: Path, replacements: list[tuple[str, str]]) -> None:
     for old, new in replacements:
         content = content.replace(old, new)
     if content != original:
-        path.write_text(content, encoding="utf-8")
+        path.write_text(content, encoding="utf-8", newline="\n")
 
 
 def _copy_source_snapshot(source_checkout: Path, target_root: Path) -> None:
@@ -109,7 +109,7 @@ def _update_custody_registry(new_root: str) -> None:
             mapping["custody_root"] = new_root
             changed = True
     if changed:
-        SUPERPOWERS_CUSTODY_REGISTRY_PATH.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+        SUPERPOWERS_CUSTODY_REGISTRY_PATH.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
@@ -133,6 +133,7 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
     SUPERPOWERS_BUNDLE_MANIFEST_PATH.write_text(
         json.dumps(bundle_manifest, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

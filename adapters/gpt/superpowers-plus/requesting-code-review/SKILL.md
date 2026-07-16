@@ -23,4 +23,3 @@ cases.
 - Review before merge, not after a surprise lands.
 - Do not bury the important context in a long history dump.
 - Treat actionable findings as real work, not noise.
-

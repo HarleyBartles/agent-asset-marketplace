@@ -1729,7 +1729,7 @@ Complete API documentation for all slash commands in the Cortex Plugin.
 **Budget Levels**:
 
 - **4K**: Standard reasoning (~$0.012) - routine tasks
-- **10K**: Deep reasoning (~$0.030) - architectural decisions  
+- **10K**: Deep reasoning (~$0.030) - architectural decisions
 - **32K**: Maximum reasoning (~$0.096) - critical redesign
 - **128K**: Extended thinking (~$0.384) - extreme complexity (5x cheaper than OpenAI o1)
 

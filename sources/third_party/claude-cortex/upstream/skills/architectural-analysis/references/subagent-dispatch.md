@@ -85,7 +85,7 @@ The following in-tree docs are authoritative for this mode. The orchestrator has
 relevant section + path. Example:
 
   ## mainwebcode/docs/HANDLEBARS_CACHING.md (authoritative on cache layers)
-  
+
   > Templates are compiled server-side by CF and cached in Couchbase
   > across **three layers**...
   > Layer 1 — file content cache, 60,000s TTL...

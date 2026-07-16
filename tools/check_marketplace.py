@@ -30,6 +30,10 @@ def main() -> int:
     args = _parse_args()
 
     _run_tool("generate_plugin_root_inventory.py", "--check")
+    # Verify overlay.yaml line edits are healthy — stale overlays (where
+    # source normalization shifted line numbers or whitespace) must be
+    # healed via rebuild_marketplace.py before CI can pass.
+    _run_tool("heal_overlays.py", "--check")
     _run_tool("update_skill_artifacts.py", "--check", "--full-regeneration", "--base", args.base)
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py", "--check")

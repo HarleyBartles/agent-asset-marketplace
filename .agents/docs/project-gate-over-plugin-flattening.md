@@ -15,4 +15,3 @@
 
 - This repo is a small golden exemplar of the base pattern only.
 - Do not use this PR to implement the Wild Bunch decomposition.
-

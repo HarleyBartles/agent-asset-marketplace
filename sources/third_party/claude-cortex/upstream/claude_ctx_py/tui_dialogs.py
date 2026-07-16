@@ -70,7 +70,7 @@ class ConfirmDialog(ModalScreen[bool]):
     ConfirmDialog {
         align: center middle;
     }
-    
+
     ConfirmDialog #dialog {
         opacity: 1;
     }
@@ -136,7 +136,7 @@ class ErrorDialog(ModalScreen[None]):
     ErrorDialog {
         align: center middle;
     }
-    
+
     ErrorDialog #dialog {
         opacity: 1;
     }
@@ -192,7 +192,7 @@ class InfoDialog(ModalScreen[None]):
     InfoDialog {
         align: center middle;
     }
-    
+
     InfoDialog #dialog {
         opacity: 1;
     }
@@ -264,7 +264,7 @@ class TaskEditorDialog(ModalScreen[Optional[TaskEditorData]]):
     TaskEditorDialog {
         align: center middle;
     }
-    
+
     TaskEditorDialog #dialog {
         opacity: 1;
     }
@@ -365,7 +365,7 @@ class PromptDialog(ModalScreen[Optional[str]]):
     PromptDialog {
         align: center middle;
     }
-    
+
     PromptDialog #dialog {
         opacity: 1;
     }
@@ -495,7 +495,7 @@ class MCPServerDialog(ModalScreen[Optional[MCPServerData]]):
     MCPServerDialog {
         align: center middle;
     }
-    
+
     MCPServerDialog #dialog {
         opacity: 1;
     }

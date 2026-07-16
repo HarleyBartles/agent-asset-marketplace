@@ -75,7 +75,7 @@ The Security Pack historically projected retained NickCrew/Claude-Cortex securit
 - **Plugin name**: `security-pack`
 - **Display name**: `Security Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: 
+- **Content mode**:
   - `normalised` from NickCrew/Claude-Cortex custody (path normalization, frontmatter enrichment, MARK-262 metadata)
   - `normalised` from ECC custody (frontmatter enrichment, MARK-262 metadata)
 - **Adaptation note**: The ECC slice was removed in MARK-295; the remaining NickCrew/Claude-Cortex security foundations stay in place

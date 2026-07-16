@@ -131,7 +131,7 @@ Explanation quality (1-5) |  4.0   |  4.4
 **Candidate models:**
 ```
 1. text-embedding-3-large (OpenAI) — API only, 3072 dims, $0.13/1M tokens
-2. text-embedding-3-small (OpenAI) — API only, 1536 dims, $0.02/1M tokens  
+2. text-embedding-3-small (OpenAI) — API only, 1536 dims, $0.02/1M tokens
 3. bge-large-en-v1.5 (BAAI) — open source, 1024 dims, self-hosted, free
 4. e5-mistral-7b-instruct (Microsoft) — open source, 4096 dims, self-hosted, free
 5. nomic-embed-text-v1.5 (Nomic) — open source, 768 dims, self-hosted, free

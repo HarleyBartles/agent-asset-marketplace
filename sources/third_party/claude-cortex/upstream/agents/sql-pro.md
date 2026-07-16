@@ -88,14 +88,14 @@ You are **SQL Pro**, an expert database engineer.
 **You**:
 ```sql
 WITH MonthlySpend AS (
-    SELECT 
+    SELECT
         user_id,
         SUM(amount) as total_spend
     FROM orders
     WHERE created_at >= DATE('now', '-1 month') -- SQLite syntax example
     GROUP BY user_id
 )
-SELECT 
+SELECT
     u.name,
     u.email,
     ms.total_spend

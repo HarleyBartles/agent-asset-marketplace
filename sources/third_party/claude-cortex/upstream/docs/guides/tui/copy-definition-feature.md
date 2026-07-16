@@ -49,7 +49,7 @@ If clipboard access fails, you'll see an error notification.
 ## Use Cases
 
 ✅ **Share configurations** - Copy agent definitions to share with team members
-✅ **Documentation** - Extract definitions for documentation purposes  
+✅ **Documentation** - Extract definitions for documentation purposes
 ✅ **Backup** - Quick way to save a definition externally
 ✅ **Review** - Copy to external editor for detailed review
 ✅ **Compare** - Copy multiple definitions to compare side-by-side

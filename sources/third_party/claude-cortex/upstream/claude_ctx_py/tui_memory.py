@@ -85,7 +85,7 @@ class MemoryScreen(Screen[None]):
     .note-content {
         height: 100%;
     }
-    
+
     #empty-state {
         text-align: center;
         color: $text-muted;
@@ -96,12 +96,12 @@ class MemoryScreen(Screen[None]):
     def compose(self) -> ComposeResult:
         """Create child widgets."""
         yield Header(show_clock=True)
-        
+
         with Container(id="memory-container"):
             with Vertical(id="left-pane"):
                 yield Input(placeholder="Search memories... (/)", id="search-input")
                 yield DataTable(id="notes-table", cursor_type="row")
-            
+
             with Vertical(id="right-pane"):
                 yield Markdown(id="note-view")
                 yield Static("Select a note to view details", id="empty-state")
@@ -121,13 +121,13 @@ class MemoryScreen(Screen[None]):
         table.add_column("Date", width=12)
 
         notes = list_notes()
-        
+
         # Filter locally for now
         if query:
             query = query.lower()
             notes = [
-                n for n in notes 
-                if query in n["title"].lower() 
+                n for n in notes
+                if query in n["title"].lower()
                 or query in n["name"].lower()
                 or any(query in t.lower() for t in n.get("tags", []))
             ]
@@ -136,17 +136,17 @@ class MemoryScreen(Screen[None]):
             note_type = note["type"]
             icon = self._get_type_icon(note_type)
             date_str = note["modified"].strftime("%Y-%m-%d")
-            
+
             # Style the type
             type_styled = f"{icon} {note_type.title()}"
-            
+
             table.add_row(
                 type_styled,
                 note["title"],
                 date_str,
                 key=note["path"]  # Store path as key
             )
-        
+
         search_input = self.query_one("#search-input", Input)
         search_input.border_subtitle = f"{len(notes)} notes found"
 
@@ -173,18 +173,18 @@ class MemoryScreen(Screen[None]):
         path = event.row_key.value
         if not path:
             return
-            
+
         try:
             # We have the full path from list_notes
             from pathlib import Path
             content = Path(path).read_text(encoding="utf-8")
-            
+
             # Hide empty state, show content
             self.query_one("#empty-state").display = False
             md_view = self.query_one("#note-view", Markdown)
             md_view.display = True
             md_view.update(content)
-            
+
         except Exception as e:
             self.notify(f"Error reading note: {e}", severity="error")
 

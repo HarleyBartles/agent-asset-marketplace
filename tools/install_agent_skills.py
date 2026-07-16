@@ -56,7 +56,7 @@ def _get_installed_plugins(config: dict[str, Any]) -> list[dict[str, Any]]:
     plugins = config.get("plugins", [])
     if not isinstance(plugins, list):
         raise ValueError(f"{MARKETPLACE_PATH}: plugins must be a list")
-    
+
     installed = []
     for plugin in plugins:
         if not isinstance(plugin, dict):
@@ -75,15 +75,15 @@ def _get_plugin_skills_path(plugin: dict[str, Any]) -> Path | None:
     source = plugin.get("source", {})
     if not isinstance(source, dict):
         return None
-    
+
     source_type = source.get("source")
     if source_type != "local":
         return None
-    
+
     path = source.get("path")
     if not isinstance(path, str) or not path:
         return None
-    
+
     plugin_path = ROOT / path
     skills_path = plugin_path / "skills"
     return skills_path if skills_path.is_dir() else None
@@ -93,7 +93,7 @@ def _copy_skill_directory(source_skill: Path, dest_skill: Path) -> None:
     """Copy a skill directory from plugin to .agents/skills."""
     if dest_skill.exists():
         shutil.rmtree(dest_skill)
-    
+
     shutil.copytree(source_skill, dest_skill)
     print(f"Installed skill: {dest_skill.relative_to(ROOT)}")
 
@@ -141,7 +141,7 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
     skills_path = _get_plugin_skills_path(plugin)
     if skills_path is None:
         return False
-    
+
     plugin_name = plugin.get("name", "unknown")
     if not isinstance(plugin_name, str):
         return False
@@ -153,9 +153,9 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
     for skill_dir in sorted(skills_path.iterdir()):
         if not skill_dir.is_dir():
             continue
-        
+
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
-        
+
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
         if skill_dir.name in synced_skill_names:
@@ -216,7 +216,7 @@ def _write_provenance(manifest_sha: str, synced_plugins: list[str], synced_skill
         "sourcePath": "codex-marketplace/plugins",
         "marketplaceFile": ".agents/plugins/marketplace.json"
     }
-    PROVENANCE_PATH.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
+    PROVENANCE_PATH.write_text(json.dumps(provenance, indent=2), encoding="utf-8", newline="\n")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -238,14 +238,14 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = _parse_args()
-    
+
     config = _load_marketplace_config()
     installed_plugins = _get_installed_plugins(config)
-    
+
     if not installed_plugins:
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
-    
+
     # Get current provenance and manifest SHA
     existing_provenance = _load_provenance()
     current_manifest_sha = _get_marketplace_manifest_sha()
@@ -283,7 +283,7 @@ def main() -> int:
     print("\nChecking for orphan skills...")
     if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names):
         changes_made = True
-    
+
     # Write provenance if changes were made
     if not args.check and (changes_made or args.force):
         _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))

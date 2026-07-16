@@ -448,7 +448,7 @@ def parse_hook_file(hook_file: Path) -> Optional[HookDefinition]:
         return None
 
     suffix = hook_file.suffix.lower()
-    
+
     if suffix == ".sh":
         return _parse_shell_hook(hook_file, content)
     else:
@@ -459,7 +459,7 @@ def _parse_shell_hook(hook_file: Path, content: str) -> Optional[HookDefinition]
     """Parse a shell script hook file."""
     lines = content.split("\n")
     comment_lines: List[str] = []
-    
+
     for line in lines:
         stripped = line.strip()
         # Skip shebang
@@ -470,14 +470,14 @@ def _parse_shell_hook(hook_file: Path, content: str) -> Optional[HookDefinition]
             comment_lines.append(stripped[1:].strip())
         elif stripped:  # Stop at first non-comment, non-empty line
             break
-    
+
     # First comment line is description
     description = comment_lines[0] if comment_lines else "No description"
     full_comments = "\n".join(comment_lines).lower()
-    
+
     # Detect event type from comments
     event = _detect_event_from_text(full_comments)
-    
+
     return HookDefinition(
         name=hook_file.stem,
         description=description,
@@ -533,7 +533,7 @@ def _parse_python_hook(hook_file: Path, content: str) -> Optional[HookDefinition
 def _detect_event_from_text(text: str) -> str:
     """Detect hook event type from description text."""
     text = text.lower()
-    
+
     if "sessionend" in text or "session-end" in text or "session end" in text:
         return "SessionEnd"
     if "sessionstart" in text or "session-start" in text or "session start" in text:
@@ -552,7 +552,7 @@ def _detect_event_from_text(text: str) -> str:
         return "SubagentStop"
     if "userpromptsubmit" in text or "user prompt" in text or "userprompt" in text:
         return "UserPromptSubmit"
-    
+
     return "UserPromptSubmit"  # Default
 
 

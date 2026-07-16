@@ -672,7 +672,7 @@ class SkillRecommender:
                 ORDER BY timestamp DESC
                 LIMIT 1
             """, (skill_name, context_hash))
-            
+
             row = cursor.fetchone()
             if row:
                 rec_id = row[0]
@@ -834,7 +834,7 @@ class SkillRecommender:
                 total = row[0]
                 activations = row[1]
                 helpful = row[2]
-                
+
                 stats = {
                     "skill_name": skill_name,
                     "total_recommendations": total,
@@ -858,7 +858,7 @@ class SkillRecommender:
                 total = row[0]
                 activated = row[1]
                 helpful = row[2]
-                
+
                 stats = {
                     "total_recommendations": total,
                     "total_activations": activated,

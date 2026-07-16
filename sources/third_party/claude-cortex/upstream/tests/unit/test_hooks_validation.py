@@ -5,7 +5,7 @@ from claude_ctx_py.core.hooks import validate_hooks_config, _check_hook_executab
 def test_check_hook_executable_exists(tmp_path):
     script = tmp_path / "test.py"
     script.write_text("print('test')")
-    
+
     # Should be valid (exists)
     assert _check_hook_executable(f"python3 {script}") is None
     # Test with interpreter and flags

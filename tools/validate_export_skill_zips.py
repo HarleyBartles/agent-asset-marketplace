@@ -43,7 +43,7 @@ def _load_registry() -> dict:
 
 def _write_temp_registry(tmp: Path, registry: dict) -> Path:
     path = tmp / "registry.json"
-    path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
     return path
 
 
@@ -52,7 +52,7 @@ def test_pack_export_and_manifest() -> tuple[Path, dict]:
         out_dir = Path(tmp) / "batch"
         out_dir.mkdir(parents=True, exist_ok=True)
         stale_file = out_dir / "stale.txt"
-        stale_file.write_text("remove me", encoding="utf-8")
+        stale_file.write_text("remove me", encoding="utf-8", newline="\n")
         result = run_export(["--pack", "house-skills", "--out", str(out_dir), "--clean-output"])
         assert_ok(result)
 
@@ -75,7 +75,7 @@ def test_from_file_export() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         request_file = tmp_path / "requested-skills.txt"
-        request_file.write_text("house-skills/asset-market\nhouse-skills/boring-loop\n", encoding="utf-8")
+        request_file.write_text("house-skills/asset-market\nhouse-skills/boring-loop\n", encoding="utf-8", newline="\n")
 
         manifest = export_skill_zips(
             form="from-file",

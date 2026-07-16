@@ -1,8 +1,8 @@
 # Cortex: Master Architecture Document
 
-**Version**: 1.1  
-**Last Updated**: 2025-12-05  
-**Status**: Living Document  
+**Version**: 1.1
+**Last Updated**: 2025-12-05
+**Status**: Living Document
 **Recent Updates**: Component Toggle System, Doctor Diagnostics, TUI Refactoring
 
 ---
@@ -285,7 +285,7 @@ The TUI uses Textual's reactive properties for state management:
 ```python
 class AgentsView(Screen):
     active_agents: Reactive[List[str]] = Reactive([])
-    
+
     def watch_active_agents(self, new_value: List[str]) -> None:
         """Called automatically when active_agents changes."""
         self.refresh_table()
@@ -379,19 +379,19 @@ def main() -> int:
     # 1. Parse arguments
     parser = create_parser()
     args = parser.parse_args()
-    
+
     # 2. Initialize core modules
     claude_dir = _resolve_claude_dir()
     agents_mgr = AgentManager(claude_dir / "agents")
     modes_mgr = ModeManager(claude_dir / "modes")
-    
+
     # 3. Route to appropriate handler
     if args.command == "agent":
         return handle_agent_command(args, agents_mgr)
     elif args.command == "mode":
         return handle_mode_command(args, modes_mgr)
     # ...
-    
+
     return 0
 ```
 
@@ -513,30 +513,30 @@ Each view follows a consistent lifecycle:
 ```python
 class AgentsView(Screen):
     """Agents management view (key: 0)."""
-    
+
     def __init__(self):
         super().__init__()
         self.agents_mgr = None  # Injected on mount
-    
+
     async def on_mount(self) -> None:
         """Called when view is mounted."""
         # 1. Inject dependencies
         self.agents_mgr = self.app.agents_mgr
-        
+
         # 2. Load data
         await self.load_agents()
-        
+
         # 3. Setup UI
         self.setup_table()
-        
+
         # 4. Start refresh timer (optional)
         self.set_interval(5.0, self.refresh_data)
-    
+
     async def load_agents(self) -> None:
         """Load agents from core module."""
         self.agents = await self.agents_mgr.list_all()
         self.active = await self.agents_mgr.list_active()
-    
+
     def on_key(self, event: events.Key) -> None:
         """Handle key presses."""
         if event.key == "enter":
@@ -565,7 +565,7 @@ The command palette provides fuzzy search across all TUI commands:
 ```python
 class CommandPalette(Container):
     """Command palette for fuzzy search."""
-    
+
     commands = [
         ("Agent: List All", "agents_list"),
         ("Agent: Activate", "agents_activate"),
@@ -574,7 +574,7 @@ class CommandPalette(Container):
         ("Skill: Rate", "skills_rate"),
         # ... 50+ commands
     ]
-    
+
     def on_input_changed(self, event: Input.Changed) -> None:
         """Filter commands as user types."""
         query = event.value.lower()
@@ -630,18 +630,18 @@ The TUI uses Textual's reactive properties for state:
 ```python
 class ClaudeCtxApp(App):
     """Main TUI application."""
-    
+
     # Reactive properties
     active_agents: Reactive[List[str]] = Reactive([])
     active_modes: Reactive[List[str]] = Reactive([])
     current_view: Reactive[str] = Reactive("agents")
     notifications: Reactive[List[Notification]] = Reactive([])
-    
+
     def watch_active_agents(self, new_value: List[str]) -> None:
         """React to agent changes."""
         self.notify(f"{len(new_value)} agents active")
         self.refresh_views()
-    
+
     def watch_notifications(self, new_value: List[Notification]) -> None:
         """Show toast notifications."""
         for notif in new_value:
@@ -696,12 +696,12 @@ Captures the current development context:
 @dataclass
 class SessionContext:
     """Represents current session state for intelligent decisions."""
-    
+
     # File context
     files_changed: List[str]
     file_types: Set[str]
     directories: Set[str]
-    
+
     # Code context (detected patterns)
     has_tests: bool
     has_auth: bool
@@ -709,16 +709,16 @@ class SessionContext:
     has_frontend: bool
     has_backend: bool
     has_database: bool
-    
+
     # Activity context
     errors_count: int
     test_failures: int
     build_failures: int
-    
+
     # Time context
     session_start: datetime
     last_activity: datetime
-    
+
     # Current state
     active_agents: List[str]
     active_modes: List[str]
@@ -730,7 +730,7 @@ class SessionContext:
 ```python
 class ContextDetector:
     """Detects context from file changes and git diff."""
-    
+
     def detect_context(self, files: List[str]) -> SessionContext:
         """Build context from changed files."""
         context = SessionContext(
@@ -746,7 +746,7 @@ class ContextDetector:
             # ... more detection logic
         )
         return context
-    
+
     def _has_auth_code(self, files: List[str]) -> bool:
         """Detect auth-related code."""
         patterns = [
@@ -771,12 +771,12 @@ Learns from successful sessions:
 ```python
 class PatternLearner:
     """Learns patterns from session history."""
-    
+
     def __init__(self, history_file: Path):
         self.history_file = history_file
         self.patterns: Dict[str, List[Dict]] = defaultdict(list)
         self._load_history()
-    
+
     def record_success(
         self,
         context: SessionContext,
@@ -792,14 +792,14 @@ class PatternLearner:
             "duration": duration,
             "outcome": outcome,
         }
-        
+
         # Store by context key
         context_key = self._generate_context_key(context)
         self.patterns[context_key].append(session_data)
-        
+
         # Persist to disk
         self._save_history()
-    
+
     def predict_agents(
         self,
         context: SessionContext
@@ -807,13 +807,13 @@ class PatternLearner:
         """Predict agents based on learned patterns."""
         context_key = self._generate_context_key(context)
         historical = self.patterns.get(context_key, [])
-        
+
         # Count agent usage in similar contexts
         agent_counts = Counter()
         for session in historical:
             for agent in session["agents"]:
                 agent_counts[agent] += 1
-        
+
         # Generate recommendations
         total = len(historical)
         recommendations = []
@@ -828,7 +828,7 @@ class PatternLearner:
                     auto_activate=(confidence >= 0.8),
                     context_triggers=[context_key],
                 ))
-        
+
         return recommendations
 ```
 
@@ -839,42 +839,42 @@ Combines rule-based and pattern-based recommendations:
 ```python
 class IntelligentAgent:
     """Main intelligence orchestrator."""
-    
+
     def __init__(self, claude_dir: Path):
         self.claude_dir = claude_dir
         self.detector = ContextDetector()
         self.learner = PatternLearner(
             claude_dir / "data" / "patterns.json"
         )
-    
+
     def recommend_agents(
         self,
         context: SessionContext
     ) -> List[AgentRecommendation]:
         """Generate agent recommendations."""
         recommendations = []
-        
+
         # 1. Rule-based recommendations (hard-coded intelligence)
         recommendations.extend(self._rule_based_recommendations(context))
-        
+
         # 2. Pattern-based recommendations (learned intelligence)
         recommendations.extend(self.learner.predict_agents(context))
-        
+
         # 3. Deduplicate and merge scores
         merged = self._merge_recommendations(recommendations)
-        
+
         # 4. Sort by confidence
         merged.sort(key=lambda r: r.confidence, reverse=True)
-        
+
         return merged
-    
+
     def _rule_based_recommendations(
         self,
         context: SessionContext
     ) -> List[AgentRecommendation]:
         """Hard-coded intelligence rules."""
         recommendations = []
-        
+
         # Auth code → security-auditor
         if context.has_auth:
             recommendations.append(AgentRecommendation(
@@ -885,7 +885,7 @@ class IntelligentAgent:
                 auto_activate=True,
                 context_triggers=["auth"],
             ))
-        
+
         # Test failures → test-automator
         if context.test_failures > 0:
             recommendations.append(AgentRecommendation(
@@ -896,7 +896,7 @@ class IntelligentAgent:
                 auto_activate=True,
                 context_triggers=["test_failures"],
             ))
-        
+
         # Large changeset → code-reviewer
         if len(context.files_changed) >= 8:
             recommendations.append(AgentRecommendation(
@@ -907,7 +907,7 @@ class IntelligentAgent:
                 auto_activate=False,
                 context_triggers=["large_changeset"],
             ))
-        
+
         # Database changes → performance-engineer
         if context.has_database:
             recommendations.append(AgentRecommendation(
@@ -918,7 +918,7 @@ class IntelligentAgent:
                 auto_activate=False,
                 context_triggers=["database"],
             ))
-        
+
         return recommendations
 ```
 
@@ -938,13 +938,13 @@ def auto_activate(
 ) -> List[str]:
     """Auto-activate high-confidence agents."""
     activated = []
-    
+
     for rec in recommendations:
         if rec.auto_activate and rec.confidence >= 0.8:
             if not dry_run:
                 agent_activate(rec.agent_name)
             activated.append(rec.agent_name)
-    
+
     return activated
 ```
 
@@ -955,7 +955,7 @@ Watch mode monitors the file system and triggers recommendations in real-time:
 ```python
 class WatchMode:
     """Real-time monitoring and auto-activation."""
-    
+
     def __init__(
         self,
         claude_dir: Path,
@@ -969,7 +969,7 @@ class WatchMode:
         self.threshold = threshold
         self.intelligence = IntelligentAgent(claude_dir)
         self.last_git_head = None
-    
+
     async def run(self) -> None:
         """Main watch loop."""
         console.print("🤖 AI WATCH MODE - Real-time Intelligence")
@@ -977,36 +977,36 @@ class WatchMode:
         console.print(f"  Threshold: {self.threshold:.0%} confidence")
         console.print(f"  Check interval: {self.interval}s")
         console.print()
-        
+
         stats = {"checks": 0, "recommendations": 0, "activations": 0}
         start_time = datetime.now()
-        
+
         try:
             while True:
                 await asyncio.sleep(self.interval)
                 stats["checks"] += 1
-                
+
                 # Check for git changes
                 current_head = self._get_git_head()
                 if current_head != self.last_git_head:
                     console.print(f"[{self._timestamp()}] 📝 Git commit detected")
                     self.last_git_head = current_head
-                
+
                 # Detect context
                 changed_files = self._get_changed_files()
                 if not changed_files:
                     continue
-                
+
                 context = self.intelligence.detector.detect_context(changed_files)
-                
+
                 # Get recommendations
                 recommendations = self.intelligence.recommend_agents(context)
                 filtered = [r for r in recommendations if r.confidence >= self.threshold]
-                
+
                 if filtered:
                     stats["recommendations"] += len(filtered)
                     self._display_recommendations(context, filtered)
-                    
+
                     # Auto-activate if enabled
                     if self.auto_activate_enabled:
                         activated = self.intelligence.auto_activate(filtered)
@@ -1015,7 +1015,7 @@ class WatchMode:
                             console.print(f"[{self._timestamp()}] ⚡ Auto-activating {len(activated)} agents...")
                             for agent in activated:
                                 console.print(f"     ✓ {agent}")
-        
+
         except KeyboardInterrupt:
             self._display_stats(start_time, stats)
 ```
@@ -1130,10 +1130,10 @@ rows = await conn.fetch("SELECT * FROM events")
 ```python
 class NoteManager:
     """Manages memory vault notes."""
-    
+
     def __init__(self, vault_path: Path):
         self.vault_path = vault_path
-    
+
     def create_note(
         self,
         note_type: NoteType,
@@ -1144,12 +1144,12 @@ class NoteManager:
         """Create a new note."""
         # Generate slug from title
         slug = self._slugify(title)
-        
+
         # Determine file path
         note_dir = self.vault_path / note_type.value
         note_dir.mkdir(parents=True, exist_ok=True)
         note_path = note_dir / f"{slug}.md"
-        
+
         # Build frontmatter
         frontmatter = {
             "created": datetime.now().isoformat(),
@@ -1157,11 +1157,11 @@ class NoteManager:
         }
         if tags:
             frontmatter["tags"] = tags
-        
+
         # Write note
         full_content = self._format_note(title, frontmatter, content)
         note_path.write_text(full_content, encoding="utf-8")
-        
+
         return note_path
 ```
 
@@ -1172,37 +1172,37 @@ The vault can automatically capture session summaries:
 ```python
 class SessionCapture:
     """Automatic session capture."""
-    
+
     def __init__(self, vault_path: Path, config: Dict[str, Any]):
         self.vault_path = vault_path
         self.config = config
         self.note_mgr = NoteManager(vault_path)
-    
+
     def should_capture(self, session: Dict[str, Any]) -> bool:
         """Determine if session should be captured."""
         # Check minimum duration
         min_duration = self.config.get("min_session_length", 5)
         if session["duration_minutes"] < min_duration:
             return False
-        
+
         # Check exclude patterns
         exclude = self.config.get("exclude_patterns", [])
         query = session.get("query", "").lower()
         if any(pat in query for pat in exclude):
             return False
-        
+
         return True
-    
+
     def capture_session(self, session: Dict[str, Any]) -> Optional[Path]:
         """Capture session summary."""
         if not self.should_capture(session):
             return None
-        
+
         # Generate summary
         title = self._generate_title(session)
         content = self._generate_content(session)
         tags = self._extract_tags(session)
-        
+
         # Create note
         return self.note_mgr.create_note(
             NoteType.SESSIONS,
@@ -1219,7 +1219,7 @@ Full-text search across all notes:
 ```python
 class NoteSearch:
     """Search memory vault notes."""
-    
+
     def search(
         self,
         query: str,
@@ -1228,23 +1228,23 @@ class NoteSearch:
     ) -> List[SearchResult]:
         """Search notes by content and metadata."""
         results = []
-        
+
         # Search directories
         search_dirs = [self.vault_path / note_type.value] if note_type else \
                       [self.vault_path / t.value for t in NoteType]
-        
+
         for dir_path in search_dirs:
             if not dir_path.exists():
                 continue
-            
+
             for note_path in dir_path.glob("*.md"):
                 # Load note
                 content = note_path.read_text(encoding="utf-8")
                 frontmatter, body = self._parse_note(content)
-                
+
                 # Calculate relevance score
                 score = self._score_relevance(query, frontmatter, body)
-                
+
                 if score > 0:
                     results.append(SearchResult(
                         path=note_path,
@@ -1253,7 +1253,7 @@ class NoteSearch:
                         excerpt=self._generate_excerpt(query, body),
                         tags=frontmatter.get("tags", []),
                     ))
-        
+
         # Sort by relevance and limit
         results.sort(key=lambda r: r.score, reverse=True)
         return results[:limit]
@@ -1323,19 +1323,19 @@ def agent_list(
 ) -> List[Agent]:
     """List available agents."""
     agents = []
-    
+
     # Scan active directory
     for path in _iter_md_files(agents_dir):
         agent = _parse_agent(path)
         agents.append(agent)
-    
+
     # Scan inactive directory (if not active_only)
     if not active_only:
         for path in _iter_md_files(inactive_dir):
             agent = _parse_agent(path)
             agent.active = False
             agents.append(agent)
-    
+
     return sorted(agents, key=lambda a: a.name)
 
 def agent_activate(
@@ -1344,7 +1344,7 @@ def agent_activate(
     auto_deps: bool = True
 ) -> Tuple[List[str], List[str]]:
     """Activate an agent and its dependencies.
-    
+
     Returns:
         (activated_agents, missing_dependencies)
     """
@@ -1352,29 +1352,29 @@ def agent_activate(
     agent_path = _find_agent(agent_name, claude_dir)
     if not agent_path:
         raise AgentNotFoundError(f"Agent '{agent_name}' not found")
-    
+
     # Parse agent metadata
     agent = _parse_agent(agent_path)
-    
+
     # Build dependency graph
     dep_graph = _build_dependency_graph(agent, claude_dir)
-    
+
     # Topological sort for activation order
     activation_order = _topological_sort(dep_graph)
-    
+
     activated = []
     missing = []
-    
+
     for dep_name in activation_order:
         dep_path = _find_agent(dep_name, claude_dir)
         if not dep_path:
             missing.append(dep_name)
             continue
-        
+
         # Activate by updating CLAUDE.md
         _update_claude_md(claude_dir, dep_name, activate=True)
         activated.append(dep_name)
-    
+
     return activated, missing
 
 def agent_graph(
@@ -1383,12 +1383,12 @@ def agent_graph(
     format: str = "text"
 ) -> str:
     """Generate dependency graph visualization.
-    
+
     Args:
         format: "text", "mermaid", or "dot"
     """
     agents = agent_list(agents_dir, inactive_dir)
-    
+
     if format == "mermaid":
         return _generate_mermaid_graph(agents)
     elif format == "dot":
@@ -1407,21 +1407,21 @@ def _build_dependency_graph(
     """Build dependency graph using DFS."""
     graph: Dict[str, Set[str]] = defaultdict(set)
     visited: Set[str] = set()
-    
+
     def visit(name: str) -> None:
         if name in visited:
             return
         visited.add(name)
-        
+
         agent_path = _find_agent(name, claude_dir)
         if not agent_path:
             return
-        
+
         agent_obj = _parse_agent(agent_path)
         for dep in agent_obj.dependencies:
             graph[name].add(dep)
             visit(dep)
-    
+
     visit(agent.name)
     return graph
 
@@ -1431,10 +1431,10 @@ def _topological_sort(graph: Dict[str, Set[str]]) -> List[str]:
     for node in graph:
         for neighbor in graph[node]:
             in_degree[neighbor] = in_degree.get(neighbor, 0) + 1
-    
+
     queue = [node for node, degree in in_degree.items() if degree == 0]
     result = []
-    
+
     while queue:
         node = queue.pop(0)
         result.append(node)
@@ -1442,7 +1442,7 @@ def _topological_sort(graph: Dict[str, Set[str]]) -> List[str]:
             in_degree[neighbor] -= 1
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
-    
+
     return result
 ```
 
@@ -1459,18 +1459,18 @@ def skill_list(
 ) -> List[Skill]:
     """List available skills."""
     skills = []
-    
+
     for path in skills_dir.glob("**/*.md"):
         if _is_disabled(path):
             continue
-        
+
         skill = _parse_skill(path)
-        
+
         if category and skill.category != category:
             continue
-        
+
         skills.append(skill)
-    
+
     return sorted(skills, key=lambda s: s.name)
 ```
 
@@ -1486,7 +1486,7 @@ def skill_rate(
     """Rate a skill (1-5 stars)."""
     if not 1 <= stars <= 5:
         raise ValueError("Stars must be 1-5")
-    
+
     with sqlite3.connect(db_path) as conn:
         conn.execute("""
             INSERT INTO ratings (skill_name, stars, review, timestamp)
@@ -1502,14 +1502,14 @@ def skill_analytics(db_path: Path) -> Dict[str, Any]:
             FROM ratings
             GROUP BY skill_name
         """))
-        
+
         # Rating distribution
         distribution = dict(conn.execute("""
             SELECT skill_name, stars, COUNT(*) as count
             FROM ratings
             GROUP BY skill_name, stars
         """))
-        
+
         # Top rated skills
         top_rated = list(conn.execute("""
             SELECT skill_name, AVG(stars) as avg_rating, COUNT(*) as num_ratings
@@ -1519,7 +1519,7 @@ def skill_analytics(db_path: Path) -> Dict[str, Any]:
             ORDER BY avg_rating DESC
             LIMIT 10
         """))
-    
+
     return {
         "average_ratings": avg_ratings,
         "distribution": distribution,
@@ -1540,7 +1540,7 @@ def mode_activate(
     exclusive: bool = False
 ) -> None:
     """Activate a mode.
-    
+
     Args:
         mode_name: Mode to activate
         exclusive: If True, deactivate other modes first
@@ -1549,13 +1549,13 @@ def mode_activate(
     mode_path = _find_mode(mode_name, claude_dir)
     if not mode_path:
         raise ModeNotFoundError(f"Mode '{mode_name}' not found")
-    
+
     # Deactivate other modes if exclusive
     if exclusive:
         active_modes = mode_list_active(claude_dir)
         for mode in active_modes:
             mode_deactivate(mode, claude_dir)
-    
+
     # Update CLAUDE.md
     _update_claude_md(claude_dir, mode_name, activate=True, category="modes")
 
@@ -1566,19 +1566,19 @@ def mode_smart_select(
     """Intelligently select mode based on context."""
     # Load all modes
     modes = mode_list(modes_dir)
-    
+
     # Score each mode
     scores = []
     for mode in modes:
         score = _score_mode_relevance(mode, context)
         if score > 0:
             scores.append((mode.name, score))
-    
+
     # Return highest scoring mode
     if scores:
         scores.sort(key=lambda x: x[1], reverse=True)
         return scores[0][0]
-    
+
     return None
 ```
 
@@ -1591,10 +1591,10 @@ Orchestrates multi-step workflows.
 ```python
 class WorkflowRunner:
     """Executes multi-step workflows."""
-    
+
     def __init__(self, claude_dir: Path):
         self.claude_dir = claude_dir
-    
+
     def run_workflow(
         self,
         workflow_name: str,
@@ -1603,7 +1603,7 @@ class WorkflowRunner:
         """Execute a workflow."""
         # Load workflow definition
         workflow = self._load_workflow(workflow_name)
-        
+
         # Initialize state
         state = WorkflowState(
             workflow_name=workflow_name,
@@ -1611,7 +1611,7 @@ class WorkflowRunner:
             context=context or {},
             start_time=datetime.now(),
         )
-        
+
         # Execute steps
         for step in workflow.steps:
             try:
@@ -1622,7 +1622,7 @@ class WorkflowRunner:
                 state.failed_step = step.name
                 state.error = str(e)
                 break
-        
+
         # Build result
         return WorkflowResult(
             success=(state.failed_step is None),
@@ -1631,7 +1631,7 @@ class WorkflowRunner:
             duration=(datetime.now() - state.start_time).total_seconds(),
             state=state,
         )
-    
+
     def _execute_step(
         self,
         step: WorkflowStep,
@@ -1740,11 +1740,11 @@ The skill recommender suggests relevant skills based on context:
 ```python
 class SkillRecommender:
     """Recommends skills based on context and patterns."""
-    
+
     def __init__(self, db_path: Path):
         self.db_path = db_path
         self._init_database()
-    
+
     def recommend(
         self,
         context: SessionContext,
@@ -1753,61 +1753,61 @@ class SkillRecommender:
     ) -> List[SkillRecommendation]:
         """Generate skill recommendations."""
         recommendations = []
-        
+
         # 1. Rule-based recommendations
         rule_recs = self._rule_based_recommendations(context)
         recommendations.extend(rule_recs)
-        
+
         # 2. Pattern-based recommendations
         pattern_recs = self._pattern_based_recommendations(context)
         recommendations.extend(pattern_recs)
-        
+
         # 3. Agent-specific recommendations
         if agent_name:
             agent_recs = self._agent_based_recommendations(agent_name)
             recommendations.extend(agent_recs)
-        
+
         # 4. Deduplicate and merge scores
         merged = self._merge_recommendations(recommendations)
-        
+
         # 5. Apply rating boost
         merged = self._apply_rating_boost(merged)
-        
+
         # 6. Sort by confidence
         merged.sort(key=lambda r: r.confidence, reverse=True)
-        
+
         return merged[:limit]
-    
+
     def _rule_based_recommendations(
         self,
         context: SessionContext
     ) -> List[SkillRecommendation]:
         """Hard-coded skill recommendations."""
         recommendations = []
-        
+
         if context.has_api:
             recommendations.append(SkillRecommendation(
                 skill_name="api-design-patterns",
                 confidence=0.85,
                 reason="API code detected",
             ))
-        
+
         if context.has_tests:
             recommendations.append(SkillRecommendation(
                 skill_name="python-testing-patterns",
                 confidence=0.80,
                 reason="Test files detected",
             ))
-        
+
         if context.has_database:
             recommendations.append(SkillRecommendation(
                 skill_name="sql-optimization",
                 confidence=0.75,
                 reason="Database code detected",
             ))
-        
+
         return recommendations
-    
+
     def record_activation(
         self,
         skill_name: str,
@@ -1817,7 +1817,7 @@ class SkillRecommender:
         """Record skill activation for learning."""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute("""
-                INSERT INTO skill_activations 
+                INSERT INTO skill_activations
                 (skill_name, context_key, agent_name, timestamp)
                 VALUES (?, ?, ?, ?)
             """, (
@@ -1878,22 +1878,22 @@ def get_skill_analytics(skill_name: str, db_path: Path) -> Dict[str, Any]:
         avg = conn.execute("""
             SELECT AVG(stars) FROM ratings WHERE skill_name = ?
         """, (skill_name,)).fetchone()[0]
-        
+
         # Rating distribution
         dist = dict(conn.execute("""
-            SELECT stars, COUNT(*) FROM ratings 
-            WHERE skill_name = ? 
+            SELECT stars, COUNT(*) FROM ratings
+            WHERE skill_name = ?
             GROUP BY stars
         """, (skill_name,)))
-        
+
         # Activation count
         activations = conn.execute("""
             SELECT COUNT(*) FROM skill_activations WHERE skill_name = ?
         """, (skill_name,)).fetchone()[0]
-        
+
         # Success correlation (skills used in successful sessions)
         # (requires session outcomes table)
-        
+
     return {
         "average_rating": avg or 0.0,
         "distribution": dist,
@@ -1909,7 +1909,7 @@ The TUI shows auto-prompts for recently used skills:
 ```python
 class SkillRatingPrompt:
     """Auto-prompt for skill ratings."""
-    
+
     def should_prompt(
         self,
         skill_name: str,
@@ -1923,17 +1923,17 @@ class SkillRatingPrompt:
                 WHERE skill_name = ?
                 AND timestamp > datetime('now', '-7 days')
             """, (skill_name,)).fetchone()[0]
-            
+
             # Check if already rated recently
             rated = conn.execute("""
                 SELECT COUNT(*) FROM ratings
                 WHERE skill_name = ?
                 AND timestamp > datetime('now', '-30 days')
             """, (skill_name,)).fetchone()[0]
-            
+
             # Prompt if used 3+ times but not rated
             return recent >= 3 and rated == 0
-    
+
     def generate_prompt(
         self,
         skill_name: str,
@@ -1946,7 +1946,7 @@ class SkillRatingPrompt:
                 SELECT COUNT(*) FROM skill_activations
                 WHERE skill_name = ?
             """, (skill_name,)).fetchone()[0]
-            
+
             # Get context types
             contexts = list(conn.execute("""
                 SELECT DISTINCT context_key FROM skill_activations
@@ -1954,7 +1954,7 @@ class SkillRatingPrompt:
                 ORDER BY timestamp DESC
                 LIMIT 3
             """, (skill_name,)))
-        
+
         return f"""
 You've used "{skill_name}" {activations} times.
 
@@ -2001,16 +2001,16 @@ MCP Integration
 ```python
 class MCPManager:
     """Manages MCP server integrations."""
-    
+
     def __init__(self, claude_desktop_config: Path):
         self.config_path = claude_desktop_config
-    
+
     def discover_servers(self) -> List[MCPServer]:
         """Discover MCP servers from Claude Desktop config."""
         # Load config
         with open(self.config_path) as f:
             config = json.load(f)
-        
+
         servers = []
         for name, server_config in config.get("mcpServers", {}).items():
             server = MCPServer(
@@ -2021,30 +2021,30 @@ class MCPManager:
                 installed=self._check_installed(server_config),
             )
             servers.append(server)
-        
+
         return servers
-    
+
     def validate_server(self, server: MCPServer) -> ValidationResult:
         """Validate server configuration."""
         issues = []
-        
+
         # Check command exists
         command_path = shutil.which(server.command)
         if not command_path:
             issues.append(f"Command not found: {server.command}")
-        
+
         # Check environment variables
         for env_var in server.env:
             if not os.getenv(env_var):
                 issues.append(f"Environment variable not set: {env_var}")
-        
+
         # Try to connect (if installed)
         if server.installed:
             try:
                 self._test_connection(server)
             except ConnectionError as e:
                 issues.append(f"Connection failed: {e}")
-        
+
         return ValidationResult(
             valid=(len(issues) == 0),
             issues=issues,
@@ -2058,7 +2058,7 @@ Built-in documentation for popular MCP servers:
 ```python
 class MCPDocumentation:
     """Curated MCP server documentation."""
-    
+
     BUILT_IN_DOCS = {
         "context7": """
 # Context7 MCP Server
@@ -2190,7 +2190,7 @@ Components are toggled via HTML comments in CLAUDE.md:
 <!-- @modes/Deep_Focus.md -->
 ```
 
-**Activation**: Remove HTML comment  
+**Activation**: Remove HTML comment
 **Deactivation**: Add HTML comment
 
 #### Core Functions
@@ -2203,17 +2203,17 @@ def parse_claude_md_components(
     component_type: str
 ) -> Tuple[List[str], List[str]]:
     """Parse CLAUDE.md to find active and inactive components.
-    
+
     Args:
         claude_dir: Path to Claude directory
         component_type: Type of component (e.g., "modes", "rules")
-    
+
     Returns:
         Tuple of (active_components, inactive_components)
     """
     claude_md = claude_dir / "CLAUDE.md"
     content = claude_md.read_text(encoding="utf-8")
-    
+
     # Active: @{type}/{Name}.md
     active_pattern = re.compile(
         rf'^@{re.escape(component_type)}/([^/]+)\\.md\\s*$',
@@ -2224,10 +2224,10 @@ def parse_claude_md_components(
         rf'^<!--\\s*@{re.escape(component_type)}/([^/]+)\\.md\\s*-->',
         re.MULTILINE
     )
-    
+
     active = active_pattern.findall(content)
     inactive = inactive_pattern.findall(content)
-    
+
     return active, inactive
 ```
 
@@ -2241,19 +2241,19 @@ def toggle_component_in_claude_md(
     activate: bool
 ) -> Tuple[bool, str]:
     """Toggle a component in CLAUDE.md.
-    
+
     Args:
         claude_dir: Path to Claude directory
         component_type: Type ("modes", "rules", etc.)
         name: Component name (without .md)
         activate: True to activate, False to deactivate
-    
+
     Returns:
         (success, error_message)
     """
     claude_md = claude_dir / "CLAUDE.md"
     content = claude_md.read_text(encoding="utf-8")
-    
+
     if activate:
         # Remove HTML comment
         pattern = re.compile(
@@ -2270,7 +2270,7 @@ def toggle_component_in_claude_md(
         )
         replacement = f'<!-- @{component_type}/{name}.md -->'
         content = pattern.sub(replacement, content)
-    
+
     _update_with_backup(claude_md, lambda _: content)
     return True, ""
 ```
@@ -2284,21 +2284,21 @@ def component_activate(
     home: Path | None = None
 ) -> Tuple[int, str]:
     """Activate a component.
-    
+
     Returns:
         (exit_code, message)
     """
     claude_dir = _resolve_claude_dir(home)
-    
+
     # Verify component file exists
     component_path = claude_dir / component_type / f"{name}.md"
     if not component_path.is_file():
         return 1, f"Component file not found: {component_type}/{name}.md"
-    
+
     success, error = toggle_component_in_claude_md(
         claude_dir, component_type, name, activate=True
     )
-    
+
     if success:
         return 0, f"Activated {component_type.rstrip('s')}: {name}"
     else:
@@ -2310,16 +2310,16 @@ def component_deactivate(
     home: Path | None = None
 ) -> Tuple[int, str]:
     """Deactivate a component.
-    
+
     Returns:
         (exit_code, message)
     """
     claude_dir = _resolve_claude_dir(home)
-    
+
     success, error = toggle_component_in_claude_md(
         claude_dir, component_type, name, activate=False
     )
-    
+
     if success:
         return 0, f"Deactivated {component_type.rstrip('s')}: {name}"
     else:
@@ -2421,7 +2421,7 @@ Validates that active components actually exist on disk:
 def check_consistency(claude_dir: Path) -> List[Diagnosis]:
     """Check consistency between active state and file system."""
     diagnoses = []
-    
+
     # Active Modes
     active_modes_file = claude_dir / ".active-modes"
     if active_modes_file.exists():
@@ -2436,7 +2436,7 @@ def check_consistency(claude_dir: Path) -> List[Diagnosis]:
                     resource=str(mode_path),
                     suggestion=f"Update .active-modes to remove {mode}"
                 ))
-    
+
     # Active Rules
     active_rules_file = claude_dir / ".active-rules"
     if active_rules_file.exists():
@@ -2451,7 +2451,7 @@ def check_consistency(claude_dir: Path) -> List[Diagnosis]:
                     resource=str(rule_path),
                     suggestion=f"Run 'cortex rules deactivate {rule}'"
                 ))
-    
+
     return diagnoses
 ```
 
@@ -2464,7 +2464,7 @@ def check_duplicates(claude_dir: Path) -> List[Diagnosis]:
     """Check for duplicate definitions."""
     diagnoses = []
     hashes: Dict[str, List[str]] = {}
-    
+
     agents_dir = claude_dir / "agents"
     if agents_dir.exists():
         for agent_file in _iter_md_files(agents_dir):
@@ -2473,7 +2473,7 @@ def check_duplicates(claude_dir: Path) -> List[Diagnosis]:
             if file_hash not in hashes:
                 hashes[file_hash] = []
             hashes[file_hash].append(agent_file.name)
-    
+
     for file_hash, files in hashes.items():
         if len(files) > 1:
             diagnoses.append(Diagnosis(
@@ -2482,7 +2482,7 @@ def check_duplicates(claude_dir: Path) -> List[Diagnosis]:
                 message=f"Identical content found: {', '.join(files)}",
                 suggestion="Delete duplicate files."
             ))
-    
+
     return diagnoses
 ```
 
@@ -2494,7 +2494,7 @@ Identifies performance issues and best practice violations:
 def check_optimizations(claude_dir: Path) -> List[Diagnosis]:
     """Check for optimization opportunities."""
     diagnoses = []
-    
+
     agents_dir = claude_dir / "agents"
     if agents_dir.exists():
         for agent_file in _iter_md_files(agents_dir):
@@ -2507,7 +2507,7 @@ def check_optimizations(claude_dir: Path) -> List[Diagnosis]:
                     resource=agent_file.name,
                     suggestion="Consider splitting or removing verbose examples."
                 ))
-    
+
     return diagnoses
 ```
 
@@ -2678,10 +2678,10 @@ def update_claude_md(
     """Update CLAUDE.md to activate/deactivate component."""
     claude_md = claude_dir / "CLAUDE.md"
     content = claude_md.read_text(encoding="utf-8")
-    
+
     # Build reference line
     ref_line = f"@{category}/{component_name}.md"
-    
+
     if activate:
         # Uncomment if commented, add if missing
         if f"<!-- {ref_line} -->" in content:
@@ -2699,7 +2699,7 @@ def update_claude_md(
                 ref_line,
                 f"<!-- {ref_line} -->"
             )
-    
+
     # Write back with backup
     _write_with_backup(claude_md, content)
 ```
@@ -2919,20 +2919,20 @@ SQLite: INSERT INTO skill_activations
 ```
 1. Install CLI
    $ pip install -e ".[dev]"
-   
+
 2. Verify installation
    $ cortex --help
    $ cortex status
-   
+
 3. (Optional) Set up shell completion
    $ cortex install completions --shell bash
-   
+
 4. Launch TUI to explore
    $ cortex tui
-   
+
 5. Activate first agent
    TUI: Press '0' → Select 'code-reviewer' → Press Enter
-   
+
 6. (Optional) Enable AI intelligence
    $ cortex ai recommend
 ```
@@ -3223,14 +3223,14 @@ skills:
 
 class MyView(Screen):
     """My custom view."""
-    
+
     def __init__(self):
         super().__init__()
-    
+
     async def on_mount(self) -> None:
         """Load data and setup UI."""
         self.setup_table()
-    
+
     def setup_table(self) -> None:
         """Setup the data table."""
         table = DataTable()
@@ -3258,10 +3258,10 @@ class ClaudeCtxApp(App):
 
 class CustomIntelligence(IntelligentAgent):
     """Extended intelligence with custom rules."""
-    
+
     def _rule_based_recommendations(self, context):
         recommendations = super()._rule_based_recommendations(context)
-        
+
         # Add custom rule
         if self._detect_custom_pattern(context):
             recommendations.append(AgentRecommendation(
@@ -3272,9 +3272,9 @@ class CustomIntelligence(IntelligentAgent):
                 auto_activate=True,
                 context_triggers=["custom_pattern"],
             ))
-        
+
         return recommendations
-    
+
     def _detect_custom_pattern(self, context):
         """Custom detection logic."""
         # Your logic here
@@ -3586,7 +3586,7 @@ $ cortex doctor --fix-claude-md
 def topological_sort(graph: Dict[str, Set[str]]) -> List[str]:
     """
     Kahn's algorithm for topological sort.
-    
+
     Time complexity: O(V + E)
     Space complexity: O(V)
     """
@@ -3594,10 +3594,10 @@ def topological_sort(graph: Dict[str, Set[str]]) -> List[str]:
     for node in graph:
         for neighbor in graph[node]:
             in_degree[neighbor] = in_degree.get(neighbor, 0) + 1
-    
+
     queue = [node for node, degree in in_degree.items() if degree == 0]
     result = []
-    
+
     while queue:
         node = queue.pop(0)
         result.append(node)
@@ -3605,10 +3605,10 @@ def topological_sort(graph: Dict[str, Set[str]]) -> List[str]:
             in_degree[neighbor] -= 1
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
-    
+
     if len(result) != len(graph):
         raise ValueError("Cycle detected in dependency graph")
-    
+
     return result
 ```
 
@@ -3622,7 +3622,7 @@ def calculate_confidence(
 ) -> float:
     """
     Combine scores into final confidence.
-    
+
     Strategy: Take max of rule and pattern, then apply rating boost.
     """
     base_confidence = max(rule_score, pattern_score)
@@ -3636,32 +3636,32 @@ def calculate_confidence(
 def fuzzy_match(query: str, candidates: List[str]) -> List[Tuple[str, float]]:
     """
     Simple fuzzy matching based on character overlap.
-    
+
     Better alternative: Use rapidfuzz library for production.
     """
     query = query.lower()
     matches = []
-    
+
     for candidate in candidates:
         candidate_lower = candidate.lower()
-        
+
         # Exact match: score = 1.0
         if query == candidate_lower:
             matches.append((candidate, 1.0))
             continue
-        
+
         # Substring match: score = 0.8
         if query in candidate_lower:
             matches.append((candidate, 0.8))
             continue
-        
+
         # Character overlap: score = overlap / len(query)
         overlap = sum(1 for c in query if c in candidate_lower)
         score = overlap / len(query)
-        
+
         if score >= 0.5:  # Minimum threshold
             matches.append((candidate, score))
-    
+
     # Sort by score descending
     matches.sort(key=lambda x: x[1], reverse=True)
     return matches
@@ -3770,8 +3770,8 @@ def fuzzy_match(query: str, candidates: List[str]) -> List[Tuple[str, float]]:
 
 ---
 
-**Document Status**: ✅ Complete  
-**Next Review**: 2026-01-05  
+**Document Status**: ✅ Complete
+**Next Review**: 2026-01-05
 **Maintainer**: Core Team
 
 ---

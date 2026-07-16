@@ -304,5 +304,3 @@ def install_aliases(
     ]
 
     return 0, "\n".join(message)
-
-
