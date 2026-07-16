@@ -26,9 +26,7 @@ PACKAGING_TOOLING_PATHS = {
     "tools/skill_gpt_exports.py",
     "tools/materialize_projection.py",
     "tools/update_skill_artifacts.py",
-    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/safe_skill_tree.py",
-    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_skill.py",
-    "codex-marketplace/plugins/house-skills/skills/skill-packager/scripts/package_and_verify_skill.py",
+    "tools/package_skill_zips.py",
 }
 
 

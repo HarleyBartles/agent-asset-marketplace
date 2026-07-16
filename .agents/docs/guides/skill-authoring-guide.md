@@ -4,6 +4,8 @@ Use this reference when writing, editing, or testing skills in the agent-asset-m
 
 ## Before You Begin: Read the Standards
 
+- **[`docs/skill-standards-policy.md`](../../../docs/skill-standards-policy.md)** — first-party skill authoring standards
+- **[`docs/overlay-adapter-policy.md`](../../../docs/overlay-adapter-policy.md)** — third-party overlay and adapter triggers
 - **[`sources/AGENTS.md`](../../../sources/AGENTS.md)** — first-party skill source format
 - **[`../writing-skills`](../../skills/writing-skills)** — skill creation and testing guidance
 

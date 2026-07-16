@@ -63,22 +63,6 @@
                         "scope":  "cleanup-custody"
                     },
                     {
-                        "issue":  "MARK-21",
-                        "source_id":  "skill-validator-v1",
-                        "source_path":  "sources/first_party/skills/skill-validator",
-                        "public_name":  "skill-validator",
-                        "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
-                        "scope":  "skill validation"
-                    },
-                    {
-                        "issue":  "MARK-21",
-                        "source_id":  "skill-packager-v1",
-                        "source_path":  "sources/first_party/skills/skill-packager",
-                        "public_name":  "skill-packager",
-                        "provenance_name":  "MARK-21 skill maintenance House Skills source slice",
-                        "scope":  "skill packaging"
-                    },
-                    {
                         "issue":  "MARK-22",
                         "source_id":  "adventures-project-doctrine-v1.1",
                         "source_path":  "sources/first_party/skills/adventures-project-doctrine",
@@ -386,24 +370,6 @@
                         "public_name":  "asset-market",
                         "provenance_name":  "MARK-109 saved GPT skill zip source package",
                         "scope":  "marketplace source and pack acquisition",
-                        "import_state":  "imported"
-                    },
-                    {
-                        "issue":  "MARK-109",
-                        "source_id":  "skill-handoff-v1",
-                        "source_path":  "sources/first_party/skills/skill-handoff",
-                        "public_name":  "skill-handoff",
-                        "provenance_name":  "MARK-109 saved GPT skill zip source package",
-                        "scope":  "skill package handoff cadence",
-                        "import_state":  "imported"
-                    },
-                    {
-                        "issue":  "MARK-109",
-                        "source_id":  "skill-installer-v1",
-                        "source_path":  "sources/first_party/skills/skill-installer",
-                        "public_name":  "skill-installer",
-                        "provenance_name":  "MARK-109 saved GPT skill zip source package",
-                        "scope":  "skill installation handoff orchestration",
                         "import_state":  "imported"
                     },
                     {

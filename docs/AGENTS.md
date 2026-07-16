@@ -14,6 +14,8 @@ Mesh policy for the repo lives at `../.agents/docs/mesh-policy.md`; docs under
 ## Routing pointers
 
 - `INDEX.md` for docs-owned navigation
+- `skill-standards-policy.md` for first-party skill authoring standards
+- `overlay-adapter-policy.md` for third-party overlay and adapter triggers
 - `unslop/profile.md` for the canonical repo unslop profile
 - `contracts/AGENTS.md` for the contract-doc subtree
 - `../.agents/docs/mesh-policy.md` for the repo mesh policy
