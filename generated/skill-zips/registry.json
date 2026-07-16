@@ -191,13 +191,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/adventures-pack/using-linear/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 19961,
-      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
+      "source_bytes": 18863,
+      "source_sha256": "5ebd114cf9dc517ea241277df862e51de26292aa008864d7beb1d4ed1974b540",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9828,
-      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
+      "zip_size_bytes": 9455,
+      "zip_sha256": "9572e31529d7ee7f5bd20303cd0990e5933bfc8af14d7c9df8e43b482981175f"
     },
     {
       "pack": "agentic-evaluation",
@@ -2415,13 +2415,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/using-linear/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 19961,
-      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
+      "source_bytes": 18863,
+      "source_sha256": "5ebd114cf9dc517ea241277df862e51de26292aa008864d7beb1d4ed1974b540",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9828,
-      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
+      "zip_size_bytes": 9455,
+      "zip_sha256": "9572e31529d7ee7f5bd20303cd0990e5933bfc8af14d7c9df8e43b482981175f"
     },
     {
       "pack": "house-skills",
@@ -2847,13 +2847,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/using-linear/skill.zip",
       "source_file_count": 13,
-      "source_bytes": 19961,
-      "source_sha256": "75017cc5187a741b77e1581d0d7a541b92d72975ccf6b7d6a05091f7f6d6dc0b",
+      "source_bytes": 18863,
+      "source_sha256": "5ebd114cf9dc517ea241277df862e51de26292aa008864d7beb1d4ed1974b540",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9828,
-      "zip_sha256": "ad51bf2525e2256596a783fa775558c7b5537df094ca7eefa4db3d72c9273d2a"
+      "zip_size_bytes": 9455,
+      "zip_sha256": "9572e31529d7ee7f5bd20303cd0990e5933bfc8af14d7c9df8e43b482981175f"
     },
     {
       "pack": "repo-worker-pack",
