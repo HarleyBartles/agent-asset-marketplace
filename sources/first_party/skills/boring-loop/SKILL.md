@@ -90,15 +90,15 @@ Do not leave a vague queue order that depends on memory.
 Route out instead of restating specialist procedure.
 
 - When readiness is uncertain or the work might be too broad or false-green: `boring-buster`
-- Linear issue shaping, issue-track shaping, or worker-packet shaping: `linear-superpowers`
+- Linear issue shaping, issue-track shaping, or worker-packet shaping: `linear-issue-shaping`
 - Linear connector side effects, including issue create/update, comments, status, labels, assignments, or readback after mutation: `connector-safety`
 - Implementation planning: `writing-plans`
 - Code execution workflow: `executing-plans`
-- GitHub proof, review routing, or branch closeout: `github-operations` or `github-superpowers`
+- GitHub proof, review routing, or branch closeout: `github-operations`
 - Verification before completion: `verification-before-completion`
-- Repo-specific anti-slop controls: `unslop-superpowers`
+- Repo-specific anti-slop controls: `unslop-plus`
 - Skill lifecycle work: use the current repo-backed install/projection lane for skill work; do not route new work through the retired package/install/handoff stack.
-- Dense issue bodies, connector-hostile content, or moving detail to attached Linear docs: `linear-superpowers`
+- Dense issue bodies, connector-hostile content, or moving detail to attached Linear docs: `linear-issue-shaping`
 
 Use the specialist skill for the procedure. Use Boring Loop only to decide when to route there and what the next boring move is.
 

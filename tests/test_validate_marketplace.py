@@ -132,7 +132,7 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
         ],
         "notes": [
             "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
-            "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the House Skills-backed linear-superpowers, github-superpowers, unslop-superpowers, and architecture-superpowers projections.",
+            "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the source-backed House Skills inspecting-the-environment skill to the core Superpowers set.",
             "The harness-specific surfaces remain preserved in third-party source custody.",
             "The retained snapshot keeps the broader package boundary for provenance and review.",
         ],
@@ -154,9 +154,8 @@ def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) ->
 SUPERPOWERS_PROJECTION_DOC = """# Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
-`{SUPERPOWERS_VERSION}`, plus the source-backed House Skills `linear-superpowers`,
-`github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`
-skills.
+`{SUPERPOWERS_VERSION}`, plus the source-backed House Skills
+`inspecting-the-environment` skill.
 
 ## Layer Model
 
@@ -218,19 +217,19 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 [sys.executable, "tools/generate_pack_manifests.py", "--check"],
             )
 
-    def test_superpowers_bundle_accepts_first_party_linear_superpowers_projection(self) -> None:
+    def test_superpowers_bundle_accepts_first_party_inspecting_the_environment_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "linear-superpowers"
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "inspecting-the-environment"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
-            projected_skill_root = plugin_root / "skills" / "linear-superpowers"
+            projected_skill_root = plugin_root / "skills" / "inspecting-the-environment"
             skill_md = _first_party_projection_frontmatter(
-                "linear-superpowers",
-                "sources/first_party/skills/linear-superpowers/SKILL.md",
-                "MARK-139 Linear Superpowers compositional skill",
-                "Use when the Linear packet needs the smallest applicable Superpowers router.",
+                "inspecting-the-environment",
+                "sources/first_party/skills/inspecting-the-environment/SKILL.md",
+                "MARK-324 retained House Skills environment inspection skill",
+                "Use when environment constraints, auth, connectors, or workspace state must be discovered before action.",
             )
             _touch(
                 source_skill_root / "SKILL.md",
@@ -325,11 +324,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "blocked_count": 0,
                 "entries": [
                     {
-                        "canonical_name": "linear-superpowers",
+                        "canonical_name": "inspecting-the-environment",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/skills/linear-superpowers",
-                        "local_path": "skills/linear-superpowers",
+                        "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+                        "local_path": "skills/inspecting-the-environment",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
                         "provenance_note": "Projected from the canonical first-party source.",
@@ -580,130 +579,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 bundle_name="superpowers-plus",
             )
 
-    def test_superpowers_bundle_accepts_first_party_github_superpowers_projection(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "github-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
-
-            projected_skill_root = plugin_root / "skills" / "github-superpowers"
-            skill_md = _first_party_projection_frontmatter(
-                "github-superpowers",
-                "sources/first_party/skills/github-superpowers/SKILL.md",
-                "MARK-143 GitHub Superpowers compositional skill",
-                "Use when GitHub-facing work needs the smallest applicable Superpowers router.",
-            )
-            _touch(
-                source_skill_root / "SKILL.md",
-                skill_md,
-            )
-            _touch(source_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-            _touch(projected_skill_root / "SKILL.md", skill_md)
-            _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-
-            for rel_path in (
-                "LICENSE",
-                "SOURCE.md",
-                "PROJECTION.md",
-                "references/codex-marketplace-compatibility.md",
-                "references/bundle-manifest.json",
-                "references/provenance-map.json",
-                "assets/app-icon.png",
-                "assets/superpowers-small.svg",
-            ):
-                _touch(plugin_root / rel_path)
-            _touch(plugin_root / "PROJECTION.md", SUPERPOWERS_PROJECTION_DOC)
-            _touch(
-                plugin_root / "references" / "codex-marketplace-compatibility.md",
-                SUPERPOWERS_COMPATIBILITY_DOC,
-            )
-
-            for rel_path in (
-                ".codex-plugin/plugin.json",
-                "LICENSE",
-                "README.md",
-                "AGENTS.md",
-                "package.json",
-                "assets/app-icon.png",
-                "assets/superpowers-small.svg",
-            ):
-                _touch(source_root / rel_path)
-
-            for rel_path in (
-                ".claude-plugin",
-                ".cursor-plugin",
-                ".opencode",
-                "gemini-extension.json",
-                "CLAUDE.md",
-                "GEMINI.md",
-                "hooks",
-            ):
-                target = source_root / rel_path
-                if rel_path == "hooks":
-                    target.mkdir(parents=True, exist_ok=True)
-                else:
-                    _touch(target)
-
-            _write_superpowers_plugin_manifests(source_root, plugin_root)
-
-            bundle_manifest = {
-                "bundle_name": "superpowers-plus",
-                "bundle_version": "6.1.0",
-                "bundle_type": "third-party-codex-plugin-projection",
-                "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-                "source_tag": "v6.1.0",
-                "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-                "license": "MIT",
-                "plugin_author": "Harley Bartles",
-                "plugin_license": "MIT",
-                "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
-                "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
-                ],
-                "candidate_count": 1,
-                "imported_count": 1,
-                "skipped_count": 0,
-                "blocked_count": 0,
-                "entries": [
-                    {
-                        "canonical_name": "github-superpowers",
-                        "source_category": "first_party",
-                        "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/skills/github-superpowers",
-                        "local_path": "skills/github-superpowers",
-                        "import_status": "imported",
-                        "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected from the canonical first-party source.",
-                    }
-                ],
-                "excluded": [
-                    {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},
-                    {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},
-                    {"path": ".opencode", "reason": "OpenCode harness metadata stays in third-party source custody."},
-                    {"path": "gemini-extension.json", "reason": "Gemini harness metadata stays in third-party source custody."},
-                    {"path": "CLAUDE.md", "reason": "Claude instructions stay in third-party source custody."},
-                    {"path": "GEMINI.md", "reason": "Gemini instructions stay in third-party source custody."},
-                    {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},
-                ],
-            }
-            _write_superpowers_provenance_map(plugin_root, bundle_manifest)
-
-            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
-                try:
-                    validate_superpowers_bundle_manifest(
-                        bundle_manifest,
-                        plugin_root="codex-marketplace/plugins/superpowers-plus",
-                    )
-                except ValueError as exc:  # pragma: no cover - exercised by the red test run
-                    self.fail(f"validator rejected the first-party projection: {exc}")
-
     def test_validate_skill_markdown_frontmatter_accepts_simple_headers(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             skill_root = Path(temp_dir) / "example-skill"
@@ -790,130 +665,6 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     (skill_root / "SKILL.md").write_bytes(raw)
                     with self.assertRaises(ValueError):
                         validate_skill_markdown_frontmatter(skill_root)
-
-    def test_superpowers_bundle_accepts_first_party_unslop_superpowers_projection(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "unslop-superpowers"
-            plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
-
-            projected_skill_root = plugin_root / "skills" / "unslop-superpowers"
-            skill_md = _first_party_projection_frontmatter(
-                "unslop-superpowers",
-                "sources/first_party/skills/unslop-superpowers/SKILL.md",
-                "MARK-144 Unslop Superpowers compositional guard skill",
-                "Use when repo-specific anti-slop controls need the smallest applicable Superpowers router.",
-            )
-            _touch(
-                source_skill_root / "SKILL.md",
-                skill_md,
-            )
-            _touch(source_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-            _touch(projected_skill_root / "SKILL.md", skill_md)
-            _touch(projected_skill_root / "agents" / "openai.yaml", "model: gpt-5\n")
-
-            for rel_path in (
-                "LICENSE",
-                "SOURCE.md",
-                "PROJECTION.md",
-                "references/codex-marketplace-compatibility.md",
-                "references/bundle-manifest.json",
-                "references/provenance-map.json",
-                "assets/app-icon.png",
-                "assets/superpowers-small.svg",
-            ):
-                _touch(plugin_root / rel_path)
-            _touch(plugin_root / "PROJECTION.md", SUPERPOWERS_PROJECTION_DOC)
-            _touch(
-                plugin_root / "references" / "codex-marketplace-compatibility.md",
-                SUPERPOWERS_COMPATIBILITY_DOC,
-            )
-
-            for rel_path in (
-                ".codex-plugin/plugin.json",
-                "LICENSE",
-                "README.md",
-                "AGENTS.md",
-                "package.json",
-                "assets/app-icon.png",
-                "assets/superpowers-small.svg",
-            ):
-                _touch(source_root / rel_path)
-
-            for rel_path in (
-                ".claude-plugin",
-                ".cursor-plugin",
-                ".opencode",
-                "gemini-extension.json",
-                "CLAUDE.md",
-                "GEMINI.md",
-                "hooks",
-            ):
-                target = source_root / rel_path
-                if rel_path == "hooks":
-                    target.mkdir(parents=True, exist_ok=True)
-                else:
-                    _touch(target)
-
-            _write_superpowers_plugin_manifests(source_root, plugin_root)
-
-            bundle_manifest = {
-                "bundle_name": "superpowers-plus",
-                "bundle_version": "6.1.0",
-                "bundle_type": "third-party-codex-plugin-projection",
-                "marketplace_root": ".agents/plugins/marketplace.json",
-                "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-                "source_tag": "v6.1.0",
-                "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-                "license": "MIT",
-                "plugin_author": "Harley Bartles",
-                "plugin_license": "MIT",
-                "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
-                "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
-                ],
-                "candidate_count": 1,
-                "imported_count": 1,
-                "skipped_count": 0,
-                "blocked_count": 0,
-                "entries": [
-                    {
-                        "canonical_name": "unslop-superpowers",
-                        "source_category": "first_party",
-                        "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/skills/unslop-superpowers",
-                        "local_path": "skills/unslop-superpowers",
-                        "import_status": "imported",
-                        "copy_expectation": "byte_identical",
-                        "provenance_note": "Projected as a directory mirror from the canonical first-party source.",
-                    }
-                ],
-                "excluded": [
-                    {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},
-                    {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},
-                    {"path": ".opencode", "reason": "OpenCode harness metadata stays in third-party source custody."},
-                    {"path": "gemini-extension.json", "reason": "Gemini harness metadata stays in third-party source custody."},
-                    {"path": "CLAUDE.md", "reason": "Claude instructions stay in third-party source custody."},
-                    {"path": "GEMINI.md", "reason": "Gemini instructions stay in third-party source custody."},
-                    {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},
-                ],
-            }
-            _write_superpowers_provenance_map(plugin_root, bundle_manifest)
-
-            with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
-                try:
-                    validate_superpowers_bundle_manifest(
-                        bundle_manifest,
-                        plugin_root="codex-marketplace/plugins/superpowers-plus",
-                    )
-                except ValueError as exc:  # pragma: no cover - exercised by the red test run
-                    self.fail(f"validator rejected the first-party projection: {exc}")
 
     def test_superpowers_bundle_rejects_adapted_third_party_entry_without_overlay_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

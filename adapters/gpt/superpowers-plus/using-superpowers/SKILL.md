@@ -10,8 +10,8 @@ need brainstorming, planning, implementation, debugging, verification, review,
 or closeout help, then open the relevant skill before you act.
 
 This overlay is the Asset Marketplace `Superpowers+` adaptation layer, not
-upstream/base Superpowers doctrine. It only routes to compositional wrappers
-that are actually present in `superpowers-plus`.
+upstream/base Superpowers doctrine. It routes to the core Superpowers workflow
+skills plus `inspecting-the-environment`.
 If the task has or needs a written plan, route it through the verified-plan
 adapter path: `writing-plans` -> `executing-plans` ->
 `verification-before-completion`.
@@ -32,13 +32,8 @@ adapter path: `writing-plans` -> `executing-plans` ->
   `receiving-code-review`.
 - Branch completion and publication closeout: use
   `finishing-a-development-branch`.
-- Linear issue shaping and smallest-applicable workflow selection: use
-  `linear-superpowers`.
-- GitHub-facing proof, PRs, branches, commits, and publication state: use
-  `github-superpowers`.
-- Repo-specific anti-slop or profile work: use `unslop-superpowers`.
-- Architecture review and composition boundaries: use
-  `architecture-superpowers`.
+- Environment inspection before action when constraints matter: use
+  `inspecting-the-environment`.
 - Parallel agent dispatch or worktree setup when those are the smallest useful
   helpers: use `subagent-driven-development`, `dispatching-parallel-agents`, or
   `using-git-worktrees`.
