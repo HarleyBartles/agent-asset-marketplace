@@ -14,7 +14,7 @@
 - Public identity: `skill-validator`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice (retired)
 - Scope: skill validation
-- Notes: Retired legacy skill helper. Skill validation is now covered by the repo skill spec at `docs/skill-spec.md` and the validator tooling in `tools/validate_marketplace.py`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired legacy skill helper. Skill validation is now covered by the repo skill standards at `docs/skill-standards-policy.md` and the validator tooling in `tools/validate_marketplace.py`. This record exists only for provenance audit of the retired source path.
 
 ## skill-packager
 
