@@ -142,6 +142,12 @@ What goes wrong + fixes.
 - Scoped: stay focused on the skill's specific domain.
 - No jargon when plain language works.
 
+### Referring to the human operator
+
+- Use "your human partner" when referring to the person the agent is working with.
+- Do not use "user", "Harley", or other named individuals in skill content.
+- This keeps skills portable across operators and avoids encoding person-specific identity bindings.
+
 ## agents/openai.yaml
 
 Required for skills projected into a Codex marketplace plugin.
