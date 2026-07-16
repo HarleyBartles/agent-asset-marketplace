@@ -12,17 +12,17 @@
 
 - Source path: `sources/first_party/skills/skill-validator/SKILL.md`
 - Public identity: `skill-validator`
-- Provenance/history only: MARK-21 skill maintenance House Skills source slice
+- Provenance/history only: MARK-21 skill maintenance House Skills source slice (retired)
 - Scope: skill validation
-- Notes: Validator requirements are authoritative over creator output. `skill-creator` is reference-only/system-built-in and was not imported. `skill-market` is retired because MARK replaces it and was not revived.
+- Notes: Retired legacy skill helper. Skill validation is now covered by the repo skill spec at `docs/skill-spec.md` and the validator tooling in `tools/validate_marketplace.py`. This record exists only for provenance audit of the retired source path.
 
 ## skill-packager
 
 - Source path: `sources/first_party/skills/skill-packager/SKILL.md`
 - Public identity: `skill-packager`
-- Provenance/history only: MARK-21 skill maintenance House Skills source slice
+- Provenance/history only: MARK-21 skill maintenance House Skills source slice (retired)
 - Scope: skill packaging
-- Notes: Validation must happen before packaging. This source import does not add repo-import ZIP packaging, ChatGPT skill ZIP packaging, plugin projections, or skill-market replacement logic.
+- Notes: Retired legacy skill helper. Skill packaging is now handled by `tools/package_skill_zips.py` and the deterministic marketplace generation pipeline. This record exists only for provenance audit of the retired source path.
 
 ## connector-safety
 
@@ -145,17 +145,17 @@
 
 - Source path: `sources/first_party/skills/skill-handoff`
 - Public identity: `skill-handoff`
-- Provenance/history: MARK-109 saved GPT skill zip source package
+- Provenance/history only: MARK-109 saved GPT skill zip source package (retired)
 - Scope: skill package handoff cadence
-- Notes: Imported from the saved zip as the exact handoff surface for visible `skill.zip` presentation and landed confirmation.
+- Notes: Retired legacy skill helper. Skill handoff is now covered by `writing-plans` plus the repo skill spec where appropriate. This record exists only for provenance audit of the retired source path.
 
 ## skill-installer
 
 - Source path: `sources/first_party/skills/skill-installer`
 - Public identity: `skill-installer`
-- Provenance/history: MARK-109 saved GPT skill zip source package
+- Provenance/history only: MARK-109 saved GPT skill zip source package (retired)
 - Scope: skill installation handoff orchestration
-- Notes: Imported from the saved zip as the source-to-handoff coordinator for GPT skill installation flows.
+- Notes: Retired legacy skill helper. Skill installation is now handled by `tools/install_agent_skills.py` and the deterministic marketplace pipeline. This record exists only for provenance audit of the retired source path.
 
 ## rooms-bootstrap
 
