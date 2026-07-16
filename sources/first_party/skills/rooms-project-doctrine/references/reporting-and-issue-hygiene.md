@@ -1,12 +1,12 @@
 # Reporting and issue hygiene
 
 Use `base-doctrine` (report hygiene reference) first for generic report partitioning. Use the reporting-and-issue-hygiene guidance under
-`rooms-project-doctrine-v1` when the report-like artifact is Rooms-specific or touches Chris, Albert/Pit, Brian/World,
-Derek/Manuscript, Will/workspace, issue closure, publication, receipts, or continuity.
+`rooms-project-doctrine` when the report-like artifact is Rooms-specific or touches project-local governance, Pit/archive, World/canon,
+Manuscript/prose, workspace governance, issue closure, publication, receipts, or continuity.
 
 A Rooms report is not canon, archive evidence, manuscript authority, or publication proof. Report laundering happens when smooth prose promotes worker claims, archive richness, conversation memory, validation notes, or inference into durable Rooms truth.
 
-Issue comments are durable records, not scratch space and not automatic work orders. Dispatches normally belong in chat unless Harley explicitly asks to record them in an issue.
+Issue comments are durable records, not scratch space and not automatic work orders. Dispatches normally belong in chat unless your human partner explicitly asks to record them in an issue.
 
 Keep lanes separate:
 

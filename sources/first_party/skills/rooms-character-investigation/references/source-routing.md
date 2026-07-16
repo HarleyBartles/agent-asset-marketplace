@@ -7,11 +7,11 @@ Use the narrowest relevant source first. Search is discovery; fetched or inspect
 For character investigations and sheet precursor packets, use bound `file_search` GitHub as the default first pass for
 broad discovery. It should search across the relevant Rooms repos before relying on exact API reads.
 
-If `file_search` is unavailable, unbound, or missing the relevant repo selection, stop and ask Harley to bind/select the
+If `file_search` is unavailable, unbound, or missing the relevant repo selection, stop and ask your human partner to bind/select the
 needed GitHub repos. Name `rooms-world`, `rooms-pit`, `rooms-manuscript`, and `rooms-mostly` when broad character or
 subject investigation is needed; include `will-workspace` only when wrapper/workspace governance is part of the task.
 
-Only continue without `file_search` after Harley explicitly confirms to proceed anyway. In that fallback mode, use live
+Only continue without `file_search` after your human partner explicitly confirms to proceed anyway. In that fallback mode, use live
 GitHub API exact searches/reads and label the source set as narrower API-based discovery that may miss indirect insight,
 transcript, manuscript-support, or adjacent room surfaces.
 
@@ -29,7 +29,7 @@ Do not rely only on keyword search. Once a character folder is found, expand the
 
 ## Rooms, events, reputation patterns, and systems
 
-Inspect room/system surfaces when the character file, Harley, transcript search, or exchange material names rooms,
+Inspect room/system surfaces when the character file, your human partner, transcript search, or exchange material names rooms,
 events, drama, reputation patterns, or room mechanics.
 
 Common surfaces:
@@ -37,7 +37,7 @@ Common surfaces:
 - `rooms-world/Rooms/**` for room sketches and room-local material.
 - `rooms-world/Systems/**` for room mechanics, cross-room behaviour, exchange dynamics, externalised room games,
   timeline/room mechanics, and related systems.
-- room aliases and predecessor/successor names supplied by Harley.
+- room aliases and predecessor/successor names supplied by your human partner.
 
 For recall-sheet precursor work, search the subject by name, handle, persona, room names, event labels, reveal terms,
 fallout terms, and the names of likely witnesses or affected
@@ -52,7 +52,7 @@ for what.
 Search bounded transcript areas by:
 
 - handle, display name, persona name, and real name where appropriate;
-- Harley-named rooms and known room aliases;
+- partner-named rooms and known room aliases;
 - world-named rooms and predecessor/successor room names;
 - exchange terms, reveal terms, fallout terms, and repeated public-thread terms.
 
@@ -68,12 +68,12 @@ surfaces only.
 
 ## Insights
 
-Inspect Brian/world insight surfaces when searches find them or the target is linked to insight-heavy material.
+Inspect World/canon insight surfaces when searches find them or the target is linked to insight-heavy material.
 
 Possible surfaces include:
 
 - `rooms-world/Research/Insights/**`.
-- Brian insight ledgers and provenance maps.
+- World/canon insight ledgers and provenance maps.
 - entity-room insight linkage registries.
 - room insight registries or indexes.
 
@@ -95,7 +95,7 @@ back-and-forth artifacts, inspect:
 
 - `rooms-world/Research/Epistolary And Exchange Style Guide.md` or current style-guide equivalent.
 - `rooms-world/Systems/Exchange Dynamics.md`.
-- bounded `rooms-world/Brian/ManuscriptSupport/**` bridge/index surfaces.
+- bounded `rooms-world/World/ManuscriptSupport/**` bridge/index surfaces.
 - `rooms-manuscript` synopses when available and appropriate.
 - loose structure, story-beat placement, and prose tension/manuscript-support surfaces when exchange or prose-bearing
   material is involved.
@@ -127,9 +127,9 @@ conversations, transcript ids, provenance, and freshness markers.
 
 If the ledger is missing or incomplete, mark this as `unavailable` or `not checked`, not as absence of evidence.
 
-## Harley narrative
+## Partner narrative
 
-Use current Harley framing as `harley-narrative`. It can identify rooms, names, relationships, sensitivities, and
+Use your human partner's current framing as `partner-narrative`. It can identify rooms, names, relationships, sensitivities, and
 hypotheses to investigate or preserve, but it is not repo truth by itself.
 
 ## Minimum source sets by output lane

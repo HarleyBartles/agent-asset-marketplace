@@ -9,7 +9,7 @@ right, wrong, too neat, missing, overdramatic, or not really them.
 
 ## Canonical style
 
-Use this style by default unless Harley explicitly asks for a different form:
+Use this style by default unless your human partner explicitly asks for a different form:
 
 - start with a short intro only;
 - avoid writerly framing such as "as a writer," "what I am trying to do," or long explanation of the book's mechanics;
@@ -57,7 +57,7 @@ Default to:
 - plain language;
 - no repo jargon;
 - no archive/transcript case-file posture;
-- no hidden structural/thematic interpretation unless Harley explicitly approves disclosure;
+- no hidden structural/thematic interpretation unless your human partner explicitly approves disclosure;
 - no direct transcript quotes unless explicitly approved;
 - no claim that the participant must confirm the project's read.
 
@@ -84,4 +84,4 @@ Bad moves:
 
 The sneak peek can inform later prompt-sheet sensitivity, but it should not replace the prompt sheet. Prompt-
 sheet buster decides memory prompts separately and should not assume the participant has seen or accepted the
-sneak peek unless Harley says so.
+sneak peek unless your human partner says so.

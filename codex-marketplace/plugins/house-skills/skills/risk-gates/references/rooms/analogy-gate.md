@@ -44,7 +44,7 @@ mutations.
 
 If `file_search` is unavailable or not bound, do not treat that as loss of GitHub access when a live API route is
 available. Use the live API route for exact reads and operations. If broad repo discovery would materially improve
-safety or completeness, ask Harley to bind `file_search` GitHub to the relevant repo set before doing the scan.
+safety or completeness, ask your human partner to bind `file_search` GitHub to the relevant repo set before doing the scan.
 
 Search results are discovery, not final truth. Inspect the relevant file, issue, commit, or source surface before
 making affirmative repo-grounded claims.
@@ -53,7 +53,7 @@ making affirmative repo-grounded claims.
 
 Treat the analogy as:
 
-- a working interpretive analogy supplied by Harley and persisted in World;
+- a working interpretive analogy supplied by your human partner and persisted in World;
 - useful for lived-experience framing, discussion, buster checks, and craft reasoning;
 - not archive evidence;
 - not canon fact by itself;
@@ -63,7 +63,7 @@ Treat the analogy as:
 
 ## Workflow
 
-1. Invoke or follow cross-runtime `analogy-buster` mechanics first: internal mode when clear, interactive queue when Harley
+1. Invoke or follow cross-runtime `analogy-buster` mechanics first: internal mode when clear, interactive queue when your human partner
 must resolve amber items, and useful-break handling when the analogy clarifies by failing.
 2. If the task is Rooms-specific and the analogy matters, use the World Systems analogy surface as the active project
 analogy.
@@ -95,7 +95,7 @@ Check for these risks before using the analogy in Rooms reasoning:
 - Cunty's refusal of curation is being generalized to everyone.
 - VHS degradation is being treated as exact archive mechanics rather than record/memory experience.
 - Analogy is being used as canon, archive evidence, or manuscript authority.
-- Analogy is overriding machine truth, repo-grounded World state, archive provenance, or Harley's live direction.
+- Analogy is overriding machine truth, repo-grounded World state, archive provenance, or your human partner's live direction.
 
 ## Compose with Rooms Skills
 
@@ -107,13 +107,13 @@ When the analogy touches other Rooms truth domains, route or compose as needed:
   conversation-derived material.
 - Use `rooms-ambiguity-buster` when the analogy risks overresolving identity, motive, witness status, disappearance,
   reconstruction, or manuscript uncertainty.
-- Use `base-doctrine-v1.1` when Harley asks for named Rooms facts, character/world/canon claims, or repo-grounded
+- Use `base-doctrine-v1.1` when your human partner asks for named Rooms facts, character/world/canon claims, or repo-grounded
   answers.
 - Use the current dispatch gate before any worker-facing dispatch that relies on the analogy.
 
 ## Interactive queue posture
 
-If unresolved analogy risks remain and Harley's decision is needed, present a short buster queue using the buster
+If unresolved analogy risks remain and your human partner's decision is needed, present a short buster queue using the buster
 framework style. Default to at most five items. Each item should include:
 
 - what analogy use is under review;
@@ -121,7 +121,7 @@ framework style. Default to at most five items. Each item should include:
 - what would make it green;
 - GPT's strong recommendation.
 
-Suppress items with only one legitimate path forward. Harley may blanket-approve visible recommendations with normal
+Suppress items with only one legitimate path forward. Your human partner may blanket-approve visible recommendations with normal
 positive approval such as "go," "proceed," "accepted," "agreed," or a thumbs-up.
 
 ## Output basis labels

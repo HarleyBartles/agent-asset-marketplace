@@ -67,8 +67,8 @@ Artifacts are regeneration test surfaces, not optional examples. Use the smalles
 Prefer, in order, when relevant and available:
 
 1. The actual artifact under discussion: tweet/thread/sketch/room doc/voice artifact/manuscript excerpt/system surface.
-2. Brian/World character, room, systems, and canon surfaces.
-3. Manuscript surfaces for prose/scene behaviour, preserving Derek authority.
+2. World/canon character, room, systems, and canon surfaces.
+3. Manuscript surfaces for prose/scene behaviour, preserving Manuscript/prose authority.
 4. Pit/archive evidence only as evidence, with provenance and partiality preserved.
 5. Reports only as reports.
 6. Conversation-derived material only as candidate compression, not artifact verification.
@@ -85,7 +85,7 @@ mutations.
 
 If `file_search` is unavailable or not bound, do not treat that as loss of GitHub access when a live API route is
 available. Use the live API route for exact reads and operations. If broad repo discovery would materially improve
-safety or completeness, ask Harley to bind `file_search` GitHub to the relevant repo set before doing the scan.
+safety or completeness, ask your human partner to bind `file_search` GitHub to the relevant repo set before doing the scan.
 
 Search results are discovery, not final truth. Inspect the relevant file, issue, commit, or source surface before
 making affirmative repo-grounded claims.
@@ -98,7 +98,7 @@ them as artifact-verified.
 
 ## Interactive mode
 
-Use an interactive queue when Harley must decide among real modelling or persistence choices. Inherit visible queue
+Use an interactive queue when your human partner must decide among real modelling or persistence choices. Inherit visible queue
 mechanics and conversational item formatting from `buster-framework`. Domain-specific zoom-out item content should
 include the proposed compression, artifact gap or failure risk, green condition, and GPT's strong recommendation. See
 `references/queue-patterns.md`.

@@ -17,14 +17,14 @@ Recommended sections:
    source-labelled.
 5. Public voice and timeline behaviour, if relevant.
 6. Room voice, private/DM register, or event/reputation context.
-7. Rooms and room lineage: confirmed, candidate, Harley-named, and unresolved.
+7. Rooms and room lineage: confirmed, candidate, partner-named, and unresolved.
 8. Transcript evidence and transcript candidates, with identity confirmation state.
 9. Key relationships, orbits, witnesses, and affected people.
 10. Exchange/epistolary/public-thread surfaces.
 11. Insight surfaces and developed interpretations.
 12. Pit/archive/evidence surfaces and limits.
 13. Manuscript/support surfaces and provenance limits.
-14. Harley narrative and hypotheses.
+14. Partner narrative and hypotheses.
 15. Open ambiguities and missing surfaces.
 16. Character or subject risks: overread, flattening, canon leakage, source gaps, participant sensitivity.
 17. Sheet handoff implications for `prompt`, `peek`, or `recall`, if relevant.
@@ -41,12 +41,12 @@ Recommended shape:
 - one to three paragraphs on role, voice, relationships, rooms, impact, and open questions;
 - a brief source-boundary note if material is mixed or uncertain.
 
-Do not include a long audit trail unless Harley asks. Do include enough caveat language to avoid treating conversation,
+Do not include a long audit trail unless your human partner asks. Do include enough caveat language to avoid treating conversation,
 reports, or participant accounts as canon.
 
 ## Sheet precursor lane
 
-Use when Harley asks for a prompt, peek, or recall sheet and the job is to prepare the investigation packet.
+Use when your human partner asks for a prompt, peek, or recall sheet and the job is to prepare the investigation packet.
 
 Return a concise but sufficient packet for `rooms-sheet-creator-v1`:
 
@@ -64,7 +64,7 @@ Return a concise but sufficient packet for `rooms-sheet-creator-v1`:
 ## Prompt handoff guidance
 
 For a `prompt` sheet, hand off memory veins about the respondent's own participation. Translate source findings into
-open prompts, not conclusions. Keep characterisation and structural interpretation behind the scenes unless Harley
+open prompts, not conclusions. Keep characterisation and structural interpretation behind the scenes unless your human partner
 explicitly approves.
 
 ## Peek handoff guidance

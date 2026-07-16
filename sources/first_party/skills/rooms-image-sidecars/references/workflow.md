@@ -33,7 +33,7 @@ Do not promote a candidate conversation to known room status unless repo/DB evid
 
 ## 4. Entity hints
 
-Entity hints are query accelerators. They are not resolutions. Use them to point Albert toward likely matches, possible aliases, and search terms.
+Entity hints are query accelerators. They are not resolutions. Use them to point the archive lane toward likely matches, possible aliases, and search terms.
 
 Example:
 
@@ -54,11 +54,11 @@ Capture patterns such as identity assimilation, transplanted membership, room li
 
 ## 6. DB promotion companion pass
 
-Run this pass when Harley has finished identifying people, rooms, handles, current profiles, or relationship fragments and the packet will feed Pit/ProjectDB promotion.
+Run this pass when your human partner has finished identifying people, rooms, handles, current profiles, or relationship fragments and the packet will feed Pit/ProjectDB promotion.
 
 Create a `db_promotion_companion/` folder using `references/db_mutation_proposal_csvs.md`. The companion CSVs should translate observations into DB-routing proposals: conversations, memberships, message fragments, observed entities, handles, alias/name forms, and relationship fragments.
 
-Keep direct image evidence separate from Harley-context or profile screenshots. For example, a screenshot-visible display name can become an observed entity proposal, while Harley's later browser/profile identification becomes a separate resolution proposal.
+Keep direct image evidence separate from partner-context or profile screenshots. For example, a screenshot-visible display name can become an observed entity proposal, while your human partner's later browser/profile identification becomes a separate resolution proposal.
 
 The worker must still verify live schema and duplicate state before using the ProjectDB command/unit-of-work layer.
 
@@ -71,7 +71,7 @@ python scripts/build_sidecar_packet.py \
   --input-dir /path/to/images \
   --sidecar semantic_sidecar.json \
   --sidecar-md semantic_sidecar.md \
-  --readme README_FOR_ALBERT.md \
+  --readme README_FOR_ARCHIVE.md \
   --output /path/to/output.zip
 ```
 

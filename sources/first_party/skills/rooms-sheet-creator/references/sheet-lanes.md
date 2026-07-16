@@ -75,7 +75,7 @@ What would someone misunderstand about you from this version?
 Avoid writerly/process framing such as "as a writer" or "what I am trying to do." Do not ask full room, DM, conflict,
 or exchange memory prompts in a peek.
 
-For harm-bearing subjects, use a stricter correction axis if Harley approves showing a peek: accurate, overstated, too
+For harm-bearing subjects, use a stricter correction axis if your human partner approves showing a peek: accurate, overstated, too
 flattering, too monstrous, too neat, missing context, and whether it excuses too much. Do not use a warm flattering
 register when harmlessness, charm, or trust is part of the harm mechanism.
 

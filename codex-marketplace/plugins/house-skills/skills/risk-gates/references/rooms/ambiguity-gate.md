@@ -10,7 +10,7 @@ When ambiguity depends on repo evidence, choose the source route explicitly.
   the relevant evidence surface is not already known.
 - Use the live GitHub API connector route, such as `api_tool` when exposed, for exact known files, issue threads,
   comments, commits, refs, and PR details.
-- If `file_search` is unbound and broad discovery is needed before a safe ambiguity judgment, ask Harley to bind the
+- If `file_search` is unbound and broad discovery is needed before a safe ambiguity judgment, ask your human partner to bind the
   GitHub `file_search` connector to the relevant repo set.
 - If exact known surfaces are enough, inspect them through the live API route rather than blocking on `file_search`.
 
