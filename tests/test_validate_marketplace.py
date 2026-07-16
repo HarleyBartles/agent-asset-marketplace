@@ -14,6 +14,12 @@ TOOLS = ROOT / "tools"
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
+# Superpowers upstream snapshot constants. Update these when the vendored
+# superpowers source is refreshed to avoid hardcoding the version across tests.
+SUPERPOWERS_VERSION = "v6.1.0"
+SUPERPOWERS_COMMIT = "f2cbfbefebbfef77321e4c9abc9e949826bea9d7"
+SUPERPOWERS_TAG_OBJECT = "ecbd610fce16d5faabcea997f17031129589b572"
+
 import validate_marketplace  # noqa: E402
 import superpowers_source  # noqa: E402
 import skill_zip_artifacts  # noqa: E402
@@ -53,7 +59,7 @@ def _third_party_projection_frontmatter(name: str, upstream_name: str, overlay: 
         "metadata:\n"
         "  source_category: third_party\n"
         f"  upstream_name: {upstream_name}\n"
-        "  upstream_version: v6.1.0\n"
+        f"  upstream_version: {SUPERPOWERS_VERSION}\n"
         f"  adaptation_overlay: {overlay}\n"
         "  projection_plugin: superpowers-plus\n"
         "---\n"
@@ -92,12 +98,12 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
         "bundle_version": "6.1.0",
         "upstream": {
             "repository": "https://github.com/obra/superpowers",
-            "release_tag": "v6.1.0",
-            "release_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-            "tag_object": "ecbd610fce16d5faabcea997f17031129589b572",
+            "release_tag": SUPERPOWERS_VERSION,
+            "release_commit": SUPERPOWERS_COMMIT,
+            "tag_object": SUPERPOWERS_TAG_OBJECT,
             "license": "MIT",
         },
-        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+        "source_custody_root": f"sources/third_party/superpowers/obra-superpowers/{SUPERPOWERS_VERSION}",
         "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
         "codex_surface": {
             "plugin_manifest": ".codex-plugin/plugin.json",
@@ -148,7 +154,7 @@ def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) ->
 SUPERPOWERS_PROJECTION_DOC = """# Projection
 
 This root is the Codex-facing marketplace projection of `obra/superpowers`
-`v6.1.0`, plus the source-backed House Skills `linear-superpowers`,
+`{SUPERPOWERS_VERSION}`, plus the source-backed House Skills `linear-superpowers`,
 `github-superpowers`, `unslop-superpowers`, and `architecture-superpowers`
 skills.
 

@@ -46,7 +46,8 @@ def _find_content(
     """Search for ``expected`` line sequence in ``source_lines``.
 
     Returns the 1-based (start, end) line range if found, else None.
-    Tries the original location first, then scans the full file.
+    Tries the original location first, then prefers the closest match to the
+    original start line to avoid healing to a repeated heading/table row/etc.
     """
     if not expected:
         return None
@@ -61,12 +62,18 @@ def _find_content(
         if haystack[orig_start_0:orig_end_0] == needle:
             return (original_start, original_start + len(needle) - 1)
 
-    # Scan full file for the sequence
+    # Collect all matches, then prefer the closest to the original start.
+    matches: list[int] = []
     for i in range(len(haystack) - len(needle) + 1):
         if haystack[i : i + len(needle)] == needle:
-            return (i + 1, i + len(needle))
+            matches.append(i)
 
-    return None
+    if not matches:
+        return None
+
+    # Distance is measured by start-line offset; nearest wins.
+    best = min(matches, key=lambda i: abs(i - orig_start_0))
+    return (best + 1, best + len(needle))
 
 
 def _heal_overlay(
@@ -74,13 +81,18 @@ def _heal_overlay(
     source_root: Path,
     *,
     write: bool,
-) -> list[str]:
-    """Heal a single overlay.yaml. Returns a list of human-readable changes."""
+) -> tuple[list[str], bool]:
+    """Heal a single overlay.yaml.
+
+    Returns (changes, has_errors). ``has_errors`` is True when an edit could
+    not be healed (missing source file, anchor not found, content not found).
+    """
     spec = _load_yaml(overlay_path)
     changes: list[str] = []
+    has_errors = False
     edits = spec.get("edits", [])
     if not edits:
-        return changes
+        return changes, has_errors
 
     # Cache source file lines by relative path to avoid re-reading
     source_lines_cache: dict[str, list[str]] = {}
@@ -104,8 +116,9 @@ def _heal_overlay(
 
         source_lines = _get_source_lines(rel_path)
         if source_lines is None:
-            changes.append(f"  WARNING: source file missing: {rel_path}")
+            changes.append(f"  ERROR: source file missing: {rel_path}")
             healed_edits.append(dict(edit))
+            has_errors = True
             continue
 
         if op in {"insert_before", "insert_after"}:
@@ -124,22 +137,29 @@ def _heal_overlay(
                     healed_edits.append(healed)
                     continue
 
-            # Search for anchor in full file
+            # Search for anchor in full file, prefer nearest to original line
             anchor_stripped = anchor.rstrip()
-            found = False
-            for i, src_line in enumerate(source_lines):
-                if src_line.rstrip() == anchor_stripped:
-                    healed["line"] = i + 1
-                    if src_line != anchor:
-                        healed["anchor"] = src_line
-                    changes.append(f"  {rel_path} insert anchor moved {line}->{i+1}")
-                    actually_healed = True
-                    found = True
-                    break
+            candidates: list[tuple[int, str]] = [
+                (i, src_line)
+                for i, src_line in enumerate(source_lines)
+                if src_line.rstrip() == anchor_stripped
+            ]
+            if candidates:
+                # Prefer the closest match to the original line
+                best_i, best_line = min(
+                    candidates, key=lambda pair: abs(pair[0] - (line - 1))
+                )
+                healed["line"] = best_i + 1
+                if best_line != anchor:
+                    healed["anchor"] = best_line
+                changes.append(f"  {rel_path} insert anchor moved {line}->{best_i+1}")
+                actually_healed = True
+                healed_edits.append(healed)
+                continue
 
-            if not found:
-                changes.append(f"  {rel_path} insert anchor NOT FOUND")
+            changes.append(f"  ERROR: {rel_path} insert anchor NOT FOUND")
             healed_edits.append(healed)
+            has_errors = True
             continue
 
         # replace / delete edits
@@ -162,13 +182,14 @@ def _heal_overlay(
                 healed_edits.append(healed)
                 continue
 
-        # Search for content (whitespace-insensitive)
+        # Search for content (whitespace-insensitive, nearest to original first)
         found = _find_content(source_lines, expected_lines, start_line)
         if found is None:
             changes.append(
-                f"  {rel_path} {start_line}-{end_line} content NOT FOUND — manual fix needed"
+                f"  ERROR: {rel_path} {start_line}-{end_line} content NOT FOUND — manual fix needed"
             )
             healed_edits.append(healed)
+            has_errors = True
             continue
 
         new_start, new_end = found
@@ -196,13 +217,13 @@ def _heal_overlay(
 
         healed_edits.append(healed)
 
-    # Only write if at least one edit was actually healed (not just warnings)
+    # Only write if at least one edit was actually healed (not just errors)
     if actually_healed:
         spec["edits"] = healed_edits
         if write:
             _save_yaml(overlay_path, spec)
 
-    return changes
+    return changes, has_errors
 
 
 def _infer_source_root(overlay_path: Path) -> Path | None:
@@ -292,14 +313,21 @@ def main() -> int:
         overlays = _discover_overlays()
 
     total_changes = 0
+    has_errors = False
     for overlay_path, source_root in overlays:
         overlay_rel = overlay_path.relative_to(ROOT).as_posix()
-        changes = _heal_overlay(overlay_path, source_root, write=write)
+        changes, overlay_errors = _heal_overlay(overlay_path, source_root, write=write)
         if changes:
             total_changes += len(changes)
             print(f"\n{overlay_rel}:")
             for change in changes:
                 print(change)
+        if overlay_errors:
+            has_errors = True
+
+    if has_errors:
+        print("\nERROR: one or more overlays could not be healed — manual fix required")
+        return 1
 
     if total_changes == 0:
         print("OK all overlays healthy")
@@ -307,7 +335,7 @@ def main() -> int:
 
     mode = "healed" if write else "would heal"
     print(f"\n{total_changes} change(s) {mode} across {len(overlays)} overlay(s)")
-    return 0 if write else 1
+    return 0
 
 
 if __name__ == "__main__":

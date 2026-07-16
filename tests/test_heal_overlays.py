@@ -41,6 +41,13 @@ class FindContentTests(unittest.TestCase):
         result = heal_overlays._find_content(source, ["b", "c"], 1)
         self.assertEqual(result, (2, 3))
 
+    def test_repeated_content_prefers_nearest_match(self) -> None:
+        source = ["heading", "a", "b", "heading", "a", "b"]
+        # Original target was the second "heading" block at line 4-5
+        result = heal_overlays._find_content(source, ["a", "b"], 4)
+        # Should prefer line 4-5 (distance 0) over line 1-2 (distance 3)
+        self.assertEqual(result, (5, 6))
+
     def test_not_found(self) -> None:
         source = ["a", "b", "c"]
         result = heal_overlays._find_content(source, ["z"], 1)
@@ -81,7 +88,7 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, _ = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
             self.assertTrue(any("lines healed" in c for c in changes))
             # Verify the overlay was updated
             import yaml
@@ -113,7 +120,7 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, _ = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
             self.assertTrue(any("whitespace healed" in c for c in changes))
             import yaml
 
@@ -142,7 +149,7 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, _ = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
             self.assertTrue(any("no-op" in c for c in changes))
             import yaml
 
@@ -171,9 +178,10 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, has_errors = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            self.assertTrue(has_errors)
             self.assertTrue(any("NOT FOUND" in c for c in changes))
-            # File should NOT be written when only a warning occurred
+            # File should NOT be written when an error occurred
             import yaml
 
             spec = yaml.safe_load(overlay_path.read_text(encoding="utf-8"))
@@ -202,7 +210,8 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, has_errors = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            self.assertTrue(has_errors)
             self.assertTrue(any("source file missing" in c for c in changes))
 
     def test_anchor_insert_healing(self) -> None:
@@ -226,7 +235,7 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, _ = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
             self.assertTrue(any("anchor moved" in c for c in changes))
             import yaml
 
@@ -253,7 +262,7 @@ class HealOverlayTests(unittest.TestCase):
                 ],
             })
             _write(overlay_path, original_overlay)
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=False)
+            changes, _ = heal_overlays._heal_overlay(overlay_path, source_root, write=False)
             self.assertTrue(len(changes) > 0)
             # File should be unchanged
             self.assertEqual(overlay_path.read_text(encoding="utf-8"), original_overlay)
@@ -290,7 +299,8 @@ class HealOverlayTests(unittest.TestCase):
                     ],
                 }),
             )
-            heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            _, has_errors = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            self.assertFalse(has_errors)
             import yaml
 
             spec = yaml.safe_load(overlay_path.read_text(encoding="utf-8"))
@@ -318,9 +328,10 @@ class HealOverlayTests(unittest.TestCase):
                 ],
             })
             _write(overlay_path, original)
-            changes = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            changes, has_errors = heal_overlays._heal_overlay(overlay_path, source_root, write=True)
+            self.assertTrue(has_errors)
             self.assertTrue(any("NOT FOUND" in c for c in changes))
-            # File should be unchanged — only a warning, no actual healing
+            # File should be unchanged when an error occurred
             self.assertEqual(overlay_path.read_text(encoding="utf-8"), original)
 
 
