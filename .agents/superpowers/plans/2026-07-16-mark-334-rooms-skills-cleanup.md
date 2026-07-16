@@ -1,6 +1,6 @@
 # MARK-334: Rooms-* Skills Full Cleanup Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Remove retired named-agent bindings from all rooms-* skills, merge bootstrap+project-doctrine+source-partitioning into one skill, fix version suffixes, frontmatter descriptions, trigger fields, and word counts, then regenerate the marketplace.
 
@@ -41,7 +41,7 @@
 - Produces: a single `rooms-project-doctrine` skill that absorbs bootstrap and source-partitioning content.
 - Later tasks rely on: `rooms-bootstrap` and `rooms-source-partitioning` no longer existing as separate skills.
 
-- [ ] **Step 1: Read the three source skills to understand current content**
+- [x] **Step 1: Read the three source skills to understand current content**
 
 Read:
 - `sources/first_party/skills/rooms-bootstrap/SKILL.md`
@@ -50,15 +50,15 @@ Read:
 - `sources/first_party/skills/rooms-bootstrap/references/source-and-repo-posture.md`
 - `sources/first_party/skills/rooms-source-partitioning/references/source-route-labels.md`
 
-- [ ] **Step 2: Create `references/bootstrap-posture.md` from rooms-bootstrap body**
+- [x] **Step 2: Create `references/bootstrap-posture.md` from rooms-bootstrap body**
 
 Extract the bootstrap-specific content (first-turn arrival, request classification, session-buster handoff routing, doctrine and task routing) into a new reference file. Apply named-agent replacements (Albert/Pit → Pit/archive, etc.) and version suffix cleanup as you write.
 
-- [ ] **Step 3: Create `references/source-partitioning.md` from rooms-source-partitioning body**
+- [x] **Step 3: Create `references/source-partitioning.md` from rooms-source-partitioning body**
 
 Extract the source-partitioning content (label claims by source basis, evidence state rules) into a new reference file. Copy `source-route-labels.md` content into this file or keep it as a nested reference.
 
-- [ ] **Step 4: Rewrite `rooms-project-doctrine/SKILL.md` as the merged skill**
+- [x] **Step 4: Rewrite `rooms-project-doctrine/SKILL.md` as the merged skill**
 
 The new SKILL.md body (under 500 words) should:
 - Open with: "Use this skill before working in Rooms — for project arrival, doctrine lookup, or source-basis labeling."
@@ -68,35 +68,35 @@ The new SKILL.md body (under 500 words) should:
 - Apply named-agent replacements and version suffix cleanup.
 - Update frontmatter: `description`, `use_when`, `do_not_use_when`, add `use_with` where appropriate.
 
-- [ ] **Step 5: Move bootstrap's `source-and-repo-posture.md` into project-doctrine references**
+- [x] **Step 5: Move bootstrap's `source-and-repo-posture.md` into project-doctrine references**
 
 Copy `sources/first_party/skills/rooms-bootstrap/references/source-and-repo-posture.md` to `sources/first_party/skills/rooms-project-doctrine/references/source-and-repo-posture.md`. Apply named-agent replacements.
 
-- [ ] **Step 6: Move version-history files as provenance**
+- [x] **Step 6: Move version-history files as provenance**
 
 Copy `rooms-bootstrap/references/version-history.md` and `rooms-source-partitioning/references/version-history.md` into `rooms-project-doctrine/references/` with names `version-history-bootstrap.md` and `version-history-source-partitioning.md`.
 
-- [ ] **Step 7: Update `rooms-skill-routing.md` to remove merged entries**
+- [x] **Step 7: Update `rooms-skill-routing.md` to remove merged entries**
 
 Remove the `rooms-bootstrap-v1.1` and `rooms-source-partitioning-v1` lines. Update `rooms-project-doctrine` entry to describe the merged scope. Strip version suffixes from all remaining entries.
 
-- [ ] **Step 8: Update `doctrine-index.md` to reflect merged references**
+- [x] **Step 8: Update `doctrine-index.md` to reflect merged references**
 
 Add `bootstrap-posture.md` and `source-partitioning.md` to the doctrine index. Remove references to the deleted skills.
 
-- [ ] **Step 9: Delete the two retired skill directories**
+- [x] **Step 9: Delete the two retired skill directories**
 
 ```bash
 Remove-Item -Recurse sources/first_party/skills/rooms-bootstrap
 Remove-Item -Recurse sources/first_party/skills/rooms-source-partitioning
 ```
 
-- [ ] **Step 10: Verify no stale references to deleted skills**
+- [x] **Step 10: Verify no stale references to deleted skills**
 
 Run: `rg "rooms-bootstrap|rooms-source-partitioning" sources/first_party/skills/ --glob "!*version-history*"`
 Expected: No matches outside version-history files.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add -A
@@ -124,12 +124,12 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: the merged rooms-project-doctrine from Task 1.
 - Produces: all rooms-* skills free of named-agent bindings (Chris, Albert, Brian, Derek, Will, Harley in body text).
 
-- [ ] **Step 1: Replace named agents in rooms-ambiguity-buster**
+- [x] **Step 1: Replace named agents in rooms-ambiguity-buster**
 
 Edit `sources/first_party/skills/rooms-ambiguity-buster/SKILL.md`:
 - Line 33: "ask Harley to bind" → "ask your human partner to bind"
 
-- [ ] **Step 2: Replace named agents in rooms-analogy-buster**
+- [x] **Step 2: Replace named agents in rooms-analogy-buster**
 
 Edit `sources/first_party/skills/rooms-analogy-buster/SKILL.md`:
 - Line 47: "ask Harley to bind" → "ask your human partner to bind"
@@ -144,7 +144,7 @@ Edit `sources/first_party/skills/rooms-analogy-buster/references/rooms-analogy-b
 - Line 12: "when Harley or Brian updates" → "when your human partner or World/canon updates"
 - Line 23: "Harley's live direction" → "your human partner's live direction"
 
-- [ ] **Step 3: Replace named agents in rooms-canon-buster**
+- [x] **Step 3: Replace named agents in rooms-canon-buster**
 
 Edit `sources/first_party/skills/rooms-canon-buster/SKILL.md`:
 - Line 31: "when Harley must decide" → "when your human partner must decide"
@@ -159,7 +159,7 @@ Edit `sources/first_party/skills/rooms-canon-buster/references/canon-buster-queu
 Edit `sources/first_party/skills/rooms-canon-buster/references/canon-green-paths.md`:
 - Line 11: "Harley or Rooms intent" → "your human partner or Rooms intent"
 
-- [ ] **Step 4: Replace named agents in rooms-character-investigation**
+- [x] **Step 4: Replace named agents in rooms-character-investigation**
 
 Edit `sources/first_party/skills/rooms-character-investigation/SKILL.md`:
 - Line 38: "when Harley wants" → "when your human partner wants"
@@ -199,7 +199,7 @@ Edit `sources/first_party/skills/rooms-character-investigation/references/source
 - Line 130: "## Harley narrative" → "## Partner narrative"
 - Line 132: "Harley framing" → "your human partner's framing"; "harley-narrative" → "partner-narrative"
 
-- [ ] **Step 5: Replace named agents in rooms-image-sidecars**
+- [x] **Step 5: Replace named agents in rooms-image-sidecars**
 
 Edit `sources/first_party/skills/rooms-image-sidecars/SKILL.md`:
 - Line 4: "before Albert/Pit ingestion" → "before Pit/archive ingestion"; "a user supplies" → "your human partner supplies"
@@ -233,7 +233,7 @@ Edit `sources/first_party/skills/rooms-image-sidecars/references/workflow.md`:
 - Line 57: "when Harley has finished" → "when your human partner has finished"
 - Line 61: "Harley-context" → "partner-context"; "Harley's later browser" → "your human partner's later browser"
 
-- [ ] **Step 6: Replace named agents in rooms-project-doctrine (merged skill)**
+- [x] **Step 6: Replace named agents in rooms-project-doctrine (merged skill)**
 
 Edit `sources/first_party/skills/rooms-project-doctrine/SKILL.md`:
 - Line 62: "Do not simulate Chris, Albert, Brian, Derek, or Will" → "Do not simulate archive, canon, manuscript, project-local, or workspace governance lanes"
@@ -257,7 +257,7 @@ Edit `sources/first_party/skills/rooms-project-doctrine/references/dispatch-gith
 Edit `sources/first_party/skills/rooms-project-doctrine/references/rooms-skill-routing.md`:
 - Line 16: "before Albert/Pit ingestion" → "before Pit/archive ingestion"
 
-- [ ] **Step 7: Replace named agents in rooms-sheet-creator**
+- [x] **Step 7: Replace named agents in rooms-sheet-creator**
 
 Edit `sources/first_party/skills/rooms-sheet-creator/SKILL.md`:
 - Line 23: "Harley's approved direction" → "your human partner's approved direction"
@@ -283,7 +283,7 @@ Edit `sources/first_party/skills/rooms-sheet-creator/references/source-boundary.
 - Line 11: "ask Harley to bind/select" → "ask your human partner to bind/select"
 - Line 15: "after Harley explicitly confirms" → "after your human partner explicitly confirms"
 
-- [ ] **Step 8: Replace named agents in rooms-zoom-outs-buster**
+- [x] **Step 8: Replace named agents in rooms-zoom-outs-buster**
 
 Edit `sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md`:
 - Line 70: "Brian/World character, room, systems, and canon surfaces" → "World/canon character, room, systems, and canon surfaces"
@@ -298,7 +298,7 @@ Edit `sources/first_party/skills/rooms-zoom-outs-buster/references/queue-pattern
 - Line 47: "asking Harley to accept" → "asking your human partner to accept"
 - Line 48: "asking Harley to approve" → "asking your human partner to approve"
 
-- [ ] **Step 9: Verify no named-agent bindings remain**
+- [x] **Step 9: Verify no named-agent bindings remain**
 
 Run: `rg -i "\b(Chris|Albert|Brian|Derek|Will)\b" sources/first_party/skills/rooms-*/ --glob "!*version-history*"`
 Expected: No matches outside version-history files.
@@ -306,7 +306,7 @@ Expected: No matches outside version-history files.
 Run: `rg "Harley" sources/first_party/skills/rooms-*/ --glob "!*version-history*" --glob "!SKILL.md"`
 Expected: No matches in reference files (SKILL.md matches should only be `owner: Harley Bartles` in frontmatter).
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add -A
@@ -334,7 +334,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: merged skill structure from Task 1, named-agent cleanup from Task 2.
 - Produces: all cross-references using unversioned skill names.
 
-- [ ] **Step 1: Strip version suffixes from rooms-analogy-buster**
+- [x] **Step 1: Strip version suffixes from rooms-analogy-buster**
 
 Edit `sources/first_party/skills/rooms-analogy-buster/SKILL.md`:
 - Line 104: `rooms-project-doctrine-v1` → `rooms-project-doctrine`
@@ -342,7 +342,7 @@ Edit `sources/first_party/skills/rooms-analogy-buster/SKILL.md`:
 - Line 108: `rooms-ambiguity-buster-v1` → `rooms-ambiguity-buster`
 - Line 110: `base-doctrine-v1.1` → `base-doctrine`
 
-- [ ] **Step 2: Strip version suffixes from rooms-canon-buster**
+- [x] **Step 2: Strip version suffixes from rooms-canon-buster**
 
 Edit `sources/first_party/skills/rooms-canon-buster/SKILL.md`:
 - Line 29: `rooms-project-doctrine-v1` → `rooms-project-doctrine`; `rooms-source-partitioning-v1` → `rooms-project-doctrine`; `rooms-ambiguity-buster-v1` → `rooms-ambiguity-buster`; `linear-issue-shaping-v1` → `linear-issue-shaping`
@@ -356,7 +356,7 @@ Edit `sources/first_party/skills/rooms-canon-buster/SKILL.md`:
 - Line 78: `rooms-image-sidecars-v0.1` → `rooms-image-sidecars`
 - Line 79: `linear-issue-shaping-v1` → `linear-issue-shaping`
 
-- [ ] **Step 3: Strip version suffixes from rooms-character-investigation**
+- [x] **Step 3: Strip version suffixes from rooms-character-investigation**
 
 Edit `sources/first_party/skills/rooms-character-investigation/SKILL.md`:
 - Line 27: `rooms-sheet-creator-v1` → `rooms-sheet-creator`
@@ -374,7 +374,7 @@ Edit `sources/first_party/skills/rooms-character-investigation/references/output
 - Line 9: `rooms-sheet-creator-v1` → `rooms-sheet-creator`
 - Line 51: `rooms-sheet-creator-v1` → `rooms-sheet-creator`
 
-- [ ] **Step 4: Strip version suffixes from rooms-project-doctrine**
+- [x] **Step 4: Strip version suffixes from rooms-project-doctrine**
 
 Edit `sources/first_party/skills/rooms-project-doctrine/SKILL.md`:
 - Line 34: `work-mode-router-v1` → `work-mode-router`
@@ -411,7 +411,7 @@ Edit `sources/first_party/skills/rooms-project-doctrine/references/source-and-gr
 - Line 3: `rooms-project-doctrine-v1` → `rooms-project-doctrine`
 - Line 7: `rooms-source-partitioning-v1` → `rooms-project-doctrine`
 
-- [ ] **Step 5: Strip version suffixes from rooms-sheet-creator**
+- [x] **Step 5: Strip version suffixes from rooms-sheet-creator**
 
 Edit `sources/first_party/skills/rooms-sheet-creator/SKILL.md`:
 - Line 23: `rooms-character-investigation-v1` → `rooms-character-investigation`
@@ -427,7 +427,7 @@ Edit `sources/first_party/skills/rooms-sheet-creator/references/source-boundary.
 - Line 3: `rooms-sheet-creator-v1` → `rooms-sheet-creator`; `rooms-character-investigation-v1` → `rooms-character-investigation`
 - Line 6: `rooms-character-investigation-v1` → `rooms-character-investigation`
 
-- [ ] **Step 6: Strip version suffixes from rooms-zoom-outs-buster**
+- [x] **Step 6: Strip version suffixes from rooms-zoom-outs-buster**
 
 Edit `sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md`:
 - Line 44: `rooms-source-partitioning-v1` → `rooms-project-doctrine`; `canon-buster-v1` → `rooms-canon-buster`; `rooms-ambiguity-buster-v1` → `rooms-ambiguity-buster`; `invariant-buster-v1` → remove or note as not available
@@ -437,12 +437,12 @@ Edit `sources/first_party/skills/rooms-zoom-outs-buster/SKILL.md`:
 - Line 129: `rooms-ambiguity-buster-v1` → `rooms-ambiguity-buster`
 - Line 130: `invariant-buster-v1` → remove or note as not available
 
-- [ ] **Step 7: Verify no version suffixes remain**
+- [x] **Step 7: Verify no version suffixes remain**
 
 Run: `rg "rooms-.*-v[0-9]|base-doctrine-v[0-9]|linear-issue-shaping-v[0-9]|tps-(reporting|ingress)-v[0-9]|work-mode-router-v[0-9]|canon-buster-v[0-9]|invariant-buster-v[0-9]" sources/first_party/skills/rooms-*/ --glob "!*version-history*"`
 Expected: No matches outside version-history files.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -467,7 +467,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: cleaned skills from Tasks 1-3.
 - Produces: skills with correct descriptions, specific do_not_use_when, and ordering/composition triggers.
 
-- [ ] **Step 1: Fix rooms-ambiguity-buster frontmatter**
+- [x] **Step 1: Fix rooms-ambiguity-buster frontmatter**
 
 Update `description` to: "Use when preserving rooms ambiguity for identity, motive, authorship, archive gaps, narration, and disappearance."
 
@@ -477,7 +477,7 @@ Update `do_not_use_when` to:
 
 Add `use_instead: [rooms-canon-buster, rooms-analogy-buster]`
 
-- [ ] **Step 2: Fix rooms-analogy-buster frontmatter**
+- [x] **Step 2: Fix rooms-analogy-buster frontmatter**
 
 Update `description` to: "Use when validating rooms-specific interpretive analogies against the black box theatre analogy before binding them to world canon."
 
@@ -487,7 +487,7 @@ Update `do_not_use_when` to:
 
 Add `use_instead: [rooms-canon-buster, rooms-ambiguity-buster]`
 
-- [ ] **Step 3: Fix rooms-canon-buster frontmatter**
+- [x] **Step 3: Fix rooms-canon-buster frontmatter**
 
 Update `do_not_use_when` to:
 - "Do not use when the task is ambiguity preservation rather than canon resolution — use rooms-ambiguity-buster instead."
@@ -495,7 +495,7 @@ Update `do_not_use_when` to:
 
 Add `use_with: [rooms-project-doctrine]`
 
-- [ ] **Step 4: Fix rooms-character-investigation frontmatter**
+- [x] **Step 4: Fix rooms-character-investigation frontmatter**
 
 Update `do_not_use_when` to:
 - "Do not use when the task is sheet creation rather than character investigation — use rooms-sheet-creator instead."
@@ -503,7 +503,7 @@ Update `do_not_use_when` to:
 
 Add `use_before: [rooms-sheet-creator]`
 
-- [ ] **Step 5: Fix rooms-image-sidecars frontmatter**
+- [x] **Step 5: Fix rooms-image-sidecars frontmatter**
 
 Shorten `description` to: "Use when preparing GPT-native semantic starter sidecars for Rooms image evidence batches before Pit/archive ingestion."
 
@@ -511,7 +511,7 @@ Update `do_not_use_when` to:
 - "Do not use when the task is character investigation rather than image sidecar preparation — use rooms-character-investigation instead."
 - "Do not use when the task is canon resolution — use rooms-canon-buster instead."
 
-- [ ] **Step 6: Fix rooms-project-doctrine frontmatter (merged skill)**
+- [x] **Step 6: Fix rooms-project-doctrine frontmatter (merged skill)**
 
 Update `description` to: "Use before working in Rooms — for project arrival, doctrine lookup, source-basis labeling, and routing to specialist Rooms skills."
 
@@ -519,7 +519,7 @@ Update `do_not_use_when` to:
 - "Do not use when a specialist Rooms skill owns the specific task — route to that skill instead."
 - "Do not use for ordinary conversation without source, canon, archive, or repo claims."
 
-- [ ] **Step 7: Fix rooms-sheet-creator frontmatter**
+- [x] **Step 7: Fix rooms-sheet-creator frontmatter**
 
 Update `do_not_use_when` to:
 - "Do not use when the task is character investigation rather than sheet creation — use rooms-character-investigation instead."
@@ -527,13 +527,13 @@ Update `do_not_use_when` to:
 
 Add `use_after: [rooms-character-investigation]`
 
-- [ ] **Step 8: Fix rooms-zoom-outs-buster frontmatter**
+- [x] **Step 8: Fix rooms-zoom-outs-buster frontmatter**
 
 Update `do_not_use_when` to:
 - "Do not use when the task is canon resolution rather than zoom-out compression — use rooms-canon-buster instead."
 - "Do not use when the task is ambiguity preservation — use rooms-ambiguity-buster instead."
 
-- [ ] **Step 9: Verify all frontmatter has required and new trigger fields**
+- [x] **Step 9: Verify all frontmatter has required and new trigger fields**
 
 Run: `rg "do_not_use_when" sources/first_party/skills/rooms-*/SKILL.md`
 Expected: 8 matches, none containing "another more specific skill owns this task".
@@ -541,7 +541,7 @@ Expected: 8 matches, none containing "another more specific skill owns this task
 Run: `rg "use_before|use_after|use_with|use_instead" sources/first_party/skills/rooms-*/SKILL.md`
 Expected: Matches in rooms-character-investigation (use_before), rooms-sheet-creator (use_after), rooms-canon-buster (use_with), rooms-ambiguity-buster (use_instead), rooms-analogy-buster (use_instead).
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add -A
@@ -574,37 +574,37 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: cleaned skills from Tasks 1-4.
 - Produces: all SKILL.md bodies under 500 words, with external path context notes.
 
-- [ ] **Step 1: Trim rooms-canon-buster to under 500 words**
+- [x] **Step 1: Trim rooms-canon-buster to under 500 words**
 
 Move detailed canon-check steps from SKILL.md body to new `references/canon-check-steps.md`. Keep the SKILL.md body as a compact router: overview, when to use, compose-with list, and a pointer to the reference for detailed steps.
 
-- [ ] **Step 2: Trim rooms-character-investigation to under 500 words**
+- [x] **Step 2: Trim rooms-character-investigation to under 500 words**
 
 Move source-routing detail from SKILL.md body to `references/source-routing.md` (append or integrate). Keep the SKILL.md body as overview, when to use, output lanes summary, and handoff section.
 
-- [ ] **Step 3: Trim rooms-image-sidecars to under 500 words**
+- [x] **Step 3: Trim rooms-image-sidecars to under 500 words**
 
 Move DB companion CSV details from SKILL.md body to `references/db_mutation_proposal_csvs.md` (append). Keep the SKILL.md body as overview, when to use, packet structure summary, and boundary rules.
 
-- [ ] **Step 4: Add external path note to source-routing.md**
+- [x] **Step 4: Add external path note to source-routing.md**
 
 Add at the top of `sources/first_party/skills/rooms-character-investigation/references/source-routing.md`:
 ```
 > Paths like `rooms-world/`, `rooms-pit/`, `rooms-manuscript/` refer to external repos in the Rooms-mostly ecosystem, not paths in this marketplace repo.
 ```
 
-- [ ] **Step 5: Add external path note to direct-landing.md**
+- [x] **Step 5: Add external path note to direct-landing.md**
 
 Add at the top of `sources/first_party/skills/rooms-sheet-creator/references/direct-landing.md`:
 ```
 > Paths like `rooms-world/` refer to external repos in the Rooms-mostly ecosystem, not paths in this marketplace repo.
 ```
 
-- [ ] **Step 6: Verify word counts**
+- [x] **Step 6: Verify word counts**
 
 Run word count on each trimmed SKILL.md body (after frontmatter `---`). All must be under 500 words.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
@@ -630,22 +630,22 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: all source changes from Tasks 1-5.
 - Produces: regenerated marketplace projections, skill-zips, and a published PR.
 
-- [ ] **Step 1: Run full marketplace rebuild**
+- [x] **Step 1: Run full marketplace rebuild**
 
 Run: `py -3 tools/rebuild_marketplace.py`
 Expected: All validation passed, no errors.
 
-- [ ] **Step 2: Run CI gate**
+- [x] **Step 2: Run CI gate**
 
 Run: `py -3 tools/check_marketplace.py`
 Expected: All checks pass.
 
-- [ ] **Step 3: Run test suite**
+- [x] **Step 3: Run test suite**
 
 Run: `py -3 -m pytest tests/ -x`
 Expected: All tests pass.
 
-- [ ] **Step 4: Verify no named-agent bindings in projections**
+- [x] **Step 4: Verify no named-agent bindings in projections**
 
 Run: `rg -i "\b(Chris|Albert|Brian|Derek|Will)\b" codex-marketplace/plugins/rooms-project-pack/ --glob "!*version-history*"`
 Expected: No matches outside version-history files.
@@ -653,12 +653,12 @@ Expected: No matches outside version-history files.
 Run: `rg "Harley" codex-marketplace/plugins/rooms-project-pack/ --glob "!*version-history*" --glob "!SKILL.md"`
 Expected: No matches in reference files.
 
-- [ ] **Step 5: Verify no version suffixes in projections**
+- [x] **Step 5: Verify no version suffixes in projections**
 
 Run: `rg "rooms-.*-v[0-9]|base-doctrine-v[0-9]|linear-issue-shaping-v[0-9]|tps-(reporting|ingress)-v[0-9]|work-mode-router-v[0-9]" codex-marketplace/plugins/rooms-project-pack/ --glob "!*version-history*"`
 Expected: No matches outside version-history files.
 
-- [ ] **Step 6: Verify merged skills are not present as separate skills**
+- [x] **Step 6: Verify merged skills are not present as separate skills**
 
 Run: `Test-Path sources/first_party/skills/rooms-bootstrap`
 Expected: False
@@ -666,7 +666,7 @@ Expected: False
 Run: `Test-Path sources/first_party/skills/rooms-source-partitioning`
 Expected: False
 
-- [ ] **Step 7: Commit generated changes**
+- [x] **Step 7: Commit generated changes**
 
 ```bash
 git add -A
@@ -680,13 +680,13 @@ Generated with [Devin](https://devin.ai)
 Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
 ```
 
-- [ ] **Step 8: Push branch**
+- [x] **Step 8: Push branch**
 
 ```bash
 git push -u origin harleydbartles/mark-334-refresh-rooms-project-pack-skills-to-remove-retired-named
 ```
 
-- [ ] **Step 9: Create PR**
+- [x] **Step 9: Create PR**
 
 ```bash
 gh pr create --title "MARK-334: Refresh Rooms project-pack skills — remove named-agent bindings, merge orientation skills, full cleanup" --body "$(cat <<'EOF'
@@ -717,7 +717,7 @@ EOF
 )"
 ```
 
-- [ ] **Step 10: Report PR URL and commit SHA**
+- [x] **Step 10: Report PR URL and commit SHA**
 
 Record the PR URL and final commit SHA for the Linear issue return evidence.
 
