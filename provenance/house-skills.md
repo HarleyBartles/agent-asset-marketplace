@@ -67,12 +67,12 @@
 
 ## rooms-canon-buster
 
-- Source path: `sources/first_party/skills/rooms-canon-buster`
+- Source path: `sources/first_party/skills/rooms-canon-buster` (retired 2026-07-16)
 - Public identity: `rooms-canon-buster`
-- Provenance/history: MARK-97 attached rooms canon buster zip update
+- Provenance/history only: MARK-97 attached rooms canon buster zip update (retired)
 - Ownership: Harley-authored first-party House skill
 - Scope: Rooms canon pressure checks and lawful canon/item adjustment
-- Notes: Canonical source now lives in the House skills lane and is projected into the Rooms portion of the bundle. `agents/openai.yaml` was copied into repo source control and keeps the clear policy/interface fields from the zip. `assets/icon.svg` was included with the zip and is vendored here.
+- Notes: Retired as part of the buster framework consolidation. The Rooms canon gate function now lives in `risk-gates` under `references/rooms/rooms-canon-gate.md`. This record exists only for provenance audit of the retired source path.
 
 ## asset-market
 
@@ -92,12 +92,12 @@
 
 ## boring-loop
 
-- Source path: `sources/first_party/skills/boring-loop`
+- Source path: `sources/first_party/skills/boring-loop` (retired 2026-07-16)
 - Public identity: `boring-loop`
-- Provenance/history: MARK-152 Boring Loop beta first-party source
+- Provenance/history only: MARK-152 Boring Loop beta first-party source (retired)
 - Ownership: Harley-owned first-party House skill
 - Scope: loop cadence, readiness and false-green prevention, parent/child DoD coverage, queue grooming, next boring move selection, route-to-specialist guidance
-- Notes: Canonical source lives at `sources/first_party/skills/boring-loop/` and is projected into House Skills and repo-worker-base. Direct GPT export is the default unless a later validation proves an overlay is required.
+- Notes: Retired as part of the buster framework consolidation. The boring-loop function is now covered by `verification-before-completion` and `repo-worker-base` for finish-line enforcement. This record exists only for provenance audit of the retired source path.
 
 ## github-operations
 
@@ -140,6 +140,15 @@
 - Ownership: Harley-owned first-party House skill
 - Scope: large text write safety, bounded composition, and atomic replacement
 - Notes: First-party safety skill for large generated or edited text files. The canonical source is a directory-level skill spec with `SKILL.md` and `agents/openai.yaml`, and it teaches bounded composition, safe staging, and atomic replacement for large writes.
+
+## risk-gates
+
+- Source path: `sources/first_party/skills/risk-gates`
+- Public identity: `risk-gates`
+- Provenance/history: 2026-07-16 buster framework consolidation
+- Ownership: Harley-owned first-party House skill
+- Scope: consolidated pre-action risk gate router with generic and Rooms-specific gate references
+- Notes: Imported as the consolidated risk-gates skill that retires and replaces the six MARK-19 core generic buster source records (buster-framework, ambiguity-buster, boring-buster, invariant-buster, analogy-buster, canon-buster) plus the Rooms gate overlays (rooms-ambiguity-buster, rooms-analogy-buster, rooms-canon-buster, rooms-zoom-outs-buster), crew/crew-buster, boring-loop, and session-buster/session-buster-ingress. Generic gate references live under `references/gates/`; Rooms-specific gate overlays live under `references/rooms/`.
 
 ## skill-handoff
 
@@ -222,8 +231,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `github-operations` GitHub proof skill, the `rooms-canon-buster` Rooms canon-pressure overlay, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `rooms-canon-buster` is projected here as a Rooms canon-pressure overlay, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `github-operations` GitHub proof skill, the `risk-gates` consolidated pre-action risk gate router, the refreshed `rooms-bootstrap` v1.1 root, and the hydrated Wild Bunch first-party roots.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `risk-gates` is projected here as the consolidated pre-action risk gate router, and `rooms-bootstrap` is projected here as the refreshed first-turn Rooms router.
 
 ## Active imports
 
@@ -236,10 +245,7 @@
 - `using-linear-v1` - `sources/first_party/skills/using-linear`
 - `tps-reporting-v1` - `sources/first_party/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
 - `tps-ingress-v1` - `sources/first_party/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
-- `session-buster-v0.2` - `sources/first_party/skills/session-buster/v0.2/session-buster-v0.2/SKILL.md`
-- `session-buster-ingress-v0.2` - `sources/first_party/skills/session-buster-ingress/v0.2/session-buster-ingress-v0.2/SKILL.md`
-- `crew-v1` - `sources/first_party/skills/crew/v1/crew-v1/SKILL.md`
-- `crew-buster-v1` - `sources/first_party/skills/crew-buster/v1/crew-buster-v1/SKILL.md`
+- `risk-gates` - `sources/first_party/skills/risk-gates/SKILL.md`
 
 ### Adventures v1.1
 
@@ -259,9 +265,6 @@
 - `rooms-project-doctrine-v1` - `sources/first_party/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
 - `rooms-bootstrap-v1.1` - `sources/first_party/skills/rooms-bootstrap`
 - `rooms-source-partitioning-v1` - `sources/first_party/skills/rooms-source-partitioning/v1/rooms-source-partitioning-v1/SKILL.md`
-- `rooms-ambiguity-buster-v1` - `sources/first_party/skills/rooms-ambiguity-buster/v1/rooms-ambiguity-buster-v1/SKILL.md`
-- `rooms-analogy-buster-v1` - `sources/first_party/skills/rooms-analogy-buster/v1/rooms-analogy-buster-v1/SKILL.md`
-- `rooms-zoom-outs-buster-v1` - `sources/first_party/skills/rooms-zoom-outs-buster/v1/rooms-zoom-outs-buster-v1/SKILL.md`
 - `rooms-character-investigation-v1` - `sources/first_party/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
 - `rooms-sheet-creator-v1` - `sources/first_party/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
 

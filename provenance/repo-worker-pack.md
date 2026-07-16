@@ -22,10 +22,11 @@
 - `linear-issue-shaping` is projected here from the canonical first-party
   source at `sources/first_party/skills/linear-issue-shaping/` so Linear worker
   readiness and route-state handling stay on the repo-facing worker surface.
-- `boring-loop` is projected here from the canonical first-party source at
-  `sources/first_party/skills/boring-loop/` and keeps the same retained loop
-  cadence, readiness, queue grooming, and specialist-routing doctrine on the
-  worker-facing plugin surface.
+- `boring-loop` was previously projected here from the canonical first-party
+  source at `sources/first_party/skills/boring-loop/` but was retired on
+  2026-07-16 as part of the buster framework consolidation. The loop cadence
+  and finish-line enforcement functions are now covered by
+  `verification-before-completion` and `repo-worker-base`.
 - `connector-safety` is projected here from the canonical first-party source
   at `sources/first_party/skills/connector-safety/` so connector and tool
   writes stay narrow, auditable, and recoverable.
