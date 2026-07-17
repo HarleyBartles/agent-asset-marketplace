@@ -94,8 +94,15 @@ license: MIT
 
 #### Trigger fields (required)
 
-- `use_when` — list of strings using "Use when..." language. Covers "use before", "use after", or similar use-case phrasing. Each entry is a specific triggering condition.
+- `use_when` — list of strings using "Use when..." language. Each entry is a specific triggering condition.
 - `do_not_use_when` — list of strings using "Do not use when..." language. Each entry is a specific exclusion condition that prevents false triggers.
+
+#### Ordering and composition fields (optional)
+
+- `use_before` — list of skill names that should fire after this skill. Use when this skill produces an artifact that another skill consumes (e.g., `use_before: [rooms-sheet-creator]` on `rooms-character-investigation`).
+- `use_after` — list of skill names that should fire before this skill. Use when this skill consumes an artifact that another skill produces (e.g., `use_after: [rooms-character-investigation]` on `rooms-sheet-creator`).
+- `use_with` — list of skill names that should compose with this skill in the same turn. Use when skills run alongside each other rather than in sequence (e.g., `use_with: [risk-gates]` on `rooms-project-doctrine`).
+- `use_instead` — list of skill names preferred over this skill for specific sub-tasks where they are better suited. Use when a skill is broadly triggered but a more specific skill handles certain cases better (e.g., `use_instead: [rooms-risk-gates]` on `risk-gates` for rooms-specific gate questions). Each entry is a skill name; pair with a `do_not_use_when` entry explaining the specific case.
 
 #### Optional routing fields
 
@@ -141,6 +148,12 @@ What goes wrong + fixes.
 - Complete: cover the key aspects of the domain.
 - Scoped: stay focused on the skill's specific domain.
 - No jargon when plain language works.
+
+### Referring to the human operator
+
+- Use "your human partner" when referring to the person the agent is working with.
+- Do not use "user", "Harley", or other named individuals in skill content.
+- This keeps skills portable across operators and avoids encoding person-specific identity bindings.
 
 ## agents/openai.yaml
 

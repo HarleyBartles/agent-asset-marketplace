@@ -109,7 +109,7 @@ def main() -> int:
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py")
     _run_tool("generate_repo_index.py")
-    _run_tool("validate_marketplace.py")
+    _run_tool("validate_marketplace.py", "--skip-freshness-checks")
     _run_tool("generate_repo_index.py", "--check")
     _run_tool("generate_index_mesh.py")
     _run_tool("generate_index_mesh.py", "--check")

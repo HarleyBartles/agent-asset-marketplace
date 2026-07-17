@@ -17,7 +17,7 @@ Keep work inside ordinary GPT when the user only needs a small textual storyboar
 
 ## GPT-to-PSA packet
 
-A PSA handoff packet must be paste-ready and self-contained. Do not rely on PSA seeing prior GPT messages, repo paths, uploads, or cross-agent workspace files unless Harley separately proves that route for the current session.
+A PSA handoff packet must be paste-ready and self-contained. Do not rely on PSA seeing prior GPT messages, repo paths, uploads, or cross-agent workspace files unless your human partner separately proves that route for the current session.
 
 ```yaml
 recipient_actor: PSA
@@ -53,7 +53,7 @@ return_requirements:
   - return artifact paths
   - include PSA self-QA status
   - list deviations or blockers
-  - state how GPT/Harley should review the board
+  - state how GPT and your human partner should review the board
   - state how PIG should later use the board if suitable
 acceptance_boundary:
   psa_output_is_planning_artifact: true

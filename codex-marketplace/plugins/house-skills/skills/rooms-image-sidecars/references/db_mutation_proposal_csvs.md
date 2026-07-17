@@ -6,12 +6,12 @@ Use this reference when a Rooms image sidecar packet is intended to support Pit/
 
 DB companion CSVs are routing proposals, not executable mutation commands and not evidence by themselves.
 
-GPT may propose where observed facts should land. Albert must verify the live DB schema, run duplicate checks, and use the lawful ProjectDB command/unit-of-work route before any write. Do not generate raw SQL inserts as final authority.
+GPT may propose where observed facts should land. The archive lane must verify the live DB schema, run duplicate checks, and use the lawful ProjectDB command/unit-of-work route before any write. Do not generate raw SQL inserts as final authority.
 
 Keep provenance layers separate:
 
 - `image-visible`: directly visible in the supplied image batch.
-- `harley-context`: supplied by Harley from memory or browsing/profile screenshots.
+- `partner-context`: supplied by your human partner from memory or browsing/profile screenshots.
 - `repo-grounded`: checked against repo files in the current session.
 - `db-grounded`: checked against the live local machine-surface DB by a worker.
 - `synthesis`: GPT reasoning that must be verified.
@@ -87,7 +87,7 @@ Columns:
 - `basis_or_caution`
 - `target_db_surfaces`
 
-Purpose: route observed display names, handles, labels, and Harley follow-up resolutions into account/entity/handle/identity-label surfaces. Preserve observed strings separately from resolved entities.
+Purpose: route observed display names, handles, labels, and your human partner's follow-up resolutions into account/entity/handle/identity-label surfaces. Preserve observed strings separately from resolved entities.
 
 ### alias_name_form_companion.csv
 
@@ -125,7 +125,7 @@ Purpose: route social-graph observations and relationship fragments, especially 
 - Mark uncertain/current-profile continuity as `probable`, `resolved_with_handle_variant`, or `unresolved_observed`; do not flatten it.
 - If a direct message or cropped room has no title, propose an unresolved conversation/event surface rather than inventing a title.
 - For inbox/list screenshots, do not promote membership unless the DB/write policy allows room-list membership inference or a worker verifies it.
-- If the user asks for a refreshed pack after an identification pass, regenerate all companion CSVs so the on-disk package reflects the latest Harley context before DB mutation.
+- If your human partner asks for a refreshed pack after an identification pass, regenerate all companion CSVs so the on-disk package reflects the latest partner context before DB mutation.
 
 ## Recommended package layout
 
@@ -134,7 +134,7 @@ batch.intake.json
 semantic_sidecar.json
 semantic_sidecar.md
 starter_manifest.json
-README_FOR_ALBERT.md
+README_FOR_ARCHIVE.md
 image_observation_table.csv
 conversation_candidates.csv
 db_promotion_companion/

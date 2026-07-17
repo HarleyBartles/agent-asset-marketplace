@@ -30,6 +30,14 @@ projected skill trees, source maps, provenance maps, or bundle-manifest
 membership lists, and do not create plugin-specific one-off scripts when the
 existing deterministic path can be extended instead.
 
+Skill-to-pack assignments (which skills appear in which plugin pack) are
+authored in `codex-marketplace/custody-pack-registry.json` under each pack
+bundle's `entries` array. See `../AGENTS.md` "Skill-to-pack assignment chain"
+for the edit-to-projection pipeline. Do not hand-edit
+`references/bundle-manifest.json` or `references/source-map.md` in plugin
+directories — they are regenerated from the registry by
+`py -3 tools/rebuild_marketplace.py`.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

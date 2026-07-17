@@ -32,7 +32,7 @@ deterministic asset-sheet compile.
     "type": "PATCH MISSION CONTROL SUPPORT BOTS",
     "status": "PROVISIONAL / QA-ACCEPTED SOURCE SET",
     "version": "v1",
-    "source_qa": "Harley-approved source images"
+    "source_qa": "partner-approved source images"
   },
   "guidance": ["Short bullet one", "Short bullet two"],
   "trim": true,

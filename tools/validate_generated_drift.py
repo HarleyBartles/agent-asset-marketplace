@@ -165,8 +165,8 @@ def _packaging_tool_changed(source_changes: list[str]) -> bool:
     return any(change in PACKAGING_TOOLING_PATHS for change in source_changes)
 
 
-def validate_generated_drift(*, base: str, full_regeneration: bool = False) -> None:
-    validate_skill_zip_registry()
+def validate_generated_drift(*, base: str, full_regeneration: bool = False, skip_content_validation: bool = False) -> None:
+    validate_skill_zip_registry(skip_content_validation=skip_content_validation)
 
     current_registry = load_registry()
     current_by_key = {

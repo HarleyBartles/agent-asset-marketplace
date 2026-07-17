@@ -183,13 +183,6 @@
       "local_path": "skills/risk-gates"
     },
     {
-      "canonical_name": "rooms-bootstrap",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
-      "local_path": "skills/rooms-bootstrap"
-    },
-    {
       "canonical_name": "rooms-character-investigation",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -211,18 +204,18 @@
       "local_path": "skills/rooms-project-doctrine"
     },
     {
+      "canonical_name": "rooms-risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-risk-gates",
+      "local_path": "skills/rooms-risk-gates"
+    },
+    {
       "canonical_name": "rooms-sheet-creator",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/rooms-sheet-creator",
       "local_path": "skills/rooms-sheet-creator"
-    },
-    {
-      "canonical_name": "rooms-source-partitioning",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
-      "local_path": "skills/rooms-source-partitioning"
     },
     {
       "canonical_name": "sprite-pipeline",

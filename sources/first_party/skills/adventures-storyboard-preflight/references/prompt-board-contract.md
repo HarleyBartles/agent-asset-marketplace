@@ -111,7 +111,7 @@ excluded_available_images:
     reason: <wrong lane, conflicting trial, broad contact sheet, character sheet, not needed>
 ```
 
-`use_all_available_images: true` is only valid when Harley explicitly asks for broad synthesis, overview, audit, or
+`use_all_available_images: true` is only valid when your human partner explicitly asks for broad synthesis, overview, audit, or
 contact-sheet style generation. It is not valid for normal governed image generation.
 
 If there is a prompt board, downstream ordinary GPT image preflight should use exactly the selected references unless a required file

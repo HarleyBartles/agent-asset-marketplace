@@ -90,6 +90,21 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "local_path": "skills/risk-gates",
+      "lane": "Worker",
+      "source_path": "sources/first_party/skills/risk-gates/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
+    },
+    {
       "canonical_name": "unslop-plus",
       "source_category": "first_party",
       "content_mode": "verbatim",

@@ -1,6 +1,6 @@
 # Modes and Verification
 
-Read this reference when running interactive frame creation/refinement with Harley, or when only
+Read this reference when running interactive frame creation/refinement with your human partner, or when only
 checking whether an existing issue/comment already contains a usable green frame.
 
 ## Contents
@@ -16,7 +16,7 @@ conversationally, normally up to five items at a time.
 
 Use interactive mode whenever the frame must be created, selected, materially changed, repaired, or
 extended. Do not let GPT privately choose among legitimate worlds, stories, characters,
-environments, or asset-reuse paths. Do not queue items where the issue or Harley has already decided
+environments, or asset-reuse paths. Do not queue items where the issue or your human partner has already decided
 the answer; instead verify whether the written answer is green.
 
 Typical Adventures Frame Buster items:
@@ -36,7 +36,7 @@ Typical Adventures Frame Buster items:
 ## Internal verification mode
 
 
-Use internal mode only to verify an already explicit source-written or Harley-approved frame, or to
+Use internal mode only to verify an already explicit source-written or partner-approved frame, or to
 classify a blocker. Internal mode must not create, choose, repair, or materially extend the frame.
 
 Allowed internal actions:
@@ -44,19 +44,19 @@ Allowed internal actions:
 - read issue/comments and classify `green_as_written`, `amber_advisory_stop`, `red`, or `blocked`;
 - check whether a prior green frame comment contains actors, environments, progression, stakes,
   boundaries, and asset posture;
-- carry forward a Harley-approved frame exactly as approved;
+- carry forward a partner-approved frame exactly as approved;
 - mark missing details as amber rather than filling them privately.
 
 Disallowed internal actions:
 
 - choosing between multiple legitimate worlds or analogies;
 - inventing the main story, cast, or environment path;
-- deciding cross-context asset reuse without Harley;
+- deciding cross-context asset reuse without your human partner;
 - turning a thin issue into a green frame by adding GPT-created details during an end-to-end run.
 
 Examples:
 
-- Harley says in the issue/comments: "Mission Control is the frame; Patch is given an impossible
+- Your human partner says in the issue/comments: "Mission Control is the frame; Patch is given an impossible
   mission; the client is the mission sponsor; the control room blocks unsafe launch; the simulator
   reveals missing constraints; the debrief proves the corrected mission worked." Verify whether this
   is green as written. If actors or progression are missing, return amber advisory stop rather than

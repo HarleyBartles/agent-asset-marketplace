@@ -14,7 +14,7 @@ The house pattern is the Patch v1.4 bible shape: concise visual canon plus mecha
 
 When repo or connector evidence is needed, separate broad discovery from exact operations. Use a bound `file_search` GitHub route for repo-wide discovery, stale-pattern sweeps, and indexed corpus reads when it is available. Use live GitHub API routes such as `api_tool` for exact issue, comment, file, commit, compare, and authorized mutation operations.
 
-If `file_search` is not bound and broad repository discovery would materially reduce risk, ask Harley to bind the relevant GitHub connector before continuing or state that the task is operating from narrower live API spot checks. Do not treat an unbound `file_search` route as repo absence when another live GitHub route works.
+If `file_search` is not bound and broad repository discovery would materially reduce risk, ask your human partner to bind the relevant GitHub connector before continuing or state that the task is operating from narrower live API spot checks. Do not treat an unbound `file_search` route as repo absence when another live GitHub route works.
 
 ## Scope
 
@@ -58,7 +58,7 @@ Start from repo truth when the task depends on existing project state.
 1. Read the source issue or task.
 2. Start asset discovery from `assets/INDEX.md`.
 3. Follow the index mesh to relevant asset families, style guides, current visual package evidence, package indexes, and existing bibles.
-4. Use accepted generated images or Harley-supplied images only as scoped visual evidence.
+4. Use accepted generated images or your human partner-supplied images only as scoped visual evidence.
 5. For repo-canonical image inspection, use the current repo-indexed visual inspection route, normally a Patch-returned asset/contact-sheet package derived from the asset index mesh when GPT needs to inspect pixels.
 6. Partition evidence as repo text, current repo-indexed visual package evidence, accepted generated reference, user-supplied visual evidence, package-only evidence, inference, and uncertainty.
 
@@ -137,7 +137,7 @@ Prompt-positive blocks should say what to draw in clean visual language. Prompt-
 
 Do not paste QA prose, candidate numbers, repo paths, issue comments, status labels, process notes, sidebars, or checklists into prompt-facing blocks.
 
-Prompt guidance and repair blocks are later-stage inputs, not tool-call permission. They may be handed to image planning, image preflight, or QA, but this skill must stop after producing or updating the bible unless Harley separately asks for a downstream deterministic handoff.
+Prompt guidance and repair blocks are later-stage inputs, not tool-call permission. They may be handed to image planning, image preflight, or QA, but this skill must stop after producing or updating the bible unless your human partner separately asks for a downstream deterministic handoff.
 
 ## Output contracts
 

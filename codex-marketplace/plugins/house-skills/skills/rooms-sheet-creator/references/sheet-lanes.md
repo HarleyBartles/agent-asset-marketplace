@@ -75,7 +75,7 @@ What would someone misunderstand about you from this version?
 Avoid writerly/process framing such as "as a writer" or "what I am trying to do." Do not ask full room, DM, conflict,
 or exchange memory prompts in a peek.
 
-For harm-bearing subjects, use a stricter correction axis if Harley approves showing a peek: accurate, overstated, too
+For harm-bearing subjects, use a stricter correction axis if your human partner approves showing a peek: accurate, overstated, too
 flattering, too monstrous, too neat, missing context, and whether it excuses too much. Do not use a warm flattering
 register when harmlessness, charm, or trust is part of the harm mechanism.
 
@@ -140,3 +140,49 @@ Useful need prompts:
 
 Do not make recall a gossip net. Do not ask for unbounded naming. Keep direct experience, second-hand memory, rumour,
 and later interpretation separate.
+
+## Investigation packet requirement
+
+For important, existing, sensitive, or harm-bearing subjects, do not draft from memory alone. Use a packet from
+`rooms-character-investigation` containing:
+
+- respondent and subject;
+- intended sheet lane;
+- source partition and unavailable surfaces;
+- memory anchors safe to expose;
+- hidden or sensitive material to keep behind the scenes;
+- candidate material that must not be stated as fact;
+- recommended sheet emphasis;
+- risks and no-go phrasings.
+
+If your human partner explicitly asks to proceed without a fresh packet, state the limitation before drafting.
+
+## Participant-facing rules
+
+All lanes must be plain, permissive, and non-forensic. The sheet should make memory or correction easier, not
+narrower.
+
+Do not:
+
+- claim canon, evidence, or testimony status;
+- present repo, archive, transcript, or DB material as a case file;
+- ask a participant to verify source evidence;
+- expose hidden structural or thematic interpretation unless your human partner approves;
+- pressure the respondent to answer every section;
+- launder rumours, participant accounts, partner narrative, or inference into truth;
+- simulate the respondent's voice.
+
+## Direct-landing summary
+
+Prompt and peek lanes already have governed GPT direct-landing exceptions in World research surfaces. Recall may be
+created in chat, but do not persist recall sheets until a repo-resident recall lane or explicit write surface approved by your human partner
+surface exists.
+
+Use `references/direct-landing.md` for exact path limits before any repo mutation.
+
+## Output format
+
+For drafts, return only the sheet text plus a short source-boundary note when helpful. Do not include hidden source
+analysis inside participant-facing text.
+
+For persistence, report the created/updated path, commit, and navigation update. Stay inside the allowed lane.

@@ -870,7 +870,13 @@ def _exclusion_record(target: SkillTarget) -> dict[str, Any]:
     }
 
 
-def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *, scope_label: str) -> SkillArtifact:
+def _validate_existing_artifact(
+    target: SkillTarget,
+    artifact: SkillArtifact,
+    *,
+    scope_label: str,
+    skip_content_validation: bool = False,
+) -> SkillArtifact:
     zip_path = ROOT / artifact.zip_path
     if not zip_path.exists():
         raise FileNotFoundError(zip_path)
@@ -938,32 +944,33 @@ def _validate_existing_artifact(target: SkillTarget, artifact: SkillArtifact, *,
             f"check {target.source_path}"
         )
 
-    staged_root, tempdir = _materialize_export_tree(target)
-    try:
-        with zipfile.ZipFile(zip_path) as archive:
-            extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
-            staged_files, staged_forbidden_paths = scan_skill_tree(staged_root)
-            if staged_forbidden_paths:
-                raise ValueError(
-                    f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
-                    f"generated/{artifact.zip_path} staged export contains forbidden source paths: "
-                    f"{', '.join(staged_forbidden_paths)}"
-                )
-            expected_names = [f"{target.skill}/{_relative_path(path, staged_root)}" for path in staged_files]
-            if extracted_names != expected_names:
-                raise ValueError(
-                    f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
-                    f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
-                )
-            for name in extracted_names:
-                staged_file = staged_root / Path(name).relative_to(target.skill)
-                if archive.read(name) != _read_canonical_file_bytes(staged_file):
+    if not skip_content_validation:
+        staged_root, tempdir = _materialize_export_tree(target)
+        try:
+            with zipfile.ZipFile(zip_path) as archive:
+                extracted_names = sorted(name for name in archive.namelist() if name and not name.endswith("/"))
+                staged_files, staged_forbidden_paths = scan_skill_tree(staged_root)
+                if staged_forbidden_paths:
                     raise ValueError(
                         f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
-                        f"generated/{artifact.zip_path} content differs from {target.source_path}"
+                        f"generated/{artifact.zip_path} staged export contains forbidden source paths: "
+                        f"{', '.join(staged_forbidden_paths)}"
                     )
-    finally:
-        tempdir.cleanup()
+                expected_names = [f"{target.skill}/{_relative_path(path, staged_root)}" for path in staged_files]
+                if extracted_names != expected_names:
+                    raise ValueError(
+                        f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                        f"generated/{artifact.zip_path} content inventory differs from {target.source_path}"
+                    )
+                for name in extracted_names:
+                    staged_file = staged_root / Path(name).relative_to(target.skill)
+                    if archive.read(name) != _read_canonical_file_bytes(staged_file):
+                        raise ValueError(
+                            f"{scope_label} artifact drift for {target.pack}/{target.skill}; "
+                            f"generated/{artifact.zip_path} content differs from {target.source_path}"
+                        )
+        finally:
+            tempdir.cleanup()
 
     return artifact
 
@@ -1047,7 +1054,7 @@ def synchronize_skill_zips(*, pack: str | None = None, skill: str | None = None,
     return registry
 
 
-def validate_skill_zip_registry() -> dict[str, Any]:
+def validate_skill_zip_registry(*, skip_content_validation: bool = False) -> dict[str, Any]:
     registry = load_registry()
     targets = discover_skill_export_targets()
     artifacts_by_key = _registry_artifact_indexes(registry)
@@ -1078,7 +1085,14 @@ def validate_skill_zip_registry() -> dict[str, Any]:
             )
         if exclusion is not None:
             raise ValueError(f"active skill {target.pack}/{target.skill} is incorrectly marked as excluded")
-        artifacts.append(_validate_existing_artifact(target, artifact, scope_label="current"))
+        artifacts.append(
+            _validate_existing_artifact(
+                target,
+                artifact,
+                scope_label="current",
+                skip_content_validation=skip_content_validation,
+            )
+        )
     validate_generated_surface(artifacts)
     expected = build_registry(artifacts, exclusions=exclusions)
     discovered_keys = {(target.pack, target.skill) for target in targets}

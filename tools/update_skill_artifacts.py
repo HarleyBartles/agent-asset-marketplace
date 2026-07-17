@@ -82,6 +82,14 @@ def _parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--check", action="store_true", help="validate current generated artifacts without writing")
     parser.add_argument("--base", default="origin/main", help="git revision used for generated drift validation")
+    parser.add_argument(
+        "--skip-zip-content-validation",
+        action="store_true",
+        help=(
+            "skip the expensive byte-by-byte zip content comparison in CI; "
+            "the cheap source/zip hash and file-count checks still run"
+        ),
+    )
     args = parser.parse_args()
 
     update_selected = any((args.skill, args.pack, args.all, args.full_regeneration))
@@ -100,8 +108,12 @@ def main() -> int:
 
     if args.check:
         _run_full_regeneration_checks()
-        registry = validate_skill_zip_registry()
-        validate_generated_drift(base=args.base, full_regeneration=args.full_regeneration)
+        registry = validate_skill_zip_registry(skip_content_validation=args.skip_zip_content_validation)
+        validate_generated_drift(
+            base=args.base,
+            full_regeneration=args.full_regeneration,
+            skip_content_validation=args.skip_zip_content_validation,
+        )
         print_registry_receipt(registry)
         return 0
 

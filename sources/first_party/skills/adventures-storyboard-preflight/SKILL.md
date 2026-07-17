@@ -1,7 +1,7 @@
 ---
 name: adventures-storyboard-preflight
 description: Use when prepare GPT/project-side Adventures storyboards, prompt boards,
-  and deterministic visual planning. use when Harley asks ordinary GPT to storyboard
+  and deterministic visual planning. use when your human partner asks ordinary GPT to storyboard
   frames, make prompt boards, map slide visuals, preflight story beats, or produce
   visual planning packets before image generation; never grants image-generation authority.
 metadata:
@@ -12,13 +12,13 @@ metadata:
   status: active
   owner: Harley Bartles
   scope: Use when prepare GPT/project-side Adventures storyboards, prompt boards,
-    and deterministic visual planning. use when Harley asks ordinary GPT to storyboard
+    and deterministic visual planning. use when your human partner asks ordinary GPT to storyboard
     frames, make prompt boards, map slide visuals, preflight story beats, or produce
     visual planning packets before image generation; never grants image-generation
     authority.
   use_when:
   - Use when prepare GPT/project-side Adventures storyboards, prompt boards, and deterministic
-    visual planning. use when Harley asks ordinary GPT to storyboard frames, make
+    visual planning. use when your human partner asks ordinary GPT to storyboard frames, make
     prompt boards, map slide visuals, preflight story beats, or produce visual planning
     packets before image generation; never grants image-generation authority.
   do_not_use_when:
@@ -27,7 +27,7 @@ license: MIT
 ---
 # Adventures Storyboard Preflight
 
-Use this skill when Harley asks ordinary GPT/project workflow to storyboard Adventures frames, make prompt boards, map slide visuals, prepare visual planning packets, or preflight story beats before image generation. Use it to produce deterministic planning inputs that may later support image preflight, QA, deck planning, or asset work.
+Use this skill when your human partner asks ordinary GPT/project workflow to storyboard Adventures frames, make prompt boards, map slide visuals, prepare visual planning packets, or preflight story beats before image generation. Use it to produce deterministic planning inputs that may later support image preflight, QA, deck planning, or asset work.
 
 ## Owned decision
 

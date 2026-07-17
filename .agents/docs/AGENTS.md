@@ -11,10 +11,6 @@ Defer to the repository root `AGENTS.md` for global repo doctrine and to
 Keep these docs compact. They should describe scoped law, not directory
 navigation.
 
-When documenting reusable workflow patterns, point agents at
-`.agents/playbooks/`, `.agents/runbooks/`, and this docs-owned doctrine surface
-instead of restating procedural steps here.
-
 ## Routing pointers
 
 - `mesh-policy.md` for the canonical mesh statement

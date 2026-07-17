@@ -24,8 +24,6 @@ Bundle identity:
 - bundle version: `1.0.0`
 - marketplace source: `.agents/plugins/marketplace.json`
 - bundle root: `codex-marketplace/plugins/house-skills/`
-- human registry source: `sources/first_party/skills/house-skills/decisions.md`
-- structured archive ledger: `sources/first_party/skills/house-skills/decisions.json`
 - generator: `tools/generate_marketplace.py`
 - validator: `tools/validate_marketplace.py`
 

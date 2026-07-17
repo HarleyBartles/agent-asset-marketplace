@@ -1,7 +1,7 @@
 ---
 name: asset-market
 description: Use when source-facing Asset Marketplace skill and pack acquisition with
-  fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare,
+  fidelity control. Use when your human partner asks to get, pull, fetch, install, update, compare,
   or prepare the latest GPT skill or bundled skill pack from the asset marketplace
   repo, especially phrases like "using asset-market", "from the repo", or "latest
   marketplace version". Owns connector-backed repo source resolution, exact source
@@ -15,7 +15,7 @@ metadata:
   status: active
   owner: Harley Bartles
   scope: Use when source-facing Asset Marketplace skill and pack acquisition with
-    fidelity control. Use when Harley asks to get, pull, fetch, install, update, compare,
+    fidelity control. Use when your human partner asks to get, pull, fetch, install, update, compare,
     or prepare the latest GPT skill or bundled skill pack from the asset marketplace
     repo, especially phrases like "using asset-market", "from the repo", or "latest
     marketplace version". Owns connector-backed repo source resolution, exact source
@@ -24,7 +24,7 @@ metadata:
     repo.
   use_when:
   - Use when source-facing Asset Marketplace skill and pack acquisition with fidelity
-    control. Use when Harley asks to get, pull, fetch, install, update, compare, or
+    control. Use when your human partner asks to get, pull, fetch, install, update, compare, or
     prepare the latest GPT skill or bundled skill pack from the asset marketplace
     repo, especially phrases like "using asset-market", "from the repo", or "latest
     marketplace version". Owns connector-backed repo source resolution, exact source
@@ -48,15 +48,15 @@ This skill owns source acquisition, source-fidelity blocking, and pack-to-per-sk
 
 Treat the asset marketplace repo as the source of truth only after it has been inspected through an available repo connector. Do not infer current repo paths, manifest state, latest skill contents, pack inventory, or projection mappings from memory, chat, Linear, prior package links, or installed local skills.
 
-When connector access to the marketplace repo is unavailable, stop with `blocked_source_unavailable`. Do not reconstruct the skill or pack from memory unless Harley explicitly asks for new skill authoring rather than the marketplace version.
+When connector access to the marketplace repo is unavailable, stop with `blocked_source_unavailable`. Do not reconstruct the skill or pack from memory unless your human partner explicitly asks for new skill authoring rather than the marketplace version.
 
 ## Route classification
 
 Classify the request before source inspection:
 
-- `single_skill`: Harley asks for one named skill, such as `asset-market`, `adventures-bootstrap`, or `wild-bunch-domain-modeling`.
-- `pack`: Harley asks for a bundled skill pack or plugin, such as `adventures-pack`, `wild-bunch-project-pack`, `install the Adventures project pack`, or `install all skills from a pack`.
-- `comparison`: Harley asks to compare repo source, installed skill state, package contents, or projections without installation.
+- `single_skill`: your human partner asks for one named skill, such as `asset-market`, `adventures-bootstrap`, or `wild-bunch-domain-modeling`.
+- `pack`: your human partner asks for a bundled skill pack or plugin, such as `adventures-pack`, `wild-bunch-project-pack`, `install the Adventures project pack`, or `install all skills from a pack`.
+- `comparison`: your human partner asks to compare repo source, installed skill state, package contents, or projections without installation.
 - `blocked_or_ambiguous`: the request could refer to multiple skills or packs and repo inspection cannot disambiguate.
 
 For GPT installation, a pack is not itself the install unit. A pack is a repo source catalog that expands into a queue of single-skill install units.
@@ -75,7 +75,7 @@ For GPT installation, a pack is not itself the install unit. A pack is a repo so
 
 ## Pack workflow
 
-Use the pack workflow when Harley requests a project pack, plugin bundle, or all skills from a pack for GPT installation.
+Use the pack workflow when your human partner requests a project pack, plugin bundle, or all skills from a pack for GPT installation.
 
 1. Inspect the pack root through the connector. Required pack evidence is:
    - `.codex-plugin/plugin.json` when present;
@@ -147,7 +147,7 @@ For blocked pack requests, use the same blocked fields in `asset_market_pack_pac
 
 Use the current install/projection lane after source acquisition when the user wants an installable package or install handoff. For a pack, hand off one green `asset_market_source_packet` per install unit; do not ask a pack-level workflow to install the whole plugin or pack as one unit.
 
-Use `skill-creator` only when Harley asks to create or modify skill content rather than reproduce the marketplace source exactly.
+Use `skill-creator` only when your human partner asks to create or modify skill content rather than reproduce the marketplace source exactly.
 
 Use repo/GitHub proof or worker dispatch skills only when the task is to change or verify the marketplace repo itself. This skill is read-only with respect to repo state.
 

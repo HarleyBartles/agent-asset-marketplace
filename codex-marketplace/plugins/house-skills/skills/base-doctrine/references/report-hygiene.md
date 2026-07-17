@@ -52,7 +52,7 @@ Next gate:
 Use this mapping:
 
 - Codex thread exists, no completion comment: `delegated/running`.
-- Codex completion comment exists, no PR attachment or `Created pull request` comment: `returned/pr-gate`; next gate is for Harley to open the Codex task link and click `Create PR`.
+- Codex completion comment exists, no PR attachment or `Created pull request` comment: `returned/pr-gate`; next gate is for your human partner to open the Codex task link and click `Create PR`.
 - PR attachment or `Created pull request` comment exists: `pr-created`; next gate is GitHub PR verification.
 - PR merged and main verified: `landed`; next gate is issue closeout only when authorized.
 

@@ -70,7 +70,7 @@ If the answer is mostly decorative, classify as `amber_progression_gap` or `red_
 ## Actor and interaction test
 
 
-Patch needs meaningful counterparties unless Harley explicitly defines a solitary adventure.
+Patch needs meaningful counterparties unless your human partner explicitly defines a solitary adventure.
 
 Ask:
 
@@ -114,7 +114,7 @@ and classify each relevant candidate:
 - `reuse_candidate`: the asset naturally belongs in the frame and strengthens the lesson. Example: a
   client/stakeholder role in a mission-control deck if the world includes mission sponsors, command
   stakeholders, or briefing-room authorities.
-- `maybe_adapt`: the asset could work only if Harley explicitly chooses a frame that justifies the
+- `maybe_adapt`: the asset could work only if your human partner explicitly chooses a frame that justifies the
   role or environment.
 - `do_not_reuse`: the asset would be a cameo, cross-context noise, or misleading visual shorthand.
   Example: a Club DB bouncer in a non-club/non-gate deck unless the frame genuinely includes access
@@ -130,4 +130,4 @@ Ask:
 - Is reuse helping the audience understand the frame, or merely rewarding project familiarity?
 - Should the asset stay out of this deck even though it is available?
 
-If asset reuse remains material and unresolved, classify as `amber_asset_fit_unclear` and ask Harley interactively.
+If asset reuse remains material and unresolved, classify as `amber_asset_fit_unclear` and ask your human partner interactively.

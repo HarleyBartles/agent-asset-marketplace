@@ -12,7 +12,7 @@ GitHub API routes such as `api_tool` for exact issue, comment, file, commit,
 compare, and authorized mutation operations.
 
 If `file_search` is not bound and broad repository discovery would materially
-reduce risk, ask Harley to bind the relevant GitHub connector before continuing
+reduce risk, ask your human partner to bind the relevant GitHub connector before continuing
 or state that the task is operating from narrower live API spot checks. Do not
 treat an unbound `file_search` route as repo absence when another live GitHub
 route works.
@@ -84,7 +84,7 @@ minimal bible -> Pass A source images and deterministic overview sheet
 
 When interpreting a bible for asset-sheet production, return constraints for source-image generation or PIG production first. The final
 sheet layout, captions, border, and footer belong to deterministic compile after source-image QA. Do not route layout,
-caption, border, footer, contact-sheet, or template work to one-shot image generation from this skill; if Harley
+caption, border, footer, contact-sheet, or template work to one-shot image generation from this skill; if your human partner
 explicitly requests an ordinary GPT experiment, still require the downstream adventures-visual-intent-gate and image-preflight gates to establish
 current-turn mutation authority. For PIG experiments, require a bounded PIG job and keep final acceptance outside PIG.
 

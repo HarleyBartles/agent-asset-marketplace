@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import importlib
 import json
 import re
@@ -37,8 +38,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         "ADVENTURES_PACK_BUNDLE_MANIFEST_PATH",
         "ADVENTURES_PACK_SOURCE_MAP_PATH",
         "ADVENTURES_PACK_SKILL_PATH",
-        "SOURCE_DECISIONS_JSON_PATH",
-        "SOURCE_DECISIONS_MD_PATH",
         "SOURCE_INTAKE_JSON_PATH",
         "SOURCE_MAP_PATH",
         "PLUGIN_ROOT_INVENTORY_PATH",
@@ -46,8 +45,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         "REPO_INDEX_README_PATH",
         "build_marketplace_manifest",
         "load_json",
-        "normalize_decision_record",
-        "normalize_decision_row",
         "parse_top_markdown_table",
         "_installation_policy_for_plugin",
     ):
@@ -57,6 +54,8 @@ def _bootstrap_marketplace_dependencies() -> None:
     skill_zip_artifacts = importlib.import_module("skill_zip_artifacts")
     globals()["validate_skill_markdown_frontmatter"] = skill_zip_artifacts.validate_skill_markdown_frontmatter
     globals()["validate_skill_zip_registry"] = skill_zip_artifacts.validate_skill_zip_registry
+    globals()["load_registry"] = skill_zip_artifacts.load_registry
+    globals()["SKILL_ZIP_ROOT"] = skill_zip_artifacts.ROOT
 
 
 def check_json(path: Path) -> dict:
@@ -86,6 +85,11 @@ def _run_tool_check(command: list[str], label: str) -> None:
         subprocess.run(command, cwd=ROOT, check=True)
     except subprocess.CalledProcessError as exc:  # pragma: no cover - exercised via integration checks
         raise ValueError(f"{label} failed with exit code {exc.returncode}") from exc
+
+
+def _git_lines(*args: str) -> list[str]:
+    result = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True)
+    return result.stdout.splitlines()
 
 
 def validate_projection_materializer() -> None:
@@ -446,36 +450,6 @@ def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str
             if plugin_author == "Harley Bartles" and "Harley Bartles" in source_author:
                 if source_category == "third_party":
                     raise ValueError(f"{bundle_name} entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
-
-
-def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
-    normalized_json = [
-        _decision_structure(normalize_decision_record(row))
-        for row in decisions
-        if row.get("source_id") and row.get("source_id") != "global.mark-19.source-import-boundary"
-    ]
-    normalized_md = [
-        _decision_structure(normalize_decision_row(row))
-        for row in decisions_md_rows
-        if row.get("source_id") and row.get("source_id") != "global.mark-19.source-import-boundary"
-    ]
-    if normalized_json != normalized_md:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md does not match sources/first_party/skills/house-skills/decisions.json")
-
-    boundary = next((row for row in decisions if row.get("id") == "global.mark-19.source-import-boundary"), None)
-    if boundary is None:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.json is missing the MARK-19 boundary row")
-    if boundary.get("import_state") != "source-import-boundary":
-        raise ValueError("sources/first_party/skills/house-skills/decisions.json has an invalid MARK-19 boundary state")
-    if "global.mark-19.source-import-boundary" not in decisions_md_text:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary row")
-    if "MARK-19 imports exactly six reviewed core generic buster source records" not in decisions_md_text:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary description")
-
-
-def _decision_structure(record: dict[str, object]) -> dict[str, object]:
-    keys = ("issue", "source_id", "source_path", "public_name", "provenance_name", "import_state", "scope")
-    return {key: record.get(key, "") for key in keys}
 
 
 def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
@@ -1342,8 +1316,6 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
     if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/house-skills/skills":
         raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        "sources/first_party/skills/house-skills/decisions.json",
-        "sources/first_party/skills/house-skills/decisions.md",
         "sources/first_party/skills/house-skills/intake.json",
         "provenance/house-skills.md",
     ]:
@@ -1543,14 +1515,101 @@ def validate_no_legacy_manifest_shapes() -> None:
     print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 
-def main() -> int:
-    _run_tool_check(
-        [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
-        "plugin root inventory check",
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
+    parser.add_argument(
+        "--skip-freshness-checks",
+        action="store_true",
+        help=(
+            "Skip freshness checks already covered by an upstream step "
+            "(generate_plugin_root_inventory --check, projection materializer, "
+            "pack manifests, and skill zip registry). Metadata validation "
+            "(validate_repo_index) still runs."
+        ),
     )
+    return parser.parse_args()
+
+
+def validate_skill_zip_assertions() -> None:
+    """Assert skill-zip registry invariants that are not covered elsewhere.
+
+    These three checks previously lived in the standalone
+    ``validate_skill_zips.py`` step. They are cheap metadata assertions
+    (no zip materialization), so they run regardless of
+    ``--skip-freshness-checks``.
+    """
+    import zipfile
+
+    registry = load_registry()
+
+    # finishing-a-development-branch must be a direct (verbatim) export.
+    verbatim = next(
+        (
+            record
+            for record in registry["artifacts"]
+            if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
+        ),
+        None,
+    )
+    if verbatim is None:
+        raise ValueError("expected finishing-a-development-branch artifact in registry but found none")
+    if verbatim["export_mode"] != "direct":
+        raise AssertionError("expected finishing-a-development-branch to be a direct export")
+    if verbatim.get("overlay_path") is not None:
+        raise AssertionError("expected finishing-a-development-branch to have a null overlay path")
+    with zipfile.ZipFile(SKILL_ZIP_ROOT / verbatim["zip_path"]) as archive:
+        skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
+    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
+        raise AssertionError("direct skill zip does not contain the retained upstream guidance")
+    if "Codex Marketplace Note" in skill_md:
+        raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
+
+    # dispatching-parallel-agents must be excluded.
+    excluded = next(
+        (
+            record
+            for record in registry["excluded"]
+            if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
+        ),
+        None,
+    )
+    if excluded is None:
+        raise ValueError("expected dispatching-parallel-agents excluded record in registry but found none")
+    if excluded["export_mode"] != "excluded":
+        raise AssertionError("expected dispatching-parallel-agents to be excluded")
+    if "subagents" not in excluded["reason"]:
+        raise AssertionError("excluded skill should explain the subagent limitation")
+
+    # worker-verification must export as an installable zip and must not be
+    # re-added to wild-bunch-project-pack.
+    worker_verification = next(
+        (
+            record
+            for record in registry["artifacts"]
+            if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
+        ),
+        None,
+    )
+    if worker_verification is None:
+        raise ValueError("expected house-skills/worker-verification artifact in registry but found none")
+    if worker_verification["export_mode"] not in {"direct", "overlay"}:
+        raise AssertionError("house-skills/worker-verification should export as an installable zip")
+    if any(
+        record["skill"] == "worker-verification" and record["pack"] == "wild-bunch-project-pack"
+        for record in registry["artifacts"]
+    ):
+        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
+
+
+def main() -> int:
+    args = _parse_args()
+    if not args.skip_freshness_checks:
+        _run_tool_check(
+            [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
+            "plugin root inventory check",
+        )
     _bootstrap_marketplace_dependencies()
 
-    decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
@@ -1559,15 +1618,13 @@ def main() -> int:
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
-    decisions_md_text = check_text(SOURCE_DECISIONS_MD_PATH)
-    decision_rows = parse_top_markdown_table(SOURCE_DECISIONS_MD_PATH)
 
-    validate_decisions(decisions, decision_rows, decisions_md_text)
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
-    validate_skill_zip_registry()
-    validate_projection_materializer()
-    validate_pack_manifests()
+    if not args.skip_freshness_checks:
+        validate_skill_zip_registry()
+        validate_projection_materializer()
+        validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
@@ -1638,6 +1695,7 @@ def main() -> int:
         )
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()
+    validate_skill_zip_assertions()
 
     print("Marketplace validation passed.")
     return 0

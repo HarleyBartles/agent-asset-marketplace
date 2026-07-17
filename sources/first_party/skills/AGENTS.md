@@ -37,6 +37,10 @@ Use these rules when editing or adding a first-party skill under
   - `do_not_use_when`
   - `related_skills`
   - `notes`
+- The `normalize_first_party_skill_sources.py` tool only preserves whitelisted
+  metadata fields. When adding new metadata fields, update the whitelist in
+  `tools/normalize_first_party_skill_sources.py` or the field will be silently
+  stripped on the next rebuild.
 - Do not write projection-target state back into canonical source frontmatter;
   projection surfaces belong in catalog or generator outputs.
 

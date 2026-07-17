@@ -10,21 +10,21 @@ Use an available live repository or GitHub-state capability for exact known targ
 
 Use an available indexed repository-search capability only for broad discovery tasks such as stale-reference sweeps, duplicate checks, unknown-file discovery, multi-file inventories, and corpus-style reads, and only when the active runtime explicitly exposes the target repository as searchable content.
 
-Use uploaded-file or file-library inspection only for files actually supplied or available in that file surface. Do not treat uploaded-file or file-library search as repository truth unless the repository source explicitly points to that package or Harley scopes the task to that package.
+Use uploaded-file or file-library inspection only for files actually supplied or available in that file surface. Do not treat uploaded-file or file-library search as repository truth unless the repository source explicitly points to that package or your human partner scopes the task to that package.
 
 Do not assume the model-facing name of any connector. Connector presence is not itself a reason to inspect connectors, search repositories, or enter source-route work for ordinary chat.
 
-If broad indexed discovery would materially reduce false-green risk but no such capability is available or safe to use, state that limitation. Proceed from exact routes only when they are sufficient, otherwise ask Harley for the appropriate repository-search capability or stop with that blocker.
+If broad indexed discovery would materially reduce false-green risk but no such capability is available or safe to use, state that limitation. Proceed from exact routes only when they are sufficient, otherwise ask your human partner for the appropriate repository-search capability or stop with that blocker.
 
 Never treat one route failure or search miss as repository absence. State the layer that failed: exact repository route, indexed search/binding, connector scope, authorization, uploaded-file scope, package mirror scope, or runtime/tool error.
 
 ## Canonical project source
 
-The canonical Adventures repository is `HarleyBartles/adventures-of-patch` unless Harley names another source. Repo files, issues, repo-tracked receipts, repo-tracked asset docs, and repo-tracked playbooks are authoritative for project state.
+The canonical Adventures repository is `HarleyBartles/adventures-of-patch` unless your human partner names another source. Repo files, issues, repo-tracked receipts, repo-tracked asset docs, and repo-tracked playbooks are authoritative for project state.
 
-Project-source zips and visual/contact-sheet packages are inspection mirrors only when the repo points to them, Harley scopes the task to them, or they match repo-indexed package names. If repo text and visual/package mirrors disagree, report the mismatch.
+Project-source zips and visual/contact-sheet packages are inspection mirrors only when the repo points to them, your human partner scopes the task to them, or they match repo-indexed package names. If repo text and visual/package mirrors disagree, report the mismatch.
 
-Patch is the default first-class protagonist unless Harley explicitly says otherwise. Preserve Patch identity and continuity through current repo evidence and the relevant Adventures skill when Patch, visual canon, image planning, or scene generation is actually in scope.
+Patch is the default first-class protagonist unless your human partner explicitly says otherwise. Preserve Patch identity and continuity through current repo evidence and the relevant Adventures skill when Patch, visual canon, image planning, or scene generation is actually in scope.
 
 ## First repo reads when repo state matters
 

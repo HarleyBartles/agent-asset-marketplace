@@ -9,7 +9,7 @@ right, wrong, too neat, missing, overdramatic, or not really them.
 
 ## Canonical style
 
-Use this style by default unless Harley explicitly asks for a different form:
+Use this style by default unless your human partner explicitly asks for a different form:
 
 - start with a short intro only;
 - avoid writerly framing such as "as a writer," "what I am trying to do," or long explanation of the book's mechanics;
@@ -46,7 +46,7 @@ Do not make the statement series a questionnaire. Do not ask for memories inside
 ## Do not let sneak peek kill the prompt sheet
 
 Do not ask full memory-prompt questions in a sneak peek. Do not exhaust rooms, DMs, public exchanges, room
-lineages, conflicts, or event memories. Leave those for prompt-sheet buster.
+lineages, conflicts, or event memories. Leave those for rooms-sheet-creator.
 
 A sneak peek may mention that separate memory prompts may follow or exist, but it should not merge the two processes.
 
@@ -57,7 +57,7 @@ Default to:
 - plain language;
 - no repo jargon;
 - no archive/transcript case-file posture;
-- no hidden structural/thematic interpretation unless Harley explicitly approves disclosure;
+- no hidden structural/thematic interpretation unless your human partner explicitly approves disclosure;
 - no direct transcript quotes unless explicitly approved;
 - no claim that the participant must confirm the project's read.
 
@@ -80,8 +80,7 @@ Bad moves:
 - Here is the archive evidence for how we read you.
 - Here is the prompt sheet in miniature.
 
-## Relation to prompt-sheet buster
+## Relation to rooms-sheet-creator
 
-The sneak peek can inform later prompt-sheet sensitivity, but it should not replace the prompt sheet. Prompt-
-sheet buster decides memory prompts separately and should not assume the participant has seen or accepted the
-sneak peek unless Harley says so.
+The sneak peek can inform later prompt-sheet sensitivity, but it should not replace the prompt sheet. rooms-sheet-creator decides memory prompts separately and should not assume the participant has seen or accepted the
+sneak peek unless your human partner says so.

@@ -1,3 +1,5 @@
+> Paths like `rooms-world/` refer to external repos in the Rooms-mostly ecosystem, not paths in this marketplace repo.
+
 # Direct landing
 
 GPT direct landing is allowed only where a repo-resident governance surface has established a narrow lane.
@@ -22,14 +24,14 @@ Allowed surfaces:
 
 ## Recall lane
 
-Do not persist recall sheets by default until a governed repo-resident recall lane exists or Harley explicitly approves
+Do not persist recall sheets by default until a governed repo-resident recall lane exists or your human partner explicitly approves
 the exact write surface in the current conversation. Drafting recall sheets in chat is allowed.
 
 ## Forbidden surfaces
 
 The direct-landing exceptions do not authorize:
 
-- canon execution or Brian canon persistence;
+- canon execution or World/canon persistence;
 - Pit/archive extraction or mutation;
 - transcript mutation;
 - ProjectDB mutation;

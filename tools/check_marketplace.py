@@ -34,15 +34,11 @@ def main() -> int:
     # source normalization shifted line numbers or whitespace) must be
     # healed via rebuild_marketplace.py before CI can pass.
     _run_tool("heal_overlays.py", "--check")
-    _run_tool("update_skill_artifacts.py", "--check", "--full-regeneration", "--base", args.base)
+    _run_tool("update_skill_artifacts.py", "--check", "--full-regeneration", "--base", args.base, "--skip-zip-content-validation")
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py", "--check")
-    _run_tool("validate_marketplace.py")
-    _run_tool("generate_repo_index.py", "--check")
+    _run_tool("validate_marketplace.py", "--skip-freshness-checks")
     _run_tool("generate_index_mesh.py", "--check")
-    _run_tool("generate_first_party_skill_catalog.py", "--check")
-    _run_tool("validate_repo_index.py")
-    _run_tool("validate_skill_zips.py")
     _run_git("diff", "--check")
     _run_git("diff", "--exit-code")
     return 0

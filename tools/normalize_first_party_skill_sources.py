@@ -172,6 +172,10 @@ def _ensure_list(value: Any) -> list[str]:
 
 
 _USE_WHEN_PREFIXES = ("use when ", "use for ")
+_USE_BEFORE_PREFIXES = ("use before ",)
+_USE_AFTER_PREFIXES = ("use after ",)
+_USE_WITH_PREFIXES = ("use with ",)
+_USE_INSTEAD_PREFIXES = ("use instead ",)
 _DO_NOT_USE_WHEN_PREFIXES = ("do not use when ", "do not use ", "don't use when ", "avoid when ")
 
 
@@ -193,10 +197,17 @@ def _normalize_use_when(description: str) -> str:
     text = description.strip()
     if not text:
         return text
-    bare = _strip_prefix(text, _USE_WHEN_PREFIXES)
-    if not bare:
-        return text
-    return "Use when " + bare
+    for prefixes, label in (
+        (_USE_WHEN_PREFIXES, "Use when"),
+        (_USE_BEFORE_PREFIXES, "Use before"),
+        (_USE_AFTER_PREFIXES, "Use after"),
+        (_USE_WITH_PREFIXES, "Use with"),
+        (_USE_INSTEAD_PREFIXES, "Use instead"),
+    ):
+        bare = _strip_prefix(text, prefixes)
+        if bare != text:
+            return f"{label} {bare}"
+    return "Use when " + text[0].lower() + text[1:]
 
 
 def _normalize_condition(value: str, *, prefix: str) -> str:
@@ -205,9 +216,11 @@ def _normalize_condition(value: str, *, prefix: str) -> str:
         return text
     if prefix == "do not use when":
         bare = _strip_prefix(text, _DO_NOT_USE_WHEN_PREFIXES)
-    else:
-        bare = _strip_prefix(text, (prefix,))
-    if not bare:
+        if not bare or bare == text:
+            return text
+        return f"{_capitalize_first(prefix)} {bare}"
+    bare = _strip_prefix(text, (prefix,))
+    if not bare or bare == text:
         return text
     return f"{_capitalize_first(prefix)} {bare}"
 
@@ -256,7 +269,7 @@ def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
         "do_not_use_when": do_not_use_when,
     }
 
-    for key in ("related_skills", "notes"):
+    for key in ("related_skills", "notes", "use_before", "use_after", "use_with", "use_instead"):
         if key in metadata and metadata.get(key) is not None:
             normalized_metadata[key] = metadata[key]
 

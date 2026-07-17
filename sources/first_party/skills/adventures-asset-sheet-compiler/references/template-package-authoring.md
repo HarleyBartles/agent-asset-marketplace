@@ -58,7 +58,7 @@ areas are decorative only, leave `text_regions` empty rather than inventing edit
 ## Reusable-template neutrality and baked-text policy
 
 Blank templates are reusable layout contracts. They must not encode a specific adventure, issue, deck, character, scene,
-or one-off use case unless Harley explicitly asks for a non-reusable special-purpose template. Prefer generic names and
+or one-off use case unless your human partner explicitly asks for a non-reusable special-purpose template. Prefer generic names and
 neutral geometry for reusable shapes, for example `template_asset_sheet_4up_equal_header_v2` rather than
 `template_asset_sheet_dugout_4view_v1`.
 
