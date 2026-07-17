@@ -40,6 +40,10 @@ bundle manifests, projected skill trees, source maps, provenance maps, or zip
 artifacts, and do not introduce plugin-specific one-off scripts when the
 existing pipeline can be extended or reused.
 
+MUST READ when changing any skill's projected plugin home (adding, removing,
+retiring, moving between packs, or touching a bundle manifest entry):
+`../docs/custody-and-projection-doctrine.md` Mega-packs section.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

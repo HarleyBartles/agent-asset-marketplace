@@ -67,8 +67,14 @@ declares both projection-lane pack nodes and mega-pack nodes; mega-pack nodes
 set `is_mega_pack: true`, while the registry as a whole decides which plugin
 roots are actively projected:
 
-- **`house-skills`** — first-party mega-pack. Every first-party skill goes
-  in `house-skills` AND wherever else it is bundled.
+- **`house-skills`** — first-party mega-pack. Every first-party skill stays
+  in `house-skills` AND wherever else it is bundled. A topical projection-lane
+  pack (such as `repo-worker-pack` or `rooms-project-pack`) is additional
+  exposure, not a replacement home; the skill must also remain in
+  `house-skills`. Removing a skill from `house-skills` while it remains in a
+  topical pack is a doctrine violation and will fail
+  `validate_mega_pack_inclusion`. When a first-party skill is retired, remove
+  it from `house-skills` and from every topical pack in the same change.
 - **`codex-cortex`** — claude-cortex source family mega-pack.
 - **`everything-codex-code`** — ecc source family mega-pack.
 - **`superpowers-plus`** — retained mixed projection-lane bundle over the
@@ -141,9 +147,9 @@ The business-as-usual target for adding or updating a skill is:
 
 If a first-party skill is removed from a project pack but remains approved in
 `house-skills`, keep the source in custody and regenerate the projections so
-only the project pack loses the exposure. `crew` is one example of a skill that
-may stay in `house-skills` while being absent from project-pack exposure unless
-the manifest explicitly justifies a project-specific appearance.
+only the project pack loses the exposure. A skill may stay in `house-skills`
+while being absent from project-pack exposure unless the manifest explicitly
+justifies a project-specific appearance.
 
 No Python edits for normal skill work. If the workflow requires editing Python
 to land a skill, that is a tooling gap to raise, not a step to silently absorb.

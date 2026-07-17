@@ -60,3 +60,9 @@ Use these rules when editing or adding a first-party skill under
 - If a historical name remains anywhere, it must be quarantined to provenance
   or archive material.
 - Skill-root `INDEX.md` files do not belong in this tree.
+
+## Mega-pack inclusion
+
+MUST READ when changing any skill's projected plugin home (adding, removing,
+retiring, or moving a skill between packs, or touching a bundle manifest
+entry): `../../../docs/custody-and-projection-doctrine.md` Mega-packs section.
