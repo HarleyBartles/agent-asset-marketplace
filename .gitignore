@@ -49,3 +49,8 @@ Thumbs.db
 # Local Devin/Codex issue worktrees
 .worktrees/*
 !.worktrees/AGENTS.md
+
+# Superpowers SDD and specs are local-only working surfaces
+.agents/superpowers/sdd/
+.agents/superpowers/specs/
+.superpowers/
