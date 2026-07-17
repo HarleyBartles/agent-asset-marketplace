@@ -1,0 +1,13 @@
+Rebuild marketplace projections and remove deleted skill entries
+
+Remove rooms-bootstrap and rooms-source-partitioning from
+custody-pack-registry.json (deleted in Task 1 merge). Run full
+marketplace rebuild to regenerate all projections, provenance maps,
+source maps, bundle manifests, skill zips, and index mesh.
+
+Also includes first-party source normalization for 6 rooms-* skills
+(frontmatter standardization from normalize_first_party_skill_sources.py).
+
+Generated with [Devin](https://devin.ai)
+
+Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>

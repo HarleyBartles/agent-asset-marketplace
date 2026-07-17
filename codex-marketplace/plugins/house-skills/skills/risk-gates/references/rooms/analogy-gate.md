@@ -19,9 +19,6 @@ metadata:
     use rooms-canon-buster instead.
   - Do not use when the task is ambiguity preservation — use rooms-ambiguity-buster
     instead.
-  use_instead:
-  - rooms-canon-buster
-  - rooms-ambiguity-buster
 license: MIT
 ---
 # Rooms Analogy Buster

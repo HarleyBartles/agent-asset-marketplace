@@ -1,4 +1,4 @@
-﻿# Version History for Rooms Source Partitioning
+# Version History for Rooms Source Partitioning
 
 - Historical version: `v1`
 - Historical source id: `rooms-source-partitioning-v1`

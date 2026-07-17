@@ -20,7 +20,7 @@ For issue-backed work, preserve or require:
 - `worker_claim_vs_observed_state`;
 - `judgment`.
 
-Tracked source-controlled changes route through worker dispatches unless Harley explicitly authorizes a direct GPT exception.
+Tracked source-controlled changes route through worker dispatches unless your human partner explicitly authorizes a direct GPT exception.
 
 ## Devin-shaped Rooms repo cleanup campaigns
 

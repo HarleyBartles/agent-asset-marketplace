@@ -1,10 +1,7 @@
 ---
 name: rooms-project-doctrine
-description: Use when route shared Rooms project doctrine without duplicating detailed
-  law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named
-  Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity,
-  actor/domain boundaries, report hygiene, GitHub publication or issue closure posture,
-  and when a task needs the right Rooms doctrine-bearing skill before action.
+description: Use when use before working in Rooms — for project arrival, doctrine
+  lookup, source-basis labeling, and routing to specialist Rooms skills.
 metadata:
   source-id: rooms-project-doctrine
   source-path: sources/first_party/skills/rooms-project-doctrine/SKILL.md
@@ -12,31 +9,35 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when route shared Rooms project doctrine without duplicating detailed
-    law. use for Rooms bootstrap follow-up, project-level doctrine orientation, named
-    Rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity,
-    actor/domain boundaries, report hygiene, GitHub publication or issue closure posture,
-    and when a task needs the right Rooms doctrine-bearing skill before action.
+  scope: Use before working in Rooms — for project arrival, doctrine lookup, source-basis
+    labeling, and routing to specialist Rooms skills.
   use_when:
-  - Use when route shared Rooms project doctrine without duplicating detailed law.
-    use for Rooms bootstrap follow-up, project-level doctrine orientation, named Rooms
-    truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity, actor/domain
-    boundaries, report hygiene, GitHub publication or issue closure posture, and when
-    a task needs the right Rooms doctrine-bearing skill before action.
+  - Use when use before working in Rooms when first-turn project arrival, request
+    classification, or continuity ingress routing is needed.
+  - Use when project-level doctrine orientation, named Rooms truth/canon/archive/manuscript/repo
+    claims, source partitioning, ambiguity, actor/domain boundaries, report hygiene,
+    or GitHub publication/issue closure posture.
+  - Use when a task needs the right Rooms doctrine-bearing skill before action.
   do_not_use_when:
-  - Do not use when another more specific skill owns this task.
+  - Do not use when a specialist Rooms skill owns the specific task — route to that
+    skill instead.
+  - Do not use when Do not use for ordinary conversation without source, canon, archive,
+    or repo claims.
 license: MIT
 ---
 # Rooms Project Doctrine
 
-Use this skill as the shared Rooms doctrine store and routing index for project rules not owned by a more specific Rooms skill.
+Use this skill before working in Rooms — for project arrival, doctrine lookup, or source-basis labeling.
 
-This skill composes the `work-mode-router-v1` pattern: bootstrap routes to doctrine-bearing skills, and doctrine skills teach the durable reasons behind gates. This skill is not a second system prompt and not an execution surface.
+This skill is the shared Rooms doctrine store, first-turn bootstrap mediator, and source-partitioning authority. It composes the `work-mode-router` pattern: bootstrap routes to doctrine-bearing skills, and doctrine skills teach the durable reasons behind gates. This skill is not a second system prompt and not an execution surface.
 
 `SKILL.md` is a control plane. Load only the reference needed for the current task.
 
 ## Table of contents
 
+- First-turn arrival and classification: read `references/bootstrap-posture.md`.
+- Source and repo posture: read `references/source-and-repo-posture.md`.
+- Source-basis labeling and partitioning: read `references/source-partitioning.md`.
 - Source and grounding posture: read `references/source-and-grounding-posture.md`.
 - Domain truth boundaries: read `references/domain-truth-boundaries.md`.
 - Ambiguity and narration discipline: read `references/ambiguity-and-narration.md`.
@@ -53,10 +54,10 @@ Use this skill for shared project doctrine orientation, then route actual work t
 
 ## Bootstrap composition
 
-When reached from `rooms-bootstrap-v1.1`, use this skill to select required doctrine reads by task shape. Do not continue from project doctrine alone when a more specific Rooms skill owns the decision.
+When first-turn routing is the issue, load `references/bootstrap-posture.md` to classify the request and select required doctrine reads by task shape. Do not continue from project doctrine alone when a more specific Rooms skill owns the decision.
 
-For ordinary conversation, stay conversational and use `rooms-bootstrap-v1.1` only when first-turn routing is needed. For repo-sensitive, canon-sensitive, archive-sensitive, manuscript-sensitive, or issue-backed work, load the relevant reference here and then route to the owning skill.
+For ordinary conversation, stay conversational. For repo-sensitive, canon-sensitive, archive-sensitive, manuscript-sensitive, or issue-backed work, load the relevant reference here and then route to the owning skill.
 
 ## Boundaries
 
-Do not simulate Chris, Albert, Brian, Derek, or Will. Do not mutate source-controlled repos, publish, close issues, or prepare worker dispatches from this skill alone. Do not collapse detailed Rooms doctrine into this file when a specialist skill owns it.
+Do not simulate project-local governance, Pit, World, Manuscript, or workspace governance. Do not mutate source-controlled repos, publish, close issues, or prepare worker dispatches from this skill alone. Do not collapse detailed Rooms doctrine into this file when a specialist skill owns it.

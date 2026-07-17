@@ -1,34 +1,6 @@
----
-name: rooms-bootstrap
-description: Use when bootstrap Rooms, Mostly sessions through one-time project arrival,
-  request classification, continuity ingress routing, and doctrine/task handoff without
-  treating connector presence as a task signal or doing source-route selection from
-  the entrypoint.
-metadata:
-  source-id: rooms-bootstrap
-  source-path: sources/first_party/skills/rooms-bootstrap/SKILL.md
-  provenance-name: Rooms Bootstrap first-party skill
-  source-category: first_party
-  status: active
-  owner: Harley Bartles
-  scope: Use when bootstrap Rooms, Mostly sessions through one-time project arrival,
-    request classification, continuity ingress routing, and doctrine/task handoff
-    without treating connector presence as a task signal or doing source-route selection
-    from the entrypoint.
-  use_when:
-  - Use when bootstrap Rooms, Mostly sessions through one-time project arrival, request
-    classification, continuity ingress routing, and doctrine/task handoff without
-    treating connector presence as a task signal or doing source-route selection from
-    the entrypoint.
-  do_not_use_when:
-  - Do not use when another more specific skill owns this task.
-license: MIT
----
-# Rooms Bootstrap
+# Bootstrap posture
 
-Use this skill as the first project bootstrap mediator for Rooms, Mostly work when source scope, workflow mode, truth domain, or actor route could matter.
-
-Compose the GPT-wide bootstrap pattern first. This skill is not the Rooms doctrine store. It routes GPT into the Rooms doctrine-bearing and task-specific skills that own the next decision.
+Load this reference for first-turn project arrival, request classification, continuity ingress routing, and doctrine/task handoff routing.
 
 ## Core lesson
 
@@ -50,7 +22,7 @@ Connector, file, source, or tool presence is not itself a task signal. Load sour
 
 ## Progressive reference loading
 
-Read `references/source-and-repo-posture.md` only when the classified task depends on Rooms or Will repository evidence, connector/source availability, repo-scope claims, issue or publication evidence, broad discovery, or source-route diagnosis.
+Read `source-and-repo-posture.md` only when the classified task depends on Rooms or workspace governance repository evidence, connector/source availability, repo-scope claims, issue or publication evidence, broad discovery, or source-route diagnosis.
 
 Do not load that reference for ordinary chat, creative discussion, lightweight meta, acknowledgements, or pings.
 
@@ -86,10 +58,10 @@ Bootstrap may name these reminders, but detailed law belongs to the owning Rooms
 
 - Conversation is not canon, archive evidence, manuscript authority, or publication proof.
 - Reports are reports, not truth.
-- Albert/Pit preserves archive evidence and provenance; Albert does not write canon.
-- Brian/World owns canon/world state and must not infer importance from archive richness alone.
-- Derek/Manuscript owns prose/manuscript drafting and does not resolve identity ambiguity independently.
-- GPT may inspect, reason, verify, queue or comment where authorized, and prepare dispatches. GPT does not simulate Chris, Albert, Brian, Derek, or Will.
+- Pit/archive preserves archive evidence and provenance; Pit does not write canon.
+- World/canon owns canon/world state and must not infer importance from archive richness alone.
+- Manuscript/prose owns prose/manuscript drafting and does not resolve identity ambiguity independently.
+- GPT may inspect, reason, verify, queue or comment where authorized, and prepare dispatches. GPT does not simulate project-local governance, Pit, World, Manuscript, or workspace governance.
 - Checked-in source-controlled changes route through worker dispatches unless a separate explicit direct-mutation authority exists.
 
 ## Output behavior

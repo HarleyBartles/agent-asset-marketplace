@@ -19,8 +19,6 @@ metadata:
     — use rooms-character-investigation instead.
   - Do not use when no investigation packet exists — run rooms-character-investigation
     first.
-  use_after:
-  - rooms-character-investigation
 license: MIT
 ---
 # Rooms Sheet Creator

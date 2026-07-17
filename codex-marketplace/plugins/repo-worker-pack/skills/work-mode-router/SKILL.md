@@ -44,6 +44,10 @@ This skill is not a doctrine store and does not execute project work. It does no
 
 Bootstrap is orientation and classification, not source inspection. A project-relevant bootstrap is mandatory once at new-session start when a project context is active or the first user task is project-scoped. Bootstrap must classify the current request before evidence-route, connector, mutation, artifact, worker, or downstream skill decisions.
 
+**Session resume verification:** When a session resumes from a previous conversation (continuity ingress, summary block, or inherited worktree state), verify the worktree location before proceeding with substantive work. Check whether the current worktree path matches the repo's declared canonical worktree root (e.g., `../_agent-worktrees/<repo-name>` per `AGENTS.md` or `repo-worker-base` guidance). If the worktree is in a non-canonical location, move it with `git worktree move` before continuing. Do not inherit a wrong-location worktree as a given — the previous session may have created it without invoking `using-git-worktrees`.
+
+**Skill invocation at session resume:** The `using-superpowers` skill's "invoke before ANY response" rule applies at session resume, not just at new session start. A continued session must still invoke bootstrap skills before substantive work — the previous session's skill invocations do not carry forward.
+
 Normal coding work now routes through the repo-backed worker flow by default. Legacy chat/YAML dispatch stacks are Plan B only. Do not load old dispatch-family skills merely because your human partner says `dispatch`; route coding work to `/using-superpowers` with the discovered mode from this skill and let `/using-superpowers` choose the implementation lane. `work-mode-router` only classifies the mode from durable evidence.
 
 For worker starts, classify the durable route state before any implementation lane choice. A prompt such as `Pick up {{issue.identifier}} from Linear. Start with /work-mode-router.` must be enough to infer one of the worker route states below from durable Linear/repo evidence.

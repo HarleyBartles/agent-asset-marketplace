@@ -1,4 +1,4 @@
-﻿# Version History for Rooms Bootstrap
+# Version History for Rooms Bootstrap
 
 - Historical version: `v1.1`
 - Historical source id: `rooms-bootstrap-v1.1`
