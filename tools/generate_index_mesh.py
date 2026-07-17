@@ -14,13 +14,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__", ".pytest_cache"}
 EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__"}
-EXCLUDED_FILE_NAMES = {".git"}
+EXCLUDED_FILE_NAMES = {".git", ".gitkeep"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
 
 
-def _load_tracked_dirs() -> set[Path]:
-    """Return the set of directories that contain at least one git-tracked file."""
+def _load_tracked() -> tuple[set[Path], set[Path]]:
+    """Return (tracked_dirs, tracked_files) from git ls-files."""
     result = subprocess.run(
         ["git", "ls-files"],
         cwd=ROOT,
@@ -29,19 +29,21 @@ def _load_tracked_dirs() -> set[Path]:
         check=True,
     )
     tracked_dirs: set[Path] = set()
+    tracked_files: set[Path] = set()
     for line in result.stdout.splitlines():
         if not line.strip():
             continue
         path = ROOT / line
+        tracked_files.add(path)
         tracked_dirs.add(path.parent)
         for parent in path.parents:
             if parent == ROOT:
                 break
             tracked_dirs.add(parent)
-    return tracked_dirs
+    return tracked_dirs, tracked_files
 
 
-TRACKED_DIRS = _load_tracked_dirs()
+TRACKED_DIRS, TRACKED_FILES = _load_tracked()
 
 
 @dataclass(frozen=True)
@@ -111,9 +113,13 @@ def render_index(path: Path) -> str:
                 continue
             if is_skill_root(path):
                 continue
+            if entry not in TRACKED_DIRS:
+                continue
             dirs.append(entry)
         else:
             if entry.name in EXCLUDED_FILE_NAMES:
+                continue
+            if entry not in TRACKED_FILES:
                 continue
             files.append(entry)
 
