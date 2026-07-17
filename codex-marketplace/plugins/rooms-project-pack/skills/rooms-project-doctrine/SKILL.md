@@ -1,7 +1,7 @@
 ---
 name: rooms-project-doctrine
-description: Use before working in Rooms — for project arrival, doctrine
-  lookup, source-basis labeling, and routing to specialist Rooms skills.
+description: Use before working in Rooms — for project arrival, doctrine lookup, source-basis
+  labeling, and routing to specialist Rooms skills.
 metadata:
   source-id: rooms-project-doctrine
   source-path: sources/first_party/skills/rooms-project-doctrine/SKILL.md
@@ -12,8 +12,8 @@ metadata:
   scope: Use before working in Rooms — for project arrival, doctrine lookup, source-basis
     labeling, and routing to specialist Rooms skills.
   use_when:
-  - Use before working in Rooms when first-turn project arrival, request
-    classification, or continuity ingress routing is needed.
+  - Use before working in Rooms when first-turn project arrival, request classification,
+    or continuity ingress routing is needed.
   - Use when project-level doctrine orientation, named Rooms truth/canon/archive/manuscript/repo
     claims, source partitioning, ambiguity, actor/domain boundaries, report hygiene,
     or GitHub publication/issue closure posture.
@@ -21,8 +21,8 @@ metadata:
   do_not_use_when:
   - Do not use when a specialist Rooms skill owns the specific task — route to that
     skill instead.
-  - Do not use for ordinary conversation without source, canon, archive,
-    or repo claims.
+  - Do not use when for ordinary conversation without source, canon, archive, or repo
+    claims.
   use_with:
   - work-mode-router
 license: MIT

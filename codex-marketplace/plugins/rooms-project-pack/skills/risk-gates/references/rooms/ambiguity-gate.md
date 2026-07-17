@@ -1,6 +1,31 @@
-# Rooms Ambiguity Gate
+---
+name: rooms-ambiguity-buster
+description: Use when preserving rooms ambiguity for identity, motive, authorship,
+  archive gaps, narration, and disappearance.
+metadata:
+  source-id: rooms-ambiguity-buster
+  source-path: sources/first_party/skills/rooms-ambiguity-buster/SKILL.md
+  provenance-name: Rooms Ambiguity Buster first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when preserving rooms ambiguity for identity, motive, authorship, archive
+    gaps, narration, and disappearance.
+  use_when:
+  - Use when preserving rooms ambiguity for identity, motive, authorship, archive
+    gaps, narration, and disappearance.
+  do_not_use_when:
+  - Do not use when the task is canon resolution rather than ambiguity detection —
+    use rooms-canon-buster instead.
+  - Do not use when the task is analogy validation — use rooms-analogy-buster instead.
+  use_instead:
+  - rooms-canon-buster
+  - rooms-analogy-buster
+license: MIT
+---
+# Rooms Ambiguity Buster
 
-Use this gate when the work risks resolving uncertainty without evidence.
+Use this Skill when the work risks resolving uncertainty without evidence.
 
 ## Source-route discipline
 
@@ -10,7 +35,7 @@ When ambiguity depends on repo evidence, choose the source route explicitly.
   the relevant evidence surface is not already known.
 - Use the live GitHub API connector route, such as `api_tool` when exposed, for exact known files, issue threads,
   comments, commits, refs, and PR details.
-- If `file_search` is unbound and broad discovery is needed before a safe ambiguity judgment, ask Harley to bind the
+- If `file_search` is unbound and broad discovery is needed before a safe ambiguity judgment, ask your human partner to bind the
   GitHub `file_search` connector to the relevant repo set.
 - If exact known surfaces are enough, inspect them through the live API route rather than blocking on `file_search`.
 

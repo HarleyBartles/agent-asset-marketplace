@@ -17,7 +17,6 @@ EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__", ".superpowers"}
 EXCLUDED_FILE_NAMES = {".git", ".gitkeep"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
-SUPERPOWERS_SDD_ROOT = ROOT / ".agents" / "superpowers" / "sdd"
 
 
 def _load_tracked() -> tuple[set[Path], set[Path]]:
@@ -70,7 +69,6 @@ def should_descend(child: Path) -> bool:
         and not is_skill_root(child)
         and (child == THIRD_PARTY_ROOT or not is_under(child, THIRD_PARTY_ROOT))
         and not is_under(child, SKILL_ZIPS_ROOT)
-        and not is_under(child, SUPERPOWERS_SDD_ROOT)
         and child in TRACKED_DIRS
     )
 

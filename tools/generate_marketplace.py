@@ -12,7 +12,6 @@ from marketplace_utils import (
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
-    SOURCE_DECISIONS_JSON_PATH,
     SOURCE_INTAKE_JSON_PATH,
     build_marketplace_manifest,
     load_json,
@@ -36,17 +35,8 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="validate without writing")
     args = parser.parse_args()
 
-    decisions = load_json(SOURCE_DECISIONS_JSON_PATH)
     intake = load_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests = [load_json(spec["manifest_path"]) for spec in MARKETPLACE_PLUGIN_SPECS]
-
-    imported_records = [
-        record
-        for record in decisions
-        if record.get("source_id") and record.get("import_state", "imported") == "imported"
-    ]
-    if not imported_records:
-        raise ValueError("No imported House Skills records found in the source ledger")
 
     if not intake.get("imports"):
         raise ValueError("sources/first_party/skills/house-skills/intake.json does not contain imports")

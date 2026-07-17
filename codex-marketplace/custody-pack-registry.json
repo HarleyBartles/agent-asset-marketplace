@@ -1278,21 +1278,6 @@
       ],
       "entries": [
         {
-          "canonical_name": "rooms-bootstrap",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
-          "local_path": "skills/rooms-bootstrap",
-          "lane": "Rooms",
-          "source_path": "sources/first_party/skills/rooms-bootstrap/SKILL.md",
-          "source_author": "Harley Bartles",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "First-party skill projected verbatim into the rooms-project-pack."
-        },
-        {
           "canonical_name": "rooms-character-investigation",
           "source_category": "first_party",
           "content_mode": "verbatim",
@@ -1346,21 +1331,6 @@
           "local_path": "skills/rooms-sheet-creator",
           "lane": "Rooms",
           "source_path": "sources/first_party/skills/rooms-sheet-creator/SKILL.md",
-          "source_author": "Harley Bartles",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "First-party skill projected verbatim into the rooms-project-pack."
-        },
-        {
-          "canonical_name": "rooms-source-partitioning",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
-          "local_path": "skills/rooms-source-partitioning",
-          "lane": "Rooms",
-          "source_path": "sources/first_party/skills/rooms-source-partitioning/SKILL.md",
           "source_author": "Harley Bartles",
           "source_license": "MIT",
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",

@@ -37,8 +37,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         "ADVENTURES_PACK_BUNDLE_MANIFEST_PATH",
         "ADVENTURES_PACK_SOURCE_MAP_PATH",
         "ADVENTURES_PACK_SKILL_PATH",
-        "SOURCE_DECISIONS_JSON_PATH",
-        "SOURCE_DECISIONS_MD_PATH",
         "SOURCE_INTAKE_JSON_PATH",
         "SOURCE_MAP_PATH",
         "PLUGIN_ROOT_INVENTORY_PATH",
@@ -46,8 +44,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         "REPO_INDEX_README_PATH",
         "build_marketplace_manifest",
         "load_json",
-        "normalize_decision_record",
-        "normalize_decision_row",
         "parse_top_markdown_table",
         "_installation_policy_for_plugin",
     ):
@@ -446,36 +442,6 @@ def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str
             if plugin_author == "Harley Bartles" and "Harley Bartles" in source_author:
                 if source_category == "third_party":
                     raise ValueError(f"{bundle_name} entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
-
-
-def validate_decisions(decisions: list[dict], decisions_md_rows: list[dict[str, str]], decisions_md_text: str) -> None:
-    normalized_json = [
-        _decision_structure(normalize_decision_record(row))
-        for row in decisions
-        if row.get("source_id") and row.get("source_id") != "global.mark-19.source-import-boundary"
-    ]
-    normalized_md = [
-        _decision_structure(normalize_decision_row(row))
-        for row in decisions_md_rows
-        if row.get("source_id") and row.get("source_id") != "global.mark-19.source-import-boundary"
-    ]
-    if normalized_json != normalized_md:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md does not match sources/first_party/skills/house-skills/decisions.json")
-
-    boundary = next((row for row in decisions if row.get("id") == "global.mark-19.source-import-boundary"), None)
-    if boundary is None:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.json is missing the MARK-19 boundary row")
-    if boundary.get("import_state") != "source-import-boundary":
-        raise ValueError("sources/first_party/skills/house-skills/decisions.json has an invalid MARK-19 boundary state")
-    if "global.mark-19.source-import-boundary" not in decisions_md_text:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary row")
-    if "MARK-19 imports exactly six reviewed core generic buster source records" not in decisions_md_text:
-        raise ValueError("sources/first_party/skills/house-skills/decisions.md is missing the MARK-19 boundary description")
-
-
-def _decision_structure(record: dict[str, object]) -> dict[str, object]:
-    keys = ("issue", "source_id", "source_path", "public_name", "provenance_name", "import_state", "scope")
-    return {key: record.get(key, "") for key in keys}
 
 
 def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
@@ -1342,8 +1308,6 @@ def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) ->
     if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/house-skills/skills":
         raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
     if bundle_manifest.get("source_of_truth") != [
-        "sources/first_party/skills/house-skills/decisions.json",
-        "sources/first_party/skills/house-skills/decisions.md",
         "sources/first_party/skills/house-skills/intake.json",
         "provenance/house-skills.md",
     ]:
@@ -1602,7 +1566,6 @@ def main() -> int:
     )
     _bootstrap_marketplace_dependencies()
 
-    decisions = check_json(SOURCE_DECISIONS_JSON_PATH)
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
@@ -1611,10 +1574,7 @@ def main() -> int:
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
-    decisions_md_text = check_text(SOURCE_DECISIONS_MD_PATH)
-    decision_rows = parse_top_markdown_table(SOURCE_DECISIONS_MD_PATH)
 
-    validate_decisions(decisions, decision_rows, decisions_md_text)
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
     validate_skill_zip_registry()

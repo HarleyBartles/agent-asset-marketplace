@@ -388,21 +388,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "rooms-bootstrap",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
-      "local_path": "skills/rooms-bootstrap",
-      "lane": "Rooms",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/rooms-bootstrap/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "rooms-character-investigation",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -456,21 +441,6 @@
       "lane": "Rooms",
       "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
       "source_path": "sources/first_party/skills/rooms-sheet-creator/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "rooms-source-partitioning",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-source-partitioning",
-      "local_path": "skills/rooms-source-partitioning",
-      "lane": "Rooms",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/rooms-source-partitioning/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",

@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 194,
+  "artifact_count": 190,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1934,14 +1934,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/house-skills",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/house-skills/skill.zip",
-      "source_file_count": 5,
-      "source_bytes": 62692,
-      "source_sha256": "73accc7e9f006a5a4bf0b5f82186829ec6af0954f069995776ecddd0d9a086c5",
+      "source_file_count": 3,
+      "source_bytes": 26146,
+      "source_sha256": "2bac562757fe0c276990b9e1ae3f3485a8c03d0458854966c00c763ffd16cbe0",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12774,
-      "zip_sha256": "45bd939c42678affc4aad4e8da329cffa6c356dc8e2295fecefdc35ce397b7d5"
+      "zip_size_bytes": 5029,
+      "zip_sha256": "fcb53e925b9dc9375bfc7446725c74c7f6a79427a463a966217d27a0b7b04f59"
     },
     {
       "pack": "house-skills",
@@ -1951,13 +1951,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/inspecting-the-environment/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 7018,
-      "source_sha256": "36c92ba1d72b0d8e1946ac2462de9d3f49a15f0af750bfeb251d397991b49814",
+      "source_bytes": 7416,
+      "source_sha256": "1d5d19862d8bbe92798440a43aa03940bc480a3ffec14934171254f5081ff702",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3157,
-      "zip_sha256": "c9221f6919eb30d90dde901ba4ec130dde4e942bf99413f72b73505da74264ae"
+      "zip_size_bytes": 3332,
+      "zip_sha256": "0d37bb5edf5b7e796312cc0f09a6110459b53373b518558aea2ad160342a7571"
     },
     {
       "pack": "house-skills",
@@ -2015,29 +2015,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/risk-gates/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 54269,
-      "source_sha256": "758e876045676394051041082e17154e76a05c39fb0e03c472622968188cb293",
+      "source_bytes": 48776,
+      "source_sha256": "2719c4e39322473fb2f38314555f9f6b1265d6b70b9c70c962780aaca8b93cd8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 25007,
-      "zip_sha256": "a609766053b2a139dfe9deccbe2586181c8d8161e1aaa473ee0985063c296b01"
-    },
-    {
-      "pack": "house-skills",
-      "skill": "rooms-bootstrap",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-bootstrap",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/house-skills/rooms-bootstrap/skill.zip",
-      "source_file_count": 6,
-      "source_bytes": 13387,
-      "source_sha256": "a61afa608b36e0041b3e2d4f0b46b62ea822ee2ac6ebc6f1087bb037e706bacb",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 6436,
-      "zip_sha256": "8bfd87ed14fe094c9dca2e2da1284c1d4c851ed6b851ee7a4f9fd1bfa8585ed0"
+      "zip_size_bytes": 22412,
+      "zip_sha256": "fbb2e4edf47c390a902093bee25b11dda54225dee77cd69250275c65ba748692"
     },
     {
       "pack": "house-skills",
@@ -2047,13 +2031,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-character-investigation/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 25395,
-      "source_sha256": "5746493aea197cf42a55475f9b32e04430931d94aefa1d7a012ed8f8c626a795",
+      "source_bytes": 27557,
+      "source_sha256": "a1817ff260efc4ec228e05fd6a09f4273b6a2d110b73f95e96fec08a5f8954d0",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12195,
-      "zip_sha256": "cd693d3a33e20d9d8fed7723b394d03bf30f91c35eae485192520832ca6735f0"
+      "zip_size_bytes": 12775,
+      "zip_sha256": "4e8c76f4f61b564d1f914e7d142dc2c49082d905270814096d56ced99685e272"
     },
     {
       "pack": "house-skills",
@@ -2063,13 +2047,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-image-sidecars/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 33916,
-      "source_sha256": "1c0bfbc60644f9739e29c74bd65f14b63c8232d521a823f3ba45332ac4d94252",
+      "source_bytes": 31163,
+      "source_sha256": "13f74991b5442f61420382ee27b4356fab7dd3696c1ba031ee81cb1d8f0e3961",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 14430,
-      "zip_sha256": "2808d4a96fb17425631fc2221ed55fd3a08957675db304200ce8859f5d959715"
+      "zip_size_bytes": 13622,
+      "zip_sha256": "c1b42dbb0d315689dc7ed0d6c314d5f74bcfe198500d1ecf6ee5828523eb396b"
     },
     {
       "pack": "house-skills",
@@ -2078,14 +2062,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-project-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-project-doctrine/skill.zip",
-      "source_file_count": 12,
-      "source_bytes": 16372,
-      "source_sha256": "0d8cf031567abd0e659c1f07562d899b779a8414e67f33afda83ed82f2e3185d",
+      "source_file_count": 17,
+      "source_bytes": 31809,
+      "source_sha256": "e09b7952de2ad11cfe8213045cda28cfb23f77f24bfba7db693e6f374c07b35a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9612,
-      "zip_sha256": "99bd618b6b4aef81d0bc870e1531d99fe31cb251d312ff0b3ec0e9f17322201c"
+      "zip_size_bytes": 17088,
+      "zip_sha256": "39470bc2061e43976d3d22d063ed5144e92b213e948d2ef8dc3e9623e586642b"
     },
     {
       "pack": "house-skills",
@@ -2095,29 +2079,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-sheet-creator/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 15168,
-      "source_sha256": "a222bfbd8ae7bc3185fb97782ac4ff739236b5b7f8d668066133aaf6eddb86b5",
+      "source_bytes": 17490,
+      "source_sha256": "bf51374fbb58ff880d6a46c65e7012b0f33d20dbec5bc936a7f0f290f878b201",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8101,
-      "zip_sha256": "20118061d9196dbfde99d86810c7a8ee3d798ad4b27754922f028229bccecf68"
-    },
-    {
-      "pack": "house-skills",
-      "skill": "rooms-source-partitioning",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/house-skills/skills/rooms-source-partitioning",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/house-skills/rooms-source-partitioning/skill.zip",
-      "source_file_count": 6,
-      "source_bytes": 9046,
-      "source_sha256": "7eb885f042bf9f71758ebd983be43ec3baebcdacabace2cbd9115d6b450382e7",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 4888,
-      "zip_sha256": "a6ee8e17ef9247170c02eb4cff7c499a20159f14af8a09aab9647ef4148f08f7"
+      "zip_size_bytes": 8978,
+      "zip_sha256": "58640e2097c59cfa94ab84a919ebe1ddbccb741541f5166fd25303cb08f8e10a"
     },
     {
       "pack": "house-skills",
@@ -2271,13 +2239,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 25875,
-      "source_sha256": "ebcc299fa6dfa62442cda254a44567bec1327bd6f130423b7d8d99ad6ca27252",
+      "source_bytes": 26827,
+      "source_sha256": "3706db3778bfd1a4347477328ddb615a0e0313c23bc97863ecf691d017b931f5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10119,
-      "zip_sha256": "9e08b6b1f758e16baf0535a60f2477abfe9b31ea9e63cd57f483bcc2c01a8bac"
+      "zip_size_bytes": 10457,
+      "zip_sha256": "139f1a3659363b37a03e0791bc1fcc34718d9ebf43468ef4ba5164bfdf3355d1"
     },
     {
       "pack": "house-skills",
@@ -2591,13 +2559,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/work-mode-router/skill.zip",
       "source_file_count": 6,
-      "source_bytes": 25875,
-      "source_sha256": "ebcc299fa6dfa62442cda254a44567bec1327bd6f130423b7d8d99ad6ca27252",
+      "source_bytes": 26827,
+      "source_sha256": "3706db3778bfd1a4347477328ddb615a0e0313c23bc97863ecf691d017b931f5",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 10119,
-      "zip_sha256": "9e08b6b1f758e16baf0535a60f2477abfe9b31ea9e63cd57f483bcc2c01a8bac"
+      "zip_size_bytes": 10457,
+      "zip_sha256": "139f1a3659363b37a03e0791bc1fcc34718d9ebf43468ef4ba5164bfdf3355d1"
     },
     {
       "pack": "research-pack",
@@ -2639,29 +2607,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/risk-gates/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 54269,
-      "source_sha256": "758e876045676394051041082e17154e76a05c39fb0e03c472622968188cb293",
+      "source_bytes": 48776,
+      "source_sha256": "2719c4e39322473fb2f38314555f9f6b1265d6b70b9c70c962780aaca8b93cd8",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 25007,
-      "zip_sha256": "a609766053b2a139dfe9deccbe2586181c8d8161e1aaa473ee0985063c296b01"
-    },
-    {
-      "pack": "rooms-project-pack",
-      "skill": "rooms-bootstrap",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/rooms-project-pack/skills/rooms-bootstrap",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/rooms-project-pack/rooms-bootstrap/skill.zip",
-      "source_file_count": 6,
-      "source_bytes": 13387,
-      "source_sha256": "a61afa608b36e0041b3e2d4f0b46b62ea822ee2ac6ebc6f1087bb037e706bacb",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 6436,
-      "zip_sha256": "8bfd87ed14fe094c9dca2e2da1284c1d4c851ed6b851ee7a4f9fd1bfa8585ed0"
+      "zip_size_bytes": 22412,
+      "zip_sha256": "fbb2e4edf47c390a902093bee25b11dda54225dee77cd69250275c65ba748692"
     },
     {
       "pack": "rooms-project-pack",
@@ -2671,13 +2623,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/rooms-character-investigation/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 25395,
-      "source_sha256": "5746493aea197cf42a55475f9b32e04430931d94aefa1d7a012ed8f8c626a795",
+      "source_bytes": 27557,
+      "source_sha256": "a1817ff260efc4ec228e05fd6a09f4273b6a2d110b73f95e96fec08a5f8954d0",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 12195,
-      "zip_sha256": "cd693d3a33e20d9d8fed7723b394d03bf30f91c35eae485192520832ca6735f0"
+      "zip_size_bytes": 12775,
+      "zip_sha256": "4e8c76f4f61b564d1f914e7d142dc2c49082d905270814096d56ced99685e272"
     },
     {
       "pack": "rooms-project-pack",
@@ -2687,13 +2639,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/rooms-image-sidecars/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 33916,
-      "source_sha256": "1c0bfbc60644f9739e29c74bd65f14b63c8232d521a823f3ba45332ac4d94252",
+      "source_bytes": 31163,
+      "source_sha256": "13f74991b5442f61420382ee27b4356fab7dd3696c1ba031ee81cb1d8f0e3961",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 14430,
-      "zip_sha256": "2808d4a96fb17425631fc2221ed55fd3a08957675db304200ce8859f5d959715"
+      "zip_size_bytes": 13622,
+      "zip_sha256": "c1b42dbb0d315689dc7ed0d6c314d5f74bcfe198500d1ecf6ee5828523eb396b"
     },
     {
       "pack": "rooms-project-pack",
@@ -2702,14 +2654,14 @@
       "source_path": "codex-marketplace/plugins/rooms-project-pack/skills/rooms-project-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/rooms-project-doctrine/skill.zip",
-      "source_file_count": 12,
-      "source_bytes": 16372,
-      "source_sha256": "0d8cf031567abd0e659c1f07562d899b779a8414e67f33afda83ed82f2e3185d",
+      "source_file_count": 17,
+      "source_bytes": 31809,
+      "source_sha256": "e09b7952de2ad11cfe8213045cda28cfb23f77f24bfba7db693e6f374c07b35a",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 9612,
-      "zip_sha256": "99bd618b6b4aef81d0bc870e1531d99fe31cb251d312ff0b3ec0e9f17322201c"
+      "zip_size_bytes": 17088,
+      "zip_sha256": "39470bc2061e43976d3d22d063ed5144e92b213e948d2ef8dc3e9623e586642b"
     },
     {
       "pack": "rooms-project-pack",
@@ -2719,29 +2671,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/rooms-sheet-creator/skill.zip",
       "source_file_count": 8,
-      "source_bytes": 15168,
-      "source_sha256": "a222bfbd8ae7bc3185fb97782ac4ff739236b5b7f8d668066133aaf6eddb86b5",
+      "source_bytes": 17490,
+      "source_sha256": "bf51374fbb58ff880d6a46c65e7012b0f33d20dbec5bc936a7f0f290f878b201",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 8101,
-      "zip_sha256": "20118061d9196dbfde99d86810c7a8ee3d798ad4b27754922f028229bccecf68"
-    },
-    {
-      "pack": "rooms-project-pack",
-      "skill": "rooms-source-partitioning",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/rooms-project-pack/skills/rooms-source-partitioning",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/rooms-project-pack/rooms-source-partitioning/skill.zip",
-      "source_file_count": 6,
-      "source_bytes": 9046,
-      "source_sha256": "7eb885f042bf9f71758ebd983be43ec3baebcdacabace2cbd9115d6b450382e7",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 4888,
-      "zip_sha256": "a6ee8e17ef9247170c02eb4cff7c499a20159f14af8a09aab9647ef4148f08f7"
+      "zip_size_bytes": 8978,
+      "zip_sha256": "58640e2097c59cfa94ab84a919ebe1ddbccb741541f5166fd25303cb08f8e10a"
     },
     {
       "pack": "security-pack",
@@ -2895,13 +2831,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/superpowers-plus/inspecting-the-environment/skill.zip",
       "source_file_count": 2,
-      "source_bytes": 7018,
-      "source_sha256": "36c92ba1d72b0d8e1946ac2462de9d3f49a15f0af750bfeb251d397991b49814",
+      "source_bytes": 7416,
+      "source_sha256": "1d5d19862d8bbe92798440a43aa03940bc480a3ffec14934171254f5081ff702",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 3157,
-      "zip_sha256": "c9221f6919eb30d90dde901ba4ec130dde4e942bf99413f72b73505da74264ae"
+      "zip_size_bytes": 3332,
+      "zip_sha256": "0d37bb5edf5b7e796312cc0f09a6110459b53373b518558aea2ad160342a7571"
     },
     {
       "pack": "superpowers-plus",
@@ -3142,8 +3078,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
       "overlay_path": null,
       "source_file_count": 1,
-      "source_bytes": 7769,
-      "source_sha256": "c8b4f4a0ae7a80aa0c945626777b3e47fda7aabed1dec0835bf73b8e35a5435f",
+      "source_bytes": 8438,
+      "source_sha256": "44d4c6993af9a6b0be6d162b13b86465b122c76b28062039a60067c22d6931b3",
       "reason": "This skill depends on local git worktree operations that should not be implied in a raw GPT export."
     }
   ]
