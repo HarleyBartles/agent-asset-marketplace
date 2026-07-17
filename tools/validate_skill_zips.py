@@ -47,24 +47,15 @@ def _assert_house_skills_exports_present(registry: dict) -> None:
         for record in registry["artifacts"]
         if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
     )
-    crew = next(
-        record
-        for record in registry["artifacts"]
-        if record["pack"] == "house-skills" and record["skill"] == "crew"
-    )
 
     if worker_verification["export_mode"] not in {"direct", "overlay"}:
         raise AssertionError("house-skills/worker-verification should export as an installable zip")
-    if crew["export_mode"] not in {"direct", "overlay"}:
-        raise AssertionError("house-skills/crew should export as an installable zip")
 
     if any(
         record["skill"] == "worker-verification" and record["pack"] == "wild-bunch-project-pack"
         for record in registry["artifacts"]
     ):
         raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
-    if any(record["skill"] == "crew" and record["pack"] == "wild-bunch-project-pack" for record in registry["artifacts"]):
-        raise AssertionError("crew must not be exposed through wild-bunch-project-pack")
 
 
 def main() -> int:

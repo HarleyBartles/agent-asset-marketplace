@@ -1,78 +1,29 @@
 [
   {
     "issue": "MARK-19",
-    "source_id": "buster-framework-v1",
-    "source_path": "sources/first_party/skills/buster-framework",
-    "public_name": "buster-framework",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
+    "source_id": "risk-gates-v1",
+    "source_path": "sources/first_party/skills/risk-gates",
+    "public_name": "risk-gates",
+    "provenance_name": "Risk Gates first-party skill",
     "import_state": "imported",
-    "scope": "generic pre-action buster framework",
-    "notes": "Imported as the cross-runtime control plane for true pre-action buster gates and aligned buster outcomes."
-  },
-  {
-    "issue": "MARK-19",
-    "source_id": "ambiguity-buster-v1",
-    "source_path": "sources/first_party/skills/ambiguity-buster",
-    "public_name": "ambiguity-buster",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
-    "import_state": "imported",
-    "scope": "ambiguity pre-action review",
-    "notes": "Imported as the generic pre-action ambiguity gate for unresolved meaning, scope, referents, source, authority, output, time, and vocabulary."
-  },
-  {
-    "issue": "MARK-19",
-    "source_id": "boring-buster-v1",
-    "source_path": "sources/first_party/skills/boring-buster",
-    "public_name": "boring-buster",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
-    "import_state": "imported",
-    "scope": "boring-readiness pre-action review",
-    "notes": "Imported as the generic boring-readiness gate for work that must be small, dull, explicit, falsifiable, and execution-ready."
-  },
-  {
-    "issue": "MARK-19",
-    "source_id": "invariant-buster-v1",
-    "source_path": "sources/first_party/skills/invariant-buster",
-    "public_name": "invariant-buster",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
-    "import_state": "imported",
-    "scope": "binding invariant pre-action review",
-    "notes": "Imported as the generic gate for binding constraints and non-negotiable rules before action."
-  },
-  {
-    "issue": "MARK-19",
-    "source_id": "analogy-buster-v1",
-    "source_path": "sources/first_party/skills/analogy-buster",
-    "public_name": "analogy-buster",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
-    "import_state": "imported",
-    "scope": "analogy pre-action review",
-    "notes": "Imported as the generic analogy gate; statuses use buster-framework-v1 vocabulary while hold/drop guidance remains explanatory output."
-  },
-  {
-    "issue": "MARK-19",
-    "source_id": "canon-buster-v1",
-    "source_path": "sources/first_party/skills/canon-buster",
-    "public_name": "canon-buster",
-    "provenance_name": "MARK-19 core generic buster House Skills source slice",
-    "import_state": "imported",
-    "scope": "canon/source drift pre-action review",
-    "notes": "Imported as the generic canon/source-drift gate before durable truth claims or mutations."
+    "scope": "consolidated pre-action risk gate router",
+    "notes": "Imported as the consolidated risk-gates skill that retires and replaces the six MARK-19 core generic buster source records (buster-framework, ambiguity-buster, boring-buster, invariant-buster, analogy-buster, canon-buster) plus the Rooms gate overlays, crew/crew-buster, boring-loop, and session-buster/session-buster-ingress."
   },
   {
     "issue": "MARK-19",
     "id": "global.mark-19.source-import-boundary",
     "status": "v1",
     "import_state": "source-import-boundary",
-    "decision": "MARK-19 imports exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. No unrelated House Skills, plugin projections, ChatGPT skill ZIPs, or renamed busters are imported in this slice.",
-    "imported_source_paths": [
+    "decision": "MARK-19 imports exactly six reviewed core generic buster source records: buster-framework-v1, ambiguity-buster-v1, boring-buster-v1, invariant-buster-v1, analogy-buster-v1, and canon-buster-v1. Those six records are now retired and consolidated into the single risk-gates-v1 source record. No unrelated House Skills, plugin projections, ChatGPT skill ZIPs, or renamed busters are imported in this slice.",
+    "retired_source_paths": [
       "sources/first_party/skills/buster-framework/v1/buster-framework-v1/SKILL.md",
       "sources/first_party/skills/ambiguity-buster/v1/ambiguity-buster-v1/SKILL.md",
       "sources/first_party/skills/boring-buster/v1/boring-buster-v1/SKILL.md",
       "sources/first_party/skills/invariant-buster/v1/invariant-buster-v1/SKILL.md",
       "sources/first_party/skills/analogy-buster/v1/analogy-buster-v1/SKILL.md",
       "sources/first_party/skills/canon-buster/v1/canon-buster-v1/SKILL.md"
-    ]
+    ],
+    "consolidated_into": "sources/first_party/skills/risk-gates/SKILL.md"
   },
   {
     "issue": "MARK-20",
@@ -153,66 +104,6 @@
     "import_state": "imported",
     "scope": "Linear connector surface routing by intent",
     "notes": "Imported as the Linear-side skill for connector surface selection, intent routing, and the `save_*` mutation taxonomy."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "tps-reporting-v1",
-    "source_path": "sources/first_party/skills/tps-reporting",
-    "public_name": "tps-reporting",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "producer-side TPS reporting",
-    "notes": "Imported as the producer-side TPS report protocol with cover-sheet, evidence, provenance, route, falsification, and remediation expectations."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "tps-ingress-v1",
-    "source_path": "sources/first_party/skills/tps-ingress",
-    "public_name": "tps-ingress",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "consumer-side TPS ingress",
-    "notes": "Imported as the consumer-side TPS protocol that reads the cover sheet, partitions claims, and forwards or returns the packet through the lawful route."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "session-buster-v0.2",
-    "source_path": "sources/first_party/skills/session-buster",
-    "public_name": "session-buster",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "continuity fallback artifact",
-    "notes": "Imported as the v0.2 continuity artifact with suggested next session naming metadata; v0.1 remains historical/provenance-only."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "session-buster-ingress-v0.2",
-    "source_path": "sources/first_party/skills/session-buster-ingress",
-    "public_name": "session-buster-ingress",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "continuity fallback ingress",
-    "notes": "Imported as the v0.2 ingress half of the continuity fallback; suggested next session names are navigation metadata only."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "crew-v1",
-    "source_path": "sources/first_party/skills/crew",
-    "public_name": "crew",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Crew role-lens doctrine",
-    "notes": "Imported as the Crew doctrine source that compresses responsibility and authority without becoming a worker identity or dispatch route."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "crew-buster-v1",
-    "source_path": "sources/first_party/skills/crew-buster",
-    "public_name": "crew-buster",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Crew planning and route interrogation",
-    "notes": "Imported as the applied planning surface for Crew reasoning over concrete plans, route choices, and failure modes."
   },
   {
     "issue": "WILL-276",
@@ -356,36 +247,6 @@
   },
   {
     "issue": "MARK-30",
-    "source_id": "rooms-ambiguity-buster-v1",
-    "source_path": "sources/first_party/skills/rooms-ambiguity-buster",
-    "public_name": "rooms-ambiguity-buster",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Rooms project-specific ambiguity overlay",
-    "notes": "Imported as the Rooms override that preserves project-protected ambiguity after the generic ambiguity buster."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "rooms-analogy-buster-v1",
-    "source_path": "sources/first_party/skills/rooms-analogy-buster",
-    "public_name": "rooms-analogy-buster",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Rooms analogy overlay",
-    "notes": "Imported as the Rooms-specific analogy pressure check that stays separate from evidence or canon."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "rooms-zoom-outs-buster-v1",
-    "source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
-    "public_name": "rooms-zoom-outs-buster",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Rooms zoom-out readiness check",
-    "notes": "Imported as the Rooms-only large-picture readiness check that returns the work packet to the narrow surface after the wider constraint is visible."
-  },
-  {
-    "issue": "MARK-30",
     "source_id": "rooms-character-investigation-v1",
     "source_path": "sources/first_party/skills/rooms-character-investigation",
     "public_name": "rooms-character-investigation",
@@ -403,16 +264,6 @@
     "import_state": "imported",
     "scope": "Rooms sheet creation from durable packets",
     "notes": "Imported as the sheet creator that consumes the durable investigation packet, lane information, and Harley direction."
-  },
-  {
-    "issue": "MARK-97",
-    "source_id": "rooms-canon-buster-v1",
-    "source_path": "sources/first_party/skills/rooms-canon-buster",
-    "public_name": "rooms-canon-buster",
-    "provenance_name": "MARK-97 attached rooms canon buster zip update",
-    "import_state": "imported",
-    "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
-    "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
   },
   {
     "issue": "MARK-109",

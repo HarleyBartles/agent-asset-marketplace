@@ -71,20 +71,6 @@
       "local_path": "skills/adventures-visual-preproduction"
     },
     {
-      "canonical_name": "ambiguity-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/ambiguity-buster",
-      "local_path": "skills/ambiguity-buster"
-    },
-    {
-      "canonical_name": "analogy-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/analogy-buster",
-      "local_path": "skills/analogy-buster"
-    },
-    {
       "canonical_name": "asset-market",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -106,34 +92,6 @@
       "local_path": "skills/bootstrap-router"
     },
     {
-      "canonical_name": "boring-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/boring-buster",
-      "local_path": "skills/boring-buster"
-    },
-    {
-      "canonical_name": "boring-loop",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/boring-loop",
-      "local_path": "skills/boring-loop"
-    },
-    {
-      "canonical_name": "buster-framework",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/buster-framework",
-      "local_path": "skills/buster-framework"
-    },
-    {
-      "canonical_name": "canon-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/canon-buster",
-      "local_path": "skills/canon-buster"
-    },
-    {
       "canonical_name": "cleanup-custody",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -153,20 +111,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/context-safety",
       "local_path": "skills/context-safety"
-    },
-    {
-      "canonical_name": "crew",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/crew",
-      "local_path": "skills/crew"
-    },
-    {
-      "canonical_name": "crew-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/crew-buster",
-      "local_path": "skills/crew-buster"
     },
     {
       "canonical_name": "don-logan-boundary",
@@ -211,13 +155,6 @@
       "local_path": "skills/inspecting-the-environment"
     },
     {
-      "canonical_name": "invariant-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/invariant-buster",
-      "local_path": "skills/invariant-buster"
-    },
-    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -239,18 +176,11 @@
       "local_path": "skills/repo-worker-base"
     },
     {
-      "canonical_name": "rooms-ambiguity-buster",
+      "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-ambiguity-buster",
-      "local_path": "skills/rooms-ambiguity-buster"
-    },
-    {
-      "canonical_name": "rooms-analogy-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-analogy-buster",
-      "local_path": "skills/rooms-analogy-buster"
+      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "local_path": "skills/risk-gates"
     },
     {
       "canonical_name": "rooms-bootstrap",
@@ -258,13 +188,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/rooms-bootstrap",
       "local_path": "skills/rooms-bootstrap"
-    },
-    {
-      "canonical_name": "rooms-canon-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-canon-buster",
-      "local_path": "skills/rooms-canon-buster"
     },
     {
       "canonical_name": "rooms-character-investigation",
@@ -302,46 +225,11 @@
       "local_path": "skills/rooms-source-partitioning"
     },
     {
-      "canonical_name": "rooms-zoom-outs-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
-      "local_path": "skills/rooms-zoom-outs-buster"
-    },
-    {
-      "canonical_name": "session-buster",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/session-buster",
-      "local_path": "skills/session-buster"
-    },
-    {
-      "canonical_name": "session-buster-ingress",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/session-buster-ingress",
-      "local_path": "skills/session-buster-ingress"
-    },
-    {
       "canonical_name": "sprite-pipeline",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
       "local_path": "skills/sprite-pipeline"
-    },
-    {
-      "canonical_name": "tps-ingress",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-ingress",
-      "local_path": "skills/tps-ingress"
-    },
-    {
-      "canonical_name": "tps-reporting",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-reporting",
-      "local_path": "skills/tps-reporting"
     },
     {
       "canonical_name": "unslop-plus",

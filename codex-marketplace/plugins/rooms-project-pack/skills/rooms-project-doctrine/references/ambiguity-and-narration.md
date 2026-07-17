@@ -1,6 +1,6 @@
 # Ambiguity and narration discipline
 
-Use `rooms-ambiguity-buster-v1` when identity, motive, authorship, witness status, archive gaps, room history, narrator knowledge, reconstruction, disappearance, or emotional cost could be overresolved.
+Use `risk-gates` (rooms ambiguity gate) when identity, motive, authorship, witness status, archive gaps, room history, narrator knowledge, reconstruction, disappearance, or emotional cost could be overresolved.
 
 Preserve questions such as:
 

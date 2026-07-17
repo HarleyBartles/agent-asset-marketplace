@@ -1,6 +1,6 @@
 # Reporting and issue hygiene
 
-Use `tps-reporting-v1` first for generic report partitioning. Use the reporting-and-issue-hygiene guidance under
+Use `base-doctrine` (report hygiene reference) first for generic report partitioning. Use the reporting-and-issue-hygiene guidance under
 `rooms-project-doctrine-v1` when the report-like artifact is Rooms-specific or touches Chris, Albert/Pit, Brian/World,
 Derek/Manuscript, Will/workspace, issue closure, publication, receipts, or continuity.
 

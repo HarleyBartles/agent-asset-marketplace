@@ -11,7 +11,7 @@ checking whether an existing issue/comment already contains a usable green frame
 ## Interactive mode
 
 
-Inherit visible queue mechanics from `buster-framework`. Present unresolved frame decisions
+Inherit visible queue mechanics from `risk-gates`. Present unresolved frame decisions
 conversationally, normally up to five items at a time.
 
 Use interactive mode whenever the frame must be created, selected, materially changed, repaired, or

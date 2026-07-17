@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,10 +14,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__", ".pytest_cache"}
 EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__"}
-EXCLUDED_FILE_NAMES = {".git"}
+EXCLUDED_FILE_NAMES = {".git", ".gitkeep"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
-SUPERPOWERS_SDD_ROOT = ROOT / ".superpowers" / "sdd"
+
+
+def _load_tracked() -> tuple[set[Path], set[Path]]:
+    """Return (tracked_dirs, tracked_files) from git ls-files."""
+    result = subprocess.run(
+        ["git", "ls-files"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    tracked_dirs: set[Path] = set()
+    tracked_files: set[Path] = set()
+    for line in result.stdout.splitlines():
+        if not line.strip():
+            continue
+        path = ROOT / line
+        tracked_files.add(path)
+        tracked_dirs.add(path.parent)
+        for parent in path.parents:
+            if parent == ROOT:
+                break
+            tracked_dirs.add(parent)
+    return tracked_dirs, tracked_files
+
+
+TRACKED_DIRS, TRACKED_FILES = _load_tracked()
 
 
 @dataclass(frozen=True)
@@ -42,7 +69,7 @@ def should_descend(child: Path) -> bool:
         and not is_skill_root(child)
         and (child == THIRD_PARTY_ROOT or not is_under(child, THIRD_PARTY_ROOT))
         and not is_under(child, SKILL_ZIPS_ROOT)
-        and not is_under(child, SUPERPOWERS_SDD_ROOT)
+        and child in TRACKED_DIRS
     )
 
 
@@ -55,6 +82,8 @@ def should_index(path: Path) -> bool:
     if is_under(path, THIRD_PARTY_ROOT) and path != THIRD_PARTY_ROOT:
         return False
     if is_under(path, SKILL_ZIPS_ROOT):
+        return False
+    if path not in TRACKED_DIRS:
         return False
     return not is_skill_root(path)
 
@@ -84,9 +113,13 @@ def render_index(path: Path) -> str:
                 continue
             if is_skill_root(path):
                 continue
+            if entry not in TRACKED_DIRS:
+                continue
             dirs.append(entry)
         else:
             if entry.name in EXCLUDED_FILE_NAMES:
+                continue
+            if entry not in TRACKED_FILES:
                 continue
             files.append(entry)
 
@@ -179,7 +212,7 @@ def main() -> int:
         and path.name == "INDEX.md"
         and (not is_under(path, THIRD_PARTY_ROOT) or path == THIRD_PARTY_ROOT / "INDEX.md")
         and not is_under(path, SKILL_ZIPS_ROOT)
-        and not is_under(path, SUPERPOWERS_SDD_ROOT)
+        and path.parent in TRACKED_DIRS
     }
     unexpected = sorted(path for path in actual_paths if path not in expected_paths)
     missing = sorted(path for path in expected_paths if path not in actual_paths)

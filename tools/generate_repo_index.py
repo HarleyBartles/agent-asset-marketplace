@@ -134,18 +134,6 @@ DEFAULT_REPO_INDEX = {
             ],
         },
         {
-            "name": "first-party-boring-loop-ledger",
-            "path": "sources/first_party/skills/boring-loop",
-            "purpose": "Editable Boring Loop first-party source ledger and boundary records used to project the shared loop skill.",
-            "surface_kind": "provenance",
-            "nearest_scoped_agents_md": None,
-            "key_validation_scripts": [
-                "tools/update_skill_artifacts.py",
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
-        },
-        {
             "name": "third-party-custody",
             "path": "sources/third_party",
             "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, dotnet-claude-kit, claude-cortex, and ecc upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",

@@ -222,7 +222,7 @@ contract or Harley explicitly waives it.
 
 Short functional in-world labels are acceptable. Reject or repair when text is long, garbled, misspelled, wrong-canon,
 operator-facing, or required for the asset to make sense. Reject or repair if the image includes bootstrap notes,
-session-buster-v0.2 text, issue comments, candidate numbers, repo paths, source-zip names, skill-install notes, sidebars,
+continuity-export text, issue comments, candidate numbers, repo paths, source-zip names, skill-install notes, sidebars,
 checklists, QA labels, pass/fail labels, or process reports unless Harley explicitly requested a status artifact.
 
 ## Working-loop and repo-record discipline

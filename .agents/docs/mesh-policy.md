@@ -11,6 +11,12 @@ distinctions, not directory navigation.
 `AGENTS.md` files should stay slim. Their job is to tell agents what to read,
 when to read it, and where the next relevant surface lives.
 
+Do not restate doctrine in `AGENTS.md`. When a rule lives in a doctrine doc
+under `docs/` or `.agents/docs/`, the scoped `AGENTS.md` carries only a
+MUST READ pointer with the trigger condition and the path to the doctrine
+doc. The doctrine doc is the canonical rule surface; `AGENTS.md` is the
+routing surface.
+
 ## 2. `INDEX.md` mesh
 
 `INDEX.md` files are generated navigation and coverage surfaces.

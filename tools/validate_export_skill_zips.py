@@ -75,7 +75,7 @@ def test_from_file_export() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         request_file = tmp_path / "requested-skills.txt"
-        request_file.write_text("house-skills/asset-market\nhouse-skills/boring-loop\n", encoding="utf-8", newline="\n")
+        request_file.write_text("house-skills/asset-market\nhouse-skills/adventures-bootstrap\n", encoding="utf-8", newline="\n")
 
         manifest = export_skill_zips(
             form="from-file",
@@ -86,19 +86,19 @@ def test_from_file_export() -> None:
         )
 
         assert (tmp_path / "from-file" / "asset-market" / "skill.zip").is_file()
-        assert (tmp_path / "from-file" / "boring-loop" / "skill.zip").is_file()
+        assert (tmp_path / "from-file" / "adventures-bootstrap" / "skill.zip").is_file()
         assert manifest["request"]["form"] == "from-file"
-        assert manifest["request"]["value"] == ["house-skills/asset-market", "house-skills/boring-loop"]
+        assert manifest["request"]["value"] == ["house-skills/asset-market", "house-skills/adventures-bootstrap"]
         assert manifest["request"]["source_file"] == str(request_file)
 
 
 def test_subset_export_and_bare_name_ambiguity() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         out_dir = Path(tmp) / "subset"
-        result = run_export(["--skills", "house-skills/asset-market,house-skills/boring-loop", "--out", str(out_dir)])
+        result = run_export(["--skills", "house-skills/asset-market,house-skills/adventures-bootstrap", "--out", str(out_dir)])
         assert_ok(result)
         assert (out_dir / "asset-market" / "skill.zip").is_file()
-        assert (out_dir / "boring-loop" / "skill.zip").is_file()
+        assert (out_dir / "adventures-bootstrap" / "skill.zip").is_file()
 
         bare_unique = export_skill_zips(
             form="skills",
@@ -185,7 +185,7 @@ def main() -> int:
     print("Receipt:")
     print("  commands run:")
     print("    py -3 tools/export_skill_zips.py --pack house-skills --out <temp>/batch --clean-output")
-    print("    py -3 tools/export_skill_zips.py --skills house-skills/asset-market,house-skills/boring-loop --out <temp>/subset")
+    print("    py -3 tools/export_skill_zips.py --skills house-skills/asset-market,house-skills/adventures-bootstrap --out <temp>/subset")
     print("    py -3 tools/export_skill_zips.py --skills linear --out <temp>/ambiguous")
     print("  sample export path: " + str(out_dir / manifest["resolved"][0]["output_path"]))
     print("  exported skills: " + ", ".join(f"{entry['pack']}/{entry['skill']}" for entry in manifest["resolved"]))

@@ -33,7 +33,7 @@ Compose with these Skills when available:
 - `rooms-source-partitioning-v1` for source-basis separation.
 - `base-doctrine-v1.1` and `rooms-project-doctrine-v1` for named Rooms character, world, canon, archive, room,
   narrator, actor, or repo-structure claims and the related truth-boundary references.
-- `rooms-ambiguity-buster-v1` when identity, motive, authorship, witness status, archive gaps, relationship meaning,
+- `risk-gates` (rooms ambiguity gate) when identity, motive, authorship, witness status, archive gaps, relationship meaning,
   disappearance, room history, or emotional cost could be overresolved.
 - `rooms-sheet-creator-v1` after the investigation packet when Harley wants a participant-facing sheet.
 
