@@ -1,6 +1,6 @@
-# Reporting hygiene contract
+# Report hygiene
 
-Use this reference for full report partitioning, issue-goal conformance lanes, output patterns, and false-GREEN risks.
+Use this reference when drafting or reviewing report-like surfaces — partition reports, worker returns, Linear/Codex status notes, issue comments, verification summaries, publication notes, and continuity notes — so claims do not become truth.
 
 ## Core lesson
 
@@ -12,7 +12,7 @@ The failure mode is report laundering: a smooth report turns a worker claim, Lin
 
 Use for report drafts, worker returns, verifier summaries, publication notes, issue comments, receipt summaries, proof pointers, validation receipts, continuity notes, or closure summaries when reporting language could change the authority of information.
 
-Do not use this skill to dispatch workers, poll Linear, verify GitHub, run validation, mutate source evidence, close issues, or update repositories.
+Do not use this reference to dispatch workers, poll Linear, verify GitHub, run validation, mutate source evidence, close issues, or update repositories. Use `linear-issue-shaping` for Linear/Codex state, `github-operations` for GitHub proof, and `verification-before-completion` for completion readiness.
 
 Use project-specific reporting wrappers only when local actor/domain law matters. Wrong-project wrappers are noise.
 

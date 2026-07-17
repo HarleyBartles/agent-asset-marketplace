@@ -106,26 +106,6 @@
     "notes": "Imported as the Linear-side skill for connector surface selection, intent routing, and the `save_*` mutation taxonomy."
   },
   {
-    "issue": "MARK-30",
-    "source_id": "tps-reporting-v1",
-    "source_path": "sources/first_party/skills/tps-reporting",
-    "public_name": "tps-reporting",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "producer-side TPS reporting",
-    "notes": "Imported as the producer-side TPS report protocol with cover-sheet, evidence, provenance, route, falsification, and remediation expectations."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "tps-ingress-v1",
-    "source_path": "sources/first_party/skills/tps-ingress",
-    "public_name": "tps-ingress",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "consumer-side TPS ingress",
-    "notes": "Imported as the consumer-side TPS protocol that reads the cover sheet, partitions claims, and forwards or returns the packet through the lawful route."
-  },
-  {
     "issue": "WILL-276",
     "source_id": "connector-safety-v1.1",
     "source_path": "sources/first_party/skills/connector-safety",

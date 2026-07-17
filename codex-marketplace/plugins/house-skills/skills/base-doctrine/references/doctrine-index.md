@@ -7,3 +7,4 @@ Use this map to avoid loading all doctrine.
 - `durable-doctrine-routing.md`: where to store durable rules and agent assets: system prompt, skills, canonical source repos, Codex plugin marketplaces, repo overlays, playbooks, repo docs, project sources, Linear, or memory.
 - `failure-and-trust-posture.md`: correction, no handwaving, and verified-versus-inferred language.
 - `output-artifact-shape.md`: output form as authority, reserved YAML shapes, dispatch/continuity confusion, and worker-copy attention guards.
+- `report-hygiene.md`: report partitioning, report laundering hard stops, compact coding report shape, and false-GREEN risks.

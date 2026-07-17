@@ -143,7 +143,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 - `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to a cloud agent unless the editable source is known to live in a worker-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> the repo/GitHub proof surface after a GitHub artifact exists. Do not use repo/GitHub proof to decide worker state or issue routing.
 - `linear_control` -> `using-linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
-- `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as the validation decision surface, `tps-ingress`, or `tps-reporting`.
+- `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as the validation decision surface, `risk-gates` (feedback gate), or `base-doctrine` (report hygiene).
 - `legacy_plan_b` -> the compact legacy dispatch stack only after the default route has been rejected or unavailable.
 
 Use project bootstrap or project doctrine only when the active project actually matches the project wrapper and the current task needs local law.

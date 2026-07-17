@@ -489,36 +489,6 @@
       "source_family": "first_party"
     },
     {
-      "canonical_name": "tps-ingress",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-ingress",
-      "local_path": "skills/tps-ingress",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/tps-ingress/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "tps-reporting",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-reporting",
-      "local_path": "skills/tps-reporting",
-      "lane": "Base and control plane",
-      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
-      "source_path": "sources/first_party/skills/tps-reporting/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "first_party",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "unslop-plus",
       "source_category": "first_party",
       "content_mode": "verbatim",

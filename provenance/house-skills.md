@@ -218,6 +218,24 @@
 - Scope: Wild Bunch worker returns, PRs, commits, validation notes, and completion verification
 - Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
 
+## tps-reporting
+
+- Source path: `sources/first_party/skills/tps-reporting` (retired 2026-07-16)
+- Public identity: `tps-reporting`
+- Provenance/history only: MARK-30 base and control plane (retired)
+- Ownership: Harley-authored first-party House skill
+- Scope: producer-side report hygiene — partition reports, worker returns, Linear/Codex status notes, verification summaries, and continuity notes so claims do not become truth
+- Notes: Retired as part of the tps skill retirement. The report hygiene function now lives in `base-doctrine` under `references/report-hygiene.md`. This record exists only for provenance audit of the retired source path.
+
+## tps-ingress
+
+- Source path: `sources/first_party/skills/tps-ingress` (retired 2026-07-16)
+- Public identity: `tps-ingress`
+- Provenance/history only: MARK-30 base and control plane (retired)
+- Ownership: Harley-authored first-party House skill
+- Scope: consumer-side feedback verification — evaluate review, verifier, worker, issue, PR, automated-check, or external feedback before it becomes action, scope, evidence, or closure posture
+- Notes: Retired as part of the tps skill retirement. The feedback verification function now lives in `risk-gates` under `references/gates/feedback-gate.md`. This record exists only for provenance audit of the retired source path.
+
 ## House Skills plugin projection
 
 - Bundle name: `house-skills`
@@ -243,8 +261,6 @@
 - `work-mode-router-v1` - `sources/first_party/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `linear-issue-shaping-v1` - `sources/first_party/skills/linear-issue-shaping`
 - `using-linear-v1` - `sources/first_party/skills/using-linear`
-- `tps-reporting-v1` - `sources/first_party/skills/tps-reporting/v1/tps-reporting-v1/SKILL.md`
-- `tps-ingress-v1` - `sources/first_party/skills/tps-ingress/v1/tps-ingress-v1/SKILL.md`
 - `risk-gates` - `sources/first_party/skills/risk-gates/SKILL.md`
 
 ### Adventures v1.1

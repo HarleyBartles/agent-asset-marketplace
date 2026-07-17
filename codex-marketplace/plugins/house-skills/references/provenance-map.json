@@ -232,20 +232,6 @@
       "local_path": "skills/sprite-pipeline"
     },
     {
-      "canonical_name": "tps-ingress",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-ingress",
-      "local_path": "skills/tps-ingress"
-    },
-    {
-      "canonical_name": "tps-reporting",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/tps-reporting",
-      "local_path": "skills/tps-reporting"
-    },
-    {
       "canonical_name": "unslop-plus",
       "source_category": "first_party",
       "content_mode": "verbatim",
