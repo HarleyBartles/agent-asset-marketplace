@@ -35,6 +35,7 @@ metadata:
   related_skills:
   - verification-before-completion
   - connector-safety
+  - rooms-risk-gates
 license: MIT
 ---
 # Risk Gates
@@ -90,16 +91,9 @@ Read only the gate reference docs whose use-when matches the current action. Ski
 | analogy-gate | About to rely on an analogy, metaphor, comparison, role model, frame, or project-specific shorthand to answer, plan, dispatch, or make a durable decision. | No analogy is doing evidentiary or decision work — the reasoning is source-grounded without metaphorical scaffolding. | `references/gates/analogy-gate.md` |
 | feedback-gate | Review, verifier, worker, issue, PR, automated-check, or external feedback appears and could become action, scope, evidence, closure posture, or a worker instruction before current source reality and lawful ownership are checked. | The feedback is ordinary conversation, already verified against current source, or does not affect the immediate safe next step. | `references/gates/feedback-gate.md` |
 
-### Rooms project gates (apply only when working in Rooms, Mostly)
+## Project-specific overlays
 
-Read these only when the current task is in the Rooms, Mostly project. If the task is not Rooms-related, skip this entire section.
-
-| Gate | Use when | Do not use when | Reference |
-|------|----------|-----------------|-----------|
-| rooms-ambiguity-gate | Working in Rooms and the action risks resolving identity, motive, authorship, witness status, narrator knowledge, archive gaps, disappearance, or manuscript uncertainty without evidence. | Not working in Rooms, or the ambiguity is generic (use the generic ambiguity-gate instead). | `references/rooms/ambiguity-gate.md` |
-| rooms-canon-gate | Working in Rooms and testing canon pressure — whether an item fits, conflicts with, exposes a gap in, or belongs to another layer than established Rooms canon. | Not working in Rooms, or the canon question is generic (use the generic canon-gate instead). | `references/rooms/canon-gate.md` |
-| rooms-analogy-gate | Working in Rooms and relying on the black box theatre analogy for a canon, world, manuscript, dispatch, or persistence decision. | Not working in Rooms, or no analogy is in play, or the analogy question is generic (use the generic analogy-gate instead). | `references/rooms/analogy-gate.md` |
-| rooms-zoom-outs-gate | Working in Rooms and compressing a character, room, event, or system into a behavioural/emotional/structural model that will be used for canon, persistence, or dispatch decisions. | Not working in Rooms, or no zoom-out/compression model is being constructed or relied upon. | `references/rooms/zoom-outs-gate.md` |
+Rooms-specific gate profiles (canon pressure, ambiguity preservation, analogy validation, zoom-out compression) live in the separate `rooms-risk-gates` overlay skill. When working in Rooms, Mostly, compose this base skill with `rooms-risk-gates` for rooms-specific gate questions. For non-Rooms projects, this base skill is sufficient.
 
 ## Workflow
 

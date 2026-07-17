@@ -1,60 +1,6 @@
 {
   "imports": [
     {
-      "issue": "MARK-19",
-      "source_id": "buster-framework-v1",
-      "source_path": "sources/first_party/skills/buster-framework",
-      "public_name": "buster-framework",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "generic pre-action buster framework",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "ambiguity-buster-v1",
-      "source_path": "sources/first_party/skills/ambiguity-buster",
-      "public_name": "ambiguity-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "ambiguity pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "boring-buster-v1",
-      "source_path": "sources/first_party/skills/boring-buster",
-      "public_name": "boring-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "boring-readiness pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "invariant-buster-v1",
-      "source_path": "sources/first_party/skills/invariant-buster",
-      "public_name": "invariant-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "binding invariant pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "analogy-buster-v1",
-      "source_path": "sources/first_party/skills/analogy-buster",
-      "public_name": "analogy-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "analogy pre-action review",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-19",
-      "source_id": "canon-buster-v1",
-      "source_path": "sources/first_party/skills/canon-buster",
-      "public_name": "canon-buster",
-      "provenance_name": "MARK-19 core generic buster House Skills source slice",
-      "scope": "canon/source drift pre-action review",
-      "import_state": "imported"
-    },
-    {
       "issue": "MARK-20",
       "source_id": "cleanup-custody-v0.1",
       "source_path": "sources/first_party/skills/cleanup-custody",
@@ -292,33 +238,6 @@
     },
     {
       "issue": "MARK-30",
-      "source_id": "rooms-ambiguity-buster-v1",
-      "source_path": "sources/first_party/skills/rooms-ambiguity-buster",
-      "public_name": "rooms-ambiguity-buster",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms project-specific ambiguity overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-analogy-buster-v1",
-      "source_path": "sources/first_party/skills/rooms-analogy-buster",
-      "public_name": "rooms-analogy-buster",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms analogy overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-zoom-outs-buster-v1",
-      "source_path": "sources/first_party/skills/rooms-zoom-outs-buster",
-      "public_name": "rooms-zoom-outs-buster",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms zoom-out readiness check",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
       "source_id": "rooms-character-investigation-v1",
       "source_path": "sources/first_party/skills/rooms-character-investigation",
       "public_name": "rooms-character-investigation",
@@ -334,16 +253,6 @@
       "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
       "scope": "Rooms sheet creation from durable packets",
       "import_state": "imported"
-    },
-    {
-      "issue": "MARK-97",
-      "source_id": "rooms-canon-buster-v1",
-      "source_path": "sources/first_party/skills/rooms-canon-buster",
-      "public_name": "rooms-canon-buster",
-      "provenance_name": "MARK-97 attached rooms canon buster zip update",
-      "scope": "Rooms canon pressure checks and lawful canon/item adjustment",
-      "import_state": "imported",
-      "notes": "Imported as the Rooms canon-pressure overlay. Keeps canon pressure, gaps, ambiguity, layer mismatch, and lawful item/canon move decisions separate from generic canon-buster."
     },
     {
       "issue": "MARK-109",
@@ -423,6 +332,15 @@
       "scope": "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
       "import_state": "imported",
       "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
+    },
+    {
+      "issue": "MARK-334",
+      "source_id": "rooms-risk-gates",
+      "source_path": "sources/first_party/skills/rooms-risk-gates",
+      "public_name": "rooms-risk-gates",
+      "provenance_name": "Rooms risk gates overlay skill",
+      "scope": "Rooms-specific risk gate profiles composing with risk-gates",
+      "import_state": "imported"
     }
   ]
 }

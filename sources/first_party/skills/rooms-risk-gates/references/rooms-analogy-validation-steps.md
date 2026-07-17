@@ -1,6 +1,6 @@
 # Analogy validation steps
 
-Detailed validation workflow, source-status rules, green-outcome definitions, common Rooms analogy checks, interactive queue posture, GitHub source-route discipline, and output basis labels for `rooms-analogy-buster`.
+Detailed validation workflow, source-status rules, green-outcome definitions, common Rooms analogy checks, interactive queue posture, GitHub source-route discipline, and output basis labels for the rooms analogy gate.
 
 ## Authoritative analogy surface
 
@@ -12,7 +12,7 @@ Wrapper path when accessed through the Rooms-Mostly stack:
 
 `Rooms-Mostly/World/Systems/rooms_mostly_black_box_theatre_analogy.md`
 
-This World Systems surface is the project authority for the Rooms, Mostly black box theatre / rag-tag pop-up theatre collective analogy. Do not rely on memory alone when a durable Rooms claim, dispatch, canon/world decision, manuscript decision, or buster queue depends on the analogy.
+This World Systems surface is the project authority for the Rooms, Mostly black box theatre / rag-tag pop-up theatre collective analogy. Do not rely on memory alone when a durable Rooms claim, dispatch, canon/world decision, manuscript decision, or gate queue depends on the analogy.
 
 ## GitHub source-route discipline
 
@@ -27,7 +27,7 @@ Search results are discovery, not final truth. Inspect the relevant file, issue,
 Treat the analogy as:
 
 - a working interpretive analogy supplied by your human partner and persisted in World;
-- useful for lived-experience framing, discussion, buster checks, and craft reasoning;
+- useful for lived-experience framing, discussion, gate checks, and craft reasoning;
 - not archive evidence;
 - not canon fact by itself;
 - not machine truth;
@@ -36,7 +36,7 @@ Treat the analogy as:
 
 ## Workflow
 
-1. Invoke or follow cross-runtime `analogy-buster` mechanics first: internal mode when clear, interactive queue when your human partner must resolve amber items, and useful-break handling when the analogy clarifies by failing.
+1. Invoke or follow the generic analogy-gate mechanics first: internal mode when clear, interactive queue when your human partner must resolve amber items, and useful-break handling when the analogy clarifies by failing.
 2. If the task is Rooms-specific and the analogy matters, use the World Systems analogy surface as the active project analogy.
 3. If repo access is unavailable, say the analogy is not freshly repo-grounded. Use only explicitly provided fallback text or previously verified path knowledge, and mark the basis.
 4. Check whether the analogy is helping the lived experience of the book, or whether it is overfitting, flattening, or smuggling in false structure.
@@ -44,7 +44,7 @@ Treat the analogy as:
 
 ## Rooms-specific green outcomes
 
-A Rooms analogy-buster result can be green in either direction:
+A Rooms analogy-gate result can be green in either direction:
 
 - `green_holds`: the theatre / backstage / VHS analogy clarifies the current Rooms question.
 - `green_breaks_usefully`: the analogy breaks here, and that break protects a useful boundary.
@@ -67,7 +67,7 @@ Check for these risks before using the analogy in Rooms reasoning:
 
 ## Interactive queue posture
 
-If unresolved analogy risks remain and your human partner's decision is needed, present a short buster queue using the buster framework style. Default to at most five items. Each item should include:
+If unresolved analogy risks remain and your human partner's decision is needed, present a short gate queue using the risk-gates framework style. Default to at most five items. Each item should include:
 
 - what analogy use is under review;
 - current amber risk;

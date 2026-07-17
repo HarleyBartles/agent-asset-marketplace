@@ -96,6 +96,21 @@
       "provenance_note": "First-party skill projected verbatim into the rooms-project-pack."
     },
     {
+      "canonical_name": "rooms-risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/rooms-risk-gates",
+      "local_path": "skills/rooms-risk-gates",
+      "lane": "Rooms",
+      "source_path": "sources/first_party/skills/rooms-risk-gates/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the rooms-project-pack. Rooms-specific risk gate overlay composing with the base risk-gates skill."
+    },
+    {
       "canonical_name": "rooms-sheet-creator",
       "source_category": "first_party",
       "content_mode": "verbatim",

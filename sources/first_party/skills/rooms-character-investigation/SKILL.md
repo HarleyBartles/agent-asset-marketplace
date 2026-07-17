@@ -17,7 +17,7 @@ metadata:
   do_not_use_when:
   - Do not use when the task is sheet creation rather than character investigation
     — use rooms-sheet-creator instead.
-  - Do not use when the task is canon resolution — use rooms-canon-buster instead.
+  - Do not use when the task is canon resolution — use the rooms canon-gate instead.
   use_before:
   - rooms-sheet-creator
 license: MIT

@@ -17,7 +17,7 @@ metadata:
   do_not_use_when:
   - Do not use when the task is character investigation rather than image sidecar
     preparation — use rooms-character-investigation instead.
-  - Do not use when the task is canon resolution — use rooms-canon-buster instead.
+  - Do not use when the task is canon resolution — use the rooms canon-gate instead.
 license: MIT
 ---
 # Rooms Image Sidecars

@@ -36,6 +36,13 @@
       "local_path": "skills/rooms-project-doctrine"
     },
     {
+      "canonical_name": "rooms-risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/rooms-risk-gates",
+      "local_path": "skills/rooms-risk-gates"
+    },
+    {
       "canonical_name": "rooms-sheet-creator",
       "source_category": "first_party",
       "content_mode": "verbatim",
