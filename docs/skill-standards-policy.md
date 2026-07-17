@@ -101,8 +101,8 @@ license: MIT
 
 - `use_before` — list of skill names that should fire after this skill. Use when this skill produces an artifact that another skill consumes (e.g., `use_before: [rooms-sheet-creator]` on `rooms-character-investigation`).
 - `use_after` — list of skill names that should fire before this skill. Use when this skill consumes an artifact that another skill produces (e.g., `use_after: [rooms-character-investigation]` on `rooms-sheet-creator`).
-- `use_with` — list of skill names that should compose with this skill in the same turn. Use when skills run alongside each other rather than in sequence (e.g., `use_with: [rooms-source-partitioning]` on `rooms-canon-buster`).
-- `use_instead` — list of skill names preferred over this skill for specific sub-tasks where they are better suited. Use when a skill is broadly triggered but a more specific skill handles certain cases better (e.g., `use_instead: [rooms-canon-buster]` on `rooms-ambiguity-buster` for canon resolution tasks). Each entry is a skill name; pair with a `do_not_use_when` entry explaining the specific case.
+- `use_with` — list of skill names that should compose with this skill in the same turn. Use when skills run alongside each other rather than in sequence (e.g., `use_with: [risk-gates]` on `rooms-project-doctrine`).
+- `use_instead` — list of skill names preferred over this skill for specific sub-tasks where they are better suited. Use when a skill is broadly triggered but a more specific skill handles certain cases better (e.g., `use_instead: [rooms-risk-gates]` on `risk-gates` for rooms-specific gate questions). Each entry is a skill name; pair with a `do_not_use_when` entry explaining the specific case.
 
 #### Optional routing fields
 

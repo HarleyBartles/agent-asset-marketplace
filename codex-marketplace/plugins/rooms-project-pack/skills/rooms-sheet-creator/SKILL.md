@@ -109,8 +109,8 @@ Do not:
 ## Direct-landing summary
 
 Prompt and peek lanes already have governed GPT direct-landing exceptions in World research surfaces. Recall may be
-created in chat, but do not persist recall sheets until a repo-resident recall lane or explicit your human partner-approved write
-surface exists.
+created in chat, but do not persist recall sheets until a repo-resident recall lane or explicit write surface approved by
+your human partner exists.
 
 Use `references/direct-landing.md` for exact path limits before any repo mutation.
 

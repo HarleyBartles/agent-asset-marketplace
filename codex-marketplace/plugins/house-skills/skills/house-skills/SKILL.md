@@ -56,8 +56,6 @@ The bundle's live projection surface is `codex-marketplace/plugins/house-skills/
 
 The historical source ledger remains:
 
-- `sources/first_party/skills/house-skills/decisions.json`
-- `sources/first_party/skills/house-skills/decisions.md`
 - `sources/first_party/skills/house-skills/intake.json`
 - `provenance/house-skills.md`
 
@@ -70,7 +68,6 @@ The bundle does not replace the archived source ledger. Current version lives in
 Marketplace exports are generated, not hand-edited:
 
 - edit the live plugin roots in `codex-marketplace/plugins/house-skills/skills/<skill-name>/`;
-- keep the historical registry in `sources/first_party/skills/house-skills/decisions.md` and `sources/first_party/skills/house-skills/decisions.json` as archive/provenance;
 - regenerate `.agents/plugins/marketplace.json` with `tools/generate_marketplace.py`;
 - verify the result with `tools/validate_marketplace.py`.
 

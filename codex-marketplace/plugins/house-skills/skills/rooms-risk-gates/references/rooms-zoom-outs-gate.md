@@ -23,16 +23,84 @@ A model is not fully green merely because it feels elegant. It must regenerate a
 2. State the proposed zoom-out: behavioural truth, emotional posture, interaction mechanic, compression mode, or structural role.
 3. Check whether the model is only conversation-derived or already artifact-grounded.
 4. Zoom back in: test the model against relevant artifacts, voice surfaces, room/system docs, canon/world surfaces, manuscript excerpts, or archive-derived evidence when lawful and needed.
-5. Mark status using the readiness levels in `references/queue-patterns.md`.
+5. Mark status using the readiness levels below.
 6. If the model is a persistence candidate, compose with `rooms-project-doctrine`, the rooms canon-gate, `rooms-ambiguity-gate`, and `invariant-gate` before dispatch or canon/world persistence.
 
-## Compose with
+## Status levels
+
+- `green_artifact_verified`: compression survives return to persisted artifact behaviour.
+- `green_model_only`: compression is plausible for conversation but not artifact-verified; do not persist as truth without further checks.
+- `green_internal_misalignment`: artifacts support belonging plus stable imperfect execution or rhythm divergence.
+- `amber_artifact_needed`: the model may be right, but source surfaces have not been checked.
+- `amber_overfit_risk`: the compression may be flattening distinction, assigning shared forms too exclusively, or making one entity carry a pattern.
+- `red_flattening`: the zoom-out erases meaningful distinction.
+- `red_overresolution`: the zoom-out resolves awareness, motive, identity, or ambiguity beyond artifact support.
+- `red_externalising`: the model incorrectly treats internal participants as outsiders or observers.
+- `red_symbolic_drift`: the model becomes symbolic shorthand instead of behaviour regeneration.
+- `red_regeneration_failure`: the compressed model cannot plausibly reproduce artifact behaviour.
+- `blocked_source_unavailable`: required artifact/canon/source surfaces are unavailable.
+
+## Source and verification discipline
+
+Artifacts are regeneration test surfaces, not optional examples. Use the smallest sufficient source set.
+
+Prefer, in order, when relevant and available:
+
+1. The actual artifact under discussion: tweet/thread/sketch/room doc/voice artifact/manuscript excerpt/system surface.
+2. Brian/World character, room, systems, and canon surfaces.
+3. Manuscript surfaces for prose/scene behaviour, preserving Derek authority.
+4. Pit/archive evidence only as evidence, with provenance and partiality preserved.
+5. Reports only as reports.
+6. Conversation-derived material only as candidate compression, not artifact verification.
+
+Do not treat memory, conversation, reports, or analogy as artifact verification.
+
+## GitHub source-route discipline
+
+Before repo-dependent judgment, identify the available GitHub route. Use bound `file_search` GitHub for broad repo discovery, unknown-path searches, stale-reference inventories, and corpus-style reads across multiple repo surfaces. Use the live GitHub API connector route, such as `api_tool` when exposed, for exact issue threads, comments, file-by-path reads, commit/ref comparison, PR details, remote-head checks, and authorized GitHub mutations.
+
+If `file_search` is unavailable or not bound, do not treat that as loss of GitHub access when a live API route is available. Use the live API route for exact reads and operations. If broad repo discovery would materially improve safety or completeness, ask your human partner to bind `file_search` GitHub to the relevant repo set before doing the scan.
+
+Search results are discovery, not final truth. Inspect the relevant file, issue, commit, or source surface before making affirmative repo-grounded claims.
+
+## Internal mode
+
+Run internally when the answer, plan, or dispatch depends on a zoom-out. Do not show a queue when there is one legitimate path. Internally downgrade unverified models to `green_model_only` or `amber_artifact_needed`; do not present them as artifact-verified.
+
+## Interactive mode
+
+Use an interactive queue when your human partner must decide among real modelling or persistence choices. Domain-specific zoom-out item content should include the proposed compression, artifact gap or failure risk, green condition, and GPT's strong recommendation.
+
+A visible zoom-out item should be compact and readable, normally including:
+
+- the entity or pattern under discussion;
+- the proposed compression or zoom-out;
+- the artifact basis checked, or the artifact gap;
+- the amber/red risk, such as flattening, overresolution, externalising, symbolic drift, artifact gap, or regeneration failure;
+- the green condition;
+- GPT's strong recommendation.
+
+Do not queue a zoom-out item when the artifact path gives only one lawful move. Examples:
+
+- If artifacts have not been checked, internally downgrade to `amber_artifact_needed` or `green_model_only` instead of asking your human partner to accept artifact verification.
+- If a compression overresolves motive or identity, repair or reject it rather than asking your human partner to approve overresolution.
+- If the model is only conversation-derived, label it that way and do not present it as artifact-verified.
+
+## Internal Misalignment Green
+
+A character can fully belong to a room, understand it, and still not execute its rhythm perfectly. This is not outsider status, misunderstanding, or conscious anxiety when artifacts support internal belonging plus stable rhythm divergence. Use `green_internal_misalignment` for this pattern.
+
+## Persistence boundary
+
+This Skill does not persist canon. A verified zoom-out may become a persistence candidate. Before persistence, compose with:
 
 - `rooms-project-doctrine` for evidence/conversation/report/canon separation.
 - the rooms canon-gate for canon pressure.
 - `rooms-ambiguity-gate` for unresolved scope, source, actor, or terminology ambiguity.
 - `invariant-gate` for protected surfaces, authority, and repo/governance invariants.
 - `linear-issue-shaping` if worker execution is needed.
+
+Do not simulate Brian, Albert, Derek, Chris, or Will. Do not mutate repos from chat.
 
 ## References
 

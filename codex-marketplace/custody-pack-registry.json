@@ -21,8 +21,6 @@
         "Project the clean Adventures line plus the generic helper skills needed to use it sensibly. Keep historical imports out of the active bundle."
       ],
       "source_ledger": [
-        "sources/first_party/skills/house-skills/decisions.json",
-        "sources/first_party/skills/house-skills/decisions.md",
         "sources/first_party/skills/house-skills/intake.json",
         "provenance/house-skills.md"
       ],

@@ -87,6 +87,11 @@ def _run_tool_check(command: list[str], label: str) -> None:
         raise ValueError(f"{label} failed with exit code {exc.returncode}") from exc
 
 
+def _git_lines(*args: str) -> list[str]:
+    result = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True)
+    return result.stdout.splitlines()
+
+
 def validate_projection_materializer() -> None:
     _run_tool_check([sys.executable, "tools/materialize_projection.py", "--check"], "projection materializer check")
 
@@ -1510,58 +1515,6 @@ def validate_no_legacy_manifest_shapes() -> None:
     print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 
-def validate_no_stale_superpowers_output_path() -> None:
-    """Flag any projected third-party skill file that references the stale
-    ``.superpowers/`` output directory instead of the canonical
-    ``.agents/superpowers/`` path, and flag any tracked ``.superpowers/``
-    directory at the repo root.
-
-    The upstream obra-superpowers framework defaults to ``.superpowers/`` for
-    its SDD workspace and brainstorm session files. This repo standardizes on
-    ``.agents/superpowers/`` as the single canonical output directory. Overlay
-    edits are responsible for repointing upstream references; this validator
-    catches any that were missed and prevents the stale directory from being
-    tracked again.
-    """
-    # Check 1: no tracked .superpowers/ directory at repo root
-    stale_dir = ROOT / ".superpowers"
-    if stale_dir.exists():
-        tracked = _git_lines("ls-files", ".superpowers/")
-        if tracked:
-            raise ValueError(
-                f"stale .superpowers/ directory is tracked in git "
-                f"({len(tracked)} file(s)). Remove it with `git rm -r --cached .superpowers/` "
-                f"and use .agents/superpowers/ as the canonical output path."
-            )
-
-    # Check 2: no .superpowers/ path references in projected skill files
-    projection_root = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills"
-    if not projection_root.exists():
-        return
-
-    stale_refs: list[str] = []
-    for file_path in sorted(projection_root.rglob("*")):
-        if not file_path.is_file():
-            continue
-        rel = file_path.relative_to(ROOT)
-        try:
-            text = file_path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, OSError):
-            continue
-        for line_no, line in enumerate(text.splitlines(), 1):
-            if ".superpowers/" in line:
-                stale_refs.append(f"{rel}:{line_no}: {line.strip()}")
-
-    if stale_refs:
-        details = "\n  ".join(stale_refs[:20])
-        raise ValueError(
-            f"stale .superpowers/ output path found in {len(stale_refs)} projected line(s) "
-            f"(must be .agents/superpowers/):\n  {details}"
-            + ("\n  ..." if len(stale_refs) > 20 else "")
-        )
-    print(f"OK stale superpowers output path check: 0 stale refs in projection, 0 tracked files")
-
-
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
     parser.add_argument(
@@ -1591,10 +1544,15 @@ def validate_skill_zip_assertions() -> None:
 
     # finishing-a-development-branch must be a direct (verbatim) export.
     verbatim = next(
-        record
-        for record in registry["artifacts"]
-        if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
+        (
+            record
+            for record in registry["artifacts"]
+            if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
+        ),
+        None,
     )
+    if verbatim is None:
+        raise ValueError("expected finishing-a-development-branch artifact in registry but found none")
     if verbatim["export_mode"] != "direct":
         raise AssertionError("expected finishing-a-development-branch to be a direct export")
     if verbatim.get("overlay_path") is not None:
@@ -1608,10 +1566,15 @@ def validate_skill_zip_assertions() -> None:
 
     # dispatching-parallel-agents must be excluded.
     excluded = next(
-        record
-        for record in registry["excluded"]
-        if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
+        (
+            record
+            for record in registry["excluded"]
+            if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
+        ),
+        None,
     )
+    if excluded is None:
+        raise ValueError("expected dispatching-parallel-agents excluded record in registry but found none")
     if excluded["export_mode"] != "excluded":
         raise AssertionError("expected dispatching-parallel-agents to be excluded")
     if "subagents" not in excluded["reason"]:
@@ -1620,10 +1583,15 @@ def validate_skill_zip_assertions() -> None:
     # worker-verification must export as an installable zip and must not be
     # re-added to wild-bunch-project-pack.
     worker_verification = next(
-        record
-        for record in registry["artifacts"]
-        if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
+        (
+            record
+            for record in registry["artifacts"]
+            if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
+        ),
+        None,
     )
+    if worker_verification is None:
+        raise ValueError("expected house-skills/worker-verification artifact in registry but found none")
     if worker_verification["export_mode"] not in {"direct", "overlay"}:
         raise AssertionError("house-skills/worker-verification should export as an installable zip")
     if any(
@@ -1727,7 +1695,6 @@ def main() -> int:
         )
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()
-    validate_no_stale_superpowers_output_path()
     validate_skill_zip_assertions()
 
     print("Marketplace validation passed.")

@@ -4,9 +4,7 @@ This plugin is the reviewed first-party House Skills projection root.
 
 ## Source basis
 
-- Source ledger: `sources/first_party/skills/house-skills/decisions.md`
-- Structured archive ledger: `sources/first_party/skills/house-skills/decisions.json`
-- Intake ledger: `sources/first_party/skills/house-skills/intake.json`
+- Source ledger: `sources/first_party/skills/house-skills/intake.json`
 - Provenance note: `provenance/house-skills.md`
 - Current install surfaces: `codex-marketplace/plugins/house-skills/skills/`
 - Canonical generic core skill roots: `sources/first_party/skills/<skill-name>/`

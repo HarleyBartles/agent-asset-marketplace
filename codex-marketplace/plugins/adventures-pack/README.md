@@ -24,8 +24,6 @@ Adventures House Skills line.
 ## Provenance
 
 - Canonical source root: `sources/first_party/skills`
-- Bundle source ledger: `sources/first_party/skills/house-skills/decisions.json`
-- Human registry: `sources/first_party/skills/house-skills/decisions.md`
 - Structured registry mirror: `sources/first_party/skills/house-skills/intake.json`
 
 The copied skill docs stay in their own directories and are exposed through the

@@ -2,7 +2,7 @@
 
 - Historical version: `v1.1`
 - Historical source id: `rooms-bootstrap-v1.1`
-- Current root: `sources/first_party/skills/rooms-bootstrap/SKILL.md`
+- Current root: Retired — merged into `sources/first_party/skills/rooms-project-doctrine/SKILL.md`
 - Provenance: historical archive note for rooms-bootstrap
 - Historical package folders folded out of the live root: none
 

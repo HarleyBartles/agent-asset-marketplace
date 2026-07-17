@@ -8,7 +8,7 @@ This gate is Rooms-only. It does not answer generic continuity questions for oth
 
 Use `rooms-project-doctrine` for Rooms truth boundaries, the rooms ambiguity gate when the right outcome is to preserve unresolved identity or motive, and `linear-issue-shaping` when a canon-safe next step turns into Linear issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, or GitHub proof handoff after a PR/branch/commit exists.
 
-Use the GPT-wide gate framework pattern. Run internally when there is one lawful path. Switch to interactive queue mode when Harley must decide a real creative/canon tradeoff.
+Use the GPT-wide gate framework pattern. Run internally when there is one lawful path. Switch to interactive queue mode when your human partner must decide a real creative/canon tradeoff.
 
 ## What the Canon Gate Tests
 
@@ -54,7 +54,7 @@ Use or defer to:
 - the rooms zoom-outs gate when the full frame is getting lost;
 - `rooms-character-investigation` for broad source lookup and source-partitioned investigation packets;
 - `rooms-sheet-creator` for prompt, peek, and recall sheet creation from durable packets;
-- `rooms-image-sidecars` for image evidence starter packets before Albert/Pit ingestion;
+- `rooms-image-sidecars` for image evidence starter packets before Pit/archive ingestion;
 - `linear-issue-shaping` for Linear worker issue readiness, worker-shaped issue status handling, external handoff text when explicitly requested, and GitHub proof handoff after a PR/branch/commit exists.
 
 ## Canon pressure types
@@ -76,7 +76,7 @@ A green outcome is not always "no conflict." The canon gate can go green through
 
 - `green_no_conflict`: the item fits current canon.
 - `green_item_modified`: modify the item to fit established canon. Use when established canon is stronger and the item can be adjusted without losing its purpose.
-- `green_canon_update_recommended`: keep the item and route a Rooms canon update. Use when the item is stronger or newer Harley or Rooms intent should move the world state. This requires lawful Rooms routing before claiming canon changed.
+- `green_canon_update_recommended`: keep the item and route a Rooms canon update. Use when the item is stronger or newer intent from your human partner or Rooms should move the world state. This requires lawful Rooms routing before claiming canon changed.
 - `green_both_update_recommended`: adjust both item and canon through lawful routing. Use when the item reveals a better shape but both the item and the existing canon surface need revision.
 - `green_layer_partitioned`: the item is valid in another layer, not canon. Use when the item is valid in another layer: archive evidence, report, manuscript unreliability, character belief, narrator limitation, working theory, or conversation candidate.
 - `green_ambiguity_preserved`: the apparent conflict is intentionally unresolved and should not be collapsed. Use when resolving the conflict would flatten intended uncertainty.
@@ -87,7 +87,7 @@ GPT may recommend canon modification, but GPT does not directly change canon in 
 
 ## Amber, Red, and Blocked
 
-Use `amber_harley_decision_needed` when a real creative or canon choice remains.
+Use `amber_partner_decision_needed` when a real creative or canon choice remains.
 
 Use `amber_repo_grounding_needed` when relevant Rooms surfaces must be inspected before judgment.
 
@@ -101,15 +101,15 @@ Resolve internally when only one lawful path exists.
 
 Examples:
 
-- If archive evidence is being treated as canon, partition it as evidence or candidate instead of asking Harley.
+- If archive evidence is being treated as canon, partition it as evidence or candidate instead of asking your human partner.
 - If a contradiction is only a character belief or narrator limitation, preserve the layer rather than forcing world-canon repair.
 - If a repo-backed Rooms move has one lawful route, take it directly rather than turning it into a queue.
 
-Do not show a gate queue for one-path corrections unless Harley asks to see the reasoning.
+Do not show a gate queue for one-path corrections unless your human partner asks to see the reasoning.
 
 ## Interactive Queue Mode
 
-Use interactive mode when Harley must choose among legitimate canon paths. Present up to five items at a time by default. Harley may blanket approve GPT recommendations with "go," "proceed," "accepted," "agreed," a thumbs-up, or similar positive affirmation.
+Use interactive mode when your human partner must choose among legitimate canon paths. Present up to five items at a time by default. Your human partner may blanket approve GPT recommendations with "go," "proceed," "accepted," "agreed," a thumbs-up, or similar positive affirmation.
 
 Default to at most five visible items. For each item, show:
 
@@ -122,7 +122,7 @@ Default to at most five visible items. For each item, show:
 
 Suppress items with only one lawful path. Internally repair those before output.
 
-Accept blanket approval for all visible GPT recommendations when Harley says "go," "proceed," "accepted," "agreed," gives a thumbs-up, or uses similar affirmative language.
+Accept blanket approval for all visible GPT recommendations when your human partner says "go," "proceed," "accepted," "agreed," gives a thumbs-up, or uses similar affirmative language.
 
 Queue item shape:
 

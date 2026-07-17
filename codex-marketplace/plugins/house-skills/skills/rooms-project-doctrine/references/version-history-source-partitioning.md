@@ -2,7 +2,7 @@
 
 - Historical version: `v1`
 - Historical source id: `rooms-source-partitioning-v1`
-- Current root: `sources/first_party/skills/rooms-source-partitioning/SKILL.md`
+- Current root: Retired — merged into `sources/first_party/skills/rooms-project-doctrine/SKILL.md`
 - Provenance: historical archive note for rooms-source-partitioning
 - Historical package folders folded out of the live root: none
 
