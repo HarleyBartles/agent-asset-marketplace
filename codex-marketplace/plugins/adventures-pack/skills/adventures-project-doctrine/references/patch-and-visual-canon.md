@@ -1,6 +1,6 @@
 # Patch and visual canon
 
-Patch is the constant first-class autonomous AI agent protagonist unless Harley explicitly excludes him.
+Patch is the constant first-class autonomous AI agent protagonist unless your human partner explicitly excludes him.
 
 Patch is singular. Do not create Patch clones, Patch-shaped teams, Patch-like audiences, or helper agents sharing
 Patch identity markers. Supporting agents, humans, systems, terminals, reviewers, and operators must remain visually

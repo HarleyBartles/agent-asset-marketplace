@@ -6,7 +6,7 @@ This reference preserves the detailed operating contract moved out of `SKILL.md`
 # Adventures Asset Sheet Compiler
 
 Use this skill for deterministic asset-sheet work only. It is the positive no-credit route after source images have been
-accepted and Harley asks to compile, assemble, lay out, package, or place those images onto an approved asset-sheet
+accepted and your human partner asks to compile, assemble, lay out, package, or place those images onto an approved asset-sheet
 template.
 
 This skill has two lanes:
@@ -83,7 +83,7 @@ Workflow:
 
 1. Read the repo template JSON sidecar for the selected template.
 2. Confirm the matching project-source PNG/spec filenames named by the sidecar are available locally.
-3. Confirm source images have been QA-accepted or explicitly scoped by Harley as accepted inputs.
+3. Confirm source images have been QA-accepted or explicitly scoped by your human partner as accepted inputs.
 4. List available source images in `/mnt/data` and map each to the intended sidecar slot id.
 5. Create a JSON manifest following `references/manifest-schema.md`.
 6. Run the compiler with the manifest.
@@ -101,7 +101,7 @@ problem. Route back to image QA/preflight and wait for a separate current-turn i
 
 ## Lane B: author a new template package
 
-Use this lane when Harley asks to create a new blank asset-sheet template, create a template for a new sheet shape, or
+Use this lane when your human partner asks to create a new blank asset-sheet template, create a template for a new sheet shape, or
 prepare a template zip for Patch to ingest.
 
 Read `references/template-package-authoring.md` before creating the package.
@@ -119,7 +119,7 @@ The JSON sidecar must already be repo-ready. Patch should verify and publish it,
 name the exact package, PNG, and JSON filenames inside the zip. Do not use `_spec.json` unless the package really
 contains a file with that exact name.
 
-Before handing a template package to Harley or Patch, run:
+Before handing a template package to your human partner or Patch, run:
 
 ```bash
 python /home/oai/skills/adventures-asset-sheet-compiler/scripts/validate_template_package.py /path/to/template.zip

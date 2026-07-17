@@ -4,12 +4,12 @@ This reference preserves detailed operating guidance moved out of `SKILL.md` dur
 
 # Adventures Frame Buster
 
-Use this skill as the canonical router for what Harley calls frame buster: the whole pre-deck
+Use this skill as the canonical router for what your human partner calls frame buster: the whole pre-deck
 framing family that must become green before deck planning, image planning, or PPTX production can
 proceed.
 
 This skill no longer owns every detailed framing test. It coordinates specialist busters, preserves
-Harley's creative authority, and returns the combined readiness state.
+your human partner's creative authority, and returns the combined readiness state.
 
 This is deterministic no-credit work. It may inspect issues, partition source evidence, route framing checks, aggregate readiness, and name the next lawful downstream task. It must not generate or edit images, compile assets, build slides, post repo comments, mutate issues, or treat readiness as authority to spend image-generation credits.
 
@@ -21,7 +21,7 @@ routes such as `api_tool` for exact issue, comment, file, commit, compare, and
 authorized mutation operations.
 
 If `file_search` is not bound and broad repo discovery would materially reduce
-risk, ask Harley to bind the relevant GitHub connector before continuing, or state
+risk, ask your human partner to bind the relevant GitHub connector before continuing, or state
 that the pass is operating from narrower live API spot checks. Do not treat an
 unbound `file_search` route as repo absence when another live GitHub route works.
 
@@ -39,9 +39,9 @@ A candidate adventure is green only when the required checks collectively establ
 - prop and state logic;
 - asset preproduction order or asset-readiness handoff.
 
-Do not privately invent or repair the frame when Harley must make a creative choice. Use interactive
+Do not privately invent or repair the frame when your human partner must make a creative choice. Use interactive
 buster posture for creation, selection, repair, or material extension. Use verification posture only
-when the source issue/comments already contain a Harley-approved frame and you are checking whether
+when the source issue/comments already contain a partner-approved frame and you are checking whether
 it is green as written.
 
 ## Task handoff map
@@ -88,7 +88,7 @@ Use these states consistently:
 5. Preserve partial statuses. Do not collapse theme_ready or story_ready into frame_ready.
 6. If all framing checks are green, produce or request the visual preproduction order.
 7. If asset readiness is missing, stop before playbook and route to visual preproduction.
-8. If `playbook_ready` is achieved, state the next downstream task only. Do not begin issue ingestion, deck planning, image planning, PPTX building, repo comments, or image generation unless Harley's current turn separately asks for that specific downstream action.
+8. If `playbook_ready` is achieved, state the next downstream task only. Do not begin issue ingestion, deck planning, image planning, PPTX building, repo comments, or image generation unless your human partner's current turn separately asks for that specific downstream action.
 
 ## Image-credit and mutation boundary
 
@@ -115,7 +115,7 @@ For a normal framing pass, return:
 - prop/state status;
 - asset order status;
 - green / amber / red / blocked decision;
-- exact blockers or Harley choices;
+- exact blockers or partner choices;
 - next route.
 
 ## Stop conditions
@@ -130,7 +130,7 @@ Stop amber or red when:
 - props are ungrounded decoration;
 - the continuity object/state transition is missing;
 - asset preproduction would have to invent the visual world after framing;
-- Harley must choose among real creative options.
+- your human partner must choose among real creative options.
 
 ## Patch and source discipline
 
@@ -148,7 +148,7 @@ reports, commit summaries, and next-session instructions as operator context. Us
 verify work, but do
 not turn them into issue content, story content, slide copy, image prompts, asset-sheet labels, or
 audience-facing deck
-material unless Harley explicitly asks for a status, continuity, or handoff artifact.
+material unless your human partner explicitly asks for a status, continuity, or handoff artifact.
 
 When a session continuity block is present, extract the smallest task directive needed for this skill and quarantine the rest.
 For visual work, the task directive should name the issue or frame, the artifact lane, scope, blockers, and required

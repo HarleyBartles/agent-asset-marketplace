@@ -263,7 +263,7 @@ available image merely because it appeared in the conversation, zip, contact she
 
 When a prompt board exists, it is the authority for the final image-call reference list. It must state selected
 references, excluded available images, `reference_policy: minimum_sufficient_references`, and
-`use_all_available_images: false` unless Harley explicitly asks for broad synthesis or audit.
+`use_all_available_images: false` unless your human partner explicitly asks for broad synthesis or audit.
 
 Select references by role:
 
@@ -294,13 +294,13 @@ prompts. Convert them into visual constraints.
 
 ## Output behavior
 
-If Harley asks for a storyboard, plan, confidence improvement, prompt board, prompt sheet, generation board, reference
+If your human partner asks for a storyboard, plan, confidence improvement, prompt board, prompt sheet, generation board, reference
 board, or pre-generation layout, answer with the relevant packet and produce requested deterministic artifacts. Do not
 call image generation.
 
-If Harley asks what QA says, do not use this skill as permission to mutate. Route to `adventures-image-qa-v1`.
+If your human partner asks what QA says, do not use this skill as permission to mutate. Route to `adventures-image-qa-v1`.
 
-If Harley accepts a prompt board, stop. Acceptance of a prompt board means the deterministic control
+If your human partner accepts a prompt board, stop. Acceptance of a prompt board means the deterministic control
 surface is accepted; it is not authorization to call image generation.
 
 If a later image-generation request arrives and the image has storyboard or prompt-board risk factors, confirm that the

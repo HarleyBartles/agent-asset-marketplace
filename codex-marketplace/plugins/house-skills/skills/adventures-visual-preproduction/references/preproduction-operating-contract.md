@@ -12,7 +12,7 @@ sweeps, and indexed corpus reads when it is available. Use live GitHub API route
 `api_tool` for exact issue, comment, file, commit, compare, and authorized mutation operations.
 
 If `file_search` is not bound and broad repository discovery would materially reduce risk, ask
-Harley to bind the relevant GitHub connector before continuing or state that the task is operating
+your human partner to bind the relevant GitHub connector before continuing or state that the task is operating
 from narrower live API spot checks. Do not treat an unbound `file_search` route as repo absence
 when another live GitHub route works.
 
@@ -25,7 +25,7 @@ visual bible planning, storyboards, prompt boards, QA, and template compilation 
 reach ordinary GPT image generation only at the narrow source-image mutation stage, after the Adventures current-turn image-credit authorization gate proves visible mutation authority and Adventures image preflight proves readiness. It may also prepare bounded packets for PIG production, but it must not itself generate deck body-slide images or claim PIG execution authority.
 
 Image preflight is generation-bearing only when the current user turn explicitly authorizes an image tool call. A
-preflighted request may culminate in one candidate image, then authorization is spent and the workflow stops for Harley
+preflighted request may culminate in one candidate image, then authorization is spent and the workflow stops for your human partner's
 review. On a later QA request, resume at image QA for the latest candidate and stop after the QA decision.
 
 
@@ -111,7 +111,7 @@ asset-package readiness, or visual preproduction before deck production, use thi
 image generation is authorized.
 
 This skill owns the sheet lane, source-discovery packet, visual asset preflight, and generation prompt contract.
-Before any ordinary GPT-side visible image mutation, run the concrete mutation-intent task: decide whether the current user turn authorizes generation or editing now through the Adventures current-turn image-credit authorization gate. After every generated candidate, stop. If Harley later asks for QA, run the
+Before any ordinary GPT-side visible image mutation, run the concrete mutation-intent task: decide whether the current user turn authorizes generation or editing now through the Adventures current-turn image-credit authorization gate. After every generated candidate, stop. If your human partner later asks for QA, run the
 concrete Adventures image QA task in the selected lane and return an accept, edit-required, regenerate-required, or
 blocked decision. Do not use that QA decision to start another image call.
 
@@ -122,7 +122,7 @@ blocked or amber with the exact missing QA route.
 
 Visual preproduction consumes the task directive, not the session machinery. Bootstrap text, continuity exports, repo
 rollups, source-zip rebuild notes, skill install lists, commit references, and next-session instructions are operator
-context. Do not put them in prompts, generated labels, asset sheets, or deck visuals unless Harley explicitly asks for
+context. Do not put them in prompts, generated labels, asset sheets, or deck visuals unless your human partner explicitly asks for
 a status or continuity artifact.
 
 
@@ -210,7 +210,7 @@ zip before any costume, hero image, interaction, or scene generation. The issue 
 wrong-domain actor and Bit is the no-costume right-domain failure actor, but the inspected asset package binds their
 designs.
 
-If Harley asks a question, asks what happened, asks whether assets were inspected, or asks to find/check/look at visual
+If your human partner asks a question, asks what happened, asks whether assets were inspected, or asks to find/check/look at visual
 assets, remain in text/source inspection mode. Do not proceed into image generation in that turn.
 
 ## Mandatory visual asset preflight
@@ -246,7 +246,7 @@ The preflight packet must include:
 - selected Adventures image QA lane;
 - known risk notes to carry into QA.
 
-If the packet is incomplete, block generation. If the packet is complete, generation is still not automatic. Generate one governed ordinary GPT candidate only when the latest user turn explicitly authorizes spending an image credit now and image preflight returns ready. A complete packet is readiness evidence, not mutation authority. If the route is PIG, return a bounded PIG production packet rather than generating here. After generation, stop for Harley review; do not continue to QA until Harley asks or nudges.
+If the packet is incomplete, block generation. If the packet is complete, generation is still not automatic. Generate one governed ordinary GPT candidate only when the latest user turn explicitly authorizes spending an image credit now and image preflight returns ready. A complete packet is readiness evidence, not mutation authority. If the route is PIG, return a bounded PIG production packet rather than generating here. After generation, stop for your human partner's review; do not continue to QA until your human partner asks or nudges.
 
 
 ## Visual bible creator route
@@ -294,23 +294,23 @@ asset family pass, lock the bible or explicitly leave it provisional with unreso
 
 
 Default asset-sheet production is source-first and deterministic. Do not ask image generation to solve sheet layout,
-typography, captions, borders, and source imagery in one fragile full-sheet image unless Harley explicitly requests an
+typography, captions, borders, and source imagery in one fragile full-sheet image unless your human partner explicitly requests an
 omnibus experiment.
 
 For both Pass A asset-class overviews and Pass B member asset sheets, use this pattern:
 
 ```text
-plan the sheet lane -> generate 2-3 focused source images or views -> stop for Harley review
+plan the sheet lane -> generate 2-3 focused source images or views -> stop for your human partner's review
 -> on continue: run image QA for each source image -> deterministically compile the final PNG sheet
 -> run final sheet/lane compliance QA -> land only approved final PNG and durable source images
 ```
 
 Source images define visual canon. The deterministic compile step defines sheet layout. Canva or another editor is an
 optional manual repair path, not the default dependency for canonical asset-sheet assembly. HTML, template, and helper
-files used only to compile the sheet are disposable intermediates unless Harley explicitly promotes them.
+files used only to compile the sheet are disposable intermediates unless your human partner explicitly promotes them.
 
 Any reusable asset class must be produced through a required two-pass workflow. Do not ask image generation to create
-an asset class overview and all related member asset sheets in one instruction unless Harley explicitly overrides this
+an asset class overview and all related member asset sheets in one instruction unless your human partner explicitly overrides this
 rule for a narrow exception.
 
 ### Pass A: asset class overview
@@ -360,7 +360,7 @@ background before compile. Alternates may show close-ups, character-in-world vie
 or expression/gesture studies.
 
 Do not treat generated source images, contact sheets, Canva edits, scratch HTML, temporary manifests, or helper scripts
-as the final canonical asset sheet unless Harley explicitly promotes them.
+as the final canonical asset sheet unless your human partner explicitly promotes them.
 
 ## Patch-first world proof
 
@@ -398,7 +398,7 @@ Choose one sheet lane before generation:
 - interaction or handoff;
 - anti-pattern or style reference.
 
-Do not generate omnibus world posters unless Harley explicitly requests that lane.
+Do not generate omnibus world posters unless your human partner explicitly requests that lane.
 
 ## Semi-autonomous generation and QA cadence
 
@@ -406,34 +406,34 @@ Use this default cadence for authorized visual-preproduction deliverables:
 
 ```text
 plan sheet/package -> discover and enumerate task assets -> deterministic storyboard/prompt board when needed
--> visual asset preflight -> current-turn image-credit authorization -> generate one ordinary GPT candidate -> stop for Harley
+-> visual asset preflight -> current-turn image-credit authorization -> generate one ordinary GPT candidate -> stop for your human partner's review
 -> on continue or QA request: run Adventures image QA -> return decision and repair guidance only -> stop
 -> wait for separate current-turn authorization before any ordinary GPT edit/regeneration; for PIG jobs, return to PIG only under a fresh bounded production packet
 ```
 
 Generation is a natural and expected stop point. The image tool returns a visible candidate, and that pause gives
-Harley an insertion point to inspect the image and add visual direction before QA. Stopping after generation is not a
+your human partner an insertion point to inspect the image and add visual direction before QA. Stopping after generation is not a
 process failure.
 
-After Harley says to continue from a generated or edited candidate, resume at QA for the latest candidate. Do not
+After your human partner says to continue from a generated or edited candidate, resume at QA for the latest candidate. Do not
 restart planning, ask whether QA is desired, or skip QA.
 
 Failed QA with a clear, well-defined repair target does not authorize edit/regeneration. QA creates diagnosis and repair guidance; it does not collapse the review stop point into unsupervised mutation. Return the repair packet in
 text and stop. Edit or regenerate only after a separate current-turn instruction explicitly authorizes that image tool
 call.
 
-Continuing through multiple generated candidates without a Harley review insertion point is not the default. It
+Continuing through multiple generated candidates without your human partner's's review insertion point is not the default. It
 requires explicit authorization for a fully autonomous run in that specific stage.
 
 Stop or pause at these points:
 
 - after each generated or edited candidate;
-- a QA-pass candidate or package is ready for Harley approval;
+- a QA-pass candidate or package is ready for your human partner's approval;
 - a hard blocker prevents safe continuation;
-- a creative-choice fork requires Harley to choose direction.
+- a creative-choice fork requires your human partner to choose direction.
 
 Carry forward the source issue, selected lane, candidate identifier or path, asset-discovery basis, intended use, QA
-task, known risk notes, and any Harley visual direction added at the generation stop.
+task, known risk notes, and any your human partner's visual direction added at the generation stop.
 
 ### Fresh-start discipline
 
@@ -460,12 +460,12 @@ state.
 
 Persist to an issue only when one of these applies:
 
-- Harley has approved a QA-pass candidate/package;
+- your human partner has approved a QA-pass candidate/package;
 - a hard blocker requires durable project tracking;
-- Harley explicitly asks to preserve a planning decision;
+- your human partner explicitly asks to preserve a planning decision;
 - the stage readiness report is complete.
 
-Do not persist false-green risk by posting a repo comment before Harley approval. Only candidates accepted as
+Do not persist false-green risk by posting a repo comment before your human partner's approval. Only candidates accepted as
 `accepted_preproduction_reference` or `accepted_antipattern_reference` and approved for the current stage can count
 toward asset-ready.
 
@@ -531,7 +531,7 @@ Visual preproduction report
 
 ## Boundaries
 
-Do not generate body-slide art. Do not use preproduction asset sheets as slide art for proof/final runs unless Harley
+Do not generate body-slide art. Do not use preproduction asset sheets as slide art for proof/final runs unless your human partner
 explicitly requests storyboard mode. Do not call generated assets canonical because they were generated or
 QA-accepted. Do not reveal repo/project implementation details in audience-facing deck material unless explicitly
 scoped. Do not spend image credits for QA, prompt boards, contact sheets, deterministic compiles, package work,

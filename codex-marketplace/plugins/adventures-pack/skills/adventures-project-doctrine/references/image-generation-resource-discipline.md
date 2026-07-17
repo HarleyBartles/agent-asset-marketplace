@@ -16,7 +16,7 @@ Do not apply GPT-side fear-of-generation posture to Patch Image Gen (PIG). PIG i
 
 For GPT-side direct image calls, current-turn authorization and one-call stop points remain mandatory. For PSA jobs, GPT should provide paste-ready deterministic board packets and then review returned boards as planning/control artifacts. For PIG jobs, GPT should provide bounded production packets, optionally carrying reviewed PSA boards as grounding inputs, and external QA/acceptance after PIG returns candidates.
 
-PSA self-QA is not GPT QA, PIG self-QA, Harley acceptance, canon lock, deck-ready status, repo/project acceptance, publication, or issue closure. PIG self-QA is not GPT QA, Harley acceptance, canon lock, deck-ready status, repo/project acceptance, publication, or issue closure.
+PSA self-QA is not GPT QA, PIG self-QA, your human partner's acceptance, canon lock, deck-ready status, repo/project acceptance, publication, or issue closure. PIG self-QA is not GPT QA, your human partner's acceptance, canon lock, deck-ready status, repo/project acceptance, publication, or issue closure.
 
 Use the repo playbook `playbooks/image-generation-resource-discipline.md` as the full durable source when repo access is
 available. This reference is the compact installed-skill doctrine for routing before the repo surface is loaded.

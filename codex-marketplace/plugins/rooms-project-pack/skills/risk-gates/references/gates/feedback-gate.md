@@ -30,7 +30,7 @@ Do not apply the easy part of feedback while leaving related ambiguous or author
 
 Treat feedback differently depending on source:
 
-- Harley direction: high authority, but unclear scope still needs clarification.
+- your human partner's direction: high authority, but unclear scope still needs clarification.
 - Verifier correction: must be checked against issue criteria and source evidence before action.
 - Codex worker return: a claim to inspect, not proof by itself.
 - Linear issue comment: durable context to classify, not automatic authority.

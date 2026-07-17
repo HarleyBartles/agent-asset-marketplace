@@ -1,6 +1,6 @@
 # Lane Checks
 
-PIG-returned candidates are still candidates. A PIG self-QA pass is useful production evidence, but it does not replace this external lane review when Harley asks for Adventures QA, deck readiness, asset readiness, canon lock, or acceptance.
+PIG-returned candidates are still candidates. A PIG self-QA pass is useful production evidence, but it does not replace this external lane review when your human partner asks for Adventures QA, deck readiness, asset readiness, canon lock, or acceptance.
 
 Use this reference when a candidate needs detailed lane review.
 

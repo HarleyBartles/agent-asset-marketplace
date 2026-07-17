@@ -5,13 +5,13 @@ This reference preserves the detailed operating contract moved out of `SKILL.md`
 
 # Adventures Image QA
 
-Use this skill as the external GPT/Harley/project QA gate for Adventures of Patch image candidates and deterministic image packages.
+Use this skill as the external GPT, your human partner, or project QA gate for Adventures of Patch image candidates and deterministic image packages.
 
 ## Actor boundary
 
-This reference is not PIG self-QA. PIG self-QA is an internal production judgment that a candidate is worth returning from a bounded PIG job. This skill owns the later project-facing QA decision after a candidate, PSA board, or deterministic visual package is visible or provided to GPT/Harley.
+This reference is not PIG self-QA. PIG self-QA is an internal production judgment that a candidate is worth returning from a bounded PIG job. This skill owns the later project-facing QA decision after a candidate, PSA board, or deterministic visual package is visible or provided to GPT and your human partner.
 
-A PSA self-QA pass is not `accepted`, not Harley acceptance, not GPT QA, not canon lock, not deck-ready status, not asset-ready status, and not PIG-ready by itself. A PIG self-QA pass is not `accepted`, not Harley acceptance, not GPT QA, not canon lock, not deck-ready status, and not asset-ready status. Review PIG-returned candidates here only when the user asks for external Adventures QA.
+A PSA self-QA pass is not `accepted`, not your human partner's acceptance, not GPT QA, not canon lock, not deck-ready status, not asset-ready status, and not PIG-ready by itself. A PIG self-QA pass is not `accepted`, not your human partner's acceptance, not GPT QA, not canon lock, not deck-ready status, and not asset-ready status. Review PIG-returned candidates here only when the user asks for external Adventures QA.
 
 This skill decides whether a visible candidate is externally accepted, needs edit, needs regeneration, or is blocked. It covers Patch scene
 art, Patch-bearing preproduction references, non-Patch references, anti-pattern references, compiled asset sheets, and
@@ -21,7 +21,7 @@ package image review. It does not generate images, edit images, build decks, cre
 
 Image generation credits are scarce Adventures production capacity. Deterministic workflows exist to reduce failed image calls and conserve those credits. Calling image generation during deterministic work defeats the purpose of those workflows and can block visual preproduction, preprod-ready work, deck-ready work, and production until credits refresh.
 
-QA is deterministic no-credit work and a deliberate review stop point. Its job is to inspect a visible candidate, name what passed, name what failed, decide the accepted use or repair class, and then stop. If QA immediately mutates pixels, it removes Harley's review insertion point and turns diagnosis into unsupervised generation. That damages the workflow: the project loses the chance to decide whether the repair is worth spending a scarce credit, whether the candidate lineage should be abandoned, or whether deterministic planning should improve first.
+QA is deterministic no-credit work and a deliberate review stop point. Its job is to inspect a visible candidate, name what passed, name what failed, decide the accepted use or repair class, and then stop. If QA immediately mutates pixels, it removes your human partner's review insertion point and turns diagnosis into unsupervised generation. That damages the workflow: the project loses the chance to decide whether the repair is worth spending a scarce credit, whether the candidate lineage should be abandoned, or whether deterministic planning should improve first.
 
 A QA request, QA decision, repair packet, accepted prompt board, clear repair target, attractive failed candidate, or `continue` after a candidate never authorizes image generation or generative editing. This skill stops at a text QA decision and repair guidance. Any later image call requires a separate current-turn image-credit authorization gate for visible mutation, then Adventures image preflight readiness. Use role-based discovery for that authorization gate rather than treating this skill as tightly coupled to a package name.
 
@@ -39,8 +39,8 @@ repair constraints. It must not call image generation, generative edit, style tr
 
 ## When to use
 
-Use after a generated, edited, PIG-returned candidate, or PSA-returned board is visible, when Harley asks `what does QA say?`, `QA please`, `review it`,
-`critique this`, `what failed?`, or asks whether a candidate or board is suitable. Use for deterministic PSA board review when Harley asks whether a storyboard/prompt-board output is suitable for PIG grounding. Use for deterministic compiled-sheet QA after
+Use after a generated, edited, PIG-returned candidate, or PSA-returned board is visible, when your human partner asks `what does QA say?`, `QA please`, `review it`,
+`critique this`, `what failed?`, or asks whether a candidate or board is suitable. Use for deterministic PSA board review when your human partner asks whether a storyboard/prompt-board output is suitable for PIG grounding. Use for deterministic compiled-sheet QA after
 accepted source images have been placed onto an approved template. Use for deck/package image review when acceptance,
 lane compliance, Patch compliance, storyboard compliance, or asset-ready status is being judged.
 
@@ -61,7 +61,7 @@ physical logic, template posture, or story function right on the first pass.
 
 If a supposed generation attempt produced no visible image candidate and no generated output path, return `blocked` with
 `blocked_no_candidate`. Do not inspect a storyboard, contact sheet, style reference, prompt board, or prior image as if
-it were the new candidate unless Harley explicitly identifies that item as the candidate under review.
+it were the new candidate unless your human partner explicitly identifies that item as the candidate under review.
 
 For ordinary GPT-side image production, the safe cadence is:
 
@@ -74,7 +74,7 @@ user separately authorizes GPT-side generate/edit/regenerate in a later current 
 ## Authorization boundary
 
 QA cannot be converted into an image call inside the same response. If the current turn asks for QA and seems to imply a
-follow-up mutation, first return the QA decision and stop. Ask Harley to issue a separate latest-turn generation or edit
+follow-up mutation, first return the QA decision and stop. Ask your human partner to issue a separate latest-turn generation or edit
 command if the repair should be applied.
 
 Hard non-authorizations include:
@@ -201,7 +201,7 @@ For deterministic asset-sheet production, distinguish two QA moments:
    template fidelity, layout consistency, footer/title accuracy, and whether only QA-accepted source images were used.
 
 A polished compiled sheet cannot rescue a weak or unaccepted source image. An accepted source image does not
-automatically make the final compiled sheet canonical; the final sheet still needs layout/lane QA and Harley approval
+automatically make the final compiled sheet canonical; the final sheet still needs layout/lane QA and your human partner's approval
 before repo canonisation.
 
 For final compiled asset sheets, check:
@@ -216,20 +216,20 @@ For final compiled asset sheets, check:
 - scratch HTML, helper scripts, and compile manifests are not treated as durable deliverables unless promoted.
 
 For character asset sheets, require a full-body plain-white-background hero/main source image unless the governing
-contract or Harley explicitly waives it.
+contract or your human partner explicitly waives it.
 
 ## Text and operator-context checks
 
 Short functional in-world labels are acceptable. Reject or repair when text is long, garbled, misspelled, wrong-canon,
 operator-facing, or required for the asset to make sense. Reject or repair if the image includes bootstrap notes,
 continuity-export text, issue comments, candidate numbers, repo paths, source-zip names, skill-install notes, sidebars,
-checklists, QA labels, pass/fail labels, or process reports unless Harley explicitly requested a status artifact.
+checklists, QA labels, pass/fail labels, or process reports unless your human partner explicitly requested a status artifact.
 
 ## Working-loop and repo-record discipline
 
 During an active visual-preproduction loop, QA decisions are working loop state unless a durable reporting threshold is
-met. Do not post per-candidate QA comments to GitHub. Persist to repo only when Harley approves a QA-pass candidate or
-package, a hard blocker needs durable tracking, Harley explicitly asks to preserve a planning decision, or a final stage
+met. Do not post per-candidate QA comments to GitHub. Persist to repo only when your human partner approves a QA-pass candidate or
+package, a hard blocker needs durable tracking, your human partner explicitly asks to preserve a planning decision, or a final stage
 readiness report is complete.
 
 ## Repair-prompt hygiene

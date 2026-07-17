@@ -1,7 +1,7 @@
 ---
 name: adventures-asset-sheet-compiler
 description: Use when compile Adventures asset sheets through deterministic no-credit
-  template work. Use when Harley asks to compile, assemble, lay out, inspect, package,
+  template work. Use when your human partner asks to compile, assemble, lay out, inspect, package,
   or QA externally accepted source images on an approved template, or to author a
   blank reusable asset-sheet template package using bundled PIL tooling. Do not treat
   PIG self-QA as acceptance.
@@ -13,13 +13,13 @@ metadata:
   status: active
   owner: Harley Bartles
   scope: Use when compile Adventures asset sheets through deterministic no-credit
-    template work. Use when Harley asks to compile, assemble, lay out, inspect, package,
+    template work. Use when your human partner asks to compile, assemble, lay out, inspect, package,
     or QA externally accepted source images on an approved template, or to author
     a blank reusable asset-sheet template package using bundled PIL tooling. Do not
     treat PIG self-QA as acceptance.
   use_when:
   - Use when compile Adventures asset sheets through deterministic no-credit template
-    work. Use when Harley asks to compile, assemble, lay out, inspect, package, or
+    work. Use when your human partner asks to compile, assemble, lay out, inspect, package, or
     QA externally accepted source images on an approved template, or to author a blank
     reusable asset-sheet template package using bundled PIL tooling. Do not treat
     PIG self-QA as acceptance.
@@ -40,7 +40,7 @@ Decide whether the request is a deterministic compile, blank-template authoring 
 
 Do not generate, regenerate, restyle, or creatively edit source art. This skill may use only deterministic no-credit work and non-credit pixel operations such as PIL placement, crop, trim, annotation, or template rendering. If source art needs repair or new pixels, route to image QA/preflight and stop.
 
-PIG output is candidate production art until external Adventures/GPT/Harley acceptance says otherwise. Do not compile a PIG candidate or PIG self-QA pass into an asset sheet as accepted source art. Use only images whose acceptance/source status is explicit for the target sheet, or return a blocker identifying the missing external acceptance evidence.
+PIG output is candidate production art until external Adventures/GPT and your human partner's acceptance says otherwise. Do not compile a PIG candidate or PIG self-QA pass into an asset sheet as accepted source art. Use only images whose acceptance/source status is explicit for the target sheet, or return a blocker identifying the missing external acceptance evidence.
 
 ## Progressive references
 

@@ -66,7 +66,7 @@ This skill establishes posture and then routes to specialist skills for domain-s
 
 - Treat `HarleyBartles/wild-bunch` as a mainline-only C#/.NET game project.
 - Inspect live source before claiming current state.
-- GPT prepares worker packets; Harley sends them; workers execute.
+- GPT prepares worker packets; your human partner sends them; workers execute.
 - When a task touches world setup, seed identity, difficulty, entropy, random selection, or starting inventory, read `references/difficulty-entropy-seeded-world-setup.md` first and keep it as the canonical anchor.
 - Returns must include branch, commit, PR, validation, and issue-goal conformance notes.
 - Scripts in `scripts/` are first-class surfaces. Before reporting environmental issues or running ad-hoc commands, read `references/policy-references.md` for the script discovery map.
