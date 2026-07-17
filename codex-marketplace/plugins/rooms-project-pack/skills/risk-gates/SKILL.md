@@ -31,7 +31,7 @@ metadata:
   - Do not use when the action is ordinary, unconstrained, and has no protected surfaces
     or required workflow steps.
   - Do not use when another more specific skill owns the task.
-  - Do not use when Do not use as a broad planning or research workflow.
+  - Do not use when the task is a broad planning or research workflow without a concrete action to gate.
   related_skills:
   - verification-before-completion
   - connector-safety

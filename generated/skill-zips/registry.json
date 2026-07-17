@@ -2015,13 +2015,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/risk-gates/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 54197,
-      "source_sha256": "9467e34b568677785e1cef93fac669c2e843d039e7aee7ef109fadc79eb8dd07",
+      "source_bytes": 54269,
+      "source_sha256": "758e876045676394051041082e17154e76a05c39fb0e03c472622968188cb293",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 24980,
-      "zip_sha256": "0919398ccd4db5d007684e3344944576d9389df92ee87ccfe131cb181b6d97e1"
+      "zip_size_bytes": 25007,
+      "zip_sha256": "a609766053b2a139dfe9deccbe2586181c8d8161e1aaa473ee0985063c296b01"
     },
     {
       "pack": "house-skills",
@@ -2639,13 +2639,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/risk-gates/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 54197,
-      "source_sha256": "9467e34b568677785e1cef93fac669c2e843d039e7aee7ef109fadc79eb8dd07",
+      "source_bytes": 54269,
+      "source_sha256": "758e876045676394051041082e17154e76a05c39fb0e03c472622968188cb293",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 24980,
-      "zip_sha256": "0919398ccd4db5d007684e3344944576d9389df92ee87ccfe131cb181b6d97e1"
+      "zip_size_bytes": 25007,
+      "zip_sha256": "a609766053b2a139dfe9deccbe2586181c8d8161e1aaa473ee0985063c296b01"
     },
     {
       "pack": "rooms-project-pack",
@@ -3010,10 +3010,10 @@
       "source_bytes": 8811,
       "source_sha256": "e6b64cbc68c05890a992047d2683020227565c9853d8cdb920ff272d5eb05d44",
       "overlay_file_count": 1,
-      "overlay_bytes": 2275,
-      "overlay_sha256": "2178507171423931ed88d126a638f3e80c1e04625b13d068d92373d224abdd56",
-      "zip_size_bytes": 2209,
-      "zip_sha256": "274f4a26e38bee061050ab93178e9704e17e71891dcc2c82b8f417883d66a66e"
+      "overlay_bytes": 2315,
+      "overlay_sha256": "7e92c77e93294dd989dfb7459ae3c4774df2e20dce9c717de0b0addbb7cf4296",
+      "zip_size_bytes": 2214,
+      "zip_sha256": "6b703a77f455027b2eef0ae46d9d2f1f5019996671bff39b0e7fe0bbc02f19d5"
     },
     {
       "pack": "superpowers-plus",

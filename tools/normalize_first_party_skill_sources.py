@@ -171,23 +171,45 @@ def _ensure_list(value: Any) -> list[str]:
     return result
 
 
+_USE_WHEN_PREFIXES = ("use when ", "use for ")
+_DO_NOT_USE_WHEN_PREFIXES = ("do not use when ", "do not use ", "don't use when ", "avoid when ")
+
+
+def _strip_prefix(text: str, prefixes: tuple[str, ...]) -> str:
+    lower = text.lower()
+    for prefix in prefixes:
+        if lower.startswith(prefix):
+            return text[len(prefix):].lstrip()
+    return text
+
+
+def _capitalize_first(text: str) -> str:
+    if not text:
+        return text
+    return text[0].upper() + text[1:]
+
+
 def _normalize_use_when(description: str) -> str:
     text = description.strip()
-    if text.lower().startswith("use when "):
-        return "Use when " + text[9:].lstrip()
-    if text.lower().startswith("use for "):
-        return "Use when " + text[8:].lstrip()
-    if text:
-        return "Use when " + text[0].lower() + text[1:]
-    return text
+    if not text:
+        return text
+    bare = _strip_prefix(text, _USE_WHEN_PREFIXES)
+    if not bare:
+        return text
+    return "Use when " + bare
 
 
 def _normalize_condition(value: str, *, prefix: str) -> str:
     text = value.strip()
-    lower = text.lower()
-    if lower.startswith(prefix):
-        return f"{prefix[0].upper() + prefix[1:]} {text[len(prefix):].lstrip()}"
-    return f"{prefix[0].upper() + prefix[1:]} {text}".strip()
+    if not text:
+        return text
+    if prefix == "do not use when":
+        bare = _strip_prefix(text, _DO_NOT_USE_WHEN_PREFIXES)
+    else:
+        bare = _strip_prefix(text, (prefix,))
+    if not bare:
+        return text
+    return f"{_capitalize_first(prefix)} {bare}"
 
 
 def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
