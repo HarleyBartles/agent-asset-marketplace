@@ -23,6 +23,8 @@ metadata:
     skill instead.
   - Do not use for ordinary conversation without source, canon, archive,
     or repo claims.
+  use_with:
+  - work-mode-router
 license: MIT
 ---
 # Rooms Project Doctrine

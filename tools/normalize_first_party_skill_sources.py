@@ -269,7 +269,7 @@ def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
         "do_not_use_when": do_not_use_when,
     }
 
-    for key in ("related_skills", "notes"):
+    for key in ("related_skills", "notes", "use_before", "use_after", "use_with", "use_instead"):
         if key in metadata and metadata.get(key) is not None:
             normalized_metadata[key] = metadata[key]
 

@@ -18,6 +18,8 @@ metadata:
   - Do not use when the task is ambiguity preservation rather than canon resolution
     — use rooms-ambiguity-buster instead.
   - Do not use when the task is analogy validation — use rooms-analogy-buster instead.
+  use_with:
+  - rooms-project-doctrine
 license: MIT
 ---
 # Rooms Canon Buster
