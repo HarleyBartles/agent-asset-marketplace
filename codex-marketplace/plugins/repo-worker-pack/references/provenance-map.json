@@ -50,6 +50,13 @@
       "local_path": "skills/repo-worker-base"
     },
     {
+      "canonical_name": "risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "local_path": "skills/risk-gates"
+    },
+    {
       "canonical_name": "unslop-plus",
       "source_category": "first_party",
       "content_mode": "verbatim",

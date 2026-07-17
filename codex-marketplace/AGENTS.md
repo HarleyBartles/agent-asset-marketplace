@@ -44,6 +44,33 @@ MUST READ when changing any skill's projected plugin home (adding, removing,
 retiring, moving between packs, or touching a bundle manifest entry):
 `../docs/custody-and-projection-doctrine.md` Mega-packs section.
 
+## Skill-to-pack assignment chain
+
+When a skill needs to move between packs, be added to a pack, or be removed
+from a pack, the editable source of truth is the `entries` array inside each
+pack bundle node in `codex-marketplace/custody-pack-registry.json`. Each
+entry has a `canonical_name`, `canonical_source_path`, `local_path`, `lane`,
+`content_mode`, and `provenance_note`. The chain from edit to published
+projection is:
+
+1. **Edit `codex-marketplace/custody-pack-registry.json`** — add, remove, or
+   move the entry between pack `entries` arrays. Update `lane` and
+   `provenance_note` to reflect the new pack context.
+2. **Run `py -3 tools/rebuild_marketplace.py`** — this regenerates all
+   derived surfaces: plugin projection trees under
+   `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, source maps,
+   provenance maps, skill zips, the marketplace manifest, and the index mesh.
+3. **Run `py -3 tools/check_marketplace.py`** — CI gate proves all surfaces
+   are current.
+
+Do not hand-edit the derived surfaces (`bundle-manifest.json`,
+`source-map.md`, `provenance-map.json`, projected skill trees, skill zips).
+They are regenerated from the registry by the rebuild pipeline.
+
+The `codex-marketplace/plugin-roots.json` file defines which plugin roots
+exist and their order, but does not define skill-to-pack assignments — that
+lives only in `custody-pack-registry.json`.
+
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 

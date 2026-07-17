@@ -8,13 +8,6 @@
       "local_path": "skills/database-design-patterns"
     },
     {
-      "canonical_name": "risk-gates",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/risk-gates",
-      "local_path": "skills/risk-gates"
-    },
-    {
       "canonical_name": "rooms-character-investigation",
       "source_category": "first_party",
       "content_mode": "verbatim",

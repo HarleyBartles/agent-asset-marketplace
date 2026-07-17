@@ -36,21 +36,6 @@
       "provenance_note": "Copied verbatim from retained Claude-Cortex custody because Rooms-mostly needs one generic database guidance skill for the canonical sqlite surface."
     },
     {
-      "canonical_name": "risk-gates",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/risk-gates",
-      "local_path": "skills/risk-gates",
-      "lane": "Rooms",
-      "source_path": "sources/first_party/skills/risk-gates/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the rooms-project-pack. Replaces the retired rooms-ambiguity-buster, rooms-analogy-buster, rooms-canon-buster, and rooms-zoom-outs-buster gate overlays."
-    },
-    {
       "canonical_name": "rooms-character-investigation",
       "source_category": "first_party",
       "content_mode": "verbatim",

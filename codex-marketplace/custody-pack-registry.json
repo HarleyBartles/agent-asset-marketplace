@@ -580,16 +580,6 @@
       ],
       "entries": [
         {
-          "canonical_name": "repo-worker-base",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/repo-worker-base",
-          "local_path": "skills/repo-worker-base",
-          "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
-          "copy_expectation": "byte_identical"
-        },
-        {
           "canonical_name": "base-doctrine",
           "source_category": "first_party",
           "content_mode": "verbatim",
@@ -600,33 +590,13 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "work-mode-router",
+          "canonical_name": "cleanup-custody",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/work-mode-router",
-          "local_path": "skills/work-mode-router",
-          "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "linear-issue-shaping",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
-          "local_path": "skills/linear-issue-shaping",
-          "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "using-linear",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/using-linear",
-          "local_path": "skills/using-linear",
-          "provenance_note": "Projected verbatim from the first-party using-linear skill.",
+          "canonical_source_path": "sources/first_party/skills/cleanup-custody",
+          "local_path": "skills/cleanup-custody",
+          "provenance_note": "Projected verbatim from the first-party cleanup-custody skill.",
           "copy_expectation": "byte_identical"
         },
         {
@@ -640,6 +610,16 @@
           "copy_expectation": "byte_identical"
         },
         {
+          "canonical_name": "context-safety",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/context-safety",
+          "local_path": "skills/context-safety",
+          "provenance_note": "Projected verbatim from the first-party context-safety skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
           "canonical_name": "github-operations",
           "source_category": "first_party",
           "content_mode": "verbatim",
@@ -648,6 +628,41 @@
           "local_path": "skills/github-operations",
           "provenance_note": "Projected verbatim from the first-party github-operations skill.",
           "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "linear-issue-shaping",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+          "local_path": "skills/linear-issue-shaping",
+          "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "repo-worker-base",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+          "local_path": "skills/repo-worker-base",
+          "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "risk-gates",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/risk-gates",
+          "local_path": "skills/risk-gates",
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/risk-gates/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
         },
         {
           "canonical_name": "unslop-plus",
@@ -660,23 +675,23 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "context-safety",
+          "canonical_name": "using-linear",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/context-safety",
-          "local_path": "skills/context-safety",
-          "provenance_note": "Projected verbatim from the first-party context-safety skill.",
+          "canonical_source_path": "sources/first_party/skills/using-linear",
+          "local_path": "skills/using-linear",
+          "provenance_note": "Projected verbatim from the first-party using-linear skill.",
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "cleanup-custody",
+          "canonical_name": "work-mode-router",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/cleanup-custody",
-          "local_path": "skills/cleanup-custody",
-          "provenance_note": "Projected verbatim from the first-party cleanup-custody skill.",
+          "canonical_source_path": "sources/first_party/skills/work-mode-router",
+          "local_path": "skills/work-mode-router",
+          "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
           "copy_expectation": "byte_identical"
         }
       ]
@@ -1334,21 +1349,6 @@
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
           "copy_expectation": "byte_identical",
           "provenance_note": "First-party skill projected verbatim into the rooms-project-pack."
-        },
-        {
-          "canonical_name": "risk-gates",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/risk-gates",
-          "local_path": "skills/risk-gates",
-          "lane": "Rooms",
-          "source_path": "sources/first_party/skills/risk-gates/SKILL.md",
-          "source_author": "Harley Bartles",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "First-party skill projected verbatim into the rooms-project-pack. Replaces the retired rooms-ambiguity-buster, rooms-analogy-buster, rooms-canon-buster, and rooms-zoom-outs-buster gate overlays."
         },
         {
           "canonical_name": "rooms-risk-gates",

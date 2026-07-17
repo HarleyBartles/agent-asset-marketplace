@@ -2537,6 +2537,22 @@
     },
     {
       "pack": "repo-worker-pack",
+      "skill": "risk-gates",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/risk-gates",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-pack/risk-gates/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 25352,
+      "source_sha256": "f2017c24ce82af2dc36909040b59889f00176d7a3f857cee9f988958eeb9c527",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 11717,
+      "zip_sha256": "aede0415995a1659d93b93f1b0293b37e1bd0c1dbdde33c3218d12f4af0905f7"
+    },
+    {
+      "pack": "repo-worker-pack",
       "skill": "unslop-plus",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus",
@@ -2614,22 +2630,6 @@
       "overlay_sha256": null,
       "zip_size_bytes": 12022,
       "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
-    },
-    {
-      "pack": "rooms-project-pack",
-      "skill": "risk-gates",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/rooms-project-pack/skills/risk-gates",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/rooms-project-pack/risk-gates/skill.zip",
-      "source_file_count": 7,
-      "source_bytes": 25352,
-      "source_sha256": "f2017c24ce82af2dc36909040b59889f00176d7a3f857cee9f988958eeb9c527",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 11717,
-      "zip_sha256": "aede0415995a1659d93b93f1b0293b37e1bd0c1dbdde33c3218d12f4af0905f7"
     },
     {
       "pack": "rooms-project-pack",
