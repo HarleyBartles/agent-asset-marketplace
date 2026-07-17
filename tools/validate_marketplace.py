@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import importlib
 import json
 import re
@@ -1559,11 +1560,28 @@ def validate_no_stale_superpowers_output_path() -> None:
     print(f"OK stale superpowers output path check: 0 stale refs in projection, 0 tracked files")
 
 
-def main() -> int:
-    _run_tool_check(
-        [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
-        "plugin root inventory check",
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
+    parser.add_argument(
+        "--skip-freshness-checks",
+        action="store_true",
+        help=(
+            "Skip freshness checks already covered by an upstream step "
+            "(generate_plugin_root_inventory --check, projection materializer, "
+            "pack manifests, and skill zip registry). Metadata validation "
+            "(validate_repo_index) still runs."
+        ),
     )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = _parse_args()
+    if not args.skip_freshness_checks:
+        _run_tool_check(
+            [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
+            "plugin root inventory check",
+        )
     _bootstrap_marketplace_dependencies()
 
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
@@ -1577,9 +1595,10 @@ def main() -> int:
 
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
-    validate_skill_zip_registry()
-    validate_projection_materializer()
-    validate_pack_manifests()
+    if not args.skip_freshness_checks:
+        validate_skill_zip_registry()
+        validate_projection_materializer()
+        validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
