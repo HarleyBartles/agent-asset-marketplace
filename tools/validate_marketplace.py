@@ -54,6 +54,8 @@ def _bootstrap_marketplace_dependencies() -> None:
     skill_zip_artifacts = importlib.import_module("skill_zip_artifacts")
     globals()["validate_skill_markdown_frontmatter"] = skill_zip_artifacts.validate_skill_markdown_frontmatter
     globals()["validate_skill_zip_registry"] = skill_zip_artifacts.validate_skill_zip_registry
+    globals()["load_registry"] = skill_zip_artifacts.load_registry
+    globals()["SKILL_ZIP_ROOT"] = skill_zip_artifacts.ROOT
 
 
 def check_json(path: Path) -> dict:
@@ -1575,6 +1577,62 @@ def _parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def validate_skill_zip_assertions() -> None:
+    """Assert skill-zip registry invariants that are not covered elsewhere.
+
+    These three checks previously lived in the standalone
+    ``validate_skill_zips.py`` step. They are cheap metadata assertions
+    (no zip materialization), so they run regardless of
+    ``--skip-freshness-checks``.
+    """
+    import zipfile
+
+    registry = load_registry()
+
+    # finishing-a-development-branch must be a direct (verbatim) export.
+    verbatim = next(
+        record
+        for record in registry["artifacts"]
+        if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
+    )
+    if verbatim["export_mode"] != "direct":
+        raise AssertionError("expected finishing-a-development-branch to be a direct export")
+    if verbatim.get("overlay_path") is not None:
+        raise AssertionError("expected finishing-a-development-branch to have a null overlay path")
+    with zipfile.ZipFile(SKILL_ZIP_ROOT / verbatim["zip_path"]) as archive:
+        skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
+    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
+        raise AssertionError("direct skill zip does not contain the retained upstream guidance")
+    if "Codex Marketplace Note" in skill_md:
+        raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
+
+    # dispatching-parallel-agents must be excluded.
+    excluded = next(
+        record
+        for record in registry["excluded"]
+        if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
+    )
+    if excluded["export_mode"] != "excluded":
+        raise AssertionError("expected dispatching-parallel-agents to be excluded")
+    if "subagents" not in excluded["reason"]:
+        raise AssertionError("excluded skill should explain the subagent limitation")
+
+    # worker-verification must export as an installable zip and must not be
+    # re-added to wild-bunch-project-pack.
+    worker_verification = next(
+        record
+        for record in registry["artifacts"]
+        if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
+    )
+    if worker_verification["export_mode"] not in {"direct", "overlay"}:
+        raise AssertionError("house-skills/worker-verification should export as an installable zip")
+    if any(
+        record["skill"] == "worker-verification" and record["pack"] == "wild-bunch-project-pack"
+        for record in registry["artifacts"]
+    ):
+        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
+
+
 def main() -> int:
     args = _parse_args()
     if not args.skip_freshness_checks:
@@ -1670,6 +1728,7 @@ def main() -> int:
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()
     validate_no_stale_superpowers_output_path()
+    validate_skill_zip_assertions()
 
     print("Marketplace validation passed.")
     return 0
