@@ -1,6 +1,6 @@
 ---
 name: rooms-canon-buster
-description: Use when rooms canon pressure checks and lawful canon/item adjustment
+description: Use when performing Rooms canon pressure checks and lawful canon/item adjustment
   routing for canon, gaps, ambiguity, and layer mismatches.
 metadata:
   source-id: rooms-canon-buster

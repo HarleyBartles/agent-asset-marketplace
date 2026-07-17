@@ -22,13 +22,14 @@
 
 | Skill | Include in `rooms-project-pack` | Source bundle | Why |
 | -- | -- | -- | -- |
-| `rooms-bootstrap` | Yes | House Skills / Rooms | Project entry and routing surface for Rooms-specific startup. |
 | `rooms-project-doctrine` | Yes | House Skills / Rooms | Shared Rooms doctrine and truth-boundary routing. |
-| `rooms-source-partitioning` | Yes | House Skills / Rooms | Keeps evidence, synthesis, inference, and report classes separate. |
-| `risk-gates` | Yes | House Skills | Consolidated pre-action risk gate router with Rooms-specific gate overlays under `references/rooms/`. Replaces the retired rooms-ambiguity-buster, rooms-analogy-buster, rooms-canon-buster, and rooms-zoom-outs-buster gate overlays. |
+| `rooms-ambiguity-buster` | Yes | House Skills / Rooms | Preserves unresolved identity, motive, and narrator ambiguity. |
+| `rooms-analogy-buster` | Yes | House Skills / Rooms | Prevents analogy from overdoing the reasoning work. |
+| `rooms-zoom-outs-buster` | Yes | House Skills / Rooms | Large-picture review without losing the full frame. |
 | `rooms-character-investigation` | Yes | House Skills / Rooms | Broad Rooms lookup and source-partitioned investigation packets. |
 | `rooms-sheet-creator` | Yes | House Skills / Rooms | Turns durable investigations into participant-facing sheets. |
-| `rooms-image-sidecars` | Yes | House Skills / Rooms | Useful for image evidence starter packets before Albert/Pit ingestion. |
+| `rooms-canon-buster` | Yes | House Skills / Rooms | Rooms canon pressure and lawful canon/item adjustment. |
+| `rooms-image-sidecars` | Yes | House Skills / Rooms | Useful for image evidence starter packets before Pit/archive ingestion. |
 | `database-design-patterns` | Yes | Claude-Cortex | Relevant because this repo has a canonical sqlite database surface and needs generic schema/query guidance without taking a full architecture bundle. |
 | `cleanup-custody` | No | repo-worker-pack | Already the right home for repo hygiene and cleanup-custody. |
 | `repo-worker-pack` | No | Separate plugin | Keeps repo hygiene and worker routing separate from the Rooms pack. |

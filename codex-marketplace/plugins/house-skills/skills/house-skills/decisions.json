@@ -226,26 +226,6 @@
     "notes": "Imported as the shared Rooms doctrine store for truth domains, actor boundaries, and repo posture."
   },
   {
-    "issue": "MARK-97",
-    "source_id": "rooms-bootstrap-v1.1",
-    "source_path": "sources/first_party/skills/rooms-bootstrap",
-    "public_name": "rooms-bootstrap",
-    "provenance_name": "MARK-97 rooms bootstrap zip update",
-    "import_state": "imported",
-    "scope": "Rooms first-read router",
-    "notes": "Imported as the compact Rooms router that cleans the route map and hands off to project doctrine or a more specific Rooms capability. Preserves the stronger repo/posture routing while adopting the zip's clearer packaging metadata."
-  },
-  {
-    "issue": "MARK-30",
-    "source_id": "rooms-source-partitioning-v1",
-    "source_path": "sources/first_party/skills/rooms-source-partitioning",
-    "public_name": "rooms-source-partitioning",
-    "provenance_name": "MARK-9 chunk ledger base and control plane",
-    "import_state": "imported",
-    "scope": "Rooms source-answering and evidence partitioning",
-    "notes": "Imported as the grounded-answering lane for Rooms source, evidence, and report partitioning."
-  },
-  {
     "issue": "MARK-30",
     "source_id": "rooms-character-investigation-v1",
     "source_path": "sources/first_party/skills/rooms-character-investigation",

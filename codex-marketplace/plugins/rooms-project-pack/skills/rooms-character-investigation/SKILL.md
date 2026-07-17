@@ -1,6 +1,6 @@
 ---
 name: rooms-character-investigation
-description: Use when rooms character and subject investigations with source partitioning
+description: Use when performing Rooms character and subject investigations with source partitioning
   for prompt, peek, and recall handoffs.
 metadata:
   source-id: rooms-character-investigation

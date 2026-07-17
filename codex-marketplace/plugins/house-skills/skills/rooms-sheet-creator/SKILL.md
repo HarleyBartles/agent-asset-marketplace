@@ -1,6 +1,6 @@
 ---
 name: rooms-sheet-creator
-description: Use when create Rooms prompt, peek, and recall sheets from character-investigation
+description: Use when creating Rooms prompt, peek, and recall sheets from character-investigation
   packets.
 metadata:
   source-id: rooms-sheet-creator
