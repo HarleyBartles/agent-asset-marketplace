@@ -47,8 +47,8 @@ Artifacts are regeneration test surfaces, not optional examples. Use the smalles
 Prefer, in order, when relevant and available:
 
 1. The actual artifact under discussion: tweet/thread/sketch/room doc/voice artifact/manuscript excerpt/system surface.
-2. Brian/World character, room, systems, and canon surfaces.
-3. Manuscript surfaces for prose/scene behaviour, preserving Derek authority.
+2. World character, room, systems, and canon surfaces.
+3. Manuscript surfaces for prose/scene behaviour, preserving manuscript authority.
 4. Pit/archive evidence only as evidence, with provenance and partiality preserved.
 5. Reports only as reports.
 6. Conversation-derived material only as candidate compression, not artifact verification.
@@ -100,7 +100,7 @@ This Skill does not persist canon. A verified zoom-out may become a persistence 
 - `invariant-gate` for protected surfaces, authority, and repo/governance invariants.
 - `linear-issue-shaping` if worker execution is needed.
 
-Do not simulate Brian, Albert, Derek, Chris, or Will. Do not mutate repos from chat.
+Do not simulate participants. Do not mutate repos from chat.
 
 ## References
 

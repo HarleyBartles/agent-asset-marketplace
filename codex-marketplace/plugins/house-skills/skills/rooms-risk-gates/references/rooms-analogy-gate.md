@@ -13,7 +13,7 @@ Use when validating rooms-specific interpretive analogies against the black box 
 
 The project authority for the Rooms black box theatre analogy lives at `rooms-world/Systems/rooms_mostly_black_box_theatre_analogy.md` (wrapper: `Rooms-Mostly/World/Systems/rooms_mostly_black_box_theatre_analogy.md`). Do not rely on memory alone when a durable claim depends on the analogy.
 
-Use this binding only as a binding note. Do not duplicate the full analogy into the gate. The repo surface remains the source that should evolve when your human partner or Brian updates the analogy.
+Use this binding only as a binding note. Do not duplicate the full analogy into the gate. The repo surface remains the source that should evolve when your human partner or the World/Systems author updates the analogy.
 
 ## Intended use
 

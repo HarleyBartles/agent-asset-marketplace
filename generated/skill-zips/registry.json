@@ -2079,13 +2079,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/rooms-risk-gates/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 34919,
-      "source_sha256": "36eac9243423c20583a161a189d307d25b98e89938616c16d1db843c79cfbc49",
+      "source_bytes": 34913,
+      "source_sha256": "d91c7dfdbf80880efdd8a476de96219ea1884bca5b099f94503249c9fa211727",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16065,
-      "zip_sha256": "1628832d7d7313274279e6a7a1456d6192ee6c6a038ea494edd24185379c7791"
+      "zip_size_bytes": 16041,
+      "zip_sha256": "42cc324c5968794e44818822056e82ceb0f978e3c8cc6f027d40f83cebc87b90"
     },
     {
       "pack": "house-skills",
@@ -2687,13 +2687,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/rooms-risk-gates/skill.zip",
       "source_file_count": 10,
-      "source_bytes": 34919,
-      "source_sha256": "36eac9243423c20583a161a189d307d25b98e89938616c16d1db843c79cfbc49",
+      "source_bytes": 34913,
+      "source_sha256": "d91c7dfdbf80880efdd8a476de96219ea1884bca5b099f94503249c9fa211727",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 16065,
-      "zip_sha256": "1628832d7d7313274279e6a7a1456d6192ee6c6a038ea494edd24185379c7791"
+      "zip_size_bytes": 16041,
+      "zip_sha256": "42cc324c5968794e44818822056e82ceb0f978e3c8cc6f027d40f83cebc87b90"
     },
     {
       "pack": "rooms-project-pack",
