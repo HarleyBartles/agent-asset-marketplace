@@ -2847,13 +2847,13 @@
       "overlay_path": "adapters/gpt/superpowers-plus/brainstorming",
       "zip_path": "generated/skill-zips/superpowers-plus/brainstorming/skill.zip",
       "source_file_count": 11,
-      "source_bytes": 86067,
-      "source_sha256": "4149e34f3bcc22c7660dea1b603423163ebfbbcff5d20b7df4b751af6a942ebe",
+      "source_bytes": 86165,
+      "source_sha256": "2d1c0f9a57a34e98aa3d9d513d78da89fdcd25149779c3e42a2afaaf1f0957ed",
       "overlay_file_count": 1,
       "overlay_bytes": 863,
       "overlay_sha256": "1d4176cb6cd7aaa26177906f396a48947e1d8fe9951dd26dcacbf89cfd17ff46",
-      "zip_size_bytes": 29146,
-      "zip_sha256": "d56c4e29523b428b7bf06d67b6c1410e834bcc7b02452bfd8ec9f8fd382e137f"
+      "zip_size_bytes": 29170,
+      "zip_sha256": "183d1bb7eb2c59c96de70a130cc07602a3867729eb410c4440dbb3c0e40a9f77"
     },
     {
       "pack": "superpowers-plus",
@@ -3131,8 +3131,8 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "overlay_path": null,
       "source_file_count": 10,
-      "source_bytes": 44127,
-      "source_sha256": "d2901c05184e8b6ac82e3a4f5f17b357c2e40b893b32566992aa7cd7cb296df3",
+      "source_bytes": 44148,
+      "source_sha256": "38a5df5e0ddf68d1d640bba571eda3fcedb25bb899b2b915033a851587c16935",
       "reason": "This skill is fundamentally subagent-based and should not export as a raw GPT package."
     },
     {

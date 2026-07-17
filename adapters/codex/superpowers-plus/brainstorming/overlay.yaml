@@ -33,3 +33,69 @@ edits:
       - "**Dispatch after:** Spec document is written to docs/superpowers/specs/"
     replace_lines:
       - "**Dispatch after:** Spec document is written to .agents/superpowers/specs/"
+  - path: visual-companion.md
+    op: replace
+    start_line: 42
+    end_line: 43
+    expected_lines:
+      - "#           \"screen_dir\":\"/path/to/project/.superpowers/brainstorm/12345-1706000000/content\","
+      - "#           \"state_dir\":\"/path/to/project/.superpowers/brainstorm/12345-1706000000/state\"}"
+    replace_lines:
+      - "#           \"screen_dir\":\"/path/to/project/.agents/superpowers/brainstorm/12345-1706000000/content\","
+      - "#           \"state_dir\":\"/path/to/project/.agents/superpowers/brainstorm/12345-1706000000/state\"}"
+  - path: visual-companion.md
+    op: replace
+    start_line: 56
+    end_line: 56
+    expected_lines:
+      - "**Finding connection info:** The server writes its startup JSON to `$STATE_DIR/server-info`. If you launched the server in the background and didn't capture stdout, read that file to get the URL and port. When using `--project-dir`, check `<project>/.superpowers/brainstorm/` for the session directory."
+    replace_lines:
+      - "**Finding connection info:** The server writes its startup JSON to `$STATE_DIR/server-info`. If you launched the server in the background and didn't capture stdout, read that file to get the URL and port. When using `--project-dir`, check `<project>/.agents/superpowers/brainstorm/` for the session directory."
+  - path: visual-companion.md
+    op: replace
+    start_line: 58
+    end_line: 58
+    expected_lines:
+      - "**Note:** Pass the project root as `--project-dir` so mockups persist in `.superpowers/brainstorm/` and survive server restarts. Without it, files go to `/tmp` and get cleaned up. Remind the user to add `.superpowers/` to `.gitignore` if it's not already there."
+    replace_lines:
+      - "**Note:** Pass the project root as `--project-dir` so mockups persist in `.agents/superpowers/brainstorm/` and survive server restarts. Without it, files go to `/tmp` and get cleaned up. Remind the user to add `.agents/superpowers/` to `.gitignore` if it's not already there."
+  - path: visual-companion.md
+    op: replace
+    start_line: 286
+    end_line: 286
+    expected_lines:
+      - "If the session used `--project-dir`, mockup files persist in `.superpowers/brainstorm/` for later reference. Only `/tmp` sessions get deleted on stop."
+    replace_lines:
+      - "If the session used `--project-dir`, mockup files persist in `.agents/superpowers/brainstorm/` for later reference. Only `/tmp` sessions get deleted on stop."
+  - path: scripts/start-server.sh
+    op: replace
+    start_line: 9
+    end_line: 9
+    expected_lines:
+      - "#   --project-dir <path>  Store session files under <path>/.superpowers/brainstorm/"
+    replace_lines:
+      - "#   --project-dir <path>  Store session files under <path>/.agents/superpowers/brainstorm/"
+  - path: scripts/start-server.sh
+    op: replace
+    start_line: 117
+    end_line: 121
+    expected_lines:
+      - "  SESSION_DIR=\"${PROJECT_DIR}/.superpowers/brainstorm/${SESSION_ID}\""
+      - "  # Persist the bound port and key per project so a restart reuses them and an"
+      - "  # already-open browser tab reconnects to the same URL with a valid cookie."
+      - "  export BRAINSTORM_PORT_FILE=\"${PROJECT_DIR}/.superpowers/brainstorm/.last-port\""
+      - "  export BRAINSTORM_TOKEN_FILE=\"${PROJECT_DIR}/.superpowers/brainstorm/.last-token\""
+    replace_lines:
+      - "  SESSION_DIR=\"${PROJECT_DIR}/.agents/superpowers/brainstorm/${SESSION_ID}\""
+      - "  # Persist the bound port and key per project so a restart reuses them and an"
+      - "  # already-open browser tab reconnects to the same URL with a valid cookie."
+      - "  export BRAINSTORM_PORT_FILE=\"${PROJECT_DIR}/.agents/superpowers/brainstorm/.last-port\""
+      - "  export BRAINSTORM_TOKEN_FILE=\"${PROJECT_DIR}/.agents/superpowers/brainstorm/.last-token\""
+  - path: scripts/stop-server.sh
+    op: replace
+    start_line: 6
+    end_line: 6
+    expected_lines:
+      - "# under /tmp (ephemeral). Persistent directories (.superpowers/) are"
+    replace_lines:
+      - "# under /tmp (ephemeral). Persistent directories (.agents/superpowers/) are"

@@ -1543,6 +1543,58 @@ def validate_no_legacy_manifest_shapes() -> None:
     print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 
+def validate_no_stale_superpowers_output_path() -> None:
+    """Flag any projected third-party skill file that references the stale
+    ``.superpowers/`` output directory instead of the canonical
+    ``.agents/superpowers/`` path, and flag any tracked ``.superpowers/``
+    directory at the repo root.
+
+    The upstream obra-superpowers framework defaults to ``.superpowers/`` for
+    its SDD workspace and brainstorm session files. This repo standardizes on
+    ``.agents/superpowers/`` as the single canonical output directory. Overlay
+    edits are responsible for repointing upstream references; this validator
+    catches any that were missed and prevents the stale directory from being
+    tracked again.
+    """
+    # Check 1: no tracked .superpowers/ directory at repo root
+    stale_dir = ROOT / ".superpowers"
+    if stale_dir.exists():
+        tracked = _git_lines("ls-files", ".superpowers/")
+        if tracked:
+            raise ValueError(
+                f"stale .superpowers/ directory is tracked in git "
+                f"({len(tracked)} file(s)). Remove it with `git rm -r --cached .superpowers/` "
+                f"and use .agents/superpowers/ as the canonical output path."
+            )
+
+    # Check 2: no .superpowers/ path references in projected skill files
+    projection_root = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills"
+    if not projection_root.exists():
+        return
+
+    stale_refs: list[str] = []
+    for file_path in sorted(projection_root.rglob("*")):
+        if not file_path.is_file():
+            continue
+        rel = file_path.relative_to(ROOT)
+        try:
+            text = file_path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if ".superpowers/" in line:
+                stale_refs.append(f"{rel}:{line_no}: {line.strip()}")
+
+    if stale_refs:
+        details = "\n  ".join(stale_refs[:20])
+        raise ValueError(
+            f"stale .superpowers/ output path found in {len(stale_refs)} projected line(s) "
+            f"(must be .agents/superpowers/):\n  {details}"
+            + ("\n  ..." if len(stale_refs) > 20 else "")
+        )
+    print(f"OK stale superpowers output path check: 0 stale refs in projection, 0 tracked files")
+
+
 def main() -> int:
     _run_tool_check(
         [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
@@ -1638,6 +1690,7 @@ def main() -> int:
         )
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()
+    validate_no_stale_superpowers_output_path()
 
     print("Marketplace validation passed.")
     return 0
