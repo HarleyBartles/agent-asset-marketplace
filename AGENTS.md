@@ -41,6 +41,9 @@ For ordinary worker execution, prefer a PR into `main`. The PR or direct-main co
 - `adapters/AGENTS.md` for adapter and overlay work
 - `provenance/AGENTS.md` for provenance and trust evidence
 
+MUST READ when creating a worktree, placing scratch files, or writing temp
+artifacts: `docs/non-repo-locations-policy.md`.
+
 ## Maintenance responsibility
 
 This file is the repository's primary worker doctrine. When repo conventions, marketplace structure, or publication rules change, this file must be updated to reflect the new expectations. Do not let this file become stale if agents are following patterns that contradict this document, either update the document or update the repo conventions to match.

@@ -46,10 +46,6 @@ Thumbs.db
 
 .codex/environments/environment.toml
 
-# Local Devin/Codex issue worktrees
-.worktrees/*
-!.worktrees/AGENTS.md
-
 # Superpowers SDD and specs are local-only working surfaces
 # Track the directories via .gitkeep and generated INDEX.md, ignore all content files
 .agents/superpowers/sdd/*
