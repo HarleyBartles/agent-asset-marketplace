@@ -99,8 +99,9 @@ def test_router_route_states_cannot_bypass_repo_worker_base():
         "stale_plan_repair_needed": "repo-worker-base` -> `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> `/using-superpowers`",
     }
     for route_name, handoff in route_expectations.items():
-        route_line = next(line for line in text.splitlines() if line.startswith(f"| `{route_name}` |"))
-        assert handoff in route_line, f"{route_name} bypasses the required base handoff"
+        route_lines = [line for line in text.splitlines() if line.startswith(f"| `{route_name}` |")]
+        assert len(route_lines) == 1, f"expected one {route_name} route-state entry, found {len(route_lines)}"
+        assert handoff in route_lines[0], f"{route_name} bypasses the required base handoff"
 
 
 def test_router_routing_map_cannot_bypass_repo_worker_base():
@@ -116,8 +117,9 @@ def test_router_routing_map_cannot_bypass_repo_worker_base():
         "repo_or_source_evidence": "repo-worker-base` + baseline for the active stage/local guide -> the evidence or implementation lane",
     }
     for route_name, handoff in route_expectations.items():
-        route_line = next(line for line in text.splitlines() if line.startswith(f"- `{route_name}` ->"))
-        assert handoff in route_line, f"{route_name} routing map bypasses the required base handoff"
+        route_lines = [line for line in text.splitlines() if line.startswith(f"- `{route_name}` ->")]
+        assert len(route_lines) == 1, f"expected one {route_name} routing-map entry, found {len(route_lines)}"
+        assert handoff in route_lines[0], f"{route_name} routing map bypasses the required base handoff"
 
     github_routes = [line for line in text.splitlines() if line.startswith("- `github_proof` ->")]
     assert len(github_routes) == 1, f"expected one github_proof routing entry, found {len(github_routes)}"
