@@ -2,6 +2,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -65,10 +66,10 @@ def _init_repository(path: Path) -> Path:
 
 
 def _resolve_worker_locations(start_path: Path, *, allow_shared_checkout: bool = False) -> dict[str, Path | str]:
-    current_checkout = Path(_run_git(start_path, "rev-parse", "--show-toplevel")).resolve()
-    superproject = _run_git(current_checkout, "rev-parse", "--show-superproject-working-tree")
+    superproject = _run_git(start_path, "rev-parse", "--show-superproject-working-tree")
     if superproject:
         raise ValueError("submodule checkouts are rejected")
+    current_checkout = Path(_run_git(start_path, "rev-parse", "--show-toplevel")).resolve()
 
     common_git = Path(
         _run_git(current_checkout, "rev-parse", "--path-format=absolute", "--git-common-dir")
@@ -367,11 +368,38 @@ def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
         assert not missing, f"{router.relative_to(REPO_ROOT)} routes to missing targets: {missing}"
 
 
+def test_marketplace_generation_guide_uses_supported_mesh_check_mode():
+    guide = REPO_ROOT / ".agents" / "guides" / "marketplace-generation-guide.md"
+    text = guide.read_text(encoding="utf-8")
+    assert "generate_index_mesh.py --validate" not in text
+    assert text.count("generate_index_mesh.py --check") >= 2
+
+
 def test_local_guides_cannot_override_the_mandatory_superpowers_mapping():
     text = ROUTER.read_text(encoding="utf-8")
     assert "the repo guide takes precedence" not in text
     assert "Local guides cannot override or bypass this canonical mapping" in text
     assert "paths, commands, exclusions, CI, and exceptions" in text
+
+
+def test_portable_resolution_checks_submodule_status_from_supplied_start_path_first(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    repository = _init_repository(tmp_path / "portable-repo")
+    start_path = repository / "nested" / "path"
+    start_path.mkdir(parents=True)
+    calls: list[tuple[Path, tuple[str, ...]]] = []
+    real_run_git = _run_git
+
+    def recording_run_git(path: Path, *args: str) -> str:
+        calls.append((Path(path), args))
+        return real_run_git(path, *args)
+
+    monkeypatch.setattr(sys.modules[__name__], "_run_git", recording_run_git)
+    _resolve_worker_locations(start_path, allow_shared_checkout=True)
+
+    assert calls[0] == (start_path, ("rev-parse", "--show-superproject-working-tree"))
+    assert calls[1] == (start_path, ("rev-parse", "--show-toplevel"))
 
 
 def test_sdd_mesh_publishes_generated_child_indexes_without_publishing_session_scratch():

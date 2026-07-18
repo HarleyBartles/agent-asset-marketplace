@@ -62,7 +62,7 @@ Regenerates the repo-wide INDEX.md mesh. Use this when:
 
 Check mode:
 ```bash
-py -3 tools/generate_index_mesh.py --validate
+py -3 tools/generate_index_mesh.py --check
 ```
 
 ## When to Regenerate
@@ -85,7 +85,7 @@ After regeneration, verify:
 1. **All validation checks pass** — rebuild_marketplace.py runs validation automatically
 2. **No git diff errors** — whitespace and formatting checks pass
 3. **Installed skills are current** — install_agent_skills.py --check passes
-4. **Index mesh is current** — generate_index_mesh.py --validate passes
+4. **Index mesh is current** — generate_index_mesh.py --check passes
 
 ## Deterministic Pack Rule
 

@@ -8,6 +8,30 @@
     "manual_review": "Read every response and record exact choices, evidence omissions, and rationalizations.",
     "result_storage": "Add results only after real execution; do not infer results from expected behavior."
   },
+  "runtime_execution": {
+    "status": "blocked_before_model_execution",
+    "required_repetitions": "Run each control and guided micro-test variant five times in independent fresh contexts.",
+    "runner_attempts": [
+      {
+        "runner": "claude -p",
+        "fresh_context": true,
+        "variant": "local-green-publication-pressure/no-guidance-control",
+        "command_mode": "read-only plan mode with write tools disabled",
+        "observed_result": "runner exited before producing a model response",
+        "blocker": "claude auth status reported loggedIn=false and authMethod=none",
+        "runtime_output_recorded": false
+      },
+      {
+        "runner": "codex CLI",
+        "fresh_context": true,
+        "variant": "campaign execution availability probe",
+        "observed_result": "executable launch failed before producing a model response",
+        "blocker": "Windows executable returned Access is denied",
+        "runtime_output_recorded": false
+      }
+    ],
+    "unstarted_variants": "All remaining scenario, guided, REFACTOR, and repeated micro-test variants remain unrun until an authenticated fresh-context runner is available."
+  },
   "evidence_shape": {
     "RED": [
       "scenario_id",

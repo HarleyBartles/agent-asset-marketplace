@@ -116,6 +116,10 @@ external_scratch_root = main_checkout / ".." / "_agent-scratch" / repo_name / br
 - [x] Commit the regenerated repo-worker-base marketplace surfaces and final-review corrections (`83c028e6782f08f5ae28c9b3431f9bf40764345a`, followed by `cc49e597b87af43baa3003ce13d655189c92984c`).
 - [x] Push the task branch and publish it through PR #200 into `main`; the final-review implementation head `cc49e597b87af43baa3003ce13d655189c92984c` passed remote Marketplace validation run 29643154881. Portfolio refresh remains a separate downstream authorized action.
 
+## Follow-up execution receipt
+
+- [ ] Execute the checked-in pressure campaign in authenticated, independent fresh subagent contexts; record actual RED, guided GREEN, REFACTOR/rationalization, and repeated micro-test outputs. The current worktree records the runner-unavailable blocker and keeps runtime results empty.
+
 ## Interim states
 
 - Task 1 is intentionally RED.

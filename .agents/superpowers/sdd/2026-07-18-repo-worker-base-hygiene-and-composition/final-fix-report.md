@@ -2,7 +2,10 @@
 
 ## Status
 
-GREEN for the bounded final-review correction wave. The implementation commit
+AMBER for the bounded follow-up review wave: the guide/helper corrections are
+verified, but the requested model-based pressure campaign is blocked before
+model execution because no authenticated fresh-context runner is available.
+The earlier implementation commit
 is `cc49e597b87af43baa3003ce13d655189c92984c` on
 `harleydbartles/mark-336-add-focused-repository-hygiene-references-to-repo-worker`.
 It is published through
@@ -13,6 +16,33 @@ and passed remote Marketplace validation run
 The branch started from current `origin/main` at
 `c7e3273410a73376182d994bee1849a973c323c5`; the final-review wave was applied
 in the registered linked worktree named in MARK-336. Portfolio was not touched.
+
+## Follow-up review corrections
+
+- Replaced both occurrences of the unsupported
+  `generate_index_mesh.py --validate` command in the canonical marketplace
+  generation guide with `--check`.
+- Added a regression assertion that rejects `--validate` and requires the
+  supported check mode.
+- Reordered the behavioral Git helper so
+  `git rev-parse --show-superproject-working-tree` runs from the supplied start
+  path before top-level/common-dir resolution; the new test records and checks
+  that call order.
+- The focused contract suite is now 22 passed.
+
+## Pressure campaign execution status
+
+The structured campaign remains reproducible and its `runtime_results` array
+remains empty. I attempted a real independent read-only `claude -p` context;
+it exited before a model response because `claude auth status` reported
+`loggedIn=false` and `authMethod=none`. The installed Codex CLI was also
+probed and returned `Access is denied` before producing a response.
+
+The durable details are in
+`tests/pressure/repo-worker-base/fresh-context-execution-blocker.md` and
+`campaign.json`. No RED, guided GREEN, REFACTOR, or repeated micro-test model
+output is claimed. An authenticated runner is required to close this AMBER
+item.
 
 ## Confirmed blocker resolutions
 
