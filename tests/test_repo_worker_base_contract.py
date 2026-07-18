@@ -135,6 +135,20 @@ def test_router_prompt_metadata_uses_the_mandatory_handoff():
     assert "routing normal coding work to /using-superpowers" not in text
 
 
+def test_router_phase_table_and_guide_discovery_use_canonical_guide_home():
+    text = ROUTER.read_text(encoding="utf-8")
+    phase_table = text.split("## Working Mode Phases", 1)[1].split("## Superpowers Workflow Mapping", 1)[0]
+    assert ".agents/guides/design-guide.md" in phase_table
+    assert ".agents/guides/planning-guide.md" in phase_table
+    assert ".agents/guides/implementing-guide.md" in phase_table
+    assert ".agents/guides/code-review-guide.md" in phase_table
+    assert ".agents/docs/guides/" not in phase_table
+
+    guide_discovery = text.split("## Workflow Enforcement", 1)[1].split("## Golden-gate reminder", 1)[0]
+    assert "When a repo has guides in `.agents/guides/`, reference them explicitly" in guide_discovery
+    assert ".agents/docs/guides/" not in guide_discovery
+
+
 def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
     canonical = REPO_ROOT / ".agents" / "guides"
     legacy = REPO_ROOT / ".agents" / "docs" / "guides"
