@@ -62,6 +62,36 @@ def test_router_requires_base_before_downstream_lane():
     assert text.index("repo-worker-base") < text.index("using-superpowers")
 
 
+def test_router_contract_covers_composition_ownership_and_non_recursion():
+    text = ROUTER.read_text(encoding="utf-8")
+    required = (
+        "work-mode-router` -> `repo-worker-base` -> matching baseline reference and local `.agents/guides/` guide -> Superpowers lane",
+        "The router owns first classification",
+        "`repo-worker-base` owns portable repo hygiene, composition",
+        "do not invoke `work-mode-router` recursively",
+        "planning-baseline.md",
+        "implementation-baseline.md",
+        "code-review-baseline.md",
+        ".agents/guides/design-guide.md",
+        ".agents/guides/planning-guide.md",
+        ".agents/guides/implementing-guide.md",
+        ".agents/guides/code-review-guide.md",
+        "source evidence",
+        "publication",
+        "review",
+    )
+    missing = [snippet for snippet in required if snippet not in text]
+    assert not missing, f"router contract is missing: {missing}"
+
+
+def test_router_routes_each_repo_worker_stage_to_the_downstream_superpowers_lane():
+    text = ROUTER.read_text(encoding="utf-8")
+    for lane in ("/brainstorming", "/writing-plans", "/executing-plans", "/subagent-driven-development", "/requesting-code-review"):
+        assert lane in text, f"missing Superpowers lane route: {lane}"
+    assert text.index("/repo-worker-base") < text.index("/writing-plans")
+    assert text.index("/repo-worker-base") < text.index("/requesting-code-review")
+
+
 def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
     canonical = REPO_ROOT / ".agents" / "guides"
     legacy = REPO_ROOT / ".agents" / "docs" / "guides"
