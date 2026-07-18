@@ -166,7 +166,6 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 - `code_review_needed` -> `repo-worker-base` + `code-review-baseline.md` + local `.agents/guides/code-review-guide.md` -> `/requesting-code-review`
 - `repo_worker_coding` -> `repo-worker-base` + matching baseline/local guide -> `/using-superpowers` with the discovered mode (existing)
 - `repo_or_source_evidence` -> `repo-worker-base` + baseline for the active stage/local guide -> the evidence or implementation lane
-- `github_proof` -> `repo-worker-base` + implementation or review baseline/local guide -> the GitHub proof surface
 - `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to a cloud agent unless the editable source is known to live in a worker-accessible repo and the task is explicitly repo-backed.
 - `github_proof` -> `repo-worker-base` + implementation or review baseline/local guide -> the repo/GitHub proof surface after a GitHub artifact exists. Do not use repo/GitHub proof to decide worker state or issue routing.
 - `linear_control` -> `using-linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
