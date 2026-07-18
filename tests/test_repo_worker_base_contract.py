@@ -158,6 +158,6 @@ def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
     canonical = REPO_ROOT / ".agents" / "guides"
     legacy = REPO_ROOT / ".agents" / "docs" / "guides"
 
-    assert legacy.is_dir(), "the existing legacy guide home documents the RED baseline"
+    assert not legacy.exists(), "the retired .agents/docs/guides home must not remain"
     missing = [name for name in STAGE_GUIDES if not (canonical / name).is_file()]
     assert not missing, f"missing canonical stage guides: {missing}"

@@ -38,10 +38,10 @@ during `check_marketplace.py`. If `heal_overlays.py --check` fails, run
 ## Routing pointers
 
 - `../.agents/docs/mesh-policy.md` before changing generator or validator behavior
-- `../.agents/docs/guides/planning-guide.md` before planning tool changes
-- `../.agents/docs/guides/implementing-guide.md` before implementing tool changes
-- `../.agents/docs/guides/marketplace-generation-guide.md` before changing marketplace regeneration behavior
-- `../.agents/docs/guides/code-review-guide.md` before reviewing tooling changes
+- `../.agents/guides/planning-guide.md` before planning tool changes
+- `../.agents/guides/implementing-guide.md` before implementing tool changes
+- `../.agents/guides/marketplace-generation-guide.md` before changing marketplace regeneration behavior
+- `../.agents/guides/code-review-guide.md` before reviewing tooling changes
 
 Policy for agent work:
 
