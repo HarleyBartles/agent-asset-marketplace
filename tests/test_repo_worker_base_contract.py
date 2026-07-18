@@ -5,6 +5,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = REPO_ROOT / "sources" / "first_party" / "skills"
 REPO_WORKER_BASE = SOURCE_ROOT / "repo-worker-base"
 ROUTER = SOURCE_ROOT / "work-mode-router" / "SKILL.md"
+ROUTER_PROMPT = SOURCE_ROOT / "work-mode-router" / "agents" / "openai.yaml"
 
 REFERENCE_FILENAMES = (
     "worktree-and-branch-policy.md",
@@ -84,12 +85,54 @@ def test_router_contract_covers_composition_ownership_and_non_recursion():
     assert not missing, f"router contract is missing: {missing}"
 
 
-def test_router_routes_each_repo_worker_stage_to_the_downstream_superpowers_lane():
+def test_router_route_states_cannot_bypass_repo_worker_base():
     text = ROUTER.read_text(encoding="utf-8")
-    for lane in ("/brainstorming", "/writing-plans", "/executing-plans", "/subagent-driven-development", "/requesting-code-review"):
-        assert lane in text, f"missing Superpowers lane route: {lane}"
-    assert text.index("/repo-worker-base") < text.index("/writing-plans")
-    assert text.index("/repo-worker-base") < text.index("/requesting-code-review")
+    route_expectations = {
+        "worktree_isolation_needed": "repo-worker-base` -> `worktree-and-branch-policy.md` -> local repository policy -> `/using-git-worktrees`",
+        "design_needed": "repo-worker-base` -> `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
+        "planning_needed": "repo-worker-base` -> `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/writing-plans`",
+        "approved_plan_execution_ready": "repo-worker-base` -> matching baseline + local `.agents/guides/` guide -> `/using-superpowers`",
+        "implementation_in_progress": "repo-worker-base` -> `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> implementing lane skills",
+        "code_review_needed": "repo-worker-base` -> `code-review-baseline.md` + local `.agents/guides/code-review-guide.md` -> `/requesting-code-review`",
+        "preflight_needed": "repo-worker-base` -> `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/using-superpowers`",
+        "preflight_complete_pending_approval": "repo-worker-base` verifies the planning baseline and local `.agents/guides/planning-guide.md`",
+        "stale_plan_repair_needed": "repo-worker-base` -> `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> `/using-superpowers`",
+    }
+    for route_name, handoff in route_expectations.items():
+        route_line = next(line for line in text.splitlines() if line.startswith(f"| `{route_name}` |"))
+        assert handoff in route_line, f"{route_name} bypasses the required base handoff"
+
+
+def test_router_routing_map_cannot_bypass_repo_worker_base():
+    text = ROUTER.read_text(encoding="utf-8")
+    route_expectations = {
+        "worktree_isolation_needed": "repo-worker-base` + worktree policy/local repository policy -> `/using-git-worktrees`",
+        "design_needed": "repo-worker-base` + `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
+        "planning_needed": "repo-worker-base` + `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/writing-plans`",
+        "approved_plan_execution_ready": "repo-worker-base` + matching baseline/local guide -> `/using-superpowers`",
+        "implementation_in_progress": "repo-worker-base` + `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> `/executing-plans`",
+        "code_review_needed": "repo-worker-base` + `code-review-baseline.md` + local `.agents/guides/code-review-guide.md` -> `/requesting-code-review`",
+        "repo_worker_coding": "repo-worker-base` + matching baseline/local guide -> `/using-superpowers`",
+        "repo_or_source_evidence": "repo-worker-base` + baseline for the active stage/local guide -> the evidence or implementation lane",
+        "github_proof": "repo-worker-base` + implementation or review baseline/local guide -> the GitHub proof surface",
+    }
+    for route_name, handoff in route_expectations.items():
+        route_line = next(line for line in text.splitlines() if line.startswith(f"- `{route_name}` ->"))
+        assert handoff in route_line, f"{route_name} routing map bypasses the required base handoff"
+
+
+def test_router_prompt_metadata_uses_the_mandatory_handoff():
+    router_text = ROUTER.read_text(encoding="utf-8")
+    frontmatter = router_text.split("---", 2)[1]
+    assert "routing repository-backed work through /repo-worker-base" in frontmatter
+    assert "routing normal coding work to /using-superpowers" not in frontmatter
+
+    text = ROUTER_PROMPT.read_text(encoding="utf-8")
+    assert "routing repository-backed work through /repo-worker-base" in text
+    assert "baseline and local .agents/guides/ guide, then /using-superpowers" in text
+    assert "Do not recursively" in text
+    assert "/work-mode-router after classification" in text
+    assert "routing normal coding work to /using-superpowers" not in text
 
 
 def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
