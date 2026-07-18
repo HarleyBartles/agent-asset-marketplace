@@ -15,7 +15,7 @@ Navigation stays in generated `INDEX.md` files.
 
 - `docs/mesh-policy.md` for the canonical mesh contract
 - `docs/INDEX.md` for tracked docs under `.agents/docs/`
-- `docs/guides/AGENTS.md` for stage-aware docs guidance
+- `guides/AGENTS.md` for stage-aware repository guidance
 - `../docs/AGENTS.md` for docs-owned guidance when the work moves into `docs/`
 
 ## Review guidelines

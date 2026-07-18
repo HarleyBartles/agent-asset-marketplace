@@ -6,9 +6,9 @@ Use this reference when turning an idea into a repo-ready design spec for the ag
 
 A design that ignores the repo's standards will produce specs that do not hand off cleanly. Read these before you start:
 
-- **[`../mesh-policy.md`](../mesh-policy.md)** - how AGENTS.md, README, and INDEX.md surfaces are supposed to work
-- **[`../workflow-policy.md`](../workflow-policy.md)** - fresh-main discipline, PR hygiene, and publication honesty
-- **[`docs/custody-and-projection-doctrine.md`](../../../docs/custody-and-projection-doctrine.md)** - source custody rules, provenance modes, plugin curation rules
+- **[`../docs/mesh-policy.md`](../docs/mesh-policy.md)** - how AGENTS.md, README, and INDEX.md surfaces are supposed to work
+- **[`AGENTS.md`](../../AGENTS.md)** - repository source-of-truth and publication rules
+- **[`docs/custody-and-projection-doctrine.md`](../../docs/custody-and-projection-doctrine.md)** - source custody rules, provenance modes, plugin curation rules
 
 ## Design Spec Expectations
 
