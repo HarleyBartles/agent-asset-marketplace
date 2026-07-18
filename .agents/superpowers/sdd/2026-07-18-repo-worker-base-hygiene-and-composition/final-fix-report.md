@@ -2,9 +2,9 @@
 
 ## Status
 
-AMBER for the bounded follow-up review wave: the guide/helper corrections are
-verified, but the requested model-based pressure campaign is blocked before
-model execution because no authenticated fresh-context runner is available.
+GREEN for the bounded follow-up review wave: the guide/helper corrections are
+verified, and the controller-orchestrated fresh-context evidence is recorded
+in the structured pressure campaign.
 The earlier implementation commit
 is `cc49e597b87af43baa3003ce13d655189c92984c` on
 `harleydbartles/mark-336-add-focused-repository-hygiene-references-to-repo-worker`.
@@ -32,17 +32,14 @@ in the registered linked worktree named in MARK-336. Portfolio was not touched.
 
 ## Pressure campaign execution status
 
-The structured campaign remains reproducible and its `runtime_results` array
-remains empty. I attempted a real independent read-only `claude -p` context;
-it exited before a model response because `claude auth status` reported
-`loggedIn=false` and `authMethod=none`. The installed Codex CLI was also
-probed and returned `Access is denied` before producing a response.
-
-The durable details are in
-`tests/pressure/repo-worker-base/fresh-context-execution-blocker.md` and
-`campaign.json`. No RED, guided GREEN, REFACTOR, or repeated micro-test model
-output is claimed. An authenticated runner is required to close this AMBER
-item.
+The controller-orchestrated evidence is recorded in
+`tests/pressure/repo-worker-base/campaign.json`. Its `runtime_results` array
+contains exactly 11 fresh Codex subagent contexts: six scenario contexts
+(three no-guidance controls and three guided variants) plus five independent
+micro-test contexts. Each result preserves its source rollout filename,
+judgment, and raw response excerpt for audit. The report makes no claim about
+additional repetitions or RED/GREEN/REFACTOR phase execution beyond these
+recorded contexts.
 
 ## Confirmed blocker resolutions
 
@@ -122,9 +119,9 @@ documented by its README. It contains:
   variants;
 - explicit RED, GREEN, and REFACTOR evidence fields;
 - six micro-test cases;
-- a fresh-context execution contract and minimum repetition count;
-- an empty `runtime_results` collection, so no unchecked runtime result is
-  claimed.
+- a fresh-context execution contract and explicit evidence-shape schema;
+- exactly 11 recorded `runtime_results` entries: six scenario contexts and
+  five independent micro-test contexts.
 
 ### 7. Plan receipts
 
@@ -193,6 +190,7 @@ self-referential commit SHA inside this tracked report.
 - GitHub emitted a Node.js 20 deprecation annotation for upstream
   `actions/checkout@v4` and `actions/setup-python@v5`; it did not affect the
   successful workflow.
-- No runtime pressure campaign was executed or claimed. The checked-in fixture
-  is durable and ready for the repository's fresh-context validation workflow.
+- The controller-supplied pressure evidence is recorded in the checked-in
+  fixture; no additional repetitions or RED/GREEN/REFACTOR phase execution is
+  inferred beyond those 11 results.
 - MARK-337 and any Portfolio refresh remain outside this bounded fix wave.
