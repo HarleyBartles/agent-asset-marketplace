@@ -113,8 +113,8 @@ external_scratch_root = main_checkout / ".." / "_agent-scratch" / repo_name / br
 - [x] Run `py -3 -m pytest tests/test_repo_worker_base_contract.py tests/test_validate_marketplace.py tests/test_generator_check_modes.py -q` and `git diff --check`; the focused contract is 20/20 GREEN, while the combined command still exposes two unchanged generator-check test failures already present outside this fix wave.
 - [x] Check in a reproducible pressure campaign with separate no-guidance controls and guided prompts, explicit RED/GREEN/REFACTOR evidence fields, three-plus combined-pressure scenarios, five-plus micro-tests, and no unchecked runtime-result claims.
 - [x] Confirm both projections and both repo-worker-base zips contain the ten references, `SKILL.md`, and `agents/openai.yaml`; confirm application code/tests do not import installed skill trees or user caches.
-- [ ] Commit: `chore: regenerate repo worker base marketplace surfaces`.
-- [ ] Push, open a PR into `main`, and record the remote PR URL and full head SHA. Only then treat completion as publishable; Portfolio refresh is a separate downstream authorized action.
+- [x] Commit the regenerated repo-worker-base marketplace surfaces and final-review corrections (`83c028e6782f08f5ae28c9b3431f9bf40764345a`, followed by `cc49e597b87af43baa3003ce13d655189c92984c`).
+- [x] Push the task branch and publish it through PR #200 into `main`; the final-review implementation head `cc49e597b87af43baa3003ce13d655189c92984c` passed remote Marketplace validation run 29643154881. Portfolio refresh remains a separate downstream authorized action.
 
 ## Interim states
 
