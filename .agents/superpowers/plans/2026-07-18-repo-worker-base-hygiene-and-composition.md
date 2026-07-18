@@ -118,7 +118,7 @@ external_scratch_root = main_checkout / ".." / "_agent-scratch" / repo_name / br
 
 ## Follow-up execution receipt
 
-- [ ] Execute the checked-in pressure campaign in authenticated, independent fresh subagent contexts; record actual RED, guided GREEN, REFACTOR/rationalization, and repeated micro-test outputs. The current worktree records the runner-unavailable blocker and keeps runtime results empty.
+- [x] Record the controller-supplied fresh Codex subagent evidence in `tests/pressure/repo-worker-base/campaign.json` and `fresh-context-pressure-results.md`: six scenario contexts (three no-guidance controls and three guided variants) plus exactly five independent micro-test contexts. No five-fold repetition or sixth micro-test execution is claimed; RED/GREEN/REFACTOR phase repetition remains unrun and unclaimed.
 
 ## Interim states
 

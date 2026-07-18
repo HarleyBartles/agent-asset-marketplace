@@ -442,7 +442,14 @@ def test_pressure_campaign_is_structured_for_red_green_refactor_execution():
     campaign = json.loads(fixture_path.read_text(encoding="utf-8"))
 
     assert campaign["schema_version"] == 1
-    assert campaign["runtime_results"] == []
+    runtime_results = campaign["runtime_results"]
+    assert len(runtime_results) == 11
+    assert campaign["runtime_execution"]["scenario_context_count"] == 6
+    assert campaign["runtime_execution"]["independent_micro_test_context_count"] == 5
+    assert sum(result["context_kind"] == "scenario" for result in runtime_results) == 6
+    assert sum(result["context_kind"] == "independent_micro_test" for result in runtime_results) == 5
+    assert all(result["fresh_codex_subagent_context"] for result in runtime_results)
+    assert all(result["source_rollout"] and result["raw_response_excerpt"] for result in runtime_results)
     assert set(campaign["evidence_shape"]) == {"RED", "GREEN", "REFACTOR"}
     for phase, required_fields in campaign["evidence_shape"].items():
         assert required_fields, f"{phase} evidence shape must declare required fields"
