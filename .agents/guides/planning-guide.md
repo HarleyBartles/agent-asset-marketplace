@@ -6,9 +6,9 @@ Use this reference when planning work in the agent-asset-marketplace repo — be
 
 A plan that doesn't account for the repo's standards will produce implementations that fail review. Read these before planning:
 
-- **[`docs/custody-and-projection-doctrine.md`](../../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
-- **[`../workflow-policy.md`](../workflow-policy.md)** — fresh-main discipline, PR hygiene, and publication honesty
-- **[`tools/AGENTS.md`](../../../tools/AGENTS.md)** — marketplace generation and validation tooling
+- **[`docs/custody-and-projection-doctrine.md`](../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`AGENTS.md`](../../AGENTS.md)** — repository source-of-truth and publication rules
+- **[`tools/AGENTS.md`](../../tools/AGENTS.md)** — marketplace generation and validation tooling
 
 ## Skills to Invoke
 

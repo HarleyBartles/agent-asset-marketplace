@@ -4,7 +4,7 @@ Use this reference when working with marketplace generation, validation, and reg
 
 ## Before You Begin: Read the Standards
 
-- **[`docs/custody-and-projection-doctrine.md`](../../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`docs/custody-and-projection-doctrine.md`](../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`tools/AGENTS.md`](../../tools/AGENTS.md)** — marketplace generation and validation tooling
 
 ## Canonical Tooling

@@ -1,4 +1,10 @@
+import json
+import os
+import re
+import subprocess
 from pathlib import Path
+
+import pytest
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +33,75 @@ STAGE_GUIDES = (
     "code-review-guide.md",
 )
 
+MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+PRESSURE_ROOT = REPO_ROOT / "tests" / "pressure" / "repo-worker-base"
+SDD_ROOT = REPO_ROOT / ".agents" / "superpowers" / "sdd"
+SDD_SESSION = SDD_ROOT / "2026-07-18-repo-worker-base-hygiene-and-composition"
+
+
+def _run_git(cwd: Path, *args: str) -> str:
+    result = subprocess.run(
+        ["git", "-C", str(cwd), *args],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def _init_repository(path: Path) -> Path:
+    subprocess.run(
+        ["git", "init", "--initial-branch=main", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    _run_git(path, "config", "user.email", "repo-worker-tests@example.invalid")
+    _run_git(path, "config", "user.name", "Repo Worker Tests")
+    (path / "README.md").write_text("fixture\n", encoding="utf-8", newline="\n")
+    _run_git(path, "add", "README.md")
+    _run_git(path, "commit", "-m", "test fixture")
+    return path
+
+
+def _resolve_worker_locations(start_path: Path, *, allow_shared_checkout: bool = False) -> dict[str, Path | str]:
+    current_checkout = Path(_run_git(start_path, "rev-parse", "--show-toplevel")).resolve()
+    superproject = _run_git(current_checkout, "rev-parse", "--show-superproject-working-tree")
+    if superproject:
+        raise ValueError("submodule checkouts are rejected")
+
+    common_git = Path(
+        _run_git(current_checkout, "rev-parse", "--path-format=absolute", "--git-common-dir")
+    ).resolve()
+    checkout_git = Path(
+        _run_git(current_checkout, "rev-parse", "--path-format=absolute", "--git-dir")
+    ).resolve()
+    is_shared_checkout = os.path.normcase(str(checkout_git)) == os.path.normcase(str(common_git))
+    if is_shared_checkout and not allow_shared_checkout:
+        raise ValueError("shared checkout requires an explicit override")
+
+    main_checkout = common_git.parent
+    repository_name = main_checkout.name
+    branch_name = _run_git(current_checkout, "branch", "--show-current")
+    return {
+        "current_checkout": current_checkout,
+        "main_checkout": main_checkout,
+        "external_worktree_root": main_checkout.parent / "_agent-worktrees" / repository_name,
+        "external_scratch_root": main_checkout.parent / "_agent-scratch" / repository_name / branch_name,
+    }
+
+
+def _assert_local_markdown_links_resolve(path: Path) -> None:
+    for raw_target in MARKDOWN_LINK.findall(path.read_text(encoding="utf-8")):
+        clean_target = raw_target.split("#", 1)[0]
+        if not clean_target or clean_target.startswith(("http://", "https://", "mailto:")):
+            continue
+        if clean_target.startswith((".agents/", "docs/", "sources/", "tools/")):
+            resolved = (REPO_ROOT / clean_target).resolve()
+        else:
+            resolved = (path.parent / clean_target).resolve()
+        assert resolved.exists(), f"broken local link in {path.relative_to(REPO_ROOT)}: {raw_target}"
+
 
 def test_repo_worker_base_exposes_all_focused_references():
     references = REPO_WORKER_BASE / "references"
@@ -49,8 +124,8 @@ def test_worktree_policy_uses_portable_resolution_and_scratch_conventions():
     assert policy_path.is_file(), f"missing worktree policy: {policy_path}"
     policy = policy_path.read_text(encoding="utf-8")
     for required in (
-        "git rev-parse --show-toplevel",
-        "git rev-parse --git-common-dir",
+        "rev-parse --show-toplevel",
+        "rev-parse --path-format=absolute --git-common-dir",
         "_agent-worktrees",
         "_agent-scratch",
     ):
@@ -161,3 +236,205 @@ def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
     assert not legacy.exists(), "the retired .agents/docs/guides home must not remain"
     missing = [name for name in STAGE_GUIDES if not (canonical / name).is_file()]
     assert not missing, f"missing canonical stage guides: {missing}"
+
+
+def test_worktree_policy_uses_git_anchored_absolute_resolution_and_preserves_gates():
+    policy = (REPO_WORKER_BASE / "references" / "worktree-and-branch-policy.md").read_text(encoding="utf-8")
+    implementation = (REPO_WORKER_BASE / "references" / "implementation-baseline.md").read_text(encoding="utf-8")
+
+    for required in (
+        "git -C <start-path> rev-parse --show-toplevel",
+        "git -C <current-checkout> rev-parse --path-format=absolute --git-common-dir",
+        "git -C <current-checkout> rev-parse --path-format=absolute --git-dir",
+        "## Fresh-main gate",
+        "## Worktree isolation and verification gate",
+        "git worktree list",
+        "## Branch and PR gate",
+        "## Worktree stop signs",
+    ):
+        assert required in policy
+
+    for forbidden in (
+        "current_checkout / common_git",
+        "Path(__file__).parent",
+        "walk filesystem parents",
+    ):
+        assert forbidden not in policy
+
+    for required in (
+        "## Validation and publication gate",
+        "## GREEN gate",
+        "## Required return evidence",
+        "## Stop signs",
+    ):
+        assert required in implementation
+
+
+@pytest.mark.parametrize("nested", [False, True], ids=["root", "nested"])
+def test_portable_resolution_from_shared_main_checkout_requires_override(tmp_path: Path, nested: bool):
+    repository = _init_repository(tmp_path / "portable-repo")
+    start_path = repository
+    if nested:
+        start_path = repository / "nested" / "path"
+        start_path.mkdir(parents=True)
+
+    with pytest.raises(ValueError, match="shared checkout"):
+        _resolve_worker_locations(start_path)
+
+    resolved = _resolve_worker_locations(start_path, allow_shared_checkout=True)
+    assert resolved["current_checkout"] == repository.resolve()
+    assert resolved["main_checkout"] == repository.resolve()
+    assert resolved["external_worktree_root"] == tmp_path / "_agent-worktrees" / repository.name
+    assert resolved["external_scratch_root"] == tmp_path / "_agent-scratch" / repository.name / "main"
+
+
+@pytest.mark.parametrize("nested", [False, True], ids=["root", "nested"])
+def test_portable_resolution_from_linked_worktree_finds_main_checkout(tmp_path: Path, nested: bool):
+    repository = _init_repository(tmp_path / "portable-repo")
+    linked = tmp_path / "linked-checkout"
+    _run_git(repository, "worktree", "add", "-b", "feature/portable", str(linked))
+    start_path = linked
+    if nested:
+        start_path = linked / "nested" / "path"
+        start_path.mkdir(parents=True)
+
+    resolved = _resolve_worker_locations(start_path)
+    assert resolved["current_checkout"] == linked.resolve()
+    assert resolved["main_checkout"] == repository.resolve()
+    assert resolved["external_worktree_root"] == tmp_path / "_agent-worktrees" / repository.name
+    assert resolved["external_scratch_root"] == tmp_path / "_agent-scratch" / repository.name / "feature" / "portable"
+
+
+def test_portable_resolution_rejects_submodule_even_with_shared_override(tmp_path: Path):
+    child = _init_repository(tmp_path / "child-repo")
+    superproject = _init_repository(tmp_path / "superproject")
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "protocol.file.allow=always",
+            "-C",
+            str(superproject),
+            "submodule",
+            "add",
+            str(child),
+            "modules/child",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    submodule = superproject / "modules" / "child"
+
+    with pytest.raises(ValueError, match="submodule"):
+        _resolve_worker_locations(submodule, allow_shared_checkout=True)
+
+
+def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
+    guide_root = REPO_ROOT / ".agents" / "guides"
+    link_surfaces = [
+        *sorted(guide_root.glob("*.md")),
+        REPO_ROOT / ".agents" / "INDEX.md",
+        REPO_ROOT / ".agents" / "AGENTS.md",
+        REPO_ROOT / ".agents" / "docs" / "INDEX.md",
+        REPO_ROOT / ".agents" / "docs" / "AGENTS.md",
+        guide_root / "AGENTS.md",
+        REPO_ROOT / "tools" / "AGENTS.md",
+        SDD_ROOT / "INDEX.md",
+    ]
+    for path in link_surfaces:
+        _assert_local_markdown_links_resolve(path)
+
+    routed_targets = {
+        REPO_ROOT / ".agents" / "AGENTS.md": (
+            REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
+            REPO_ROOT / ".agents" / "docs" / "INDEX.md",
+            guide_root / "AGENTS.md",
+        ),
+        REPO_ROOT / ".agents" / "docs" / "AGENTS.md": (
+            REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
+            guide_root / "AGENTS.md",
+        ),
+        guide_root / "AGENTS.md": (
+            REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
+            guide_root / "INDEX.md",
+        ),
+        REPO_ROOT / "tools" / "AGENTS.md": tuple(guide_root / name for name in STAGE_GUIDES),
+    }
+    for router, targets in routed_targets.items():
+        assert router.is_file(), f"missing router: {router.relative_to(REPO_ROOT)}"
+        missing = [target.relative_to(REPO_ROOT) for target in targets if not target.exists()]
+        assert not missing, f"{router.relative_to(REPO_ROOT)} routes to missing targets: {missing}"
+
+
+def test_local_guides_cannot_override_the_mandatory_superpowers_mapping():
+    text = ROUTER.read_text(encoding="utf-8")
+    assert "the repo guide takes precedence" not in text
+    assert "Local guides cannot override or bypass this canonical mapping" in text
+    assert "paths, commands, exclusions, CI, and exceptions" in text
+
+
+def test_sdd_mesh_publishes_generated_child_indexes_without_publishing_session_scratch():
+    gitignore = SDD_ROOT / ".gitignore"
+    child_index = SDD_SESSION / "INDEX.md"
+    assert gitignore.is_file()
+    assert child_index.is_file()
+
+    for path in (gitignore, child_index):
+        relative = path.relative_to(REPO_ROOT).as_posix()
+        tracked = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", relative],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert tracked.returncode == 0, f"published mesh file is absent from Git HEAD: {relative}"
+
+        ignored = subprocess.run(
+            ["git", "check-ignore", "-q", relative],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert ignored.returncode == 1, f"published mesh file is still ignored: {relative}"
+
+    ignored_session_artifact = SDD_SESSION / "task-2-brief.md"
+    ignored = subprocess.run(
+        ["git", "check-ignore", "-q", ignored_session_artifact.relative_to(REPO_ROOT).as_posix()],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert ignored.returncode == 0, "ordinary SDD session artifacts must remain ignored"
+
+
+def test_pressure_campaign_is_structured_for_red_green_refactor_execution():
+    fixture_path = PRESSURE_ROOT / "campaign.json"
+    assert fixture_path.is_file(), "missing structured repo-worker-base pressure campaign"
+    campaign = json.loads(fixture_path.read_text(encoding="utf-8"))
+
+    assert campaign["schema_version"] == 1
+    assert campaign["runtime_results"] == []
+    assert set(campaign["evidence_shape"]) == {"RED", "GREEN", "REFACTOR"}
+    for phase, required_fields in campaign["evidence_shape"].items():
+        assert required_fields, f"{phase} evidence shape must declare required fields"
+
+    scenarios = campaign["combined_pressure_scenarios"]
+    assert len(scenarios) >= 3
+    assert len({scenario["id"] for scenario in scenarios}) == len(scenarios)
+    for scenario in scenarios:
+        assert len(scenario["pressures"]) >= 3
+        assert scenario["no_guidance_control"]["prompt"]
+        assert scenario["guided_variant"]["prompt"]
+        assert scenario["expected_behavior"]
+
+    micro_tests = campaign["micro_tests"]
+    assert len(micro_tests) >= 5
+    assert len({case["id"] for case in micro_tests}) == len(micro_tests)
+    for case in micro_tests:
+        assert case["no_guidance_control"]["prompt"]
+        assert case["guided_variant"]["prompt"]
+        assert case["expected_behavior"]
+
+    assert not (PRESSURE_ROOT / "repo-backed-superpowers-lane.md").exists()
+    assert not (PRESSURE_ROOT / "worktree-resolution.md").exists()

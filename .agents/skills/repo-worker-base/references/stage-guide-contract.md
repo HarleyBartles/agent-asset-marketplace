@@ -14,10 +14,10 @@ implementing-guide.md, and code-review-guide.md. A repository may declare
 additional guides, but each must name one stage and remain local.
 
 Each guide supplies only repository-specific paths, commands, exclusions, CI,
-and exceptions. It does not replace the matching portable baseline or the
-selected Superpowers lane. Migrate a legacy home through the repository's
-approved plan and keep a fallback pointer only when that policy explicitly
-requires it.
+and exceptions. It does not replace, override, reorder, or bypass the matching
+portable baseline or selected Superpowers lane. Migrate a legacy home through
+the repository's approved plan and keep a fallback pointer only when that
+policy explicitly requires it.
 
 If no local guide exists, read the repository hygiene/layout policy and report
 the absent guide as a local-policy gap. Do not invent repository-specific

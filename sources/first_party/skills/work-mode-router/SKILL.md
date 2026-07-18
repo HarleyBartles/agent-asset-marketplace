@@ -135,7 +135,7 @@ For general guidance on which Superpowers workflow to route a piece of work to, 
 
 ### Repo Guide Integration
 
-Repo-specific guides (`.agents/guides/design-guide.md`, `.agents/guides/planning-guide.md`, etc.) may provide additional repo-specific guidance on which superpowers skills to invoke and how to adapt them to the repo's conventions. When repo guide guidance conflicts with this canonical mapping, the repo guide takes precedence for that specific repo.
+Repo-specific guides (`.agents/guides/design-guide.md`, `.agents/guides/planning-guide.md`, etc.) own only repository-specific paths, commands, exclusions, CI, and exceptions. Local guides cannot override or bypass this canonical mapping: `repo-worker-base` -> matching baseline -> local guide -> Superpowers lane.
 
 ## First classification
 

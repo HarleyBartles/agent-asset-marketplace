@@ -24,6 +24,8 @@ The repository-local hygiene/layout policy remains the authority for local
 paths, commands, exclusions, CI, and exceptions. The local guide supplies its
 stage overlay; the Superpowers lane supplies stage technique; this base skill
 supplies portable hygiene, custody, evidence, and publication boundaries.
+Local guidance cannot override, reorder, or bypass the required base,
+matching-baseline, local-guide, and lane sequence.
 
 Do not use this pairing to recursively reclassify work or to copy local policy
 into generic guidance. If a declared local guide is absent, read the local
