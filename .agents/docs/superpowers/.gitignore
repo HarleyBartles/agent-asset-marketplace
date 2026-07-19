@@ -1,0 +1,5 @@
+# This directory is a non-canonical guard surface. Keep only this warning and
+# its ignore policy; do not add reports, plans, indexes, or other artifacts.
+*
+!.gitignore
+!AGENTS.md
