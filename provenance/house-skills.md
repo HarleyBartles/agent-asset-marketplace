@@ -39,7 +39,7 @@
 - Public identity: `adventures-project-doctrine-v1`
 - Provenance/history only: MARK-22 prep payload for Adventures House Skills survivor import
 - Scope: Adventures project doctrine
-- Notes: Imported as the primary Adventures survivor. Preserves shared doctrine, connector posture, visual canon, and resource discipline while stripping retired image-generation framing, deck/PPTX, receipt, and standalone GitHub operations residue from the active House Skills lane.
+- Notes: Imported as the primary Adventures survivor and retired with the Adventures project pack on 2026-07-19. Preserves the historical doctrine, connector posture, visual canon, and resource-discipline record; this entry is provenance only and must not be rehydrated into an active House Skills lane.
 
 ## base-doctrine
 
@@ -247,19 +247,31 @@
 - Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Adventures v1.1, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `github-operations` GitHub proof skill, the `risk-gates` consolidated pre-action risk gate router, the `rooms-risk-gates` Rooms-specific gate overlay, and the hydrated Wild Bunch first-party roots.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `github-operations` GitHub proof skill, the `risk-gates` consolidated pre-action risk gate router, the `rooms-risk-gates` Rooms-specific gate overlay, and the hydrated Wild Bunch first-party roots. The Adventures project pack and Don Logan boundary are retired and excluded from this projection.
 - Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `github-operations` is projected here as the generic GitHub proof base skill, `risk-gates` is projected here as the consolidated pre-action risk gate router, and `rooms-risk-gates` is projected here as the Rooms-specific gate overlay.
 
 ## Active imports
 
 ### Base and control plane
 
-- `don-logan-boundary-v1` - `sources/first_party/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md`
 - `base-doctrine` - `sources/first_party/skills/base-doctrine`
 - `work-mode-router-v1` - `sources/first_party/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `linear-issue-shaping-v1` - `sources/first_party/skills/linear-issue-shaping`
 - `using-linear-v1` - `sources/first_party/skills/using-linear`
 - `risk-gates` - `sources/first_party/skills/risk-gates/SKILL.md`
+
+### Rooms
+
+- `rooms-project-doctrine-v1` - `sources/first_party/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
+- `rooms-risk-gates` - `sources/first_party/skills/rooms-risk-gates/SKILL.md`
+- `rooms-character-investigation-v1` - `sources/first_party/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
+- `rooms-sheet-creator-v1` - `sources/first_party/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
+
+## Retired imports (history only)
+
+### Don Logan boundary
+
+- `don-logan-boundary-v1` - `sources/first_party/skills/don-logan-boundary/v1/don-logan-boundary-v1/SKILL.md` (retired 2026-07-19 with the Adventures project pack)
 
 ### Adventures v1.1
 
@@ -273,12 +285,5 @@
 - `adventures-image-qa-v1.1` - `sources/first_party/skills/adventures-image-qa/v1.1/adventures-image-qa-v1.1/SKILL.md`
 - `adventures-asset-sheet-compiler-v1.1` - `sources/first_party/skills/adventures-asset-sheet-compiler/v1.1/adventures-asset-sheet-compiler-v1.1/SKILL.md`
 - `adventures-frame-buster-v1.1` - `sources/first_party/skills/adventures-frame-buster/v1.1/adventures-frame-buster-v1.1/SKILL.md`
-
-### Rooms
-
-- `rooms-project-doctrine-v1` - `sources/first_party/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
-- `rooms-risk-gates` - `sources/first_party/skills/rooms-risk-gates/SKILL.md`
-- `rooms-character-investigation-v1` - `sources/first_party/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
-- `rooms-sheet-creator-v1` - `sources/first_party/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
 
 Retired, folded, reference-only, and deferred MARK-9 decisions remain in Linear ledgers and are not duplicated here.

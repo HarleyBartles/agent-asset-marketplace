@@ -26,19 +26,16 @@ class GeneratorCheckModeTests(unittest.TestCase):
     def test_generate_marketplace_check_detects_stale_registry_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            decisions_path = temp_root / "sources" / "first_party" / "skills" / "house-skills" / "decisions.json"
             intake_path = temp_root / "sources" / "first_party" / "skills" / "house-skills" / "intake.json"
             plugin_manifest_path = temp_root / "codex-marketplace" / "plugins" / "demo" / ".codex-plugin" / "plugin.json"
             marketplace_path = temp_root / ".agents" / "plugins" / "marketplace.json"
             codex_manifest_path = temp_root / "codex-marketplace" / "manifest.json"
 
-            decisions_path.parent.mkdir(parents=True, exist_ok=True)
             intake_path.parent.mkdir(parents=True, exist_ok=True)
             plugin_manifest_path.parent.mkdir(parents=True, exist_ok=True)
             marketplace_path.parent.mkdir(parents=True, exist_ok=True)
             codex_manifest_path.parent.mkdir(parents=True, exist_ok=True)
 
-            decisions_path.write_text('[{"source_id":"demo","import_state":"imported"}]\n', encoding="utf-8")
             intake_path.write_text('{"imports":[{"source_id":"demo"}]}\n', encoding="utf-8")
             plugin_manifest_path.write_text('{"name":"demo","skills":"skills"}\n', encoding="utf-8")
 
@@ -61,7 +58,6 @@ class GeneratorCheckModeTests(unittest.TestCase):
 
             with (
                 patch.object(generate_marketplace, "ROOT", temp_root),
-                patch.object(generate_marketplace, "SOURCE_DECISIONS_JSON_PATH", decisions_path),
                 patch.object(generate_marketplace, "SOURCE_INTAKE_JSON_PATH", intake_path),
                 patch.object(generate_marketplace, "MARKETPLACE_PATH", marketplace_path),
                 patch.object(generate_marketplace, "CODEX_MARKETPLACE_MANIFEST_PATH", codex_manifest_path),
@@ -79,7 +75,6 @@ class GeneratorCheckModeTests(unittest.TestCase):
             marketplace_path.write_text(rendered.replace("generated", "stale"), encoding="utf-8")
             with (
                 patch.object(generate_marketplace, "ROOT", temp_root),
-                patch.object(generate_marketplace, "SOURCE_DECISIONS_JSON_PATH", decisions_path),
                 patch.object(generate_marketplace, "SOURCE_INTAKE_JSON_PATH", intake_path),
                 patch.object(generate_marketplace, "MARKETPLACE_PATH", marketplace_path),
                 patch.object(generate_marketplace, "CODEX_MARKETPLACE_MANIFEST_PATH", codex_manifest_path),
@@ -440,7 +435,10 @@ class GeneratorCheckModeTests(unittest.TestCase):
             [
                 ("generate_all_mega_packs", {"write": False}),
                 ("reconcile_projection", {"write": False}),
-                ("validate_generated_drift", {"base": "origin/main", "full_regeneration": False}),
+                (
+                    "validate_generated_drift",
+                    {"base": "origin/main", "full_regeneration": False, "skip_content_validation": False},
+                ),
                 ("print_registry_receipt", {"registry": {"registry": True}}),
             ],
         )
@@ -463,12 +461,12 @@ class GeneratorCheckModeTests(unittest.TestCase):
             zip_sha256="b" * 64,
         )
         base_artifact = SkillArtifact(
-            pack="adventures-pack",
+            pack="house-skills",
             skill="base-doctrine",
             export_mode="direct",
             source_path="sources/first_party/skills/base-doctrine",
             overlay_path=None,
-            zip_path="generated/skill-zips/adventures-pack/base-doctrine/skill.zip",
+            zip_path="generated/skill-zips/house-skills/base-doctrine/skill.zip",
             source_file_count=1,
             source_bytes=1,
             source_sha256="a" * 64,
@@ -489,7 +487,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 validate_generated_drift,
                 "_generated_changes",
                 return_value=[
-                    ("R100", "generated/skill-zips/adventures-pack/base-doctrine/skill.zip"),
+                    ("R100", "generated/skill-zips/house-skills/base-doctrine/skill.zip"),
                     ("R100", "generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip"),
                 ],
             ),

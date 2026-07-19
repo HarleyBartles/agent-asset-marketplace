@@ -17,6 +17,7 @@ EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__", ".superpowers"}
 EXCLUDED_FILE_NAMES = {".git", ".gitkeep"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
+NON_CANONICAL_GUARD_ROOTS = {ROOT / ".agents" / "docs" / "superpowers"}
 
 
 def _load_tracked() -> tuple[set[Path], set[Path]]:
@@ -63,12 +64,17 @@ def is_under(path: Path, ancestor: Path) -> bool:
     return path == ancestor or ancestor in path.parents
 
 
+def is_non_canonical_guard(path: Path) -> bool:
+    return any(is_under(path, root) for root in NON_CANONICAL_GUARD_ROOTS)
+
+
 def should_descend(child: Path) -> bool:
     return (
         child.name not in EXCLUDED_DIR_NAMES
         and not is_skill_root(child)
         and (child == THIRD_PARTY_ROOT or not is_under(child, THIRD_PARTY_ROOT))
         and not is_under(child, SKILL_ZIPS_ROOT)
+        and not is_non_canonical_guard(child)
         and child in TRACKED_DIRS
     )
 
@@ -76,6 +82,8 @@ def should_descend(child: Path) -> bool:
 def should_index(path: Path) -> bool:
     if path == ROOT:
         return True
+    if is_non_canonical_guard(path):
+        return False
     relative = path.relative_to(ROOT)
     if any(part in EXCLUDED_ROOT_NAMES for part in relative.parts):
         return False
@@ -110,6 +118,8 @@ def render_index(path: Path) -> str:
             continue
         if entry.is_dir():
             if entry.name in EXCLUDED_DIR_NAMES:
+                continue
+            if is_non_canonical_guard(entry):
                 continue
             if is_skill_root(path):
                 continue
@@ -212,6 +222,7 @@ def main() -> int:
         and path.name == "INDEX.md"
         and (not is_under(path, THIRD_PARTY_ROOT) or path == THIRD_PARTY_ROOT / "INDEX.md")
         and not is_under(path, SKILL_ZIPS_ROOT)
+        and not is_non_canonical_guard(path.parent)
         and path.parent in TRACKED_DIRS
     }
     unexpected = sorted(path for path in actual_paths if path not in expected_paths)

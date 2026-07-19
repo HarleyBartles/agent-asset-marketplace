@@ -1,52 +1,19 @@
-# Adventures Pack Provenance
+# Adventures Pack Provenance (Retired)
 
-## Summary
+## Retirement record
 
-The Adventures Pack is a first-party project-scoped Codex plugin that packages the clean Adventures first-party line as a focused bundle for visual production workflows.
+- **Status**: retired
+- **Retired on**: 2026-07-19
+- **Scope**: The Adventures project pack and its active `adventures-*` skill line were removed from marketplace custody.
+- **Culled dependency**: `don-logan-boundary` was removed from first-party custody and all projections.
+- **Retained skill**: `using-linear` remains canonical and is exposed through `repo-worker-pack` and `house-skills`.
 
-## Source Basis
+This file is retained as historical provenance for the retired pack. It is not an active marketplace or source-custody entry.
 
-- **Ownership**: First-party Harley-owned source
-- **License posture**: first-party Harley-owned source
-- **Canonical roots**: `sources/first_party/skills/`
-- **Active projection lane**: Adventures
-- **Marketplace package**: `codex-marketplace/plugins/adventures-pack/`
+## Historical source basis
 
-## Source Roots
-
-### Adventures Skills (10 skills)
-
-- `sources/first_party/skills/adventures-project-doctrine/SKILL.md`
-- `sources/first_party/skills/adventures-bootstrap/SKILL.md`
-- `sources/first_party/skills/adventures-github-operations/SKILL.md`
-- `sources/first_party/skills/adventures-visual-preproduction/SKILL.md`
-- `sources/first_party/skills/adventures-storyboard-preflight/SKILL.md`
-- `sources/first_party/skills/adventures-visual-bible-creator/SKILL.md`
-- `sources/first_party/skills/adventures-visual-bible-interpreter/SKILL.md`
-- `sources/first_party/skills/adventures-image-qa/SKILL.md`
-- `sources/first_party/skills/adventures-asset-sheet-compiler/SKILL.md`
-- `sources/first_party/skills/adventures-frame-buster/SKILL.md`
-
-### Generic Dependencies (2 skills)
-
-- `sources/first_party/skills/don-logan-boundary/SKILL.md`
-- `sources/first_party/skills/using-linear/SKILL.md`
-
-## Marketplace Adaptation
-
-- **Status**: `current`
-- **Plugin name**: `adventures-pack`
-- **Display name**: `Adventures Pack`
-- **Marketplace category**: `Productivity`
-- **Content mode**: `verbatim` for all first-party sources
-- **Adaptation note**: Project-scoped projection from canonical House Skills sources with generic dependencies for repo-backed work
-
-## Bundle Inventory
-
-- Clean active Adventures skills projected: 10
-- Generic dependencies projected: 2
-- Historical v1 imports projected as active inventory: 0
-
-## Notes
-
-The bundle records the canonical source paths and versions in `references/bundle-manifest.json` and the source map in `references/source-map.md`. All source material is first-party Harley-owned content with no third-party redistribution.
+The retired pack was a first-party project-scoped projection rooted in
+`sources/first_party/skills/` and previously published at
+`codex-marketplace/plugins/adventures-pack/`. Its active inventory consisted
+of ten Adventures skills plus the generic `don-logan-boundary` and
+`using-linear` dependencies.

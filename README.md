@@ -57,7 +57,7 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
 For this normalized pass, the active plugin set is limited to the protected
-roots: `codex-marketplace/plugins/house-skills`, `codex-marketplace/plugins/adventures-pack`,
+roots: `codex-marketplace/plugins/house-skills`,
 `codex-marketplace/plugins/unslop`, and
 `codex-marketplace/plugins/game-studio`, plus
 `codex-marketplace/plugins/wild-bunch-project-pack` and

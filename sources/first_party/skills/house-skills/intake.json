@@ -9,29 +9,12 @@
       "scope": "cleanup-custody"
     },
     {
-      "issue": "MARK-22",
-      "source_id": "adventures-project-doctrine-v1.1",
-      "source_path": "sources/first_party/skills/adventures-project-doctrine",
-      "public_name": "adventures-project-doctrine",
-      "provenance_name": "MARK-22 prep payload for Adventures House Skills survivor import",
-      "scope": "Adventures project doctrine"
-    },
-    {
       "issue": "MARK-23",
       "source_id": "rooms-image-sidecars-v0.1",
       "source_path": "sources/first_party/skills/rooms-image-sidecars",
       "public_name": "rooms-image-sidecars",
       "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
       "scope": "Rooms image sidecar preparation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "don-logan-boundary-v1",
-      "source_path": "sources/first_party/skills/don-logan-boundary",
-      "public_name": "don-logan-boundary",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â base and control plane",
-      "scope": "lawful worker boundary and finish-line enforcement",
       "import_state": "imported"
     },
     {
@@ -137,15 +120,6 @@
       "notes": "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/connector-safety/. House Skills is a projection surface only."
     },
     {
-      "issue": "MARK-30",
-      "source_id": "adventures-bootstrap-v1.1",
-      "source_path": "sources/first_party/skills/adventures-bootstrap",
-      "public_name": "adventures-bootstrap",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures first-read router",
-      "import_state": "imported"
-    },
-    {
       "issue": "MARK-161",
       "source_id": "bootstrap-router-v1",
       "source_path": "sources/first_party/skills/bootstrap-router",
@@ -154,78 +128,6 @@
       "scope": "project bootstrap routing and first-turn classification",
       "import_state": "imported",
       "notes": "Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping."
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-github-operations-v1.1",
-      "source_path": "sources/first_party/skills/adventures-github-operations",
-      "public_name": "adventures-github-operations",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures GitHub proof overlay",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-preproduction-v1.1",
-      "source_path": "sources/first_party/skills/adventures-visual-preproduction",
-      "public_name": "adventures-visual-preproduction",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures source-first visual planning",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-storyboard-preflight-v1.1",
-      "source_path": "sources/first_party/skills/adventures-storyboard-preflight",
-      "public_name": "adventures-storyboard-preflight",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures deterministic storyboard preflight",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-bible-creator-v1.1",
-      "source_path": "sources/first_party/skills/adventures-visual-bible-creator",
-      "public_name": "adventures-visual-bible-creator",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures visual bible authoring",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-visual-bible-interpreter-v1.1",
-      "source_path": "sources/first_party/skills/adventures-visual-bible-interpreter",
-      "public_name": "adventures-visual-bible-interpreter",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures visual bible interpretation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-image-qa-v1.1",
-      "source_path": "sources/first_party/skills/adventures-image-qa",
-      "public_name": "adventures-image-qa",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures image QA",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-asset-sheet-compiler-v1.1",
-      "source_path": "sources/first_party/skills/adventures-asset-sheet-compiler",
-      "public_name": "adventures-asset-sheet-compiler",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures asset-sheet compilation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "adventures-frame-buster-v1.1",
-      "source_path": "sources/first_party/skills/adventures-frame-buster",
-      "public_name": "adventures-frame-buster",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Adventures",
-      "scope": "Adventures frame-readiness surface",
-      "import_state": "imported"
     },
     {
       "issue": "MARK-30",

@@ -80,11 +80,11 @@ Bundle versioning is separate from component versioning.
 
 ## Lane map
 
-The bundle intentionally groups the current House Skills in the same three boring lanes used by the historical source ledger:
+The bundle intentionally groups the current House Skills in the current boring lanes used by the historical source ledger:
 
 - Base and control plane
-- Adventures
 - Rooms
+- Wild Bunch
 
 The base/control-plane lane also carries the shared `connector-safety` component so connector and tool work stays narrow, recoverable, and auditable.
 

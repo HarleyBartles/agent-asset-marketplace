@@ -17,9 +17,6 @@ REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json"
 BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/references/bundle-manifest.json"
 REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "codex-marketplace/repo-local-marketplace-policy.json"
-ADVENTURES_PACK_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/bundle-manifest.json"
-ADVENTURES_PACK_SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/references/source-map.md"
-ADVENTURES_PACK_SKILL_PATH = ROOT / "codex-marketplace/plugins/adventures-pack/skills/adventures-pack/SKILL.md"
 SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/house-skills/references/source-map.md"
 PLUGIN_README_PATH = ROOT / "codex-marketplace/plugins/house-skills/README.md"
 PLUGIN_SKILL_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
@@ -94,8 +91,8 @@ EXPECTED_SOURCE_OF_TRUTH = [
 
 EXPECTED_COMPONENT_LANE_ORDER = {
     "base/control-plane": 0,
-    "Adventures": 1,
-    "Rooms": 2,
+    "Rooms": 1,
+    "Wild Bunch": 2,
 }
 
 
