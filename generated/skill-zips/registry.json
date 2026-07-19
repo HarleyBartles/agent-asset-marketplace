@@ -1438,14 +1438,14 @@
       "source_path": "codex-marketplace/plugins/house-skills/skills/base-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/base-doctrine/skill.zip",
-      "source_file_count": 13,
-      "source_bytes": 31497,
-      "source_sha256": "ff679d2fe58e892d07eb8a68e4a2e50035d9a07ba94298b97496b67bd9c759f1",
+      "source_file_count": 14,
+      "source_bytes": 33233,
+      "source_sha256": "0c4b1a1419ad415375369529c4a9664f8bb469f51c09bf9af98124fe6fc16292",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15292,
-      "zip_sha256": "fc4d7b2f518c9155003e77c12950620476a27c9ee5e3d39ba87473a208ee1ad3"
+      "zip_size_bytes": 16314,
+      "zip_sha256": "ac6a03af640e7bbca8edfd2744ee593ec31ff66b9aa97a130eea887436cc593e"
     },
     {
       "pack": "house-skills",
@@ -2062,14 +2062,14 @@
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine",
       "overlay_path": null,
       "zip_path": "generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip",
-      "source_file_count": 13,
-      "source_bytes": 31497,
-      "source_sha256": "ff679d2fe58e892d07eb8a68e4a2e50035d9a07ba94298b97496b67bd9c759f1",
+      "source_file_count": 14,
+      "source_bytes": 33233,
+      "source_sha256": "0c4b1a1419ad415375369529c4a9664f8bb469f51c09bf9af98124fe6fc16292",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15292,
-      "zip_sha256": "fc4d7b2f518c9155003e77c12950620476a27c9ee5e3d39ba87473a208ee1ad3"
+      "zip_size_bytes": 16314,
+      "zip_sha256": "ac6a03af640e7bbca8edfd2744ee593ec31ff66b9aa97a130eea887436cc593e"
     },
     {
       "pack": "repo-worker-pack",
