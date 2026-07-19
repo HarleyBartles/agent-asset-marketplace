@@ -35,9 +35,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         "PLUGIN_SKILL_PATH",
         "PROVENANCE_PATH",
         "PLUGIN_BUNDLE_AGENTS_PATH",
-        "ADVENTURES_PACK_BUNDLE_MANIFEST_PATH",
-        "ADVENTURES_PACK_SOURCE_MAP_PATH",
-        "ADVENTURES_PACK_SKILL_PATH",
         "SOURCE_INTAKE_JSON_PATH",
         "SOURCE_MAP_PATH",
         "PLUGIN_ROOT_INVENTORY_PATH",
@@ -627,9 +624,7 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
         if not local_path or not isinstance(local_path, str):
             raise ValueError(f"bundle manifest entry {name} is missing local_path")
         expected_lane = (
-            "Adventures"
-            if name.startswith("adventures-")
-            else "Rooms"
+            "Rooms"
             if name.startswith("rooms-")
             else "Wild Bunch"
             if name.startswith("wild-bunch-")
@@ -1299,102 +1294,6 @@ def validate_skill_bundle_manifest(
                 raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
 
-def validate_project_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
-    # Projection-lane manifests are validated by the materializer --check.
-    if bundle_manifest.get("bundle_type") == "projection-lane":
-        return
-    if bundle_manifest.get("bundle_name") != "adventures-pack":
-        raise ValueError("adventures-pack bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError("adventures-pack bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") != "project-scoped-codex-plugin-projection":
-        raise ValueError("adventures-pack bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
-        raise ValueError("adventures-pack bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/adventures-pack":
-        raise ValueError("adventures-pack bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_root") != "codex-marketplace/plugins/house-skills/skills":
-        raise ValueError("adventures-pack bundle manifest canonical_source_root mismatch")
-    if bundle_manifest.get("source_of_truth") != [
-        "sources/first_party/skills/house-skills/intake.json",
-        "provenance/house-skills.md",
-    ]:
-        raise ValueError("adventures-pack bundle manifest source_of_truth mismatch")
-
-    components = bundle_manifest.get("components", [])
-    if not isinstance(components, list) or not components:
-        raise ValueError("adventures-pack bundle manifest components must be a non-empty list")
-
-    skill_dir = ROOT / plugin_root / "skills"
-    check_path_exists(skill_dir / "adventures-pack" / "SKILL.md")
-
-    actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir() and path.name != "adventures-pack"]
-    if len(actual_skill_dirs) != len(components):
-        raise ValueError("adventures-pack bundle manifest component directory count does not match copied skills")
-
-    adventure_count = 0
-    dependency_count = 0
-    seen_local_paths: set[str] = set()
-
-    for component in components:
-        if not isinstance(component, dict):
-            raise ValueError("adventures-pack bundle manifest components must contain objects")
-        canonical_name = component.get("canonical_name")
-        component_version = component.get("component_version")
-        source_path = component.get("source_path")
-        local_path = component.get("local_path")
-        role = component.get("role")
-        projection_status = component.get("projection_status")
-
-        if not canonical_name or not isinstance(canonical_name, str):
-            raise ValueError("adventures-pack bundle manifest component is missing canonical_name")
-        if not component_version or not isinstance(component_version, str):
-            raise ValueError(f"adventures-pack bundle manifest component {canonical_name} is missing component_version")
-        if not source_path or not isinstance(source_path, str):
-            raise ValueError(f"adventures-pack bundle manifest component {canonical_name} is missing source_path")
-        if not local_path or not isinstance(local_path, str):
-            raise ValueError(f"adventures-pack bundle manifest component {canonical_name} is missing local_path")
-        if local_path in seen_local_paths:
-            raise ValueError(f"adventures-pack bundle manifest component local path is duplicated: {local_path}")
-        seen_local_paths.add(local_path)
-
-        if role not in {"adventures", "dependency"}:
-            raise ValueError(f"adventures-pack bundle manifest component {canonical_name} has an unsupported role")
-        if projection_status != "projected":
-            raise ValueError(f"adventures-pack bundle manifest component {canonical_name} must be projected")
-
-        source_md = ROOT / source_path
-        local_md = ROOT / plugin_root / local_path
-        check_path_exists(source_md)
-        check_path_exists(local_md)
-        validate_tree_mirror(source_md.parent, local_md.parent, canonical_name, bundle_name)
-
-        if role == "adventures":
-            adventure_count += 1
-            if component_version != "v1.1":
-                raise ValueError(f"adventures-pack bundle manifest component {canonical_name} must be v1.1")
-        else:
-            dependency_count += 1
-            if component_version not in {"v1", "v0.1"}:
-                raise ValueError(f"adventures-pack bundle manifest component {canonical_name} has an unexpected dependency version")
-
-    if adventure_count != 10:
-        raise ValueError("adventures-pack bundle manifest must project ten clean Adventures components")
-    if dependency_count != 2:
-        raise ValueError("adventures-pack bundle manifest must project two generic dependency components")
-
-    for required in (
-        ROOT / plugin_root / "README.md",
-        ROOT / plugin_root / "SOURCE.md",
-        ROOT / plugin_root / "LICENSE",
-        ROOT / plugin_root / ".codex-plugin" / "plugin.json",
-        ADVENTURES_PACK_SOURCE_MAP_PATH,
-        ADVENTURES_PACK_BUNDLE_MANIFEST_PATH,
-        ADVENTURES_PACK_SKILL_PATH,
-    ):
-        check_path_exists(required)
-
-
 def validate_source_map(text: str) -> None:
     for needle in (
         "codex-marketplace/plugins/house-skills/skills/",
@@ -1649,9 +1548,7 @@ def main() -> int:
         bundle_path = plugin_root / "references/bundle-manifest.json"
         if bundle_path.exists():
             bundle_manifest_json = check_json(bundle_path)
-            if spec["name"] == "adventures-pack":
-                validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
-            elif spec["name"] == "superpowers-plus":
+            if spec["name"] == "superpowers-plus":
                 validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
             elif bundle_manifest_json.get("bundle_type") == "projection-lane":
                 if "entries" in bundle_manifest_json:
@@ -1660,8 +1557,6 @@ def main() -> int:
                         bundle_name=spec["name"],
                         plugin_root=spec["plugin_root"],
                     )
-                elif "components" in bundle_manifest_json:
-                    validate_project_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
                 else:
                     raise ValueError(f"{spec['name']} projection-lane bundle manifest has no recognized payload shape")
             else:

@@ -48,7 +48,6 @@ def _run_full_regeneration_checks() -> None:
     _run_tool("generate_marketplace.py", "--check")
     _run_tool("generate_repo_index.py", "--check")
     _run_tool("generate_pack_manifests.py", "--check")
-    _run_tool("generate_adventures_pack_manifest.py", "--check")
     generate_all_mega_packs(write=False)
     reconcile_projection(write=False)
     _run_tool("generate_provenance_maps.py", "--check")
@@ -61,12 +60,10 @@ def _run_full_regeneration_writes(selected_pack: str | None) -> None:
     _run_tool("generate_marketplace.py")
     _run_tool("generate_repo_index.py")
     _run_tool("generate_pack_manifests.py")
-    _run_tool("generate_adventures_pack_manifest.py")
     generate_all_mega_packs(write=True)
     reconcile_projection(write=True, plugin_name=selected_pack)
     _run_tool("generate_provenance_maps.py")
     _run_tool("generate_source_maps.py")
-    _run_tool("generate_first_party_skill_catalog.py")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -134,6 +131,7 @@ def main() -> int:
         registry = synchronize_skill_zips(write=True)
         validate_generated_drift(base=args.base, full_regeneration=True)
 
+    _run_tool("generate_first_party_skill_catalog.py")
     validate_skill_zip_registry()
     print_registry_receipt(registry)
     return 0

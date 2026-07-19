@@ -5,7 +5,7 @@ Marketplace plugin projection shape lives here.
 Codex plugin first; generated GPT-safe skill zips second.
 
 The active marketplace roots under this directory are limited to
-`house-skills/`, `adventures-pack/`, `unslop/`, `game-studio/`,
+`house-skills/`, `unslop/`, `game-studio/`,
 `wild-bunch-project-pack/`, `superpowers-plus/`, `repo-worker-pack/`,
 `dotnet-kit/`, `codex-cortex/`, `api-contracts-pack/`, `architecture-pack/`,
 `language-patterns-pack/`, `security-pack/`, `frontend-pack/`,

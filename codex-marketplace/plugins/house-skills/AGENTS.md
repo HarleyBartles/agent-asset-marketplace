@@ -29,7 +29,7 @@ like a versioned snapshot tree.
 - Historical package folders are folded into the current root and recorded in changelog and version-history notes.
 - Update the live skill root and inventory surfaces first, then regenerate the bundle manifest and marketplace export.
 - Keep `house-skills` valid while adding project-scoped bundles beside it.
-- Project-scoped bundles, such as an Adventures pack, should point at explicit canonical source paths when they are meant to be projections.
+- Project-scoped bundles should point at explicit canonical source paths when they are meant to be projections.
 - Navigation belongs in generated container indexes, not in this skill root.
 
 ## Maintenance responsibility

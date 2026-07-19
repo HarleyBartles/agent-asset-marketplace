@@ -85,8 +85,6 @@ def collect_entries_by_family(
 
 
 def _skill_lane(canonical_name: str) -> str:
-    if canonical_name.startswith("adventures-"):
-        return "Adventures"
     if canonical_name.startswith("rooms-"):
         return "Rooms"
     return "Base and control plane"
