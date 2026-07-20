@@ -309,6 +309,21 @@
       "source_family": "first_party"
     },
     {
+      "canonical_name": "subagent-model-routing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/subagent-model-routing",
+      "local_path": "skills/subagent-model-routing",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/subagent-model-routing/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "unslop-plus",
       "source_category": "first_party",
       "content_mode": "verbatim",
