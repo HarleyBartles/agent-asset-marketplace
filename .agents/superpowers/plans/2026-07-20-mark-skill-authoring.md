@@ -680,14 +680,14 @@ git add .agents/superpowers/plans/2026-07-20-mark-skill-authoring.md .agents/ski
 git commit -m "docs: add mark skill authoring implementation plan"
 ```
 
-- [ ] **Step 6: Publish and verify the plan commit.**
+- [x] **Step 6: Publish and verify the plan commit.**
 
 ```text
 git push origin codex/authoring-skills-design
 gh pr view 204 --json headRefOid,url,isDraft,state
 ```
 
-Expected: the existing draft PR points to the pushed head SHA and includes the tracked plan. Do not mark the PR ready or merge it as part of planning; implementation and fresh-eyes review remain separate stages.
+Expected: the existing draft PR points to the pushed head SHA and includes the tracked plan. PR readiness and merge remain separate lifecycle steps after implementation and fresh-eyes review.
 
 ## Execution Confidence Assessment
 
