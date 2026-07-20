@@ -1,6 +1,6 @@
 # MARK-338: subagent-model-routing skill implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Create a first-party `subagent-model-routing` skill that chooses the cheapest adequate included model/reasoning/context route for child subagents across Codex, Devin Desktop, and unknown runtimes, then project it into `repo-worker-pack`.
 
@@ -33,7 +33,7 @@
 
 ### Step 1.1: Write `SKILL.md` frontmatter and body
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/SKILL.md` with this exact content:**
+- [x] **Create `sources/first_party/skills/subagent-model-routing/SKILL.md` with this exact content:**
 
 ```markdown
 ---
@@ -90,11 +90,11 @@ Use this skill before choosing a child subagent route. Detect the runtime, load 
 When the obvious choice is unclear or contested, read `references/pressure-scenarios.md` first.
 ```
 
-- [ ] **Verify frontmatter** with `py -3 tools/normalize_first_party_skill_sources.py --check`.
+- [x] **Verify frontmatter** with `py -3 tools/normalize_first_party_skill_sources.py --check`.
 
 ### Step 1.2: Write `agents/openai.yaml`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/agents/openai.yaml` with this exact content:**
+- [x] **Create `sources/first_party/skills/subagent-model-routing/agents/openai.yaml` with this exact content:**
 
 ```yaml
 interface:
@@ -107,7 +107,7 @@ policy:
 
 ### Step 1.3: Write `references/shared-policy.md`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/references/shared-policy.md` with this exact content:** (No additional editing is required; the Max clarification is already applied below.)
+- [x] **Create `sources/first_party/skills/subagent-model-routing/references/shared-policy.md` with this exact content:** (No additional editing is required; the Max clarification is already applied below.)
 
 ```markdown
 Apply these rules in every environment:
@@ -141,7 +141,7 @@ Default to the environment’s free/included posture.
 
 ### Step 1.4: Write `references/codex-profile.md`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/references/codex-profile.md` with this exact content:** (No editing is required.)
+- [x] **Create `sources/first_party/skills/subagent-model-routing/references/codex-profile.md` with this exact content:** (No editing is required.)
 
 ```markdown
 ### Normal parent posture
@@ -212,7 +212,7 @@ Use High. Fall back to Sol High when unavailable. Do not present 5.5 as a cheape
 
 ### Step 1.5: Write `references/devin-desktop-profile.md`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md` with this exact content:** (The SWE-1.7 reasoning ceiling clarification is already applied below.)
+- [x] **Create `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md` with this exact content:** (The SWE-1.7 reasoning ceiling clarification is already applied below.)
 
 ```markdown
 Use a SWE-first policy for repository software work. Do not preserve GLM merely to give every model a lane.
@@ -322,7 +322,7 @@ GLM is additive only when a distinct review question exists. It does not replace
 
 ### Step 1.6: Write `references/generic-free-first-profile.md`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/references/generic-free-first-profile.md` with this exact content:** (No editing is required.)
+- [x] **Create `sources/first_party/skills/subagent-model-routing/references/generic-free-first-profile.md` with this exact content:** (No editing is required.)
 
 ```markdown
 For an unknown or non-Codex runtime, do not guess equivalence from model names. Inventory available models and classify them by capability:
@@ -365,7 +365,7 @@ Prefer lowering reasoning on the strongest included model over selecting an olde
 
 ### Step 1.7: Write `references/pressure-scenarios.md`
 
-- [ ] **Create `sources/first_party/skills/subagent-model-routing/references/pressure-scenarios.md` with this exact content:** (No editing is required.)
+- [x] **Create `sources/first_party/skills/subagent-model-routing/references/pressure-scenarios.md` with this exact content:** (No editing is required.)
 
 ```markdown
 ### Shared failures
@@ -405,7 +405,7 @@ Prefer lowering reasoning on the strongest included model over selecting an olde
 27. Provider benchmark conflicts with repeated local evaluation -> preserve documented default until an evaluation-backed profile update is made; do not drift ad hoc.
 ```
 
-- [ ] **Step 1.8: Commit source-only addition**
+- [x] **Step 1.8: Commit source-only addition**
 
 ```bash
 git add sources/first_party/skills/subagent-model-routing
@@ -423,8 +423,8 @@ generic free-first profile, and pressure scenarios."
 
 ### Step 2.1: Add to `repo-worker-pack` source ledger and entries
 
-- [ ] **Add `sources/first_party/skills/subagent-model-routing` to the `source_ledger` array of the `repo-worker-pack` pack.**
-- [ ] **Add this entry to the `entries` array of the `repo-worker-pack` pack (keep alphabetical order by `canonical_name`):**
+- [x] **Add `sources/first_party/skills/subagent-model-routing` to the `source_ledger` array of the `repo-worker-pack` pack.**
+- [x] **Add this entry to the `entries` array of the `repo-worker-pack` pack (keep alphabetical order by `canonical_name`):**
 
 ```json
 {
@@ -439,7 +439,7 @@ generic free-first profile, and pressure scenarios."
 }
 ```
 
-- [ ] **Step 2.2: Commit registry change**
+- [x] **Step 2.2: Commit registry change**
 
 ```bash
 git add codex-marketplace/custody-pack-registry.json
@@ -450,7 +450,7 @@ git commit -m "feat: register subagent-model-routing in repo-worker-pack (MARK-3
 
 ### Step 3.1: Run full rebuild
 
-- [ ] **Run the canonical rebuild command:**
+- [x] **Run the canonical rebuild command:**
 
 ```bash
 py -3 tools/rebuild_marketplace.py
@@ -458,7 +458,7 @@ py -3 tools/rebuild_marketplace.py
 
 Expected: projection trees, bundle manifests, source maps, provenance maps, skill zips, and marketplace manifests update without errors.
 
-- [ ] **Step 3.2: Commit generated outputs**
+- [x] **Step 3.2: Commit generated outputs**
 
 ```bash
 git add codex-marketplace/ .agents/plugins/marketplace.json repo-index/
@@ -469,7 +469,7 @@ git commit -m "chore: regenerate marketplace projection for subagent-model-routi
 
 ### Step 4.1: Run CI-gate validation
 
-- [ ] **Run the non-mutating check command:**
+- [x] **Run the non-mutating check command:**
 
 ```bash
 py -3 tools/check_marketplace.py
@@ -477,7 +477,7 @@ py -3 tools/check_marketplace.py
 
 Expected: exits 0 with no drift or missing generated surfaces.
 
-- [ ] **Run first-party source normalization check:**
+- [x] **Run first-party source normalization check:**
 
 ```bash
 py -3 tools/normalize_first_party_skill_sources.py --check
@@ -489,14 +489,14 @@ Expected: "OK first-party skill sources: current"
 
 ### Step 5.1: Push branch and open PR
 
-- [ ] **Push the current branch:**
+- [x] **Push the current branch:**
 
 ```bash
 git push -u origin mark-338-subagent-model-routing-plan
 ```
 
-- [ ] **Open a PR into `main` with title** `feat: add subagent-model-routing skill to repo-worker-pack`.
-- [ ] **PR body includes:**
+- [x] **Open a PR into `main` with title** `feat: add subagent-model-routing skill to repo-worker-pack`.
+- [x] **PR body includes:**
   - Summary of new skill and runtime profiles.
   - Canonical source path and projection target.
   - Link to MARK-338.
@@ -504,7 +504,7 @@ git push -u origin mark-338-subagent-model-routing-plan
 
 ## Task 6: Update Linear route state
 
-- [ ] **After the PR is open, update MARK-338 with:**
+- [x] **After the PR is open, update MARK-338 with:**
   - `route_state: preflight_complete_pending_approval`
   - `plan_path: .agents/superpowers/plans/2026-07-20-mark-338-subagent-model-routing.md`
   - `pr_url: <PR URL>`
