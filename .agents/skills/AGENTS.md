@@ -6,7 +6,14 @@ This scope contains agent skills installed from marketplace plugins.
 
 ## Purpose
 
-This directory is the deterministic installation surface for skills from marketplace plugins that have `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
+This directory contains two custody lanes:
+
+- marketplace-derived skills copied from plugins with `INSTALLED_BY_DEFAULT`
+  policy; and
+- tracked repository-local skills under the reserved `mark-*` prefix.
+
+Marketplace-derived skills are generated output. `mark-*` skills are authored
+local custody and are not part of marketplace provenance.
 
 ## Installation
 
@@ -21,6 +28,10 @@ This tool:
 - Copies skill directories from the plugin's `skills/` directory to `.agents/skills/`
 - Removes orphan skills that no longer belong to any installed plugin
 - Supports `--check` mode to report what would change without making changes
+
+The installer validates and preserves every valid `mark-*` directory. It
+never copies marketplace content over a `mark-*` name and never removes a
+`mark-*` directory as an orphan.
 
 ## Source of Truth
 

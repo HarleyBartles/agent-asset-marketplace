@@ -45,3 +45,28 @@ def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Pa
         assert install_agent_skills.main() == 0
 
     assert json.loads(provenance_path.read_text(encoding="utf-8")) == original
+
+
+def test_clean_orphan_skills_preserves_mark_skill(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    local_skill = skills_path / "mark-example"
+    local_skill.mkdir(parents=True)
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-example\ndescription: Use when testing local skill custody.\n---\n\n# Example\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", skills_path):
+        assert install_agent_skills._clean_orphan_skills([], synced_skill_names=set()) is False
+
+    assert local_skill.is_dir()
+
+
+def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    (skills_path / "mark-invalid").mkdir(parents=True)
+
+    with patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", skills_path):
+        invalid = install_agent_skills._validate_local_skill_dirs()
+
+    assert invalid == [skills_path / "mark-invalid"]

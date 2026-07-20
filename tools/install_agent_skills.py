@@ -12,9 +12,35 @@ from pathlib import Path
 from typing import Any
 
 from marketplace_utils import ROOT, MARKETPLACE_PATH, load_json
+from skill_zip_artifacts import validate_skill_markdown_frontmatter
 
 AGENTS_SKILLS_PATH = ROOT / ".agents/skills"
 PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
+LOCAL_SKILL_PREFIX = "mark-"
+
+
+def _is_local_skill_dir(skill_dir: Path) -> bool:
+    return skill_dir.is_dir() and skill_dir.name.startswith(LOCAL_SKILL_PREFIX)
+
+
+def _validate_local_skill_dirs() -> list[Path]:
+    if not AGENTS_SKILLS_PATH.is_dir():
+        return []
+
+    invalid: list[Path] = []
+    for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
+        if not _is_local_skill_dir(skill_dir):
+            continue
+        try:
+            validate_skill_markdown_frontmatter(skill_dir)
+        except (FileNotFoundError, UnicodeDecodeError, ValueError) as exc:
+            try:
+                display_path = skill_dir.relative_to(ROOT)
+            except ValueError:
+                display_path = skill_dir
+            print(f"ERROR: local skill {display_path} is invalid: {exc}")
+            invalid.append(skill_dir)
+    return invalid
 
 
 def _load_marketplace_config() -> dict[str, Any]:
@@ -193,6 +219,9 @@ def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bo
         if not skill_dir.is_dir():
             continue
 
+        if _is_local_skill_dir(skill_dir):
+            continue
+
         if skill_dir.name not in synced_skill_names:
             if check_mode:
                 print(f"CHECK: Would remove orphan skill: {skill_dir.relative_to(ROOT)}")
@@ -238,6 +267,10 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = _parse_args()
+
+    invalid_local_skills = _validate_local_skill_dirs()
+    if invalid_local_skills:
+        return 1
 
     config = _load_marketplace_config()
     installed_plugins = _get_installed_plugins(config)
