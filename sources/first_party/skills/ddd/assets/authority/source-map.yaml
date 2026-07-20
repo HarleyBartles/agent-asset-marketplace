@@ -1,0 +1,12 @@
+schema_version: 1
+reconciled_against: https://www.domainlanguage.com/ddd/reference/
+references:
+- path: references/operational-guidance.md
+  source_sections:
+  - Strategic Design
+  - Tactical Design
+  - Building Blocks
+  content_mode: licensed_adaptation
+  load_when:
+  - Use when applying DDD strategic or tactical patterns.
+  - Use when the operational guidance needs source-grounded detail.
