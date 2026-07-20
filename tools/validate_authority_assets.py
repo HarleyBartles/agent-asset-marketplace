@@ -24,6 +24,7 @@ REQUIRED_AUTHORITY_FIELDS = {
 }
 URL_FIELDS = {"canonical_url", "pinned_source_url", "latest_check_url", "license_url"}
 REQUIRED_REFERENCE_FIELDS = {"path", "source_sections", "content_mode", "load_when"}
+SOURCE_MAP_FIELDS = {"schema_version", "reconciled_against", "references"}
 
 
 def discover_authority_assets(root: Path) -> list[Path]:
@@ -58,6 +59,32 @@ def _contains_non_hidden_file(directory: Path) -> bool:
     )
 
 
+def _validate_references(
+    references: object, *, record_name: str, lane: object, errors: list[str]
+) -> list[object] | None:
+    if not isinstance(references, list):
+        errors.append(f"{record_name} references must be a list")
+        return None
+    for index, reference in enumerate(references, start=1):
+        if not isinstance(reference, dict):
+            errors.append(f"{record_name} references[{index}] must be a mapping")
+            continue
+        for field in sorted(REQUIRED_REFERENCE_FIELDS):
+            if field not in reference:
+                errors.append(f"{record_name} references[{index}] is missing {field}")
+        if "content_mode" in reference and reference["content_mode"] not in CONTENT_MODES:
+            errors.append(
+                f"{record_name} references[{index}] has unsupported content_mode "
+                f"{reference['content_mode']!r}"
+            )
+        if lane == "skills-with-citation" and reference.get("content_mode") != "first_party_synthesis":
+            errors.append(
+                f"{record_name} references[{index}] must use first_party_synthesis "
+                "for skills-with-citation"
+            )
+    return references
+
+
 def validate_authority_skill(skill_root: Path) -> list[str]:
     authority_root = skill_root / "assets/authority"
     authority_path = authority_root / "authority.yaml"
@@ -75,6 +102,8 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
     record = _load_mapping(authority_path, errors)
     if record is None:
         return errors
+
+    source_map = _load_mapping(source_map_path, errors) if source_map_path.is_file() else None
 
     if record.get("schema_version") != 1:
         errors.append("authority.yaml must declare schema_version: 1")
@@ -94,27 +123,46 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
                 errors.append(f"authority.yaml authority {field} must be a nonblank http:// or https:// URL")
 
     decomposition = record.get("decomposition")
+    authority_reconciled_against: object | None = None
+    authority_references: list[object] | None = None
     if not isinstance(decomposition, dict):
         errors.append("authority.yaml decomposition must be a mapping")
     else:
         if "reconciled_against" not in decomposition:
             errors.append("authority.yaml decomposition is missing reconciled_against")
-        references = decomposition.get("references")
-        if not isinstance(references, list):
-            errors.append("authority.yaml decomposition.references must be a list")
         else:
-            for index, reference in enumerate(references, start=1):
-                if not isinstance(reference, dict):
-                    errors.append(f"authority.yaml decomposition.references[{index}] must be a mapping")
-                    continue
-                for field in sorted(REQUIRED_REFERENCE_FIELDS):
-                    if field not in reference:
-                        errors.append(f"authority.yaml decomposition.references[{index}] is missing {field}")
-                if "content_mode" in reference and reference["content_mode"] not in CONTENT_MODES:
-                    errors.append(
-                        f"authority.yaml decomposition.references[{index}] has unsupported content_mode "
-                        f"{reference['content_mode']!r}"
-                    )
+            authority_reconciled_against = decomposition["reconciled_against"]
+        authority_references = _validate_references(
+            decomposition.get("references"),
+            record_name="authority.yaml decomposition",
+            lane=lane,
+            errors=errors,
+        )
+
+    source_map_reconciled_against: object | None = None
+    source_map_references: list[object] | None = None
+    if source_map is not None:
+        if source_map.get("schema_version") != 1:
+            errors.append("source-map.yaml must declare schema_version: 1")
+        for field in sorted(set(source_map) - SOURCE_MAP_FIELDS):
+            errors.append(f"source-map.yaml has unsupported top-level field {field}")
+        if "reconciled_against" not in source_map:
+            errors.append("source-map.yaml is missing reconciled_against")
+        else:
+            source_map_reconciled_against = source_map["reconciled_against"]
+        source_map_references = _validate_references(
+            source_map.get("references"),
+            record_name="source-map.yaml",
+            lane=lane,
+            errors=errors,
+        )
+
+    if authority_reconciled_against is not None and source_map_reconciled_against is not None:
+        if authority_reconciled_against != source_map_reconciled_against:
+            errors.append("source-map.yaml reconciled_against must match authority.yaml decomposition.reconciled_against")
+    if authority_references is not None and source_map_references is not None:
+        if authority_references != source_map_references:
+            errors.append("source-map.yaml references must match authority.yaml decomposition.references")
 
     reference_source = authority_root / "reference-source"
     if lane == "skills-with-source":

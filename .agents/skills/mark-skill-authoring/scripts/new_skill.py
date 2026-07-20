@@ -47,9 +47,11 @@ def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
     files = {"SKILL.md": _template("skill/SKILL.md", name=name, custody=custody, lane=lane)}
     if custody == "local":
         return files
+    files["references/.gitkeep"] = "\n"
+    if lane == "first_party":
+        return files
     files.update(
         {
-            "references/.gitkeep": "\n",
             "assets/authority/authority.yaml": _template("authority/authority.yaml", name=name, custody=custody, lane=lane),
             "assets/authority/source-map.yaml": _template("authority/source-map.yaml", name=name, custody=custody, lane=lane),
             "assets/authority/CITATIONS.md": _template("authority/CITATIONS.md", name=name, custody=custody, lane=lane),
@@ -79,6 +81,14 @@ def _guard_write_checkout(repo_root: Path, allow_shared_checkout: bool) -> Path:
             raise ValueError("refusing to scaffold from a shared main checkout; use --allow-shared-checkout with current human approval")
         print("WARNING: --allow-shared-checkout is active; current human approval is required.")
     return checkout_root
+
+
+def _resolve_cli_repo_root(start_directory: Path) -> Path:
+    """Use the Git top-level for CLI use while preserving testable non-Git calls."""
+    try:
+        return Path(_git(start_directory, "rev-parse", "--show-toplevel")).resolve()
+    except (OSError, subprocess.CalledProcessError):
+        return start_directory
 
 
 def scaffold(
@@ -112,7 +122,7 @@ def main() -> int:
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()
     try:
-        repo_root = Path.cwd().resolve()
+        repo_root = _resolve_cli_repo_root(Path.cwd().resolve())
         return scaffold(repo_root, args.name, args.custody, args.lane, args.check, allow_shared_checkout=args.allow_shared_checkout)
     except (OSError, subprocess.CalledProcessError, ValueError, FileExistsError) as error:
         parser.error(str(error))

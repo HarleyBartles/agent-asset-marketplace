@@ -1,15 +1,3 @@
 schema_version: 1
-lane: {lane}
-authority:
-  title: "{name}"
-  canonical_url: TODO
-  pinned_source_url: TODO
-  latest_check_url: TODO
-  revision: TODO
-  retrieved_at: TODO
-  content_sha256: TODO
-  license: TODO
-  license_url: TODO
-decomposition:
-  reconciled_against: TODO
-  references: []
+reconciled_against: TODO
+references: []

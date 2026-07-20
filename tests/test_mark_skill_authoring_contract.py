@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys
+from unittest.mock import patch
 
 import pytest
 import yaml
@@ -33,8 +34,10 @@ def test_local_request_requires_first_party_lane():
 
 
 def test_render_scaffold_uses_lane_specific_authority_shape():
+    first_party_files = new_skill.render_scaffold("ddd", "marketplace", "first_party")
     source_files = new_skill.render_scaffold("ddd", "marketplace", "skills-with-source")
     citation_files = new_skill.render_scaffold("owasp", "marketplace", "skills-with-citation")
+    assert set(first_party_files) == {"SKILL.md", "references/.gitkeep"}
     assert "assets/authority/authority.yaml" in source_files
     assert "assets/authority/CITATIONS.md" in source_files
     assert "assets/authority/reference-source/.gitkeep" in source_files
@@ -49,13 +52,23 @@ def test_rendered_authority_record_has_required_decomposition_keys():
     assert "  references:" in authority
 
 
+def test_rendered_source_map_uses_decomposition_projection_schema():
+    files = new_skill.render_scaffold("ddd", "marketplace", "skills-with-source")
+    source_map = yaml.safe_load(files["assets/authority/source-map.yaml"])
+    assert source_map == {
+        "schema_version": 1,
+        "reconciled_against": "TODO",
+        "references": [],
+    }
+
+
 def test_rendered_files_are_lf_terminated():
     files = new_skill.render_scaffold("ddd", "marketplace", "skills-with-source")
     assert all(content.endswith("\n") for content in files.values())
 
 
 def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
-    files = new_skill.render_scaffold("true", "marketplace", "first_party")
+    files = new_skill.render_scaffold("true", "marketplace", "skills-with-source")
     frontmatter = yaml.safe_load(files["SKILL.md"].split("---", 2)[1])
     authority = yaml.safe_load(files["assets/authority/authority.yaml"])
     source_map = yaml.safe_load(files["assets/authority/source-map.yaml"])
@@ -64,13 +77,37 @@ def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
     assert isinstance(frontmatter["name"], str)
     assert authority["authority"]["title"] == "true"
     assert isinstance(authority["authority"]["title"], str)
-    assert source_map["authority"]["title"] == "true"
-    assert isinstance(source_map["authority"]["title"], str)
+    assert source_map["reconciled_against"] == "TODO"
 
 
 def test_scaffold_check_does_not_write(tmp_path: Path):
     assert new_skill.scaffold(tmp_path, "mark-example", "local", "first_party", check=True) == 0
     assert not (tmp_path / ".agents/skills/mark-example").exists()
+
+
+def test_cli_check_resolves_git_top_level_from_nested_directory(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    repo_root = tmp_path / "repo"
+    nested = repo_root / "nested" / "directory"
+    nested.mkdir(parents=True)
+    monkeypatch.chdir(nested)
+
+    with (
+        patch.object(new_skill, "_git", return_value=str(repo_root)),
+        patch.object(sys, "argv", [
+            "new_skill.py", "--name", "mark-example", "--custody", "local", "--lane", "first_party", "--check"
+        ]),
+        patch("builtins.print") as printed,
+    ):
+        assert new_skill.main() == 0
+
+    printed.assert_any_call(repo_root / ".agents/skills/mark-example/SKILL.md")
+
+
+def test_bash_wrapper_prefers_python3_and_falls_back_to_py_launcher():
+    wrapper = (SCRIPTS / "new-skill.sh").read_text(encoding="utf-8")
+    assert "command -v python3" in wrapper
+    assert 'exec python3 "$script_dir/new_skill.py" "$@"' in wrapper
+    assert 'exec py -3 "$script_dir/new_skill.py" "$@"' in wrapper
 
 
 def test_local_guidance_routes_to_mark_skill_authoring():
@@ -80,6 +117,32 @@ def test_local_guidance_routes_to_mark_skill_authoring():
     assert "mark-skill-authoring" in guide
     assert "authoring-skills" not in standards
     assert "authoring-skills" not in guide
+
+
+def test_authoring_docs_describe_installed_writing_skills_projection_and_handoff_floor():
+    standards = (ROOT / "docs/skill-standards-policy.md").read_text(encoding="utf-8")
+    design_guide = (ROOT / ".agents/guides/design-guide.md").read_text(encoding="utf-8")
+    source_guidance = (ROOT / ".agents/skills/mark-skill-authoring/references/source-grounded-authoring.md").read_text(encoding="utf-8")
+    custody_guidance = (ROOT / ".agents/skills/mark-skill-authoring/references/local-and-marketplace-custody.md").read_text(encoding="utf-8")
+
+    assert "superpowers-plus:writing-skills" in standards
+    assert "superpowers:writing-skills" in standards
+    assert "upstream origin" in standards
+    assert "below `9/10`" in design_guide
+    for phrase in (
+        "first_party",
+        "skills-with-source",
+        "skills-with-citation",
+        "source_sections",
+        "load_when",
+        "legal redistribution approval",
+        "reference-source",
+        "clean-room synthesis",
+        "CITATIONS.md",
+        "manual freshness review",
+        "No inline citations",
+    ):
+        assert phrase in source_guidance or phrase in custody_guidance
 
 
 def test_first_party_normalizer_preserves_use_with(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):

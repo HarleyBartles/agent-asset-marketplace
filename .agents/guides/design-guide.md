@@ -51,7 +51,7 @@ Once the design is approved, write the implementation plan under the tracked
 is the repository-visible handoff artifact.
 
 - Rate the spec's handoff confidence honestly on a 0-10 scale
-- If the confidence is below `8/10`, do not hand it off yet
+- If the confidence is below `9/10`, do not hand it off yet
 - Tighten the design, verify source facts, or close obvious gaps until the score reaches the floor or the remaining gap is clearly user-owned
 - If a gap materially changes scope, sequence, or file targets, surface it in the design instead of burying it for the planner
 - The planner should receive a spec that is both honest and as de-risked as the current source allows

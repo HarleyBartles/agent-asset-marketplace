@@ -25,6 +25,12 @@ def _is_local_skill_dir(skill_dir: Path) -> bool:
     return skill_dir.is_dir() and skill_dir.name.startswith(LOCAL_SKILL_PREFIX)
 
 
+def _frontmatter_name(skill_dir: Path) -> object:
+    lines = (skill_dir / "SKILL.md").read_text(encoding="utf-8").splitlines()
+    end_index = next(index for index, line in enumerate(lines[1:], start=1) if line == "---")
+    return yaml.safe_load("\n".join(lines[1:end_index])).get("name")
+
+
 def _validate_local_skill_dirs() -> list[Path]:
     if not AGENTS_SKILLS_PATH.is_dir():
         return []
@@ -35,6 +41,8 @@ def _validate_local_skill_dirs() -> list[Path]:
             continue
         try:
             validate_skill_markdown_frontmatter(skill_dir)
+            if _frontmatter_name(skill_dir) != skill_dir.name:
+                raise ValueError("local skill directory name must match frontmatter name")
         except (FileNotFoundError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
             try:
                 display_path = skill_dir.relative_to(ROOT)
@@ -43,6 +51,21 @@ def _validate_local_skill_dirs() -> list[Path]:
             print(f"ERROR: local skill {display_path} is invalid: {exc}")
             invalid.append(skill_dir)
     return invalid
+
+
+def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any]]) -> list[tuple[str, str]]:
+    collisions: list[tuple[str, str]] = []
+    for plugin in installed_plugins:
+        skills_path = _get_plugin_skills_path(plugin)
+        if skills_path is None:
+            continue
+        plugin_name = plugin.get("name", "unknown")
+        if not isinstance(plugin_name, str):
+            plugin_name = "unknown"
+        for skill_dir in sorted(skills_path.iterdir()):
+            if skill_dir.is_dir() and skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+                collisions.append((plugin_name, skill_dir.name))
+    return collisions
 
 
 def _load_marketplace_config() -> dict[str, Any]:
@@ -185,8 +208,9 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
 
         if skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
-            print(f"WARNING: Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix; keeping local custody.")
-            continue
+            raise ValueError(
+                f"Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix"
+            )
 
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
@@ -284,6 +308,15 @@ def main() -> int:
     if not installed_plugins:
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
+
+    collisions = _reserved_marketplace_skill_collisions(installed_plugins)
+    if collisions:
+        for plugin_name, skill_name in collisions:
+            print(
+                f"ERROR: Marketplace plugin '{plugin_name}' exposes reserved local skill prefix "
+                f"'{skill_name}'"
+            )
+        return 1
 
     # Get current provenance and manifest SHA
     existing_provenance = _load_provenance()
