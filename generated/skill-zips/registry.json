@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 171,
+  "artifact_count": 173,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1753,6 +1753,22 @@
     },
     {
       "pack": "house-skills",
+      "skill": "subagent-model-routing",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/subagent-model-routing",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/subagent-model-routing/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 15800,
+      "source_sha256": "2ad0db50f957d82c26357cfcc0d37fff3a9cef64707452aed28c6963fbe6ddcd",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 8566,
+      "zip_sha256": "b2d4f39e43c1b5ea990dc0e35113ffca63e74c9f64747e9785423d25c825eb63"
+    },
+    {
+      "pack": "house-skills",
       "skill": "unslop-plus",
       "export_mode": "direct",
       "source_path": "codex-marketplace/plugins/house-skills/skills/unslop-plus",
@@ -2198,6 +2214,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 11717,
       "zip_sha256": "aede0415995a1659d93b93f1b0293b37e1bd0c1dbdde33c3218d12f4af0905f7"
+    },
+    {
+      "pack": "repo-worker-pack",
+      "skill": "subagent-model-routing",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/subagent-model-routing",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/repo-worker-pack/subagent-model-routing/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 15800,
+      "source_sha256": "2ad0db50f957d82c26357cfcc0d37fff3a9cef64707452aed28c6963fbe6ddcd",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 8566,
+      "zip_sha256": "b2d4f39e43c1b5ea990dc0e35113ffca63e74c9f64747e9785423d25c825eb63"
     },
     {
       "pack": "repo-worker-pack",

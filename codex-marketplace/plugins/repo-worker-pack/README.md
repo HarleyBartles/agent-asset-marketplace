@@ -13,12 +13,13 @@ This bundle projects the first-party repo worker baseline skills.
 - `linear-issue-shaping`
 - `repo-worker-base`
 - `risk-gates`
+- `subagent-model-routing`
 - `unslop-plus`
 - `using-linear`
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 12.
+Manifest entry count: 13.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation
