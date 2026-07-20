@@ -1,0 +1,13 @@
+schema_version: 1
+reconciled_against: cf318bf6e49239cd034bdfcdf41ca87eab4036c34f8991be2d2a24e52647a12b
+references:
+  - path: references/operational-guidance.md
+    source_sections:
+      - Top 10 risks
+      - ASVS verification route
+      - Prevention cheat sheets
+    load_when:
+      - Use when reviewing web application security risks.
+      - Use when mapping controls to OWASP Top 10.
+      - Use when establishing an ASVS verification route.
+    content_mode: licensed_adaptation
