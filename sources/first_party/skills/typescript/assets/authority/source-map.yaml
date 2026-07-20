@@ -1,0 +1,13 @@
+schema_version: 1
+reconciled_against: "1ab730d2bdafb7c84b760462f667a511d5c2bc1ee788c9ad1c883d14cac147d6"
+references:
+  - path: "references/operational-guidance.md"
+    source_sections:
+      - "Type system"
+      - "Interfaces and types"
+      - "Generics"
+      - "Module resolution"
+    content_mode: "licensed_adaptation"
+    load_when:
+      - "Adapting TypeScript type system guidance"
+      - "Designing interfaces, generics, or module resolution"
