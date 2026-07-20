@@ -4,18 +4,25 @@ This policy defines the standards for first-party skills in the agent-asset-mark
 
 This policy implements and extends two upstream sources:
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base format for `SKILL.md` frontmatter (`name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`). This policy adopts that format and adds repo-specific requirements on top: mandatory `metadata` for first-party skills, required `use_when` and `do_not_use_when` trigger fields, canonical identity fields, and a 500-word body limit.
-- The `superpowers:writing-skills` skill defines a TDD-based approach to skill creation (RED-GREEN-REFACTOR for documentation) and skill discovery optimization (description = when to use, not what it does; token efficiency; cross-referencing). This policy adopts those principles as testing requirements and content rules.
+- The installed `superpowers-plus:writing-skills` projection, whose upstream origin is `superpowers:writing-skills`, defines a TDD-based approach to skill creation (RED-GREEN-REFACTOR for documentation) and skill discovery optimization (description = when to use, not what it does; token efficiency; cross-referencing). This policy adopts those principles as testing requirements and content rules.
 
 Where this policy is stricter than the upstream sources, this policy wins for repo skills. Where this policy is silent, the upstream sources apply.
 
 Use this policy when creating, editing, reviewing, or bringing first-party skills up to standard. Not every existing skill is compliant yet; this policy is the target to walk the tree toward.
+
+Use the local [`mark-skill-authoring`](../.agents/skills/mark-skill-authoring/SKILL.md)
+skill with `superpowers-plus:writing-skills` when creating or reviewing a
+skill. It owns the authoring lanes, custody-aware scaffolding, authority
+evidence, scholarly citations, and clean-room boundaries. This policy remains
+the authority for marketplace paths, projection metadata, and repository
+validation.
 
 For third-party skill adaptation and overlay adapter triggers, see `docs/overlay-adapter-policy.md`.
 
 ## External references
 
 - [agentskills.io specification](https://agentskills.io/specification) — the base format spec for `SKILL.md` frontmatter (implemented and extended by this policy)
-- `superpowers:writing-skills` — TDD-based skill creation and testing guidance (adopted as testing requirements and content rules by this policy)
+- `superpowers-plus:writing-skills` — installed projection of the upstream `superpowers:writing-skills` TDD-based skill creation and testing guidance (adopted as testing requirements and content rules by this policy)
 - `docs/contracts/skill-frontmatter.md` — projection frontmatter contract
 - `docs/contracts/openai-agent-yaml.md` — OpenAI agent YAML contract
 - `docs/custody-and-projection-doctrine.md` — custody, projection, and export doctrine
@@ -33,6 +40,13 @@ sources/first_party/skills/<skill-name>/
 ```
 
 The skill directory name must match the `name` field in `SKILL.md` frontmatter.
+
+## Local skills
+
+Local `.agents/skills/mark-*` skills are tracked local custody. They require
+normal local skill frontmatter, but are excluded from marketplace provenance.
+Use `mark-skill-authoring` for their authoring method; this policy does not
+duplicate its source decomposition or citation workflow.
 
 ## SKILL.md frontmatter
 

@@ -12,9 +12,15 @@ A design that ignores the repo's standards will produce specs that do not hand o
 
 ## Design Spec Expectations
 
-The design spec is the durable record of the decision, not the implementation plan.
+The design spec is the working record of the decision, not the implementation
+plan. Design specs are intentionally ignored in this repository; the tracked
+implementation plan is the durable handoff artifact.
 
-- Write the spec to `.agents/docs/design/` or appropriate design location
+- Write the spec to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
+  Do not create design specs under `.agents/docs/design/` or another tracked
+  docs directory.
+- Keep the design spec in the ignored local-only specs surface while the
+  design is being developed and reviewed.
 - Keep it concrete enough that a planning agent can turn it into a task plan without inventing missing decisions
 - Include the real names, counts, file targets, and contract rules that define the work
 - Separate goals, scope, non-goals, contract, and validation
@@ -40,8 +46,12 @@ If the spec fails any of those checks, fix it before proceeding.
 
 Before handing the spec to a planning agent, assess whether it is already strong enough to avoid avoidable in-flight invention.
 
+Once the design is approved, write the implementation plan under the tracked
+`.agents/superpowers/plans/` surface. The plan, not the ignored design spec,
+is the repository-visible handoff artifact.
+
 - Rate the spec's handoff confidence honestly on a 0-10 scale
-- If the confidence is below `8/10`, do not hand it off yet
+- If the confidence is below `9/10`, do not hand it off yet
 - Tighten the design, verify source facts, or close obvious gaps until the score reaches the floor or the remaining gap is clearly user-owned
 - If a gap materially changes scope, sequence, or file targets, surface it in the design instead of burying it for the planner
 - The planner should receive a spec that is both honest and as de-risked as the current source allows

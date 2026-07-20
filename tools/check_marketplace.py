@@ -39,6 +39,7 @@ def main() -> int:
     _run_tool("install_agent_skills.py", "--check")
     _run_tool("validate_marketplace.py", "--skip-freshness-checks")
     _run_tool("generate_index_mesh.py", "--check")
+    _run_tool("validate_authority_assets.py")
     _run_git("diff", "--check")
     _run_git("diff", "--exit-code")
     return 0

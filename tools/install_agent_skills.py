@@ -11,10 +11,88 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from marketplace_utils import ROOT, MARKETPLACE_PATH, load_json
+from skill_zip_artifacts import validate_skill_markdown_frontmatter
 
 AGENTS_SKILLS_PATH = ROOT / ".agents/skills"
 PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
+LOCAL_SKILL_PREFIX = "mark-"
+
+
+def _is_local_skill_dir(skill_dir: Path) -> bool:
+    return skill_dir.is_dir() and skill_dir.name.startswith(LOCAL_SKILL_PREFIX)
+
+
+def _frontmatter_name(skill_dir: Path) -> object:
+    lines = (skill_dir / "SKILL.md").read_text(encoding="utf-8").splitlines()
+    end_index = next(index for index, line in enumerate(lines[1:], start=1) if line == "---")
+    return yaml.safe_load("\n".join(lines[1:end_index])).get("name")
+
+
+def _validate_local_skill_dirs() -> list[Path]:
+    if not AGENTS_SKILLS_PATH.is_dir():
+        return []
+
+    invalid: list[Path] = []
+    for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
+        if not _is_local_skill_dir(skill_dir):
+            continue
+        try:
+            validate_skill_markdown_frontmatter(skill_dir)
+            if _frontmatter_name(skill_dir) != skill_dir.name:
+                raise ValueError("local skill directory name must match frontmatter name")
+        except (FileNotFoundError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
+            try:
+                display_path = skill_dir.relative_to(ROOT)
+            except ValueError:
+                display_path = skill_dir
+            print(f"ERROR: local skill {display_path} is invalid: {exc}")
+            invalid.append(skill_dir)
+    return invalid
+
+
+def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any]]) -> list[tuple[str, str]]:
+    collisions: list[tuple[str, str]] = []
+    for plugin in installed_plugins:
+        skills_path = _get_plugin_skills_path(plugin)
+        if skills_path is None:
+            continue
+        plugin_name = plugin.get("name", "unknown")
+        if not isinstance(plugin_name, str):
+            plugin_name = "unknown"
+        for skill_dir in sorted(skills_path.iterdir()):
+            if skill_dir.is_dir() and skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+                collisions.append((plugin_name, skill_dir.name))
+    return collisions
+
+
+def _expected_marketplace_skill_inventory(installed_plugins: list[dict[str, Any]]) -> dict[str, Path]:
+    expected: dict[str, Path] = {}
+    for plugin in installed_plugins:
+        skills_path = _get_plugin_skills_path(plugin)
+        if skills_path is None:
+            continue
+        for skill_dir in sorted(skills_path.iterdir()):
+            if skill_dir.is_dir() and not skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+                expected.setdefault(skill_dir.name, skill_dir)
+    return expected
+
+
+def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, Any]]) -> bool:
+    expected = _expected_marketplace_skill_inventory(installed_plugins)
+    if not expected or not AGENTS_SKILLS_PATH.is_dir():
+        return False
+    installed_marketplace_names = {
+        skill_dir.name
+        for skill_dir in AGENTS_SKILLS_PATH.iterdir()
+        if skill_dir.is_dir() and not skill_dir.name.startswith(LOCAL_SKILL_PREFIX)
+    }
+    return installed_marketplace_names == set(expected) and all(
+        not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name)
+        for name, source_skill in expected.items()
+    )
 
 
 def _load_marketplace_config() -> dict[str, Any]:
@@ -156,6 +234,11 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
 
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
 
+        if skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+            raise ValueError(
+                f"Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix"
+            )
+
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
         if skill_dir.name in synced_skill_names:
@@ -191,6 +274,9 @@ def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bo
     cleaned_any = False
     for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
         if not skill_dir.is_dir():
+            continue
+
+        if _is_local_skill_dir(skill_dir):
             continue
 
         if skill_dir.name not in synced_skill_names:
@@ -239,12 +325,25 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
+    invalid_local_skills = _validate_local_skill_dirs()
+    if invalid_local_skills:
+        return 1
+
     config = _load_marketplace_config()
     installed_plugins = _get_installed_plugins(config)
 
     if not installed_plugins:
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
+
+    collisions = _reserved_marketplace_skill_collisions(installed_plugins)
+    if collisions:
+        for plugin_name, skill_name in collisions:
+            print(
+                f"ERROR: Marketplace plugin '{plugin_name}' exposes reserved local skill prefix "
+                f"'{skill_name}'"
+            )
+        return 1
 
     # Get current provenance and manifest SHA
     existing_provenance = _load_provenance()
@@ -253,10 +352,7 @@ def main() -> int:
     # Check if refresh is needed based on provenance
     if not args.force and existing_provenance:
         if existing_provenance.get("manifestSha") == current_manifest_sha:
-            has_skill_dirs = AGENTS_SKILLS_PATH.exists() and any(
-                AGENTS_SKILLS_PATH.iterdir()
-            )
-            if has_skill_dirs:
+            if _marketplace_skill_inventory_is_current(installed_plugins):
                 print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
                 print(f"Synced skills: {existing_provenance.get('syncedSkills')} from {existing_provenance.get('syncedPlugins')} plugins.")
                 return 0
@@ -284,8 +380,9 @@ def main() -> int:
     if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names):
         changes_made = True
 
-    # Write provenance if changes were made
-    if not args.check and (changes_made or args.force):
+    # Write provenance only when the installed skill tree changed. A forced
+    # byte-identical refresh must remain a no-diff operation.
+    if not args.check and changes_made:
         _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
 
