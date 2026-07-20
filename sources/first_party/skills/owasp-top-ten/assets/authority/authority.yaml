@@ -4,15 +4,15 @@ lane: skills-with-source
 authority:
   title: OWASP Top Ten
   canonical_url: https://owasp.org/Top10/
-  pinned_source_url: https://owasp.org/Top10/
-  latest_check_url: https://owasp.org/Top10/
+  pinned_source_url: https://owasp.org/Top10/2025/
+  latest_check_url: https://owasp.org/Top10/2025/
   revision: current
   retrieved_at: "2026-07-20"
-  content_sha256: cf318bf6e49239cd034bdfcdf41ca87eab4036c34f8991be2d2a24e52647a12b
+  content_sha256: fdfaba46ee4daa1bb4f583c2ee93b6c6c2678cda5f844c6739292c9697a06237
   license: CC-BY-SA-4.0
   license_url: https://creativecommons.org/licenses/by-sa/4.0/
 decomposition:
-  reconciled_against: cf318bf6e49239cd034bdfcdf41ca87eab4036c34f8991be2d2a24e52647a12b
+  reconciled_against: fdfaba46ee4daa1bb4f583c2ee93b6c6c2678cda5f844c6739292c9697a06237
   references:
     - path: references/operational-guidance.md
       source_sections:

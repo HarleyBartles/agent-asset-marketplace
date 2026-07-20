@@ -1,5 +1,5 @@
 schema_version: 1
-reconciled_against: cf318bf6e49239cd034bdfcdf41ca87eab4036c34f8991be2d2a24e52647a12b
+reconciled_against: fdfaba46ee4daa1bb4f583c2ee93b6c6c2678cda5f844c6739292c9697a06237
 references:
   - path: references/operational-guidance.md
     source_sections:

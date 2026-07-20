@@ -2,7 +2,7 @@
 
 ## Scholarly citation
 
-- OWASP Foundation. "OWASP Top 10." https://owasp.org/Top10/ (accessed 2026-07-20).
+- OWASP Foundation. "OWASP Top 10." https://owasp.org/Top10/2025/ (accessed 2026-07-20).
 - OWASP Foundation. "Application Security Verification Standard (ASVS)." https://owasp.org/www-project-application-security-verification-standard/ (accessed 2026-07-20).
 
 ## Derivation boundary
