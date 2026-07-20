@@ -176,7 +176,7 @@ _USE_BEFORE_PREFIXES = ("use before ",)
 _USE_AFTER_PREFIXES = ("use after ",)
 _USE_WITH_PREFIXES = ("use with ",)
 _USE_INSTEAD_PREFIXES = ("use instead ",)
-_DO_NOT_USE_WHEN_PREFIXES = ("do not use when ", "do not use ", "don't use when ", "avoid when ")
+_DO_NOT_USE_WHEN_PREFIXES = ("do not use when ", "don't use when ", "avoid when ")
 
 
 def _strip_prefix(text: str, prefixes: tuple[str, ...]) -> str:
