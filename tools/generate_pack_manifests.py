@@ -100,7 +100,17 @@ OPTIONAL_MANIFEST_FIELDS = (
     "canonical_source_roots",
     "source_of_truth",
     "projection_policy",
+    "generated_doc_surfaces",
 )
+
+GENERATED_DOC_MARKERS = {
+    "README.md": ("<!-- BEGIN GENERATED: bundle-contents -->", "<!-- END GENERATED: bundle-contents -->"),
+    "SOURCE.md": ("<!-- BEGIN GENERATED: pack-inventory -->", "<!-- END GENERATED: pack-inventory -->"),
+    "PROJECTION.md": (
+        "<!-- BEGIN GENERATED: projection-contract -->",
+        "<!-- END GENERATED: projection-contract -->",
+    ),
+}
 
 
 def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
@@ -138,6 +148,86 @@ def _write_manifest(path: Path, manifest: dict[str, Any]) -> None:
     path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
+def _family_label(source_family: str) -> str:
+    return source_family.replace("_", " ").replace("-", " ").title()
+
+
+def _render_generated_doc_block(pack: dict[str, Any], doc_name: str) -> str:
+    entries = sorted(pack["entries"], key=lambda item: item["canonical_name"])
+    plugin_root = pack["plugin_root"]
+    if doc_name == "README.md":
+        lines: list[str] = []
+        for source_family in sorted({entry["source_family"] for entry in entries}):
+            lines.append(f"### {_family_label(source_family)} skills")
+            for entry in entries:
+                if entry["source_family"] == source_family:
+                    lines.append(f"- `{entry['canonical_name']}`")
+            lines.append("")
+        lines.append(f"Manifest entry count: {len(entries)}.")
+        return "\n".join(lines).rstrip()
+
+    if doc_name == "SOURCE.md":
+        lines = ["## Source custody"]
+        for source_family in sorted({entry["source_family"] for entry in entries}):
+            lines.append(f"### {_family_label(source_family)} custody")
+            for entry in entries:
+                if entry["source_family"] == source_family:
+                    lines.append(f"- `{entry['canonical_source_path']}/`")
+            lines.append("")
+        lines.extend(
+            [
+                "## Projection surfaces",
+                f"- Codex plugin root: `{plugin_root}/`",
+                f"- Skill root: `{plugin_root}/skills/`",
+                "- Skill roots:",
+            ]
+        )
+        lines.extend(f"  - `{plugin_root}/{entry['local_path']}/`" for entry in entries)
+        lines.extend(["", "## Generated install units"])
+        lines.extend(
+            f"- `generated/skill-zips/{pack['bundle_name']}/{entry['canonical_name']}/skill.zip`"
+            for entry in entries
+        )
+        return "\n".join(lines).rstrip()
+
+    if doc_name == "PROJECTION.md":
+        lines = [f"- Active manifest entries ({len(entries)}):"]
+        lines.extend(f"  - `{entry['canonical_name']}`" for entry in entries)
+        return "\n".join(lines).rstrip()
+
+    raise ValueError(f"Unsupported generated pack documentation surface: {doc_name}")
+
+
+def _replace_generated_block(path: Path, current: str, rendered: str) -> str:
+    doc_name = path.name
+    try:
+        start_marker, end_marker = GENERATED_DOC_MARKERS[doc_name]
+    except KeyError as exc:
+        raise ValueError(f"Unsupported generated pack documentation surface: {path}") from exc
+    if current.count(start_marker) != 1 or current.count(end_marker) != 1:
+        raise ValueError(f"{path.relative_to(ROOT)} must contain exactly one generated documentation marker pair")
+    start = current.index(start_marker) + len(start_marker)
+    end = current.index(end_marker)
+    if end < start:
+        raise ValueError(f"{path.relative_to(ROOT)} has reversed generated documentation markers")
+    return current[:start] + "\n" + rendered.rstrip() + "\n" + current[end:]
+
+
+def _sync_generated_docs(pack: dict[str, Any], *, write: bool) -> None:
+    for doc_name in pack.get("generated_doc_surfaces", []):
+        path = ROOT / pack["plugin_root"] / doc_name
+        if not path.exists():
+            raise FileNotFoundError(path)
+        current = path.read_text(encoding="utf-8")
+        expected = _replace_generated_block(path, current, _render_generated_doc_block(pack, doc_name))
+        if expected == current:
+            continue
+        if not write:
+            raise ValueError(f"{path.relative_to(ROOT)} is stale; run py -3 tools/generate_pack_manifests.py")
+        path.write_text(expected, encoding="utf-8", newline="\n")
+        print(f"WROTE {path.relative_to(ROOT)}")
+
+
 def generate(*, write: bool) -> None:
     for pack in PACKS:
         manifest = _bundle_manifest(pack)
@@ -145,12 +235,14 @@ def generate(*, write: bool) -> None:
         if write:
             _write_manifest(manifest_path, manifest)
             print(f"WROTE {manifest_path.relative_to(ROOT)}")
+            _sync_generated_docs(pack, write=True)
             continue
         if not manifest_path.exists():
             raise FileNotFoundError(manifest_path)
         current = json.loads(manifest_path.read_text(encoding="utf-8"))
         if current != manifest:
             raise ValueError(f"{manifest_path.relative_to(ROOT)} is stale; run py -3 tools/generate_pack_manifests.py")
+        _sync_generated_docs(pack, write=False)
         print(f"OK   {manifest_path.relative_to(ROOT)}")
 
 

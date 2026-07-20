@@ -25,10 +25,21 @@ The split is deliberate:
 
 - `repo-worker-pack` is the first-party plugin projection with core repo worker
   skills and its compositional entrypoint.
-- The active plugin contains `repo-worker-base`, `base-doctrine`,
-  `work-mode-router`, `linear-issue-shaping`, `using-linear`,
-  `connector-safety`, `github-operations`, `unslop-plus`, and
-  `context-safety` alongside the pack entrypoint.
+<!-- BEGIN GENERATED: projection-contract -->
+- Active manifest entries (12):
+  - `base-doctrine`
+  - `cleanup-custody`
+  - `connector-safety`
+  - `context-safety`
+  - `github-operations`
+  - `linear-issue-shaping`
+  - `repo-worker-base`
+  - `risk-gates`
+  - `unslop-plus`
+  - `using-linear`
+  - `work-mode-router`
+  - `writing-with-clarity`
+<!-- END GENERATED: projection-contract -->
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface
