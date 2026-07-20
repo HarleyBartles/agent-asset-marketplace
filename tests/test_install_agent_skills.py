@@ -70,3 +70,49 @@ def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path:
         invalid = install_agent_skills._validate_local_skill_dirs()
 
     assert invalid == [skills_path / "mark-invalid"]
+
+
+def test_install_plugin_skills_preserves_existing_mark_skill(tmp_path: Path) -> None:
+    source_skills = tmp_path / "source" / "skills"
+    source_skill = source_skills / "mark-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("marketplace content\n", encoding="utf-8")
+
+    installed_skills = tmp_path / "installed"
+    local_skill = installed_skills / "mark-example"
+    local_skill.mkdir(parents=True)
+    local_skill_file = local_skill / "SKILL.md"
+    local_skill_file.write_text("local content\n", encoding="utf-8")
+
+    with (
+        patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", installed_skills),
+        patch.object(install_agent_skills, "_get_plugin_skills_path", return_value=source_skills),
+    ):
+        assert install_agent_skills._install_plugin_skills({"name": "example"}) is False
+
+    assert local_skill_file.read_text(encoding="utf-8") == "local content\n"
+
+
+def test_install_plugin_skills_check_preserves_existing_mark_skill(tmp_path: Path) -> None:
+    source_skills = tmp_path / "source" / "skills"
+    source_skill = source_skills / "mark-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("marketplace content\n", encoding="utf-8")
+
+    installed_skills = tmp_path / "installed"
+    local_skill = installed_skills / "mark-example"
+    local_skill.mkdir(parents=True)
+    local_skill_file = local_skill / "SKILL.md"
+    local_skill_file.write_text("local content\n", encoding="utf-8")
+
+    synced_skill_names: set[str] = set()
+    with (
+        patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", installed_skills),
+        patch.object(install_agent_skills, "_get_plugin_skills_path", return_value=source_skills),
+    ):
+        assert install_agent_skills._install_plugin_skills(
+            {"name": "example"}, check_mode=True, synced_skill_names=synced_skill_names
+        ) is False
+
+    assert local_skill_file.read_text(encoding="utf-8") == "local content\n"
+    assert synced_skill_names == set()

@@ -35,7 +35,14 @@ never copies marketplace content over a `mark-*` name and never removes a
 
 ## Source of Truth
 
-The source of truth for skill content is the marketplace plugin under `codex-marketplace/plugins/<pack-name>/skills/`. This `.agents/skills/` directory is a derived installation surface and should not be edited directly.
+For marketplace-derived skills, the source of truth is the marketplace plugin
+under `codex-marketplace/plugins/<pack-name>/skills/`. Those installed skills
+are generated output and should not be edited directly.
+
+For repository-local `mark-*` skills, the source of truth is the tracked local
+directory under `.agents/skills/`. Those skills are local custody and may be
+edited directly; they are not regenerated from marketplace content or included
+in marketplace provenance.
 
 ## Regeneration
 

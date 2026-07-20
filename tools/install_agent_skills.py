@@ -182,6 +182,10 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
 
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
 
+        if skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+            print(f"WARNING: Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix; keeping local custody.")
+            continue
+
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
         if skill_dir.name in synced_skill_names:
