@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 from typing import Final
 
@@ -42,9 +44,34 @@ def _template(path: str, **values: str) -> str:
     return (TEMPLATE_ROOT / path).read_text(encoding="utf-8").format(**values).replace("\r\n", "\n").rstrip("\n") + "\n"
 
 
+def _metadata_for(name: str, custody: str, lane: str) -> str:
+    if custody == "local":
+        return f"  custody: {custody}\n  lane: {lane}"
+    description = f"Use when authoring or reviewing the {name} skill."
+    title = name.replace("-", " ").title()
+    return (
+        f"  source-id: {json.dumps(name)}\n"
+        f"  source-path: {json.dumps(f'sources/first_party/skills/{name}/SKILL.md')}\n"
+        f"  provenance-name: {json.dumps(f'{title} first-party skill')}\n"
+        "  source-category: first_party\n"
+        "  status: active\n"
+        "  owner: \"Harley Bartles\"\n"
+        f"  scope: {json.dumps(description)}\n"
+        "  use_when:\n"
+        f"  - {json.dumps(description)}\n"
+        "  do_not_use_when:\n"
+        "  - \"Do not use when another more specific skill owns this task.\""
+    )
+
+
 def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
     validate_request(name, custody, lane)
-    files = {"SKILL.md": _template("skill/SKILL.md", name=name, custody=custody, lane=lane)}
+    files = {
+        "SKILL.md": _template(
+            "skill/SKILL.md", name=name, custody=custody, lane=lane,
+            metadata=_metadata_for(name, custody, lane),
+        )
+    }
     if custody == "local":
         return files
     files["references/.gitkeep"] = "\n"
@@ -105,11 +132,20 @@ def scaffold(
         for relative_path in files:
             print(destination / relative_path)
         return 0
-    for relative_path, content in files.items():
-        output_path = destination / relative_path
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        with output_path.open("x", encoding="utf-8", newline="\n") as handle:
-            handle.write(content)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    created_destination = False
+    try:
+        destination.mkdir()
+        created_destination = True
+        for relative_path, content in files.items():
+            output_path = destination / relative_path
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            with output_path.open("x", encoding="utf-8", newline="\n") as handle:
+                handle.write(content)
+    except Exception:
+        if created_destination:
+            shutil.rmtree(destination)
+        raise
     return 0
 
 

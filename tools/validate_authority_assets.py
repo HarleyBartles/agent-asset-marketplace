@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
+import re
 
 import yaml
 
@@ -25,21 +27,48 @@ REQUIRED_AUTHORITY_FIELDS = {
 URL_FIELDS = {"canonical_url", "pinned_source_url", "latest_check_url", "license_url"}
 REQUIRED_REFERENCE_FIELDS = {"path", "source_sections", "content_mode", "load_when"}
 SOURCE_MAP_FIELDS = {"schema_version", "reconciled_against", "references"}
+SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+CITATION_SECTIONS = (
+    "Scholarly citation",
+    "Derivation boundary",
+    "Attribution",
+    "Human review",
+)
+
+
+class _UniqueKeyLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects duplicate mapping keys at every level."""
+
+
+def _construct_unique_mapping(loader: _UniqueKeyLoader, node: yaml.MappingNode, deep: bool = False) -> dict[object, object]:
+    mapping: dict[object, object] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        if key in mapping:
+            raise yaml.YAMLError(f"duplicate key {key!r}")
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+_UniqueKeyLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_unique_mapping
+)
 
 
 def discover_authority_assets(root: Path) -> list[Path]:
     roots = [root / "sources/first_party/skills", root / ".agents/skills"]
     return sorted(
-        authority.parent.parent.parent
+        authority.parent.parent
         for skills_root in roots if skills_root.is_dir()
-        for authority in skills_root.glob("*/assets/authority/authority.yaml")
+        for authority in skills_root.glob("*/assets/authority")
+        if authority.is_dir()
     )
 
 
 def _load_mapping(path: Path, errors: list[str]) -> dict[object, object] | None:
     try:
-        data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    except (OSError, yaml.YAMLError) as error:
+        data = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
+    except (OSError, UnicodeDecodeError, yaml.YAMLError) as error:
         errors.append(f"{path.name} cannot be read as YAML: {error}")
         return None
     if not isinstance(data, dict):
@@ -59,12 +88,63 @@ def _contains_non_hidden_file(directory: Path) -> bool:
     )
 
 
+def _nonblank_string(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _validate_string_list(value: object, *, field: str, errors: list[str]) -> bool:
+    if not isinstance(value, list) or not value or not all(_nonblank_string(item) for item in value):
+        errors.append(f"{field} must be a nonempty list of nonblank strings")
+        return False
+    return True
+
+
+def _validate_reference_path(value: object, *, skill_root: Path, field: str, errors: list[str]) -> None:
+    if not _nonblank_string(value):
+        errors.append(f"{field} must name an existing file under references/")
+        return
+    relative_path = Path(value)
+    references_root = skill_root / "references"
+    candidate = skill_root / relative_path
+    if (
+        relative_path.is_absolute()
+        or not relative_path.parts
+        or relative_path.parts[0] != "references"
+        or ".." in relative_path.parts
+        or not candidate.is_file()
+        or not candidate.resolve().is_relative_to(references_root.resolve())
+    ):
+        errors.append(f"{field} must name an existing file under references/")
+
+
+def _validate_citations(path: Path, errors: list[str]) -> None:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as error:
+        errors.append(f"CITATIONS.md cannot be read: {error}")
+        return
+    for section in CITATION_SECTIONS:
+        heading = f"## {section}"
+        match = re.search(rf"^{re.escape(heading)}\s*$", text, flags=re.MULTILINE)
+        label = section.lower()
+        if match is None:
+            errors.append(f"CITATIONS.md is missing {label} section")
+            continue
+        following = text[match.end():]
+        content = following.split("\n## ", maxsplit=1)[0].strip()
+        if not content or re.search(r"\b(?:TODO|TBD)\b|^(?:Record|State)\b", content, flags=re.IGNORECASE | re.MULTILINE):
+            errors.append(f"CITATIONS.md {label} section must contain non-placeholder content")
+
+
 def _validate_references(
-    references: object, *, record_name: str, lane: object, errors: list[str]
+    references: object, *, record_name: str, lane: object, skill_root: Path, errors: list[str]
 ) -> list[object] | None:
     if not isinstance(references, list):
-        errors.append(f"{record_name} references must be a list")
+        errors.append(f"{record_name} references must be a nonempty list")
         return None
+    if not references:
+        errors.append(f"{record_name} references must be a nonempty list")
+        return references
     for index, reference in enumerate(references, start=1):
         if not isinstance(reference, dict):
             errors.append(f"{record_name} references[{index}] must be a mapping")
@@ -72,6 +152,22 @@ def _validate_references(
         for field in sorted(REQUIRED_REFERENCE_FIELDS):
             if field not in reference:
                 errors.append(f"{record_name} references[{index}] is missing {field}")
+        _validate_reference_path(
+            reference.get("path"),
+            skill_root=skill_root,
+            field=f"{record_name} references[{index}] path",
+            errors=errors,
+        )
+        _validate_string_list(
+            reference.get("source_sections"),
+            field=f"{record_name} references[{index}] source_sections",
+            errors=errors,
+        )
+        _validate_string_list(
+            reference.get("load_when"),
+            field=f"{record_name} references[{index}] load_when",
+            errors=errors,
+        )
         if "content_mode" in reference and reference["content_mode"] not in CONTENT_MODES:
             errors.append(
                 f"{record_name} references[{index}] has unsupported content_mode "
@@ -100,10 +196,9 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
         return errors
 
     record = _load_mapping(authority_path, errors)
+    source_map = _load_mapping(source_map_path, errors) if source_map_path.is_file() else None
     if record is None:
         return errors
-
-    source_map = _load_mapping(source_map_path, errors) if source_map_path.is_file() else None
 
     if record.get("schema_version") != 1:
         errors.append("authority.yaml must declare schema_version: 1")
@@ -119,8 +214,19 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
         for field in sorted(REQUIRED_AUTHORITY_FIELDS):
             if field not in authority:
                 errors.append(f"authority.yaml authority is missing {field}")
+            elif not _nonblank_string(authority[field]):
+                errors.append(f"authority.yaml authority {field} must be a nonblank string")
             elif field in URL_FIELDS and not _is_nonblank_http_url(authority[field]):
                 errors.append(f"authority.yaml authority {field} must be a nonblank http:// or https:// URL")
+        content_sha256 = authority.get("content_sha256")
+        if _nonblank_string(content_sha256) and not SHA256_PATTERN.fullmatch(content_sha256):
+            errors.append("authority.yaml authority content_sha256 must be a 64-character lowercase SHA-256")
+        retrieved_at = authority.get("retrieved_at")
+        if _nonblank_string(retrieved_at):
+            try:
+                date.fromisoformat(retrieved_at)
+            except ValueError:
+                errors.append("authority.yaml authority retrieved_at must be an ISO-8601 date")
 
     decomposition = record.get("decomposition")
     authority_reconciled_against: object | None = None
@@ -132,10 +238,13 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             errors.append("authority.yaml decomposition is missing reconciled_against")
         else:
             authority_reconciled_against = decomposition["reconciled_against"]
+            if not _nonblank_string(authority_reconciled_against):
+                errors.append("authority.yaml decomposition reconciled_against must be a nonblank string")
         authority_references = _validate_references(
             decomposition.get("references"),
             record_name="authority.yaml decomposition",
             lane=lane,
+            skill_root=skill_root,
             errors=errors,
         )
 
@@ -150,10 +259,13 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             errors.append("source-map.yaml is missing reconciled_against")
         else:
             source_map_reconciled_against = source_map["reconciled_against"]
+            if not _nonblank_string(source_map_reconciled_against):
+                errors.append("source-map.yaml reconciled_against must be a nonblank string")
         source_map_references = _validate_references(
             source_map.get("references"),
             record_name="source-map.yaml",
             lane=lane,
+            skill_root=skill_root,
             errors=errors,
         )
 
@@ -170,6 +282,8 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             errors.append("skills-with-source reference-source must contain at least one non-hidden file")
     if lane == "skills-with-citation" and reference_source.is_dir() and any(reference_source.iterdir()):
         errors.append("skills-with-citation reference-source must not contain vendored source files")
+    if citations_path.is_file():
+        _validate_citations(citations_path, errors)
 
     return errors
 

@@ -68,6 +68,26 @@ def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any
     return collisions
 
 
+def _expected_marketplace_skill_inventory(installed_plugins: list[dict[str, Any]]) -> dict[str, Path]:
+    expected: dict[str, Path] = {}
+    for plugin in installed_plugins:
+        skills_path = _get_plugin_skills_path(plugin)
+        if skills_path is None:
+            continue
+        for skill_dir in sorted(skills_path.iterdir()):
+            if skill_dir.is_dir() and not skill_dir.name.startswith(LOCAL_SKILL_PREFIX):
+                expected.setdefault(skill_dir.name, skill_dir)
+    return expected
+
+
+def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, Any]]) -> bool:
+    expected = _expected_marketplace_skill_inventory(installed_plugins)
+    return bool(expected) and all(
+        not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name)
+        for name, source_skill in expected.items()
+    )
+
+
 def _load_marketplace_config() -> dict[str, Any]:
     """Load the marketplace configuration."""
     config = load_json(MARKETPLACE_PATH)
@@ -325,10 +345,7 @@ def main() -> int:
     # Check if refresh is needed based on provenance
     if not args.force and existing_provenance:
         if existing_provenance.get("manifestSha") == current_manifest_sha:
-            has_skill_dirs = AGENTS_SKILLS_PATH.exists() and any(
-                AGENTS_SKILLS_PATH.iterdir()
-            )
-            if has_skill_dirs:
+            if _marketplace_skill_inventory_is_current(installed_plugins):
                 print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
                 print(f"Synced skills: {existing_provenance.get('syncedSkills')} from {existing_provenance.get('syncedPlugins')} plugins.")
                 return 0

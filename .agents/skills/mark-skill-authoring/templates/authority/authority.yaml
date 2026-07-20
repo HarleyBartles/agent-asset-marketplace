@@ -1,4 +1,5 @@
 schema_version: 1
+custody: marketplace
 lane: {lane}
 authority:
   title: "{name}"

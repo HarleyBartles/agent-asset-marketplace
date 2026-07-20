@@ -66,7 +66,7 @@
 
 **Expected interim state:** The installer tests may be red until the orphan-cleanup guard is added. No marketplace skill content or provenance should change during this task.
 
-- [ ] **Step 1: Write the failing local-lane tests.**
+- [x] **Step 1: Write the failing local-lane tests.**
 
 Append these tests to `tests/test_install_agent_skills.py`, reusing the module import pattern already present there:
 
@@ -96,7 +96,7 @@ def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path:
     assert invalid == [skills_path / "mark-invalid"]
 ```
 
-- [ ] **Step 2: Run the focused tests and verify failure.**
+- [x] **Step 2: Run the focused tests and verify failure.**
 
 Run:
 
@@ -106,7 +106,7 @@ py -3 -m pytest tests/test_install_agent_skills.py::test_clean_orphan_skills_pre
 
 Expected: FAIL because `mark-*` directories are currently treated as orphan skills and `_validate_local_skill_dirs` does not exist.
 
-- [ ] **Step 3: Implement the local-lane guard.**
+- [x] **Step 3: Implement the local-lane guard.**
 
 Add the following imports and helpers to `tools/install_agent_skills.py`:
 
@@ -153,7 +153,7 @@ Add the local-skill skip before the orphan condition in `_clean_orphan_skills`:
         if skill_dir.name not in synced_skill_names:
 ```
 
-- [ ] **Step 4: Update `.agents/skills/AGENTS.md`.**
+- [x] **Step 4: Update `.agents/skills/AGENTS.md`.**
 
 Replace the opening purpose/source-of-truth language with a two-lane contract:
 
@@ -178,7 +178,7 @@ never copies marketplace content over a `mark-*` name and never removes a
 `mark-*` directory as an orphan.
 ```
 
-- [ ] **Step 5: Run the focused tests and the existing no-op regression.**
+- [x] **Step 5: Run the focused tests and the existing no-op regression.**
 
 Run:
 
@@ -188,7 +188,7 @@ py -3 -m pytest tests/test_install_agent_skills.py -q
 
 Expected: PASS, including the existing forced byte-identical refresh test.
 
-- [ ] **Step 6: Commit the custody-lane change.**
+- [x] **Step 6: Commit the custody-lane change.**
 
 ```text
 git add tools/install_agent_skills.py .agents/skills/AGENTS.md tests/test_install_agent_skills.py
@@ -229,7 +229,7 @@ git commit -m "fix: preserve repository-local mark skills"
 
 The scaffolder must reject a local name that does not start with `mark-`, reject a marketplace name that starts with `mark-`, reject unsupported lanes/custody values, reject invalid skill names, and refuse an existing destination. It must not write a registry entry or source file.
 
-- [ ] **Step 1: Write failing contract tests.**
+- [x] **Step 1: Write failing contract tests.**
 
 Create `tests/test_mark_skill_authoring_contract.py` with tests for:
 
@@ -260,7 +260,7 @@ def test_scaffold_check_does_not_write(tmp_path: Path):
 
 The test module must import the script by adding the skill’s `scripts/` directory to `sys.path`, matching existing repository tool tests.
 
-- [ ] **Step 2: Run the contract tests and verify failure.**
+- [x] **Step 2: Run the contract tests and verify failure.**
 
 Run:
 
@@ -270,7 +270,7 @@ py -3 -m pytest tests/test_mark_skill_authoring_contract.py -q
 
 Expected: FAIL because the local skill and `new_skill.py` do not yet exist.
 
-- [ ] **Step 3: Implement the Python scaffolder.**
+- [x] **Step 3: Implement the Python scaffolder.**
 
 Implement `new_skill.py` with these exact behaviors:
 
@@ -290,11 +290,11 @@ def destination_for(repo_root: Path, name: str, custody: str) -> Path:
 
 The Git guard must run `git rev-parse --show-superproject-working-tree` first, reject a non-empty result, compare absolute `--git-dir` and `--git-common-dir`, refuse a shared main checkout unless `--allow-shared-checkout` is present, and print a warning when that override is used.
 
-- [ ] **Step 4: Add real Bash and PowerShell entrypoints.**
+- [x] **Step 4: Add real Bash and PowerShell entrypoints.**
 
 `new-skill.sh` must resolve its own directory and `exec` the Python core with `"$@"`. `new-skill.ps1` must expose `-Name`, `-Custody`, `-Lane`, `-Check`, and `-AllowSharedCheckout`, construct the equivalent argument list, invoke `py -3 new_skill.py`, and exit with `$LASTEXITCODE`.
 
-- [ ] **Step 5: Write the local skill and templates.**
+- [x] **Step 5: Write the local skill and templates.**
 
 The local `SKILL.md` must:
 
@@ -308,7 +308,7 @@ The local `SKILL.md` must:
 
 The authority templates must contain the required keys `schema_version`, `lane`, `authority.title`, `authority.canonical_url`, `authority.pinned_source_url`, `authority.latest_check_url`, `authority.revision`, `authority.retrieved_at`, `authority.content_sha256`, `authority.license`, `authority.license_url`, `decomposition.reconciled_against`, and `decomposition.references`. `CITATIONS.md` must include scholarly citation, derivation boundary, attribution, and human review sections without inline citations in operational skill text.
 
-- [ ] **Step 6: Run core and entrypoint tests.**
+- [x] **Step 6: Run core and entrypoint tests.**
 
 Run:
 
@@ -320,7 +320,7 @@ powershell -NoProfile -File .agents/skills/mark-skill-authoring/scripts/new-skil
 
 Expected: PASS; both shell entrypoints print the same planned output shape and create no files in check mode.
 
-- [ ] **Step 7: Commit the local skill and scaffolder.**
+- [x] **Step 7: Commit the local skill and scaffolder.**
 
 ```text
 git add .agents/skills/mark-skill-authoring tests/test_mark_skill_authoring_contract.py
@@ -345,7 +345,7 @@ git commit -m "feat: add local skill authoring scaffolder"
 
 **Expected interim state:** The standalone validator and its tests can be added before it is wired into `check_marketplace.py`. During that interval, the standalone test must pass; the aggregate checker is expected to lack the new validation call until Step 5.
 
-- [ ] **Step 1: Write failing validator tests.**
+- [x] **Step 1: Write failing validator tests.**
 
 Create fixtures under `tmp_path` rather than the repository’s real skill trees. Cover:
 
@@ -415,7 +415,7 @@ def test_valid_source_and_citation_lanes_pass(tmp_path: Path):
 
 The fixture must write complete YAML mappings for the required fields and create `source-map.yaml` and `CITATIONS.md`, so a passing test proves the actual schema rather than a missing-file shortcut.
 
-- [ ] **Step 2: Run the validator tests and verify failure.**
+- [x] **Step 2: Run the validator tests and verify failure.**
 
 Run:
 
@@ -425,7 +425,7 @@ py -3 -m pytest tests/test_validate_authority_assets.py -q
 
 Expected: FAIL because the validator module and schema checks do not exist.
 
-- [ ] **Step 3: Implement the read-only validator.**
+- [x] **Step 3: Implement the read-only validator.**
 
 Use `yaml.safe_load` and these rules:
 
@@ -450,7 +450,7 @@ def discover_authority_assets(root: Path) -> list[Path]:
 
 For `skills-with-source`, require `reference-source/` to contain at least one non-hidden file. For `skills-with-citation`, reject any non-empty `reference-source/` directory. Do not fetch `canonical_url`, `pinned_source_url`, or `latest_check_url`; URL validity is limited to nonblank `http://` or `https://` strings. Print one error per invalid skill and return `1` if any errors exist.
 
-- [ ] **Step 4: Wire validation into the aggregate checker.**
+- [x] **Step 4: Wire validation into the aggregate checker.**
 
 Add this call in `tools/check_marketplace.py` before the final Git diff check:
 
@@ -460,7 +460,7 @@ _run_tool("validate_authority_assets.py")
 
 Document the command in `tools/AGENTS.md` as a non-mutating authority-shape check. State explicitly that it does not perform freshness networking and does not fail because a remote source has changed; it only validates recorded local evidence.
 
-- [ ] **Step 5: Run validator tests and the standalone command.**
+- [x] **Step 5: Run validator tests and the standalone command.**
 
 Run:
 
@@ -471,7 +471,7 @@ py -3 tools/validate_authority_assets.py
 
 Expected: PASS with no authority assets currently discovered until a future marketplace-custodied source-backed skill is added.
 
-- [ ] **Step 6: Commit authority validation.**
+- [x] **Step 6: Commit authority validation.**
 
 ```text
 git add tools/validate_authority_assets.py tests/test_validate_authority_assets.py tools/check_marketplace.py tools/AGENTS.md
@@ -495,7 +495,7 @@ git commit -m "feat: validate source-backed skill authority evidence"
 
 **Expected interim state:** The guidance may temporarily contain both old and new routing text while the two documents are edited. The final task state must have one authoritative description of each rule and no stale `authoring-skills` path.
 
-- [ ] **Step 1: Write failing guidance and metadata tests.**
+- [x] **Step 1: Write failing guidance and metadata tests.**
 
 Add tests that assert:
 
@@ -544,7 +544,7 @@ def test_first_party_normalizer_preserves_use_with(tmp_path: Path):
 
 The test must import `normalize_first_party_skill_sources` using the repository’s existing `tools/` path insertion pattern. Do not change the normalizer merely to move or rename an already-preserved field.
 
-- [ ] **Step 2: Run the guidance and metadata tests and verify the expected failure.**
+- [x] **Step 2: Run the guidance and metadata tests and verify the expected failure.**
 
 Run:
 
@@ -554,7 +554,7 @@ py -3 -m pytest tests/test_mark_skill_authoring_contract.py -q
 
 Expected: the guidance assertions fail until the two local documents are routed to `mark-skill-authoring`; the normalizer regression passes against the existing implementation.
 
-- [ ] **Step 3: Update `docs/skill-standards-policy.md`.**
+- [x] **Step 3: Update `docs/skill-standards-policy.md`.**
 
 Keep marketplace standards authoritative for first-party source custody, frontmatter, projection metadata, word limits, and marketplace validation. Add this routing paragraph near the opening standards section:
 
@@ -569,7 +569,7 @@ validation.
 
 Add a local-skill subsection defining `.agents/skills/mark-*` as tracked local custody, requiring normal local skill frontmatter, and excluding it from marketplace provenance. Do not duplicate the source decomposition or citation workflow in this policy.
 
-- [ ] **Step 4: Update `.agents/guides/skill-authoring-guide.md`.**
+- [x] **Step 4: Update `.agents/guides/skill-authoring-guide.md`.**
 
 Replace its generic authoring workflow with this local route:
 
@@ -597,7 +597,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name ddd --cust
 
 Keep the existing local rebuild, check, and publication commands, but remove copied explanations of authority custody and decomposition.
 
-- [ ] **Step 5: Run guidance, normalizer, and stale-reference checks.**
+- [x] **Step 5: Run guidance, normalizer, and stale-reference checks.**
 
 Run:
 
@@ -608,7 +608,7 @@ rg -n "authoring-skills|sources/first_party/skills/authoring-skills|repo-worker-
 
 Expected: tests pass; the stale-reference search returns no active-document matches. References inside the ignored superseded spec are not implementation surfaces and are not a failure condition.
 
-- [ ] **Step 6: Commit guidance reconciliation.**
+- [x] **Step 6: Commit guidance reconciliation.**
 
 ```text
 git add docs/skill-standards-policy.md .agents/guides/skill-authoring-guide.md tests/test_mark_skill_authoring_contract.py
@@ -630,7 +630,7 @@ git commit -m "docs: route skill authoring through local mark skill"
 
 **Expected interim state:** Adding the local skill and test files makes generated indexes stale until the mesh generator runs. That stale state is expected only between the file-add and regeneration steps; the final committed state must have no generated drift.
 
-- [ ] **Step 1: Regenerate the local mesh.**
+- [x] **Step 1: Regenerate the local mesh.**
 
 Run:
 
@@ -640,7 +640,7 @@ py -3 tools/generate_index_mesh.py
 
 Expected: `.agents/skills/INDEX.md`, `tests/INDEX.md`, and any other affected indexes include the new tracked files. Do not hand-edit an index.
 
-- [ ] **Step 2: Prove local skills survive the canonical rebuild.**
+- [x] **Step 2: Prove local skills survive the canonical rebuild.**
 
 Run:
 
@@ -650,7 +650,7 @@ py -3 tools/rebuild_marketplace.py
 
 Expected: the default-installed marketplace skills refresh as usual, `mark-skill-authoring` remains present and byte-identical, no local skill appears in `.agents/skills/.provenance.json`, and generated marketplace surfaces remain current. If the rebuild reports a `mark-*` orphan or deletes a local skill, stop and fix Task 1 before continuing.
 
-- [ ] **Step 3: Run all required validation.**
+- [x] **Step 3: Run all required validation.**
 
 Run:
 
@@ -663,7 +663,7 @@ git diff --check
 
 Expected: all tests pass, authority validation reports no invalid assets, the aggregate checker passes, and `git diff --check` is clean.
 
-- [ ] **Step 4: Perform the plan/spec coverage review.**
+- [x] **Step 4: Perform the plan/spec coverage review.**
 
 Verify the implementation against every approved design decision:
 
@@ -673,7 +673,7 @@ rg -n "mark-skill-authoring|skills-with-source|skills-with-citation|assets/autho
 
 Confirm that no implementation file introduces a network freshness check, inline runtime citations, `agents/openai.yaml` for the local skill, a marketplace registry entry for `mark-skill-authoring`, or deletion of a `mark-*` directory.
 
-- [ ] **Step 5: Commit generated surfaces and the completed plan.**
+- [x] **Step 5: Commit generated surfaces and the completed plan.**
 
 ```text
 git add .agents/superpowers/plans/2026-07-20-mark-skill-authoring.md .agents/skills/INDEX.md tests/INDEX.md

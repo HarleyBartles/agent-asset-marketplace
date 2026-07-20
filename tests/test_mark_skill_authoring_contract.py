@@ -67,6 +67,39 @@ def test_rendered_files_are_lf_terminated():
     assert all(content.endswith("\n") for content in files.values())
 
 
+def test_marketplace_first_party_scaffold_is_normalization_stable(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    skill_root = tmp_path / "sources/first_party/skills/example"
+    skill_root.mkdir(parents=True)
+    files = new_skill.render_scaffold("example", "marketplace", "first_party")
+    for relative_path, content in files.items():
+        output = skill_root / relative_path
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(content, encoding="utf-8", newline="\n")
+
+    monkeypatch.setattr(normalize, "ROOT", tmp_path)
+    assert normalize._normalize_skill(skill_root / "SKILL.md", write=False) is False
+
+
+def test_scaffold_rolls_back_created_destination_when_a_later_write_fails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    destination = tmp_path / "sources/first_party/skills/example"
+    files = new_skill.render_scaffold("example", "marketplace", "skills-with-citation")
+    real_open = Path.open
+
+    def fail_on_source_map(self: Path, *args, **kwargs):
+        if self.name == "source-map.yaml":
+            raise OSError("injected write failure")
+        return real_open(self, *args, **kwargs)
+
+    monkeypatch.setattr(new_skill, "_guard_write_checkout", lambda root, allow: root)
+    monkeypatch.setattr(new_skill, "render_scaffold", lambda *args: files)
+    monkeypatch.setattr(Path, "open", fail_on_source_map)
+
+    with pytest.raises(OSError, match="injected write failure"):
+        new_skill.scaffold(tmp_path, "example", "marketplace", "skills-with-citation", check=False)
+
+    assert not destination.exists()
+
+
 def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
     files = new_skill.render_scaffold("true", "marketplace", "skills-with-source")
     frontmatter = yaml.safe_load(files["SKILL.md"].split("---", 2)[1])

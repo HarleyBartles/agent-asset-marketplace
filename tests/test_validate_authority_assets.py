@@ -24,7 +24,7 @@ def write_authority_fixture(root: Path, *, lane: str) -> Path:
         "  latest_check_url: https://example.com/authority\n"
         "  revision: v1\n"
         "  retrieved_at: '2026-07-20'\n"
-        "  content_sha256: example-hash\n"
+        "  content_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
         "  license: CC-BY-4.0\n"
         "  license_url: https://creativecommons.org/licenses/by/4.0/\n"
         "decomposition:\n"
@@ -48,8 +48,17 @@ def write_authority_fixture(root: Path, *, lane: str) -> Path:
         encoding="utf-8",
         newline="\n",
     )
+    reference = skill / "references/example.md"
+    reference.parent.mkdir(parents=True)
+    reference.write_text("# Example\n", encoding="utf-8", newline="\n")
     (authority / "CITATIONS.md").write_text(
-        "# Citations\n\n## Human review\n", encoding="utf-8", newline="\n"
+        "# Citations\n\n"
+        "## Scholarly citation\n\nExample Authority (2026).\n\n"
+        "## Derivation boundary\n\nOperational guidance is a clean-room synthesis.\n\n"
+        "## Attribution\n\nAttribution retained under CC-BY-4.0.\n\n"
+        "## Human review\n\nReviewed and approved on 2026-07-20.\n",
+        encoding="utf-8",
+        newline="\n",
     )
     return skill
 
@@ -112,6 +121,78 @@ def test_citation_lane_requires_first_party_synthesis_in_both_records(tmp_path: 
     )
     errors = validator.validate_authority_skill(skill)
     assert sum("must use first_party_synthesis" in error for error in errors) == 2
+
+
+def test_discovery_reports_authority_directory_missing_authority_yaml(tmp_path: Path, capsys):
+    marketplace_authority = tmp_path / "sources/first_party/skills/example/assets/authority"
+    local_authority = tmp_path / ".agents/skills/mark-example/assets/authority"
+    for authority_root in (marketplace_authority, local_authority):
+        authority_root.mkdir(parents=True)
+        (authority_root / "CITATIONS.md").write_text("# Citations\n", encoding="utf-8", newline="\n")
+
+    assert validator.validate_authority_assets(tmp_path) == 1
+    output = capsys.readouterr().out
+    assert str(marketplace_authority.parent.parent) in output
+    assert str(local_authority.parent.parent) in output
+    assert output.count("missing authority.yaml") == 2
+
+
+def test_authority_requires_typed_nonblank_values_safe_references_and_real_citations(tmp_path: Path):
+    skill = write_authority_fixture(tmp_path, lane="skills-with-citation")
+    authority_path = skill / "assets/authority/authority.yaml"
+    authority_path.write_text(
+        authority_path.read_text(encoding="utf-8")
+        .replace("title: Example Authority", "title: ''")
+        .replace("content_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "content_sha256: not-a-sha")
+        .replace("retrieved_at: '2026-07-20'", "retrieved_at: invalid-date")
+        .replace("path: references/example.md", "path: ../escape.md")
+        .replace("source_sections: [Example]", "source_sections: []"),
+        encoding="utf-8",
+        newline="\n",
+    )
+    source_map_path = skill / "assets/authority/source-map.yaml"
+    source_map_path.write_text(
+        source_map_path.read_text(encoding="utf-8")
+        .replace("path: references/example.md", "path: ../escape.md")
+        .replace("source_sections: [Example]", "source_sections: []"),
+        encoding="utf-8",
+        newline="\n",
+    )
+    (skill / "assets/authority/CITATIONS.md").write_text(
+        "# Citations\n\n"
+        "## Scholarly citation\n\nTODO\n\n"
+        "## Derivation boundary\n\nState what operational guidance was derived.\n\n"
+        "## Attribution\n\nRecord required attribution here.\n\n"
+        "## Human review\n\nRecord the reviewer here.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    errors = validator.validate_authority_skill(skill)
+    assert any("title must be a nonblank string" in error for error in errors)
+    assert any("content_sha256 must be a 64-character lowercase SHA-256" in error for error in errors)
+    assert any("retrieved_at must be an ISO-8601 date" in error for error in errors)
+    assert sum("path must name an existing file under references/" in error for error in errors) == 2
+    assert sum("source_sections must be a nonempty list of nonblank strings" in error for error in errors) == 2
+    assert any("CITATIONS.md scholarly citation section must contain non-placeholder content" in error for error in errors)
+    assert any("CITATIONS.md derivation boundary section must contain non-placeholder content" in error for error in errors)
+    assert any("CITATIONS.md attribution section must contain non-placeholder content" in error for error in errors)
+    assert any("CITATIONS.md human review section must contain non-placeholder content" in error for error in errors)
+
+
+def test_authority_rejects_duplicate_yaml_keys_and_non_utf8_content(tmp_path: Path):
+    skill = write_authority_fixture(tmp_path, lane="skills-with-citation")
+    authority_path = skill / "assets/authority/authority.yaml"
+    authority_path.write_text(
+        authority_path.read_text(encoding="utf-8") + "lane: skills-with-citation\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    (skill / "assets/authority/source-map.yaml").write_bytes(b"\xff\xfe")
+
+    errors = validator.validate_authority_skill(skill)
+    assert any("duplicate key" in error for error in errors)
+    assert any("source-map.yaml cannot be read as YAML" in error for error in errors)
 
 
 def test_valid_source_and_citation_lanes_pass(tmp_path: Path):
