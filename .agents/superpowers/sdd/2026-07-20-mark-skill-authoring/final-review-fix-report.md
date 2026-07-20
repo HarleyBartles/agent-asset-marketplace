@@ -201,3 +201,54 @@ before the local commit.
 
 None. Publication remains the only unchecked plan item and is intentionally
 not performed in this wave.
+
+## Closing review evidence (2026-07-20)
+
+The final two review gaps were closed without weakening the write guard or
+changing the completed plan.
+
+### TDD evidence
+
+The new routing contract initially failed because the authoring skill ran the
+scaffolder before the mandated custody/source guidance and lane choice. After
+the wording change, the focused contract suite passed:
+
+```text
+py -3 -m pytest tests/test_mark_skill_authoring_contract.py -q
+20 passed
+```
+
+The suite now executes the actual scaffold against a portable temporary Git
+repository. It proves explicit shared-checkout override creates every rendered
+file, shared checkout without the override is refused, an existing destination
+does not overwrite a sentinel, and the prior injected-write rollback remains
+covered.
+
+### Delivered corrections
+
+1. New-skill instructions now require reading local-and-marketplace custody
+   first, source-grounded authoring when applicable, then choosing custody and
+   lane before running a scaffolder. Existing-skill review and refresh remain
+   inspection-only.
+2. Mutation-safety tests exercise the real scaffold and Git guard rather than
+   replacing the guard with a test double.
+
+### Closing validation
+
+```text
+py -3 -m pytest tests/test_mark_skill_authoring_contract.py -q
+20 passed
+```
+
+The full suite reached 141 passing tests, then stopped at one unrelated
+post-rebase baseline failure in
+`tests/test_writing_with_clarity_contract.py`: it expects `Manifest entry
+count: 12.` while current `origin/main` projects the new
+`subagent-model-routing` entry and reports 13. That test and its generated
+repo-worker-pack surfaces are outside this mark-authoring fix wave and were
+not changed.
+
+### Closing concerns
+
+The unrelated 12-versus-13 repo-worker-pack baseline assertion remains for its
+own owner to reconcile. Publication remains intentionally outstanding.

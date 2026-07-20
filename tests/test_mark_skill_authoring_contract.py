@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 import sys
 from unittest.mock import patch
 
@@ -16,6 +17,15 @@ if str(TOOLS) not in sys.path:
 
 import new_skill  # noqa: E402
 import normalize_first_party_skill_sources as normalize  # noqa: E402
+
+
+def initialize_git_repository(path: Path) -> None:
+    subprocess.run(
+        ["git", "init", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
 
 
 def test_local_request_requires_mark_prefix():
@@ -102,6 +112,54 @@ def test_scaffold_rolls_back_created_destination_when_a_later_write_fails(tmp_pa
     assert not destination.parent.exists()
 
 
+def test_scaffold_creates_every_rendered_file_in_a_git_repository(tmp_path: Path):
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    initialize_git_repository(repository)
+    expected_files = new_skill.render_scaffold("example", "marketplace", "skills-with-source")
+
+    assert new_skill.scaffold(
+        repository, "example", "marketplace", "skills-with-source", check=False, allow_shared_checkout=True
+    ) == 0
+
+    destination = repository / "sources/first_party/skills/example"
+    assert {
+        path.relative_to(destination).as_posix()
+        for path in destination.rglob("*")
+        if path.is_file()
+    } == set(expected_files)
+    for relative_path, content in expected_files.items():
+        assert (destination / relative_path).read_text(encoding="utf-8") == content
+
+
+def test_scaffold_existing_destination_refuses_without_overwriting_sentinel(tmp_path: Path):
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    initialize_git_repository(repository)
+    destination = repository / "sources/first_party/skills/example"
+    destination.mkdir(parents=True)
+    sentinel = destination / "SKILL.md"
+    sentinel.write_text("do not overwrite\n", encoding="utf-8")
+
+    with pytest.raises(FileExistsError, match="destination already exists"):
+        new_skill.scaffold(
+            repository, "example", "marketplace", "first_party", check=False, allow_shared_checkout=True
+        )
+
+    assert sentinel.read_text(encoding="utf-8") == "do not overwrite\n"
+
+
+def test_scaffold_shared_checkout_requires_explicit_override(tmp_path: Path):
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    initialize_git_repository(repository)
+
+    with pytest.raises(ValueError, match="refusing to scaffold from a shared main checkout"):
+        new_skill.scaffold(repository, "example", "marketplace", "first_party", check=False)
+
+    assert not (repository / "sources/first_party/skills/example").exists()
+
+
 def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
     files = new_skill.render_scaffold("true", "marketplace", "skills-with-source")
     frontmatter = yaml.safe_load(files["SKILL.md"].split("---", 2)[1])
@@ -157,8 +215,11 @@ def test_local_guidance_routes_to_mark_skill_authoring():
 def test_authoring_skill_scaffolds_only_new_skills_and_inspects_existing_ones():
     skill = (ROOT / ".agents/skills/mark-skill-authoring/SKILL.md").read_text(encoding="utf-8")
 
-    assert "For creating a new skill, run" in skill
+    assert "For creating a new skill, first read" in skill
     assert "reviewing or refreshing an existing skill, inspect its existing custody and lane" in skill
+    assert skill.index("[local and marketplace custody]") < skill.index("[source-grounded authoring]")
+    assert skill.index("[source-grounded authoring]") < skill.index("Choose custody and lane")
+    assert skill.index("Choose custody and lane") < skill.index("run `scripts/new-skill.sh`")
 
 
 def test_authoring_docs_describe_installed_writing_skills_projection_and_handoff_floor():
