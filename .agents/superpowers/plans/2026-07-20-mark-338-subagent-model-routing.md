@@ -14,7 +14,7 @@
 - Active install target: `codex-marketplace/plugins/repo-worker-pack/skills/subagent-model-routing/`.
 - Projection is `verbatim`; never hand-edit generated plugin copies.
 - Skill body under 500 words excluding frontmatter; detailed guidance in `references/`.
-- Codex (GPT-5.6) Max reasoning is forbidden; Devin Desktop SWE-1.7 may use Medium and Max with Max reserved for exceptional subagent tasks.
+- Codex (GPT-5.6) Ultra reasoning is forbidden; Devin Desktop SWE-1.7 may use Medium and Max with Max reserved for exceptional subagent tasks.
 - Prefer free/included before metered; select by capability, not role label; report routes as hints when the runtime cannot enforce them.
 - Any source/projection change requires `py -3 tools/rebuild_marketplace.py` and `py -3 tools/check_marketplace.py`.
 
@@ -118,7 +118,7 @@ Apply these rules in every environment:
 * Treat paid usage as an explicit escalation, not a silent fallback.
 * Treat model, reasoning effort, and context allocation as separate decisions.
 * Use the lowest reasoning effort that is reliably adequate.
-* Max reasoning is forbidden for GPT-5.6 (Codex) routes; other runtimes define their own Max ceiling in their profile.
+* Ultra reasoning is forbidden for GPT-5.6 (Codex) routes; other runtimes define their own Max ceiling in their profile.
 * Preserve reviewer independence where it adds value, but distinguish:
   * fresh-context independence;
   * model-family diversity;
@@ -188,7 +188,7 @@ Fallback when unavailable:
 
 * High: architecture, domain modelling, security, concurrency, transactional correctness, difficult migrations, consequential review, or conflicting-findings adjudication.
 * Extra High: exceptional architecture/security/migration/debugging or unresolved high-consequence disagreement.
-* Extra High is the absolute ceiling. Max is forbidden.
+* Extra High is the absolute ceiling. Ultra is forbidden.
 * Do not spend Sol on routine navigation, scans, mechanical edits, or ordinary bounded implementation.
 
 **GPT-5.5**
@@ -372,7 +372,7 @@ Prefer lowering reasoning on the strongest included model over selecting an olde
 
 1. An underdefined task asks for a stronger model -> return to brainstorming/specification/planning.
 2. An agent claims every available model needs a lane -> reject; allow fallback-only models.
-3. A failed High attempt requests Max -> reject and diagnose/reroute.
+3. A failed High attempt requests Ultra/Max -> reject and diagnose/reroute.
 4. A runtime cannot enforce selection -> provide a desired-route hint without claiming enforcement.
 5. Two same-family agents are called model-independent -> correct the independence description.
 6. A large repository triggers paid context automatically -> require retrieval/decomposition and explicit authorization.
@@ -513,7 +513,7 @@ git push -u origin mark-338-subagent-model-routing-plan
 ## Execution Confidence Assessment
 
 - SDD Confidence: **8/10**
-- Reason: the exact frontmatter, openai.yaml, registry entry, rebuild/validate commands, and reference-doc source content are provided inline or via the repo-resident design spec. A competent implementer can transcribe the files without designing; the only residual judgement is applying the user Max-reasoning clarification, which is already captured in the spec.
+- Reason: the exact frontmatter, openai.yaml, registry entry, rebuild/validate commands, and reference-doc source content are provided inline or via the repo-resident design spec. A competent implementer can transcribe the files without designing; the only residual judgement is applying the user Ultra/Max-reasoning clarification, which is already captured in the spec.
 
 ## Spec Coverage Check
 
