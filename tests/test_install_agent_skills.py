@@ -72,6 +72,27 @@ def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path:
     assert invalid == [skills_path / "mark-invalid"]
 
 
+def test_main_rejects_malformed_mark_skill_frontmatter(tmp_path: Path, capsys) -> None:
+    skills_path = tmp_path / "skills"
+    local_skill = skills_path / "mark-invalid"
+    local_skill.mkdir(parents=True)
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: [unterminated\ndescription: invalid\n---\n\n# Invalid\n",
+        encoding="utf-8",
+    )
+
+    with (
+        patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(sys, "argv", ["install_agent_skills.py"]),
+    ):
+        result = install_agent_skills.main()
+
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "ERROR: local skill" in captured.out
+    assert "Traceback" not in captured.err
+
+
 def test_install_plugin_skills_preserves_existing_mark_skill(tmp_path: Path) -> None:
     source_skills = tmp_path / "source" / "skills"
     source_skill = source_skills / "mark-example"

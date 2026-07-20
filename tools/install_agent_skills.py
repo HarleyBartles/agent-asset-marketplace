@@ -11,6 +11,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from marketplace_utils import ROOT, MARKETPLACE_PATH, load_json
 from skill_zip_artifacts import validate_skill_markdown_frontmatter
 
@@ -33,7 +35,7 @@ def _validate_local_skill_dirs() -> list[Path]:
             continue
         try:
             validate_skill_markdown_frontmatter(skill_dir)
-        except (FileNotFoundError, UnicodeDecodeError, ValueError) as exc:
+        except (FileNotFoundError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
             try:
                 display_path = skill_dir.relative_to(ROOT)
             except ValueError:
