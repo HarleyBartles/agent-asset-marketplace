@@ -31,6 +31,9 @@ and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.
+`py -3 tools/validate_authority_assets.py` is a non-mutating authority-shape
+check. It does not perform freshness networking and does not fail because a
+remote source has changed; it only validates recorded local evidence.
 Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
 adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
 trailing whitespace stripping) shifts line numbers or whitespace. It runs
