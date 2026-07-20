@@ -284,8 +284,9 @@ def main() -> int:
     if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names):
         changes_made = True
 
-    # Write provenance if changes were made
-    if not args.check and (changes_made or args.force):
+    # Write provenance only when the installed skill tree changed. A forced
+    # byte-identical refresh must remain a no-diff operation.
+    if not args.check and changes_made:
         _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
 
