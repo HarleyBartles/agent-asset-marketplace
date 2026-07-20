@@ -19,7 +19,7 @@ metadata:
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
-  - Do not use when to switch the current parent session when the runtime cannot change
+  - Do not use to switch the current parent session when the runtime cannot change
     models mid-session.
   - Do not use when another more specific skill owns the task.
   related_skills:

@@ -176,6 +176,8 @@ _USE_BEFORE_PREFIXES = ("use before ",)
 _USE_AFTER_PREFIXES = ("use after ",)
 _USE_WITH_PREFIXES = ("use with ",)
 _USE_INSTEAD_PREFIXES = ("use instead ",)
+# Exclude bare "do not use " — it would strip the start of "Do not use to switch..."
+# and cause the normalizer to prepend "when", producing "Do not use when to switch...".
 _DO_NOT_USE_WHEN_PREFIXES = ("do not use when ", "don't use when ", "avoid when ")
 
 
