@@ -1,0 +1,37 @@
+{
+  "name": "dotnet-pack",
+  "version": "1.0.0",
+  "description": "First-party .NET ecosystem pack projected from the dotnet skill.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "dotnet",
+    "csharp",
+    "aspnetcore",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dotnet Pack",
+    "shortDescription": ".NET ecosystem Codex pack",
+    "longDescription": "A repo-local Codex plugin bundle projecting the first-party .NET ecosystem skill.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the dotnet-pack source map and bundle manifest.",
+      "Use the pack to install the dotnet skill.",
+      "Confirm provider-specific assumptions are stripped from the projection."
+    ],
+    "brandColor": "#0F4C81",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
