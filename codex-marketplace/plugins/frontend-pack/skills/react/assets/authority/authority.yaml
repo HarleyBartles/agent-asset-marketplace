@@ -1,0 +1,26 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: "React"
+  canonical_url: "https://github.com/reactjs/react.dev"
+  pinned_source_url: "https://github.com/reactjs/react.dev/archive/refs/heads/main.tar.gz"
+  latest_check_url: "https://github.com/reactjs/react.dev/archive/refs/heads/main.tar.gz"
+  revision: "main"
+  retrieved_at: "2026-07-20"
+  content_sha256: "e8e7b8b51ad3b97b4decc817cbea690b7edd285e8da66f4979a2b4b06a0e230d"
+  license: "CC-BY-4.0"
+  license_url: "https://github.com/reactjs/react.dev/blob/main/LICENSE"
+decomposition:
+  reconciled_against: "e8e7b8b51ad3b97b4decc817cbea690b7edd285e8da66f4979a2b4b06a0e230d"
+  references:
+    - path: "references/operational-guidance.md"
+      source_sections:
+        - "Thinking in React"
+        - "State and lifecycle"
+        - "Hooks"
+        - "Performance"
+      content_mode: "first_party_synthesis"
+      load_when:
+        - "Adapting React component, hooks, and performance guidance"
+        - "Designing state, effects, and composition patterns"

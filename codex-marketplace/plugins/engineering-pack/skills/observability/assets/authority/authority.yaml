@@ -1,0 +1,30 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: "OpenTelemetry Specification"
+  canonical_url: "https://github.com/open-telemetry/opentelemetry-specification"
+  pinned_source_url: "https://github.com/open-telemetry/opentelemetry-specification/archive/refs/heads/main.tar.gz"
+  latest_check_url: "https://github.com/open-telemetry/opentelemetry-specification/archive/refs/heads/main.tar.gz"
+  revision: "main"
+  retrieved_at: "2026-07-20"
+  content_sha256: "63e438cbea910082ac4cfa959f9996425dad7715453a5f4d5f0625792a80e75a"
+  license: "Apache-2.0"
+  license_url: "https://github.com/open-telemetry/opentelemetry-specification/blob/main/LICENSE"
+decomposition:
+  reconciled_against: "63e438cbea910082ac4cfa959f9996425dad7715453a5f4d5f0625792a80e75a"
+  references:
+    - path: "references/operational-guidance.md"
+      source_sections:
+        - "Overview"
+        - "Tracing"
+        - "Metrics"
+        - "Logs"
+        - "Context Propagation"
+        - "SDK Configuration"
+        - "Semantic Conventions"
+      content_mode: "first_party_synthesis"
+      load_when:
+        - "Use when building or reviewing OpenTelemetry instrumentation."
+        - "Use when designing trace, metric, and log pipelines."
+        - "Use when deciding sampling, context propagation, and resource attributes."

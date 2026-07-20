@@ -1,0 +1,26 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Web Identity
+  canonical_url: https://datatracker.ietf.org/doc/html/rfc6749
+  pinned_source_url: https://datatracker.ietf.org/doc/html/rfc6749
+  latest_check_url: https://datatracker.ietf.org/doc/html/rfc6749
+  revision: RFC 6749
+  retrieved_at: "2026-07-20"
+  content_sha256: e13c64f33f5bc325121c3fe56ee4f833a396fe96e11e53a90bd064dbc2ae15b5
+  license: Multiple; see CITATIONS.md
+  license_url: https://datatracker.ietf.org/doc/html/rfc6749
+decomposition:
+  reconciled_against: e13c64f33f5bc325121c3fe56ee4f833a396fe96e11e53a90bd064dbc2ae15b5
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - RFC 6749 OAuth 2.0
+    - OpenID Connect Core 1.0
+    - Platform identity docs
+    content_mode: first_party_synthesis
+    load_when:
+    - selecting OAuth 2.0 or OIDC flows
+    - validating tokens
+    - integrating identity providers

@@ -1,0 +1,47 @@
+{
+  "bundle_name": "dotnet-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/dotnet-pack",
+  "is_mega_pack": false,
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    ".NET ecosystem pack projects the first-party dotnet skill."
+  ],
+  "provenance_refs": [
+    "provenance/dotnet-pack.md"
+  ],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "dotnet",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/dotnet",
+      "local_path": "skills/dotnet",
+      "import_status": "imported",
+      "provenance_note": "Projected verbatim from the first-party dotnet ecosystem skill.",
+      "copy_expectation": "byte_identical"
+    }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/dotnet-pack/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/dotnet-pack/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/dotnet-pack/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

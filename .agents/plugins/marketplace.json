@@ -65,10 +65,10 @@
       "category": "Productivity"
     },
     {
-      "name": "dotnet-kit",
+      "name": "dotnet-pack",
       "source": {
         "source": "local",
-        "path": "./codex-marketplace/plugins/dotnet-kit"
+        "path": "./codex-marketplace/plugins/dotnet-pack"
       },
       "policy": {
         "installation": "AVAILABLE",

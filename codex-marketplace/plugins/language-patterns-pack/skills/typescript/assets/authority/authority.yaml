@@ -1,0 +1,26 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: "TypeScript"
+  canonical_url: "https://github.com/microsoft/TypeScript-Website"
+  pinned_source_url: "https://github.com/microsoft/TypeScript-Website/archive/refs/heads/v2.tar.gz"
+  latest_check_url: "https://github.com/microsoft/TypeScript-Website/archive/refs/heads/v2.tar.gz"
+  revision: "v2"
+  retrieved_at: "2026-07-20"
+  content_sha256: "156733f8b6a0e4ccc70e6bd8887c33823a026b3db638b0cb5e0c7ce167cd2026"
+  license: "CC-BY-4.0"
+  license_url: "https://github.com/microsoft/TypeScript-Website/blob/v2/LICENSE"
+decomposition:
+  reconciled_against: "156733f8b6a0e4ccc70e6bd8887c33823a026b3db638b0cb5e0c7ce167cd2026"
+  references:
+    - path: "references/operational-guidance.md"
+      source_sections:
+        - "Type system"
+        - "Interfaces and types"
+        - "Generics"
+        - "Module resolution"
+      content_mode: "first_party_synthesis"
+      load_when:
+        - "Adapting TypeScript type system guidance"
+        - "Designing interfaces, generics, or module resolution"

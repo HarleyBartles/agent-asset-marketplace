@@ -1,0 +1,17 @@
+schema_version: 1
+reconciled_against: "63e438cbea910082ac4cfa959f9996425dad7715453a5f4d5f0625792a80e75a"
+references:
+  - path: "references/operational-guidance.md"
+    source_sections:
+      - "Overview"
+      - "Tracing"
+      - "Metrics"
+      - "Logs"
+      - "Context Propagation"
+      - "SDK Configuration"
+      - "Semantic Conventions"
+    content_mode: "first_party_synthesis"
+    load_when:
+      - "Use when building or reviewing OpenTelemetry instrumentation."
+      - "Use when designing trace, metric, and log pipelines."
+      - "Use when deciding sampling, context propagation, and resource attributes."

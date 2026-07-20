@@ -1,0 +1,12 @@
+{
+  "source_backed_projections": [
+    {
+      "canonical_name": "dotnet",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/dotnet",
+      "local_path": "skills/dotnet"
+    }
+  ],
+  "adapted_projections": []
+}

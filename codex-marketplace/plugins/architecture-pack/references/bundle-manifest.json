@@ -6,7 +6,8 @@
   "plugin_root": "codex-marketplace/plugins/architecture-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex"
+    "claude-cortex",
+    "first_party"
   ],
   "notes": [
     "Architecture bundle projected from retained Codex Cortex custody only.",
@@ -19,19 +20,26 @@
   "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "cqrs-event-sourcing",
-      "source_category": "third_party",
+      "canonical_name": "clean-architecture",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
-      "local_path": "skills/cqrs-event-sourcing",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/clean-architecture",
+      "local_path": "skills/clean-architecture",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party clean-architecture skill."
+    },
+    {
+      "canonical_name": "cqrs",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/cqrs",
+      "local_path": "skills/cqrs",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party cqrs skill."
     },
     {
       "canonical_name": "database-design-patterns",
@@ -49,6 +57,17 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
+      "canonical_name": "ddd",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/ddd",
+      "local_path": "skills/ddd",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party ddd skill."
+    },
+    {
       "canonical_name": "event-driven-architecture",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -62,6 +81,28 @@
       "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "event-sourcing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/event-sourcing",
+      "local_path": "skills/event-sourcing",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party event-sourcing skill."
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
     }
   ],
   "repo_index": {

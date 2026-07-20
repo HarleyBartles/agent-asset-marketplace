@@ -6,7 +6,8 @@
   "plugin_root": "codex-marketplace/plugins/engineering-pack",
   "is_mega_pack": false,
   "source_families": [
-    "ecc"
+    "ecc",
+    "first_party"
   ],
   "notes": [
     "Engineering pack groups the selected ECC implementation and deployment skills into a practical delivery home.",
@@ -46,6 +47,17 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/affaan-m/ECC",
       "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "observability",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/observability",
+      "local_path": "skills/observability",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party observability skill."
     }
   ],
   "repo_index": {

@@ -7,7 +7,8 @@
   "is_mega_pack": false,
   "source_families": [
     "claude-cortex",
-    "feature-sliced"
+    "feature-sliced",
+    "first_party"
   ],
   "notes": [
     "Frontend bundle projected from retained NickCrew/Claude-Cortex and feature-sliced custody only.",
@@ -17,21 +18,6 @@
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-    {
-      "canonical_name": "accessibility-audit",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
-      "local_path": "skills/accessibility-audit",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
     {
       "canonical_name": "feature-sliced-design",
       "source_category": "third_party",
@@ -63,19 +49,15 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "canonical_name": "react-performance-optimization",
-      "source_category": "third_party",
+      "canonical_name": "react",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
-      "local_path": "skills/react-performance-optimization",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/react",
+      "local_path": "skills/react",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party react skill."
     },
     {
       "canonical_name": "ux-review",
@@ -91,6 +73,28 @@
       "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+    },
+    {
+      "canonical_name": "wcag",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/wcag",
+      "local_path": "skills/wcag",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party wcag skill."
+    },
+    {
+      "canonical_name": "web-styling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/web-styling",
+      "local_path": "skills/web-styling",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party web-styling skill."
     },
     {
       "canonical_name": "webapp-testing",

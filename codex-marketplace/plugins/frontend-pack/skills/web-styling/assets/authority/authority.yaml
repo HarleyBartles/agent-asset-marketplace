@@ -1,0 +1,27 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Web Styling
+  canonical_url: https://www.w3.org/TR/css/
+  pinned_source_url: https://www.w3.org/TR/2026/NOTE-css-2026-20260622/
+  latest_check_url: https://www.w3.org/TR/css/
+  revision: NOTE-css-2026-20260622
+  retrieved_at: "2026-07-20"
+  content_sha256: fddc6c448e08e5eaa22a362c759a3a7c28045da1cdffad2d8421d679d49839d2
+  license: W3C Document License
+  license_url: https://www.w3.org/copyright/document-license-2023/
+decomposition:
+  reconciled_against: fddc6c448e08e5eaa22a362c759a3a7c28045da1cdffad2d8421d679d49839d2
+  references:
+    - path: references/operational-guidance.md
+      source_sections:
+        - CSS Modules
+        - Sass
+        - Less
+        - styled-components
+        - CSS-in-JS vs preprocessed CSS
+      content_mode: first_party_synthesis
+      load_when:
+        - choosing a CSS approach
+        - refactoring styles across frameworks

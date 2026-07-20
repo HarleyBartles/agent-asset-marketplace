@@ -24,6 +24,8 @@ The split is deliberate:
 
 - `dotnet-pack` is the .NET ecosystem plugin projection.
 <!-- BEGIN GENERATED: projection-contract -->
+- Active manifest entries (1):
+  - `dotnet`
 <!-- END GENERATED: projection-contract -->
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 

@@ -4,6 +4,10 @@ This plugin bundle projects the first-party .NET ecosystem skill into an install
 
 ## Bundle contents
 <!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `dotnet`
+
+Manifest entry count: 1.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

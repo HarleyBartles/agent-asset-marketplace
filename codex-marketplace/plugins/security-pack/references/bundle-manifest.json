@@ -7,7 +7,8 @@
   "is_mega_pack": false,
   "source_families": [
     "claude-cortex",
-    "ecc"
+    "ecc",
+    "first_party"
   ],
   "notes": [
     "Security pack combines the retained Claude Cortex security foundations with the selected ECC safety and security-review skills.",
@@ -22,21 +23,15 @@
   "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "owasp-top-10",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-      "local_path": "skills/owasp-top-10",
-      "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "adapted_author": "Harley Bartles",
-      "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10",
-      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
-      "copy_expectation": "normalised_from_source"
+      "canonical_name": "owasp-top-ten",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/owasp-top-ten",
+      "local_path": "skills/owasp-top-ten",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party owasp-top-ten skill."
     },
     {
       "canonical_name": "safety-guard",
@@ -119,6 +114,17 @@
       "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques",
       "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
       "copy_expectation": "normalised_from_source"
+    },
+    {
+      "canonical_name": "web-identity",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/web-identity",
+      "local_path": "skills/web-identity",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party web-identity skill."
     }
   ],
   "repo_index": {

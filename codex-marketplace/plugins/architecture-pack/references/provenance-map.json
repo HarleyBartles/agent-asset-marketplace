@@ -1,11 +1,18 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "cqrs-event-sourcing",
-      "source_category": "third_party",
+      "canonical_name": "clean-architecture",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
-      "local_path": "skills/cqrs-event-sourcing"
+      "canonical_source_path": "sources/first_party/skills/clean-architecture",
+      "local_path": "skills/clean-architecture"
+    },
+    {
+      "canonical_name": "cqrs",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/cqrs",
+      "local_path": "skills/cqrs"
     },
     {
       "canonical_name": "database-design-patterns",
@@ -15,11 +22,32 @@
       "local_path": "skills/database-design-patterns"
     },
     {
+      "canonical_name": "ddd",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/ddd",
+      "local_path": "skills/ddd"
+    },
+    {
       "canonical_name": "event-driven-architecture",
       "source_category": "third_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
       "local_path": "skills/event-driven-architecture"
+    },
+    {
+      "canonical_name": "event-sourcing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/event-sourcing",
+      "local_path": "skills/event-sourcing"
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture"
     }
   ],
   "adapted_projections": []

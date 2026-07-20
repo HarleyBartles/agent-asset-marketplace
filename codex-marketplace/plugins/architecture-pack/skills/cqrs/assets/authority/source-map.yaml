@@ -1,0 +1,11 @@
+schema_version: 1
+reconciled_against: 11cf46ce308805e94e4b110016b09d004fbf8c47669a7041080f661c798b2f29
+references:
+- path: references/operational-guidance.md
+  source_sections:
+  - Martin Fowler CQRS
+  - Greg Young CQRS/Event Sourcing
+  - Microsoft CQRS pattern
+  load_when:
+  - Use when cqrs operational guidance is needed.
+  content_mode: first_party_synthesis

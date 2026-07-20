@@ -1,0 +1,12 @@
+schema_version: 1
+reconciled_against: 15f12e539a3ac811c5f18950bc9cff296b43a22ad4d50b4db8d533f37ebc1d23
+references:
+  - path: references/operational-guidance.md
+    source_sections:
+      - OpenAPI Object
+      - Paths
+      - Components
+    content_mode: licensed_adaptation
+    load_when:
+      - designing or reviewing an OpenAPI contract
+      - versioning an API contract

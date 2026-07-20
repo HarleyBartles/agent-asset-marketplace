@@ -6,7 +6,8 @@
   "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex"
+    "claude-cortex",
+    "first_party"
   ],
   "notes": [
     "Language-patterns bundle projected from retained Claude-Cortex custody only.",
@@ -69,22 +70,15 @@
       "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
     },
     {
-      "canonical_name": "typescript-advanced-patterns",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
-      "local_path": "skills/typescript-advanced-patterns",
+      "canonical_name": "typescript",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/typescript",
+      "local_path": "skills/typescript",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns",
-      "copy_expectation": "adapted_from_source",
-      "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party typescript skill."
     }
   ],
   "repo_index": {
