@@ -10,12 +10,13 @@ if str(TOOLS) not in sys.path:
 import validate_authority_assets as validator  # noqa: E402
 
 
-def write_authority_fixture(root: Path, *, lane: str) -> Path:
-    skill = root / "skill"
+def write_authority_fixture(root: Path, *, lane: str, skill_name: str = "skill") -> Path:
+    skill = root / skill_name
     authority = skill / "assets/authority"
     authority.mkdir(parents=True)
     (authority / "authority.yaml").write_text(
         "schema_version: 1\n"
+        "custody: marketplace\n"
         f"lane: {lane}\n"
         "authority:\n"
         "  title: Example Authority\n"
@@ -193,6 +194,71 @@ def test_authority_rejects_duplicate_yaml_keys_and_non_utf8_content(tmp_path: Pa
     errors = validator.validate_authority_skill(skill)
     assert any("duplicate key" in error for error in errors)
     assert any("source-map.yaml cannot be read as YAML" in error for error in errors)
+
+
+def test_authority_returns_errors_for_container_values_without_traceback(tmp_path: Path):
+    skill = write_authority_fixture(tmp_path, lane="skills-with-citation")
+    authority_path = skill / "assets/authority/authority.yaml"
+    authority_path.write_text(
+        authority_path.read_text(encoding="utf-8")
+        .replace("schema_version: 1", "schema_version: [1]")
+        .replace("lane: skills-with-citation", "lane: [skills-with-citation]")
+        .replace("content_mode: first_party_synthesis", "content_mode: [first_party_synthesis]"),
+        encoding="utf-8",
+        newline="\n",
+    )
+    source_map_path = skill / "assets/authority/source-map.yaml"
+    source_map_path.write_text(
+        source_map_path.read_text(encoding="utf-8")
+        .replace("schema_version: 1", "schema_version: [1]")
+        .replace("content_mode: first_party_synthesis", "content_mode: [first_party_synthesis]"),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    errors = validator.validate_authority_skill(skill)
+
+    assert any("authority.yaml must declare schema_version: 1" in error for error in errors)
+    assert any("authority.yaml lane must be one of" in error for error in errors)
+    assert any("source-map.yaml must declare schema_version: 1" in error for error in errors)
+    assert sum("has unsupported content_mode" in error for error in errors) == 2
+
+
+def test_authority_rejects_non_string_or_unhashable_mapping_keys(tmp_path: Path):
+    skill = write_authority_fixture(tmp_path, lane="skills-with-citation")
+    (skill / "assets/authority/authority.yaml").write_text(
+        "? [unexpected, key]\n: value\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    errors = validator.validate_authority_skill(skill)
+
+    assert any("cannot be read as YAML" in error for error in errors)
+
+
+def test_local_mark_skill_authority_assets_are_rejected(tmp_path: Path):
+    skill = write_authority_fixture(
+        tmp_path / ".agents/skills", lane="skills-with-citation", skill_name="mark-example"
+    )
+
+    errors = validator.validate_authority_skill(skill)
+
+    assert any("local mark-* skills must not contain authority assets" in error for error in errors)
+
+
+def test_authority_records_require_marketplace_custody(tmp_path: Path):
+    skill = write_authority_fixture(tmp_path, lane="skills-with-citation")
+    authority_path = skill / "assets/authority/authority.yaml"
+    authority_path.write_text(
+        authority_path.read_text(encoding="utf-8").replace("custody: marketplace", "custody: local"),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    errors = validator.validate_authority_skill(skill)
+
+    assert any("authority.yaml must declare custody: marketplace" in error for error in errors)
 
 
 def test_valid_source_and_citation_lanes_pass(tmp_path: Path):

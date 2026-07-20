@@ -47,6 +47,7 @@ def test_render_scaffold_uses_lane_specific_authority_shape():
 def test_rendered_authority_record_has_required_decomposition_keys():
     files = new_skill.render_scaffold("ddd", "marketplace", "skills-with-source")
     authority = files["assets/authority/authority.yaml"]
+    assert "custody: marketplace" in authority
     assert "decomposition:" in authority
     assert "  reconciled_against:" in authority
     assert "  references:" in authority
@@ -98,6 +99,7 @@ def test_scaffold_rolls_back_created_destination_when_a_later_write_fails(tmp_pa
         new_skill.scaffold(tmp_path, "example", "marketplace", "skills-with-citation", check=False)
 
     assert not destination.exists()
+    assert not destination.parent.exists()
 
 
 def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
@@ -150,6 +152,13 @@ def test_local_guidance_routes_to_mark_skill_authoring():
     assert "mark-skill-authoring" in guide
     assert "authoring-skills" not in standards
     assert "authoring-skills" not in guide
+
+
+def test_authoring_skill_scaffolds_only_new_skills_and_inspects_existing_ones():
+    skill = (ROOT / ".agents/skills/mark-skill-authoring/SKILL.md").read_text(encoding="utf-8")
+
+    assert "For creating a new skill, run" in skill
+    assert "reviewing or refreshing an existing skill, inspect its existing custody and lane" in skill
 
 
 def test_authoring_docs_describe_installed_writing_skills_projection_and_handoff_floor():

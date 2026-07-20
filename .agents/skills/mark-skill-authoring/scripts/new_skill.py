@@ -132,9 +132,17 @@ def scaffold(
         for relative_path in files:
             print(destination / relative_path)
         return 0
-    destination.parent.mkdir(parents=True, exist_ok=True)
     created_destination = False
+    created_parents: list[Path] = []
+    missing_parents: list[Path] = []
+    parent = destination.parent
+    while not parent.exists():
+        missing_parents.append(parent)
+        parent = parent.parent
     try:
+        for parent in reversed(missing_parents):
+            parent.mkdir()
+            created_parents.append(parent)
         destination.mkdir()
         created_destination = True
         for relative_path, content in files.items():
@@ -145,6 +153,11 @@ def scaffold(
     except Exception:
         if created_destination:
             shutil.rmtree(destination)
+        for parent in reversed(created_parents):
+            try:
+                parent.rmdir()
+            except OSError:
+                pass
         raise
     return 0
 

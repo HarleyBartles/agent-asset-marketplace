@@ -144,3 +144,60 @@ the commit.
 
 None. Validation remains read-only and advisory-only; no freshness lookup or
 network activity was added.
+
+## Final review hardening evidence (2026-07-20)
+
+The final five review findings were fixed in one additional TDD wave without
+network access, registry changes, or third-party modifications.
+
+### TDD evidence
+
+The new focused regression run failed in the expected paths:
+
+```text
+py -3 -m pytest tests/test_install_agent_skills.py tests/test_mark_skill_authoring_contract.py tests/test_validate_authority_assets.py -q
+7 failed, 34 passed
+```
+
+The failures proved the matching-provenance orphan false green, created-parent
+leak on scaffold failure, unsafe review/refresh instruction, unhashable YAML
+container handling, non-string mapping-key handling, local authority custody,
+and missing marketplace custody enforcement.
+
+### Delivered hardening
+
+1. The installer fast path now requires the actual non-local skill-directory
+   name set to equal the expected marketplace inventory. Extra marketplace
+   orphan directories force normal and check-mode sync/cleanup; `mark-*`
+   directories and `.provenance.json` remain excluded.
+2. The authority validator rejects malformed but syntactically valid YAML as
+   validation errors: mapping keys must be strings, schema versions must be
+   exact integers, and lane/content-mode checks are type-guarded before set
+   membership.
+3. Authority directories below local `mark-*` skills are rejected. Every
+   source-backed authority record must declare `custody: marketplace`; the
+   scaffold template and valid fixtures satisfy that rule.
+4. The authoring skill now limits scaffold invocation to new skills and tells
+   review/refresh workflows to inspect existing custody and lane instead.
+5. Rollback removes empty ancestor directories that were created by the failed
+   scaffold invocation while leaving pre-existing paths untouched.
+
+### Final validation
+
+```text
+py -3 -m pytest tests/test_install_agent_skills.py tests/test_mark_skill_authoring_contract.py tests/test_validate_authority_assets.py -q
+41 passed
+
+py -3 -m pytest tests/ -x
+140 passed
+```
+
+`py -3 tools/check_marketplace.py` completed its component validation and
+correctly stopped at its intentional dirty-worktree guard. It was rerun after
+staging this final wave; index generation and diff validation were also run
+before the local commit.
+
+### Final concerns
+
+None. Publication remains the only unchecked plan item and is intentionally
+not performed in this wave.

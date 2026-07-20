@@ -82,7 +82,14 @@ def _expected_marketplace_skill_inventory(installed_plugins: list[dict[str, Any]
 
 def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, Any]]) -> bool:
     expected = _expected_marketplace_skill_inventory(installed_plugins)
-    return bool(expected) and all(
+    if not expected or not AGENTS_SKILLS_PATH.is_dir():
+        return False
+    installed_marketplace_names = {
+        skill_dir.name
+        for skill_dir in AGENTS_SKILLS_PATH.iterdir()
+        if skill_dir.is_dir() and not skill_dir.name.startswith(LOCAL_SKILL_PREFIX)
+    }
+    return installed_marketplace_names == set(expected) and all(
         not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name)
         for name, source_skill in expected.items()
     )

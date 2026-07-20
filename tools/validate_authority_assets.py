@@ -44,6 +44,8 @@ def _construct_unique_mapping(loader: _UniqueKeyLoader, node: yaml.MappingNode, 
     mapping: dict[object, object] = {}
     for key_node, value_node in node.value:
         key = loader.construct_object(key_node, deep=deep)
+        if not isinstance(key, str):
+            raise yaml.YAMLError(f"mapping key {key!r} must be a string")
         if key in mapping:
             raise yaml.YAMLError(f"duplicate key {key!r}")
         mapping[key] = loader.construct_object(value_node, deep=deep)
@@ -68,7 +70,7 @@ def discover_authority_assets(root: Path) -> list[Path]:
 def _load_mapping(path: Path, errors: list[str]) -> dict[object, object] | None:
     try:
         data = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
-    except (OSError, UnicodeDecodeError, yaml.YAMLError) as error:
+    except (OSError, TypeError, UnicodeDecodeError, yaml.YAMLError) as error:
         errors.append(f"{path.name} cannot be read as YAML: {error}")
         return None
     if not isinstance(data, dict):
@@ -168,12 +170,13 @@ def _validate_references(
             field=f"{record_name} references[{index}] load_when",
             errors=errors,
         )
-        if "content_mode" in reference and reference["content_mode"] not in CONTENT_MODES:
+        content_mode = reference.get("content_mode")
+        if not isinstance(content_mode, str) or content_mode not in CONTENT_MODES:
             errors.append(
                 f"{record_name} references[{index}] has unsupported content_mode "
-                f"{reference['content_mode']!r}"
+                f"{content_mode!r}"
             )
-        if lane == "skills-with-citation" and reference.get("content_mode") != "first_party_synthesis":
+        if lane == "skills-with-citation" and content_mode != "first_party_synthesis":
             errors.append(
                 f"{record_name} references[{index}] must use first_party_synthesis "
                 "for skills-with-citation"
@@ -188,6 +191,13 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
     citations_path = authority_root / "CITATIONS.md"
     errors: list[str] = []
 
+    if (
+        skill_root.name.startswith("mark-")
+        and skill_root.parent.name == "skills"
+        and skill_root.parent.parent.name == ".agents"
+    ):
+        errors.append("local mark-* skills must not contain authority assets")
+
     for path in (authority_path, source_map_path, citations_path):
         if not path.is_file():
             errors.append(f"missing {path.name}")
@@ -200,12 +210,14 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
     if record is None:
         return errors
 
-    if record.get("schema_version") != 1:
+    if type(record.get("schema_version")) is not int or record.get("schema_version") != 1:
         errors.append("authority.yaml must declare schema_version: 1")
 
     lane = record.get("lane")
-    if lane not in LANES:
+    if not isinstance(lane, str) or lane not in LANES:
         errors.append(f"authority.yaml lane must be one of {sorted(LANES)}")
+    if record.get("custody") != "marketplace":
+        errors.append("authority.yaml must declare custody: marketplace")
 
     authority = record.get("authority")
     if not isinstance(authority, dict):
@@ -251,7 +263,7 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
     source_map_reconciled_against: object | None = None
     source_map_references: list[object] | None = None
     if source_map is not None:
-        if source_map.get("schema_version") != 1:
+        if type(source_map.get("schema_version")) is not int or source_map.get("schema_version") != 1:
             errors.append("source-map.yaml must declare schema_version: 1")
         for field in sorted(set(source_map) - SOURCE_MAP_FIELDS):
             errors.append(f"source-map.yaml has unsupported top-level field {field}")

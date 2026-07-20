@@ -212,3 +212,40 @@ def test_matching_provenance_with_stale_marketplace_skill_continues_sync(tmp_pat
 
     install.assert_called_once()
     assert local_skill.is_dir()
+
+
+def test_matching_provenance_with_extra_marketplace_orphan_continues_sync(tmp_path: Path) -> None:
+    skills_path = tmp_path / "installed"
+    installed_skill = skills_path / "marketplace-example"
+    installed_skill.mkdir(parents=True)
+    (installed_skill / "SKILL.md").write_text("current\n", encoding="utf-8")
+    (skills_path / "orphan-marketplace-skill").mkdir()
+    (skills_path / ".provenance.json").write_text('{"manifestSha": "current"}\n', encoding="utf-8")
+    local_skill = skills_path / "mark-local"
+    local_skill.mkdir()
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-local\ndescription: Use when preserving local custody.\n---\n\n# Local\n",
+        encoding="utf-8",
+    )
+    source_skills = tmp_path / "source/skills"
+    source_skill = source_skills / "marketplace-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("current\n", encoding="utf-8")
+    plugin = {"name": "example"}
+
+    with (
+        patch.object(install_agent_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(install_agent_skills, "PROVENANCE_PATH", skills_path / ".provenance.json"),
+        patch.object(install_agent_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(install_agent_skills, "_get_installed_plugins", return_value=[plugin]),
+        patch.object(install_agent_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(install_agent_skills, "_get_marketplace_manifest_sha", return_value="current"),
+        patch.object(install_agent_skills, "_install_plugin_skills", return_value=True) as install,
+        patch.object(install_agent_skills, "_clean_orphan_skills", return_value=True) as clean,
+        patch.object(sys, "argv", ["install_agent_skills.py", "--check"]),
+    ):
+        assert install_agent_skills.main() == 1
+
+    install.assert_called_once()
+    clean.assert_called_once()
+    assert local_skill.is_dir()
