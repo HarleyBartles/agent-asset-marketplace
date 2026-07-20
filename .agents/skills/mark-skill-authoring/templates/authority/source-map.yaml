@@ -1,7 +1,7 @@
 schema_version: 1
 lane: {lane}
 authority:
-  title: {name}
+  title: "{name}"
   canonical_url: TODO
   pinned_source_url: TODO
   latest_check_url: TODO

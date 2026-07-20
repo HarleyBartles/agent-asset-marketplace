@@ -2,6 +2,7 @@ from pathlib import Path
 import sys
 
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +48,20 @@ def test_rendered_authority_record_has_required_decomposition_keys():
 def test_rendered_files_are_lf_terminated():
     files = new_skill.render_scaffold("ddd", "marketplace", "skills-with-source")
     assert all(content.endswith("\n") for content in files.values())
+
+
+def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
+    files = new_skill.render_scaffold("true", "marketplace", "first_party")
+    frontmatter = yaml.safe_load(files["SKILL.md"].split("---", 2)[1])
+    authority = yaml.safe_load(files["assets/authority/authority.yaml"])
+    source_map = yaml.safe_load(files["assets/authority/source-map.yaml"])
+
+    assert frontmatter["name"] == "true"
+    assert isinstance(frontmatter["name"], str)
+    assert authority["authority"]["title"] == "true"
+    assert isinstance(authority["authority"]["title"], str)
+    assert source_map["authority"]["title"] == "true"
+    assert isinstance(source_map["authority"]["title"], str)
 
 
 def test_scaffold_check_does_not_write(tmp_path: Path):
