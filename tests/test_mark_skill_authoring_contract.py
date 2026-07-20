@@ -9,8 +9,12 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / ".agents" / "skills" / "mark-skill-authoring" / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
+TOOLS = ROOT / "tools"
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
 
 import new_skill  # noqa: E402
+import normalize_first_party_skill_sources as normalize  # noqa: E402
 
 
 def test_local_request_requires_mark_prefix():
@@ -67,3 +71,41 @@ def test_yaml_sensitive_name_remains_a_string_in_rendered_yaml():
 def test_scaffold_check_does_not_write(tmp_path: Path):
     assert new_skill.scaffold(tmp_path, "mark-example", "local", "first_party", check=True) == 0
     assert not (tmp_path / ".agents/skills/mark-example").exists()
+
+
+def test_local_guidance_routes_to_mark_skill_authoring():
+    standards = (ROOT / "docs/skill-standards-policy.md").read_text(encoding="utf-8")
+    guide = (ROOT / ".agents/guides/skill-authoring-guide.md").read_text(encoding="utf-8")
+    assert "mark-skill-authoring" in standards
+    assert "mark-skill-authoring" in guide
+    assert "authoring-skills" not in standards
+    assert "authoring-skills" not in guide
+
+
+def test_first_party_normalizer_preserves_use_with(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    skill_md = tmp_path / "sample" / "SKILL.md"
+    skill_md.parent.mkdir(parents=True)
+    monkeypatch.setattr(normalize, "ROOT", tmp_path)
+    skill_md.write_text(
+        "---\n"
+        "name: sample\n"
+        "description: Use when testing metadata preservation.\n"
+        "metadata:\n"
+        "  source-id: sample\n"
+        "  source-path: sample/SKILL.md\n"
+        "  provenance-name: Sample first-party skill\n"
+        "  source-category: first_party\n"
+        "  status: active\n"
+        "  owner: Harley Bartles\n"
+        "  scope: metadata test\n"
+        "  use_when:\n"
+        "    - Use when testing metadata preservation.\n"
+        "  do_not_use_when:\n"
+        "    - Do not use when the test is unrelated.\n"
+        "  use_with:\n"
+        "    - superpowers-plus:writing-skills\n"
+        "license: MIT\n"
+        "---\n\n# Sample\n",
+        encoding="utf-8",
+    )
+    assert normalize._normalize_skill(skill_md, write=False) is False
