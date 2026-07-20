@@ -12,7 +12,7 @@ authority:
   license: Copyright Eric Evans / Domain Language; reference extraction
   license_url: https://www.domainlanguage.com/ddd/reference/
 decomposition:
-  reconciled_against: https://www.domainlanguage.com/ddd/reference/
+  reconciled_against: b7638db7a6addbeeea90182b1b015068648eb86e570779a3f23f4b188b9f7da8
   references:
   - path: references/operational-guidance.md
     source_sections:
