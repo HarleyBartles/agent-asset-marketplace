@@ -1,0 +1,21 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: "Clean Architecture"
+  canonical_url: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+  pinned_source_url: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+  latest_check_url: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+  revision: current
+  retrieved_at: "2026-07-20"
+  content_sha256: ca86d5653333b894f0a525b2bc96e4a31e013138a8096d27742817296877554d
+  license: "Multiple; see CITATIONS.md"
+  license_url: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+decomposition:
+  reconciled_against: ca86d5653333b894f0a525b2bc96e4a31e013138a8096d27742817296877554d
+  references:
+  - path: references/operational-guidance.md
+    source_sections: ["Robert C. Martin Clean Architecture", "Alistair Cockburn Hexagonal Architecture", "Jeffrey Palermo Onion Architecture"]
+    load_when:
+    - Use when clean-architecture operational guidance is needed.
+    content_mode: first_party_synthesis

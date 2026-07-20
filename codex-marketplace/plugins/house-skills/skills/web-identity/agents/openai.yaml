@@ -1,0 +1,11 @@
+version: 1
+metadata:
+  skill_name: web-identity
+  plugin: security-pack
+  source_category: first_party
+interface:
+  display_name: Web Identity
+  short_description: Use when selecting OAuth 2.0 / OIDC flows, validating tokens, or integrating identity providers.
+  default_prompt: Use /web-identity when selecting OAuth 2.0 / OIDC flows, validating tokens, or integrating identity providers.
+policy:
+  allow_implicit_invocation: true
