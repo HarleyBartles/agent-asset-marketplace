@@ -85,6 +85,13 @@
       "local_path": "skills/linear-issue-shaping"
     },
     {
+      "canonical_name": "owasp-top-ten",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/owasp-top-ten",
+      "local_path": "skills/owasp-top-ten"
+    },
+    {
       "canonical_name": "phaser-2d-game",
       "source_category": "third_party",
       "content_mode": "verbatim",

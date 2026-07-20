@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 173,
+  "artifact_count": 174,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -1606,6 +1606,22 @@
       "overlay_sha256": null,
       "zip_size_bytes": 21574,
       "zip_sha256": "b64df708f47bd8a54ff36229512a734494ba28e85c76f6b740e9c8aff1ca5bd0"
+    },
+    {
+      "pack": "house-skills",
+      "skill": "owasp-top-ten",
+      "export_mode": "direct",
+      "source_path": "codex-marketplace/plugins/house-skills/skills/owasp-top-ten",
+      "overlay_path": null,
+      "zip_path": "generated/skill-zips/house-skills/owasp-top-ten/skill.zip",
+      "source_file_count": 7,
+      "source_bytes": 33662,
+      "source_sha256": "1216c386266a7e5855b102b9b79eccfc758205fa333bfb7485f58159d747dd62",
+      "overlay_file_count": 0,
+      "overlay_bytes": 0,
+      "overlay_sha256": null,
+      "zip_size_bytes": 10746,
+      "zip_sha256": "5c9b94c9a892e5503d73a007757eeb419f59cc55b78e110dc65716d353a73e8c"
     },
     {
       "pack": "house-skills",
