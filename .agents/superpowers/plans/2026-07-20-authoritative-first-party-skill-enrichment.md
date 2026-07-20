@@ -12,8 +12,8 @@
 
 - One epic branch: `harleydbartles/afpse-epic` from `origin/main`.
 - One master PR to `main`; no per-skill PRs.
-- `sources/third_party/` is immutable; do not modify.
-- Mega-pack duplicates in `codex-cortex`, `everything-codex-code`, `house-skills`, `unslop-plus`, `game-studio`, and `dotnet-kit` are retained as provenance collections this pass.
+- `sources/third_party/` is immutable for retained snapshots; the drained `dotnet-claude-kit` upstream snapshot is removed in Task 16.
+- Mega-pack duplicates in `codex-cortex`, `everything-codex-code`, `house-skills`, `unslop-plus`, and `game-studio` are retained as provenance collections this pass.
 - Only one new plugin root: `dotnet-pack` replacing `dotnet-kit`.
 - `MARK-352` produces a decision matrix only; it does not implement additional skills.
 - All first-party skills use MIT license and the canonical first-party frontmatter from `docs/skill-standards-policy.md`.
@@ -149,22 +149,22 @@ references:
 For a single web-page authority:
 
 ```bash
-curl -L -o sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.html <canonical-url>
+curl.exe -L -o sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.html <canonical-url>
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.html').read_bytes()).hexdigest())"
 ```
 
 For a single GitHub repository:
 
 ```bash
-curl -L -o sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.tar.gz https://github.com/<owner>/<repo>/archive/refs/heads/<branch>.tar.gz
+curl.exe -L -o sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.tar.gz https://github.com/<owner>/<repo>/archive/refs/heads/<branch>.tar.gz
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/<skill>/assets/authority/reference-source/<skill>.tar.gz').read_bytes()).hexdigest())"
 ```
 
 For a citation-backed skill, download the primary authority to the scratch folder (not committed), compute the SHA-256, then delete the scratch file:
 
 ```bash
-mkdir -p ../_agent-scratch/agent-asset-marketplace/afpse-epic
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/<skill>.html <canonical-url>
+New-Item -ItemType Directory -Force -Path ../_agent-scratch/agent-asset-marketplace/afpse-epic
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/<skill>.html <canonical-url>
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/<skill>.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/<skill>.html
 ```
@@ -208,7 +208,7 @@ Create `provenance/afpse-authority-inventory.md` with the table from the design 
 | MARK-343 | `owasp-top-ten` | skills-with-source | `security-pack` | `claude-cortex` `owasp-top-10` | `harleydbartles/mark-343-re-custody-owasp-top-ten-and-establish-an-asvs-verification` |
 | MARK-344 | `openapi-specification` | skills-with-source | `api-contracts-pack` | `claude-cortex` `openapi-specification` | `harleydbartles/mark-344-re-custody-the-openapi-specification-specialist-skill` |
 | MARK-345 | `wcag` | skills-with-source | `frontend-pack` | `claude-cortex` `accessibility-audit` | `harleydbartles/mark-345-re-custody-the-wcag-accessibility-audit-specialist-skill` |
-| MARK-346 | `dotnet` | skills-with-source | `dotnet-pack` | `dotnet-claude-kit` `modern-csharp`, `ef-core`, `testing`, `clean-architecture`, `ddd` | `harleydbartles/mark-346-create-the-first-party-net-ecosystem-skill-and-migrate` |
+| MARK-346 | `dotnet` | skills-with-source | `dotnet-pack` | `dotnet-claude-kit` `modern-csharp`, `ef-core`, `testing`, `clean-architecture`, `ddd`, `vertical-slice` | `harleydbartles/mark-346-create-the-first-party-net-ecosystem-skill-and-migrate` |
 | MARK-347 | `typescript` | skills-with-source | `language-patterns-pack` | `claude-cortex` `typescript-advanced-patterns` | `harleydbartles/mark-347-create-the-first-party-typescript-ecosystem-skill` |
 | MARK-348 | `react` | skills-with-source | `frontend-pack` | `claude-cortex` `react-performance-optimization` | `harleydbartles/mark-348-create-the-first-party-react-ecosystem-skill` |
 | MARK-349 | `web-styling` | skills-with-source if licenses permit; otherwise skills-with-citation | `frontend-pack` | none | `harleydbartles/mark-349-create-the-cross-framework-web-styling-skill` |
@@ -281,7 +281,7 @@ Expected: `sources/first_party/skills/ddd/` created with `SKILL.md`, `references
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/ddd/assets/authority/reference-source/ddd.html https://www.domainlanguage.com/ddd/reference/
+curl.exe -L -o sources/first_party/skills/ddd/assets/authority/reference-source/ddd.html https://www.domainlanguage.com/ddd/reference/
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/ddd/assets/authority/reference-source/ddd.html').read_bytes()).hexdigest())"
 ```
 
@@ -410,8 +410,8 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name event-sour
 For `cqrs`:
 
 ```bash
-mkdir -p ../_agent-scratch/agent-asset-marketplace/afpse-epic
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/cqrs.html https://martinfowler.com/bliki/CQRS.html
+New-Item -ItemType Directory -Force -Path ../_agent-scratch/agent-asset-marketplace/afpse-epic
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/cqrs.html https://martinfowler.com/bliki/CQRS.html
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/cqrs.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/cqrs.html
 ```
@@ -419,7 +419,7 @@ Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/cqrs.html
 For `event-sourcing`:
 
 ```bash
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/event-sourcing.html https://martinfowler.com/eaaDev/EventSourcing.html
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/event-sourcing.html https://martinfowler.com/eaaDev/EventSourcing.html
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/event-sourcing.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/event-sourcing.html
 ```
@@ -622,8 +622,8 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name hexagonal-
 For `clean-architecture`:
 
 ```bash
-mkdir -p ../_agent-scratch/agent-asset-marketplace/afpse-epic
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/clean-architecture.html https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+New-Item -ItemType Directory -Force -Path ../_agent-scratch/agent-asset-marketplace/afpse-epic
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/clean-architecture.html https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/clean-architecture.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/clean-architecture.html
 ```
@@ -631,7 +631,7 @@ Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/clean-architect
 For `hexagonal-architecture`:
 
 ```bash
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/hexagonal-architecture.html https://alistair.cockburn.us/hexagonal-architecture/
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/hexagonal-architecture.html https://alistair.cockburn.us/hexagonal-architecture/
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/hexagonal-architecture.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/hexagonal-architecture.html
 ```
@@ -838,7 +838,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name owasp-top-
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/owasp-top-ten/assets/authority/reference-source/owasp-top-ten.html https://owasp.org/Top10/
+curl.exe -L -o sources/first_party/skills/owasp-top-ten/assets/authority/reference-source/owasp-top-ten.html https://owasp.org/Top10/
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/owasp-top-ten/assets/authority/reference-source/owasp-top-ten.html').read_bytes()).hexdigest())"
 ```
 
@@ -962,7 +962,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name openapi-sp
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/openapi-specification/assets/authority/reference-source/openapi-specification.html https://spec.openapis.org/oas/
+curl.exe -L -o sources/first_party/skills/openapi-specification/assets/authority/reference-source/openapi-specification.html https://spec.openapis.org/oas/
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/openapi-specification/assets/authority/reference-source/openapi-specification.html').read_bytes()).hexdigest())"
 ```
 
@@ -1082,7 +1082,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name wcag --cus
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/wcag/assets/authority/reference-source/wcag.html https://www.w3.org/TR/WCAG22/
+curl.exe -L -o sources/first_party/skills/wcag/assets/authority/reference-source/wcag.html https://www.w3.org/TR/WCAG22/
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/wcag/assets/authority/reference-source/wcag.html').read_bytes()).hexdigest())"
 ```
 
@@ -1204,7 +1204,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name typescript
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/typescript/assets/authority/reference-source/typescript.tar.gz https://github.com/microsoft/TypeScript-Website/archive/refs/heads/v2.tar.gz
+curl.exe -L -o sources/first_party/skills/typescript/assets/authority/reference-source/typescript.tar.gz https://github.com/microsoft/TypeScript-Website/archive/refs/heads/v2.tar.gz
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/typescript/assets/authority/reference-source/typescript.tar.gz').read_bytes()).hexdigest())"
 ```
 
@@ -1292,10 +1292,10 @@ This skill is `skills-with-source` only if **all** upstream licenses permit vend
 Candidate sources (verify license and branch before running):
 
 ```bash
-curl -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/css-modules.tar.gz https://github.com/css-modules/css-modules/archive/refs/heads/master.tar.gz
-curl -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/sass-site.tar.gz https://github.com/sass/sass-site/archive/refs/heads/main.tar.gz
-curl -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/less-docs.tar.gz https://github.com/less/less-docs/archive/refs/heads/master.tar.gz
-curl -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/styled-components-website.tar.gz https://github.com/styled-components/styled-components-website/archive/refs/heads/main.tar.gz
+curl.exe -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/css-modules.tar.gz https://github.com/css-modules/css-modules/archive/refs/heads/master.tar.gz
+curl.exe -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/sass-site.tar.gz https://github.com/sass/sass-site/archive/refs/heads/main.tar.gz
+curl.exe -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/less-docs.tar.gz https://github.com/less/less-docs/archive/refs/heads/master.tar.gz
+curl.exe -L -o sources/first_party/skills/web-styling/assets/authority/reference-source/styled-components-website.tar.gz https://github.com/styled-components/styled-components-website/archive/refs/heads/main.tar.gz
 ```
 
 For each downloaded archive, compute SHA-256:
@@ -1474,7 +1474,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name react --cu
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/react/assets/authority/reference-source/react.tar.gz https://github.com/reactjs/react.dev/archive/refs/heads/main.tar.gz
+curl.exe -L -o sources/first_party/skills/react/assets/authority/reference-source/react.tar.gz https://github.com/reactjs/react.dev/archive/refs/heads/main.tar.gz
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/react/assets/authority/reference-source/react.tar.gz').read_bytes()).hexdigest())"
 ```
 
@@ -1595,7 +1595,7 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name observabil
 - [ ] **Step 3: Download the canonical source**
 
 ```bash
-curl -L -o sources/first_party/skills/observability/assets/authority/reference-source/observability.tar.gz https://github.com/open-telemetry/opentelemetry-specification/archive/refs/heads/main.tar.gz
+curl.exe -L -o sources/first_party/skills/observability/assets/authority/reference-source/observability.tar.gz https://github.com/open-telemetry/opentelemetry-specification/archive/refs/heads/main.tar.gz
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('sources/first_party/skills/observability/assets/authority/reference-source/observability.tar.gz').read_bytes()).hexdigest())"
 ```
 
@@ -1716,8 +1716,8 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name web-identi
 - [ ] **Step 3: Download primary authority snapshot to scratch**
 
 ```bash
-mkdir -p ../_agent-scratch/agent-asset-marketplace/afpse-epic
-curl -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/web-identity.html https://datatracker.ietf.org/doc/html/rfc6749
+New-Item -ItemType Directory -Force -Path ../_agent-scratch/agent-asset-marketplace/afpse-epic
+curl.exe -L -o ../_agent-scratch/agent-asset-marketplace/afpse-epic/web-identity.html https://datatracker.ietf.org/doc/html/rfc6749
 py -3 -c "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('../_agent-scratch/agent-asset-marketplace/afpse-epic/web-identity.html').read_bytes()).hexdigest())"
 Remove-Item ../_agent-scratch/agent-asset-marketplace/afpse-epic/web-identity.html
 ```
@@ -1845,10 +1845,10 @@ py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name dotnet --c
 - [ ] **Step 3: Download the canonical sources and build a combined archive**
 
 ```bash
-mkdir -p sources/first_party/skills/dotnet/assets/authority/reference-source
-mkdir -p ../_agent-scratch/agent-asset-marketplace/afpse-epic/dotnet-source
-curl -L -o sources/first_party/skills/dotnet/assets/authority/reference-source/dotnet-docs.tar.gz https://github.com/dotnet/docs/archive/refs/heads/main.tar.gz
-curl -L -o sources/first_party/skills/dotnet/assets/authority/reference-source/aspnetcore-docs.tar.gz https://github.com/dotnet/AspNetCore.Docs/archive/refs/heads/main.tar.gz
+New-Item -ItemType Directory -Force -Path sources/first_party/skills/dotnet/assets/authority/reference-source
+New-Item -ItemType Directory -Force -Path ../_agent-scratch/agent-asset-marketplace/afpse-epic/dotnet-source
+curl.exe -L -o sources/first_party/skills/dotnet/assets/authority/reference-source/dotnet-docs.tar.gz https://github.com/dotnet/docs/archive/refs/heads/main.tar.gz
+curl.exe -L -o sources/first_party/skills/dotnet/assets/authority/reference-source/aspnetcore-docs.tar.gz https://github.com/dotnet/AspNetCore.Docs/archive/refs/heads/main.tar.gz
 tar -xzf sources/first_party/skills/dotnet/assets/authority/reference-source/dotnet-docs.tar.gz -C ../_agent-scratch/agent-asset-marketplace/afpse-epic/dotnet-source
 tar -xzf sources/first_party/skills/dotnet/assets/authority/reference-source/aspnetcore-docs.tar.gz -C ../_agent-scratch/agent-asset-marketplace/afpse-epic/dotnet-source
 tar -czf sources/first_party/skills/dotnet/assets/authority/reference-source/dotnet.tar.gz -C ../_agent-scratch/agent-asset-marketplace/afpse-epic/dotnet-source .
@@ -1970,23 +1970,20 @@ git push -u origin harleydbartles/mark-352-qualify-the-next-authoritative-source
 - Create: `codex-marketplace/plugins/dotnet-pack/PROJECTION.md`
 - Create: `codex-marketplace/plugins/dotnet-pack/LICENSE`
 - Create: `codex-marketplace/plugins/dotnet-pack/assets/icon.svg`
-- Create: `adapters/codex/dotnet-pack/vertical-slice/SKILL.md`
-- Create: `adapters/codex/dotnet-pack/vertical-slice/overlay.yaml`
 - Create: `provenance/dotnet-pack.md`
 
 **Interfaces:**
 - Consumes: `dotnet` skill branch merged; retiring `dotnet-kit` plugin root.
-- Produces: new `dotnet-pack` plugin root and overlay for `vertical-slice`; ready for registry integration.
+- Produces: new `dotnet-pack` plugin root containing only the first-party `dotnet` skill; ready for registry integration.
 
 - [ ] **Step 1: Check out the epic and create the new plugin root**
 
 ```bash
 git checkout harleydbartles/afpse-epic
 git pull origin harleydbartles/afpse-epic
-mkdir -p codex-marketplace/plugins/dotnet-pack/.codex-plugin
-mkdir -p codex-marketplace/plugins/dotnet-pack/assets
-mkdir -p codex-marketplace/plugins/dotnet-pack/references
-mkdir -p adapters/codex/dotnet-pack/vertical-slice
+New-Item -ItemType Directory -Force -Path codex-marketplace/plugins/dotnet-pack/.codex-plugin
+New-Item -ItemType Directory -Force -Path codex-marketplace/plugins/dotnet-pack/assets
+New-Item -ItemType Directory -Force -Path codex-marketplace/plugins/dotnet-pack/references
 ```
 
 - [ ] **Step 2: Copy and edit the plugin manifest**
@@ -1997,7 +1994,7 @@ Copy `codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json` to `codex-
 {
   "name": "dotnet-pack",
   "version": "1.0.0",
-  "description": "First-party .NET ecosystem pack projected from the dotnet skill and the retained vertical-slice skill.",
+  "description": "First-party .NET ecosystem pack projected from the dotnet skill.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -2008,14 +2005,13 @@ Copy `codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json` to `codex-
     "dotnet",
     "csharp",
     "aspnetcore",
-    "vertical-slice",
     "codex"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Dotnet Pack",
     "shortDescription": ".NET ecosystem Codex pack",
-    "longDescription": "A repo-local Codex plugin bundle projecting the first-party .NET ecosystem skill and the retained vertical-slice skill from dotnet-claude-kit.",
+    "longDescription": "A repo-local Codex plugin bundle projecting the first-party .NET ecosystem skill.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -2024,7 +2020,7 @@ Copy `codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json` to `codex-
     ],
     "defaultPrompt": [
       "Inspect the dotnet-pack source map and bundle manifest.",
-      "Use the pack to install the dotnet and vertical-slice skills.",
+      "Use the pack to install the dotnet skill.",
       "Confirm provider-specific assumptions are stripped from the projection."
     ],
     "brandColor": "#0F4C81",
@@ -2039,32 +2035,16 @@ Copy `codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json` to `codex-
 ```bash
 Copy-Item codex-marketplace/plugins/dotnet-kit/LICENSE codex-marketplace/plugins/dotnet-pack/LICENSE
 Copy-Item codex-marketplace/plugins/dotnet-kit/assets/icon.svg codex-marketplace/plugins/dotnet-pack/assets/icon.svg
-Copy-Item adapters/codex/dotnet-kit/vertical-slice/SKILL.md adapters/codex/dotnet-pack/vertical-slice/SKILL.md
 ```
 
-- [ ] **Step 4: Write the `vertical-slice` overlay spec**
-
-Create `adapters/codex/dotnet-pack/vertical-slice/overlay.yaml`:
-
-```yaml
-schema_version: 1
-deletes: []
-metadata:
-  source_category: third_party
-  upstream_name: vertical-slice
-  adaptation_overlay: adapters/codex/dotnet-pack/vertical-slice
-  projection_plugin: dotnet-pack
-  upstream_version: upstream
-```
-
-- [ ] **Step 5: Write `README.md` with generated-content markers**
+- [ ] **Step 4: Write `README.md` with generated-content markers**
 
 Create `codex-marketplace/plugins/dotnet-pack/README.md`:
 
 ```markdown
 # Dotnet Pack
 
-This plugin bundle projects the first-party .NET ecosystem skill and the retained `vertical-slice` guidance from `dotnet-claude-kit` into an installable Codex marketplace pack.
+This plugin bundle projects the first-party .NET ecosystem skill into an installable Codex marketplace pack.
 
 ## Bundle contents
 <!-- BEGIN GENERATED: bundle-contents -->
@@ -2077,7 +2057,6 @@ This plugin bundle projects the first-party .NET ecosystem skill and the retaine
 
 ## Boundary
 - `dotnet` carries the first-party .NET ecosystem guidance.
-- `vertical-slice` is retained from `dotnet-claude-kit` with its existing overlay.
 - Provider-specific assumptions from the upstream snapshot are stripped or rewritten in the installable pack.
 
 ## Install shape
@@ -2085,24 +2064,23 @@ This plugin bundle projects the first-party .NET ecosystem skill and the retaine
 The installable skill zips are generated under `generated/skill-zips/dotnet-pack/<skill-name>/skill.zip`.
 ```
 
-- [ ] **Step 6: Write `SOURCE.md` with generated-content markers**
+- [ ] **Step 5: Write `SOURCE.md` with generated-content markers**
 
 Create `codex-marketplace/plugins/dotnet-pack/SOURCE.md`:
 
 ```markdown
 # Source
 
-This plugin projects the first-party `dotnet` skill and the retained `vertical-slice` skill from `dotnet-claude-kit` into a Codex marketplace pack.
+This plugin projects the first-party `dotnet` skill into a Codex marketplace pack.
 
 <!-- BEGIN GENERATED: pack-inventory -->
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary
 - `dotnet` is first-party source custody under `sources/first_party/skills/dotnet/`.
-- `vertical-slice` source custody remains `sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/`.
 ```
 
-- [ ] **Step 7: Write `PROJECTION.md` with generated-content markers**
+- [ ] **Step 6: Write `PROJECTION.md` with generated-content markers**
 
 Create `codex-marketplace/plugins/dotnet-pack/PROJECTION.md`:
 
@@ -2115,17 +2093,17 @@ This root is the Codex-facing marketplace projection of the .NET ecosystem pack.
 
 This repository uses two distinct layers for the dotnet-pack bundle:
 
-- Source custody keeps the first-party `dotnet` skill and the retained `dotnet-claude-kit` snapshot verbatim.
+- Source custody keeps the first-party `dotnet` skill verbatim.
 - Projection layer holds the source-controlled marketplace copy with first-party selection decisions.
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The projected skills are materialized from `sources/first_party/skills/dotnet/` and `sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/` per the registry.
+- The projected skill is materialized from `sources/first_party/skills/dotnet/` per the registry.
 - Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
-- Do not apply Codex-safe wording or marketplace adaptation inside the third-party source custody root.
+- Do not apply Codex-safe wording or marketplace adaptation inside the first-party source custody root.
 - Do apply projection-layer adaptations in the marketplace copy where they can be reviewed, documented, and regenerated.
 - Do treat generated zips, registry entries, and GPT exports as derived install surfaces, not hand-edited sources.
 
@@ -2146,27 +2124,20 @@ The split is deliberate:
 - `PROJECTION.md`
 - `references/bundle-manifest.json`
 - `references/source-map.md`
-
-## Excluded from the active install surface
-
-- Upstream harness surfaces, tests, docs, and package metadata remain in `sources/third_party/dotnet-claude-kit/upstream/` as support provenance and retained source custody.
 ```
 
-- [ ] **Step 8: Write `provenance/dotnet-pack.md`**
+- [ ] **Step 7: Write `provenance/dotnet-pack.md`**
 
 Create `provenance/dotnet-pack.md`:
 
 ```markdown
 # Dotnet Pack Provenance
 
-This plugin projects the first-party `dotnet` ecosystem skill and the retained `vertical-slice` skill from `dotnet-claude-kit` into a Codex marketplace pack.
+This plugin projects the first-party `dotnet` ecosystem skill into a Codex marketplace pack.
 
 ## Upstream basis
 
 - `dotnet` first-party skill: `sources/first_party/skills/dotnet/`
-- `vertical-slice` upstream: `codewithmukesh/dotnet-claude-kit`
-- Pinned commit: `9a9a91107596b3ac3ad1d0ad5ec5eef189e74515`
-- `vertical-slice` license: MIT
 
 ## Pack shape
 
@@ -2176,11 +2147,10 @@ This plugin projects the first-party `dotnet` ecosystem skill and the retained `
 
 ## Rights and Attribution
 
-- `vertical-slice` content is MIT-licensed from `dotnet-claude-kit`.
 - `dotnet` content is MIT-licensed first-party.
 ```
 
-- [ ] **Step 9: Validate the new plugin root shape**
+- [ ] **Step 8: Validate the new plugin root shape**
 
 ```bash
 py -3 tools/validate_authority_assets.py
@@ -2189,10 +2159,10 @@ py -3 tools/normalize_first_party_skill_sources.py --check
 
 Expected: no errors.
 
-- [ ] **Step 10: Commit and push**
+- [ ] **Step 9: Commit and push**
 
 ```bash
-git add codex-marketplace/plugins/dotnet-pack adapters/codex/dotnet-pack/vertical-slice provenance/dotnet-pack.md
+git add codex-marketplace/plugins/dotnet-pack provenance/dotnet-pack.md
 git commit -m "feat: bootstrap dotnet-pack plugin root from dotnet-kit"
 git push origin harleydbartles/afpse-epic
 ```
@@ -2408,11 +2378,10 @@ Remove the `dotnet-claude-kit` mega-pack node and insert the following node in i
   "category": "Productivity",
   "is_mega_pack": false,
   "notes": [
-    ".NET ecosystem pack projects the first-party dotnet skill and the retained vertical-slice skill from dotnet-claude-kit."
+    ".NET ecosystem pack projects the first-party dotnet skill."
   ],
   "source_ledger": [
-    "sources/first_party/skills/dotnet/SKILL.md",
-    "sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md"
+    "sources/first_party/skills/dotnet/SKILL.md"
   ],
   "provenance_refs": [
     "provenance/dotnet-pack.md"
@@ -2432,29 +2401,21 @@ Remove the `dotnet-claude-kit` mega-pack node and insert the following node in i
       "local_path": "skills/dotnet",
       "provenance_note": "Projected verbatim from the first-party dotnet ecosystem skill.",
       "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "vertical-slice",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "source_family": "dotnet-claude-kit",
-      "canonical_source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice",
-      "local_path": "skills/vertical-slice",
-      "import_status": "imported",
-      "source_path": "sources/third_party/dotnet-claude-kit/upstream/skills/vertical-slice/SKILL.md",
-      "source_author": "codewithmukesh",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/codewithmukesh/dotnet-claude-kit",
-      "adapted_author": "Harley Bartles",
-      "adaptation_overlay_path": "adapters/codex/dotnet-pack/vertical-slice",
-      "adaptation_note": "Retained from dotnet-claude-kit with the projection plugin root updated to dotnet-pack.",
-      "copy_expectation": "adapted_from_source"
     }
   ]
 }
 ```
 
-- [ ] **Step 5: Regenerate the plugin-root inventory**
+- [ ] **Step 5: Delete the drained third-party source and adapter trees**
+
+```powershell
+Remove-Item -Recurse -Force sources/third_party/dotnet-claude-kit/upstream
+Remove-Item -Recurse -Force adapters/codex/dotnet-kit
+```
+
+Expected: `sources/third_party/dotnet-claude-kit/upstream/` and `adapters/codex/dotnet-kit/` no longer exist.
+
+- [ ] **Step 6: Regenerate the plugin-root inventory**
 
 ```bash
 py -3 tools/generate_plugin_root_inventory.py
@@ -2462,7 +2423,7 @@ py -3 tools/generate_plugin_root_inventory.py
 
 Expected: `Wrote codex-marketplace/plugin-roots.json`.
 
-- [ ] **Step 6: Validate registry and plugin root inventory**
+- [ ] **Step 7: Validate registry and plugin root inventory**
 
 ```bash
 py -3 tools/generate_plugin_root_inventory.py --check
@@ -2472,9 +2433,10 @@ py -3 tools/normalize_first_party_skill_sources.py --check
 
 Expected: plugin-root inventory is current and authority assets are valid. `generate_pack_manifests` checks are intentionally deferred to Task 17 (`rebuild_marketplace.py` and `check_marketplace.py`) because the new `dotnet-pack` bundle manifest is generated as part of the full marketplace rebuild.
 
-- [ ] **Step 7: Commit the registry changes**
+- [ ] **Step 8: Commit the registry changes**
 
 ```bash
+git add -u
 git add codex-marketplace/custody-pack-registry.json codex-marketplace/plugin-roots.json
 git commit -m "feat: integrate first-party skill assignments and dotnet-pack registry node"
 git push origin harleydbartles/mark-afpse-registry-integration
@@ -2495,24 +2457,25 @@ git push origin harleydbartles/mark-afpse-registry-integration
 ```bash
 git checkout harleydbartles/afpse-epic
 git pull origin harleydbartles/afpse-epic
-for branch in \
-  harleydbartles/mark-340-re-custody-ddd-from-the-eric-evans-ddd-reference \
-  harleydbartles/mark-341-split-cqrs-and-event-sourcing-into-clean-room-citation \
-  harleydbartles/mark-342-create-clean-architecture-and-hexagonal-architecture-citation-backed \
-  harleydbartles/mark-343-re-custody-owasp-top-ten-and-establish-an-asvs-verification \
-  harleydbartles/mark-344-re-custody-the-openapi-specification-specialist-skill \
-  harleydbartles/mark-345-re-custody-the-wcag-accessibility-audit-specialist-skill \
-  harleydbartles/mark-346-create-the-first-party-net-ecosystem-skill-and-migrate \
-  harleydbartles/mark-347-create-the-first-party-typescript-ecosystem-skill \
-  harleydbartles/mark-348-create-the-first-party-react-ecosystem-skill \
-  harleydbartles/mark-349-create-the-cross-framework-web-styling-skill \
-  harleydbartles/mark-350-create-the-opentelemetry-observability-skill \
-  harleydbartles/mark-351-create-the-cross-stack-web-identity-citation-backed-skill \
-  harleydbartles/mark-352-qualify-the-next-authoritative-source-specialist-candidates \
-  harleydbartles/mark-afpse-registry-integration
-do
-  git merge --no-ff "$branch" -m "merge $branch into afpse-epic"
-done
+$branches = @(
+  "harleydbartles/mark-340-re-custody-ddd-from-the-eric-evans-ddd-reference",
+  "harleydbartles/mark-341-split-cqrs-and-event-sourcing-into-clean-room-citation",
+  "harleydbartles/mark-342-create-clean-architecture-and-hexagonal-architecture-citation-backed",
+  "harleydbartles/mark-343-re-custody-owasp-top-ten-and-establish-an-asvs-verification",
+  "harleydbartles/mark-344-re-custody-the-openapi-specification-specialist-skill",
+  "harleydbartles/mark-345-re-custody-the-wcag-accessibility-audit-specialist-skill",
+  "harleydbartles/mark-346-create-the-first-party-net-ecosystem-skill-and-migrate",
+  "harleydbartles/mark-347-create-the-first-party-typescript-ecosystem-skill",
+  "harleydbartles/mark-348-create-the-first-party-react-ecosystem-skill",
+  "harleydbartles/mark-349-create-the-cross-framework-web-styling-skill",
+  "harleydbartles/mark-350-create-the-opentelemetry-observability-skill",
+  "harleydbartles/mark-351-create-the-cross-stack-web-identity-citation-backed-skill",
+  "harleydbartles/mark-352-qualify-the-next-authoritative-source-specialist-candidates",
+  "harleydbartles/mark-afpse-registry-integration"
+)
+foreach ($branch in $branches) {
+  git merge --no-ff $branch -m "merge $branch into afpse-epic"
+}
 ```
 
 - [ ] **Step 2: Run the canonical full marketplace rebuild**
@@ -2577,7 +2540,7 @@ Return must include:
 - `new_skill.py` exists at `.agents/skills/mark-skill-authoring/scripts/new_skill.py` and accepts `--name`, `--custody marketplace`, and `--lane` values used in the plan.
 - `tools/validate_authority_assets.py`, `tools/normalize_first_party_skill_sources.py`, `tools/rebuild_marketplace.py`, `tools/check_marketplace.py`, `tools/generate_plugin_root_inventory.py`, and `tools/generate_pack_manifests.py` all exist and support the flags used in the plan.
 - `codex-marketplace/custody-pack-registry.json` contains the existing pack nodes and `entries` arrays referenced in Task 16.
-- `codex-marketplace/plugins/dotnet-kit/` contains the files used for `dotnet-pack` bootstrapping, and `adapters/codex/dotnet-kit/vertical-slice/` contains the overlay used for `adapters/codex/dotnet-pack/vertical-slice/`.
+- `codex-marketplace/plugins/dotnet-kit/` contains the files used for `dotnet-pack` bootstrapping (LICENSE, icon, and plugin.json); `adapters/codex/dotnet-kit/` and the `dotnet-claude-kit` upstream snapshot are removed in Task 16.
 - The current branch is `harleydbartles/afpse-epic` and `origin/main` resolves.
 
 **Known gaps / discovery required during execution:**
