@@ -113,8 +113,8 @@ def test_repo_worker_pack_inventory_docs_are_manifest_backed():
         text = path.read_text(encoding="utf-8")
         assert "writing-with-clarity" in text, path
         assert "BEGIN GENERATED:" in text, path
-    assert "Manifest entry count: 12." in PACK_DOCS[0].read_text(encoding="utf-8")
-    assert "Active manifest entries (12):" in PACK_DOCS[2].read_text(encoding="utf-8")
+    assert "Manifest entry count: 13." in PACK_DOCS[0].read_text(encoding="utf-8")
+    assert "Active manifest entries (13):" in PACK_DOCS[2].read_text(encoding="utf-8")
 
 
 def test_repo_worker_pack_registry_contains_first_party_entry():
