@@ -32,6 +32,9 @@ PACK_DOCS = [
     ROOT / "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/PROJECTION.md",
 ]
+REPO_WORKER_PACK_MANIFEST = (
+    ROOT / "codex-marketplace/plugins/repo-worker-pack/references/bundle-manifest.json"
+)
 
 
 def test_source_skill_contains_expected_reference_tree():
@@ -109,12 +112,14 @@ def test_projected_and_installed_skill_trees_match_source():
 
 
 def test_repo_worker_pack_inventory_docs_are_manifest_backed():
+    manifest = json.loads(REPO_WORKER_PACK_MANIFEST.read_text(encoding="utf-8"))
+    manifest_entry_count = len(manifest["entries"])
     for path in PACK_DOCS:
         text = path.read_text(encoding="utf-8")
         assert "writing-with-clarity" in text, path
         assert "BEGIN GENERATED:" in text, path
-    assert "Manifest entry count: 13." in PACK_DOCS[0].read_text(encoding="utf-8")
-    assert "Active manifest entries (13):" in PACK_DOCS[2].read_text(encoding="utf-8")
+    assert f"Manifest entry count: {manifest_entry_count}." in PACK_DOCS[0].read_text(encoding="utf-8")
+    assert f"Active manifest entries ({manifest_entry_count}):" in PACK_DOCS[2].read_text(encoding="utf-8")
 
 
 def test_repo_worker_pack_registry_contains_first_party_entry():
