@@ -25,6 +25,9 @@ itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_m
 Agent skills installation is handled by `py -3 tools/install_agent_skills.py`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
+`py -3 tools/generate_pack_manifests.py --check` also verifies any
+manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
+and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py`.
 The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.

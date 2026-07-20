@@ -44,3 +44,10 @@
   source at `sources/first_party/skills/cleanup-custody/` so workspace
   and repository surface custody classification rides with the repo
   baseline.
+- `risk-gates` is projected here from the canonical first-party source at
+  `sources/first_party/skills/risk-gates/` so generic pre-action risk gates
+  remain available on the repo-facing worker surface.
+- `writing-with-clarity` is projected here from the canonical first-party
+  source at `sources/first_party/skills/writing-with-clarity/`; its compact
+  references route human-facing prose tasks while the bundled 1918 HTML remains
+  a reference-only fallback with its upstream custody record.

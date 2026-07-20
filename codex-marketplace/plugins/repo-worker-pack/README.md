@@ -3,16 +3,23 @@
 This bundle projects the first-party repo worker baseline skills.
 
 ## Bundle contents
-### First_Party skills
-- `work-mode-router`
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
 - `base-doctrine`
-- `linear-issue-shaping`
-- `using-linear`
-- `repo-worker-base`
+- `cleanup-custody`
 - `connector-safety`
-- `github-operations`
-- `unslop-plus`
 - `context-safety`
+- `github-operations`
+- `linear-issue-shaping`
+- `repo-worker-base`
+- `risk-gates`
+- `unslop-plus`
+- `using-linear`
+- `work-mode-router`
+- `writing-with-clarity`
+
+Manifest entry count: 12.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -22,7 +29,7 @@ This bundle projects the first-party repo worker baseline skills.
 ## Boundary
 - The first-party repo worker skills stay projected alongside the
   compositional repo-worker entrypoint and supporting workflow skills.
-- The bundle stays narrow, first-party only, and tracks the current nine-skill
+- The bundle stays narrow, first-party only, and tracks the current manifest
   repo worker baseline without absorbing broader Superpowers+ or other workflow
   packs.
 

@@ -187,6 +187,66 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     generate_pack_manifests.main()
 
+    def test_generate_pack_manifests_refreshes_and_checks_generated_pack_docs(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            plugin_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack"
+            manifest_path = plugin_root / "references" / "bundle-manifest.json"
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            for doc_name, marker in (
+                ("README.md", "bundle-contents"),
+                ("SOURCE.md", "pack-inventory"),
+                ("PROJECTION.md", "projection-contract"),
+            ):
+                (plugin_root / doc_name).write_text(
+                    f"# Sample\n<!-- BEGIN GENERATED: {marker} -->\nstale\n<!-- END GENERATED: {marker} -->\n",
+                    encoding="utf-8",
+                )
+
+            pack = {
+                "bundle_name": "sample-pack",
+                "plugin_root": "codex-marketplace/plugins/sample-pack",
+                "bundle_version": "1.0.0",
+                "bundle_type": "projection-lane",
+                "is_mega_pack": False,
+                "notes": ["generated"],
+                "provenance_refs": ["provenance/sample-pack.md"],
+                "generated_doc_surfaces": ["README.md", "SOURCE.md", "PROJECTION.md"],
+                "entries": [
+                    {
+                        "canonical_name": "sample-skill",
+                        "source_category": "third_party",
+                        "source_family": "ecc",
+                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "local_path": "skills/sample-skill",
+                        "provenance_note": "Projected verbatim from retained ECC custody.",
+                    }
+                ],
+            }
+
+            with (
+                patch.object(generate_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_pack_manifests, "PACKS", [pack]),
+            ):
+                generate_pack_manifests.generate(write=True)
+
+            for doc_name in ("README.md", "SOURCE.md", "PROJECTION.md"):
+                rendered = (plugin_root / doc_name).read_text(encoding="utf-8")
+                self.assertIn("sample-skill", rendered)
+                self.assertNotIn("stale", rendered)
+
+            readme_path = plugin_root / "README.md"
+            readme_path.write_text(
+                readme_path.read_text(encoding="utf-8").replace("sample-skill", "retired-skill"),
+                encoding="utf-8",
+            )
+            with (
+                patch.object(generate_pack_manifests, "ROOT", temp_root),
+                patch.object(generate_pack_manifests, "PACKS", [pack]),
+            ):
+                with self.assertRaises(ValueError):
+                    generate_pack_manifests.generate(write=False)
+
     def test_materialize_projection_check_detects_stale_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)

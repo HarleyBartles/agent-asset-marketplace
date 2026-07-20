@@ -216,6 +216,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/worker-verification",
       "local_path": "skills/worker-verification"
+    },
+    {
+      "canonical_name": "writing-with-clarity",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/writing-with-clarity",
+      "local_path": "skills/writing-with-clarity"
     }
   ],
   "adapted_projections": []
