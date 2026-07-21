@@ -22,8 +22,8 @@ SUPERPOWERS_TAG_OBJECT = "ecbd610fce16d5faabcea997f17031129589b572"
 
 import validate_marketplace  # noqa: E402
 import superpowers_source  # noqa: E402
-import skill_zip_artifacts  # noqa: E402
-from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
+import project_skills  # noqa: E402
+from skill_validation import validate_skill_markdown_frontmatter  # noqa: E402
 from validate_marketplace import (  # noqa: E402
     _validate_projection_entry_provenance,
     _validate_repo_index_metadata,
@@ -201,7 +201,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             run_mock.assert_called_once()
             self.assertEqual(
                 run_mock.call_args.args[0],
-                [sys.executable, "tools/materialize_projection.py", "--check"],
+                [sys.executable, "tools/project_skills.py", "--check"],
             )
 
     def test_validate_marketplace_runs_pack_manifest_check(self) -> None:
@@ -621,7 +621,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "---\nname: using-superpowers\ndescription: Use when workflow-sensitive work needs Superpowers guidance.\n---\nBody.\n",
             )
 
-            with patch("skill_zip_artifacts.ROOT", temp_root):
+            with patch("skill_validation.ROOT", temp_root):
                 with self.assertRaises(ValueError):
                     validate_skill_markdown_frontmatter(projected_skill_root)
 
@@ -641,7 +641,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 ),
             )
 
-            with patch("skill_zip_artifacts.ROOT", temp_root):
+            with patch("skill_validation.ROOT", temp_root):
                 validate_skill_markdown_frontmatter(projected_skill_root)
 
     def test_validate_skill_markdown_frontmatter_rejects_invalid_headers(self) -> None:
