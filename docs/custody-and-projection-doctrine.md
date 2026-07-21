@@ -105,7 +105,8 @@ The flow is:
 2. **Projection** — `codex-marketplace/plugins/` vendored bundles, generated
    from custody plus manifest entries.
 3. **Install / export** — `codex-marketplace/plugins/` is the canonical install
-   surface; `generated/skill-zips/` is the derived GPT export corpus.
+   surface; `generated/skill-zips/<skill>.zip` is the derived flat GPT-ready
+   export corpus with no per-pack subdirectories and no registry file.
 
 Projection is generated, not hand-edited. The manifest is the edit surface that
 drives projection.
@@ -135,15 +136,15 @@ The business-as-usual target for adding or updating a skill is:
    first-party skill adds/removals, the first-party mega-pack is rebuilt from
    `sources/first_party/skills/`; curated non-first-party mega-packs still
    follow their selected-entry unions.
-4. **Add GPT decision** — record the GPT export lane decision (see below).
-5. **Run one tool** — regenerate the projection with the designated tooling
-   (e.g. `py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`).
-6. **Regenerate proof surfaces** — run
+4. **Run one tool** — regenerate the projection with the designated tooling
+   (`py -3 tools/update_skill_artifacts.py --all`), which also refreshes the
+   flat `generated/skill-zips/<skill>.zip` artifacts.
+5. **Regenerate proof surfaces** — run
    `py -3 tools/generate_provenance_maps.py` and
    `py -3 tools/generate_source_maps.py`.
-7. **Validate** — run `py -3 tools/validate_marketplace.py` and
-   `py -3 tools/materialize_projection.py --check` to confirm the projection
-   matches custody and manifest.
+6. **Validate** — run `py -3 tools/validate_marketplace.py` and
+   `py -3 tools/project_skills.py --check` to confirm the projection and flat
+   zips match custody and manifest.
 
 If a first-party skill is removed from a project pack but remains approved in
 `house-skills`, keep the source in custody and regenerate the projections so
@@ -168,7 +169,7 @@ still to add the manifest entry and regenerate, not to delete the source.
 
 ## Manifest shape validation
 
-All 20 plugin manifests must use the directory-level `entries[]` projection-lane
+All 21 plugin manifests must use the directory-level `entries[]` projection-lane
 shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests
 with legacy shapes (`skills[]`, `components[]`, or file-level
 `canonical_source_path` ending in a file suffix). This ensures the materializer
@@ -181,20 +182,11 @@ not hand-maintained. Run `py -3 tools/generate_provenance_maps.py` and
 `py -3 tools/generate_source_maps.py` to regenerate them. Both generators have
 `--check` mode that fails on drift.
 
-## Zip projection lanes
+## Zip projection
 
-When projecting from marketplace source to GPT-ready zips under
-`generated/skill-zips/`, each entry falls into one lane:
-
-- **`direct`** — already GPT-safe. Verbatim passthrough from projection to
-  zip. No overlay needed.
-- **`overlay`** — codex-safe but not GPT-safe. Needs GPT adaptation declared
-  under `adapters/gpt/` to become installable as a raw GPT package. The
-  overlay makes the export safe without weakening Codex-native plugin
-  behavior.
-- **`excluded`** — not exportable as a raw GPT package. The entry is
-  intentionally omitted from the zip corpus. Exclusion is explicit, not
-  silent.
-
-The lane is a per-entry decision recorded alongside the manifest entry. It
-drives export behavior, not projection behavior.
+`generated/skill-zips/<skill>.zip` is a flat, deterministic archive of the
+staged Codex projection for each active `canonical_name`. The archive contains
+exactly one top-level folder named `<skill>/`, including `<skill>/SKILL.md`.
+There is no per-pack subdirectory and no `registry.json`. The projection is the
+same byte content installed into `codex-marketplace/plugins/<pack>/skills/<skill>/`;
+GPT-readiness is a property of the Codex projection itself, not a separate lane.

@@ -8,16 +8,15 @@ Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
 The skill-update path is now worker-facing through
-`py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>`. The root
-inventory that drives marketplace plugin ownership is
-`codex-marketplace/plugin-roots.json`, GPT overlay sources live under
-`adapters/gpt/`, and drift validation lives in
-`tools/validate_generated_drift.py`.
+`py -3 tools/update_skill_artifacts.py --all` for a full regeneration. The
+`--skill` and `--pack` flags remain as backwards-compatible aliases that also
+run the full pipeline. The root inventory that drives marketplace plugin
+ownership is `codex-marketplace/plugin-roots.json`.
 The marketplace freshness proof is `py -3 tools/generate_marketplace.py --check`
 for `.agents/plugins/marketplace.json` and
 `codex-marketplace/manifest.json`, plus `py -3 tools/generate_repo_index.py
---check` for `repo-index/repo-index.json`. Projection-lane freshness is
-proven by `py -3 tools/materialize_projection.py --check`, and the selected
+--check` for `repo-index/repo-index.json`. Projection-lane and flat skill-zip
+freshness are proven by `py -3 tools/project_skills.py --check`, and the selected
 pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests.py
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
@@ -111,8 +110,8 @@ write LF.
   and validation command documentation aligned.
 - Flag targeted skill-update helpers that rewrite unrelated generated state or
   that hide full-regeneration behavior behind an ordinary update path.
-- Flag GPT export manifests that allow raw Codex-specific assumptions to leak
-  into generated skill zips instead of using an overlay or exclusion.
+- Flag flat skill.zip artifacts that do not match the staged Codex projection
+  or that contain stale adapter, gpt, or per-pack zip references.
 
 ## Maintenance responsibility
 

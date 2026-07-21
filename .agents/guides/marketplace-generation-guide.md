@@ -70,7 +70,7 @@ py -3 tools/generate_index_mesh.py --check
 You must run the full marketplace regeneration (`rebuild_marketplace.py`) after any change to:
 
 - Source custody under `sources/first_party/` or `sources/third_party/`
-- Adapter files under `adapters/codex/` or `adapters/gpt/`
+- Codex adapter/overlay files under `adapters/codex/`
 - Projection plugin shapes under `codex-marketplace/plugins/`
 - Bundle manifests in plugin references
 - Source maps or provenance maps
@@ -89,13 +89,13 @@ After regeneration, verify:
 
 ## Deterministic Pack Rule
 
-If a skillset pack or projection lane lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard update/check entrypoints. Do not hand-edit projected skill trees, source maps, provenance maps, registry surfaces, or zip artifacts.
+If a skillset pack or projection lane lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard update/check entrypoints. Do not hand-edit projected skill trees, source maps, provenance maps, or zip artifacts.
 
 ## Editable Custody Inputs
 
 The editable custody inputs for marketplace generation are:
 - Source trees under `sources/`
-- Adapter/overlay trees under `adapters/`
+- Codex overlay/adapter trees under `adapters/codex/`
 - Pack registry under `codex-marketplace/custody-pack-registry.json`
 
 Generated surfaces (manifests, projection trees, source maps, provenance maps, zip artifacts) must stay derived from these inputs.

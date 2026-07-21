@@ -15,26 +15,21 @@ The repo-wide navigation mesh lives in [INDEX.md](INDEX.md) and the agent
 projection mesh lives in [.agents/AGENTS.md](.agents/AGENTS.md) with policy in
 [.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md).
 
-Canonical repo-resident `skill.zip` artifacts, when present, live under
-`generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip` with a registry at
-`generated/skill-zips/registry.json`. The package tooling is the normal writer
-for that surface.
+Canonical repo-resident `skill.zip` artifacts, when present, live as flat files
+under `generated/skill-zips/<skill-name>.zip`. The package tooling is the normal
+writer for that surface.
 
-That generated surface is the GPT-ready export surface. It is built from the
-marketplace source tree plus any repo-owned GPT overlay declared under
-`adapters/gpt/`. Direct exports stay direct when the source is already
-GPT-safe; overlay exports apply the overlay before packaging; excluded skills
-are recorded in the registry with a reason instead of being exported raw.
-
-Treat the marketplace plugin roots under `codex-marketplace/plugins/` as the
-canonical install surface. Treat `generated/skill-zips/` as a generated GPT
-export corpus, not canonical source.
+That generated surface is the GPT-ready export surface. It is built as a
+deterministic copy of the staged Codex projection. Treat the marketplace plugin
+roots under `codex-marketplace/plugins/` as the canonical install surface.
+Treat `generated/skill-zips/` as a generated GPT export corpus, not canonical
+source.
 
 The active marketplace root inventory is editable at
 `codex-marketplace/plugin-roots.json`. Workers should update that inventory,
 the relevant source/projection files, and then run
-`py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>` for a targeted
-refresh. Use `--all` only for an explicit full regeneration.
+`py -3 tools/update_skill_artifacts.py --all` for a full regeneration. The
+`--skill` and `--pack` flags remain as backwards-compatible aliases.
 Use `py -3 tools/generate_marketplace.py --check` and
 `py -3 tools/generate_repo_index.py --check` to prove the marketplace registry,
 Codex marketplace manifest, and repo index are current without mutating them.

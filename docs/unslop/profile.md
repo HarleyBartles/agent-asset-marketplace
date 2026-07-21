@@ -11,7 +11,7 @@ This file is the repo-specific anti-slop guard for `HarleyBartles/agent-asset-ma
 
 - Codex marketplace source is plugin-first.
 - Canonical skill identity is `plugin_name:skill_name`.
-- `gpt-overlays/` describes projection behavior, not source doctrine.
+- `adapters/codex/` describes Codex projection behavior, not source doctrine.
 - Generated `skill.zip` files in `generated/skill-zips/` are repo-resident outputs, not canonical source.
 - Regenerate generated zips through tooling. Do not hand-edit them.
 

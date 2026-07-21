@@ -22,7 +22,7 @@
 - Public identity: `skill-packager`
 - Provenance/history only: MARK-21 skill maintenance House Skills source slice (retired)
 - Scope: skill packaging
-- Notes: Retired legacy skill helper. Skill packaging is now handled by `tools/package_skill_zips.py` and the deterministic marketplace generation pipeline. This record exists only for provenance audit of the retired source path.
+- Notes: Retired legacy skill helper. Skill packaging is now handled by `tools/project_skills.py` and the deterministic marketplace generation pipeline. This record exists only for provenance audit of the retired source path.
 
 ## connector-safety
 
