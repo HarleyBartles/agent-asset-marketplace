@@ -44,7 +44,37 @@ def _load_tracked() -> tuple[set[Path], set[Path]]:
     return tracked_dirs, tracked_files
 
 
+def _load_ignored_index_paths(tracked_dirs: set[Path]) -> set[str]:
+    """Return the set of relative INDEX.md paths that git would ignore.
+
+    Batch the check via `git check-ignore --no-index --stdin` so the number of
+    git subprocesses does not scale with the number of directories.
+    """
+    candidates = sorted((d / "INDEX.md").relative_to(ROOT).as_posix() for d in tracked_dirs)
+    ignored: set[str] = set()
+    if not candidates:
+        return ignored
+    input_bytes = b"\x00".join(c.encode("utf-8") for c in candidates) + b"\x00"
+    result = subprocess.run(
+        ["git", "check-ignore", "--no-index", "-z", "--stdin"],
+        input=input_bytes,
+        cwd=ROOT,
+        capture_output=True,
+    )
+    if result.returncode not in (0, 1):
+        raise subprocess.CalledProcessError(
+            result.returncode, result.args, output=result.stdout, stderr=result.stderr
+        )
+    if result.stdout:
+        for raw_path in result.stdout.rstrip(b"\x00").split(b"\x00"):
+            decoded = raw_path.decode("utf-8")
+            if decoded:
+                ignored.add(decoded)
+    return ignored
+
+
 TRACKED_DIRS, TRACKED_FILES = _load_tracked()
+IGNORED_INDEX_PATHS = _load_ignored_index_paths(TRACKED_DIRS)
 
 
 @dataclass(frozen=True)
@@ -70,12 +100,8 @@ def is_non_canonical_guard(path: Path) -> bool:
 
 def is_index_ignored(path: Path) -> bool:
     """Return True if an INDEX.md inside this directory would be ignored by git."""
-    result = subprocess.run(
-        ["git", "check-ignore", "--no-index", "-q", str(path / "INDEX.md")],
-        cwd=ROOT,
-        capture_output=True,
-    )
-    return result.returncode == 0
+    rel = (path / "INDEX.md").relative_to(ROOT).as_posix()
+    return rel in IGNORED_INDEX_PATHS
 
 
 def should_descend(child: Path) -> bool:
