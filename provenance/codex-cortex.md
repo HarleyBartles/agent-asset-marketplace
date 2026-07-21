@@ -10,8 +10,6 @@
 ## Custody surface
 
 - Full upstream mirror root: `sources/third_party/claude-cortex/upstream/`
-- First-party import ledger: `sources/first_party/skills/codex-cortex/decisions.json`
-- First-party intake record: `sources/first_party/skills/codex-cortex/intake.json`
 
 ## Full upstream custody inventory
 
