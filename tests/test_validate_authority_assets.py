@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 import sys
 
@@ -264,9 +265,37 @@ def test_authority_records_require_marketplace_custody(tmp_path: Path):
 def test_valid_source_and_citation_lanes_pass(tmp_path: Path):
     source_skill = write_authority_fixture(tmp_path / "source", lane="skills-with-source")
     (source_skill / "assets/authority/reference-source").mkdir(parents=True)
-    (source_skill / "assets/authority/reference-source/source.txt").write_text(
-        "approved source", encoding="utf-8", newline="\n"
-    )
+    source_text = "approved source"
+    source_file = source_skill / "assets/authority/reference-source/source.txt"
+    source_file.write_text(source_text, encoding="utf-8", newline="\n")
+    source_sha = hashlib.sha256(source_file.read_bytes()).hexdigest()
+    _set_sha_for_skill(source_skill, source_sha)
+
     citation_skill = write_authority_fixture(tmp_path / "citation", lane="skills-with-citation")
+    citation_sha = hashlib.sha256((citation_skill / "assets/authority/CITATIONS.md").read_bytes()).hexdigest()
+    _set_sha_for_skill(citation_skill, citation_sha)
+
     assert validator.validate_authority_skill(source_skill) == []
     assert validator.validate_authority_skill(citation_skill) == []
+
+
+def _set_sha_for_skill(skill: Path, sha: str) -> None:
+    authority_path = skill / "assets/authority/authority.yaml"
+    source_map_path = skill / "assets/authority/source-map.yaml"
+    authority_path.write_text(
+        authority_path.read_text(encoding="utf-8")
+        .replace(
+            "content_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            f"content_sha256: {sha}",
+        )
+        .replace("reconciled_against: v1", f"reconciled_against: {sha}"),
+        encoding="utf-8",
+        newline="\n",
+    )
+    source_map_path.write_text(
+        source_map_path.read_text(encoding="utf-8").replace(
+            "reconciled_against: v1", f"reconciled_against: {sha}"
+        ),
+        encoding="utf-8",
+        newline="\n",
+    )
