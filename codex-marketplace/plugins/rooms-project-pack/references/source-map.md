@@ -4,7 +4,7 @@ Generated from `codex-marketplace/plugins/rooms-project-pack/references/bundle-m
 
 | Skill | Source category | Content mode | Canonical source path | Local path | Notes |
 | --- | --- | --- | --- | --- | --- |
-| database-design-patterns | third_party | verbatim | `sources/third_party/claude-cortex/upstream/skills/database-design-patterns` | `codex-marketplace/plugins/rooms-project-pack/skills/database-design-patterns` | Copied verbatim from retained Claude-Cortex custody because Rooms-mostly needs one generic database guidance skill for the canonical sqlite surface. |
+| database-design-patterns | first_party | verbatim | `sources/first_party/skills/database-design-patterns` | `codex-marketplace/plugins/rooms-project-pack/skills/database-design-patterns` | Projected verbatim from the first-party database-design-patterns skill into the rooms-project-pack. |
 | rooms-character-investigation | first_party | verbatim | `sources/first_party/skills/rooms-character-investigation` | `codex-marketplace/plugins/rooms-project-pack/skills/rooms-character-investigation` | First-party skill projected verbatim into the rooms-project-pack. |
 | rooms-image-sidecars | first_party | verbatim | `sources/first_party/skills/rooms-image-sidecars` | `codex-marketplace/plugins/rooms-project-pack/skills/rooms-image-sidecars` | First-party skill projected verbatim into the rooms-project-pack. |
 | rooms-project-doctrine | first_party | verbatim | `sources/first_party/skills/rooms-project-doctrine` | `codex-marketplace/plugins/rooms-project-pack/skills/rooms-project-doctrine` | First-party skill projected verbatim into the rooms-project-pack. |

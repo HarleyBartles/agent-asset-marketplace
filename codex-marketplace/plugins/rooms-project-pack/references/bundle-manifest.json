@@ -6,12 +6,11 @@
   "plugin_root": "codex-marketplace/plugins/rooms-project-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex",
     "first_party"
   ],
   "notes": [
     "Rooms keeps the project-routing, source-partitioning, and canon-pressure skills together in one Rooms-specific pack.",
-    "The pack also includes one generic database guidance skill because this repo has a canonical sqlite database surface.",
+    "The pack also includes one first-party generic database guidance skill because this repo has a canonical sqlite database surface.",
     "It intentionally does not duplicate repo-worker-pack, superpowers-plus, unslop-plus, or architecture-pack."
   ],
   "provenance_refs": [
@@ -22,18 +21,15 @@
   "entries": [
     {
       "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/database-design-patterns",
       "local_path": "skills/database-design-patterns",
       "lane": "Base and control plane",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from retained Claude-Cortex custody because Rooms-mostly needs one generic database guidance skill for the canonical sqlite surface."
+      "provenance_note": "Projected verbatim from the first-party database-design-patterns skill into the rooms-project-pack."
     },
     {
       "canonical_name": "rooms-character-investigation",
