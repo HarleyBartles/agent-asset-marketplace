@@ -27,7 +27,7 @@
     "provenance_name": "MARK-201 codex-cortex source custody",
     "import_state": "imported",
     "scope": "Database schema design patterns and optimization guidance",
-    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle."
+    "notes": "Imported from the selective Claude-Cortex custody surface and projected into the architecture-pack bundle. Later rehomed to first-party custody; removed from the Claude-Cortex mirror and no longer counted as a Claude-Cortex projection."
   },
   {
     "issue": "MARK-204",
