@@ -89,13 +89,6 @@ EXPECTED_SOURCE_OF_TRUTH = [
     "provenance/house-skills.md",
 ]
 
-EXPECTED_COMPONENT_LANE_ORDER = {
-    "base/control-plane": 0,
-    "Rooms": 1,
-    "Wild Bunch": 2,
-}
-
-
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)

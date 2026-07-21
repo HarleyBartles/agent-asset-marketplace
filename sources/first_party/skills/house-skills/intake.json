@@ -185,56 +185,7 @@
       "import_state": "imported",
       "notes": "First-party Harley-owned source custody for context-safe large text writes. The canonical source is a directory-level skill spec with SKILL.md and agents/openai.yaml, and it teaches bounded composition, safe staging, and atomic replacement for large writes."
     },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-project-doctrine-v1",
-      "source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
-      "public_name": "wild-bunch-project-doctrine",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch project posture and repo sensitivity",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-domain-modeling-v1",
-      "source_path": "sources/first_party/skills/wild-bunch-domain-modeling",
-      "public_name": "wild-bunch-domain-modeling",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-dotnet-architecture-v1",
-      "source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture",
-      "public_name": "wild-bunch-dotnet-architecture",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-browser-game-v1",
-      "source_path": "sources/first_party/skills/wild-bunch-browser-game",
-      "public_name": "wild-bunch-browser-game",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
-    {
-      "issue": "MARK-85",
-      "source_id": "wild-bunch-worker-verification-v1",
-      "source_path": "sources/first_party/skills/wild-bunch-worker-verification",
-      "public_name": "wild-bunch-worker-verification",
-      "provenance_name": "MARK-85 Wild Bunch first-party source hydration from attached zip",
-      "scope": "Wild Bunch worker returns, PRs, commits, validation notes, and completion verification",
-      "import_state": "imported",
-      "notes": "Hydrated from the attached authoritative zip and projected unchanged into the House Skills lane."
-    },
+
     {
       "issue": "MARK-334",
       "source_id": "rooms-risk-gates",

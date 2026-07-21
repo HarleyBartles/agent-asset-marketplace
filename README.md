@@ -60,7 +60,6 @@ For this normalized pass, the active plugin set is limited to the protected
 roots: `codex-marketplace/plugins/house-skills`,
 `codex-marketplace/plugins/unslop`, and
 `codex-marketplace/plugins/game-studio`, plus
-`codex-marketplace/plugins/wild-bunch-project-pack` and
 `codex-marketplace/plugins/superpowers-plus`,
 `codex-marketplace/plugins/repo-worker-pack`, `codex-marketplace/plugins/dotnet-kit`,
 `codex-marketplace/plugins/codex-cortex`, `codex-marketplace/plugins/api-contracts-pack`,

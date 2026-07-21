@@ -9,7 +9,6 @@ This plugin is the reviewed first-party House Skills projection root.
 - Current install surfaces: `codex-marketplace/plugins/house-skills/skills/`
 - Canonical generic core skill roots: `sources/first_party/skills/<skill-name>/`
 - Canonical family-owned first-party skill roots: `sources/first_party/skills/<skill-name>/`
-- Wild Bunch first-party hydration: `sources/first_party/skills/wild-bunch-*/`
 
 ## Source surfaces copied
 
