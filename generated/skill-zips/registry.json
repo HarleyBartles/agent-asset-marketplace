@@ -1823,13 +1823,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/worker-verification/skill.zip",
       "source_file_count": 1,
-      "source_bytes": 3426,
-      "source_sha256": "168c8d3eda4feffdabf0b8ce4986a64172b0082ca1c2cf46077c4cd5934d38fe",
+      "source_bytes": 3284,
+      "source_sha256": "0235dd2bce1d76e7c4390cef4fb5c7df4ac25672c28a79fcfcb7f7ab2b402dbf",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 1390,
-      "zip_sha256": "acfcc2f2763c1af25f8aad068a996ea0213f13c91a4dd437a77aa87b75cdd48a"
+      "zip_size_bytes": 1318,
+      "zip_sha256": "7d726254966d51f0d4a4c0c8b65941c24a538fef61c926cee2fa12300b7c06ce"
     },
     {
       "pack": "house-skills",

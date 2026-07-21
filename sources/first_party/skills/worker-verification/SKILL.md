@@ -42,7 +42,6 @@ Use this skill when finishing or reviewing repo work. Passing tests are not the 
 6. For browser or UI work, require screenshot evidence or state why it is unavailable.
 7. Do not claim landed or mainline state unless it is verified after merge.
 8. If a task changes initial setup, seeded behavior, or entropy-sensitive behavior, verify those claims or note the explicit deferral.
-9. When the task is Wild Bunch-specific, consult `wild-bunch-project-doctrine` for setup, difficulty, entropy, and seeded-world verification.
 
 ## Review gates
 
