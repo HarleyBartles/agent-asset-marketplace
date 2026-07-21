@@ -10,7 +10,7 @@ This plugin projects the first-party `dotnet` ecosystem skill into a Codex marke
 
 - Codex plugin root: `codex-marketplace/plugins/dotnet-pack/`
 - Skill root: `codex-marketplace/plugins/dotnet-pack/skills/`
-- Generated install units: `generated/skill-zips/dotnet-pack/<skill-name>/skill.zip`
+- Generated install units: `generated/skill-zips/<skill-name>.zip`
 
 ## Rights and Attribution
 

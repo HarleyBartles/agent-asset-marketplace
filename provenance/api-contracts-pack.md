@@ -21,8 +21,8 @@ The API Contracts Pack projects the first-party `openapi-specification` skill an
 
 ## Generated Install Units
 
-- `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
-- `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
+- `generated/skill-zips/openapi-specification.zip`
+- `generated/skill-zips/api-design-patterns.zip`
 
 ## Marketplace Adaptation
 

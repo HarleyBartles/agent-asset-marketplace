@@ -37,10 +37,10 @@ The Language Patterns Pack projects the first-party `typescript` skill and retai
 
 ## Generated Install Units
 
-- `generated/skill-zips/language-patterns-pack/typescript/skill.zip`
-- `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`
-- `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`
-- `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`
+- `generated/skill-zips/typescript.zip`
+- `generated/skill-zips/async-python-patterns.zip`
+- `generated/skill-zips/python-testing-patterns.zip`
+- `generated/skill-zips/python-performance-optimization.zip`
 
 ## Marketplace Adaptation
 

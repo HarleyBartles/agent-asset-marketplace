@@ -393,6 +393,9 @@ class GeneratorCheckModeTests(unittest.TestCase):
             ):
                 project_skills.project_skills(write=True)
 
+            stale_root.mkdir(parents=True, exist_ok=True)
+            (stale_root / "SKILL.md").write_text("---\nname: retired-skill\ndescription: stale\n---\n\nbody\n", encoding="utf-8")
+
             with (
                 patch.object(project_skills, "ROOT", temp_root),
                 patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),

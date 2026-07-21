@@ -23,5 +23,5 @@ Codex Cortex custody plugin into an installable Codex marketplace pack.
 
 The installable skill zips are generated under:
 
-- `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
-- `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
+- `generated/skill-zips/api-design-patterns.zip`
+- `generated/skill-zips/openapi-specification.zip`

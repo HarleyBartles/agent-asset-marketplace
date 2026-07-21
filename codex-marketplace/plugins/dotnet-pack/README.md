@@ -21,4 +21,4 @@ Manifest entry count: 1.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/dotnet-pack/<skill-name>/skill.zip`.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip`.

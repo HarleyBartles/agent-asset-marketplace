@@ -22,7 +22,7 @@ custody root into a Codex marketplace pack.
 
 - Codex plugin root: `codex-marketplace/plugins/planning-pack/`
 - Skill root: `codex-marketplace/plugins/planning-pack/skills/`
-- Generated install units: `generated/skill-zips/planning-pack/<skill-name>/skill.zip`
+- Generated install units: `generated/skill-zips/<skill-name>.zip`
 
 ## Boundary
 

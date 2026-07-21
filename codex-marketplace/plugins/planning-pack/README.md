@@ -31,10 +31,10 @@ installable Codex marketplace pack.
 
 The installable skill zips are generated under:
 
-- `generated/skill-zips/planning-pack/requirements-discovery/skill.zip`
-- `generated/skill-zips/planning-pack/mermaid-diagramming/skill.zip`
-- `generated/skill-zips/planning-pack/development-estimation/skill.zip`
-- `generated/skill-zips/planning-pack/release-prep/skill.zip`
-- `generated/skill-zips/planning-pack/release-analysis/skill.zip`
+- `generated/skill-zips/requirements-discovery.zip`
+- `generated/skill-zips/mermaid-diagramming.zip`
+- `generated/skill-zips/development-estimation.zip`
+- `generated/skill-zips/release-prep.zip`
+- `generated/skill-zips/release-analysis.zip`
 
 and can be installed directly from those artifacts.

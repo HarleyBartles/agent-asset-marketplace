@@ -20,4 +20,4 @@ This bundle projects the retained Claude-Cortex language/runtime and testing ski
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/language-patterns-pack/<skill-name>/skill.zip` and can be installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

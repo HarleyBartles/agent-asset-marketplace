@@ -32,13 +32,13 @@ The Frontend Pack projects first-party frontend skills alongside retained `featu
 
 ## Generated Install Units
 
-- `generated/skill-zips/frontend-pack/react/skill.zip`
-- `generated/skill-zips/frontend-pack/wcag/skill.zip`
-- `generated/skill-zips/frontend-pack/web-styling/skill.zip`
-- `generated/skill-zips/frontend-pack/feature-sliced-design/skill.zip`
-- `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
-- `generated/skill-zips/frontend-pack/ux-review/skill.zip`
-- `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
+- `generated/skill-zips/react.zip`
+- `generated/skill-zips/wcag.zip`
+- `generated/skill-zips/web-styling.zip`
+- `generated/skill-zips/feature-sliced-design.zip`
+- `generated/skill-zips/interaction-design.zip`
+- `generated/skill-zips/ux-review.zip`
+- `generated/skill-zips/webapp-testing.zip`
 
 ## Marketplace Adaptation
 

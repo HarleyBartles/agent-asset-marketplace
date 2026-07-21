@@ -43,21 +43,21 @@ This plugin projects the mixed Superpowers+ workflow and routing helpers.
   - `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/`
 
 ## Generated install units
-- `generated/skill-zips/superpowers-plus/brainstorming/skill.zip`
-- `generated/skill-zips/superpowers-plus/dispatching-parallel-agents/skill.zip`
-- `generated/skill-zips/superpowers-plus/executing-plans/skill.zip`
-- `generated/skill-zips/superpowers-plus/finishing-a-development-branch/skill.zip`
-- `generated/skill-zips/superpowers-plus/inspecting-the-environment/skill.zip`
-- `generated/skill-zips/superpowers-plus/receiving-code-review/skill.zip`
-- `generated/skill-zips/superpowers-plus/requesting-code-review/skill.zip`
-- `generated/skill-zips/superpowers-plus/subagent-driven-development/skill.zip`
-- `generated/skill-zips/superpowers-plus/systematic-debugging/skill.zip`
-- `generated/skill-zips/superpowers-plus/test-driven-development/skill.zip`
-- `generated/skill-zips/superpowers-plus/using-git-worktrees/skill.zip`
-- `generated/skill-zips/superpowers-plus/using-superpowers/skill.zip`
-- `generated/skill-zips/superpowers-plus/verification-before-completion/skill.zip`
-- `generated/skill-zips/superpowers-plus/writing-plans/skill.zip`
-- `generated/skill-zips/superpowers-plus/writing-skills/skill.zip`
+- `generated/skill-zips/brainstorming.zip`
+- `generated/skill-zips/dispatching-parallel-agents.zip`
+- `generated/skill-zips/executing-plans.zip`
+- `generated/skill-zips/finishing-a-development-branch.zip`
+- `generated/skill-zips/inspecting-the-environment.zip`
+- `generated/skill-zips/receiving-code-review.zip`
+- `generated/skill-zips/requesting-code-review.zip`
+- `generated/skill-zips/subagent-driven-development.zip`
+- `generated/skill-zips/systematic-debugging.zip`
+- `generated/skill-zips/test-driven-development.zip`
+- `generated/skill-zips/using-git-worktrees.zip`
+- `generated/skill-zips/using-superpowers.zip`
+- `generated/skill-zips/verification-before-completion.zip`
+- `generated/skill-zips/writing-plans.zip`
+- `generated/skill-zips/writing-skills.zip`
 
 ## Boundary
 - This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
