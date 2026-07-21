@@ -223,13 +223,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/architecture-pack/database-design-patterns/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 2971237,
-      "source_sha256": "def68b96f48035f72130606fda921186e050d1d753bc90143bb891e118d99d75",
+      "source_bytes": 2971239,
+      "source_sha256": "27c86c0262f3d7f12cd8eb92d30d3da7a59b957599ff4bec91492f590bcb8d76",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2459726,
-      "zip_sha256": "68d20e2b96d3d70e061dcd86b09e0fc68864af2c6e3fadfcca4edfa1b073f902"
+      "zip_size_bytes": 2459728,
+      "zip_sha256": "304b1e762a15f2a666173f8c83310c5d0e363fc102a1d4fc937308a22e070c78"
     },
     {
       "pack": "architecture-pack",
@@ -655,13 +655,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/data-platform-pack/database-engines/skill.zip",
       "source_file_count": 21,
-      "source_bytes": 15717748,
-      "source_sha256": "d36bada79355b8f30bb3c02e49d06b16e4fa3e6221794b329e1db812c6fded61",
+      "source_bytes": 15717750,
+      "source_sha256": "f1badfc7f3033ec7601c6ce40ea1f2c35fb6a6e11d1ac5ff4294e031336992e6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15534615,
-      "zip_sha256": "72ed8829b5e98dbb2a08d32035d9b2b8b7d6bc1a0f6f618e752b576472e29c05"
+      "zip_size_bytes": 15534618,
+      "zip_sha256": "74f7b659ffacde0d4646ddda29b27aa4222b702c72918140481379201ad170f4"
     },
     {
       "pack": "dotnet-pack",
@@ -1551,13 +1551,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/database-design-patterns/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 2971237,
-      "source_sha256": "def68b96f48035f72130606fda921186e050d1d753bc90143bb891e118d99d75",
+      "source_bytes": 2971239,
+      "source_sha256": "27c86c0262f3d7f12cd8eb92d30d3da7a59b957599ff4bec91492f590bcb8d76",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2459726,
-      "zip_sha256": "68d20e2b96d3d70e061dcd86b09e0fc68864af2c6e3fadfcca4edfa1b073f902"
+      "zip_size_bytes": 2459728,
+      "zip_sha256": "304b1e762a15f2a666173f8c83310c5d0e363fc102a1d4fc937308a22e070c78"
     },
     {
       "pack": "house-skills",
@@ -1567,13 +1567,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/house-skills/database-engines/skill.zip",
       "source_file_count": 21,
-      "source_bytes": 15717748,
-      "source_sha256": "d36bada79355b8f30bb3c02e49d06b16e4fa3e6221794b329e1db812c6fded61",
+      "source_bytes": 15717750,
+      "source_sha256": "f1badfc7f3033ec7601c6ce40ea1f2c35fb6a6e11d1ac5ff4294e031336992e6",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 15534615,
-      "zip_sha256": "72ed8829b5e98dbb2a08d32035d9b2b8b7d6bc1a0f6f618e752b576472e29c05"
+      "zip_size_bytes": 15534618,
+      "zip_sha256": "74f7b659ffacde0d4646ddda29b27aa4222b702c72918140481379201ad170f4"
     },
     {
       "pack": "house-skills",
@@ -2607,13 +2607,13 @@
       "overlay_path": null,
       "zip_path": "generated/skill-zips/rooms-project-pack/database-design-patterns/skill.zip",
       "source_file_count": 14,
-      "source_bytes": 2971237,
-      "source_sha256": "def68b96f48035f72130606fda921186e050d1d753bc90143bb891e118d99d75",
+      "source_bytes": 2971239,
+      "source_sha256": "27c86c0262f3d7f12cd8eb92d30d3da7a59b957599ff4bec91492f590bcb8d76",
       "overlay_file_count": 0,
       "overlay_bytes": 0,
       "overlay_sha256": null,
-      "zip_size_bytes": 2459726,
-      "zip_sha256": "68d20e2b96d3d70e061dcd86b09e0fc68864af2c6e3fadfcca4edfa1b073f902"
+      "zip_size_bytes": 2459728,
+      "zip_sha256": "304b1e762a15f2a666173f8c83310c5d0e363fc102a1d4fc937308a22e070c78"
     },
     {
       "pack": "rooms-project-pack",

@@ -51,4 +51,4 @@ engine-specific semantics in the engine-specific references.
 - Ignoring transaction isolation and locking behavior.
 
 For source-grounded detail, read `assets/authority/CITATIONS.md` and
-`assets/authority/source-map.md`.
+`assets/authority/source-map.yaml`.

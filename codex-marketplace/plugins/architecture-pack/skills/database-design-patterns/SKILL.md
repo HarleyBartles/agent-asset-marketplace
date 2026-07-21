@@ -55,4 +55,4 @@ citable indexing, query-tuning, and architecture references.
 - Treating sharding as a fix for poor indexing or bad queries.
 
 For source-grounded detail, read `assets/authority/CITATIONS.md` and
-`assets/authority/source-map.md`.
+`assets/authority/source-map.yaml`.
