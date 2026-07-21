@@ -15,7 +15,7 @@ from marketplace_utils import ROOT, load_json, load_text, parse_top_markdown_tab
 SOURCE_ROOT = ROOT / "sources/first_party/skills"
 CATALOG_PATH = ROOT / "provenance/first-party-skills.md"
 PLUGIN_MANIFESTS_ROOT = ROOT / "codex-marketplace/plugins"
-GENERATED_REGISTRY_PATH = ROOT / "generated/skill-zips/registry.json"
+GENERATED_SKILL_ZIPS_ROOT = ROOT / "generated/skill-zips"
 
 REFERENCE_SURFACES = (
     ROOT / "sources/first_party/skills/house-skills/intake.json",
@@ -32,7 +32,6 @@ REFERENCE_SURFACES = (
     ROOT / "provenance/repo-worker-pack.md",
     ROOT / "provenance/house-skills.md",
     ROOT / "repo-index/repo-index.json",
-    GENERATED_REGISTRY_PATH,
 )
 
 
@@ -137,17 +136,9 @@ def _discover_projected_plugins(skill_name: str, source_root: str) -> tuple[str,
 
 def _discover_generated_refs(skill_name: str, projected_in: tuple[str, ...]) -> tuple[str, ...]:
     refs: set[str] = set()
-    if GENERATED_REGISTRY_PATH.exists():
-        registry = load_json(GENERATED_REGISTRY_PATH)
-        for artifact in registry.get("artifacts", []):
-            if not isinstance(artifact, dict):
-                continue
-            if artifact.get("skill") == skill_name:
-                zip_path = artifact.get("zip_path")
-                if isinstance(zip_path, str) and zip_path:
-                    refs.add(zip_path)
-        if refs:
-            refs.add("generated/skill-zips/registry.json")
+    zip_path = GENERATED_SKILL_ZIPS_ROOT / f"{skill_name}.zip"
+    if zip_path.exists():
+        refs.add(zip_path.relative_to(ROOT).as_posix())
 
     for plugin_root in projected_in:
         refs.add(f"{plugin_root}/references/bundle-manifest.json")

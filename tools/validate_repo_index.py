@@ -121,8 +121,8 @@ def validate_repo_index() -> dict:
         raise ValueError("repo-index skill_zips_full_regeneration command mismatch")
     if validation.get("skill_zips_check") != "py -3 tools/validate_skill_zips.py":
         raise ValueError("repo-index skill_zips_check command mismatch")
-    if validation.get("generated_drift") != "py -3 tools/validate_generated_drift.py --base origin/main":
-        raise ValueError("repo-index generated_drift command mismatch")
+    if "generated_drift" in validation:
+        raise ValueError("repo-index validation block contains obsolete generated_drift command")
 
     check_path_exists(PLUGIN_ROOT_INVENTORY_PATH)
 

@@ -185,7 +185,7 @@ def _render_generated_doc_block(pack: dict[str, Any], doc_name: str) -> str:
         lines.extend(f"  - `{plugin_root}/{entry['local_path']}/`" for entry in entries)
         lines.extend(["", "## Generated install units"])
         lines.extend(
-            f"- `generated/skill-zips/{pack['bundle_name']}/{entry['canonical_name']}/skill.zip`"
+            f"- `generated/skill-zips/{entry['canonical_name']}.zip`"
             for entry in entries
         )
         return "\n".join(lines).rstrip()
