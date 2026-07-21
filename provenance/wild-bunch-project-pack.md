@@ -26,7 +26,7 @@ The Wild Bunch Project Pack packages Wild Bunch first-party skills together with
 - `sources/first_party/skills/repo-worker-base/SKILL.md`
 - `sources/first_party/skills/boring-loop/SKILL.md`
 - `sources/first_party/skills/connector-safety/SKILL.md`
-- `sources/first_party/skills/github-operations/SKILL.md`
+- `sources/first_party/skills/using-github/SKILL.md`
 - `sources/first_party/skills/crew/SKILL.md`
 
 ### Third-Party Game-Studio Skills

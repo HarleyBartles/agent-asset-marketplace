@@ -9,13 +9,13 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/cleanup-custody/`
 - `sources/first_party/skills/connector-safety/`
 - `sources/first_party/skills/context-safety/`
-- `sources/first_party/skills/github-operations/`
 - `sources/first_party/skills/linear-issue-shaping/`
 - `sources/first_party/skills/repo-guide-standard/`
 - `sources/first_party/skills/repo-worker-base/`
 - `sources/first_party/skills/risk-gates/`
 - `sources/first_party/skills/subagent-model-routing/`
 - `sources/first_party/skills/unslop-plus/`
+- `sources/first_party/skills/using-github/`
 - `sources/first_party/skills/using-linear/`
 - `sources/first_party/skills/work-mode-router/`
 - `sources/first_party/skills/writing-with-clarity/`
@@ -28,13 +28,13 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/context-safety/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/github-operations/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-guide-standard/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/subagent-model-routing/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/using-github/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/work-mode-router/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
@@ -44,13 +44,13 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/repo-worker-pack/cleanup-custody/skill.zip`
 - `generated/skill-zips/repo-worker-pack/connector-safety/skill.zip`
 - `generated/skill-zips/repo-worker-pack/context-safety/skill.zip`
-- `generated/skill-zips/repo-worker-pack/github-operations/skill.zip`
 - `generated/skill-zips/repo-worker-pack/linear-issue-shaping/skill.zip`
 - `generated/skill-zips/repo-worker-pack/repo-guide-standard/skill.zip`
 - `generated/skill-zips/repo-worker-pack/repo-worker-base/skill.zip`
 - `generated/skill-zips/repo-worker-pack/risk-gates/skill.zip`
 - `generated/skill-zips/repo-worker-pack/subagent-model-routing/skill.zip`
 - `generated/skill-zips/repo-worker-pack/unslop-plus/skill.zip`
+- `generated/skill-zips/repo-worker-pack/using-github/skill.zip`
 - `generated/skill-zips/repo-worker-pack/using-linear/skill.zip`
 - `generated/skill-zips/repo-worker-pack/work-mode-router/skill.zip`
 - `generated/skill-zips/repo-worker-pack/writing-with-clarity/skill.zip`

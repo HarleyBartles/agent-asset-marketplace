@@ -69,7 +69,7 @@ For `ordinary_chat`, answer directly. Do not inspect connectors, call tools, or 
 
 - `linear_codex_coding` -> `linear-issue-shaping` first. It owns Linear/Codex issue shaping, Codex worker status, PR-gate handling, and the golden gate.
 - `gpt_native_skillwork` -> `skill-creator` for authored skill content, then `writing-skills` for cross-repo wording and doctrine checks when relevant. Do not delegate GPT-native skillwork to Codex Cloud unless the editable source is known to live in a Codex-accessible repo and the task is explicitly repo-backed.
-- `github_proof` -> `github-operations` after a GitHub artifact exists. Do not use GitHub Operations to decide worker state or issue routing.
+- `github_proof` -> `using-github` after a GitHub artifact exists. Do not use using-github to decide worker state or issue routing.
 - `linear_control` -> `using-linear` for connector mechanics: create/update/fetch/comment/project/status/label/document work.
 - `verification_or_reporting` -> the narrow downstream skill that owns the decision, such as `base-doctrine` (report hygiene) and `risk-gates` (feedback gate).
 - `legacy_plan_b` -> the compact legacy dispatch stack only after the default route has been rejected or unavailable.

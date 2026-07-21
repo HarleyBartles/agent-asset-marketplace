@@ -167,13 +167,13 @@
     },
     {
       "issue": "MARK-142",
-      "source_id": "github-operations-v1",
-      "source_path": "sources/first_party/skills/github-operations",
-      "public_name": "github-operations",
-      "provenance_name": "MARK-226 canonical first-party source for github-operations",
-      "scope": "GitHub evidence, PR review routing, and publication proof",
+      "source_id": "using-github-v1",
+      "source_path": "sources/first_party/skills/using-github",
+      "public_name": "using-github",
+      "provenance_name": "MARK-226 canonical first-party source for using-github",
+      "scope": "GitHub surface selection, MCP/gh/REST/GraphQL/git routing, and publication proof",
       "import_state": "imported",
-      "notes": "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/github-operations/. House Skills is a projection surface only. It keeps generic GitHub verification, publication proof, and native review write routing in the House Skills lane while preserving the same-account REQUEST_CHANGES limitation in source."
+      "notes": "Projected House Skills copy of the canonical first-party source at sources/first_party/skills/using-github/. House Skills is a projection surface only. Renamed from github-operations and restructured as a router skill mirroring using-linear."
     },
     {
       "issue": "MARK-310",

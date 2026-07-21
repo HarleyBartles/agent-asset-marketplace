@@ -9,13 +9,13 @@ This bundle projects the first-party repo worker baseline skills.
 - `cleanup-custody`
 - `connector-safety`
 - `context-safety`
-- `github-operations`
 - `linear-issue-shaping`
 - `repo-guide-standard`
 - `repo-worker-base`
 - `risk-gates`
 - `subagent-model-routing`
 - `unslop-plus`
+- `using-github`
 - `using-linear`
 - `work-mode-router`
 - `writing-with-clarity`
