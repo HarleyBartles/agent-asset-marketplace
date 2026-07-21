@@ -1,8 +1,0 @@
-schema_version: 1
-deletes: []
-metadata:
-  source_category: third_party
-  upstream_name: quarkus-security
-  adaptation_overlay: adapters/codex/security-pack/quarkus-security
-  projection_plugin: security-pack
-  upstream_version: upstream
