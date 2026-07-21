@@ -52,14 +52,19 @@ repo-guide-standard -> repo-worker-base -> local guide -> selected Superpowers l
 
 ## Required root surfaces
 
-- Root `AGENTS.md` contains canonical headings:
-  - `## Build and test commands`
-  - `## Testing instructions`
-  - `## Code style guidelines`
-  - `## Review guidelines`
-  - `## PR instructions`
-  - `## Contributing`
-  - `## Security considerations`
+- Root `AGENTS.md` contains canonical headings in order:
+  1. `## Repository purpose`
+  2. `## Source-of-truth split`
+  3. `## Publication proof for repo work`
+  4. `## Build and test commands`
+  5. `## Testing instructions`
+  6. `## Code style guidelines`
+  7. `## Review guidelines`
+  8. `## PR instructions`
+  9. `## Contributing`
+  10. `## Security considerations`
+  11. `## Routing pointers`
+  12. `## Maintenance responsibility`
 - Root `REVIEW.md` is the review entry point. It contains first-class review concerns and routes to `.agents/guides/code-review-guide.md` for detailed review methodology and to `/requesting-code-review` for execution.
 - Root `CONTRIBUTING.md` is the contributor entry point. It routes to the design, planning, implementation, and review guides and to the relevant repo-worker-pack and Superpowers skills. It may be a thin pointer to `.agents/guides/contributing-guide.md` when a repo keeps detailed guidance there.
 
