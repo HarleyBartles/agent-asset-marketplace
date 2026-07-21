@@ -1,16 +1,11 @@
 # Agentic Workflows
 
-This bundle projects the retained ECC workflow mechanics into a dedicated
+This bundle projects the first-party `agentic-harness` skill into a dedicated
 topical home.
 
 ## Bundle contents
-### ECC skills
-- `agent-harness-construction`
-- `autonomous-agent-harness`
-- `continuous-agent-loop`
-- `dynamic-workflow-mode`
-- `dmux-workflows`
-- `agentic-os`
+### First-party skills
+- `agentic-harness`
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -18,8 +13,7 @@ topical home.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The pack covers harness design, autonomous loops, dynamic workflow mode,
-  and multi-agent dispatch.
+- The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.
 - The pack does not absorb the evaluation, research, or security homes.
 
 ## Install shape

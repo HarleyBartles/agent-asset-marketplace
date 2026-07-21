@@ -6,6 +6,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+import yaml
+
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE", "SOURCE.md", "PROJECTION.md"}
 TEXT_SUFFIXES = {
     ".md",
@@ -50,10 +52,38 @@ def _is_text_file(path: Path, raw: bytes) -> bool:
 
 
 def canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
-    """Normalize CRLF/CR to LF for text files. Binary files are returned as-is."""
-    if _is_text_file(path, raw):
-        return raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
-    return raw
+    """Normalize CRLF/CR to LF for text files. Binary files are returned as-is.
+
+    For Codex agent YAML, the ``metadata.plugin`` and
+    ``metadata.projection_plugin`` keys are projection-generated identity
+    fields; they are stripped before comparison so that the same source skill
+    can be projected into multiple plugin packs without breaking verbatim
+    mirror validation.
+    """
+    if not _is_text_file(path, raw):
+        return raw
+    text = raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    if path.name == "openai.yaml":
+        try:
+            parsed = yaml.safe_load(text.decode("utf-8"))
+        except Exception:
+            return text
+        if isinstance(parsed, dict):
+            metadata = parsed.get("metadata")
+            if isinstance(metadata, dict):
+                metadata.pop("plugin", None)
+                metadata.pop("projection_plugin", None)
+                if not metadata:
+                    parsed.pop("metadata", None)
+            rendered = yaml.safe_dump(
+                parsed,
+                sort_keys=False,
+                allow_unicode=True,
+                width=4096,
+                default_flow_style=False,
+            ).rstrip() + "\n"
+            return rendered.encode("utf-8")
+    return text
 
 
 def canonicalize_tree(root: Path) -> dict[str, bytes]:

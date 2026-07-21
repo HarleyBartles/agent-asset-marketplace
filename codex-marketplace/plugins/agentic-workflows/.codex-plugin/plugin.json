@@ -1,7 +1,7 @@
 {
   "name": "agentic-workflows",
   "version": "1.0.0",
-  "description": "ECC agentic workflow mechanics for Codex marketplace projection.",
+  "description": "First-party agentic harness skill for Codex marketplace projection.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -11,18 +11,20 @@
   "keywords": [
     "codex",
     "marketplace",
-    "ecc",
     "agentic",
-    "workflow",
     "harness",
+    "agent-loop",
+    "multi-agent",
+    "orchestration",
+    "tools",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Agentic Workflows",
-    "shortDescription": "ECC agent workflow mechanics and harness design.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects the retained ECC workflow mechanics into an installable home for harness construction, autonomous loops, dynamic workflow mode, and multi-agent dispatch.",
+    "shortDescription": "Agent loops, harness construction, tool/action spaces, and multi-agent orchestration.",
+    "longDescription": "A repo-local Codex marketplace bundle that projects the first-party agentic-harness skill into an installable home for harness construction, autonomous loops, tool/action spaces, and multi-agent orchestration.",
     "developerName": "Harley Bartles",
     "category": "Coding",
     "capabilities": [
@@ -31,8 +33,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Agentic Workflows bundle and source map.",
-      "Use the bundle to review the selected ECC workflow mechanics.",
-      "Compare the bundle against the retained ECC custody surface."
+      "Use the bundle to review the agentic-harness skill.",
+      "Compare the bundle against the first-party source custody."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",

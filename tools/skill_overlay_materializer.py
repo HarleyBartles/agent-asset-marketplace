@@ -478,6 +478,27 @@ def _apply_overlay_files(staged_root: Path, overlay_root: Path) -> None:
         shutil.copy2(overlay_file, dest)
 
 
+def _inject_plugin_identity(staged_root: Path, plugin_name: str) -> None:
+    """Set metadata.plugin to the target plugin in the projected agent YAML."""
+    openai_yaml = staged_root / OPENAI_AGENT_FILENAME
+    if not openai_yaml.is_file():
+        return
+    parsed = _load_yaml_mapping(openai_yaml)
+    metadata = parsed.get("metadata")
+    if not isinstance(metadata, dict):
+        metadata = {}
+        parsed["metadata"] = metadata
+    metadata["plugin"] = plugin_name
+    rendered = yaml.safe_dump(
+        parsed,
+        sort_keys=False,
+        allow_unicode=True,
+        width=4096,
+        default_flow_style=False,
+    ).rstrip() + "\n"
+    openai_yaml.write_text(rendered, encoding="utf-8", newline="\n")
+
+
 def _materialize_into(source_root: Path, overlay_root: Path | None, destination_root: Path) -> None:
     if not source_root.exists():
         raise FileNotFoundError(source_root)
@@ -487,6 +508,9 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
     if destination_root.exists():
         shutil.rmtree(_as_windows_long_path(destination_root))
     destination_root.parent.mkdir(parents=True, exist_ok=True)
+
+    # codex-marketplace/plugins/<plugin>/skills/<skill>
+    plugin_name = destination_root.parents[1].name
 
     tempdir = tempfile.TemporaryDirectory()
     staged_root = Path(tempdir.name) / source_root.name
@@ -507,6 +531,7 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
             _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
+        _inject_plugin_identity(staged_root, plugin_name)
         shutil.copytree(staged_root, _as_windows_long_path(destination_root))
     finally:
         tempdir.cleanup()

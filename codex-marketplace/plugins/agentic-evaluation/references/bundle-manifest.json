@@ -6,11 +6,12 @@
   "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
   "is_mega_pack": false,
   "source_families": [
-    "ecc"
+    "first_party"
   ],
   "notes": [
-    "Agentic evaluation pack groups the scoring and audit skills that help decide whether an agent workflow is actually earning its keep.",
-    "The pack keeps the evaluation rubric and the architectural audit surface together as a complementary home."
+    "Agentic evaluation pack now projects the first-party agent-evaluation skill.",
+    "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics.",
+    "The retired adapter tree and ECC evaluation snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
   ],
   "provenance_refs": [
     "provenance/ecc-domain-packs.md",
@@ -20,49 +21,15 @@
   "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "agent-architecture-audit",
-      "source_category": "third_party",
+      "canonical_name": "agent-evaluation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit",
-      "local_path": "skills/agent-architecture-audit",
-      "provenance_note": "Projected verbatim from retained ECC custody into the agentic evaluation pack.",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit/SKILL.md",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "agent-eval",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-eval",
-      "local_path": "skills/agent-eval",
-      "provenance_note": "Projected verbatim from retained ECC custody into the agentic evaluation pack.",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-eval/SKILL.md",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "agent-self-evaluation",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
-      "local_path": "skills/agent-self-evaluation",
-      "provenance_note": "Normalised from retained ECC custody by moving examples and templates into canonical references/ folders.",
-      "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md",
-      "source_author": "ECC",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "adapted_author": "Harley Bartles",
-      "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation",
-      "adaptation_note": "Move examples/ and templates/ into references/ and repoint the evaluation report template link to the internal references folder.",
-      "copy_expectation": "normalised_from_source"
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/agent-evaluation",
+      "local_path": "skills/agent-evaluation",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party agent-evaluation skill."
     }
   ],
   "repo_index": {

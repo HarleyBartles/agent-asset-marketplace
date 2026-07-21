@@ -1,46 +1,11 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "agent-harness-construction",
-      "source_category": "third_party",
+      "canonical_name": "agentic-harness",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction",
-      "local_path": "skills/agent-harness-construction"
-    },
-    {
-      "canonical_name": "agentic-os",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agentic-os",
-      "local_path": "skills/agentic-os"
-    },
-    {
-      "canonical_name": "autonomous-agent-harness",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness",
-      "local_path": "skills/autonomous-agent-harness"
-    },
-    {
-      "canonical_name": "continuous-agent-loop",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop",
-      "local_path": "skills/continuous-agent-loop"
-    },
-    {
-      "canonical_name": "dmux-workflows",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows",
-      "local_path": "skills/dmux-workflows"
-    },
-    {
-      "canonical_name": "dynamic-workflow-mode",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode",
-      "local_path": "skills/dynamic-workflow-mode"
+      "canonical_source_path": "sources/first_party/skills/agentic-harness",
+      "local_path": "skills/agentic-harness"
     }
   ],
   "adapted_projections": []

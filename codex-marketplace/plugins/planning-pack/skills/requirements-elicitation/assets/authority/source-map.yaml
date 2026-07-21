@@ -1,0 +1,13 @@
+schema_version: 1
+reconciled_against: afa5d4f0523d3c135c7b4b6c7e24c3f5eabb3288c95d2b171ddca8232fd3d41c
+references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - When to apply
+    - Stakeholder interviews
+    - User stories
+    - Acceptance criteria
+    - Validation and traceability
+    load_when:
+    - Use when requirements-elicitation operational guidance is needed.
+    content_mode: first_party_synthesis

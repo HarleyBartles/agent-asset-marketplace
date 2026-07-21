@@ -1,7 +1,7 @@
 {
   "name": "engineering-pack",
   "version": "1.0.0",
-  "description": "ECC engineering delivery workflows for Codex marketplace projection.",
+  "description": "First-party engineering delivery, release, and observability skills for the Codex marketplace.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -11,18 +11,19 @@
   "keywords": [
     "codex",
     "marketplace",
-    "ecc",
     "engineering",
     "delivery",
-    "deployment",
+    "release",
+    "release-engineering",
+    "observability",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Engineering Pack",
-    "shortDescription": "ECC implementation and deployment workflows.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects the retained ECC engineering workflow into a practical home for implementation and deployment support.",
+    "shortDescription": "Engineering delivery, release, and observability workflows.",
+    "longDescription": "A repo-local Codex marketplace bundle that projects first-party engineering skills into a practical home for implementation, release, and operational support. Includes release-engineering and observability.",
     "developerName": "Harley Bartles",
     "category": "Coding",
     "capabilities": [
@@ -31,8 +32,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Engineering Pack bundle and source map.",
-      "Use the bundle to review the selected ECC engineering skills.",
-      "Compare the bundle against the retained ECC custody surface."
+      "Use the bundle to review the engineering skills (release-engineering, observability).",
+      "Compare the bundle against its source custody surfaces."
     ],
     "brandColor": "#EA580C",
     "composerIcon": "./assets/icon.svg",

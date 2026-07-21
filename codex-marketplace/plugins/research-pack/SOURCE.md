@@ -1,15 +1,16 @@
 # Research Pack Source Notes
 
-This bundle projects the retained ECC research workflow into the Codex
+This bundle projects the first-party `research-ops` skill into the Codex
 marketplace.
 
 ## Source custody
-- `sources/third_party/ecc/upstream/source-custody.md`
-- `sources/third_party/ecc/upstream/manifest.json`
-- `sources/third_party/ecc/upstream/LICENSE`
+### First-party skill root
+- `sources/first_party/skills/research-ops/`
 
 ## Selected skills
 - `research-ops`
 
 ## Projection notes
-- `research-ops` projects verbatim from retained ECC custody.
+- `research-ops` projects verbatim from first-party source custody.
+- The ECC `research-ops` upstream snapshot was removed in Task 8; see
+  `provenance/ecc-domain-packs.md`.

@@ -1,10 +1,10 @@
 # Research Pack
 
-This bundle projects the retained ECC evidence-first research workflow into a
-focused topical home.
+This bundle projects the first-party `research-ops` skill into a focused
+topical home.
 
 ## Bundle contents
-### ECC skills
+### First-party skills
 - `research-ops`
 
 ### Documentation
@@ -13,8 +13,7 @@ focused topical home.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The pack covers research planning, source gathering, and evidence-first
-  synthesis.
+- The pack covers research planning, source gathering, and evidence-first synthesis.
 - The pack stays out of workflow dispatch, engineering, and security homes.
 
 ## Install shape

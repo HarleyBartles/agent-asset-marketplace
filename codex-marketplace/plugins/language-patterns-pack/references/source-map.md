@@ -4,7 +4,6 @@ Generated from `codex-marketplace/plugins/language-patterns-pack/references/bund
 
 | Skill | Source category | Content mode | Canonical source path | Local path | Notes |
 | --- | --- | --- | --- | --- | --- |
-| async-python-patterns | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/async-python-patterns` | `codex-marketplace/plugins/language-patterns-pack/skills/async-python-patterns` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
-| python-performance-optimization | third_party | adapted | `sources/third_party/claude-cortex/upstream/skills/python-performance-optimization` | `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization` | Adapted from the retained upstream snapshot for the Codex projection. Adaptation: Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata. |
-| python-testing-patterns | third_party | normalised | `sources/third_party/claude-cortex/upstream/skills/python-testing-patterns` | `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns` | Normalised from the retained upstream snapshot with metadata and path rewrites. |
+| python | first_party | verbatim | `sources/first_party/skills/python` | `codex-marketplace/plugins/language-patterns-pack/skills/python` | Projected verbatim from the first-party python skill. |
+| python-frameworks | first_party | verbatim | `sources/first_party/skills/python-frameworks` | `codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks` | Projected verbatim from the first-party python-frameworks skill. |
 | typescript | first_party | verbatim | `sources/first_party/skills/typescript` | `codex-marketplace/plugins/language-patterns-pack/skills/typescript` | Projected verbatim from the first-party typescript skill. |

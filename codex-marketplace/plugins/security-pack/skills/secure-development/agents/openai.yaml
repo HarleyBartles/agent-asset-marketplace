@@ -1,0 +1,11 @@
+version: 1
+metadata:
+  skill_name: secure-development
+  plugin: security-pack
+  source_category: first_party
+interface:
+  display_name: Secure Development
+  short_description: Use when secure coding, security testing, threat modeling, or security review guidance is needed.
+  default_prompt: Use secure-development when secure coding, security testing, threat modeling, or security review guidance is needed.
+policy:
+  allow_implicit_invocation: true

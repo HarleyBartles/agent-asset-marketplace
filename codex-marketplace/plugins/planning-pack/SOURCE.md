@@ -1,9 +1,17 @@
 # Source
 
-This plugin projects 5 planning-related skills from the retained Claude-Cortex
-custody root into a Codex marketplace pack.
+This plugin projects first-party planning skills into a Codex marketplace pack.
 
-## Source custody (Claude-Cortex)
+## Source custody
+
+- First-party skill root: `sources/first_party/skills/`
+- Projected skills:
+  - `release-engineering`
+  - `requirements-elicitation`
+  - `estimation`
+  - `mermaid-diagramming`
+
+## Retained upstream custody
 
 - Upstream repo: `NickCrew/Claude-Cortex`
 - URL: <https://github.com/NickCrew/Claude-Cortex.git>
@@ -11,12 +19,10 @@ custody root into a Codex marketplace pack.
 - License: `MIT`
 - Manifest: `sources/third_party/claude-cortex/upstream/manifest.json`
 - Skill root: `sources/third_party/claude-cortex/upstream/skills/`
-- Projected skills:
-  - requirements-discovery
-  - mermaid-diagramming
-  - development-estimation
-  - release-prep
-  - release-analysis
+
+The retired planning skills (`requirements-discovery`, `development-estimation`,
+`release-prep`, `release-analysis`) remain in retained upstream custody but are
+no longer projected by this pack.
 
 ## Pack shape
 
@@ -26,5 +32,5 @@ custody root into a Codex marketplace pack.
 
 ## Boundary
 
-Only the retained planning skills are projected. Later Claude-Cortex candidates
-stay out of scope.
+The pack now projects first-party planning skills. Retained upstream snapshots
+are preserved for provenance but are not part of the active projection set.

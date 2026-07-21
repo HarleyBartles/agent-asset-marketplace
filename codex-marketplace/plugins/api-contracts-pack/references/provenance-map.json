@@ -1,21 +1,12 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "openapi-specification",
+      "canonical_name": "api-design",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/openapi-specification",
-      "local_path": "skills/openapi-specification"
+      "canonical_source_path": "sources/first_party/skills/api-design",
+      "local_path": "skills/api-design"
     }
   ],
-  "adapted_projections": [
-    {
-      "canonical_name": "api-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
-      "local_path": "skills/api-design-patterns",
-      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns"
-    }
-  ]
+  "adapted_projections": []
 }

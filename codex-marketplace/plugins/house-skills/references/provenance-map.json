@@ -1,6 +1,27 @@
 {
   "source_backed_projections": [
     {
+      "canonical_name": "agent-evaluation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/agent-evaluation",
+      "local_path": "skills/agent-evaluation"
+    },
+    {
+      "canonical_name": "agentic-harness",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/agentic-harness",
+      "local_path": "skills/agentic-harness"
+    },
+    {
+      "canonical_name": "api-design",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/api-design",
+      "local_path": "skills/api-design"
+    },
+    {
       "canonical_name": "asset-market",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -85,11 +106,32 @@
       "local_path": "skills/dotnet"
     },
     {
+      "canonical_name": "estimation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/estimation",
+      "local_path": "skills/estimation"
+    },
+    {
+      "canonical_name": "event-driven-systems",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/event-driven-systems",
+      "local_path": "skills/event-driven-systems"
+    },
+    {
       "canonical_name": "event-sourcing",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/event-sourcing",
       "local_path": "skills/event-sourcing"
+    },
+    {
+      "canonical_name": "frontend-ux",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/frontend-ux",
+      "local_path": "skills/frontend-ux"
     },
     {
       "canonical_name": "game-playtest",
@@ -134,18 +176,18 @@
       "local_path": "skills/linear-issue-shaping"
     },
     {
+      "canonical_name": "mermaid-diagramming",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
+      "local_path": "skills/mermaid-diagramming"
+    },
+    {
       "canonical_name": "observability",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/observability",
       "local_path": "skills/observability"
-    },
-    {
-      "canonical_name": "openapi-specification",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/openapi-specification",
-      "local_path": "skills/openapi-specification"
     },
     {
       "canonical_name": "owasp-top-ten",
@@ -162,11 +204,39 @@
       "local_path": "skills/phaser-2d-game"
     },
     {
+      "canonical_name": "playwright-testing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/playwright-testing",
+      "local_path": "skills/playwright-testing"
+    },
+    {
+      "canonical_name": "python",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/python",
+      "local_path": "skills/python"
+    },
+    {
+      "canonical_name": "python-frameworks",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/python-frameworks",
+      "local_path": "skills/python-frameworks"
+    },
+    {
       "canonical_name": "react",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/react",
       "local_path": "skills/react"
+    },
+    {
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "local_path": "skills/release-engineering"
     },
     {
       "canonical_name": "repo-guide-standard",
@@ -181,6 +251,20 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base"
+    },
+    {
+      "canonical_name": "requirements-elicitation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+      "local_path": "skills/requirements-elicitation"
+    },
+    {
+      "canonical_name": "research-ops",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/research-ops",
+      "local_path": "skills/research-ops"
     },
     {
       "canonical_name": "risk-gates",
@@ -223,6 +307,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/rooms-sheet-creator",
       "local_path": "skills/rooms-sheet-creator"
+    },
+    {
+      "canonical_name": "secure-development",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/secure-development",
+      "local_path": "skills/secure-development"
     },
     {
       "canonical_name": "sprite-pipeline",

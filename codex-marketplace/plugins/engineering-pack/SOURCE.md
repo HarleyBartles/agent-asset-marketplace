@@ -1,16 +1,20 @@
 # Engineering Pack Source Notes
 
-This bundle projects the retained ECC engineering workflow into the Codex
-marketplace.
+This bundle projects first-party engineering skills into the Codex marketplace.
 
 ## Source custody
-- `sources/third_party/ecc/upstream/source-custody.md`
-- `sources/third_party/ecc/upstream/manifest.json`
-- `sources/third_party/ecc/upstream/LICENSE`
+
+### First-party skill root
+- `sources/first_party/skills/release-engineering/`
+- `sources/first_party/skills/observability/`
 
 ## Selected skills
-- `ai-first-engineering`
-- `deployment-patterns`
+
+- `release-engineering` (first-party)
+- `observability` (first-party)
 
 ## Projection notes
-- Both skills project verbatim from retained ECC custody.
+
+- `release-engineering` and `observability` project verbatim from first-party source custody.
+- `ai-first-engineering` has been removed from the active projection set; the ECC
+  upstream snapshot was removed in Task 8.

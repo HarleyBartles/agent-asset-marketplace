@@ -1,5 +1,12 @@
 # Codex Cortex Provenance
 
+## Retirement note
+
+The `codex-cortex` mega-pack was retired in MARK-353. Its projected plugin
+root under `codex-marketplace/plugins/codex-cortex/` was removed, and the
+Tier 1 Claude-Cortex skills it contained were converted to first-party skills
+or are no longer projected.
+
 ## Source anchor
 
 - Upstream repository: `NickCrew/Claude-Cortex`

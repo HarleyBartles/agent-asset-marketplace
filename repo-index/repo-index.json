@@ -292,20 +292,6 @@
       }
     },
     {
-      "name": "codex-cortex",
-      "plugin_root": "codex-marketplace/plugins/codex-cortex",
-      "plugin_manifest": "codex-marketplace/plugins/codex-cortex/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/codex-cortex/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/codex-cortex/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/codex-cortex/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/codex-cortex",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
       "name": "api-contracts-pack",
       "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
       "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
@@ -482,20 +468,6 @@
       "skills_path": "codex-marketplace/plugins/engineering-pack/skills",
       "agents_md": null,
       "registry_path": "./codex-marketplace/plugins/engineering-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "everything-codex-code",
-      "plugin_root": "codex-marketplace/plugins/everything-codex-code",
-      "plugin_manifest": "codex-marketplace/plugins/everything-codex-code/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/everything-codex-code/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/everything-codex-code/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/everything-codex-code/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/everything-codex-code",
       "registry_alignment": {
         "status": "aligned",
         "note": null

@@ -1,9 +1,0 @@
-schema_version: 1
-deletes:
-  - validation/rubric.yaml
-metadata:
-  source_category: third_party
-  upstream_name: python-testing-patterns
-  adaptation_overlay: adapters/codex/language-patterns-pack/python-testing-patterns
-  projection_plugin: language-patterns-pack
-  upstream_version: upstream

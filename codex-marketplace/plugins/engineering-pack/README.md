@@ -1,12 +1,13 @@
 # Engineering Pack
 
-This bundle projects the retained ECC implementation and deployment skills
-into a focused topical home.
+This bundle projects first-party engineering skills into a focused topical
+home.
 
 ## Bundle contents
-### ECC skills
-- `ai-first-engineering`
-- `deployment-patterns`
+
+### First-party skills
+- `release-engineering`
+- `observability`
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -14,8 +15,10 @@ into a focused topical home.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The pack covers implementation flow, release readiness, and deployment
-  patterns.
+- The pack covers implementation flow, release readiness, deployment patterns, and observability.
+- `release-engineering` and `observability` are projected from first-party source custody.
+- `ai-first-engineering` has been removed from the active projection set; the ECC
+  upstream snapshot remains in `sources/third_party/ecc/upstream/skills/ai-first-engineering/`.
 - The pack stays out of workflow dispatch, research, and security homes.
 
 ## Install shape

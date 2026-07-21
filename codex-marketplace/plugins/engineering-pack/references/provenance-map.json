@@ -1,25 +1,18 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "ai-first-engineering",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering",
-      "local_path": "skills/ai-first-engineering"
-    },
-    {
-      "canonical_name": "deployment-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns",
-      "local_path": "skills/deployment-patterns"
-    },
-    {
       "canonical_name": "observability",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/observability",
       "local_path": "skills/observability"
+    },
+    {
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "local_path": "skills/release-engineering"
     }
   ],
   "adapted_projections": []

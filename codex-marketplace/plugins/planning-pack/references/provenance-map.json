@@ -1,39 +1,32 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "development-estimation",
-      "source_category": "third_party",
+      "canonical_name": "estimation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
-      "local_path": "skills/development-estimation"
+      "canonical_source_path": "sources/first_party/skills/estimation",
+      "local_path": "skills/estimation"
     },
     {
       "canonical_name": "mermaid-diagramming",
-      "source_category": "third_party",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+      "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
       "local_path": "skills/mermaid-diagramming"
     },
     {
-      "canonical_name": "release-analysis",
-      "source_category": "third_party",
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
-      "local_path": "skills/release-analysis"
+      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "local_path": "skills/release-engineering"
     },
     {
-      "canonical_name": "release-prep",
-      "source_category": "third_party",
+      "canonical_name": "requirements-elicitation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
-      "local_path": "skills/release-prep"
-    },
-    {
-      "canonical_name": "requirements-discovery",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
-      "local_path": "skills/requirements-discovery"
+      "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+      "local_path": "skills/requirements-elicitation"
     }
   ],
   "adapted_projections": []

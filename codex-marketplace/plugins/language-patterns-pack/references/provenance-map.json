@@ -1,6 +1,20 @@
 {
   "source_backed_projections": [
     {
+      "canonical_name": "python",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/python",
+      "local_path": "skills/python"
+    },
+    {
+      "canonical_name": "python-frameworks",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/python-frameworks",
+      "local_path": "skills/python-frameworks"
+    },
+    {
       "canonical_name": "typescript",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -8,30 +22,5 @@
       "local_path": "skills/typescript"
     }
   ],
-  "adapted_projections": [
-    {
-      "canonical_name": "async-python-patterns",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns",
-      "local_path": "skills/async-python-patterns",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns"
-    },
-    {
-      "canonical_name": "python-performance-optimization",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization",
-      "local_path": "skills/python-performance-optimization",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-performance-optimization"
-    },
-    {
-      "canonical_name": "python-testing-patterns",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns",
-      "local_path": "skills/python-testing-patterns",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns"
-    }
-  ]
+  "adapted_projections": []
 }

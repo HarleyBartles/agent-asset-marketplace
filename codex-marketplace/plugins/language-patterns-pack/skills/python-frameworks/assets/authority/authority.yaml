@@ -1,0 +1,25 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Python Frameworks
+  canonical_url: https://docs.djangoproject.com/en/stable/
+  pinned_source_url: https://docs.djangoproject.com/en/stable/
+  latest_check_url: https://docs.djangoproject.com/en/stable/
+  revision: '5.2'
+  retrieved_at: '2026-07-21'
+  content_sha256: 881c2ac807a5dbeb65eb32e9731fac17e1e72c415b81a2f012be516107ef0514
+  license: MIT
+  license_url: https://opensource.org/licenses/MIT
+decomposition:
+  reconciled_against: 881c2ac807a5dbeb65eb32e9731fac17e1e72c415b81a2f012be516107ef0514
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Django patterns
+    - FastAPI patterns
+    - Celery patterns
+    - Choosing a framework
+    load_when:
+    - Use when python-frameworks operational guidance is needed.
+    content_mode: first_party_synthesis

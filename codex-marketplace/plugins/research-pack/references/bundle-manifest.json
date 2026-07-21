@@ -6,11 +6,12 @@
   "plugin_root": "codex-marketplace/plugins/research-pack",
   "is_mega_pack": false,
   "source_families": [
-    "ecc"
+    "first_party"
   ],
   "notes": [
-    "Research pack keeps the evidence-first research workflow as its own domain home.",
-    "The pack is intentionally small so it complements other workflow packs instead of duplicating them."
+    "Research pack now projects the first-party research-ops skill.",
+    "The pack covers evidence-first research workflows, source triage, synthesis, and citation.",
+    "The replaced ECC research-ops snapshot was removed in Task 8; see provenance/ecc-domain-packs.md."
   ],
   "provenance_refs": [
     "provenance/ecc-domain-packs.md",
@@ -21,17 +22,14 @@
   "entries": [
     {
       "canonical_name": "research-ops",
-      "source_category": "third_party",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/research-ops",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/research-ops",
       "local_path": "skills/research-ops",
-      "provenance_note": "Projected verbatim from retained ECC custody into the research pack.",
-      "source_path": "sources/third_party/ecc/upstream/skills/research-ops/SKILL.md",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "copy_expectation": "byte_identical"
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party research-ops skill."
     }
   ],
   "repo_index": {

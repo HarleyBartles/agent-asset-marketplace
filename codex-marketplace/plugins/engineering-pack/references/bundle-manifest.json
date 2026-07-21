@@ -6,12 +6,11 @@
   "plugin_root": "codex-marketplace/plugins/engineering-pack",
   "is_mega_pack": false,
   "source_families": [
-    "ecc",
     "first_party"
   ],
   "notes": [
-    "Engineering pack groups the selected ECC implementation and deployment skills into a practical delivery home.",
-    "The pack is narrow and complementary: it covers engineering execution without absorbing the broader workflow packs."
+    "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home.",
+    "ai-first-engineering has been removed from the active projection set; the ECC upstream snapshot was removed in Task 8."
   ],
   "provenance_refs": [
     "provenance/ecc-domain-packs.md",
@@ -20,34 +19,6 @@
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-    {
-      "canonical_name": "ai-first-engineering",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering",
-      "local_path": "skills/ai-first-engineering",
-      "provenance_note": "Projected verbatim from retained ECC custody into the engineering pack.",
-      "source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "deployment-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "source_family": "ecc",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns",
-      "local_path": "skills/deployment-patterns",
-      "provenance_note": "Projected verbatim from retained ECC custody into the engineering pack.",
-      "source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md",
-      "source_author": "Affaan Mustafa",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/affaan-m/ECC",
-      "copy_expectation": "byte_identical"
-    },
     {
       "canonical_name": "observability",
       "source_category": "first_party",
@@ -58,6 +29,17 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party observability skill."
+    },
+    {
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "local_path": "skills/release-engineering",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party release-engineering skill into the engineering pack."
     }
   ],
   "repo_index": {

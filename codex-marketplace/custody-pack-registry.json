@@ -517,14 +517,6 @@
       ]
     },
     {
-      "source_family": "claude-cortex",
-      "custody_root": "sources/third_party/claude-cortex/upstream",
-      "mega_pack": "codex-cortex",
-      "mega_pack_root": "codex-marketplace/plugins/codex-cortex",
-      "category": "Productivity",
-      "is_mega_pack": true
-    },
-    {
       "bundle_name": "api-contracts-pack",
       "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
       "bundle_version": "1.0.0",
@@ -532,9 +524,8 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Two-slice contract-doctrine pack.",
-        "The bundle projects the retained api-design-patterns guidance and the narrower openapi-specification companion slice into an installable marketplace shape.",
-        "openapi-specification composes with api-design-patterns and stays within the OpenAPI-specific boundary."
+        "Contract-design bundle projected from first-party source custody.",
+        "The api-design skill replaces the former api-design-patterns and openapi-specification entries."
       ],
       "source_ledger": [],
       "provenance_refs": [
@@ -542,31 +533,15 @@
       ],
       "entries": [
         {
-          "canonical_name": "api-design-patterns",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
-          "local_path": "skills/api-design-patterns",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns",
-          "copy_expectation": "normalised_from_source",
-          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
-        },
-        {
-          "canonical_name": "openapi-specification",
+          "canonical_name": "api-design",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/openapi-specification",
-          "local_path": "skills/openapi-specification",
+          "canonical_source_path": "sources/first_party/skills/api-design",
+          "local_path": "skills/api-design",
           "import_status": "imported",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Projected verbatim from the first-party openapi-specification skill."
+          "provenance_note": "Projected verbatim from the first-party api-design skill."
         }
       ]
     },
@@ -579,6 +554,7 @@
       "is_mega_pack": false,
       "notes": [
         "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
+        "event-driven-systems replaces the former Claude-Cortex event-driven-architecture projection.",
         "The ECC architecture slice has been removed from the active projection set."
       ],
       "source_ledger": [],
@@ -598,19 +574,15 @@
           "provenance_note": "Projected verbatim from the first-party database-design-patterns skill."
         },
         {
-          "canonical_name": "event-driven-architecture",
-          "source_category": "third_party",
+          "canonical_name": "event-driven-systems",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
-          "local_path": "skills/event-driven-architecture",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/event-driven-systems",
+          "local_path": "skills/event-driven-systems",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party event-driven-systems skill."
         },
         {
           "canonical_name": "ddd",
@@ -677,8 +649,8 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Language-patterns bundle projected from retained Claude-Cortex custody only.",
-        "The ECC language/framework slice has been removed from the active projection set."
+        "Language-patterns bundle projected from first-party source custody.",
+        "Covers Python language, Python frameworks, and TypeScript."
       ],
       "source_ledger": [],
       "provenance_refs": [
@@ -686,54 +658,26 @@
       ],
       "entries": [
         {
-          "canonical_name": "async-python-patterns",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns",
-          "local_path": "skills/async-python-patterns",
+          "canonical_name": "python",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/python",
+          "local_path": "skills/python",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/async-python-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns",
-          "copy_expectation": "normalised_from_source",
-          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party python skill."
         },
         {
-          "canonical_name": "python-performance-optimization",
-          "source_category": "third_party",
-          "content_mode": "adapted",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization",
-          "local_path": "skills/python-performance-optimization",
+          "canonical_name": "python-frameworks",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/python-frameworks",
+          "local_path": "skills/python-frameworks",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-performance-optimization",
-          "copy_expectation": "adapted_from_source",
-          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
-          "adapted_author": "Harley Bartles",
-          "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths and the projected skill carries canonical agents/openai.yaml metadata."
-        },
-        {
-          "canonical_name": "python-testing-patterns",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns",
-          "local_path": "skills/python-testing-patterns",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns",
-          "copy_expectation": "normalised_from_source",
-          "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party python-frameworks skill."
         },
         {
           "canonical_name": "typescript",
@@ -756,16 +700,11 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Security pack combines the retained Claude Cortex security foundations with the selected ECC safety and security-review skills.",
-        "The bundle keeps the existing security foundations while adding the ECC security slice in the same topical home."
+        "Security pack projected from first-party source custody.",
+        "secure-development replaces the former Claude-Cortex and ECC security skills.",
+        "risk-gates is projected verbatim with an expanded safety gate for destructive operations."
       ],
-      "source_ledger": [
-        "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-        "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
-        "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
-        "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
-        "sources/third_party/ecc/upstream/source-custody.md"
-      ],
+      "source_ledger": [],
       "provenance_refs": [
         "provenance/security-pack.md",
         "provenance/ecc-domain-packs.md",
@@ -773,86 +712,26 @@
       ],
       "entries": [
         {
-          "canonical_name": "secure-coding-practices",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "claude-cortex",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
-          "local_path": "skills/secure-coding-practices",
-          "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices",
-          "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
-          "copy_expectation": "normalised_from_source"
-        },
-        {
-          "canonical_name": "security-testing-patterns",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "claude-cortex",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
-          "local_path": "skills/security-testing-patterns",
-          "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns",
-          "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
-          "copy_expectation": "normalised_from_source"
-        },
-        {
-          "canonical_name": "threat-modeling-techniques",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "claude-cortex",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
-          "local_path": "skills/threat-modeling-techniques",
-          "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques",
-          "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
-          "copy_expectation": "normalised_from_source"
-        },
-        {
-          "canonical_name": "safety-guard",
-          "source_category": "third_party",
+          "canonical_name": "secure-development",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/safety-guard",
-          "local_path": "skills/safety-guard",
-          "provenance_note": "Projected verbatim from retained ECC custody as the safety guard complement to the existing security foundations.",
-          "source_path": "sources/third_party/ecc/upstream/skills/safety-guard/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/secure-development",
+          "local_path": "skills/secure-development",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party secure-development skill."
         },
         {
-          "canonical_name": "security-review",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
-          "local_path": "skills/security-review",
-          "provenance_note": "Normalised from retained ECC custody by moving the companion infrastructure guide under references/.",
-          "source_path": "sources/third_party/ecc/upstream/skills/security-review/SKILL.md",
-          "source_author": "ECC",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
-          "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference.",
-          "copy_expectation": "normalised_from_source"
+          "canonical_name": "risk-gates",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/risk-gates",
+          "local_path": "skills/risk-gates",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party risk-gates skill, expanded with a safety gate for destructive operations."
         },
         {
           "canonical_name": "owasp-top-ten",
@@ -886,8 +765,8 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Frontend bundle projected from retained NickCrew/Claude-Cortex and feature-sliced custody only.",
-        "The ECC frontend slice has been removed from the active projection set."
+        "Frontend bundle projected from retained feature-sliced custody and first-party skills.",
+        "frontend-ux replaces interaction-design and ux-review; playwright-testing replaces webapp-testing."
       ],
       "source_ledger": [],
       "provenance_refs": [],
@@ -908,49 +787,26 @@
           "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
         },
         {
-          "canonical_name": "interaction-design",
-          "source_category": "third_party",
+          "canonical_name": "frontend-ux",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
-          "local_path": "skills/interaction-design",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/frontend-ux",
+          "local_path": "skills/frontend-ux",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party frontend-ux skill."
         },
         {
-          "canonical_name": "ux-review",
-          "source_category": "third_party",
+          "canonical_name": "playwright-testing",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
-          "local_path": "skills/ux-review",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/playwright-testing",
+          "local_path": "skills/playwright-testing",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-        },
-        {
-          "canonical_name": "webapp-testing",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
-          "local_path": "skills/webapp-testing",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party playwright-testing skill."
         },
         {
           "canonical_name": "wcag",
@@ -1025,9 +881,9 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Planning pack covering requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
-        "The retained upstream skills keep their source-path references intact in the projected pack.",
-        "All 5 skills are projected verbatim from Claude-Cortex custody."
+        "Planning pack groups first-party skills for release engineering, requirements elicitation, estimation, and mermaid diagramming.",
+        "release-engineering, requirements-elicitation, and estimation are projected verbatim from first-party sources.",
+        "mermaid-diagramming is projected from a first-party skill."
       ],
       "source_ledger": [],
       "provenance_refs": [
@@ -1035,79 +891,48 @@
       ],
       "entries": [
         {
-          "canonical_name": "development-estimation",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
-          "local_path": "skills/development-estimation",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-        },
-        {
           "canonical_name": "mermaid-diagramming",
-          "source_category": "third_party",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
           "local_path": "skills/mermaid-diagramming",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party mermaid-diagramming skill."
         },
         {
-          "canonical_name": "release-analysis",
-          "source_category": "third_party",
+          "canonical_name": "release-engineering",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
-          "local_path": "skills/release-analysis",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/release-engineering",
+          "local_path": "skills/release-engineering",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party release-engineering skill."
         },
         {
-          "canonical_name": "release-prep",
-          "source_category": "third_party",
+          "canonical_name": "requirements-elicitation",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
-          "local_path": "skills/release-prep",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+          "local_path": "skills/requirements-elicitation",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party requirements-elicitation skill."
         },
         {
-          "canonical_name": "requirements-discovery",
-          "source_category": "third_party",
+          "canonical_name": "estimation",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
-          "local_path": "skills/requirements-discovery",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/estimation",
+          "local_path": "skills/estimation",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party estimation skill."
         }
       ]
     },
@@ -1259,102 +1084,26 @@
       "category": "Coding",
       "is_mega_pack": false,
       "notes": [
-        "Agentic workflows pack groups the selected ECC workflow mechanics into one topical home.",
-        "The pack keeps the workflow-facing skills together so they can be projected as a complementary bundle instead of a superpowers-themed wrapper."
+        "Agentic workflows pack now projects the first-party agentic-harness skill.",
+        "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.",
+        "The replaced ECC workflow snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
       ],
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/source-custody.md",
-        "sources/third_party/ecc/upstream/manifest.json",
-        "sources/third_party/ecc/upstream/LICENSE"
-      ],
+      "source_ledger": [],
       "provenance_refs": [
         "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
       ],
       "entries": [
         {
-          "canonical_name": "agent-harness-construction",
-          "source_category": "third_party",
+          "canonical_name": "agentic-harness",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction",
-          "local_path": "skills/agent-harness-construction",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-harness-construction/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "autonomous-agent-harness",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness",
-          "local_path": "skills/autonomous-agent-harness",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/autonomous-agent-harness/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "continuous-agent-loop",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop",
-          "local_path": "skills/continuous-agent-loop",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/continuous-agent-loop/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "dynamic-workflow-mode",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode",
-          "local_path": "skills/dynamic-workflow-mode",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/dynamic-workflow-mode/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "dmux-workflows",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows",
-          "local_path": "skills/dmux-workflows",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/dmux-workflows/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "agentic-os",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agentic-os",
-          "local_path": "skills/agentic-os",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic workflows pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agentic-os/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/agentic-harness",
+          "local_path": "skills/agentic-harness",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party agentic-harness skill."
         }
       ]
     },
@@ -1366,63 +1115,26 @@
       "category": "Coding",
       "is_mega_pack": false,
       "notes": [
-        "Agentic evaluation pack groups the scoring and audit skills that help decide whether an agent workflow is actually earning its keep.",
-        "The pack keeps the evaluation rubric and the architectural audit surface together as a complementary home."
+        "Agentic evaluation pack now projects the first-party agent-evaluation skill.",
+        "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics.",
+        "The retired adapter tree and ECC evaluation snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
       ],
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/source-custody.md",
-        "sources/third_party/ecc/upstream/manifest.json",
-        "sources/third_party/ecc/upstream/LICENSE"
-      ],
+      "source_ledger": [],
       "provenance_refs": [
         "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/agentic-evaluation/references/source-map.md"
       ],
       "entries": [
         {
-          "canonical_name": "agent-self-evaluation",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
-          "local_path": "skills/agent-self-evaluation",
-          "provenance_note": "Normalised from retained ECC custody by moving examples and templates into canonical references/ folders.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md",
-          "source_author": "ECC",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation",
-          "adaptation_note": "Move examples/ and templates/ into references/ and repoint the evaluation report template link to the internal references folder.",
-          "copy_expectation": "normalised_from_source"
-        },
-        {
-          "canonical_name": "agent-eval",
-          "source_category": "third_party",
+          "canonical_name": "agent-evaluation",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-eval",
-          "local_path": "skills/agent-eval",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic evaluation pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-eval/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "agent-architecture-audit",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit",
-          "local_path": "skills/agent-architecture-audit",
-          "provenance_note": "Projected verbatim from retained ECC custody into the agentic evaluation pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/agent-evaluation",
+          "local_path": "skills/agent-evaluation",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party agent-evaluation skill."
         }
       ]
     },
@@ -1434,14 +1146,11 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Research pack keeps the evidence-first research workflow as its own domain home.",
-        "The pack is intentionally small so it complements other workflow packs instead of duplicating them."
+        "Research pack now projects the first-party research-ops skill.",
+        "The pack covers evidence-first research workflows, source triage, synthesis, and citation.",
+        "The replaced ECC research-ops snapshot was removed in Task 8; see provenance/ecc-domain-packs.md."
       ],
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/source-custody.md",
-        "sources/third_party/ecc/upstream/manifest.json",
-        "sources/third_party/ecc/upstream/LICENSE"
-      ],
+      "source_ledger": [],
       "provenance_refs": [
         "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/research-pack/references/source-map.md"
@@ -1449,17 +1158,14 @@
       "entries": [
         {
           "canonical_name": "research-ops",
-          "source_category": "third_party",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/research-ops",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/research-ops",
           "local_path": "skills/research-ops",
-          "provenance_note": "Projected verbatim from retained ECC custody into the research pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/research-ops/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party research-ops skill."
         }
       ]
     },
@@ -1471,46 +1177,25 @@
       "category": "Coding",
       "is_mega_pack": false,
       "notes": [
-        "Engineering pack groups the selected ECC implementation and deployment skills into a practical delivery home.",
-        "The pack is narrow and complementary: it covers engineering execution without absorbing the broader workflow packs."
+        "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home.",
+        "ai-first-engineering has been removed from the active projection set; the ECC upstream snapshot was removed in Task 8."
       ],
-      "source_ledger": [
-        "sources/third_party/ecc/upstream/source-custody.md",
-        "sources/third_party/ecc/upstream/manifest.json",
-        "sources/third_party/ecc/upstream/LICENSE"
-      ],
+      "source_ledger": [],
       "provenance_refs": [
         "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/engineering-pack/references/source-map.md"
       ],
       "entries": [
         {
-          "canonical_name": "ai-first-engineering",
-          "source_category": "third_party",
+          "canonical_name": "release-engineering",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering",
-          "local_path": "skills/ai-first-engineering",
-          "provenance_note": "Projected verbatim from retained ECC custody into the engineering pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/ai-first-engineering/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
-        },
-        {
-          "canonical_name": "deployment-patterns",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "source_family": "ecc",
-          "canonical_source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns",
-          "local_path": "skills/deployment-patterns",
-          "provenance_note": "Projected verbatim from retained ECC custody into the engineering pack.",
-          "source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns/SKILL.md",
-          "source_author": "Affaan Mustafa",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/affaan-m/ECC",
-          "copy_expectation": "byte_identical"
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/release-engineering",
+          "local_path": "skills/release-engineering",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party release-engineering skill into the engineering pack."
         },
         {
           "canonical_name": "observability",
@@ -1524,14 +1209,6 @@
           "provenance_note": "Projected verbatim from the first-party observability skill."
         }
       ]
-    },
-    {
-      "source_family": "ecc",
-      "custody_root": "sources/third_party/ecc/upstream/skills",
-      "mega_pack": "everything-codex-code",
-      "mega_pack_root": "codex-marketplace/plugins/everything-codex-code",
-      "category": "Coding",
-      "is_mega_pack": true
     }
   ]
 }
