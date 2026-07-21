@@ -345,6 +345,13 @@ def _check_skill_zip(canonical_name: str, staged_root: Path, packaged_files: lis
         expected_names = sorted(f"{canonical_name}/{_relative_path(path, staged_root)}" for path in packaged_files)
         if names != expected_names:
             raise ValueError(f"{zip_path} namelist mismatch: expected {expected_names}, got {names}")
+        for file_path in packaged_files:
+            arcname = f"{canonical_name}/{_relative_path(file_path, staged_root)}"
+            with archive.open(arcname) as member:
+                member_bytes = member.read()
+            expected_bytes = _read_canonical_file_bytes(file_path)
+            if member_bytes != expected_bytes:
+                raise ValueError(f"{zip_path} content mismatch for {arcname}")
 
 
 def _cleanup_generated_skill_zips(expected_names: set[str]) -> None:
