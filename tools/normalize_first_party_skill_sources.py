@@ -15,6 +15,20 @@ from marketplace_utils import ROOT
 
 SOURCE_ROOT = ROOT / "sources/first_party/skills"
 
+# Proper-noun overrides for skill display names so brand casing is preserved
+# when generating provenance-name and agents/openai.yaml display_name.
+_SKILL_NAME_OVERRIDES: dict[str, str] = {
+    "github": "GitHub",
+}
+
+
+def _skill_display_name(skill_name: str) -> str:
+    """Convert a kebab-case skill name to a title-case display name."""
+    parts = skill_name.replace("-", " ").split()
+    return " ".join(
+        _SKILL_NAME_OVERRIDES.get(part.lower(), part.title()) for part in parts
+    )
+
 
 def _read_frontmatter(path: Path) -> tuple[dict[str, Any], str]:
     raw = path.read_text(encoding="utf-8")
@@ -262,7 +276,7 @@ def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
     normalized_metadata: dict[str, Any] = {
         "source-id": name,
         "source-path": skill_md.relative_to(ROOT).as_posix(),
-        "provenance-name": f"{name.replace('-', ' ').title()} first-party skill",
+        "provenance-name": f"{_skill_display_name(name)} first-party skill",
         "source-category": "first_party",
         "status": "active",
         "owner": str(metadata.get("owner") or "Harley Bartles").strip(),
@@ -303,7 +317,7 @@ def _normalize_openai_yaml(path: Path, *, skill_name: str, description: str, wri
     if not isinstance(policy, dict):
         policy = {}
 
-    title = skill_name.replace("-", " ").title()
+    title = _skill_display_name(skill_name)
     normalized = dict(data)
     normalized["interface"] = {
         "display_name": interface.get("display_name") or title,

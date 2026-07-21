@@ -100,7 +100,7 @@ mutation {
 
 ```graphql
 mutation {
-  addPullRequestReviewThreadReply(input: {pullRequestId: "PRID", threadId: "PRRT_...", body: "..."}) {
+  addPullRequestReviewThreadReply(input: {pullRequestReviewThreadId: "PRRT_...", body: "..."}) {
     comment { id body }
   }
 }

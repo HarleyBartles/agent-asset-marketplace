@@ -5,15 +5,15 @@ description: Use when choosing the right GitHub or Git surface for a task, picki
 metadata:
   source-id: using-github
   source-path: sources/first_party/skills/using-github/SKILL.md
-  provenance-name: Using Github first-party skill
+  provenance-name: Using GitHub first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
   scope: Use when choosing the right GitHub or Git surface for a task, picking between
     the GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
   use_when:
-  - Use when choosing the right GitHub or Git surface for a task, picking between the
-    GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
+  - Use when choosing the right GitHub or Git surface for a task, picking between
+    the GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
   do_not_use_when:
   - Do not use when another more specific skill owns this task.
 license: MIT
