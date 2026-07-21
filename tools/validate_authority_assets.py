@@ -12,7 +12,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LANES = {"skills-with-source", "skills-with-citation"}
+LANES = {"skills-with-source", "skills-with-citation", "skills-with-mixed-source"}
 CONTENT_MODES = {"first_party_synthesis", "licensed_adaptation", "verbatim_source"}
 REQUIRED_AUTHORITY_FIELDS = {
     "title",
@@ -143,6 +143,31 @@ def _compute_file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _validate_single_authority_record(
+    record: object, field_prefix: str, errors: list[str]
+) -> dict | None:
+    if not isinstance(record, dict):
+        errors.append(f"{field_prefix} must be a mapping")
+        return None
+    for field in sorted(REQUIRED_AUTHORITY_FIELDS):
+        if field not in record:
+            errors.append(f"{field_prefix} is missing {field}")
+        elif not _nonblank_string(record[field]):
+            errors.append(f"{field_prefix} {field} must be a nonblank string")
+        elif field in URL_FIELDS and not _is_nonblank_http_url(record[field]):
+            errors.append(f"{field_prefix} {field} must be a nonblank http:// or https:// URL")
+    content_sha256 = record.get("content_sha256")
+    if _nonblank_string(content_sha256) and not SHA256_PATTERN.fullmatch(content_sha256):
+        errors.append(f"{field_prefix} content_sha256 must be a 64-character lowercase SHA-256")
+    retrieved_at = record.get("retrieved_at")
+    if _nonblank_string(retrieved_at):
+        try:
+            date.fromisoformat(retrieved_at)
+        except ValueError:
+            errors.append(f"{field_prefix} retrieved_at must be an ISO-8601 date")
+    return record
+
+
 def _validate_sha_against_evidence(
     skill_root: Path,
     record: dict,
@@ -151,9 +176,66 @@ def _validate_sha_against_evidence(
     errors: list[str],
 ) -> None:
     """Ensure recorded SHA values honestly represent a retained local file."""
+    lane = record.get("lane")
     authority = record.get("authority")
     if not isinstance(authority, dict):
         return
+
+    reference_source = skill_root / "assets/authority/reference-source"
+
+    if lane == "skills-with-mixed-source":
+        decomposition = record.get("decomposition")
+        authority_reconciled = (
+            decomposition.get("reconciled_against")
+            if isinstance(decomposition, dict)
+            else None
+        )
+        source_map_reconciled = (
+            source_map.get("reconciled_against")
+            if isinstance(source_map, dict)
+            else None
+        )
+        for label, source_record in authority.items():
+            if not isinstance(label, str) or not isinstance(source_record, dict):
+                continue
+            content_sha256 = source_record.get("content_sha256")
+            if not isinstance(content_sha256, str):
+                continue
+            label_dir = reference_source / label
+            expected_shas: set[str] = set()
+            if label_dir.is_dir():
+                for path in label_dir.rglob("*"):
+                    if (
+                        path.is_file()
+                        and not any(part.startswith(".") for part in path.relative_to(label_dir).parts)
+                    ):
+                        expected_shas.add(_compute_file_sha256(path))
+            evidence_desc = f"reference-source/{label}/*"
+            if not expected_shas:
+                errors.append(
+                    f"authority.yaml authority[{label}] content_sha256 has no local evidence in {evidence_desc}"
+                )
+                continue
+            if content_sha256 not in expected_shas:
+                errors.append(
+                    f"authority.yaml authority[{label}] content_sha256 does not match SHA-256 of {evidence_desc}"
+                )
+            auth_rec = authority_reconciled.get(label) if isinstance(authority_reconciled, dict) else None
+            if isinstance(auth_rec, str) and auth_rec not in expected_shas:
+                errors.append(
+                    f"authority.yaml decomposition.reconciled_against[{label}] does not match SHA-256 of {evidence_desc}"
+                )
+            sm_rec = source_map_reconciled.get(label) if isinstance(source_map_reconciled, dict) else None
+            if isinstance(sm_rec, str) and sm_rec not in expected_shas:
+                errors.append(
+                    f"source-map.yaml reconciled_against[{label}] does not match SHA-256 of {evidence_desc}"
+                )
+            if isinstance(auth_rec, str) and content_sha256 != auth_rec:
+                errors.append(
+                    f"authority.yaml authority[{label}] content_sha256 must match decomposition.reconciled_against[{label}]"
+                )
+        return
+
     content_sha256 = authority.get("content_sha256")
     if not isinstance(content_sha256, str):
         return
@@ -162,7 +244,6 @@ def _validate_sha_against_evidence(
     authority_reconciled = decomposition.get("reconciled_against") if isinstance(decomposition, dict) else None
     source_map_reconciled = source_map.get("reconciled_against") if isinstance(source_map, dict) else None
 
-    lane = record.get("lane")
     expected_shas: set[str] = set()
     evidence_desc = ""
     if lane == "skills-with-citation":
@@ -170,7 +251,6 @@ def _validate_sha_against_evidence(
             expected_shas.add(_compute_file_sha256(citations_path))
             evidence_desc = "assets/authority/CITATIONS.md"
     elif lane == "skills-with-source":
-        reference_source = skill_root / "assets/authority/reference-source"
         if reference_source.is_dir():
             for path in reference_source.rglob("*"):
                 if (
@@ -276,25 +356,28 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
         errors.append("authority.yaml must declare custody: marketplace")
 
     authority = record.get("authority")
+    authority_records: dict[str, dict] = {}
     if not isinstance(authority, dict):
         errors.append("authority.yaml authority must be a mapping")
     else:
-        for field in sorted(REQUIRED_AUTHORITY_FIELDS):
-            if field not in authority:
-                errors.append(f"authority.yaml authority is missing {field}")
-            elif not _nonblank_string(authority[field]):
-                errors.append(f"authority.yaml authority {field} must be a nonblank string")
-            elif field in URL_FIELDS and not _is_nonblank_http_url(authority[field]):
-                errors.append(f"authority.yaml authority {field} must be a nonblank http:// or https:// URL")
-        content_sha256 = authority.get("content_sha256")
-        if _nonblank_string(content_sha256) and not SHA256_PATTERN.fullmatch(content_sha256):
-            errors.append("authority.yaml authority content_sha256 must be a 64-character lowercase SHA-256")
-        retrieved_at = authority.get("retrieved_at")
-        if _nonblank_string(retrieved_at):
-            try:
-                date.fromisoformat(retrieved_at)
-            except ValueError:
-                errors.append("authority.yaml authority retrieved_at must be an ISO-8601 date")
+        if lane == "skills-with-mixed-source":
+            if not authority:
+                errors.append("authority.yaml authority must contain at least one source label")
+            for label, source_record in authority.items():
+                if not _nonblank_string(label):
+                    errors.append("authority.yaml authority source labels must be nonblank strings")
+                    continue
+                validated = _validate_single_authority_record(
+                    source_record, f"authority.yaml authority[{label}]", errors
+                )
+                if validated is not None:
+                    authority_records[label] = validated
+        else:
+            validated = _validate_single_authority_record(
+                authority, "authority.yaml authority", errors
+            )
+            if validated is not None:
+                authority_records[""] = validated
 
     decomposition = record.get("decomposition")
     authority_reconciled_against: object | None = None
@@ -306,8 +389,37 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             errors.append("authority.yaml decomposition is missing reconciled_against")
         else:
             authority_reconciled_against = decomposition["reconciled_against"]
-            if not _nonblank_string(authority_reconciled_against):
-                errors.append("authority.yaml decomposition reconciled_against must be a nonblank string")
+            if lane == "skills-with-mixed-source":
+                if not isinstance(authority_reconciled_against, dict) or not authority_reconciled_against:
+                    errors.append(
+                        "authority.yaml decomposition reconciled_against must be a non-empty mapping for skills-with-mixed-source"
+                    )
+                else:
+                    for label, sha in authority_reconciled_against.items():
+                        if not _nonblank_string(label):
+                            errors.append(
+                                "authority.yaml decomposition reconciled_against labels must be nonblank strings"
+                            )
+                        elif not _nonblank_string(sha) or not SHA256_PATTERN.fullmatch(sha):
+                            errors.append(
+                                f"authority.yaml decomposition reconciled_against[{label}] must be a 64-character lowercase SHA-256"
+                            )
+                    if isinstance(authority, dict):
+                        for label in authority:
+                            if label not in authority_reconciled_against:
+                                errors.append(
+                                    f"authority.yaml decomposition.reconciled_against is missing source label {label}"
+                                )
+                        for label in authority_reconciled_against:
+                            if label not in authority:
+                                errors.append(
+                                    f"authority.yaml decomposition.reconciled_against has unknown source label {label}"
+                                )
+            else:
+                if not _nonblank_string(authority_reconciled_against):
+                    errors.append("authority.yaml decomposition reconciled_against must be a nonblank string")
+                elif not SHA256_PATTERN.fullmatch(authority_reconciled_against):
+                    errors.append("authority.yaml decomposition reconciled_against must be a 64-character lowercase SHA-256")
         authority_references = _validate_references(
             decomposition.get("references"),
             record_name="authority.yaml decomposition",
@@ -327,8 +439,35 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             errors.append("source-map.yaml is missing reconciled_against")
         else:
             source_map_reconciled_against = source_map["reconciled_against"]
-            if not _nonblank_string(source_map_reconciled_against):
-                errors.append("source-map.yaml reconciled_against must be a nonblank string")
+            if lane == "skills-with-mixed-source":
+                if not isinstance(source_map_reconciled_against, dict) or not source_map_reconciled_against:
+                    errors.append(
+                        "source-map.yaml reconciled_against must be a non-empty mapping for skills-with-mixed-source"
+                    )
+                else:
+                    for label, sha in source_map_reconciled_against.items():
+                        if not _nonblank_string(label):
+                            errors.append("source-map.yaml reconciled_against labels must be nonblank strings")
+                        elif not _nonblank_string(sha) or not SHA256_PATTERN.fullmatch(sha):
+                            errors.append(
+                                f"source-map.yaml reconciled_against[{label}] must be a 64-character lowercase SHA-256"
+                            )
+                    if isinstance(authority, dict):
+                        for label in authority:
+                            if label not in source_map_reconciled_against:
+                                errors.append(
+                                    f"source-map.yaml reconciled_against is missing source label {label}"
+                                )
+                        for label in source_map_reconciled_against:
+                            if label not in authority:
+                                errors.append(
+                                    f"source-map.yaml reconciled_against has unknown source label {label}"
+                                )
+            else:
+                if not _nonblank_string(source_map_reconciled_against):
+                    errors.append("source-map.yaml reconciled_against must be a nonblank string")
+                elif not SHA256_PATTERN.fullmatch(source_map_reconciled_against):
+                    errors.append("source-map.yaml reconciled_against must be a 64-character lowercase SHA-256")
         source_map_references = _validate_references(
             source_map.get("references"),
             record_name="source-map.yaml",
@@ -348,6 +487,16 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
     if lane == "skills-with-source":
         if not reference_source.is_dir() or not _contains_non_hidden_file(reference_source):
             errors.append("skills-with-source reference-source must contain at least one non-hidden file")
+    elif lane == "skills-with-mixed-source":
+        if not reference_source.is_dir() or not any(reference_source.iterdir()):
+            errors.append("skills-with-mixed-source reference-source must contain at least one labelled source directory")
+        else:
+            for label in authority_records:
+                label_dir = reference_source / label
+                if not label_dir.is_dir() or not _contains_non_hidden_file(label_dir):
+                    errors.append(
+                        f"skills-with-mixed-source reference-source/{label} must contain at least one non-hidden file"
+                    )
     if lane == "skills-with-citation" and reference_source.is_dir() and any(reference_source.iterdir()):
         errors.append("skills-with-citation reference-source must not contain vendored source files")
     if citations_path.is_file():
