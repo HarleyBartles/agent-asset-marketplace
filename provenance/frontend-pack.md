@@ -1,31 +1,59 @@
 # Frontend Pack Provenance
 
-## Source anchor
+## Summary
 
-- Upstream repository: `NickCrew/Claude-Cortex`
-- Upstream commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
-- License: retained upstream license in source custody
+The Frontend Pack projects first-party frontend skills alongside retained `feature-sliced` and `NickCrew/Claude-Cortex` custody into a Codex marketplace pack.
 
-## Custody surface
+## Source Custody
 
-- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
+### First-Party Custody
 
-## Projection surface
+- `sources/first_party/skills/react/`
+- `sources/first_party/skills/wcag/`
+- `sources/first_party/skills/web-styling/`
 
-- Installable plugin projection: `codex-marketplace/plugins/frontend-pack/`
-- Generated install unit: `generated/skill-zips/frontend-pack/react-performance-optimization/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/accessibility-audit/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/ux-review/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
-- Generated install unit: `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
+### Retained Upstream
+
+- `feature-sliced` upstream: `sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/`
+- `NickCrew/Claude-Cortex` upstream:
+  - `sources/third_party/claude-cortex/upstream/skills/interaction-design/`
+  - `sources/third_party/claude-cortex/upstream/skills/ux-review/`
+  - `sources/third_party/claude-cortex/upstream/skills/webapp-testing/`
+
+## Projection Surfaces
+
+- `codex-marketplace/plugins/frontend-pack/skills/react/`
+- `codex-marketplace/plugins/frontend-pack/skills/wcag/`
+- `codex-marketplace/plugins/frontend-pack/skills/web-styling/`
+- `codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design/`
+- `codex-marketplace/plugins/frontend-pack/skills/interaction-design/`
+- `codex-marketplace/plugins/frontend-pack/skills/ux-review/`
+- `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/`
+
+## Generated Install Units
+
+- `generated/skill-zips/frontend-pack/react/skill.zip`
+- `generated/skill-zips/frontend-pack/wcag/skill.zip`
+- `generated/skill-zips/frontend-pack/web-styling/skill.zip`
+- `generated/skill-zips/frontend-pack/feature-sliced-design/skill.zip`
+- `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
+- `generated/skill-zips/frontend-pack/ux-review/skill.zip`
+- `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
+
+## Marketplace Adaptation
+
+- **Status**: `projected`
+- **Plugin name**: `frontend-pack`
+- **Display name**: `Frontend Pack`
+- **Marketplace category**: `Productivity`
+- **Content mode**: `verbatim` for first-party and retained upstream skills
+
+## Rights and Attribution
+
+- First-party skills are MIT-licensed by Harley Bartles.
+- `feature-sliced-design` is used under the upstream MIT license.
+- `interaction-design`, `ux-review`, and `webapp-testing` are used under NickCrew/Claude-Cortex MIT terms.
 
 ## Boundary
 
-The retained custody surface seeds the exact MARK-214 first-wave frontend skills:
-`react-performance-optimization`, `accessibility-audit`, `ux-review`,
-`interaction-design`, and `webapp-testing`.
-
-These skills are imported from retained upstream custody under
-`sources/third_party/claude-cortex/upstream/` and projected into
-`codex-marketplace/plugins/frontend-pack/` with pack-relative paths. Game-studio
-or browser-game material is intentionally excluded from this pack boundary.
+The pack covers React component and performance patterns, web accessibility conformance, CSS approach decisions, feature-sliced design, and supporting interaction/UX/testing guidance. It does not include framework-specific server frameworks, provider-specific tooling, or unrelated implementation domains.
