@@ -162,7 +162,7 @@ DEFAULT_REPO_INDEX = {
         {
             "name": "claude-cortex-custody",
             "path": "sources/third_party/claude-cortex/upstream",
-            "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, database-design-patterns import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210. The custody target is the skill tree; any broader upstream scaffold is incidental and should not become the default retained surface.",
+            "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210. The database-design-patterns skill was rehomed to first-party custody and is no longer present in this mirror. The custody target is the skill tree; any broader upstream scaffold is incidental and should not become the default retained surface.",
             "surface_kind": "vendored",
             "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
             "guidance_scope": "repo-owned-guidance",
