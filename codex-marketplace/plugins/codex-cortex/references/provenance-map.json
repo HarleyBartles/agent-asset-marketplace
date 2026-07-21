@@ -1,27 +1,6 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "accessibility-audit",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
-      "local_path": "skills/accessibility-audit"
-    },
-    {
-      "canonical_name": "cqrs-event-sourcing",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
-      "local_path": "skills/cqrs-event-sourcing"
-    },
-    {
-      "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
-      "local_path": "skills/database-design-patterns"
-    },
-    {
       "canonical_name": "development-estimation",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -48,13 +27,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
       "local_path": "skills/mermaid-diagramming"
-    },
-    {
-      "canonical_name": "react-performance-optimization",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
-      "local_path": "skills/react-performance-optimization"
     },
     {
       "canonical_name": "release-analysis",
@@ -110,22 +82,6 @@
       "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns"
     },
     {
-      "canonical_name": "openapi-specification",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
-      "local_path": "skills/openapi-specification",
-      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification"
-    },
-    {
-      "canonical_name": "owasp-top-10",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-      "local_path": "skills/owasp-top-10",
-      "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10"
-    },
-    {
       "canonical_name": "python-performance-optimization",
       "source_category": "third_party",
       "content_mode": "adapted",
@@ -164,14 +120,6 @@
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
       "local_path": "skills/threat-modeling-techniques",
       "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques"
-    },
-    {
-      "canonical_name": "typescript-advanced-patterns",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
-      "local_path": "skills/typescript-advanced-patterns",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns"
     }
   ]
 }

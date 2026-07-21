@@ -1,43 +1,32 @@
 {
     "name":  "data-platform-pack",
     "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for data, database, analytics, ETL, and ML-platform skills projected from retained ECC custody plus an adapted PlanetScale PostgreSQL skill. Includes ClickHouse, cache patterns, dashboard builders, data throughput accelerators, database migrations, PostgreSQL guidance, PostgreSQL patterns, PyTorch patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
+    "description":  "Codex marketplace bundle for first-party relational database engine guidance. Projects the database-engines skill with source-grounded PostgreSQL and SQLite documentation and selective MS-SQL guidance.",
     "author":  {
                    "name":  "Harley Bartles"
                },
     "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "license":  "MIT",
-    "rights":  "Contains third-party ECC-derived data, database, analytics, ETL, and ML-platform guidance; see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+    "rights":  "Contains first-party database-engines guidance with vendored PostgreSQL and SQLite documentation; see SOURCE.md and references/source-map.md for source custody and attribution.",
     "keywords":  [
                      "codex",
                      "marketplace",
                      "data",
                      "database",
-                     "analytics",
-                     "etl",
-                     "ml",
                      "platform",
-                     "clickhouse",
-                     "cache",
-                     "dashboard",
-                     "throughput",
-                     "migrations",
-                     "postgres",
-                     "pytorch",
-                     "quality",
-                     "scientific",
-                     "pubmed",
-                     "literature",
-                     "scholar",
+                     "postgresql",
+                     "sqlite",
+                     "mssql",
+                     "engines",
                      "skills",
                      "projection"
                  ],
     "skills":  "./skills/",
     "interface":  {
                       "displayName":  "Data Platform Pack",
-                      "shortDescription":  "Data, database, analytics, ETL, and ML-platform guidance",
-                      "longDescription":  "A repo-local Codex plugin bundle that projects retained ECC data/platform skills plus an adapted PlanetScale PostgreSQL skill into an installable marketplace shape for PostgreSQL guidance, PostgreSQL patterns, quality nonconformance handling, PubMed database access, scientific literature review, and scholarly evaluation.",
+                      "shortDescription":  "Relational database engine guidance",
+                      "longDescription":  "A repo-local Codex plugin bundle that projects the first-party database-engines skill into an installable marketplace shape for PostgreSQL, SQLite, and selectable MS-SQL relational database guidance.",
                       "developerName":  "Harley Bartles",
                       "category":  "Productivity",
                       "capabilities":  [
@@ -46,8 +35,8 @@
                                        ],
                       "defaultPrompt":  [
                                             "Inspect the Data Platform Pack bundle and source map.",
-                                            "Use the bundle to review the data, database, analytics, ETL, and ML-platform skill projections.",
-                                            "Compare the bundle versioning against the retained ECC custody surface."
+                                            "Use the bundle to review the first-party database-engines skill projection.",
+                                            "Compare the bundle versioning against the first-party source custody in sources/first_party/skills/database-engines."
                                         ],
                       "brandColor":  "#0D9488",
                       "composerIcon":  "./assets/icon.svg",

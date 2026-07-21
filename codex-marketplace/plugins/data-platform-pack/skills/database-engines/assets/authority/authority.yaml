@@ -1,0 +1,125 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-mixed-source
+authority:
+  postgresql-docs:
+    title: PostgreSQL 18.4 Documentation
+    canonical_url: https://www.postgresql.org/docs/18.4/
+    pinned_source_url: https://download.postgresql.org/pub/latest/postgresql-18.4-docs.tar.gz
+    latest_check_url: https://www.postgresql.org/docs/18.4/
+    revision: '18.4'
+    retrieved_at: '2026-07-21'
+    content_sha256: b5ca7fd89d86aa9e5ee4beb7dcb12349de7f0087848b39288a288072b540a861
+    license: PostgreSQL License
+    license_url: https://www.postgresql.org/about/licence/
+  sqlite-docs:
+    title: SQLite 3.53.3 Documentation
+    canonical_url: https://sqlite.org/docs.html
+    pinned_source_url: https://sqlite.org/2026/sqlite-doc-3530300.zip
+    latest_check_url: https://sqlite.org/docs.html
+    revision: '3.53.3'
+    retrieved_at: '2026-07-21'
+    content_sha256: 168f99869876bcf4db8d93efa2a483a9c81536537d01900c58cd75d0a67cca27
+    license: Public Domain
+    license_url: https://sqlite.org/copyright.html
+decomposition:
+  reconciled_against:
+    postgresql-docs: b5ca7fd89d86aa9e5ee4beb7dcb12349de7f0087848b39288a288072b540a861
+    sqlite-docs: 168f99869876bcf4db8d93efa2a483a9c81536537d01900c58cd75d0a67cca27
+  references:
+    - path: references/operational-guidance.md
+      source_sections:
+        - Engine selection and shared concepts
+      content_mode: first_party_synthesis
+      load_when:
+        - Use when routing between engines.
+        - Use when a concept applies to more than one engine.
+    - path: references/postgresql/connection-and-drivers.md
+      source_sections:
+        - 'postgresql: Client Applications / psql'
+        - 'postgresql: Client Interfaces / libpq'
+        - 'postgresql: Server Administration / Server Setup'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when connecting to or configuring PostgreSQL client access.
+    - path: references/postgresql/schema-and-types.md
+      source_sections:
+        - 'postgresql: The SQL Language / Data Definition'
+        - 'postgresql: The SQL Language / Data Types'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when designing PostgreSQL schemas or choosing data types.
+    - path: references/postgresql/indexing.md
+      source_sections:
+        - 'postgresql: The SQL Language / Indexes'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when creating or tuning PostgreSQL indexes.
+    - path: references/postgresql/query-patterns.md
+      source_sections:
+        - 'postgresql: The SQL Language / Queries'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when writing or optimizing PostgreSQL queries.
+    - path: references/postgresql/transactions.md
+      source_sections:
+        - 'postgresql: The SQL Language / Transaction Isolation and Concurrency Control'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when handling PostgreSQL transactions or concurrency.
+    - path: references/postgresql/backup-and-replication.md
+      source_sections:
+        - 'postgresql: Server Administration / Backup and Restore'
+        - 'postgresql: Server Administration / High Availability, Load Balancing, and Replication'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when backing up, restoring, or replicating PostgreSQL.
+    - path: references/sqlite/connection-and-drivers.md
+      source_sections:
+        - 'sqlite: About SQLite / C API'
+        - 'sqlite: SQLite Features'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when connecting to SQLite from an application.
+    - path: references/sqlite/schema-and-types.md
+      source_sections:
+        - 'sqlite: SQL Language / Data Types'
+        - 'sqlite: SQL Language / CREATE TABLE'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when designing SQLite schemas or choosing storage classes.
+    - path: references/sqlite/indexing.md
+      source_sections:
+        - 'sqlite: Query Planning / The SQLite Query Optimizer'
+        - 'sqlite: Query Planning / Indexes'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when creating or tuning SQLite indexes.
+    - path: references/sqlite/query-patterns.md
+      source_sections:
+        - 'sqlite: SQL Language / SELECT'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when writing or optimizing SQLite queries.
+    - path: references/sqlite/transactions.md
+      source_sections:
+        - 'sqlite: Transaction Control / WAL Mode'
+        - 'sqlite: Transaction Control / Isolation'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when handling SQLite transactions or WAL.
+    - path: references/sqlite/backup-and-wal.md
+      source_sections:
+        - 'sqlite: Backup API'
+        - 'sqlite: WAL'
+      content_mode: licensed_adaptation
+      load_when:
+        - Use when backing up SQLite or configuring WAL.
+    - path: references/mssql/selectable-engine.md
+      source_sections:
+        - Microsoft SQL Server documentation (proprietary citation)
+        - MySQL Reference Manual (Oracle proprietary citation)
+      content_mode: first_party_synthesis
+      load_when:
+        - Use when the user explicitly selects MS-SQL.
+        - Use when comparing T-SQL semantics with PostgreSQL or SQLite.

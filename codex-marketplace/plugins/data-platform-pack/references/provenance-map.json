@@ -1,13 +1,12 @@
 {
-  "source_backed_projections": [],
-  "adapted_projections": [
+  "source_backed_projections": [
     {
-      "canonical_name": "postgres",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
-      "local_path": "skills/postgres",
-      "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres"
+      "canonical_name": "database-engines",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/database-engines",
+      "local_path": "skills/database-engines"
     }
-  ]
+  ],
+  "adapted_projections": []
 }

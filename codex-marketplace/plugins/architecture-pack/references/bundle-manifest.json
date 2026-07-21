@@ -10,7 +10,7 @@
     "first_party"
   ],
   "notes": [
-    "Architecture bundle projected from retained Codex Cortex custody only.",
+    "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
     "The ECC architecture slice has been removed from the active projection set."
   ],
   "provenance_refs": [
@@ -43,18 +43,14 @@
     },
     {
       "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/database-design-patterns",
       "local_path": "skills/database-design-patterns",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party database-design-patterns skill."
     },
     {
       "canonical_name": "ddd",

@@ -1,14 +1,14 @@
 # Projection
 
 This root is the Codex-facing marketplace projection of the retained Rooms
-project skills plus one database guidance skill.
+project skills plus one first-party database guidance skill.
 
 ## Layer Model
 
 This repository uses two distinct layers for the Rooms bundle:
 
-- Source custody keeps the retained first-party Rooms skills and the retained
-  Claude-Cortex database skill in their source trees.
+- Source custody keeps the retained first-party Rooms skills and the first-party
+  database guidance skill in their source trees.
 - Projection layer holds the source-controlled marketplace copy with the
   selection decision for the Rooms project pack.
 - Installation/export layer is derived from the projection and is produced only
@@ -48,6 +48,5 @@ The split is deliberate:
 
 ## Excluded from the active install surface
 
-- Source custody trees remain in `sources/first_party/skills/` and
-  `sources/third_party/claude-cortex/upstream/`.
+- Source custody trees remain in `sources/first_party/skills/`.
 - Other Rooms skill decisions stay in the house-skills projection.

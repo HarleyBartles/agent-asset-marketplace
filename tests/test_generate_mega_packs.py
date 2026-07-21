@@ -39,6 +39,28 @@ class GenerateMegaPacksTests(unittest.TestCase):
         self.assertEqual(len(by_family["claude-cortex"]), 2)
         self.assertEqual(len(by_family["ecc"]), 1)
 
+    def test_collect_entries_by_family_excludes_mega_pack_manifests(self) -> None:
+        plugin_manifests = [
+            {
+                "bundle_name": "codex-cortex",
+                "is_mega_pack": True,
+                "mega_pack_for": "claude-cortex",
+                "entries": [
+                    {"canonical_name": "mega-only", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mega-only", "local_path": "skills/mega-only"},
+                ],
+            },
+            {
+                "bundle_name": "api-contracts-pack",
+                "entries": [
+                    {"canonical_name": "api-design-patterns", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns", "local_path": "skills/api-design-patterns"},
+                ],
+            },
+        ]
+        by_family = collect_entries_by_family(plugin_manifests)
+        self.assertIn("claude-cortex", by_family)
+        self.assertEqual(len(by_family["claude-cortex"]), 1)
+        self.assertEqual(by_family["claude-cortex"][0]["canonical_name"], "api-design-patterns")
+
     def test_generate_mega_pack_manifest_produces_correct_shape(self) -> None:
         entries = [
             {"canonical_name": "owasp-top-10", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10", "local_path": "skills/owasp-top-10"},

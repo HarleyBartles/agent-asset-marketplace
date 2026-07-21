@@ -10,31 +10,20 @@
   ],
   "entries": [
     {
-      "canonical_name": "accessibility-audit",
+      "canonical_name": "api-design-patterns",
       "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
-      "local_path": "skills/accessibility-audit",
+      "content_mode": "normalised",
+      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
+      "local_path": "skills/api-design-patterns",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
       "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "api-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns",
-      "local_path": "skills/api-design-patterns",
-      "import_status": "imported",
+      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns",
       "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites.",
-      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/api-design-patterns"
+      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
     },
     {
       "canonical_name": "async-python-patterns",
@@ -51,32 +40,6 @@
       "adaptation_overlay_path": "adapters/codex/language-patterns-pack/async-python-patterns",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
-    },
-    {
-      "canonical_name": "cqrs-event-sourcing",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
-      "local_path": "skills/cqrs-event-sourcing",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
-      "local_path": "skills/database-design-patterns",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
     },
     {
       "canonical_name": "development-estimation",
@@ -97,23 +60,31 @@
       "canonical_name": "event-driven-architecture",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
       "local_path": "skills/event-driven-architecture",
       "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
       "canonical_name": "interaction-design",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
       "local_path": "skills/interaction-design",
       "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
       "canonical_name": "mermaid-diagramming",
@@ -129,34 +100,6 @@
       "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "openapi-specification",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
-      "local_path": "skills/openapi-specification",
-      "import_status": "imported",
-      "copy_expectation": "adapted_from_source",
-      "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
-      "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
-    },
-    {
-      "canonical_name": "owasp-top-10",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-      "local_path": "skills/owasp-top-10",
-      "import_status": "imported",
-      "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites.",
-      "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout."
     },
     {
       "canonical_name": "python-performance-optimization",
@@ -191,21 +134,6 @@
       "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns",
       "copy_expectation": "normalised_from_source",
       "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
-    },
-    {
-      "canonical_name": "react-performance-optimization",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
-      "local_path": "skills/react-performance-optimization",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
       "canonical_name": "release-analysis",
@@ -259,12 +187,15 @@
       "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
       "local_path": "skills/secure-coding-practices",
-      "import_status": "imported",
-      "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites.",
-      "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices",
+      "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
       "adapted_author": "Harley Bartles",
-      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout."
+      "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices",
+      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
+      "copy_expectation": "normalised_from_source"
     },
     {
       "canonical_name": "security-testing-patterns",
@@ -273,12 +204,15 @@
       "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
       "local_path": "skills/security-testing-patterns",
-      "import_status": "imported",
-      "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites.",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns",
+      "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
       "adapted_author": "Harley Bartles",
-      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout."
+      "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns",
+      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
+      "copy_expectation": "normalised_from_source"
     },
     {
       "canonical_name": "threat-modeling-techniques",
@@ -287,52 +221,45 @@
       "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
       "local_path": "skills/threat-modeling-techniques",
-      "import_status": "imported",
-      "copy_expectation": "normalised_from_source",
-      "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites.",
-      "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques",
-      "adapted_author": "Harley Bartles",
-      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout."
-    },
-    {
-      "canonical_name": "typescript-advanced-patterns",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
-      "local_path": "skills/typescript-advanced-patterns",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
+      "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/SKILL.md",
       "source_author": "NickCrew",
       "source_license": "MIT",
       "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns",
-      "copy_expectation": "adapted_from_source",
-      "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
       "adapted_author": "Harley Bartles",
-      "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
+      "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques",
+      "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
+      "copy_expectation": "normalised_from_source"
     },
     {
       "canonical_name": "ux-review",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
       "local_path": "skills/ux-review",
       "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
       "canonical_name": "webapp-testing",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "source_family": "claude-cortex",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
       "local_path": "skills/webapp-testing",
       "import_status": "imported",
+      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
+      "source_author": "NickCrew",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
   ],
   "notes": [

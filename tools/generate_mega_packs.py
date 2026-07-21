@@ -66,6 +66,10 @@ def collect_entries_by_family(
     """Collect all active entries from all plugin manifests, grouped by source_family."""
     by_family: dict[str, list[dict[str, Any]]] = {}
     for manifest in plugin_manifests:
+        # Mega-pack manifests must not seed their own source-family entries.
+        # They should only aggregate entries already projected into topical packs.
+        if manifest.get("is_mega_pack"):
+            continue
         entries = manifest.get("entries", [])
         if not isinstance(entries, list):
             continue

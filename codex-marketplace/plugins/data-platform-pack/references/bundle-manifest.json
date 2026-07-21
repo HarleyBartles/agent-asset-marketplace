@@ -6,10 +6,10 @@
   "plugin_root": "codex-marketplace/plugins/data-platform-pack",
   "is_mega_pack": false,
   "source_families": [
-    "planetscale"
+    "first_party"
   ],
   "notes": [
-    "Data-platform bundle projected from retained PlanetScale custody only.",
+    "Data-platform bundle projected from the first-party database-engines skill.",
     "The ECC data-platform slice has been removed from the active projection set."
   ],
   "provenance_refs": [
@@ -20,20 +20,15 @@
   "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "postgres",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
-      "local_path": "skills/postgres",
-      "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres",
+      "canonical_name": "database-engines",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/database-engines",
+      "local_path": "skills/database-engines",
       "import_status": "imported",
-      "source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres/SKILL.md",
-      "source_author": "PlanetScale",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/planetscale/database-skills",
-      "source_family": "planetscale",
-      "copy_expectation": "adapted_from_source",
-      "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party database-engines skill."
     }
   ],
   "repo_index": {

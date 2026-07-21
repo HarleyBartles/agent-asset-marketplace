@@ -3,15 +3,13 @@
 ## Source anchor
 
 - First-party source custody: `sources/first_party/skills/`
-- Claude-Cortex upstream repository: `NickCrew/Claude-Cortex`
-- Claude-Cortex resolved commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
 - License: MIT
 
 ## Custody surface
 
 - First-party Rooms skill custody: `sources/first_party/skills/rooms-*`
-- Retained upstream database skill custody:
-  `sources/third_party/claude-cortex/upstream/skills/database-design-patterns`
+- First-party database guidance skill custody:
+  `sources/first_party/skills/database-design-patterns`
 
 ## Projection surface
 
@@ -27,7 +25,7 @@
 | `rooms-character-investigation` | Yes | House Skills / Rooms | Broad Rooms lookup and source-partitioned investigation packets. |
 | `rooms-sheet-creator` | Yes | House Skills / Rooms | Turns durable investigations into participant-facing sheets. |
 | `rooms-image-sidecars` | Yes | House Skills / Rooms | Useful for image evidence starter packets before Pit/archive ingestion. |
-| `database-design-patterns` | Yes | Claude-Cortex | Relevant because this repo has a canonical sqlite database surface and needs generic schema/query guidance without taking a full architecture bundle. |
+| `database-design-patterns` | Yes | First-party | Relevant because this repo has a canonical sqlite database surface and needs generic schema/query guidance without taking a full architecture bundle. |
 | `cleanup-custody` | No | repo-worker-pack | Already the right home for repo hygiene and cleanup-custody. |
 | `repo-worker-pack` | No | Separate plugin | Keeps repo hygiene and worker routing separate from the Rooms pack. |
 | `superpowers-plus` | No | Separate plugin | General workflow/process skills; not Rooms-project-pack material. |
@@ -39,7 +37,7 @@
 The pack is narrow and project-specific.
 
 * Keep Rooms-native project skills together.
-* Pull in one database skill for the canonical sqlite surface.
+* Pull in one first-party database skill for the canonical sqlite surface.
 * Do not duplicate repo-worker-pack.
 * Do not duplicate superpowers-plus.
 * Do not duplicate unslop-plus.
