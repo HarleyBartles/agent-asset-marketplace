@@ -19,10 +19,10 @@ The full Claude-Cortex upstream is mirrored into source custody at
 `sources/third_party/claude-cortex/upstream/` at pinned commit
 `7892d00e7cb6adf00144a535103b930c772fb2c0` (MIT license).
 
-The mirror includes all 149 skill directories plus the full upstream tree
+The mirror includes all 148 skill directories plus the full upstream tree
 (agents, rules, hooks, Python CLI, tests, docs, schemas, configuration).
 
-### All 149 upstream skill directories in custody
+### All 148 upstream skill directories in custody
 
 `.system`, `accessibility-audit`, `agent-loops`, `ai-tells-review`,
 `ai-tells-scan`, `api-design-patterns`, `api-gateway-patterns`,
@@ -33,8 +33,7 @@ The mirror includes all 149 skill directories plus the full upstream tree
 `codex-code-review`, `collaboration`, `color-palette`, `community`,
 `competitor-analyst`, `compliance-audit`, `condition-based-waiting`,
 `constructive-dissent`, `copywriter`, `cortex-skills-loop`,
-`cqrs-event-sourcing`, `dashboard-designer`, `database-design-patterns`,
-`dataset-curator`, `decision-maker`, `defense-in-depth`, `design-critiquer`,
+`cqrs-event-sourcing`, `dashboard-designer`, `dataset-curator`, `decision-maker`, `defense-in-depth`, `design-critiquer`,
 `design-journey-review`, `design-system-architecture`, `development-estimation`,
 `dev-workflows`, `dispatching-parallel-agents`, `doc-architecture-review`,
 `doc-claim-validator`, `doc-completeness-audit`, `doc-health-audit`,
@@ -83,7 +82,7 @@ The mirror includes all 149 skill directories plus the full upstream tree
 
 ## Projected today / already projected
 
-23 of 149 upstream skills are projected into canonical marketplace plugins.
+22 of 148 upstream skills are projected into canonical marketplace plugins.
 
 ### Already projected (prior issues MARK-172 through MARK-214)
 
@@ -93,7 +92,6 @@ The mirror includes all 149 skill directories plus the full upstream tree
 | `api-design-patterns` | `codex-cortex`, `api-contracts-pack` |
 | `async-python-patterns` | `language-patterns-pack` |
 | `cqrs-event-sourcing` | `codex-cortex`, `architecture-pack` |
-| `database-design-patterns` | `codex-cortex`, `architecture-pack` |
 | `event-driven-architecture` | `codex-cortex`, `architecture-pack` |
 | `interaction-design` | `frontend-pack` |
 | `openapi-specification` | `codex-cortex`, `api-contracts-pack` |
@@ -120,7 +118,7 @@ The mirror includes all 149 skill directories plus the full upstream tree
 
 ## Retained in source custody / not yet projected
 
-126 of 149 upstream skills are retained in source custody but not yet projected
+126 of 148 upstream skills are retained in source custody but not yet projected
 into marketplace plugins. They are available for future projection when a
 follow-up issue scopes them.
 
@@ -193,7 +191,7 @@ follow-up issue scopes them.
 
 ## MARK-279 retained existing skills
 
-No existing first-party or third-party plugin content was removed or replaced. All 18 previously-projected Claude-Cortex skills retain their existing projections across `codex-cortex`, `architecture-pack`, `api-contracts-pack`, `language-patterns-pack`, `security-pack`, and `frontend-pack`. Projected plugin copies were synced to match the full upstream mirror source where the upstream content differed from the previous selective snapshot.
+No existing first-party or third-party plugin content was removed or replaced. All 17 previously-projected Claude-Cortex skills retain their existing projections across `codex-cortex`, `architecture-pack`, `api-contracts-pack`, `language-patterns-pack`, `security-pack`, and `frontend-pack`. `database-design-patterns` was rehomed to first-party custody and is no longer counted as a Claude-Cortex projection. Projected plugin copies were synced to match the full upstream mirror source where the upstream content differed from the previous selective snapshot.
 
 ## MARK-279 generated artifact explanation
 

@@ -5,7 +5,7 @@
   "license": "MIT",
   "retained_snapshot_root": "sources/third_party/claude-cortex/upstream",
   "custody_scope": "full-upstream-mirror",
-  "custody_skill_count": 149,
+  "custody_skill_count": 148,
   "imports": [
     {
       "source_id": "codex-cortex-cqrs-event-sourcing-v1",
@@ -18,13 +18,6 @@
       "source_id": "codex-cortex-event-driven-architecture-v1",
       "public_name": "event-driven-architecture",
       "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-      "status": "imported",
-      "projected_into": ["codex-cortex", "architecture-pack"]
-    },
-    {
-      "source_id": "codex-cortex-database-design-patterns-v1",
-      "public_name": "database-design-patterns",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
       "status": "imported",
       "projected_into": ["codex-cortex", "architecture-pack"]
     },
@@ -188,12 +181,13 @@
   ],
   "deferred": [],
   "notes": [
-    "MARK-279 mirrors the full Claude-Cortex upstream (149 skills) into source custody at sources/third_party/claude-cortex/upstream/.",
-    "23 of 149 skills are projected into canonical marketplace plugins.",
-    "126 of 149 skills are retained in source custody and not yet projected. They are available for future projection when a follow-up issue scopes them.",
-    "2 of 149 skills are rejected with hard reasons (durable-source doctrine violations).",
-    "The retained custody surface is the durable source home for all 149 upstream skills.",
-    "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 adds database-design-patterns, MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns, MARK-210 adds threat-modeling-techniques, MARK-212 adds typescript-advanced-patterns, MARK-213 adds python-testing-patterns, async-python-patterns, and python-performance-optimization.",
+    "MARK-279 mirrors the full Claude-Cortex upstream (149 skills at the pinned commit) into source custody at sources/third_party/claude-cortex/upstream/.",
+    "database-design-patterns was rehomed to first-party custody and removed from the local Claude-Cortex mirror, leaving 148 skills in the mirror.",
+    "22 of those 148 mirror skills are projected into canonical marketplace plugins.",
+    "126 of those 148 skills are retained in source custody and not yet projected. They are available for future projection when a follow-up issue scopes them.",
+    "2 of the original 149 upstream skills are rejected with hard reasons (durable-source doctrine violations).",
+    "The retained custody surface is the durable source home for the 148 upstream skills retained in the mirror.",
+    "MARK-172 retains cqrs-event-sourcing, MARK-200 adds event-driven-architecture, MARK-201 originally added database-design-patterns (later rehomed to first-party custody), MARK-204 adds api-design-patterns, MARK-205 adds openapi-specification, MARK-207 adds secure-coding-practices, owasp-top-10, and security-testing-patterns, MARK-210 adds threat-modeling-techniques, MARK-212 adds typescript-advanced-patterns, MARK-213 adds python-testing-patterns, async-python-patterns, and python-performance-optimization.",
     "MARK-279 adds requirements-discovery, mermaid-diagramming, development-estimation, release-prep, and release-analysis projected into planning-pack.",
     "Projected plugin copies were synced to match the full upstream mirror source where the upstream content differed from the previous selective snapshot."
   ]

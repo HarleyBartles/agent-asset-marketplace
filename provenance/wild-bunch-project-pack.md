@@ -53,7 +53,6 @@ The Wild Bunch Project Pack packages Wild Bunch first-party skills together with
 ### Third-Party Claude-Cortex Skills
 
 - `sources/third_party/claude-cortex/upstream/skills/api-design-patterns/SKILL.md`
-- `sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md`
 - `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md`
 - `sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md`
 - `sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md`
