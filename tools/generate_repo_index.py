@@ -371,6 +371,13 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone["nearest_scoped_agents_md"] = ".agents/superpowers/plans/AGENTS.md"
             normalized_zones.append(updated_zone)
             continue
+        if zone.get("name") == "claude-cortex-custody":
+            updated_zone = dict(zone)
+            updated_zone["purpose"] = (
+                "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210. The database-design-patterns skill was rehomed to first-party custody and is no longer present in this mirror. The custody target is the skill tree; any broader upstream scaffold is incidental and should not become the default retained surface."
+            )
+            normalized_zones.append(updated_zone)
+            continue
         normalized_zones.append(zone)
     return normalized_zones
 
