@@ -13,6 +13,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/ecc/upstream/skills/deployment-patterns",
       "local_path": "skills/deployment-patterns"
+    },
+    {
+      "canonical_name": "observability",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/observability",
+      "local_path": "skills/observability"
     }
   ],
   "adapted_projections": []

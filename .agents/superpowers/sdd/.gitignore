@@ -1,4 +1,3 @@
-# Keep volatile SDD session artifacts private while publishing generated mesh navigation.
 *
 !*/
 !.gitignore

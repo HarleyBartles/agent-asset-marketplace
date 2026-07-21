@@ -1,0 +1,11 @@
+version: 1
+metadata:
+  skill_name: typescript
+  plugin: language-patterns-pack
+  source_category: first_party
+interface:
+  display_name: TypeScript
+  short_description: Use when writing or reviewing TypeScript type design, generics, module resolution, or compiler configuration.
+  default_prompt: Use when writing or reviewing TypeScript type design, generics, module resolution, or compiler configuration.
+policy:
+  allow_implicit_invocation: true

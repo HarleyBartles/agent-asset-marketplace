@@ -1,0 +1,11 @@
+version: 1
+metadata:
+  skill_name: openapi-specification
+  plugin: api-contracts-pack
+  source_category: first_party
+interface:
+  display_name: OpenAPI Specification
+  short_description: Use when designing, reviewing, or versioning an OpenAPI contract.
+  default_prompt: Use when designing, reviewing, or versioning an OpenAPI contract.
+policy:
+  allow_implicit_invocation: true

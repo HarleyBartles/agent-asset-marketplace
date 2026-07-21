@@ -1,13 +1,6 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "accessibility-audit",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
-      "local_path": "skills/accessibility-audit"
-    },
-    {
       "canonical_name": "feature-sliced-design",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -22,11 +15,11 @@
       "local_path": "skills/interaction-design"
     },
     {
-      "canonical_name": "react-performance-optimization",
-      "source_category": "third_party",
+      "canonical_name": "react",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
-      "local_path": "skills/react-performance-optimization"
+      "canonical_source_path": "sources/first_party/skills/react",
+      "local_path": "skills/react"
     },
     {
       "canonical_name": "ux-review",
@@ -34,6 +27,20 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
       "local_path": "skills/ux-review"
+    },
+    {
+      "canonical_name": "wcag",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/wcag",
+      "local_path": "skills/wcag"
+    },
+    {
+      "canonical_name": "web-styling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/web-styling",
+      "local_path": "skills/web-styling"
     },
     {
       "canonical_name": "webapp-testing",

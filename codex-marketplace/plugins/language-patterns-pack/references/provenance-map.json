@@ -1,5 +1,13 @@
 {
-  "source_backed_projections": [],
+  "source_backed_projections": [
+    {
+      "canonical_name": "typescript",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/typescript",
+      "local_path": "skills/typescript"
+    }
+  ],
   "adapted_projections": [
     {
       "canonical_name": "async-python-patterns",
@@ -24,14 +32,6 @@
       "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/python-testing-patterns",
       "local_path": "skills/python-testing-patterns",
       "adaptation_overlay_path": "adapters/codex/language-patterns-pack/python-testing-patterns"
-    },
-    {
-      "canonical_name": "typescript-advanced-patterns",
-      "source_category": "third_party",
-      "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
-      "local_path": "skills/typescript-advanced-patterns",
-      "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns"
     }
   ]
 }

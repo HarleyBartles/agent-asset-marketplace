@@ -4,6 +4,10 @@ Generated from `codex-marketplace/plugins/architecture-pack/references/bundle-ma
 
 | Skill | Source category | Content mode | Canonical source path | Local path | Notes |
 | --- | --- | --- | --- | --- | --- |
-| cqrs-event-sourcing | third_party | verbatim | `sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing` | `codex-marketplace/plugins/architecture-pack/skills/cqrs-event-sourcing` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| clean-architecture | first_party | verbatim | `sources/first_party/skills/clean-architecture` | `codex-marketplace/plugins/architecture-pack/skills/clean-architecture` | Projected verbatim from the first-party clean-architecture skill. |
+| cqrs | first_party | verbatim | `sources/first_party/skills/cqrs` | `codex-marketplace/plugins/architecture-pack/skills/cqrs` | Projected verbatim from the first-party cqrs skill. |
 | database-design-patterns | third_party | verbatim | `sources/third_party/claude-cortex/upstream/skills/database-design-patterns` | `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| ddd | first_party | verbatim | `sources/first_party/skills/ddd` | `codex-marketplace/plugins/architecture-pack/skills/ddd` | Projected verbatim from the first-party ddd skill. |
 | event-driven-architecture | third_party | verbatim | `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture` | `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture` | Copied verbatim from the retained upstream snapshot into the Codex projection. |
+| event-sourcing | first_party | verbatim | `sources/first_party/skills/event-sourcing` | `codex-marketplace/plugins/architecture-pack/skills/event-sourcing` | Projected verbatim from the first-party event-sourcing skill. |
+| hexagonal-architecture | first_party | verbatim | `sources/first_party/skills/hexagonal-architecture` | `codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture` | Projected verbatim from the first-party hexagonal-architecture skill. |

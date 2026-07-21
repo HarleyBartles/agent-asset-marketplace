@@ -2,23 +2,27 @@
 
 ## Summary
 
-The Security Pack historically projected retained NickCrew/Claude-Cortex security foundations and retained ECC security-oriented skills into a Codex marketplace pack. MARK-295 removed the active ECC slice.
+The Security Pack projects first-party security skills alongside retained `NickCrew/Claude-Cortex` and `ECC` security-oriented skills into a Codex marketplace pack. MARK-295 removed the active ECC slice; MARK-343 and MARK-351 added first-party `owasp-top-ten` and `web-identity`.
 
 ## Source Custody
+
+### First-Party Custody
+
+- `sources/first_party/skills/owasp-top-ten/`
+- `sources/first_party/skills/web-identity/`
 
 ### Retained NickCrew/Claude-Cortex Upstream
 
 - **Upstream root**: `sources/third_party/claude-cortex/upstream/`
 - **Retained skill roots**:
   - `sources/third_party/claude-cortex/upstream/skills/secure-coding-practices/`
-  - `sources/third_party/claude-cortex/upstream/skills/owasp-top-10/`
   - `sources/third_party/claude-cortex/upstream/skills/security-testing-patterns/`
   - `sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques/`
 
 ### Historical ECC Upstream
 
 - **Upstream root**: `sources/third_party/ecc/upstream/`
-- **Retained skill roots**:
+- **Retained skill roots** (historical, not active in this pack):
   - `sources/third_party/ecc/upstream/skills/defi-amm-security/`
   - `sources/third_party/ecc/upstream/skills/django-security/`
   - `sources/third_party/ecc/upstream/skills/laravel-security/`
@@ -44,30 +48,33 @@ The Security Pack historically projected retained NickCrew/Claude-Cortex securit
 
 ## Projection Surfaces
 
+### First-Party Projection
+
+- `codex-marketplace/plugins/security-pack/skills/owasp-top-ten/`
+- `codex-marketplace/plugins/security-pack/skills/web-identity/`
+
 ### NickCrew/Claude-Cortex Projection
 
 - `codex-marketplace/plugins/security-pack/skills/secure-coding-practices/`
-- `codex-marketplace/plugins/security-pack/skills/owasp-top-10/`
 - `codex-marketplace/plugins/security-pack/skills/security-testing-patterns/`
 - `codex-marketplace/plugins/security-pack/skills/threat-modeling-techniques/`
 
-### Historical ECC Projection
+### ECC Projection
 
-- `codex-marketplace/plugins/security-pack/skills/defi-amm-security/`
-- `codex-marketplace/plugins/security-pack/skills/django-security/`
-- `codex-marketplace/plugins/security-pack/skills/laravel-security/`
-- `codex-marketplace/plugins/security-pack/skills/llm-trading-agent-security/`
-- `codex-marketplace/plugins/security-pack/skills/network-config-validation/`
-- `codex-marketplace/plugins/security-pack/skills/perl-security/`
-- `codex-marketplace/plugins/security-pack/skills/prediction-market-risk-review/`
-- `codex-marketplace/plugins/security-pack/skills/quarkus-security/`
 - `codex-marketplace/plugins/security-pack/skills/safety-guard/`
-- `codex-marketplace/plugins/security-pack/skills/security-bounty-hunter/`
 - `codex-marketplace/plugins/security-pack/skills/security-review/`
-- `codex-marketplace/plugins/security-pack/skills/security-scan/`
-- `codex-marketplace/plugins/security-pack/skills/springboot-security/`
 
 - **Security Pack source map**: `codex-marketplace/plugins/security-pack/references/source-map.md`
+
+## Generated Install Units
+
+- `generated/skill-zips/security-pack/owasp-top-ten/skill.zip`
+- `generated/skill-zips/security-pack/web-identity/skill.zip`
+- `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
+- `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
+- `generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip`
+- `generated/skill-zips/security-pack/safety-guard/skill.zip`
+- `generated/skill-zips/security-pack/security-review/skill.zip`
 
 ## Marketplace Adaptation
 
@@ -76,11 +83,17 @@ The Security Pack historically projected retained NickCrew/Claude-Cortex securit
 - **Display name**: `Security Pack`
 - **Marketplace category**: `Productivity`
 - **Content mode**:
+  - `verbatim` for first-party skills
   - `normalised` from NickCrew/Claude-Cortex custody (path normalization, frontmatter enrichment, MARK-262 metadata)
   - `normalised` from ECC custody (frontmatter enrichment, MARK-262 metadata)
-- **Adaptation note**: The ECC slice was removed in MARK-295; the remaining NickCrew/Claude-Cortex security foundations stay in place
+- **Adaptation note**: The first-party `owasp-top-ten` replaces the retired Claude-Cortex `owasp-top-10` projection. `web-identity` is a new citation-backed first-party skill.
 
 ## Rights and Attribution
+
+### First-Party Content
+
+- **Author**: Harley Bartles
+- **License**: MIT
 
 ### NickCrew/Claude-Cortex Content
 
@@ -99,10 +112,11 @@ The Security Pack historically projected retained NickCrew/Claude-Cortex securit
 
 The combined bundle keeps the source families distinct while letting them compose:
 
+- `owasp-top-ten` stays focused on application-risk taxonomy and remediation.
+- `web-identity` stays focused on OAuth 2.0 / OIDC flow selection, token validation, and identity-provider integration.
 - `secure-coding-practices` stays focused on defensive application coding, input validation, output encoding, secrets handling, and secure defaults.
-- `owasp-top-10` stays focused on application-risk taxonomy and remediation.
 - `security-testing-patterns` stays focused on validation, security testing strategy, and automation.
 - `threat-modeling-techniques` stays focused on pre-implementation risk framing, abuse cases, and trust boundaries.
-- ECC skills were removed from the active bundle in MARK-295; follow-up reprojection can reconsider the slice after fresh source inspection.
-- `security-review` stays distinct from `secure-coding-practices` and `owasp-top-10`: the pack uses it for general review and cloud infrastructure security, with the support doc projected at `skills/security-review/references/cloud-infrastructure-security.md`.
+- `safety-guard` is the retained ECC safety guard complement.
+- `security-review` stays distinct from `secure-coding-practices` and `owasp-top-ten`: the pack uses it for general review and cloud infrastructure security, with the support doc projected at `skills/security-review/references/cloud-infrastructure-security.md`.
 - The bundle stays out of generic compliance theatre, repo governance, and unrelated implementation domains unless another issue explicitly composes them in.

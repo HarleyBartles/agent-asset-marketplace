@@ -538,12 +538,39 @@
       ]
     },
     {
-      "source_family": "dotnet-claude-kit",
-      "custody_root": "sources/third_party/dotnet-claude-kit/upstream",
-      "mega_pack": "dotnet-kit",
-      "mega_pack_root": "codex-marketplace/plugins/dotnet-kit",
+      "bundle_name": "dotnet-pack",
+      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": true
+      "is_mega_pack": false,
+      "notes": [
+        ".NET ecosystem pack projects the first-party dotnet skill."
+      ],
+      "source_ledger": [
+        "sources/first_party/skills/dotnet/SKILL.md"
+      ],
+      "provenance_refs": [
+        "provenance/dotnet-pack.md"
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "dotnet",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/dotnet",
+          "local_path": "skills/dotnet",
+          "import_status": "imported",
+          "provenance_note": "Projected verbatim from the first-party dotnet ecosystem skill.",
+          "copy_expectation": "byte_identical"
+        }
+      ]
     },
     {
       "source_family": "claude-cortex",
@@ -588,21 +615,14 @@
         },
         {
           "canonical_name": "openapi-specification",
-          "source_category": "third_party",
-          "content_mode": "adapted",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/openapi-specification",
           "local_path": "skills/openapi-specification",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/openapi-specification/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/api-contracts-pack/openapi-specification",
-          "copy_expectation": "adapted_from_source",
-          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
-          "adapted_author": "Harley Bartles",
-          "adaptation_note": "Projected as the OpenAPI-specific reference surface for the companion slice."
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party openapi-specification skill."
         }
       ]
     },
@@ -622,21 +642,6 @@
         "provenance/architecture-pack.md"
       ],
       "entries": [
-        {
-          "canonical_name": "cqrs-event-sourcing",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing",
-          "local_path": "skills/cqrs-event-sourcing",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-        },
         {
           "canonical_name": "database-design-patterns",
           "source_category": "third_party",
@@ -666,6 +671,61 @@
           "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
           "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "ddd",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/ddd",
+          "local_path": "skills/ddd",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party ddd skill."
+        },
+        {
+          "canonical_name": "cqrs",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/cqrs",
+          "local_path": "skills/cqrs",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party cqrs skill."
+        },
+        {
+          "canonical_name": "event-sourcing",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/event-sourcing",
+          "local_path": "skills/event-sourcing",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party event-sourcing skill."
+        },
+        {
+          "canonical_name": "clean-architecture",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/clean-architecture",
+          "local_path": "skills/clean-architecture",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party clean-architecture skill."
+        },
+        {
+          "canonical_name": "hexagonal-architecture",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/hexagonal-architecture",
+          "local_path": "skills/hexagonal-architecture",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
         }
       ]
     },
@@ -736,22 +796,15 @@
           "provenance_note": "Normalised from the retained upstream snapshot with metadata and path rewrites."
         },
         {
-          "canonical_name": "typescript-advanced-patterns",
-          "source_category": "third_party",
-          "content_mode": "adapted",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns",
-          "local_path": "skills/typescript-advanced-patterns",
+          "canonical_name": "typescript",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/typescript",
+          "local_path": "skills/typescript",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "adaptation_overlay_path": "adapters/codex/language-patterns-pack/typescript-advanced-patterns",
-          "copy_expectation": "adapted_from_source",
-          "provenance_note": "Adapted from the retained upstream snapshot for the Codex projection.",
-          "adapted_author": "Harley Bartles",
-          "adaptation_note": "Adapted from the retained Claude-Cortex snapshot so the installable pack uses skill-root-relative reference paths."
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party typescript skill."
         }
       ]
     },
@@ -779,23 +832,6 @@
         "codex-marketplace/plugins/security-pack/references/source-map.md"
       ],
       "entries": [
-        {
-          "canonical_name": "owasp-top-10",
-          "source_category": "third_party",
-          "content_mode": "normalised",
-          "source_family": "claude-cortex",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10",
-          "local_path": "skills/owasp-top-10",
-          "provenance_note": "Normalised from the retained Claude Cortex snapshot with metadata and path rewrites.",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "adapted_author": "Harley Bartles",
-          "adaptation_overlay_path": "adapters/codex/security-pack/owasp-top-10",
-          "adaptation_note": "Keep the skill body intact while adapting the projection metadata and path layout.",
-          "copy_expectation": "normalised_from_source"
-        },
         {
           "canonical_name": "secure-coding-practices",
           "source_category": "third_party",
@@ -877,6 +913,28 @@
           "adaptation_overlay_path": "adapters/codex/security-pack/security-review",
           "adaptation_note": "Move the loose cloud infrastructure companion into canonical references/ and keep the skill body pointed at the internal reference.",
           "copy_expectation": "normalised_from_source"
+        },
+        {
+          "canonical_name": "owasp-top-ten",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/owasp-top-ten",
+          "local_path": "skills/owasp-top-ten",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party owasp-top-ten skill."
+        },
+        {
+          "canonical_name": "web-identity",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/web-identity",
+          "local_path": "skills/web-identity",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party web-identity skill."
         }
       ]
     },
@@ -894,21 +952,6 @@
       "source_ledger": [],
       "provenance_refs": [],
       "entries": [
-        {
-          "canonical_name": "accessibility-audit",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit",
-          "local_path": "skills/accessibility-audit",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/accessibility-audit/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-        },
         {
           "canonical_name": "feature-sliced-design",
           "source_category": "third_party",
@@ -932,21 +975,6 @@
           "local_path": "skills/interaction-design",
           "import_status": "imported",
           "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
-          "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-        },
-        {
-          "canonical_name": "react-performance-optimization",
-          "source_category": "third_party",
-          "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization",
-          "local_path": "skills/react-performance-optimization",
-          "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/react-performance-optimization/SKILL.md",
           "source_author": "NickCrew",
           "source_license": "MIT",
           "source_repo": "https://github.com/NickCrew/Claude-Cortex",
@@ -983,6 +1011,39 @@
           "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
           "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+        },
+        {
+          "canonical_name": "wcag",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/wcag",
+          "local_path": "skills/wcag",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party wcag skill."
+        },
+        {
+          "canonical_name": "react",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/react",
+          "local_path": "skills/react",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party react skill."
+        },
+        {
+          "canonical_name": "web-styling",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/web-styling",
+          "local_path": "skills/web-styling",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party web-styling skill."
         }
       ]
     },
@@ -1518,6 +1579,17 @@
           "source_license": "MIT",
           "source_repo": "https://github.com/affaan-m/ECC",
           "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "observability",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/observability",
+          "local_path": "skills/observability",
+          "import_status": "imported",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party observability skill."
         }
       ]
     },

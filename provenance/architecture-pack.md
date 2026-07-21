@@ -2,31 +2,43 @@
 
 ## Summary
 
-The Architecture Pack projects the MARK-172 `cqrs-event-sourcing` seed, the MARK-200 `event-driven-architecture` candidate, and the MARK-201 `database-design-patterns` candidate from the retained NickCrew/Claude-Cortex custody plugin into a Codex marketplace pack.
+The Architecture Pack projects first-party architecture skills and retained `NickCrew/Claude-Cortex` database/event-driven skills into a Codex marketplace pack.
 
 ## Source Custody
 
-### Source Custody Plugin
-
-- **Plugin root**: `codex-marketplace/plugins/codex-cortex/`
-- **Skill roots**:
-  - `codex-marketplace/plugins/codex-cortex/skills/cqrs-event-sourcing/`
-  - `codex-marketplace/plugins/codex-cortex/skills/event-driven-architecture/`
-  - `codex-marketplace/plugins/codex-cortex/skills/database-design-patterns/`
-- **Source map**: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
-
 ### First-Party Custody
 
-- **Selection/provenance ledger**: `sources/first_party/skills/codex-cortex/decisions.json`
-- **Human-readable ledger**: `sources/first_party/skills/codex-cortex/decisions.md`
-- **Intake record**: `sources/first_party/skills/codex-cortex/intake.json`
-- **Provenance note**: `provenance/codex-cortex.md`
+- `sources/first_party/skills/clean-architecture/`
+- `sources/first_party/skills/cqrs/`
+- `sources/first_party/skills/ddd/`
+- `sources/first_party/skills/event-sourcing/`
+- `sources/first_party/skills/hexagonal-architecture/`
 
-## Pack Shape
+### Retained Upstream
 
-- **Codex plugin root**: `codex-marketplace/plugins/architecture-pack/`
-- **Skill root**: `codex-marketplace/plugins/architecture-pack/skills/`
-- **Generated install units**: `generated/skill-zips/architecture-pack/<skill-name>/skill.zip`
+- `NickCrew/Claude-Cortex` upstream:
+  - `sources/third_party/claude-cortex/upstream/skills/database-design-patterns/`
+  - `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/`
+
+## Projection Surfaces
+
+- `codex-marketplace/plugins/architecture-pack/skills/clean-architecture/`
+- `codex-marketplace/plugins/architecture-pack/skills/cqrs/`
+- `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/`
+- `codex-marketplace/plugins/architecture-pack/skills/ddd/`
+- `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture/`
+- `codex-marketplace/plugins/architecture-pack/skills/event-sourcing/`
+- `codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture/`
+
+## Generated Install Units
+
+- `generated/skill-zips/architecture-pack/clean-architecture/skill.zip`
+- `generated/skill-zips/architecture-pack/cqrs/skill.zip`
+- `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
+- `generated/skill-zips/architecture-pack/ddd/skill.zip`
+- `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
+- `generated/skill-zips/architecture-pack/event-sourcing/skill.zip`
+- `generated/skill-zips/architecture-pack/hexagonal-architecture/skill.zip`
 
 ## Marketplace Adaptation
 
@@ -34,16 +46,15 @@ The Architecture Pack projects the MARK-172 `cqrs-event-sourcing` seed, the MARK
 - **Plugin name**: `architecture-pack`
 - **Display name**: `Architecture Pack`
 - **Marketplace category**: `Productivity`
-- **Content mode**: `adapted` from NickCrew/Claude-Cortex custody
-- **Adaptation note**: Projected from retained NickCrew/Claude-Cortex custody with first-party selection ledger
+- **Content mode**:
+  - `verbatim` for first-party skills
+  - `verbatim` for retained upstream skills
 
 ## Rights and Attribution
 
-- **Upstream source**: NickCrew/Claude-Cortex
-- **License**: MIT
-- **First-party selection**: MARK-172, MARK-200, and MARK-201 decision records
-- **Redistribution rights**: Per upstream license terms with first-party selection provenance
+- First-party skills are MIT-licensed by Harley Bartles.
+- `database-design-patterns` and `event-driven-architecture` are used under NickCrew/Claude-Cortex MIT terms.
 
 ## Boundary
 
-Only the retained architecture skills are projected. Later Claude-Cortex candidates stay out of scope for MARK-172, MARK-200, and MARK-201.
+Only the retained architecture skills are projected. Later Claude-Cortex candidates stay out of scope for the current pack boundary.

@@ -58,11 +58,11 @@
     },
     {
       "order": 6,
-      "name": "dotnet-kit",
+      "name": "dotnet-pack",
       "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/dotnet-kit",
-      "plugin_root": "codex-marketplace/plugins/dotnet-kit",
-      "manifest_path": "codex-marketplace/plugins/dotnet-kit/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/dotnet-pack",
+      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
+      "manifest_path": "codex-marketplace/plugins/dotnet-pack/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
