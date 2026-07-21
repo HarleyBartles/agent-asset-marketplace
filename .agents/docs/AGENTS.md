@@ -15,5 +15,6 @@ navigation.
 
 - `mesh-policy.md` for the canonical mesh statement
 - `INDEX.md` for docs-owned doctrine surfaces
+- `repo-guide-policy.md` for this repo's mapping to the cross-repo guide standard
 - `../guides/AGENTS.md` for guide-stage routing
 - `../../docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
