@@ -13,7 +13,9 @@ from pathlib import Path
 
 import yaml
 
+import project_skills
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
+from skill_validation import validate_skill_markdown_frontmatter
 from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
 
@@ -48,11 +50,6 @@ def _bootstrap_marketplace_dependencies() -> None:
         globals()[name] = getattr(marketplace_utils, name)
 
     globals()["validate_repo_index"] = importlib.import_module("validate_repo_index").validate_repo_index
-    skill_zip_artifacts = importlib.import_module("skill_zip_artifacts")
-    globals()["validate_skill_markdown_frontmatter"] = skill_zip_artifacts.validate_skill_markdown_frontmatter
-    globals()["validate_skill_zip_registry"] = skill_zip_artifacts.validate_skill_zip_registry
-    globals()["load_registry"] = skill_zip_artifacts.load_registry
-    globals()["SKILL_ZIP_ROOT"] = skill_zip_artifacts.ROOT
 
 
 def check_json(path: Path) -> dict:
@@ -90,7 +87,7 @@ def _git_lines(*args: str) -> list[str]:
 
 
 def validate_projection_materializer() -> None:
-    _run_tool_check([sys.executable, "tools/materialize_projection.py", "--check"], "projection materializer check")
+    _run_tool_check([sys.executable, "tools/project_skills.py", "--check"], "project skills check")
 
 
 def validate_pack_manifests() -> None:
@@ -1415,64 +1412,39 @@ def _parse_args() -> argparse.Namespace:
         action="store_true",
         help=(
             "Skip freshness checks already covered by an upstream step "
-            "(generate_plugin_root_inventory --check, projection materializer, "
-            "pack manifests, and skill zip registry). Metadata validation "
-            "(validate_repo_index) still runs."
+            "(generate_plugin_root_inventory --check, project_skills.py --check, "
+            "and pack manifests). Metadata validation (validate_repo_index) still runs."
         ),
     )
     return parser.parse_args()
 
 
 def validate_skill_zip_assertions() -> None:
-    """Assert skill-zip registry invariants that are not covered elsewhere.
+    """Assert flat skill-zip invariants that are not covered elsewhere.
 
-    These three checks previously lived in the standalone
-    ``validate_skill_zips.py`` step. They are cheap metadata assertions
-    (no zip materialization), so they run regardless of
-    ``--skip-freshness-checks``.
+    These checks previously lived in the standalone ``validate_skill_zips.py``
+    step. They are cheap metadata assertions (no zip materialization), so they
+    run regardless of ``--skip-freshness-checks``.
     """
     import zipfile
 
-    registry = load_registry()
+    groups = project_skills._collect_skill_groups()
+    if "finishing-a-development-branch" not in groups:
+        raise AssertionError("expected finishing-a-development-branch projection")
 
-    # finishing-a-development-branch must be a direct (verbatim) export.
-    verbatim = next(
-        (
-            record
-            for record in registry["artifacts"]
-            if record["pack"] == "superpowers-plus" and record["skill"] == "finishing-a-development-branch"
-        ),
-        None,
-    )
-    if verbatim is None:
-        raise ValueError("expected finishing-a-development-branch artifact in registry but found none")
-    if verbatim["export_mode"] != "direct":
-        raise AssertionError("expected finishing-a-development-branch to be a direct export")
-    if verbatim.get("overlay_path") is not None:
-        raise AssertionError("expected finishing-a-development-branch to have a null overlay path")
-    with zipfile.ZipFile(SKILL_ZIP_ROOT / verbatim["zip_path"]) as archive:
+    worker_packs = {entry["pack_name"] for entry in groups.get("worker-verification", [])}
+    if "wild-bunch-project-pack" in worker_packs:
+        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
+
+    finishing = project_skills.GENERATED_SKILL_ZIPS_ROOT / "finishing-a-development-branch.zip"
+    if not finishing.exists():
+        raise FileNotFoundError(f"expected flat zip: {finishing}")
+    with zipfile.ZipFile(finishing) as archive:
         skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
     if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
         raise AssertionError("direct skill zip does not contain the retained upstream guidance")
     if "Codex Marketplace Note" in skill_md:
         raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
-
-    # dispatching-parallel-agents must be excluded.
-    excluded = next(
-        (
-            record
-            for record in registry["excluded"]
-            if record["pack"] == "superpowers-plus" and record["skill"] == "dispatching-parallel-agents"
-        ),
-        None,
-    )
-    if excluded is None:
-        raise ValueError("expected dispatching-parallel-agents excluded record in registry but found none")
-    if excluded["export_mode"] != "excluded":
-        raise AssertionError("expected dispatching-parallel-agents to be excluded")
-    if "subagents" not in excluded["reason"]:
-        raise AssertionError("excluded skill should explain the subagent limitation")
-
 
 
 def main() -> int:
@@ -1496,7 +1468,6 @@ def main() -> int:
     validate_marketplace_registry(registry, plugin_manifests)
     validate_active_plugin_tree()
     if not args.skip_freshness_checks:
-        validate_skill_zip_registry()
         validate_projection_materializer()
         validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)

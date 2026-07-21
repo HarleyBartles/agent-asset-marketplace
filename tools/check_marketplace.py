@@ -22,7 +22,6 @@ def _run_git(*args: str) -> None:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the non-mutating marketplace check stack")
-    parser.add_argument("--base", default="origin/main", help="git revision used for generated drift validation")
     return parser.parse_args()
 
 
@@ -34,7 +33,7 @@ def main() -> int:
     # source normalization shifted line numbers or whitespace) must be
     # healed via rebuild_marketplace.py before CI can pass.
     _run_tool("heal_overlays.py", "--check")
-    _run_tool("update_skill_artifacts.py", "--check", "--full-regeneration", "--base", args.base, "--skip-zip-content-validation")
+    _run_tool("update_skill_artifacts.py", "--check")
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py", "--check")
     _run_tool("validate_marketplace.py", "--skip-freshness-checks")
