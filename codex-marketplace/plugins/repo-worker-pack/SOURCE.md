@@ -40,20 +40,20 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
 
 ## Generated install units
-- `generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip`
-- `generated/skill-zips/repo-worker-pack/cleanup-custody/skill.zip`
-- `generated/skill-zips/repo-worker-pack/connector-safety/skill.zip`
-- `generated/skill-zips/repo-worker-pack/context-safety/skill.zip`
-- `generated/skill-zips/repo-worker-pack/linear-issue-shaping/skill.zip`
-- `generated/skill-zips/repo-worker-pack/repo-guide-standard/skill.zip`
-- `generated/skill-zips/repo-worker-pack/repo-worker-base/skill.zip`
-- `generated/skill-zips/repo-worker-pack/risk-gates/skill.zip`
-- `generated/skill-zips/repo-worker-pack/subagent-model-routing/skill.zip`
-- `generated/skill-zips/repo-worker-pack/unslop-plus/skill.zip`
-- `generated/skill-zips/repo-worker-pack/using-github/skill.zip`
-- `generated/skill-zips/repo-worker-pack/using-linear/skill.zip`
-- `generated/skill-zips/repo-worker-pack/work-mode-router/skill.zip`
-- `generated/skill-zips/repo-worker-pack/writing-with-clarity/skill.zip`
+- `generated/skill-zips/base-doctrine.zip`
+- `generated/skill-zips/cleanup-custody.zip`
+- `generated/skill-zips/connector-safety.zip`
+- `generated/skill-zips/context-safety.zip`
+- `generated/skill-zips/linear-issue-shaping.zip`
+- `generated/skill-zips/repo-guide-standard.zip`
+- `generated/skill-zips/repo-worker-base.zip`
+- `generated/skill-zips/risk-gates.zip`
+- `generated/skill-zips/subagent-model-routing.zip`
+- `generated/skill-zips/unslop-plus.zip`
+- `generated/skill-zips/using-github.zip`
+- `generated/skill-zips/using-linear.zip`
+- `generated/skill-zips/work-mode-router.zip`
+- `generated/skill-zips/writing-with-clarity.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

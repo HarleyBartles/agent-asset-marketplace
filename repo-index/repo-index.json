@@ -11,7 +11,6 @@
     "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
     "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
     "skill_zips_check": "py -3 tools/validate_skill_zips.py",
-    "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main",
     "repo_index_generate": "py -3 tools/generate_repo_index.py",
     "marketplace_generate": "py -3 tools/generate_marketplace.py",
     "marketplace_check": "py -3 tools/generate_marketplace.py --check",
@@ -82,7 +81,7 @@
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py",
-        "tools/package_skill_zips.py"
+        "tools/project_skills.py"
       ]
     },
     {
