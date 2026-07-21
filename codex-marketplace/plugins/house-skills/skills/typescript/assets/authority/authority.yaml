@@ -8,11 +8,11 @@ authority:
   latest_check_url: "https://github.com/microsoft/TypeScript-Website/archive/refs/heads/v2.tar.gz"
   revision: "v2"
   retrieved_at: "2026-07-20"
-  content_sha256: "156733f8b6a0e4ccc70e6bd8887c33823a026b3db638b0cb5e0c7ce167cd2026"
+  content_sha256: "f439bf36f4c745c2ea34559aa162447377fbecb9c7b675e2df0eadcf5bdab963"
   license: "CC-BY-4.0"
   license_url: "https://github.com/microsoft/TypeScript-Website/blob/v2/LICENSE"
 decomposition:
-  reconciled_against: "156733f8b6a0e4ccc70e6bd8887c33823a026b3db638b0cb5e0c7ce167cd2026"
+  reconciled_against: "f439bf36f4c745c2ea34559aa162447377fbecb9c7b675e2df0eadcf5bdab963"
   references:
     - path: "references/operational-guidance.md"
       source_sections:

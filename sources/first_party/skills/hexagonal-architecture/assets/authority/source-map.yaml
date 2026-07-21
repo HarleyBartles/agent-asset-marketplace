@@ -1,5 +1,5 @@
 schema_version: 1
-reconciled_against: 8632333bb6587cc753faa0e5dc9342cd8bbb779767c78315f7c9e7dc8584800a
+reconciled_against: 67913f873a9a3cf72980ad7c2f10ede401dd568404e7d35a8df8124b174e54dc
 references:
 - path: references/operational-guidance.md
   source_sections: ["Alistair Cockburn Hexagonal Architecture", "Robert C. Martin Clean Architecture", "Jeffrey Palermo Onion Architecture"]

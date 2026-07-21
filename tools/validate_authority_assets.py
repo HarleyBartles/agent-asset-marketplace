@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
+import hashlib
 import re
 
 import yaml
@@ -136,6 +137,61 @@ def _validate_citations(path: Path, errors: list[str]) -> None:
         content = following.split("\n## ", maxsplit=1)[0].strip()
         if not content or re.search(r"\b(?:TODO|TBD)\b|^(?:Record|State)\b", content, flags=re.IGNORECASE | re.MULTILINE):
             errors.append(f"CITATIONS.md {label} section must contain non-placeholder content")
+
+
+def _compute_file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _validate_sha_against_evidence(
+    skill_root: Path,
+    record: dict,
+    source_map: dict | None,
+    citations_path: Path,
+    errors: list[str],
+) -> None:
+    """Ensure recorded SHA values honestly represent a retained local file."""
+    authority = record.get("authority")
+    if not isinstance(authority, dict):
+        return
+    content_sha256 = authority.get("content_sha256")
+    if not isinstance(content_sha256, str):
+        return
+
+    decomposition = record.get("decomposition")
+    authority_reconciled = decomposition.get("reconciled_against") if isinstance(decomposition, dict) else None
+    source_map_reconciled = source_map.get("reconciled_against") if isinstance(source_map, dict) else None
+
+    lane = record.get("lane")
+    expected_shas: set[str] = set()
+    evidence_desc = ""
+    if lane == "skills-with-citation":
+        if citations_path.is_file():
+            expected_shas.add(_compute_file_sha256(citations_path))
+            evidence_desc = "assets/authority/CITATIONS.md"
+    elif lane == "skills-with-source":
+        reference_source = skill_root / "assets/authority/reference-source"
+        if reference_source.is_dir():
+            for path in reference_source.rglob("*"):
+                if (
+                    path.is_file()
+                    and not any(part.startswith(".") for part in path.relative_to(reference_source).parts)
+                ):
+                    expected_shas.add(_compute_file_sha256(path))
+        evidence_desc = "assets/authority/reference-source/*"
+
+    if not expected_shas:
+        errors.append(f"authority.yaml content_sha256 has no local evidence to validate against for lane {lane}")
+        return
+
+    if content_sha256 not in expected_shas:
+        errors.append(f"authority.yaml content_sha256 does not match SHA-256 of {evidence_desc}")
+    if isinstance(authority_reconciled, str) and authority_reconciled not in expected_shas:
+        errors.append(f"authority.yaml decomposition.reconciled_against does not match SHA-256 of {evidence_desc}")
+    if isinstance(source_map_reconciled, str) and source_map_reconciled not in expected_shas:
+        errors.append(f"source-map.yaml reconciled_against does not match SHA-256 of {evidence_desc}")
+    if isinstance(authority_reconciled, str) and content_sha256 != authority_reconciled:
+        errors.append("authority.yaml content_sha256 must match decomposition.reconciled_against")
 
 
 def _validate_references(
@@ -296,6 +352,8 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
         errors.append("skills-with-citation reference-source must not contain vendored source files")
     if citations_path.is_file():
         _validate_citations(citations_path, errors)
+
+    _validate_sha_against_evidence(skill_root, record, source_map, citations_path, errors)
 
     return errors
 

@@ -8,11 +8,11 @@ authority:
   latest_check_url: "https://github.com/open-telemetry/opentelemetry-specification/archive/refs/heads/main.tar.gz"
   revision: "main"
   retrieved_at: "2026-07-20"
-  content_sha256: "63e438cbea910082ac4cfa959f9996425dad7715453a5f4d5f0625792a80e75a"
+  content_sha256: "d0ff96722e679dd26fffc35047a729e14ace6423c70546a2190e45581f6f016e"
   license: "Apache-2.0"
   license_url: "https://github.com/open-telemetry/opentelemetry-specification/blob/main/LICENSE"
 decomposition:
-  reconciled_against: "63e438cbea910082ac4cfa959f9996425dad7715453a5f4d5f0625792a80e75a"
+  reconciled_against: "d0ff96722e679dd26fffc35047a729e14ace6423c70546a2190e45581f6f016e"
   references:
     - path: "references/operational-guidance.md"
       source_sections:
