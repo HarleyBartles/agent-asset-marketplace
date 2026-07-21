@@ -7,11 +7,11 @@ Replace the current per-pack, GPT-overlay zip pipeline with a single shared proj
 ## Scope
 
 - Create `tools/project_skills.py` as the single generator/validator for plugin tree and skill zip outputs.
-- `project_skills.py` discovers the 22 active plugin roots from `codex-marketplace/plugin-roots.json`, loads each `references/bundle-manifest.json`, collects entries by `canonical_name`, validates cross-pack conflicts, stages each unique skill once, then:
+- `project_skills.py` discovers the 21 active plugin roots from `codex-marketplace/plugin-roots.json`, loads each `references/bundle-manifest.json`, collects entries by `canonical_name`, validates cross-pack conflicts, stages each unique skill once, then:
   - copies the staged tree to every plugin pack destination `codex-marketplace/plugins/<pack>/skills/<skill>`;
   - writes `generated/skill-zips/<skill>.zip` with one top-level `<skill>/` folder and deterministic 1980-01-01 timestamps / 0644 permissions.
 - Remove the GPT export lane entirely by deleting the `adapters/gpt/` tree (`manifest.json`, `AGENTS.md`, `README.md`, `INDEX.md`, and `superpowers-plus/` overlays).
-- Drop `generated/skill-zips/registry.json` and the old per-pack zip layout `generated/skill-zips/<pack>/<skill>/skill.zip` (174 per-pack artifact records -> 99 unique skill zips).
+- Drop `generated/skill-zips/registry.json` and the old per-pack zip layout `generated/skill-zips/<pack>/<skill>/skill.zip` (168 bundle-manifest entries -> 94 unique skill zips).
 - Remove obsolete tooling:
   - `tools/skill_gpt_exports.py`
   - `tools/export_skill_zips.py`
@@ -90,14 +90,14 @@ Replace the current per-pack, GPT-overlay zip pipeline with a single shared proj
 - `py -3 tools/rebuild_marketplace.py` passes after a full regeneration.
 - `py -3 tools/check_marketplace.py` passes.
 - `git diff --check` passes.
-- After regeneration, `generated/skill-zips/` contains only `<skill>.zip` files (99 expected) and no `registry.json` or per-pack subdirectories.
+- After regeneration, `generated/skill-zips/` contains only `<skill>.zip` files (94 expected) and no `registry.json` or per-pack subdirectories.
 - `adapters/gpt/` is removed and no active AGENTS.md or docs surface references it.
 
 ## Tradeoffs / risks
 
 - `--check` only compares zip file inventories, not file contents. Content-only source changes that do not add or remove files will not fail `--check` if the zip is stale; the safeguard is running `py -3 tools/rebuild_marketplace.py` and committing regenerated zips.
 - Removing `tools/materialize_projection.py` and `tools/skill_zip_artifacts.py` changes the tool surface. This repo's own `validate_marketplace.py` and tests are updated in scope; no external consumers are expected.
-- The first regeneration collapses 174 per-pack zip records into 99 unique zips. The diff will be large but is purely derived output.
+- The first regeneration collapses 168 bundle-manifest entries into 94 unique zips. The diff will be large but is purely derived output.
 
 ## Handoff confidence
 
