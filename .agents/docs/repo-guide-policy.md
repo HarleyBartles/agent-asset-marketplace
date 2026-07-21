@@ -12,10 +12,10 @@ This repo follows the `repo-guide-standard` skill. Invoke `/repo-guide-standard`
 | code-review-guide.md | `.agents/guides/code-review-guide.md` | exists |
 | marketplace-generation-guide.md | `.agents/guides/marketplace-generation-guide.md` | exists |
 | skill-authoring-guide.md | `.agents/guides/skill-authoring-guide.md` | exists |
-| security-guide.md | `.agents/guides/security-guide.md` | to create |
-| testing-guide.md | `.agents/guides/testing-guide.md` | to create |
-| pr-guide.md | `.agents/guides/pr-guide.md` | to create |
-| code-style-guide.md | `.agents/guides/code-style-guide.md` | to create |
+| security-guide.md | `.agents/guides/security-guide.md` | exists |
+| testing-guide.md | `.agents/guides/testing-guide.md` | exists |
+| pr-guide.md | `.agents/guides/pr-guide.md` | exists |
+| code-style-guide.md | `.agents/guides/code-style-guide.md` | exists |
 
 ## Additional repo-specific guides
 
