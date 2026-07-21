@@ -8,7 +8,6 @@ This plugin projects the retained Codex Cortex skills only.
 - `sources/third_party/claude-cortex/upstream/skills/api-design-patterns/`
 - `sources/third_party/claude-cortex/upstream/skills/async-python-patterns/`
 - `sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/`
-- `sources/third_party/claude-cortex/upstream/skills/database-design-patterns/`
 - `sources/third_party/claude-cortex/upstream/skills/development-estimation/`
 - `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/`
 - `sources/third_party/claude-cortex/upstream/skills/interaction-design/`
@@ -36,7 +35,6 @@ This plugin projects the retained Codex Cortex skills only.
 - `api-design-patterns`
 - `async-python-patterns`
 - `cqrs-event-sourcing`
-- `database-design-patterns`
 - `development-estimation`
 - `event-driven-architecture`
 - `interaction-design`
