@@ -37,7 +37,7 @@ Use it when you need to understand:
 - the plugin identity and current shape;
 - where the local marketplace entry lives;
 - which current skill roots live in the plugin tree;
-- the `github-operations`, `asset-market`, `linear-issue-shaping`, and `verification-before-completion` roots that now live as current control-plane skills;
+- the `using-github`, `asset-market`, `linear-issue-shaping`, and `verification-before-completion` roots that now live as current control-plane skills;
 - how to separate historical archive custody from the live plugin surface.
 
 ## Bundle contract

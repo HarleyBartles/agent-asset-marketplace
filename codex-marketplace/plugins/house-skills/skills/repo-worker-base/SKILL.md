@@ -69,7 +69,7 @@ thin: it routes to those owners instead of duplicating their stage technique.
 - linear-issue-shaping owns the Linear control plane.
 - verification-before-completion owns evidence-before-assertions.
 - connector-safety owns sensitive or blocked connector writes.
-- github-operations owns GitHub proof.
+- using-github owns GitHub proof.
 - base-doctrine owns cross-project source-truth and doctrine routing.
 
 Do not treat an installed skill, generated projection, local cache, or worker

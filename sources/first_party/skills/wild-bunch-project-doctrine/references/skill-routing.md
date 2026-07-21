@@ -15,7 +15,7 @@ Consolidated from the Wild Bunch repo root `AGENTS.md` at commit `a65ca6c2`. Inv
 
 - `/using-linear` — Use when working with the Linear connector surface, choosing the right tool call, or finding create/update tools exposed under `save_*` rather than `create_*` or `update_*`.
 - `/linear-issue-shaping` — Use when Linear-backed issue, project, and document shaping: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists.
-- `/github-operations` — Use when verifying GitHub repository evidence without taking over coding workflow routing. Use after a Linear/Codex task has a GitHub PR, branch, commit, review, merge, status, or file-state question; when checking publication proof, PR diff scope, mergeability, CI/status evidence, final main state, or GitHub-specific closure proof.
+- `/using-github` — Use when choosing the right GitHub or Git surface for a task, picking between the GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
 - `/repo-worker-base` — Use for fresh-main discipline, worktree isolation, branch and PR hygiene, validation evidence, or publication proof.
 
 ## Anti-Slop & Quality

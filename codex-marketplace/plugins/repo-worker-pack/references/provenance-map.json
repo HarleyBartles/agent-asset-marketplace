@@ -29,13 +29,6 @@
       "local_path": "skills/context-safety"
     },
     {
-      "canonical_name": "github-operations",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/github-operations",
-      "local_path": "skills/github-operations"
-    },
-    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -76,6 +69,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/unslop-plus",
       "local_path": "skills/unslop-plus"
+    },
+    {
+      "canonical_name": "using-github",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/using-github",
+      "local_path": "skills/using-github"
     },
     {
       "canonical_name": "using-linear",

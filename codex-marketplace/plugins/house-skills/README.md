@@ -7,7 +7,7 @@ references, assets, scripts, and changelog notes.
 It is first-party Harley-owned source prepared to stay clean enough for a future
 permissive publication decision, with no unlicensed third-party bundled
 content.
-It includes `github-operations` as the generic GitHub proof base skill,
+It includes `using-github` as the generic GitHub proof base skill,
 `unslop-plus` as the repo-specific anti-slop guard skill,
 `linear-issue-shaping` as the Linear issue and track shaping skill,
 `risk-gates` as the consolidated pre-action risk gate router,
@@ -15,7 +15,7 @@ It includes `github-operations` as the generic GitHub proof base skill,
 side-effecting connector/tool work, `base-doctrine` and
 `bootstrap-router` as the shared base/control-plane routers,
 the current `asset-market` base/control-plane skill root, and the hydrated Wild Bunch first-party roots.
-`connector-safety` and `github-operations` now project from `sources/first_party/skills/<skill-name>/`
+`connector-safety` and `using-github` now project from `sources/first_party/skills/<skill-name>/`
 instead of claiming House Skills as their canonical source authority.
 
 Bundle identity:

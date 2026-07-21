@@ -60,16 +60,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "github-operations",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/github-operations",
-      "local_path": "skills/github-operations",
-      "provenance_note": "Projected verbatim from the first-party github-operations skill.",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -133,6 +123,16 @@
       "canonical_source_path": "sources/first_party/skills/unslop-plus",
       "local_path": "skills/unslop-plus",
       "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "using-github",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/using-github",
+      "local_path": "skills/using-github",
+      "provenance_note": "Projected verbatim from the first-party using-github skill.",
       "copy_expectation": "byte_identical"
     },
     {

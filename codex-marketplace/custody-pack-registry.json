@@ -381,7 +381,7 @@
         "sources/first_party/skills/linear-issue-shaping",
         "sources/first_party/skills/using-linear",
         "sources/first_party/skills/connector-safety",
-        "sources/first_party/skills/github-operations",
+        "sources/first_party/skills/using-github",
         "sources/first_party/skills/unslop-plus",
         "sources/first_party/skills/context-safety",
         "sources/first_party/skills/cleanup-custody",
@@ -441,13 +441,13 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "github-operations",
+          "canonical_name": "using-github",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/github-operations",
-          "local_path": "skills/github-operations",
-          "provenance_note": "Projected verbatim from the first-party github-operations skill.",
+          "canonical_source_path": "sources/first_party/skills/using-github",
+          "local_path": "skills/using-github",
+          "provenance_note": "Projected verbatim from the first-party using-github skill.",
           "copy_expectation": "byte_identical"
         },
         {
