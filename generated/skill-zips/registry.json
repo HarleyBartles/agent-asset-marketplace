@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 190,
+  "artifact_count": 192,
   "excluded_count": 3,
   "artifacts": [
     {
