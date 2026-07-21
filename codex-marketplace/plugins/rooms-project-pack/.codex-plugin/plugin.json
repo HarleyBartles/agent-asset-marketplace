@@ -8,7 +8,7 @@
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains first-party Rooms skills and retained third-party Claude-Cortex skill projections; see SOURCE.md and references/source-map.md for source custody and attribution.",
+  "rights": "Contains first-party Rooms skills and first-party database-design-patterns guidance; see SOURCE.md and references/source-map.md for source custody and attribution.",
   "keywords": [
     "codex",
     "marketplace",

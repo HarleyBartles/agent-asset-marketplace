@@ -1,13 +1,12 @@
 # Source
 
-This bundle packages the retained Rooms first-party skills plus one retained
-Claude-Cortex database skill as a Codex plugin projection.
+This bundle packages the retained Rooms first-party skills plus one first-party
+database guidance skill as a Codex plugin projection.
 
 ## Canonical basis
 
 - First-party Rooms source custody: `sources/first_party/skills/`
-- Retained Claude-Cortex source custody: `sources/third_party/claude-cortex/upstream/skills/`
-- License posture: mixed first-party and third-party custody for the active pack surface
+- License posture: first-party custody for the active pack surface
 
 ## Source roots copied
 

@@ -45,9 +45,6 @@ compliance-audit:
 cqrs-event-sourcing:
   - (standalone)
 
-database-design-patterns:
-  - (standalone)
-
 evaluator-optimizer:
   - (standalone)
 

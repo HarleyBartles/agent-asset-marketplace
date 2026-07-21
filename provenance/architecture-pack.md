@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Architecture Pack projects first-party architecture skills and retained `NickCrew/Claude-Cortex` database/event-driven skills into a Codex marketplace pack.
+The Architecture Pack projects first-party architecture skills and retained `NickCrew/Claude-Cortex` event-driven skills into a Codex marketplace pack.
 
 ## Source Custody
 
@@ -10,6 +10,7 @@ The Architecture Pack projects first-party architecture skills and retained `Nic
 
 - `sources/first_party/skills/clean-architecture/`
 - `sources/first_party/skills/cqrs/`
+- `sources/first_party/skills/database-design-patterns/`
 - `sources/first_party/skills/ddd/`
 - `sources/first_party/skills/event-sourcing/`
 - `sources/first_party/skills/hexagonal-architecture/`
@@ -17,7 +18,6 @@ The Architecture Pack projects first-party architecture skills and retained `Nic
 ### Retained Upstream
 
 - `NickCrew/Claude-Cortex` upstream:
-  - `sources/third_party/claude-cortex/upstream/skills/database-design-patterns/`
   - `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/`
 
 ## Projection Surfaces
@@ -53,7 +53,7 @@ The Architecture Pack projects first-party architecture skills and retained `Nic
 ## Rights and Attribution
 
 - First-party skills are MIT-licensed by Harley Bartles.
-- `database-design-patterns` and `event-driven-architecture` are used under NickCrew/Claude-Cortex MIT terms.
+- `event-driven-architecture` is used under NickCrew/Claude-Cortex MIT terms.
 
 ## Boundary
 

@@ -29,6 +29,7 @@ URL_FIELDS = {"canonical_url", "pinned_source_url", "latest_check_url", "license
 REQUIRED_REFERENCE_FIELDS = {"path", "source_sections", "content_mode", "load_when"}
 SOURCE_MAP_FIELDS = {"schema_version", "reconciled_against", "references"}
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+SAFE_LABEL_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
 CITATION_SECTIONS = (
     "Scholarly citation",
     "Derivation boundary",
@@ -93,6 +94,10 @@ def _contains_non_hidden_file(directory: Path) -> bool:
 
 def _nonblank_string(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def _is_safe_label(value: object) -> bool:
+    return _nonblank_string(value) and SAFE_LABEL_PATTERN.fullmatch(value) is not None
 
 
 def _validate_string_list(value: object, *, field: str, errors: list[str]) -> bool:
@@ -196,19 +201,28 @@ def _validate_sha_against_evidence(
             else None
         )
         for label, source_record in authority.items():
-            if not isinstance(label, str) or not isinstance(source_record, dict):
+            if not isinstance(label, str):
+                continue
+            if not _is_safe_label(label):
+                errors.append(
+                    f"authority.yaml authority source label {label!r} must be a safe single directory name"
+                )
+                continue
+            if not isinstance(source_record, dict):
                 continue
             content_sha256 = source_record.get("content_sha256")
             if not isinstance(content_sha256, str):
                 continue
             label_dir = reference_source / label
             expected_shas: set[str] = set()
+            file_paths: list[Path] = []
             if label_dir.is_dir():
                 for path in label_dir.rglob("*"):
                     if (
                         path.is_file()
                         and not any(part.startswith(".") for part in path.relative_to(label_dir).parts)
                     ):
+                        file_paths.append(path)
                         expected_shas.add(_compute_file_sha256(path))
             evidence_desc = f"reference-source/{label}/*"
             if not expected_shas:
@@ -220,6 +234,13 @@ def _validate_sha_against_evidence(
                 errors.append(
                     f"authority.yaml authority[{label}] content_sha256 does not match SHA-256 of {evidence_desc}"
                 )
+            for path in file_paths:
+                file_hash = _compute_file_sha256(path)
+                if file_hash != content_sha256:
+                    rel = path.relative_to(label_dir)
+                    errors.append(
+                        f"reference-source/{label}/{rel} is not recorded in authority.yaml and does not match authority[{label}] content_sha256"
+                    )
             auth_rec = authority_reconciled.get(label) if isinstance(authority_reconciled, dict) else None
             if isinstance(auth_rec, str) and auth_rec not in expected_shas:
                 errors.append(
@@ -366,6 +387,11 @@ def validate_authority_skill(skill_root: Path) -> list[str]:
             for label, source_record in authority.items():
                 if not _nonblank_string(label):
                     errors.append("authority.yaml authority source labels must be nonblank strings")
+                    continue
+                if not _is_safe_label(label):
+                    errors.append(
+                        f"authority.yaml authority source label {label!r} must be a safe single directory name"
+                    )
                     continue
                 validated = _validate_single_authority_record(
                     source_record, f"authority.yaml authority[{label}]", errors
