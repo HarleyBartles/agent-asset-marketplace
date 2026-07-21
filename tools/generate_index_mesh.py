@@ -68,6 +68,16 @@ def is_non_canonical_guard(path: Path) -> bool:
     return any(is_under(path, root) for root in NON_CANONICAL_GUARD_ROOTS)
 
 
+def is_index_ignored(path: Path) -> bool:
+    """Return True if an INDEX.md inside this directory would be ignored by git."""
+    result = subprocess.run(
+        ["git", "check-ignore", "--no-index", "-q", str(path / "INDEX.md")],
+        cwd=ROOT,
+        capture_output=True,
+    )
+    return result.returncode == 0
+
+
 def should_descend(child: Path) -> bool:
     return (
         child.name not in EXCLUDED_DIR_NAMES
@@ -75,6 +85,7 @@ def should_descend(child: Path) -> bool:
         and (child == THIRD_PARTY_ROOT or not is_under(child, THIRD_PARTY_ROOT))
         and not is_under(child, SKILL_ZIPS_ROOT)
         and not is_non_canonical_guard(child)
+        and not is_index_ignored(child)
         and child in TRACKED_DIRS
     )
 
@@ -82,6 +93,8 @@ def should_descend(child: Path) -> bool:
 def should_index(path: Path) -> bool:
     if path == ROOT:
         return True
+    if is_index_ignored(path):
+        return False
     if is_non_canonical_guard(path):
         return False
     relative = path.relative_to(ROOT)
@@ -120,6 +133,8 @@ def render_index(path: Path) -> str:
             if entry.name in EXCLUDED_DIR_NAMES:
                 continue
             if is_non_canonical_guard(entry):
+                continue
+            if is_index_ignored(entry):
                 continue
             if is_skill_root(path):
                 continue
