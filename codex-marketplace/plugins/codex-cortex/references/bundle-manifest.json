@@ -68,17 +68,6 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "source_family": "claude-cortex",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
-      "local_path": "skills/database-design-patterns",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained Claude-Cortex upstream snapshot into the Wild Bunch pack."
-    },
-    {
       "canonical_name": "development-estimation",
       "source_category": "third_party",
       "content_mode": "verbatim",

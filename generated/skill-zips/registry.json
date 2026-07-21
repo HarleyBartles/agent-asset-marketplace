@@ -4,7 +4,7 @@
     ".agents/plugins/marketplace.json",
     "codex-marketplace/manifest.json"
   ],
-  "artifact_count": 191,
+  "artifact_count": 190,
   "excluded_count": 3,
   "artifacts": [
     {
@@ -358,22 +358,6 @@
       "overlay_sha256": null,
       "zip_size_bytes": 11760,
       "zip_sha256": "5a0a5b24e91a7614390bff5dbc1e0c02d9504025f752183f82107f2cec3686d0"
-    },
-    {
-      "pack": "codex-cortex",
-      "skill": "database-design-patterns",
-      "export_mode": "direct",
-      "source_path": "codex-marketplace/plugins/codex-cortex/skills/database-design-patterns",
-      "overlay_path": null,
-      "zip_path": "generated/skill-zips/codex-cortex/database-design-patterns/skill.zip",
-      "source_file_count": 7,
-      "source_bytes": 26431,
-      "source_sha256": "6c4f180ae17e814dbe9738fe119d7d9032903bd9b61cee209c8ca3234c0ed395",
-      "overlay_file_count": 0,
-      "overlay_bytes": 0,
-      "overlay_sha256": null,
-      "zip_size_bytes": 12022,
-      "zip_sha256": "fd35b7193ebab16e6d53372eb08411cb0e15d77dbaf6410ed4f8f66d7f952f10"
     },
     {
       "pack": "codex-cortex",

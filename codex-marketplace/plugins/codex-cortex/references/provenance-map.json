@@ -15,13 +15,6 @@
       "local_path": "skills/cqrs-event-sourcing"
     },
     {
-      "canonical_name": "database-design-patterns",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
-      "local_path": "skills/database-design-patterns"
-    },
-    {
       "canonical_name": "development-estimation",
       "source_category": "third_party",
       "content_mode": "verbatim",
