@@ -80,6 +80,16 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "repo-guide-standard",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/repo-guide-standard",
+      "local_path": "skills/repo-guide-standard",
+      "provenance_note": "Projected verbatim from the first-party repo-guide-standard skill. Defines cross-repo guide layout, invocation, and workflow order.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "repo-worker-base",
       "source_category": "first_party",
       "content_mode": "verbatim",

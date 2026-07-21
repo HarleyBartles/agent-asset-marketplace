@@ -11,6 +11,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `context-safety`
 - `github-operations`
 - `linear-issue-shaping`
+- `repo-guide-standard`
 - `repo-worker-base`
 - `risk-gates`
 - `subagent-model-routing`
@@ -19,7 +20,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 13.
+Manifest entry count: 14.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

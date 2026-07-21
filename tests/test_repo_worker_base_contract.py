@@ -38,6 +38,7 @@ MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 PRESSURE_ROOT = REPO_ROOT / "tests" / "pressure" / "repo-worker-base"
 SDD_ROOT = REPO_ROOT / ".agents" / "superpowers" / "sdd"
 SDD_SESSION = SDD_ROOT / "2026-07-18-repo-worker-base-hygiene-and-composition"
+SPECS_ROOT = REPO_ROOT / ".agents" / "superpowers" / "specs"
 
 
 def _run_git(cwd: Path, *args: str) -> str:
@@ -341,7 +342,6 @@ def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
         REPO_ROOT / ".agents" / "docs" / "AGENTS.md",
         guide_root / "AGENTS.md",
         REPO_ROOT / "tools" / "AGENTS.md",
-        SDD_ROOT / "INDEX.md",
     ]
     for path in link_surfaces:
         _assert_local_markdown_links_resolve(path)
@@ -402,29 +402,28 @@ def test_portable_resolution_checks_submodule_status_from_supplied_start_path_fi
     assert calls[1] == (start_path, ("rev-parse", "--show-toplevel"))
 
 
-def test_sdd_mesh_publishes_generated_child_indexes_without_publishing_session_scratch():
+def test_sdd_mesh_respects_gitignore_for_session_directories():
     gitignore = SDD_ROOT / ".gitignore"
     child_index = SDD_SESSION / "INDEX.md"
     assert gitignore.is_file()
-    assert child_index.is_file()
+    assert not child_index.is_file(), "generated INDEX.md must not be created inside gitignored SDD sessions"
 
-    for path in (gitignore, child_index):
-        relative = path.relative_to(REPO_ROOT).as_posix()
-        tracked = subprocess.run(
-            ["git", "ls-files", "--error-unmatch", relative],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-        )
-        assert tracked.returncode == 0, f"published mesh file is absent from Git HEAD: {relative}"
+    relative_gitignore = gitignore.relative_to(REPO_ROOT).as_posix()
+    tracked = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", relative_gitignore],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert tracked.returncode == 0, f"SDD .gitignore scaffold is absent from Git HEAD: {relative_gitignore}"
 
-        ignored = subprocess.run(
-            ["git", "check-ignore", "-q", relative],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-        )
-        assert ignored.returncode == 1, f"published mesh file is still ignored: {relative}"
+    ignored = subprocess.run(
+        ["git", "check-ignore", "-q", child_index.relative_to(REPO_ROOT).as_posix()],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert ignored.returncode == 0, "SDD session INDEX.md path must be ignored"
 
     ignored_session_artifact = SDD_SESSION / "task-2-brief.md"
     ignored = subprocess.run(
@@ -434,6 +433,11 @@ def test_sdd_mesh_publishes_generated_child_indexes_without_publishing_session_s
         text=True,
     )
     assert ignored.returncode == 0, "ordinary SDD session artifacts must remain ignored"
+
+
+def test_specs_mesh_generates_index():
+    specs_index = SPECS_ROOT / "INDEX.md"
+    assert specs_index.is_file(), "specs/ is repo-resident and must have a generated INDEX.md"
 
 
 def test_pressure_campaign_is_structured_for_red_green_refactor_execution():

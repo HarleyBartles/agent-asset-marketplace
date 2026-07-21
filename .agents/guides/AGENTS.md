@@ -17,3 +17,7 @@ Keep this scope short. It owns guide-stage routing, not doctrine.
 - `code-review-guide.md` for review work
 - `marketplace-generation-guide.md` for marketplace generation or projection work
 - `skill-authoring-guide.md` for skill or document authoring work
+- `security-guide.md` for security posture and review
+- `testing-guide.md` for test commands and TDD workflow
+- `pr-guide.md` for pull-request workflow and publication proof
+- `code-style-guide.md` for Python and Markdown conventions

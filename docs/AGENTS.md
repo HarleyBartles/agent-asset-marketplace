@@ -20,6 +20,7 @@ Mesh policy for the repo lives at `../.agents/docs/mesh-policy.md`; docs under
 - `unslop/profile.md` for the canonical repo unslop profile
 - `contracts/AGENTS.md` for the contract-doc subtree
 - `../.agents/docs/mesh-policy.md` for the repo mesh policy
+- `../.agents/docs/repo-guide-policy.md` for the repo's guide standard mapping
 
 ## Review guidelines
 
