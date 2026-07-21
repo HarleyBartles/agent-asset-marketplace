@@ -30,8 +30,41 @@ If repo files changed, the worker must publish the changes to GitHub before clai
 
 For ordinary worker execution, prefer a PR into `main`. The PR or direct-main commit is the publication surface that lets GPT verify changed files, diffs, and final main state. Local validation supports the return, but it does not substitute for GitHub-visible publication.
 
+## Build and test commands
+
+Canonical validation and regeneration commands live in [`tools/AGENTS.md`](tools/AGENTS.md).
+For the implementation verification workflow, see [`.agents/guides/implementing-guide.md`](.agents/guides/implementing-guide.md).
+
+## Testing instructions
+
+This repo uses test-driven development. See [`.agents/guides/testing-guide.md`](.agents/guides/testing-guide.md) and invoke `/test-driven-development` before writing implementation code.
+
+## Code style guidelines
+
+Skill and marketplace shape standards are in [`docs/skill-standards-policy.md`](docs/skill-standards-policy.md).
+General code style and writing conventions are in [`.agents/guides/code-style-guide.md`](.agents/guides/code-style-guide.md).
+
+## Review guidelines
+
+For Devin Review and the full review methodology, see [`REVIEW.md`](REVIEW.md) and [`.agents/guides/code-review-guide.md`](.agents/guides/code-review-guide.md).
+
+## PR instructions
+
+PRs must include publication proof per [Publication proof for repo work](#publication-proof-for-repo-work) above.
+For the PR workflow, see [`.agents/guides/pr-guide.md`](.agents/guides/pr-guide.md).
+For what reviewers check, see [`.agents/guides/code-review-guide.md`](.agents/guides/code-review-guide.md).
+
+## Contributing
+
+For the implementation and contribution workflow, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Security considerations
+
+Apply the `security-review` profile from `/unslop-plus` to relevant work and review the security lenses in [`.agents/guides/security-guide.md`](.agents/guides/security-guide.md).
+
 ## Routing pointers
 
+- `.agents/docs/repo-guide-policy.md` for this repo's mapping to the cross-repo guide standard
 - `.agents/AGENTS.md` for tracked agent doctrine and local agent-facing deltas
 - `.agents/docs/mesh-policy.md` for mesh-specific law
 - `docs/AGENTS.md` for docs-owned guidance
