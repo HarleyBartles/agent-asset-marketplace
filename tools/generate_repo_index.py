@@ -216,6 +216,16 @@ DEFAULT_REPO_INDEX = {
             ],
         },
         {
+            "name": "superpowers-specs",
+            "path": ".agents/superpowers/specs",
+            "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
+            "surface_kind": "hand-authored",
+            "nearest_scoped_agents_md": ".agents/guides/design-guide.md",
+            "key_validation_scripts": [
+                "tools/validate_repo_index.py",
+            ],
+        },
+        {
             "name": "tools",
             "path": "tools",
             "purpose": "Repository validation and generation scripts.",

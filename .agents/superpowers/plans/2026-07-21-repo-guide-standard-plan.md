@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Create the portable `repo-guide-standard` skill, add it to `repo-worker-pack`, make `agent-asset-marketplace` the first fully-aligned exemplar by creating the missing guide docs and wiring root surfaces, and normalize `.agents/superpowers/` directory hygiene with a portable `repo-worker-base` reference.
+**Goal:** Create the portable `repo-guide-standard` skill, add it to `repo-worker-pack`, make `agent-asset-marketplace` the first fully-aligned exemplar by creating the missing guide docs and wiring root surfaces, normalize `.agents/superpowers/sdd/` directory hygiene, and make `.agents/superpowers/specs/` a repo-resident indexed surface.
 
-**Architecture:** Add a first-party source skill `repo-guide-standard` that defines the cross-repo guide layout, invocation, workflow order, and handoff requirements. Each repo keeps a local `.agents/docs/repo-guide-policy.md` overlay. In `agent-asset-marketplace`, update `AGENTS.md` canonical headings, create four new `.agents/guides/*.md` files, update routing/index surfaces, normalize `.agents/superpowers/sdd/` and `specs/` `.gitignore` hygiene, and add a `repo-worker-base` reference that carries the superpowers directory-hygiene rule.
+**Architecture:** Add a first-party source skill `repo-guide-standard` that defines the cross-repo guide layout, invocation, workflow order, and handoff requirements. Each repo keeps a local `.agents/docs/repo-guide-policy.md` overlay. In `agent-asset-marketplace`, update `AGENTS.md` canonical headings, create four new `.agents/guides/*.md` files, update routing/index surfaces, normalize `.agents/superpowers/sdd/` `.gitignore` hygiene, make `specs/` repo-resident and indexed, and add a `repo-worker-base` reference that carries the superpowers directory-hygiene rule.
 
 **Tech Stack:** Markdown skill sources, JSON bundle registry, Python marketplace generators (`py -3 tools/rebuild_marketplace.py`, `py -3 tools/check_marketplace.py`, `py -3 tools/generate_index_mesh.py`).
 
@@ -17,13 +17,13 @@
 - Root `CONTRIBUTING.md` is the substantive contributor entry point that routes to design/plan/implement/review guides and the relevant repo-worker-pack and Superpowers skills.
 - Local guides are repo-specific overlays; universal guide rules live in the `repo-guide-standard` skill.
 - Any change to source custody or pack registry requires full marketplace regeneration before calling green.
-- `.agents/superpowers/sdd/` and `.agents/superpowers/specs/` are gitignored content roots: track only `.gitignore` and ignore all session contents; no `INDEX.md` is generated there. `plans/` is fully repo resident. `repo-worker-base` carries the portable hygiene rule.
+- `.agents/superpowers/sdd/` is a gitignored content root: track only `.gitignore` and ignore all session contents; no `INDEX.md` is generated there. `.agents/superpowers/specs/` is repo-resident and indexed. `plans/` is fully repo resident. `repo-worker-base` carries the portable hygiene rule.
 
 ## File Structure
 
-- `.gitignore` — update superpowers sdd/specs exceptions from `.gitkeep`/INDEX.md to `.gitignore` only.
-- `.agents/superpowers/sdd/.gitignore` and `.agents/superpowers/specs/.gitignore` — local-only session/spec ignore patterns.
-- `.agents/superpowers/sdd/**/INDEX.md` and `.agents/superpowers/specs/INDEX.md` — deleted because gitignored folders no longer get indexes.
+- `.gitignore` — update superpowers sdd exceptions from `.gitkeep`/INDEX.md to `.gitignore` only; remove specs ignore block so specs are tracked.
+- `.agents/superpowers/sdd/.gitignore` — local-only session ignore pattern.
+- `.agents/superpowers/sdd/**/INDEX.md` — deleted because gitignored folders no longer get indexes; `specs/INDEX.md` is regenerated as a tracked surface.
 - `tools/generate_index_mesh.py` — skip directories where `INDEX.md` would be gitignored.
 - `sources/first_party/skills/repo-worker-base/references/superpowers-directory-hygiene.md` — portable `.agents/superpowers/` hygiene rule.
 - `sources/first_party/skills/repo-worker-base/SKILL.md` — add hygiene reference to read-when table.
@@ -218,17 +218,17 @@ Creating, reviewing, or cleaning up `.agents/superpowers/` working surfaces.
 `.agents/superpowers/` is the workspace for Superpowers session artifacts. It has three distinct custody lanes:
 
 - `plans/` — fully repo resident. Implementation plans live here and are version controlled. The index mesh generator creates `INDEX.md` here.
+- `specs/` — fully repo resident. Design specs live here and are version controlled. The index mesh generator creates `INDEX.md` here.
 - `sdd/` — local-only session working directory. The directory is repo resident, but its contents are gitignored. Track only `.gitignore`. No `INDEX.md` is generated because the directory is gitignored.
-- `specs/` — local-only design specs. Same pattern as `sdd/`: directory is repo resident, contents are gitignored, track only `.gitignore`. No `INDEX.md` is generated.
 
-Each `sdd/` and `specs/` subfolder must contain:
+`sdd/` must contain a `.gitignore` with:
 
 ```gitignore
 *
 !.gitignore
 ```
 
-This keeps the folder present in the repo while ignoring all volatile session artifacts. The index mesh generator (`tools/generate_index_mesh.py`) respects these `.gitignore` rules and does not place `INDEX.md` files in folders where `INDEX.md` would be ignored. Do not place durable source, plans, or generated marketplace assets under `sdd/` or `specs/`.
+This keeps the folder present in the repo while ignoring all volatile session artifacts. The index mesh generator (`tools/generate_index_mesh.py`) respects `.gitignore` rules and does not place `INDEX.md` files in folders where `INDEX.md` would be ignored. Do not place durable source, plans, or generated marketplace assets under `sdd/`.
 
 ## Routing to skills
 
@@ -1000,7 +1000,7 @@ Expected: completes without errors; projected `repo-guide-standard` skill appear
 - [x] **Step 2: Regenerate index mesh**
 
 Run: `py -3 tools/generate_index_mesh.py`
-Expected: `INDEX.md` surfaces updated to include new guides and policy doc; no `INDEX.md` is created in `.agents/superpowers/sdd/` or `.agents/superpowers/specs/`.
+Expected: `INDEX.md` surfaces updated to include new guides and policy doc; no `INDEX.md` is created in `.agents/superpowers/sdd/`; `.agents/superpowers/specs/INDEX.md` is generated as a tracked surface.
 
 - [x] **Step 3: Validate marketplace**
 

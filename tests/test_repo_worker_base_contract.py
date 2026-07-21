@@ -38,6 +38,7 @@ MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 PRESSURE_ROOT = REPO_ROOT / "tests" / "pressure" / "repo-worker-base"
 SDD_ROOT = REPO_ROOT / ".agents" / "superpowers" / "sdd"
 SDD_SESSION = SDD_ROOT / "2026-07-18-repo-worker-base-hygiene-and-composition"
+SPECS_ROOT = REPO_ROOT / ".agents" / "superpowers" / "specs"
 
 
 def _run_git(cwd: Path, *args: str) -> str:
@@ -432,6 +433,11 @@ def test_sdd_mesh_respects_gitignore_for_session_directories():
         text=True,
     )
     assert ignored.returncode == 0, "ordinary SDD session artifacts must remain ignored"
+
+
+def test_specs_mesh_generates_index():
+    specs_index = SPECS_ROOT / "INDEX.md"
+    assert specs_index.is_file(), "specs/ is repo-resident and must have a generated INDEX.md"
 
 
 def test_pressure_campaign_is_structured_for_red_green_refactor_execution():

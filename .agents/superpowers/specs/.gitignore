@@ -1,3 +1,0 @@
-# Ignore all design specs in this gitignored workspace; keep only this .gitignore.
-*
-!.gitignore
