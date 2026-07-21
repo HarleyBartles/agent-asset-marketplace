@@ -8,6 +8,8 @@
 
 **Tech Stack:** Python 3.13, PyYAML, `tools/rebuild_marketplace.py`, `tools/check_marketplace.py`, `tools/validate_authority_assets.py`, `tools/install_agent_skills.py`.
 
+**Status:** Completed — this plan was executed on the `database-skills` branch. The first-party `database-engines` and `database-design-patterns` skills, the `skills-with-mixed-source` lane, and the marketplace/provenance updates are in place.
+
 ## Global Constraints
 
 - All text file writes must use LF line endings (`newline="\n"` in Python, literal `\n` in static file content).

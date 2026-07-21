@@ -1,7 +1,7 @@
 # Database skills design
 
 **Date:** 2026-07-21
-**Status:** Proposed
+**Status:** Implemented
 **Scope:** Replace the third-party PlanetScale `postgres` skill and the Claude-Cortex `database-design-patterns` skill with two first-party database skills, introduce a `skills-with-mixed-source` lane to support multiple vendored references plus clean-room citations, and migrate the existing `writing-with-clarity` skill's vendored source from `references/source/` to `assets/authority/reference-source/` for consistency.
 
 ## Problem
