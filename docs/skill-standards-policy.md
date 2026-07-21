@@ -48,6 +48,26 @@ normal local skill frontmatter, but are excluded from marketplace provenance.
 Use `mark-skill-authoring` for their authoring method; this policy does not
 duplicate its source decomposition or citation workflow.
 
+## Authority and source custody
+
+First-party skills that rely on source-grounded material must declare their
+authority lane in `assets/authority/authority.yaml`:
+
+- `skills-with-source` — one vendored redistributable source in
+  `assets/authority/reference-source/`, plus `CITATIONS.md` for supplementary
+  references.
+- `skills-with-mixed-source` — multiple vendored redistributable sources, each
+  in its own labelled subdirectory under `assets/authority/reference-source/`,
+  with `authority.yaml` recording a mapping of source labels to authority
+  records. `decomposition.reconciled_against` and `source-map.yaml`
+  `reconciled_against` are mappings of source labels to SHA-256 values.
+- `skills-with-citation` — clean-room synthesis with no vendored source;
+  `CITATIONS.md` is the only authority evidence.
+
+All source-backed skills keep `SKILL.md` body text free of inline citations and
+record derivation boundaries, attribution, and review in
+`assets/authority/CITATIONS.md`.
+
 ## SKILL.md frontmatter
 
 ### Required fields

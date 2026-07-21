@@ -645,7 +645,7 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Architecture bundle projected from retained Codex Cortex custody only.",
+        "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
         "The ECC architecture slice has been removed from the active projection set."
       ],
       "source_ledger": [],
@@ -655,18 +655,14 @@
       "entries": [
         {
           "canonical_name": "database-design-patterns",
-          "source_category": "third_party",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/database-design-patterns",
           "local_path": "skills/database-design-patterns",
           "import_status": "imported",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-          "source_family": "claude-cortex",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+          "provenance_note": "Projected verbatim from the first-party database-design-patterns skill."
         },
         {
           "canonical_name": "event-driven-architecture",
@@ -1066,7 +1062,7 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Data-platform bundle projected from retained PlanetScale custody only.",
+        "Data-platform bundle projected from the first-party database-engines skill.",
         "The ECC data-platform slice has been removed from the active projection set."
       ],
       "source_ledger": [],
@@ -1076,20 +1072,15 @@
       ],
       "entries": [
         {
-          "canonical_name": "postgres",
-          "source_category": "third_party",
-          "content_mode": "adapted",
-          "canonical_source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres",
-          "local_path": "skills/postgres",
-          "adaptation_overlay_path": "adapters/codex/data-platform-pack/postgres",
+          "canonical_name": "database-engines",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/database-engines",
+          "local_path": "skills/database-engines",
           "import_status": "imported",
-          "source_path": "sources/third_party/planetscale/database-skills/upstream/skills/postgres/SKILL.md",
-          "source_author": "PlanetScale",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/planetscale/database-skills",
-          "source_family": "planetscale",
-          "copy_expectation": "adapted_from_source",
-          "provenance_note": "Adapted from the retained PlanetScale upstream with PlanetScale-specific marketing removed and neutral PostgreSQL guidance preserved."
+          "copy_expectation": "byte_identical",
+          "provenance_note": "Projected verbatim from the first-party database-engines skill."
         }
       ]
     },
@@ -1196,7 +1187,7 @@
       "is_mega_pack": false,
       "notes": [
         "Rooms keeps the project-routing, source-partitioning, and canon-pressure skills together in one Rooms-specific pack.",
-        "The pack also includes one generic database guidance skill because this repo has a canonical sqlite database surface.",
+        "The pack also includes one first-party generic database guidance skill because this repo has a canonical sqlite database surface.",
         "It intentionally does not duplicate repo-worker-pack, superpowers-plus, unslop-plus, or architecture-pack."
       ],
       "provenance_refs": [
@@ -1280,18 +1271,15 @@
         },
         {
           "canonical_name": "database-design-patterns",
-          "source_category": "third_party",
+          "source_category": "first_party",
           "content_mode": "verbatim",
-          "source_family": "claude-cortex",
-          "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/database-design-patterns",
           "local_path": "skills/database-design-patterns",
           "lane": "Base and control plane",
-          "source_path": "sources/third_party/claude-cortex/upstream/skills/database-design-patterns/SKILL.md",
-          "source_author": "NickCrew",
-          "source_license": "MIT",
-          "source_repo": "https://github.com/NickCrew/Claude-Cortex",
+          "import_status": "imported",
           "copy_expectation": "byte_identical",
-          "provenance_note": "Copied verbatim from retained Claude-Cortex custody because Rooms-mostly needs one generic database guidance skill for the canonical sqlite surface."
+          "provenance_note": "Projected verbatim from the first-party database-design-patterns skill into the rooms-project-pack."
         }
       ]
     },
