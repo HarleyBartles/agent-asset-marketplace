@@ -54,8 +54,8 @@ When connector access to the marketplace repo is unavailable, stop with `blocked
 
 Classify the request before source inspection:
 
-- `single_skill`: your human partner asks for one named skill, such as `asset-market`, `using-linear`, or `wild-bunch-domain-modeling`.
-- `pack`: your human partner asks for a bundled skill pack or plugin, such as `wild-bunch-project-pack`, `install the Wild Bunch project pack`, or `install all skills from a pack`.
+- `single_skill`: your human partner asks for one named skill, such as `asset-market`, `using-linear`, or `database-engines`.
+- `pack`: your human partner asks for a bundled skill pack or plugin, such as `superpowers-plus`, `install the Superpowers+ pack`, or `install all skills from a pack`.
 - `comparison`: your human partner asks to compare repo source, installed skill state, package contents, or projections without installation.
 - `blocked_or_ambiguous`: the request could refer to multiple skills or packs and repo inspection cannot disambiguate.
 

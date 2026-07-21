@@ -295,41 +295,6 @@
       "local_path": "skills/web-styling"
     },
     {
-      "canonical_name": "wild-bunch-browser-game",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-browser-game",
-      "local_path": "skills/wild-bunch-browser-game"
-    },
-    {
-      "canonical_name": "wild-bunch-domain-modeling",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-domain-modeling",
-      "local_path": "skills/wild-bunch-domain-modeling"
-    },
-    {
-      "canonical_name": "wild-bunch-dotnet-architecture",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-dotnet-architecture",
-      "local_path": "skills/wild-bunch-dotnet-architecture"
-    },
-    {
-      "canonical_name": "wild-bunch-project-doctrine",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-project-doctrine",
-      "local_path": "skills/wild-bunch-project-doctrine"
-    },
-    {
-      "canonical_name": "wild-bunch-worker-verification",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/wild-bunch-worker-verification",
-      "local_path": "skills/wild-bunch-worker-verification"
-    },
-    {
       "canonical_name": "work-mode-router",
       "source_category": "first_party",
       "content_mode": "verbatim",

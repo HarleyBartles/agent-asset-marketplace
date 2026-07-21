@@ -173,50 +173,14 @@
 - Provenance/history: MARK-97 rooms bootstrap zip update
 - Scope: Rooms first-read router
 - Notes: Retired as part of MARK-334. The Rooms first-read router function was merged into `rooms-project-doctrine`. This record exists only for provenance audit of the retired source path.
-## wild-bunch-project-doctrine-v1
+## Wild Bunch skills (retired)
 
-- Source path: `sources/first_party/skills/wild-bunch-project-doctrine`
-- Public identity: `wild-bunch-project-doctrine`
-- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
+- Source paths: `sources/first_party/skills/wild-bunch-browser-game`, `sources/first_party/skills/wild-bunch-domain-modeling`, `sources/first_party/skills/wild-bunch-dotnet-architecture`, `sources/first_party/skills/wild-bunch-project-doctrine`, `sources/first_party/skills/wild-bunch-worker-verification`
+- Public identities: `wild-bunch-browser-game`, `wild-bunch-domain-modeling`, `wild-bunch-dotnet-architecture`, `wild-bunch-project-doctrine`, `wild-bunch-worker-verification`
+- Provenance/history only: MARK-85 Wild Bunch first-party source hydration from attached zip (retired)
 - Ownership: Harley-authored first-party House skill
-- Scope: Wild Bunch project posture and repo sensitivity
-- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
-
-## wild-bunch-domain-modeling-v1
-
-- Source path: `sources/first_party/skills/wild-bunch-domain-modeling`
-- Public identity: `wild-bunch-domain-modeling`
-- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
-- Ownership: Harley-authored first-party House skill
-- Scope: Wild Bunch gameplay state, GameSession boundaries, clue and journal flows, travel, horses, and hidden culprit truth
-- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
-
-## wild-bunch-dotnet-architecture-v1
-
-- Source path: `sources/first_party/skills/wild-bunch-dotnet-architecture`
-- Public identity: `wild-bunch-dotnet-architecture`
-- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
-- Ownership: Harley-authored first-party House skill
-- Scope: Wild Bunch C#/.NET architecture guardrails for domain ownership, mutation routes, persistence, and framework leakage
-- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
-
-## wild-bunch-browser-game-v1
-
-- Source path: `sources/first_party/skills/wild-bunch-browser-game`
-- Public identity: `wild-bunch-browser-game`
-- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
-- Ownership: Harley-authored first-party House skill
-- Scope: Wild Bunch browser delivery, HUD design, Phaser/TypeScript/Vite, DOM overlays, playtest evidence, and browser QA
-- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
-
-## wild-bunch-worker-verification-v1
-
-- Source path: `sources/first_party/skills/wild-bunch-worker-verification`
-- Public identity: `wild-bunch-worker-verification`
-- Provenance/history: MARK-85 Wild Bunch first-party source hydration from attached zip
-- Ownership: Harley-authored first-party House skill
-- Scope: Wild Bunch worker returns, PRs, commits, validation notes, and completion verification
-- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane.
+- Scope: Wild Bunch project, domain, .NET architecture, browser game, and worker verification skills
+- Notes: Hydrated from the authoritative attached zip and projected unchanged into the House Skills lane. Removed from this repository on 2026-07-21; these skills are now owned by the Wild Bunch repo directly. This record exists only for provenance audit of the retired source paths.
 
 ## tps-reporting
 

@@ -78,17 +78,7 @@ DEFAULT_REPO_INDEX = {
                 "tools/validate_repo_index.py",
             ],
         },
-        {
-            "name": "wild-bunch-project-pack",
-            "path": "codex-marketplace/plugins/wild-bunch-project-pack",
-            "purpose": "Self-contained Wild Bunch project pack projection with hydrated first-party skills and retained browser-game helpers.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": None,
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
-        },
+
         {
             "name": "frontend-pack",
             "path": "codex-marketplace/plugins/frontend-pack",

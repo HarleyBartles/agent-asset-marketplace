@@ -623,13 +623,7 @@ def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
             raise ValueError(f"bundle manifest entry {name} is missing canonical_source_path")
         if not local_path or not isinstance(local_path, str):
             raise ValueError(f"bundle manifest entry {name} is missing local_path")
-        expected_lane = (
-            "Rooms"
-            if name.startswith("rooms-")
-            else "Wild Bunch"
-            if name.startswith("wild-bunch-")
-            else "Base and control plane"
-        )
+        expected_lane = "Rooms" if name.startswith("rooms-") else "Base and control plane"
         if lane != expected_lane:
             raise ValueError(f"bundle manifest entry {name} lane mismatch")
         check_path_exists(ROOT / source_path)
@@ -1479,25 +1473,6 @@ def validate_skill_zip_assertions() -> None:
     if "subagents" not in excluded["reason"]:
         raise AssertionError("excluded skill should explain the subagent limitation")
 
-    # worker-verification must export as an installable zip and must not be
-    # re-added to wild-bunch-project-pack.
-    worker_verification = next(
-        (
-            record
-            for record in registry["artifacts"]
-            if record["pack"] == "house-skills" and record["skill"] == "worker-verification"
-        ),
-        None,
-    )
-    if worker_verification is None:
-        raise ValueError("expected house-skills/worker-verification artifact in registry but found none")
-    if worker_verification["export_mode"] not in {"direct", "overlay"}:
-        raise AssertionError("house-skills/worker-verification should export as an installable zip")
-    if any(
-        record["skill"] == "worker-verification" and record["pack"] == "wild-bunch-project-pack"
-        for record in registry["artifacts"]
-    ):
-        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
 
 
 def main() -> int:
