@@ -7,8 +7,8 @@
 *.ps1 text eol=lf
 *.bash text eol=lf
 
-# Generated JSON surfaces are text and must be LF.
-generated/skill-zips/registry.json text eol=lf
+# Upstream reference sources may retain trailing whitespace; do not lint them.
+**/reference-source/** -whitespace
 
 # Binary asset families: never perform line-ending normalization or diff.
 *.png binary
