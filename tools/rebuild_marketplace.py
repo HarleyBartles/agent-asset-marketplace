@@ -100,6 +100,87 @@ def _check_arg(check: bool) -> tuple[str, ...]:
     return ("--check",) if check else ()
 
 
+def _run_inventory(*, check: bool, verbose: bool) -> None:
+    _run_tool("generate_plugin_root_inventory.py", *_check_arg(check), verbose=verbose)
+    if not check:
+        _prune_stale_projected_plugin_roots()
+    _run_tool("validate_marketplace.py", "--phase", "inventory", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_heal(*, check: bool, verbose: bool) -> None:
+    _run_tool("heal_overlays.py", *_check_arg(check), verbose=verbose)
+
+
+def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
+    if check:
+        _run_tool("update_skill_artifacts.py", "--check", verbose=verbose)
+    else:
+        _run_tool("update_skill_artifacts.py", "--all", verbose=verbose)
+    _run_tool("normalize_first_party_skill_sources.py", *_check_arg(check), verbose=verbose)
+    if not skip_install:
+        _run_tool("install_agent_skills.py", *_check_arg(check), verbose=verbose)
+    _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
+    if skip_index:
+        return
+    _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
+    if check:
+        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+    else:
+        _run_tool("generate_index_mesh.py", verbose=verbose)
+        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+    _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_catalog(*, check: bool, verbose: bool) -> None:
+    if check:
+        _run_tool("generate_first_party_skill_catalog.py", "--check", verbose=verbose)
+    else:
+        _run_tool("generate_first_party_skill_catalog.py", verbose=verbose)
+        _run_tool("generate_first_party_skill_catalog.py", "--check", verbose=verbose)
+
+
+def _run_whitespace_check(*, verbose: bool, skip: bool) -> None:
+    if skip:
+        return
+    changed_paths = [
+        path
+        for path in _git_output("diff", "--name-only", "HEAD").splitlines()
+        if path and path not in _retained_verbatim_paths()
+    ]
+    if not changed_paths:
+        return
+    _MAX_CMD_CHARS = 28000
+    batch: list[str] = []
+    batch_len = 0
+    for path in changed_paths:
+        path_len = len(path) + 4  # path + space + 2 quotes + separator
+        if batch and batch_len + path_len > _MAX_CMD_CHARS:
+            _run_git("diff", "--check", "HEAD", "--", *batch, verbose=verbose)
+            batch = []
+            batch_len = 0
+        batch.append(path)
+        batch_len += path_len
+    if batch:
+        _run_git("diff", "--check", "HEAD", "--", *batch, verbose=verbose)
+
+
+def _run_validate(
+    *,
+    check: bool,
+    verbose: bool,
+    skip_validate: bool,
+    skip_whitespace_check: bool,
+) -> None:
+    if not skip_validate:
+        _run_tool("validate_authority_assets.py", verbose=verbose)
+    _run_whitespace_check(verbose=verbose, skip=skip_whitespace_check)
+    if check:
+        _run_git("diff", "--exit-code", verbose=verbose)
+
+
 _PHASE_ORDER = ("inventory", "heal", "project", "index", "catalog", "validate")
 
 
