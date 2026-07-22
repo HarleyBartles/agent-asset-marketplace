@@ -536,9 +536,6 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
         shutil.rmtree(_as_windows_long_path(destination_root))
     destination_root.parent.mkdir(parents=True, exist_ok=True)
 
-    # codex-marketplace/plugins/<plugin>/skills/<skill>
-    plugin_name = destination_root.parents[1].name
-
     tempdir = tempfile.TemporaryDirectory()
     staged_root = Path(tempdir.name) / source_root.name
     try:
