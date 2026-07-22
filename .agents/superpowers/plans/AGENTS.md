@@ -28,5 +28,9 @@ publication rules.
 
 This file must stay aligned with the repo's plan documentation practices. When
 plan formats change or new guidance is needed for plan structure, review and
-update this file to reflect current expectations. Plans should be archived or
-removed when the work they describe is complete—stale plans create confusion.
+update this file to reflect current expectations. Completed implementation plans
+must be checked off and committed with their implementation PR (see
+`.agents/guides/implementing-guide.md`) so reviewers can compare planned vs.
+delivered work. Once the plan is merged and no longer the active source of
+truth, it may be archived; it must not be left open or uncommitted as stale
+in-progress guidance.
