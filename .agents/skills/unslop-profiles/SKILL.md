@@ -1,8 +1,9 @@
 ---
 name: unslop-profiles
-description: Use when applying anti-slop guidance to writing, documentation, implementation
-  plans, code review, worker returns, debugging, React work, UI design, API design,
-  architecture, testing, security review, or repository cleanup.
+description: Use when a software development workflow would benefit from anti-slop
+  guidance for writing, documentation, implementation plans, code review, worker returns,
+  debugging, React work, UI design, API design, architecture, testing, security review,
+  or repository cleanup.
 metadata:
   source-id: unslop-profiles
   source-path: sources/first_party/skills/unslop-profiles/SKILL.md
@@ -10,9 +11,10 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when applying anti-slop guidance to writing, documentation, implementation
-    plans, code review, worker returns, debugging, React work, UI design, API design,
-    architecture, testing, security review, or repository cleanup.
+  scope: Use when a software development workflow would benefit from anti-slop
+    guidance for writing, documentation, implementation plans, code review, worker
+    returns, debugging, React work, UI design, API design, architecture, testing, security
+    review, or repository cleanup.
   use_when:
   - Use when writing general prose.
   - Use when writing or reviewing technical documentation.

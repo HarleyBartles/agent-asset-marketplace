@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Unslop Profiles
-  short_description: Use when applying the right anti-slop profile to a software development workflow.
-  default_prompt: Use $unslop-profiles to apply the right anti-slop profile for the current task.
+  short_description: Use when a software development workflow would benefit from anti-slop guidance.
+  default_prompt: Use $unslop-profiles when a software development workflow would benefit from anti-slop guidance, and read the profile file matching the current task before applying its avoid/prefer rules.
 policy:
   allow_implicit_invocation: true
