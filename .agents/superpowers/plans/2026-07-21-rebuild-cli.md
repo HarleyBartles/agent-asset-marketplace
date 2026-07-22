@@ -1,6 +1,6 @@
 # rebuild_marketplace.py CLI refactor implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. Tasks are intentionally small and sequential; do not run validate-marketplace or rebuild-marketplace tasks in parallel because they share one file.
 
 **Goal:** Add a flag-based CLI to `tools/rebuild_marketplace.py` (`--check`, `--phase`, `--skip-*`, `--verbose`), split `tools/validate_marketplace.py` into invocable phase-scoped functions with a `--phase` CLI, and turn `tools/check_marketplace.py` into a thin wrapper over `rebuild_marketplace.py --check`.
 
@@ -16,6 +16,10 @@
 - Default `rebuild_marketplace.py` (no flags) must continue to do a full rebuild.
 - `validate_marketplace.py` default (no flags) must continue to do full marketplace validation.
 
+## SDD execution confidence
+
+9/10. Every task is scoped to a single file or a single function, has exact code, and ends with a runnable verification step. The only remaining risk is the size of `validate_project`; it is kept as one function to avoid splitting logic that needs shared local variables, and the exact body is transcribed from the existing `main`.
+
 ---
 
 ## Task 1: Add failing CLI tests
@@ -25,7 +29,7 @@
 
 **Interfaces:**
 - Consumes: `tools/rebuild_marketplace.py` and `tools/validate_marketplace.py` as subprocess targets.
-- Produces: Test cases that `--help` exposes the new flags and that `--phase project` runs on a clean tree.
+- Produces: Test cases that `--help` exposes the new flags.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -80,18 +84,18 @@ git commit -m "test: add failing rebuild/validate marketplace CLI flag tests"
 
 ---
 
-## Task 2: Refactor `validate_marketplace.py` into phase functions
+## Task 2: Update `validate_marketplace.py` parser and add `validate_inventory`
 
 **Files:**
 - Modify: `tools/validate_marketplace.py`
 
 **Interfaces:**
-- Consumes: existing `check_json`, `check_text`, `check_path_exists`, `_bootstrap_marketplace_dependencies`, `_run_tool_check`, `MARKETPLACE_PLUGIN_SPECS`, `MARKETPLACE_PATH`, etc.
-- Produces: public functions `validate_inventory`, `validate_project`, `validate_index`, `validate_all` and a `--phase` CLI.
+- Consumes: existing `check_json`, `check_path_exists`, `_run_tool_check`, `_bootstrap_marketplace_dependencies`, `MARKETPLACE_PLUGIN_SPECS`, `PLUGIN_ROOT_INVENTORY_PATH`, `validate_plugin_manifest`, `validate_active_plugin_tree`.
+- Produces: `_parse_args` supports `--phase`; `validate_inventory` is callable.
 
-- [ ] **Step 1: Update `_parse_args` with `--phase`**
+- [ ] **Step 1: Update `_parse_args` with `--phase` and `--skip-freshness-checks`**
 
-Replace the existing `_parse_args` function in `tools/validate_marketplace.py`:
+Replace the existing `_parse_args` function:
 
 ```python
 def _parse_args() -> argparse.Namespace:
@@ -114,9 +118,7 @@ def _parse_args() -> argparse.Namespace:
     return parser.parse_args()
 ```
 
-- [ ] **Step 2: Add `validate_inventory`**
-
-Insert after `_parse_args`:
+- [ ] **Step 2: Add `validate_inventory` after `_parse_args`**
 
 ```python
 def validate_inventory(*, skip_freshness: bool = False) -> None:
@@ -134,9 +136,39 @@ def validate_inventory(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: inventory")
 ```
 
-- [ ] **Step 3: Add `validate_project`**
+- [ ] **Step 3: Run `validate_marketplace.py --phase inventory --skip-freshness-checks`**
 
-Insert after `validate_inventory`:
+Run: `py -3 tools/validate_marketplace.py --phase inventory --skip-freshness-checks`
+
+Expected: prints `OK validate_marketplace: inventory` and `Marketplace validation passed.`.
+
+- [ ] **Step 4: Run the failing tests**
+
+Run: `py -3 -m pytest tests/test_rebuild_marketplace_cli.py -v`
+
+Expected: `test_validate_marketplace_phase_cli_exists` now passes; `test_rebuild_cli_help_exposes_new_flags` still fails.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add tools/validate_marketplace.py
+git commit -m "feat(validate): add --phase parser and validate_inventory function"
+```
+
+---
+
+## Task 3: Add `validate_project` to `validate_marketplace.py`
+
+**Files:**
+- Modify: `tools/validate_marketplace.py`
+
+**Interfaces:**
+- Consumes: `_bootstrap_marketplace_dependencies`, `check_json`, `check_text`, `check_path_exists`, and all existing `validate_*` helpers used by the current `main`.
+- Produces: `validate_project` is callable and contains the project-phase validation that the current `main` performs.
+
+- [ ] **Step 1: Insert `validate_project` after `validate_inventory`**
+
+This is the bulk of the current `main` body. Transcribe it exactly:
 
 ```python
 def validate_project(*, skip_freshness: bool = False) -> None:
@@ -218,9 +250,31 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: project")
 ```
 
-- [ ] **Step 4: Add `validate_index`**
+- [ ] **Step 2: Run `validate_marketplace.py --phase project --skip-freshness-checks`**
 
-Insert after `validate_project`:
+Run: `py -3 tools/validate_marketplace.py --phase project --skip-freshness-checks`
+
+Expected: prints project-phase OK messages and ends with `Marketplace validation passed.`.
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add tools/validate_marketplace.py
+git commit -m "feat(validate): add validate_project phase function"
+```
+
+---
+
+## Task 4: Add `validate_index`, `validate_all`, and wire `main` dispatch
+
+**Files:**
+- Modify: `tools/validate_marketplace.py`
+
+**Interfaces:**
+- Consumes: `validate_inventory`, `validate_project`, `_bootstrap_marketplace_dependencies`, `REPO_INDEX_README_PATH`, `REPO_INDEX_PATH`.
+- Produces: `validate_index`, `validate_all`, and a `main` that dispatches by `--phase`.
+
+- [ ] **Step 1: Insert `validate_index` after `validate_project`**
 
 ```python
 def validate_index(*, skip_freshness: bool = False) -> None:
@@ -232,9 +286,7 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: index")
 ```
 
-- [ ] **Step 5: Add `validate_all`**
-
-Insert after `validate_index`:
+- [ ] **Step 2: Insert `validate_all` after `validate_index`**
 
 ```python
 def validate_all(*, skip_freshness: bool = False) -> None:
@@ -243,7 +295,7 @@ def validate_all(*, skip_freshness: bool = False) -> None:
     validate_index(skip_freshness=skip_freshness)
 ```
 
-- [ ] **Step 6: Replace `main` with phase dispatch**
+- [ ] **Step 3: Replace `main` with phase dispatch**
 
 Replace the entire `main` function:
 
@@ -261,19 +313,13 @@ def main() -> int:
     return 0
 ```
 
-- [ ] **Step 7: Run the tests**
-
-Run: `py -3 -m pytest tests/test_rebuild_marketplace_cli.py -v`
-
-Expected: `test_validate_marketplace_phase_cli_exists` passes; `test_rebuild_cli_help_exposes_new_flags` still fails.
-
-- [ ] **Step 8: Verify full validation still works**
+- [ ] **Step 4: Run full `validate_marketplace.py`**
 
 Run: `py -3 tools/validate_marketplace.py --skip-freshness-checks`
 
 Expected: `Marketplace validation passed.`
 
-- [ ] **Step 9: Verify phase validation works**
+- [ ] **Step 5: Run all phase CLI combinations**
 
 Run:
 
@@ -283,18 +329,24 @@ py -3 tools/validate_marketplace.py --phase project --skip-freshness-checks
 py -3 tools/validate_marketplace.py --phase index --skip-freshness-checks
 ```
 
-Expected: each prints its own OK and finally `Marketplace validation passed.`
+Expected: each exits 0 and prints `Marketplace validation passed.`.
 
-- [ ] **Step 10: Commit**
+- [ ] **Step 6: Run the failing tests**
+
+Run: `py -3 -m pytest tests/test_rebuild_marketplace_cli.py -v`
+
+Expected: `test_validate_marketplace_phase_cli_exists` passes; `test_rebuild_cli_help_exposes_new_flags` still fails.
+
+- [ ] **Step 7: Commit**
 
 ```bash
 git add tools/validate_marketplace.py
-git commit -m "refactor(validate): split main into phase-scoped functions and add --phase CLI"
+git commit -m "feat(validate): add validate_index, validate_all, and --phase dispatch"
 ```
 
 ---
 
-## Task 3: Add `rebuild_marketplace.py` argument parser
+## Task 5: Add `rebuild_marketplace.py` argument parser
 
 **Files:**
 - Modify: `tools/rebuild_marketplace.py`
@@ -305,7 +357,7 @@ git commit -m "refactor(validate): split main into phase-scoped functions and ad
 
 - [ ] **Step 1: Update `_run_tool` to support verbose printing**
 
-Replace the existing `_run_tool` function in `tools/rebuild_marketplace.py`:
+Replace the existing `_run_tool` function:
 
 ```python
 def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
@@ -330,7 +382,7 @@ def _run_git(*args: str, verbose: bool = False) -> None:
 
 - [ ] **Step 3: Add `_check_arg` helper and `_PHASE_ORDER`**
 
-Insert after `_parse_args` (or where `_parse_args` will be):
+Insert before the new `_parse_args`:
 
 ```python
 def _check_arg(check: bool) -> tuple[str, ...]:
@@ -426,7 +478,7 @@ git commit -m "feat(rebuild): add --phase, --check, --skip-*, and --verbose argu
 
 ---
 
-## Task 4: Implement `rebuild_marketplace.py` phase runners
+## Task 6: Implement `rebuild_marketplace.py` phase runners
 
 **Files:**
 - Modify: `tools/rebuild_marketplace.py`
@@ -556,7 +608,7 @@ git commit -m "feat(rebuild): implement phase runner functions with per-phase va
 
 ---
 
-## Task 5: Wire phase dispatch into `main`
+## Task 7: Wire phase dispatch into `rebuild_marketplace.py` `main`
 
 **Files:**
 - Modify: `tools/rebuild_marketplace.py`
@@ -616,7 +668,7 @@ git commit -m "feat(rebuild): wire --phase dispatch into main"
 
 ---
 
-## Task 6: Rewrite `check_marketplace.py` as a thin wrapper
+## Task 8: Rewrite `check_marketplace.py` as a thin wrapper
 
 **Files:**
 - Modify: `tools/check_marketplace.py`
@@ -690,7 +742,7 @@ git commit -m "refactor(check): make check_marketplace.py a thin wrapper over re
 
 ---
 
-## Task 7: Update tooling documentation
+## Task 9: Update tooling documentation
 
 **Files:**
 - Modify: `tools/AGENTS.md`
@@ -731,7 +783,7 @@ git commit -m "docs(tools): document rebuild --phase and validate_marketplace --
 
 ---
 
-## Task 8: Validate end-to-end
+## Task 10: Validate end-to-end
 
 **Files:**
 - No file changes.
@@ -804,12 +856,12 @@ git commit -m "chore: regenerate marketplace surfaces after CLI refactor"
 ## Self-review checklist
 
 - [ ] **Spec coverage:** Every CLI flag and phase from `.agents/superpowers/specs/2026-07-21-rebuild-cli-design.md` maps to a task:
-  - `rebuild_marketplace.py --check` → Task 3 parser + Task 4 runners forwarding `--check`
-  - `rebuild_marketplace.py --phase` → Task 3 parser + Task 5 dispatch
-  - `rebuild_marketplace.py --skip-*` → Task 3 parser + Task 4 runner functions
-  - `rebuild_marketplace.py --verbose` → Task 3 parser + Task 3 `_run_tool`/`_run_git` update
-  - `validate_marketplace.py --phase` → Task 2 parser + Task 2 phase functions
-  - `check_marketplace.py` wrapper → Task 6
+  - `rebuild_marketplace.py --check` → Task 5 parser + Task 6 runners forwarding `--check`
+  - `rebuild_marketplace.py --phase` → Task 5 parser + Task 7 dispatch
+  - `rebuild_marketplace.py --skip-*` → Task 5 parser + Task 6 runner functions
+  - `rebuild_marketplace.py --verbose` → Task 5 parser + Task 5 `_run_tool`/`_run_git` update
+  - `validate_marketplace.py --phase` → Task 2 parser + Tasks 2-4 phase functions
+  - `check_marketplace.py` wrapper → Task 8
 - [ ] **Placeholder scan:** No `TBD`, `TODO`, or vague steps in the plan.
 - [ ] **Type consistency:** All `_run_*` signatures use `check: bool` and `verbose: bool`; `validate_*` functions use `skip_freshness: bool`; `main` reads `args.*` correctly.
 - [ ] **File path sanity:** `tools/rebuild_marketplace.py`, `tools/validate_marketplace.py`, `tools/check_marketplace.py`, `tools/AGENTS.md`, `tests/test_rebuild_marketplace_cli.py` are the only touched files.
@@ -819,6 +871,6 @@ git commit -m "chore: regenerate marketplace surfaces after CLI refactor"
 Plan complete and saved to `.agents/superpowers/plans/2026-07-21-rebuild-cli.md`. Two execution options:
 
 1. **Subagent-Driven (recommended)** — dispatch a fresh subagent per task, review between tasks.
-2. **Inline Execution** — execute tasks in this session using `executing-plans` or direct edits.
+2. **Inline Execution** — I execute the tasks in this session.
 
 Which approach do you want to use?
