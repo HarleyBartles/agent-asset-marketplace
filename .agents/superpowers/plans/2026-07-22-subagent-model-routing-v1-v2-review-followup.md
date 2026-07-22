@@ -54,5 +54,5 @@ not as a routing-skill regression; all routing-skill contract tests must pass.
 
 - [x] Run `py -3 tools/rebuild_marketplace.py` to regenerate all derived skill and index surfaces.
 - [x] Run `py -3 -m pytest` and `py -3 tools/check_marketplace.py`; inspect the diff for source-to-projection consistency and unintended files. The full suite has the six pre-existing `repo-worker-base` baseline failures documented above; the routing-skill contract suite passes 6/6.
-- [ ] Mark this plan complete only after the evidence above is green, commit the canonical source, tests, plan, and generated outputs, then push the existing PR branch.
-- [ ] Request a fresh-context review of the published PR head and address every actionable finding before asking to merge.
+- [x] Mark this plan complete only after the evidence above is green, commit the canonical source, tests, plan, and generated outputs, then push the existing PR branch.
+- [x] Request a fresh-context review of the published PR head and address every actionable finding before asking to merge. The review found no actionable findings on `e7ad3cd80e666404f153044d24db4df5708c459c`.
