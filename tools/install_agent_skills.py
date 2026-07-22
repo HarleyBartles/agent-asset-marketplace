@@ -14,7 +14,7 @@ from typing import Any
 import yaml
 
 from marketplace_utils import ROOT, MARKETPLACE_PATH, load_json
-from skill_zip_artifacts import validate_skill_markdown_frontmatter
+from skill_validation import validate_skill_markdown_frontmatter
 
 AGENTS_SKILLS_PATH = ROOT / ".agents/skills"
 PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"

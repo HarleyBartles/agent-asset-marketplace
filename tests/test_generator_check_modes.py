@@ -16,10 +16,8 @@ if str(TOOLS) not in sys.path:
 import generate_marketplace  # noqa: E402
 import generate_pack_manifests  # noqa: E402
 import generate_repo_index  # noqa: E402
-import materialize_projection  # noqa: E402
+import project_skills  # noqa: E402
 import update_skill_artifacts  # noqa: E402
-import validate_generated_drift  # noqa: E402
-from skill_zip_artifacts import SkillArtifact, artifact_to_record  # noqa: E402
 
 
 class GeneratorCheckModeTests(unittest.TestCase):
@@ -247,7 +245,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     generate_pack_manifests.generate(write=False)
 
-    def test_materialize_projection_check_detects_stale_projection(self) -> None:
+    def test_project_skills_check_detects_stale_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
@@ -286,6 +284,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "source_license": "MIT",
                         "source_repo": "https://github.com/affaan-m/ECC",
                         "copy_expectation": "byte_identical",
+                        "import_status": "imported",
                     }
                 ],
                 "repo_index": {
@@ -299,33 +298,33 @@ class GeneratorCheckModeTests(unittest.TestCase):
             manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
             with (
-                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(project_skills, "ROOT", temp_root),
+                patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),
                 patch.object(
-                    materialize_projection,
+                    project_skills,
                     "load_plugin_root_inventory",
-                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack", "enabled": True}],
                 ),
-                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
             ):
-                self.assertEqual(materialize_projection.main(), 0)
+                project_skills.project_skills(write=True)
 
             (projected_root / "SKILL.md").write_text(
                 "---\nname: sample-skill\ndescription: stale\n---\n\nbody\n",
                 encoding="utf-8",
             )
             with (
-                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(project_skills, "ROOT", temp_root),
+                patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),
                 patch.object(
-                    materialize_projection,
+                    project_skills,
                     "load_plugin_root_inventory",
-                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack", "enabled": True}],
                 ),
-                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
             ):
                 with self.assertRaises(ValueError):
-                    materialize_projection.main()
+                    project_skills.project_skills(write=False)
 
-    def test_materialize_projection_check_fails_on_stale_skill_roots(self) -> None:
+    def test_project_skills_check_fails_on_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
@@ -367,6 +366,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "source_license": "MIT",
                         "source_repo": "https://github.com/affaan-m/ECC",
                         "copy_expectation": "byte_identical",
+                        "import_status": "imported",
                     }
                 ],
                 "repo_index": {
@@ -383,20 +383,34 @@ class GeneratorCheckModeTests(unittest.TestCase):
             manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
             with (
-                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(project_skills, "ROOT", temp_root),
+                patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),
                 patch.object(
-                    materialize_projection,
+                    project_skills,
                     "load_plugin_root_inventory",
-                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack", "enabled": True}],
                 ),
-                patch.object(sys, "argv", ["materialize_projection.py", "--check"]),
+            ):
+                project_skills.project_skills(write=True)
+
+            stale_root.mkdir(parents=True, exist_ok=True)
+            (stale_root / "SKILL.md").write_text("---\nname: retired-skill\ndescription: stale\n---\n\nbody\n", encoding="utf-8")
+
+            with (
+                patch.object(project_skills, "ROOT", temp_root),
+                patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),
+                patch.object(
+                    project_skills,
+                    "load_plugin_root_inventory",
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack", "enabled": True}],
+                ),
             ):
                 with self.assertRaises(ValueError) as ctx:
-                    materialize_projection.main()
+                    project_skills.project_skills(write=False)
 
             self.assertIn("retired-skill", str(ctx.exception))
 
-    def test_materialize_projection_write_prunes_stale_skill_roots(self) -> None:
+    def test_project_skills_write_prunes_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
             source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
@@ -438,6 +452,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "source_license": "MIT",
                         "source_repo": "https://github.com/affaan-m/ECC",
                         "copy_expectation": "byte_identical",
+                        "import_status": "imported",
                     }
                 ],
                 "repo_index": {
@@ -454,38 +469,35 @@ class GeneratorCheckModeTests(unittest.TestCase):
             manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
             with (
-                patch.object(materialize_projection, "ROOT", temp_root),
+                patch.object(project_skills, "ROOT", temp_root),
+                patch.object(project_skills, "GENERATED_SKILL_ZIPS_ROOT", temp_root / "generated/skill-zips"),
                 patch.object(
-                    materialize_projection,
+                    project_skills,
                     "load_plugin_root_inventory",
-                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack"}],
+                    return_value=[{"name": "sample-pack", "plugin_root": "codex-marketplace/plugins/sample-pack", "enabled": True}],
                 ),
             ):
-                materialize_projection.reconcile_projection(write=True)
+                project_skills.project_skills(write=True)
 
             self.assertTrue(projected_root.exists())
             self.assertFalse(stale_root.exists())
+            self.assertTrue((temp_root / "generated/skill-zips/sample-skill.zip").exists())
 
-    def test_update_skill_artifacts_check_runs_mega_pack_generation_first(self) -> None:
+    def test_update_skill_artifacts_check_runs_skill_artifact_pipeline(self) -> None:
         calls: list[tuple[str, dict[str, object]]] = []
 
         def record(name: str, result: object | None = None):
             def _inner(**kwargs):
                 calls.append((name, dict(kwargs)))
                 return result
-
             return _inner
 
         with (
             patch.object(update_skill_artifacts, "generate_all_mega_packs", side_effect=record("generate_all_mega_packs")),
-            patch.object(update_skill_artifacts, "reconcile_projection", side_effect=record("reconcile_projection")),
-            patch.object(update_skill_artifacts, "validate_skill_zip_registry", return_value={"registry": True}),
-            patch.object(update_skill_artifacts, "validate_generated_drift", side_effect=record("validate_generated_drift")),
-            patch.object(
-                update_skill_artifacts,
-                "print_registry_receipt",
-                side_effect=lambda registry: calls.append(("print_registry_receipt", {"registry": registry})),
-            ),
+            patch.object(update_skill_artifacts, "generate_pack_manifests", side_effect=record("generate_pack_manifests")),
+            patch.object(update_skill_artifacts, "project_skills", side_effect=record("project_skills")),
+            patch.object(update_skill_artifacts, "generate_first_party_skill_catalog", side_effect=record("generate_first_party_skill_catalog")),
+            patch.object(update_skill_artifacts, "_run_tool") as run_tool_mock,
             patch.object(sys, "argv", ["update_skill_artifacts.py", "--check"]),
         ):
             self.assertEqual(update_skill_artifacts.main(), 0)
@@ -493,71 +505,13 @@ class GeneratorCheckModeTests(unittest.TestCase):
         self.assertEqual(
             calls,
             [
+                ("generate_pack_manifests", {"write": False}),
                 ("generate_all_mega_packs", {"write": False}),
-                ("reconcile_projection", {"write": False}),
-                (
-                    "validate_generated_drift",
-                    {"base": "origin/main", "full_regeneration": False, "skip_content_validation": False},
-                ),
-                ("print_registry_receipt", {"registry": {"registry": True}}),
+                ("project_skills", {"write": False}),
+                ("generate_first_party_skill_catalog", {"write": False}),
             ],
         )
-
-    def test_validate_generated_drift_allows_rename_paths_for_generated_artifacts(self) -> None:
-        current_artifact = SkillArtifact(
-            pack="repo-worker-pack",
-            skill="base-doctrine",
-            export_mode="direct",
-            source_path="sources/first_party/skills/base-doctrine",
-            overlay_path=None,
-            zip_path="generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip",
-            source_file_count=1,
-            source_bytes=1,
-            source_sha256="a" * 64,
-            overlay_file_count=0,
-            overlay_bytes=0,
-            overlay_sha256=None,
-            zip_size_bytes=1,
-            zip_sha256="b" * 64,
-        )
-        base_artifact = SkillArtifact(
-            pack="house-skills",
-            skill="base-doctrine",
-            export_mode="direct",
-            source_path="sources/first_party/skills/base-doctrine",
-            overlay_path=None,
-            zip_path="generated/skill-zips/house-skills/base-doctrine/skill.zip",
-            source_file_count=1,
-            source_bytes=1,
-            source_sha256="a" * 64,
-            overlay_file_count=0,
-            overlay_bytes=0,
-            overlay_sha256=None,
-            zip_size_bytes=1,
-            zip_sha256="b" * 64,
-        )
-        current_registry = {"artifacts": [artifact_to_record(current_artifact)], "excluded": []}
-        base_registry = {"artifacts": [artifact_to_record(base_artifact)], "excluded": []}
-
-        with (
-            patch.object(validate_generated_drift, "validate_skill_zip_registry", return_value=None),
-            patch.object(validate_generated_drift, "load_registry", return_value=current_registry),
-            patch.object(validate_generated_drift, "_load_git_json", return_value=base_registry),
-            patch.object(
-                validate_generated_drift,
-                "_generated_changes",
-                return_value=[
-                    ("R100", "generated/skill-zips/house-skills/base-doctrine/skill.zip"),
-                    ("R100", "generated/skill-zips/repo-worker-pack/base-doctrine/skill.zip"),
-                ],
-            ),
-            patch.object(
-                validate_generated_drift,
-                "_source_changes",
-                return_value=["tools/generate_pack_manifests.py"],
-            ),
-        ):
-            validate_generated_drift.validate_generated_drift(base="origin/main", full_regeneration=False)
+        run_tool_mock.assert_called()
 
 
 if __name__ == "__main__":

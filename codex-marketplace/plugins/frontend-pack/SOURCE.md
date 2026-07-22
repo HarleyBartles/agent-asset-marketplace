@@ -25,12 +25,12 @@ This plugin projects the retained NickCrew/Claude-Cortex frontend skills and the
   - `codex-marketplace/plugins/frontend-pack/skills/webapp-testing/`
 
 ## Generated install units
-- `generated/skill-zips/frontend-pack/accessibility-audit/skill.zip`
-- `generated/skill-zips/frontend-pack/feature-sliced-design/skill.zip`
-- `generated/skill-zips/frontend-pack/interaction-design/skill.zip`
-- `generated/skill-zips/frontend-pack/react-performance-optimization/skill.zip`
-- `generated/skill-zips/frontend-pack/ux-review/skill.zip`
-- `generated/skill-zips/frontend-pack/webapp-testing/skill.zip`
+- `generated/skill-zips/accessibility-audit.zip`
+- `generated/skill-zips/feature-sliced-design.zip`
+- `generated/skill-zips/interaction-design.zip`
+- `generated/skill-zips/react-performance-optimization.zip`
+- `generated/skill-zips/ux-review.zip`
+- `generated/skill-zips/webapp-testing.zip`
 
 ## Boundary
 - Only the retained frontend, UX, testing, and feature-sliced guidance is projected.

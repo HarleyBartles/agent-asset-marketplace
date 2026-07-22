@@ -27,7 +27,6 @@ DEFAULT_REPO_INDEX = {
         "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
         "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
         "skill_zips_check": "py -3 tools/validate_skill_zips.py",
-        "generated_drift": "py -3 tools/validate_generated_drift.py --base origin/main",
         "repo_index_generate": "py -3 tools/generate_repo_index.py",
         "marketplace_generate": "py -3 tools/generate_marketplace.py",
         "marketplace_check": "py -3 tools/generate_marketplace.py --check",
@@ -99,7 +98,7 @@ DEFAULT_REPO_INDEX = {
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
-                "tools/package_skill_zips.py",
+                "tools/project_skills.py",
             ],
         },
         {
@@ -429,6 +428,17 @@ def build_repo_index() -> dict:
     validation["marketplace_check"] = "py -3 tools/generate_marketplace.py --check"
     validation["repo_index_generate"] = "py -3 tools/generate_repo_index.py"
     validation["repo_index_check"] = "py -3 tools/generate_repo_index.py --check"
+    validation["skill_zips_check"] = "py -3 tools/validate_skill_zips.py"
+    validation.pop("generated_drift", None)
+
+    for zone in repo_index.get("zones", []):
+        scripts = zone.get("key_validation_scripts", [])
+        if "tools/package_skill_zips.py" in scripts:
+            zone["key_validation_scripts"] = [
+                "tools/project_skills.py" if s == "tools/package_skill_zips.py" else s
+                for s in scripts
+            ]
+
     repo_index["validation"] = validation
     return repo_index
 

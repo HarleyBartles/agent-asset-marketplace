@@ -13,11 +13,11 @@
 ## Projection surface
 
 - Installable plugin projection: `codex-marketplace/plugins/planning-pack/`
-- Generated install unit: `generated/skill-zips/planning-pack/requirements-discovery/skill.zip`
-- Generated install unit: `generated/skill-zips/planning-pack/mermaid-diagramming/skill.zip`
-- Generated install unit: `generated/skill-zips/planning-pack/development-estimation/skill.zip`
-- Generated install unit: `generated/skill-zips/planning-pack/release-prep/skill.zip`
-- Generated install unit: `generated/skill-zips/planning-pack/release-analysis/skill.zip`
+- Generated install unit: `generated/skill-zips/requirements-discovery.zip`
+- Generated install unit: `generated/skill-zips/mermaid-diagramming.zip`
+- Generated install unit: `generated/skill-zips/development-estimation.zip`
+- Generated install unit: `generated/skill-zips/release-prep.zip`
+- Generated install unit: `generated/skill-zips/release-analysis.zip`
 
 ## Boundary
 

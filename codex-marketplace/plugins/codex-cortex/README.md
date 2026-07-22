@@ -31,11 +31,11 @@ Claude-Cortex.
 
 The installable skill zips are generated under:
 
-- `generated/skill-zips/codex-cortex/cqrs-event-sourcing/skill.zip`
-- `generated/skill-zips/codex-cortex/event-driven-architecture/skill.zip`
-- `generated/skill-zips/codex-cortex/api-design-patterns/skill.zip`
-- `generated/skill-zips/codex-cortex/openapi-specification/skill.zip`
-- `generated/skill-zips/codex-cortex/secure-coding-practices/skill.zip`
-- `generated/skill-zips/codex-cortex/owasp-top-10/skill.zip`
-- `generated/skill-zips/codex-cortex/security-testing-patterns/skill.zip`
-- `generated/skill-zips/codex-cortex/threat-modeling-techniques/skill.zip`
+- `generated/skill-zips/cqrs-event-sourcing.zip`
+- `generated/skill-zips/event-driven-architecture.zip`
+- `generated/skill-zips/api-design-patterns.zip`
+- `generated/skill-zips/openapi-specification.zip`
+- `generated/skill-zips/secure-coding-practices.zip`
+- `generated/skill-zips/owasp-top-10.zip`
+- `generated/skill-zips/security-testing-patterns.zip`
+- `generated/skill-zips/threat-modeling-techniques.zip`

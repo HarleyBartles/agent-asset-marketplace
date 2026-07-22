@@ -13,7 +13,7 @@ This plugin projects the first-party `database-engines` skill.
   - `codex-marketplace/plugins/data-platform-pack/skills/database-engines/`
 
 ## Generated install units
-- `generated/skill-zips/data-platform-pack/database-engines/skill.zip`
+- `generated/skill-zips/database-engines.zip`
 
 ## Boundary
 - Only the first-party relational database-engines guidance is kept here.

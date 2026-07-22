@@ -18,7 +18,7 @@ from skill_overlay_materializer import (  # noqa: E402
     stage_overlay_tree,
     validate_openai_agent_yaml,
 )
-from skill_zip_artifacts import validate_skill_markdown_frontmatter  # noqa: E402
+from skill_validation import validate_skill_markdown_frontmatter  # noqa: E402
 
 
 def _write(path: Path, content: str) -> None:

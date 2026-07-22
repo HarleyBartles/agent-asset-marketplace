@@ -14,7 +14,7 @@
 ## Projection surface
 
 - Installable plugin projection: `codex-marketplace/plugins/rooms-project-pack/`
-- Generated install units: `generated/skill-zips/rooms-project-pack/<skill-name>/skill.zip`
+- Generated install units: `generated/skill-zips/<skill-name>.zip`
 
 ## Keep / Skip Matrix
 

@@ -19,9 +19,9 @@ Those roots are installable projections only. Their editable source custody
 lives under `sources/first_party/` and `sources/third_party/`.
 
 The marketplace plugin roots are the canonical install surface. Generated
-`skill.zip` files under `generated/skill-zips/` are downstream GPT exports, and
-`adapters/gpt/manifest.json` decides whether each one is `direct`, `overlay`,
-or `excluded`.
+`skill.zip` files under `generated/skill-zips/` are downstream GPT-ready exports
+produced as flat, deterministic archives named `generated/skill-zips/<skill>.zip`.
+There is no per-pack subdirectory and no `registry.json`.
 Use `py -3 tools/generate_marketplace.py --check` to prove
 `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` are
 current, and `py -3 tools/generate_repo_index.py --check` to prove
@@ -93,14 +93,14 @@ rules, and upstream-drain policy.
   category or install-policy drift in the marketplace manifest.
 - Flag missing `SOURCE.md`, `LICENSE`, or bundle-manifest references when a
   plugin root claims to expose them.
-- Flag generated-export mismatches that would let the registry or bundle source
-  drift silently from the tracked marketplace source tree or GPT overlay source.
+- Flag generated-export mismatches that would let the bundle source drift
+  silently from the tracked marketplace source tree or Codex overlay source.
 - Flag any `skill.zip` found inside a source skill tree; canonical install
-  archives belong only under `generated/skill-zips/` and must be written by the
-  package tool, not by hand.
+  archives belong only under `generated/skill-zips/` as flat `<skill>.zip`
+  files and must be written by `tools/project_skills.py`, not by hand.
 - Flag stale or unregistered canonical skill.zip artifacts under
-  `generated/skill-zips/`, including missing overlay derivation metadata or
-  excluded GPT-export records.
+  `generated/skill-zips/`, including leftover per-pack subdirectories or
+  `registry.json`.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
 
 ## Maintenance responsibility

@@ -18,4 +18,4 @@ This bundle projects the first-party `database-engines` skill.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/data-platform-pack/<skill-name>/skill.zip` and can be installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

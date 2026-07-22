@@ -20,12 +20,12 @@ Codex marketplace home.
 - Skill root: `codex-marketplace/plugins/agentic-workflows/skills/`
 
 ## Generated install units
-- `generated/skill-zips/agentic-workflows/agent-harness-construction/skill.zip`
-- `generated/skill-zips/agentic-workflows/autonomous-agent-harness/skill.zip`
-- `generated/skill-zips/agentic-workflows/continuous-agent-loop/skill.zip`
-- `generated/skill-zips/agentic-workflows/dynamic-workflow-mode/skill.zip`
-- `generated/skill-zips/agentic-workflows/dmux-workflows/skill.zip`
-- `generated/skill-zips/agentic-workflows/agentic-os/skill.zip`
+- `generated/skill-zips/agent-harness-construction.zip`
+- `generated/skill-zips/autonomous-agent-harness.zip`
+- `generated/skill-zips/continuous-agent-loop.zip`
+- `generated/skill-zips/dynamic-workflow-mode.zip`
+- `generated/skill-zips/dmux-workflows.zip`
+- `generated/skill-zips/agentic-os.zip`
 
 ## Boundary
 - The pack keeps the selected ECC workflow mechanics together as a topical

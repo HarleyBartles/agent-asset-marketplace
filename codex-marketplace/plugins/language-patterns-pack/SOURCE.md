@@ -19,10 +19,10 @@ This plugin projects the retained Claude-Cortex language/runtime and testing ski
   - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/`
 
 ## Generated install units
-- `generated/skill-zips/language-patterns-pack/async-python-patterns/skill.zip`
-- `generated/skill-zips/language-patterns-pack/python-performance-optimization/skill.zip`
-- `generated/skill-zips/language-patterns-pack/python-testing-patterns/skill.zip`
-- `generated/skill-zips/language-patterns-pack/typescript-advanced-patterns/skill.zip`
+- `generated/skill-zips/async-python-patterns.zip`
+- `generated/skill-zips/python-performance-optimization.zip`
+- `generated/skill-zips/python-testing-patterns.zip`
+- `generated/skill-zips/typescript-advanced-patterns.zip`
 
 ## Boundary
 - Only the retained TypeScript, Python, and related language/testing guidance is kept here.

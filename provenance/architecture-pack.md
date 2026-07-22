@@ -32,13 +32,13 @@ The Architecture Pack projects first-party architecture skills and retained `Nic
 
 ## Generated Install Units
 
-- `generated/skill-zips/architecture-pack/clean-architecture/skill.zip`
-- `generated/skill-zips/architecture-pack/cqrs/skill.zip`
-- `generated/skill-zips/architecture-pack/database-design-patterns/skill.zip`
-- `generated/skill-zips/architecture-pack/ddd/skill.zip`
-- `generated/skill-zips/architecture-pack/event-driven-architecture/skill.zip`
-- `generated/skill-zips/architecture-pack/event-sourcing/skill.zip`
-- `generated/skill-zips/architecture-pack/hexagonal-architecture/skill.zip`
+- `generated/skill-zips/clean-architecture.zip`
+- `generated/skill-zips/cqrs.zip`
+- `generated/skill-zips/database-design-patterns.zip`
+- `generated/skill-zips/ddd.zip`
+- `generated/skill-zips/event-driven-architecture.zip`
+- `generated/skill-zips/event-sourcing.zip`
+- `generated/skill-zips/hexagonal-architecture.zip`
 
 ## Marketplace Adaptation
 

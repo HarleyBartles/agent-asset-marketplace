@@ -19,10 +19,10 @@ These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
 
 Treat these plugin roots as the canonical install surface. Generated
-`skill.zip` artifacts are downstream GPT exports; `adapters/gpt/manifest.json`
-controls whether a skill is exported direct, via overlay, or excluded.
-Everything else in this tree is support custody or historical source material,
-not part of the active marketplace inventory for the normalized root pass.
+`skill.zip` artifacts are downstream flat GPT-ready exports named
+`generated/skill-zips/<skill>.zip`. Everything else in this tree is support
+custody or historical source material, not part of the active marketplace
+inventory for the normalized root pass.
 
 Deterministic pack rule: plugin-root membership must come from the central
 manifest and the checked-in generator/validator pipeline. Do not hand-edit

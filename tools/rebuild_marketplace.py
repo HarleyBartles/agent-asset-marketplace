@@ -92,7 +92,6 @@ def _retained_verbatim_paths() -> set[str]:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the full marketplace rebuild and validation stack")
-    parser.add_argument("--base", default="origin/main", help="git revision used for generated drift validation")
     return parser.parse_args()
 
 
@@ -105,7 +104,7 @@ def main() -> int:
     # normalization (CRLF→LF, trailing whitespace) doesn't break line-based
     # overlay edits. Runs in write mode during the canonical full rebuild.
     _run_tool("heal_overlays.py")
-    _run_tool("update_skill_artifacts.py", "--all", "--base", args.base)
+    _run_tool("update_skill_artifacts.py", "--all")
     _run_tool("normalize_first_party_skill_sources.py", "--check")
     _run_tool("install_agent_skills.py")
     _run_tool("generate_repo_index.py")

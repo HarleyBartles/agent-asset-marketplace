@@ -57,7 +57,7 @@ Reason: Both are better handled after the first Codex-native technical pack exis
 
 - **Codex plugin root**: `codex-marketplace/plugins/dotnet-kit/`
 - **Skill root**: `codex-marketplace/plugins/dotnet-kit/skills/`
-- **Generated install units**: `generated/skill-zips/dotnet-kit/<skill-name>/skill.zip`
+- **Generated install units**: `generated/skill-zips/<skill-name>.zip`
 
 ## Rights and Attribution
 

@@ -26,10 +26,10 @@ selected ECC safety and security-review skills.
 - `codex-marketplace/plugins/security-pack/skills/security-review/`
 
 ## Generated install units
-- `generated/skill-zips/security-pack/owasp-top-10/skill.zip`
-- `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
-- `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
-- `generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip`
+- `generated/skill-zips/owasp-top-10.zip`
+- `generated/skill-zips/secure-coding-practices.zip`
+- `generated/skill-zips/security-testing-patterns.zip`
+- `generated/skill-zips/threat-modeling-techniques.zip`
 
 ## Boundary
 - The retained security foundations stay projected alongside the complementary

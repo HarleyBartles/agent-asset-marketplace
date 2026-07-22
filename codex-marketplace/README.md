@@ -31,23 +31,16 @@ remaining mega-pack generation are driven by
 `codex-marketplace/custody-pack-registry.json`; mega-pack nodes are marked with
 `is_mega_pack: true`.
 
-Repo-resident canonical `skill.zip` artifacts are published separately under
-`generated/skill-zips/<pack-or-plugin>/<skill-name>/skill.zip`, with
-`generated/skill-zips/registry.json` mapping each archive back to the source
-skill tree that produced it.
+Repo-resident canonical `skill.zip` artifacts are published as flat files under
+`generated/skill-zips/<skill-name>.zip`. Each archive contains a single
+`<skill-name>/` directory with `SKILL.md` and any supporting files.
 
-That generated surface is the GPT-ready export surface. It packages the source
-skill tree plus any repo-owned GPT overlay declared under `adapters/gpt/`.
-Direct exports stay direct when the source is already GPT-safe; overlay exports
-apply the overlay before packaging; excluded skills are recorded in the
-registry with a reason instead of being exported raw.
+That generated surface is the GPT-ready export surface. It is built as a
+deterministic copy of the staged Codex projection. The marketplace plugin roots
+are the canonical install surface.
 
-The marketplace plugin roots are the canonical install surface. `adapters/gpt/`
-exists to keep generated exports GPT-safe without changing Codex plugin
-behavior.
-
-Targeted updates should use `py -3 tools/update_skill_artifacts.py --skill
-<pack>/<skill>`; `--all` is only for explicit full regeneration. Unrelated
+Use `py -3 tools/update_skill_artifacts.py --all` for full regeneration. The
+`--skill` and `--pack` flags remain as backwards-compatible aliases. Unrelated
 generated drift is not acceptable.
 Use `py -3 tools/generate_marketplace.py --check` and
 `py -3 tools/generate_repo_index.py --check` to prove the marketplace registry,

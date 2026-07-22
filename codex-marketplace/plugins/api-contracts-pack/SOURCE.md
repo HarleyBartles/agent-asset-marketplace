@@ -24,8 +24,8 @@ Cortex custody plugin into a Codex marketplace pack.
 - Skill roots: `codex-marketplace/plugins/api-contracts-pack/skills/api-design-patterns/`
   and `codex-marketplace/plugins/api-contracts-pack/skills/openapi-specification/`
 - Generated install units:
-  - `generated/skill-zips/api-contracts-pack/api-design-patterns/skill.zip`
-  - `generated/skill-zips/api-contracts-pack/openapi-specification/skill.zip`
+  - `generated/skill-zips/api-design-patterns.zip`
+  - `generated/skill-zips/openapi-specification.zip`
 
 ## Boundary
 

@@ -37,4 +37,4 @@ Manifest entry count: 14.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/repo-worker-pack/<skill-name>/skill.zip` and can be installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

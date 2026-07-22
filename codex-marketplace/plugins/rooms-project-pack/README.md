@@ -33,13 +33,13 @@ Marketplace wrapper for the Rooms project pack.
 
 The installable skill zips are generated under:
 
-- `generated/skill-zips/rooms-project-pack/rooms-bootstrap/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-project-doctrine/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-source-partitioning/skill.zip`
-- `generated/skill-zips/rooms-project-pack/risk-gates/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-character-investigation/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-sheet-creator/skill.zip`
-- `generated/skill-zips/rooms-project-pack/rooms-image-sidecars/skill.zip`
-- `generated/skill-zips/rooms-project-pack/database-design-patterns/skill.zip`
+- `generated/skill-zips/rooms-bootstrap.zip`
+- `generated/skill-zips/rooms-project-doctrine.zip`
+- `generated/skill-zips/rooms-source-partitioning.zip`
+- `generated/skill-zips/risk-gates.zip`
+- `generated/skill-zips/rooms-character-investigation.zip`
+- `generated/skill-zips/rooms-sheet-creator.zip`
+- `generated/skill-zips/rooms-image-sidecars.zip`
+- `generated/skill-zips/database-design-patterns.zip`
 
 and can be installed directly from those artifacts.

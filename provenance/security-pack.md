@@ -68,13 +68,13 @@ The Security Pack projects first-party security skills alongside retained `NickC
 
 ## Generated Install Units
 
-- `generated/skill-zips/security-pack/owasp-top-ten/skill.zip`
-- `generated/skill-zips/security-pack/web-identity/skill.zip`
-- `generated/skill-zips/security-pack/secure-coding-practices/skill.zip`
-- `generated/skill-zips/security-pack/security-testing-patterns/skill.zip`
-- `generated/skill-zips/security-pack/threat-modeling-techniques/skill.zip`
-- `generated/skill-zips/security-pack/safety-guard/skill.zip`
-- `generated/skill-zips/security-pack/security-review/skill.zip`
+- `generated/skill-zips/owasp-top-ten.zip`
+- `generated/skill-zips/web-identity.zip`
+- `generated/skill-zips/secure-coding-practices.zip`
+- `generated/skill-zips/security-testing-patterns.zip`
+- `generated/skill-zips/threat-modeling-techniques.zip`
+- `generated/skill-zips/safety-guard.zip`
+- `generated/skill-zips/security-review.zip`
 
 ## Marketplace Adaptation
 

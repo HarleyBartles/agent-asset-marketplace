@@ -21,5 +21,5 @@ focused topical home.
 ## Install shape
 
 The installable skill zips are generated under
-`generated/skill-zips/agentic-evaluation/<skill-name>/skill.zip` and can be
+`generated/skill-zips/<skill-name>.zip` and can be
 installed directly from those artifacts.

@@ -16,19 +16,19 @@
 
 - Installable plugin projection: `codex-marketplace/plugins/security-pack/`
 - Generated install units:
-  - `generated/skill-zips/security-pack/defi-amm-security/skill.zip`
-  - `generated/skill-zips/security-pack/django-security/skill.zip`
-  - `generated/skill-zips/security-pack/laravel-security/skill.zip`
-  - `generated/skill-zips/security-pack/llm-trading-agent-security/skill.zip`
-  - `generated/skill-zips/security-pack/network-config-validation/skill.zip`
-  - `generated/skill-zips/security-pack/perl-security/skill.zip`
-  - `generated/skill-zips/security-pack/prediction-market-risk-review/skill.zip`
-  - `generated/skill-zips/security-pack/quarkus-security/skill.zip`
-  - `generated/skill-zips/security-pack/safety-guard/skill.zip`
-  - `generated/skill-zips/security-pack/security-bounty-hunter/skill.zip`
-  - `generated/skill-zips/security-pack/security-review/skill.zip`
-  - `generated/skill-zips/security-pack/security-scan/skill.zip`
-  - `generated/skill-zips/security-pack/springboot-security/skill.zip`
+  - `generated/skill-zips/defi-amm-security.zip`
+  - `generated/skill-zips/django-security.zip`
+  - `generated/skill-zips/laravel-security.zip`
+  - `generated/skill-zips/llm-trading-agent-security.zip`
+  - `generated/skill-zips/network-config-validation.zip`
+  - `generated/skill-zips/perl-security.zip`
+  - `generated/skill-zips/prediction-market-risk-review.zip`
+  - `generated/skill-zips/quarkus-security.zip`
+  - `generated/skill-zips/safety-guard.zip`
+  - `generated/skill-zips/security-bounty-hunter.zip`
+  - `generated/skill-zips/security-review.zip`
+  - `generated/skill-zips/security-scan.zip`
+  - `generated/skill-zips/springboot-security.zip`
 
 ## Boundary
 
