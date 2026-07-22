@@ -27,3 +27,7 @@ first-party replacements added in MARK-353.
 ## Retired upstream snapshots
 - The ECC upstream snapshots for the replaced skills were removed in Task 8
   of MARK-353.
+- The `sources/third_party/ecc` and `sources/third_party/claude-cortex`
+  custody directories were removed entirely after their marketplace plugin
+  roots were retired, leaving no remaining vendored content from those
+  upstreams.

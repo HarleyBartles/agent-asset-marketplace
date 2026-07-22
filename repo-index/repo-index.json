@@ -108,33 +108,7 @@
     {
       "name": "third-party-custody",
       "path": "sources/third_party",
-      "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, dotnet-claude-kit, claude-cortex, and ecc upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
-      "surface_kind": "vendored",
-      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
-      "guidance_scope": "repo-owned-guidance",
-      "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py",
-        "tools/validate_marketplace.py"
-      ]
-    },
-    {
-      "name": "ecc-custody",
-      "path": "sources/third_party/ecc/upstream",
-      "purpose": "Retained third-party source custody for the promoted ECC upstream skills inventory and adoption-target notes. The durable custody shape is the ECC skills tree, not the whole upstream package surface.",
-      "surface_kind": "vendored",
-      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
-      "guidance_scope": "repo-owned-guidance",
-      "notes": "Third-party inventory truth is preserved here after MARK-238 promotion from docs/inventory/.",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py",
-        "tools/validate_marketplace.py"
-      ]
-    },
-    {
-      "name": "claude-cortex-custody",
-      "path": "sources/third_party/claude-cortex/upstream",
-      "purpose": "Retained third-party source custody for the Claude-Cortex cqrs-event-sourcing seed, event-driven-architecture import, api-design-patterns import, openapi-specification import, secure-coding-practices import, owasp-top-10 import, security-testing-patterns import, and threat-modeling-techniques import retained by MARK-172 through MARK-210. The database-design-patterns skill was rehomed to first-party custody and is no longer present in this mirror. The custody target is the skill tree; any broader upstream scaffold is incidental and should not become the default retained surface.",
+      "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",
