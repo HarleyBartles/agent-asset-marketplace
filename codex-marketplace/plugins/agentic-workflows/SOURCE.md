@@ -1,22 +1,22 @@
-# Source
+# Agentic Workflows Source Notes
 
-This plugin projects the first-party `agentic-harness` skill into a dedicated
-Codex marketplace home.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-### First-party skill root
+### First Party custody
 - `sources/first_party/skills/agentic-harness/`
 
 ## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/agentic-workflows/`
 - Skill root: `codex-marketplace/plugins/agentic-workflows/skills/`
-- Skill root: `codex-marketplace/plugins/agentic-workflows/skills/agentic-harness/`
+- Skill roots:
+  - `codex-marketplace/plugins/agentic-workflows/skills/agentic-harness/`
 
 ## Generated install units
 - `generated/skill-zips/agentic-harness.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-- The pack keeps the first-party `agentic-harness` skill as a topical home and
-  does not absorb the evaluation, research, or security packs.
-- The replaced ECC workflow snapshots were removed in Task 8; see
-  `provenance/ecc-domain-packs.md`.
+- The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.
+- The pack does not absorb unrelated topical homes.

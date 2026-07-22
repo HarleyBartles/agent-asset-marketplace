@@ -4,12 +4,12 @@ This bundle projects first-party source custody into the Codex marketplace.
 
 <!-- BEGIN GENERATED: projection-contract -->
 - Active manifest entries (1):
-  - `agentic-harness`
+  - `database-engines`
 <!-- END GENERATED: projection-contract -->
 
 ## Layer Model
 
-This repository uses three distinct layers for the Agentic Workflows bundle:
+This repository uses three distinct layers for the Data Platform Pack bundle:
 
 - Source custody keeps the retained source snapshot verbatim.
 - Projection layer holds the source-controlled marketplace copy and any Codex-marketplace adaptations.
@@ -19,5 +19,5 @@ This repository uses three distinct layers for the Agentic Workflows bundle:
 - OpenAI agent contract: docs/contracts/openai-agent-yaml.md
 
 ## Boundary
-- The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.
+- The pack covers first-party relational database engine guidance for PostgreSQL, SQLite, and selectable MS-SQL.
 - Keep unrelated topical slices in their dedicated packs.

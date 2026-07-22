@@ -13,7 +13,7 @@
     "Covers Python language, Python frameworks, and TypeScript."
   ],
   "provenance_refs": [
-    "provenance/language-patterns-pack.md"
+    "codex-marketplace/plugins/language-patterns-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -51,6 +51,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party typescript skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",

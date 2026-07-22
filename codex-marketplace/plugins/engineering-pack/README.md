@@ -1,13 +1,16 @@
 # Engineering Pack
 
-This bundle projects first-party engineering skills into a focused topical
-home.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
 
-### First-party skills
-- `release-engineering`
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
 - `observability`
+- `release-engineering`
+
+Manifest entry count: 2.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -16,13 +19,9 @@ home.
 
 ## Boundary
 - The pack covers implementation flow, release readiness, deployment patterns, and observability.
-- `release-engineering` and `observability` are projected from first-party source custody.
-- `ai-first-engineering` has been removed from the active projection set; the ECC
-  upstream snapshot remains in `sources/third_party/ecc/upstream/skills/ai-first-engineering/`.
-- The pack stays out of workflow dispatch, research, and security homes.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
-The installable skill zips are generated under
-`generated/skill-zips/<skill-name>.zip` and can be
-installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

@@ -1,11 +1,15 @@
 # Agentic Workflows
 
-This bundle projects the first-party `agentic-harness` skill into a dedicated
-topical home.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### First-party skills
+
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
 - `agentic-harness`
+
+Manifest entry count: 1.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -14,10 +18,9 @@ topical home.
 
 ## Boundary
 - The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.
-- The pack does not absorb the evaluation, research, or security homes.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
-The installable skill zips are generated under
-`generated/skill-zips/<skill-name>.zip` and can be
-installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

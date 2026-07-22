@@ -1,10 +1,15 @@
 # Data Platform Pack
 
-This bundle projects the first-party `database-engines` skill.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### First-party skills
+
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
 - `database-engines`
+
+Manifest entry count: 1.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -12,8 +17,8 @@ This bundle projects the first-party `database-engines` skill.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- Only the first-party relational database-engines guidance is kept here.
-- The removed ECC data-platform slice is deferred to a follow-up reprojection issue with fresh source inspection and pack-by-pack design.
+- The pack covers first-party relational database engine guidance for PostgreSQL, SQLite, and selectable MS-SQL.
+- The pack does not absorb unrelated topical homes.
 - The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape

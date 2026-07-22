@@ -1,18 +1,18 @@
 # Security Pack
 
-This bundle projects the retained Codex Cortex security foundations plus the
-selected ECC safety and security-review skills.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### Claude Cortex skills
-- `owasp-top-10`
-- `secure-coding-practices`
-- `security-testing-patterns`
-- `threat-modeling-techniques`
 
-### ECC complement
-- `safety-guard`
-- `security-review`
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `owasp-top-ten`
+- `risk-gates`
+- `secure-development`
+- `web-identity`
+
+Manifest entry count: 4.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -20,11 +20,9 @@ selected ECC safety and security-review skills.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The retained security foundations stay projected alongside the complementary
-  ECC safety and security-review skills.
-- The bundle stays out of generic compliance theatre, repo governance, and
-  unrelated implementation domains unless another issue explicitly composes
-  them in.
+- The pack covers secure coding, OWASP review, risk gates, security testing, threat modeling, cloud review, config validation, risk review, and web identity.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 

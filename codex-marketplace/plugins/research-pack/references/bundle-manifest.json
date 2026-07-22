@@ -10,11 +10,9 @@
   ],
   "notes": [
     "Research pack now projects the first-party research-ops skill.",
-    "The pack covers evidence-first research workflows, source triage, synthesis, and citation.",
-    "The replaced ECC research-ops snapshot was removed in Task 8; see provenance/ecc-domain-packs.md."
+    "The pack covers evidence-first research workflows, source triage, synthesis, and citation."
   ],
   "provenance_refs": [
-    "provenance/ecc-domain-packs.md",
     "codex-marketplace/plugins/research-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
@@ -31,6 +29,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party research-ops skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/research-pack/SOURCE.md",

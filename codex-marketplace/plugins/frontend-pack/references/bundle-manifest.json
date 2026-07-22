@@ -10,10 +10,11 @@
     "first_party"
   ],
   "notes": [
-    "Frontend bundle projected from retained feature-sliced custody and first-party skills.",
-    "frontend-ux replaces interaction-design and ux-review; playwright-testing replaces webapp-testing."
+    "Frontend bundle projected from retained feature-sliced custody and first-party skills."
   ],
-  "provenance_refs": [],
+  "provenance_refs": [
+    "codex-marketplace/plugins/frontend-pack/references/source-map.md"
+  ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -87,6 +88,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party web-styling skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",

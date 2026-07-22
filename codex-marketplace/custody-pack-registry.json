@@ -495,7 +495,8 @@
         "sources/first_party/skills/dotnet/SKILL.md"
       ],
       "provenance_refs": [
-        "provenance/dotnet-pack.md"
+        "provenance/dotnet-pack.md",
+        "codex-marketplace/plugins/dotnet-pack/references/source-map.md"
       ],
       "generated_doc_surfaces": [
         "README.md",
@@ -524,12 +525,11 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Contract-design bundle projected from first-party source custody.",
-        "The api-design skill replaces the former api-design-patterns and openapi-specification entries."
+        "Contract-design bundle projected from first-party source custody."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/api-contracts-pack.md"
+        "codex-marketplace/plugins/api-contracts-pack/references/source-map.md"
       ],
       "entries": [
         {
@@ -543,6 +543,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party api-design skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -553,13 +558,11 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
-        "event-driven-systems replaces the former Claude-Cortex event-driven-architecture projection.",
-        "The ECC architecture slice has been removed from the active projection set."
+        "Architecture bundle projected from first-party source custody."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/architecture-pack.md"
+        "codex-marketplace/plugins/architecture-pack/references/source-map.md"
       ],
       "entries": [
         {
@@ -639,6 +642,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -654,7 +662,7 @@
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/language-patterns-pack.md"
+        "codex-marketplace/plugins/language-patterns-pack/references/source-map.md"
       ],
       "entries": [
         {
@@ -690,6 +698,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party typescript skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -701,13 +714,10 @@
       "is_mega_pack": false,
       "notes": [
         "Security pack projected from first-party source custody.",
-        "secure-development replaces the former Claude-Cortex and ECC security skills.",
         "risk-gates is projected verbatim with an expanded safety gate for destructive operations."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/security-pack.md",
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/security-pack/references/source-map.md"
       ],
       "entries": [
@@ -755,6 +765,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party web-identity skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -765,11 +780,12 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Frontend bundle projected from retained feature-sliced custody and first-party skills.",
-        "frontend-ux replaces interaction-design and ux-review; playwright-testing replaces webapp-testing."
+        "Frontend bundle projected from retained feature-sliced custody and first-party skills."
       ],
       "source_ledger": [],
-      "provenance_refs": [],
+      "provenance_refs": [
+        "codex-marketplace/plugins/frontend-pack/references/source-map.md"
+      ],
       "entries": [
         {
           "canonical_name": "feature-sliced-design",
@@ -841,6 +857,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party web-styling skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -851,12 +872,10 @@
       "category": "Productivity",
       "is_mega_pack": false,
       "notes": [
-        "Data-platform bundle projected from the first-party database-engines skill.",
-        "The ECC data-platform slice has been removed from the active projection set."
+        "Data-platform bundle projected from the first-party database-engines skill."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/data-platform-pack.md",
         "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
       ],
       "entries": [
@@ -871,6 +890,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party database-engines skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -887,7 +911,8 @@
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/planning-pack.md"
+        "provenance/planning-pack.md",
+        "codex-marketplace/plugins/planning-pack/references/source-map.md"
       ],
       "entries": [
         {
@@ -934,6 +959,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party estimation skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -949,7 +979,8 @@
         "It intentionally does not duplicate repo-worker-pack, superpowers-plus, unslop-plus, or architecture-pack."
       ],
       "provenance_refs": [
-        "provenance/rooms-project-pack.md"
+        "provenance/rooms-project-pack.md",
+        "codex-marketplace/plugins/rooms-project-pack/references/source-map.md"
       ],
       "entries": [
         {
@@ -1057,7 +1088,9 @@
         "sources/third_party/feature-sliced/upstream/LICENSE",
         "sources/third_party/feature-sliced/upstream/source-custody.md"
       ],
-      "provenance_refs": [],
+      "provenance_refs": [
+        "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
+      ],
       "entries": [
         {
           "canonical_name": "feature-sliced-design",
@@ -1085,12 +1118,10 @@
       "is_mega_pack": false,
       "notes": [
         "Agentic workflows pack now projects the first-party agentic-harness skill.",
-        "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.",
-        "The replaced ECC workflow snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
+        "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
       ],
       "entries": [
@@ -1105,6 +1136,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party agentic-harness skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -1115,13 +1151,10 @@
       "category": "Coding",
       "is_mega_pack": false,
       "notes": [
-        "Agentic evaluation pack now projects the first-party agent-evaluation skill.",
-        "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics.",
-        "The retired adapter tree and ECC evaluation snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
+        "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/agentic-evaluation/references/source-map.md"
       ],
       "entries": [
@@ -1136,6 +1169,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party agent-evaluation skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -1147,12 +1185,10 @@
       "is_mega_pack": false,
       "notes": [
         "Research pack now projects the first-party research-ops skill.",
-        "The pack covers evidence-first research workflows, source triage, synthesis, and citation.",
-        "The replaced ECC research-ops snapshot was removed in Task 8; see provenance/ecc-domain-packs.md."
+        "The pack covers evidence-first research workflows, source triage, synthesis, and citation."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/research-pack/references/source-map.md"
       ],
       "entries": [
@@ -1167,6 +1203,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party research-ops skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     },
     {
@@ -1177,12 +1218,10 @@
       "category": "Coding",
       "is_mega_pack": false,
       "notes": [
-        "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home.",
-        "ai-first-engineering has been removed from the active projection set; the ECC upstream snapshot was removed in Task 8."
+        "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home."
       ],
       "source_ledger": [],
       "provenance_refs": [
-        "provenance/ecc-domain-packs.md",
         "codex-marketplace/plugins/engineering-pack/references/source-map.md"
       ],
       "entries": [
@@ -1208,6 +1247,11 @@
           "copy_expectation": "byte_identical",
           "provenance_note": "Projected verbatim from the first-party observability skill."
         }
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
       ]
     }
   ]

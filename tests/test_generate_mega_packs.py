@@ -22,59 +22,59 @@ class GenerateMegaPacksTests(unittest.TestCase):
             {
                 "bundle_name": "security-pack",
                 "entries": [
-                    {"canonical_name": "owasp-top-10", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10", "local_path": "skills/owasp-top-10"},
-                    {"canonical_name": "ecc-security", "source_category": "third_party", "source_family": "ecc", "content_mode": "normalised", "canonical_source_path": "sources/third_party/ecc/upstream/skills/ecc-security", "local_path": "skills/ecc-security"},
+                    {"canonical_name": "sample-skill-a", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/owasp-top-10", "local_path": "skills/owasp-top-10"},
+                    {"canonical_name": "sample-skill-c", "source_category": "third_party", "source_family": "feature-sliced", "content_mode": "normalised", "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/ecc-security", "local_path": "skills/ecc-security"},
                 ],
             },
             {
                 "bundle_name": "architecture-pack",
                 "entries": [
-                    {"canonical_name": "cqrs", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs", "local_path": "skills/cqrs"},
+                    {"canonical_name": "sample-skill-b", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/cqrs", "local_path": "skills/cqrs"},
                 ],
             },
         ]
         by_family = collect_entries_by_family(plugin_manifests)
-        self.assertIn("claude-cortex", by_family)
-        self.assertIn("ecc", by_family)
-        self.assertEqual(len(by_family["claude-cortex"]), 2)
-        self.assertEqual(len(by_family["ecc"]), 1)
+        self.assertIn("game-studio", by_family)
+        self.assertIn("feature-sliced", by_family)
+        self.assertEqual(len(by_family["game-studio"]), 2)
+        self.assertEqual(len(by_family["feature-sliced"]), 1)
 
     def test_collect_entries_by_family_excludes_mega_pack_manifests(self) -> None:
         plugin_manifests = [
             {
-                "bundle_name": "codex-cortex",
+                "bundle_name": "game-studio",
                 "is_mega_pack": True,
-                "mega_pack_for": "claude-cortex",
+                "mega_pack_for": "game-studio",
                 "entries": [
-                    {"canonical_name": "mega-only", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mega-only", "local_path": "skills/mega-only"},
+                    {"canonical_name": "sample-skill-d", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/mega-only", "local_path": "skills/mega-only"},
                 ],
             },
             {
                 "bundle_name": "api-contracts-pack",
                 "entries": [
-                    {"canonical_name": "api-design-patterns", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/api-design-patterns", "local_path": "skills/api-design-patterns"},
+                    {"canonical_name": "sample-skill-e", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/api-design-patterns", "local_path": "skills/api-design-patterns"},
                 ],
             },
         ]
         by_family = collect_entries_by_family(plugin_manifests)
-        self.assertIn("claude-cortex", by_family)
-        self.assertEqual(len(by_family["claude-cortex"]), 1)
-        self.assertEqual(by_family["claude-cortex"][0]["canonical_name"], "api-design-patterns")
+        self.assertIn("game-studio", by_family)
+        self.assertEqual(len(by_family["game-studio"]), 1)
+        self.assertEqual(by_family["game-studio"][0]["canonical_name"], "sample-skill-e")
 
     def test_generate_mega_pack_manifest_produces_correct_shape(self) -> None:
         entries = [
-            {"canonical_name": "owasp-top-10", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/owasp-top-10", "local_path": "skills/owasp-top-10"},
-            {"canonical_name": "cqrs", "source_category": "third_party", "source_family": "claude-cortex", "content_mode": "normalised", "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/cqrs", "local_path": "skills/cqrs"},
+            {"canonical_name": "sample-skill-a", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/owasp-top-10", "local_path": "skills/owasp-top-10"},
+            {"canonical_name": "sample-skill-b", "source_category": "third_party", "source_family": "game-studio", "content_mode": "normalised", "canonical_source_path": "sources/third_party/game-studio/upstream/skills/cqrs", "local_path": "skills/cqrs"},
         ]
         manifest = generate_mega_pack_manifest(
-            mega_pack_name="codex-cortex",
-            mega_pack_root="codex-marketplace/plugins/codex-cortex",
-            source_family="claude-cortex",
+            mega_pack_name="game-studio",
+            mega_pack_root="codex-marketplace/plugins/game-studio",
+            source_family="game-studio",
             entries=entries,
         )
-        self.assertEqual(manifest["bundle_name"], "codex-cortex")
+        self.assertEqual(manifest["bundle_name"], "game-studio")
         self.assertTrue(manifest["is_mega_pack"])
-        self.assertEqual(manifest["mega_pack_for"], "claude-cortex")
+        self.assertEqual(manifest["mega_pack_for"], "game-studio")
         self.assertEqual(len(manifest["entries"]), 2)
         # Mega-pack local_path should be relative to the mega-pack root
         for entry in manifest["entries"]:

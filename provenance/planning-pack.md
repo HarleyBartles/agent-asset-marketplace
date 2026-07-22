@@ -10,12 +10,6 @@ The `planning-pack` now projects first-party skills under
 - `estimation`
 - `mermaid-diagramming`
 
-## Retired upstream custody
-
-The retired planning skills (`requirements-discovery`, `development-estimation`,
-`release-prep`, `release-analysis`) were removed in Task 8; see
-`provenance/ecc-domain-packs.md`.
-
 ## Projection surface
 
 - Installable plugin projection: `codex-marketplace/plugins/planning-pack/`

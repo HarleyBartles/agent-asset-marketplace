@@ -9,12 +9,10 @@
     "first_party"
   ],
   "notes": [
-    "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
-    "event-driven-systems replaces the former Claude-Cortex event-driven-architecture projection.",
-    "The ECC architecture slice has been removed from the active projection set."
+    "Architecture bundle projected from first-party source custody."
   ],
   "provenance_refs": [
-    "provenance/architecture-pack.md"
+    "codex-marketplace/plugins/architecture-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -96,6 +94,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",

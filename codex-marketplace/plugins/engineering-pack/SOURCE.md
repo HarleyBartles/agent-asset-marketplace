@@ -1,20 +1,25 @@
 # Engineering Pack Source Notes
 
-This bundle projects first-party engineering skills into the Codex marketplace.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-
-### First-party skill root
-- `sources/first_party/skills/release-engineering/`
+### First Party custody
 - `sources/first_party/skills/observability/`
+- `sources/first_party/skills/release-engineering/`
 
-## Selected skills
+## Projection surfaces
+- Codex plugin root: `codex-marketplace/plugins/engineering-pack/`
+- Skill root: `codex-marketplace/plugins/engineering-pack/skills/`
+- Skill roots:
+  - `codex-marketplace/plugins/engineering-pack/skills/observability/`
+  - `codex-marketplace/plugins/engineering-pack/skills/release-engineering/`
 
-- `release-engineering` (first-party)
-- `observability` (first-party)
+## Generated install units
+- `generated/skill-zips/observability.zip`
+- `generated/skill-zips/release-engineering.zip`
+<!-- END GENERATED: pack-inventory -->
 
-## Projection notes
-
-- `release-engineering` and `observability` project verbatim from first-party source custody.
-- `ai-first-engineering` has been removed from the active projection set; the ECC
-  upstream snapshot was removed in Task 8.
+## Boundary
+- The pack covers implementation flow, release readiness, deployment patterns, and observability.
+- The pack does not absorb unrelated topical homes.

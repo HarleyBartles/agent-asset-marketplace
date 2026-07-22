@@ -10,11 +10,9 @@
   ],
   "notes": [
     "Agentic workflows pack now projects the first-party agentic-harness skill.",
-    "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration.",
-    "The replaced ECC workflow snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
+    "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration."
   ],
   "provenance_refs": [
-    "provenance/ecc-domain-packs.md",
     "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
@@ -31,6 +29,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party agentic-harness skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",

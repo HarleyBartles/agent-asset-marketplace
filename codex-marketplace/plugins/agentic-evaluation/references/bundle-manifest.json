@@ -9,12 +9,9 @@
     "first_party"
   ],
   "notes": [
-    "Agentic evaluation pack now projects the first-party agent-evaluation skill.",
-    "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics.",
-    "The retired adapter tree and ECC evaluation snapshots were removed in Task 8; see provenance/ecc-domain-packs.md."
+    "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics."
   ],
   "provenance_refs": [
-    "provenance/ecc-domain-packs.md",
     "codex-marketplace/plugins/agentic-evaluation/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
@@ -31,6 +28,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party agent-evaluation skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/agentic-evaluation/SOURCE.md",

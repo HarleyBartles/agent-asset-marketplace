@@ -546,21 +546,21 @@ class ValidateMarketplaceTests(unittest.TestCase):
         )
         _validate_projection_entry_provenance(
             {
-                "canonical_name": "agent-self-evaluation",
+                "canonical_name": "sample-skill",
                 "source_category": "third_party",
                 "content_mode": "normalised",
-                "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
-                "local_path": "skills/agent-self-evaluation",
-                "source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md",
-                "source_author": "ECC",
+                "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
+                "local_path": "skills/sample-skill",
+                "source_path": "sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md",
+                "source_author": "OpenAI",
                 "source_license": "MIT",
-                "source_repo": "https://github.com/affaan-m/ECC",
+                "source_repo": "openai/plugins",
                 "adapted_author": "Harley Bartles",
-                "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation",
-                "provenance_note": "Projected from the retained ECC evaluation skill with internal references normalized into the adapter tree.",
-                "adaptation_note": "Moved examples and template assets into canonical references/ folders and repointed the report template link.",
+                "adaptation_overlay_path": "adapters/codex/game-studio/sample-skill",
+                "provenance_note": "Projected from the retained Game Studio sample skill.",
+                "adaptation_note": "Moved examples into canonical references/ folders.",
             },
-            bundle_name="agentic-evaluation",
+            bundle_name="game-studio",
         )
 
     def test_validate_projection_entry_provenance_rejects_missing_adapted_author(self) -> None:

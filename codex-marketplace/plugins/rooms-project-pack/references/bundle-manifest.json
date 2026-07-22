@@ -14,7 +14,8 @@
     "It intentionally does not duplicate repo-worker-pack, superpowers-plus, unslop-plus, or architecture-pack."
   ],
   "provenance_refs": [
-    "provenance/rooms-project-pack.md"
+    "provenance/rooms-project-pack.md",
+    "codex-marketplace/plugins/rooms-project-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",

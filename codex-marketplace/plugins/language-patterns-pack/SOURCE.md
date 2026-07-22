@@ -1,29 +1,28 @@
-# Source
+# Language Patterns Pack Source Notes
 
-This plugin projects the retained Claude-Cortex language/runtime and testing skills only.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-### Claude Cortex custody
-- `sources/third_party/claude-cortex/upstream/skills/async-python-patterns/`
-- `sources/third_party/claude-cortex/upstream/skills/python-performance-optimization/`
-- `sources/third_party/claude-cortex/upstream/skills/python-testing-patterns/`
-- `sources/third_party/claude-cortex/upstream/skills/typescript-advanced-patterns/`
+### First Party custody
+- `sources/first_party/skills/python/`
+- `sources/first_party/skills/python-frameworks/`
+- `sources/first_party/skills/typescript/`
 
 ## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/language-patterns-pack/`
 - Skill root: `codex-marketplace/plugins/language-patterns-pack/skills/`
 - Skill roots:
-  - `codex-marketplace/plugins/language-patterns-pack/skills/async-python-patterns/`
-  - `codex-marketplace/plugins/language-patterns-pack/skills/python-performance-optimization/`
-  - `codex-marketplace/plugins/language-patterns-pack/skills/python-testing-patterns/`
-  - `codex-marketplace/plugins/language-patterns-pack/skills/typescript-advanced-patterns/`
+  - `codex-marketplace/plugins/language-patterns-pack/skills/python/`
+  - `codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks/`
+  - `codex-marketplace/plugins/language-patterns-pack/skills/typescript/`
 
 ## Generated install units
-- `generated/skill-zips/async-python-patterns.zip`
-- `generated/skill-zips/python-performance-optimization.zip`
-- `generated/skill-zips/python-testing-patterns.zip`
-- `generated/skill-zips/typescript-advanced-patterns.zip`
+- `generated/skill-zips/python.zip`
+- `generated/skill-zips/python-frameworks.zip`
+- `generated/skill-zips/typescript.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-- Only the retained TypeScript, Python, and related language/testing guidance is kept here.
-- The pack does not absorb frontend, architecture, CQRS, database, security, repo governance, CI, or other non-language guidance.
+- The pack covers Python and TypeScript language, testing, async, performance, and framework guidance.
+- The pack does not absorb unrelated topical homes.

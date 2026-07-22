@@ -1,34 +1,22 @@
-# Source
+# API Contracts Pack Source Notes
 
-This plugin projects the MARK-204 `api-design-patterns` contract-doctrine slice
-and the MARK-205 `openapi-specification` companion slice from the retained Codex
-Cortex custody plugin into a Codex marketplace pack.
+This bundle projects first-party source custody into the Codex marketplace.
 
-## Source custody plugin
+<!-- BEGIN GENERATED: pack-inventory -->
+## Source custody
+### First Party custody
+- `sources/first_party/skills/api-design/`
 
-- Plugin root: `codex-marketplace/plugins/codex-cortex/`
-- Skill roots: `codex-marketplace/plugins/codex-cortex/skills/api-design-patterns/`
-  and `codex-marketplace/plugins/codex-cortex/skills/openapi-specification/`
-- Source map: `codex-marketplace/plugins/codex-cortex/references/source-map.md`
-
-## First-party custody
-
-- Selection/provenance ledger: `sources/first_party/skills/codex-cortex/decisions.json`
-- Human-readable ledger: `sources/first_party/skills/codex-cortex/decisions.md`
-- Intake record: `sources/first_party/skills/codex-cortex/intake.json`
-
-## Pack shape
-
+## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/api-contracts-pack/`
 - Skill root: `codex-marketplace/plugins/api-contracts-pack/skills/`
-- Skill roots: `codex-marketplace/plugins/api-contracts-pack/skills/api-design-patterns/`
-  and `codex-marketplace/plugins/api-contracts-pack/skills/openapi-specification/`
-- Generated install units:
-  - `generated/skill-zips/api-design-patterns.zip`
-  - `generated/skill-zips/openapi-specification.zip`
+- Skill roots:
+  - `codex-marketplace/plugins/api-contracts-pack/skills/api-design/`
+
+## Generated install units
+- `generated/skill-zips/api-design.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-
-`api-design-patterns` remains the umbrella contract-doctrine slice. The
-`openapi-specification` companion stays focused on OpenAPI syntax, schema
-composition, emission, linting, and validation.
+- The pack covers contract-first API design, OpenAPI expression, generated-client expectations, and contract validation posture.
+- The pack does not absorb unrelated topical homes.
