@@ -17,5 +17,4 @@ deployment output.
 - `third_party/unslop/`, `third_party/game-studio/`, `third_party/superpowers/`,
   and `third_party/feature-sliced/` hold the retained third-party plugin source
   custody for the plugins carried in the marketplace. First-party skills replace
-  the former ECC, Claude-Cortex, and dotnet-claude-kit slices in the topical
-  packs.
+  retired provider-specific workflow slices in the topical packs.

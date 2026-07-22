@@ -61,7 +61,7 @@ package mirrors. Harley curates which entries appear in which plugin.
 
 ## Mega-packs
 
-Three maintained mega-packs carry the remaining broad custody-root bundles. The
+Maintained mega-packs and a retained projection bundle carry the broad custody-root bundles. The
 editable pack registry in `codex-marketplace/custody-pack-registry.json`
 declares both projection-lane pack nodes and mega-pack nodes; mega-pack nodes
 set `is_mega_pack: true`, while the registry as a whole decides which plugin
