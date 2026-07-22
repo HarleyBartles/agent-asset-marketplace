@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -6,6 +7,7 @@ SKILL_ROOT = ROOT / "sources/first_party/skills/subagent-model-routing"
 SKILL = SKILL_ROOT / "SKILL.md"
 V1_PROFILE = SKILL_ROOT / "references/codex-multi-agent-v1-profile.md"
 V2_PROFILE = SKILL_ROOT / "references/codex-multi-agent-v2-profile.md"
+OPENAI_METADATA = SKILL_ROOT / "agents/openai.yaml"
 
 
 def test_router_selects_a_profile_from_the_live_dispatch_contract():
@@ -50,3 +52,19 @@ def test_pressure_scenarios_allow_profile_supported_max_without_allowing_ultra()
     assert "requesting `ultra`" in text
     assert "`max` only when the active profile exposes it" in text
     assert "do not silently inherit the parent model and reasoning" in text
+
+
+def test_discovery_metadata_does_not_advertise_paid_or_tier_selection():
+    skill_text = SKILL.read_text(encoding="utf-8")
+    openai_text = OPENAI_METADATA.read_text(encoding="utf-8")
+
+    for text in (skill_text, openai_text):
+        assert "paid route" not in text
+        assert "context tier" not in text
+
+
+def test_pressure_scenario_ids_are_globally_unique_and_sequential():
+    text = (SKILL_ROOT / "references/pressure-scenarios.md").read_text(encoding="utf-8")
+    scenario_ids = [int(match) for match in re.findall(r"^\s*(\d+)\. ", text, flags=re.MULTILINE)]
+
+    assert scenario_ids == list(range(1, 33))
