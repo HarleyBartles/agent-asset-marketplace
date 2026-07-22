@@ -253,45 +253,31 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
-    _run_tool("generate_plugin_root_inventory.py")
-    _prune_stale_projected_plugin_roots()
-    # Self-heal overlay.yaml line edits before projection so that source
-    # normalization (CRLF→LF, trailing whitespace) doesn't break line-based
-    # overlay edits. Runs in write mode during the canonical full rebuild.
-    _run_tool("heal_overlays.py")
-    _run_tool("update_skill_artifacts.py", "--all")
-    _run_tool("normalize_first_party_skill_sources.py", "--check")
-    _run_tool("install_agent_skills.py")
-    _run_tool("generate_repo_index.py")
-    _run_tool("validate_marketplace.py", "--skip-freshness-checks")
-    _run_tool("generate_repo_index.py", "--check")
-    _run_tool("generate_index_mesh.py")
-    _run_tool("generate_index_mesh.py", "--check")
-    _run_tool("generate_first_party_skill_catalog.py", "--check")
-    _run_tool("validate_repo_index.py")
-    _run_tool("validate_skill_zips.py")
-    skip_paths = _retained_verbatim_paths()
-    changed_paths = [path for path in _git_output("diff", "--name-only", "HEAD").splitlines() if path and path not in skip_paths]
-    if changed_paths:
-        # Retained third-party source custody intentionally preserves upstream byte
-        # fidelity, including whitespace that would be a false-positive in a generic
-        # working-tree diff check. The projection mirror for those verbatim entries
-        # is skipped here as well so the gate stays aligned with the custody model.
-        # Batch the pathspec to stay under the Windows command-line length limit
-        # (~32 KB) when a large normalization pass changes thousands of files.
-        _MAX_CMD_CHARS = 28000
-        batch: list[str] = []
-        batch_len = 0
-        for path in changed_paths:
-            path_len = len(path) + 4  # path + space + 2 quotes + separator
-            if batch and batch_len + path_len > _MAX_CMD_CHARS:
-                _run_git("diff", "--check", "HEAD", "--", *batch)
-                batch = []
-                batch_len = 0
-            batch.append(path)
-            batch_len += path_len
-        if batch:
-            _run_git("diff", "--check", "HEAD", "--", *batch)
+    phase_runners = {
+        "inventory": lambda: _run_inventory(check=args.check, verbose=args.verbose),
+        "heal": lambda: _run_heal(check=args.check, verbose=args.verbose),
+        "project": lambda: _run_project(
+            check=args.check,
+            verbose=args.verbose,
+            skip_install=args.skip_install,
+        ),
+        "index": lambda: _run_index(
+            check=args.check,
+            verbose=args.verbose,
+            skip_index=args.skip_index,
+        ),
+        "catalog": lambda: _run_catalog(check=args.check, verbose=args.verbose),
+        "validate": lambda: _run_validate(
+            check=args.check,
+            verbose=args.verbose,
+            skip_validate=args.skip_validate,
+            skip_whitespace_check=args.skip_whitespace_check,
+        ),
+    }
+
+    phases = _PHASE_ORDER if args.phase == "all" else (args.phase,)
+    for phase in phases:
+        phase_runners[phase]()
     return 0
 
 
