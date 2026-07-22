@@ -1,7 +1,7 @@
 {
   "name": "unslop-plus",
   "version": "1.0.0",
-  "description": "Generate and validate domain-specific anti-slop profiles from bundled Python scripts with thirteen first-party portable profiles for common software development workflows.",
+  "description": "Anti-slop engine and profile router for software development workflows.",
   "author": {
     "name": "Asset Marketplace",
     "url": "https://github.com/HarleyBartles/agent-asset-marketplace"
@@ -11,7 +11,8 @@
   "license": "MIT",
   "keywords": [
     "skill",
-    "writing",
+    "unslop-engine",
+    "unslop-profiles",
     "profile",
     "validation",
     "code-review",
@@ -22,14 +23,14 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Unslop+",
-    "shortDescription": "Anti-slop profiles for software development workflows",
-    "longDescription": "Asset Marketplace-owned unslop-plus package with thirteen first-party portable profiles for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, and cleanup-custody workflows.",
+    "shortDescription": "Anti-slop engine and profile router for software development workflows.",
+    "longDescription": "Asset Marketplace-owned unslop-plus package. Use $unslop-engine to generate a domain-specific anti-slop profile, or $unslop-profiles to apply the right existing profile for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, or cleanup-custody workflows.",
     "developerName": "Asset Marketplace",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
     "defaultPrompt": [
-      "Use $unslop-plus to apply the appropriate anti-slop profile for your current workflow."
+      "Use $unslop-profiles to apply the right anti-slop profile for the current workflow, or $unslop-engine to generate a new domain-specific profile."
     ],
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/icon.svg",
