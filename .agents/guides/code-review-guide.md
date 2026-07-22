@@ -33,7 +33,7 @@ Reviewers must verify that marketplace work aligns with the marketplace generati
 
 Reviewers must review the repo's unslop profiles and apply the relevant ones to work under review:
 
-- The portable profiles from `/unslop-plus` — `code-review`, `testing`, `security-review`, `cleanup-custody`, `architecture`, etc.
+- The portable profiles from `/unslop-profiles` — `code-review`, `testing`, `security-review`, `cleanup-custody`, `architecture`, etc.
 
 Apply the profile that matches the work's domain. A tooling-only PR does not need the testing profile, and vice versa.
 

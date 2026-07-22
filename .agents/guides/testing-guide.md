@@ -24,5 +24,5 @@ Use this guide for the test commands and conventions in `agent-asset-marketplace
 ## Routing to skills
 
 - For TDD implementation, invoke `/test-driven-development`.
-- For test design and coverage, invoke `/unslop-plus` with the `testing` profile.
+- For test design and coverage, invoke `/unslop-profiles` with the `testing` profile.
 - For repo hygiene and publication, invoke `/repo-worker-base`.

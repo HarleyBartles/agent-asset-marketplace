@@ -20,7 +20,7 @@ The package adapts the upstream idea of sampling outputs, detecting repetitive A
 - **Codex plugin install path**: `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json`
 - **Text mode**: Uses Python standard library analysis over inline samples, fixture samples, or a sample directory
 - **Visual mode**: Checks for Playwright and Chromium before attempting visual evidence; missing optional dependencies are recorded as skipped in the output manifest and validation report
-- **Output contract**: Documented in `skills/unslop/references/output-contract.md`
+- **Output contract**: Generated artifacts are written to `unslop-output/` and validated by `skills/unslop-engine/scripts/validate_unslop_output.py`; see `skills/unslop-engine/SKILL.md` for the output layout.
 
 ## Marketplace Adaptation
 

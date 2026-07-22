@@ -60,7 +60,7 @@ For the implementation and contribution workflow, see [`CONTRIBUTING.md`](CONTRI
 
 ## Security considerations
 
-Apply the `security-review` profile from `/unslop-plus` to relevant work and review the security lenses in [`.agents/guides/security-guide.md`](.agents/guides/security-guide.md).
+Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in [`.agents/guides/security-guide.md`](.agents/guides/security-guide.md).
 
 ## Routing pointers
 

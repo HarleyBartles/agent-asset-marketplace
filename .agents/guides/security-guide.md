@@ -5,7 +5,7 @@ Use this guide for repo-specific security posture when working in `agent-asset-m
 ## Before you begin
 
 - Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/guides/code-review-guide.md`](./code-review-guide.md) for review expectations.
-- Invoke `/unslop-plus` with the `security-review` profile for concrete security analysis.
+- Invoke `/unslop-profiles` with the `security-review` profile for concrete security analysis.
 
 ## When to use
 
@@ -24,6 +24,6 @@ Use this guide for repo-specific security posture when working in `agent-asset-m
 
 ## Routing to skills
 
-- For concrete security analysis, invoke `/unslop-plus` with the `security-review` profile.
+- For concrete security analysis, invoke `/unslop-profiles` with the `security-review` profile.
 - For code review, invoke `/requesting-code-review` and `/risk-gates`.
 - For repo hygiene and publication, invoke `/repo-worker-base`.
