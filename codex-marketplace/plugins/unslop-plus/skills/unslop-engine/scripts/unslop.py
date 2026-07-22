@@ -210,7 +210,7 @@ def cleanup_output_dir(out: Path, *, force_cleanup: bool) -> None:
 
 
 def write_json(path: Path, data: object) -> None:
-    path.write_text(json.dumps(data, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(data, indent=2, sort_keys=False) + "\n", encoding="utf-8", newline="\n")
 
 
 def write_samples(out: Path, samples: list[Sample], dtype: str) -> list[dict[str, object]]:
@@ -219,7 +219,7 @@ def write_samples(out: Path, samples: list[Sample], dtype: str) -> list[dict[str
     for index, sample in enumerate(samples):
         filename = f"sample_{index:04d}{ext}"
         path = out / "samples" / filename
-        path.write_text(sample.text, encoding="utf-8")
+        path.write_text(sample.text, encoding="utf-8", newline="\n")
         records.append(
             {
                 "id": f"sample_{index:04d}",
@@ -383,7 +383,7 @@ def write_analysis(out: Path, result: dict[str, object]) -> None:
             "- Treat the generated skill as a draft until reviewed against the sample set.",
         ]
     )
-    (out / "analysis.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (out / "analysis.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def make_avoid_bullets(result: dict[str, object]) -> list[str]:
@@ -431,7 +431,7 @@ def write_skill(out: Path, result: dict[str, object]) -> None:
         "## Review rule",
         "If a future output starts to match several avoided patterns, stop and rewrite from the domain facts rather than polishing the generic draft.",
     ]
-    (out / "skill.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (out / "skill.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def visual_smoke(dtype: str) -> dict[str, object]:
@@ -541,14 +541,14 @@ def write_validation(out: Path, passed: bool, issues: list[str], visual_status: 
         lines.append(f"- Reason: {reason}")
     if visual_status.get("screenshots") is not None:
         lines.append(f"- Screenshots: {visual_status['screenshots']}")
-    (out / "validation.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (out / "validation.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def write_before_after_note(out: Path, prompts: list[dict[str, object]], skill_path: Path) -> None:
     comparison = out / "before-after"
     comparison.mkdir(exist_ok=True)
     prompt = prompts[len(prompts) // 2]["prompt"] if prompts else "Use the generated profile on a representative task."
-    (comparison / "test-prompt.txt").write_text(str(prompt) + "\n", encoding="utf-8")
+    (comparison / "test-prompt.txt").write_text(str(prompt) + "\n", encoding="utf-8", newline="\n")
     (comparison / "README.md").write_text(
         "\n".join(
             [
@@ -562,6 +562,7 @@ def write_before_after_note(out: Path, prompts: list[dict[str, object]], skill_p
         )
         + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 
