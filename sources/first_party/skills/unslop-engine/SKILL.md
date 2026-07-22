@@ -1,7 +1,7 @@
 ---
 name: unslop-engine
-description: Use when you need to empirically detect repetitive AI output patterns in a domain and generate a reusable anti-slop profile.
-license: MIT
+description: Use when you need to empirically detect repetitive AI output patterns
+  in a domain and generate a reusable anti-slop profile.
 metadata:
   source-id: unslop-engine
   source-path: sources/first_party/skills/unslop-engine/SKILL.md
@@ -9,12 +9,16 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
+  scope: Use when you need to empirically detect repetitive AI output patterns in
+    a domain and generate a reusable anti-slop profile.
   use_when:
-    - Use when generating a domain-specific anti-slop profile from samples or observed defaults.
+  - Use when generating a domain-specific anti-slop profile from samples or observed
+    defaults.
   do_not_use_when:
-    - Do not use when applying an existing anti-slop profile to a task.
+  - Do not use when applying an existing anti-slop profile to a task.
   related_skills:
-    - unslop-profiles
+  - unslop-profiles
+license: MIT
 ---
 
 # Unslop Engine
