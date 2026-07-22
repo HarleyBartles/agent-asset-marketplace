@@ -76,7 +76,6 @@ roots are actively projected:
   `validate_mega_pack_inclusion`. When a first-party skill is retired, remove
   it from `house-skills` and from every topical pack in the same change.
 - **`game-studio`** — game-studio source family mega-pack.
-- **`unslop-plus`** — unslop source family mega-pack.
 - **`superpowers-plus`** — retained mixed projection-lane bundle over the
   Superpowers source family. It also carries curated cross-family first-party
   projections and is not a maintained mega-pack root.

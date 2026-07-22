@@ -1,0 +1,12 @@
+version: 1
+metadata:
+  skill_name: unslop-engine
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
+interface:
+  display_name: Unslop Engine
+  short_description: Use when observed AI output defaults in a domain are repetitive and you need a durable anti-slop profile.
+  default_prompt: Use $unslop-engine when observed AI output defaults in a domain are repetitive and you need a durable anti-slop profile to counter them.
+policy:
+  allow_implicit_invocation: false

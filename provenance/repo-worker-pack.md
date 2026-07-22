@@ -34,8 +34,8 @@
   at `sources/first_party/skills/using-github/` so GitHub surface selection,
   publication proof, and merge/readiness checks have a canonical non-House-Skills
   home.
-- `unslop-plus` is projected here from the canonical first-party source at
-  `sources/first_party/skills/unslop-plus/` so worker-facing anti-slop profiles
+- `unslop-profiles` is projected here from the canonical first-party source at
+  `sources/first_party/skills/unslop-profiles/` so worker-facing anti-slop profiles
   are available on the repo baseline surface.
 - `context-safety` is projected here from the canonical first-party
   source at `sources/first_party/skills/context-safety/` so safer

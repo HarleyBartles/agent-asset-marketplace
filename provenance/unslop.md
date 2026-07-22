@@ -2,7 +2,7 @@
 
 ## Summary
 
-MARK-99 adds an Asset Marketplace-owned `unslop` GPT/Codex package at `codex-marketplace/plugins/unslop/`.
+MARK-99 adds an Asset Marketplace-owned `unslop-plus` GPT/Codex package at `codex-marketplace/plugins/unslop-plus/`.
 
 The package adapts the upstream idea of sampling outputs, detecting repetitive AI defaults, and producing a reusable anti-slop profile. Runtime execution is self-contained in bundled Python scripts and uses local samples rather than fetching source code or depending on a provider-specific CLI.
 
@@ -12,23 +12,23 @@ The package adapts the upstream idea of sampling outputs, detecting repetitive A
 - **Pinned commit**: `edcb62386d129c65e4395f0cfcc9168eb1ba2148`
 - **License**: MIT
 - **Source custody**: `sources/third_party/unslop/upstream/`
-- **Marketplace package**: `codex-marketplace/plugins/unslop/`
+- **Marketplace package**: `codex-marketplace/plugins/unslop-plus/`
 
 ## Adaptation Notes
 
-- **GPT skill install path**: `codex-marketplace/plugins/unslop/skills/unslop/`
-- **Codex plugin install path**: `codex-marketplace/plugins/unslop/.codex-plugin/plugin.json`
+- **GPT skill install paths**: `codex-marketplace/plugins/unslop-plus/skills/unslop-engine/` and `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/`
+- **Codex plugin install path**: `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json`
 - **Text mode**: Uses Python standard library analysis over inline samples, fixture samples, or a sample directory
 - **Visual mode**: Checks for Playwright and Chromium before attempting visual evidence; missing optional dependencies are recorded as skipped in the output manifest and validation report
-- **Output contract**: Documented in `skills/unslop/references/output-contract.md`
+- **Output contract**: Generated artifacts are written to `unslop-output/` and validated by `skills/unslop-engine/scripts/validate_unslop_output.py`; see `skills/unslop-engine/SKILL.md` for the output layout.
 
 ## Marketplace Adaptation
 
 - **Status**: `adapted`
-- **Plugin name**: `unslop`
-- **Display name**: `Unslop`
+- **Plugin name**: `unslop-plus`
+- **Display name**: `Unslop+`
 - **Marketplace category**: `Productivity`
-- **Content mode**: Mixed `adapted` (main skill) and `verbatim` (profiles)
+- **Content mode**: `verbatim` (first-party `unslop-engine` and `unslop-profiles` skills); upstream engine concept is adapted into `unslop-engine`
 - **Adaptation note**: Reimplemented as an Asset Marketplace GPT/Codex skill with bundled Python scripts, local sample orchestration, output manifests, validators, and optional visual dependency smoke checks
 
 ## Rights and Attribution

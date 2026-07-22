@@ -1,11 +1,18 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "unslop-plus",
+      "canonical_name": "unslop-engine",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-plus",
-      "local_path": "skills/unslop-plus"
+      "canonical_source_path": "sources/first_party/skills/unslop-engine",
+      "local_path": "skills/unslop-engine"
+    },
+    {
+      "canonical_name": "unslop-profiles",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+      "local_path": "skills/unslop-profiles"
     }
   ],
   "adapted_projections": []

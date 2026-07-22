@@ -14,7 +14,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/repo-worker-base/`
 - `sources/first_party/skills/risk-gates/`
 - `sources/first_party/skills/subagent-model-routing/`
-- `sources/first_party/skills/unslop-plus/`
+- `sources/first_party/skills/unslop-profiles/`
 - `sources/first_party/skills/using-github/`
 - `sources/first_party/skills/using-linear/`
 - `sources/first_party/skills/work-mode-router/`
@@ -33,7 +33,7 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/subagent-model-routing/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-plus/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-github/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/work-mode-router/`
@@ -49,7 +49,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/repo-worker-base.zip`
 - `generated/skill-zips/risk-gates.zip`
 - `generated/skill-zips/subagent-model-routing.zip`
-- `generated/skill-zips/unslop-plus.zip`
+- `generated/skill-zips/unslop-profiles.zip`
 - `generated/skill-zips/using-github.zip`
 - `generated/skill-zips/using-linear.zip`
 - `generated/skill-zips/work-mode-router.zip`

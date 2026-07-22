@@ -36,7 +36,7 @@ The split is deliberate:
   - `repo-worker-base`
   - `risk-gates`
   - `subagent-model-routing`
-  - `unslop-plus`
+  - `unslop-profiles`
   - `using-github`
   - `using-linear`
   - `work-mode-router`

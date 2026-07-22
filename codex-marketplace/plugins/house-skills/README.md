@@ -8,7 +8,7 @@ It is first-party Harley-owned source prepared to stay clean enough for a future
 permissive publication decision, with no unlicensed third-party bundled
 content.
 It includes `using-github` as the generic GitHub proof base skill,
-`unslop-plus` as the repo-specific anti-slop guard skill,
+`unslop-engine` and `unslop-profiles` for anti-slop profile generation and application,
 `linear-issue-shaping` as the Linear issue and track shaping skill,
 `risk-gates` as the consolidated pre-action risk gate router,
 `connector-safety` as a shared base/control-plane safety component for

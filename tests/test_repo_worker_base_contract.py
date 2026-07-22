@@ -13,6 +13,9 @@ SOURCE_ROOT = REPO_ROOT / "sources" / "first_party" / "skills"
 REPO_WORKER_BASE = SOURCE_ROOT / "repo-worker-base"
 ROUTER = SOURCE_ROOT / "work-mode-router" / "SKILL.md"
 ROUTER_PROMPT = SOURCE_ROOT / "work-mode-router" / "agents" / "openai.yaml"
+ROUTER_CORE_POSTURE = SOURCE_ROOT / "work-mode-router" / "references" / "core-posture.md"
+ROUTER_ROUTE_STATES = SOURCE_ROOT / "work-mode-router" / "references" / "route-states.md"
+ROUTER_WORKFLOW_PHASES = SOURCE_ROOT / "work-mode-router" / "references" / "workflow-phases.md"
 
 REFERENCE_FILENAMES = (
     "worktree-and-branch-policy.md",
@@ -141,7 +144,7 @@ def test_router_requires_base_before_downstream_lane():
 
 
 def test_router_contract_covers_composition_ownership_and_non_recursion():
-    text = ROUTER.read_text(encoding="utf-8")
+    text = ROUTER_CORE_POSTURE.read_text(encoding="utf-8")
     required = (
         "work-mode-router` -> `repo-worker-base` -> matching baseline reference and local `.agents/guides/` guide -> Superpowers lane",
         "The router owns first classification",
@@ -163,7 +166,7 @@ def test_router_contract_covers_composition_ownership_and_non_recursion():
 
 
 def test_router_route_states_cannot_bypass_repo_worker_base():
-    text = ROUTER.read_text(encoding="utf-8")
+    text = ROUTER_ROUTE_STATES.read_text(encoding="utf-8")
     route_expectations = {
         "worktree_isolation_needed": "repo-worker-base` -> `worktree-and-branch-policy.md` -> local repository policy -> `/using-git-worktrees`",
         "design_needed": "repo-worker-base` -> `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
@@ -182,7 +185,7 @@ def test_router_route_states_cannot_bypass_repo_worker_base():
 
 
 def test_router_routing_map_cannot_bypass_repo_worker_base():
-    text = ROUTER.read_text(encoding="utf-8")
+    text = ROUTER_ROUTE_STATES.read_text(encoding="utf-8")
     route_expectations = {
         "worktree_isolation_needed": "repo-worker-base` + worktree policy/local repository policy -> `/using-git-worktrees`",
         "design_needed": "repo-worker-base` + `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
@@ -205,20 +208,21 @@ def test_router_routing_map_cannot_bypass_repo_worker_base():
 
 def test_router_prompt_metadata_uses_the_mandatory_handoff():
     router_text = ROUTER.read_text(encoding="utf-8")
-    frontmatter = router_text.split("---", 2)[1]
-    assert "routing repository-backed work through /repo-worker-base" in frontmatter
-    assert "routing normal coding work to /using-superpowers" not in frontmatter
+    assert "routes repo-backed work through `repo-worker-base`" in router_text
+    assert "routing normal coding work to /using-superpowers" not in router_text
 
     text = ROUTER_PROMPT.read_text(encoding="utf-8")
-    assert "routing repository-backed work through /repo-worker-base" in text
-    assert "baseline and local .agents/guides/ guide, then /using-superpowers" in text
-    assert "Do not recursively" in text
-    assert "/work-mode-router after classification" in text
+    assert "repo-backed work to /repo-worker-base" in text
+    assert "baseline/local guide before /using-superpowers" in text
+    assert "Do not invoke" in text
+    assert "/work-mode-router" in text
+    assert "recursively" in text
+    assert "after classification" in text
     assert "routing normal coding work to /using-superpowers" not in text
 
 
 def test_router_phase_table_and_guide_discovery_use_canonical_guide_home():
-    text = ROUTER.read_text(encoding="utf-8")
+    text = ROUTER_WORKFLOW_PHASES.read_text(encoding="utf-8")
     phase_table = text.split("## Working Mode Phases", 1)[1].split("## Superpowers Workflow Mapping", 1)[0]
     assert ".agents/guides/design-guide.md" in phase_table
     assert ".agents/guides/planning-guide.md" in phase_table
@@ -376,8 +380,10 @@ def test_marketplace_generation_guide_uses_supported_mesh_check_mode():
 
 
 def test_local_guides_cannot_override_the_mandatory_superpowers_mapping():
-    text = ROUTER.read_text(encoding="utf-8")
-    assert "the repo guide takes precedence" not in text
+    router_text = ROUTER.read_text(encoding="utf-8")
+    assert "the repo guide takes precedence" not in router_text
+
+    text = ROUTER_WORKFLOW_PHASES.read_text(encoding="utf-8")
     assert "Local guides cannot override or bypass this canonical mapping" in text
     assert "paths, commands, exclusions, CI, and exceptions" in text
 

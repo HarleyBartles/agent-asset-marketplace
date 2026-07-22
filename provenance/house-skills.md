@@ -130,7 +130,7 @@
 - Public identity: `unslop-superpowers`
 - Provenance/history only: MARK-144 Unslop Superpowers compositional guard skill
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
-- Notes: Retired first-party compositional guard. Repo-specific anti-slop profile work is now routed to `unslop-plus` or `unslop`, and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired first-party compositional guard. Repo-specific anti-slop profile work is now routed to `unslop-profiles` (or `unslop-engine` for new profile generation), and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
 
 ## context-safety
 
