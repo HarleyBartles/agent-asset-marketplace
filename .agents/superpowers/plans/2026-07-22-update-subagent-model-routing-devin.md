@@ -78,7 +78,7 @@ The only caller-controllable subagent control in Devin Desktop is the `run_subag
 - `is_background`: launch in the background for parallel work
 - `resume`: continue a previous subagent
 
-The runtime may assign subagents to SWE-family or GLM-family models. Do not encode current model version numbers in prompts, task briefs, or rationale; they may change.
+The runtime assigns the same model as the parent session. Do not encode current model names or versions in prompts, task briefs, or rationale; they may change.
 
 ### Selecting the dispatch profile
 
