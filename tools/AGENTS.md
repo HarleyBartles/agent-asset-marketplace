@@ -28,9 +28,13 @@ plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`
 manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
-`py -3 tools/rebuild_marketplace.py`; for the complete step-by-step flow,
-inputs, and outputs, see `.agents/guides/marketplace-generation-guide.md`.
-The canonical non-mutating CI gate is `py -3 tools/check_marketplace.py`.
+`py -3 tools/rebuild_marketplace.py`.
+Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
+or `py -3 tools/check_marketplace.py` as the CI convenience wrapper.
+Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
+single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
+and `--skip-whitespace-check` omit steps from a full run.
+Partial validation is available with `py -3 tools/validate_marketplace.py --phase <inventory|project|index>`.
 `py -3 tools/validate_authority_assets.py` is a non-mutating authority-shape
 check. It does not perform freshness networking and does not fail because a
 remote source has changed; it only validates recorded local evidence.
