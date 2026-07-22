@@ -33,23 +33,29 @@ license: MIT
 ---
 # Subagent Model Routing
 
-Use this skill before choosing a child subagent route. Detect the runtime, load the shared policy and exactly one matching environment profile, then return the cheapest adequate included or approved route.
+Use this skill before choosing a child subagent route. Detect the live dispatch
+contract, load the shared policy and exactly one matching environment profile,
+then choose the least escalated route the runtime actually exposes.
 
 ## Runtime contract
 
-1. Detect the active environment.
-2. Inventory the models and controls actually available.
+1. Detect the active child-dispatch contract.
+2. Inventory the models, reasoning values, context controls, and capacity actually exposed.
 3. Load `references/shared-policy.md` and exactly one matching profile.
 4. Treat current runtime inventory as authoritative over stale profile metadata.
-5. Choose the cheapest adequate included route.
-6. Record a concise rationale and fallback when material.
+5. Choose the least escalated adequate exposed route; do not infer price or entitlement.
+6. Record the profile, model or inheritance, reasoning or inheritance, context mode, rationale, and material limitation.
 7. State explicitly when a desired route could not be enforced.
+
+Routing chooses a route; it does not authorize delegation. Follow the current
+task, environment, and repository rules before calling a child-dispatch tool.
 
 ## Profiles
 
-| Runtime | Profile |
+| Live dispatch signature | Profile |
 |---|---|
-| OpenAI Codex / ChatGPT | `references/codex-profile.md` |
+| `multi_agent_v1__spawn_agent` with Boolean `fork_context` | `references/codex-multi-agent-v1-profile.md` |
+| `spawn_agent` with `fork_turns` | `references/codex-multi-agent-v2-profile.md` |
 | Devin Desktop | `references/devin-desktop-profile.md` |
 | Unknown or non-Codex runtime | `references/generic-free-first-profile.md` |
 

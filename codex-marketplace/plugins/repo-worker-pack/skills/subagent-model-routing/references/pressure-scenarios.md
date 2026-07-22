@@ -2,21 +2,29 @@
 
 1. An underdefined task asks for a stronger model -> return to brainstorming/specification/planning.
 2. An agent claims every available model needs a lane -> reject; allow fallback-only models.
-3. A failed High attempt requests Ultra/Max -> reject and diagnose/reroute.
+3. A failed High attempt is requesting `ultra` -> reject. Allow `max` only when the active profile exposes it and concrete evidence justifies one deliberate escalation; otherwise diagnose and reroute.
 4. A runtime cannot enforce selection -> provide a desired-route hint without claiming enforcement.
 5. Two same-family agents are called model-independent -> correct the independence description.
 6. A large repository triggers paid context automatically -> require retrieval/decomposition and explicit authorization.
 7. A strong model investigates adjacent issues -> preserve bounded mutation and report findings.
 
-### Codex
+### Codex MultiAgentV1
 
- 8. Well-specified SDD implementation -> GPT-5.4 mini High.
- 9. Mechanical exact change -> GPT-5.4 mini Medium.
-10. Large read/inventory -> Luna Medium.
-11. Cross-boundary debugging -> Terra High.
-12. Security-sensitive migration or concurrency review -> Sol High; Extra High only with explicit exceptional justification.
-13. 5.5 is proposed as cheaper Sol -> reject; allow only deliberate diversity/regression use.
-14. GPT-5.4 mini unavailable -> Luna or Terra fallback according to context versus judgment need.
+ 8. Well-specified bounded implementation -> `gpt-5.4` with supported adequate reasoning.
+ 9. Large read/inventory -> Luna at `medium` unless the live schema says otherwise.
+10. Cross-boundary debugging -> Terra at `high`.
+11. Security-sensitive migration or concurrency review -> Sol at `high`; escalate through `xhigh` or `max` only with exceptional justification.
+12. A task needs full history and Sol -> V1 may use `fork_context: true`; record that backend enforcement semantics are unobserved.
+13. 5.5 is proposed as cheaper Sol -> reject the price claim; allow only deliberate diversity or regression use.
+14. `gpt-5.4-mini` is requested -> correct to the exact V1 slug `gpt-5.4` when it is exposed.
+
+### Codex MultiAgentV2
+
+15. Full history is requested with a Sol override -> do not silently inherit the parent model and reasoning. Use `fork_turns: "none"` or a positive count with a bounded brief, or keep the task with the parent.
+16. A routine bounded task needs a child -> Terra at `medium`; use `high` only when the reasoning need is concrete.
+17. Consequential review -> Sol at `high`; use `xhigh` only for exceptional consequence or unresolved disagreement.
+18. Luna, 5.5, or 5.4 is requested -> report it as not exposed by the current V2 dispatch surface; do not substitute silently.
+19. A different fresh-context reviewer is called model-independent -> correct the claim. Fresh context and model-family diversity are separate properties.
 
 ### Devin Desktop
 
