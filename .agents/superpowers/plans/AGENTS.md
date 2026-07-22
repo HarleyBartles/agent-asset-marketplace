@@ -34,3 +34,9 @@ must be checked off and committed with their implementation PR (see
 delivered work. Plans remain repo resident as historical records and are not
 removed or archived; they must not be left open or uncommitted as stale
 in-progress guidance.
+
+## Historical reference
+
+Completed plans and the adjacent `.agents/superpowers/specs/` documents are
+historical references. Agents may inspect them alongside git history to
+understand how the repo became what it is today via planned work.
