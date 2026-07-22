@@ -1,0 +1,26 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Estimation
+  canonical_url: https://csse.usc.edu/research/cocomoii.htm
+  pinned_source_url: https://csse.usc.edu/research/cocomoii.htm
+  latest_check_url: https://csse.usc.edu/research/cocomoii.htm
+  revision: current
+  retrieved_at: '2026-07-21'
+  content_sha256: 293b465a1282a10fb6ab6b1e198814cf350177a94408b6fe6287d485fe14a28a
+  license: MIT
+  license_url: https://opensource.org/licenses/MIT
+decomposition:
+  reconciled_against: 293b465a1282a10fb6ab6b1e198814cf350177a94408b6fe6287d485fe14a28a
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - When to apply
+    - Breaking down work
+    - Estimation methods
+    - Confidence and risk buffers
+    - Calibration
+    load_when:
+    - Use when estimation operational guidance is needed.
+    content_mode: first_party_synthesis

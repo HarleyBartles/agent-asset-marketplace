@@ -1,9 +1,10 @@
-# Source
+# Data Platform Pack Source Notes
 
-This plugin projects the first-party `database-engines` skill.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-### First-party custody
+### First Party custody
 - `sources/first_party/skills/database-engines/`
 
 ## Projection surfaces
@@ -14,8 +15,8 @@ This plugin projects the first-party `database-engines` skill.
 
 ## Generated install units
 - `generated/skill-zips/database-engines.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-- Only the first-party relational database-engines guidance is kept here.
-- The removed ECC data-platform slice is deferred to a follow-up reprojection issue with fresh source inspection and pack-by-pack design.
-- The bundle is a projection over retained source custody, not a new source of truth.
+- The pack covers first-party relational database engine guidance for PostgreSQL, SQLite, and selectable MS-SQL.
+- The pack does not absorb unrelated topical homes.

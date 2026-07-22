@@ -17,13 +17,19 @@ PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace/plugins"
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 
 
-def _run_tool(script_name: str, *args: str) -> None:
+def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
     script_path = Path(__file__).resolve().with_name(script_name)
-    subprocess.run([sys.executable, str(script_path), *args], check=True)
+    cmd = [sys.executable, str(script_path), *args]
+    if verbose:
+        print("+ " + " ".join(cmd))
+    subprocess.run(cmd, check=True)
 
 
-def _run_git(*args: str) -> None:
-    subprocess.run(["git", *args], cwd=ROOT, check=True)
+def _run_git(*args: str, verbose: bool = False) -> None:
+    cmd = ["git", *args]
+    if verbose:
+        print("+ " + " ".join(cmd))
+    subprocess.run(cmd, cwd=ROOT, check=True)
 
 
 def _git_output(*args: str) -> str:
@@ -90,53 +96,188 @@ def _retained_verbatim_paths() -> set[str]:
     return skip_paths
 
 
+def _check_arg(check: bool) -> tuple[str, ...]:
+    return ("--check",) if check else ()
+
+
+def _run_inventory(*, check: bool, verbose: bool) -> None:
+    _run_tool("generate_plugin_root_inventory.py", *_check_arg(check), verbose=verbose)
+    if not check:
+        _prune_stale_projected_plugin_roots()
+    _run_tool("validate_marketplace.py", "--phase", "inventory", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_heal(*, check: bool, verbose: bool) -> None:
+    _run_tool("heal_overlays.py", *_check_arg(check), verbose=verbose)
+
+
+def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
+    if check:
+        _run_tool("update_skill_artifacts.py", "--check", verbose=verbose)
+    else:
+        _run_tool("update_skill_artifacts.py", "--all", verbose=verbose)
+    _run_tool("normalize_first_party_skill_sources.py", *_check_arg(check), verbose=verbose)
+    if not skip_install:
+        _run_tool("install_agent_skills.py", *_check_arg(check), verbose=verbose)
+    _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
+    if skip_index:
+        return
+    _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
+    if check:
+        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+    else:
+        _run_tool("generate_index_mesh.py", verbose=verbose)
+        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+    _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
+
+
+def _run_catalog(*, check: bool, verbose: bool) -> None:
+    if check:
+        _run_tool("generate_first_party_skill_catalog.py", "--check", verbose=verbose)
+    else:
+        _run_tool("generate_first_party_skill_catalog.py", verbose=verbose)
+        _run_tool("generate_first_party_skill_catalog.py", "--check", verbose=verbose)
+
+
+def _run_whitespace_check(*, verbose: bool, skip: bool) -> None:
+    if skip:
+        return
+    changed_paths = [
+        path
+        for path in _git_output("diff", "--name-only", "HEAD").splitlines()
+        if path and path not in _retained_verbatim_paths()
+    ]
+    if not changed_paths:
+        return
+    _MAX_CMD_CHARS = 28000
+    batch: list[str] = []
+    batch_len = 0
+    for path in changed_paths:
+        path_len = len(path) + 4  # path + space + 2 quotes + separator
+        if batch and batch_len + path_len > _MAX_CMD_CHARS:
+            _run_git("diff", "--check", "HEAD", "--", *batch, verbose=verbose)
+            batch = []
+            batch_len = 0
+        batch.append(path)
+        batch_len += path_len
+    if batch:
+        _run_git("diff", "--check", "HEAD", "--", *batch, verbose=verbose)
+
+
+def _run_validate(
+    *,
+    check: bool,
+    verbose: bool,
+    skip_validate: bool,
+    skip_whitespace_check: bool,
+) -> None:
+    if not skip_validate:
+        _run_tool("validate_authority_assets.py", verbose=verbose)
+    _run_whitespace_check(verbose=verbose, skip=skip_whitespace_check)
+    if check:
+        _run_git("diff", "--exit-code", verbose=verbose)
+
+
+_PHASE_ORDER = ("inventory", "heal", "project", "index", "catalog", "validate")
+
+
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the full marketplace rebuild and validation stack")
+    epilog = (
+        "This is the canonical 'refresh marketplace' command. It regenerates all derived\n"
+        "marketplace surfaces and then validates them.\n\n"
+        "Use --phase to run only one logical phase. Each phase is self-checking; earlier\n"
+        "phases are not automatically regenerated unless you run --phase all (the default).\n\n"
+        "Editable inputs (do not hand-edit derived outputs):\n"
+        "  - codex-marketplace/custody-pack-registry.json\n"
+        "  - sources/first_party/skills/<skill>/\n"
+        "  - sources/third_party/<upstream>/\n"
+        "  - adapters/codex/<pack>/<skill>/\n\n"
+        "Key outputs:\n"
+        "  - .agents/plugins/marketplace.json, codex-marketplace/manifest.json\n"
+        "  - codex-marketplace/plugins/<pack>/skills/<skill>/\n"
+        "  - codex-marketplace/plugins/<pack>/references/{bundle-manifest,source-map,provenance-map}.*\n"
+        "  - generated/skill-zips/<skill>.zip\n"
+        "  - provenance/first-party-skills.md\n"
+        "  - repo-index/repo-index.json and repo-wide INDEX.md mesh\n"
+        "  - .agents/skills/<skill>/ (installed skills)\n\n"
+        "For the full step-by-step flow see .agents/guides/marketplace-generation-guide.md."
+    )
+    parser = argparse.ArgumentParser(
+        description="Run the full marketplace rebuild and validation stack",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=epilog,
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Non-mutating check mode. Forwards --check to every writer script that supports it.",
+    )
+    parser.add_argument(
+        "--phase",
+        choices=("inventory", "heal", "project", "index", "catalog", "validate", "all"),
+        default="all",
+        help="Run only the named phase. Default: all",
+    )
+    parser.add_argument(
+        "--skip-install",
+        action="store_true",
+        help="Skip installing skills into .agents/skills/",
+    )
+    parser.add_argument(
+        "--skip-index",
+        action="store_true",
+        help="Skip repo-index and index-mesh generation",
+    )
+    parser.add_argument(
+        "--skip-validate",
+        action="store_true",
+        help="Skip validator scripts in the final validate phase",
+    )
+    parser.add_argument(
+        "--skip-whitespace-check",
+        action="store_true",
+        help="Skip git diff --check (whitespace lint). Does not skip --exit-code in --check mode.",
+    )
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="Print each command before running it",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = _parse_args()
 
-    _run_tool("generate_plugin_root_inventory.py")
-    _prune_stale_projected_plugin_roots()
-    # Self-heal overlay.yaml line edits before projection so that source
-    # normalization (CRLF→LF, trailing whitespace) doesn't break line-based
-    # overlay edits. Runs in write mode during the canonical full rebuild.
-    _run_tool("heal_overlays.py")
-    _run_tool("update_skill_artifacts.py", "--all")
-    _run_tool("normalize_first_party_skill_sources.py", "--check")
-    _run_tool("install_agent_skills.py")
-    _run_tool("generate_repo_index.py")
-    _run_tool("validate_marketplace.py", "--skip-freshness-checks")
-    _run_tool("generate_repo_index.py", "--check")
-    _run_tool("generate_index_mesh.py")
-    _run_tool("generate_index_mesh.py", "--check")
-    _run_tool("generate_first_party_skill_catalog.py", "--check")
-    _run_tool("validate_repo_index.py")
-    _run_tool("validate_skill_zips.py")
-    skip_paths = _retained_verbatim_paths()
-    changed_paths = [path for path in _git_output("diff", "--name-only", "HEAD").splitlines() if path and path not in skip_paths]
-    if changed_paths:
-        # Retained third-party source custody intentionally preserves upstream byte
-        # fidelity, including whitespace that would be a false-positive in a generic
-        # working-tree diff check. The projection mirror for those verbatim entries
-        # is skipped here as well so the gate stays aligned with the custody model.
-        # Batch the pathspec to stay under the Windows command-line length limit
-        # (~32 KB) when a large normalization pass changes thousands of files.
-        _MAX_CMD_CHARS = 28000
-        batch: list[str] = []
-        batch_len = 0
-        for path in changed_paths:
-            path_len = len(path) + 4  # path + space + 2 quotes + separator
-            if batch and batch_len + path_len > _MAX_CMD_CHARS:
-                _run_git("diff", "--check", "HEAD", "--", *batch)
-                batch = []
-                batch_len = 0
-            batch.append(path)
-            batch_len += path_len
-        if batch:
-            _run_git("diff", "--check", "HEAD", "--", *batch)
+    phase_runners = {
+        "inventory": lambda: _run_inventory(check=args.check, verbose=args.verbose),
+        "heal": lambda: _run_heal(check=args.check, verbose=args.verbose),
+        "project": lambda: _run_project(
+            check=args.check,
+            verbose=args.verbose,
+            skip_install=args.skip_install,
+        ),
+        "index": lambda: _run_index(
+            check=args.check,
+            verbose=args.verbose,
+            skip_index=args.skip_index,
+        ),
+        "catalog": lambda: _run_catalog(check=args.check, verbose=args.verbose),
+        "validate": lambda: _run_validate(
+            check=args.check,
+            verbose=args.verbose,
+            skip_validate=args.skip_validate,
+            skip_whitespace_check=args.skip_whitespace_check,
+        ),
+    }
+
+    phases = _PHASE_ORDER if args.phase == "all" else (args.phase,)
+    for phase in phases:
+        phase_runners[phase]()
     return 0
 
 

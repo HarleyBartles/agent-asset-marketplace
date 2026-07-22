@@ -1,16 +1,18 @@
 # Planning Pack
 
-This plugin bundle projects retained Claude-Cortex planning skills into an
-installable Codex marketplace pack.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
 
-### Claude-Cortex skills
-- `requirements-discovery`
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `estimation`
 - `mermaid-diagramming`
-- `development-estimation`
-- `release-prep`
-- `release-analysis`
+- `release-engineering`
+- `requirements-elicitation`
+
+Manifest entry count: 4.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -18,23 +20,10 @@ installable Codex marketplace pack.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-
-- `requirements-discovery` carries requirements gathering, elicitation, and shaping guidance.
-- `mermaid-diagramming` carries diagramming guidance for planning and architecture.
-- `development-estimation` carries development effort estimation techniques and reference material.
-- `release-prep` carries release preparation workflows and checklists.
-- `release-analysis` carries release analysis, comparison, and reporting guidance.
-- The pack is sourced from retained `NickCrew/Claude-Cortex` planning skills under the retained `claude-cortex` custody root.
+- The pack covers release engineering, requirements elicitation, estimation, and mermaid diagramming.
+- The pack does not absorb unrelated topical homes.
 - The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
-The installable skill zips are generated under:
-
-- `generated/skill-zips/requirements-discovery.zip`
-- `generated/skill-zips/mermaid-diagramming.zip`
-- `generated/skill-zips/development-estimation.zip`
-- `generated/skill-zips/release-prep.zip`
-- `generated/skill-zips/release-analysis.zip`
-
-and can be installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

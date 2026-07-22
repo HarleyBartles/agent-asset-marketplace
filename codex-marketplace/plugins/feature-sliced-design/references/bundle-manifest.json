@@ -13,7 +13,9 @@
     "Vendored verbatim from feature-sliced/skills at commit 653e7f3187eac51311652bf787a72bcf56325eea.",
     "Added as part of MARK-290."
   ],
-  "provenance_refs": [],
+  "provenance_refs": [
+    "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
+  ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [

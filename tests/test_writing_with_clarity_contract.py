@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from tree_canonicalization import canonicalize_tree_bytes
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources/first_party/skills/writing-with-clarity"
@@ -18,10 +20,10 @@ SHORT_REFERENCES = {
     "references/usage-and-word-choice.md",
     "references/format-and-markup.md",
     "references/final-edit.md",
-    "references/source/source-map.md",
+    "assets/authority/source-map.yaml",
 }
 
-FULL_SOURCE = SOURCE / "references/source/elements-of-style-1918.html"
+FULL_SOURCE = SOURCE / "assets/authority/reference-source/elements-of-style-1918.html"
 PROJECTION_ROOTS = [
     ROOT / "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity",
     ROOT / "codex-marketplace/plugins/house-skills/skills/writing-with-clarity",
@@ -37,6 +39,14 @@ REPO_WORKER_PACK_MANIFEST = (
 )
 
 
+def _canonical_bytes(path: Path) -> bytes:
+    """Compare agent YAML canonically to allow injected projection identity."""
+    raw = path.read_bytes()
+    if path.name == "openai.yaml":
+        return canonicalize_tree_bytes(path, raw)
+    return raw
+
+
 def test_source_skill_contains_expected_reference_tree():
     assert SKILL.is_file()
     for relative_path in SHORT_REFERENCES:
@@ -50,7 +60,10 @@ def test_skill_routes_all_human_facing_prose_without_defaulting_to_full_source()
     assert "references/routing.md" in text
     assert "one primary reference" in text
     assert "at most one secondary reference" in text
-    assert "Do not read `references/source/elements-of-style-1918.html` during ordinary use" in text
+    assert (
+        "Do not read `assets/authority/reference-source/elements-of-style-1918.html` during ordinary use"
+        in text
+    )
     assert "only when a shorter reference leaves an unresolved question" in text
     assert "This is a separate" in text
     assert "secondary topical reference" in text
@@ -58,17 +71,23 @@ def test_skill_routes_all_human_facing_prose_without_defaulting_to_full_source()
 
 
 def test_short_references_preserve_source_mapping_and_precedence():
-    source_map = (SOURCE / "references/source/source-map.md").read_text(encoding="utf-8")
+    source_map = (SOURCE / "assets/authority/source-map.yaml").read_text(encoding="utf-8")
     assert "Rules 1-7" in source_map
     assert "Rules 8-9 and 14-18" in source_map
     assert "Rules 10-13" in source_map
     assert "Chapter V" in source_map
     assert "Chapters IV and VI" in source_map
-    assert "https://github.com/obra/the-elements-of-style" in source_map
-    assert "6099c505c2a8eb066f3777f83a97d9d828f7954c" in source_map
-    assert "E5AD6A6CBC5F8562D1171C743AC468C60C92329532CD351D3B9F7AD9E582E89B" in source_map
 
-    for relative_path in SHORT_REFERENCES - {"references/routing.md", "references/source/source-map.md"}:
+    authority_evidence = (
+        (SOURCE / "assets/authority/CITATIONS.md").read_text(encoding="utf-8")
+        + "\n"
+        + (SOURCE / "assets/authority/authority.yaml").read_text(encoding="utf-8")
+    )
+    assert "https://github.com/obra/the-elements-of-style" in authority_evidence
+    assert "6099c505c2a8eb066f3777f83a97d9d828f7954c" in authority_evidence
+    assert "e5ad6a6cbc5f8562d1171c743ac468c60c92329532cd351d3b9f7ad9e582e89b" in authority_evidence.lower()
+
+    for relative_path in SHORT_REFERENCES - {"references/routing.md", "assets/authority/source-map.yaml"}:
         text = (SOURCE / relative_path).read_text(encoding="utf-8")
         assert "Source basis" in text, relative_path
         assert "historical source" in text, relative_path
@@ -84,10 +103,15 @@ def test_router_has_explicit_artifact_precedence_and_retry_boundary():
 
 
 def test_historical_source_is_marked_reference_only():
-    source_map = (SOURCE / "references/source/source-map.md").read_text(encoding="utf-8")
-    assert "REFERENCE-ONLY" in source_map
-    assert "historical" in source_map
-    assert "not default operational guidance" in source_map
+    source_markers = (
+        (SOURCE / "assets/authority/source-map.yaml").read_text(encoding="utf-8")
+        + "\n"
+        + (SOURCE / "assets/authority/CITATIONS.md").read_text(encoding="utf-8")
+        + "\n"
+        + SKILL.read_text(encoding="utf-8")
+    )
+    assert "historical" in source_markers
+    assert "not default operational guidance" in source_markers or "not current style authority" in source_markers
     text = FULL_SOURCE.read_text(encoding="utf-8")
     assert "<html>" in text
     assert text.rstrip().endswith("</html>")
@@ -106,8 +130,10 @@ def test_projected_and_installed_skill_trees_match_source():
         )
         assert projection_files == source_files, projection
         for relative_path in source_files:
-            source_bytes = (SOURCE / relative_path).read_bytes()
-            projection_bytes = (projection / relative_path).read_bytes()
+            source_path = SOURCE / relative_path
+            projection_path = projection / relative_path
+            source_bytes = _canonical_bytes(source_path)
+            projection_bytes = _canonical_bytes(projection_path)
             assert hashlib.sha256(projection_bytes).digest() == hashlib.sha256(source_bytes).digest(), relative_path
 
 

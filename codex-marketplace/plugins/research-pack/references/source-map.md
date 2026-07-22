@@ -4,4 +4,4 @@ Generated from `codex-marketplace/plugins/research-pack/references/bundle-manife
 
 | Skill | Source category | Content mode | Canonical source path | Local path | Notes |
 | --- | --- | --- | --- | --- | --- |
-| research-ops | third_party | verbatim | `sources/third_party/ecc/upstream/skills/research-ops` | `codex-marketplace/plugins/research-pack/skills/research-ops` | Projected verbatim from retained ECC custody into the research pack. |
+| research-ops | first_party | verbatim | `sources/first_party/skills/research-ops` | `codex-marketplace/plugins/research-pack/skills/research-ops` | Projected verbatim from the first-party research-ops skill. |

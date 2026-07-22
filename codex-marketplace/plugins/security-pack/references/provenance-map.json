@@ -8,11 +8,18 @@
       "local_path": "skills/owasp-top-ten"
     },
     {
-      "canonical_name": "safety-guard",
-      "source_category": "third_party",
+      "canonical_name": "risk-gates",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/safety-guard",
-      "local_path": "skills/safety-guard"
+      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "local_path": "skills/risk-gates"
+    },
+    {
+      "canonical_name": "secure-development",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/secure-development",
+      "local_path": "skills/secure-development"
     },
     {
       "canonical_name": "web-identity",
@@ -22,38 +29,5 @@
       "local_path": "skills/web-identity"
     }
   ],
-  "adapted_projections": [
-    {
-      "canonical_name": "secure-coding-practices",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/secure-coding-practices",
-      "local_path": "skills/secure-coding-practices",
-      "adaptation_overlay_path": "adapters/codex/security-pack/secure-coding-practices"
-    },
-    {
-      "canonical_name": "security-review",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/security-review",
-      "local_path": "skills/security-review",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-review"
-    },
-    {
-      "canonical_name": "security-testing-patterns",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/security-testing-patterns",
-      "local_path": "skills/security-testing-patterns",
-      "adaptation_overlay_path": "adapters/codex/security-pack/security-testing-patterns"
-    },
-    {
-      "canonical_name": "threat-modeling-techniques",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/threat-modeling-techniques",
-      "local_path": "skills/threat-modeling-techniques",
-      "adaptation_overlay_path": "adapters/codex/security-pack/threat-modeling-techniques"
-    }
-  ]
+  "adapted_projections": []
 }

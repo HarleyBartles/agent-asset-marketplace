@@ -1,15 +1,14 @@
 {
   "name": "frontend-pack",
   "version": "0.1.0",
-  "description": "Frontend application skills for React, Angular, Vue, SwiftUI, design systems, e2e testing, performance optimization, accessibility review, interaction design, UX review, webapp testing, and Feature-Sliced Design architecture.",
+  "description": "Codex marketplace bundle for frontend application development, including React, accessibility, UX, testing, and Feature-Sliced Design.",
   "author": {
-    "name": "OpenAI",
-    "email": "support@openai.com",
-    "url": "https://openai.com/"
+    "name": "Harley Bartles"
   },
-  "homepage": "https://openai.com/",
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
+  "rights": "Contains first-party and retained third-party skill projections; see SOURCE.md and references/source-map.md for source custody and attribution.",
   "keywords": [
     "frontend",
     "react",
@@ -19,7 +18,6 @@
     "performance",
     "accessibility",
     "ux",
-    "interaction-design",
     "design-system",
     "testing",
     "e2e",
@@ -32,23 +30,21 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Frontend Pack",
-    "shortDescription": "React and frontend application workflows",
-    "longDescription": "Plan, optimize, review, and test frontend application work with guidance for React, Angular, Vue, SwiftUI, design systems, e2e testing, performance optimization, accessibility review, UX review, interaction design, browser-based testing, and Feature-Sliced Design (FSD) architecture.",
-    "developerName": "OpenAI",
+    "shortDescription": "Frontend application development, React, accessibility, UX, testing, and FSD",
+    "longDescription": "A repo-local Codex plugin bundle that projects the first-party frontend-ux, playwright-testing, react, wcag, and web-styling skills and the retained feature-sliced-design skill into an installable marketplace shape for frontend application development.",
+    "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"
     ],
-    "websiteURL": "https://openai.com/",
-    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
-    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Design a frontend workstream for React performance, accessibility, UX, interaction, and webapp testing"
+      "Inspect the Frontend Pack bundle and source map.",
+      "Use the bundle to review the frontend, testing, and feature-sliced skill projections.",
+      "Compare the bundle versioning against the source custody surface."
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg",
-    "screenshots": []
+    "logo": "./assets/icon.svg"
   }
 }

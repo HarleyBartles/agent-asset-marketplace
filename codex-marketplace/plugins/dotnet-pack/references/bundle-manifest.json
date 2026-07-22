@@ -12,7 +12,8 @@
     ".NET ecosystem pack projects the first-party dotnet skill."
   ],
   "provenance_refs": [
-    "provenance/dotnet-pack.md"
+    "provenance/dotnet-pack.md",
+    "codex-marketplace/plugins/dotnet-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",

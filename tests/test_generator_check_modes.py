@@ -146,20 +146,20 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 "bundle_type": "projection-lane",
                 "is_mega_pack": False,
                 "notes": ["generated"],
-                "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                "source_ledger": ["sources/third_party/game-studio/upstream/source-custody.md"],
                 "provenance_refs": ["provenance/sample-pack.md"],
                 "entries": [
                     {
                         "canonical_name": "sample-skill",
                         "source_category": "third_party",
-                        "source_family": "ecc",
-                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "source_family": "game-studio",
+                        "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
                         "local_path": "skills/sample-skill",
-                        "provenance_note": "Projected verbatim from retained ECC custody.",
-                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
-                        "source_author": "ECC",
+                        "provenance_note": "Projected verbatim from retained Game Studio custody.",
+                        "source_path": "sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "OpenAI",
                         "source_license": "MIT",
-                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "source_repo": "openai/plugins",
                     }
                 ],
             }
@@ -214,10 +214,10 @@ class GeneratorCheckModeTests(unittest.TestCase):
                     {
                         "canonical_name": "sample-skill",
                         "source_category": "third_party",
-                        "source_family": "ecc",
-                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "source_family": "game-studio",
+                        "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
                         "local_path": "skills/sample-skill",
-                        "provenance_note": "Projected verbatim from retained ECC custody.",
+                        "provenance_note": "Projected verbatim from retained Game Studio custody.",
                     }
                 ],
             }
@@ -248,7 +248,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
     def test_project_skills_check_detects_stale_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
+            source_root = temp_root / "sources" / "third_party" / "game-studio" / "upstream" / "skills" / "sample-skill"
             projected_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "sample-skill"
             manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
 
@@ -265,7 +265,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 "bundle_type": "projection-lane",
                 "plugin_root": "codex-marketplace/plugins/sample-pack",
                 "is_mega_pack": False,
-                "source_families": ["ecc"],
+                "source_families": ["game-studio"],
                 "notes": ["generated"],
                 "provenance_refs": ["provenance/sample-pack.md"],
                 "plugin_author": "Harley Bartles",
@@ -275,14 +275,14 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "canonical_name": "sample-skill",
                         "source_category": "third_party",
                         "content_mode": "verbatim",
-                        "source_family": "ecc",
-                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "source_family": "game-studio",
+                        "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
                         "local_path": "skills/sample-skill",
-                        "provenance_note": "Projected verbatim from retained ECC custody.",
-                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
-                        "source_author": "ECC",
+                        "provenance_note": "Projected verbatim from retained Game Studio custody.",
+                        "source_path": "sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "OpenAI",
                         "source_license": "MIT",
-                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "source_repo": "openai/plugins",
                         "copy_expectation": "byte_identical",
                         "import_status": "imported",
                     }
@@ -327,7 +327,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
     def test_project_skills_check_fails_on_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
+            source_root = temp_root / "sources" / "third_party" / "game-studio" / "upstream" / "skills" / "sample-skill"
             projected_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "sample-skill"
             stale_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "retired-skill"
             manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
@@ -347,7 +347,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 "bundle_type": "projection-lane",
                 "plugin_root": "codex-marketplace/plugins/sample-pack",
                 "is_mega_pack": False,
-                "source_families": ["ecc"],
+                "source_families": ["game-studio"],
                 "notes": ["generated"],
                 "provenance_refs": ["provenance/sample-pack.md"],
                 "plugin_author": "Harley Bartles",
@@ -357,21 +357,21 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "canonical_name": "sample-skill",
                         "source_category": "third_party",
                         "content_mode": "verbatim",
-                        "source_family": "ecc",
-                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "source_family": "game-studio",
+                        "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
                         "local_path": "skills/sample-skill",
-                        "provenance_note": "Projected verbatim from retained ECC custody.",
-                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
-                        "source_author": "ECC",
+                        "provenance_note": "Projected verbatim from retained Game Studio custody.",
+                        "source_path": "sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "OpenAI",
                         "source_license": "MIT",
-                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "source_repo": "openai/plugins",
                         "copy_expectation": "byte_identical",
                         "import_status": "imported",
                     }
                 ],
                 "repo_index": {
                     "source_md": "codex-marketplace/plugins/sample-pack/SOURCE.md",
-                    "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                    "source_ledger": ["sources/third_party/game-studio/upstream/source-custody.md"],
                     "license_path": "codex-marketplace/plugins/sample-pack/LICENSE",
                     "bundle_manifest": "codex-marketplace/plugins/sample-pack/references/bundle-manifest.json",
                     "skills_path": "codex-marketplace/plugins/sample-pack/skills",
@@ -413,7 +413,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
     def test_project_skills_write_prunes_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "ecc" / "upstream" / "skills" / "sample-skill"
+            source_root = temp_root / "sources" / "third_party" / "game-studio" / "upstream" / "skills" / "sample-skill"
             projected_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "sample-skill"
             stale_root = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "skills" / "retired-skill"
             manifest_path = temp_root / "codex-marketplace" / "plugins" / "sample-pack" / "references" / "bundle-manifest.json"
@@ -433,7 +433,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 "bundle_type": "projection-lane",
                 "plugin_root": "codex-marketplace/plugins/sample-pack",
                 "is_mega_pack": False,
-                "source_families": ["ecc"],
+                "source_families": ["game-studio"],
                 "notes": ["generated"],
                 "provenance_refs": ["provenance/sample-pack.md"],
                 "plugin_author": "Harley Bartles",
@@ -443,21 +443,21 @@ class GeneratorCheckModeTests(unittest.TestCase):
                         "canonical_name": "sample-skill",
                         "source_category": "third_party",
                         "content_mode": "verbatim",
-                        "source_family": "ecc",
-                        "canonical_source_path": "sources/third_party/ecc/upstream/skills/sample-skill",
+                        "source_family": "game-studio",
+                        "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sample-skill",
                         "local_path": "skills/sample-skill",
-                        "provenance_note": "Projected verbatim from retained ECC custody.",
-                        "source_path": "sources/third_party/ecc/upstream/skills/sample-skill/SKILL.md",
-                        "source_author": "ECC",
+                        "provenance_note": "Projected verbatim from retained Game Studio custody.",
+                        "source_path": "sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md",
+                        "source_author": "OpenAI",
                         "source_license": "MIT",
-                        "source_repo": "https://github.com/affaan-m/ECC",
+                        "source_repo": "openai/plugins",
                         "copy_expectation": "byte_identical",
                         "import_status": "imported",
                     }
                 ],
                 "repo_index": {
                     "source_md": "codex-marketplace/plugins/sample-pack/SOURCE.md",
-                    "source_ledger": ["sources/third_party/ecc/upstream/source-custody.md"],
+                    "source_ledger": ["sources/third_party/game-studio/upstream/source-custody.md"],
                     "license_path": "codex-marketplace/plugins/sample-pack/LICENSE",
                     "bundle_manifest": "codex-marketplace/plugins/sample-pack/references/bundle-manifest.json",
                     "skills_path": "codex-marketplace/plugins/sample-pack/skills",

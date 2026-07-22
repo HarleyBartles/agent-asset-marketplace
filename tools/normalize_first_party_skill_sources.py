@@ -19,6 +19,7 @@ SOURCE_ROOT = ROOT / "sources/first_party/skills"
 # when generating provenance-name and agents/openai.yaml display_name.
 _SKILL_NAME_OVERRIDES: dict[str, str] = {
     "github": "GitHub",
+    "ux": "UX",
 }
 
 

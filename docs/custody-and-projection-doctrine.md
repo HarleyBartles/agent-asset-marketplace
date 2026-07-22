@@ -61,7 +61,7 @@ package mirrors. Harley curates which entries appear in which plugin.
 
 ## Mega-packs
 
-Six maintained mega-packs carry the remaining broad custody-root bundles. The
+Maintained mega-packs and a retained projection bundle carry the broad custody-root bundles. The
 editable pack registry in `codex-marketplace/custody-pack-registry.json`
 declares both projection-lane pack nodes and mega-pack nodes; mega-pack nodes
 set `is_mega_pack: true`, while the registry as a whole decides which plugin
@@ -75,14 +75,11 @@ roots are actively projected:
   topical pack is a doctrine violation and will fail
   `validate_mega_pack_inclusion`. When a first-party skill is retired, remove
   it from `house-skills` and from every topical pack in the same change.
-- **`codex-cortex`** — claude-cortex source family mega-pack.
-- **`everything-codex-code`** — ecc source family mega-pack.
+- **`game-studio`** — game-studio source family mega-pack.
+- **`unslop-plus`** — unslop source family mega-pack.
 - **`superpowers-plus`** — retained mixed projection-lane bundle over the
   Superpowers source family. It also carries curated cross-family first-party
   projections and is not a maintained mega-pack root.
-- **`game-studio`** — game-studio source family mega-pack.
-- **`dotnet-kit`** — dotnet-claude-kit source family mega-pack.
-- **`unslop-plus`** — unslop source family mega-pack.
 
 Mega-pack manifests are **generated**, not hand-edited. Run
 `py -3 tools/generate_mega_packs.py` to regenerate them. First-party mega-packs
@@ -163,13 +160,13 @@ projection is an orphan. The validator (`detect_first_party_orphans` in
 directories with `SKILL.md` and checks that each one appears as a
 `first_party` entry in some plugin manifest. Orphans cause validation to
 fail with a clear list of the missing skills. MARK-295 removed the stale
-`ecc-superpowers` wrapper source along with its projection, so there is no
+retired wrapper source along with its projection, so there is no
 retired-source exception to carry forward. For active skills, the fix is
 still to add the manifest entry and regenerate, not to delete the source.
 
 ## Manifest shape validation
 
-All 21 plugin manifests must use the directory-level `entries[]` projection-lane
+All 19 plugin manifests must use the directory-level `entries[]` projection-lane
 shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests
 with legacy shapes (`skills[]`, `components[]`, or file-level
 `canonical_source_path` ending in a file suffix). This ensures the materializer

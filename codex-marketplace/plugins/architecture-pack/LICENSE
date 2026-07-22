@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 Nicholas Ferguson
+Copyright (c) 2026 Harley Bartles
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -17,15 +17,5 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
----
-
-This bundle contains skill content derived from third-party sources:
-
-- Codex Cortex (NickCrew/Claude-Cortex): See SOURCE.md and references/source-map.md for details
-
-The third-party skill content is projected under MIT license terms consistent
-with the upstream licenses. See bundle-manifest.json for individual skill
-provenance and content_mode declarations.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

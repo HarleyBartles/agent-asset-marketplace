@@ -1,11 +1,12 @@
 version: 1
 metadata:
   skill_name: observability
-  plugin: engineering-pack
   source_category: first_party
   source-id: observability
   source-path: sources/first_party/skills/observability/SKILL.md
   provenance-name: Observability first-party skill
+  plugin: engineering-pack
+  projection_plugin: engineering-pack
 interface:
   display_name: Observability
   short_description: Use when building or reviewing OpenTelemetry instrumentation and telemetry pipelines.

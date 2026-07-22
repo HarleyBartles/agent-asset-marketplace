@@ -51,16 +51,9 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 ## Marketplace asset flow
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
-For this normalized pass, the active plugin set is limited to the protected
-roots: `codex-marketplace/plugins/house-skills`,
-`codex-marketplace/plugins/unslop`, and
-`codex-marketplace/plugins/game-studio`, plus
-`codex-marketplace/plugins/superpowers-plus`,
-`codex-marketplace/plugins/repo-worker-pack`, `codex-marketplace/plugins/dotnet-kit`,
-`codex-marketplace/plugins/codex-cortex`, `codex-marketplace/plugins/api-contracts-pack`,
-`codex-marketplace/plugins/architecture-pack`, and
-`codex-marketplace/plugins/security-pack`, and
-`codex-marketplace/plugins/frontend-pack`.
+For this normalized pass, the active plugin set is defined in
+`codex-marketplace/plugin-roots.json` and includes the protected mega-pack and
+projection-lane roots under `codex-marketplace/plugins/`.
 
 Expected flow:
 
@@ -116,7 +109,7 @@ Default posture:
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
 - `sources/` - source-attribution records and retained upstream snapshots.
 - `sources/first_party/` - editable first-party source custody and skill-ledger records.
-- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers`, `dotnet-claude-kit`, and `Claude-Cortex` snapshots.
+- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers`, `game-studio`, `unslop`, and `feature-sliced` snapshots.
 - `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
 - `tools/` - helper scripts and validation tooling.
 - `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.

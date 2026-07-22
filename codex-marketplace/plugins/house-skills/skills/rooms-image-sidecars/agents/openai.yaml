@@ -1,9 +1,13 @@
+version: 1
+metadata:
+  skill_name: rooms-image-sidecars
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Rooms Image Sidecar Prep
   short_description: Prepare semantic starter sidecars for Rooms image evidence batches
-  default_prompt: Use $rooms-image-sidecars to inspect image batches and produce archive-ready
-    semantic sidecar packets with provisional room, entity, message, relationship,
-    and DB query hints.
+  default_prompt: Use $rooms-image-sidecars to inspect image batches and produce archive-ready semantic sidecar packets with provisional room, entity, message, relationship, and DB query hints.
 policy:
   products:
   - chatgpt

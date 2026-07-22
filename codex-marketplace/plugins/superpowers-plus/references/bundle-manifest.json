@@ -33,7 +33,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Kept bash helpers as the primary surface and added sibling PowerShell script versions.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -48,7 +48,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/dispatching-parallel-agents/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -63,7 +63,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -78,7 +78,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -108,7 +108,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/receiving-code-review/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -126,7 +126,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Adjusted the plan-reference path to the repo-local `.agents/superpowers/plans/` convention for Codex projections.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -144,7 +144,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, and pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -162,7 +162,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Kept the bash helper as the primary surface and added a sibling PowerShell version.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -177,7 +177,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -195,7 +195,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Honored repo-declared canonical sibling-folder worktree roots before falling back to project-local directories.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -213,7 +213,7 @@
       "provenance_note": "Adapted to keep core Superpowers plus environment inspection only.",
       "adaptation_note": "Trimmed to core Superpowers plus environment inspection only.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -228,7 +228,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/verification-before-completion/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -246,7 +246,7 @@
       "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "adaptation_note": "Adjusted plan-path guidance to the repo-local `.agents/superpowers/plans/` convention for Codex projections.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
@@ -261,7 +261,7 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Copied verbatim from the retained upstream v6.1.0 snapshot into the Codex projection.",
       "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-skills/SKILL.md",
-      "source_author": "NickCrew",
+      "source_author": "obra",
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"

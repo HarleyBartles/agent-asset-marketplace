@@ -401,11 +401,11 @@ class InferSourceRootTests(unittest.TestCase):
             temp = Path(td)
             # Two upstreams both have the same skill name
             superpowers = temp / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0" / "skills" / "sample-skill"
-            cortex = temp / "sources" / "third_party" / "claude-cortex" / "upstream" / "skills" / "sample-skill"
+            cortex = temp / "sources" / "third_party" / "game-studio" / "upstream" / "skills" / "sample-skill"
             superpowers.mkdir(parents=True)
             cortex.mkdir(parents=True)
             (superpowers / "SKILL.md").write_text("superpowers\n", encoding="utf-8")
-            (cortex / "SKILL.md").write_text("cortex\n", encoding="utf-8")
+            (cortex / "SKILL.md").write_text("game-studio\n", encoding="utf-8")
 
             overlay_path = temp / "adapters" / "codex" / "superpowers-plus" / "sample-skill" / "overlay.yaml"
             overlay_path.parent.mkdir(parents=True)
@@ -431,7 +431,7 @@ class InferSourceRootTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             temp = Path(td)
             one = temp / "sources" / "third_party" / "superpowers" / "v6.1.0" / "skills" / "sample-skill"
-            two = temp / "sources" / "third_party" / "claude-cortex" / "upstream" / "skills" / "sample-skill"
+            two = temp / "sources" / "third_party" / "game-studio" / "upstream" / "skills" / "sample-skill"
             one.mkdir(parents=True)
             two.mkdir(parents=True)
 

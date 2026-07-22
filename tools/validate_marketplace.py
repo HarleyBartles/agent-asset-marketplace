@@ -455,22 +455,6 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "c33199897758cab145bb7fdab1ca8fb1cbd9de50":
             raise ValueError("Unexpected pinned commit for openai/plugins vendor snapshot")
         return ROOT / "sources/third_party/game-studio/upstream"
-    if upstream_repo == "codewithmukesh/dotnet-claude-kit":
-        if pinned_commit != "9a9a91107596b3ac3ad1d0ad5ec5eef189e74515":
-            raise ValueError("Unexpected pinned commit for codewithmukesh/dotnet-claude-kit vendor snapshot")
-        return ROOT / "sources/third_party/dotnet-claude-kit/upstream"
-    if upstream_repo == "NickCrew/Claude-Cortex":
-        if pinned_commit != "7892d00e7cb6adf00144a535103b930c772fb2c0":
-            raise ValueError("Unexpected pinned commit for NickCrew/Claude-Cortex vendor snapshot")
-        return ROOT / "sources/third_party/claude-cortex/upstream"
-    if upstream_repo == "affaan-m/ECC":
-        if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
-            raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
-        return ROOT / "sources/third_party/ecc/upstream"
-    if upstream_repo == "https://github.com/affaan-m/ECC/tree/main/skills":
-        if pinned_commit != "ceca28852e5b31edbbf66ebccc8fd163dd14208e":
-            raise ValueError("Unexpected pinned commit for affaan-m/ECC vendor snapshot")
-        return ROOT / "sources/third_party/ecc/upstream"
     if upstream_repo == "combined-source":
         # Combined-source bundles aggregate from multiple upstreams; no single vendor root
         return None
@@ -1408,6 +1392,12 @@ def validate_no_legacy_manifest_shapes() -> None:
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
     parser.add_argument(
+        "--phase",
+        choices=("inventory", "project", "index", "all"),
+        default="all",
+        help="Validate only one phase. Default: all",
+    )
+    parser.add_argument(
         "--skip-freshness-checks",
         action="store_true",
         help=(
@@ -1419,43 +1409,23 @@ def _parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def validate_skill_zip_assertions() -> None:
-    """Assert flat skill-zip invariants that are not covered elsewhere.
-
-    These checks previously lived in the standalone ``validate_skill_zips.py``
-    step. They are cheap metadata assertions (no zip materialization), so they
-    run regardless of ``--skip-freshness-checks``.
-    """
-    import zipfile
-
-    groups = project_skills._collect_skill_groups()
-    if "finishing-a-development-branch" not in groups:
-        raise AssertionError("expected finishing-a-development-branch projection")
-
-    worker_packs = {entry["pack_name"] for entry in groups.get("worker-verification", [])}
-    if "wild-bunch-project-pack" in worker_packs:
-        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
-
-    finishing = project_skills.GENERATED_SKILL_ZIPS_ROOT / "finishing-a-development-branch.zip"
-    if not finishing.exists():
-        raise FileNotFoundError(f"expected flat zip: {finishing}")
-    with zipfile.ZipFile(finishing) as archive:
-        skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
-    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
-        raise AssertionError("direct skill zip does not contain the retained upstream guidance")
-    if "Codex Marketplace Note" in skill_md:
-        raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
-
-
-def main() -> int:
-    args = _parse_args()
-    if not args.skip_freshness_checks:
+def validate_inventory(*, skip_freshness: bool = False) -> None:
+    _bootstrap_marketplace_dependencies()
+    if not skip_freshness:
         _run_tool_check(
             [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
             "plugin root inventory check",
         )
-    _bootstrap_marketplace_dependencies()
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_manifest = check_json(spec["manifest_path"])
+        validate_plugin_manifest(plugin_manifest, spec)
+    validate_active_plugin_tree()
+    check_json(PLUGIN_ROOT_INVENTORY_PATH)
+    print("OK validate_marketplace: inventory")
 
+
+def validate_project(*, skip_freshness: bool = False) -> None:
+    _bootstrap_marketplace_dependencies()
     intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
@@ -1466,8 +1436,7 @@ def main() -> int:
     bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
 
     validate_marketplace_registry(registry, plugin_manifests)
-    validate_active_plugin_tree()
-    if not args.skip_freshness_checks:
+    if not skip_freshness:
         validate_projection_materializer()
         validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
@@ -1514,7 +1483,6 @@ def main() -> int:
 
     source_map = check_text(SOURCE_MAP_PATH)
     validate_source_map(source_map)
-    check_json(PLUGIN_ROOT_INVENTORY_PATH)
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
     check_text(PLUGIN_README_PATH)
@@ -1522,11 +1490,6 @@ def main() -> int:
     check_text(PLUGIN_BUNDLE_AGENTS_PATH)
     check_text(PROVENANCE_PATH)
     check_text(ROOT / "provenance/MARK-99-unslop.md")
-    check_text(REPO_INDEX_README_PATH)
-    check_json(REPO_INDEX_PATH)
-    validate_repo_index()
-
-    # New validation checks for normalized projection-lane shape
     validate_no_legacy_manifest_shapes()
     orphans = detect_first_party_orphans()
     if orphans:
@@ -1537,7 +1500,61 @@ def main() -> int:
     print(f"OK first-party orphan check: 0 orphans")
     validate_mega_pack_inclusion()
     validate_skill_zip_assertions()
+    print("OK validate_marketplace: project")
 
+
+def validate_index(*, skip_freshness: bool = False) -> None:
+    _ = skip_freshness
+    _bootstrap_marketplace_dependencies()
+    check_text(REPO_INDEX_README_PATH)
+    check_json(REPO_INDEX_PATH)
+    validate_repo_index()
+    print("OK validate_marketplace: index")
+
+
+def validate_all(*, skip_freshness: bool = False) -> None:
+    validate_inventory(skip_freshness=skip_freshness)
+    validate_project(skip_freshness=skip_freshness)
+    validate_index(skip_freshness=skip_freshness)
+
+
+def validate_skill_zip_assertions() -> None:
+    """Assert flat skill-zip invariants that are not covered elsewhere.
+
+    These checks previously lived in the standalone ``validate_skill_zips.py``
+    step. They are cheap metadata assertions (no zip materialization), so they
+    run regardless of ``--skip-freshness-checks``.
+    """
+    import zipfile
+
+    groups = project_skills._collect_skill_groups()
+    if "finishing-a-development-branch" not in groups:
+        raise AssertionError("expected finishing-a-development-branch projection")
+
+    worker_packs = {entry["pack_name"] for entry in groups.get("worker-verification", [])}
+    if "wild-bunch-project-pack" in worker_packs:
+        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
+
+    finishing = project_skills.GENERATED_SKILL_ZIPS_ROOT / "finishing-a-development-branch.zip"
+    if not finishing.exists():
+        raise FileNotFoundError(f"expected flat zip: {finishing}")
+    with zipfile.ZipFile(finishing) as archive:
+        skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
+    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
+        raise AssertionError("direct skill zip does not contain the retained upstream guidance")
+    if "Codex Marketplace Note" in skill_md:
+        raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
+
+
+def main() -> int:
+    args = _parse_args()
+    phase_runners = {
+        "inventory": lambda: validate_inventory(skip_freshness=args.skip_freshness_checks),
+        "project": lambda: validate_project(skip_freshness=args.skip_freshness_checks),
+        "index": lambda: validate_index(skip_freshness=args.skip_freshness_checks),
+        "all": lambda: validate_all(skip_freshness=args.skip_freshness_checks),
+    }
+    phase_runners[args.phase]()
     print("Marketplace validation passed.")
     return 0
 

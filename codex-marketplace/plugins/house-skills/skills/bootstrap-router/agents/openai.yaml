@@ -1,15 +1,13 @@
+version: 1
+metadata:
+  skill_name: bootstrap-router
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Bootstrap Router
-  short_description: Routes first-turn project work through classification and required
-    doctrine.
-  default_prompt: Use /bootstrap-router when bootstrap router for new project sessions
-    and workflow-sensitive starts after linear/codex adoption. use when a project
-    context begins, a session resumes, or a request may involve continuity ingress,
-    repo/source evidence, coding dispatch, codex workers, linear issues, artifacts,
-    verification, issue work, skill/package work, mutation, or publication. owns first
-    classification, ordinary-chat escape hatch, bounded skill-read stop rules, and
-    routing normal coding work to linear-issue-shaping instead of legacy dispatch
-    stacks.
+  short_description: Routes first-turn project work through classification and required doctrine.
+  default_prompt: Use /bootstrap-router when bootstrap router for new project sessions and workflow-sensitive starts after linear/codex adoption. use when a project context begins, a session resumes, or a request may involve continuity ingress, repo/source evidence, coding dispatch, codex workers, linear issues, artifacts, verification, issue work, skill/package work, mutation, or publication. owns first classification, ordinary-chat escape hatch, bounded skill-read stop rules, and routing normal coding work to linear-issue-shaping instead of legacy dispatch stacks.
 policy:
   products:
   - chatgpt

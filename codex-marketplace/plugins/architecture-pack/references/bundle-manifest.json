@@ -6,15 +6,13 @@
   "plugin_root": "codex-marketplace/plugins/architecture-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex",
     "first_party"
   ],
   "notes": [
-    "Architecture bundle projected from first-party and retained Claude-Cortex custody.",
-    "The ECC architecture slice has been removed from the active projection set."
+    "Architecture bundle projected from first-party source custody."
   ],
   "provenance_refs": [
-    "provenance/architecture-pack.md"
+    "codex-marketplace/plugins/architecture-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -64,19 +62,15 @@
       "provenance_note": "Projected verbatim from the first-party ddd skill."
     },
     {
-      "canonical_name": "event-driven-architecture",
-      "source_category": "third_party",
+      "canonical_name": "event-driven-systems",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
-      "local_path": "skills/event-driven-architecture",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/event-driven-systems",
+      "local_path": "skills/event-driven-systems",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party event-driven-systems skill."
     },
     {
       "canonical_name": "event-sourcing",
@@ -100,6 +94,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",

@@ -1,28 +1,12 @@
 {
   "source_backed_projections": [
     {
-      "canonical_name": "agent-architecture-audit",
-      "source_category": "third_party",
+      "canonical_name": "agent-evaluation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-architecture-audit",
-      "local_path": "skills/agent-architecture-audit"
-    },
-    {
-      "canonical_name": "agent-eval",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-eval",
-      "local_path": "skills/agent-eval"
+      "canonical_source_path": "sources/first_party/skills/agent-evaluation",
+      "local_path": "skills/agent-evaluation"
     }
   ],
-  "adapted_projections": [
-    {
-      "canonical_name": "agent-self-evaluation",
-      "source_category": "third_party",
-      "content_mode": "normalised",
-      "canonical_source_path": "sources/third_party/ecc/upstream/skills/agent-self-evaluation",
-      "local_path": "skills/agent-self-evaluation",
-      "adaptation_overlay_path": "adapters/codex/agentic-evaluation/agent-self-evaluation"
-    }
-  ]
+  "adapted_projections": []
 }

@@ -1,30 +1,31 @@
-# Source
+# Planning Pack Source Notes
 
-This plugin projects 5 planning-related skills from the retained Claude-Cortex
-custody root into a Codex marketplace pack.
+This bundle projects first-party source custody into the Codex marketplace.
 
-## Source custody (Claude-Cortex)
+<!-- BEGIN GENERATED: pack-inventory -->
+## Source custody
+### First Party custody
+- `sources/first_party/skills/estimation/`
+- `sources/first_party/skills/mermaid-diagramming/`
+- `sources/first_party/skills/release-engineering/`
+- `sources/first_party/skills/requirements-elicitation/`
 
-- Upstream repo: `NickCrew/Claude-Cortex`
-- URL: <https://github.com/NickCrew/Claude-Cortex.git>
-- Pinned commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
-- License: `MIT`
-- Manifest: `sources/third_party/claude-cortex/upstream/manifest.json`
-- Skill root: `sources/third_party/claude-cortex/upstream/skills/`
-- Projected skills:
-  - requirements-discovery
-  - mermaid-diagramming
-  - development-estimation
-  - release-prep
-  - release-analysis
-
-## Pack shape
-
+## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/planning-pack/`
 - Skill root: `codex-marketplace/plugins/planning-pack/skills/`
-- Generated install units: `generated/skill-zips/<skill-name>.zip`
+- Skill roots:
+  - `codex-marketplace/plugins/planning-pack/skills/estimation/`
+  - `codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming/`
+  - `codex-marketplace/plugins/planning-pack/skills/release-engineering/`
+  - `codex-marketplace/plugins/planning-pack/skills/requirements-elicitation/`
+
+## Generated install units
+- `generated/skill-zips/estimation.zip`
+- `generated/skill-zips/mermaid-diagramming.zip`
+- `generated/skill-zips/release-engineering.zip`
+- `generated/skill-zips/requirements-elicitation.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-
-Only the retained planning skills are projected. Later Claude-Cortex candidates
-stay out of scope.
+- The pack covers release engineering, requirements elicitation, estimation, and mermaid diagramming.
+- The pack does not absorb unrelated topical homes.

@@ -1,0 +1,12 @@
+version: 1
+metadata:
+  skill_name: python-frameworks
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
+interface:
+  display_name: Python Frameworks
+  short_description: Use when building, reviewing, or choosing Python web or task frameworks.
+  default_prompt: Use python-frameworks when building, reviewing, or choosing Python web or task frameworks.
+policy:
+  allow_implicit_invocation: true

@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: typescript
-  plugin: language-patterns-pack
   source_category: first_party
+  plugin: language-patterns-pack
+  projection_plugin: language-patterns-pack
 interface:
   display_name: TypeScript
   short_description: Use when writing or reviewing TypeScript type design, generics, module resolution, or compiler configuration.

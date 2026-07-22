@@ -1,7 +1,7 @@
 {
   "name": "agentic-evaluation",
   "version": "1.0.0",
-  "description": "ECC agent evaluation and audit workflows for Codex marketplace projection.",
+  "description": "First-party agent evaluation skill for Codex marketplace projection.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -11,18 +11,19 @@
   "keywords": [
     "codex",
     "marketplace",
-    "ecc",
+    "agentic",
     "evaluation",
-    "audit",
-    "self-evaluation",
+    "benchmark",
+    "scoring",
+    "rubric",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Agentic Evaluation",
-    "shortDescription": "ECC evaluation and audit workflows.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects the retained ECC evaluation and architecture-audit skills into a focused home for self-evaluation, rubric-driven review, and agent assessment.",
+    "shortDescription": "Benchmark design, scoring, and self-evaluation rubrics.",
+    "longDescription": "A repo-local Codex marketplace bundle that projects the first-party agent-evaluation skill into a focused home for benchmark design, rubric-driven review, and agent assessment.",
     "developerName": "Harley Bartles",
     "category": "Coding",
     "capabilities": [
@@ -31,8 +32,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Agentic Evaluation bundle and source map.",
-      "Use the bundle to review the selected ECC evaluation skills.",
-      "Compare the bundle against the retained ECC custody surface."
+      "Use the bundle to review the agent-evaluation skill.",
+      "Compare the bundle against the first-party source custody."
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",

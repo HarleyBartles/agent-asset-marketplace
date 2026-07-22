@@ -1,20 +1,22 @@
 # Agentic Evaluation Source Notes
 
-This bundle projects the retained ECC evaluation and audit skills into the
-Codex marketplace.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-- `sources/third_party/ecc/upstream/source-custody.md`
-- `sources/third_party/ecc/upstream/manifest.json`
-- `sources/third_party/ecc/upstream/LICENSE`
+### First Party custody
+- `sources/first_party/skills/agent-evaluation/`
 
-## Selected skills
-- `agent-self-evaluation`
-- `agent-eval`
-- `agent-architecture-audit`
+## Projection surfaces
+- Codex plugin root: `codex-marketplace/plugins/agentic-evaluation/`
+- Skill root: `codex-marketplace/plugins/agentic-evaluation/skills/`
+- Skill roots:
+  - `codex-marketplace/plugins/agentic-evaluation/skills/agent-evaluation/`
 
-## Projection notes
-- `agent-self-evaluation` is normalized through the adapter tree so the
-  examples and template assets live under canonical `references/` folders.
-- `agent-eval` and `agent-architecture-audit` project verbatim from retained
-  ECC custody.
+## Generated install units
+- `generated/skill-zips/agent-evaluation.zip`
+<!-- END GENERATED: pack-inventory -->
+
+## Boundary
+- The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics.
+- The pack does not absorb unrelated topical homes.

@@ -29,11 +29,11 @@
       "local_path": "skills/ddd"
     },
     {
-      "canonical_name": "event-driven-architecture",
-      "source_category": "third_party",
+      "canonical_name": "event-driven-systems",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/event-driven-architecture",
-      "local_path": "skills/event-driven-architecture"
+      "canonical_source_path": "sources/first_party/skills/event-driven-systems",
+      "local_path": "skills/event-driven-systems"
     },
     {
       "canonical_name": "event-sourcing",

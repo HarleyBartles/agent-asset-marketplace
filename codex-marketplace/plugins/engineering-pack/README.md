@@ -1,12 +1,16 @@
 # Engineering Pack
 
-This bundle projects the retained ECC implementation and deployment skills
-into a focused topical home.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### ECC skills
-- `ai-first-engineering`
-- `deployment-patterns`
+
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `observability`
+- `release-engineering`
+
+Manifest entry count: 2.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -14,12 +18,10 @@ into a focused topical home.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The pack covers implementation flow, release readiness, and deployment
-  patterns.
-- The pack stays out of workflow dispatch, research, and security homes.
+- The pack covers implementation flow, release readiness, deployment patterns, and observability.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
-The installable skill zips are generated under
-`generated/skill-zips/<skill-name>.zip` and can be
-installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

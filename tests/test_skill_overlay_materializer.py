@@ -196,7 +196,7 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 source_root / "SKILL.md",
                 (
                     "---\n"
-                    "name: agent-self-evaluation\n"
+                    "name: sample-skill\n"
                     "description: Evaluate task outputs\n"
                     "---\n\n"
                     "See `examples/high-score-example.md` and `templates/evaluation-report.md`.\n"
@@ -205,7 +205,7 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
             _write(source_root / "examples" / "high-score-example.md", "# old example\n")
             _write(source_root / "templates" / "evaluation-report.md", "# old template\n")
             _write(source_root / "scripts" / "evaluate.py", "print('ok')\n")
-            _write(source_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: agent-self-evaluation}\n")
+            _write(source_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: sample-skill}\n")
 
             _write(
                 overlay_root / "overlay.yaml",
@@ -220,7 +220,7 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 overlay_root / "SKILL.md",
                 (
                     "---\n"
-                    "name: agent-self-evaluation\n"
+                    "name: sample-skill\n"
                     "description: Evaluate task outputs\n"
                     "---\n\n"
                     "See `references/examples/high-score-example.md` and `references/templates/evaluation-report.md`.\n"
@@ -341,23 +341,23 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                     "version: 1\n"
                     "metadata:\n"
                     "  source_category: third_party\n"
-                    "  upstream_name: agent-self-evaluation\n"
+                    "  upstream_name: sample-skill\n"
                     "  upstream_version: upstream\n"
-                    "  adaptation_overlay: adapters/codex/agentic-evaluation/agent-self-evaluation\n"
-                    "  projection_plugin: agentic-evaluation\n"
-                    "  source-id: agent-self-evaluation\n"
-                    "  source-path: sources/third_party/ecc/upstream/skills/agent-self-evaluation/SKILL.md\n"
+                    "  adaptation_overlay: adapters/codex/game-studio/sample-skill\n"
+                    "  projection_plugin: game-studio\n"
+                    "  source-id: sample-skill\n"
+                    "  source-path: sources/third_party/game-studio/upstream/skills/sample-skill/SKILL.md\n"
                     "  provenance-name: MARK-301 Agentic evaluation normalization skill\n"
                     "  origin: third_party\n"
-                    "  source_author: ECC\n"
+                    "  source_author: OpenAI\n"
                     "  source_license: MIT\n"
-                    "  source_repo: https://github.com/affaan-m/ECC\n"
+                    "  source_repo: openai/plugins\n"
                     "  content_mode: normalised\n"
                     "  adapted_author: Harley Bartles\n"
                     "interface:\n"
                     "  display_name: Agentic Evaluation\n"
-                    "  short_description: Route evaluation-heavy work to the dedicated agentic-evaluation pack.\n"
-                    "  default_prompt: Use /agent-self-evaluation to keep evaluation assets internal.\n"
+                    "  short_description: Route evaluation-heavy work to the dedicated game-studio pack.\n"
+                    "  default_prompt: Use /sample-skill to keep evaluation assets internal.\n"
                     "policy:\n"
                     "  allow_implicit_invocation: true\n"
                     "  products:\n"

@@ -1,3 +1,8 @@
+version: 1
+metadata:
+  skill_name: connector-safety
+  source_category: first_party
+
 interface:
   display_name: Connector Safety
   short_description: Keep connector writes safe, narrow, auditable, and verified.

@@ -1,21 +1,17 @@
-# Source
+# Architecture Pack Source Notes
 
-This plugin projects the retained Codex Cortex architecture skills plus the
-first-party `database-design-patterns` skill.
+This bundle projects first-party source custody into the Codex marketplace.
 
+<!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
-### First-party custody
+### First Party custody
 - `sources/first_party/skills/clean-architecture/`
 - `sources/first_party/skills/cqrs/`
 - `sources/first_party/skills/database-design-patterns/`
 - `sources/first_party/skills/ddd/`
+- `sources/first_party/skills/event-driven-systems/`
 - `sources/first_party/skills/event-sourcing/`
 - `sources/first_party/skills/hexagonal-architecture/`
-
-### Retained upstream
-- `NickCrew/Claude-Cortex` upstream:
-  - `sources/third_party/claude-cortex/upstream/skills/cqrs-event-sourcing/`
-  - `sources/third_party/claude-cortex/upstream/skills/event-driven-architecture/`
 
 ## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/architecture-pack/`
@@ -25,7 +21,7 @@ first-party `database-design-patterns` skill.
   - `codex-marketplace/plugins/architecture-pack/skills/cqrs/`
   - `codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/`
   - `codex-marketplace/plugins/architecture-pack/skills/ddd/`
-  - `codex-marketplace/plugins/architecture-pack/skills/event-driven-architecture/`
+  - `codex-marketplace/plugins/architecture-pack/skills/event-driven-systems/`
   - `codex-marketplace/plugins/architecture-pack/skills/event-sourcing/`
   - `codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture/`
 
@@ -34,11 +30,11 @@ first-party `database-design-patterns` skill.
 - `generated/skill-zips/cqrs.zip`
 - `generated/skill-zips/database-design-patterns.zip`
 - `generated/skill-zips/ddd.zip`
-- `generated/skill-zips/event-driven-architecture.zip`
+- `generated/skill-zips/event-driven-systems.zip`
 - `generated/skill-zips/event-sourcing.zip`
 - `generated/skill-zips/hexagonal-architecture.zip`
+<!-- END GENERATED: pack-inventory -->
 
 ## Boundary
-- Only the retained architecture skills are projected.
-- Later Claude-Cortex or ECC candidates stay out of scope until a follow-up issue rebuilds them from fresh source inspection.
-- The bundle is a projection over retained source custody, not a new source of truth.
+- The pack covers software architecture patterns, domain-driven design, CQRS, event sourcing, clean architecture, and hexagonal architecture.
+- The pack does not absorb unrelated topical homes.

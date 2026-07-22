@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Canonical non-mutating marketplace validation entrypoint."""
+"""Canonical non-mutating marketplace validation entrypoint.
+
+This is a thin wrapper around `tools/rebuild_marketplace.py --check`.
+The wrapper preserves the canonical CI command and help surface while the
+full orchestration lives in the rebuild entry point.
+"""
 
 from __future__ import annotations
 
@@ -9,39 +14,31 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-
-
-def _run_tool(script_name: str, *args: str) -> None:
-    script_path = Path(__file__).resolve().with_name(script_name)
-    subprocess.run([sys.executable, str(script_path), *args], check=True)
-
-
-def _run_git(*args: str) -> None:
-    subprocess.run(["git", *args], cwd=ROOT, check=True)
+REBUILD = ROOT / "tools" / "rebuild_marketplace.py"
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the non-mutating marketplace check stack")
+    epilog = (
+        "This is the canonical non-mutating CI gate. It checks whether the committed\n"
+        "marketplace surfaces are current and valid without writing any files.\n\n"
+        "The check is implemented as `py -3 tools/rebuild_marketplace.py --check`.\n\n"
+        "For the full rebuild flow see .agents/guides/marketplace-generation-guide.md."
+    )
+    parser = argparse.ArgumentParser(
+        description="Run the non-mutating marketplace check stack",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=epilog,
+    )
     return parser.parse_args()
 
 
 def main() -> int:
-    args = _parse_args()
-
-    _run_tool("generate_plugin_root_inventory.py", "--check")
-    # Verify overlay.yaml line edits are healthy — stale overlays (where
-    # source normalization shifted line numbers or whitespace) must be
-    # healed via rebuild_marketplace.py before CI can pass.
-    _run_tool("heal_overlays.py", "--check")
-    _run_tool("update_skill_artifacts.py", "--check")
-    _run_tool("normalize_first_party_skill_sources.py", "--check")
-    _run_tool("install_agent_skills.py", "--check")
-    _run_tool("validate_marketplace.py", "--skip-freshness-checks")
-    _run_tool("generate_index_mesh.py", "--check")
-    _run_tool("validate_authority_assets.py")
-    _run_git("diff", "--check")
-    _run_git("diff", "--exit-code")
-    return 0
+    _parse_args()
+    return subprocess.run(
+        [sys.executable, str(REBUILD), "--check"],
+        cwd=ROOT,
+        check=False,
+    ).returncode
 
 
 if __name__ == "__main__":

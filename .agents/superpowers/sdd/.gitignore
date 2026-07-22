@@ -1,3 +1,1 @@
-# Ignore all session artifacts in this gitignored workspace; keep only this .gitignore.
 *
-!.gitignore

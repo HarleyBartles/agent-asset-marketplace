@@ -1,13 +1,13 @@
+version: 1
+metadata:
+  skill_name: rooms-project-doctrine
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Rooms Project Doctrine
-  short_description: Shared Rooms doctrine routing for source, truth-domain, ambiguity,
-    report, issue, and publication posture.
-  default_prompt: Use /rooms-project-doctrine when route shared rooms project doctrine
-    without duplicating detailed law. use for rooms bootstrap follow-up, project-level
-    doctrine orientation, named rooms truth/canon/archive/manuscript/repo claims,
-    source partitioning, ambiguity, actor/domain boundaries, report hygiene, github
-    publication or issue closure posture, and when a task needs the right rooms doctrine-bearing
-    skill before action.
+  short_description: Shared Rooms doctrine routing for source, truth-domain, ambiguity, report, issue, and publication posture.
+  default_prompt: Use /rooms-project-doctrine when route shared rooms project doctrine without duplicating detailed law. use for rooms bootstrap follow-up, project-level doctrine orientation, named rooms truth/canon/archive/manuscript/repo claims, source partitioning, ambiguity, actor/domain boundaries, report hygiene, github publication or issue closure posture, and when a task needs the right rooms doctrine-bearing skill before action.
 policy:
   products:
   - chatgpt

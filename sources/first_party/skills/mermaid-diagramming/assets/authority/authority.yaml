@@ -1,0 +1,25 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Mermaid Diagramming
+  canonical_url: https://mermaid.js.org/intro/
+  pinned_source_url: https://mermaid.js.org/intro/
+  latest_check_url: https://mermaid.js.org/intro/
+  revision: current
+  retrieved_at: "2026-07-21"
+  content_sha256: 8b91590a1c3307a89192d61d667386c36a18713f2e91aa8974ecd914de330050
+  license: MIT
+  license_url: https://opensource.org/licenses/MIT
+decomposition:
+  reconciled_against: 8b91590a1c3307a89192d61d667386c36a18713f2e91aa8974ecd914de330050
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Mermaid diagram types
+    - Syntax and style conventions
+    - When to use each diagram
+    - Accessibility
+    load_when:
+    - Use when mermaid-diagramming operational guidance is needed.
+    content_mode: first_party_synthesis

@@ -6,15 +6,15 @@
   "plugin_root": "codex-marketplace/plugins/frontend-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex",
     "feature-sliced",
     "first_party"
   ],
   "notes": [
-    "Frontend bundle projected from retained NickCrew/Claude-Cortex and feature-sliced custody only.",
-    "The ECC frontend slice has been removed from the active projection set."
+    "Frontend bundle projected from retained feature-sliced custody and first-party skills."
   ],
-  "provenance_refs": [],
+  "provenance_refs": [
+    "codex-marketplace/plugins/frontend-pack/references/source-map.md"
+  ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -34,19 +34,26 @@
       "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
-      "canonical_name": "interaction-design",
-      "source_category": "third_party",
+      "canonical_name": "frontend-ux",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
-      "local_path": "skills/interaction-design",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/frontend-ux",
+      "local_path": "skills/frontend-ux",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party frontend-ux skill."
+    },
+    {
+      "canonical_name": "playwright-testing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/playwright-testing",
+      "local_path": "skills/playwright-testing",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Projected verbatim from the first-party playwright-testing skill."
     },
     {
       "canonical_name": "react",
@@ -58,21 +65,6 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party react skill."
-    },
-    {
-      "canonical_name": "ux-review",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
-      "local_path": "skills/ux-review",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     },
     {
       "canonical_name": "wcag",
@@ -95,22 +87,12 @@
       "import_status": "imported",
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party web-styling skill."
-    },
-    {
-      "canonical_name": "webapp-testing",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
-      "local_path": "skills/webapp-testing",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",

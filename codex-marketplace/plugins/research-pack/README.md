@@ -1,11 +1,15 @@
 # Research Pack
 
-This bundle projects the retained ECC evidence-first research workflow into a
-focused topical home.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### ECC skills
+
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
 - `research-ops`
+
+Manifest entry count: 1.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -13,12 +17,10 @@ focused topical home.
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- The pack covers research planning, source gathering, and evidence-first
-  synthesis.
-- The pack stays out of workflow dispatch, engineering, and security homes.
+- The pack covers evidence-first research workflows, source triage, synthesis, and citation.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 
-The installable skill zips are generated under
-`generated/skill-zips/<skill-name>.zip` and can be
-installed directly from those artifacts.
+The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.

@@ -1,0 +1,12 @@
+version: 1
+metadata:
+  skill_name: agentic-harness
+  source_category: first_party
+  plugin: agentic-workflows
+  projection_plugin: agentic-workflows
+interface:
+  display_name: Agentic Harness
+  short_description: Use when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
+  default_prompt: Use agentic-harness when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
+policy:
+  allow_implicit_invocation: true

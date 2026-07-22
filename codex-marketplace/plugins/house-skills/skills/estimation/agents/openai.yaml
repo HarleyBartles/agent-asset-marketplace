@@ -1,0 +1,12 @@
+version: 1
+metadata:
+  skill_name: estimation
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
+interface:
+  display_name: Estimation
+  short_description: Use when estimating effort, risk, and uncertainty for sprints, milestones, or releases.
+  default_prompt: Use estimation when estimating effort, risk, and uncertainty for sprints, milestones, or releases.
+policy:
+  allow_implicit_invocation: true

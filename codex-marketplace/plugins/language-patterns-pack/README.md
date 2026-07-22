@@ -1,13 +1,17 @@
 # Language Patterns Pack
 
-This bundle projects the retained Claude-Cortex language/runtime and testing skills only.
+This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
-### Claude Cortex skills
-- `async-python-patterns`
-- `python-performance-optimization`
-- `python-testing-patterns`
-- `typescript-advanced-patterns`
+
+<!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `python`
+- `python-frameworks`
+- `typescript`
+
+Manifest entry count: 3.
+<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
@@ -15,8 +19,9 @@ This bundle projects the retained Claude-Cortex language/runtime and testing ski
 - canonical source mapping in `references/source-map.md`
 
 ## Boundary
-- Only the retained TypeScript, Python, and related language/testing guidance is kept here.
-- The pack does not absorb frontend, architecture, CQRS, database, security, repo governance, CI, or other non-language guidance.
+- The pack covers Python and TypeScript language, testing, async, performance, and framework guidance.
+- The pack does not absorb unrelated topical homes.
+- The bundle is a projection over retained source custody, not a new source of truth.
 
 ## Install shape
 

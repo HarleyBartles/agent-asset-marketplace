@@ -6,94 +6,69 @@
   "plugin_root": "codex-marketplace/plugins/planning-pack",
   "is_mega_pack": false,
   "source_families": [
-    "claude-cortex"
+    "first_party"
   ],
   "notes": [
-    "Planning pack covering requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
-    "The retained upstream skills keep their source-path references intact in the projected pack.",
-    "All 5 skills are projected verbatim from Claude-Cortex custody."
+    "Planning pack groups first-party skills for release engineering, requirements elicitation, estimation, and mermaid diagramming.",
+    "release-engineering, requirements-elicitation, and estimation are projected verbatim from first-party sources.",
+    "mermaid-diagramming is projected from a first-party skill."
   ],
   "provenance_refs": [
-    "provenance/planning-pack.md"
+    "provenance/planning-pack.md",
+    "codex-marketplace/plugins/planning-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
     {
-      "canonical_name": "development-estimation",
-      "source_category": "third_party",
+      "canonical_name": "estimation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation",
-      "local_path": "skills/development-estimation",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/estimation",
+      "local_path": "skills/estimation",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/development-estimation/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party estimation skill."
     },
     {
       "canonical_name": "mermaid-diagramming",
-      "source_category": "third_party",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
       "local_path": "skills/mermaid-diagramming",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/mermaid-diagramming/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party mermaid-diagramming skill."
     },
     {
-      "canonical_name": "release-analysis",
-      "source_category": "third_party",
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis",
-      "local_path": "skills/release-analysis",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "local_path": "skills/release-engineering",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-analysis/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party release-engineering skill."
     },
     {
-      "canonical_name": "release-prep",
-      "source_category": "third_party",
+      "canonical_name": "requirements-elicitation",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep",
-      "local_path": "skills/release-prep",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+      "local_path": "skills/requirements-elicitation",
       "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/release-prep/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
-    },
-    {
-      "canonical_name": "requirements-discovery",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery",
-      "local_path": "skills/requirements-discovery",
-      "import_status": "imported",
-      "source_path": "sources/third_party/claude-cortex/upstream/skills/requirements-discovery/SKILL.md",
-      "source_author": "NickCrew",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/NickCrew/Claude-Cortex",
-      "source_family": "claude-cortex",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Projected verbatim from the first-party requirements-elicitation skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",

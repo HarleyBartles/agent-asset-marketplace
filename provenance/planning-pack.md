@@ -1,30 +1,21 @@
 # Planning Pack Provenance
 
-## Source anchor
+## Current projection
 
-- Upstream repository: `NickCrew/Claude-Cortex`
-- Upstream commit: `7892d00e7cb6adf00144a535103b930c772fb2c0`
-- License: retained upstream license in source custody
+The `planning-pack` now projects first-party skills under
+`sources/first_party/skills/`:
 
-## Custody surface
-
-- Retained snapshot root: `sources/third_party/claude-cortex/upstream/`
+- `release-engineering`
+- `requirements-elicitation`
+- `estimation`
+- `mermaid-diagramming`
 
 ## Projection surface
 
 - Installable plugin projection: `codex-marketplace/plugins/planning-pack/`
-- Generated install unit: `generated/skill-zips/requirements-discovery.zip`
-- Generated install unit: `generated/skill-zips/mermaid-diagramming.zip`
-- Generated install unit: `generated/skill-zips/development-estimation.zip`
-- Generated install unit: `generated/skill-zips/release-prep.zip`
-- Generated install unit: `generated/skill-zips/release-analysis.zip`
+- Generated install units: `generated/skill-zips/<skill-name>.zip`
 
 ## Boundary
 
-The retained custody surface seeds the exact planning skills:
-`requirements-discovery`, `mermaid-diagramming`, `development-estimation`,
-`release-prep`, and `release-analysis`.
-
-These skills are imported from retained upstream custody under
-`sources/third_party/claude-cortex/upstream/` and projected into
-`codex-marketplace/plugins/planning-pack/` with pack-relative paths.
+The active `planning-pack` projection is sourced from first-party skills.
+Retired upstream snapshots are no longer part of the active projection set.

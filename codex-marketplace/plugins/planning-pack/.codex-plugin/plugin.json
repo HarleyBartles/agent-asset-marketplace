@@ -1,31 +1,33 @@
 {
   "name": "planning-pack",
   "version": "1.0.0",
-  "description": "Planning, requirements, diagramming, estimation, and release management skills",
+  "description": "Planning, requirements, diagramming, estimation, and release engineering skills.",
   "author": {
     "name": "Harley Bartles"
   },
   "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
   "license": "MIT",
-  "rights": "Contains third-party skill projections from Claude-Cortex (NickCrew/Claude-Cortex); see SOURCE.md and references/source-map.md for source custody and adaptation notes.",
+  "rights": "Contains first-party skill projections; see SOURCE.md and references/source-map.md for source custody.",
   "keywords": [
     "codex",
     "marketplace",
     "planning",
     "requirements",
+    "elicitation",
     "diagramming",
     "mermaid",
     "estimation",
     "release",
+    "release-engineering",
     "skills",
     "projection"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Planning Pack",
-    "shortDescription": "Planning, requirements, diagramming, estimation, and release management skills",
-    "longDescription": "A repo-local Codex plugin bundle that projects retained Claude-Cortex planning skills into an installable marketplace shape. Includes requirements discovery, mermaid diagramming, development estimation, release preparation, and release analysis.",
+    "shortDescription": "Planning, requirements, diagramming, estimation, and release engineering skills.",
+    "longDescription": "A repo-local Codex plugin bundle that projects first-party planning skills into an installable marketplace shape. Includes release-engineering, requirements-elicitation, estimation, and mermaid-diagramming.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [
@@ -34,8 +36,8 @@
     ],
     "defaultPrompt": [
       "Inspect the Planning Pack bundle and source map.",
-      "Use the bundle to install the Claude-Cortex projections (requirements-discovery, mermaid-diagramming, development-estimation, release-prep, release-analysis).",
-      "Compare the bundle versioning against the retained Claude-Cortex custody surface."
+      "Use the bundle to install the first-party planning skills (release-engineering, requirements-elicitation, estimation, mermaid-diagramming).",
+      "Compare the bundle versioning against the first-party source custody."
     ],
     "brandColor": "#0D9488",
     "composerIcon": "./assets/icon.svg",

@@ -9,11 +9,9 @@
     "first_party"
   ],
   "notes": [
-    "Data-platform bundle projected from the first-party database-engines skill.",
-    "The ECC data-platform slice has been removed from the active projection set."
+    "Data-platform bundle projected from the first-party database-engines skill."
   ],
   "provenance_refs": [
-    "provenance/data-platform-pack.md",
     "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
@@ -30,6 +28,11 @@
       "copy_expectation": "byte_identical",
       "provenance_note": "Projected verbatim from the first-party database-engines skill."
     }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",

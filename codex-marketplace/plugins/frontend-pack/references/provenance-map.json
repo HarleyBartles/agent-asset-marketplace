@@ -8,11 +8,18 @@
       "local_path": "skills/feature-sliced-design"
     },
     {
-      "canonical_name": "interaction-design",
-      "source_category": "third_party",
+      "canonical_name": "frontend-ux",
+      "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/interaction-design",
-      "local_path": "skills/interaction-design"
+      "canonical_source_path": "sources/first_party/skills/frontend-ux",
+      "local_path": "skills/frontend-ux"
+    },
+    {
+      "canonical_name": "playwright-testing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/playwright-testing",
+      "local_path": "skills/playwright-testing"
     },
     {
       "canonical_name": "react",
@@ -20,13 +27,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/react",
       "local_path": "skills/react"
-    },
-    {
-      "canonical_name": "ux-review",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/ux-review",
-      "local_path": "skills/ux-review"
     },
     {
       "canonical_name": "wcag",
@@ -41,13 +41,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/web-styling",
       "local_path": "skills/web-styling"
-    },
-    {
-      "canonical_name": "webapp-testing",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/claude-cortex/upstream/skills/webapp-testing",
-      "local_path": "skills/webapp-testing"
     }
   ],
   "adapted_projections": []
