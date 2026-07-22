@@ -10,7 +10,7 @@ import zipfile
 from pathlib import Path
 from typing import Any, Iterable
 
-from marketplace_utils import ROOT, load_json, load_plugin_root_inventory
+from marketplace_utils import ROOT, as_windows_long_path, load_json, load_plugin_root_inventory
 from skill_overlay_materializer import stage_overlay_tree
 from tree_canonicalization import compare_trees_canonicalized
 
@@ -75,19 +75,9 @@ TEXT_FILENAMES = {"SKILL.md", "openai.yaml"}
 CANONICAL_ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 CANONICAL_ZIP_PERMISSIONS = 0o644
 
-def _as_windows_long_path(path: Path) -> str:
-    resolved = path.resolve(strict=False)
-    text = str(resolved)
-    if os.name != "nt" or text.startswith("\\\\?\\"):
-        return text
-    if text.startswith("\\\\"):
-        return "\\\\?\\UNC\\" + text[2:]
-    return "\\\\?\\" + text
-
-
 def _relative_path(path: Path, root: Path) -> str:
-    path_text = _as_windows_long_path(path)
-    root_text = _as_windows_long_path(root)
+    path_text = as_windows_long_path(path)
+    root_text = as_windows_long_path(root)
     if os.name == "nt":
         if not path_text.startswith("\\\\?\\"):
             path_text = "\\\\?\\" + path_text
@@ -98,8 +88,8 @@ def _relative_path(path: Path, root: Path) -> str:
             return path_text[len(prefix) :].replace("\\", "/")
     try:
         return path.resolve(strict=False).relative_to(root.resolve(strict=False)).as_posix()
-    except ValueError:
-        return str(path).replace("\\", "/")
+    except ValueError as exc:
+        raise ValueError(f"packaged path {path} is not under {root}") from exc
 
 
 def _is_text_file(path: Path, raw: bytes | None = None) -> bool:
@@ -113,7 +103,7 @@ def _canonicalize_text_bytes(raw: bytes) -> bytes:
 
 
 def _read_canonical_file_bytes(path: Path) -> bytes:
-    raw = Path(_as_windows_long_path(path)).read_bytes()
+    raw = Path(as_windows_long_path(path)).read_bytes()
     if _is_text_file(path, raw):
         raw.decode("utf-8")
         if raw.startswith(b"\xef\xbb\xbf"):
@@ -158,7 +148,7 @@ def scan_skill_tree(skill_root: Path) -> tuple[list[Path], list[str]]:
         raise FileNotFoundError(skill_root)
     if not skill_root.is_dir():
         raise NotADirectoryError(skill_root)
-    skill_root_str = _as_windows_long_path(skill_root)
+    skill_root_str = as_windows_long_path(skill_root)
 
     packaged_files: list[Path] = []
     forbidden_paths: list[str] = []
@@ -208,7 +198,7 @@ def _load_bundle_manifest(plugin_root: Path) -> dict[str, Any] | None:
         if "canonical_name" not in first or "canonical_source_path" not in first:
             return None
         csp = first.get("canonical_source_path", "")
-        if isinstance(csp, str) and Path(csp).suffix:
+        if isinstance(csp, str) and Path(csp).name == "SKILL.md":
             return None
     return manifest
 
@@ -302,9 +292,9 @@ def _expected_plugin_roots(groups: dict[str, list[dict[str, Any]]]) -> dict[str,
 def _copy_staged_tree(staged_root: Path, destination_root: Path) -> None:
     """Replace a plugin skill tree with the freshly staged tree."""
     if destination_root.exists():
-        shutil.rmtree(_as_windows_long_path(destination_root))
+        shutil.rmtree(as_windows_long_path(destination_root))
     destination_root.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(_as_windows_long_path(staged_root), _as_windows_long_path(destination_root))
+    shutil.copytree(as_windows_long_path(staged_root), as_windows_long_path(destination_root))
 
 
 def _write_skill_zip(canonical_name: str, staged_root: Path, packaged_files: list[Path]) -> None:
@@ -320,7 +310,7 @@ def _write_skill_zip(canonical_name: str, staged_root: Path, packaged_files: lis
                 root=staged_root,
                 archive_root_name=canonical_name,
             )
-        os.replace(str(_as_windows_long_path(tmp_path)), str(_as_windows_long_path(zip_path)))
+        os.replace(str(as_windows_long_path(tmp_path)), str(as_windows_long_path(zip_path)))
     except Exception:
         if tmp_path.exists():
             tmp_path.unlink()
@@ -437,7 +427,7 @@ def project_skills(*, write: bool = True, plugin_name: str | None = None) -> Non
             if child.name in roots:
                 continue
             if write:
-                shutil.rmtree(_as_windows_long_path(child))
+                shutil.rmtree(as_windows_long_path(child))
                 print(f"Pruned stale projected skill root {child.relative_to(ROOT)}")
             else:
                 raise ValueError(f"{plugin_root} has stale projected skill roots: {child.name}")

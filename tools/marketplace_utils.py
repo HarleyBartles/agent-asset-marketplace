@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -342,3 +343,18 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
         "plugins": plugins,
         "notes": MARKETPLACE_NOTES,
     }
+
+
+def as_windows_long_path(path: Path) -> str:
+    r"""Return a Windows long-path prefix string for a Path.
+
+    This is a no-op on non-Windows platforms and for paths that already carry
+    the \\?\ prefix.
+    """
+    resolved = path.resolve(strict=False)
+    text = str(resolved)
+    if os.name != "nt" or text.startswith("\\\\?\\"):
+        return text
+    if text.startswith("\\\\"):
+        return "\\\\?\\UNC\\" + text[2:]
+    return "\\\\?\\" + text

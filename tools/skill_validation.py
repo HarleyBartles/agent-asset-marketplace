@@ -3,25 +3,16 @@
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import yaml
 from yaml.nodes import MappingNode, ScalarNode, SequenceNode
 
+from marketplace_utils import as_windows_long_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {"using-superpowers"}
-
-
-def _as_windows_long_path(path: Path) -> str:
-    resolved = path.resolve(strict=False)
-    text = str(resolved)
-    if os.name != "nt" or text.startswith("\\\\?\\"):
-        return text
-    if text.startswith("\\\\"):
-        return "\\\\?\\UNC\\" + text[2:]
-    return "\\\\?\\" + text
 
 
 def _projected_skill_requires_metadata(skill_root: Path) -> bool:
@@ -33,7 +24,7 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     if not skill_md.is_file():
         raise FileNotFoundError(skill_md)
 
-    raw = Path(_as_windows_long_path(skill_md)).read_bytes()
+    raw = Path(as_windows_long_path(skill_md)).read_bytes()
     if raw.startswith(b"\xef\xbb\xbf"):
         raise ValueError(f"{skill_md} begins with a UTF-8 BOM")
 
