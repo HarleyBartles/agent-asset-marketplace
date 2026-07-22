@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: research-ops
-  plugin: research-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Research Ops
   short_description: Use when planning research, triaging sources, synthesizing evidence, or managing citations.

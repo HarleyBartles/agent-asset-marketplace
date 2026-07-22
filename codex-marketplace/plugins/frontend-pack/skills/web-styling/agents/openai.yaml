@@ -3,6 +3,7 @@ metadata:
   skill_name: web-styling
   plugin: frontend-pack
   source_category: first_party
+  projection_plugin: frontend-pack
 interface:
   display_name: Web Styling
   short_description: Use when choosing or refactoring CSS approaches across CSS Modules, Sass, Less, and styled-components.

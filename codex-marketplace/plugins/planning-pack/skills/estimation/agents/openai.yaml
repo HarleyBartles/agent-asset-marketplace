@@ -3,6 +3,7 @@ metadata:
   skill_name: estimation
   plugin: planning-pack
   source_category: first_party
+  projection_plugin: planning-pack
 interface:
   display_name: Estimation
   short_description: Use when estimating effort, risk, and uncertainty for sprints, milestones, or releases.

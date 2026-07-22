@@ -1,12 +1,12 @@
 version: 1
 metadata:
   skill_name: database-engines
-  plugin: data-platform-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Database Engines
-  short_description: Use when choosing, connecting to, querying, or operating a
-    relational database engine.
+  short_description: Use when choosing, connecting to, querying, or operating a relational database engine.
   default_prompt: Which relational database engine are you using?
 policy:
   allow_implicit_invocation: true

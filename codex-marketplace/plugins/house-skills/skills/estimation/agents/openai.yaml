@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: estimation
-  plugin: planning-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Estimation
   short_description: Use when estimating effort, risk, and uncertainty for sprints, milestones, or releases.

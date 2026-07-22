@@ -21,7 +21,19 @@ def _run_git(*args: str) -> None:
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the non-mutating marketplace check stack")
+    epilog = (
+        "This is the canonical non-mutating CI gate. It checks whether the committed\n"
+        "marketplace surfaces are current and valid without writing any files.\n\n"
+        "Checks include: plugin-root inventory, overlay health, skill artifacts,\n"
+        "first-party source shape, installed skills, marketplace structure, index\n"
+        "mesh, authority assets, and git diff cleanliness.\n\n"
+        "For the full rebuild flow see .agents/guides/marketplace-generation-guide.md."
+    )
+    parser = argparse.ArgumentParser(
+        description="Run the non-mutating marketplace check stack",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=epilog,
+    )
     return parser.parse_args()
 
 

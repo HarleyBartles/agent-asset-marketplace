@@ -11,3 +11,6 @@ policy:
   allow_implicit_invocation: true
 dependencies:
   tools: []
+metadata:
+  plugin: repo-worker-pack
+  projection_plugin: repo-worker-pack

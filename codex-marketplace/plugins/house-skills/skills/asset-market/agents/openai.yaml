@@ -1,14 +1,7 @@
 interface:
   display_name: Asset Market
   short_description: Fetch exact marketplace skill source for installation handoff.
-  default_prompt: Use /asset-market when source-facing asset marketplace skill and
-    pack acquisition with fidelity control. use when harley asks to get, pull, fetch,
-    install, update, compare, or prepare the latest gpt skill or bundled skill pack
-    from the asset marketplace repo, especially phrases like "using asset-market",
-    "from the repo", or "latest marketplace version". owns connector-backed repo source
-    resolution, exact source reconstruction, pack-to-per-skill install-unit expansion,
-    and source/projection ambiguity. does not validate, package, present installable
-    zips, or mutate the repo.
+  default_prompt: Use /asset-market when source-facing asset marketplace skill and pack acquisition with fidelity control. use when harley asks to get, pull, fetch, install, update, compare, or prepare the latest gpt skill or bundled skill pack from the asset marketplace repo, especially phrases like "using asset-market", "from the repo", or "latest marketplace version". owns connector-backed repo source resolution, exact source reconstruction, pack-to-per-skill install-unit expansion, and source/projection ambiguity. does not validate, package, present installable zips, or mutate the repo.
 policy:
   products:
   - chatgpt
@@ -16,3 +9,6 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
+metadata:
+  plugin: house-skills
+  projection_plugin: house-skills

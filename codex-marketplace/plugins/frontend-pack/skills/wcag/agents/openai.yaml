@@ -3,6 +3,7 @@ metadata:
   skill_name: wcag
   plugin: frontend-pack
   source_category: first_party
+  projection_plugin: frontend-pack
 interface:
   display_name: WCAG
   short_description: Use when auditing web content accessibility against WCAG 2.2 or mapping success criteria to a verification plan.

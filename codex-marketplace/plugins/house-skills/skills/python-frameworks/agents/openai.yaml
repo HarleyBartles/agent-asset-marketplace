@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: python-frameworks
-  plugin: language-patterns-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Python Frameworks
   short_description: Use when building, reviewing, or choosing Python web or task frameworks.

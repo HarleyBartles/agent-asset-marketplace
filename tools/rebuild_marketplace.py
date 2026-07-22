@@ -91,7 +91,29 @@ def _retained_verbatim_paths() -> set[str]:
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the full marketplace rebuild and validation stack")
+    epilog = (
+        "This is the canonical 'refresh marketplace' command. It regenerates all derived\n"
+        "marketplace surfaces and then validates them.\n\n"
+        "Editable inputs (do not hand-edit derived outputs):\n"
+        "  - codex-marketplace/custody-pack-registry.json\n"
+        "  - sources/first_party/skills/<skill>/\n"
+        "  - sources/third_party/<upstream>/\n"
+        "  - adapters/codex/<pack>/<skill>/\n\n"
+        "Key outputs:\n"
+        "  - .agents/plugins/marketplace.json, codex-marketplace/manifest.json\n"
+        "  - codex-marketplace/plugins/<pack>/skills/<skill>/\n"
+        "  - codex-marketplace/plugins/<pack>/references/{bundle-manifest,source-map,provenance-map}.*\n"
+        "  - generated/skill-zips/<skill>.zip\n"
+        "  - provenance/first-party-skills.md\n"
+        "  - repo-index/repo-index.json and repo-wide INDEX.md mesh\n"
+        "  - .agents/skills/<skill>/ (installed skills)\n\n"
+        "For the full step-by-step flow see .agents/guides/marketplace-generation-guide.md."
+    )
+    parser = argparse.ArgumentParser(
+        description="Run the full marketplace rebuild and validation stack",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=epilog,
+    )
     return parser.parse_args()
 
 

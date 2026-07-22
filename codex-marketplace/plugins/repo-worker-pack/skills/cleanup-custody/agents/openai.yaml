@@ -9,3 +9,6 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
+metadata:
+  plugin: repo-worker-pack
+  projection_plugin: repo-worker-pack

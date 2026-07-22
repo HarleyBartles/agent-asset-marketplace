@@ -3,6 +3,7 @@ metadata:
   skill_name: playwright-testing
   plugin: frontend-pack
   source_category: first_party
+  projection_plugin: frontend-pack
 interface:
   display_name: Playwright Testing
   short_description: Use when writing, reviewing, or debugging Playwright end-to-end tests.

@@ -3,6 +3,7 @@ metadata:
   skill_name: mermaid-diagramming
   plugin: planning-pack
   source_category: first_party
+  projection_plugin: planning-pack
 interface:
   display_name: Mermaid Diagramming
   short_description: Use when selecting, writing, or reviewing Mermaid diagrams for technical documentation.

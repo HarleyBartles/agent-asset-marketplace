@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from marketplace_utils import ROOT, as_windows_long_path, load_json, load_plugin_root_inventory
-from skill_overlay_materializer import stage_overlay_tree
+from skill_overlay_materializer import _inject_plugin_identity, stage_overlay_tree
 from tree_canonicalization import compare_trees_canonicalized
 
 
@@ -401,6 +401,7 @@ def project_skills(*, write: bool = True, plugin_name: str | None = None) -> Non
                 for entry in entries:
                     destination_root = ROOT / entry["plugin_root"] / entry["local_path"]
                     _copy_staged_tree(staged_root, destination_root)
+                    _inject_plugin_identity(destination_root, entry["pack_name"])
                 _write_skill_zip(canonical_name, staged_root, packaged_files)
             else:
                 for entry in entries:

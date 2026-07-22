@@ -479,7 +479,7 @@ def _apply_overlay_files(staged_root: Path, overlay_root: Path) -> None:
 
 
 def _inject_plugin_identity(staged_root: Path, plugin_name: str) -> None:
-    """Set metadata.plugin to the target plugin in the projected agent YAML."""
+    """Set metadata.plugin and metadata.projection_plugin in the projected agent YAML."""
     openai_yaml = staged_root / OPENAI_AGENT_FILENAME
     if not openai_yaml.is_file():
         return
@@ -489,6 +489,7 @@ def _inject_plugin_identity(staged_root: Path, plugin_name: str) -> None:
         metadata = {}
         parsed["metadata"] = metadata
     metadata["plugin"] = plugin_name
+    metadata["projection_plugin"] = plugin_name
     rendered = yaml.safe_dump(
         parsed,
         sort_keys=False,
@@ -531,7 +532,6 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
             _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
-        _inject_plugin_identity(staged_root, plugin_name)
         shutil.copytree(staged_root, _as_windows_long_path(destination_root))
     finally:
         tempdir.cleanup()

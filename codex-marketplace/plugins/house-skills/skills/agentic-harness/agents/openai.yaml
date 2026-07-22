@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: agentic-harness
-  plugin: agentic-workflows
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Agentic Harness
   short_description: Use when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.

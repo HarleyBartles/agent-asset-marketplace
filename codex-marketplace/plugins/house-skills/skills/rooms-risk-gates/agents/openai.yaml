@@ -4,3 +4,6 @@ interface:
   default_prompt: Use $rooms-risk-gates when working in Rooms, Mostly and a pre-action risk gate is needed for rooms-specific canon pressure, ambiguity preservation, analogy validation, or zoom-out compression. Composes with the base risk-gates skill.
 policy:
   allow_implicit_invocation: true
+metadata:
+  plugin: house-skills
+  projection_plugin: house-skills

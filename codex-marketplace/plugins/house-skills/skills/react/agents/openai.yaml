@@ -1,13 +1,12 @@
 version: 1
 metadata:
   skill_name: react
-  plugin: frontend-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: React
-  short_description: Use when building or reviewing React component architecture, hooks usage,
-    and performance patterns.
-  default_prompt: Use when building or reviewing React component architecture, hooks usage,
-    and performance patterns.
+  short_description: Use when building or reviewing React component architecture, hooks usage, and performance patterns.
+  default_prompt: Use when building or reviewing React component architecture, hooks usage, and performance patterns.
 policy:
   allow_implicit_invocation: true

@@ -4,3 +4,6 @@ interface:
   default_prompt: Read references/repository-guide-standard.md, then the repo's .agents/docs/repo-guide-policy.md, then the specific local guide. Use repo-worker-base for worktree, branch, validation, and publication. Route to the matching Superpowers skill for the stage.
 policy:
   allow_implicit_invocation: true
+metadata:
+  plugin: repo-worker-pack
+  projection_plugin: repo-worker-pack

@@ -1,9 +1,7 @@
 interface:
   display_name: Rooms Character Investigation
-  short_description: Investigate Rooms characters and participants from repo/source
-    surfaces.
-  default_prompt: Use /rooms-character-investigation when rooms character and subject
-    investigations with source partitioning for prompt, peek, and recall handoffs.
+  short_description: Investigate Rooms characters and participants from repo/source surfaces.
+  default_prompt: Use /rooms-character-investigation when rooms character and subject investigations with source partitioning for prompt, peek, and recall handoffs.
 policy:
   products:
   - chatgpt
@@ -11,3 +9,6 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
+metadata:
+  plugin: house-skills
+  projection_plugin: house-skills

@@ -11,3 +11,6 @@ policy:
   allow_implicit_invocation: true
 dependencies:
   tools: []
+metadata:
+  plugin: house-skills
+  projection_plugin: house-skills

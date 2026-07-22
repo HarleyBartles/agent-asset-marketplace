@@ -7,6 +7,7 @@ metadata:
   source-path: sources/first_party/skills/owasp-top-ten/SKILL.md
   provenance-name: OWASP Top Ten first-party skill
   content_mode: verbatim
+  projection_plugin: security-pack
 interface:
   display_name: OWASP Top Ten
   short_description: Use when reviewing web application security risks, mapping controls to OWASP Top 10, or establishing an ASVS verification route.

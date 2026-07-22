@@ -1,8 +1,9 @@
 version: 1
 metadata:
   skill_name: event-driven-systems
-  plugin: architecture-pack
+  plugin: house-skills
   source_category: first_party
+  projection_plugin: house-skills
 interface:
   display_name: Event Driven Systems
   short_description: Use when designing, reviewing, or operating event-driven systems with asynchronous communication.

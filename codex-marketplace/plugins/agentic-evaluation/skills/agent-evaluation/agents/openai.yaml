@@ -3,6 +3,7 @@ metadata:
   skill_name: agent-evaluation
   plugin: agentic-evaluation
   source_category: first_party
+  projection_plugin: agentic-evaluation
 interface:
   display_name: Agent Evaluation
   short_description: Use when evaluating agent outputs, designing benchmarks, or building self-evaluation rubrics.
