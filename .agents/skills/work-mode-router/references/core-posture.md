@@ -31,4 +31,4 @@ Design uses the same contract with `design-baseline.md` and `.agents/guides/desi
 
 `work-mode-router` only classifies and hands off. It does not perform repo hygiene, select stage technique, or execute project work; `/using-superpowers` owns the downstream lane choice after the base/baseline/local-guide pairing is established.
 
-For worker starts, classify the durable route state before any implementation lane choice. A prompt such as `Pick up {{issue.identifier}} from Linear. Start with /work-mode-router.` must be enough to infer one of the worker route states below from durable Linear/repo evidence.
+For worker starts, classify the durable route state before any implementation lane choice. A prompt such as `Pick up {{issue.identifier}} from Linear. Start with /work-mode-router.` must be enough to infer one of the worker route states in `route-states.md` from durable Linear/repo evidence.

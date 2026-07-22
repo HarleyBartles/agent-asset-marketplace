@@ -14,4 +14,7 @@ interface:
     and the matching baseline/local guide before /using-superpowers. Do not invoke
     /work-mode-router recursively after classification.
 policy:
+  products:
+  - chatgpt
+  - codex
   allow_implicit_invocation: true
