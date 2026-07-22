@@ -14,7 +14,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `repo-worker-base`
 - `risk-gates`
 - `subagent-model-routing`
-- `unslop-plus`
+- `unslop-profiles`
 - `using-github`
 - `using-linear`
 - `work-mode-router`

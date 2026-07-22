@@ -4,6 +4,11 @@ Anti-slop engine and profile router for software development workflows.
 
 ## What's Included
 <!-- BEGIN GENERATED: bundle-contents -->
+### First Party skills
+- `unslop-engine`
+- `unslop-profiles`
+
+Manifest entry count: 2.
 <!-- END GENERATED: bundle-contents -->
 
 ## Usage

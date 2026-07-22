@@ -1,0 +1,9 @@
+interface:
+  display_name: Unslop Engine
+  short_description: Use when generating a reusable anti-slop profile from observed defaults.
+  default_prompt: Use $unslop-engine to analyze a domain for repetitive AI defaults and generate a reusable anti-slop profile.
+policy:
+  allow_implicit_invocation: false
+metadata:
+  plugin: unslop-plus
+  projection_plugin: unslop-plus

@@ -2,34 +2,56 @@
   "bundle_name": "unslop-plus",
   "bundle_version": "1.0.0",
   "bundle_type": "projection-lane",
+  "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/unslop-plus",
-  "is_mega_pack": true,
-  "mega_pack_for": "unslop",
+  "is_mega_pack": false,
   "source_families": [
-    "unslop"
-  ],
-  "entries": [
-    {
-      "canonical_name": "unslop-plus",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/unslop-plus",
-      "local_path": "skills/unslop-plus",
-      "import_status": "imported",
-      "source_path": "sources/first_party/skills/unslop-plus/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "unslop",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Curated unslop-plus skill projected verbatim from first-party custody. The adapted unslop.py and upstream LICENSE are preserved within the first-party source as derivative work and provenance evidence."
-    }
+    "first_party"
   ],
   "notes": [
-    "Auto-generated mega-pack manifest for the unslop custody root.",
-    "Curated cross-family entries are preserved from the prior manifest.",
-    "Regenerate with: py -3 tools/generate_mega_packs.py"
+    "Unslop+ is a first-party projection-lane bundle containing the unslop engine skill and the anti-slop profile router skill.",
+    "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
+  ],
+  "provenance_refs": [
+    "provenance/unslop.md",
+    "codex-marketplace/plugins/unslop-plus/references/source-map.md"
   ],
   "plugin_author": "Harley Bartles",
-  "plugin_license": "MIT"
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "unslop-engine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/unslop-engine",
+      "local_path": "skills/unslop-engine",
+      "provenance_note": "Projected verbatim from the first-party unslop-engine skill.",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "unslop-profiles",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+      "local_path": "skills/unslop-profiles",
+      "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
+      "copy_expectation": "byte_identical"
+    }
+  ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md"
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/unslop-plus/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/unslop-plus/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/unslop-plus/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
 }

@@ -24,6 +24,21 @@ The projected `unslop-engine` skill adapts the upstream idea (sample collection,
 
 ## First-Party Source Custody
 <!-- BEGIN GENERATED: pack-inventory -->
+## Source custody
+### First Party custody
+- `sources/first_party/skills/unslop-engine/`
+- `sources/first_party/skills/unslop-profiles/`
+
+## Projection surfaces
+- Codex plugin root: `codex-marketplace/plugins/unslop-plus/`
+- Skill root: `codex-marketplace/plugins/unslop-plus/skills/`
+- Skill roots:
+  - `codex-marketplace/plugins/unslop-plus/skills/unslop-engine/`
+  - `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/`
+
+## Generated install units
+- `generated/skill-zips/unslop-engine.zip`
+- `generated/skill-zips/unslop-profiles.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Marketplace Composition

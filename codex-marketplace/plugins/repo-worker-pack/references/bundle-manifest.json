@@ -116,13 +116,13 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "unslop-plus",
+      "canonical_name": "unslop-profiles",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/unslop-plus",
-      "local_path": "skills/unslop-plus",
-      "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
+      "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+      "local_path": "skills/unslop-profiles",
+      "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
       "copy_expectation": "byte_identical"
     },
     {
