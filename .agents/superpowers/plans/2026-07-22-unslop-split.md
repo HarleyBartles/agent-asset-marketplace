@@ -952,5 +952,3 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - **Interim state:** Between Task 6 and Task 7 the marketplace will fail validation because `unslop-plus` source is gone but projections are stale. This is expected and fixed by Task 7.
 - **Task independence:** Tasks 1 and 2 are fully independent. Tasks 3–6 are sequential. Task 7 depends on all preceding tasks.
 - **Execution confidence:** **9/10**. All file targets, exact contents, registry edits, and validation commands are specified. The only runtime uncertainty is the exact text of `validate_package.py` forbidden-fragment checks, which are already defined.
-
-
