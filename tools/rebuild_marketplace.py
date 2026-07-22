@@ -17,13 +17,19 @@ PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace/plugins"
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 
 
-def _run_tool(script_name: str, *args: str) -> None:
+def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
     script_path = Path(__file__).resolve().with_name(script_name)
-    subprocess.run([sys.executable, str(script_path), *args], check=True)
+    cmd = [sys.executable, str(script_path), *args]
+    if verbose:
+        print("+ " + " ".join(cmd))
+    subprocess.run(cmd, check=True)
 
 
-def _run_git(*args: str) -> None:
-    subprocess.run(["git", *args], cwd=ROOT, check=True)
+def _run_git(*args: str, verbose: bool = False) -> None:
+    cmd = ["git", *args]
+    if verbose:
+        print("+ " + " ".join(cmd))
+    subprocess.run(cmd, cwd=ROOT, check=True)
 
 
 def _git_output(*args: str) -> str:
@@ -90,10 +96,19 @@ def _retained_verbatim_paths() -> set[str]:
     return skip_paths
 
 
+def _check_arg(check: bool) -> tuple[str, ...]:
+    return ("--check",) if check else ()
+
+
+_PHASE_ORDER = ("inventory", "heal", "project", "index", "catalog", "validate")
+
+
 def _parse_args() -> argparse.Namespace:
     epilog = (
         "This is the canonical 'refresh marketplace' command. It regenerates all derived\n"
         "marketplace surfaces and then validates them.\n\n"
+        "Use --phase to run only one logical phase. Each phase is self-checking; earlier\n"
+        "phases are not automatically regenerated unless you run --phase all (the default).\n\n"
         "Editable inputs (do not hand-edit derived outputs):\n"
         "  - codex-marketplace/custody-pack-registry.json\n"
         "  - sources/first_party/skills/<skill>/\n"
@@ -113,6 +128,43 @@ def _parse_args() -> argparse.Namespace:
         description="Run the full marketplace rebuild and validation stack",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=epilog,
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Non-mutating check mode. Forwards --check to every writer script that supports it.",
+    )
+    parser.add_argument(
+        "--phase",
+        choices=("inventory", "heal", "project", "index", "catalog", "validate", "all"),
+        default="all",
+        help="Run only the named phase. Default: all",
+    )
+    parser.add_argument(
+        "--skip-install",
+        action="store_true",
+        help="Skip installing skills into .agents/skills/",
+    )
+    parser.add_argument(
+        "--skip-index",
+        action="store_true",
+        help="Skip repo-index and index-mesh generation",
+    )
+    parser.add_argument(
+        "--skip-validate",
+        action="store_true",
+        help="Skip validator scripts in the final validate phase",
+    )
+    parser.add_argument(
+        "--skip-whitespace-check",
+        action="store_true",
+        help="Skip git diff --check (whitespace lint). Does not skip --exit-code in --check mode.",
+    )
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="Print each command before running it",
     )
     return parser.parse_args()
 
