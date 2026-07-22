@@ -1,0 +1,6 @@
+interface:
+  display_name: Unslop Profiles
+  short_description: Use when applying the right anti-slop profile to a software development workflow.
+  default_prompt: Use $unslop-profiles to apply the right anti-slop profile for the current task.
+policy:
+  allow_implicit_invocation: true
