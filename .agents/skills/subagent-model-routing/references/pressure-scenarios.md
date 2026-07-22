@@ -20,16 +20,16 @@
 
 ### Devin Desktop
 
-15. New repo feature needs live exploration and planning -> SWE-1.7 High, not GLM by inherited “planner” label.
-16. Product-level textual design discussion without substantial repo work -> GLM-5.2 High may be selected.
-17. Approved mechanical implementation -> SWE-1.7 Medium.
-18. Hidden root-cause bug -> SWE-1.7 High with broad investigation but bounded mutation.
-19. Screenshot-dependent frontend fault -> SWE-1.7 High.
-20. Technical code review -> fresh-context SWE-1.7 High.
-21. SWE-authored plan needs architecture/intent challenge -> GLM-5.2 High with a non-overlapping prompt.
-22. “SWE implemented it, therefore GLM must review” -> reject automatic pairing and classify review type first.
-23. “The task is easy, therefore use SWE-1.6” -> prefer SWE-1.7 Medium unless quota/evaluation evidence says otherwise.
-24. “SWE-1.6 Fast is cheap, therefore use it” -> reject while free SWE-1.7 is adequate; allow only latency/quota/outage/evaluation justification.
-25. SWE-1.7 is unavailable -> use explicit SWE-1.6 fallback.
-26. Large diff/repo triggers GLM 1M -> reject automatic paid context.
-27. Provider benchmark conflicts with repeated local evaluation -> preserve documented default until an evaluation-backed profile update is made; do not drift ad hoc.
+15. New repo feature needs live exploration and planning -> `subagent_explore`; switch to `subagent_general` only for implementation.
+16. Product-level textual design discussion without substantial repo work -> `subagent_explore`.
+17. Approved mechanical implementation -> `subagent_general`.
+18. Hidden root-cause bug -> `subagent_general` with broad investigation but bounded mutation.
+19. Screenshot-dependent frontend fault -> `subagent_general` if interactive tooling is needed, else `subagent_explore`.
+20. Technical code review -> `subagent_explore` with fresh context.
+21. Plan needs architecture / intent challenge -> `subagent_explore` with a non-overlapping prompt.
+22. "Parent used one model family, therefore the other must review" -> reject automatic model-family pairing; classify the review question and choose `subagent_explore` or `subagent_general`.
+23. "The task is easy, therefore use a weaker/smaller model" -> reject; model is not selectable. Use `subagent_explore` for read-only and `subagent_general` for mutation.
+24. "A different/faster/cheaper model is available, therefore use it" -> reject; model, cost, and reasoning are not dispatch dimensions while current dispatches are adequate.
+25. Subagent fails and retry by "changing model" is requested -> reject; retry by refining the prompt, narrowing scope, or decomposing.
+26. Large diff / repo triggers a request for paid context -> reject; no paid context tier. Decompose across `subagent_explore` and `subagent_general`.
+27. Provider benchmark conflicts with repeated local evaluation -> preserve the documented profile until an evaluation-backed update is made; do not drift ad hoc.

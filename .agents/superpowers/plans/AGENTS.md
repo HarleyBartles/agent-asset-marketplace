@@ -28,5 +28,15 @@ publication rules.
 
 This file must stay aligned with the repo's plan documentation practices. When
 plan formats change or new guidance is needed for plan structure, review and
-update this file to reflect current expectations. Plans should be archived or
-removed when the work they describe is complete—stale plans create confusion.
+update this file to reflect current expectations. Completed implementation plans
+must be checked off and committed with their implementation PR (see
+`.agents/guides/implementing-guide.md`) so reviewers can compare planned vs.
+delivered work. Plans remain repo resident as historical records and are not
+removed or archived; they must not be left open or uncommitted as stale
+in-progress guidance.
+
+## Historical reference
+
+Completed plans and the adjacent `.agents/superpowers/specs/` documents are
+historical references. Agents may inspect them alongside git history to
+understand how the repo became what it is today via planned work.

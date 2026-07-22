@@ -27,6 +27,8 @@ metadata:
   - risk-gates
   - work-mode-router
   - repo-worker-base
+  use_after:
+  - inspecting-the-environment
 license: MIT
 ---
 # Subagent Model Routing
