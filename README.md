@@ -51,16 +51,9 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 ## Marketplace asset flow
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
-For this normalized pass, the active plugin set is limited to the protected
-roots: `codex-marketplace/plugins/house-skills`,
-`codex-marketplace/plugins/unslop`, and
-`codex-marketplace/plugins/game-studio`, plus
-`codex-marketplace/plugins/superpowers-plus`,
-`codex-marketplace/plugins/repo-worker-pack`, `codex-marketplace/plugins/dotnet-kit`,
-`codex-marketplace/plugins/codex-cortex`, `codex-marketplace/plugins/api-contracts-pack`,
-`codex-marketplace/plugins/architecture-pack`, and
-`codex-marketplace/plugins/security-pack`, and
-`codex-marketplace/plugins/frontend-pack`.
+For this normalized pass, the active plugin set is defined in
+`codex-marketplace/plugin-roots.json` and includes the protected mega-pack and
+projection-lane roots under `codex-marketplace/plugins/`.
 
 Expected flow:
 
