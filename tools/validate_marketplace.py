@@ -1408,6 +1408,12 @@ def validate_no_legacy_manifest_shapes() -> None:
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
     parser.add_argument(
+        "--phase",
+        choices=("inventory", "project", "index", "all"),
+        default="all",
+        help="Validate only one phase. Default: all",
+    )
+    parser.add_argument(
         "--skip-freshness-checks",
         action="store_true",
         help=(
@@ -1417,6 +1423,21 @@ def _parse_args() -> argparse.Namespace:
         ),
     )
     return parser.parse_args()
+
+
+def validate_inventory(*, skip_freshness: bool = False) -> None:
+    _bootstrap_marketplace_dependencies()
+    if not skip_freshness:
+        _run_tool_check(
+            [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
+            "plugin root inventory check",
+        )
+    for spec in MARKETPLACE_PLUGIN_SPECS:
+        plugin_manifest = check_json(spec["manifest_path"])
+        validate_plugin_manifest(plugin_manifest, spec)
+    validate_active_plugin_tree()
+    check_json(PLUGIN_ROOT_INVENTORY_PATH)
+    print("OK validate_marketplace: inventory")
 
 
 def validate_skill_zip_assertions() -> None:
@@ -1449,6 +1470,10 @@ def validate_skill_zip_assertions() -> None:
 
 def main() -> int:
     args = _parse_args()
+    if args.phase == "inventory":
+        validate_inventory(skip_freshness=args.skip_freshness_checks)
+        print("Marketplace validation passed.")
+        return 0
     if not args.skip_freshness_checks:
         _run_tool_check(
             [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
