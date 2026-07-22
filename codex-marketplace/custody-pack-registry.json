@@ -11,12 +11,50 @@
       "is_mega_pack": true
     },
     {
-      "source_family": "unslop",
-      "custody_root": "sources/third_party/unslop/upstream",
-      "mega_pack": "unslop-plus",
-      "mega_pack_root": "codex-marketplace/plugins/unslop-plus",
+      "bundle_name": "unslop-plus",
+      "plugin_root": "codex-marketplace/plugins/unslop-plus",
+      "bundle_version": "1.0.0",
+      "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": true
+      "is_mega_pack": false,
+      "notes": [
+        "Unslop+ is a first-party projection-lane bundle containing the unslop engine skill and the anti-slop profile router skill.",
+        "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
+      ],
+      "source_ledger": [
+        "sources/first_party/skills/unslop-engine",
+        "sources/first_party/skills/unslop-profiles"
+      ],
+      "provenance_refs": [
+        "provenance/unslop.md",
+        "codex-marketplace/plugins/unslop-plus/references/source-map.md"
+      ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md"
+      ],
+      "entries": [
+        {
+          "canonical_name": "unslop-engine",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/unslop-engine",
+          "local_path": "skills/unslop-engine",
+          "provenance_note": "Projected verbatim from the first-party unslop-engine skill.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "unslop-profiles",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+          "local_path": "skills/unslop-profiles",
+          "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
+          "copy_expectation": "byte_identical"
+        }
+      ]
     },
     {
       "source_family": "game-studio",
@@ -315,7 +353,7 @@
         "sources/first_party/skills/using-linear",
         "sources/first_party/skills/connector-safety",
         "sources/first_party/skills/using-github",
-        "sources/first_party/skills/unslop-plus",
+        "sources/first_party/skills/unslop-profiles",
         "sources/first_party/skills/context-safety",
         "sources/first_party/skills/cleanup-custody",
         "sources/first_party/skills/risk-gates",
@@ -430,13 +468,13 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "unslop-plus",
+          "canonical_name": "unslop-profiles",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/unslop-plus",
-          "local_path": "skills/unslop-plus",
-          "provenance_note": "Projected verbatim from the first-party unslop-plus skill.",
+          "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+          "local_path": "skills/unslop-profiles",
+          "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
           "copy_expectation": "byte_identical"
         },
         {
