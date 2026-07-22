@@ -1,6 +1,6 @@
 # Unslop-plus split into unslop-engine and unslop-profiles
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Retire the `unslop-plus` skill, split it into `unslop-engine` and `unslop-profiles` first-party skills, and wire both into the `unslop-plus` plugin, `repo-worker-pack`, and `house-skills`.
 
@@ -38,7 +38,7 @@
 - Consumes: upstream `mshumer/unslop` concept, existing `unslop-plus/scripts/unslop.py`.
 - Produces: `sources/first_party/skills/unslop-engine/` source root ready for projection.
 
-- [ ] **Step 1.1: Create the source directory tree**
+- [x] **Step 1.1: Create the source directory tree**
 
 Run:
 ```bash
@@ -48,7 +48,7 @@ mkdir -p sources/first_party/skills/unslop-engine/assets/authority
 mkdir -p sources/first_party/skills/unslop-engine/references
 ```
 
-- [ ] **Step 1.2: Move/copy engine scripts and upstream license**
+- [x] **Step 1.2: Move/copy engine scripts and upstream license**
 
 Run:
 ```bash
@@ -58,11 +58,11 @@ cp sources/first_party/skills/unslop-plus/LICENSE.upstream sources/first_party/s
 cp sources/first_party/skills/unslop-plus/references/upstream-provenance.md sources/first_party/skills/unslop-engine/references/upstream-provenance.md
 ```
 
-- [ ] **Step 1.3: Update `references/upstream-provenance.md` path references**
+- [x] **Step 1.3: Update `references/upstream-provenance.md` path references**
 
 Edit `sources/first_party/skills/unslop-engine/references/upstream-provenance.md` and replace any references to `skills/unslop-plus/` with `skills/unslop-engine/`. Use `grep` to confirm there are no remaining `unslop-plus` strings.
 
-- [ ] **Step 1.4: Write `SKILL.md`**
+- [x] **Step 1.4: Write `SKILL.md`**
 
 Create `sources/first_party/skills/unslop-engine/SKILL.md` with this content:
 
@@ -108,7 +108,7 @@ Do not use this skill when applying an existing anti-slop profile; use `$unslop-
 5. Return the profile name, the dominant repeated patterns, and how to use the profile.
 ```
 
-- [ ] **Step 1.5: Write `agents/openai.yaml`**
+- [x] **Step 1.5: Write `agents/openai.yaml`**
 
 Create `sources/first_party/skills/unslop-engine/agents/openai.yaml`:
 
@@ -121,7 +121,7 @@ policy:
   allow_implicit_invocation: false
 ```
 
-- [ ] **Step 1.6: Write authority records**
+- [x] **Step 1.6: Write authority records**
 
 Create `sources/first_party/skills/unslop-engine/assets/authority/authority.yaml`:
 
@@ -201,7 +201,7 @@ Create `sources/first_party/skills/unslop-engine/assets/authority/CITATIONS.md`:
 - Decision: Approved. Operational `SKILL.md` body contains no inline citations; source-grounded claims are recorded in `assets/authority/`.
 ```
 
-- [ ] **Step 1.7: Write updated `scripts/validate_package.py`**
+- [x] **Step 1.7: Write updated `scripts/validate_package.py`**
 
 Create `sources/first_party/skills/unslop-engine/scripts/validate_package.py`:
 
@@ -275,7 +275,7 @@ if __name__ == "__main__":
     raise SystemExit(main())
 ```
 
-- [ ] **Step 1.8: Verify the source skill shape**
+- [x] **Step 1.8: Verify the source skill shape**
 
 Run:
 ```bash
@@ -283,7 +283,7 @@ py -3 sources/first_party/skills/unslop-engine/scripts/validate_package.py
 ```
 Expected: `OK: sources/first_party/skills/unslop-engine`
 
-- [ ] **Step 1.9: Commit**
+- [x] **Step 1.9: Commit**
 
 ```bash
 git add sources/first_party/skills/unslop-engine
@@ -310,7 +310,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: the 13 existing profile files from `unslop-plus/profiles/`.
 - Produces: `sources/first_party/skills/unslop-profiles/` source root ready for projection.
 
-- [ ] **Step 2.1: Create the source directory tree and copy profiles**
+- [x] **Step 2.1: Create the source directory tree and copy profiles**
 
 Run:
 ```bash
@@ -325,7 +325,7 @@ ls sources/first_party/skills/unslop-profiles/profiles/
 ```
 Expected: `api-design.md`, `architecture.md`, `cleanup-custody.md`, `code-review.md`, `debugging.md`, `frontend-react.md`, `frontend-ui.md`, `implementation-plans.md`, `security-review.md`, `technical-writing.md`, `testing.md`, `worker-returns.md`, `writing.md`
 
-- [ ] **Step 2.2: Write `SKILL.md`**
+- [x] **Step 2.2: Write `SKILL.md`**
 
 Create `sources/first_party/skills/unslop-profiles/SKILL.md`:
 
@@ -382,7 +382,7 @@ Do not apply a profile from memory. Pick the profile matching the current task a
 | Repository cleanup | `profiles/cleanup-custody.md` |
 ```
 
-- [ ] **Step 2.3: Write `agents/openai.yaml`**
+- [x] **Step 2.3: Write `agents/openai.yaml`**
 
 Create `sources/first_party/skills/unslop-profiles/agents/openai.yaml`:
 
@@ -395,7 +395,7 @@ policy:
   allow_implicit_invocation: true
 ```
 
-- [ ] **Step 2.4: Verify profile count and naming**
+- [x] **Step 2.4: Verify profile count and naming**
 
 Run:
 ```bash
@@ -403,7 +403,7 @@ python -c "from pathlib import Path; p=Path('sources/first_party/skills/unslop-p
 ```
 Expected: `OK: 13 profiles`
 
-- [ ] **Step 2.5: Commit**
+- [x] **Step 2.5: Commit**
 
 ```bash
 git add sources/first_party/skills/unslop-profiles
@@ -428,7 +428,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: `sources/first_party/skills/unslop-engine/` and `sources/first_party/skills/unslop-profiles/`.
 - Produces: registry node that drives `codex-marketplace/plugins/unslop-plus/` projection.
 
-- [ ] **Step 3.1: Remove the `unslop` mega-pack mapping**
+- [x] **Step 3.1: Remove the `unslop` mega-pack mapping**
 
 Edit `codex-marketplace/custody-pack-registry.json` and remove this top-level mapping object:
 
@@ -446,7 +446,7 @@ Old:
 
 New: nothing.
 
-- [ ] **Step 3.2: Add the `unslop-plus` projection-lane pack node**
+- [x] **Step 3.2: Add the `unslop-plus` projection-lane pack node**
 
 Immediately after the `house-skills` mega-pack mapping (or in the `packs` array near `repo-worker-pack`), add:
 
@@ -499,7 +499,7 @@ Immediately after the `house-skills` mega-pack mapping (or in the `packs` array 
     },
 ```
 
-- [ ] **Step 3.3: Replace `unslop-plus` with `unslop-profiles` in `repo-worker-pack` entries**
+- [x] **Step 3.3: Replace `unslop-plus` with `unslop-profiles` in `repo-worker-pack` entries**
 
 In `codex-marketplace/custody-pack-registry.json`, inside the `repo-worker-pack` `entries` array, replace the `unslop-plus` entry with `unslop-profiles`.
 
@@ -531,11 +531,11 @@ New:
         },
 ```
 
-- [ ] **Step 3.4: Update `repo-worker-pack` source ledger**
+- [x] **Step 3.4: Update `repo-worker-pack` source ledger**
 
 In the `repo-worker-pack` node, replace `sources/first_party/skills/unslop-plus` with `sources/first_party/skills/unslop-profiles` in the `source_ledger` array.
 
-- [ ] **Step 3.5: Validate JSON syntax**
+- [x] **Step 3.5: Validate JSON syntax**
 
 Run:
 ```bash
@@ -543,7 +543,7 @@ python -m json.tool codex-marketplace/custody-pack-registry.json > /dev/null
 ```
 Expected: no output, exit 0.
 
-- [ ] **Step 3.6: Commit**
+- [x] **Step 3.6: Commit**
 
 ```bash
 git add codex-marketplace/custody-pack-registry.json
@@ -570,7 +570,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: new `unslop-engine` and `unslop-profiles` skill names.
 - Produces: plugin root with generated-doc marker pairs and updated plugin manifest.
 
-- [ ] **Step 4.1: Rewrite `plugin.json`**
+- [x] **Step 4.1: Rewrite `plugin.json`**
 
 Replace `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json` entirely with:
 
@@ -616,7 +616,7 @@ Replace `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json` entire
 }
 ```
 
-- [ ] **Step 4.2: Rewrite `README.md`**
+- [x] **Step 4.2: Rewrite `README.md`**
 
 Replace `codex-marketplace/plugins/unslop-plus/README.md` entirely with:
 
@@ -642,7 +642,7 @@ Use `$unslop-engine` to generate a new domain-specific anti-slop profile from sa
 - Upstream MIT notice: `skills/unslop-engine/LICENSE.upstream`.
 ```
 
-- [ ] **Step 4.3: Rewrite `SOURCE.md`**
+- [x] **Step 4.3: Rewrite `SOURCE.md`**
 
 Replace `codex-marketplace/plugins/unslop-plus/SOURCE.md` entirely with:
 
@@ -685,7 +685,7 @@ The projected `unslop-engine` skill adapts the upstream idea (sample collection,
 - Plugin-level MIT license at `LICENSE` covers first-party profile and adaptation work.
 ```
 
-- [ ] **Step 4.4: Commit**
+- [x] **Step 4.4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json codex-marketplace/plugins/unslop-plus/README.md codex-marketplace/plugins/unslop-plus/SOURCE.md
@@ -711,7 +711,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: new `unslop-plus` projection-lane pack shape and new `unslop-engine`/`unslop-profiles` source paths.
 - Produces: accurate doctrine and provenance records.
 
-- [ ] **Step 5.1: Update `docs/custody-and-projection-doctrine.md`**
+- [x] **Step 5.1: Update `docs/custody-and-projection-doctrine.md`**
 
 Edit `docs/custody-and-projection-doctrine.md`. Change:
 
@@ -742,7 +742,7 @@ Old:
 
 New: nothing.
 
-- [ ] **Step 5.2: Update `provenance/unslop.md`**
+- [x] **Step 5.2: Update `provenance/unslop.md`**
 
 Edit `provenance/unslop.md` and make these replacements:
 
@@ -795,7 +795,7 @@ New:
 - **Content mode**: `verbatim` (first-party `unslop-engine` and `unslop-profiles` skills); upstream engine concept is adapted into `unslop-engine`
 ```
 
-- [ ] **Step 5.3: Commit**
+- [x] **Step 5.3: Commit**
 
 ```bash
 git add docs/custody-and-projection-doctrine.md provenance/unslop.md
@@ -820,7 +820,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: completed Tasks 1–5.
 - Produces: clean source tree with no stale `unslop-plus` skill or zip artifacts.
 
-- [ ] **Step 6.1: Verify all assets are migrated**
+- [x] **Step 6.1: Verify all assets are migrated**
 
 Run:
 ```bash
@@ -833,21 +833,21 @@ Test-Path "sources/first_party/skills/unslop-profiles/profiles/writing.md"
 ```
 Expected: all return `True`.
 
-- [ ] **Step 6.2: Delete the retired source directory**
+- [x] **Step 6.2: Delete the retired source directory**
 
 Run:
 ```bash
 Remove-Item -Recurse -Force sources/first_party/skills/unslop-plus
 ```
 
-- [ ] **Step 6.3: Delete the stale skill zip**
+- [x] **Step 6.3: Delete the stale skill zip**
 
 Run:
 ```bash
 Remove-Item -Force generated/skill-zips/unslop-plus.zip
 ```
 
-- [ ] **Step 6.4: Commit**
+- [x] **Step 6.4: Commit**
 
 ```bash
 git add -A
@@ -877,7 +877,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: all source, registry, and plugin manual edits from Tasks 1–6.
 - Produces: a consistent, validated marketplace projection.
 
-- [ ] **Step 7.1: Rebuild the marketplace**
+- [x] **Step 7.1: Rebuild the marketplace**
 
 Run:
 ```bash
@@ -885,7 +885,7 @@ py -3 tools/rebuild_marketplace.py
 ```
 Expected: completes without errors.
 
-- [ ] **Step 7.2: Run the CI check**
+- [x] **Step 7.2: Run the CI check**
 
 Run:
 ```bash
@@ -893,7 +893,7 @@ py -3 tools/check_marketplace.py
 ```
 Expected: `Marketplace validation passed.`
 
-- [ ] **Step 7.3: Run targeted validators**
+- [x] **Step 7.3: Run targeted validators**
 
 Run:
 ```bash
@@ -902,7 +902,7 @@ py -3 tools/install_agent_skills.py --check
 ```
 Expected: both pass.
 
-- [ ] **Step 7.4: Manual projection checks**
+- [x] **Step 7.4: Manual projection checks**
 
 Run:
 ```bash
@@ -922,7 +922,7 @@ Test-Path "generated/skill-zips/unslop-plus.zip"
 ```
 Expected: `False`.
 
-- [ ] **Step 7.5: Check `unslop-profiles/SKILL.md` instructs file reads**
+- [x] **Step 7.5: Check `unslop-profiles/SKILL.md` instructs file reads**
 
 Run:
 ```bash
@@ -930,7 +930,7 @@ Select-String -Path "codex-marketplace/plugins/unslop-plus/skills/unslop-profile
 ```
 Expected: lines matching `profiles/<name>.md` are present in the body.
 
-- [ ] **Step 7.6: Commit regenerated surfaces**
+- [x] **Step 7.6: Commit regenerated surfaces**
 
 ```bash
 git add -A
