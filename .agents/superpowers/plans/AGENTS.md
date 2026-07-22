@@ -31,6 +31,6 @@ plan formats change or new guidance is needed for plan structure, review and
 update this file to reflect current expectations. Completed implementation plans
 must be checked off and committed with their implementation PR (see
 `.agents/guides/implementing-guide.md`) so reviewers can compare planned vs.
-delivered work. Once the plan is merged and no longer the active source of
-truth, it may be archived; it must not be left open or uncommitted as stale
+delivered work. Plans remain repo resident as historical records and are not
+removed or archived; they must not be left open or uncommitted as stale
 in-progress guidance.
