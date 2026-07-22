@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-  "manifestSha": "a4e5da15c2085c0163edc39a847db1b28c4dc3ed",
-  "syncedAt": "2026-07-22T14:22:33.420752",
-=======
-  "manifestSha": "5e8febc19b834127268cf350586a942eb787a1a6",
-  "syncedAt": "2026-07-22T14:31:44.072651",
->>>>>>> f899696d (fix(unslop): update stale unslop-plus skill references to unslop-profiles/unslop-engine)
+  "manifestSha": "30f90503facd3cfd2db128492f49d4d87d0e6d89",
+  "syncedAt": "2026-07-22T16:15:40.167900",
   "syncedPlugins": [
     "repo-worker-pack"
   ],
