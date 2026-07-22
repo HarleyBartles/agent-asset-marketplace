@@ -1,3 +1,8 @@
+version: 1
+metadata:
+  skill_name: rooms-risk-gates
+  source_category: first_party
+
 interface:
   display_name: Rooms Risk Gates
   short_description: Rooms, Mostly risk gate profiles for canon pressure, ambiguity preservation, analogy validation, and zoom-out compression

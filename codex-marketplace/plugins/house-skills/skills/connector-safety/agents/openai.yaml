@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: connector-safety
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Connector Safety
   short_description: Keep connector writes safe, narrow, auditable, and verified.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: house-skills
-  projection_plugin: house-skills

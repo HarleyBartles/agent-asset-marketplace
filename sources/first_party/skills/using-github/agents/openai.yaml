@@ -1,3 +1,8 @@
+version: 1
+metadata:
+  skill_name: using-github
+  source_category: first_party
+
 interface:
   display_name: Using Github
   short_description: Pick the right GitHub or Git surface from the task intent.

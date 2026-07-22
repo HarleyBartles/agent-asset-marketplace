@@ -1,11 +1,11 @@
 version: 1
 metadata:
   skill_name: observability
-  plugin: house-skills
   source_category: first_party
   source-id: observability
   source-path: sources/first_party/skills/observability/SKILL.md
   provenance-name: Observability first-party skill
+  plugin: house-skills
   projection_plugin: house-skills
 interface:
   display_name: Observability

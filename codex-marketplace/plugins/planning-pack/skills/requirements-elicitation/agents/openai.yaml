@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: requirements-elicitation
-  plugin: planning-pack
   source_category: first_party
+  plugin: planning-pack
   projection_plugin: planning-pack
 interface:
   display_name: Requirements Elicitation

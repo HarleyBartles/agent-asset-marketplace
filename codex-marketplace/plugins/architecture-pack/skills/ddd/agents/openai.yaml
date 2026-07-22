@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: ddd
-  plugin: architecture-pack
   source_category: first_party
+  plugin: architecture-pack
   projection_plugin: architecture-pack
 interface:
   display_name: DDD

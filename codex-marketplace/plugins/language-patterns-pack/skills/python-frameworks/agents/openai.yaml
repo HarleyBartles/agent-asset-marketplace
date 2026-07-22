@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: python-frameworks
-  plugin: language-patterns-pack
   source_category: first_party
+  plugin: language-patterns-pack
   projection_plugin: language-patterns-pack
 interface:
   display_name: Python Frameworks

@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: rooms-project-doctrine
+  source_category: first_party
+  plugin: rooms-project-pack
+  projection_plugin: rooms-project-pack
 interface:
   display_name: Rooms Project Doctrine
   short_description: Shared Rooms doctrine routing for source, truth-domain, ambiguity, report, issue, and publication posture.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: rooms-project-pack
-  projection_plugin: rooms-project-pack

@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: dotnet
-  plugin: dotnet-pack
   source_category: first_party
+  plugin: dotnet-pack
   projection_plugin: dotnet-pack
 interface:
   display_name: Dotnet

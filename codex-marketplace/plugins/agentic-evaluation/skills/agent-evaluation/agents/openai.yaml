@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: agent-evaluation
-  plugin: agentic-evaluation
   source_category: first_party
+  plugin: agentic-evaluation
   projection_plugin: agentic-evaluation
 interface:
   display_name: Agent Evaluation

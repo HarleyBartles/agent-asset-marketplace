@@ -21,8 +21,7 @@ a reference is derived from a vendored source (for example,
 source map is the operational projection of `authority.yaml`'s decomposition,
 not a second authority manifest.
 
-`skills-with-source` and `skills-with-mixed-source` require legal redistribution
-approval before a source is copied. Put approved cold material in
+`skills-with-source` and `skills-with-mixed-source` require legal redistribution approval before a source is copied. Put approved cold material in
 `assets/authority/reference-source/` and write operational prose from the
 recorded decomposition. `skills-with-citation` must use `first_party_synthesis`
 for every reference, keep no vendored source, and maintain scholarly evidence in

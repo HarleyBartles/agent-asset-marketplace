@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: database-design-patterns
-  plugin: rooms-project-pack
   source_category: first_party
+  plugin: rooms-project-pack
   projection_plugin: rooms-project-pack
 interface:
   display_name: Database Design Patterns

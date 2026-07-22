@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: release-engineering
-  plugin: house-skills
   source_category: first_party
+  plugin: house-skills
   projection_plugin: house-skills
 interface:
   display_name: Release Engineering

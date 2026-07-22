@@ -1,3 +1,8 @@
+version: 1
+metadata:
+  skill_name: work-mode-router
+  source_category: first_party
+
 interface:
   display_name: GPT Bootstrap
   short_description: Routes new project sessions through one-time bootstrap, safe

@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: risk-gates
-  plugin: repo-worker-pack
   source_category: first_party
+  plugin: repo-worker-pack
   projection_plugin: repo-worker-pack
 interface:
   display_name: Risk Gates

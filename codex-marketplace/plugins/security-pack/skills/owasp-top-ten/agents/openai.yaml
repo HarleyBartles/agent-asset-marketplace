@@ -1,12 +1,12 @@
 version: 1
 metadata:
   skill_name: owasp-top-ten
-  plugin: security-pack
   source_category: first_party
   source-id: owasp-top-ten
   source-path: sources/first_party/skills/owasp-top-ten/SKILL.md
   provenance-name: OWASP Top Ten first-party skill
   content_mode: verbatim
+  plugin: security-pack
   projection_plugin: security-pack
 interface:
   display_name: OWASP Top Ten

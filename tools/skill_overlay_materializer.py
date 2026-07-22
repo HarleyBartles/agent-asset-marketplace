@@ -478,6 +478,32 @@ def _apply_overlay_files(staged_root: Path, overlay_root: Path) -> None:
         shutil.copy2(overlay_file, dest)
 
 
+def _strip_plugin_identity(staged_root: Path) -> None:
+    """Remove metadata.plugin and metadata.projection_plugin from staged agent YAML.
+
+    Zips are plugin-neutral export artifacts; plugin identity is injected only
+    into per-plugin projected trees and installed skill mirrors.
+    """
+    openai_yaml = staged_root / OPENAI_AGENT_FILENAME
+    if not openai_yaml.is_file():
+        return
+    parsed = _load_yaml_mapping(openai_yaml)
+    metadata = parsed.get("metadata")
+    if isinstance(metadata, dict):
+        metadata.pop("plugin", None)
+        metadata.pop("projection_plugin", None)
+        if not metadata:
+            parsed.pop("metadata", None)
+    rendered = yaml.safe_dump(
+        parsed,
+        sort_keys=False,
+        allow_unicode=True,
+        width=4096,
+        default_flow_style=False,
+    ).rstrip() + "\n"
+    openai_yaml.write_text(rendered, encoding="utf-8", newline="\n")
+
+
 def _inject_plugin_identity(staged_root: Path, plugin_name: str) -> None:
     """Set metadata.plugin and metadata.projection_plugin in the projected agent YAML."""
     openai_yaml = staged_root / OPENAI_AGENT_FILENAME

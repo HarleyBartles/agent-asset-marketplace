@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: rooms-image-sidecars
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Rooms Image Sidecar Prep
   short_description: Prepare semantic starter sidecars for Rooms image evidence batches
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: house-skills
-  projection_plugin: house-skills

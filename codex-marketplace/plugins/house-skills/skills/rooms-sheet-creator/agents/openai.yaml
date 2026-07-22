@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: rooms-sheet-creator
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Rooms Sheet Creator
   short_description: Create Rooms prompt, peek, and recall sheets from investigation packets.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: house-skills
-  projection_plugin: house-skills

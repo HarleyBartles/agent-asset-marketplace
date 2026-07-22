@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: react
-  plugin: frontend-pack
   source_category: first_party
+  plugin: frontend-pack
   projection_plugin: frontend-pack
 interface:
   display_name: React

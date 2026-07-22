@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from marketplace_utils import ROOT, as_windows_long_path, load_json, load_plugin_root_inventory
-from skill_overlay_materializer import _inject_plugin_identity, stage_overlay_tree
+from skill_overlay_materializer import _inject_plugin_identity, _strip_plugin_identity, stage_overlay_tree
 from tree_canonicalization import compare_trees_canonicalized
 
 
@@ -396,6 +396,8 @@ def project_skills(*, write: bool = True, plugin_name: str | None = None) -> Non
             packaged_files, forbidden_paths = scan_skill_tree(staged_root)
             if forbidden_paths:
                 raise ValueError(f"{canonical_name} staged tree contains forbidden paths: {forbidden_paths}")
+
+            _strip_plugin_identity(staged_root)
 
             if write:
                 for entry in entries:

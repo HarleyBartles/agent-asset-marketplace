@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: using-linear
+  source_category: first_party
+  plugin: repo-worker-pack
+  projection_plugin: repo-worker-pack
 interface:
   display_name: Using Linear
   short_description: Route Linear connector work by intent and use the right surface.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: repo-worker-pack
-  projection_plugin: repo-worker-pack

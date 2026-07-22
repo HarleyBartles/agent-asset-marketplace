@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: web-identity
-  plugin: security-pack
   source_category: first_party
+  plugin: security-pack
   projection_plugin: security-pack
 interface:
   display_name: Web Identity

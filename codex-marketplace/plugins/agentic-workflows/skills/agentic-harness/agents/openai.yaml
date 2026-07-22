@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: agentic-harness
-  plugin: agentic-workflows
   source_category: first_party
+  plugin: agentic-workflows
   projection_plugin: agentic-workflows
 interface:
   display_name: Agentic Harness

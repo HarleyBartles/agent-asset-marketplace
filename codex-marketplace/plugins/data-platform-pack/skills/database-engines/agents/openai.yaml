@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: database-engines
-  plugin: data-platform-pack
   source_category: first_party
+  plugin: data-platform-pack
   projection_plugin: data-platform-pack
 interface:
   display_name: Database Engines

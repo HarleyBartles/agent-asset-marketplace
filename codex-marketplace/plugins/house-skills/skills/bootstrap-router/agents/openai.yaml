@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: bootstrap-router
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: Bootstrap Router
   short_description: Routes first-turn project work through classification and required doctrine.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: house-skills
-  projection_plugin: house-skills

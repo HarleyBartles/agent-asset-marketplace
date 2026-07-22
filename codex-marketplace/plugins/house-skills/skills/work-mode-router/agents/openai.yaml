@@ -1,3 +1,9 @@
+version: 1
+metadata:
+  skill_name: work-mode-router
+  source_category: first_party
+  plugin: house-skills
+  projection_plugin: house-skills
 interface:
   display_name: GPT Bootstrap
   short_description: Routes new project sessions through one-time bootstrap, safe request classification, and reserved output-shape guards.
@@ -9,6 +15,3 @@ policy:
   - api
   - atlas
   allow_implicit_invocation: true
-metadata:
-  plugin: house-skills
-  projection_plugin: house-skills

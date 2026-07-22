@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: api-design
-  plugin: api-contracts-pack
   source_category: first_party
+  plugin: api-contracts-pack
   projection_plugin: api-contracts-pack
 interface:
   display_name: API Design

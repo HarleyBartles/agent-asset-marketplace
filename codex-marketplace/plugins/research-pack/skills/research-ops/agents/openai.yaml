@@ -1,8 +1,8 @@
 version: 1
 metadata:
   skill_name: research-ops
-  plugin: research-pack
   source_category: first_party
+  plugin: research-pack
   projection_plugin: research-pack
 interface:
   display_name: Research Ops

@@ -1,3 +1,8 @@
+version: 1
+metadata:
+  skill_name: bootstrap-router
+  source_category: first_party
+
 interface:
   display_name: Bootstrap Router
   short_description: Routes first-turn project work through classification and required
