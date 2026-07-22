@@ -160,13 +160,13 @@ projection is an orphan. The validator (`detect_first_party_orphans` in
 directories with `SKILL.md` and checks that each one appears as a
 `first_party` entry in some plugin manifest. Orphans cause validation to
 fail with a clear list of the missing skills. MARK-295 removed the stale
-`ecc-superpowers` wrapper source along with its projection, so there is no
+retired wrapper source along with its projection, so there is no
 retired-source exception to carry forward. For active skills, the fix is
 still to add the manifest entry and regenerate, not to delete the source.
 
 ## Manifest shape validation
 
-All 21 plugin manifests must use the directory-level `entries[]` projection-lane
+All 19 plugin manifests must use the directory-level `entries[]` projection-lane
 shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests
 with legacy shapes (`skills[]`, `components[]`, or file-level
 `canonical_source_path` ending in a file suffix). This ensures the materializer

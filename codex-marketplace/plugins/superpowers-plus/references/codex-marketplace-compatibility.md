@@ -15,7 +15,7 @@ This note applies to the active Codex projection of `obra/superpowers`.
 - The remaining first-party helper is compositional and complementary. It keeps Superpowers workflow guidance narrow by adding environment inspection only.
 - The repo-specific adaptation for `using-superpowers` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
 - When `using-superpowers` changes upstream, update the Codex adapter overlay and its `agents/openai.yaml` companion before regenerating. The reusable source updater will flag those files as stale if they still point at the old upstream version.
-- The retired ECC router wrapper previously pointed to a dedicated ECC pack; that routing path is now deferred to follow-up reprojection work.
+- The retired provider-specific router wrapper previously pointed to a dedicated pack; that routing path is now deferred to follow-up reprojection work.
 - Source custody remains a verbatim upstream snapshot. Do not fold Codex-safe wording, frontmatter normalization, marketplace policy, or adaptation overlays into the retained source tree.
 - Keep only the latest retained upstream source snapshot in custody. Older version directories are replaced, not accumulated.
 - Installation and export artifacts are derived from the projection layer plus overlays. Do not hand-edit generated zips or registry entries.
@@ -23,7 +23,7 @@ This note applies to the active Codex projection of `obra/superpowers`.
 - OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
 - Do not place first-party expert or domain skills directly in the Superpowers plugin.
 - Do not use this plugin as a dumping ground for House Skills, project doctrine, verification experts, GitHub/Linear mechanics, or other first-party expert surfaces.
-- Do not use this plugin as a dumping ground for ECC workflow doctrine; defer that routing to follow-up reprojection work instead.
+- Do not use this plugin as a dumping ground for retired workflow doctrine; defer that routing to follow-up reprojection work instead.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 - Any future first-party skill proposed for projection into `superpowers` must be justified as a compositional wrapper over Superpowers, not as an expert skill being relocated into the third-party plugin.
 
