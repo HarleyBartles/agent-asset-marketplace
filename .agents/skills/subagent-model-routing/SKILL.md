@@ -1,7 +1,7 @@
 ---
 name: subagent-model-routing
-description: Use when choosing a child subagent model, reasoning level, context tier,
-  or paid route, or when retrying failed work by changing model/reasoning/context.
+description: Use when choosing a child subagent model, reasoning level, or context mode,
+  or when retrying failed work by changing model, reasoning, or context.
 metadata:
   source-id: subagent-model-routing
   source-path: sources/first_party/skills/subagent-model-routing/SKILL.md
@@ -9,13 +9,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when choosing a child subagent model, reasoning level, context tier,
-    or paid route, or when retrying failed work by changing model/reasoning/context.
+  scope: Use when choosing a child subagent model, reasoning level, or context mode,
+    or when retrying failed work by changing model, reasoning, or context.
   use_when:
   - Use before calling `spawn_agent` or an equivalent subagent tool.
   - Use when creating or selecting a named subagent configuration.
-  - Use when recommending a child model, reasoning level, context tier, or paid route.
-  - Use when retrying failed work by changing model/reasoning/context.
+  - Use when recommending a child model, reasoning level, or context mode.
+  - Use when retrying failed work by changing model, reasoning, or context.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
