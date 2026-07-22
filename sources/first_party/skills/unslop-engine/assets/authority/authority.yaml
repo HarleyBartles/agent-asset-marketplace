@@ -1,0 +1,28 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: "mshumer/unslop"
+  canonical_url: https://github.com/mshumer/unslop
+  pinned_source_url: https://github.com/mshumer/unslop/blob/edcb62386d129c65e4395f0cfcc9168eb1ba2148/README.md
+  latest_check_url: https://github.com/mshumer/unslop
+  revision: edcb62386d129c65e4395f0cfcc9168eb1ba2148
+  retrieved_at: "2026-07-22"
+  content_sha256: 5c5e317d341aa63d73f73ca0b50309ca712acaebf660c6057b4ee376736643bd
+  license: MIT
+  license_url: https://github.com/mshumer/unslop/blob/main/LICENSE
+decomposition:
+  reconciled_against: 5c5e317d341aa63d73f73ca0b50309ca712acaebf660c6057b4ee376736643bd
+  references:
+    - path: SKILL.md
+      source_sections:
+        - Upstream unslop engine concept
+      load_when:
+        - Use when generating a domain-specific anti-slop profile.
+      content_mode: first_party_synthesis
+    - path: references/upstream-provenance.md
+      source_sections:
+        - Upstream provenance and adaptation rationale
+      load_when:
+        - Use when verifying authority or provenance.
+      content_mode: first_party_synthesis

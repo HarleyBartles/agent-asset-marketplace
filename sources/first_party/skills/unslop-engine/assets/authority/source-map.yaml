@@ -1,0 +1,15 @@
+schema_version: 1
+reconciled_against: 5c5e317d341aa63d73f73ca0b50309ca712acaebf660c6057b4ee376736643bd
+references:
+  - path: SKILL.md
+    source_sections:
+      - Upstream unslop engine concept
+    load_when:
+      - Use when generating a domain-specific anti-slop profile.
+    content_mode: first_party_synthesis
+  - path: references/upstream-provenance.md
+    source_sections:
+      - Upstream provenance and adaptation rationale
+    load_when:
+      - Use when verifying authority or provenance.
+    content_mode: first_party_synthesis
