@@ -13,6 +13,11 @@
 - The bundled `scripts/unslop.py` is an Asset Marketplace adaptation that replaces the upstream `claude` CLI dependency with Python standard library text analysis and optional Playwright visual evidence.
 - The upstream MIT license and copyright are preserved in `LICENSE.upstream`.
 
+## Attribution
+
+- Original idea and upstream implementation: Matt Shumer (mshumer/unslop, MIT license, Copyright (c) 2026 Matt Shumer).
+- Asset Marketplace adaptation and first-party synthesis: Harley Bartles.
+
 ## Human review
 
 - Reviewer: Harley Bartles

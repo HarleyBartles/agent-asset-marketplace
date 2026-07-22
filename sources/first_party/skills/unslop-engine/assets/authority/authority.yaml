@@ -8,18 +8,12 @@ authority:
   latest_check_url: https://github.com/mshumer/unslop
   revision: edcb62386d129c65e4395f0cfcc9168eb1ba2148
   retrieved_at: "2026-07-22"
-  content_sha256: 5c5e317d341aa63d73f73ca0b50309ca712acaebf660c6057b4ee376736643bd
+  content_sha256: 5be928b71fc996815467b858e99f12cc7e6d1fcf860790820c189924fbccb6b7
   license: MIT
   license_url: https://github.com/mshumer/unslop/blob/main/LICENSE
 decomposition:
-  reconciled_against: 5c5e317d341aa63d73f73ca0b50309ca712acaebf660c6057b4ee376736643bd
+  reconciled_against: 5be928b71fc996815467b858e99f12cc7e6d1fcf860790820c189924fbccb6b7
   references:
-    - path: SKILL.md
-      source_sections:
-        - Upstream unslop engine concept
-      load_when:
-        - Use when generating a domain-specific anti-slop profile.
-      content_mode: first_party_synthesis
     - path: references/upstream-provenance.md
       source_sections:
         - Upstream provenance and adaptation rationale
