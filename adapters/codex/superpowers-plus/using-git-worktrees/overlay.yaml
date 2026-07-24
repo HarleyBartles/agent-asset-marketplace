@@ -5,6 +5,19 @@ metadata:
   upstream_version: v6.1.0
   adaptation_overlay: adapters/codex/superpowers-plus/using-git-worktrees
   projection_plugin: superpowers-plus
+generated_files:
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/new_worktree.py
+    path: scripts/new_worktree.py
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/new-worktree.sh
+    path: scripts/new-worktree.sh
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/new-worktree.ps1
+    path: scripts/new-worktree.ps1
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/remove_worktree.py
+    path: scripts/remove_worktree.py
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/remove-worktree.sh
+    path: scripts/remove-worktree.sh
+  - source: adapters/codex/superpowers-plus/using-git-worktrees/scripts/remove-worktree.ps1
+    path: scripts/remove-worktree.ps1
 edits:
   - path: SKILL.md
     op: replace
@@ -77,3 +90,43 @@ edits:
       - "**Mandatory pre-flight:** Invoke this skill BEFORE running `git worktree add`, not after. If you are about to create a worktree without having invoked this skill, stop and invoke it first. Creating a worktree ad hoc without consulting this skill risks placing the worktree in a non-canonical location that violates repo conventions."
       - ""
       - "**Session resume check:** If you are resuming a session that inherited a worktree from a previous conversation, verify the worktree location matches the repo's declared canonical worktree root before proceeding with substantive work. If the worktree is in a non-canonical location, move it with `git worktree move` before continuing."
+  - path: SKILL.md
+    op: insert_after
+    line: 57
+    anchor: "Only proceed to Step 1b if you have no native worktree tool available."
+    insert_lines:
+      - ""
+      - "Use the `new-worktree`/`remove-worktree` scripts bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helpers (for example, in a `scripts/` directory at the repo root), prefer the repo-specific ones. The bundled scripts are installed at `.agents/skills/using-git-worktrees/scripts/` and place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing."
+  - path: SKILL.md
+    op: insert_after
+    line: 157
+    anchor: "| No package.json/Cargo.toml | Skip dependency install |"
+    insert_lines:
+      - "| Bundled `new-worktree` script | Use it instead of `git worktree add` |"
+      - "| Bundled `remove-worktree` script | Use it to remove a worktree and deinit submodules |"
+      - "| Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills` |"
+  - path: SKILL.md
+    op: insert_after
+    line: 184
+    anchor: "- **Fix:** Report failures, get explicit permission to proceed"
+    insert_lines:
+      - ""
+      - "## Remove a Worktree"
+      - ""
+      - "When a feature branch is complete, remove the isolated worktree to avoid stale copies."
+      - ""
+      - "1. Run the bundled `remove-worktree` script if available:"
+      - "   ```bash"
+      - "   bash .agents/skills/using-git-worktrees/scripts/remove-worktree.sh <branch-name>"
+      - "   # or on Windows:"
+      - "   .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 <branch-name>"
+      - "   ```"
+      - "   This de-initializes any submodules and removes the worktree directory."
+      - ""
+      - "2. If no bundled script is available, use `git worktree remove` directly:"
+      - "   ```bash"
+      - "   git worktree remove <path-to-worktree>"
+      - "   ```"
+      - "   Then manually deinitialize submodules if the repo uses them."
+      - ""
+      - "Never remove the main repository checkout with this command."

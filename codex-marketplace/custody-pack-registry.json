@@ -259,7 +259,7 @@
           "adapted_author": "Harley Bartles",
           "copy_expectation": "adapted_from_source",
           "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
-          "adaptation_note": "Honored repo-declared canonical sibling-folder worktree roots before falling back to project-local directories.",
+          "adaptation_note": "Bundled `new-worktree`/`remove-worktree` scripts place worktrees at the repo-declared canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`) and auto-run `refreshing-installed-skills` after creation; otherwise honored canonical worktree roots before falling back to project-local directories.",
           "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/SKILL.md",
           "source_author": "obra",
           "source_license": "MIT",
@@ -359,7 +359,9 @@
         "sources/first_party/skills/risk-gates",
         "sources/first_party/skills/writing-with-clarity",
         "sources/first_party/skills/subagent-model-routing",
-        "sources/first_party/skills/repo-guide-standard"
+        "sources/first_party/skills/repo-guide-standard",
+        "sources/first_party/skills/refreshing-installed-skills",
+        "sources/first_party/skills/generating-index-mesh"
       ],
       "provenance_refs": [
         "provenance/repo-worker-pack.md",
@@ -516,6 +518,36 @@
           "local_path": "skills/repo-guide-standard",
           "provenance_note": "Projected verbatim from the first-party repo-guide-standard skill. Defines cross-repo guide layout, invocation, and workflow order.",
           "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "refreshing-installed-skills",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/refreshing-installed-skills",
+          "local_path": "skills/refreshing-installed-skills",
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/refreshing-installed-skills/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh."
+        },
+        {
+          "canonical_name": "generating-index-mesh",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/generating-index-mesh",
+          "local_path": "skills/generating-index-mesh",
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/generating-index-mesh/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
         }
       ]
     },

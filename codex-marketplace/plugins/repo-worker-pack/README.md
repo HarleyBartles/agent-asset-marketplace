@@ -9,7 +9,9 @@ This bundle projects the first-party repo worker baseline skills.
 - `cleanup-custody`
 - `connector-safety`
 - `context-safety`
+- `generating-index-mesh`
 - `linear-issue-shaping`
+- `refreshing-installed-skills`
 - `repo-guide-standard`
 - `repo-worker-base`
 - `risk-gates`
@@ -20,7 +22,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 14.
+Manifest entry count: 16.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

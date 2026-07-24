@@ -29,11 +29,25 @@
       "local_path": "skills/context-safety"
     },
     {
+      "canonical_name": "generating-index-mesh",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/generating-index-mesh",
+      "local_path": "skills/generating-index-mesh"
+    },
+    {
       "canonical_name": "linear-issue-shaping",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
       "local_path": "skills/linear-issue-shaping"
+    },
+    {
+      "canonical_name": "refreshing-installed-skills",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/refreshing-installed-skills",
+      "local_path": "skills/refreshing-installed-skills"
     },
     {
       "canonical_name": "repo-guide-standard",
