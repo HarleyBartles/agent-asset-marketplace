@@ -9,7 +9,9 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/cleanup-custody/`
 - `sources/first_party/skills/connector-safety/`
 - `sources/first_party/skills/context-safety/`
+- `sources/first_party/skills/generating-index-mesh/`
 - `sources/first_party/skills/linear-issue-shaping/`
+- `sources/first_party/skills/refreshing-installed-skills/`
 - `sources/first_party/skills/repo-guide-standard/`
 - `sources/first_party/skills/repo-worker-base/`
 - `sources/first_party/skills/risk-gates/`
@@ -28,7 +30,9 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/context-safety/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/generating-index-mesh/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-guide-standard/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
@@ -44,7 +48,9 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/cleanup-custody.zip`
 - `generated/skill-zips/connector-safety.zip`
 - `generated/skill-zips/context-safety.zip`
+- `generated/skill-zips/generating-index-mesh.zip`
 - `generated/skill-zips/linear-issue-shaping.zip`
+- `generated/skill-zips/refreshing-installed-skills.zip`
 - `generated/skill-zips/repo-guide-standard.zip`
 - `generated/skill-zips/repo-worker-base.zip`
 - `generated/skill-zips/risk-gates.zip`

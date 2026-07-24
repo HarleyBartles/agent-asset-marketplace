@@ -317,6 +317,21 @@
       "source_family": "first_party"
     },
     {
+      "canonical_name": "generating-index-mesh",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/generating-index-mesh",
+      "local_path": "skills/generating-index-mesh",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/generating-index-mesh/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "hexagonal-architecture",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -487,6 +502,21 @@
       "lane": "Base and control plane",
       "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
       "source_path": "sources/first_party/skills/react/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "copy_expectation": "byte_identical"
+    },
+    {
+      "canonical_name": "refreshing-installed-skills",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/refreshing-installed-skills",
+      "local_path": "skills/refreshing-installed-skills",
+      "lane": "Base and control plane",
+      "provenance_note": "First-party skill projected verbatim into the house-skills mega-pack.",
+      "source_path": "sources/first_party/skills/refreshing-installed-skills/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",

@@ -60,6 +60,8 @@ Native tools handle directory placement, branch creation, and cleanup automatica
 
 Only proceed to Step 1b if you have no native worktree tool available.
 
+If the repo provides bundled `new-worktree`/`remove-worktree` scripts (e.g. under `.agents/skills/using-git-worktrees/scripts/` or the `adapters/codex/superpowers-plus/using-git-worktrees/scripts/` source), prefer those helpers. They place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`) and automatically refresh installed skills after creation.
+
 ### 1b. Git Worktree Fallback
 
 **Only use this if Step 1a does not apply** — you have no native worktree tool available. Create a worktree manually using git.
@@ -162,6 +164,9 @@ Ready to implement <feature-name>
 | Permission error on create | Sandbox fallback, work in place |
 | Tests fail during baseline | Report failures + ask |
 | No package.json/Cargo.toml | Skip dependency install |
+| Bundled `new-worktree` script | Use it instead of `git worktree add` |
+| Bundled `remove-worktree` script | Use it to remove a worktree and deinit submodules |
+| Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills` |
 
 ## Common Mistakes
 
@@ -189,6 +194,26 @@ Ready to implement <feature-name>
 
 - **Problem:** Can't distinguish new bugs from pre-existing issues
 - **Fix:** Report failures, get explicit permission to proceed
+
+## Remove a Worktree
+
+When a feature branch is complete, remove the isolated worktree to avoid stale copies.
+
+1. Run the bundled `remove-worktree` script if available:
+   ```bash
+   bash .agents/skills/using-git-worktrees/scripts/remove-worktree.sh <branch-name>
+   # or on Windows:
+   .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 <branch-name>
+   ```
+   This de-initializes any submodules and removes the worktree directory.
+
+2. If no bundled script is available, use `git worktree remove` directly:
+   ```bash
+   git worktree remove <path-to-worktree>
+   ```
+   Then manually deinitialize submodules if the repo uses them.
+
+Never remove the main repository checkout with this command.
 
 ## Red Flags
 

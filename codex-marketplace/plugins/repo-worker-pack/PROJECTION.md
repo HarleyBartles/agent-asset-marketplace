@@ -26,12 +26,14 @@ The split is deliberate:
 - `repo-worker-pack` is the first-party plugin projection with core repo worker
   skills and its compositional entrypoint.
 <!-- BEGIN GENERATED: projection-contract -->
-- Active manifest entries (14):
+- Active manifest entries (16):
   - `base-doctrine`
   - `cleanup-custody`
   - `connector-safety`
   - `context-safety`
+  - `generating-index-mesh`
   - `linear-issue-shaping`
+  - `refreshing-installed-skills`
   - `repo-guide-standard`
   - `repo-worker-base`
   - `risk-gates`
