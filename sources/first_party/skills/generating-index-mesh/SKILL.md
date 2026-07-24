@@ -11,7 +11,7 @@ metadata:
   scope: Run the repository's generate_index_mesh.py command.
   use_when:
   - Use when INDEX.md files are stale after skill, plugin, or source changes.
-  - Use when as a CI or pre-commit gate to verify the navigation mesh.
+  - Use when verifying the navigation mesh in CI or as a pre-commit gate.
   do_not_use_when:
   - Do not use when installing or refreshing skills from the plugin source.
   related_skills:
