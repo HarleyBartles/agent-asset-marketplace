@@ -248,3 +248,73 @@ def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert not personal_root.exists()
+
+
+def test_new_worktree_rejects_path_traversal(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "traversal-repo")
+    for branch in ["../evil", "evil/../other"]:
+        result = subprocess.run(
+            [sys.executable, str(NEW_WORKTREE), branch, "--no-skill-refresh"],
+            cwd=repo,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode != 0, branch
+        assert any(
+            word in result.stderr.lower()
+            for word in ["canonical", "outside", "invalid branch"]
+        ), branch
+
+
+def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "absolute-repo")
+    outside = (tmp_path / "outside").resolve()
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), str(outside), "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert any(
+        word in result.stderr.lower()
+        for word in ["canonical", "outside", "invalid branch"]
+    )
+
+
+def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "ambiguous-repo")
+
+    team_root = tmp_path / "_agent-worktrees" / "ambiguous-repo" / "team" / "feature"
+    subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "team/feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        check=True,
+    )
+    assert team_root.is_dir()
+
+    personal_root = tmp_path / "_agent-worktrees" / "ambiguous-repo" / "personal" / "feature"
+    subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        check=True,
+    )
+    assert personal_root.is_dir()
+
+    result = subprocess.run(
+        [sys.executable, str(REMOVE_WORKTREE), "feature"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "ambiguous" in result.stderr.lower()
+    assert team_root.is_dir()
+    assert personal_root.is_dir()

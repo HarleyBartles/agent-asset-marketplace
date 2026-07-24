@@ -42,24 +42,57 @@ def _reject_submodule() -> None:
 
 
 def _main_repo_root() -> Path:
+    """Return the main repository worktree root.
+
+    The first worktree reported by `git worktree list` is the main worktree.
+    Using this instead of `--git-common-dir` avoids misplacing worktrees when
+    the repository uses `--separate-git-dir` or other non-standard git-dir
+    layouts.
+    """
     result = subprocess.run(
-        ["git", "rev-parse", "--git-common-dir"],
+        ["git", "worktree", "list", "--porcelain"],
         capture_output=True,
         text=True,
         check=True,
         env=_stripped_env(),
     )
-    common = Path(result.stdout.strip())
-    if not common.is_absolute():
-        common = (_repo_root() / common).resolve()
-    else:
-        common = common.resolve()
-    return common.parent
+    for line in result.stdout.splitlines():
+        if line.startswith("worktree "):
+            return Path(line.split(" ", 1)[1]).resolve()
+    raise RuntimeError("Could not determine the main repository root")
 
 
 def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
     repo_name = main_repo_root.name
     return main_repo_root.parent / "_agent-worktrees" / repo_name / branch
+
+
+def _validate_branch_name(branch: str) -> None:
+    """Raise ValueError if branch is not a valid git ref name."""
+    result = subprocess.run(
+        ["git", "check-ref-format", f"refs/heads/{branch}"],
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
+    if result.returncode != 0:
+        raise ValueError(f"invalid branch name: {branch!r}")
+
+
+def _validate_worktree_root(main_repo_root: Path, branch: str) -> Path:
+    """Return the resolved worktree path, refusing paths that escape the canonical root."""
+    _validate_branch_name(branch)
+    canonical_root = _canonical_worktree_root(main_repo_root, "placeholder").parent
+    worktree_root = _canonical_worktree_root(main_repo_root, branch).resolve()
+    try:
+        worktree_root.relative_to(canonical_root.resolve())
+    except ValueError as exc:
+        raise ValueError(
+            f"branch {branch!r} would place worktree outside the canonical root {canonical_root}"
+        ) from exc
+    if worktree_root == canonical_root.resolve():
+        raise ValueError(f"branch {branch!r} resolves to the canonical worktree root")
+    return worktree_root
 
 
 def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path | None:
@@ -113,7 +146,11 @@ def main(argv: list[str] | None = None) -> int:
     _reject_submodule()
     main_repo_root = _main_repo_root()
 
-    worktree_root = _canonical_worktree_root(main_repo_root, args.branch)
+    try:
+        worktree_root = _validate_worktree_root(main_repo_root, args.branch)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
     if worktree_root.is_file():
         print(f"error: worktree path is an existing file: {worktree_root}", file=sys.stderr)
         return 1

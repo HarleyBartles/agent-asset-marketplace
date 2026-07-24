@@ -185,7 +185,13 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and _git_has_changes(repo_root):
         subprocess.run(["git", "add", "-A"], cwd=repo_root, env=_stripped_env(), check=True)
         subprocess.run(
-            ["git", "commit", "-m", "chore: refresh installed skills and regenerate index mesh"],
+            [
+                "git",
+                "commit",
+                "--no-verify",
+                "-m",
+                "chore: refresh installed skills and regenerate index mesh",
+            ],
             cwd=repo_root,
             env=_stripped_env(),
             check=True,

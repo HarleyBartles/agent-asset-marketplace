@@ -1,8 +1,9 @@
 {
-  "manifestSha": "75857d5cca22b84741421d878da5b87f6ee81fde",
-  "syncedAt": "2026-07-24T13:59:22.617498",
+  "manifestSha": "0cfb3f233823b527d74257d9f55c9548d16384eb",
+  "syncedAt": "2026-07-24T15:47:12.569326",
   "syncedPlugins": [
-    "superpowers-plus"
+    "superpowers-plus",
+    "repo-worker-pack"
   ],
   "syncedSkills": 31,
   "source": "HarleyBartles/agent-asset-marketplace",
