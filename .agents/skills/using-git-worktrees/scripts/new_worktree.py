@@ -68,9 +68,9 @@ def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
 
 
 def _validate_branch_name(branch: str) -> None:
-    """Raise ValueError if branch is not a valid git ref name."""
+    """Raise ValueError if branch is not a valid git branch name."""
     result = subprocess.run(
-        ["git", "check-ref-format", f"refs/heads/{branch}"],
+        ["git", "check-ref-format", "--branch", branch],
         capture_output=True,
         text=True,
         env=_stripped_env(),
