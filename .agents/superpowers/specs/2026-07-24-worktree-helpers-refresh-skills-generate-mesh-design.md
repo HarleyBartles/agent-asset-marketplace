@@ -157,7 +157,7 @@ generated_files:
 
 ### `codex-marketplace/custody-pack-registry.json`
 
-Add first-party entries for `refreshing-installed-skills` and `generating-index-mesh` to the `repo-worker-pack` bundle (both are also auto-included in the `house-skills` mega-pack because it scans `sources/first_party/skills/`).
+Add the source directories to the `repo-worker-pack` `source_ledger` and add first-party entries for `refreshing-installed-skills` and `generating-index-mesh` to the `repo-worker-pack` bundle (both are also auto-included in the `house-skills` mega-pack because it scans `sources/first_party/skills/`).
 
 Example entry shape for `repo-worker-pack`:
 
