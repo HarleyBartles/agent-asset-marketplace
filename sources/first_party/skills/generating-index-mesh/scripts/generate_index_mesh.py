@@ -56,7 +56,7 @@ def _find_override(repo_root: Path) -> list[str] | None:
                 return [sys.executable, str(candidate)]
             if sys.platform == "win32" and rel.endswith(".ps1"):
                 return ["pwsh", "-File", str(candidate)]
-            if shutil.which("bash"):
+            elif rel.endswith(".sh") and shutil.which("bash"):
                 return ["bash", str(candidate)]
             raise RuntimeError(f"Found {candidate} but no interpreter available")
     return None
@@ -70,6 +70,11 @@ def _find_command(repo_root: Path) -> list[str] | None:
     return None
 
 
+def find_mesh_command(repo_root: Path) -> list[str] | None:
+    """Return the command list for the repo's index mesh generator, if any."""
+    return _find_override(repo_root) or _find_command(repo_root)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the repo's index mesh generator")
     parser.add_argument("--check", action="store_true", help="validate without writing")
@@ -78,7 +83,7 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = _repo_root()
     _reject_submodule()
 
-    command = _find_override(repo_root) or _find_command(repo_root)
+    command = find_mesh_command(repo_root)
     if command is None:
         print("error: no generate_index_mesh command found", file=sys.stderr)
         return 1
