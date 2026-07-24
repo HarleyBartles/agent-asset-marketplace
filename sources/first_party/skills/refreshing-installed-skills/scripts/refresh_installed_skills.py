@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -95,17 +96,30 @@ def find_install_command(repo_root: Path) -> list[str] | None:
     return None
 
 
+def _is_under_repo(repo_root: Path, candidate: Path) -> bool:
+    """Return True if candidate resolves to a path inside repo_root."""
+    try:
+        candidate.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        return False
+    return True
+
+
 def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path | None:
-    """Return the path to a skill's core script, searching installed plugins first."""
+    """Return the path to a skill's core script, searching installed plugins first.
+
+    This helper is intentionally self-contained in each skill script so the
+    skills remain independent; do not share a module between installed skills.
+    """
     fast_path = repo_root / ".agents" / "skills" / skill_name / "scripts" / core_name
-    if fast_path.is_file():
+    if fast_path.is_file() and _is_under_repo(repo_root, fast_path):
         return fast_path
 
     marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
     if marketplace.is_file():
         try:
             data = json.loads(marketplace.read_text(encoding="utf-8"))
-        except Exception:
+        except json.JSONDecodeError:
             data = {}
         for plugin in data.get("plugins", []):
             if plugin.get("policy", {}).get("installation") != "INSTALLED_BY_DEFAULT":
@@ -117,7 +131,7 @@ def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path |
             if not plugin_path.is_absolute():
                 plugin_path = (repo_root / plugin_path).resolve()
             candidate = plugin_path / "skills" / skill_name / "scripts" / core_name
-            if candidate.is_file():
+            if candidate.is_file() and _is_under_repo(repo_root, candidate):
                 return candidate
 
     for pattern in [
@@ -125,7 +139,7 @@ def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path |
         f".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
     ]:
         for candidate in sorted(repo_root.glob(pattern)):
-            if candidate.is_file():
+            if candidate.is_file() and _is_under_repo(repo_root, candidate):
                 return candidate
     return None
 
@@ -135,15 +149,50 @@ def find_mesh_script(repo_root: Path) -> Path | None:
     return _find_skill_core(repo_root, "generating-index-mesh", "generate_index_mesh.py")
 
 
-def _git_has_changes(repo_root: Path) -> bool:
+def _is_refresh_path(repo_root: Path, path: Path) -> bool:
+    """Return True for paths the refresh command owns (skills, index mesh, repo-index)."""
+    try:
+        rel = path.resolve().relative_to(repo_root.resolve())
+    except ValueError:
+        return False
+    parts = rel.parts
+    if len(parts) >= 2 and parts[0] == ".agents" and parts[1] == "skills":
+        return True
+    if parts and parts[0] == "repo-index":
+        return True
+    if rel.name == "INDEX.md":
+        return True
+    return False
+
+
+def _git_refresh_changes(repo_root: Path) -> list[str]:
+    """Return repo-relative paths that belong to the refresh surfaces and are dirty."""
     result = subprocess.run(
-        ["git", "status", "--porcelain"],
+        ["git", "status", "--porcelain", "--untracked-files=all"],
         cwd=repo_root,
         capture_output=True,
         text=True,
         env=_stripped_env(),
+        check=True,
     )
-    return bool(result.stdout.strip())
+    changed: list[str] = []
+    for line in result.stdout.splitlines():
+        if not line:
+            continue
+        # status is two chars, then a space, then the path (quoted if needed).
+        # Renamed entries include " -> " between old and new path.
+        path_field = line[3:]
+        tokens = shlex.split(path_field)
+        if "->" in tokens:
+            path_str = tokens[tokens.index("->") + 1]
+        elif tokens:
+            path_str = tokens[-1]
+        else:
+            continue
+        path = repo_root / path_str
+        if _is_refresh_path(repo_root, path):
+            changed.append(path_str)
+    return changed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -182,20 +231,27 @@ def main(argv: list[str] | None = None) -> int:
     if result.returncode != 0:
         return result.returncode
 
-    if not args.check and _git_has_changes(repo_root):
-        subprocess.run(["git", "add", "-A"], cwd=repo_root, env=_stripped_env(), check=True)
-        subprocess.run(
-            [
-                "git",
-                "commit",
-                "--no-verify",
-                "-m",
-                "chore: refresh installed skills and regenerate index mesh",
-            ],
-            cwd=repo_root,
-            env=_stripped_env(),
-            check=True,
-        )
+    if not args.check:
+        refresh_paths = _git_refresh_changes(repo_root)
+        if refresh_paths:
+            subprocess.run(
+                ["git", "add", "--", *refresh_paths],
+                cwd=repo_root,
+                env=_stripped_env(),
+                check=True,
+            )
+            subprocess.run(
+                [
+                    "git",
+                    "commit",
+                    "--no-verify",
+                    "-m",
+                    "chore: refresh installed skills and regenerate index mesh",
+                ],
+                cwd=repo_root,
+                env=_stripped_env(),
+                check=True,
+            )
 
     return 0
 

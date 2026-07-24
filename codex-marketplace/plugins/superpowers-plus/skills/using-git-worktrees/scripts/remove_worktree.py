@@ -96,10 +96,18 @@ def main(argv: list[str] | None = None) -> int:
         print("error: refusing to remove the main repository checkout", file=sys.stderr)
         return 1
 
-    try:
-        subprocess.run(["git", "-C", str(worktree), "submodule", "deinit", "--all", "-f"], check=False, capture_output=True)
-    except Exception:
-        pass
+    if args.force:
+        # Deinitialize submodules only when force-removing; this mutates the
+        # shared git config and can affect other worktrees, so it is gated.
+        try:
+            subprocess.run(
+                ["git", "-C", str(worktree), "submodule", "deinit", "--all", "-f"],
+                check=False,
+                capture_output=True,
+                env=_stripped_env(),
+            )
+        except Exception:
+            pass
 
     cmd = ["git", "worktree", "remove", str(worktree)]
     if args.force:
