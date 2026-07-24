@@ -1273,12 +1273,18 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
   py -3 tools/rebuild_marketplace.py
   py -3 tools/check_marketplace.py
   ```
-- [ ] Run whitespace check:
+- [ ] Stage all changes and run the whitespace check:
   ```powershell
-  git diff --check
+  git add -A
+  git diff --cached --check
+  ```
+  If it fails, fix whitespace and re-stage.
+- [ ] Commit:
+  ```
+  git commit -m "chore: regenerate marketplace and validate"
   ```
 
-**Expected interim state:** All tests pass, `check_marketplace.py` exits 0, `git diff --check` exits 0.
+**Expected interim state:** All tests pass, `check_marketplace.py` exits 0, `git diff --cached --check` exits 0.
 
 ---
 
@@ -1307,6 +1313,6 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
 
 ## SDD Confidence Rating
 
-8/10
+9/10
 
-The plan is concrete and each task has exact file targets, code, and validation. The remaining risk is the overlay `insert_after` line numbers/anchors: the materializer requires the anchor text to match the upstream source exactly. The plan lists anchors verbatim from the current upstream `SKILL.md` (line 57, 157, 185), but if the upstream file changes before execution, the insert will fail. The implementer should re-read the upstream `SKILL.md` and overlay to confirm anchors before running Task 4 Step 4.
+The plan is concrete and each task has exact file targets, code, and validation. Overlay `insert_after` anchors are quoted verbatim from the current upstream `SKILL.md` and `tools/heal_overlays.py` runs during `rebuild_marketplace.py`/`check_marketplace.py`, so line-number drift is auto-healed as long as the anchor text remains unchanged. The only remaining risk is if the upstream `SKILL.md` content changes before execution; the implementer should verify the three anchors in `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/SKILL.md` before running Task 4 Step 4.
