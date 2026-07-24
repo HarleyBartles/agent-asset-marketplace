@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-python3 "${SCRIPT_DIR}/refresh_installed_skills.py" "$@"
+python3 "${SCRIPT_DIR}/remove_worktree.py" "$@"
