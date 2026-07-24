@@ -66,14 +66,14 @@ def _resolve_worktree(repo_root: Path, target: str) -> Path:
     if target in worktrees:
         return Path(worktrees[target]).resolve()
 
-    for branch, path in worktrees.items():
-        if branch.split("/")[-1] == target:
-            return Path(path).resolve()
-
     for path in worktrees.values():
         resolved = Path(path).resolve()
         if resolved.name == target:
             return resolved
+
+    for branch, path in worktrees.items():
+        if branch.split("/")[-1] == target:
+            return Path(path).resolve()
 
     raise RuntimeError(f"Could not resolve worktree: {target}")
 

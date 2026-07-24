@@ -60,7 +60,7 @@ Native tools handle directory placement, branch creation, and cleanup automatica
 
 Only proceed to Step 1b if you have no native worktree tool available.
 
-If the repo provides bundled `new-worktree`/`remove-worktree` scripts (e.g. under `.agents/skills/using-git-worktrees/scripts/` or the `adapters/codex/superpowers-plus/using-git-worktrees/scripts/` source), prefer those helpers. They place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`) and automatically refresh installed skills after creation.
+Use the `new-worktree`/`remove-worktree` scripts bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helpers (for example, in a `scripts/` directory at the repo root), prefer the repo-specific ones. The bundled scripts are installed at `.agents/skills/using-git-worktrees/scripts/` and place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing.
 
 ### 1b. Git Worktree Fallback
 

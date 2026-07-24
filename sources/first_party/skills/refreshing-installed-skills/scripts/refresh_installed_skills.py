@@ -46,8 +46,18 @@ def _init_marketplace_source(repo_root: Path) -> None:
     submodule = repo_root / ".agents" / "plugins" / "marketplace-source"
     if not (repo_root / ".gitmodules").is_file():
         return
+    relative = submodule.relative_to(repo_root).as_posix()
+    status = subprocess.run(
+        ["git", "submodule", "status", relative],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
+    if status.returncode != 0:
+        return
     subprocess.run(
-        ["git", "submodule", "update", "--init", "--recursive", str(submodule.relative_to(repo_root))],
+        ["git", "submodule", "update", "--init", "--recursive", relative],
         cwd=repo_root,
         env=_stripped_env(),
         check=True,

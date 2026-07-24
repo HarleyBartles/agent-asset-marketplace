@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -19,6 +20,23 @@ def _make_repo(tmp_path: Path, name: str) -> Path:
     (repo / "README.md").write_text("# test\n", encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "init"], cwd=repo, check=True, capture_output=True)
+    return repo
+
+
+def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
+    """Create a fake repo with enough marketplace structure for new-worktree to auto-refresh skills."""
+    repo = _make_repo(tmp_path, name)
+    pack = repo / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    pack.mkdir(parents=True)
+    source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
+    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-index-mesh"
+    shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
+    shutil.copytree(source_mesh, pack / "generating-index-mesh")
+    (repo / "tools").mkdir()
+    (repo / "tools" / "install_agent_skills.py").write_text("print('install ok')\n", encoding="utf-8")
+    (repo / "tools" / "generate_index_mesh.py").write_text("print('mesh ok')\n", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add refresh scaffolding"], cwd=repo, check=True, capture_output=True)
     return repo
 
 
@@ -164,3 +182,69 @@ def test_new_worktree_fails_when_target_path_already_exists(tmp_path: Path) -> N
     )
     assert result.returncode != 0
     assert "directory" in result.stderr.lower()
+
+
+def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
+    repo = _make_repo_with_bundled_refresh(tmp_path, "refresh-repo")
+    worktree_root = tmp_path / "_agent-worktrees" / "refresh-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert "Worktree ready" in result.stdout
+    assert "install ok" in result.stdout
+    assert "mesh ok" in result.stdout
+
+
+def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "namespace-repo")
+
+    team_root = tmp_path / "_agent-worktrees" / "namespace-repo" / "team" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "team/feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert team_root.is_dir()
+
+    personal_root = tmp_path / "_agent-worktrees" / "namespace-repo" / "personal" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert personal_root.is_dir()
+
+    # Resolve by full ref
+    result = subprocess.run(
+        [sys.executable, str(REMOVE_WORKTREE), "refs/heads/team/feature"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not team_root.exists()
+    assert personal_root.is_dir()
+
+    # Resolve by branch leaf (ambiguous, should remove the remaining one)
+    result = subprocess.run(
+        [sys.executable, str(REMOVE_WORKTREE), "feature"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not personal_root.exists()

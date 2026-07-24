@@ -259,7 +259,7 @@
           "adapted_author": "Harley Bartles",
           "copy_expectation": "adapted_from_source",
           "provenance_note": "Adapted from the retained upstream v6.1.0 snapshot into the Codex projection.",
-          "adaptation_note": "Honored repo-declared canonical sibling-folder worktree roots before falling back to project-local directories.",
+          "adaptation_note": "Bundled `new-worktree`/`remove-worktree` scripts place worktrees at the repo-declared canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`) and auto-run `refreshing-installed-skills` after creation; otherwise honored canonical worktree roots before falling back to project-local directories.",
           "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/SKILL.md",
           "source_author": "obra",
           "source_license": "MIT",

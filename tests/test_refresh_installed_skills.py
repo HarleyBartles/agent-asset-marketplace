@@ -177,6 +177,26 @@ def test_missing_marketplace_source_initializes_submodule(tmp_path: Path, monkey
 
     monkeypatch.setattr(refresh_installed_skills.subprocess, "run", fake_run)
     refresh_installed_skills._init_marketplace_source(repo)
-    assert recorded
-    assert recorded[0][:5] == ["git", "submodule", "update", "--init", "--recursive"]
-    assert Path(recorded[0][-1]).as_posix() == ".agents/plugins/marketplace-source"
+    assert len(recorded) == 2
+    assert recorded[0][:3] == ["git", "submodule", "status"]
+    assert recorded[1][:5] == ["git", "submodule", "update", "--init", "--recursive"]
+    assert Path(recorded[1][-1]).as_posix() == ".agents/plugins/marketplace-source"
+
+
+def test_unrelated_submodule_is_not_initialized(tmp_path: Path, monkeypatch) -> None:
+    repo = tmp_path / "other-submodule-repo"
+    repo.mkdir()
+    (repo / ".gitmodules").write_text(
+        "[submodule \"other\"]\n\tpath = other\n",
+        encoding="utf-8",
+    )
+    recorded = []
+
+    def fake_run(cmd, **kwargs):
+        recorded.append(cmd)
+        return subprocess.CompletedProcess(cmd, 1, "", "")
+
+    monkeypatch.setattr(refresh_installed_skills.subprocess, "run", fake_run)
+    refresh_installed_skills._init_marketplace_source(repo)
+    assert len(recorded) == 1
+    assert recorded[0][:3] == ["git", "submodule", "status"]

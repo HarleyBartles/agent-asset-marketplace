@@ -123,7 +123,7 @@ def main(argv: list[str] | None = None) -> int:
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["git", "worktree", "add", str(worktree_root), "-b", args.branch]
+    cmd = ["git", "worktree", "add", "-b", args.branch, str(worktree_root)]
     if args.base_ref:
         cmd.append(args.base_ref)
 
@@ -143,7 +143,10 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
                 return result.returncode
         else:
-            print("warning: refreshing-installed-skills not found; run it manually in the new worktree", file=sys.stderr)
+            print(
+                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
+                file=sys.stderr,
+            )
 
     print(f"Worktree ready at {worktree_root}")
     return 0
