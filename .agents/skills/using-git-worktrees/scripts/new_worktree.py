@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -61,19 +62,44 @@ def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
     return main_repo_root.parent / "_agent-worktrees" / repo_name / branch
 
 
-def _find_refresh_script(worktree_root: Path) -> Path | None:
-    candidates = [
-        worktree_root / ".agents" / "skills" / "refreshing-installed-skills" / "scripts" / "refresh_installed_skills.py",
-    ]
+def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path | None:
+    """Return the path to a skill's core script, searching installed plugins first."""
+    fast_path = repo_root / ".agents" / "skills" / skill_name / "scripts" / core_name
+    if fast_path.is_file():
+        return fast_path
+
+    marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
+    if marketplace.is_file():
+        try:
+            data = json.loads(marketplace.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+        for plugin in data.get("plugins", []):
+            if plugin.get("policy", {}).get("installation") != "INSTALLED_BY_DEFAULT":
+                continue
+            source_path = plugin.get("source", {}).get("path")
+            if not source_path:
+                continue
+            plugin_path = Path(source_path)
+            if not plugin_path.is_absolute():
+                plugin_path = (repo_root / plugin_path).resolve()
+            candidate = plugin_path / "skills" / skill_name / "scripts" / core_name
+            if candidate.is_file():
+                return candidate
+
     for pattern in [
-        "codex-marketplace/plugins/*/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
-        ".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
+        f"codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
+        f".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
     ]:
-        candidates.extend(sorted(worktree_root.glob(pattern)))
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate
+        for candidate in sorted(repo_root.glob(pattern)):
+            if candidate.is_file():
+                return candidate
     return None
+
+
+def _find_refresh_script(worktree_root: Path) -> Path | None:
+    """Return the path to the new worktree's refreshing-installed-skills script."""
+    return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -88,8 +114,11 @@ def main(argv: list[str] | None = None) -> int:
     main_repo_root = _main_repo_root()
 
     worktree_root = _canonical_worktree_root(main_repo_root, args.branch)
-    if worktree_root.exists():
-        print(f"error: worktree path already exists: {worktree_root}", file=sys.stderr)
+    if worktree_root.is_file():
+        print(f"error: worktree path is an existing file: {worktree_root}", file=sys.stderr)
+        return 1
+    if worktree_root.is_dir():
+        print(f"error: worktree directory already exists: {worktree_root}", file=sys.stderr)
         return 1
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
@@ -105,7 +134,14 @@ def main(argv: list[str] | None = None) -> int:
     if not args.no_skill_refresh:
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            subprocess.run([sys.executable, str(refresh_script)], cwd=worktree_root, env=_stripped_env())
+            result = subprocess.run(
+                [sys.executable, str(refresh_script)],
+                cwd=worktree_root,
+                env=_stripped_env(),
+            )
+            if result.returncode != 0:
+                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
+                return result.returncode
         else:
             print("warning: refreshing-installed-skills not found; run it manually in the new worktree", file=sys.stderr)
 

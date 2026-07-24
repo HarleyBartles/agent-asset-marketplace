@@ -49,13 +49,11 @@ def _list_worktrees(repo_root: Path) -> dict[str, str]:
             current_branch = line.split(" ", 1)[1]
         elif line == "":
             if current_path and current_branch:
-                branch_name = current_branch.split("/")[-1]
-                worktrees[branch_name] = current_path
+                worktrees[current_branch] = current_path
             current_path = ""
             current_branch = ""
     if current_path and current_branch:
-        branch_name = current_branch.split("/")[-1]
-        worktrees[branch_name] = current_path
+        worktrees[current_branch] = current_path
     return worktrees
 
 
@@ -67,6 +65,10 @@ def _resolve_worktree(repo_root: Path, target: str) -> Path:
     worktrees = _list_worktrees(repo_root)
     if target in worktrees:
         return Path(worktrees[target]).resolve()
+
+    for branch, path in worktrees.items():
+        if branch.split("/")[-1] == target:
+            return Path(path).resolve()
 
     for path in worktrees.values():
         resolved = Path(path).resolve()

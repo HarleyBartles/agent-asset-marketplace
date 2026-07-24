@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -45,8 +46,6 @@ def _init_marketplace_source(repo_root: Path) -> None:
     submodule = repo_root / ".agents" / "plugins" / "marketplace-source"
     if not (repo_root / ".gitmodules").is_file():
         return
-    if not submodule.exists():
-        return
     subprocess.run(
         ["git", "submodule", "update", "--init", "--recursive", str(submodule.relative_to(repo_root))],
         cwd=repo_root,
@@ -68,9 +67,9 @@ def _find_override(repo_root: Path) -> list[str] | None:
         if candidate.is_file():
             if rel.endswith(".py"):
                 return [sys.executable, str(candidate)]
-            if sys.platform == "win32" and rel.endswith(".ps1"):
+            elif sys.platform == "win32" and rel.endswith(".ps1"):
                 return ["pwsh", "-File", str(candidate)]
-            if shutil.which("bash"):
+            elif rel.endswith(".sh") and shutil.which("bash"):
                 return ["bash", str(candidate)]
             raise RuntimeError(f"Found {candidate} but no interpreter available")
     return None
@@ -86,20 +85,44 @@ def find_install_command(repo_root: Path) -> list[str] | None:
     return None
 
 
+def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path | None:
+    """Return the path to a skill's core script, searching installed plugins first."""
+    fast_path = repo_root / ".agents" / "skills" / skill_name / "scripts" / core_name
+    if fast_path.is_file():
+        return fast_path
+
+    marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
+    if marketplace.is_file():
+        try:
+            data = json.loads(marketplace.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+        for plugin in data.get("plugins", []):
+            if plugin.get("policy", {}).get("installation") != "INSTALLED_BY_DEFAULT":
+                continue
+            source_path = plugin.get("source", {}).get("path")
+            if not source_path:
+                continue
+            plugin_path = Path(source_path)
+            if not plugin_path.is_absolute():
+                plugin_path = (repo_root / plugin_path).resolve()
+            candidate = plugin_path / "skills" / skill_name / "scripts" / core_name
+            if candidate.is_file():
+                return candidate
+
+    for pattern in [
+        f"codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
+        f".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
+    ]:
+        for candidate in sorted(repo_root.glob(pattern)):
+            if candidate.is_file():
+                return candidate
+    return None
+
+
 def find_mesh_script(repo_root: Path) -> Path | None:
     """Return the path to the repo's generating-index-mesh script, if any."""
-    candidates = [
-        repo_root / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py",
-    ]
-    for pattern in [
-        "codex-marketplace/plugins/*/skills/generating-index-mesh/scripts/generate_index_mesh.py",
-        ".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/generating-index-mesh/scripts/generate_index_mesh.py",
-    ]:
-        candidates.extend(sorted(repo_root.glob(pattern)))
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate
-    return None
+    return _find_skill_core(repo_root, "generating-index-mesh", "generate_index_mesh.py")
 
 
 def _git_has_changes(repo_root: Path) -> bool:
@@ -123,7 +146,11 @@ def main(argv: list[str] | None = None) -> int:
 
     override = _find_override(repo_root)
     if override:
-        result = subprocess.run(override, cwd=repo_root, env=_stripped_env())
+        result = subprocess.run(
+            override + (["--check"] if args.check else []),
+            cwd=repo_root,
+            env=_stripped_env(),
+        )
         return result.returncode
 
     install_cmd = find_install_command(repo_root)
