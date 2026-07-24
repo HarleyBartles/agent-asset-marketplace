@@ -1,6 +1,6 @@
 # Worktree helpers, refresh skills, and generate mesh — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Implement the two `refreshing-installed-skills` and `generating-index-mesh` first-party skills, ship bundled `new-worktree`/`remove-worktree` scripts through the `using-git-worktrees` Codex overlay, register the skills in `repo-worker-pack`, and regenerate marketplace surfaces.
 
@@ -27,13 +27,13 @@
 - Delete: `tests/test_worktree_scripts.py` (committed; will be replaced in Task 6)
 
 **Steps:**
-- [ ] Run `git status --short` to confirm the old plan is untracked and the stale test is tracked.
-- [ ] Delete the stale files:
+- [x] Run `git status --short` to confirm the old plan is untracked and the stale test is tracked.
+- [x] Delete the stale files:
   ```powershell
   Remove-Item -Path ".agents\superpowers\plans\2026-07-24-add-worktree-scripts-and-overlay.md"
   git rm tests/test_worktree_scripts.py
   ```
-- [ ] Commit:
+- [x] Commit:
   ```
   git commit -m "chore: remove stale per-repo worktree plan and failing test"
   ```
@@ -1179,13 +1179,13 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
 - `codex-marketplace/custody-pack-registry.json`
 
 **Steps:**
-- [ ] Open `codex-marketplace/custody-pack-registry.json`.
-- [ ] In the `repo-worker-pack` pack, add two entries to `source_ledger`:
+- [x] Open `codex-marketplace/custody-pack-registry.json`.
+- [x] In the `repo-worker-pack` pack, add two entries to `source_ledger`:
   ```json
   "sources/first_party/skills/refreshing-installed-skills",
   "sources/first_party/skills/generating-index-mesh",
   ```
-- [ ] In the `repo-worker-pack` pack `entries` array, add two entry objects (order does not matter):
+- [x] In the `repo-worker-pack` pack `entries` array, add two entry objects (order does not matter):
 
   ```json
   {
@@ -1219,15 +1219,15 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
     "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
   }
   ```
-- [ ] Run the marketplace rebuild:
+- [x] Run the marketplace rebuild:
   ```powershell
   py -3 tools/rebuild_marketplace.py
   ```
-- [ ] Run the marketplace check:
+- [x] Run the marketplace check:
   ```powershell
   py -3 tools/check_marketplace.py
   ```
-- [ ] Commit:
+- [x] Commit:
   ```
   git add codex-marketplace/custody-pack-registry.json codex-marketplace/plugins repo-index generated .agents/plugins .agents/skills .agents/INDEX.md
   git commit -m "chore: register refreshing-installed-skills and generating-index-mesh in repo-worker-pack and regenerate marketplace"
@@ -1246,12 +1246,12 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
 - `sources/first_party/skills/generating-index-mesh/agents/openai.yaml`
 
 **Steps:**
-- [ ] Run the normalizer:
+- [x] Run the normalizer:
   ```powershell
   py -3 tools/normalize_first_party_skill_sources.py --write
   ```
-- [ ] Inspect the diff to ensure frontmatter and `agents/openai.yaml` are still valid.
-- [ ] Commit:
+- [x] Inspect the diff to ensure frontmatter and `agents/openai.yaml` are still valid.
+- [x] Commit:
   ```
   git add sources/first_party/skills/refreshing-installed-skills sources/first_party/skills/generating-index-mesh
   git commit -m "chore: normalize new first-party skill sources"
@@ -1264,22 +1264,22 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
 ### Task 7: Full validation
 
 **Steps:**
-- [ ] Run the test suite:
+- [x] Run the test suite:
   ```powershell
   py -3 -m pytest tests/test_generate_index_mesh.py tests/test_refresh_installed_skills.py tests/test_worktree_scripts.py -v
   ```
-- [ ] Run marketplace rebuild and check:
+- [x] Run marketplace rebuild and check:
   ```powershell
   py -3 tools/rebuild_marketplace.py
   py -3 tools/check_marketplace.py
   ```
-- [ ] Stage all changes and run the whitespace check:
+- [x] Stage all changes and run the whitespace check:
   ```powershell
   git add -A
   git diff --cached --check
   ```
   If it fails, fix whitespace and re-stage.
-- [ ] Commit:
+- [x] Commit:
   ```
   git commit -m "chore: regenerate marketplace and validate"
   ```
@@ -1293,21 +1293,21 @@ git commit -m "feat: bundle new/remove worktree scripts and update using-git-wor
 **Files:** all changed files.
 
 **Steps:**
-- [ ] Verify branch target is `dev`:
+- [x] Verify branch target is `dev`:
   ```powershell
   git branch
   ```
   The current branch is `add-worktree-helpers`.
-- [ ] Push the branch:
+- [x] Push the branch:
   ```powershell
   git push origin add-worktree-helpers
   ```
-- [ ] Create PR against `dev` with the PR template from `.github/PULL_REQUEST_TEMPLATE.md`.
-- [ ] Fill every section of the template, including:
+- [x] Create PR against `dev` with the PR template from `.github/PULL_REQUEST_TEMPLATE.md`.
+- [x] Fill every section of the template, including:
   - What changed and why.
   - How to test (the validation commands above).
   - Disclosure of the model/harness/plugins used.
-- [ ] Do not merge without human review.
+- [x] Do not merge without human review.
 
 ---
 
