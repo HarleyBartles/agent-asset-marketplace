@@ -67,6 +67,14 @@ def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
     return main_repo_root.parent / "_agent-worktrees" / repo_name / branch
 
 
+def _normalize_branch_name(branch: str) -> str:
+    """Strip a leading refs/heads/ prefix so full refs can be used as branch names."""
+    prefix = "refs/heads/"
+    if branch.startswith(prefix):
+        branch = branch[len(prefix):]
+    return branch
+
+
 def _validate_branch_name(branch: str) -> None:
     """Raise ValueError if branch is not a valid git branch name."""
     result = subprocess.run(
@@ -158,9 +166,10 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = _repo_root()
     _reject_submodule()
     main_repo_root = _main_repo_root()
+    branch = _normalize_branch_name(args.branch)
 
     try:
-        worktree_root = _validate_worktree_root(main_repo_root, args.branch)
+        worktree_root = _validate_worktree_root(main_repo_root, branch)
     except ValueError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
@@ -173,11 +182,13 @@ def main(argv: list[str] | None = None) -> int:
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["git", "worktree", "add", "-b", args.branch, str(worktree_root)]
+    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root)]
     if args.base_ref:
         cmd.append(args.base_ref)
 
-    result = subprocess.run(cmd, cwd=repo_root, env=_stripped_env())
+    # Run from the main worktree so that the default base is main's HEAD, not the
+    # HEAD of any linked worktree the user may be invoking this script from.
+    result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
     if result.returncode != 0:
         return result.returncode
 

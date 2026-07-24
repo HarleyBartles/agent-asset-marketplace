@@ -58,11 +58,18 @@ def _list_worktrees(repo_root: Path) -> dict[str, str]:
 
 
 def _resolve_worktree(repo_root: Path, target: str) -> Path:
-    candidate = Path(target)
-    if candidate.is_absolute() and candidate.is_dir():
-        return candidate.resolve()
-
     worktrees = _list_worktrees(repo_root)
+    registered_paths = {Path(path).resolve() for path in worktrees.values()}
+
+    candidate = Path(target)
+    if candidate.is_absolute():
+        resolved = candidate.resolve()
+        if resolved in registered_paths:
+            return resolved
+        if candidate.is_dir():
+            raise RuntimeError(f"directory {target!r} is not a registered worktree of this repository")
+        raise RuntimeError(f"Could not resolve worktree: {target}")
+
     if target in worktrees:
         return Path(worktrees[target]).resolve()
 
@@ -106,8 +113,8 @@ def main(argv: list[str] | None = None) -> int:
                 capture_output=True,
                 env=_stripped_env(),
             )
-        except Exception:
-            pass
+        except (OSError, subprocess.SubprocessError) as exc:
+            print(f"warning: submodule deinit failed: {exc}", file=sys.stderr)
 
     cmd = ["git", "worktree", "remove", str(worktree)]
     if args.force:

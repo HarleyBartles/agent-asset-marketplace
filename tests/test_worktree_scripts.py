@@ -318,3 +318,32 @@ def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
     assert "ambiguous" in result.stderr.lower()
     assert team_root.is_dir()
     assert personal_root.is_dir()
+
+
+def test_remove_worktree_rejects_unregistered_absolute_path(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "unregistered-repo")
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    result = subprocess.run(
+        [sys.executable, str(REMOVE_WORKTREE), str(outside)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "not a registered worktree" in result.stderr.lower()
+
+
+def test_new_worktree_accepts_full_ref(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "full-ref-repo")
+    worktree_root = tmp_path / "_agent-worktrees" / "full-ref-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "refs/heads/feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
