@@ -37,7 +37,9 @@ def _is_shared_checkout(repo_root: Path) -> bool:
         ["git", "rev-parse", "--git-common-dir"],
         cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env(),
     ).stdout.strip()
-    return Path(git_dir).resolve() == Path(git_common).resolve()
+    # A linked worktree (shared checkout) has its git-dir under .git/worktrees/<name>
+    # while the common dir is the main .git directory.
+    return Path(git_dir).resolve() != Path(git_common).resolve()
 
 
 def _is_submodule(repo_root: Path) -> bool:

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import shutil
 import subprocess
 import sys
@@ -29,7 +28,7 @@ def _repo_root() -> Path:
 ROOT = _repo_root()
 
 
-def load_json(path: Path) -> Any:
+def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
 
@@ -74,7 +73,7 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
         try:
             if _frontmatter_name(skill_dir) != skill_dir.name:
                 raise ValueError("local skill directory name must match frontmatter name")
-        except (FileNotFoundError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
+        except (FileNotFoundError, UnicodeDecodeError, ValueError, AttributeError, TypeError, yaml.YAMLError) as exc:
             try:
                 display_path = skill_dir.relative_to(ROOT)
             except ValueError:
@@ -128,7 +127,7 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
 
 def _load_marketplace_config() -> dict[str, Any]:
     """Load the marketplace configuration."""
-    config = load_json(MARKETPLACE_PATH)
+    config = _load_json(MARKETPLACE_PATH)
     if not isinstance(config, dict):
         raise ValueError(f"{MARKETPLACE_PATH}: must contain a JSON object")
     return config
@@ -147,7 +146,7 @@ def _get_marketplace_manifest_sha() -> str:
         return result.stdout.strip()
     except subprocess.CalledProcessError:
         # Fallback: use marketplace.json modification time
-        return MARKETPLACE_PATH.stat().st_mtime.isoformat()
+        return datetime.fromtimestamp(MARKETPLACE_PATH.stat().st_mtime).isoformat()
 
 
 def _load_provenance() -> dict[str, Any] | None:
@@ -155,7 +154,7 @@ def _load_provenance() -> dict[str, Any] | None:
     if not PROVENANCE_PATH.exists():
         return None
     try:
-        return load_json(PROVENANCE_PATH)
+        return _load_json(PROVENANCE_PATH)
     except (json.JSONDecodeError, ValueError):
         return None
 
@@ -345,7 +344,9 @@ def _write_provenance(manifest_sha: str, synced_plugins: list[str], synced_skill
 def _is_shared_checkout(repo_root: Path) -> bool:
     git_dir = subprocess.run(["git", "rev-parse", "--git-dir"], cwd=repo_root, capture_output=True, text=True, check=True).stdout.strip()
     git_common = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=repo_root, capture_output=True, text=True, check=True).stdout.strip()
-    return Path(git_dir).resolve() == Path(git_common).resolve()
+    # A linked worktree (shared checkout) has its git-dir under .git/worktrees/<name>
+    # while the common dir is the main .git directory.
+    return Path(git_dir).resolve() != Path(git_common).resolve()
 
 
 def _is_submodule(repo_root: Path) -> bool:
@@ -358,8 +359,15 @@ def _roll_marketplace_source(repo_root: Path) -> None:
     if not submodule.is_dir() or not (submodule / ".git").exists():
         return
     print("Rolling marketplace-source to origin/main...")
-    subprocess.run(["git", "-C", str(submodule), "fetch", "origin"], check=True)
-    subprocess.run(["git", "-C", str(submodule), "reset", "--hard", "origin/main"], check=True)
+    try:
+        subprocess.run(["git", "-C", str(submodule), "fetch", "origin"], check=True)
+        subprocess.run(["git", "-C", str(submodule), "reset", "--hard", "origin/main"], check=True)
+    except subprocess.CalledProcessError as exc:
+        print(
+            f"ERROR: could not roll {submodule.relative_to(repo_root).as_posix()} to origin/main: {exc}",
+            file=sys.stderr,
+        )
+        raise
     rel = submodule.relative_to(repo_root).as_posix()
     subprocess.run(["git", "add", "--", rel], cwd=repo_root, check=True)
 
