@@ -57,7 +57,7 @@ def _parse_repo_guide_policy(policy_path: Path) -> dict[str, Path] | None:
     for line in text.splitlines():
         if not line.strip().startswith("|"):
             continue
-        parts = [p.strip() for p in line.split("|") if p.strip() != ""]
+        parts = [p.strip().strip("`") for p in line.split("|") if p.strip() != ""]
         if len(parts) >= 2 and parts[0] in GUIDE_TITLES:
             mapping[parts[0]] = Path(parts[1])
     return mapping if mapping else None
