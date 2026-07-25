@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py"
+CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py"
 
 
 def _make_source_repo(tmp_path: Path) -> Path:

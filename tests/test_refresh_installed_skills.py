@@ -42,8 +42,8 @@ def _make_source_repo(tmp_path: Path) -> Path:
     (repo / "tools" / "generate_index_mesh.py").write_text(
         "import sys\nprint('mesh ok')\n", encoding="utf-8"
     )
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py").write_text(
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
         "import sys\nprint('mesh ok')\n", encoding="utf-8"
     )
     return repo
@@ -62,8 +62,8 @@ def _make_consumer_repo(tmp_path: Path) -> Path:
     (repo / "scripts" / "generate_index_mesh.py").write_text(
         "import sys\nprint('mesh ok')\n", encoding="utf-8"
     )
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py").write_text(
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
         "import sys\nprint('mesh ok')\n", encoding="utf-8"
     )
     return repo
@@ -123,8 +123,8 @@ def test_check_is_propagated_to_install_and_mesh(tmp_path: Path) -> None:
         "import sys\nprint('install check ok')\nsys.exit(0 if '--check' in sys.argv else 1)\n",
         encoding="utf-8",
     )
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py").write_text(
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
+    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
         "import sys\nprint('mesh check ok')\nsys.exit(0 if '--check' in sys.argv else 1)\n",
         encoding="utf-8",
     )

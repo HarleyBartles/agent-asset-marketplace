@@ -142,10 +142,10 @@ def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
         return
     _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
     if check:
-        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
+        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     else:
-        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", verbose=verbose)
-        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
+        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", verbose=verbose)
+        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
 
 
