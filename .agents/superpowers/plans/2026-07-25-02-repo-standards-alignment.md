@@ -477,6 +477,16 @@ git commit -m "feat: harden repo-standards for router AGENTS.md, canonical guide
 
 ---
 
+## Completion checklist
+
+- [x] Task 1: Repository shape standard and manifest updated with router AGENTS.md model.
+- [x] Task 2: `scaffold_agents_md.py` and `scaffold_marketplace_json.py` scripts, templates, and `.sh`/`.ps1` wrappers added.
+- [x] Task 3: `repo_standards.py --check` hardened with scaffold checks and AGENTS.md validation.
+- [x] Task 4: PowerShell wrappers for all scaffold scripts rewritten for `py` launcher and `-Check`/`-Force` support.
+- [x] Task 5: `repo-standards/SKILL.md` and `agents/openai.yaml` updated.
+- [x] Task 6: Source repo `AGENTS.md` rewritten as a router; `repo-guide-policy.md` notes root router coverage; `marketplace.json` already uses `repo.local_skill_prefixes`.
+- [x] Task 7: Full scaffold check, `repo-standards --check`, `rebuild_marketplace.py`, `check_marketplace.py`, and pre-commit hook restore completed.
+
 ## Execution Confidence Rating
 
 **6/10 draft.**

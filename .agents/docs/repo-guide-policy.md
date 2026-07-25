@@ -17,6 +17,8 @@ This repo follows the `repo-standards` skill. Invoke `/repo-standards` before re
 | pr-guide.md | `.agents/guides/pr-guide.md` | exists |
 | code-style-guide.md | `.agents/guides/code-style-guide.md` | exists |
 
+Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed guides/routed surfaces.
+
 ## Additional repo-specific guides
 
 - `marketplace-generation-guide.md` — because this repo is an asset marketplace.
