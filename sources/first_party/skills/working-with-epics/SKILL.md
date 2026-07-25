@@ -22,6 +22,16 @@ metadata:
   - executing-plans
   - subagent-driven-development
   - brainstorming
+  use_after:
+  - brainstorming
+  use_before:
+  - handoff-gates
+  - executing-plans
+  use_with:
+  - handoff-gates
+  - writing-plans
+  - executing-plans
+  - subagent-driven-development
 license: MIT
 ---
 
@@ -44,7 +54,7 @@ Break large goals into a roadmap of consecutive plans, execute them, and keep th
 
 1. Read the roadmap.
 2. Pick the next pending or blocked item.
-3. Write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
+3. Use `writing-plans` to write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
 4. Run `handoff-gates` plan-readiness.
 5. Execute the plan.
 6. Update the roadmap with status, commit, PR, final rating, and notes.

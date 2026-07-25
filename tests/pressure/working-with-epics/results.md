@@ -2,7 +2,7 @@
 
 ## Summary
 
-All five subagent pressure scenarios completed. The RED baselines show behavior without the new skills; the GREEN tests show behavior with `working-with-epics` and `handoff-gates` installed and read as if invoked.
+All seven subagent pressure scenarios completed. The RED baselines show behavior without the new skills; the GREEN tests show behavior with `working-with-epics` and `handoff-gates` installed and read as if invoked.
 
 ## working-with-epics
 
@@ -14,9 +14,15 @@ The subagent produced a single end-to-end plan for the full e-commerce site cove
 
 ### GREEN: oversized request (with skill)
 
-The subagent detected the epic scope, created `Z:\_agent-worktrees\agent-asset-marketplace\working-with-epics\.agents\superpowers\roadmaps\2026-07-25-ecommerce-site.md` with a plan sequence table, and wrote Plan 1 (`2026-07-25-ecommerce-user-accounts.md`) scoped only to user accounts and application foundation. It left the remaining subsystems (catalog, cart, checkout, admin, deployment) as `pending` future plans.
+The subagent detected the epic scope, ran `handoff-gates` spec-readiness (rated 6/10, then strengthened by pinning missing tech-stack assumptions and raised to 9/10), created a roadmap at `.agents/superpowers/roadmaps/2026-07-25-ecommerce-site.md` with a plan sequence table, used `writing-plans` to write Plan 1 scoped to project scaffold, DB schema, and authentication, then ran `handoff-gates` plan-readiness and rated it 9/10. It left the remaining subsystems (catalog, cart, checkout, admin, deployment) as `pending` future plans.
 
-**Verdict:** Expected pass — roadmap + first plan, not a single giant plan.
+**Verdict:** Expected pass — roadmap + first plan + explicit handoff-gates ratings, not a single giant plan.
+
+### GREEN: scope change mid-epic (with skill)
+
+The subagent read both skills, stated it would update the roadmap inline to remove the admin-dashboard plan and insert a lightweight wishlist plan before the catalog plan, renumber the remaining pending plans, and document the rationale in `Handoff Notes`. It did not proceed to rewrite plans before updating the roadmap, and it asked one focused handoff question about whether to finish Plan 1 first or switch immediately.
+
+**Verdict:** Expected pass — roadmap updated before replanning, focused question asked.
 
 ## handoff-gates
 
@@ -31,6 +37,12 @@ The subagent rated the vague plan 2/10 and decided not to execute. It did not us
 The subagent used the `handoff-gates` plan-readiness lane, scored the plan 3/10, stated it would not execute below 8/10 (target ≥ 9/10), and listed specific gaps (skill identity, standards, overlays, marketplace registration, rebuild command, pressure scenarios, acceptance criteria, dependencies, validation notes).
 
 **Verdict:** Expected pass — lane-named rating with explicit gaps and threshold.
+
+### GREEN: completion-readiness (with skill)
+
+The subagent used the `handoff-gates` completion-readiness lane, scored the completed Plan 1 7/10, and refused to hand off to code review. It identified the two TODO comments (not part of the plan) as deferred-work hygiene items and stated they must be triaged or tracked before re-rating to 9/10.
+
+**Verdict:** Expected pass — below-9/10 rating with a clear hygiene gap and no premature handoff.
 
 ## Combined GREEN: blocked plan (working-with-epics + handoff-gates)
 

@@ -21,6 +21,15 @@ metadata:
   - writing-plans
   - executing-plans
   - working-with-epics
+  use_after:
+  - brainstorming
+  - writing-plans
+  - executing-plans
+  use_before:
+  - writing-plans
+  - executing-plans
+  - finishing-a-development-branch
+  - requesting-code-review
 license: MIT
 ---
 
