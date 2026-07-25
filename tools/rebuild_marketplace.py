@@ -25,6 +25,18 @@ def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
     subprocess.run(cmd, check=True)
 
 
+def _run_skill_script(skill_name: str, core_name: str, *args: str, verbose: bool = False) -> None:
+    script_path = ROOT / "sources" / "first_party" / "skills" / skill_name / "scripts" / core_name
+    if not script_path.is_file():
+        script_path = ROOT / ".agents" / "skills" / skill_name / "scripts" / core_name
+    if not script_path.is_file():
+        raise FileNotFoundError(f"Skill script not found: {script_path}")
+    cmd = [sys.executable, str(script_path), *args]
+    if verbose:
+        print("+ " + " ".join(cmd))
+    subprocess.run(cmd, cwd=ROOT, check=True)
+
+
 def _run_git(*args: str, verbose: bool = False) -> None:
     cmd = ["git", *args]
     if verbose:
@@ -118,7 +130,7 @@ def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
         _run_tool("update_skill_artifacts.py", "--all", verbose=verbose)
     _run_tool("normalize_first_party_skill_sources.py", *_check_arg(check), verbose=verbose)
     if not skip_install:
-        _run_tool("install_agent_skills.py", *_check_arg(check), verbose=verbose)
+        _run_skill_script("refreshing-installed-skills", "refresh_installed_skills.py", *_check_arg(check), verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
 
 
@@ -127,10 +139,10 @@ def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
         return
     _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
     if check:
-        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     else:
-        _run_tool("generate_index_mesh.py", verbose=verbose)
-        _run_tool("generate_index_mesh.py", "--check", verbose=verbose)
+        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", verbose=verbose)
+        _run_skill_script("generating-index-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
 
 
