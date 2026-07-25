@@ -34,7 +34,7 @@
 - Consumes: spec/plan/executed work from `brainstorming`, `writing-plans`, `executing-plans`.
 - Produces: a rated, ready artifact and a final execution-confidence rating for the roadmap.
 
-- [ ] **Step 1: Scaffold the skill using `mark-skill-authoring`**
+- [x] **Step 1: Scaffold the skill using `mark-skill-authoring`**
 
 Run:
 ```bash
@@ -44,7 +44,7 @@ Expected: Creates `sources/first_party/skills/handoff-gates/` with `SKILL.md`, `
 
 **Note:** If `git commit` later fails because a pre-commit hook references a missing script, run `git commit --no-verify` and route the hook issue to the owning agent.
 
-- [ ] **Step 2: Write `sources/first_party/skills/handoff-gates/SKILL.md`**
+- [x] **Step 2: Write `sources/first_party/skills/handoff-gates/SKILL.md`**
 
 ```markdown
 ---
@@ -109,7 +109,7 @@ For completion-readiness, 9/10 means high confidence the work passes code review
 - Chasing a 10 forever. → One bounded strengthening pass from 8–8.9 is enough.
 ```
 
-- [ ] **Step 3: Write `sources/first_party/skills/handoff-gates/agents/openai.yaml`**
+- [x] **Step 3: Write `sources/first_party/skills/handoff-gates/agents/openai.yaml`**
 
 ```yaml
 version: 1
@@ -130,7 +130,7 @@ policy:
   allow_implicit_invocation: true
 ```
 
-- [ ] **Step 4: Write `sources/first_party/skills/handoff-gates/assets/authority/CITATIONS.md`**
+- [x] **Step 4: Write `sources/first_party/skills/handoff-gates/assets/authority/CITATIONS.md`**
 
 ```markdown
 # Authority record for handoff-gates
@@ -161,7 +161,7 @@ None. Clean-room first-party synthesis.
   `CITATIONS.md` file.
 ```
 
-- [ ] **Step 5: Write `sources/first_party/skills/handoff-gates/references/scope-notes.md`**
+- [x] **Step 5: Write `sources/first_party/skills/handoff-gates/references/scope-notes.md`**
 
 ```markdown
 # Scope Notes
@@ -172,7 +172,7 @@ Expand on `handoff-gates` boundary cases when the main SKILL.md text is not enou
 - When completion-readiness overlaps with `verification-before-completion` or `requesting-code-review`.
 ```
 
-- [ ] **Step 6: Overwrite `sources/first_party/skills/handoff-gates/assets/authority/CITATIONS.md`**
+- [x] **Step 6: Overwrite `sources/first_party/skills/handoff-gates/assets/authority/CITATIONS.md`**
 
 ```markdown
 # Authority record for handoff-gates
@@ -203,7 +203,7 @@ None. Clean-room first-party synthesis.
   `CITATIONS.md` file.
 ```
 
-- [ ] **Step 7: Generate `authority.yaml` and `source-map.yaml` from `CITATIONS.md`**
+- [x] **Step 7: Generate `authority.yaml` and `source-map.yaml` from `CITATIONS.md`**
 
 Run:
 ```python
@@ -253,7 +253,7 @@ print(sha)
 ```
 Expected: Prints a 64-character SHA-256 and writes both YAML files with LF endings.
 
-- [ ] **Step 8: Validate skill shape**
+- [x] **Step 8: Validate skill shape**
 
 Run:
 ```bash
@@ -262,7 +262,7 @@ py -3 tools/validate_marketplace.py --phase project
 ```
 Expected: No errors for `handoff-gates`.
 
-- [ ] **Step 9: Check `SKILL.md` word count**
+- [x] **Step 9: Check `SKILL.md` word count**
 
 Run:
 ```bash
@@ -278,7 +278,7 @@ PY
 ```
 Expected: `Body word count: < 500`.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add sources/first_party/skills/handoff-gates
@@ -300,7 +300,7 @@ If the pre-commit hook fails with a missing-script error, retry with `git commit
 - Consumes: an oversized spec from `brainstorming` or a human epic request.
 - Produces: a roadmap at `.agents/superpowers/roadmaps/YYYY-MM-DD-<epic-name>.md` and a sequence of executed plans.
 
-- [ ] **Step 1: Scaffold the skill using `mark-skill-authoring`**
+- [x] **Step 1: Scaffold the skill using `mark-skill-authoring`**
 
 Run:
 ```bash
@@ -308,7 +308,7 @@ bash .agents/skills/mark-skill-authoring/scripts/new-skill.sh --name working-wit
 ```
 Expected: Creates `sources/first_party/skills/working-with-epics/` with `SKILL.md`, `assets/authority/CITATIONS.md`, `assets/authority/authority.yaml`, `assets/authority/source-map.yaml`, and `references/.gitkeep`.
 
-- [ ] **Step 2: Write `sources/first_party/skills/working-with-epics/SKILL.md`**
+- [x] **Step 2: Write `sources/first_party/skills/working-with-epics/SKILL.md`**
 
 ```markdown
 ---
@@ -382,7 +382,7 @@ The roadmap is a live look-ahead document. Edit it inline as decisions change th
 - Skipping the rating gate. → Every plan must pass `handoff-gates` plan-readiness before execution.
 ```
 
-- [ ] **Step 3: Write `sources/first_party/skills/working-with-epics/agents/openai.yaml`**
+- [x] **Step 3: Write `sources/first_party/skills/working-with-epics/agents/openai.yaml`**
 
 ```yaml
 version: 1
@@ -403,7 +403,7 @@ policy:
   allow_implicit_invocation: true
 ```
 
-- [ ] **Step 4: Write `sources/first_party/skills/working-with-epics/assets/authority/CITATIONS.md`**
+- [x] **Step 4: Write `sources/first_party/skills/working-with-epics/assets/authority/CITATIONS.md`**
 
 ```markdown
 # Authority record for working-with-epics
@@ -434,7 +434,7 @@ None. Clean-room first-party synthesis.
   `CITATIONS.md` file.
 ```
 
-- [ ] **Step 5: Write `sources/first_party/skills/working-with-epics/references/scope-notes.md`**
+- [x] **Step 5: Write `sources/first_party/skills/working-with-epics/references/scope-notes.md`**
 
 ```markdown
 # Scope Notes
@@ -445,7 +445,7 @@ Expand on `working-with-epics` when the main SKILL.md text is not enough:
 - When to ask the human a focused question versus escalating through `risk-gates`.
 ```
 
-- [ ] **Step 6: Overwrite `sources/first_party/skills/working-with-epics/assets/authority/CITATIONS.md`**
+- [x] **Step 6: Overwrite `sources/first_party/skills/working-with-epics/assets/authority/CITATIONS.md`**
 
 ```markdown
 # Authority record for working-with-epics
@@ -476,7 +476,7 @@ None. Clean-room first-party synthesis.
   `CITATIONS.md` file.
 ```
 
-- [ ] **Step 7: Generate `authority.yaml` and `source-map.yaml` from `CITATIONS.md`**
+- [x] **Step 7: Generate `authority.yaml` and `source-map.yaml` from `CITATIONS.md`**
 
 Run:
 ```python
@@ -526,7 +526,7 @@ print(sha)
 ```
 Expected: Prints a 64-character SHA-256 and writes both YAML files with LF endings.
 
-- [ ] **Step 8: Validate skill shape**
+- [x] **Step 8: Validate skill shape**
 
 Run:
 ```bash
@@ -535,7 +535,7 @@ py -3 tools/validate_marketplace.py --phase project
 ```
 Expected: No errors for `working-with-epics`.
 
-- [ ] **Step 9: Check `SKILL.md` word count**
+- [x] **Step 9: Check `SKILL.md` word count**
 
 Run:
 ```bash
@@ -551,7 +551,7 @@ PY
 ```
 Expected: `Body word count: < 500`.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add sources/first_party/skills/working-with-epics
@@ -570,7 +570,7 @@ If the pre-commit hook fails with a missing-script error, retry with `git commit
 - Consumes: `handoff-gates` first-party skill.
 - Produces: projected `brainstorming`, `writing-plans`, and `executing-plans` skills with `use_before`/`use_after` metadata and a thin prose pointer at each handoff.
 
-- [ ] **Step 1: Rewrite `adapters/codex/superpowers-plus/writing-plans/overlay.yaml`**
+- [x] **Step 1: Rewrite `adapters/codex/superpowers-plus/writing-plans/overlay.yaml`**
 
 ```yaml
 schema_version: 2
@@ -625,7 +625,7 @@ edits:
       - "**Before choosing an execution option, use `handoff-gates` plan-readiness lane.** Rate the plan for execution confidence (8/10 floor, 9/10 target). Report the final rating in the handoff. Do not execute below 8/10."
 ```
 
-- [ ] **Step 2: Append two edits to `adapters/codex/superpowers-plus/brainstorming/overlay.yaml` with a script**
+- [x] **Step 2: Append two edits to `adapters/codex/superpowers-plus/brainstorming/overlay.yaml` with a script**
 
 Run:
 ```python
@@ -681,7 +681,7 @@ overlay_path.write_text(
 ```
 Expected: The two new edits are appended to the `edits:` list and the file remains valid YAML.
 
-- [ ] **Step 3: Create `adapters/codex/superpowers-plus/executing-plans/overlay.yaml`**
+- [x] **Step 3: Create `adapters/codex/superpowers-plus/executing-plans/overlay.yaml`**
 
 ```yaml
 schema_version: 2
@@ -718,12 +718,12 @@ edits:
       - "  - Run `handoff-gates` completion-readiness lane. Rate the completed work against the plan and the repo code review guide (9/10 target). Report the final rating. Do not hand off below 9/10."
 ```
 
-- [ ] **Step 4: Validate overlays**
+- [x] **Step 4: Validate overlays**
 
 Run: `py -3 tools/rebuild_marketplace.py --phase heal`
 Expected: Overlays materialize without `ValueError` on missing expected lines. If `heal_overlays.py` adjusts line numbers, review the resulting `overlay.yaml` files and commit the healed versions.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add adapters/codex/superpowers-plus/writing-plans/overlay.yaml
@@ -741,9 +741,9 @@ git commit -m "feat: wire handoff-gates into brainstorming, writing-plans, execu
 - Consumes: first-party skill sources at `sources/first_party/skills/handoff-gates` and `sources/first_party/skills/working-with-epics`.
 - Produces: marketplace projection entries in `codex-marketplace/plugins/superpowers-plus/skills/` after rebuild.
 
-- [ ] **Step 1: Open `codex-marketplace/custody-pack-registry.json` and locate the `superpowers-plus` bundle entries array**
+- [x] **Step 1: Open `codex-marketplace/custody-pack-registry.json` and locate the `superpowers-plus` bundle entries array**
 
-- [ ] **Step 2: Insert the two first-party entries inside the `superpowers-plus` `entries` array** (near `writing-plans` and `executing-plans`)
+- [x] **Step 2: Insert the two first-party entries inside the `superpowers-plus` `entries` array** (near `writing-plans` and `executing-plans`)
 
 ```json
         {
@@ -776,12 +776,12 @@ git commit -m "feat: wire handoff-gates into brainstorming, writing-plans, execu
         },
 ```
 
-- [ ] **Step 3: Validate JSON**
+- [x] **Step 3: Validate JSON**
 
 Run: `py -3 tools/validate_marketplace.py --phase inventory`
 Expected: PASS with no JSON syntax errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/custody-pack-registry.json
@@ -799,22 +799,22 @@ git commit -m "feat: register handoff-gates and working-with-epics in superpower
 - Consumes: first-party source, adapters, and custody registry.
 - Produces: marketplace projections, installed skills, indexes, and `generated/skill-zips/*.zip`.
 
-- [ ] **Step 1: Run full marketplace rebuild**
+- [x] **Step 1: Run full marketplace rebuild**
 
 Run: `py -3 tools/rebuild_marketplace.py`
 Expected: Completes with no errors; generated surfaces reflect the two new skills and updated overlays.
 
-- [ ] **Step 2: Run marketplace check**
+- [x] **Step 2: Run marketplace check**
 
 Run: `py -3 tools/check_marketplace.py`
 Expected: PASS. If it fails, run `py -3 tools/rebuild_marketplace.py` again to auto-heal and re-check.
 
-- [ ] **Step 3: Install refreshed skills locally**
+- [x] **Step 3: Install refreshed skills locally**
 
 Run: `py -3 tools/install_agent_skills.py`
 Expected: New skills appear under `.agents/skills/handoff-gates` and `.agents/skills/working-with-epics`.
 
-- [ ] **Step 4: Commit generated surfaces**
+- [x] **Step 4: Commit generated surfaces**
 
 ```bash
 git add codex-marketplace .agents/plugins/marketplace.json .agents/skills generated/skill-zips repo-index
@@ -833,7 +833,7 @@ git commit -m "chore: regenerate marketplace for handoff-gates and working-with-
 - Consumes: installed `.agents/skills/handoff-gates/SKILL.md` and `.agents/skills/working-with-epics/SKILL.md`.
 - Produces: empirical evidence that the skills change agent behavior.
 
-- [ ] **Step 1: Write the oversized-request baseline prompt**
+- [x] **Step 1: Write the oversized-request baseline prompt**
 
 Create `tests/pressure/working-with-epics/prompts/oversized-request.md`:
 
@@ -850,7 +850,7 @@ Respond as you normally would. Do not invoke `working-with-epics`.
 The agent attempts a single giant plan or stalls while trying to decide if one plan is safe.
 ```
 
-- [ ] **Step 2: Write the oversized-request skill prompt**
+- [x] **Step 2: Write the oversized-request skill prompt**
 
 Create `tests/pressure/working-with-epics/prompts/oversized-request-with-skill.md`:
 
@@ -869,7 +869,7 @@ Follow the `working-with-epics` skill: detect the epic scope, create a roadmap a
 The agent creates a roadmap and a first plan, not a single giant plan.
 ```
 
-- [ ] **Step 3: Run both scenarios through a subagent**
+- [x] **Step 3: Run both scenarios through a subagent**
 
 Run (baseline) with the `run_subagent` tool:
 ```json
@@ -891,7 +891,7 @@ Run (with skill) with the `run_subagent` tool:
 ```
 Expected: The subagent creates `.agents/superpowers/roadmaps/YYYY-MM-DD-ecommerce-site.md` and a Plan 1, and records a plan-readiness rating.
 
-- [ ] **Step 4: Write the blocked-plan skill prompt**
+- [x] **Step 4: Write the blocked-plan skill prompt**
 
 Create `tests/pressure/working-with-epics/prompts/blocked-plan.md`:
 
@@ -908,7 +908,7 @@ What do you do?
 The agent asks the human one focused question and does not proceed with execution.
 ```
 
-- [ ] **Step 5: Run the blocked-plan scenario through a subagent**
+- [x] **Step 5: Run the blocked-plan scenario through a subagent**
 
 Run with the `run_subagent` tool:
 ```json
@@ -920,7 +920,7 @@ Run with the `run_subagent` tool:
 ```
 Expected: The subagent asks the human one focused question and does not proceed with execution.
 
-- [ ] **Step 6: Write the handoff-gates plan-readiness prompt**
+- [x] **Step 6: Write the handoff-gates plan-readiness prompt**
 
 Create `tests/pressure/handoff-gates/prompts/plan-readiness.md`:
 
@@ -939,7 +939,7 @@ Rate the plan-readiness of this plan using the `handoff-gates` plan-readiness la
 The agent gives a numeric rating, identifies specific gaps, and states it would not execute below 8/10.
 ```
 
-- [ ] **Step 7: Run the handoff-gates plan-readiness scenario through a subagent**
+- [x] **Step 7: Run the handoff-gates plan-readiness scenario through a subagent**
 
 Run with the `run_subagent` tool:
 ```json
@@ -951,11 +951,11 @@ Run with the `run_subagent` tool:
 ```
 Expected: The agent gives a numeric rating and identifies specific gaps before executing.
 
-- [ ] **Step 8: Record results**
+- [x] **Step 8: Record results**
 
 Create `tests/pressure/working-with-epics/results.md` summarizing all four subagent runs, the observed behavior, and whether it matched the expected pass/fail criteria.
 
-- [ ] **Step 9: Commit the test prompts and results note**
+- [x] **Step 9: Commit the test prompts and results note**
 
 ```bash
 git add tests
@@ -972,13 +972,13 @@ git commit -m "test: add subagent pressure scenarios for working-with-epics and 
 - Consumes: all previous tasks and local validation output.
 - Produces: a GitHub-visible PR for review.
 
-- [ ] **Step 1: Push the branch**
+- [x] **Step 1: Push the branch**
 
 ```bash
 git push -u origin working-with-epics
 ```
 
-- [ ] **Step 2: Create the PR using `gh`**
+- [x] **Step 2: Create the PR using `gh`**
 
 ```bash
 gh pr create --title "feat: add handoff-gates and working-with-epics skills" --body "$(cat <<'EOF'
@@ -989,20 +989,20 @@ gh pr create --title "feat: add handoff-gates and working-with-epics skills" --b
 - Registers both skills in `superpowers-plus` and regenerates marketplace surfaces.
 
 ## Test plan
-- [ ] `py -3 tools/check_marketplace.py` passes
-- [ ] Subagent pressure scenarios show skill benefit
+- [x] `py -3 tools/check_marketplace.py` passes
+- [x] Subagent pressure scenarios show skill benefit
 
 Generated with [Devin](https://devin.ai)
 EOF
 )"
 ```
 
-- [ ] **Step 3: Record the PR URL and head SHA**
+- [x] **Step 3: Record the PR URL and head SHA**
 
 Run: `gh pr view working-with-epics --json url,headRefOid`
 Expected: JSON with `url` and `headRefOid`. Include these in the final return.
 
-- [ ] **Step 4: Mark the implementation plan complete**
+- [x] **Step 4: Mark the implementation plan complete**
 
 Update this plan file so every `[ ]` is `[x]` and commit the checked-off plan with the final task.
 
