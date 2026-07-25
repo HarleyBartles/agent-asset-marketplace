@@ -99,6 +99,7 @@ The `repo-standards` skill ships `scaffold-*` scripts for user-content surfaces 
 - `scaffold-guides` for `.agents/guides/*.md`
 - `scaffold-review` for `REVIEW.md`
 - `scaffold-contributing` for `CONTRIBUTING.md`
+- `scaffold-ci-preflight` for `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1`
 - `scaffold-gitignore` for the `.gitignore` sdd rule
 
 Repos may declare surface exceptions in the `## Exceptions` section of `.agents/docs/repo-guide-policy.md`.

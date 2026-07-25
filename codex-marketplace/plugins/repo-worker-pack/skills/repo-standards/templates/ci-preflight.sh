@@ -29,8 +29,18 @@ while [ $# -gt 0 ]; do
     shift
 done
 
+STANDARDS=$(find_skill_script repo-standards repo-standards)
+SCAFFOLD=$(find_skill_script repo-standards scaffold-all)
 MESH=$(find_skill_script generating-index-mesh generate-index-mesh)
 REFRESH=$(find_skill_script refreshing-installed-skills refresh-installed-skills)
+
+STANDARDS_ARGS=()
+[ -n "$CHECK" ] && STANDARDS_ARGS+=("--check")
+"$STANDARDS" "${STANDARDS_ARGS[@]}"
+
+SCAFFOLD_ARGS=()
+[ -n "$CHECK" ] && SCAFFOLD_ARGS+=("--check")
+"$SCAFFOLD" "${SCAFFOLD_ARGS[@]}"
 
 MESH_ARGS=()
 [ -n "$CHECK" ] && MESH_ARGS+=("--check")

@@ -19,14 +19,16 @@
       "id": "ci-preflight-ps1",
       "path": "scripts/ci-preflight.ps1",
       "kind": "file",
-      "source": "templates/ci-preflight.ps1",
+      "source": null,
+      "scaffold": "scaffold_ci_preflight.py",
       "optional": false
     },
     {
       "id": "ci-preflight-sh",
       "path": "scripts/ci-preflight.sh",
       "kind": "file",
-      "source": "templates/ci-preflight.sh",
+      "source": null,
+      "scaffold": "scaffold_ci_preflight.py",
       "optional": false
     },
     {

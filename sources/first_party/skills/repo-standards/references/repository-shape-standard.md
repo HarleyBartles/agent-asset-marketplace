@@ -22,6 +22,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-guides` generates missing `.agents/guides/*.md` files from `repo-guide-policy.md`.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
+- `scaffold-ci-preflight` generates `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1` from the skill templates.
 - `scaffold-gitignore` ensures the sdd rule is in root `.gitignore`.
 - `scaffold-all` runs the above in sequence.
 

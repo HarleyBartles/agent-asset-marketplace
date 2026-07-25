@@ -27,8 +27,16 @@ function Find-SkillScript($skill, $core) {
     throw "$skill $core wrapper not found"
 }
 
+$standards = Find-SkillScript 'repo-standards' 'repo-standards'
+$scaffold = Find-SkillScript 'repo-standards' 'scaffold-all'
 $mesh = Find-SkillScript 'generating-index-mesh' 'generate-index-mesh'
 $refresh = Find-SkillScript 'refreshing-installed-skills' 'refresh-installed-skills'
+
+& $standards -Check:$Check
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+& $scaffold -Check:$Check
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 & $mesh -Check:$Check
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
