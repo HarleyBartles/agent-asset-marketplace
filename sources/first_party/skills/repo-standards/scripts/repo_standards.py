@@ -54,11 +54,37 @@ def _manifest_path() -> Path:
     return Path(__file__).resolve().parent.parent / "references" / "repository-shape-manifest.json"
 
 
+def _load_exceptions(repo_root: Path) -> set[str]:
+    exceptions: set[str] = set()
+    policy = repo_root / ".agents" / "docs" / "repo-guide-policy.md"
+    if not policy.is_file():
+        return exceptions
+    text = policy.read_text(encoding="utf-8")
+    in_exceptions = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            in_exceptions = stripped.lower().startswith("## exceptions")
+            continue
+        if not in_exceptions:
+            continue
+        if stripped.startswith("-"):
+            item = stripped.lstrip("-").strip().replace("`", "")
+            # Allow "id - reason", "id -- reason", or "id — reason"
+            for sep in (" -- ", " - ", " — ", " – "):
+                if sep in item:
+                    item = item.split(sep, 1)[0]
+                    break
+            if item:
+                exceptions.add(item)
+    return exceptions
+
+
 def _template_path(surface: dict[str, object]) -> Path | None:
     source = surface.get("source")
     if not source:
         return None
-    return Path(__file__).resolve().parent.parent / "templates" / str(source)
+    return Path(__file__).resolve().parent.parent / str(source)
 
 
 def _scaffold_script_path(surface: dict[str, object]) -> Path | None:
@@ -114,9 +140,12 @@ def _check_marketplace_json(repo_root: Path, rel: str) -> list[str]:
     return findings
 
 
-def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
+def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
+    surf_id = str(surface.get("id", ""))
+    if surf_id in exceptions or rel in exceptions:
+        return findings
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     if kind == "submodule":
@@ -160,8 +189,11 @@ def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
     return findings
 
 
-def _apply_surface(repo_root: Path, surface: dict[str, object]) -> bool:
+def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> bool:
     rel = str(surface["path"])
+    surf_id = str(surface.get("id", ""))
+    if surf_id in exceptions or rel in exceptions:
+        return False
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     scaffold = _scaffold_script_path(surface)
@@ -207,10 +239,11 @@ def main(argv: list[str] | None = None) -> int:
 
     manifest = json.loads(_manifest_path().read_text(encoding="utf-8"))
     surfaces = manifest.get("surfaces", [])
+    exceptions = _load_exceptions(repo_root)
 
     findings: list[str] = []
     for surface in surfaces:
-        findings.extend(_check_surface(repo_root, surface))
+        findings.extend(_check_surface(repo_root, surface, exceptions))
 
     if args.check or not args.apply:
         if findings:
@@ -232,8 +265,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     for surface in surfaces:
-        if _check_surface(repo_root, surface):
-            _apply_surface(repo_root, surface)
+        if _check_surface(repo_root, surface, exceptions):
+            _apply_surface(repo_root, surface, exceptions)
     print("OK repo-standards: applied missing surfaces")
     return 0
 

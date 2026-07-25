@@ -29,4 +29,7 @@ This repo follows the `repo-standards` skill. Invoke `/repo-standards` before re
 
 ## Exceptions
 
-None.
+- `marketplace-source-submodule` — this repo is the marketplace source and does not vendor itself as a submodule.
+- `ci-preflight-ps1` — this repo uses `tools/` and `py -3 tools/rebuild_marketplace.py` instead of `scripts/ci-preflight.ps1`.
+- `ci-preflight-sh` — same as above; no `scripts/ci-preflight.sh`.
+- `pre-commit-hook` — pre-commit is not wired in this producer repo.

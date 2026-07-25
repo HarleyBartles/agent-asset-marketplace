@@ -95,10 +95,13 @@ A repo may declare additional `<topic>-guide.md` files in `.agents/guides/`. Eac
 
 The `repo-standards` skill ships `scaffold-*` scripts for user-content surfaces that an agent must fill in. Run `scaffold-all` to create all missing scaffolds, or use the individual scripts:
 
+- `scaffold-repo-guide-policy` for `.agents/docs/repo-guide-policy.md`
+- `scaffold-guides` for `.agents/guides/*.md`
 - `scaffold-review` for `REVIEW.md`
 - `scaffold-contributing` for `CONTRIBUTING.md`
-- `scaffold-guides` for `.agents/guides/*.md`
 - `scaffold-gitignore` for the `.gitignore` sdd rule
+
+Repos may declare surface exceptions in the `## Exceptions` section of `.agents/docs/repo-guide-policy.md`.
 
 ## Workflow order
 

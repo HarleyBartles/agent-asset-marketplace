@@ -40,7 +40,8 @@
       "id": "repo-guide-policy",
       "path": ".agents/docs/repo-guide-policy.md",
       "kind": "file",
-      "source": "templates/repo-guide-policy.md",
+      "source": null,
+      "scaffold": "scaffold_repo_guide_policy.py",
       "optional": false
     },
     {

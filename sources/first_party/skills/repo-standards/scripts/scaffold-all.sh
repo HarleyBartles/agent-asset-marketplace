@@ -2,7 +2,7 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-for script in scaffold-review scaffold-guides scaffold-contributing scaffold-gitignore; do
+for script in scaffold-repo-guide-policy scaffold-guides scaffold-review scaffold-contributing scaffold-gitignore; do
     echo "==> running ${script}"
     "${SCRIPT_DIR}/${script}.sh" "$@"
 done

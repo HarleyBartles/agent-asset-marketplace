@@ -18,13 +18,18 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 
 Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
 
+- `scaffold-repo-guide-policy` generates `.agents/docs/repo-guide-policy.md` from the standard template.
+- `scaffold-guides` generates missing `.agents/guides/*.md` files from `repo-guide-policy.md`.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
 - `scaffold-gitignore` ensures the sdd rule is in root `.gitignore`.
-- `scaffold-guides` generates missing `.agents/guides/*.md` files from `repo-guide-policy.md`.
 - `scaffold-all` runs the above in sequence.
 
 `repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
+
+## Exceptions
+
+Repos may record surface exceptions in the `## Exceptions` section of `.agents/docs/repo-guide-policy.md` using the surface `id` (one per line). `repo-standards --check` and `--apply` skip those surfaces.
 
 ## Local overrides
 
