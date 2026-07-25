@@ -9,6 +9,23 @@ from pathlib import Path
 import yaml
 
 TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE", "SOURCE.md", "PROJECTION.md"}
+SKIP_DIR_NAMES = {
+    ".git",
+    ".hg",
+    ".svn",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".cache",
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    "tmp",
+    "temp",
+}
+SKIP_FILE_SUFFIXES = {".pyc", ".pyo", ".log"}
 TEXT_SUFFIXES = {
     ".md",
     ".txt",
@@ -92,10 +109,12 @@ def canonicalize_tree(root: Path) -> dict[str, bytes]:
     root = root.resolve()
     root_text = _as_windows_long_path(root)
     for current, dirnames, filenames in os.walk(root_text):
-        dirnames.sort()
+        dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIR_NAMES)
         filenames.sort()
         current_path = Path(current)
         for filename in filenames:
+            if Path(filename).suffix.lower() in SKIP_FILE_SUFFIXES:
+                continue
             path = current_path / filename
             rel = str(path)[len(root_text) + 1 :].replace("\\", "/")
             result[rel] = canonicalize_tree_bytes(path, Path(_as_windows_long_path(path)).read_bytes())

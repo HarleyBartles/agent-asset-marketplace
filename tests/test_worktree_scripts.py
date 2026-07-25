@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 import subprocess
@@ -32,9 +33,17 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
     shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
     shutil.copytree(source_mesh, pack / "generating-agent-mesh")
-    (repo / "tools").mkdir()
-    (repo / "tools" / "install_agent_skills.py").write_text("print('install ok')\n", encoding="utf-8")
-    (repo / "tools" / "generate_index_mesh.py").write_text("print('mesh ok')\n", encoding="utf-8")
+    (repo / ".agents" / "plugins").mkdir(parents=True)
+    marketplace = {
+        "plugins": [
+            {
+                "name": "repo-worker-pack",
+                "source": {"source": "local", "path": "./codex-marketplace/plugins/repo-worker-pack"},
+                "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
+            }
+        ]
+    }
+    (repo / ".agents" / "plugins" / "marketplace.json").write_text(json.dumps(marketplace, indent=2) + "\n", encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "add refresh scaffolding"], cwd=repo, check=True, capture_output=True)
     return repo
@@ -197,8 +206,8 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
     assert "Worktree ready" in result.stdout
-    assert "install ok" in result.stdout
-    assert "mesh ok" in result.stdout
+    assert "Installed skill" in result.stdout
+    assert "index mesh" in result.stdout
 
 
 def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
