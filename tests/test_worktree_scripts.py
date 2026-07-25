@@ -29,9 +29,9 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     pack = repo / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
     pack.mkdir(parents=True)
     source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
-    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-index-mesh"
+    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
     shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
-    shutil.copytree(source_mesh, pack / "generating-index-mesh")
+    shutil.copytree(source_mesh, pack / "generating-agent-mesh")
     (repo / "tools").mkdir()
     (repo / "tools" / "install_agent_skills.py").write_text("print('install ok')\n", encoding="utf-8")
     (repo / "tools" / "generate_index_mesh.py").write_text("print('mesh ok')\n", encoding="utf-8")

@@ -31,10 +31,10 @@ The split is deliberate:
   - `cleanup-custody`
   - `connector-safety`
   - `context-safety`
-  - `generating-index-mesh`
+  - `generating-agent-mesh`
   - `linear-issue-shaping`
   - `refreshing-installed-skills`
-  - `repo-guide-standard`
+  - `repo-standards`
   - `repo-worker-base`
   - `risk-gates`
   - `subagent-model-routing`

@@ -221,6 +221,11 @@
       "category": "Coding"
     }
   ],
+  "repo": {
+    "local_skill_prefixes": [
+      "mark-"
+    ]
+  },
   "notes": [
     "Canonical Codex marketplace source layout.",
     "Active marketplace plugins are limited to the protected plugin roots only."

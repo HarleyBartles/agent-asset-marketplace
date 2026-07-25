@@ -19,9 +19,9 @@ for `.agents/plugins/marketplace.json` and
 freshness are proven by `py -3 tools/project_skills.py --check`, and the selected
 pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests.py
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
-itself. The repo-wide `INDEX.md` mesh is proven by `py -3 tools/generate_index_mesh.py
+itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py
 --check`, and mesh law lives in `../.agents/docs/mesh-policy.md`.
-Agent skills installation is handled by `py -3 tools/install_agent_skills.py`,
+Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
