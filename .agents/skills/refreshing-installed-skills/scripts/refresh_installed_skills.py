@@ -387,8 +387,8 @@ def _roll_marketplace_source(repo_root: Path) -> None:
 def _regenerate_index_mesh(repo_root: Path) -> None:
     """Regenerate the repo-wide INDEX.md mesh after skill installation."""
     candidates = [
-        repo_root / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py",
-        repo_root / ".agents" / "plugins" / "marketplace-source" / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py",
+        repo_root / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
+        repo_root / ".agents" / "plugins" / "marketplace-source" / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
     ]
     mesh_script = next((p for p in candidates if p.is_file()), None)
     if not mesh_script:

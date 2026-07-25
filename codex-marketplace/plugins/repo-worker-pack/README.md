@@ -9,7 +9,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `cleanup-custody`
 - `connector-safety`
 - `context-safety`
-- `generating-index-mesh`
+- `generating-agent-mesh`
 - `linear-issue-shaping`
 - `refreshing-installed-skills`
 - `repo-standards`

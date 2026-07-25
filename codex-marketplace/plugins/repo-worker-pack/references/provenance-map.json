@@ -29,11 +29,11 @@
       "local_path": "skills/context-safety"
     },
     {
-      "canonical_name": "generating-index-mesh",
+      "canonical_name": "generating-agent-mesh",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/generating-index-mesh",
-      "local_path": "skills/generating-index-mesh"
+      "canonical_source_path": "sources/first_party/skills/generating-agent-mesh",
+      "local_path": "skills/generating-agent-mesh"
     },
     {
       "canonical_name": "linear-issue-shaping",

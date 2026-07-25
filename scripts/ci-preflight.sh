@@ -20,10 +20,15 @@ find_skill_script() {
 
 CHECK=""
 FULL=""
+CHANGED_FROM=""
 while [ $# -gt 0 ]; do
     case "$1" in
         --check) CHECK="--check" ;;
         --full) FULL="1" ;;
+        --changed-from)
+            shift
+            CHANGED_FROM="$1"
+            ;;
         *) echo "unknown arg: $1" >&2; exit 1 ;;
     esac
     shift
@@ -31,7 +36,8 @@ done
 
 STANDARDS=$(find_skill_script repo-standards repo-standards)
 SCAFFOLD=$(find_skill_script repo-standards scaffold-all)
-MESH=$(find_skill_script generating-index-mesh generate-index-mesh)
+MESH=$(find_skill_script generating-agent-mesh generate-index-mesh)
+VALIDATE=$(find_skill_script generating-agent-mesh validate-agent-mesh)
 REFRESH=$(find_skill_script refreshing-installed-skills refresh-installed-skills)
 
 STANDARDS_ARGS=()
@@ -44,15 +50,23 @@ SCAFFOLD_ARGS=()
 
 MESH_ARGS=()
 [ -n "$CHECK" ] && MESH_ARGS+=("--check")
+# generate-index-mesh reconciles the whole tracked mesh; scoped diff is
+# handled by validate-agent-mesh and the optional ci-preflight-extra hook.
 "$MESH" "${MESH_ARGS[@]}"
+
+VALIDATE_ARGS=()
+[ -n "$CHECK" ] && VALIDATE_ARGS+=("--check")
+[ -n "$CHANGED_FROM" ] && VALIDATE_ARGS+=("--changed-from" "$CHANGED_FROM")
+"$VALIDATE" "${VALIDATE_ARGS[@]}"
 
 REFRESH_ARGS=()
 [ -n "$CHECK" ] && REFRESH_ARGS+=("--check")
 "$REFRESH" "${REFRESH_ARGS[@]}"
 
-DOCTRINE="$SCRIPT_DIR/validate_agent_mesh.sh"
-if [ -f "$DOCTRINE" ]; then
-    DOCTRINE_ARGS=()
-    [ -n "$CHECK" ] && DOCTRINE_ARGS+=("--check")
-    "$DOCTRINE" "${DOCTRINE_ARGS[@]}"
+EXTRA="$SCRIPT_DIR/ci-preflight-extra.sh"
+if [ -f "$EXTRA" ]; then
+    EXTRA_ARGS=()
+    [ -n "$CHECK" ] && EXTRA_ARGS+=("--check")
+    [ -n "$CHANGED_FROM" ] && EXTRA_ARGS+=("--changed-from" "$CHANGED_FROM")
+    "$EXTRA" "${EXTRA_ARGS[@]}"
 fi

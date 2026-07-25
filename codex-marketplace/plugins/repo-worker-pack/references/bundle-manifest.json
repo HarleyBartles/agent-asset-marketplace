@@ -60,14 +60,14 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "generating-index-mesh",
+      "canonical_name": "generating-agent-mesh",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/generating-index-mesh",
-      "local_path": "skills/generating-index-mesh",
+      "canonical_source_path": "sources/first_party/skills/generating-agent-mesh",
+      "local_path": "skills/generating-agent-mesh",
       "lane": "Worker",
-      "source_path": "sources/first_party/skills/generating-index-mesh/SKILL.md",
+      "source_path": "sources/first_party/skills/generating-agent-mesh/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",

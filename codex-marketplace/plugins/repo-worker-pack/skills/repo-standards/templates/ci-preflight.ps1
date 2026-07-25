@@ -5,7 +5,8 @@
 [CmdletBinding()]
 param(
     [switch]$Check,
-    [switch]$Full
+    [switch]$Full,
+    [string]$ChangedFrom
 )
 
 $ErrorActionPreference = 'Stop'
@@ -29,7 +30,8 @@ function Find-SkillScript($skill, $core) {
 
 $standards = Find-SkillScript 'repo-standards' 'repo-standards'
 $scaffold = Find-SkillScript 'repo-standards' 'scaffold-all'
-$mesh = Find-SkillScript 'generating-index-mesh' 'generate-index-mesh'
+$mesh = Find-SkillScript 'generating-agent-mesh' 'generate-index-mesh'
+$validate = Find-SkillScript 'generating-agent-mesh' 'validate-agent-mesh'
 $refresh = Find-SkillScript 'refreshing-installed-skills' 'refresh-installed-skills'
 
 & $standards -Check:$Check
@@ -38,16 +40,24 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & $scaffold -Check:$Check
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+# generate-index-mesh reconciles the whole tracked mesh; scoped diff is
+# handled by validate-agent-mesh and the optional ci-preflight-extra hook.
 & $mesh -Check:$Check
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+$validateArgs = @()
+if ($Check) { $validateArgs += '--check' }
+if ($ChangedFrom) { $validateArgs += '--changed-from'; $validateArgs += $ChangedFrom }
+& $validate @validateArgs
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 & $refresh -Check:$Check
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-$doctrine = Join-Path $ScriptDir 'validate_agent_mesh.ps1'
-if (Test-Path $doctrine) {
-    & $doctrine -Check:$Check
-    exit $LASTEXITCODE
+$extra = Join-Path $ScriptDir 'ci-preflight-extra.ps1'
+if (Test-Path $extra) {
+    & $extra -Check:$Check -ChangedFrom:$ChangedFrom
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
 exit 0
