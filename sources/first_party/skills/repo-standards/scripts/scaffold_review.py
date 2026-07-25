@@ -46,8 +46,22 @@ def _has_required_boilerplate(content: str) -> bool:
 
 
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify REVIEW.md exists and contains boilerplate
+  %(prog)s                       write REVIEW.md if it is missing
+  %(prog)s --force               overwrite REVIEW.md with the template
+
+The template expects the file to keep the `# Review entry point` heading and
+references to `.agents/docs/repo-guide-policy.md` and `/requesting-code-review`.
+
+exit codes:
+  0  REVIEW.md is present/valid or was written
+  1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Deploy or verify the repo's REVIEW.md review entry point"
+        description="Scaffold the repo's REVIEW.md review entry point.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",

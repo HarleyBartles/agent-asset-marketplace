@@ -33,9 +33,34 @@ def _template_path() -> Path:
     return Path(__file__).resolve().parent.parent / "templates" / "repo-guide-policy.md"
 
 
+def _has_required_boilerplate(content: str) -> bool:
+    return (
+        "# Repo Guide Policy" in content
+        and "This repo follows the `repo-standards` skill." in content
+        and "## Standard-to-local mapping" in content
+        and "## Exceptions" in content
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify repo-guide-policy.md exists and contains boilerplate
+  %(prog)s                       write repo-guide-policy.md if it is missing
+  %(prog)s --force               overwrite repo-guide-policy.md with the template
+
+This file maps the cross-repo guide standard to the repo's local paths and
+records any surface exceptions under ## Exceptions. The boilerplate check
+ensures the heading, standard mapping section, and exceptions section are
+present.
+
+exit codes:
+  0  repo-guide-policy.md is present/valid or was written
+  1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's .agents/docs/repo-guide-policy.md"
+        description="Scaffold the repo's .agents/docs/repo-guide-policy.md mapping file.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",
@@ -58,6 +83,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if policy_path.is_file():
         if args.check:
+            content = policy_path.read_text(encoding="utf-8")
+            if not _has_required_boilerplate(content):
+                print("DRIFT: repo-guide-policy.md exists but is missing required boilerplate")
+                return 1
             print("OK repo-guide-policy.md: mapping file present")
             return 0
         if not args.force:

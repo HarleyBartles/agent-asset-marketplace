@@ -194,7 +194,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     return findings
 
 
-def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> bool:
+def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str], force: bool) -> bool:
     rel = str(surface["path"])
     surf_id = str(surface.get("id", ""))
     if surf_id in exceptions or rel in exceptions:
@@ -207,6 +207,9 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
             full = _git_hooks_dir(repo_root) / Path(rel).name
         else:
             full = repo_root / rel
+        if full.is_file() and not force:
+            print(f"skip {rel}: exists; use --force to overwrite")
+            return False
         full.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(template, full)
         if kind == "hook":
@@ -214,8 +217,11 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         print(f"wrote {rel}")
         return True
     if scaffold is not None and scaffold.is_file():
+        cmd = [sys.executable, str(scaffold)]
+        if force:
+            cmd.append("--force")
         result = subprocess.run(
-            [sys.executable, str(scaffold)],
+            cmd,
             cwd=repo_root,
             capture_output=True,
             text=True,
@@ -230,11 +236,29 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Check or apply repo-standards")
-    parser.add_argument("--check", action="store_true", help="report drift only")
-    parser.add_argument("--apply", action="store_true", help="apply missing surfaces")
-    parser.add_argument("--yes", action="store_true", help="skip interactive approval")
-    parser.add_argument("--allow-shared-checkout", action="store_true", help="allow writes in the shared checkout")
+    epilog = """\
+examples:
+  %(prog)s --check              report drift for every surface in the manifest
+  %(prog)s --apply --yes        create missing surfaces without prompting
+  %(prog)s --apply --yes --force  create missing surfaces and overwrite drifted ones
+
+exit codes:
+  0  all surfaces present (or applied successfully)
+  1  drift detected, apply aborted, or an error occurred
+
+The manifest is read from references/repository-shape-manifest.json inside the
+repo-standards skill. Exceptions declared in .agents/docs/repo-guide-policy.md
+under the ## Exceptions heading are skipped."""
+    parser = argparse.ArgumentParser(
+        description="Check or apply the repo-standards surface manifest.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("--check", action="store_true", help="report drift only; do not write")
+    parser.add_argument("--apply", action="store_true", help="create missing surfaces")
+    parser.add_argument("--yes", action="store_true", help="skip the interactive approval prompt before applying")
+    parser.add_argument("--force", action="store_true", help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)")
+    parser.add_argument("--allow-shared-checkout", action="store_true", help="allow writes in a shared/git-worktree checkout")
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
@@ -273,13 +297,13 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if not args.yes:
-        print(f"Will apply {len(unique_findings)} missing surfaces: {unique_findings}")
-        print("Add --yes to apply.")
+        print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")
+        print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
         return 1
 
     for surface in surfaces:
         if _check_surface(repo_root, surface, exceptions):
-            _apply_surface(repo_root, surface, exceptions)
+            _apply_surface(repo_root, surface, exceptions, args.force)
     print("OK repo-standards: applied missing surfaces")
     return 0
 

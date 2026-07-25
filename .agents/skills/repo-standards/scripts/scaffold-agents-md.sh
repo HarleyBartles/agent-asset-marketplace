@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Thin launcher for scaffold_agents_md.py. Run with --help to see usage.
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

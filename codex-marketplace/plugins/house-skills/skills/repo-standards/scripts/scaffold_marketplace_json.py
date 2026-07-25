@@ -107,9 +107,27 @@ def _check(path: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Scaffold or validate marketplace.json")
+    epilog = """\
+examples:
+  %(prog)s --check               validate .agents/plugins/marketplace.json
+  %(prog)s                       write or migrate marketplace.json
+  %(prog)s --force               rewrite marketplace.json with normalized content
+
+The marketplace.json file is read from .agents/plugins/marketplace.json under
+the repo root. Legacy top-level or repo-level keys named local_skill_prefixes
+or local_skills are merged into repo.local_skill_prefixes. Other blocks
+(plugins, interface, name, etc.) are preserved.
+
+exit codes:
+  0  marketplace.json is valid or was written/migrated successfully
+  1  drift detected or the file could not be written"""
+    parser = argparse.ArgumentParser(
+        description="Scaffold, migrate, or validate .agents/plugins/marketplace.json.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--check", action="store_true", help="Report drift without writing")
-    parser.add_argument("--force", action="store_true", help="Overwrite existing marketplace.json")
+    parser.add_argument("--force", action="store_true", help="Overwrite an existing marketplace.json")
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()

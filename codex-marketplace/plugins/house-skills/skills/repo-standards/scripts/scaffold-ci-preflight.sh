@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Thin launcher for scaffold_ci_preflight.py. Run with --help to see usage.
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 for python in python3 python; do

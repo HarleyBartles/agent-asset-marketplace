@@ -1,4 +1,5 @@
 #!/usr/bin/env pwsh
+# Thin launcher for scaffold_ci_preflight.py. Run with --help to see usage.
 [CmdletBinding()]
 param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)
 $ErrorActionPreference = 'Stop'

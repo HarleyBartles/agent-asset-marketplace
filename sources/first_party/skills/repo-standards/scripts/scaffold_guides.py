@@ -78,8 +78,23 @@ def _guide_content(name: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify that all mapped guides exist
+  %(prog)s                       create any missing mapped guides
+  %(prog)s --force               overwrite all mapped guides with scaffolds
+
+The guide list is read from the table in .agents/docs/repo-guide-policy.md
+under ## Standard-to-local mapping if it exists, otherwise the standard guide
+set under .agents/guides/ is used.
+
+exit codes:
+  0  all mapped guides are present or were written
+  1  one or more mapped guides are missing"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo-local .agents/guides/ set"
+        description="Scaffold the repo-local .agents/guides/ set.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",

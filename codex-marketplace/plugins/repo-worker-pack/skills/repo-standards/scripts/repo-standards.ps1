@@ -1,6 +1,14 @@
 <#
 .SYNOPSIS
   Run the repo-standards check/apply script.
+.DESCRIPTION
+  Checks the repo against the repo-standards surface manifest or applies missing
+  surfaces. Use --check for a safe read-only report. Use --apply with --yes to
+  create missing surfaces; add --force to overwrite existing drifted surfaces.
+.EXAMPLE
+  repo-standards.ps1 --check
+.EXAMPLE
+  repo-standards.ps1 --apply --yes --force
 #>
 [CmdletBinding()]
 param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)
@@ -13,6 +21,7 @@ foreach ($arg in $Remaining) {
         '-Check' { $pyArgs += '--check' }
         '-Apply' { $pyArgs += '--apply' }
         '-Yes' { $pyArgs += '--yes' }
+        '-Force' { $pyArgs += '--force' }
         '-AllowSharedCheckout' { $pyArgs += '--allow-shared-checkout' }
         default { $pyArgs += $arg }
     }

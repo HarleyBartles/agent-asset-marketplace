@@ -41,13 +41,37 @@ def _has_rule(text: str) -> bool:
 
 
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify .gitignore contains the sdd rule
+  %(prog)s                       append the sdd rule to .gitignore if missing
+  %(prog)s --force               same as without --force (accepted for uniform CLI)
+
+The sdd rule is:
+
+  .agents/superpowers/sdd/**
+  !.agents/superpowers/sdd/.gitignore
+
+If the rule is already present, the script makes no changes. Other rules are
+preserved.
+
+exit codes:
+  0  rule is present or was appended
+  1  drift detected or .gitignore could not be written"""
     parser = argparse.ArgumentParser(
-        description="Ensure root .gitignore contains the repo-standards sdd rule"
+        description="Ensure the repo's root .gitignore contains the repo-standards sdd rule.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",
         action="store_true",
         help="Report drift without writing",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Accepted for a uniform scaffold interface; has no destructive effect",
     )
     args = parser.parse_args(argv)
 

@@ -41,9 +41,29 @@ def _template() -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Scaffold or validate root AGENTS.md")
+    epilog = """\
+examples:
+  %(prog)s --check               validate the current AGENTS.md router
+  %(prog)s                       write AGENTS.md from the template if missing
+  %(prog)s --force               overwrite AGENTS.md with the template
+
+validation:
+  The five core sections (Repository purpose, Source-of-truth split,
+  Build and test commands, Routing pointers, Maintenance responsibility)
+  must exist. The Routing pointers section must contain resolvable links,
+  and the union of root headings and routed targets must cover the 12
+  canonical topics.
+
+exit codes:
+  0  AGENTS.md is valid or was written successfully
+  1  drift detected, the template is missing, or write failed"""
+    parser = argparse.ArgumentParser(
+        description="Scaffold or validate the root AGENTS.md router.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--check", action="store_true", help="Report drift without writing")
-    parser.add_argument("--force", action="store_true", help="Overwrite existing AGENTS.md")
+    parser.add_argument("--force", action="store_true", help="Overwrite an existing AGENTS.md")
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()

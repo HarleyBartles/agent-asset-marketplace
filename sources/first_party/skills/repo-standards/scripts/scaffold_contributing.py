@@ -33,9 +33,33 @@ def _template_path() -> Path:
     return Path(__file__).resolve().parent.parent / "templates" / "CONTRIBUTING.md"
 
 
+def _has_required_boilerplate(content: str) -> bool:
+    return (
+        "# Contributing" in content
+        and "contributor entry point" in content.lower()
+        and "/repo-standards" in content
+        and "/repo-worker-base" in content
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify CONTRIBUTING.md exists and contains boilerplate
+  %(prog)s                       write CONTRIBUTING.md if it is missing
+  %(prog)s --force               overwrite CONTRIBUTING.md with the template
+
+The template expects the file to keep the `# Contributing` heading and the
+required skill invocations (`/repo-standards`, `/repo-worker-base`). Use --force
+to restore the scaffold after heavy customization.
+
+exit codes:
+  0  CONTRIBUTING.md is present/valid or was written
+  1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's root CONTRIBUTING.md"
+        description="Scaffold the repo's root CONTRIBUTING.md entry point.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",
@@ -58,6 +82,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if contributing_path.is_file():
         if args.check:
+            content = contributing_path.read_text(encoding="utf-8")
+            if not _has_required_boilerplate(content):
+                print("DRIFT: CONTRIBUTING.md exists but is missing required boilerplate")
+                return 1
             print("OK CONTRIBUTING.md: contributor entry point present")
             return 0
         if not args.force:

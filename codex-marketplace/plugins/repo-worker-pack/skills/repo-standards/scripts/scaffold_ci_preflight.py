@@ -56,8 +56,23 @@ def _copy_template(name: str, target: Path, force: bool, check: bool) -> bool:
 
 
 def main(argv: list[str] | None = None) -> int:
+    epilog = """\
+examples:
+  %(prog)s --check               verify that scripts/ci-preflight.sh and .ps1 exist
+  %(prog)s                       create the two preflight scripts if they are missing
+  %(prog)s --force               replace the preflight scripts with the template copies
+
+These scripts are copied from the repo-standards skill template. They are
+intended as a starting point and may be customized after creation, so --check
+only verifies presence unless --force is used.
+
+exit codes:
+  0  preflight scripts are present or were written
+  1  drift detected or a template could not be copied"""
     parser = argparse.ArgumentParser(
-        description="Scaffold scripts/ci-preflight.sh and .ps1 from the repo-standards template"
+        description="Scaffold the repo's CI preflight scripts.",
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--check",
