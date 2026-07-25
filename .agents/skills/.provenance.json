@@ -1,8 +1,7 @@
 {
-  "manifestSha": "0cce89ebad4c27fd5bcae1af27fecfc537751d2b",
-  "syncedAt": "2026-07-25T13:36:55.203131",
+  "manifestSha": "c1977c3bca8d0b4eddb1c698efef1f9c6ef2bb03",
+  "syncedAt": "2026-07-25T13:43:45.843888",
   "syncedPlugins": [
-    "superpowers-plus",
     "repo-worker-pack"
   ],
   "syncedSkills": 33,

@@ -208,12 +208,33 @@ def _get_plugin_skills_path(plugin: dict[str, Any]) -> Path | None:
     return skills_path if skills_path.is_dir() else None
 
 
+SKIP_DIR_NAMES = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
+SKIP_FILE_SUFFIXES = {".pyc", ".pyo", ".log"}
+
+
+def _should_skip_file(path: Path) -> bool:
+    """Return True for cache/build artifacts that should not be synced."""
+    return (
+        path.name in SKIP_DIR_NAMES
+        or path.suffix.lower() in SKIP_FILE_SUFFIXES
+        or any(part in SKIP_DIR_NAMES for part in path.parts)
+    )
+
+
 def _copy_skill_directory(source_skill: Path, dest_skill: Path) -> None:
     """Copy a skill directory from plugin to .agents/skills."""
     if dest_skill.exists():
         shutil.rmtree(dest_skill)
 
-    shutil.copytree(source_skill, dest_skill)
+    shutil.copytree(
+        source_skill,
+        dest_skill,
+        ignore=lambda src, names: [
+            name
+            for name in names
+            if _should_skip_file(Path(src) / name)
+        ],
+    )
     print(f"Installed skill: {dest_skill.relative_to(ROOT)}")
 
 
@@ -231,7 +252,7 @@ def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
 
     # Check if all files exist and have identical content
     for source_file in source_skill.rglob("*"):
-        if not source_file.is_file():
+        if not source_file.is_file() or _should_skip_file(source_file):
             continue
         relative_path = source_file.relative_to(source_skill)
         dest_file = dest_skill / relative_path
@@ -244,7 +265,7 @@ def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
 
     # Check if there are any extra files in dest
     for dest_file in dest_skill.rglob("*"):
-        if not dest_file.is_file():
+        if not dest_file.is_file() or _should_skip_file(dest_file):
             continue
         relative_path = dest_file.relative_to(dest_skill)
         source_file = source_skill / relative_path
