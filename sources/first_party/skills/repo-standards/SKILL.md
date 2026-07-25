@@ -1,6 +1,6 @@
 ---
 name: repo-standards
-description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, guide layout, workflow order, and handoff requirements.
+description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, guide layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
 metadata:
   source-id: repo-standards
   source-path: sources/first_party/skills/repo-standards/SKILL.md
