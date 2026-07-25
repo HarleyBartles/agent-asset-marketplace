@@ -61,6 +61,13 @@ def _template_path(surface: dict[str, object]) -> Path | None:
     return Path(__file__).resolve().parent.parent / "templates" / str(source)
 
 
+def _scaffold_script_path(surface: dict[str, object]) -> Path | None:
+    scaffold = surface.get("scaffold")
+    if not scaffold:
+        return None
+    return Path(__file__).resolve().parent / str(scaffold)
+
+
 def _git_hooks_dir(repo_root: Path) -> Path:
     result = subprocess.run(
         ["git", "rev-parse", "--git-path", "hooks"],
@@ -136,6 +143,15 @@ def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
         return findings
     if rel == ".agents/plugins/marketplace.json":
         return _check_marketplace_json(repo_root, rel)
+    if rel == ".gitignore":
+        gitignore = repo_root / ".gitignore"
+        if not gitignore.is_file():
+            findings.append("missing: .gitignore")
+            return findings
+        text = gitignore.read_text(encoding="utf-8")
+        if ".agents/superpowers/sdd/**" not in text or "!.agents/superpowers/sdd/.gitignore" not in text:
+            findings.append("drift: .gitignore missing sdd rule")
+        return findings
     if not (repo_root / rel).exists():
         findings.append(f"missing: {rel}")
         return findings
@@ -148,6 +164,7 @@ def _apply_surface(repo_root: Path, surface: dict[str, object]) -> bool:
     rel = str(surface["path"])
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
+    scaffold = _scaffold_script_path(surface)
     if kind in ("file", "hook") and template is not None:
         if kind == "hook":
             full = _git_hooks_dir(repo_root) / Path(rel).name
@@ -158,6 +175,19 @@ def _apply_surface(repo_root: Path, surface: dict[str, object]) -> bool:
         if kind == "hook":
             full.chmod(0o755)
         print(f"wrote {rel}")
+        return True
+    if scaffold is not None and scaffold.is_file():
+        result = subprocess.run(
+            [sys.executable, str(scaffold)],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            env=_stripped_env(),
+        )
+        if result.returncode != 0:
+            print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
+            return False
+        print(result.stdout.strip())
         return True
     return False
 

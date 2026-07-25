@@ -91,6 +91,15 @@ A repo may declare additional `<topic>-guide.md` files in `.agents/guides/`. Eac
 - `marketplace-generation-guide.md`
 - `skill-authoring-guide.md`
 
+## Scaffold helpers
+
+The `repo-standards` skill ships `scaffold-*` scripts for user-content surfaces that an agent must fill in. Run `scaffold-all` to create all missing scaffolds, or use the individual scripts:
+
+- `scaffold-review` for `REVIEW.md`
+- `scaffold-contributing` for `CONTRIBUTING.md`
+- `scaffold-guides` for `.agents/guides/*.md`
+- `scaffold-gitignore` for the `.gitignore` sdd rule
+
 ## Workflow order
 
 The canonical repo-backed workflow is:

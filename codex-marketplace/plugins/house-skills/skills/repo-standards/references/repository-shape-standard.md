@@ -9,7 +9,22 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` for the default preflight bundle.
 - `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh -Check`.
 - `.agents/docs/repo-guide-policy.md` mapping the repo to `repo-standards`.
-- `REVIEW.md` at the repo root pointing to the review guide and required skill invocations. Use the `scaffold-review` script (`.sh`/`.ps1`) to generate the scaffold once if it is missing; the agent then fills in repo-specific review concerns.
+- `REVIEW.md` at the repo root pointing to the review guide and required skill invocations.
+- `CONTRIBUTING.md` at the repo root as the contributor entry point.
+- `.gitignore` containing the `.agents/superpowers/sdd/**` and `!.agents/superpowers/sdd/.gitignore` rule.
+- `.agents/guides/<standard-guide>.md` for the core and declared guide set.
+
+## Scaffold helpers
+
+Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
+
+- `scaffold-review` generates `REVIEW.md`.
+- `scaffold-contributing` generates `CONTRIBUTING.md`.
+- `scaffold-gitignore` ensures the sdd rule is in root `.gitignore`.
+- `scaffold-guides` generates missing `.agents/guides/*.md` files from `repo-guide-policy.md`.
+- `scaffold-all` runs the above in sequence.
+
+`repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
 
 ## Local overrides
 

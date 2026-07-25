@@ -48,6 +48,23 @@
       "path": "REVIEW.md",
       "kind": "file",
       "source": null,
+      "scaffold": "scaffold_review.py",
+      "optional": false
+    },
+    {
+      "id": "contributing-entry",
+      "path": "CONTRIBUTING.md",
+      "kind": "file",
+      "source": null,
+      "scaffold": "scaffold_contributing.py",
+      "optional": false
+    },
+    {
+      "id": "root-gitignore",
+      "path": ".gitignore",
+      "kind": "file",
+      "source": null,
+      "scaffold": "scaffold_gitignore.py",
       "optional": false
     }
   ]
