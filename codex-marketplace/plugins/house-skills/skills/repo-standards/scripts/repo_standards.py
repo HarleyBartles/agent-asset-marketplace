@@ -61,10 +61,21 @@ def _template_path(surface: dict[str, object]) -> Path | None:
     return Path(__file__).resolve().parent.parent / "templates" / str(source)
 
 
+def _git_hooks_dir(repo_root: Path) -> Path:
+    result = subprocess.run(
+        ["git", "rev-parse", "--git-path", "hooks"],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    return Path(result.stdout.strip())
+
+
 def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
-    full = repo_root / rel
     kind = str(surface.get("kind", "file"))
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
@@ -72,24 +83,28 @@ def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
             return findings
         if rel not in gitmodules.read_text(encoding="utf-8"):
             return findings
-        if not (full / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
+        if not (repo_root / rel / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
     if kind == "hook":
-        if not full.is_file():
+        hook_path = _git_hooks_dir(repo_root) / Path(rel).name
+        if not hook_path.is_file():
             findings.append(f"missing hook: {rel}")
         return findings
-    if not full.exists():
+    if not (repo_root / rel).exists():
         findings.append(f"missing: {rel}")
     return findings
 
 
 def _apply_surface(repo_root: Path, surface: dict[str, object]) -> bool:
     rel = str(surface["path"])
-    full = repo_root / rel
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     if kind in ("file", "hook") and template is not None:
+        if kind == "hook":
+            full = _git_hooks_dir(repo_root) / Path(rel).name
+        else:
+            full = repo_root / rel
         full.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(template, full)
         if kind == "hook":

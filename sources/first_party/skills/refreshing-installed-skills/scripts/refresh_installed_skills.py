@@ -354,24 +354,6 @@ def _is_submodule(repo_root: Path) -> bool:
     return result.returncode == 0 and result.stdout.strip()
 
 
-def _roll_marketplace_source(repo_root: Path) -> None:
-    submodule = repo_root / ".agents" / "plugins" / "marketplace-source"
-    if not submodule.is_dir() or not (submodule / ".git").exists():
-        return
-    print("Rolling marketplace-source to origin/main...")
-    try:
-        subprocess.run(["git", "-C", str(submodule), "fetch", "origin"], check=True)
-        subprocess.run(["git", "-C", str(submodule), "reset", "--hard", "origin/main"], check=True)
-    except subprocess.CalledProcessError as exc:
-        print(
-            f"ERROR: could not roll {submodule.relative_to(repo_root).as_posix()} to origin/main: {exc}",
-            file=sys.stderr,
-        )
-        raise
-    rel = submodule.relative_to(repo_root).as_posix()
-    subprocess.run(["git", "add", "--", rel], cwd=repo_root, check=True)
-
-
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Install/refresh skills in .agents/skills from installed marketplace plugins"
@@ -404,9 +386,6 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and not args.allow_shared_checkout and _is_shared_checkout(ROOT):
         print("error: refusing to modify a shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
         return 1
-
-    if not args.check:
-        _roll_marketplace_source(ROOT)
 
     config = _load_marketplace_config()
     prefixes = _local_skill_prefixes(config)

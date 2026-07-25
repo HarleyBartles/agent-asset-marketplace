@@ -130,7 +130,10 @@ def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
         _run_tool("update_skill_artifacts.py", "--all", verbose=verbose)
     _run_tool("normalize_first_party_skill_sources.py", *_check_arg(check), verbose=verbose)
     if not skip_install:
-        _run_skill_script("refreshing-installed-skills", "refresh_installed_skills.py", *_check_arg(check), verbose=verbose)
+        refresh_args = [*_check_arg(check)]
+        if not check:
+            refresh_args.append("--allow-shared-checkout")
+        _run_skill_script("refreshing-installed-skills", "refresh_installed_skills.py", *refresh_args, verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
 
 
