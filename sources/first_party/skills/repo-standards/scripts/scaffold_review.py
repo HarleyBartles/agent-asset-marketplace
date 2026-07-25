@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deploy or verify the repo's REVIEW.md entry point.
+"""Scaffold or verify the repo's REVIEW.md entry point.
 
 This is a mechanical helper: it creates a standard REVIEW.md scaffold when
 one is missing. The agent remains responsible for any repo-specific additions.

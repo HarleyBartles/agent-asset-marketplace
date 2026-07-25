@@ -9,7 +9,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` for the default preflight bundle.
 - `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh -Check`.
 - `.agents/docs/repo-guide-policy.md` mapping the repo to `repo-standards`.
-- `REVIEW.md` at the repo root pointing to the review guide and required skill invocations. Use the `deploy-review` script (`.sh`/`.ps1`) to generate the scaffold once if it is missing; the agent then fills in repo-specific review concerns.
+- `REVIEW.md` at the repo root pointing to the review guide and required skill invocations. Use the `scaffold-review` script (`.sh`/`.ps1`) to generate the scaffold once if it is missing; the agent then fills in repo-specific review concerns.
 
 ## Local overrides
 

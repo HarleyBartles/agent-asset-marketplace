@@ -13,5 +13,5 @@ if (-not $python) {
     exit 1
 }
 
-& $python.Source "$ScriptDir/deploy_review.py" @args
+& $python.Source "$ScriptDir/scaffold_review.py" @args
 exit $LASTEXITCODE
