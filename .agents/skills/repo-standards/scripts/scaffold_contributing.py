@@ -34,12 +34,15 @@ def _template_path() -> Path:
 
 
 def _has_required_boilerplate(content: str) -> bool:
-    return (
-        "# Contributing" in content
-        and "contributor entry point" in content.lower()
-        and "/repo-standards" in content
-        and "/repo-worker-base" in content
+    lines = content.splitlines()
+    has_heading = any(line.strip() == "# Contributing" for line in lines)
+    has_repo_standards = any(
+        "/repo-standards" in line and line.lstrip().startswith("-") for line in lines
     )
+    has_repo_worker_base = any(
+        "/repo-worker-base" in line and line.lstrip().startswith("-") for line in lines
+    )
+    return has_heading and has_repo_standards and has_repo_worker_base
 
 
 def main(argv: list[str] | None = None) -> int:

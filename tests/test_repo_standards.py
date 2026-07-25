@@ -427,3 +427,61 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
     assert "/repo-standards" in text
     assert "/repo-worker-base" in text
+
+
+def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
+    """scaffold_contributing --check passes when only the heading and skill invocations are kept."""
+    repo = tmp_path / "custom-contributing"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    (repo / "CONTRIBUTING.md").write_text(
+        "# Contributing\n\n"
+        "Our own contributor process.\n\n"
+        "## Required skill invocations\n\n"
+        "- `/repo-standards` for repo-shape and guide routing.\n"
+        "- `/repo-worker-base` for worktree, branch, validation, and publication boundaries.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_CONTRIBUTING), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "OK" in result.stdout
+
+
+def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> None:
+    """scaffold_repo_guide_policy --check passes when only the heading and required sections are kept."""
+    repo = tmp_path / "custom-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text(
+        "# Repo Guide Policy\n\n"
+        "This repository uses repo-standards.\n\n"
+        "## Standard-to-local mapping\n\n"
+        "| Standard guide | Local path |\n|---|---|\n"
+        "| code-review-guide.md | `.agents/guides/code-review-guide.md` |\n\n"
+        "## Exceptions\n\n"
+        "None.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_GUIDE_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "OK" in result.stdout

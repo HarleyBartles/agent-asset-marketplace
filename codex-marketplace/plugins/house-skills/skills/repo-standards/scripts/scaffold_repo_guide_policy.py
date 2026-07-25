@@ -34,11 +34,11 @@ def _template_path() -> Path:
 
 
 def _has_required_boilerplate(content: str) -> bool:
+    lines = [line.strip() for line in content.splitlines()]
     return (
-        "# Repo Guide Policy" in content
-        and "This repo follows the `repo-standards` skill." in content
-        and "## Standard-to-local mapping" in content
-        and "## Exceptions" in content
+        "# Repo Guide Policy" in lines
+        and "## Standard-to-local mapping" in lines
+        and "## Exceptions" in lines
     )
 
 
