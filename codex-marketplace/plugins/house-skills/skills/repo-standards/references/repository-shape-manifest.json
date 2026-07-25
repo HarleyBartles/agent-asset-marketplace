@@ -47,7 +47,7 @@
       "id": "review-entry",
       "path": "REVIEW.md",
       "kind": "file",
-      "source": "templates/REVIEW.md",
+      "source": null,
       "optional": false
     }
   ]
