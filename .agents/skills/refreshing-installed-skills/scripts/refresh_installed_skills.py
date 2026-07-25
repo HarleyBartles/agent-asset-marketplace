@@ -137,6 +137,10 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
 
 def _load_marketplace_config() -> dict[str, Any]:
     """Load the marketplace configuration."""
+    if not MARKETPLACE_PATH.is_file():
+        raise FileNotFoundError(
+            f"{MARKETPLACE_PATH} not found; create it with at least a 'plugins' list"
+        )
     config = _load_json(MARKETPLACE_PATH)
     if not isinstance(config, dict):
         raise ValueError(f"{MARKETPLACE_PATH}: must contain a JSON object")

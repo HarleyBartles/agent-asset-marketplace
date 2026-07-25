@@ -38,4 +38,4 @@ py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skill
 py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
 ```
 
-This skill discovers the repo's `tools/install_agent_skills.py` (source repo) or `scripts/install_agent_skills.py` (consumer repo), runs it, then runs `generating-agent-mesh`. If changes were made, it commits them with the message `chore: refresh installed skills and regenerate agent mesh`.
+This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`, rolls the optional `marketplace-source` submodule to `origin/main`, and regenerates the agent mesh. If changes were made, it commits them with the message `chore: refresh installed skills and regenerate agent mesh`.

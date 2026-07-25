@@ -1,202 +1,251 @@
-import importlib.util
-import os
-import subprocess
+from __future__ import annotations
+
+import json
 import sys
 from pathlib import Path
-
-import pytest
-
-REPO_ROOT = Path(__file__).resolve().parents[1]
-CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills" / "scripts" / "refresh_installed_skills.py"
+from unittest.mock import patch
 
 
-def _load_core_module():
-    spec = importlib.util.spec_from_file_location("refresh_installed_skills", CORE)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills" / "scripts"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+import refresh_installed_skills  # noqa: E402
 
 
-refresh_installed_skills = _load_core_module()
+def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    skills_path.mkdir()
+    provenance_path = skills_path / ".provenance.json"
+    original = {
+        "manifestSha": "old-sha",
+        "syncedAt": "2026-07-20T00:00:00",
+        "syncedPlugins": ["repo-worker-pack"],
+        "syncedSkills": 27,
+    }
+    provenance_path.write_text(json.dumps(original, indent=2) + "\n", encoding="utf-8")
+
+    plugins = [
+        {"name": "superpowers-plus"},
+        {"name": "repo-worker-pack"},
+    ]
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="new-sha"),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=skills_path),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", return_value=False),
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    assert json.loads(provenance_path.read_text(encoding="utf-8")) == original
 
 
-def _stripped_env():
-    env = os.environ.copy()
-    env.pop("GIT_DIR", None)
-    env.pop("GIT_WORK_TREE", None)
-    env.pop("GIT_INDEX_FILE", None)
-    return env
-
-
-def _make_source_repo(tmp_path: Path) -> Path:
-    repo = tmp_path / "source-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
-    (repo / "codex-marketplace" / "plugins").mkdir(parents=True)
-    (repo / "tools").mkdir()
-    (repo / "tools" / "install_agent_skills.py").write_text(
-        "import sys\nprint('install ok')\n", encoding="utf-8"
-    )
-    (repo / "tools" / "generate_index_mesh.py").write_text(
-        "import sys\nprint('mesh ok')\n", encoding="utf-8"
-    )
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
-        "import sys\nprint('mesh ok')\n", encoding="utf-8"
-    )
-    return repo
-
-
-def _make_consumer_repo(tmp_path: Path) -> Path:
-    repo = tmp_path / "consumer-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
-    (repo / "scripts").mkdir()
-    (repo / "scripts" / "install_agent_skills.py").write_text(
-        "import sys\nprint('install ok')\n", encoding="utf-8"
-    )
-    (repo / "scripts" / "generate_index_mesh.py").write_text(
-        "import sys\nprint('mesh ok')\n", encoding="utf-8"
-    )
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
-        "import sys\nprint('mesh ok')\n", encoding="utf-8"
-    )
-    return repo
-
-
-def test_source_layout_runs_tools_commands(tmp_path: Path) -> None:
-    repo = _make_source_repo(tmp_path)
-    result = subprocess.run(
-        [sys.executable, str(CORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    assert "install ok" in result.stdout
-    assert "mesh ok" in result.stdout
-
-
-def test_consumer_layout_runs_scripts_commands(tmp_path: Path) -> None:
-    repo = _make_consumer_repo(tmp_path)
-    result = subprocess.run(
-        [sys.executable, str(CORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    assert "install ok" in result.stdout
-    assert "mesh ok" in result.stdout
-
-
-def test_missing_install_command_fails(tmp_path: Path) -> None:
-    repo = tmp_path / "empty-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    result = subprocess.run(
-        [sys.executable, str(CORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode != 0
-    assert "install_agent_skills" in result.stderr or "install skills" in result.stderr
-
-
-def test_check_is_propagated_to_install_and_mesh(tmp_path: Path) -> None:
-    repo = tmp_path / "check-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
-    (repo / "scripts").mkdir()
-    (repo / "scripts" / "install_agent_skills.py").write_text(
-        "import sys\nprint('install check ok')\nsys.exit(0 if '--check' in sys.argv else 1)\n",
+def test_clean_orphan_skills_preserves_mark_skill(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    local_skill = skills_path / "mark-example"
+    local_skill.mkdir(parents=True)
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-example\ndescription: Use when testing local skill custody.\n---\n\n# Example\n",
         encoding="utf-8",
     )
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts").mkdir(parents=True)
-    (repo / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py").write_text(
-        "import sys\nprint('mesh check ok')\nsys.exit(0 if '--check' in sys.argv else 1)\n",
+
+    with patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path):
+        assert refresh_installed_skills._clean_orphan_skills([], synced_skill_names=set()) is False
+
+    assert local_skill.is_dir()
+
+
+def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    (skills_path / "mark-invalid").mkdir(parents=True)
+
+    with patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path):
+        invalid = refresh_installed_skills._validate_local_skill_dirs(["mark-"])
+
+    assert invalid == [skills_path / "mark-invalid"]
+
+
+def test_main_rejects_malformed_mark_skill_frontmatter(tmp_path: Path, capsys) -> None:
+    skills_path = tmp_path / "skills"
+    local_skill = skills_path / "mark-invalid"
+    local_skill.mkdir(parents=True)
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: [unterminated\ndescription: invalid\n---\n\n# Invalid\n",
         encoding="utf-8",
     )
-    result = subprocess.run(
-        [sys.executable, str(CORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    assert "install check ok" in result.stdout
-    assert "mesh check ok" in result.stdout
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        result = refresh_installed_skills.main()
+
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "ERROR: local skill" in captured.out
+    assert "Traceback" not in captured.err
 
 
-def test_check_is_propagated_to_override(tmp_path: Path) -> None:
-    repo = tmp_path / "override-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
-    (repo / "scripts").mkdir()
-    (repo / "scripts" / "refresh-installed-skills.py").write_text(
-        "import sys\nprint('override check ok')\nsys.exit(0 if '--check' in sys.argv else 1)\n",
+def test_main_rejects_mark_directory_name_that_differs_from_frontmatter(tmp_path: Path, capsys) -> None:
+    skills_path = tmp_path / "skills"
+    local_skill = skills_path / "mark-directory"
+    local_skill.mkdir(parents=True)
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-frontmatter\ndescription: Use when testing local skill identity.\n---\n\n# Example\n",
         encoding="utf-8",
     )
-    result = subprocess.run(
-        [sys.executable, str(CORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    assert "override check ok" in result.stdout
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        result = refresh_installed_skills.main()
+
+    assert result == 1
+    assert "must match frontmatter name" in capsys.readouterr().out
 
 
-def test_missing_marketplace_source_initializes_submodule(tmp_path: Path, monkeypatch) -> None:
-    repo = tmp_path / "submodule-repo"
-    repo.mkdir()
-    (repo / ".gitmodules").write_text(
-        "[submodule \"marketplace-source\"]\n\tpath = .agents/plugins/marketplace-source\n",
+def test_main_rejects_marketplace_reserved_mark_skill_before_mutation(tmp_path: Path, capsys) -> None:
+    source_skills = tmp_path / "source" / "skills"
+    source_skill = source_skills / "mark-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("marketplace content\n", encoding="utf-8")
+
+    installed_skills = tmp_path / "installed"
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", installed_skills),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[{"name": "example"}]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 1
+
+    assert not installed_skills.exists()
+    assert "reserved local skill prefix" in capsys.readouterr().out
+
+
+def test_main_check_rejects_marketplace_reserved_mark_skill_before_mutation(tmp_path: Path, capsys) -> None:
+    source_skills = tmp_path / "source" / "skills"
+    source_skill = source_skills / "mark-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("marketplace content\n", encoding="utf-8")
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", tmp_path / "installed"),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[{"name": "example"}]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
+    ):
+        assert refresh_installed_skills.main() == 1
+
+    assert "reserved local skill prefix" in capsys.readouterr().out
+
+
+def test_matching_provenance_with_missing_marketplace_skill_continues_sync(tmp_path: Path) -> None:
+    skills_path = tmp_path / "installed"
+    skills_path.mkdir()
+    provenance_path = skills_path / ".provenance.json"
+    provenance_path.write_text('{"manifestSha": "current"}\n', encoding="utf-8")
+    source_skills = tmp_path / "source/skills"
+    source_skill = source_skills / "marketplace-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("source\n", encoding="utf-8")
+    plugin = {"name": "example"}
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", return_value=True) as install,
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
+    ):
+        assert refresh_installed_skills.main() == 1
+
+    install.assert_called_once()
+
+
+def test_matching_provenance_with_stale_marketplace_skill_continues_sync(tmp_path: Path) -> None:
+    skills_path = tmp_path / "installed"
+    installed_skill = skills_path / "marketplace-example"
+    installed_skill.mkdir(parents=True)
+    (installed_skill / "SKILL.md").write_text("stale\n", encoding="utf-8")
+    (skills_path / ".provenance.json").write_text('{"manifestSha": "current"}\n', encoding="utf-8")
+    local_skill = skills_path / "mark-local"
+    local_skill.mkdir()
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-local\ndescription: Use when preserving local custody.\n---\n\n# Local\n",
         encoding="utf-8",
     )
-    recorded = []
+    source_skills = tmp_path / "source/skills"
+    source_skill = source_skills / "marketplace-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("current\n", encoding="utf-8")
+    plugin = {"name": "example"}
 
-    def fake_run(cmd, **kwargs):
-        recorded.append(cmd)
-        return subprocess.CompletedProcess(cmd, 0, "", "")
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", skills_path / ".provenance.json"),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", return_value=True) as install,
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
+    ):
+        assert refresh_installed_skills.main() == 1
 
-    monkeypatch.setattr(refresh_installed_skills.subprocess, "run", fake_run)
-    refresh_installed_skills._init_marketplace_source(repo)
-    assert len(recorded) == 2
-    assert recorded[0][:3] == ["git", "submodule", "status"]
-    assert recorded[1][:5] == ["git", "submodule", "update", "--init", "--recursive"]
-    assert Path(recorded[1][-1]).as_posix() == ".agents/plugins/marketplace-source"
+    install.assert_called_once()
+    assert local_skill.is_dir()
 
 
-def test_unrelated_submodule_is_not_initialized(tmp_path: Path, monkeypatch) -> None:
-    repo = tmp_path / "other-submodule-repo"
-    repo.mkdir()
-    (repo / ".gitmodules").write_text(
-        "[submodule \"other\"]\n\tpath = other\n",
+def test_matching_provenance_with_extra_marketplace_orphan_continues_sync(tmp_path: Path) -> None:
+    skills_path = tmp_path / "installed"
+    installed_skill = skills_path / "marketplace-example"
+    installed_skill.mkdir(parents=True)
+    (installed_skill / "SKILL.md").write_text("current\n", encoding="utf-8")
+    (skills_path / "orphan-marketplace-skill").mkdir()
+    (skills_path / ".provenance.json").write_text('{"manifestSha": "current"}\n', encoding="utf-8")
+    local_skill = skills_path / "mark-local"
+    local_skill.mkdir()
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-local\ndescription: Use when preserving local custody.\n---\n\n# Local\n",
         encoding="utf-8",
     )
-    recorded = []
+    source_skills = tmp_path / "source/skills"
+    source_skill = source_skills / "marketplace-example"
+    source_skill.mkdir(parents=True)
+    (source_skill / "SKILL.md").write_text("current\n", encoding="utf-8")
+    plugin = {"name": "example"}
 
-    def fake_run(cmd, **kwargs):
-        recorded.append(cmd)
-        return subprocess.CompletedProcess(cmd, 1, "", "")
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", skills_path / ".provenance.json"),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", return_value=True) as install,
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=True) as clean,
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
+    ):
+        assert refresh_installed_skills.main() == 1
 
-    monkeypatch.setattr(refresh_installed_skills.subprocess, "run", fake_run)
-    refresh_installed_skills._init_marketplace_source(repo)
-    assert len(recorded) == 1
-    assert recorded[0][:3] == ["git", "submodule", "status"]
+    install.assert_called_once()
+    clean.assert_called_once()
+    assert local_skill.is_dir()

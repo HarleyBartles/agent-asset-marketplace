@@ -46,6 +46,9 @@ def _load_tracked() -> tuple[set[Path], set[Path]]:
             if parent == ROOT:
                 break
             tracked_dirs.add(parent)
+    # The repo root itself is an implicit target (root INDEX.md) even though
+    # no tracked file lives directly at the root.
+    tracked_dirs.add(ROOT)
     return tracked_dirs, tracked_files
 
 
