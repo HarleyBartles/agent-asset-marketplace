@@ -1,10 +1,31 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: "Use when you have a spec or requirements for a multi-step task, before touching code"
 metadata:
-  use_after: [brainstorming]
-  use_before: [handoff-gates, executing-plans]
-  related_skills: [handoff-gates, executing-plans, subagent-driven-development]
+  source_category: "third_party"
+  upstream_name: "writing-plans"
+  upstream_version: "v6.1.0"
+  adaptation_overlay: "adapters/codex/superpowers-plus/writing-plans"
+  projection_plugin: "superpowers-plus"
+  source_author: "obra"
+  source_license: "MIT"
+  source_repo: "https://github.com/obra/superpowers"
+  source_path: "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans/SKILL.md"
+  content_mode: "adapted"
+  adapted_author: "Harley Bartles"
+  adaptation_note: "Adjusted plan-path guidance to the repo-local `.agents/superpowers/plans/` convention for Codex projections and normalized marketplace frontmatter metadata."
+  use_when:
+    - "Use when an approved spec exists for a multi-step task."
+    - "Use when the goal fits a single tight implementation plan."
+    - "Use before touching implementation code."
+  do_not_use_when:
+    - "Do not use when the spec covers multiple independent subsystems; use working-with-epics or brainstorm first."
+    - "Do not use when implementation has already started."
+    - "Do not use as a substitute for brainstorming."
+  use_after: [brainstorming, handoff-gates]
+  use_before: [handoff-gates, executing-plans, subagent-driven-development]
+  use_with: [handoff-gates, working-with-epics]
+  related_skills: [brainstorming, handoff-gates, executing-plans, subagent-driven-development, working-with-epics]
 ---
 
 # Writing Plans

@@ -6,69 +6,108 @@ metadata:
   adaptation_overlay: adapters/codex/superpowers-plus/subagent-driven-development
   projection_plugin: superpowers-plus
 edits:
-  - path: SKILL.md
-    op: replace
-    start_line: 136
-    end_line: 136
-    expected_lines:
-      - "**DONE:** Generate the review package (`scripts/review-package BASE HEAD`, from this skill's directory — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path."
-    replace_lines:
-      - "**DONE:** Generate the review package (`scripts/review-package BASE HEAD PLAN_FILE`, from this skill's directory — it prints the unique file path it wrote and stores it under the plan's `sdd/<plan_name>/` folder; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path."
-  - path: SKILL.md
-    op: replace
-    start_line: 181
-    end_line: 182
-    expected_lines:
-      - "- Hand the reviewer its diff as a file: run this skill's"
-      - "  `scripts/review-package BASE HEAD` and pass the reviewer the file path"
-    replace_lines:
-      - "- Hand the reviewer its diff as a file: run this skill's"
-      - "  `scripts/review-package BASE HEAD PLAN_FILE` and pass the reviewer the file path"
-  - path: SKILL.md
-    op: replace
-    start_line: 203
-    end_line: 204
-    expected_lines:
-      - "- The final whole-branch review gets a package too: run"
-      - "  `scripts/review-package MERGE_BASE HEAD` (MERGE_BASE = the commit the"
-    replace_lines:
-      - "- The final whole-branch review gets a package too: run"
-      - "  `scripts/review-package MERGE_BASE HEAD PLAN_FILE` (MERGE_BASE = the commit the"
-  - path: SKILL.md
-    op: replace
-    start_line: 384
-    end_line: 385
-    expected_lines:
-      - "- Dispatch a task reviewer without a diff file — generate it first"
-      - "  (`scripts/review-package BASE HEAD`) and name the printed path in the"
-    replace_lines:
-      - "- Dispatch a task reviewer without a diff file — generate it first"
-      - "  (`scripts/review-package BASE HEAD PLAN_FILE`) and name the printed path in the"
-  - path: task-reviewer-prompt.md
-    op: replace
-    start_line: 180
-    end_line: 182
-    expected_lines:
-      - "- `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review"
-      - "  package to (`scripts/review-package BASE HEAD` prints the unique path it"
-      - "  wrote; the package never enters the controller's context)"
-    replace_lines:
-      - "- `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review"
-      - "  package to (`scripts/review-package BASE HEAD PLAN_FILE` prints the unique path it"
-      - "  wrote; the package never enters the controller's context)"
-  - path: SKILL.md
-    op: replace
-    start_line: 277
-    end_line: 277
-    expected_lines:
-      - "[Read plan file once: docs/superpowers/plans/feature-plan.md]"
-    replace_lines:
-      - "[Read plan file once: .agents/superpowers/plans/feature-plan.md]"
-  - path: SKILL.md
-    op: replace
-    start_line: 254
-    end_line: 254
-    expected_lines:
-      - "  `cat \"$(git rev-parse --show-toplevel)/.superpowers/sdd/progress.md\"`. Tasks listed there"
-    replace_lines:
-      - "  `cat \"$(git rev-parse --show-toplevel)/.agents/superpowers/sdd/progress.md\"`. Tasks listed there"
+- path: SKILL.md
+  op: replace
+  start_line: 1
+  end_line: 4
+  expected_lines:
+  - '---'
+  - 'name: subagent-driven-development'
+  - 'description: Use when executing implementation plans with independent tasks in the current session'
+  - '---'
+  replace_lines:
+  - '---'
+  - 'name: subagent-driven-development'
+  - 'description: "Use when executing implementation plans with independent tasks in the current session"'
+  - 'metadata:'
+  - '  source_category: "third_party"'
+  - '  upstream_name: "subagent-driven-development"'
+  - '  upstream_version: "v6.1.0"'
+  - '  adaptation_overlay: "adapters/codex/superpowers-plus/subagent-driven-development"'
+  - '  projection_plugin: "superpowers-plus"'
+  - '  source_author: "obra"'
+  - '  source_license: "MIT"'
+  - '  source_repo: "https://github.com/obra/superpowers"'
+  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development/SKILL.md"'
+  - '  content_mode: "adapted"'
+  - '  adapted_author: "Harley Bartles"'
+  - '  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, and normalized marketplace frontmatter metadata."'
+  - '  use_when:'
+  - '    - "Use when executing an implementation plan with independent tasks and subagent support is available."'
+  - '    - "Use when tasks can be delegated to fresh implementer subagents in the same session."'
+  - '    - "Use when per-task review and a final whole-branch review are appropriate."'
+  - '  do_not_use_when:'
+  - '    - "Do not use when subagents are unavailable."'
+  - '    - "Do not use without a written plan."'
+  - '    - "Do not use when tasks are tightly coupled; use executing-plans instead."'
+  - '  use_after: [writing-plans, handoff-gates]'
+  - '  use_before: [requesting-code-review, finishing-a-development-branch]'
+  - '  use_with: [dispatching-parallel-agents]'
+  - '  related_skills: [writing-plans, executing-plans, requesting-code-review, finishing-a-development-branch, dispatching-parallel-agents]'
+  - '---'
+- path: SKILL.md
+  op: replace
+  start_line: 136
+  end_line: 136
+  expected_lines:
+  - '**DONE:** Generate the review package (`scripts/review-package BASE HEAD`, from this skill''s directory — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.'
+  replace_lines:
+  - '**DONE:** Generate the review package (`scripts/review-package BASE HEAD PLAN_FILE`, from this skill''s directory — it prints the unique file path it wrote and stores it under the plan''s `sdd/<plan_name>/` folder; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.'
+- path: SKILL.md
+  op: replace
+  start_line: 181
+  end_line: 182
+  expected_lines:
+  - '- Hand the reviewer its diff as a file: run this skill''s'
+  - '  `scripts/review-package BASE HEAD` and pass the reviewer the file path'
+  replace_lines:
+  - '- Hand the reviewer its diff as a file: run this skill''s'
+  - '  `scripts/review-package BASE HEAD PLAN_FILE` and pass the reviewer the file path'
+- path: SKILL.md
+  op: replace
+  start_line: 203
+  end_line: 204
+  expected_lines:
+  - '- The final whole-branch review gets a package too: run'
+  - '  `scripts/review-package MERGE_BASE HEAD` (MERGE_BASE = the commit the'
+  replace_lines:
+  - '- The final whole-branch review gets a package too: run'
+  - '  `scripts/review-package MERGE_BASE HEAD PLAN_FILE` (MERGE_BASE = the commit the'
+- path: SKILL.md
+  op: replace
+  start_line: 384
+  end_line: 385
+  expected_lines:
+  - '- Dispatch a task reviewer without a diff file — generate it first'
+  - '  (`scripts/review-package BASE HEAD`) and name the printed path in the'
+  replace_lines:
+  - '- Dispatch a task reviewer without a diff file — generate it first'
+  - '  (`scripts/review-package BASE HEAD PLAN_FILE`) and name the printed path in the'
+- path: task-reviewer-prompt.md
+  op: replace
+  start_line: 180
+  end_line: 182
+  expected_lines:
+  - '- `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review'
+  - '  package to (`scripts/review-package BASE HEAD` prints the unique path it'
+  - '  wrote; the package never enters the controller''s context)'
+  replace_lines:
+  - '- `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review'
+  - '  package to (`scripts/review-package BASE HEAD PLAN_FILE` prints the unique path it'
+  - '  wrote; the package never enters the controller''s context)'
+- path: SKILL.md
+  op: replace
+  start_line: 277
+  end_line: 277
+  expected_lines:
+  - '[Read plan file once: docs/superpowers/plans/feature-plan.md]'
+  replace_lines:
+  - '[Read plan file once: .agents/superpowers/plans/feature-plan.md]'
+- path: SKILL.md
+  op: replace
+  start_line: 254
+  end_line: 254
+  expected_lines:
+  - '  `cat "$(git rev-parse --show-toplevel)/.superpowers/sdd/progress.md"`. Tasks listed there'
+  replace_lines:
+  - '  `cat "$(git rev-parse --show-toplevel)/.agents/superpowers/sdd/progress.md"`. Tasks listed there'
