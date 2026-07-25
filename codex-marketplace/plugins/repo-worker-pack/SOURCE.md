@@ -12,7 +12,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/generating-index-mesh/`
 - `sources/first_party/skills/linear-issue-shaping/`
 - `sources/first_party/skills/refreshing-installed-skills/`
-- `sources/first_party/skills/repo-guide-standard/`
+- `sources/first_party/skills/repo-standards/`
 - `sources/first_party/skills/repo-worker-base/`
 - `sources/first_party/skills/risk-gates/`
 - `sources/first_party/skills/subagent-model-routing/`
@@ -33,7 +33,7 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/generating-index-mesh/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/repo-guide-standard/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/subagent-model-routing/`
@@ -51,7 +51,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/generating-index-mesh.zip`
 - `generated/skill-zips/linear-issue-shaping.zip`
 - `generated/skill-zips/refreshing-installed-skills.zip`
-- `generated/skill-zips/repo-guide-standard.zip`
+- `generated/skill-zips/repo-standards.zip`
 - `generated/skill-zips/repo-worker-base.zip`
 - `generated/skill-zips/risk-gates.zip`
 - `generated/skill-zips/subagent-model-routing.zip`

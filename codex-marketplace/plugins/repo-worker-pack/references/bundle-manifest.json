@@ -100,13 +100,13 @@
       "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh."
     },
     {
-      "canonical_name": "repo-guide-standard",
+      "canonical_name": "repo-standards",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/repo-guide-standard",
-      "local_path": "skills/repo-guide-standard",
-      "provenance_note": "Projected verbatim from the first-party repo-guide-standard skill. Defines cross-repo guide layout, invocation, and workflow order.",
+      "canonical_source_path": "sources/first_party/skills/repo-standards",
+      "local_path": "skills/repo-standards",
+      "provenance_note": "Projected verbatim from the first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order.",
       "copy_expectation": "byte_identical"
     },
     {

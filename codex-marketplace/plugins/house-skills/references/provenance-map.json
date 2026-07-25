@@ -253,11 +253,11 @@
       "local_path": "skills/release-engineering"
     },
     {
-      "canonical_name": "repo-guide-standard",
+      "canonical_name": "repo-standards",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/repo-guide-standard",
-      "local_path": "skills/repo-guide-standard"
+      "canonical_source_path": "sources/first_party/skills/repo-standards",
+      "local_path": "skills/repo-standards"
     },
     {
       "canonical_name": "repo-worker-base",

@@ -12,7 +12,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `generating-index-mesh`
 - `linear-issue-shaping`
 - `refreshing-installed-skills`
-- `repo-guide-standard`
+- `repo-standards`
 - `repo-worker-base`
 - `risk-gates`
 - `subagent-model-routing`
