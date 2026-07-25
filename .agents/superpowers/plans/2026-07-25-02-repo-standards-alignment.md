@@ -344,6 +344,24 @@ Update `interface.short_description` and `interface.default_prompt` to mention `
 
 ---
 
+## Tightening notes (post-Plan 1 review)
+
+- **Pre-commit flag**: The `templates/pre-commit` already calls `scripts/ci-preflight.sh --check` (lowercase). Update `repository-shape-standard.md` to match; do not introduce `-Check`.
+- **Plan 1 carry-over**: `ci-preflight` now supports `scripts/ci-preflight-extra.sh` / `.ps1` with `--check` and `--changed-from`. Document this in `repo-standards/SKILL.md`.
+- **PowerShell wrappers**: Existing scaffolds already have `.ps1` wrappers, but they pass `@args` raw and use `python` instead of the `py` launcher. Task 4 should rewrite *all* `.ps1` wrappers to accept `[switch]$Check` / `[switch]$Force` and translate them to `--check` / `--force`, then call `py -3 <script>.py` (with fallback to `python`/`python3`).
+- **New scaffold registration**: `scaffold-all.sh` and `scaffold-all.ps1` currently list `scaffold-repo-guide-policy scaffold-guides scaffold-review scaffold-contributing scaffold-ci-preflight scaffold-gitignore`. Add `scaffold-agents-md` and `scaffold-marketplace-json` to both sequences.
+- **marketplace.json enforcement**: `repo_standards.py` already validates `repo.local_skill_prefixes` in `_check_marketplace_json`; `scaffold_marketplace_json.py` can focus on writing/migrating the file. Migration should move top-level `local_skill_prefixes` and `local_skills` into `repo.local_skill_prefixes` as described.
+- **AGENTS.md validation**: The 12 canonical topic coverage check should be shared between `scaffold_agents_md.py` and `repo_standards.py` so `--check` from either surface reports consistent `DRIFT:` messages. Consider extracting the heading/link parser into a small module under `repo-standards/scripts/`.
+- **Tests**: Add a new `tests/test_repo_standards.py` (or extend existing) covering:
+  - `scaffold_agents_md.py --check` on a valid router `AGENTS.md`.
+  - `scaffold_agents_md.py --check` detecting a missing core section.
+  - `scaffold_marketplace_json.py` migrating legacy `local_skill_prefixes`.
+  - `repo_standards.py --check` reporting `DRIFT:` for `root-agents-md` and `guides-agents-md` surfaces.
+- **Regeneration order**: After code changes, run `py -3 tools/rebuild_marketplace.py` and `py -3 tools/check_marketplace.py` as the final green-path proof, then regenerate `scripts/ci-preflight.*` if templates changed.
+- **Pre-commit restoration**: The pre-commit hook was disabled during Plan 1. Restore `.git/hooks/pre-commit` either as the final step of this plan or in a follow-up PR if the scope grows.
+
+---
+
 ## Task 6: Align the source repo surfaces
 
 **Files:**
