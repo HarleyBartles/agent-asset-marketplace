@@ -21,7 +21,7 @@ Options:
 
 Each scaffold has its own --help; pass the individual script name
 with --help to learn what it writes and validates.
-'@ | Write-Host
+'@ | Write-Output
         exit 0
     }
 }

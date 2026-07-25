@@ -301,10 +301,12 @@ under the ## Exceptions heading are skipped."""
         print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
         return 1
 
+    applied = 0
     for surface in surfaces:
         if _check_surface(repo_root, surface, exceptions):
-            _apply_surface(repo_root, surface, exceptions, args.force)
-    print("OK repo-standards: applied missing surfaces")
+            if _apply_surface(repo_root, surface, exceptions, args.force):
+                applied += 1
+    print(f"OK repo-standards: applied {applied} surface(s)")
     return 0
 
 

@@ -8,7 +8,10 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = REPO_ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts"
 SCAFFOLD_AGENTS_MD = SKILL_ROOT / "scaffold_agents_md.py"
+SCAFFOLD_CONTRIBUTING = SKILL_ROOT / "scaffold_contributing.py"
+SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
 SCAFFOLD_MARKETPLACE_JSON = SKILL_ROOT / "scaffold_marketplace_json.py"
+SCAFFOLD_REPO_GUIDE_POLICY = SKILL_ROOT / "scaffold_repo_guide_policy.py"
 REPO_STANDARDS = SKILL_ROOT / "repo_standards.py"
 
 
@@ -325,3 +328,102 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
     assert result.returncode != 0, combined
     assert "DRIFT:" in combined
     assert "AGENTS.md" in combined
+
+
+def test_scaffold_contributing_check_missing_boilerplate_fails(tmp_path: Path) -> None:
+    """scaffold_contributing --check fails when the file is missing required boilerplate."""
+    repo = tmp_path / "bad-contributing"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nNo skills here.\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_CONTRIBUTING), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "DRIFT: CONTRIBUTING.md" in result.stdout
+
+
+def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Path) -> None:
+    """scaffold_repo_guide_policy --check fails when the file is missing required boilerplate."""
+    repo = tmp_path / "bad-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text("# Repo Guide Policy\n\nNo mapping.\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_GUIDE_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "DRIFT: repo-guide-policy.md" in result.stdout
+
+
+def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
+    """scaffold_gitignore --force is accepted as a uniform CLI no-op."""
+    repo = tmp_path / "gitignore-force"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE), "--force"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (repo / ".gitignore").is_file()
+
+
+def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Path) -> None:
+    """repo_standards --apply --yes --force overwrites a drifted scaffolded surface."""
+    repo = tmp_path / "repo-standards-force"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- ci-preflight-ps1\n"
+        "- ci-preflight-sh\n"
+        "- pre-commit-hook\n"
+        "- repo-guide-policy\n"
+        "- guides-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-guide-policy.md").write_text(
+        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
+    assert "/repo-standards" in text
+    assert "/repo-worker-base" in text
