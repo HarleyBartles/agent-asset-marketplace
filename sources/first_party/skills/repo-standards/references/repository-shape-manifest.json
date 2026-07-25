@@ -60,7 +60,6 @@
       "path": ".agents/guides/AGENTS.md",
       "kind": "file",
       "source": null,
-      "scaffold": "scaffold_guides.py",
       "optional": true
     },
     {

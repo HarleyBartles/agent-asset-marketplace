@@ -64,18 +64,16 @@ Apply the `security-review` profile from `/unslop-profiles` to relevant work and
 
 ## Routing pointers
 
-- `.agents/docs/repo-guide-policy.md` for this repo's mapping to the cross-repo guide standard
-- `.agents/AGENTS.md` for tracked agent doctrine and local agent-facing deltas
-- `.agents/docs/mesh-policy.md` for mesh-specific law
-- `docs/AGENTS.md` for docs-owned guidance
-- `tools/AGENTS.md` for generators and validators
-- `codex-marketplace/AGENTS.md` for marketplace source/projection law
-- `sources/AGENTS.md` for source custody
-- `adapters/AGENTS.md` for adapter and overlay work
-- `provenance/AGENTS.md` for provenance and trust evidence
-
-MUST READ when creating a worktree, placing scratch files, or writing temp
-artifacts: `docs/non-repo-locations-policy.md`.
+- Repo guide policy: [.agents/docs/repo-guide-policy.md](.agents/docs/repo-guide-policy.md)
+- Tracked agent doctrine: [.agents/AGENTS.md](.agents/AGENTS.md)
+- Mesh policy: [.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md)
+- Docs-owned guidance: [docs/AGENTS.md](docs/AGENTS.md)
+- Generators and validators: [tools/AGENTS.md](tools/AGENTS.md)
+- Marketplace source/projection law: [codex-marketplace/AGENTS.md](codex-marketplace/AGENTS.md)
+- Source custody: [sources/AGENTS.md](sources/AGENTS.md)
+- Adapter and overlay work: [adapters/AGENTS.md](adapters/AGENTS.md)
+- Provenance and trust evidence: [provenance/AGENTS.md](provenance/AGENTS.md)
+- Worktree and scratch-file policy: [docs/non-repo-locations-policy.md](docs/non-repo-locations-policy.md)
 
 ## Maintenance responsibility
 
