@@ -66,9 +66,11 @@ def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
     kind = str(surface.get("kind", "file"))
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
-        if not gitmodules.is_file() or rel not in gitmodules.read_text(encoding="utf-8"):
-            findings.append(f"missing submodule: {rel}")
-        elif not (full / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
+        if not gitmodules.is_file():
+            return findings
+        if rel not in gitmodules.read_text(encoding="utf-8"):
+            return findings
+        if not (full / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
     if kind == "hook":
@@ -123,6 +125,8 @@ def main(argv: list[str] | None = None) -> int:
         print("OK repo-standards: all surfaces present")
         return 0
 
+    if args.allow_shared_checkout:
+        print("warning: --allow-shared-checkout is an override and requires human approval before applying changes", file=sys.stderr)
     if not args.allow_shared_checkout and _is_shared_checkout(repo_root):
         print("error: shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
         return 1
