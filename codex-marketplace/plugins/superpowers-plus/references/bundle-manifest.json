@@ -84,6 +84,21 @@
       "source_family": "superpowers"
     },
     {
+      "canonical_name": "handoff-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/handoff-gates",
+      "local_path": "skills/handoff-gates",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/handoff-gates/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
+    },
+    {
       "canonical_name": "inspecting-the-environment",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -232,6 +247,21 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
+    },
+    {
+      "canonical_name": "working-with-epics",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/working-with-epics",
+      "local_path": "skills/working-with-epics",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/working-with-epics/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+      "source_family": "house-skills"
     },
     {
       "canonical_name": "writing-plans",

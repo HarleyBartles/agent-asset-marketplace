@@ -1,6 +1,10 @@
 ---
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
+metadata:
+  use_after: [brainstorming]
+  use_before: [handoff-gates, executing-plans]
+  related_skills: [handoff-gates, executing-plans, subagent-driven-development]
 ---
 
 # Writing Plans
@@ -164,6 +168,8 @@ After saving the plan, offer execution choice:
 **2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
 
 **Which approach?"**
+
+**Before choosing an execution option, use `handoff-gates` plan-readiness lane.** Rate the plan for execution confidence (8/10 floor, 9/10 target). Report the final rating in the handoff. Do not execute below 8/10.
 
 **If Subagent-Driven chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development

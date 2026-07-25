@@ -1,6 +1,9 @@
 ---
 name: brainstorming
 description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+metadata:
+  use_before: [handoff-gates, writing-plans]
+  related_skills: [handoff-gates, writing-plans, working-with-epics]
 ---
 
 # Brainstorming Ideas Into Designs
@@ -29,7 +32,8 @@ You MUST create a task for each of these items and complete them in order:
 6. **Write design doc** — save to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+9. **Spec readiness gate** — use `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
+10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 

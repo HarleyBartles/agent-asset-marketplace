@@ -155,6 +155,13 @@
       "local_path": "skills/generating-agent-mesh"
     },
     {
+      "canonical_name": "handoff-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/handoff-gates",
+      "local_path": "skills/handoff-gates"
+    },
+    {
       "canonical_name": "hexagonal-architecture",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -419,6 +426,13 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/worker-verification",
       "local_path": "skills/worker-verification"
+    },
+    {
+      "canonical_name": "working-with-epics",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/working-with-epics",
+      "local_path": "skills/working-with-epics"
     },
     {
       "canonical_name": "writing-with-clarity",
