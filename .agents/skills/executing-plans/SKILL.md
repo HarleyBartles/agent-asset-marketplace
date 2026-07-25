@@ -1,6 +1,10 @@
 ---
 name: executing-plans
 description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
+metadata:
+  use_after: [handoff-gates, writing-plans]
+  use_before: [handoff-gates, finishing-a-development-branch, requesting-code-review]
+  related_skills: [handoff-gates, writing-plans, subagent-driven-development]
 ---
 
 # Executing Plans
@@ -32,6 +36,7 @@ For each task:
 ### Step 3: Complete Development
 
 After all tasks complete and verified:
+  - Run `handoff-gates` completion-readiness lane. Rate the completed work against the plan and the repo code review guide (9/10 target). Report the final rating. Do not hand off below 9/10.
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
 - **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
 - Follow that skill to verify tests, present options, execute choice

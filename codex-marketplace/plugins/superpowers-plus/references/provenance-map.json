@@ -8,13 +8,6 @@
       "local_path": "skills/dispatching-parallel-agents"
     },
     {
-      "canonical_name": "executing-plans",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans",
-      "local_path": "skills/executing-plans"
-    },
-    {
       "canonical_name": "finishing-a-development-branch",
       "source_category": "third_party",
       "content_mode": "verbatim",
@@ -79,6 +72,14 @@
       "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
       "local_path": "skills/brainstorming",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/brainstorming"
+    },
+    {
+      "canonical_name": "executing-plans",
+      "source_category": "third_party",
+      "content_mode": "adapted",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans",
+      "local_path": "skills/executing-plans",
+      "adaptation_overlay_path": "adapters/codex/superpowers-plus/executing-plans"
     },
     {
       "canonical_name": "requesting-code-review",
