@@ -27,12 +27,12 @@ def _repo_root() -> Path:
 
 
 ROOT = _repo_root()
-# The script is relocated into the skill source tree, but still shares the
-# repo's marketplace and validation helpers. Keep those imports working.
-sys.path.insert(0, str(ROOT / "tools"))
 
-from marketplace_utils import load_json
-from skill_validation import validate_skill_markdown_frontmatter
+
+def load_json(path: Path) -> Any:
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
 
 MARKETPLACE_PATH = ROOT / ".agents" / "plugins" / "marketplace.json"
 AGENTS_SKILLS_PATH = ROOT / ".agents" / "skills"
@@ -51,7 +51,15 @@ def _is_local_skill_dir(skill_dir: Path, prefixes: list[str]) -> bool:
 
 def _frontmatter_name(skill_dir: Path) -> object:
     lines = (skill_dir / "SKILL.md").read_text(encoding="utf-8").splitlines()
-    end_index = next(index for index, line in enumerate(lines[1:], start=1) if line == "---")
+    if not lines or lines[0] != "---":
+        raise ValueError("SKILL.md must start with a YAML frontmatter delimiter")
+    end_index = None
+    for index, line in enumerate(lines[1:], start=1):
+        if line == "---":
+            end_index = index
+            break
+    if end_index is None:
+        raise ValueError("SKILL.md is missing a closing YAML frontmatter delimiter")
     return yaml.safe_load("\n".join(lines[1:end_index])).get("name")
 
 
@@ -64,7 +72,6 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
         if not _is_local_skill_dir(skill_dir, prefixes):
             continue
         try:
-            validate_skill_markdown_frontmatter(skill_dir)
             if _frontmatter_name(skill_dir) != skill_dir.name:
                 raise ValueError("local skill directory name must match frontmatter name")
         except (FileNotFoundError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
