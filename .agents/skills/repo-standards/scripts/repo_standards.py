@@ -11,6 +11,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import _agents_md
+
 
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
@@ -120,23 +122,21 @@ def _check_surface_content(repo_root: Path, rel: str, template: Path | None) -> 
     return findings
 
 
-def _check_marketplace_json(repo_root: Path, rel: str) -> list[str]:
+def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
     findings: list[str] = []
-    full = repo_root / rel
-    if not full.is_file():
-        findings.append(f"missing: {rel}")
-        return findings
-    try:
-        data = json.loads(full.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError) as exc:
-        findings.append(f"invalid JSON {rel}: {exc}")
-        return findings
-    if not isinstance(data, dict) or not isinstance(data.get("repo"), dict):
-        findings.append(f"drift: {rel} missing top-level 'repo' object")
-        return findings
-    prefixes = data["repo"].get("local_skill_prefixes")
-    if not isinstance(prefixes, list) or not prefixes:
-        findings.append(f"drift: {rel} repo.local_skill_prefixes is missing or empty")
+    result = subprocess.run(
+        [sys.executable, str(scaffold), "--check"],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
+    output = result.stdout + result.stderr
+    for line in output.splitlines():
+        if line.startswith("DRIFT:"):
+            findings.append(line[6:].strip())
+    if result.returncode != 0 and not findings:
+        findings.append(f"scaffold check failed: {scaffold.name}")
     return findings
 
 
@@ -147,7 +147,11 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     if surf_id in exceptions or rel in exceptions:
         return findings
     kind = str(surface.get("kind", "file"))
+    optional = bool(surface.get("optional", False))
     template = _template_path(surface)
+    scaffold = _scaffold_script_path(surface)
+    full = repo_root / rel
+
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
         if not gitmodules.is_file():
@@ -159,6 +163,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         if not (repo_root / rel / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
+
     if kind == "hook":
         hook_path = _git_hooks_dir(repo_root) / Path(rel).name
         if not hook_path.is_file():
@@ -170,21 +175,21 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
             if expected != actual:
                 findings.append(f"drift: {rel}")
         return findings
-    if rel == ".agents/plugins/marketplace.json":
-        return _check_marketplace_json(repo_root, rel)
-    if rel == ".gitignore":
-        gitignore = repo_root / ".gitignore"
-        if not gitignore.is_file():
-            findings.append("missing: .gitignore")
-            return findings
-        text = gitignore.read_text(encoding="utf-8")
-        if ".agents/superpowers/sdd/**" not in text or "!.agents/superpowers/sdd/.gitignore" not in text:
-            findings.append("drift: .gitignore missing sdd rule")
+
+    if optional and not full.exists():
         return findings
-    if not (repo_root / rel).exists():
+
+    if scaffold is not None and scaffold.is_file():
+        findings.extend(_run_scaffold_check(scaffold, repo_root))
+        if surf_id in ("root-agents-md", "guides-agents-md") and full.is_file():
+            findings.extend(_agents_md.validate_agents_md(full, repo_root))
+        return findings
+
+    if not full.exists():
         findings.append(f"missing: {rel}")
         return findings
-    if template is not None:
+
+    if template is not None and template.is_file():
         findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
@@ -245,9 +250,17 @@ def main(argv: list[str] | None = None) -> int:
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions))
 
+    # Deduplicate while preserving order
+    seen = set()
+    unique_findings: list[str] = []
+    for f in findings:
+        if f not in seen:
+            seen.add(f)
+            unique_findings.append(f)
+
     if args.check or not args.apply:
-        if findings:
-            for f in findings:
+        if unique_findings:
+            for f in unique_findings:
                 print(f"DRIFT: {f}")
             return 1
         print("OK repo-standards: all surfaces present")
@@ -260,7 +273,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     if not args.yes:
-        print(f"Will apply {len(findings)} missing surfaces: {findings}")
+        print(f"Will apply {len(unique_findings)} missing surfaces: {unique_findings}")
         print("Add --yes to apply.")
         return 1
 

@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 $ScriptDir = (Resolve-Path $PSScriptRoot).Path
-$scripts = @('scaffold-repo-guide-policy', 'scaffold-guides', 'scaffold-review', 'scaffold-contributing', 'scaffold-ci-preflight', 'scaffold-gitignore')
+$scripts = @('scaffold-repo-guide-policy', 'scaffold-guides', 'scaffold-review', 'scaffold-contributing', 'scaffold-ci-preflight', 'scaffold-gitignore', 'scaffold-agents-md', 'scaffold-marketplace-json')
 
 foreach ($name in $scripts) {
     Write-Host "==> running ${name}"

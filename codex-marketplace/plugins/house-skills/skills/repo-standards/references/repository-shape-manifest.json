@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "surfaces": [
     {
       "id": "marketplace-source-submodule",
@@ -13,6 +13,7 @@
       "path": ".agents/plugins/marketplace.json",
       "kind": "file",
       "source": null,
+      "scaffold": "scaffold_marketplace_json.py",
       "optional": false
     },
     {
@@ -45,6 +46,21 @@
       "source": null,
       "scaffold": "scaffold_repo_guide_policy.py",
       "optional": false
+    },
+    {
+      "id": "root-agents-md",
+      "path": "AGENTS.md",
+      "kind": "file",
+      "source": null,
+      "scaffold": "scaffold_agents_md.py",
+      "optional": false
+    },
+    {
+      "id": "guides-agents-md",
+      "path": ".agents/guides/AGENTS.md",
+      "kind": "file",
+      "source": null,
+      "optional": true
     },
     {
       "id": "review-entry",

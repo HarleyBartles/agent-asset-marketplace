@@ -54,21 +54,27 @@ repo-standards -> repo-worker-base -> local guide -> selected Superpowers lane
 
 ## Required root surfaces
 
-- Root `AGENTS.md` contains canonical headings in order:
-  1. `## Repository purpose`
-  2. `## Source-of-truth split`
-  3. `## Publication proof for repo work`
-  4. `## Build and test commands`
-  5. `## Testing instructions`
-  6. `## Code style guidelines`
-  7. `## Review guidelines`
-  8. `## PR instructions`
-  9. `## Contributing`
-  10. `## Security considerations`
-  11. `## Routing pointers`
-  12. `## Maintenance responsibility`
+- Root `AGENTS.md` is a router with five core sections and a `## Routing pointers` table that resolves to tracked files.
 - Root `REVIEW.md` is the review entry point. It contains first-class review concerns and routes to `.agents/guides/code-review-guide.md` for detailed review methodology and to `/requesting-code-review` for execution.
 - Root `CONTRIBUTING.md` is the contributor entry point. It routes to the design, planning, implementation, and review guides and to the relevant repo-worker-pack and Superpowers skills. It may be a thin pointer to `.agents/guides/contributing-guide.md` when a repo keeps detailed guidance there.
+
+## Router AGENTS.md model
+
+Root `AGENTS.md` is a router, not an encyclopedia. It must contain exactly five core sections:
+
+1. `## Repository purpose`
+2. `## Source-of-truth split`
+3. `## Build and test commands`
+4. `## Routing pointers`
+5. `## Maintenance responsibility`
+
+The `## Routing pointers` section must contain resolvable markdown links to the scoped surfaces that own each canonical topic. Canonical topics are: Repository purpose, Source-of-truth split, Publication proof, Build and test commands, Testing instructions, Code style guidelines, Review guidelines, PR instructions, Contributing, Security considerations, Routing pointers, and Maintenance responsibility.
+
+`repo-standards --check` validates that the five core sections exist, that every routing pointer resolves to a tracked file, and that the 12 canonical topics are covered by the union of root sections and routed targets.
+
+## Marketplace.json schema
+
+`.agents/plugins/marketplace.json` must contain a top-level `repo` object with a non-empty `repo.local_skill_prefixes` list. The `scaffold-marketplace-json` helper writes a minimal scaffold and migrates legacy top-level `local_skill_prefixes` and `local_skills` keys into `repo.local_skill_prefixes` while preserving `plugins`, `name`, and `interface` blocks.
 
 ## Core guide set
 
@@ -101,6 +107,10 @@ The `repo-standards` skill ships `scaffold-*` scripts for user-content surfaces 
 - `scaffold-contributing` for `CONTRIBUTING.md`
 - `scaffold-ci-preflight` for `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1`
 - `scaffold-gitignore` for the `.gitignore` sdd rule
+- `scaffold-agents-md` for root `AGENTS.md` as a router
+- `scaffold-marketplace-json` for `.agents/plugins/marketplace.json`
+
+`ci-preflight` supports an optional extra hook: if `scripts/ci-preflight-extra.sh` or `scripts/ci-preflight-extra.ps1` exists, the preflight bundle invokes it with the same `--check` and `--changed-from` contract as the core preflight.
 
 Repos may declare surface exceptions in the `## Exceptions` section of `.agents/docs/repo-guide-policy.md`.
 

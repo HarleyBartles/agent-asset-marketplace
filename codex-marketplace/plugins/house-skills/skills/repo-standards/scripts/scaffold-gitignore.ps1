@@ -1,17 +1,42 @@
 #!/usr/bin/env pwsh
+[CmdletBinding()]
+param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$ScriptDir = (Resolve-Path $PSScriptRoot).Path
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-$python = Get-Command python -ErrorAction SilentlyContinue
-if (-not $python) {
-    $python = Get-Command python3 -ErrorAction SilentlyContinue
+$check = $false
+$force = $false
+$extra = @()
+foreach ($arg in $Remaining) {
+    if ($arg -eq '-Check' -or $arg -eq '--check') {
+        $check = $true
+    } elseif ($arg -eq '-Force' -or $arg -eq '--force') {
+        $force = $true
+    } elseif ($arg -ne '') {
+        $extra += $arg
+    }
+}
+
+$pyArgs = @($extra)
+if ($check) { $pyArgs = @('--check') + $pyArgs }
+if ($force) { $pyArgs = @('--force') + $pyArgs }
+
+$python = $null
+foreach ($l in @('py', 'python', 'python3')) {
+    if (Get-Command $l -ErrorAction SilentlyContinue) {
+        $python = $l
+        break
+    }
 }
 if (-not $python) {
-    Write-Error "No Python interpreter found"
-    exit 1
+    throw "No Python interpreter found"
 }
 
-& $python.Source "$ScriptDir/scaffold_gitignore.py" @args
+if ($python -eq 'py') {
+    & py -3 "$scriptDir\scaffold_gitignore.py" @pyArgs
+} else {
+    & $python "$scriptDir\scaffold_gitignore.py" @pyArgs
+}
 exit $LASTEXITCODE
