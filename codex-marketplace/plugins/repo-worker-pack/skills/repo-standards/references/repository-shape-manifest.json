@@ -42,6 +42,13 @@
       "kind": "file",
       "source": "templates/repo-guide-policy.md",
       "optional": false
+    },
+    {
+      "id": "review-entry",
+      "path": "REVIEW.md",
+      "kind": "file",
+      "source": "templates/REVIEW.md",
+      "optional": false
     }
   ]
 }
