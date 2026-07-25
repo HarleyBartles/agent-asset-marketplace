@@ -112,6 +112,13 @@ The `repo-standards` skill ships `scaffold-*` scripts for user-content surfaces 
 
 `ci-preflight` supports an optional extra hook: if `scripts/ci-preflight-extra.sh` or `scripts/ci-preflight-extra.ps1` exists, the preflight bundle invokes it with the same `--check` and `--changed-from` contract as the core preflight.
 
+## Script usage notes
+
+- Every Python script and wrapper accepts `--help`. Run it before reading the implementation.
+- `--check` is always a safe, read-only drift report.
+- Use `--force` to overwrite an existing scaffolded surface. Without `--force`, the scaffolds create missing files and leave existing ones alone.
+- `repo-standards` supports `--apply --yes` to create missing surfaces and `--apply --yes --force` to overwrite drifted surfaces.
+
 Repos may declare surface exceptions in the `## Exceptions` section of `.agents/docs/repo-guide-policy.md`.
 
 ## Workflow order
