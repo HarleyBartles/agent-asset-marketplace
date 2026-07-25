@@ -8,6 +8,24 @@ metadata:
 edits:
   - path: SKILL.md
     op: replace
+    start_line: 1
+    end_line: 4
+    expected_lines:
+      - "---"
+      - "name: writing-plans"
+      - "description: Use when you have a spec or requirements for a multi-step task, before touching code"
+      - "---"
+    replace_lines:
+      - "---"
+      - "name: writing-plans"
+      - "description: Use when you have a spec or requirements for a multi-step task, before touching code"
+      - "metadata:"
+      - "  use_after: [brainstorming]"
+      - "  use_before: [handoff-gates, executing-plans]"
+      - "  related_skills: [handoff-gates, executing-plans, subagent-driven-development]"
+      - "---"
+  - path: SKILL.md
+    op: replace
     start_line: 18
     end_line: 19
     expected_lines:
@@ -24,3 +42,10 @@ edits:
       - "**\"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**"
     replace_lines:
       - "**\"Plan complete and saved to `.agents/superpowers/plans/<filename>.md`. Two execution options:**"
+  - path: SKILL.md
+    op: insert_after
+    line: 166
+    anchor: "**Which approach?\"**"
+    insert_lines:
+      - ""
+      - "**Before choosing an execution option, use `handoff-gates` plan-readiness lane.** Rate the plan for execution confidence (8/10 floor, 9/10 target). Report the final rating in the handoff. Do not execute below 8/10."

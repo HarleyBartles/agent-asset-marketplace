@@ -1,0 +1,32 @@
+schema_version: 2
+metadata:
+  source_category: third_party
+  upstream_name: executing-plans
+  upstream_version: v6.1.0
+  adaptation_overlay: adapters/codex/superpowers-plus/executing-plans
+  projection_plugin: superpowers-plus
+edits:
+  - path: SKILL.md
+    op: replace
+    start_line: 1
+    end_line: 4
+    expected_lines:
+      - "---"
+      - "name: executing-plans"
+      - "description: Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+      - "---"
+    replace_lines:
+      - "---"
+      - "name: executing-plans"
+      - "description: Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+      - "metadata:"
+      - "  use_after: [handoff-gates, writing-plans]"
+      - "  use_before: [handoff-gates, finishing-a-development-branch, requesting-code-review]"
+      - "  related_skills: [handoff-gates, writing-plans, subagent-driven-development]"
+      - "---"
+  - path: SKILL.md
+    op: insert_after
+    line: 34
+    anchor: "After all tasks complete and verified:"
+    insert_lines:
+      - "  - Run `handoff-gates` completion-readiness lane. Rate the completed work against the plan and the repo code review guide (9/10 target). Report the final rating. Do not hand off below 9/10."
