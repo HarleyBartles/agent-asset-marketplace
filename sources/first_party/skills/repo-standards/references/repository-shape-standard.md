@@ -13,3 +13,20 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 ## Local overrides
 
 Each repo supplies its own `repo.local_skill_prefixes` in `.agents/plugins/marketplace.json` so local skills are not pruned by `refreshing-installed-skills`.
+
+## Local-only agent surfaces
+
+The `.agents/superpowers/` directory has mixed residency:
+
+- `superpowers/specs/**` is repo resident.
+- `superpowers/plans/**` is repo resident.
+- `superpowers/sdd/` and all subdirectories are intentionally ignored; SDD outputs are not repo resident.
+
+A repo that follows this standard must have a root `.gitignore` rule equivalent to:
+
+```gitignore
+.agents/superpowers/sdd/**
+!.agents/superpowers/sdd/.gitignore
+```
+
+This keeps the `sdd/` scaffold (only its `.gitignore`) while ignoring all session content at any depth.
