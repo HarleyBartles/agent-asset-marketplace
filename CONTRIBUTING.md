@@ -6,7 +6,7 @@ This guide is the contributor entry point for `agent-asset-marketplace`. It rout
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
 - Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's mapping to the cross-repo guide standard.
-- Invoke `/repo-guide-standard` and `/repo-worker-base` before starting work.
+- Invoke `/repo-standards` and `/repo-worker-base` before starting work.
 
 ## Contributor workflow
 
@@ -22,5 +22,5 @@ Always work in an isolated worktree. Local file changes are not repo completion;
 
 - `/work-mode-router` for workflow classification.
 - `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
-- `/repo-guide-standard` for guide layout and workflow order.
+- `/repo-standards` for guide layout and workflow order.
 - Stage skills: `/brainstorming`, `/writing-plans`, `/executing-plans`, `/subagent-driven-development`, `/requesting-code-review`.

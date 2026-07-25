@@ -6,7 +6,7 @@ This file is the review entry point for `agent-asset-marketplace`. It contains f
 
 - Read root [`AGENTS.md`](./AGENTS.md) `## Publication proof for repo work`.
 - Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's guide mappings.
-- Invoke `/repo-guide-standard` and `/repo-worker-base`.
+- Invoke `/repo-standards` and `/repo-worker-base`.
 
 ## First-class review concerns
 

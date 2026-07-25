@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -15,12 +16,21 @@ from typing import Any
 import yaml
 
 
+def _stripped_env() -> dict[str, str]:
+    env = os.environ.copy()
+    env.pop("GIT_DIR", None)
+    env.pop("GIT_WORK_TREE", None)
+    env.pop("GIT_INDEX_FILE", None)
+    return env
+
+
 def _repo_root() -> Path:
     result = subprocess.run(
         ["git", "rev-parse", "--show-toplevel"],
         capture_output=True,
         text=True,
         check=True,
+        env=_stripped_env(),
     )
     return Path(result.stdout.strip())
 
@@ -141,7 +151,8 @@ def _get_marketplace_manifest_sha() -> str:
             cwd=ROOT,
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            env=_stripped_env(),
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError:
@@ -342,16 +353,49 @@ def _write_provenance(manifest_sha: str, synced_plugins: list[str], synced_skill
 
 
 def _is_shared_checkout(repo_root: Path) -> bool:
-    git_dir = subprocess.run(["git", "rev-parse", "--git-dir"], cwd=repo_root, capture_output=True, text=True, check=True).stdout.strip()
-    git_common = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=repo_root, capture_output=True, text=True, check=True).stdout.strip()
+    git_dir = subprocess.run(["git", "rev-parse", "--git-dir"], cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env()).stdout.strip()
+    git_common = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env()).stdout.strip()
     # A linked worktree (shared checkout) has its git-dir under .git/worktrees/<name>
     # while the common dir is the main .git directory.
     return Path(git_dir).resolve() != Path(git_common).resolve()
 
 
 def _is_submodule(repo_root: Path) -> bool:
-    result = subprocess.run(["git", "rev-parse", "--show-superproject-working-tree"], cwd=repo_root, capture_output=True, text=True)
+    result = subprocess.run(["git", "rev-parse", "--show-superproject-working-tree"], cwd=repo_root, capture_output=True, text=True, env=_stripped_env())
     return result.returncode == 0 and result.stdout.strip()
+
+
+def _roll_marketplace_source(repo_root: Path) -> None:
+    """Roll the marketplace-source submodule to origin/main when present."""
+    submodule = repo_root / ".agents" / "plugins" / "marketplace-source"
+    if not submodule.is_dir() or not (submodule / ".git").exists():
+        return
+    print("Rolling marketplace-source to origin/main...")
+    try:
+        subprocess.run(["git", "-C", str(submodule), "fetch", "origin"], check=True, env=_stripped_env())
+        subprocess.run(["git", "-C", str(submodule), "reset", "--hard", "origin/main"], check=True, env=_stripped_env())
+    except subprocess.CalledProcessError as exc:
+        print(
+            f"ERROR: could not roll {submodule.relative_to(repo_root).as_posix()} to origin/main: {exc}",
+            file=sys.stderr,
+        )
+        raise
+    rel = submodule.relative_to(repo_root).as_posix()
+    subprocess.run(["git", "add", "--", rel], cwd=repo_root, check=True, env=_stripped_env())
+
+
+def _regenerate_index_mesh(repo_root: Path) -> None:
+    """Regenerate the repo-wide INDEX.md mesh after skill installation."""
+    candidates = [
+        repo_root / ".agents" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py",
+        repo_root / ".agents" / "plugins" / "marketplace-source" / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-index-mesh" / "scripts" / "generate_index_mesh.py",
+    ]
+    mesh_script = next((p for p in candidates if p.is_file()), None)
+    if not mesh_script:
+        print("warning: generate_index_mesh.py not found; skipping mesh regeneration", file=sys.stderr)
+        return
+    print("Regenerating index mesh...")
+    subprocess.run([sys.executable, str(mesh_script)], cwd=repo_root, check=True, env=_stripped_env())
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -386,6 +430,9 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and not args.allow_shared_checkout and _is_shared_checkout(ROOT):
         print("error: refusing to modify a shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
         return 1
+
+    if not args.check:
+        _roll_marketplace_source(ROOT)
 
     config = _load_marketplace_config()
     prefixes = _local_skill_prefixes(config)
@@ -449,6 +496,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and changes_made:
         _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
+        _regenerate_index_mesh(ROOT)
 
     if args.check:
         if changes_made:

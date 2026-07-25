@@ -30,7 +30,7 @@ def _repo_root() -> Path:
 
 def _is_shared_checkout(repo_root: Path) -> bool:
     git_dir = subprocess.run(
-        ["git", "rev-parse", "--git-dir"],
+        ["git", "rev-parse", "--absolute-git-dir"],
         cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env(),
     ).stdout.strip()
     git_common = subprocess.run(
@@ -73,15 +73,52 @@ def _git_hooks_dir(repo_root: Path) -> Path:
     return Path(result.stdout.strip())
 
 
+def _check_surface_content(repo_root: Path, rel: str, template: Path | None) -> list[str]:
+    findings: list[str] = []
+    full = repo_root / rel
+    if not full.is_file():
+        findings.append(f"missing: {rel}")
+        return findings
+    if template is not None and template.is_file():
+        expected = template.read_bytes()
+        actual = full.read_bytes()
+        if expected != actual:
+            findings.append(f"drift: {rel}")
+    return findings
+
+
+def _check_marketplace_json(repo_root: Path, rel: str) -> list[str]:
+    findings: list[str] = []
+    full = repo_root / rel
+    if not full.is_file():
+        findings.append(f"missing: {rel}")
+        return findings
+    try:
+        data = json.loads(full.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        findings.append(f"invalid JSON {rel}: {exc}")
+        return findings
+    if not isinstance(data, dict) or not isinstance(data.get("repo"), dict):
+        findings.append(f"drift: {rel} missing top-level 'repo' object")
+        return findings
+    prefixes = data["repo"].get("local_skill_prefixes")
+    if not isinstance(prefixes, list) or not prefixes:
+        findings.append(f"drift: {rel} repo.local_skill_prefixes is missing or empty")
+    return findings
+
+
 def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
     kind = str(surface.get("kind", "file"))
+    template = _template_path(surface)
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
         if not gitmodules.is_file():
+            findings.append(f"missing .gitmodules for submodule: {rel}")
             return findings
         if rel not in gitmodules.read_text(encoding="utf-8"):
+            findings.append(f"missing submodule entry: {rel}")
             return findings
         if not (repo_root / rel / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
             findings.append(f"submodule not initialized: {rel}")
@@ -90,9 +127,20 @@ def _check_surface(repo_root: Path, surface: dict[str, object]) -> list[str]:
         hook_path = _git_hooks_dir(repo_root) / Path(rel).name
         if not hook_path.is_file():
             findings.append(f"missing hook: {rel}")
+            return findings
+        if template is not None and template.is_file():
+            expected = template.read_bytes()
+            actual = hook_path.read_bytes()
+            if expected != actual:
+                findings.append(f"drift: {rel}")
         return findings
+    if rel == ".agents/plugins/marketplace.json":
+        return _check_marketplace_json(repo_root, rel)
     if not (repo_root / rel).exists():
         findings.append(f"missing: {rel}")
+        return findings
+    if template is not None:
+        findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
 

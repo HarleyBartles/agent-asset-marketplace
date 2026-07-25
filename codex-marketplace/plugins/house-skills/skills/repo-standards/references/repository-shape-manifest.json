@@ -40,7 +40,7 @@
       "id": "repo-guide-policy",
       "path": ".agents/docs/repo-guide-policy.md",
       "kind": "file",
-      "source": null,
+      "source": "templates/repo-guide-policy.md",
       "optional": false
     }
   ]

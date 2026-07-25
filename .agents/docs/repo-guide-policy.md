@@ -1,6 +1,6 @@
 # Repo Guide Policy
 
-This repo follows the `repo-guide-standard` skill. Invoke `/repo-guide-standard` before reading, creating, or updating any repo guide.
+This repo follows the `repo-standards` skill. Invoke `/repo-standards` before reading, creating, or updating any repo guide.
 
 ## Standard-to-local mapping
 
