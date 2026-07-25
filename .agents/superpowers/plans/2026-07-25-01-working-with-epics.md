@@ -1014,5 +1014,3 @@ Plan complete. Two execution options:
 2. **Inline Execution:** Execute tasks in this session using `executing-plans`.
 
 Select an approach to begin implementation.
-
-
