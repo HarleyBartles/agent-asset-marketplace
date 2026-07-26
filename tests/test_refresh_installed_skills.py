@@ -278,6 +278,24 @@ def test_get_plugin_skills_path_github_source(tmp_path: Path) -> None:
     assert result == skills
 
 
+def test_get_plugin_skills_path_github_source_with_dotdot_resolving_inside_base(tmp_path: Path) -> None:
+    submodule = tmp_path / ".agents" / "plugins" / "marketplace-source"
+    skills = submodule / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    skills.mkdir(parents=True)
+    plugin = {
+        "name": "repo-worker-pack",
+        "source": {
+            "source": "github",
+            "owner": "HarleyBartles",
+            "repo": "agent-asset-marketplace",
+            "path": "../marketplace-source/codex-marketplace/plugins/repo-worker-pack",
+        },
+    }
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        result = refresh_installed_skills._get_plugin_skills_path(plugin)
+    assert result == skills
+
+
 def test_get_plugin_skills_path_returns_none_for_unsupported_or_malformed(tmp_path: Path) -> None:
     with patch.object(refresh_installed_skills, "ROOT", tmp_path):
         assert refresh_installed_skills._get_plugin_skills_path({}) is None
@@ -288,6 +306,9 @@ def test_get_plugin_skills_path_returns_none_for_unsupported_or_malformed(tmp_pa
         assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local", "path": 123}}) is None
         assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local", "path": "missing-plugin"}}) is None
         assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "github", "path": "missing-plugin"}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "github", "owner": "HarleyBartles"}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "github", "owner": "HarleyBartles", "repo": ""}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "github", "owner": "", "repo": "agent-asset-marketplace", "path": "missing-plugin"}}) is None
 
 
 def test_get_plugin_skills_path_rejects_path_escaping_root(tmp_path: Path) -> None:

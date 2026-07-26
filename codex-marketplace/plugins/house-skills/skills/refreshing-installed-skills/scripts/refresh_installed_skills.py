@@ -38,6 +38,11 @@ def _repo_root() -> Path:
 ROOT = _repo_root()
 
 
+def _marketplace_source_path(repo_root: Path) -> Path:
+    """Return the path to the marketplace-source submodule root."""
+    return repo_root / ".agents" / "plugins" / "marketplace-source"
+
+
 def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -203,7 +208,11 @@ def _get_plugin_skills_path(plugin: dict[str, Any]) -> Path | None:
     if source_type == "local":
         base = ROOT
     elif source_type == "github":
-        base = ROOT / ".agents" / "plugins" / "marketplace-source"
+        owner = source.get("owner")
+        repo_name = source.get("repo")
+        if not isinstance(owner, str) or not isinstance(repo_name, str) or not owner or not repo_name:
+            return None
+        base = _marketplace_source_path(ROOT)
     else:
         return None
 
@@ -401,7 +410,7 @@ def _is_submodule(repo_root: Path) -> bool:
 
 def _roll_marketplace_source(repo_root: Path) -> None:
     """Roll the marketplace-source submodule to origin/main when present."""
-    submodule = repo_root / ".agents" / "plugins" / "marketplace-source"
+    submodule = _marketplace_source_path(repo_root)
     if not submodule.is_dir() or not (submodule / ".git").exists():
         return
     print("Rolling marketplace-source to origin/main...")
@@ -422,7 +431,7 @@ def _regenerate_index_mesh(repo_root: Path) -> None:
     """Regenerate the repo-wide INDEX.md mesh after skill installation."""
     candidates = [
         repo_root / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
-        repo_root / ".agents" / "plugins" / "marketplace-source" / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
+        _marketplace_source_path(repo_root) / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
     ]
     mesh_script = next((p for p in candidates if p.is_file()), None)
     if not mesh_script:
