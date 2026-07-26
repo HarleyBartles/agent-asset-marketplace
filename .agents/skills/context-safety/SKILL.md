@@ -105,6 +105,7 @@ def iter_line_chunks(lines: list[str], chunk_lines: int = 200):
 
 
 def write_large_text(target: Path, text: str) -> None:
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
     lines = text.splitlines()
     byte_size = len(text.encode("utf-8"))
     ends_with_newline = text.endswith("\n")
