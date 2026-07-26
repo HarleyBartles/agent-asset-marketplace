@@ -213,7 +213,7 @@ When a feature branch is complete, remove the isolated worktree to avoid stale c
    # or on Windows:
    .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 <branch-name>
    ```
-   This de-initializes any submodules and removes the worktree directory.
+   If the script reports that the directory is locked, **stop immediately**. The git worktree is already deregistered; the locked on-disk folder can be deleted later once no process holds it.
 
 2. If no bundled script is available, use `git worktree remove` directly:
    ```bash
@@ -222,3 +222,8 @@ When a feature branch is complete, remove the isolated worktree to avoid stale c
    Then manually deinitialize submodules if the repo uses them.
 
 Never remove the main repository checkout with this command.
+
+## Red Flags
+
+Never run `rm -rf`, `rmdir /s /q`, or `Remove-Item -Recurse -Force` on a worktree directory that `remove-worktree` failed to delete.
+A locked directory is usually another process's current working directory or an open file handle; force-deleting it can delete the wrong directory or other repositories.

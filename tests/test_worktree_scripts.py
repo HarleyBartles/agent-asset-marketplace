@@ -356,3 +356,56 @@ def test_new_worktree_accepts_full_ref(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
+
+
+def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
+    """If the worktree directory is locked, the script deregisters it and stops."""
+    repo = _make_repo(tmp_path, "locked-repo")
+    worktree_root = tmp_path / "_agent-worktrees" / "locked-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+
+    # Lock the directory by starting a process whose cwd is the worktree.
+    lock = subprocess.Popen(
+        [sys.executable, "-c", "import time; time.sleep(30)"],
+        cwd=worktree_root,
+    )
+    try:
+        result = subprocess.run(
+            [sys.executable, str(REMOVE_WORKTREE), "feature"],
+            cwd=repo,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        assert result.returncode != 0
+        assert "file is locked for editing; stop" in result.stderr
+        assert "Don't continue trying to delete the locked directory" in result.stderr
+        assert "Worktree path:" in result.stderr
+
+        # The worktree should be deregistered.
+        list_result = subprocess.run(
+            ["git", "worktree", "list", "--porcelain"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+        )
+        assert list_result.returncode == 0
+        assert str(worktree_root) not in list_result.stdout
+
+        # The directory still exists (locked by the other process).
+        assert worktree_root.is_dir()
+    finally:
+        lock.terminate()
+        try:
+            lock.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            lock.kill()
