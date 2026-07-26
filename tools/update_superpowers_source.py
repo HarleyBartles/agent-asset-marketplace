@@ -97,17 +97,53 @@ def _remove_old_source_versions(keep_version: str) -> None:
             shutil.rmtree(child)
 
 
-def _update_custody_registry(new_root: str) -> None:
+def _update_custody_registry(
+    *,
+    old_root: str,
+    old_version: str,
+    new_root: str,
+    new_version: str,
+) -> None:
     registry = json.loads(SUPERPOWERS_CUSTODY_REGISTRY_PATH.read_text(encoding="utf-8"))
     changed = False
-    for mapping in registry.get("mappings", []):
-        if not isinstance(mapping, dict):
+    for pack in registry.get("packs", []):
+        if not isinstance(pack, dict):
             continue
-        if mapping.get("source_family") != "superpowers":
+        if pack.get("bundle_name") != "superpowers-plus":
             continue
-        if mapping.get("custody_root") != new_root:
-            mapping["custody_root"] = new_root
-            changed = True
+
+        source_ledger = pack.get("source_ledger", [])
+        for i, ledger_path in enumerate(source_ledger):
+            if not isinstance(ledger_path, str):
+                continue
+            updated = ledger_path.replace(old_root, new_root).replace(old_version, new_version)
+            if updated != ledger_path:
+                source_ledger[i] = updated
+                changed = True
+
+        for entry in pack.get("entries", []):
+            if not isinstance(entry, dict):
+                continue
+            if entry.get("source_family") != "superpowers":
+                continue
+            for field in (
+                "canonical_source_path",
+                "source_path",
+                "provenance_note",
+                "adaptation_note",
+            ):
+                value = entry.get(field)
+                if isinstance(value, str):
+                    updated = value.replace(old_root, new_root).replace(old_version, new_version)
+                    if updated != value:
+                        entry[field] = updated
+                        changed = True
+            if entry.get("source_repo") != UPSTREAM_REPO:
+                entry["source_repo"] = UPSTREAM_REPO
+                changed = True
+
+        break  # superpowers-plus is unique
+
     if changed:
         SUPERPOWERS_CUSTODY_REGISTRY_PATH.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -123,7 +159,7 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
             continue
         if entry.get("source_category") != "third_party":
             continue
-        for field in ("canonical_source_path", "source_path", "provenance_note"):
+        for field in ("canonical_source_path", "source_path", "provenance_note", "adaptation_note"):
             value = entry.get(field)
             if isinstance(value, str):
                 updated = value.replace(old_root, new_root).replace(old_version, new_version)
@@ -198,7 +234,12 @@ def _prepare(tag: str) -> None:
     finally:
         shutil.rmtree(checkout_root, ignore_errors=True)
 
-    _update_custody_registry(target_root.relative_to(ROOT).as_posix())
+    _update_custody_registry(
+        old_root=old_root,
+        old_version=old_version,
+        new_root=target_root.relative_to(ROOT).as_posix(),
+        new_version=tag,
+    )
     _update_bundle_manifest(tag, commit)
     _update_provenance_and_source_md(
         old_root=old_root,

@@ -2,7 +2,7 @@ schema_version: 2
 metadata:
   source_category: third_party
   upstream_name: brainstorming
-  upstream_version: v6.1.0
+  upstream_version: v6.2.0
   adaptation_overlay: adapters/codex/superpowers-plus/brainstorming
   projection_plugin: superpowers-plus
 generated_files:
@@ -25,13 +25,13 @@ edits:
   - 'metadata:'
   - '  source_category: "third_party"'
   - '  upstream_name: "brainstorming"'
-  - '  upstream_version: "v6.1.0"'
+  - '  upstream_version: "v6.2.0"'
   - '  adaptation_overlay: "adapters/codex/superpowers-plus/brainstorming"'
   - '  projection_plugin: "superpowers-plus"'
   - '  source_author: "obra"'
   - '  source_license: "MIT"'
   - '  source_repo: "https://github.com/obra/superpowers"'
-  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/SKILL.md"'
+  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming/SKILL.md"'
   - '  content_mode: "adapted"'
   - '  adapted_author: "Harley Bartles"'
   - '  adaptation_note: "Repointed Superpowers path references to the `.agents/superpowers/` convention, added spec-readiness and epic-scope handoff gates, and normalized marketplace frontmatter metadata."'
@@ -58,8 +58,8 @@ edits:
   - 6. **Write design doc** — save to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
 - path: SKILL.md
   op: replace
-  start_line: 106
-  end_line: 106
+  start_line: 107
+  end_line: 107
   expected_lines:
   - '- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`'
   replace_lines:
@@ -100,8 +100,8 @@ edits:
   - '**Note:** Pass the project root as `--project-dir` so mockups persist in `.agents/superpowers/brainstorm/` and survive server restarts. Without it, files go to `/tmp` and get cleaned up. Remind the user to add `.agents/superpowers/` to `.gitignore` if it''s not already there.'
 - path: visual-companion.md
   op: replace
-  start_line: 286
-  end_line: 286
+  start_line: 293
+  end_line: 293
   expected_lines:
   - If the session used `--project-dir`, mockup files persist in `.superpowers/brainstorm/` for later reference. Only `/tmp` sessions get deleted on stop.
   replace_lines:
@@ -160,7 +160,7 @@ edits:
   start_line: 37
   end_line: 58
   expected_lines:
-  - 'digraph brainstorming {'
+  - digraph brainstorming {
   - '    "Explore project context" [shape=box];'
   - '    "Ask clarifying questions" [shape=box];'
   - '    "Propose 2-3 approaches" [shape=box];'
@@ -183,7 +183,7 @@ edits:
   - '    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];'
   - '}'
   replace_lines:
-  - 'digraph brainstorming {'
+  - digraph brainstorming {
   - '    "Explore project context" [shape=box];'
   - '    "Scope too large for one spec?" [shape=diamond];'
   - '    "Invoke working-with-epics" [shape=doublecircle];'

@@ -7,20 +7,20 @@ This plugin projects the mixed Superpowers+ workflow and routing helpers.
 - `sources/first_party/skills/inspecting-the-environment/`
 
 ### Superpowers custody
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/dispatching-parallel-agents/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/receiving-code-review/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/verification-before-completion/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans/`
-- `sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-skills/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/dispatching-parallel-agents/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/executing-plans/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/finishing-a-development-branch/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/receiving-code-review/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/requesting-code-review/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/systematic-debugging/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/test-driven-development/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-git-worktrees/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/verification-before-completion/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-plans/`
+- `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-skills/`
 
 ## Projection surfaces
 - Codex plugin root: `codex-marketplace/plugins/superpowers-plus/`

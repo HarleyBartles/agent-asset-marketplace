@@ -1536,7 +1536,7 @@ def validate_skill_zip_assertions() -> None:
         raise FileNotFoundError(f"expected flat zip: {finishing}")
     with zipfile.ZipFile(finishing) as archive:
         skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
-    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup" not in skill_md:
+    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work" not in skill_md:
         raise AssertionError("direct skill zip does not contain the retained upstream guidance")
     if "Codex Marketplace Note" in skill_md:
         raise AssertionError("direct skill zip still contains raw Codex-specific guidance")

@@ -27,7 +27,7 @@
       "canonical_name": "brainstorming",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/brainstorming",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming",
       "local_path": "skills/brainstorming",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/brainstorming"
     },
@@ -35,7 +35,7 @@
       "canonical_name": "dispatching-parallel-agents",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/dispatching-parallel-agents",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/dispatching-parallel-agents",
       "local_path": "skills/dispatching-parallel-agents",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/dispatching-parallel-agents"
     },
@@ -43,7 +43,7 @@
       "canonical_name": "executing-plans",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/executing-plans",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/executing-plans",
       "local_path": "skills/executing-plans",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/executing-plans"
     },
@@ -51,7 +51,7 @@
       "canonical_name": "finishing-a-development-branch",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/finishing-a-development-branch"
     },
@@ -59,7 +59,7 @@
       "canonical_name": "receiving-code-review",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/receiving-code-review",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/receiving-code-review",
       "local_path": "skills/receiving-code-review",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/receiving-code-review"
     },
@@ -67,7 +67,7 @@
       "canonical_name": "requesting-code-review",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/requesting-code-review",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/requesting-code-review",
       "local_path": "skills/requesting-code-review",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/requesting-code-review"
     },
@@ -75,7 +75,7 @@
       "canonical_name": "subagent-driven-development",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/subagent-driven-development",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development",
       "local_path": "skills/subagent-driven-development",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/subagent-driven-development"
     },
@@ -83,7 +83,7 @@
       "canonical_name": "systematic-debugging",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/systematic-debugging",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/systematic-debugging"
     },
@@ -91,7 +91,7 @@
       "canonical_name": "test-driven-development",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/test-driven-development",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/test-driven-development",
       "local_path": "skills/test-driven-development",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/test-driven-development"
     },
@@ -99,7 +99,7 @@
       "canonical_name": "using-git-worktrees",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-git-worktrees",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-git-worktrees",
       "local_path": "skills/using-git-worktrees",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-git-worktrees"
     },
@@ -107,7 +107,7 @@
       "canonical_name": "using-superpowers",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers",
       "local_path": "skills/using-superpowers",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers"
     },
@@ -115,7 +115,7 @@
       "canonical_name": "verification-before-completion",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/verification-before-completion",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/verification-before-completion"
     },
@@ -123,7 +123,7 @@
       "canonical_name": "writing-plans",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-plans",
       "local_path": "skills/writing-plans",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/writing-plans"
     },
@@ -131,7 +131,7 @@
       "canonical_name": "writing-skills",
       "source_category": "third_party",
       "content_mode": "adapted",
-      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-skills",
+      "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-skills",
       "local_path": "skills/writing-skills",
       "adaptation_overlay_path": "adapters/codex/superpowers-plus/writing-skills"
     }

@@ -120,8 +120,8 @@
     },
     {
       "name": "superpowers-custody",
-      "path": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-      "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.1.0 release snapshot.",
+      "path": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
+      "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.2.0 release snapshot.",
       "surface_kind": "vendored",
       "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
       "guidance_scope": "repo-owned-guidance",

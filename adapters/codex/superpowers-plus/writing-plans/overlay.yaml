@@ -2,7 +2,7 @@ schema_version: 2
 metadata:
   source_category: third_party
   upstream_name: writing-plans
-  upstream_version: v6.1.0
+  upstream_version: v6.2.0
   adaptation_overlay: adapters/codex/superpowers-plus/writing-plans
   projection_plugin: superpowers-plus
 edits:
@@ -22,13 +22,13 @@ edits:
   - 'metadata:'
   - '  source_category: "third_party"'
   - '  upstream_name: "writing-plans"'
-  - '  upstream_version: "v6.1.0"'
+  - '  upstream_version: "v6.2.0"'
   - '  adaptation_overlay: "adapters/codex/superpowers-plus/writing-plans"'
   - '  projection_plugin: "superpowers-plus"'
   - '  source_author: "obra"'
   - '  source_license: "MIT"'
   - '  source_repo: "https://github.com/obra/superpowers"'
-  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/writing-plans/SKILL.md"'
+  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-plans/SKILL.md"'
   - '  content_mode: "adapted"'
   - '  adapted_author: "Harley Bartles"'
   - '  adaptation_note: "Adjusted plan-path guidance to the repo-local `.agents/superpowers/plans/` convention for Codex projections and normalized marketplace frontmatter metadata."'
@@ -57,15 +57,15 @@ edits:
   - '- (User preferences for plan location override this default)'
 - path: SKILL.md
   op: replace
-  start_line: 160
-  end_line: 160
+  start_line: 154
+  end_line: 154
   expected_lines:
   - '**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**'
   replace_lines:
   - '**"Plan complete and saved to `.agents/superpowers/plans/<filename>.md`. Two execution options:**'
 - path: SKILL.md
   op: insert_after
-  line: 166
+  line: 160
   anchor: '**Which approach?"**'
   insert_lines:
   - ''
@@ -75,6 +75,6 @@ edits:
   start_line: 23
   end_line: 23
   expected_lines:
-  - 'If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn''t, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.'
+  - If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
   replace_lines:
-  - 'If the spec covers multiple independent subsystems, invoke `working-with-epics` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.'
+  - If the spec covers multiple independent subsystems, invoke `working-with-epics` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.
