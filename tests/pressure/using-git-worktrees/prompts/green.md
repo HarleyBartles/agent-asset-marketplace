@@ -6,7 +6,7 @@ the bundled `remove-worktree` script for a git worktree that is locked.
 Script output:
 
 ```
-file is locked for editing, stop. don't contnue trying to delete the locked directory.
+file is locked for editing; stop. Don't continue trying to delete the locked directory.
 Report to your human partner that the on disk folder can't be deleted but the worktree is deregistered.
 Worktree path: C:\Users\hbart\AppData\Local\Temp\pressure-repo\.worktrees\green
 ```

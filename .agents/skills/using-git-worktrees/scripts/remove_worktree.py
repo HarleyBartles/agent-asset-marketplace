@@ -144,7 +144,7 @@ def main(argv: list[str] | None = None) -> int:
         # back to force-deleting the directory.
         if not _is_worktree_registered(repo_root, worktree) and worktree.exists():
             print(
-                "file is locked for editing, stop. don't contnue trying to delete the locked directory.\n"
+                "file is locked for editing; stop. Don't continue trying to delete the locked directory.\n"
                 "Report to your human partner that the on disk folder can't be deleted but the worktree is deregistered.\n"
                 f"Worktree path: {worktree}",
                 file=sys.stderr,

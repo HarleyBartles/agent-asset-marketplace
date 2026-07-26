@@ -387,8 +387,8 @@ def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
             timeout=30,
         )
         assert result.returncode != 0
-        assert "file is locked for editing, stop" in result.stderr
-        assert "don't contnue trying to delete the locked directory" in result.stderr
+        assert "file is locked for editing; stop" in result.stderr
+        assert "Don't continue trying to delete the locked directory" in result.stderr
         assert "Worktree path:" in result.stderr
 
         # The worktree should be deregistered.
