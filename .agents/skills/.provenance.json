@@ -1,12 +1,26 @@
 {
-  "manifestSha": "2f64abe38263015d7a6dd45cf0e48959effc8678",
-  "syncedAt": "2026-07-26T16:51:48.433082",
+  "manifestSha": "d86cf17b6406b23d816364f36b9a5e335984bb78",
+  "syncedAt": "2026-07-26T19:42:37.446014",
   "syncedPlugins": [
     "superpowers-plus",
     "repo-worker-pack"
   ],
   "syncedSkills": 33,
-  "source": "HarleyBartles/agent-asset-marketplace",
-  "sourcePath": "codex-marketplace/plugins",
+  "marketplace": {
+    "source": "HarleyBartles/agent-asset-marketplace",
+    "sourcePath": "codex-marketplace/plugins"
+  },
+  "localPlugins": [
+    {
+      "name": "superpowers-plus",
+      "path": "./codex-marketplace/plugins/superpowers-plus",
+      "source": "local"
+    },
+    {
+      "name": "repo-worker-pack",
+      "path": "./codex-marketplace/plugins/repo-worker-pack",
+      "source": "local"
+    }
+  ],
   "marketplaceFile": ".agents/plugins/marketplace.json"
 }

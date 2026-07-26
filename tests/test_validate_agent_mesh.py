@@ -15,6 +15,15 @@ CORE = (
     / "scripts"
     / "validate_agent_mesh.py"
 )
+GENERATE_CORE = (
+    REPO_ROOT
+    / "sources"
+    / "first_party"
+    / "skills"
+    / "generating-agent-mesh"
+    / "scripts"
+    / "generate_index_mesh.py"
+)
 
 
 def _stripped_env():
@@ -192,3 +201,30 @@ def test_validate_agent_mesh_extra_hook_receives_changed_from(tmp_path: Path) ->
     )
     assert result.returncode != 0
     assert "saw changed-from" in result.stderr
+
+
+def test_agent_mesh_passes_for_encoded_ambiguous_links(tmp_path: Path) -> None:
+    """Generated links to files with markdown-ambiguous names validate."""
+    repo = _make_repo(tmp_path, "encoded-link-repo")
+    _commit_file(repo, "2. Choosing an Identity (Handle + Persona Creation).md")
+    _commit_file(repo, "Ku - Sample Tweets (Reconstructed).md")
+    _commit_file(repo, "Style Guides/overview.md")
+
+    generate = subprocess.run(
+        [sys.executable, str(GENERATE_CORE)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert generate.returncode == 0, generate.stderr
+
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "OK agent mesh" in result.stdout

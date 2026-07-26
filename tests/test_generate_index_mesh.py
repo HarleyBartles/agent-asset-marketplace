@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import urllib.parse
 from pathlib import Path
 
 import pytest
@@ -203,3 +204,33 @@ def test_generate_index_mesh_extra_hook_failure_fails(tmp_path: Path) -> None:
     )
     assert result.returncode != 0
     assert "broken hook" in (result.stdout + result.stderr).lower()
+
+
+def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
+    """Links to files with spaces, parentheses, or plus signs are URL-quoted."""
+    repo = _make_repo(tmp_path, "quoted-link-repo")
+    _commit_file(repo, "2. Choosing an Identity (Handle + Persona Creation).md")
+    _commit_file(repo, "Ku - Sample Tweets (Reconstructed).md")
+    _commit_file(repo, "Style Guides/overview.md")
+
+    result = subprocess.run(
+        [sys.executable, str(CORE)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    index = (repo / "INDEX.md").read_text(encoding="utf-8")
+
+    file_target = urllib.parse.quote(
+        "2. Choosing an Identity (Handle + Persona Creation).md", safe="/#"
+    )
+    assert f"]({file_target})" in index
+    assert "2. Choosing an Identity" in index  # label stays readable
+
+    ku_target = urllib.parse.quote("Ku - Sample Tweets (Reconstructed).md", safe="/#")
+    assert f"]({ku_target})" in index
+
+    dir_target = urllib.parse.quote("Style Guides/INDEX.md", safe="/#")
+    assert f"]({dir_target})" in index

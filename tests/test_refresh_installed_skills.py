@@ -4,7 +4,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -485,3 +485,116 @@ def test_validate_local_skills_extra_hook_failure_fails_run(tmp_path: Path, caps
         assert refresh_installed_skills.main() == 1
 
     assert "bad skill" in capsys.readouterr().out
+
+
+def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
+    """Local plugins are recorded separately in provenance, not as marketplace."""
+    skills_path = tmp_path / "skills"
+    skills_path.mkdir()
+    provenance_path = skills_path / ".provenance.json"
+    source_skills = tmp_path / "source" / "skills"
+    source_skills.mkdir(parents=True)
+
+    plugins = [
+        {
+            "name": "repo-worker-pack",
+            "source": {
+                "source": "github",
+                "owner": "HarleyBartles",
+                "repo": "agent-asset-marketplace",
+                "path": "codex-marketplace/plugins/repo-worker-pack",
+            },
+        },
+        {
+            "name": "game-studio",
+            "source": {"source": "local", "path": ".agents/plugins/game-studio"},
+        },
+    ]
+
+    def install_side_effect(plugin, check_mode=False, synced_skill_names=None, prefixes=None):
+        if synced_skill_names is not None:
+            synced_skill_names.add(plugin.get("name", "unknown"))
+        return True
+
+    roll_mock = MagicMock()
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="pinned-sha"),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", side_effect=install_side_effect),
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
+        patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
+        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    roll_mock.assert_not_called()
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    assert provenance["syncedPlugins"] == ["repo-worker-pack", "game-studio"]
+    assert provenance["manifestSha"] == "pinned-sha"
+    assert provenance["marketplace"]["source"] == "HarleyBartles/agent-asset-marketplace"
+    assert provenance["marketplace"]["sourcePath"] == "codex-marketplace/plugins"
+    assert provenance["localPlugins"] == [
+        {
+            "name": "game-studio",
+            "path": ".agents/plugins/game-studio",
+            "source": "local",
+        }
+    ]
+    assert "source" not in provenance
+    assert "sourcePath" not in provenance
+
+
+def test_default_roll_marketplace_source_is_off(tmp_path: Path) -> None:
+    """Without --roll-marketplace-source the pinned submodule is not rolled."""
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    submodule = consumer / ".agents" / "plugins" / "marketplace-source"
+    submodule.mkdir(parents=True)
+    _git_init_and_commit(submodule)
+
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
+        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    assert not (consumer / ".agents" / "skills" / ".provenance.json").exists()
+
+
+def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
+    """--roll-marketplace-source explicitly rolls the submodule forward."""
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+
+    roll_mock = MagicMock()
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout", "--roll-marketplace-source"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    roll_mock.assert_called_once()
