@@ -147,3 +147,11 @@ edits:
   replace_lines:
   - 9. **Spec readiness gate** — use `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
   - 10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+- path: SKILL.md
+  op: replace
+  start_line: 69
+  end_line: 69
+  expected_lines:
+  - '- If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle.'
+  replace_lines:
+  - '- If the project is too large for a single spec, invoke `working-with-epics` to build a sequenced roadmap. Run `handoff-gates` spec-readiness on the roadmap (8/10 floor, 9/10 target). Then brainstorm the first sub-project through the normal design flow. Each sub-project still gets its own spec → plan → implementation cycle.'
