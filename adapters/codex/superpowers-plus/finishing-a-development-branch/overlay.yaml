@@ -2,7 +2,7 @@ schema_version: 2
 metadata:
   source_category: third_party
   upstream_name: finishing-a-development-branch
-  upstream_version: v6.1.0
+  upstream_version: v6.2.0
   adaptation_overlay: adapters/codex/superpowers-plus/finishing-a-development-branch
   projection_plugin: superpowers-plus
 edits:
@@ -13,22 +13,22 @@ edits:
   expected_lines:
   - '---'
   - 'name: finishing-a-development-branch'
-  - 'description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup'
+  - 'description: Use when implementation is complete, all tests pass, and you need to decide how to integrate the work'
   - '---'
   replace_lines:
   - '---'
   - 'name: finishing-a-development-branch'
-  - 'description: "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup"'
+  - 'description: "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work"'
   - 'metadata:'
   - '  source_category: "third_party"'
   - '  upstream_name: "finishing-a-development-branch"'
-  - '  upstream_version: "v6.1.0"'
+  - '  upstream_version: "v6.2.0"'
   - '  adaptation_overlay: "adapters/codex/superpowers-plus/finishing-a-development-branch"'
   - '  projection_plugin: "superpowers-plus"'
   - '  source_author: "obra"'
   - '  source_license: "MIT"'
   - '  source_repo: "https://github.com/obra/superpowers"'
-  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/finishing-a-development-branch/SKILL.md"'
+  - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/finishing-a-development-branch/SKILL.md"'
   - '  content_mode: "adapted"'
   - '  adapted_author: "Harley Bartles"'
   - '  adaptation_note: "Added marketplace frontmatter metadata block and skill-routing triggers to the upstream skill without modifying the instruction body."'

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -97,17 +98,53 @@ def _remove_old_source_versions(keep_version: str) -> None:
             shutil.rmtree(child)
 
 
-def _update_custody_registry(new_root: str) -> None:
+def _update_custody_registry(
+    *,
+    old_root: str,
+    old_version: str,
+    new_root: str,
+    new_version: str,
+) -> None:
     registry = json.loads(SUPERPOWERS_CUSTODY_REGISTRY_PATH.read_text(encoding="utf-8"))
     changed = False
-    for mapping in registry.get("mappings", []):
-        if not isinstance(mapping, dict):
+    for pack in registry.get("packs", []):
+        if not isinstance(pack, dict):
             continue
-        if mapping.get("source_family") != "superpowers":
+        if pack.get("bundle_name") != "superpowers-plus":
             continue
-        if mapping.get("custody_root") != new_root:
-            mapping["custody_root"] = new_root
-            changed = True
+
+        source_ledger = pack.get("source_ledger", [])
+        for i, ledger_path in enumerate(source_ledger):
+            if not isinstance(ledger_path, str):
+                continue
+            updated = ledger_path.replace(old_root, new_root).replace(old_version, new_version)
+            if updated != ledger_path:
+                source_ledger[i] = updated
+                changed = True
+
+        for entry in pack.get("entries", []):
+            if not isinstance(entry, dict):
+                continue
+            if entry.get("source_family") != "superpowers":
+                continue
+            for field in (
+                "canonical_source_path",
+                "source_path",
+                "provenance_note",
+                "adaptation_note",
+            ):
+                value = entry.get(field)
+                if isinstance(value, str):
+                    updated = value.replace(old_root, new_root).replace(old_version, new_version)
+                    if updated != value:
+                        entry[field] = updated
+                        changed = True
+            if entry.get("source_repo") != UPSTREAM_REPO:
+                entry["source_repo"] = UPSTREAM_REPO
+                changed = True
+
+        break  # superpowers-plus is unique
+
     if changed:
         SUPERPOWERS_CUSTODY_REGISTRY_PATH.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -123,7 +160,7 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
             continue
         if entry.get("source_category") != "third_party":
             continue
-        for field in ("canonical_source_path", "source_path", "provenance_note"):
+        for field in ("canonical_source_path", "source_path", "provenance_note", "adaptation_note"):
             value = entry.get(field)
             if isinstance(value, str):
                 updated = value.replace(old_root, new_root).replace(old_version, new_version)
@@ -137,7 +174,23 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
     )
 
 
-def _update_provenance_and_source_md(*, old_root: str, old_version: str, old_commit: str, new_version: str, new_commit: str) -> None:
+def _tag_object_from_provenance() -> str:
+    if not SUPERPOWERS_PROVENANCE_PATH.exists():
+        return ""
+    match = re.search(r"Tag object:\s*`([0-9a-f]{40})`", SUPERPOWERS_PROVENANCE_PATH.read_text(encoding="utf-8"))
+    return match.group(1) if match else ""
+
+
+def _update_provenance_and_source_md(
+    *,
+    old_root: str,
+    old_version: str,
+    old_commit: str,
+    old_tag_object: str,
+    new_version: str,
+    new_commit: str,
+    new_tag_object: str,
+) -> None:
     _replace_text(
         SUPERPOWERS_SOURCE_MD_PATH,
         [
@@ -145,14 +198,14 @@ def _update_provenance_and_source_md(*, old_root: str, old_version: str, old_com
             (old_version, new_version),
         ],
     )
-    _replace_text(
-        SUPERPOWERS_PROVENANCE_PATH,
-        [
-            (old_version, new_version),
-            (old_commit, new_commit),
-            (old_root, f"sources/third_party/superpowers/obra-superpowers/{new_version}"),
-        ],
-    )
+    provenance_replacements = [
+        (old_version, new_version),
+        (old_commit, new_commit),
+        (old_root, f"sources/third_party/superpowers/obra-superpowers/{new_version}"),
+    ]
+    if old_tag_object and new_tag_object:
+        provenance_replacements.insert(0, (old_tag_object, new_tag_object))
+    _replace_text(SUPERPOWERS_PROVENANCE_PATH, provenance_replacements)
 
 
 def _adapter_staleness() -> list[str]:
@@ -167,7 +220,7 @@ def _adapter_staleness() -> list[str]:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream version")
     if target_root not in overlay_text:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still references an older source root")
-    if f"source_repo: {UPSTREAM_REPO}" not in overlay_text:
+    if not re.search(rf"source_repo:\s*['\"]?{re.escape(UPSTREAM_REPO)}['\"]?", overlay_text):
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream repository")
     if not isinstance(openai_doc, dict) or openai_doc.get("metadata", {}).get("upstream_version") != target_version:
         issues.append(f"{SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} still points at an older upstream version")
@@ -188,6 +241,7 @@ def _prepare(tag: str) -> None:
 
     tag_object, commit = _git_ls_remote(tag)
     print(f"Resolved {tag}: tag object {tag_object}, commit {commit}")
+    old_tag_object = _tag_object_from_provenance()
 
     target_root = SUPERPOWERS_FAMILY_ROOT / tag
     checkout_root = Path(tempfile.mkdtemp(prefix="superpowers-upstream-"))
@@ -198,14 +252,21 @@ def _prepare(tag: str) -> None:
     finally:
         shutil.rmtree(checkout_root, ignore_errors=True)
 
-    _update_custody_registry(target_root.relative_to(ROOT).as_posix())
+    _update_custody_registry(
+        old_root=old_root,
+        old_version=old_version,
+        new_root=target_root.relative_to(ROOT).as_posix(),
+        new_version=tag,
+    )
     _update_bundle_manifest(tag, commit)
     _update_provenance_and_source_md(
         old_root=old_root,
         old_version=old_version,
         old_commit=old_commit,
+        old_tag_object=old_tag_object,
         new_version=tag,
         new_commit=commit,
+        new_tag_object=tag_object,
     )
     _print_adapter_guidance()
 
