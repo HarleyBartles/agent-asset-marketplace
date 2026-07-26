@@ -6,10 +6,10 @@ This repo follows the `repo-standards` skill. Invoke `/repo-standards` before re
 
 | Standard guide | Local path | Status |
 |---|---|---|
-| design-guide.md | `.agents/guides/design-guide.md` | exists |
-| planning-guide.md | `.agents/guides/planning-guide.md` | exists |
-| implementing-guide.md | `.agents/guides/implementing-guide.md` | exists |
-| code-review-guide.md | `.agents/guides/code-review-guide.md` | exists |
+| design-guide.md | `.agents/guides/design-guide.md` | required |
+| planning-guide.md | `.agents/guides/planning-guide.md` | required |
+| implementing-guide.md | `.agents/guides/implementing-guide.md` | required |
+| code-review-guide.md | `.agents/guides/code-review-guide.md` | required |
 | marketplace-generation-guide.md | `.agents/guides/marketplace-generation-guide.md` | exists |
 | skill-authoring-guide.md | `.agents/guides/skill-authoring-guide.md` | exists |
 | security-guide.md | `.agents/guides/security-guide.md` | exists |

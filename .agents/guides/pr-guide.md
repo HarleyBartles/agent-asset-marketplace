@@ -22,7 +22,7 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
   - self-review is complete,
   - the relevant validation commands pass,
   - the branch is ready for review or merge.
-- This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow is gated to run only when a PR is marked ready for review.
+- This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
 - After flipping a PR to ready, monitor CI and address failures before requesting human review.
 - The PR body must include publication proof per root `AGENTS.md`.
 
