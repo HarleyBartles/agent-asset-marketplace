@@ -57,14 +57,6 @@
       ]
     },
     {
-      "source_family": "game-studio",
-      "custody_root": "sources/third_party/game-studio/upstream",
-      "mega_pack": "game-studio",
-      "mega_pack_root": "codex-marketplace/plugins/game-studio",
-      "category": "Productivity",
-      "is_mega_pack": true
-    },
-    {
       "bundle_name": "superpowers-plus",
       "plugin_root": "codex-marketplace/plugins/superpowers-plus",
       "bundle_version": "1.0.0",
