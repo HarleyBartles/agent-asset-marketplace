@@ -40,7 +40,7 @@ edits:
   - '    - "Do not use when the spec covers multiple independent subsystems; invoke working-with-epics to create a roadmap before writing plans."'
   - '    - "Do not use when implementation has already started."'
   - '    - "Do not use as a substitute for brainstorming."'
-  - '  use_after: [brainstorming, handoff-gates]'
+  - '  use_after: [brainstorming, handoff-gates, working-with-epics]'
   - '  use_before: [handoff-gates, executing-plans, subagent-driven-development]'
   - '  use_with: [handoff-gates, working-with-epics]'
   - '  related_skills: [brainstorming, handoff-gates, executing-plans, subagent-driven-development, working-with-epics]'
