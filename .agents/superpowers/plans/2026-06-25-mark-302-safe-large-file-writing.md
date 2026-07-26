@@ -143,6 +143,7 @@ def iter_text_chunks(text: str, chunk_size: int = 8_192):
         yield text[start:start + chunk_size]
 
 def write_large_text(target: Path, text: str) -> None:
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
     lines = text.splitlines()
     byte_size = len(text.encode("utf-8"))
     is_large = len(lines) > 300 or byte_size > 256_000
@@ -154,9 +155,11 @@ def write_large_text(target: Path, text: str) -> None:
             for chunk in iter_text_chunks(text, chunk_size=8_192):
                 handle.write(chunk)
     else:
-        tmp.write_text(text, encoding="utf-8", newline="\n")
+        with tmp.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(text)
 
-    completed = tmp.read_text(encoding="utf-8")
+    with tmp.open("r", encoding="utf-8", newline="\n") as handle:
+        completed = handle.read()
     if completed != text:
         raise RuntimeError("temp file validation failed")
     if len(completed.splitlines()) != len(lines) or tmp.stat().st_size != byte_size:

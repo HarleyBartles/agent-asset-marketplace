@@ -14,7 +14,7 @@ Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
 
 ## Repo-specific guidance
 
-- Write all text files with LF line endings. When using Python `Path.write_text()`, pass `newline="\n"`.
+- Write all text files with LF line endings. Use `with path.open("w", encoding="utf-8", newline="\n") as f: f.write(content)` for new code; `Path.read_text(newline=...)` requires Python 3.13, so do not use it in scripts that must run under Python 3.12.
 - Follow `docs/skill-standards-policy.md` for skill frontmatter and metadata fields.
 - Keep Markdown headings descriptive of the reader's task.
 - Use code formatting for literal commands, paths, identifiers, and values; do not use code formatting for emphasis.
