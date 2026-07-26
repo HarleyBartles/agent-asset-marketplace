@@ -1,6 +1,6 @@
-# PR Guide
+# Pull request guide
 
-Use this guide for pull-request workflow and publication proof in `agent-asset-marketplace`.
+Use this guide for pull-request workflow and publication proof in this repo.
 
 ## Before you begin
 
@@ -22,7 +22,7 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
   - self-review is complete,
   - the relevant validation commands pass,
   - the branch is ready for review or merge.
-- This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
+- This repo's CI must not run on draft pull requests. For GitHub Actions, gate `pull_request` workflows so they run only when `github.event.pull_request.draft == false` or on `ready_for_review` activity.
 - After flipping a PR to ready, monitor CI and address failures before requesting human review.
 - The PR body must include publication proof per root `AGENTS.md`.
 
@@ -30,8 +30,7 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
 
 - Work in an isolated worktree on a task branch.
 - Run the relevant validation before pushing:
-  - Marketplace changes: `py -3 tools/rebuild_marketplace.py` then `py -3 tools/check_marketplace.py`.
-  - Structural changes: `py -3 tools/generate_index_mesh.py`.
+  - <!-- list validation commands here -->
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.
 - Push the branch and open a **draft** PR into `main` unless direct-main work is explicitly authorized.
 - A valid repo-work return must include one of:
