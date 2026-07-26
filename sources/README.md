@@ -14,7 +14,7 @@ deployment output.
   `SKILL.md`.
 - `first_party/skills/house-skills/` is the current House Skills source ledger.
 - `third_party/` holds retained third-party source custody.
-- `third_party/unslop/`, `third_party/game-studio/`, `third_party/superpowers/`,
-  and `third_party/feature-sliced/` hold the retained third-party plugin source
+- `third_party/unslop/`, `third_party/superpowers/`, and
+  `third_party/feature-sliced/` hold the retained third-party plugin source
   custody for the plugins carried in the marketplace. First-party skills replace
   retired provider-specific workflow slices in the topical packs.

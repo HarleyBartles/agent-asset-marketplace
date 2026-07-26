@@ -451,10 +451,6 @@ def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
         if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
             raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
         return ROOT / "sources/third_party/unslop/upstream"
-    if upstream_repo == "openai/plugins":
-        if pinned_commit != "c33199897758cab145bb7fdab1ca8fb1cbd9de50":
-            raise ValueError("Unexpected pinned commit for openai/plugins vendor snapshot")
-        return ROOT / "sources/third_party/game-studio/upstream"
     if upstream_repo == "combined-source":
         # Combined-source bundles aggregate from multiple upstreams; no single vendor root
         return None
