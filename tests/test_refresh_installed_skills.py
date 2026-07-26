@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 from unittest.mock import patch
@@ -319,3 +320,168 @@ def test_get_plugin_skills_path_rejects_path_escaping_root(tmp_path: Path) -> No
     with patch.object(refresh_installed_skills, "ROOT", repo_root):
         result = refresh_installed_skills._get_plugin_skills_path(plugin)
     assert result is None
+
+
+def _git_init_and_commit(repo: Path) -> None:
+    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
+    (repo / ".gitkeep").write_text("", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "init"], cwd=repo, check=True, capture_output=True)
+
+
+def test_get_marketplace_manifest_sha_returns_submodule_head(tmp_path: Path) -> None:
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    submodule = consumer / ".agents" / "plugins" / "marketplace-source"
+    submodule.mkdir(parents=True)
+    _git_init_and_commit(submodule)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.write_text("{}", encoding="utf-8")
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+    ):
+        sha = refresh_installed_skills._get_marketplace_manifest_sha()
+
+    expected = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=submodule, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    assert sha == expected
+
+
+def test_get_marketplace_manifest_sha_falls_back_to_consumer_head(tmp_path: Path) -> None:
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text("{}", encoding="utf-8")
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+    ):
+        sha = refresh_installed_skills._get_marketplace_manifest_sha()
+
+    expected = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=consumer, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    assert sha == expected
+
+
+def test_provenance_synced_plugins_lists_all_installed_plugins(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    skills_path.mkdir()
+    provenance_path = skills_path / ".provenance.json"
+    source_skills = tmp_path / "source" / "skills"
+    source_skills.mkdir(parents=True)
+    plugins = [
+        {"name": "repo-worker-pack"},
+        {"name": "superpowers-plus"},
+    ]
+
+    def install_side_effect(plugin, *args, **kwargs):
+        return plugin.get("name") == "repo-worker-pack"
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="new-sha"),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills, "_install_plugin_skills", side_effect=install_side_effect),
+        patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    assert provenance["syncedPlugins"] == ["repo-worker-pack", "superpowers-plus"]
+
+
+def test_validate_local_skills_extra_hook_invoked(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    skills_path.mkdir()
+    scripts_path = tmp_path / "scripts"
+    scripts_path.mkdir()
+    marketplace_json = tmp_path / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+    log_path = tmp_path / "hook-log.txt"
+
+    if sys.platform == "win32":
+        hook = scripts_path / "validate_local_skills_extra.ps1"
+        hook.write_text(
+            "param([switch]$Check, [Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)\n"
+            "$skillsRoot = $Remaining[0]\n"
+            "$prefixes = $Remaining[1..($Remaining.Length-1)]\n"
+            "$mode = if ($Check) { \"check\" } else { \"write\" }\n"
+            f'[System.IO.File]::WriteAllText("{log_path.as_posix()}", "$skillsRoot $($prefixes -join ",") $mode")\n',
+            encoding="utf-8",
+        )
+    else:
+        hook = scripts_path / "validate_local_skills_extra.sh"
+        hook.write_text(
+            "#!/usr/bin/env bash\n"
+            "set -euo pipefail\n"
+            "if [ \"$1\" = \"--check\" ]; then mode=check; shift; else mode=write; fi\n"
+            "skills_root=\"$1\"\n"
+            "shift\n"
+            "prefixes=\"$*\"\n"
+            f'echo "$skills_root $prefixes $mode" > "{log_path.as_posix()}"\n',
+            encoding="utf-8",
+        )
+        hook.chmod(0o755)
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
+        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    log = log_path.read_text(encoding="utf-8").strip()
+    rel_skills = skills_path.relative_to(tmp_path).as_posix()
+    assert rel_skills in log
+    assert "mark-" in log
+    assert "write" in log
+
+
+def test_validate_local_skills_extra_hook_failure_fails_run(tmp_path: Path, capsys) -> None:
+    skills_path = tmp_path / "skills"
+    skills_path.mkdir()
+    scripts_path = tmp_path / "scripts"
+    scripts_path.mkdir()
+    marketplace_json = tmp_path / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+
+    if sys.platform == "win32":
+        hook = scripts_path / "validate_local_skills_extra.ps1"
+        hook.write_text("Write-Host 'bad skill'\nexit 1\n", encoding="utf-8")
+    else:
+        hook = scripts_path / "validate_local_skills_extra.sh"
+        hook.write_text("#!/usr/bin/env bash\necho 'bad skill'\nexit 1\n", encoding="utf-8")
+        hook.chmod(0o755)
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
+        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 1
+
+    assert "bad skill" in capsys.readouterr().out

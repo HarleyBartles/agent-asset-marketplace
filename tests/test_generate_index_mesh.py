@@ -94,3 +94,112 @@ def test_empty_repo_generates_root_index(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stderr
     assert "Wrote index mesh" in result.stdout
     assert (repo / "INDEX.md").is_file()
+
+
+def _hook_ext() -> str:
+    return ".ps1" if sys.platform == "win32" else ".sh"
+
+
+def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "hook-repo")
+    _commit_file(repo, "docs/adr/README.md")
+    scripts_path = repo / "scripts"
+    scripts_path.mkdir()
+    hook = scripts_path / f"generate_index_mesh_extra{_hook_ext()}"
+    log_path = tmp_path / "hook-log.txt"
+
+    if sys.platform == "win32":
+        hook.write_text(
+            "param([switch]$Check, [string]$RepoRoot)\n"
+            "$path = Join-Path $RepoRoot \"docs/adr/INDEX.md\"\n"
+            "if ($Check) {\n"
+            '    if (-not (Test-Path $path) -or -not (Select-String -Path $path -Pattern "## Extra" -Quiet)) { Write-Host "DRIFT: missing extra"; exit 1 }\n'
+            f'    [System.IO.File]::WriteAllText("{log_path.as_posix()}", "check $RepoRoot")\n'
+            "} else {\n"
+            '    Add-Content -Path $path -Value "## Extra`n" -NoNewline\n'
+            f'    [System.IO.File]::WriteAllText("{log_path.as_posix()}", "write $RepoRoot")\n'
+            "}\n",
+            encoding="utf-8",
+        )
+    else:
+        hook.write_text(
+            "#!/usr/bin/env bash\n"
+            "set -euo pipefail\n"
+            "if [ \"$1\" = \"--check\" ]; then\n"
+            "    mode=check\n"
+            "    shift\n"
+            "else\n"
+            "    mode=write\n"
+            "fi\n"
+            "repo_root=\"$1\"\n"
+            "path=\"$repo_root/docs/adr/INDEX.md\"\n"
+            'if [ "$mode" = "check" ]; then\n'
+            '    if ! grep -q "## Extra" "$path"; then\n'
+            '        echo "DRIFT: missing extra"\n'
+            "        exit 1\n"
+            "    fi\n"
+            "else\n"
+            '    echo -e "## Extra" >> "$path"\n'
+            "fi\n"
+            f'echo "$mode $repo_root" > "{log_path.as_posix()}"\n',
+            encoding="utf-8",
+        )
+        hook.chmod(0o755)
+
+    result = subprocess.run(
+        [sys.executable, str(CORE)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "## Extra" in (repo / "docs" / "adr" / "INDEX.md").read_text(encoding="utf-8")
+
+    log = log_path.read_text(encoding="utf-8").strip()
+    assert "write" in log
+    assert str(repo) in log
+
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "check" in log_path.read_text(encoding="utf-8").strip()
+
+
+def test_generate_index_mesh_extra_hook_failure_fails(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "fail-hook-repo")
+    _commit_file(repo, "docs/adr/README.md")
+    scripts_path = repo / "scripts"
+    scripts_path.mkdir()
+    hook = scripts_path / f"generate_index_mesh_extra{_hook_ext()}"
+
+    if sys.platform == "win32":
+        hook.write_text(
+            "param([switch]$Check, [string]$RepoRoot)\n"
+            "Write-Host 'broken hook'\n"
+            "exit 1\n",
+            encoding="utf-8",
+        )
+    else:
+        hook.write_text(
+            "#!/usr/bin/env bash\n"
+            "echo 'broken hook'\n"
+            "exit 1\n",
+            encoding="utf-8",
+        )
+        hook.chmod(0o755)
+
+    result = subprocess.run(
+        [sys.executable, str(CORE)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "broken hook" in (result.stdout + result.stderr).lower()

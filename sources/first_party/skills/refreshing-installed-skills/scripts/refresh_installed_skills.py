@@ -98,6 +98,57 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
     return invalid
 
 
+def _powershell_cmd() -> list[str]:
+    for name in ("pwsh", "powershell"):
+        if shutil.which(name):
+            return [name, "-NoProfile", "-File"]
+    return ["powershell", "-NoProfile", "-File"]
+
+
+def _run_validate_local_skills_extra(check_mode: bool, prefixes: list[str]) -> bool:
+    """Run the repo-supplied local-skill validation hook if one exists.
+
+    The hook receives the skills root and any local skill prefixes:
+        scripts/validate_local_skills_extra.sh [--check] <skills-root> <prefix> ...
+    """
+    hook_sh = ROOT / "scripts" / "validate_local_skills_extra.sh"
+    hook_ps1 = ROOT / "scripts" / "validate_local_skills_extra.ps1"
+
+    # Prefer .ps1 on Windows and .sh elsewhere, but allow fallback.
+    if sys.platform == "win32" and hook_ps1.is_file():
+        cmd = _powershell_cmd() + [str(hook_ps1)]
+        if check_mode:
+            cmd.append("-Check")
+    elif hook_sh.is_file():
+        cmd = ["bash", str(hook_sh)]
+        if check_mode:
+            cmd.append("--check")
+    elif hook_ps1.is_file():
+        cmd = _powershell_cmd() + [str(hook_ps1)]
+        if check_mode:
+            cmd.append("-Check")
+    else:
+        return True
+
+    cmd.append(AGENTS_SKILLS_PATH.relative_to(ROOT).as_posix())
+    cmd.extend(prefixes)
+
+    result = subprocess.run(
+        cmd,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
+    if result.returncode != 0:
+        for line in (result.stdout + result.stderr).splitlines():
+            line = line.strip()
+            if line:
+                print(f"ERROR: local skill validation hook: {line}")
+        return False
+    return True
+
+
 def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any]], prefixes: list[str]) -> list[tuple[str, str]]:
     collisions: list[tuple[str, str]] = []
     for plugin in installed_plugins:
@@ -153,7 +204,27 @@ def _load_marketplace_config() -> dict[str, Any]:
 
 
 def _get_marketplace_manifest_sha() -> str:
-    """Get the current marketplace manifest SHA for provenance tracking."""
+    """Get the current marketplace manifest SHA for provenance tracking.
+
+    When the marketplace-source submodule is present, track its HEAD so the
+    provenance reflects the version of the marketplace that was installed.
+    Otherwise fall back to the consumer repo's HEAD.
+    """
+    submodule = _marketplace_source_path(ROOT)
+    if submodule.is_dir() and (submodule / ".git").exists():
+        try:
+            result = subprocess.run(
+                ["git", "rev-parse", "HEAD"],
+                cwd=submodule,
+                capture_output=True,
+                text=True,
+                check=True,
+                env=_stripped_env(),
+            )
+            return result.stdout.strip()
+        except subprocess.CalledProcessError:
+            pass
+
     try:
         result = subprocess.run(
             ["git", "rev-parse", "HEAD"],
@@ -484,6 +555,9 @@ def main(argv: list[str] | None = None) -> int:
     if invalid_local_skills:
         return 1
 
+    if not _run_validate_local_skills_extra(check_mode=args.check, prefixes=prefixes):
+        return 1
+
     installed_plugins = _get_installed_plugins(config)
 
     if not installed_plugins:
@@ -517,17 +591,22 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check:
         AGENTS_SKILLS_PATH.mkdir(parents=True, exist_ok=True)
 
+    # Record every configured INSTALLED_BY_DEFAULT plugin name in order,
+    # regardless of whether its skills needed copying on this run.
+    installed_plugin_names = [
+        plugin.get("name", "unknown") if isinstance(plugin.get("name"), str) else "unknown"
+        for plugin in installed_plugins
+    ]
+
     # Install skills from each plugin
     changes_made = False
     synced_skill_names = set()
-    synced_plugin_names = []
 
     for plugin in installed_plugins:
         plugin_name = plugin.get("name", "unknown")
         print(f"\nProcessing plugin: {plugin_name}")
         if _install_plugin_skills(plugin, check_mode=args.check, synced_skill_names=synced_skill_names, prefixes=prefixes):
             changes_made = True
-            synced_plugin_names.append(plugin_name)
 
     # Clean orphan skills
     print("\nChecking for orphan skills...")
@@ -537,7 +616,7 @@ def main(argv: list[str] | None = None) -> int:
     # Write provenance only when the installed skill tree changed. A forced
     # byte-identical refresh must remain a no-diff operation.
     if not args.check and changes_made:
-        _write_provenance(current_manifest_sha, synced_plugin_names, len(synced_skill_names))
+        _write_provenance(current_manifest_sha, installed_plugin_names, len(synced_skill_names))
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
         _regenerate_index_mesh(ROOT)
 
@@ -550,7 +629,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
     else:
         if changes_made:
-            print(f"\nSkills installed/refreshed successfully ({len(synced_skill_names)} skills from {len(synced_plugin_names)} plugins)")
+            print(f"\nSkills installed/refreshed successfully ({len(synced_skill_names)} skills from {len(installed_plugin_names)} plugins)")
         else:
             print("\nNo changes needed")
         return 0
