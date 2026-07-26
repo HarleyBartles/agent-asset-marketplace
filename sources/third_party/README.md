@@ -11,5 +11,4 @@ Keep each retained plugin or package in its own root under this directory, with
 upstream snapshots, patches, normalized copies, and custody notes separated
 from the installable marketplace projections under `codex-marketplace/`.
 
-Current retained roots include `unslop/`, `game-studio/`, `superpowers/`, and
-`feature-sliced/`.
+Current retained roots include `unslop/`, `superpowers/`, and `feature-sliced/`.

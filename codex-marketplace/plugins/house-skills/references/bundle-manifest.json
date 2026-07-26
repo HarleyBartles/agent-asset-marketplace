@@ -295,28 +295,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "game-playtest",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
-      "local_path": "skills/game-playtest",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
-      "source_family": "first_party"
-    },
-    {
-      "canonical_name": "game-ui-frontend",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend",
-      "local_path": "skills/game-ui-frontend",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
-      "source_family": "first_party"
-    },
-    {
       "canonical_name": "generating-agent-mesh",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -450,17 +428,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "phaser-2d-game",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
-      "local_path": "skills/phaser-2d-game",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
-      "source_family": "first_party"
     },
     {
       "canonical_name": "playwright-testing",
@@ -718,17 +685,6 @@
       "copy_expectation": "byte_identical"
     },
     {
-      "canonical_name": "sprite-pipeline",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
-      "local_path": "skills/sprite-pipeline",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
-      "source_family": "first_party"
-    },
-    {
       "canonical_name": "subagent-model-routing",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -832,17 +788,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical"
-    },
-    {
-      "canonical_name": "web-game-foundations",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
-      "local_path": "skills/web-game-foundations",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained game-studio upstream snapshot into the Wild Bunch pack.",
-      "source_family": "first_party"
     },
     {
       "canonical_name": "web-identity",

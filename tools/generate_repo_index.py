@@ -125,7 +125,7 @@ DEFAULT_REPO_INDEX = {
         {
             "name": "third-party-custody",
             "path": "sources/third_party",
-            "purpose": "Third-party source custody for the retained unslop, game-studio, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
+            "purpose": "Third-party source custody for the retained unslop, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
             "surface_kind": "vendored",
             "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
             "guidance_scope": "repo-owned-guidance",
@@ -332,6 +332,15 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone["name"] = "superpowers-plans"
             updated_zone["path"] = ".agents/superpowers/plans"
             updated_zone["nearest_scoped_agents_md"] = ".agents/superpowers/plans/AGENTS.md"
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "third-party-custody":
+            updated_zone = dict(zone)
+            updated_zone["purpose"] = (
+                "Third-party source custody for the retained unslop, superpowers, and feature-sliced upstream snapshots. "
+                "The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. "
+                "The unslop engine is projected into the unslop-plus combined-source plugin."
+            )
             normalized_zones.append(updated_zone)
             continue
         normalized_zones.append(zone)

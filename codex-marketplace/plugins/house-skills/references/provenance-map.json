@@ -134,20 +134,6 @@
       "local_path": "skills/frontend-ux"
     },
     {
-      "canonical_name": "game-playtest",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-playtest",
-      "local_path": "skills/game-playtest"
-    },
-    {
-      "canonical_name": "game-ui-frontend",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/game-ui-frontend",
-      "local_path": "skills/game-ui-frontend"
-    },
-    {
       "canonical_name": "generating-agent-mesh",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -209,13 +195,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/owasp-top-ten",
       "local_path": "skills/owasp-top-ten"
-    },
-    {
-      "canonical_name": "phaser-2d-game",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/phaser-2d-game",
-      "local_path": "skills/phaser-2d-game"
     },
     {
       "canonical_name": "playwright-testing",
@@ -337,13 +316,6 @@
       "local_path": "skills/secure-development"
     },
     {
-      "canonical_name": "sprite-pipeline",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/sprite-pipeline",
-      "local_path": "skills/sprite-pipeline"
-    },
-    {
       "canonical_name": "subagent-model-routing",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -391,13 +363,6 @@
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/wcag",
       "local_path": "skills/wcag"
-    },
-    {
-      "canonical_name": "web-game-foundations",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/game-studio/upstream/skills/web-game-foundations",
-      "local_path": "skills/web-game-foundations"
     },
     {
       "canonical_name": "web-identity",
