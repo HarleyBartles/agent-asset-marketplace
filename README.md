@@ -109,7 +109,7 @@ Default posture:
 - `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
 - `sources/` - source-attribution records and retained upstream snapshots.
 - `sources/first_party/` - editable first-party source custody and skill-ledger records.
-- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers`, `game-studio`, `unslop`, and `feature-sliced` snapshots.
+- `sources/third_party/` - third-party source snapshots, references, and custody evidence for the retained marketplace roots, including the upstream `superpowers`, `unslop`, and `feature-sliced` snapshots.
 - `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
 - `tools/` - helper scripts and validation tooling.
 - `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.
