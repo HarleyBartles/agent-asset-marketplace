@@ -123,7 +123,8 @@ def write_large_text(target: Path, text: str) -> None:
                 if not is_last_chunk or ends_with_newline:
                     handle.write("\n")
     else:
-        tmp.write_text(text, encoding="utf-8", newline="\n")
+        with tmp.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(text)
 
     completed = tmp.read_text(encoding="utf-8")
     if completed != text:
