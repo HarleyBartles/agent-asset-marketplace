@@ -388,7 +388,8 @@ def main(argv: list[str] | None = None) -> int:
         if missing:
             mismatches.extend(f"missing: {path.relative_to(ROOT)}" for path in missing)
         mismatches.extend(
-            f"extra hook: {msg}" for msg in _run_index_mesh_extra_hook(ROOT, check=True)
+            f"ERROR: generate_index_mesh_extra hook: {msg}"
+            for msg in _run_index_mesh_extra_hook(ROOT, check=True)
         )
         if mismatches:
             raise ValueError("INDEX mesh is stale or inconsistent:\n" + "\n".join(mismatches))
@@ -407,11 +408,11 @@ def main(argv: list[str] | None = None) -> int:
     for path in obsolete:
         path.unlink()
 
-    # Allow repo-specific post-processing of INDEX.md files before link validation
-    # so extra content participates in the mesh.
+    # Run the repo-specific hook after writing the generated mesh but before
+    # link validation, so any appended/post-processed content is validated too.
     hook_errors = _run_index_mesh_extra_hook(ROOT, check=False)
     if hook_errors:
-        raise ValueError("repo-specific INDEX.md hook failed:\n" + "\n".join(hook_errors))
+        raise ValueError("ERROR: generate_index_mesh_extra hook failed:\n" + "\n".join(hook_errors))
 
     link_failures: list[str] = []
     for target in targets:
