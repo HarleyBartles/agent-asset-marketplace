@@ -143,6 +143,7 @@ def iter_text_chunks(text: str, chunk_size: int = 8_192):
         yield text[start:start + chunk_size]
 
 def write_large_text(target: Path, text: str) -> None:
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
     lines = text.splitlines()
     byte_size = len(text.encode("utf-8"))
     is_large = len(lines) > 300 or byte_size > 256_000
