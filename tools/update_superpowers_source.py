@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -173,7 +174,23 @@ def _update_bundle_manifest(new_version: str, new_commit: str) -> None:
     )
 
 
-def _update_provenance_and_source_md(*, old_root: str, old_version: str, old_commit: str, new_version: str, new_commit: str) -> None:
+def _tag_object_from_provenance() -> str:
+    if not SUPERPOWERS_PROVENANCE_PATH.exists():
+        return ""
+    match = re.search(r"Tag object:\s*`([0-9a-f]{40})`", SUPERPOWERS_PROVENANCE_PATH.read_text(encoding="utf-8"))
+    return match.group(1) if match else ""
+
+
+def _update_provenance_and_source_md(
+    *,
+    old_root: str,
+    old_version: str,
+    old_commit: str,
+    old_tag_object: str,
+    new_version: str,
+    new_commit: str,
+    new_tag_object: str,
+) -> None:
     _replace_text(
         SUPERPOWERS_SOURCE_MD_PATH,
         [
@@ -181,14 +198,14 @@ def _update_provenance_and_source_md(*, old_root: str, old_version: str, old_com
             (old_version, new_version),
         ],
     )
-    _replace_text(
-        SUPERPOWERS_PROVENANCE_PATH,
-        [
-            (old_version, new_version),
-            (old_commit, new_commit),
-            (old_root, f"sources/third_party/superpowers/obra-superpowers/{new_version}"),
-        ],
-    )
+    provenance_replacements = [
+        (old_version, new_version),
+        (old_commit, new_commit),
+        (old_root, f"sources/third_party/superpowers/obra-superpowers/{new_version}"),
+    ]
+    if old_tag_object and new_tag_object:
+        provenance_replacements.insert(0, (old_tag_object, new_tag_object))
+    _replace_text(SUPERPOWERS_PROVENANCE_PATH, provenance_replacements)
 
 
 def _adapter_staleness() -> list[str]:
@@ -203,7 +220,7 @@ def _adapter_staleness() -> list[str]:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream version")
     if target_root not in overlay_text:
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still references an older source root")
-    if f"source_repo: {UPSTREAM_REPO}" not in overlay_text:
+    if not re.search(rf"source_repo:\s*['\"]?{re.escape(UPSTREAM_REPO)}['\"]?", overlay_text):
         issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream repository")
     if not isinstance(openai_doc, dict) or openai_doc.get("metadata", {}).get("upstream_version") != target_version:
         issues.append(f"{SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} still points at an older upstream version")
@@ -224,6 +241,7 @@ def _prepare(tag: str) -> None:
 
     tag_object, commit = _git_ls_remote(tag)
     print(f"Resolved {tag}: tag object {tag_object}, commit {commit}")
+    old_tag_object = _tag_object_from_provenance()
 
     target_root = SUPERPOWERS_FAMILY_ROOT / tag
     checkout_root = Path(tempfile.mkdtemp(prefix="superpowers-upstream-"))
@@ -245,8 +263,10 @@ def _prepare(tag: str) -> None:
         old_root=old_root,
         old_version=old_version,
         old_commit=old_commit,
+        old_tag_object=old_tag_object,
         new_version=tag,
         new_commit=commit,
+        new_tag_object=tag_object,
     )
     _print_adapter_guidance()
 

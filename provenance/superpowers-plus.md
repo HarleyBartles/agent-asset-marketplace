@@ -5,7 +5,7 @@
 - Upstream repository: `https://github.com/obra/superpowers`
 - Release tag: `v6.2.0`
 - Release commit: `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9`
-- Tag object: `61fd6f0ebbb6c6ff58d8cc61ada4073a8df8c35e`
+- Tag object: `0e5cc50e782429b95f933e46443898435b8b37a8`
 - License: MIT
 
 ## Custody
