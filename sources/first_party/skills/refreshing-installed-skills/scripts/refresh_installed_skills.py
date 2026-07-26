@@ -464,7 +464,7 @@ def _write_provenance(manifest_sha: str, synced_plugins: list[str], synced_skill
         "marketplaceFile": ".agents/plugins/marketplace.json"
     }
     with PROVENANCE_PATH.open("w", encoding="utf-8", newline="\n") as f:
-        f.write(json.dumps(provenance, indent=2))
+        f.write(json.dumps(provenance, indent=2) + "\n")
 
 
 def _is_shared_checkout(repo_root: Path) -> bool:

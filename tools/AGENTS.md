@@ -91,11 +91,12 @@ with path.open("w", encoding="utf-8", newline="\n") as f:
     f.write(content)
 ```
 
-Do not pass `newline=` to `Path.write_text()` or `Path.read_text()` in
-scripts that must run under Python 3.12; the `newline` keyword is only
-accepted by those methods from Python 3.13 onward. Use `Path.open()` or the
-built-in `open()` with `newline="\n"` (or `newline=""` if the text already
-contains explicit `\n` and you want no translation) instead.
+Do not pass `newline=` to `Path.read_text()` in scripts that must run under
+Python 3.12; the `newline` keyword for `Path.read_text()` was added in Python
+3.13. For consistent LF-only reads and writes across `Path.read_text()` and
+`Path.write_text()`, prefer `Path.open(..., newline="\n")` or the built-in
+`open(..., newline="\n")` (or `newline=""` if the text already contains explicit
+`\n` and you want no translation) instead.
 
 Without the explicit `newline` parameter, Python translates `\n` to
 `os.linesep` (CRLF on Windows), which `git diff --check` flags as trailing
