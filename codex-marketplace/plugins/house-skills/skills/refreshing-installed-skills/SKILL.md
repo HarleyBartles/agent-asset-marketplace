@@ -39,3 +39,12 @@ py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skill
 ```
 
 This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`, rolls the optional `marketplace-source` submodule to `origin/main`, and regenerates the agent mesh. If changes were made, it commits them with the message `chore: refresh installed skills and regenerate agent mesh`.
+
+## Plugin source types
+
+Each plugin entry in `.agents/plugins/marketplace.json` declares its source with `source.source`:
+
+- `local`: `source.path` is relative to the consumer repo root.
+- `github`: `source.path` is relative to the `marketplace-source` submodule root (`.agents/plugins/marketplace-source`).
+
+Both `local` and `github` sources are normalized and must resolve to a directory under their respective roots.

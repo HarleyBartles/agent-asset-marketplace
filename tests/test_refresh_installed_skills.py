@@ -249,3 +249,52 @@ def test_matching_provenance_with_extra_marketplace_orphan_continues_sync(tmp_pa
     install.assert_called_once()
     clean.assert_called_once()
     assert local_skill.is_dir()
+
+
+def test_get_plugin_skills_path_local_source(tmp_path: Path) -> None:
+    skills = tmp_path / "my-plugin" / "skills"
+    skills.mkdir(parents=True)
+    plugin = {"name": "my-plugin", "source": {"source": "local", "path": "my-plugin"}}
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        result = refresh_installed_skills._get_plugin_skills_path(plugin)
+    assert result == skills
+
+
+def test_get_plugin_skills_path_github_source(tmp_path: Path) -> None:
+    submodule = tmp_path / ".agents" / "plugins" / "marketplace-source"
+    skills = submodule / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    skills.mkdir(parents=True)
+    plugin = {
+        "name": "repo-worker-pack",
+        "source": {
+            "source": "github",
+            "owner": "HarleyBartles",
+            "repo": "agent-asset-marketplace",
+            "path": "codex-marketplace/plugins/repo-worker-pack",
+        },
+    }
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        result = refresh_installed_skills._get_plugin_skills_path(plugin)
+    assert result == skills
+
+
+def test_get_plugin_skills_path_returns_none_for_unsupported_or_malformed(tmp_path: Path) -> None:
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        assert refresh_installed_skills._get_plugin_skills_path({}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "bitbucket"}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local"}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local", "path": ""}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local", "path": 123}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "local", "path": "missing-plugin"}}) is None
+        assert refresh_installed_skills._get_plugin_skills_path({"source": {"source": "github", "path": "missing-plugin"}}) is None
+
+
+def test_get_plugin_skills_path_rejects_path_escaping_root(tmp_path: Path) -> None:
+    repo_root = tmp_path / "repo"
+    sibling = tmp_path / "sibling"
+    (sibling / "skills").mkdir(parents=True)
+    plugin = {"source": {"source": "local", "path": "../sibling"}}
+    with patch.object(refresh_installed_skills, "ROOT", repo_root):
+        result = refresh_installed_skills._get_plugin_skills_path(plugin)
+    assert result is None

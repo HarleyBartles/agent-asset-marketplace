@@ -200,14 +200,23 @@ def _get_plugin_skills_path(plugin: dict[str, Any]) -> Path | None:
         return None
 
     source_type = source.get("source")
-    if source_type != "local":
+    if source_type == "local":
+        base = ROOT
+    elif source_type == "github":
+        base = ROOT / ".agents" / "plugins" / "marketplace-source"
+    else:
         return None
 
     path = source.get("path")
     if not isinstance(path, str) or not path:
         return None
 
-    plugin_path = ROOT / path
+    plugin_path = (base / path).resolve()
+    try:
+        plugin_path.relative_to(base.resolve())
+    except ValueError:
+        return None
+
     skills_path = plugin_path / "skills"
     return skills_path if skills_path.is_dir() else None
 

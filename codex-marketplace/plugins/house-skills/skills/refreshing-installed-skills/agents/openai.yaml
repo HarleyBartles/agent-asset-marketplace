@@ -6,7 +6,7 @@ metadata:
   projection_plugin: house-skills
 interface:
   display_name: Refreshing Installed Skills
-  short_description: Use when a worktree is initialized or .agents/skills/ is stale from the plugin source.
-  default_prompt: Use refreshing-installed-skills when a worktree is initialized or .agents/skills/ is stale from the plugin source.
+  short_description: Use when a worktree is initialized or .agents/skills/ is stale from the local or github plugin source.
+  default_prompt: Use refreshing-installed-skills when a worktree is initialized or .agents/skills/ is stale from the local or github plugin source.
 policy:
   allow_implicit_invocation: false
