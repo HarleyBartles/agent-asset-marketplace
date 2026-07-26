@@ -126,7 +126,8 @@ def write_large_text(target: Path, text: str) -> None:
         with tmp.open("w", encoding="utf-8", newline="\n") as handle:
             handle.write(text)
 
-    completed = tmp.read_text(encoding="utf-8")
+    with tmp.open("r", encoding="utf-8", newline="\n") as handle:
+        completed = handle.read()
     if completed != text:
         raise RuntimeError("temp file validation failed")
     if len(completed.splitlines()) != len(lines):

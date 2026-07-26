@@ -61,7 +61,8 @@ def load_json(path: Path | None) -> dict[str, Any]:
 
 
 def write_json(path: Path, payload: Any) -> None:
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
 def copy_optional(src: Path | None, dst: Path) -> None:
