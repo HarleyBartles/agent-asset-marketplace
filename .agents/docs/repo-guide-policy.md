@@ -14,7 +14,7 @@ This repo follows the `repo-standards` skill. Invoke `/repo-standards` before re
 | skill-authoring-guide.md | `.agents/guides/skill-authoring-guide.md` | exists |
 | security-guide.md | `.agents/guides/security-guide.md` | exists |
 | testing-guide.md | `.agents/guides/testing-guide.md` | exists |
-| pr-guide.md | `.agents/guides/pr-guide.md` | exists |
+| pr-guide.md | `.agents/guides/pr-guide.md` | required |
 | code-style-guide.md | `.agents/guides/code-style-guide.md` | exists |
 
 Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed guides/routed surfaces.

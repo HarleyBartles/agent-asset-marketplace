@@ -14,7 +14,7 @@ This repo follows the `repo-standards` skill. Invoke `/repo-standards` before re
 | skill-authoring-guide.md | `.agents/guides/skill-authoring-guide.md` |  |
 | security-guide.md | `.agents/guides/security-guide.md` |  |
 | testing-guide.md | `.agents/guides/testing-guide.md` |  |
-| pr-guide.md | `.agents/guides/pr-guide.md` |  |
+| pr-guide.md | `.agents/guides/pr-guide.md` | required |
 | code-style-guide.md | `.agents/guides/code-style-guide.md` |  |
 
 ## Additional repo-specific guides
