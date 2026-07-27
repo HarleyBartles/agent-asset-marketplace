@@ -4,14 +4,32 @@
 #>
 [CmdletBinding()]
 param(
-    [switch]$Check,
-    [string]$ChangedFrom
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$Remaining
 )
 
 $ErrorActionPreference = 'Stop'
 
 $ScriptDir = (Resolve-Path $PSScriptRoot).Path
 $RepoRoot = (Resolve-Path (Join-Path $ScriptDir '..')).Path
+
+$ChangedFrom = $null
+for ($i = 0; $i -lt $Remaining.Count; $i++) {
+    switch ($Remaining[$i]) {
+        '--changed-from' {
+            $i++
+            $ChangedFrom = $Remaining[$i]
+        }
+        '--check' {
+            # ruff check is read-only; no action needed
+        }
+        default {
+            if ($Remaining[$i]) {
+                Write-Warning "Unknown argument: $($Remaining[$i])"
+            }
+        }
+    }
+}
 
 if (-not (Get-Command ruff -ErrorAction SilentlyContinue)) {
     Write-Host "ruff not found; skipping Python lint (install with: pip install ruff==0.9.0)"
