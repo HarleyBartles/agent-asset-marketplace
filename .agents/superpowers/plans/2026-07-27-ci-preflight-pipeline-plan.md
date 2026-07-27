@@ -53,7 +53,7 @@ mode, never mutates the repo, and prints the exact command to run when a check
 fails. The `.git/hooks/pre-commit` hook runs the preflight script, and CI runs
 the same checks as separate workflow steps.
 
-## Preflight: `scripts/ci-preflight.sh --check` / `scripts/ci-preflight.ps1 -Check`
+## Preflight: `scripts/ci-preflight.sh --check` / `scripts/ci-preflight.ps1 --check`
 
 A repo-owned script that composes the same read-only checks CI runs. It is not a
 convenience wrapper around CI and it is not called by CI; CI and preflight are
@@ -141,11 +141,11 @@ Replace the entire file with:
 # scaffold. Edit it to call the same read-only checks that your CI runs.
 #
 # Available read-only helpers from repo-standards:
-#   . .agents/skills/repo-standards/scripts/repo-standards.ps1 -Check
-#   . .agents/skills/repo-standards/scripts/scaffold-all.ps1 -Check
-#   . .agents/skills/generating-agent-mesh/scripts/generate-index-mesh.ps1 -Check
-#   . .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.ps1 -Check
-#   . .agents/skills/refreshing-installed-skills/scripts/refresh-installed-skills.ps1 -Check
+#   . .agents/skills/repo-standards/scripts/repo-standards.ps1 --check
+#   . .agents/skills/repo-standards/scripts/scaffold-all.ps1 --check
+#   . .agents/skills/generating-agent-mesh/scripts/generate-index-mesh.ps1 --check
+#   . .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.ps1 --check
+#   . .agents/skills/refreshing-installed-skills/scripts/refresh-installed-skills.ps1 --check
 #
 # Add repo-specific lint here, for example:
 #   ruff check <changed-python-files>
