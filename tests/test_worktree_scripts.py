@@ -181,6 +181,14 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
     assert worktree_head == expected_sha
     assert (worktree_root / marker).read_text(encoding="utf-8") == "from-origin-main"
 
+    # Ensure the new branch does not silently track origin/main as its upstream.
+    tracking = subprocess.run(
+        ["git", "config", "--get", "branch.feature.remote"],
+        cwd=worktree_root,
+        capture_output=True,
+    )
+    assert tracking.returncode != 0, "new feature branch should not track a remote"
+
 
 def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "resolve-repo")

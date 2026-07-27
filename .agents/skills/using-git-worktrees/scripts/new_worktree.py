@@ -226,7 +226,7 @@ def main(argv: list[str] | None = None) -> int:
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
     base_ref = args.base_ref if args.base_ref else _default_base_ref(main_repo_root)
-    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root), base_ref]
+    cmd = ["git", "worktree", "add", "-b", branch, "--no-track", str(worktree_root), base_ref]
 
     # Run from the main worktree so git uses the correct repository object store;
     # the base ref has already been resolved to origin/main when available.
