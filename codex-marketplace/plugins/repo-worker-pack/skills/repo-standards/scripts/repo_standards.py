@@ -271,7 +271,7 @@ under the ## Exceptions heading are skipped."""
         "--allow-shared-checkout",
         action="store_true",
         help="Approve applying changes in a shared or git-worktree checkout. "
-             "Only pass this if you intend to mutate this checkout; it is forwarded to any child scripts.",
+             "Only pass this if you intend to mutate this checkout.",
     )
     args = parser.parse_args(argv)
 

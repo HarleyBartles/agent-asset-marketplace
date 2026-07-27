@@ -6,20 +6,25 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 
-# Import the shared-checkout helper from the source repo. We search upward from
-# the script location so this adapter is not coupled to the exact repo layout.
+# Import the shared-checkout helper. We prefer a vendored copy next to this
+# script so the installed skill is self-contained, and fall back to the repo
+# tools/ directory when running from source.
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _SHARED_CHECKOUT_PATH: Path | None = None
-for _parent in _SCRIPT_DIR.parents:
-    _candidate = _parent / "tools" / "shared_checkout.py"
-    if _candidate.is_file():
-        _SHARED_CHECKOUT_PATH = _parent / "tools"
-        break
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
 if _SHARED_CHECKOUT_PATH is None:
     raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
 sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
@@ -176,48 +181,24 @@ def _find_mesh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
-    parser.add_argument("branch", help="branch name to create")
-    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
-    parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
-    parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="Approve writes inside the new worktree when refreshing installed skills and regenerating the index mesh. "
-             "The flag is forwarded to child scripts; the git worktree add step is not gated by this flag.",
+def _remove_worktree(worktree_root: Path, main_repo_root: Path) -> None:
+    """Remove a newly created worktree so failed runs do not leave dangling trees."""
+    remove = subprocess.run(
+        ["git", "worktree", "remove", str(worktree_root)],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
     )
-    args = parser.parse_args(argv)
+    if remove.returncode != 0 and worktree_root.exists():
+        shutil.rmtree(worktree_root, ignore_errors=True)
 
-    repo_root = _repo_root()
-    _reject_submodule()
-    main_repo_root = _main_repo_root()
-    branch = _normalize_branch_name(args.branch)
 
-    try:
-        worktree_root = _validate_worktree_root(main_repo_root, branch)
-    except ValueError as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 1
-    if worktree_root.is_file():
-        print(f"error: worktree path is an existing file: {worktree_root}", file=sys.stderr)
-        return 1
-    if worktree_root.is_dir():
-        print(f"error: worktree directory already exists: {worktree_root}", file=sys.stderr)
-        return 1
+def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace) -> int:
+    """Refresh skills and regenerate the index mesh inside the new worktree.
 
-    worktree_root.parent.mkdir(parents=True, exist_ok=True)
-
-    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root)]
-    if args.base_ref:
-        cmd.append(args.base_ref)
-
-    # Run from the main worktree so that the default base is main's HEAD, not the
-    # HEAD of any linked worktree the user may be invoking this script from.
-    result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
-    if result.returncode != 0:
-        return result.returncode
-
+    Returns an exit code; the caller is responsible for removing the worktree
+    when this returns non-zero.
+    """
     if not args.no_skill_refresh:
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
@@ -260,6 +241,59 @@ def main(argv: list[str] | None = None) -> int:
             )
 
     print(f"Worktree ready at {worktree_root}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
+    parser.add_argument("branch", help="branch name to create")
+    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
+    parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve writes inside the new worktree when refreshing installed skills and regenerating the index mesh. "
+             "The flag is forwarded to child scripts; the git worktree add step is not gated by this flag.",
+    )
+    args = parser.parse_args(argv)
+
+    repo_root = _repo_root()
+    _reject_submodule()
+    main_repo_root = _main_repo_root()
+    branch = _normalize_branch_name(args.branch)
+
+    try:
+        worktree_root = _validate_worktree_root(main_repo_root, branch)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    if worktree_root.is_file():
+        print(f"error: worktree path is an existing file: {worktree_root}", file=sys.stderr)
+        return 1
+    if worktree_root.is_dir():
+        print(f"error: worktree directory already exists: {worktree_root}", file=sys.stderr)
+        return 1
+
+    worktree_root.parent.mkdir(parents=True, exist_ok=True)
+
+    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root)]
+    if args.base_ref:
+        cmd.append(args.base_ref)
+
+    # Run from the main worktree so that the default base is main's HEAD, not the
+    # HEAD of any linked worktree the user may be invoking this script from.
+    result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
+    if result.returncode != 0:
+        return result.returncode
+
+    try:
+        exit_code = _configure_worktree(worktree_root, main_repo_root, args)
+    except BaseException:
+        _remove_worktree(worktree_root, main_repo_root)
+        raise
+    if exit_code != 0:
+        _remove_worktree(worktree_root, main_repo_root)
+        return exit_code
     return 0
 
 

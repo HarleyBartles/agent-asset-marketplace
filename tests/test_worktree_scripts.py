@@ -63,6 +63,22 @@ def test_new_help_exits_zero() -> None:
     assert "branch" in result.stdout.lower()
 
 
+def test_installed_new_worktree_runs_without_repo_tools(tmp_path: Path) -> None:
+    """The installed skill script must be self-contained and not rely on repo tools/."""
+    installed_scripts = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts"
+    isolated = tmp_path / "installed-skill"
+    shutil.copytree(installed_scripts, isolated)
+    isolated_script = isolated / "new_worktree.py"
+    result = subprocess.run(
+        [sys.executable, str(isolated_script), "--help"],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "branch" in result.stdout.lower()
+
+
 def test_remove_help_exits_zero() -> None:
     result = subprocess.run([sys.executable, str(REMOVE_WORKTREE), "--help"], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr

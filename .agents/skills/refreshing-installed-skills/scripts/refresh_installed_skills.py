@@ -558,8 +558,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve installing/refresing skills in a shared or git-worktree checkout. "
-             "Only pass this if you intend to mutate this checkout; it is forwarded to any child scripts.",
+        help="Approve installing/refreshing skills in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout.",
     )
     parser.add_argument(
         "--roll-marketplace-source",
