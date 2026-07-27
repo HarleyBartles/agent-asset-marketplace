@@ -171,7 +171,11 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         if rel not in gitmodules.read_text(encoding="utf-8"):
             findings.append(f"missing submodule entry: {rel}")
             return findings
-        if not (repo_root / rel / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
+        submodule_git = repo_root / rel / ".git"
+        submodule_module_dir = (
+            repo_root / ".git" / "modules" / rel.replace("/", "-")
+        )
+        if not submodule_git.exists() and not submodule_module_dir.exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
 
@@ -271,8 +275,16 @@ under the ## Exceptions heading are skipped."""
     parser.add_argument("--check", action="store_true", help="report drift only; do not write")
     parser.add_argument("--apply", action="store_true", help="create missing surfaces")
     parser.add_argument("--yes", action="store_true", help="skip the interactive approval prompt before applying")
-    parser.add_argument("--force", action="store_true", help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)")
-    parser.add_argument("--allow-shared-checkout", action="store_true", help="allow writes in a shared/git-worktree checkout")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)",
+    )
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="allow writes in a shared/git-worktree checkout",
+    )
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
@@ -305,7 +317,11 @@ under the ## Exceptions heading are skipped."""
         return 0
 
     if args.allow_shared_checkout:
-        print("warning: --allow-shared-checkout is an override and requires human approval before applying changes", file=sys.stderr)
+        print(
+            "warning: --allow-shared-checkout is an override and "
+            "requires human approval before applying changes",
+            file=sys.stderr,
+        )
     if not args.allow_shared_checkout and _is_shared_checkout(repo_root):
         print("error: shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
         return 1
