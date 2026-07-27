@@ -74,5 +74,5 @@
 
 ### Task 8: Publish
 
-- [ ] **Step 1: Stage all changed files and commit.**
-- [ ] **Step 2: Push the branch and open/update the PR.**
+- [x] **Step 1: Stage all changed files and commit.**
+- [x] **Step 2: Push the branch and open/update the PR.**
