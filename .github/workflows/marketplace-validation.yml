@@ -44,7 +44,37 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Lint changed Python files
-        run: bash scripts/ci-preflight-extra.sh --check
+        shell: bash
+        run: |
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            mapfile -t files < <(git diff --name-only --diff-filter=ACMR origin/main...HEAD | grep '\.py$' || true)
+          else
+            mapfile -t files < <(git ls-files '*.py')
+          fi
+          if [ ${#files[@]} -gt 0 ]; then
+            python -m ruff check "${files[@]}"
+          fi
 
-      - name: Marketplace check
-        run: python tools/check_marketplace.py
+      - name: Repo standards
+        run: bash .agents/skills/repo-standards/scripts/repo-standards.sh --check
+
+      - name: Validate agent mesh
+        run: bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check
+
+      - name: Marketplace inventory
+        run: python tools/rebuild_marketplace.py --phase inventory --check
+
+      - name: Heal overlays
+        run: python tools/rebuild_marketplace.py --phase heal --check
+
+      - name: Marketplace project
+        run: python tools/rebuild_marketplace.py --phase project --check
+
+      - name: Marketplace index
+        run: python tools/rebuild_marketplace.py --phase index --check
+
+      - name: Marketplace catalog
+        run: python tools/rebuild_marketplace.py --phase catalog --check
+
+      - name: Final validation
+        run: python tools/rebuild_marketplace.py --phase validate --check
