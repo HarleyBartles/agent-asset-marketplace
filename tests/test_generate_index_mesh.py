@@ -38,7 +38,7 @@ def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "source-repo")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
-        [sys.executable, str(CORE)],
+        [sys.executable, str(CORE), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -53,7 +53,7 @@ def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
 def test_check_mode_passes_when_current(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "check-repo")
     _commit_file(repo, "docs/guide.md")
-    subprocess.run([sys.executable, str(CORE)], cwd=repo, env=_stripped_env(), check=True)
+    subprocess.run([sys.executable, str(CORE), "--apply"], cwd=repo, env=_stripped_env(), check=True)
     result = subprocess.run(
         [sys.executable, str(CORE), "--check"],
         cwd=repo,
@@ -68,7 +68,7 @@ def test_check_mode_passes_when_current(tmp_path: Path) -> None:
 def test_check_mode_fails_when_stale(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "stale-repo")
     _commit_file(repo, "docs/guide.md")
-    subprocess.run([sys.executable, str(CORE)], cwd=repo, env=_stripped_env(), check=True)
+    subprocess.run([sys.executable, str(CORE), "--apply"], cwd=repo, env=_stripped_env(), check=True)
     _commit_file(repo, "docs/new.md")
     result = subprocess.run(
         [sys.executable, str(CORE), "--check"],
@@ -85,7 +85,7 @@ def test_empty_repo_generates_root_index(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "empty-repo")
     _commit_file(repo, "README.md")
     result = subprocess.run(
-        [sys.executable, str(CORE)],
+        [sys.executable, str(CORE), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -147,7 +147,7 @@ def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path
         hook.chmod(0o755)
 
     result = subprocess.run(
-        [sys.executable, str(CORE)],
+        [sys.executable, str(CORE), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,

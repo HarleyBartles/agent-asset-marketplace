@@ -11,7 +11,7 @@ Use this reference when working with marketplace generation, validation, and reg
 
 ### Local Rebuild (Write Mode)
 ```bash
-py -3 tools/rebuild_marketplace.py
+py -3 tools/rebuild_marketplace.py --apply
 ```
 
 This is the canonical local rebuild and validation entrypoint. It:
@@ -51,7 +51,7 @@ The script runs the generator/validator stack in order:
    - `generate_source_maps.py` → per-pack `references/source-map.md`
    - `generate_first_party_skill_catalog.py` → `provenance/first-party-skills.md`
 5. `normalize_first_party_skill_sources.py --check` — verifies first-party source shape.
-6. `install_agent_skills.py` — refreshes `.agents/skills/` for plugins marked `INSTALLED_BY_DEFAULT`.
+6. `refresh_installed_skills.py --apply` — refreshes `.agents/skills/` for plugins marked `INSTALLED_BY_DEFAULT`.
 7. `generate_repo_index.py` — writes the final `repo-index/repo-index.json`.
 8. `validate_marketplace.py --skip-freshness-checks` — structural validation of plugin trees, manifests, bundle manifests, and projections.
 9. `generate_repo_index.py --check` — confirms `repo-index/repo-index.json` is current.
@@ -98,7 +98,7 @@ Use this in CI to verify the committed state is current.
 
 ### Skills Installation
 ```bash
-py -3 tools/install_agent_skills.py
+py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
 ```
 
 Refreshes installed skills from marketplace plugins. Use this when:
@@ -108,12 +108,12 @@ Refreshes installed skills from marketplace plugins. Use this when:
 
 Check mode:
 ```bash
-py -3 tools/install_agent_skills.py --check
+py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
 ```
 
 ### Index Mesh Generation
 ```bash
-py -3 tools/generate_index_mesh.py
+py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply
 ```
 
 Regenerates the repo-wide INDEX.md mesh. Use this when:
@@ -123,12 +123,12 @@ Regenerates the repo-wide INDEX.md mesh. Use this when:
 
 Check mode:
 ```bash
-py -3 tools/generate_index_mesh.py --check
+py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check
 ```
 
 ## When to Regenerate
 
-You must run the full marketplace regeneration (`rebuild_marketplace.py`) after any change to:
+You must run the full marketplace regeneration (`rebuild_marketplace.py --apply`) after any change to:
 
 - Source custody under `sources/first_party/` or `sources/third_party/`
 - Codex adapter/overlay files under `adapters/codex/`
@@ -143,10 +143,10 @@ Partial regeneration is a fallback-only repair path and should not be used as a 
 
 After regeneration, verify:
 
-1. **All validation checks pass** — rebuild_marketplace.py runs validation automatically
+1. **All validation checks pass** — `rebuild_marketplace.py --apply` runs validation automatically
 2. **No git diff errors** — whitespace and formatting checks pass
-3. **Installed skills are current** — install_agent_skills.py --check passes
-4. **Index mesh is current** — generate_index_mesh.py --check passes
+3. **Installed skills are current** — `refresh_installed_skills.py --check` passes
+4. **Index mesh is current** — `sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check` passes
 
 ## Deterministic Pack Rule
 

@@ -195,8 +195,20 @@ def main(argv: list[str] | None = None) -> int:
     if not args.no_skill_refresh:
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            result = subprocess.run(
+            # Record shared-checkout approval non-interactively, then apply it.
+            # Worktrees are shared checkouts, so the skill needs an explicit
+            # approval token before it will mutate.
+            approve = subprocess.run(
                 [sys.executable, str(refresh_script), "--allow-shared-checkout"],
+                cwd=worktree_root,
+                env=_stripped_env(),
+                input=b"",
+            )
+            if approve.returncode != 0:
+                print(f"error: recording shared-checkout approval failed in {worktree_root}", file=sys.stderr)
+                return approve.returncode
+            result = subprocess.run(
+                [sys.executable, str(refresh_script), "--apply"],
                 cwd=worktree_root,
                 env=_stripped_env(),
             )

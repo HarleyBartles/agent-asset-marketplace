@@ -11,7 +11,8 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/docs/repo-guide-policy.md` mapping the repo to `repo-standards`.
 - `REVIEW.md` at the repo root pointing to the review guide and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
-- `.gitignore` containing the `.agents/superpowers/sdd/**` and `!.agents/superpowers/sdd/.gitignore` rule.
+- `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
+- `.agents/superpowers/sdd/.gitignore` containing the local SDD ignore rule.
 - `.agents/guides/<standard-guide>.md` for the core and declared guide set.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/guides/AGENTS.md` as an optional router for the guide set (may be scaffolded by `scaffold-guides`).
@@ -39,7 +40,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
 - `scaffold-ci-preflight` generates `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1` from the skill templates.
-- `scaffold-gitignore` ensures the sdd rule is in root `.gitignore`.
+- `scaffold-gitignore` ensures `.agents/superpowers/sdd/.gitignore` exists with the local SDD rule and that root `.gitignore` does not contain a stale sdd rule.
 - `scaffold-agents-md` scaffolds or validates root `AGENTS.md` as a router.
 - `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes`.
 - `scaffold-all` runs the above in sequence.
@@ -62,11 +63,18 @@ The `.agents/superpowers/` directory has mixed residency:
 - `superpowers/plans/**` is repo resident.
 - `superpowers/sdd/` and all subdirectories are intentionally ignored; SDD outputs are not repo resident.
 
-A repo that follows this standard must have a root `.gitignore` rule equivalent to:
+A repo that follows this standard must have a local `.gitignore` inside `superpowers/sdd/`:
+
+```gitignore
+*
+!.gitignore
+```
+
+The root `.gitignore` must not contain the stale equivalent rule:
 
 ```gitignore
 .agents/superpowers/sdd/**
 !.agents/superpowers/sdd/.gitignore
 ```
 
-This keeps the `sdd/` scaffold (only its `.gitignore`) while ignoring all session content at any depth.
+This keeps the `sdd/` scaffold (only its `.gitignore`) while ignoring all session content at any depth, and it keeps the ignore contract local to the directory it governs.
