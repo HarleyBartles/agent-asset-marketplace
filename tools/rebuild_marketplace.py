@@ -299,6 +299,11 @@ def main() -> int:
     if args.apply and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
+    # If mutation was approved interactively in a shared checkout, propagate that
+    # approval to child scripts so they do not re-prompt.
+    if args.apply and shared_checkout.is_shared_checkout(ROOT):
+        args.allow_shared_checkout = True
+
     phase_runners = {
         "inventory": lambda: _run_inventory(check=args.check, verbose=args.verbose),
         "heal": lambda: _run_heal(check=args.check, verbose=args.verbose),

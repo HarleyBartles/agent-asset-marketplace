@@ -74,6 +74,28 @@ def test_rebuild_refuses_apply_in_shared_checkout_without_flag(monkeypatch, caps
     assert "Pass --allow-shared-checkout" in captured.err
 
 
+def test_rebuild_interactive_approval_forwards_allow_shared_checkout(monkeypatch) -> None:
+    """If the user interactively approves a shared checkout, child skill scripts receive --allow-shared-checkout."""
+    calls: list[tuple[str, ...]] = []
+    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "prompt_for_approval", lambda _name: True)
+    monkeypatch.setattr(sys, "argv", ["rebuild_marketplace.py", "--apply", "--phase", "project"])
+
+    def fake_run_skill_script(skill_name: str, core_name: str, *args: str, verbose: bool = False) -> None:
+        calls.append((skill_name, core_name, *args))
+
+    def fake_run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
+        calls.append((script_name, *args))
+
+    monkeypatch.setattr(rebuild_marketplace, "_run_skill_script", fake_run_skill_script)
+    monkeypatch.setattr(rebuild_marketplace, "_run_tool", fake_run_tool)
+
+    exit_code = rebuild_marketplace.main()
+    assert exit_code == 0
+    refresh_call = next((c for c in calls if len(c) > 1 and c[1] == "refresh_installed_skills.py"), None)
+    assert refresh_call == ("refreshing-installed-skills", "refresh_installed_skills.py", "--apply", "--allow-shared-checkout")
+
+
 def test_rebuild_forwards_allow_shared_checkout_to_skill_scripts(monkeypatch) -> None:
     """The project and index phases must forward --allow-shared-checkout in apply mode."""
     calls: list[tuple[str, ...]] = []
