@@ -52,6 +52,17 @@ def _is_submodule(repo_root: Path) -> bool:
     return result.returncode == 0 and result.stdout.strip()
 
 
+def _is_ci() -> bool:
+    """Return True when running in a CI environment.
+
+    CI runners set CI=true or GITHUB_ACTIONS=true. Pre-commit hooks are a
+    local-only surface and are not validated in CI.
+    """
+    env = os.environ
+    ci = env.get("CI", "").lower()
+    return ci in ("1", "true", "yes") or env.get("GITHUB_ACTIONS") is not None
+
+
 def _manifest_path() -> Path:
     return Path(__file__).resolve().parent.parent / "references" / "repository-shape-manifest.json"
 
@@ -165,6 +176,9 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         return findings
 
     if kind == "hook":
+        # Pre-commit hooks are local-only; CI does not install or validate them.
+        if _is_ci():
+            return findings
         hook_path = _git_hooks_dir(repo_root) / Path(rel).name
         if not hook_path.is_file():
             findings.append(f"missing hook: {rel}")
