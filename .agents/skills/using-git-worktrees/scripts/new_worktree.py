@@ -250,7 +250,7 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Approve creating the new worktree and the child-script writes inside it. "
              "A new worktree is a linked/shared checkout, so this flag (or an interactive approval) "
-             "is required when invoked from a shared checkout or when skill refresh is enabled in a non-interactive environment.",
+             "is required whenever skill refresh is enabled, and also when invoked from a shared checkout.",
     )
     args = parser.parse_args(argv)
 
