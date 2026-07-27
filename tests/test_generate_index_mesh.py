@@ -214,7 +214,7 @@ def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
     _commit_file(repo, "Style Guides/overview.md")
 
     result = subprocess.run(
-        [sys.executable, str(CORE)],
+        [sys.executable, str(CORE), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,

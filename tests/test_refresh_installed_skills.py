@@ -530,7 +530,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
         patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
         patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -570,7 +570,7 @@ def test_default_roll_marketplace_source_is_off(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
         patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -593,7 +593,7 @@ def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
         patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
         patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout", "--roll-marketplace-source"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--roll-marketplace-source"]),
     ):
         assert refresh_installed_skills.main() == 0
 
