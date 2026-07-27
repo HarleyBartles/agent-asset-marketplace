@@ -23,7 +23,14 @@ while [ $# -gt 0 ]; do
 done
 
 BASE="${CHANGED_FROM:-origin/main...HEAD}"
-mapfile -t files < <(git -C "$REPO_ROOT" diff --name-only "$BASE" -- '*.py' || true)
+BASE_REF="${BASE%%...*}"
+
+if ! git -C "$REPO_ROOT" rev-parse --verify --quiet "$BASE_REF" >/dev/null 2>&1; then
+    echo "Base ref $BASE_REF not found; skipping Python lint." >&2
+    exit 0
+fi
+
+mapfile -t files < <(git -C "$REPO_ROOT" diff --name-only --diff-filter=ACMR "$BASE" -- '*.py')
 if [ ${#files[@]} -eq 0 ]; then
     echo "No changed Python files to lint."
     exit 0

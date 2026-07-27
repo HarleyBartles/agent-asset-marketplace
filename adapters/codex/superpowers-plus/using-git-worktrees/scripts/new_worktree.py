@@ -164,13 +164,22 @@ def _default_base_ref(main_repo_root: Path) -> str:
         return "HEAD"
 
     # Try to fetch the latest main; if the remote is unreachable or has no main
-    # branch, fall back to any locally cached origin/main.
-    subprocess.run(
-        ["git", "fetch", "origin", "main", "--quiet"],
-        cwd=main_repo_root,
-        capture_output=True,
-        env=_stripped_env(),
-    )
+    # branch, fall back to any locally cached origin/main. Disable terminal
+    # prompts and cap the fetch duration so worker flows don't hang on credential
+    # requests for HTTPS remotes.
+    fetch_env = _stripped_env()
+    fetch_env["GIT_TERMINAL_PROMPT"] = "0"
+    try:
+        subprocess.run(
+            ["git", "fetch", "origin", "main", "--quiet"],
+            cwd=main_repo_root,
+            capture_output=True,
+            env=fetch_env,
+            timeout=30,
+        )
+    except subprocess.TimeoutExpired:
+        # Unreachable/slow remote; rely on any cached origin/main below.
+        pass
 
     verify = subprocess.run(
         ["git", "rev-parse", "--verify", "--quiet", "origin/main"],

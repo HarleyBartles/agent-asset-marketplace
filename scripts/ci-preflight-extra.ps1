@@ -37,8 +37,20 @@ if (-not (Get-Command ruff -ErrorAction SilentlyContinue)) {
 }
 
 $base = if ($ChangedFrom) { $ChangedFrom } else { 'origin/main...HEAD' }
-$changed = git -C $RepoRoot diff --name-only $base -- '*.py' | Where-Object { $_.Trim() }
-$exitCode = 0
+$baseRef = if ($base -match '^(.*?)(\.\.\.|$)') { $matches[1] } else { $base }
+
+$null = git -C $RepoRoot rev-parse --verify --quiet $baseRef 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Warning "Base ref $baseRef not found; skipping Python lint."
+    exit 0
+}
+
+$diffOutput = git -C $RepoRoot diff --name-only --diff-filter=ACMR $base -- '*.py'
+if ($LASTEXITCODE -ne 0) {
+    Write-Warning "Could not determine changed Python files for lint (base: $base); skipping."
+    exit 0
+}
+$changed = $diffOutput | Where-Object { $_.Trim() }
 
 if (-not $changed) {
     Write-Host "No changed Python files to lint."
