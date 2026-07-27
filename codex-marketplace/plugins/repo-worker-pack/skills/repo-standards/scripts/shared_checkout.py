@@ -55,7 +55,7 @@ def prompt_for_approval(script_name: str) -> bool:
             f"warning: this is a shared/git-worktree checkout. "
             f"Allow {script_name} to apply changes? (y/N) "
         )
-    except EOFError:
+    except (EOFError, KeyboardInterrupt):
         return False
     return response.strip().lower() == "y"
 

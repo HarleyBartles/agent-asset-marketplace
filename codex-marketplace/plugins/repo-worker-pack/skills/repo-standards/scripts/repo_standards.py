@@ -311,12 +311,12 @@ under the ## Exceptions heading are skipped."""
         print("OK repo-standards: all surfaces present")
         return 0
 
-    if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
-        return 1
-
     if not args.yes:
         print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")
         print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
+        return 1
+
+    if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
     applied = 0

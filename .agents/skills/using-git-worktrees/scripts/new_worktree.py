@@ -184,7 +184,7 @@ def _find_mesh_script(worktree_root: Path) -> Path | None:
 def _remove_worktree(worktree_root: Path, main_repo_root: Path) -> None:
     """Remove a newly created worktree so failed runs do not leave dangling trees."""
     remove = subprocess.run(
-        ["git", "worktree", "remove", str(worktree_root)],
+        ["git", "worktree", "remove", "--force", str(worktree_root)],
         cwd=main_repo_root,
         env=_stripped_env(),
         capture_output=True,

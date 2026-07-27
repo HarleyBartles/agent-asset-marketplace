@@ -86,3 +86,37 @@ def test_prompt_for_approval_reads_n(monkeypatch) -> None:
     monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _prompt: "n")
     assert not shared_checkout.prompt_for_approval("test")
+
+
+def test_prompt_for_approval_catches_keyboard_interrupt(monkeypatch) -> None:
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
+
+    def raise_interrupt(_prompt: str) -> None:
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr("builtins.input", raise_interrupt)
+    assert not shared_checkout.prompt_for_approval("test")
+
+
+def test_all_shared_checkout_copies_match_canonical() -> None:
+    """Every vendored/projected copy of shared_checkout.py must be byte-identical to tools/shared_checkout.py."""
+    repo_root = Path(__file__).resolve().parents[1]
+    canonical = repo_root / "tools" / "shared_checkout.py"
+    canonical_bytes = canonical.read_bytes()
+
+    search_roots = [
+        repo_root / "sources" / "first_party" / "skills",
+        repo_root / "adapters",
+        repo_root / ".agents" / "skills",
+        repo_root / "codex-marketplace" / "plugins",
+    ]
+    copies = []
+    for root in search_roots:
+        if not root.is_dir():
+            continue
+        for candidate in root.rglob("shared_checkout.py"):
+            if candidate.is_file() and candidate.resolve() != canonical.resolve():
+                copies.append(candidate)
+
+    mismatches = [str(c) for c in copies if c.read_bytes() != canonical_bytes]
+    assert not mismatches, f"stale shared_checkout.py copies: {mismatches}"

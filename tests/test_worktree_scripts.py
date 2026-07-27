@@ -49,6 +49,44 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     return repo
 
 
+def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
+    """Create a fake repo where the refresh script writes a file and then fails."""
+    repo = _make_repo(tmp_path, name)
+    pack = repo / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    pack.mkdir(parents=True)
+    source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
+    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
+    shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
+    shutil.copytree(source_mesh, pack / "generating-agent-mesh")
+
+    # Replace the refresh script with one that writes a marker and exits non-zero.
+    fake_refresh = pack / "refreshing-installed-skills" / "scripts" / "refresh_installed_skills.py"
+    fake_refresh.write_text(
+        "import sys\nfrom pathlib import Path\n"
+        "Path('marker.txt').write_text('failed', encoding='utf-8')\n"
+        "print('refresh failed', file=sys.stderr)\n"
+        "sys.exit(1)\n",
+        encoding="utf-8",
+    )
+
+    (repo / ".agents" / "plugins").mkdir(parents=True)
+    marketplace = {
+        "plugins": [
+            {
+                "name": "repo-worker-pack",
+                "source": {"source": "local", "path": "./codex-marketplace/plugins/repo-worker-pack"},
+                "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
+            }
+        ]
+    }
+    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
+        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
+    )
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add failing refresh"], cwd=repo, check=True, capture_output=True)
+    return repo
+
+
 def _stripped_env():
     env = os.environ.copy()
     env.pop("GIT_DIR", None)
@@ -224,6 +262,29 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     assert "Worktree ready" in result.stdout
     assert "Installed skill" in result.stdout
     assert "index mesh" in result.stdout
+
+
+def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Path) -> None:
+    """A failed post-creation refresh must leave no registered worktree behind."""
+    repo = _make_repo_with_failing_refresh(tmp_path, "failing-refresh-repo")
+    worktree_root = tmp_path / "_agent-worktrees" / "failing-refresh-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert not worktree_root.exists()
+    list_result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert str(worktree_root) not in list_result.stdout
 
 
 def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
