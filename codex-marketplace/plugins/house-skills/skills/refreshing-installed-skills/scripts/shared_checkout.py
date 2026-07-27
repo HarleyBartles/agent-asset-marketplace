@@ -19,7 +19,7 @@ def _stripped_env() -> dict[str, str]:
 
 def _git_dir(repo_root: Path) -> Path:
     result = subprocess.run(
-        ["git", "rev-parse", "--git-dir"],
+        ["git", "rev-parse", "--absolute-git-dir"],
         cwd=repo_root,
         capture_output=True,
         text=True,

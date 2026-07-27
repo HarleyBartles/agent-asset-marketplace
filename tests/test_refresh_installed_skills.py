@@ -598,3 +598,52 @@ def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
         assert refresh_installed_skills.main() == 0
 
     roll_mock.assert_called_once()
+
+
+def test_allow_shared_checkout_requires_apply(capsys) -> None:
+    """--allow-shared-checkout without --apply is rejected."""
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "--allow-shared-checkout requires --apply" in captured.err
+
+
+def test_allow_shared_checkout_with_check_requires_apply(capsys) -> None:
+    """--allow-shared-checkout with --check is rejected."""
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout", "--check"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "--allow-shared-checkout requires --apply" in captured.err
+
+
+def test_apply_in_shared_checkout_requires_allow_flag(capsys, monkeypatch) -> None:
+    """--apply in a shared checkout fails without --allow-shared-checkout."""
+    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr("sys.stdin.isatty", lambda: False)
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    combined = captured.out + captured.err
+    assert result == 1
+    assert "Pass --allow-shared-checkout" in combined
+
+
+def test_apply_allow_shared_checkout_succeeds_in_shared_checkout(tmp_path: Path, monkeypatch) -> None:
+    """--apply --allow-shared-checkout works in a shared checkout."""
+    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_shared_checkout", lambda _root: True)
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0

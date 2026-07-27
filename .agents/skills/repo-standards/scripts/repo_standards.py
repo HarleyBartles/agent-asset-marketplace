@@ -246,10 +246,10 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
 def main(argv: list[str] | None = None) -> int:
     epilog = """\
 examples:
-  %(prog)s --check                 report drift for every surface in the manifest
-  %(prog)s --apply --yes           create missing surfaces without prompting
-  %(prog)s --apply --yes --force   create missing surfaces and overwrite drifted ones
-  %(prog)s --allow-shared-checkout record approval to apply changes in a shared checkout
+  %(prog)s --check                                report drift for every surface in the manifest
+  %(prog)s --apply --yes                          create missing surfaces without prompting
+  %(prog)s --apply --yes --force                  create missing surfaces and overwrite drifted ones
+  %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in a shared/git-worktree checkout
 
 exit codes:
   0  all surfaces present (or applied successfully)

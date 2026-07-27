@@ -21,7 +21,7 @@ def _make_fake_run(git_dir: Path, common_dir: Path | None = None) -> object:
     common = common_dir or git_dir
 
     def fake_run(cmd, **kwargs):
-        if "--git-dir" in cmd:
+        if "--absolute-git-dir" in cmd:
             return SimpleNamespace(stdout=str(git_dir), returncode=0, stderr="")
         if "--git-common-dir" in cmd:
             return SimpleNamespace(stdout=str(common), returncode=0, stderr="")

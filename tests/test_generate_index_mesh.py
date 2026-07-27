@@ -206,6 +206,86 @@ def test_generate_index_mesh_extra_hook_failure_fails(tmp_path: Path) -> None:
     assert "broken hook" in (result.stdout + result.stderr).lower()
 
 
+def _create_worktree(repo: Path, name: str) -> Path:
+    worktree = repo.parent / f"{repo.name}-{name}"
+    subprocess.run(
+        ["git", "worktree", "add", "-b", name, str(worktree), "HEAD"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    return worktree
+
+
+def test_allow_shared_checkout_requires_apply(tmp_path: Path) -> None:
+    """--allow-shared-checkout without --apply is rejected."""
+    repo = _make_repo(tmp_path, "allow-no-apply")
+    _commit_file(repo, "initial.txt")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "--allow-shared-checkout requires --apply" in combined
+
+
+def test_allow_shared_checkout_with_check_requires_apply(tmp_path: Path) -> None:
+    """--allow-shared-checkout with --check is rejected."""
+    repo = _make_repo(tmp_path, "allow-check")
+    _commit_file(repo, "initial.txt")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--allow-shared-checkout", "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "--allow-shared-checkout requires --apply" in combined
+
+
+def test_apply_in_shared_checkout_requires_allow_flag(tmp_path: Path) -> None:
+    """--apply in a shared checkout fails without --allow-shared-checkout."""
+    repo = _make_repo(tmp_path, "shared-no-flag")
+    _commit_file(repo, "initial.txt")
+    worktree = _create_worktree(repo, "feature")
+    _commit_file(worktree, "docs/guide.md")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply"],
+        cwd=worktree,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "Pass --allow-shared-checkout" in combined
+
+
+def test_apply_allow_shared_checkout_succeeds_in_shared_checkout(tmp_path: Path) -> None:
+    """--apply --allow-shared-checkout works in a shared checkout."""
+    repo = _make_repo(tmp_path, "shared-apply")
+    _commit_file(repo, "initial.txt")
+    worktree = _create_worktree(repo, "feature")
+    _commit_file(worktree, "docs/guide.md")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=worktree,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    assert "Wrote index mesh" in result.stdout
+    assert (worktree / "INDEX.md").is_file()
+
+
 def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
     """Links to files with spaces, parentheses, or plus signs are URL-quoted."""
     repo = _make_repo(tmp_path, "quoted-link-repo")
