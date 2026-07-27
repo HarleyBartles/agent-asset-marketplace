@@ -26,7 +26,7 @@ def _git_dir(repo_root: Path) -> Path:
         check=True,
         env=_stripped_env(),
     )
-    return Path(result.stdout.strip()).resolve()
+    return (repo_root / Path(result.stdout.strip())).resolve()
 
 
 def _git_common_dir(repo_root: Path) -> Path:
@@ -38,7 +38,7 @@ def _git_common_dir(repo_root: Path) -> Path:
         check=True,
         env=_stripped_env(),
     )
-    return Path(result.stdout.strip()).resolve()
+    return (repo_root / Path(result.stdout.strip())).resolve()
 
 
 def is_shared_checkout(repo_root: Path) -> bool:
