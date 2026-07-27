@@ -441,13 +441,13 @@ if ($files) {
 }
 
 Write-Host '==> Repo standards'
-& .agents/skills/repo-standards/scripts/repo-standards.ps1 -Check
+& .agents/skills/repo-standards/scripts/repo-standards.ps1 --check
 if ($LASTEXITCODE -ne 0) {
     throw "Fix repo standards: $pyPrefix .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes"
 }
 
 Write-Host '==> Validate agent mesh'
-& .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.ps1 -Check
+& .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.ps1 --check
 if ($LASTEXITCODE -ne 0) {
     throw "Fix agent mesh: $pyPrefix .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py"
 }
@@ -672,7 +672,8 @@ for path_str in files:
     for old, new in replacements:
         new_text = re.sub(old, new, new_text)
     if new_text != text:
-        path.write_text(new_text, encoding='utf-8', newline='\n')
+        with path.open('w', encoding='utf-8', newline='\n') as f:
+            f.write(new_text)
         print(f'updated {path}')
 ```
 
