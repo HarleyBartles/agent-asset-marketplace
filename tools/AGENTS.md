@@ -21,15 +21,16 @@ pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests
 --check`. `validate_repo_index.py` checks metadata alignment, not freshness by
 itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py
 --check`, and mesh law lives in `../.agents/docs/mesh-policy.md`.
-Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`,
+Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
+Add `--allow-shared-checkout` first in a linked worktree/shared checkout.
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
 manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
-`py -3 tools/rebuild_marketplace.py`.
-Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
+`py -3 tools/rebuild_marketplace.py --apply`.
+Use `py -3 tools/rebuild_marketplace.py` or `--check` for a non-mutating check,
 or `py -3 tools/check_marketplace.py` as the CI convenience wrapper.
 Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
 single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
@@ -41,9 +42,9 @@ remote source has changed; it only validates recorded local evidence.
 Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
 adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
 trailing whitespace stripping) shifts line numbers or whitespace. It runs
-automatically in write mode during `rebuild_marketplace.py` and in check mode
+automatically in write mode during `rebuild_marketplace.py --apply` and in check mode
 during `check_marketplace.py`. If `heal_overlays.py --check` fails, run
-`py -3 tools/rebuild_marketplace.py` to auto-heal stale overlays.
+`py -3 tools/rebuild_marketplace.py --apply` to auto-heal stale overlays.
 
 ## Routing pointers
 
@@ -61,7 +62,7 @@ Policy for agent work:
 - The canonical completion path is the full regeneration stack, not a partial refresh.
 - Partial regeneration paths are fallback-only repair tools and should not be
   advertised as a normal completion route.
-- The expected local green-path proof is `py -3 tools/rebuild_marketplace.py`.
+- The expected local green-path proof is `py -3 tools/rebuild_marketplace.py --apply`.
 - The expected CI green-path proof is `py -3 tools/check_marketplace.py`.
 - Both commands must be aligned so check mode fails if regeneration would be
   needed and write mode still performs the actual regeneration locally.

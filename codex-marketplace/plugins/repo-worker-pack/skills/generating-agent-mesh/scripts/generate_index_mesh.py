@@ -27,6 +27,46 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+# Allow importing the shared checkout helper from the script directory (so the
+# skill is self-contained when installed/projected) or from tools/ when running
+# from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_APPROVAL_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout_approval.py").is_file():
+    _SHARED_CHECKOUT_APPROVAL_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout_approval.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_APPROVAL_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_APPROVAL_PATH is None:
+    raise RuntimeError("shared_checkout_approval.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_APPROVAL_PATH))
+import shared_checkout_approval
+
+
+_SCRIPT_NAME = "generate-index-mesh"
+_SHARED_CHECKOUT_WARNING = (
+    "warning: --allow-shared-checkout is an override and requires current human approval "
+    "before applying changes"
+)
+
+
+def _is_shared_checkout(repo_root: Path) -> bool:
+    git_dir = subprocess.run(
+        ["git", "rev-parse", "--absolute-git-dir"],
+        cwd=repo_root, capture_output=True, text=True, check=True,
+        env=_stripped_env(),
+    ).stdout.strip()
+    git_common = subprocess.run(
+        ["git", "rev-parse", "--git-common-dir"],
+        cwd=repo_root, capture_output=True, text=True, check=True,
+        env=_stripped_env(),
+    ).stdout.strip()
+    return Path(git_dir).resolve() != Path(git_common).resolve()
+
+
 def _powershell_cmd() -> list[str]:
     for name in ("pwsh", "powershell"):
         if shutil.which(name):
@@ -338,9 +378,23 @@ def configure_root(repo_root: Path) -> None:
     IGNORED_INDEX_PATHS = _load_ignored_index_paths(TRACKED_DIRS)
 
 
+def _record_shared_checkout_approval(repo_root: Path) -> int:
+    print(_SHARED_CHECKOUT_WARNING, file=sys.stderr)
+    if sys.stdin.isatty():
+        response = input("Record shared-checkout approval for generate-index-mesh? (y/N) ")
+        if response.strip().lower() != "y":
+            print("approval not recorded", file=sys.stderr)
+            return 1
+    shared_checkout_approval.write(repo_root, _SCRIPT_NAME)
+    print("shared-checkout approval recorded; run --apply to generate", file=sys.stderr)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Generate or validate the repo-wide INDEX.md mesh")
     parser.add_argument("--check", action="store_true", help="validate without writing")
+    parser.add_argument("--apply", action="store_true", help="generate INDEX.md files")
+    parser.add_argument("--allow-shared-checkout", action="store_true", help="record approval to generate in a shared/git-worktree checkout")
     parser.add_argument("--repo-root", type=Path, default=None, help="repo root to process")
     args = parser.parse_args(argv)
 
@@ -355,6 +409,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     if result.returncode == 0 and result.stdout.strip():
         raise RuntimeError("This script must not run inside a git submodule")
+
+    if args.apply and args.allow_shared_checkout:
+        print("error: --allow-shared-checkout cannot be combined with --apply; run --allow-shared-checkout first, then --apply", file=sys.stderr)
+        return 1
+
+    if args.allow_shared_checkout:
+        if args.check:
+            print("error: --allow-shared-checkout cannot be combined with --check", file=sys.stderr)
+            return 1
+        return _record_shared_checkout_approval(ROOT)
+
+    if not args.check and not args.apply:
+        args.check = True
+
+    if not args.check and _is_shared_checkout(ROOT):
+        if not shared_checkout_approval.consume(ROOT, _SCRIPT_NAME):
+            print("error: shared checkout; run --allow-shared-checkout first", file=sys.stderr)
+            return 1
 
     targets = walk_index_targets()
     expected_paths = {target.path for target in targets}

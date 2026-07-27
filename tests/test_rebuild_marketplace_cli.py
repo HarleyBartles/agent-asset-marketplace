@@ -19,6 +19,8 @@ def test_rebuild_cli_help_exposes_new_flags():
     text = result.stdout
     assert "--phase" in text, "expected --phase in help"
     assert "--check" in text, "expected --check in help"
+    assert "--apply" in text, "expected --apply in help"
+    assert "--allow-shared-checkout" in text, "expected --allow-shared-checkout in help"
     assert "--skip-install" in text, "expected --skip-install in help"
     assert "--verbose" in text, "expected --verbose in help"
 
