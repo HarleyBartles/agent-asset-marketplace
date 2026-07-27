@@ -318,6 +318,29 @@ def test_new_worktree_from_linked_worktree_requires_flag(tmp_path: Path) -> None
     assert str(target_root) not in list_result.stdout
 
 
+def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
+    """A failed post-creation refresh must remove the branch so the run can be retried."""
+    repo = _make_repo_with_failing_refresh(tmp_path, "failing-branch-repo")
+    worktree_root = tmp_path / "_agent-worktrees" / "failing-branch-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert not worktree_root.exists()
+    branch_result = subprocess.run(
+        ["git", "branch", "--list", "feature"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert "feature" not in branch_result.stdout
+
+
 def test_new_worktree_from_main_in_non_tty_requires_flag(tmp_path: Path) -> None:
     """In non-TTY with skill refresh enabled, new_worktree must refuse without the flag."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "main-non-tty-repo")

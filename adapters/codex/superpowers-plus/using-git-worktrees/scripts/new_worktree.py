@@ -181,8 +181,8 @@ def _find_mesh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
 
 
-def _remove_worktree(worktree_root: Path, main_repo_root: Path) -> None:
-    """Remove a newly created worktree so failed runs do not leave dangling trees."""
+def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
+    """Remove a newly created worktree and its branch so failed runs can be retried."""
     remove = subprocess.run(
         ["git", "worktree", "remove", "--force", str(worktree_root)],
         cwd=main_repo_root,
@@ -191,6 +191,14 @@ def _remove_worktree(worktree_root: Path, main_repo_root: Path) -> None:
     )
     if remove.returncode != 0 and worktree_root.exists():
         shutil.rmtree(worktree_root, ignore_errors=True)
+    # The branch was created by `git worktree add -b` in this run; delete it so
+    # the caller can retry with the same branch name.
+    subprocess.run(
+        ["git", "branch", "-D", branch],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+    )
 
 
 def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace, allow_shared_checkout: bool) -> int:
@@ -303,10 +311,10 @@ def main(argv: list[str] | None = None) -> int:
     try:
         exit_code = _configure_worktree(worktree_root, main_repo_root, args, child_allow_shared)
     except BaseException:
-        _remove_worktree(worktree_root, main_repo_root)
+        _remove_worktree(worktree_root, main_repo_root, branch)
         raise
     if exit_code != 0:
-        _remove_worktree(worktree_root, main_repo_root)
+        _remove_worktree(worktree_root, main_repo_root, branch)
         return exit_code
     return 0
 
