@@ -41,7 +41,7 @@ def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Pa
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=skills_path),
         patch.object(refresh_installed_skills, "_install_plugin_skills", return_value=False),
         patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -86,7 +86,7 @@ def test_main_rejects_malformed_mark_skill_frontmatter(tmp_path: Path, capsys) -
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         result = refresh_installed_skills.main()
 
@@ -107,7 +107,7 @@ def test_main_rejects_mark_directory_name_that_differs_from_frontmatter(tmp_path
 
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         result = refresh_installed_skills.main()
 
@@ -127,7 +127,7 @@ def test_main_rejects_marketplace_reserved_mark_skill_before_mutation(tmp_path: 
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}]}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[{"name": "example"}]),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 1
 
@@ -396,7 +396,7 @@ def test_provenance_synced_plugins_lists_all_installed_plugins(tmp_path: Path) -
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(refresh_installed_skills, "_install_plugin_skills", side_effect=install_side_effect),
         patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -444,8 +444,8 @@ def test_validate_local_skills_extra_hook_invoked(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
         patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
-        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -479,8 +479,8 @@ def test_validate_local_skills_extra_hook_failure_fails_run(tmp_path: Path, caps
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
         patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
-        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 1
 
@@ -529,8 +529,8 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "_install_plugin_skills", side_effect=install_side_effect),
         patch.object(refresh_installed_skills, "_clean_orphan_skills", return_value=False),
         patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
-        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--allow-shared-checkout"]),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--force", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -569,8 +569,8 @@ def test_default_roll_marketplace_source_is_off(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
-        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
@@ -591,10 +591,59 @@ def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
     with (
         patch.object(refresh_installed_skills, "ROOT", consumer),
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
-        patch.object(refresh_installed_skills, "_is_shared_checkout", return_value=False),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
         patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout", "--roll-marketplace-source"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--roll-marketplace-source"]),
     ):
         assert refresh_installed_skills.main() == 0
 
     roll_mock.assert_called_once()
+
+
+def test_allow_shared_checkout_requires_apply(capsys) -> None:
+    """--allow-shared-checkout without --apply is rejected."""
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "--allow-shared-checkout requires --apply" in captured.err
+
+
+def test_allow_shared_checkout_with_check_requires_apply(capsys) -> None:
+    """--allow-shared-checkout with --check is rejected."""
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--allow-shared-checkout", "--check"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "--allow-shared-checkout requires --apply" in captured.err
+
+
+def test_apply_in_shared_checkout_requires_allow_flag(capsys, monkeypatch) -> None:
+    """--apply in a shared checkout fails without --allow-shared-checkout."""
+    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr("sys.stdin.isatty", lambda: False)
+    with patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]):
+        result = refresh_installed_skills.main()
+    captured = capsys.readouterr()
+    combined = captured.out + captured.err
+    assert result == 1
+    assert "Pass --allow-shared-checkout" in combined
+
+
+def test_apply_allow_shared_checkout_succeeds_in_shared_checkout(tmp_path: Path, monkeypatch) -> None:
+    """--apply --allow-shared-checkout works in a shared checkout."""
+    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_shared_checkout", lambda _root: True)
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0

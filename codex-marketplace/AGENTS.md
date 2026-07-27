@@ -56,7 +56,7 @@ projection is:
 1. **Edit `codex-marketplace/custody-pack-registry.json`** — add, remove, or
    move the entry between pack `entries` arrays. Update `lane` and
    `provenance_note` to reflect the new pack context.
-2. **Run `py -3 tools/rebuild_marketplace.py`** — this regenerates all
+2. **Run `py -3 tools/rebuild_marketplace.py --apply`** — this regenerates all
    derived surfaces: plugin projection trees under
    `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, source maps,
    provenance maps, skill zips, the marketplace manifest, and the index mesh.

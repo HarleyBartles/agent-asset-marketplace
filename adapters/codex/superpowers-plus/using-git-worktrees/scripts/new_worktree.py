@@ -6,9 +6,29 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+
+# Import the shared-checkout helper. We prefer a vendored copy next to this
+# script so the installed skill is self-contained, and fall back to the repo
+# tools/ directory when running from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout  # noqa: E402
 
 
 def _stripped_env() -> dict[str, str]:
@@ -17,6 +37,17 @@ def _stripped_env() -> dict[str, str]:
     env.pop("GIT_WORK_TREE", None)
     env.pop("GIT_INDEX_FILE", None)
     return env
+
+
+def _repo_root() -> Path:
+    result = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    return Path(result.stdout.strip())
 
 
 def _reject_submodule() -> None:
@@ -145,71 +176,122 @@ def _find_refresh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
-def _default_base_ref(main_repo_root: Path) -> str:
-    """Return the best default base ref for a new branch.
+def _find_mesh_script(worktree_root: Path) -> Path | None:
+    """Return the path to the new worktree's generate-index-mesh script."""
+    return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
 
-    Prefer the tip of ``origin/main`` when an ``origin`` remote is configured,
-    falling back to the main worktree's ``HEAD`` otherwise. This ensures new
-    worktrees branch from the latest shared mainline rather than from a
-    potentially stale local checkout.
+
+def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
+    """Remove a newly created worktree and its branch so failed runs can be retried."""
+    remove = subprocess.run(
+        ["git", "worktree", "remove", "--force", str(worktree_root)],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+    )
+    if remove.returncode != 0 and worktree_root.exists():
+        shutil.rmtree(worktree_root, ignore_errors=True)
+    # The branch was created by `git worktree add -b` in this run; delete it so
+    # the caller can retry with the same branch name.
+    subprocess.run(
+        ["git", "branch", "-D", branch],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+    )
+
+
+def _configure_worktree(
+    worktree_root: Path,
+    main_repo_root: Path,
+    args: argparse.Namespace,
+    allow_shared_checkout: bool,
+) -> int:
+    """Refresh skills and regenerate the index mesh inside the new worktree.
+
+    Returns an exit code; the caller is responsible for removing the worktree
+    when this returns non-zero.
     """
-    remote_result = subprocess.run(
-        ["git", "remote", "get-url", "origin"],
-        cwd=main_repo_root,
-        capture_output=True,
-        text=True,
-        env=_stripped_env(),
-    )
-    if remote_result.returncode != 0:
-        return "HEAD"
+    if not args.no_skill_refresh:
+        refresh_script = _find_refresh_script(worktree_root)
+        if refresh_script:
+            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
+                return 1
+            refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
+            result = subprocess.run(
+                [sys.executable, *refresh_args],
+                cwd=worktree_root,
+                env=_stripped_env(),
+            )
+            if result.returncode != 0:
+                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
+                return result.returncode
 
-    # Try to fetch the latest main; if the remote is unreachable or has no main
-    # branch, fall back to any locally cached origin/main. Disable terminal
-    # prompts and cap the fetch duration so worker flows don't hang on credential
-    # requests for HTTPS remotes.
-    fetch_env = _stripped_env()
-    fetch_env["GIT_TERMINAL_PROMPT"] = "0"
-    try:
-        subprocess.run(
-            ["git", "fetch", "origin", "main", "--quiet"],
-            cwd=main_repo_root,
-            capture_output=True,
-            env=fetch_env,
-            timeout=30,
-        )
-    except subprocess.TimeoutExpired:
-        # Unreachable/slow remote; rely on any cached origin/main below.
-        pass
+            mesh_script = _find_mesh_script(worktree_root)
+            if mesh_script:
+                mesh_args = [str(mesh_script), "--apply", "--allow-shared-checkout"]
+                result = subprocess.run(
+                    [sys.executable, *mesh_args],
+                    cwd=worktree_root,
+                    env=_stripped_env(),
+                )
+                if result.returncode != 0:
+                    print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
+                    return result.returncode
+            else:
+                print(
+                    "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
+                    file=sys.stderr,
+                )
+        else:
+            print(
+                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
+                file=sys.stderr,
+            )
 
-    verify = subprocess.run(
-        ["git", "rev-parse", "--verify", "--quiet", "origin/main"],
-        cwd=main_repo_root,
-        capture_output=True,
-        env=_stripped_env(),
-    )
-    if verify.returncode == 0:
-        return "origin/main"
-    return "HEAD"
+    print(f"Worktree ready at {worktree_root}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
-    parser.add_argument(
-        "--base-ref",
-        default=None,
-        help="base ref for the new branch (default: origin/main if available, otherwise HEAD)",
-    )
+    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: origin/main)")
     parser.add_argument(
         "--no-skill-refresh",
         action="store_true",
         help="skip refreshing installed skills in the new worktree",
     )
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve creating the new worktree and the child-script writes inside it. "
+             "A new worktree is a linked/shared checkout, so this flag (or an interactive approval) "
+             "is required whenever skill refresh is enabled, and also when invoked from a shared checkout.",
+    )
     args = parser.parse_args(argv)
 
+    repo_root = _repo_root()
     _reject_submodule()
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)
+
+    # A new worktree is a linked worktree, so child scripts will see a shared checkout. Confirm once
+    # before we create anything, either via the explicit flag or an interactive prompt.
+    if not args.no_skill_refresh:
+        if args.allow_shared_checkout:
+            child_allow_shared = True
+        elif shared_checkout.prompt_for_approval("new-worktree"):
+            child_allow_shared = True
+        else:
+            print("error: new worktree requires --allow-shared-checkout in a shared checkout", file=sys.stderr)
+            return 1
+    else:
+        child_allow_shared = args.allow_shared_checkout
+
+    # If we are already running from a shared checkout, also confirm the parent operation.
+    if not shared_checkout.approve_mutation(repo_root, "new-worktree", child_allow_shared):
+        return 1
 
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)
@@ -225,33 +307,37 @@ def main(argv: list[str] | None = None) -> int:
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
-    base_ref = args.base_ref if args.base_ref else _default_base_ref(main_repo_root)
-    cmd = ["git", "worktree", "add", "-b", branch, "--no-track", str(worktree_root), base_ref]
+    base_ref = args.base_ref
+    if base_ref is None:
+        # Default to the latest origin/main so new worktrees do not start from a
+        # stale local HEAD. Fetch first, and fall back to HEAD when no remote exists.
+        fetch = subprocess.run(
+            ["git", "fetch", "origin"],
+            cwd=main_repo_root,
+            env=_stripped_env(),
+            capture_output=True,
+        )
+        if fetch.returncode == 0:
+            base_ref = "origin/main"
+        else:
+            base_ref = "HEAD"
 
-    # Run from the main worktree so git uses the correct repository object store;
-    # the base ref has already been resolved to origin/main when available.
+    cmd = ["git", "worktree", "add", "--no-track", "-b", branch, str(worktree_root), base_ref]
+
+    # Run from the main worktree so that the default base is origin/main, not the
+    # HEAD of any linked worktree the user may be invoking this script from.
     result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
     if result.returncode != 0:
         return result.returncode
 
-    if not args.no_skill_refresh:
-        refresh_script = _find_refresh_script(worktree_root)
-        if refresh_script:
-            result = subprocess.run(
-                [sys.executable, str(refresh_script), "--allow-shared-checkout"],
-                cwd=worktree_root,
-                env=_stripped_env(),
-            )
-            if result.returncode != 0:
-                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-                return result.returncode
-        else:
-            print(
-                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
-                file=sys.stderr,
-            )
-
-    print(f"Worktree ready at {worktree_root}")
+    try:
+        exit_code = _configure_worktree(worktree_root, main_repo_root, args, child_allow_shared)
+    except BaseException:
+        _remove_worktree(worktree_root, main_repo_root, branch)
+        raise
+    if exit_code != 0:
+        _remove_worktree(worktree_root, main_repo_root, branch)
+        return exit_code
     return 0
 
 

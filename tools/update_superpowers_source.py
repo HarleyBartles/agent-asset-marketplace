@@ -280,14 +280,17 @@ def _prepare(tag: str) -> None:
         print("Adapter surfaces are already aligned with the new upstream version.")
 
 
-def _regen() -> None:
+def _regen(allow_shared_checkout: bool) -> None:
     issues = _adapter_staleness()
     if issues:
         print("Adapter drift detected; regenerate is blocked until the adapter is updated:")
         for issue in issues:
             print(f"- {issue}")
         raise SystemExit(2)
-    _run(sys.executable, str(ROOT / "tools" / "rebuild_marketplace.py"))
+    rebuild_args = [sys.executable, str(ROOT / "tools" / "rebuild_marketplace.py"), "--apply"]
+    if allow_shared_checkout:
+        rebuild_args.append("--allow-shared-checkout")
+    _run(*rebuild_args)
 
 
 def _parse_args() -> argparse.Namespace:
@@ -295,6 +298,11 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--tag", required=True, help="upstream release tag to retain, for example v6.1.0")
     parser.add_argument("--prepare", action="store_true", help="refresh source custody and supporting source docs")
     parser.add_argument("--regen", action="store_true", help="run the canonical marketplace rebuild after the adapter is updated")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="forward --allow-shared-checkout to the marketplace rebuild (requires --regen)",
+    )
     args = parser.parse_args()
     if not args.prepare and not args.regen:
         parser.error("choose at least one of --prepare or --regen")
@@ -306,7 +314,7 @@ def main() -> int:
     if args.prepare:
         _prepare(args.tag)
     if args.regen:
-        _regen()
+        _regen(args.allow_shared_checkout)
     return 0
 
 

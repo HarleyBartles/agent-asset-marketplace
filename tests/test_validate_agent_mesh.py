@@ -211,7 +211,7 @@ def test_agent_mesh_passes_for_encoded_ambiguous_links(tmp_path: Path) -> None:
     _commit_file(repo, "Style Guides/overview.md")
 
     generate = subprocess.run(
-        [sys.executable, str(GENERATE_CORE)],
+        [sys.executable, str(GENERATE_CORE), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
