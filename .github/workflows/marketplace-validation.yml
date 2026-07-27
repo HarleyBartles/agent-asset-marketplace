@@ -43,5 +43,90 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Marketplace check
-        run: python tools/check_marketplace.py
+      - name: Lint changed Python files
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            mapfile -t files < <(git diff --name-only --diff-filter=ACMR origin/main...HEAD | grep '\.py$' || true)
+          else
+            mapfile -t files < <(git ls-files '*.py')
+          fi
+          if [ ${#files[@]} -gt 0 ]; then
+            if ! python -m ruff check "${files[@]}"; then
+              echo "Fix lint: python -m ruff check --fix <files> && python -m ruff format <files>" >&2
+              exit 1
+            fi
+          fi
+
+      - name: Repo standards
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! bash .agents/skills/repo-standards/scripts/repo-standards.sh --check; then
+            echo "Fix repo standards: python .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes" >&2
+            exit 1
+          fi
+
+      - name: Validate agent mesh
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check; then
+            echo "Fix agent mesh: python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py" >&2
+            exit 1
+          fi
+
+      - name: Marketplace inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase inventory --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi
+
+      - name: Heal overlays
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase heal --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi
+
+      - name: Marketplace project
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase project --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi
+
+      - name: Marketplace index
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase index --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi
+
+      - name: Marketplace catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase catalog --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi
+
+      - name: Final validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! python tools/rebuild_marketplace.py --phase validate --check; then
+            echo "Fix marketplace: python tools/rebuild_marketplace.py" >&2
+            exit 1
+          fi

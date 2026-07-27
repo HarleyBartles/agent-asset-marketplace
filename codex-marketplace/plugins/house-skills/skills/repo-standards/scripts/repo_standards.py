@@ -46,7 +46,7 @@ else:
 if _SHARED_CHECKOUT_PATH is None:
     raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
 sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
-import shared_checkout
+import shared_checkout  # noqa: E402
 
 
 _SCRIPT_NAME = "repo-standards"
@@ -58,6 +58,17 @@ def _is_submodule(repo_root: Path) -> bool:
         cwd=repo_root, capture_output=True, text=True, env=_stripped_env(),
     )
     return result.returncode == 0 and result.stdout.strip()
+
+
+def _is_ci() -> bool:
+    """Return True when running in a CI environment.
+
+    CI runners set CI=true or GITHUB_ACTIONS=true. Pre-commit hooks are a
+    local-only surface and are not validated in CI.
+    """
+    env = os.environ
+    ci = env.get("CI", "").lower()
+    return ci in ("1", "true", "yes") or env.get("GITHUB_ACTIONS") is not None
 
 
 def _manifest_path() -> Path:
@@ -168,11 +179,18 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         if rel not in gitmodules.read_text(encoding="utf-8"):
             findings.append(f"missing submodule entry: {rel}")
             return findings
-        if not (repo_root / rel / ".git").exists() and not (repo_root / ".git" / "modules" / rel.replace("/", "-")).exists():
+        submodule_git = repo_root / rel / ".git"
+        submodule_module_dir = (
+            repo_root / ".git" / "modules" / rel.replace("/", "-")
+        )
+        if not submodule_git.exists() and not submodule_module_dir.exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
 
     if kind == "hook":
+        # Pre-commit hooks are local-only; CI does not install or validate them.
+        if _is_ci():
+            return findings
         hook_path = _git_hooks_dir(repo_root) / Path(rel).name
         if not hook_path.is_file():
             findings.append(f"missing hook: {rel}")
@@ -263,15 +281,32 @@ under the ## Exceptions heading are skipped."""
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--check", action="store_true", help="report drift only; do not write")
-    parser.add_argument("--apply", action="store_true", help="create missing surfaces")
-    parser.add_argument("--yes", action="store_true", help="confirm applying surfaces; shared-checkout approval is still required separately in shared/worktree checkouts")
-    parser.add_argument("--force", action="store_true", help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)")
+    parser.add_argument(
+        "--check", action="store_true", help="report drift only; do not write"
+    )
+    parser.add_argument(
+        "--apply", action="store_true", help="create missing surfaces"
+    )
+    parser.add_argument(
+        "--yes",
+        action="store_true",
+        help=(
+            "confirm applying surfaces; shared-checkout approval is still "
+            "required separately in shared/worktree checkouts"
+        ),
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)",
+    )
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve applying changes in a shared or git-worktree checkout. "
-             "Only pass this if you intend to mutate this checkout.",
+        help=(
+            "Approve applying changes in a shared or git-worktree checkout. "
+            "Only pass this if you intend to mutate this checkout."
+        ),
     )
     args = parser.parse_args(argv)
 

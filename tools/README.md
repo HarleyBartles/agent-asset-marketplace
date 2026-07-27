@@ -15,14 +15,14 @@ Current marketplace flow:
 - `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
 - `generate_pack_manifests.py` regenerates the selected pack bundle-manifest surfaces and `--check` compares them without writing.
 - `rebuild_marketplace.py` is the canonical local full reconciliation and validation entrypoint. It runs the full generator stack and the matching validators before a worker should return green.
-- `check_marketplace.py` is the canonical CI gate. It runs the non-mutating checks and fails if the committed tree would need regeneration.
+- `scripts/ci-preflight.sh --check` is the canonical CI gate. It runs the non-mutating checks and fails if the committed tree would need regeneration.
 
 Codex plugin first; generated GPT-safe skill zips second.
 
 Current scope note: `generated/skill-zips/` is the flat GPT-ready export surface
 for skill zips. It is a deterministic copy of the staged Codex projection.
 `py -3 tools/rebuild_marketplace.py` is the canonical local full reconciliation
-and validation entrypoint. `py -3 tools/check_marketplace.py` is the canonical
+and validation entrypoint. `bash scripts/ci-preflight.sh --check` is the canonical
 CI gate.
 
 Common worker update command:

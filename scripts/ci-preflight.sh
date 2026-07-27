@@ -1,30 +1,29 @@
 #!/usr/bin/env bash
+# `agent-asset-marketplace` preflight script.
+# This is a repo-owned mirror of the CI pipeline in
+# `.github/workflows/marketplace-validation.yml`. It is read-only and prints
+# the repair command for any failing check.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-find_skill_script() {
-    local skill="$1" core="$2"
-    local installed="$REPO_ROOT/.agents/skills/$skill/scripts/$core.sh"
-    if [ -f "$installed" ]; then echo "$installed"; return; fi
-
-    local mp_source="$REPO_ROOT/.agents/plugins/marketplace-source/codex-marketplace/plugins"
-    if [ -d "$mp_source" ]; then
-        local found
-        found=$(find "$mp_source" -path "*/skills/$skill/scripts/$core.sh" -maxdepth 4 -print -quit 2>/dev/null)
-        if [ -n "$found" ]; then echo "$found"; return; fi
+PYTHON=""
+for bin in python python3; do
+    if command -v "$bin" >/dev/null 2>&1; then
+        PYTHON="$bin"
+        break
     fi
-    echo "$skill $core wrapper not found" >&2; exit 1
-}
+done
+if [ -z "$PYTHON" ]; then
+    echo "No Python interpreter found" >&2
+    exit 1
+fi
 
-CHECK=""
-FULL=""
 CHANGED_FROM=""
 while [ $# -gt 0 ]; do
     case "$1" in
-        --check) CHECK="--check" ;;
-        --full) FULL="1" ;;
+        --check) ;;  # accepted for compatibility; preflight is always read-only
         --changed-from)
             shift
             CHANGED_FROM="$1"
@@ -34,39 +33,54 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-STANDARDS=$(find_skill_script repo-standards repo-standards)
-SCAFFOLD=$(find_skill_script repo-standards scaffold-all)
-MESH=$(find_skill_script generating-agent-mesh generate-index-mesh)
-VALIDATE=$(find_skill_script generating-agent-mesh validate-agent-mesh)
-REFRESH=$(find_skill_script refreshing-installed-skills refresh-installed-skills)
-
-STANDARDS_ARGS=()
-[ -n "$CHECK" ] && STANDARDS_ARGS+=("--check")
-"$STANDARDS" "${STANDARDS_ARGS[@]}"
-
-SCAFFOLD_ARGS=()
-[ -n "$CHECK" ] && SCAFFOLD_ARGS+=("--check")
-"$SCAFFOLD" "${SCAFFOLD_ARGS[@]}"
-
-MESH_ARGS=()
-[ -n "$CHECK" ] && MESH_ARGS+=("--check")
-# generate-index-mesh reconciles the whole tracked mesh; scoped diff is
-# handled by validate-agent-mesh and the optional ci-preflight-extra hook.
-"$MESH" "${MESH_ARGS[@]}"
-
-VALIDATE_ARGS=()
-[ -n "$CHECK" ] && VALIDATE_ARGS+=("--check")
-[ -n "$CHANGED_FROM" ] && VALIDATE_ARGS+=("--changed-from" "$CHANGED_FROM")
-"$VALIDATE" "${VALIDATE_ARGS[@]}"
-
-REFRESH_ARGS=()
-[ -n "$CHECK" ] && REFRESH_ARGS+=("--check")
-"$REFRESH" "${REFRESH_ARGS[@]}"
-
-EXTRA="$SCRIPT_DIR/ci-preflight-extra.sh"
-if [ -f "$EXTRA" ]; then
-    EXTRA_ARGS=()
-    [ -n "$CHECK" ] && EXTRA_ARGS+=("--check")
-    [ -n "$CHANGED_FROM" ] && EXTRA_ARGS+=("--changed-from" "$CHANGED_FROM")
-    "$EXTRA" "${EXTRA_ARGS[@]}"
+# Determine the base ref for changed-file linting.
+BASE=""
+if [ -n "$CHANGED_FROM" ]; then
+    if git rev-parse --verify "$CHANGED_FROM" >/dev/null 2>&1; then
+        BASE="$CHANGED_FROM"
+    else
+        echo "warning: $CHANGED_FROM not found, falling back to HEAD" >&2
+        BASE="HEAD"
+    fi
+elif git rev-parse --verify origin/main >/dev/null 2>&1; then
+    BASE="origin/main...HEAD"
+else
+    echo "warning: origin/main not found, linting all tracked Python files" >&2
+    BASE="HEAD"
 fi
+
+echo "==> Lint changed Python files"
+files=()
+if [ "$BASE" = "HEAD" ]; then
+    mapfile -t files < <(git ls-files '*.py')
+else
+    mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$BASE" | grep '\.py$' || true)
+fi
+if [ ${#files[@]} -gt 0 ]; then
+    if ! "$PYTHON" -m ruff check "${files[@]}"; then
+        echo "Fix lint: $PYTHON -m ruff check --fix <files> && $PYTHON -m ruff format <files>" >&2
+        exit 1
+    fi
+fi
+
+echo "==> Repo standards"
+if ! bash .agents/skills/repo-standards/scripts/repo-standards.sh --check; then
+    echo "Fix repo standards: $PYTHON .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes" >&2
+    exit 1
+fi
+
+echo "==> Validate agent mesh"
+if ! bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check; then
+    echo "Fix agent mesh: $PYTHON .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py" >&2
+    exit 1
+fi
+
+for phase in inventory heal project index catalog validate; do
+    echo "==> Marketplace $phase"
+    if ! "$PYTHON" tools/rebuild_marketplace.py --phase "$phase" --check; then
+        echo "Fix marketplace: $PYTHON tools/rebuild_marketplace.py" >&2
+        exit 1
+    fi
+done
+
+echo "All preflight checks passed."

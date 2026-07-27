@@ -28,7 +28,7 @@ else:
 if _SHARED_CHECKOUT_PATH is None:
     raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
 sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
-import shared_checkout
+import shared_checkout  # noqa: E402
 
 
 def _stripped_env() -> dict[str, str]:
@@ -201,7 +201,12 @@ def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> 
     )
 
 
-def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace, allow_shared_checkout: bool) -> int:
+def _configure_worktree(
+    worktree_root: Path,
+    main_repo_root: Path,
+    args: argparse.Namespace,
+    allow_shared_checkout: bool,
+) -> int:
     """Refresh skills and regenerate the index mesh inside the new worktree.
 
     Returns an exit code; the caller is responsible for removing the worktree
@@ -251,8 +256,12 @@ def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argpars
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
-    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
-    parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
+    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: origin/main)")
+    parser.add_argument(
+        "--no-skill-refresh",
+        action="store_true",
+        help="skip refreshing installed skills in the new worktree",
+    )
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
@@ -298,11 +307,24 @@ def main(argv: list[str] | None = None) -> int:
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root)]
-    if args.base_ref:
-        cmd.append(args.base_ref)
+    base_ref = args.base_ref
+    if base_ref is None:
+        # Default to the latest origin/main so new worktrees do not start from a
+        # stale local HEAD. Fetch first, and fall back to HEAD when no remote exists.
+        fetch = subprocess.run(
+            ["git", "fetch", "origin"],
+            cwd=main_repo_root,
+            env=_stripped_env(),
+            capture_output=True,
+        )
+        if fetch.returncode == 0:
+            base_ref = "origin/main"
+        else:
+            base_ref = "HEAD"
 
-    # Run from the main worktree so that the default base is main's HEAD, not the
+    cmd = ["git", "worktree", "add", "--no-track", "-b", branch, str(worktree_root), base_ref]
+
+    # Run from the main worktree so that the default base is origin/main, not the
     # HEAD of any linked worktree the user may be invoking this script from.
     result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
     if result.returncode != 0:

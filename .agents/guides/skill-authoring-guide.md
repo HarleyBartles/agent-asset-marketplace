@@ -58,7 +58,7 @@ py -3 tools/install_agent_skills.py
 Check the resulting marketplace state with:
 
 ```bash
-py -3 tools/check_marketplace.py
+bash scripts/ci-preflight.sh --check
 ```
 
 ## Publication handoff

@@ -31,8 +31,8 @@ manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py --apply` (also accepts `--allow-shared-checkout`).
-Use `py -3 tools/rebuild_marketplace.py` or `--check` for a non-mutating check,
-or `py -3 tools/check_marketplace.py` as the CI convenience wrapper.
+Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
+or `bash scripts/ci-preflight.sh --check` as the CI convenience wrapper.
 Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
 single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
 and `--skip-whitespace-check` omit steps from a full run.
@@ -44,7 +44,7 @@ Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
 adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
 trailing whitespace stripping) shifts line numbers or whitespace. It runs
 automatically in write mode during `rebuild_marketplace.py --apply` and in check mode
-during `check_marketplace.py`. If `heal_overlays.py --check` fails, run
+during `scripts/ci-preflight.sh --check`. If `heal_overlays.py --check` fails, run
 `py -3 tools/rebuild_marketplace.py --apply` to auto-heal stale overlays.
 
 ## Routing pointers
@@ -64,7 +64,7 @@ Policy for agent work:
 - Partial regeneration paths are fallback-only repair tools and should not be
   advertised as a normal completion route.
 - The expected local green-path proof is `py -3 tools/rebuild_marketplace.py --apply`.
-- The expected CI green-path proof is `py -3 tools/check_marketplace.py`.
+- The expected CI green-path proof is `bash scripts/ci-preflight.sh --check`.
 - Both commands must be aligned so check mode fails if regeneration would be
   needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of
