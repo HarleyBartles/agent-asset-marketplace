@@ -87,6 +87,8 @@ Only proceed to Step 1b if you have no native worktree tool available.
 
 Use the `new-worktree`/`remove-worktree` scripts bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helpers (for example, in a `scripts/` directory at the repo root), prefer the repo-specific ones. The bundled scripts are installed at `.agents/skills/using-git-worktrees/scripts/` and place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing.
 
+When using the bundled `new-worktree` script in a non-interactive environment, or when invoking it from a linked worktree, pass `--allow-shared-checkout` so the post-creation skill refresh can write inside the new linked worktree. Example: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py <branch> --allow-shared-checkout`.
+
 ### 1b. Git Worktree Fallback
 
 **Only use this if Step 1a does not apply** — you have no native worktree tool available. Create a worktree manually using git.

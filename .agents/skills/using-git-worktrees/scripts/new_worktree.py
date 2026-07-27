@@ -6,9 +6,29 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+
+# Import the shared-checkout helper. We prefer a vendored copy next to this
+# script so the installed skill is self-contained, and fall back to the repo
+# tools/ directory when running from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout
 
 
 def _stripped_env() -> dict[str, str]:
@@ -156,17 +176,113 @@ def _find_refresh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
+def _find_mesh_script(worktree_root: Path) -> Path | None:
+    """Return the path to the new worktree's generate-index-mesh script."""
+    return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
+
+
+def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
+    """Remove a newly created worktree and its branch so failed runs can be retried."""
+    remove = subprocess.run(
+        ["git", "worktree", "remove", "--force", str(worktree_root)],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+    )
+    if remove.returncode != 0 and worktree_root.exists():
+        shutil.rmtree(worktree_root, ignore_errors=True)
+    # The branch was created by `git worktree add -b` in this run; delete it so
+    # the caller can retry with the same branch name.
+    subprocess.run(
+        ["git", "branch", "-D", branch],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+    )
+
+
+def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace, allow_shared_checkout: bool) -> int:
+    """Refresh skills and regenerate the index mesh inside the new worktree.
+
+    Returns an exit code; the caller is responsible for removing the worktree
+    when this returns non-zero.
+    """
+    if not args.no_skill_refresh:
+        refresh_script = _find_refresh_script(worktree_root)
+        if refresh_script:
+            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
+                return 1
+            refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
+            result = subprocess.run(
+                [sys.executable, *refresh_args],
+                cwd=worktree_root,
+                env=_stripped_env(),
+            )
+            if result.returncode != 0:
+                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
+                return result.returncode
+
+            mesh_script = _find_mesh_script(worktree_root)
+            if mesh_script:
+                mesh_args = [str(mesh_script), "--apply", "--allow-shared-checkout"]
+                result = subprocess.run(
+                    [sys.executable, *mesh_args],
+                    cwd=worktree_root,
+                    env=_stripped_env(),
+                )
+                if result.returncode != 0:
+                    print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
+                    return result.returncode
+            else:
+                print(
+                    "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
+                    file=sys.stderr,
+                )
+        else:
+            print(
+                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
+                file=sys.stderr,
+            )
+
+    print(f"Worktree ready at {worktree_root}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
     parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
     parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve creating the new worktree and the child-script writes inside it. "
+             "A new worktree is a linked/shared checkout, so this flag (or an interactive approval) "
+             "is required whenever skill refresh is enabled, and also when invoked from a shared checkout.",
+    )
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
     _reject_submodule()
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)
+
+    # A new worktree is a linked worktree, so child scripts will see a shared checkout. Confirm once
+    # before we create anything, either via the explicit flag or an interactive prompt.
+    if not args.no_skill_refresh:
+        if args.allow_shared_checkout:
+            child_allow_shared = True
+        elif shared_checkout.prompt_for_approval("new-worktree"):
+            child_allow_shared = True
+        else:
+            print("error: new worktree requires --allow-shared-checkout in a shared checkout", file=sys.stderr)
+            return 1
+    else:
+        child_allow_shared = args.allow_shared_checkout
+
+    # If we are already running from a shared checkout, also confirm the parent operation.
+    if not shared_checkout.approve_mutation(repo_root, "new-worktree", child_allow_shared):
+        return 1
 
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)
@@ -192,24 +308,14 @@ def main(argv: list[str] | None = None) -> int:
     if result.returncode != 0:
         return result.returncode
 
-    if not args.no_skill_refresh:
-        refresh_script = _find_refresh_script(worktree_root)
-        if refresh_script:
-            result = subprocess.run(
-                [sys.executable, str(refresh_script), "--allow-shared-checkout"],
-                cwd=worktree_root,
-                env=_stripped_env(),
-            )
-            if result.returncode != 0:
-                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-                return result.returncode
-        else:
-            print(
-                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
-                file=sys.stderr,
-            )
-
-    print(f"Worktree ready at {worktree_root}")
+    try:
+        exit_code = _configure_worktree(worktree_root, main_repo_root, args, child_allow_shared)
+    except BaseException:
+        _remove_worktree(worktree_root, main_repo_root, branch)
+        raise
+    if exit_code != 0:
+        _remove_worktree(worktree_root, main_repo_root, branch)
+        return exit_code
     return 0
 
 

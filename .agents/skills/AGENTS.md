@@ -20,7 +20,7 @@ local custody and are not part of marketplace provenance.
 Skills are installed and refreshed using the deterministic tooling:
 
 ```bash
-py -3 tools/install_agent_skills.py
+py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
 ```
 
 This tool:
@@ -49,7 +49,7 @@ in marketplace provenance.
 When marketplace plugins are updated, run the full marketplace rebuild to refresh installed skills:
 
 ```bash
-py -3 tools/rebuild_marketplace.py
+py -3 tools/rebuild_marketplace.py --apply
 ```
 
 This will regenerate marketplace projections and refresh installed skills automatically.
@@ -59,7 +59,7 @@ This will regenerate marketplace projections and refresh installed skills automa
 To refresh skills without a full marketplace rebuild:
 
 ```bash
-py -3 tools/install_agent_skills.py
+py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
 ```
 
 ## Check Mode
@@ -67,5 +67,5 @@ py -3 tools/install_agent_skills.py
 To check if skills need refresh without making changes:
 
 ```bash
-py -3 tools/install_agent_skills.py --check
+py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
 ```

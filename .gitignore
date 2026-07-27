@@ -51,9 +51,7 @@ Thumbs.db
 
 .codex/environments/environment.toml
 
-# Superpowers sdd/ is a local-only session workspace.
-# Track only the directory scaffold (.gitignore); ignore all session contents at any depth.
-# plans/ and specs/ are fully repo resident and not governed by this block.
-.agents/superpowers/sdd/**
-!.agents/superpowers/sdd/.gitignore
+# .superpowers/ is the obra-superpowers upstream default output directory.
+# This repo standardizes on .agents/superpowers/; keep this ignore to avoid
+# accidentally tracking any stale .superpowers/ workspace that appears.
 .superpowers/

@@ -10,11 +10,14 @@ import subprocess
 import sys
 from pathlib import Path
 
+import shared_checkout
 from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_root
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace/plugins"
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
+
+_SCRIPT_NAME = "rebuild-marketplace"
 
 
 def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
@@ -123,7 +126,7 @@ def _run_heal(*, check: bool, verbose: bool) -> None:
     _run_tool("heal_overlays.py", *_check_arg(check), verbose=verbose)
 
 
-def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
+def _run_project(*, check: bool, verbose: bool, skip_install: bool, allow_shared_checkout: bool) -> None:
     if check:
         _run_tool("update_skill_artifacts.py", "--check", verbose=verbose)
     else:
@@ -132,19 +135,22 @@ def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
     if not skip_install:
         refresh_args = [*_check_arg(check)]
         if not check:
-            refresh_args.append("--allow-shared-checkout")
+            refresh_args.append("--apply")
+            if allow_shared_checkout:
+                refresh_args.append("--allow-shared-checkout")
         _run_skill_script("refreshing-installed-skills", "refresh_installed_skills.py", *refresh_args, verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
 
 
-def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
+def _run_index(*, check: bool, verbose: bool, skip_index: bool, allow_shared_checkout: bool) -> None:
     if skip_index:
         return
     _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
-    if check:
-        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
-    else:
-        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", verbose=verbose)
+    mesh_args = ["--check"] if check else ["--apply"]
+    if not check and allow_shared_checkout:
+        mesh_args.append("--allow-shared-checkout")
+    _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", *mesh_args, verbose=verbose)
+    if not check:
         _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
 
@@ -231,6 +237,17 @@ def _parse_args() -> argparse.Namespace:
         help="Non-mutating check mode. Forwards --check to every writer script that supports it.",
     )
     parser.add_argument(
+        "--apply",
+        action="store_true",
+        help="Apply mode: regenerate derived surfaces (required for mutation)",
+    )
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve applying changes in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout; it is forwarded to any child scripts.",
+    )
+    parser.add_argument(
         "--phase",
         choices=("inventory", "heal", "project", "index", "catalog", "validate", "all"),
         default="all",
@@ -268,6 +285,25 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
 
+    if not args.check and not args.apply:
+        args.check = True
+
+    if args.apply and args.check:
+        print("error: --apply and --check are mutually exclusive", file=sys.stderr)
+        return 1
+
+    if args.allow_shared_checkout and not args.apply:
+        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
+        return 1
+
+    if args.apply and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
+        return 1
+
+    # If mutation was approved interactively in a shared checkout, propagate that
+    # approval to child scripts so they do not re-prompt.
+    if args.apply and shared_checkout.is_shared_checkout(ROOT):
+        args.allow_shared_checkout = True
+
     phase_runners = {
         "inventory": lambda: _run_inventory(check=args.check, verbose=args.verbose),
         "heal": lambda: _run_heal(check=args.check, verbose=args.verbose),
@@ -275,11 +311,13 @@ def main() -> int:
             check=args.check,
             verbose=args.verbose,
             skip_install=args.skip_install,
+            allow_shared_checkout=args.allow_shared_checkout,
         ),
         "index": lambda: _run_index(
             check=args.check,
             verbose=args.verbose,
             skip_index=args.skip_index,
+            allow_shared_checkout=args.allow_shared_checkout,
         ),
         "catalog": lambda: _run_catalog(check=args.check, verbose=args.verbose),
         "validate": lambda: _run_validate(

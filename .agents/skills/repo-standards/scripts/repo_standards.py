@@ -30,18 +30,26 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
-def _is_shared_checkout(repo_root: Path) -> bool:
-    git_dir = subprocess.run(
-        ["git", "rev-parse", "--absolute-git-dir"],
-        cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env(),
-    ).stdout.strip()
-    git_common = subprocess.run(
-        ["git", "rev-parse", "--git-common-dir"],
-        cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env(),
-    ).stdout.strip()
-    # A linked worktree (shared checkout) has its git-dir under .git/worktrees/<name>
-    # while the common dir is the main .git directory.
-    return Path(git_dir).resolve() != Path(git_common).resolve()
+# Allow importing the shared checkout helper from the script directory (so the
+# skill is self-contained when installed/projected) or from tools/ when running
+# from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout
+
+
+_SCRIPT_NAME = "repo-standards"
 
 
 def _is_submodule(repo_root: Path) -> bool:
@@ -238,9 +246,10 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
 def main(argv: list[str] | None = None) -> int:
     epilog = """\
 examples:
-  %(prog)s --check              report drift for every surface in the manifest
-  %(prog)s --apply --yes        create missing surfaces without prompting
-  %(prog)s --apply --yes --force  create missing surfaces and overwrite drifted ones
+  %(prog)s --check                                report drift for every surface in the manifest
+  %(prog)s --apply --yes                          create missing surfaces without prompting
+  %(prog)s --apply --yes --force                  create missing surfaces and overwrite drifted ones
+  %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in a shared/git-worktree checkout
 
 exit codes:
   0  all surfaces present (or applied successfully)
@@ -256,14 +265,26 @@ under the ## Exceptions heading are skipped."""
     )
     parser.add_argument("--check", action="store_true", help="report drift only; do not write")
     parser.add_argument("--apply", action="store_true", help="create missing surfaces")
-    parser.add_argument("--yes", action="store_true", help="skip the interactive approval prompt before applying")
+    parser.add_argument("--yes", action="store_true", help="confirm applying surfaces; shared-checkout approval is still required separately in shared/worktree checkouts")
     parser.add_argument("--force", action="store_true", help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)")
-    parser.add_argument("--allow-shared-checkout", action="store_true", help="allow writes in a shared/git-worktree checkout")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve applying changes in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout.",
+    )
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
     if _is_submodule(repo_root):
         print("error: repo-standards must not run inside a submodule", file=sys.stderr)
+        return 1
+
+    if not args.check and not args.apply:
+        args.check = True
+
+    if args.allow_shared_checkout and not args.apply:
+        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
         return 1
 
     manifest = json.loads(_manifest_path().read_text(encoding="utf-8"))
@@ -290,15 +311,12 @@ under the ## Exceptions heading are skipped."""
         print("OK repo-standards: all surfaces present")
         return 0
 
-    if args.allow_shared_checkout:
-        print("warning: --allow-shared-checkout is an override and requires human approval before applying changes", file=sys.stderr)
-    if not args.allow_shared_checkout and _is_shared_checkout(repo_root):
-        print("error: shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
-        return 1
-
     if not args.yes:
         print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")
         print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
+        return 1
+
+    if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
     applied = 0

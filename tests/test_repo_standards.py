@@ -33,6 +33,26 @@ def _init_git_repo(path: Path) -> None:
     )
 
 
+def _init_git_repo_with_commit(path: Path) -> None:
+    _init_git_repo(path)
+    (path / "initial.txt").write_text("initial\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "initial.txt"], cwd=path, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "initial"], cwd=path, check=True, capture_output=True
+    )
+
+
+def _create_worktree(repo: Path, name: str) -> Path:
+    worktree = repo.parent / f"{repo.name}-{name}"
+    subprocess.run(
+        ["git", "worktree", "add", "-b", name, str(worktree), "HEAD"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    return worktree
+
+
 def test_scaffold_agents_md_check_missing_fails(tmp_path: Path) -> None:
     """scaffold_agents_md --check fails when root AGENTS.md is missing."""
     repo = tmp_path / "no-agents"
@@ -387,6 +407,121 @@ def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
     assert (repo / ".gitignore").is_file()
 
 
+def test_scaffold_gitignore_check_missing_sdd_gitignore_fails(tmp_path: Path) -> None:
+    """scaffold_gitignore --check fails when sdd/.gitignore is missing."""
+    repo = tmp_path / "no-sdd-gitignore"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    combined = result.stdout + result.stderr
+    assert "DRIFT:" in combined
+    assert ".agents/superpowers/sdd/.gitignore" in combined
+
+
+def test_scaffold_gitignore_check_incomplete_sdd_gitignore_fails(tmp_path: Path) -> None:
+    """scaffold_gitignore --check fails when sdd/.gitignore lacks !.gitignore."""
+    repo = tmp_path / "incomplete-sdd-gitignore"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
+    sdd_gitignore.parent.mkdir(parents=True)
+    sdd_gitignore.write_text("*\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    combined = result.stdout + result.stderr
+    assert "DRIFT:" in combined
+    assert ".agents/superpowers/sdd/.gitignore" in combined
+
+
+def test_scaffold_gitignore_creates_sdd_gitignore(tmp_path: Path) -> None:
+    """scaffold_gitignore creates sdd/.gitignore with * and !.gitignore."""
+    repo = tmp_path / "create-sdd-gitignore"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
+    assert sdd_gitignore.is_file()
+    content = sdd_gitignore.read_text(encoding="utf-8")
+    assert "*" in content
+    assert "!.gitignore" in content
+
+
+def test_scaffold_gitignore_check_valid_sdd_gitignore_passes(tmp_path: Path) -> None:
+    """scaffold_gitignore --check passes when sdd/.gitignore is valid."""
+    repo = tmp_path / "valid-sdd-gitignore"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    (repo / ".gitignore").write_text("", encoding="utf-8", newline="\n")
+    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
+    sdd_gitignore.parent.mkdir(parents=True)
+    sdd_gitignore.write_text("*\n!.gitignore\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "OK" in result.stdout
+
+
+def test_scaffold_gitignore_check_stale_root_rule_fails(tmp_path: Path) -> None:
+    """scaffold_gitignore --check fails when root .gitignore still has the old sdd rule."""
+    repo = tmp_path / "stale-root-sdd-rule"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    root_gitignore = repo / ".gitignore"
+    root_gitignore.write_text(
+        ".agents/superpowers/sdd/**\n!.agents/superpowers/sdd/.gitignore\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
+    sdd_gitignore.parent.mkdir(parents=True)
+    sdd_gitignore.write_text("*\n!.gitignore\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    combined = result.stdout + result.stderr
+    assert "DRIFT:" in combined
+    assert ".gitignore" in combined
+
+
 def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Path) -> None:
     """repo_standards --apply --yes --force overwrites a drifted scaffolded surface."""
     repo = tmp_path / "repo-standards-force"
@@ -454,6 +589,130 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "OK" in result.stdout
+
+
+def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path) -> None:
+    """repo_standards --apply --allow-shared-checkout works in a shared checkout."""
+    repo = tmp_path / "allow-apply"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    worktree = _create_worktree(repo, "feature")
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=worktree,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    assert "--allow-shared-checkout supplied" in combined
+
+
+def test_repo_standards_allow_shared_checkout_requires_apply(tmp_path: Path) -> None:
+    """repo_standards --allow-shared-checkout requires --apply (not --check)."""
+    repo = tmp_path / "allow-check"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--allow-shared-checkout", "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "--allow-shared-checkout requires --apply" in combined
+
+
+def test_repo_standards_allow_shared_checkout_alone_requires_apply(tmp_path: Path) -> None:
+    """repo_standards --allow-shared-checkout alone is rejected."""
+    repo = tmp_path / "allow-alone"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        input="",
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "--allow-shared-checkout requires --apply" in combined
+
+
+def test_repo_standards_apply_in_shared_checkout_requires_approval(tmp_path: Path) -> None:
+    """repo_standards --apply in a shared checkout fails without --allow-shared-checkout."""
+    repo = tmp_path / "shared-no-approval"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    worktree = _create_worktree(repo, "feature")
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes"],
+        cwd=worktree,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1, combined
+    assert "Pass --allow-shared-checkout" in combined
+
+
+def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Path) -> None:
+    """repo_standards --apply --allow-shared-checkout in a shared checkout applies changes."""
+    repo = tmp_path / "shared-apply"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- ci-preflight-ps1\n"
+        "- ci-preflight-sh\n"
+        "- pre-commit-hook\n"
+        "- repo-guide-policy\n"
+        "- guides-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-guide-policy.md").write_text(
+        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+    (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
+
+    # Commit files so worktree has them
+    subprocess.run(["git", "add", "."], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "setup"], cwd=repo, check=True, capture_output=True)
+
+    worktree = _create_worktree(repo, "feature")
+
+    # Write the stale file in the worktree too
+    (worktree / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
+        cwd=worktree,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    text = (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8")
+    assert "/repo-standards" in text
 
 
 def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> None:

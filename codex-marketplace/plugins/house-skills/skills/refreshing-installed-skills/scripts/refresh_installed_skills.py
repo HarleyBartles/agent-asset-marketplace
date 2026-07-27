@@ -35,7 +35,28 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+# Allow importing the shared checkout helper from the script directory (so the
+# skill is self-contained when installed/projected) or from tools/ when running
+# from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout
+
+
 ROOT = _repo_root()
+
+_SCRIPT_NAME = "refresh-installed-skills"
 
 
 def _marketplace_source_path(repo_root: Path) -> Path:
@@ -491,14 +512,6 @@ def _write_provenance(manifest_sha: str, installed_plugins: list[dict[str, Any]]
         f.write(json.dumps(provenance, indent=2) + "\n")
 
 
-def _is_shared_checkout(repo_root: Path) -> bool:
-    git_dir = subprocess.run(["git", "rev-parse", "--git-dir"], cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env()).stdout.strip()
-    git_common = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=repo_root, capture_output=True, text=True, check=True, env=_stripped_env()).stdout.strip()
-    # A linked worktree (shared checkout) has its git-dir under .git/worktrees/<name>
-    # while the common dir is the main .git directory.
-    return Path(git_dir).resolve() != Path(git_common).resolve()
-
-
 def _is_submodule(repo_root: Path) -> bool:
     result = subprocess.run(["git", "rev-parse", "--show-superproject-working-tree"], cwd=repo_root, capture_output=True, text=True, env=_stripped_env())
     return result.returncode == 0 and result.stdout.strip()
@@ -523,20 +536,6 @@ def _roll_marketplace_source(repo_root: Path) -> None:
     subprocess.run(["git", "add", "--", rel], cwd=repo_root, check=True, env=_stripped_env())
 
 
-def _regenerate_index_mesh(repo_root: Path) -> None:
-    """Regenerate the repo-wide INDEX.md mesh after skill installation."""
-    candidates = [
-        repo_root / ".agents" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
-        _marketplace_source_path(repo_root) / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py",
-    ]
-    mesh_script = next((p for p in candidates if p.is_file()), None)
-    if not mesh_script:
-        print("warning: generate_index_mesh.py not found; skipping mesh regeneration", file=sys.stderr)
-        return
-    print("Regenerating index mesh...")
-    subprocess.run([sys.executable, str(mesh_script)], cwd=repo_root, check=True, env=_stripped_env())
-
-
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Install/refresh skills in .agents/skills from installed marketplace plugins"
@@ -547,6 +546,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Check mode: report what would change without making changes"
     )
     parser.add_argument(
+        "--apply",
+        action="store_true",
+        help="Install/refresh skills (must be explicit; default is check mode)"
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Force refresh even when provenance matches"
@@ -554,7 +558,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Allow running in the shared checkout with a warning",
+        help="Approve installing/refreshing skills in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout.",
     )
     parser.add_argument(
         "--roll-marketplace-source",
@@ -571,8 +576,14 @@ def main(argv: list[str] | None = None) -> int:
         print("error: this script must not run inside a git submodule", file=sys.stderr)
         return 1
 
-    if not args.check and not args.allow_shared_checkout and _is_shared_checkout(ROOT):
-        print("error: refusing to modify a shared checkout; use --allow-shared-checkout to override", file=sys.stderr)
+    if not args.check and not args.apply:
+        args.check = True
+
+    if args.allow_shared_checkout and not args.apply:
+        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
+        return 1
+
+    if not args.check and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
     if not args.check and args.roll_marketplace_source:
@@ -648,7 +659,6 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and changes_made:
         _write_provenance(current_manifest_sha, installed_plugins, len(synced_skill_names))
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
-        _regenerate_index_mesh(ROOT)
 
     if args.check:
         if changes_made:

@@ -8,7 +8,7 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Install or refresh .agents/skills/ from the plugin source and regenerate the agent mesh.
+  scope: Install or refresh .agents/skills/ from the plugin source.
   use_when:
   - Use when creating a new worktree.
   - Use after updating the marketplace-source submodule.
@@ -23,7 +23,7 @@ license: MIT
 
 # Refreshing Installed Skills
 
-Install or refresh `.agents/skills/` from the plugin source, then regenerate the agent mesh.
+Install or refresh `.agents/skills/` from the plugin source.
 
 ## When to Use
 
@@ -34,11 +34,11 @@ Install or refresh `.agents/skills/` from the plugin source, then regenerate the
 ## Usage
 
 ```bash
-py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py
+py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
 py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
 ```
 
-This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`, rolls the optional `marketplace-source` submodule to `origin/main`, and regenerates the agent mesh. If changes were made, it commits them with the message `chore: refresh installed skills and regenerate agent mesh`.
+This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`, and rolls the optional `marketplace-source` submodule to `origin/main`. It defaults to `--check` mode; pass `--apply` to write files. When running from a linked worktree, add `--apply --allow-shared-checkout`.
 
 ## Plugin source types
 

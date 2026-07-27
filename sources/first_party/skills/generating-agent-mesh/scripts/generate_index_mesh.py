@@ -27,6 +27,28 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+# Allow importing the shared checkout helper from the script directory (so the
+# skill is self-contained when installed/projected) or from tools/ when running
+# from source.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+if (_SCRIPT_DIR / "shared_checkout.py").is_file():
+    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
+else:
+    for _parent in _SCRIPT_DIR.parents:
+        _candidate = _parent / "tools" / "shared_checkout.py"
+        if _candidate.is_file():
+            _SHARED_CHECKOUT_PATH = _parent / "tools"
+            break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout
+
+
+_SCRIPT_NAME = "generate-index-mesh"
+
+
 def _powershell_cmd() -> list[str]:
     for name in ("pwsh", "powershell"):
         if shutil.which(name):
@@ -341,6 +363,13 @@ def configure_root(repo_root: Path) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Generate or validate the repo-wide INDEX.md mesh")
     parser.add_argument("--check", action="store_true", help="validate without writing")
+    parser.add_argument("--apply", action="store_true", help="generate INDEX.md files")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve generating INDEX.md files in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout.",
+    )
     parser.add_argument("--repo-root", type=Path, default=None, help="repo root to process")
     args = parser.parse_args(argv)
 
@@ -355,6 +384,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     if result.returncode == 0 and result.stdout.strip():
         raise RuntimeError("This script must not run inside a git submodule")
+
+    if not args.check and not args.apply:
+        args.check = True
+
+    if args.allow_shared_checkout and not args.apply:
+        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
+        return 1
+
+    if not args.check and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
+        return 1
 
     targets = walk_index_targets()
     expected_paths = {target.path for target in targets}
