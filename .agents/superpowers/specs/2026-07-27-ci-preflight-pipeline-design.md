@@ -24,11 +24,15 @@ scaffold, not a fixed pipeline.
    point to `ci-validation-pipeline.md`.
 5. Rewrite `agent-asset-marketplace` `scripts/ci-preflight.sh` and `.ps1` to
    compose the full CI pipeline for this repo.
-6. Update `.github/workflows/marketplace-validation.yml` to run the same checks
+6. Remove `scripts/ci-preflight-extra.sh` and `scripts/ci-preflight-extra.ps1`;
+   their lint logic moves into `scripts/ci-preflight`.
+7. Update `.github/workflows/marketplace-validation.yml` to run the same checks
    as separate steps.
-7. Delete `tools/check_marketplace.py`.
-8. Update `tools/AGENTS.md`, `.agents/guides/*.md`, and `codex-marketplace/AGENTS.md`
-   to remove `check_marketplace.py` references and point to the new pipeline.
+8. Delete `tools/check_marketplace.py`.
+9. Grep the repo for `check_marketplace.py` and update active documentation
+   surfaces (`tools/AGENTS.md`, `.agents/guides/*.md`, `codex-marketplace/AGENTS.md`,
+   `tools/README.md`, `tools/INDEX.md`, etc.). Leave historical specs and plans
+   untouched.
 
 ## Non-goals
 
@@ -73,7 +77,9 @@ scaffold, not a fixed pipeline.
 run the same checks, in this order:
 
 1. **Lint changed Python files** — `ruff check` on files changed since
-   `origin/main...HEAD`.
+   `origin/main...HEAD`. The script must verify `origin/main` exists; if it
+   does not, fall back to linting all tracked `.py` files and emit a warning
+   rather than failing silently or linting nothing.
 2. **Repo standards** —
    `bash .agents/skills/repo-standards/scripts/repo-standards.sh --check`
 3. **Agent mesh validation** —
@@ -92,7 +98,9 @@ run the same checks, in this order:
    `python tools/rebuild_marketplace.py --phase validate --check`
 
 The `.ps1` preflight script uses the same steps with PowerShell-equivalent
-invocation and error handling.
+invocation and error handling. Both scripts must be executable, written with
+LF line endings, and fail fast (`set -euo pipefail` in `.sh`,
+`$ErrorActionPreference = 'Stop'` in `.ps1`).
 
 ### Failure messages
 
@@ -130,6 +138,10 @@ Each failed check prints a repair command to stderr:
 
 ## Risks and open questions
 
+- `scripts/ci-preflight-extra.sh` and `scripts/ci-preflight-extra.ps1` currently
+  exist in `agent-asset-marketplace` from the earlier lint hook experiment. They
+  must be removed when lint is inlined into `scripts/ci-preflight`; otherwise
+  two lint paths coexist and the old files may confuse readers.
 - `rebuild_marketplace.py --phase validate --check` includes `git diff
   --exit-code`, which fails if generated surfaces are stale. This is intended, but
   it requires `python tools/rebuild_marketplace.py` before preflight can pass.
