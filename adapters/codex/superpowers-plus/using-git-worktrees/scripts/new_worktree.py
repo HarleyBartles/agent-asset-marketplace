@@ -19,17 +19,6 @@ def _stripped_env() -> dict[str, str]:
     return env
 
 
-def _repo_root() -> Path:
-    result = subprocess.run(
-        ["git", "rev-parse", "--show-toplevel"],
-        capture_output=True,
-        text=True,
-        check=True,
-        env=_stripped_env(),
-    )
-    return Path(result.stdout.strip())
-
-
 def _reject_submodule() -> None:
     result = subprocess.run(
         ["git", "rev-parse", "--show-superproject-working-tree"],
@@ -197,11 +186,18 @@ def _default_base_ref(main_repo_root: Path) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
-    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: origin/main if available, otherwise HEAD)")
-    parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
+    parser.add_argument(
+        "--base-ref",
+        default=None,
+        help="base ref for the new branch (default: origin/main if available, otherwise HEAD)",
+    )
+    parser.add_argument(
+        "--no-skill-refresh",
+        action="store_true",
+        help="skip refreshing installed skills in the new worktree",
+    )
     args = parser.parse_args(argv)
 
-    repo_root = _repo_root()
     _reject_submodule()
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)

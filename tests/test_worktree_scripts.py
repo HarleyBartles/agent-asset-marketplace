@@ -5,11 +5,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
-NEW_WORKTREE = REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "new_worktree.py"
-REMOVE_WORKTREE = REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
+NEW_WORKTREE = (
+    REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "new_worktree.py"
+)
+REMOVE_WORKTREE = (
+    REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
+)
 
 
 def _make_repo(tmp_path: Path, name: str) -> Path:
@@ -43,7 +45,9 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
             }
         ]
     }
-    (repo / ".agents" / "plugins" / "marketplace.json").write_text(json.dumps(marketplace, indent=2) + "\n", encoding="utf-8")
+    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
+        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
+    )
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "add refresh scaffolding"], cwd=repo, check=True, capture_output=True)
     return repo
@@ -127,15 +131,34 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
         check=True,
         capture_output=True,
     )
-
-    marker = "origin-main-marker.txt"
-    (repo / marker).write_text("from-origin-main", encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "marker"], cwd=repo, check=True, capture_output=True)
+    # Push the initial commit; this also pins repo's local origin/main to that commit.
     subprocess.run(["git", "push", "origin", "main"], cwd=repo, check=True, capture_output=True)
 
-    # Rewind the local main so that origin/main is ahead of HEAD.
-    subprocess.run(["git", "reset", "--hard", "HEAD~1"], cwd=repo, check=True, capture_output=True)
+    # Add a second commit to the remote from a separate clone so that repo's
+    # origin/main becomes stale. new_worktree.py must fetch before it can base
+    # the new worktree branch on the latest origin/main tip.
+    upstream = tmp_path / "upstream"
+    subprocess.run(
+        ["git", "clone", "--branch", "main", str(remote), str(upstream)],
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=upstream, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=upstream, check=True, capture_output=True)
+
+    marker = "origin-main-marker.txt"
+    (upstream / marker).write_text("from-origin-main", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=upstream, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "marker"], cwd=upstream, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", "main"], cwd=upstream, check=True, capture_output=True)
+
+    expected_sha = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=upstream,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
 
     worktree_root = tmp_path / "_agent-worktrees" / "origin-main-local" / "feature"
     result = subprocess.run(
@@ -147,6 +170,15 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
+
+    worktree_head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=worktree_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    assert worktree_head == expected_sha
     assert (worktree_root / marker).read_text(encoding="utf-8") == "from-origin-main"
 
 
