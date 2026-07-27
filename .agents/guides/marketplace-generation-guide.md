@@ -14,6 +14,8 @@ Use this reference when working with marketplace generation, validation, and reg
 py -3 tools/rebuild_marketplace.py --apply
 ```
 
+In a shared or git-worktree checkout, also pass `--allow-shared-checkout` to approve writes.
+
 This is the canonical local rebuild and validation entrypoint. It:
 - Regenerates all marketplace projections
 - Refreshes installed skills
@@ -101,6 +103,8 @@ Use this in CI to verify the committed state is current.
 py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
 ```
 
+In a shared or git-worktree checkout, also pass `--allow-shared-checkout`.
+
 Refreshes installed skills from marketplace plugins. Use this when:
 - Skills have been modified in source
 - Plugin configuration has changed
@@ -115,6 +119,8 @@ py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_ins
 ```bash
 py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply
 ```
+
+In a shared or git-worktree checkout, also pass `--allow-shared-checkout`.
 
 Regenerates the repo-wide INDEX.md mesh. Use this when:
 - Files have been added or removed

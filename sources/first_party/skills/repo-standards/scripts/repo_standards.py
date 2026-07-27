@@ -265,7 +265,7 @@ under the ## Exceptions heading are skipped."""
     )
     parser.add_argument("--check", action="store_true", help="report drift only; do not write")
     parser.add_argument("--apply", action="store_true", help="create missing surfaces")
-    parser.add_argument("--yes", action="store_true", help="skip the interactive approval prompt before applying")
+    parser.add_argument("--yes", action="store_true", help="confirm applying surfaces; shared-checkout approval is still required separately in shared/worktree checkouts")
     parser.add_argument("--force", action="store_true", help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)")
     parser.add_argument(
         "--allow-shared-checkout",

@@ -184,8 +184,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve applying changes in the new worktree (a shared/git-worktree checkout). "
-             "Only pass this if you intend to mutate the new worktree; the flag is forwarded to child scripts.",
+        help="Approve writes inside the new worktree when refreshing installed skills and regenerating the index mesh. "
+             "The flag is forwarded to child scripts; the git worktree add step is not gated by this flag.",
     )
     args = parser.parse_args(argv)
 
