@@ -39,6 +39,7 @@ Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that ma
 | --- | --- |
 | How a repo's guides should be laid out | [references/repository-guide-standard.md](references/repository-guide-standard.md) |
 | How a repo's shape should be checked/applied | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
+| How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
 | The repo's local guide mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
 
