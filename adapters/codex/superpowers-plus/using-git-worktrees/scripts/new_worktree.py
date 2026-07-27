@@ -248,9 +248,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve writes inside the new worktree when refreshing installed skills and regenerating the index mesh. "
-             "The flag is forwarded to child scripts. When this script is invoked from a shared/git-worktree checkout, "
-             "it also approves creating the new worktree itself.",
+        help="Approve creating the new worktree and the child-script writes inside it. "
+             "A new worktree is a linked/shared checkout, so this flag (or an interactive approval) "
+             "is required when invoked from a shared checkout or when skill refresh is enabled in a non-interactive environment.",
     )
     args = parser.parse_args(argv)
 
@@ -259,10 +259,22 @@ def main(argv: list[str] | None = None) -> int:
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)
 
-    # If we're running from a shared checkout, confirm before creating the worktree.
-    if not shared_checkout.approve_mutation(repo_root, "new-worktree", args.allow_shared_checkout):
+    # A new worktree is a linked worktree, so child scripts will see a shared checkout. Confirm once
+    # before we create anything, either via the explicit flag or an interactive prompt.
+    if not args.no_skill_refresh:
+        if args.allow_shared_checkout:
+            child_allow_shared = True
+        elif shared_checkout.prompt_for_approval("new-worktree"):
+            child_allow_shared = True
+        else:
+            print("error: new worktree requires --allow-shared-checkout in a shared checkout", file=sys.stderr)
+            return 1
+    else:
+        child_allow_shared = args.allow_shared_checkout
+
+    # If we are already running from a shared checkout, also confirm the parent operation.
+    if not shared_checkout.approve_mutation(repo_root, "new-worktree", child_allow_shared):
         return 1
-    child_allow_shared = args.allow_shared_checkout or shared_checkout.is_shared_checkout(repo_root)
 
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)

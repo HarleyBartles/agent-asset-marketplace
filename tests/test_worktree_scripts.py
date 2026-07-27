@@ -287,6 +287,54 @@ def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Pat
     assert str(worktree_root) not in list_result.stdout
 
 
+def test_new_worktree_from_linked_worktree_requires_flag(tmp_path: Path) -> None:
+    """When invoked from a linked worktree without --allow-shared-checkout, new_worktree must refuse."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "linked-src-repo")
+    linked_root = tmp_path / "_agent-worktrees" / "linked-src-repo" / "linked"
+    subprocess.run(
+        ["git", "worktree", "add", str(linked_root), "-b", "linked"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        check=True,
+    )
+    target_root = tmp_path / "_agent-worktrees" / "linked-src-repo" / "target"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "target"],
+        cwd=linked_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert "Pass --allow-shared-checkout" in result.stderr or "requires --allow-shared-checkout" in result.stderr
+    list_result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert str(target_root) not in list_result.stdout
+
+
+def test_new_worktree_from_main_in_non_tty_requires_flag(tmp_path: Path) -> None:
+    """In non-TTY with skill refresh enabled, new_worktree must refuse without the flag."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "main-non-tty-repo")
+    target_root = tmp_path / "_agent-worktrees" / "main-non-tty-repo" / "feature"
+    # stdin is not a TTY because capture_output=True and no stdin is piped.
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert "requires --allow-shared-checkout" in result.stderr
+    assert not target_root.exists()
+
+
 def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "namespace-repo")
 
