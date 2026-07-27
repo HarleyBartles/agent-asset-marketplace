@@ -288,6 +288,10 @@ def main() -> int:
     if not args.check and not args.apply:
         args.check = True
 
+    if args.apply and args.check:
+        print("error: --apply and --check are mutually exclusive", file=sys.stderr)
+        return 1
+
     if args.allow_shared_checkout and not args.apply:
         print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
         return 1

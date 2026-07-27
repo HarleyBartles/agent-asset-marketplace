@@ -193,7 +193,7 @@ def _remove_worktree(worktree_root: Path, main_repo_root: Path) -> None:
         shutil.rmtree(worktree_root, ignore_errors=True)
 
 
-def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace) -> int:
+def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argparse.Namespace, allow_shared_checkout: bool) -> int:
     """Refresh skills and regenerate the index mesh inside the new worktree.
 
     Returns an exit code; the caller is responsible for removing the worktree
@@ -202,11 +202,9 @@ def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argpars
     if not args.no_skill_refresh:
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", args.allow_shared_checkout):
+            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
                 return 1
-            refresh_args = [str(refresh_script), "--apply"]
-            if args.allow_shared_checkout:
-                refresh_args.append("--allow-shared-checkout")
+            refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
             result = subprocess.run(
                 [sys.executable, *refresh_args],
                 cwd=worktree_root,
@@ -218,9 +216,7 @@ def _configure_worktree(worktree_root: Path, main_repo_root: Path, args: argpars
 
             mesh_script = _find_mesh_script(worktree_root)
             if mesh_script:
-                mesh_args = [str(mesh_script), "--apply"]
-                if args.allow_shared_checkout:
-                    mesh_args.append("--allow-shared-checkout")
+                mesh_args = [str(mesh_script), "--apply", "--allow-shared-checkout"]
                 result = subprocess.run(
                     [sys.executable, *mesh_args],
                     cwd=worktree_root,
@@ -253,7 +249,8 @@ def main(argv: list[str] | None = None) -> int:
         "--allow-shared-checkout",
         action="store_true",
         help="Approve writes inside the new worktree when refreshing installed skills and regenerating the index mesh. "
-             "The flag is forwarded to child scripts; the git worktree add step is not gated by this flag.",
+             "The flag is forwarded to child scripts. When this script is invoked from a shared/git-worktree checkout, "
+             "it also approves creating the new worktree itself.",
     )
     args = parser.parse_args(argv)
 
@@ -261,6 +258,11 @@ def main(argv: list[str] | None = None) -> int:
     _reject_submodule()
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)
+
+    # If we're running from a shared checkout, confirm before creating the worktree.
+    if not shared_checkout.approve_mutation(repo_root, "new-worktree", args.allow_shared_checkout):
+        return 1
+    child_allow_shared = args.allow_shared_checkout or shared_checkout.is_shared_checkout(repo_root)
 
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)
@@ -287,7 +289,7 @@ def main(argv: list[str] | None = None) -> int:
         return result.returncode
 
     try:
-        exit_code = _configure_worktree(worktree_root, main_repo_root, args)
+        exit_code = _configure_worktree(worktree_root, main_repo_root, args, child_allow_shared)
     except BaseException:
         _remove_worktree(worktree_root, main_repo_root)
         raise
