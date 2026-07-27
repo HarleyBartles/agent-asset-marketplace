@@ -1,72 +1,97 @@
-<#
-.SYNOPSIS
-  Run the repository preflight checks for local and CI use.
-#>
-[CmdletBinding()]
-param(
-    [switch]$Check,
-    [switch]$Full,
-    [string]$ChangedFrom
-)
-
+# `agent-asset-marketplace` preflight script.
+# This is a repo-owned mirror of the CI pipeline in
+# `.github/workflows/marketplace-validation.yml`. It is read-only and prints
+# the repair command for any failing check.
 $ErrorActionPreference = 'Stop'
-Set-StrictMode -Version Latest
 
-$ScriptDir = (Resolve-Path $PSScriptRoot).Path
-$RepoRoot = (Resolve-Path (Join-Path $ScriptDir '..')).Path
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot = Resolve-Path "$ScriptDir/.."
 
-function Find-SkillScript($skill, $core) {
-    $installed = Join-Path $RepoRoot ".agents/skills/$skill/scripts/$core.ps1"
-    if (Test-Path $installed) { return $installed }
-
-    $marketplaceSource = Join-Path $RepoRoot ".agents/plugins/marketplace-source/codex-marketplace/plugins"
-    if (Test-Path $marketplaceSource) {
-        $glob = Join-Path $marketplaceSource "*/skills/$skill/scripts/$core.ps1"
-        $found = @(Get-Item $glob -ErrorAction SilentlyContinue)
-        if ($found.Count -gt 0) { return $found[0].FullName }
-    }
-    throw "$skill $core wrapper not found"
+$pythonCmd = $null
+$pythonArgs = @()
+if (Get-Command py -ErrorAction SilentlyContinue) {
+    $pythonCmd = 'py'
+    $pythonArgs += '-3'
+} elseif (Get-Command python -ErrorAction SilentlyContinue) {
+    $pythonCmd = 'python'
+} elseif (Get-Command python3 -ErrorAction SilentlyContinue) {
+    $pythonCmd = 'python3'
+} else {
+    throw 'No Python interpreter found'
 }
 
-$standards = Find-SkillScript 'repo-standards' 'repo-standards'
-$scaffold = Find-SkillScript 'repo-standards' 'scaffold-all'
-$mesh = Find-SkillScript 'generating-agent-mesh' 'generate-index-mesh'
-$validate = Find-SkillScript 'generating-agent-mesh' 'validate-agent-mesh'
-$refresh = Find-SkillScript 'refreshing-installed-skills' 'refresh-installed-skills'
+$pyPrefix = "$pythonCmd"
+if ($pythonArgs.Count -gt 0) {
+    $pyPrefix += " $($pythonArgs -join ' ')"
+}
 
-$checkArgs = @()
-if ($Check) { $checkArgs += '--check' }
+function Invoke-Python($extraArgs) {
+    & $pythonCmd @($pythonArgs + $extraArgs)
+}
 
-$validateArgs = @($checkArgs)
+function Test-GitRef($ref) {
+    git rev-parse --verify $ref 2>&1 | Out-Null
+    return $LASTEXITCODE -eq 0
+}
+
+$ChangedFrom = $null
+for ($i = 0; $i -lt $args.Count; $i++) {
+    if ($args[$i] -in @('--check', '-Check')) { continue }
+    if ($args[$i] -eq '--changed-from') {
+        $i++
+        $ChangedFrom = $args[$i]
+    } else {
+        throw "unknown arg: $($args[$i])"
+    }
+}
+
+$base = 'HEAD'
 if ($ChangedFrom) {
-    $validateArgs += '--changed-from'
-    $validateArgs += $ChangedFrom
-}
-
-& $standards @checkArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-& $scaffold @checkArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-& $mesh @checkArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-& $validate @validateArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-& $refresh @checkArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-$extra = Join-Path $ScriptDir 'ci-preflight-extra.ps1'
-if (Test-Path $extra) {
-    $extraArgs = @($checkArgs)
-    if ($ChangedFrom) {
-        $extraArgs += '--changed-from'
-        $extraArgs += $ChangedFrom
+    if (Test-GitRef($ChangedFrom)) {
+        $base = $ChangedFrom
+    } else {
+        Write-Warning "$ChangedFrom not found, falling back to HEAD"
+        $base = 'HEAD'
     }
-    & $extra @extraArgs
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+} elseif (Test-GitRef('origin/main')) {
+    $base = 'origin/main...HEAD'
+} else {
+    Write-Warning 'origin/main not found, linting all tracked Python files'
+    $base = 'HEAD'
 }
 
-exit 0
+Write-Host '==> Lint changed Python files'
+$files = if ($base -eq 'HEAD') {
+    (git ls-files '*.py').Split("`n") | Where-Object { $_.Trim() -ne '' }
+} else {
+    (git diff --name-only --diff-filter=ACMR $base).Split("`n") | Where-Object { $_ -match '\.py$' } | Where-Object { $_.Trim() -ne '' }
+}
+if ($files) {
+    $ruffArgs = @('-m', 'ruff', 'check') + @($files)
+    Invoke-Python $ruffArgs
+    if ($LASTEXITCODE -ne 0) {
+        throw "Fix lint: $pyPrefix -m ruff check --fix <files> && $pyPrefix -m ruff format <files>"
+    }
+}
+
+Write-Host '==> Repo standards'
+& .agents/skills/repo-standards/scripts/repo-standards.ps1 --check
+if ($LASTEXITCODE -ne 0) {
+    throw "Fix repo standards: $pyPrefix .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes"
+}
+
+Write-Host '==> Validate agent mesh'
+& .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.ps1 --check
+if ($LASTEXITCODE -ne 0) {
+    throw "Fix agent mesh: $pyPrefix .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py"
+}
+
+foreach ($phase in @('inventory', 'heal', 'project', 'index', 'catalog', 'validate')) {
+    Write-Host "==> Marketplace $phase"
+    Invoke-Python @('tools/rebuild_marketplace.py', '--phase', $phase, '--check')
+    if ($LASTEXITCODE -ne 0) {
+        throw "Fix marketplace: $pyPrefix tools/rebuild_marketplace.py"
+    }
+}
+
+Write-Host 'All preflight checks passed.'
