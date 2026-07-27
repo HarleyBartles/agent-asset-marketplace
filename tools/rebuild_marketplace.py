@@ -10,45 +10,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-import shared_checkout_approval
+import shared_checkout
 from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_root
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace/plugins"
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 
-_REBUILD_SCRIPT_NAME = "rebuild-marketplace"
-_REFRESH_SCRIPT_NAME = "refresh-installed-skills"
-_MESH_SCRIPT_NAME = "generate-index-mesh"
-_SHARED_CHECKOUT_WARNING = (
-    "warning: --allow-shared-checkout is an override and requires current human approval "
-    "before applying changes"
-)
-
-
-def _is_shared_checkout(repo_root: Path) -> bool:
-    git_dir = subprocess.run(
-        ["git", "rev-parse", "--absolute-git-dir"],
-        cwd=repo_root, capture_output=True, text=True, check=True,
-    ).stdout.strip()
-    git_common = subprocess.run(
-        ["git", "rev-parse", "--git-common-dir"],
-        cwd=repo_root, capture_output=True, text=True, check=True,
-    ).stdout.strip()
-    return Path(git_dir).resolve() != Path(git_common).resolve()
-
-
-def _record_shared_checkout_approval(repo_root: Path) -> int:
-    print(_SHARED_CHECKOUT_WARNING, file=sys.stderr)
-    if sys.stdin.isatty():
-        response = input("Record shared-checkout approval for rebuild-marketplace? (y/N) ")
-        if response.strip().lower() != "y":
-            print("approval not recorded", file=sys.stderr)
-            return 1
-    for name in (_REBUILD_SCRIPT_NAME, _REFRESH_SCRIPT_NAME, _MESH_SCRIPT_NAME):
-        shared_checkout_approval.write(repo_root, name)
-    print("shared-checkout approval recorded; run --apply to rebuild", file=sys.stderr)
-    return 0
+_SCRIPT_NAME = "rebuild-marketplace"
 
 
 def _run_tool(script_name: str, *args: str, verbose: bool = False) -> None:
@@ -157,7 +126,7 @@ def _run_heal(*, check: bool, verbose: bool) -> None:
     _run_tool("heal_overlays.py", *_check_arg(check), verbose=verbose)
 
 
-def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
+def _run_project(*, check: bool, verbose: bool, skip_install: bool, allow_shared_checkout: bool) -> None:
     if check:
         _run_tool("update_skill_artifacts.py", "--check", verbose=verbose)
     else:
@@ -167,18 +136,21 @@ def _run_project(*, check: bool, verbose: bool, skip_install: bool) -> None:
         refresh_args = [*_check_arg(check)]
         if not check:
             refresh_args.append("--apply")
+            if allow_shared_checkout:
+                refresh_args.append("--allow-shared-checkout")
         _run_skill_script("refreshing-installed-skills", "refresh_installed_skills.py", *refresh_args, verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "project", "--skip-freshness-checks", verbose=verbose)
 
 
-def _run_index(*, check: bool, verbose: bool, skip_index: bool) -> None:
+def _run_index(*, check: bool, verbose: bool, skip_index: bool, allow_shared_checkout: bool) -> None:
     if skip_index:
         return
     _run_tool("generate_repo_index.py", *_check_arg(check), verbose=verbose)
-    if check:
-        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
-    else:
-        _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--apply", verbose=verbose)
+    mesh_args = ["--check"] if check else ["--apply"]
+    if not check and allow_shared_checkout:
+        mesh_args.append("--allow-shared-checkout")
+    _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", *mesh_args, verbose=verbose)
+    if not check:
         _run_skill_script("generating-agent-mesh", "generate_index_mesh.py", "--check", verbose=verbose)
     _run_tool("validate_marketplace.py", "--phase", "index", "--skip-freshness-checks", verbose=verbose)
 
@@ -272,7 +244,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Record approval to rebuild in a shared/git-worktree checkout",
+        help="Approve applying changes in a shared or git-worktree checkout. "
+             "Only pass this if you intend to mutate this checkout; it is forwarded to any child scripts.",
     )
     parser.add_argument(
         "--phase",
@@ -309,32 +282,18 @@ def _parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def _consume_approval_tokens(repo_root: Path) -> None:
-    """Consume any remaining shared-checkout approval tokens for child scripts."""
-    for name in (_REBUILD_SCRIPT_NAME, _REFRESH_SCRIPT_NAME, _MESH_SCRIPT_NAME):
-        shared_checkout_approval.consume(repo_root, name)
-
-
 def main() -> int:
     args = _parse_args()
-
-    if args.apply and args.allow_shared_checkout:
-        print("error: --allow-shared-checkout cannot be combined with --apply; run --allow-shared-checkout first, then --apply", file=sys.stderr)
-        return 1
-
-    if args.allow_shared_checkout:
-        if args.check:
-            print("error: --allow-shared-checkout cannot be combined with --check", file=sys.stderr)
-            return 1
-        return _record_shared_checkout_approval(ROOT)
 
     if not args.check and not args.apply:
         args.check = True
 
-    if not args.check and _is_shared_checkout(ROOT):
-        if not shared_checkout_approval.consume(ROOT, _REBUILD_SCRIPT_NAME):
-            print("error: shared checkout; run --allow-shared-checkout first", file=sys.stderr)
-            return 1
+    if args.allow_shared_checkout and not args.apply:
+        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
+        return 1
+
+    if args.apply and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
+        return 1
 
     phase_runners = {
         "inventory": lambda: _run_inventory(check=args.check, verbose=args.verbose),
@@ -343,11 +302,13 @@ def main() -> int:
             check=args.check,
             verbose=args.verbose,
             skip_install=args.skip_install,
+            allow_shared_checkout=args.allow_shared_checkout,
         ),
         "index": lambda: _run_index(
             check=args.check,
             verbose=args.verbose,
             skip_index=args.skip_index,
+            allow_shared_checkout=args.allow_shared_checkout,
         ),
         "catalog": lambda: _run_catalog(check=args.check, verbose=args.verbose),
         "validate": lambda: _run_validate(
@@ -359,12 +320,8 @@ def main() -> int:
     }
 
     phases = _PHASE_ORDER if args.phase == "all" else (args.phase,)
-    try:
-        for phase in phases:
-            phase_runners[phase]()
-    finally:
-        if not args.check:
-            _consume_approval_tokens(ROOT)
+    for phase in phases:
+        phase_runners[phase]()
     return 0
 
 

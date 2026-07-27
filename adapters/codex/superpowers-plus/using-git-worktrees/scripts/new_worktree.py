@@ -11,6 +11,21 @@ import sys
 from pathlib import Path
 
 
+# Import the shared-checkout helper from the source repo. We search upward from
+# the script location so this adapter is not coupled to the exact repo layout.
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_SHARED_CHECKOUT_PATH: Path | None = None
+for _parent in _SCRIPT_DIR.parents:
+    _candidate = _parent / "tools" / "shared_checkout.py"
+    if _candidate.is_file():
+        _SHARED_CHECKOUT_PATH = _parent / "tools"
+        break
+if _SHARED_CHECKOUT_PATH is None:
+    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
+import shared_checkout
+
+
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
     env.pop("GIT_DIR", None)
@@ -156,11 +171,22 @@ def _find_refresh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
+def _find_mesh_script(worktree_root: Path) -> Path | None:
+    """Return the path to the new worktree's generate-index-mesh script."""
+    return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
     parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
     parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="Approve applying changes in the new worktree (a shared/git-worktree checkout). "
+             "Only pass this if you intend to mutate the new worktree; the flag is forwarded to child scripts.",
+    )
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
@@ -195,26 +221,38 @@ def main(argv: list[str] | None = None) -> int:
     if not args.no_skill_refresh:
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            # Record shared-checkout approval non-interactively, then apply it.
-            # Worktrees are shared checkouts, so the skill needs an explicit
-            # approval token before it will mutate.
-            approve = subprocess.run(
-                [sys.executable, str(refresh_script), "--allow-shared-checkout"],
-                cwd=worktree_root,
-                env=_stripped_env(),
-                input=b"",
-            )
-            if approve.returncode != 0:
-                print(f"error: recording shared-checkout approval failed in {worktree_root}", file=sys.stderr)
-                return approve.returncode
+            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", args.allow_shared_checkout):
+                return 1
+            refresh_args = [str(refresh_script), "--apply"]
+            if args.allow_shared_checkout:
+                refresh_args.append("--allow-shared-checkout")
             result = subprocess.run(
-                [sys.executable, str(refresh_script), "--apply"],
+                [sys.executable, *refresh_args],
                 cwd=worktree_root,
                 env=_stripped_env(),
             )
             if result.returncode != 0:
                 print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
                 return result.returncode
+
+            mesh_script = _find_mesh_script(worktree_root)
+            if mesh_script:
+                mesh_args = [str(mesh_script), "--apply"]
+                if args.allow_shared_checkout:
+                    mesh_args.append("--allow-shared-checkout")
+                result = subprocess.run(
+                    [sys.executable, *mesh_args],
+                    cwd=worktree_root,
+                    env=_stripped_env(),
+                )
+                if result.returncode != 0:
+                    print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
+                    return result.returncode
+            else:
+                print(
+                    "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
+                    file=sys.stderr,
+                )
         else:
             print(
                 "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",

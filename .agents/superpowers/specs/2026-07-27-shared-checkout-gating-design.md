@@ -1,4 +1,4 @@
-# Shared-checkout approval gating design
+# Shared-checkout gating design
 
 ## Context
 
@@ -8,20 +8,19 @@ This spec covers the shared-checkout gating changes for the same PR that fixes t
 - `.agents/superpowers/sdd/.gitignore` contains `*` and `!.gitignore`.
 - `repo-standards/scripts/scaffold_gitignore.py` and `references/repository-shape-standard.md` are updated to enforce the local SDD `.gitignore` rule.
 
-This spec focuses on making `--allow-shared-checkout` an authoritative, two-step approval gate across the mutation scripts that ship as skills (and the repo-local `rebuild_marketplace.py` orchestrator).
+This spec reflects the final, simplified shared-checkout gating: a single runtime `--allow-shared-checkout` flag that is forwarded from parent scripts to child scripts, replacing the previous token-based two-step approval.
 
 ## Problem
 
-Today `--allow-shared-checkout` prints a warning but then immediately permits mutation when combined with `--apply`/`--yes`. An agent can read the warning only after the mutation has already happened. The flag must be split into a separate approval step so the agent sees the warning, decides whether they have permission, and then explicitly runs `--apply`.
+The original `--allow-shared-checkout` flag only printed a warning and then immediately permitted mutation when combined with `--apply`/`--yes`. There was no clear, agent-visible approval step. The initial redesign introduced a token-based pre-approval step, but that was evaluated as overly complex because it required separate invocations, TTL tracking, and redundant script re-runs.
 
 ## Goals
 
-1. No mutation script may apply changes in a shared checkout without a separate approval step.
-2. `--allow-shared-checkout` must be usable only as an approval step; it must reject mutation flags in the same invocation.
-3. The approval must be short-lived (10 minutes) and consumed on first use.
-4. The approval must be stored in the git metadata directory so it is never committed.
-5. Parent scripts like `rebuild_marketplace.py` may pre-approve child scripts that are part of the same approved operation.
-6. No flags should default to mutating; `--apply` must be explicit.
+1. A mutation script must not write files in a shared checkout unless the caller explicitly passes `--allow-shared-checkout`.
+2. `--allow-shared-checkout` must be combined with `--apply` (or the default mutation mode) in the same invocation; it is rejected when used alone or with `--check`.
+3. In a shared checkout, the script warns and, when running interactively, prompts for confirmation.
+4. Parent scripts (`rebuild_marketplace.py`, `new_worktree.py`) must forward `--allow-shared-checkout` to any child mutation scripts they invoke.
+5. No flags should default to mutating; `--apply` must be explicit.
 
 ## Out of scope
 
@@ -30,96 +29,75 @@ Today `--allow-shared-checkout` prints a warning but then immediately permits mu
 
 ## Mechanism
 
-### Token storage
+### Shared helper
 
-A shared helper, `tools/shared_checkout_approval.py`, provides script-specific tokens:
-
-```text
-<git-dir>/info/devin-shared-checkout-approval-<script-name>
-```
-
-Each token file contains an ISO-8601 UTC timestamp. Tokens are valid for 10 minutes and are consumed (deleted) on first use.
-
-### Token helper API
+`tools/shared_checkout.py` provides a single helper used by every gated script:
 
 ```python
-approval_path(repo_root: Path, script_name: str) -> Path
-is_valid(repo_root: Path, script_name: str) -> bool
-write(repo_root: Path, script_name: str) -> Path
-consume(repo_root: Path, script_name: str) -> bool
+def is_shared_checkout(repo_root: Path) -> bool
+def prompt_for_approval(script_name: str) -> bool
+def approve_mutation(repo_root: Path, script_name: str, flag_approved: bool) -> bool
 ```
 
-All functions operate with `newline="\n"` and UTC ISO-8601 timestamps.
+- `is_shared_checkout` runs `git rev-parse --absolute-git-dir` and `git rev-parse --git-common-dir` and compares the resolved paths.
+- `prompt_for_approval` returns `False` in a non-TTY and prompts `Allow <script-name> to apply changes in this shared checkout? (y/N)` when a TTY is available.
+- `approve_mutation` returns `True` immediately for non-shared checkouts; in a shared checkout it requires `flag_approved=True` or a successful interactive prompt.
 
-### Prompt behavior
+### Gated scripts
 
-When `--allow-shared-checkout` is invoked and `sys.stdin.isatty()` is True, the script prints the warning and prompts:
+Each mutation script:
 
-```text
-Record shared-checkout approval for <script-name>? (y/N)
-```
+1. Adds `--allow-shared-checkout` to its argument parser.
+2. Rejects `--allow-shared-checkout` unless `--apply` (or the mutation mode) is present.
+3. Calls `shared_checkout.approve_mutation(ROOT, SCRIPT_NAME, args.allow_shared_checkout)` before writing files.
+4. Prints a clear error telling the user to pass `--allow-shared-checkout` if the flag is missing in a shared checkout.
 
-Only a response starting with `y` or `Y` writes the token; anything else exits 1.
+Scripts updated:
 
-### Approval flow
+- `sources/first_party/skills/repo-standards/scripts/repo_standards.py`
+- `sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`
+- `sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py`
+- `tools/rebuild_marketplace.py`
+- `adapters/codex/superpowers-plus/using-git-worktrees/scripts/new_worktree.py`
 
-1. `repo_standards --allow-shared-checkout`
-   - Writes the `repo-standards` token.
-   - Prints a warning that human approval is required.
-   - Optionally prompts in a TTY.
-   - Exits 0.
-   - Errors if combined with `--apply` or `--check`.
+### Orchestrator forwarding
 
-2. `repo_standards --apply --yes`
-   - In a shared checkout, consumes the `repo-standards` token.
-   - If no valid token, errors with "run --allow-shared-checkout first".
-   - If not a shared checkout, proceeds normally.
+`tools/rebuild_marketplace.py` accepts `--allow-shared-checkout` and forwards it to:
 
-3. `refresh_installed_skills.py --allow-shared-checkout`
-   - Writes the `refresh-installed-skills` token and the `generate-index-mesh` token (because it calls `generate_index_mesh.py`).
-   - Prints warning, optionally prompts, exits.
-   - Errors if combined with `--apply`/`--check`.
+- `refresh_installed_skills.py` during the `project` phase (when `--apply` is used).
+- `generate_index_mesh.py` during the `index` phase (when `--apply` is used).
 
-4. `refresh_installed_skills.py --apply`
-   - In a shared checkout, consumes the `refresh-installed-skills` token.
-   - Before calling `generate_index_mesh.py`, that script consumes its own token.
+`new_worktree.py` accepts `--allow-shared-checkout` and forwards it to the `refresh_installed_skills.py` and `generate_index_mesh.py` scripts it discovers in the new worktree.
 
-5. `generate_index_mesh.py --allow-shared-checkout`
-   - Writes the `generate-index-mesh` token.
-   - Prints warning, optionally prompts, exits.
+### No pre-approval tokens
 
-6. `generate_index_mesh.py --apply`
-   - In a shared checkout, consumes the `generate-index-mesh` token before writing any `INDEX.md` files.
-
-7. `rebuild_marketplace.py --allow-shared-checkout`
-   - Writes tokens for `rebuild-marketplace`, `refresh-installed-skills`, and `generate-index-mesh`.
-   - Prints warning, optionally prompts, exits.
-
-8. `rebuild_marketplace.py --apply`
-   - In a shared checkout, consumes the `rebuild-marketplace` token.
-   - Calls `refresh_installed_skills.py` and `generate_index_mesh.py` without `--allow-shared-checkout`; those scripts consume their pre-written tokens.
-   - `rebuild_marketplace.py` also consumes any unconsumed tokens at the end of the run (e.g., when `--skip-install` is used).
+The previous `tools/shared_checkout_approval.py` token helper and `<git-dir>/info/devin-shared-checkout-approval-*` token files are removed. Approval is per-run and explicit.
 
 ### Default behavior
 
-All four scripts default to check/no-op when called with no flags. `--apply` must be explicit.
+All gated scripts default to check/no-op when called with no flags. `--apply` must be explicit.
 
 ## Changes
 
-- Add `tools/shared_checkout_approval.py` with token read/write/consume helpers.
+- Remove `tools/shared_checkout_approval.py`.
+- Add `tools/shared_checkout.py` with `approve_mutation`, `is_shared_checkout`, and `prompt_for_approval`.
+- Copy `shared_checkout.py` alongside each gated skill script so installed/projected skill trees are self-contained.
 - Update `sources/first_party/skills/repo-standards/scripts/repo_standards.py`.
 - Update `sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`.
 - Update `sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py`.
-- Update `tools/rebuild_marketplace.py` to add `--apply`, `--allow-shared-checkout`, and token orchestration.
-- Update `tests/test_repo_standards.py` and `tests/test_refresh_installed_skills.py`.
-- Regenerate marketplace projections.
-- Run `tools/rebuild_marketplace.py` and `py -3 -m pytest` before claiming done.
+- Update `tools/rebuild_marketplace.py` to add `--allow-shared-checkout` and forward it to child scripts.
+- Update `adapters/codex/superpowers-plus/using-git-worktrees/scripts/new_worktree.py` to add `--allow-shared-checkout` and forward it.
+- Update `tools/AGENTS.md` to document the combined flag usage.
+- Update `tests/test_shared_checkout.py` (renamed from `tests/test_shared_checkout_approval.py`) and `tests/test_repo_standards.py`, `tests/test_refresh_installed_skills.py`, `tests/test_worktree_scripts.py`.
+- Regenerate marketplace projections and run `py -3 -m pytest` plus `py -3 tools/check_marketplace.py` before claiming done.
 
 ## Testing
 
-- Add tests that `--allow-shared-checkout` rejects `--apply` in the same invocation.
-- Add tests that mutation in a shared checkout fails without a pre-existing token.
-- Add tests that the approval step writes a token and the apply step consumes it.
-- Add tests that expired or missing tokens are rejected.
-- Add tests for `rebuild_marketplace.py` token orchestration.
-- Run the full `pytest` suite and `tools/check_marketplace.py`.
+- `tests/test_shared_checkout.py` covers `is_shared_checkout`, `prompt_for_approval`, and `approve_mutation`.
+- `tests/test_repo_standards.py` covers:
+  - `--apply --allow-shared-checkout` succeeds in a shared checkout.
+  - `--allow-shared-checkout` alone and with `--check` are rejected.
+  - `--apply` in a shared checkout fails without `--allow-shared-checkout`.
+- `tests/test_refresh_installed_skills.py` patches `shared_checkout.approve_mutation` and continues to exercise install/refresh behavior.
+- `tests/test_worktree_scripts.py` covers `new_worktree.py` `--allow-shared-checkout` forwarding.
+- Full green path: `py -3 -m pytest` and `py -3 tools/check_marketplace.py`.

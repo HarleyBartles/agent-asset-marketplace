@@ -591,27 +591,28 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     assert "OK" in result.stdout
 
 
-def test_repo_standards_allow_shared_checkout_rejects_apply(tmp_path: Path) -> None:
-    """repo_standards --allow-shared-checkout rejects --apply in the same invocation."""
-    repo = tmp_path / "reject-apply"
+def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path) -> None:
+    """repo_standards --apply --allow-shared-checkout works in a shared checkout."""
+    repo = tmp_path / "allow-apply"
     repo.mkdir()
-    _init_git_repo(repo)
+    _init_git_repo_with_commit(repo)
+    worktree = _create_worktree(repo, "feature")
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
-        cwd=repo,
+        cwd=worktree,
         env=_stripped_env(),
         capture_output=True,
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 1, combined
-    assert "cannot be combined" in combined.lower()
+    assert result.returncode == 0, combined
+    assert "--allow-shared-checkout supplied" in combined
 
 
-def test_repo_standards_allow_shared_checkout_rejects_check(tmp_path: Path) -> None:
-    """repo_standards --allow-shared-checkout rejects --check."""
-    repo = tmp_path / "reject-check"
+def test_repo_standards_allow_shared_checkout_requires_apply(tmp_path: Path) -> None:
+    """repo_standards --allow-shared-checkout requires --apply (not --check)."""
+    repo = tmp_path / "allow-check"
     repo.mkdir()
     _init_git_repo(repo)
 
@@ -624,12 +625,12 @@ def test_repo_standards_allow_shared_checkout_rejects_check(tmp_path: Path) -> N
     )
     combined = result.stdout + result.stderr
     assert result.returncode == 1, combined
-    assert "cannot be combined" in combined.lower()
+    assert "--allow-shared-checkout requires --apply" in combined
 
 
-def test_repo_standards_allow_shared_checkout_writes_token(tmp_path: Path) -> None:
-    """repo_standards --allow-shared-checkout writes a token and exits."""
-    repo = tmp_path / "write-token"
+def test_repo_standards_allow_shared_checkout_alone_requires_apply(tmp_path: Path) -> None:
+    """repo_standards --allow-shared-checkout alone is rejected."""
+    repo = tmp_path / "allow-alone"
     repo.mkdir()
     _init_git_repo(repo)
 
@@ -642,17 +643,13 @@ def test_repo_standards_allow_shared_checkout_writes_token(tmp_path: Path) -> No
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
-    git_dir = subprocess.run(
-        ["git", "rev-parse", "--git-dir"], cwd=repo, capture_output=True, text=True
-    ).stdout.strip()
-    token = (repo / git_dir / "info" / "devin-shared-checkout-approval-repo-standards").resolve()
-    assert token.is_file()
+    assert result.returncode == 1, combined
+    assert "--allow-shared-checkout requires --apply" in combined
 
 
-def test_repo_standards_apply_in_shared_checkout_requires_token(tmp_path: Path) -> None:
-    """repo_standards --apply in a shared checkout fails without a pre-written token."""
-    repo = tmp_path / "shared-no-token"
+def test_repo_standards_apply_in_shared_checkout_requires_approval(tmp_path: Path) -> None:
+    """repo_standards --apply in a shared checkout fails without --allow-shared-checkout."""
+    repo = tmp_path / "shared-no-approval"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
     worktree = _create_worktree(repo, "feature")
@@ -666,12 +663,12 @@ def test_repo_standards_apply_in_shared_checkout_requires_token(tmp_path: Path) 
     )
     combined = result.stdout + result.stderr
     assert result.returncode == 1, combined
-    assert "run --allow-shared-checkout first" in combined
+    assert "Pass --allow-shared-checkout" in combined
 
 
-def test_repo_standards_apply_in_shared_checkout_with_token_succeeds(tmp_path: Path) -> None:
-    """repo_standards --apply in a shared checkout succeeds after --allow-shared-checkout."""
-    repo = tmp_path / "shared-token"
+def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Path) -> None:
+    """repo_standards --apply --allow-shared-checkout in a shared checkout applies changes."""
+    repo = tmp_path / "shared-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
 
@@ -705,17 +702,8 @@ def test_repo_standards_apply_in_shared_checkout_with_token_succeeds(tmp_path: P
     # Write the stale file in the worktree too
     (worktree / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
-    subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--allow-shared-checkout"],
-        cwd=worktree,
-        env=_stripped_env(),
-        input="",
-        capture_output=True,
-        text=True,
-    )
-
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force"],
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
         cwd=worktree,
         env=_stripped_env(),
         capture_output=True,

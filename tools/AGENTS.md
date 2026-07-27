@@ -24,12 +24,13 @@ itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/sk
 Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
-Add `--allow-shared-checkout` first in a linked worktree/shared checkout.
+In a linked worktree/shared checkout, pass `--apply --allow-shared-checkout` to
+approve the operation; `--allow-shared-checkout` alone is rejected.
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
 manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
 The canonical full rebuild and validation entrypoint is
-`py -3 tools/rebuild_marketplace.py --apply`.
+`py -3 tools/rebuild_marketplace.py --apply` (also accepts `--allow-shared-checkout`).
 Use `py -3 tools/rebuild_marketplace.py` or `--check` for a non-mutating check,
 or `py -3 tools/check_marketplace.py` as the CI convenience wrapper.
 Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a

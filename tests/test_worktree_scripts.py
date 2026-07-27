@@ -197,7 +197,7 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     repo = _make_repo_with_bundled_refresh(tmp_path, "refresh-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "refresh-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
