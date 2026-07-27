@@ -41,7 +41,7 @@ Before executing a plan, run through this checklist. Each item is a general prin
 
 ### Structural integrity
 1. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `py -3 tools/rebuild_marketplace.py` to project changes into all packs.
-2. **Validation command correctness.** Verify the plan uses the correct validation commands: `py -3 tools/check_marketplace.py` for CI, `py -3 tools/rebuild_marketplace.py` for local rebuild.
+2. **Validation command correctness.** Verify the plan uses the correct validation commands: `bash scripts/ci-preflight.sh --check` for CI, `py -3 tools/rebuild_marketplace.py` for local rebuild.
 3. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.
 
 ### Test infrastructure

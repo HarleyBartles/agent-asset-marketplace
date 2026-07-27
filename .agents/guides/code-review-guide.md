@@ -10,7 +10,7 @@ Apply three core lenses to every review.
 
 **Principal Architect** — architectural alignment, marketplace structure conformance, source custody discipline, projection correctness. Does the work respect the established patterns? Does it follow custody and projection doctrine? Are skills properly structured with correct metadata? Does the work leak implementation details into source custody?
 
-**Senior QA Engineer** — validation adequacy, test quality, edge cases, regression risk. Are the right validation commands used (check_marketplace.py, rebuild_marketplace.py)? Do validation steps assert on observable behavior? Are edge cases covered? Does the diff introduce unvalidated changes?
+**Senior QA Engineer** — validation adequacy, test quality, edge cases, regression risk. Are the right validation commands used (scripts/ci-preflight.sh --check, rebuild_marketplace.py)? Do validation steps assert on observable behavior? Are edge cases covered? Does the diff introduce unvalidated changes?
 
 **Senior Software Engineer** — code quality, naming, error handling, DRY without premature abstraction, YAGNI, existing pattern conformance, file organization. Are names accurate? Is error handling at the right boundary? Does each file have one clear responsibility? Is the work following the file structure from the plan?
 
@@ -23,7 +23,7 @@ Reviewers must invoke the architecture skills before reviewing work that touches
 
 Reviewers must check the repo's architectural choices in `docs/custody-and-projection-doctrine.md` and assess work against alignment with those standards. The skills and documentation are the authority, not the repo's current code — if code and skills disagree, the skills win.
 
-**Manifest freshness check:** If the work changes marketplace configuration or source custody, the marketplace must be regenerated via `py -3 tools/rebuild_marketplace.py` and validated via `py -3 tools/check_marketplace.py`.
+**Manifest freshness check:** If the work changes marketplace configuration or source custody, the marketplace must be regenerated via `py -3 tools/rebuild_marketplace.py` and validated via `bash scripts/ci-preflight.sh --check`.
 
 ## 3. Marketplace Review
 
@@ -77,7 +77,7 @@ Reviewers must verify that the work is adequately validated. The validation stan
 
 Key validation checks:
 - **Marketplace regeneration:** Did the work include `py -3 tools/rebuild_marketplace.py` when source custody changed?
-- **CI validation:** Did the work pass `py -3 tools/check_marketplace.py`?
+- **CI validation:** Did the work pass `bash scripts/ci-preflight.sh --check`?
 - **Skill installation:** Did the work refresh installed skills via `py -3 tools/install_agent_skills.py` when skills changed?
 - **Index mesh:** Did the work regenerate the index mesh via `py -3 tools/generate_index_mesh.py` when files were added/removed?
 - **Published vendored output:** If the PR claims to update a vendored asset or projection, verify the generated or installed vendored output changed on the PR head. An overlay, generator tweak, or manifest edit is not sufficient by itself if the published asset still matches the stale behavior.

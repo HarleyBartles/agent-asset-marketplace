@@ -60,7 +60,7 @@ projection is:
    derived surfaces: plugin projection trees under
    `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, source maps,
    provenance maps, skill zips, the marketplace manifest, and the index mesh.
-3. **Run `py -3 tools/check_marketplace.py`** — CI gate proves all surfaces
+3. **Run `bash scripts/ci-preflight.sh --check`** — CI gate proves all surfaces
    are current.
 
 Do not hand-edit the derived surfaces (`bundle-manifest.json`,

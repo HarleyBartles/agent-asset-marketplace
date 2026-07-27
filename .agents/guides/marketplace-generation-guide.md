@@ -85,7 +85,7 @@ Run the same command again after fixing the underlying source; do not hand-edit 
 
 ### CI Check (Read-Only Mode)
 ```bash
-py -3 tools/check_marketplace.py
+bash scripts/ci-preflight.sh --check
 ```
 
 This is the canonical non-mutating CI gate. It:

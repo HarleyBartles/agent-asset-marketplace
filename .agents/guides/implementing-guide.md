@@ -31,7 +31,7 @@ Record TDD evidence in your report: the RED command and failure output, then the
 
 Before claiming work is done, verify:
 
-- **All validation passes:** `py -3 tools/check_marketplace.py` for CI validation
+- **All validation passes:** `bash scripts/ci-preflight.sh --check` for CI validation
 - **Marketplace regeneration succeeds:** `py -3 tools/rebuild_marketplace.py` for local rebuild
 - **Vendored output changed as intended:** If the task claims to update a vendored asset or projection, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
 - **Build succeeds:** All Python scripts run without errors
