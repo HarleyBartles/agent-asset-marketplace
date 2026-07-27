@@ -114,6 +114,42 @@ def test_new_worktree_base_ref(tmp_path: Path) -> None:
     assert (worktree_root / marker).read_text(encoding="utf-8") == "from-base"
 
 
+def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
+    remote = tmp_path / "origin-main-remote"
+    remote.mkdir()
+    subprocess.run(["git", "init", "--bare"], cwd=remote, check=True, capture_output=True)
+
+    repo = _make_repo(tmp_path, "origin-main-local")
+    subprocess.run(["git", "branch", "-m", "main"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "remote", "add", "origin", str(remote)],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+
+    marker = "origin-main-marker.txt"
+    (repo / marker).write_text("from-origin-main", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "marker"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", "main"], cwd=repo, check=True, capture_output=True)
+
+    # Rewind the local main so that origin/main is ahead of HEAD.
+    subprocess.run(["git", "reset", "--hard", "HEAD~1"], cwd=repo, check=True, capture_output=True)
+
+    worktree_root = tmp_path / "_agent-worktrees" / "origin-main-local" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / marker).read_text(encoding="utf-8") == "from-origin-main"
+
+
 def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "resolve-repo")
 
