@@ -156,10 +156,48 @@ def _find_refresh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
+def _default_base_ref(main_repo_root: Path) -> str:
+    """Return the best default base ref for a new branch.
+
+    Prefer the tip of ``origin/main`` when an ``origin`` remote is configured,
+    falling back to the main worktree's ``HEAD`` otherwise. This ensures new
+    worktrees branch from the latest shared mainline rather than from a
+    potentially stale local checkout.
+    """
+    remote_result = subprocess.run(
+        ["git", "remote", "get-url", "origin"],
+        cwd=main_repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
+    if remote_result.returncode != 0:
+        return "HEAD"
+
+    # Try to fetch the latest main; if the remote is unreachable or has no main
+    # branch, fall back to any locally cached origin/main.
+    subprocess.run(
+        ["git", "fetch", "origin", "main", "--quiet"],
+        cwd=main_repo_root,
+        capture_output=True,
+        env=_stripped_env(),
+    )
+
+    verify = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", "origin/main"],
+        cwd=main_repo_root,
+        capture_output=True,
+        env=_stripped_env(),
+    )
+    if verify.returncode == 0:
+        return "origin/main"
+    return "HEAD"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
     parser.add_argument("branch", help="branch name to create")
-    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: HEAD)")
+    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: origin/main if available, otherwise HEAD)")
     parser.add_argument("--no-skill-refresh", action="store_true", help="skip refreshing installed skills in the new worktree")
     args = parser.parse_args(argv)
 
@@ -182,12 +220,11 @@ def main(argv: list[str] | None = None) -> int:
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root)]
-    if args.base_ref:
-        cmd.append(args.base_ref)
+    base_ref = args.base_ref if args.base_ref else _default_base_ref(main_repo_root)
+    cmd = ["git", "worktree", "add", "-b", branch, str(worktree_root), base_ref]
 
-    # Run from the main worktree so that the default base is main's HEAD, not the
-    # HEAD of any linked worktree the user may be invoking this script from.
+    # Run from the main worktree so git uses the correct repository object store;
+    # the base ref has already been resolved to origin/main when available.
     result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
     if result.returncode != 0:
         return result.returncode
