@@ -30,7 +30,7 @@
 
 **Interfaces:** none
 
-- [ ] **Step 1: Read the current files**
+- [x] **Step 1: Read the current files**
 
 Run:
 ```bash
@@ -40,7 +40,7 @@ cat sources/first_party/skills/repo-standards/references/repository-shape-standa
 cat sources/first_party/skills/repo-standards/SKILL.md
 ```
 
-- [ ] **Step 2: Create `ci-validation-pipeline.md`**
+- [x] **Step 2: Create `ci-validation-pipeline.md`**
 
 Write `sources/first_party/skills/repo-standards/references/ci-validation-pipeline.md` with this content:
 
@@ -101,7 +101,7 @@ available. A repo copies the ones it needs into its `scripts/ci-preflight`:
   `python tools/rebuild_marketplace.py --phase <inventory|heal|project|index|catalog|validate> --check`
 ```
 
-- [ ] **Step 3: Rewrite `templates/ci-preflight.sh`**
+- [x] **Step 3: Rewrite `templates/ci-preflight.sh`**
 
 Replace the entire file with:
 
@@ -132,7 +132,7 @@ set -euo pipefail
 exit 0
 ```
 
-- [ ] **Step 4: Rewrite `templates/ci-preflight.ps1`**
+- [x] **Step 4: Rewrite `templates/ci-preflight.ps1`**
 
 Replace the entire file with:
 
@@ -162,7 +162,7 @@ $ErrorActionPreference = 'Stop'
 exit 0
 ```
 
-- [ ] **Step 5: Update `repository-shape-standard.md`**
+- [x] **Step 5: Update `repository-shape-standard.md`**
 
 Find the line:
 
@@ -176,7 +176,7 @@ Replace it with:
 - `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` - a required, repo-owned preflight script. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 ```
 
-- [ ] **Step 6: Update `SKILL.md` routing table**
+- [x] **Step 6: Update `SKILL.md` routing table**
 
 Find the routing table entry:
 
@@ -193,7 +193,7 @@ Replace it with:
 | The repo's local guide mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
 ```
 
-- [ ] **Step 7: Verify the skill changes**
+- [x] **Step 7: Verify the skill changes**
 
 Run:
 
@@ -203,7 +203,7 @@ bash .agents/skills/repo-standards/scripts/repo-standards.sh --check
 
 Expected: all surfaces present, no drift.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add sources/first_party/skills/repo-standards/references/ci-validation-pipeline.md
@@ -223,13 +223,13 @@ git commit -m "repo-standards: make ci-preflight a repo-owned CI mirror"
 - Consumes: `repo-standards` check, `generating-agent-mesh` validation, `tools/rebuild_marketplace.py` phases, `ruff` lint.
 - Produces: a repo-owned preflight script used by `.git/hooks/pre-commit` and by humans.
 
-- [ ] **Step 1: Read the current file**
+- [x] **Step 1: Read the current file**
 
 ```bash
 cat scripts/ci-preflight.sh
 ```
 
-- [ ] **Step 2: Write the new `scripts/ci-preflight.sh`**
+- [x] **Step 2: Write the new `scripts/ci-preflight.sh`**
 
 Replace the entire file with:
 
@@ -322,14 +322,14 @@ done
 echo "All preflight checks passed."
 ```
 
-- [ ] **Step 3: Make it executable and ensure LF**
+- [x] **Step 3: Make it executable and ensure LF**
 
 ```bash
 chmod +x scripts/ci-preflight.sh
 git add --chmod=+x scripts/ci-preflight.sh
 ```
 
-- [ ] **Step 4: Test preflight (expected to fail until `ci-preflight-extra` removed)**
+- [x] **Step 4: Test preflight (expected to fail until `ci-preflight-extra` removed)**
 
 ```bash
 bash scripts/ci-preflight.sh --check
@@ -337,7 +337,7 @@ bash scripts/ci-preflight.sh --check
 
 Expected: it may pass or fail depending on the current repo state. If it fails, the message should name the repair command.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/ci-preflight.sh
@@ -353,13 +353,13 @@ git commit -m "ci: rewrite preflight as a repo-owned CI mirror"
 - Consumes: `repo-standards` check, `generating-agent-mesh` validation, `tools/rebuild_marketplace.py` phases, `ruff` lint.
 - Produces: the Windows preflight script used by the pre-commit hook and by humans.
 
-- [ ] **Step 1: Read the current file**
+- [x] **Step 1: Read the current file**
 
 ```powershell
 Get-Content scripts/ci-preflight.ps1
 ```
 
-- [ ] **Step 2: Write the new `scripts/ci-preflight.ps1`**
+- [x] **Step 2: Write the new `scripts/ci-preflight.ps1`**
 
 Replace the entire file with:
 
@@ -463,7 +463,7 @@ foreach ($phase in @('inventory', 'heal', 'project', 'index', 'catalog', 'valida
 Write-Host 'All preflight checks passed.'
 ```
 
-- [ ] **Step 3: Test the PowerShell preflight**
+- [x] **Step 3: Test the PowerShell preflight**
 
 ```powershell
 .\scripts\ci-preflight.ps1 -Check
@@ -471,7 +471,7 @@ Write-Host 'All preflight checks passed.'
 
 Expected: it should run the same checks as `scripts/ci-preflight.sh --check` and produce the same repair messages on failure.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add scripts/ci-preflight.ps1
@@ -490,13 +490,13 @@ git commit -m "ci: add PowerShell preflight as a repo-owned CI mirror"
 - Consumes: `scripts/ci-preflight.sh` conventions, `tools/rebuild_marketplace.py` phase commands.
 - Produces: a decomposed CI workflow whose steps match the local preflight script.
 
-- [ ] **Step 1: Read the current workflow**
+- [x] **Step 1: Read the current workflow**
 
 ```bash
 cat .github/workflows/marketplace-validation.yml
 ```
 
-- [ ] **Step 2: Write the new workflow**
+- [x] **Step 2: Write the new workflow**
 
 Replace `.github/workflows/marketplace-validation.yml` with:
 
@@ -635,7 +635,7 @@ jobs:
           fi
 ```
 
-- [ ] **Step 3: Remove the old lint hook and `check_marketplace.py`**
+- [x] **Step 3: Remove the old lint hook and `check_marketplace.py`**
 
 ```bash
 git rm scripts/ci-preflight-extra.sh
@@ -643,7 +643,7 @@ git rm scripts/ci-preflight-extra.ps1
 git rm tools/check_marketplace.py
 ```
 
-- [ ] **Step 4: Verify the repo still passes preflight**
+- [x] **Step 4: Verify the repo still passes preflight**
 
 ```bash
 bash scripts/ci-preflight.sh --check
@@ -651,7 +651,7 @@ bash scripts/ci-preflight.sh --check
 
 Expected: `All preflight checks passed.`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add .github/workflows/marketplace-validation.yml
@@ -679,13 +679,13 @@ git commit -m "ci: decompose workflow and remove check_marketplace wrapper"
 - Consumes: the new preflight command and `rebuild_marketplace.py` command.
 - Produces: docs that point agents to the new CI gate and local rebuild path.
 
-- [ ] **Step 1: Locate all references**
+- [x] **Step 1: Locate all references**
 
 ```bash
 grep -R 'check_marketplace' .agents/guides tools/AGENTS.md tools/README.md tools/INDEX.md codex-marketplace/AGENTS.md --include='*.md'
 ```
 
-- [ ] **Step 2: Apply mechanical replacements**
+- [x] **Step 2: Apply mechanical replacements**
 
 Run this Python script from the repo root:
 
@@ -729,14 +729,14 @@ for path_str in files:
         print(f'updated {path}')
 ```
 
-- [ ] **Step 3: Manual review of remaining references**
+- [x] **Step 3: Manual review of remaining references**
 
 Re-run the grep and read every remaining match. Reword prose so it describes
 `scripts/ci-preflight.sh --check` as the canonical non-mutating CI gate and
 `python tools/rebuild_marketplace.py` as the local rebuild command. Do not leave
 any stale `check_marketplace.py` examples or links.
 
-- [ ] **Step 4: Update `tools/AGENTS.md` green-path statement**
+- [x] **Step 4: Update `tools/AGENTS.md` green-path statement**
 
 Find the line:
 
@@ -750,7 +750,7 @@ If present, replace it with:
 The expected local green-path proof is `py -3 tools/rebuild_marketplace.py`.
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -768,7 +768,7 @@ git commit -m "docs: update validation commands to the new preflight pipeline"
 - Consumes: all source changes from previous tasks.
 - Produces: a consistent marketplace projection and green verification.
 
-- [ ] **Step 1: Regenerate the marketplace**
+- [x] **Step 1: Regenerate the marketplace**
 
 ```bash
 python tools/rebuild_marketplace.py
@@ -776,7 +776,7 @@ python tools/rebuild_marketplace.py
 
 Expected: the script exits 0 and reports each phase (`inventory`, `heal`, `project`, `index`, `catalog`, `validate`).
 
-- [ ] **Step 2: Run the new preflight**
+- [x] **Step 2: Run the new preflight**
 
 ```bash
 bash scripts/ci-preflight.sh --check
@@ -784,7 +784,7 @@ bash scripts/ci-preflight.sh --check
 
 Expected: `All preflight checks passed.`
 
-- [ ] **Step 3: Run pytest**
+- [x] **Step 3: Run pytest**
 
 ```bash
 py -3 -m pytest -v
@@ -792,7 +792,7 @@ py -3 -m pytest -v
 
 Expected: all tests pass.
 
-- [ ] **Step 4: Review generated changes**
+- [x] **Step 4: Review generated changes**
 
 ```bash
 git status --short
@@ -802,14 +802,14 @@ Expected changes include updated projections for `repo-standards`, updated
 `.agents/skills/.provenance.json`, and updated `generated/skill-zips/repo-standards.zip`.
 Unexpected changes outside `repo-standards` indicate a mistake; investigate.
 
-- [ ] **Step 5: Commit generated artifacts**
+- [x] **Step 5: Commit generated artifacts**
 
 ```bash
 git add -A
 git commit -m "chore: regenerate marketplace for repo-standards preflight changes"
 ```
 
-- [ ] **Step 6: Push the branch**
+- [x] **Step 6: Push the branch**
 
 ```bash
 git push
