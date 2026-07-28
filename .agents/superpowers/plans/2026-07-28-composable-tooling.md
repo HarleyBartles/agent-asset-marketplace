@@ -19,8 +19,11 @@ Replace the flat `tools/rebuild_marketplace.py` and `scripts/ci-preflight` surfa
 
 ```text
 tools/run <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]
+tools/run.ps1 <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]
 ```
 
+- On Linux/macOS/WSL/Git Bash: run `./tools/run`.
+- On Windows PowerShell: run `./tools/run.ps1` (or `py -3 tools/run.py` / `python tools/run.py` as a fallback).
 - Targets: `inventory`, `heal`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
 - `--check` is the default.
 - `--allow-shared-checkout` is approved once with `shared_checkout.approve_mutation` and forwarded to child scripts that require explicit approval for writes in the main shared checkout.
@@ -654,14 +657,15 @@ forwarding, and concrete Fix: messages on failure.
 
 ---
 
-## Task 2: Create the `tools/run` bash wrapper
+## Task 2: Create `tools/run` and `tools/run.ps1` wrappers
 
-**Files:** create `tools/run`
+**Files:** create `tools/run`, `tools/run.ps1`
 
 - [ ] Step 1: Write `tools/run` with the following content.
-- [ ] Step 2: Make it executable.
-- [ ] Step 3: Test `./tools/run --help` (or `bash tools/run --help` on Windows) and verify it prints help.
-- [ ] Step 4: Commit.
+- [ ] Step 2: Make `tools/run` executable.
+- [ ] Step 3: Write `tools/run.ps1` with the following content.
+- [ ] Step 4: Test `./tools/run --help` (or `bash tools/run --help` on Windows) and `.\tools\run.ps1 --help` in PowerShell and verify both print help.
+- [ ] Step 5: Commit.
 
 ```bash
 #!/usr/bin/env bash
@@ -689,9 +693,32 @@ chmod +x tools/run
 git update-index --chmod=+x tools/run || true
 ```
 
+```powershell
+#Requires -Version 5.1
+$ErrorActionPreference = 'Stop'
+
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+
+$python = $null
+$pythonArgs = @()
+if (Get-Command py -ErrorAction SilentlyContinue) {
+    $python = 'py'
+    $pythonArgs += '-3'
+} elseif (Get-Command python -ErrorAction SilentlyContinue) {
+    $python = 'python'
+} elseif (Get-Command python3 -ErrorAction SilentlyContinue) {
+    $python = 'python3'
+} else {
+    throw 'No Python interpreter found'
+}
+
+& $python @($pythonArgs + "$RepoRoot/tools/run.py") @args
+exit $LASTEXITCODE
+```
+
 Commit message:
 ```text
-feat(tools): add executable tools/run wrapper
+feat(tools): add executable tools/run and tools/run.ps1 wrappers
 ```
 
 ---
@@ -872,6 +899,7 @@ New block:
 ```markdown
 - [README.md](tools/README.md)
 - [run](tools/run)
+- [run.ps1](tools/run.ps1)
 - [run.py](tools/run.py)
 - [ruff_diff.py](tools/ruff_diff.py)
 ```
@@ -1210,11 +1238,12 @@ rules, and upstream-drain policy.
 The canonical task runner is `tools/run`. It composes the individual
 generator and validator scripts into a dependency-aware task graph.
 
-- `tools/run ci --check` is the full non-mutating CI gate (lint, repo-standards, marketplace).
-- `tools/run marketplace --apply` is the canonical local full regeneration and validation entrypoint.
-- `tools/run <target> --apply` regenerates only the named target and its prerequisites.
-- `tools/run <target> --check` validates only the named target and its prerequisites without writing.
-- `tools/run --help` lists all targets and flags.
+- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the full non-mutating CI gate (lint, repo-standards, marketplace).
+- `./tools/run marketplace --apply` (or `.\tools\run.ps1 marketplace --apply` on Windows PowerShell) is the canonical local full regeneration and validation entrypoint.
+- `tools/run <target> --apply` / `tools/run.ps1 <target> --apply` regenerates only the named target and its prerequisites.
+- `tools/run <target> --check` / `tools/run.ps1 <target> --check` validates only the named target and its prerequisites without writing.
+- `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
+- `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
 Targets are: `inventory`, `heal`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
 
@@ -1246,14 +1275,25 @@ for skill zips. It is a deterministic copy of the staged Codex projection.
 Common worker commands:
 
 ```bash
-# Full local regeneration and validation
-tools/run marketplace --apply
+# Full local regeneration and validation (Linux/macOS/WSL/Git Bash)
+./tools/run marketplace --apply
 
-# Full CI gate (read-only)
-tools/run ci --check
+# Full CI gate (read-only) (Linux/macOS/WSL/Git Bash)
+./tools/run ci --check
 
-# Regenerate only the mesh
-tools/run mesh --apply
+# Regenerate only the mesh (Linux/macOS/WSL/Git Bash)
+./tools/run mesh --apply
+```
+
+```powershell
+# Full local regeneration and validation (Windows PowerShell)
+.\tools\run.ps1 marketplace --apply
+
+# Full CI gate (read-only) (Windows PowerShell)
+.\tools\run.ps1 ci --check
+
+# Regenerate only the mesh (Windows PowerShell)
+.\tools\run.ps1 mesh --apply
 ```
 
 Use `--check` to validate the current generated surface without rewriting it.
@@ -1364,15 +1404,15 @@ Agent-facing policy for this directory lives in [AGENTS.md](AGENTS.md).
 
 Canonical task runner:
 
-- `tools/run <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]` — dependency-aware runner that composes the marketplace generators and validators. `tools/run` is the single public entrypoint; the individual `.py` files below are implementation details.
+- `tools/run <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]` — dependency-aware runner that composes the marketplace generators and validators. On Linux/macOS/WSL/Git Bash use `./tools/run`; on Windows PowerShell use `.\tools\run.ps1`. `py -3 tools/run.py` works as a cross-platform fallback. The individual `.py` files below are implementation details.
 
 Useful targets:
 
-- `tools/run ci --check` — full non-mutating CI gate (lint, repo-standards, marketplace).
-- `tools/run marketplace --apply` — regenerate all marketplace surfaces.
-- `tools/run marketplace --apply --allow-shared-checkout` — approve writes in the main shared checkout.
-- `tools/run mesh --apply` — regenerate only the repo-wide `INDEX.md` mesh.
-- `tools/run installed-skills mesh --apply` — refresh installed skills and regenerate the mesh.
+- `tools/run ci --check` / `tools/run.ps1 ci --check` — full non-mutating CI gate (lint, repo-standards, marketplace).
+- `tools/run marketplace --apply` / `tools/run.ps1 marketplace --apply` — regenerate all marketplace surfaces.
+- `tools/run marketplace --apply --allow-shared-checkout` / `tools/run.ps1 marketplace --apply --allow-shared-checkout` — approve writes in the main shared checkout.
+- `tools/run mesh --apply` / `tools/run.ps1 mesh --apply` — regenerate only the repo-wide `INDEX.md` mesh.
+- `tools/run installed-skills mesh --apply` / `tools/run.ps1 installed-skills mesh --apply` — refresh installed skills and regenerate the mesh.
 
 Keep tooling minimal and focused on validation or lightweight asset handling.
 ```
