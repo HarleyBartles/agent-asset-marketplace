@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OVERLAY_FILENAME = "overlay.yaml"
 OPENAI_AGENT_FILENAME = Path("agents/openai.yaml")
 ALLOWED_OVERLAY_KEYS = {"schema_version", "deletes", "metadata", "generated_files"}
+SHARED_CHECKOUT_HELPER = ROOT / "tools" / "shared_checkout.py"
 ALLOWED_LINE_EDIT_OPS = {"insert_before", "insert_after", "replace", "delete"}
 UTF8_BOM = b"\xef\xbb\xbf"
 
@@ -29,6 +30,24 @@ def _as_windows_long_path(path: Path) -> str:
     if text.startswith("\\\\"):
         return "\\\\?\\UNC\\" + text[2:]
     return "\\\\?\\" + text
+
+
+def _add_shared_checkout_companion(staged_root: Path) -> None:
+    """Copy the canonical shared_checkout.py next to any skill script that needs it."""
+    if not SHARED_CHECKOUT_HELPER.is_file():
+        return
+    for scripts_dir in staged_root.rglob("scripts"):
+        if not scripts_dir.is_dir():
+            continue
+        target = scripts_dir / "shared_checkout.py"
+        if target.exists():
+            continue
+        for script in scripts_dir.iterdir():
+            if script.suffix == ".py" and script.name != "shared_checkout.py" and script.is_file():
+                text = script.read_text(encoding="utf-8")
+                if "shared_checkout" in text:
+                    shutil.copy2(_as_windows_long_path(SHARED_CHECKOUT_HELPER), _as_windows_long_path(target))
+                    break
 
 
 def _ensure_unique_keys(node: MappingNode | SequenceNode, *, path: Path) -> None:
@@ -555,6 +574,7 @@ def _materialize_into(source_root: Path, overlay_root: Path | None, destination_
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
             _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
+        _add_shared_checkout_companion(staged_root)
         shutil.copytree(staged_root, _as_windows_long_path(destination_root))
     finally:
         tempdir.cleanup()
@@ -584,6 +604,7 @@ def stage_overlay_tree(source_root: Path, overlay_root: Path | None) -> tuple[Pa
             else:
                 _apply_line_edits(staged_root, overlay_root, spec["edits"])
             _apply_generated_files(staged_root, overlay_root, spec.get("generated_files", []))
+        _add_shared_checkout_companion(staged_root)
     except Exception:
         tempdir.cleanup()
         raise

@@ -4,7 +4,6 @@ import sys
 import urllib.parse
 from pathlib import Path
 
-import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py"
@@ -39,7 +38,7 @@ def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "source-repo")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
-        [sys.executable, str(CORE), "--apply"],
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -54,7 +53,12 @@ def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
 def test_check_mode_passes_when_current(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "check-repo")
     _commit_file(repo, "docs/guide.md")
-    subprocess.run([sys.executable, str(CORE), "--apply"], cwd=repo, env=_stripped_env(), check=True)
+    subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
     result = subprocess.run(
         [sys.executable, str(CORE), "--check"],
         cwd=repo,
@@ -69,7 +73,12 @@ def test_check_mode_passes_when_current(tmp_path: Path) -> None:
 def test_check_mode_fails_when_stale(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "stale-repo")
     _commit_file(repo, "docs/guide.md")
-    subprocess.run([sys.executable, str(CORE), "--apply"], cwd=repo, env=_stripped_env(), check=True)
+    subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
     _commit_file(repo, "docs/new.md")
     result = subprocess.run(
         [sys.executable, str(CORE), "--check"],
@@ -86,7 +95,7 @@ def test_empty_repo_generates_root_index(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "empty-repo")
     _commit_file(repo, "README.md")
     result = subprocess.run(
-        [sys.executable, str(CORE), "--apply"],
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -114,7 +123,8 @@ def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path
             "param([switch]$Check, [string]$RepoRoot)\n"
             "$path = Join-Path $RepoRoot \"docs/adr/INDEX.md\"\n"
             "if ($Check) {\n"
-            '    if (-not (Test-Path $path) -or -not (Select-String -Path $path -Pattern "## Extra" -Quiet)) { Write-Host "DRIFT: missing extra"; exit 1 }\n'
+            '    if (-not (Test-Path $path) -or -not (Select-String -Path $path -Pattern "## Extra" -Quiet)) '
+            '{ Write-Host "DRIFT: missing extra"; exit 1 }\n'
             f'    [System.IO.File]::WriteAllText("{log_path.as_posix()}", "check $RepoRoot")\n'
             "} else {\n"
             '    Add-Content -Path $path -Value "## Extra`n" -NoNewline\n'
@@ -148,7 +158,7 @@ def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path
         hook.chmod(0o755)
 
     result = subprocess.run(
-        [sys.executable, str(CORE), "--apply"],
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -249,15 +259,13 @@ def test_allow_shared_checkout_with_check_requires_apply(tmp_path: Path) -> None
     assert "--allow-shared-checkout requires --apply" in combined
 
 
-def test_apply_in_shared_checkout_requires_allow_flag(tmp_path: Path) -> None:
-    """--apply in a shared checkout fails without --allow-shared-checkout."""
-    repo = _make_repo(tmp_path, "shared-no-flag")
-    _commit_file(repo, "initial.txt")
-    worktree = _create_worktree(repo, "feature")
-    _commit_file(worktree, "docs/guide.md")
+def test_apply_in_main_shared_checkout_requires_allow_flag(tmp_path: Path) -> None:
+    """--apply in the main shared checkout fails without --allow-shared-checkout."""
+    repo = _make_repo(tmp_path, "main-no-flag")
+    _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
         [sys.executable, str(CORE), "--apply"],
-        cwd=worktree,
+        cwd=repo,
         env=_stripped_env(),
         capture_output=True,
         text=True,
@@ -294,7 +302,7 @@ def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
     _commit_file(repo, "Style Guides/overview.md")
 
     result = subprocess.run(
-        [sys.executable, str(CORE), "--apply"],
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,

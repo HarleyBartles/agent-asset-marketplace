@@ -24,8 +24,9 @@ itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/sk
 Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
-In a linked worktree/shared checkout, pass `--apply --allow-shared-checkout` to
-approve the operation; `--allow-shared-checkout` alone is rejected.
+In the main shared checkout, pass `--apply --allow-shared-checkout` to
+approve the operation; linked worktrees do not need the flag.
+`--allow-shared-checkout` alone is rejected.
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
 manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
