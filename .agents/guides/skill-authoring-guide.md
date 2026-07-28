@@ -46,19 +46,19 @@ py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>
 For marketplace-wide source or structure changes, run:
 
 ```bash
-py -3 tools/rebuild_marketplace.py
+tools/run marketplace --apply
 ```
 
 Install refreshed skills to the local agent surface with:
 
 ```bash
-py -3 tools/install_agent_skills.py
+tools/run installed-skills --apply
 ```
 
 Check the resulting marketplace state with:
 
 ```bash
-bash scripts/ci-preflight.sh --check
+tools/run ci --check
 ```
 
 ## Publication handoff

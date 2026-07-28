@@ -31,15 +31,15 @@ Record TDD evidence in your report: the RED command and failure output, then the
 
 Before claiming work is done, verify:
 
-- **All validation passes:** `bash scripts/ci-preflight.sh --check` for CI validation
-- **Marketplace regeneration succeeds:** `py -3 tools/rebuild_marketplace.py` for local rebuild
+- **All validation passes:** `tools/run ci --check` for CI validation
+- **Marketplace regeneration succeeds:** `tools/run marketplace --apply` for local rebuild
 - **Vendored output changed as intended:** If the task claims to update a vendored asset or projection, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
 - **Build succeeds:** All Python scripts run without errors
 - **No flaky tests:** Run validation multiple times to ensure consistent results
 - **Workspace clean:** No phantom files, no stray debug artifacts, no uncommitted scratch files
-- **INDEX.md regenerated:** If files were added or removed, run `py -3 tools/generate_index_mesh.py`
+- **INDEX.md regenerated:** If files were added or removed, run `tools/run mesh --apply`
 - **No secrets committed:** Check your diff for credentials, API keys, or connection strings
-- **Skills refreshed:** If skills were modified, run `py -3 tools/install_agent_skills.py` to refresh installed skills
+- **Skills refreshed:** If skills were modified, run `tools/run installed-skills --apply` to refresh installed skills
 
 ## PR, Linear, and Plan Honesty
 

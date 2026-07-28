@@ -40,8 +40,8 @@ Do not create loose files at repo root. Do not place agent-generated artifacts u
 Before executing a plan, run through this checklist. Each item is a general principle — the examples are illustrative, not exhaustive.
 
 ### Structural integrity
-1. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `py -3 tools/rebuild_marketplace.py` to project changes into all packs.
-2. **Validation command correctness.** Verify the plan uses the correct validation commands: `bash scripts/ci-preflight.sh --check` for CI, `py -3 tools/rebuild_marketplace.py` for local rebuild.
+1. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
+2. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
 3. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.
 
 ### Test infrastructure
@@ -67,7 +67,7 @@ Verify the plan's assumptions against the actual source code, not against the pl
 2. **Verify every "follows the X pattern" claim.** Read the referenced pattern (e.g. existing skill structure). Is the pattern concrete enough to replicate?
 3. **Verify every "new code" claim.** If the plan says "create new skill", confirm nothing similar already exists.
 4. **Verify every marketplace configuration.** Read the current marketplace.json, plugin manifests, and registry. Are the fields the plan expects to extend actually there?
-5. **Verify every integration site.** If the plan says "add to rebuild_marketplace.py", open that script and confirm the integration is possible as described.
+5. **Verify every integration site.** If the plan says "add to tools/run", open that script and confirm the integration is possible as described.
 6. **Identify underspecified design decisions.** If a task requires the implementer to make design decisions that aren't specified in the plan, that's a gap.
 
 ### Gap closure obligation
