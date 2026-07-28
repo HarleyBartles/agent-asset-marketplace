@@ -102,7 +102,12 @@ def _lint_file(base_ref: str, path: Path) -> list[str]:
         return [f"error: ruff failed on {path} (exit {result.returncode})"]
     if not result.stdout.strip():
         return []
-    diagnostics = json.loads(result.stdout)
+    try:
+        diagnostics = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        return [f"error: invalid ruff output for {path}: {exc}"]
+    if not isinstance(diagnostics, list):
+        return [f"error: unexpected ruff output for {path}: {diagnostics!r}"]
     findings: list[str] = []
     for d in diagnostics:
         location = d["location"]

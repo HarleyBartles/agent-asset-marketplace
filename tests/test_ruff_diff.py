@@ -218,6 +218,56 @@ def test_lint_file_reports_ruff_failure(monkeypatch) -> None:
     assert "ruff failed" in findings[0]
 
 
+def test_lint_file_reports_invalid_ruff_output(monkeypatch) -> None:
+    diff = (
+        "diff --git a/tools/foo.py b/tools/foo.py\n"
+        "--- a/tools/foo.py\n"
+        "+++ b/tools/foo.py\n"
+        "@@ -1 +1 @@\n"
+        "+x\n"
+    )
+    path = Path("tools", "foo.py")
+    fake = _run_with_git()
+    fake.add(
+        ("git", "diff", "--unified=0", "origin/main...HEAD", "--", str(path)),
+        stdout=diff,
+    )
+    fake.add(
+        (sys.executable, "-m", "ruff", "check", "--output-format=json", str(path)),
+        stdout="not-json",
+        returncode=1,
+    )
+    monkeypatch.setattr(ruff_diff, "_run", fake)
+    findings = ruff_diff._lint_file("origin/main", path)
+    assert len(findings) == 1
+    assert "invalid ruff output" in findings[0]
+
+
+def test_lint_file_reports_unexpected_ruff_output(monkeypatch) -> None:
+    diff = (
+        "diff --git a/tools/foo.py b/tools/foo.py\n"
+        "--- a/tools/foo.py\n"
+        "+++ b/tools/foo.py\n"
+        "@@ -1 +1 @@\n"
+        "+x\n"
+    )
+    path = Path("tools", "foo.py")
+    fake = _run_with_git()
+    fake.add(
+        ("git", "diff", "--unified=0", "origin/main...HEAD", "--", str(path)),
+        stdout=diff,
+    )
+    fake.add(
+        (sys.executable, "-m", "ruff", "check", "--output-format=json", str(path)),
+        stdout=json.dumps({"error": "unexpected"}),
+        returncode=1,
+    )
+    monkeypatch.setattr(ruff_diff, "_run", fake)
+    findings = ruff_diff._lint_file("origin/main", path)
+    assert len(findings) == 1
+    assert "unexpected ruff output" in findings[0]
+
+
 def test_main_returns_zero_when_no_findings(monkeypatch, tmp_path: Path, capsys) -> None:
     path = tmp_path / "foo.py"
     path.write_text("x = 1\n", encoding="utf-8")
