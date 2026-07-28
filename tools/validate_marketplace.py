@@ -722,7 +722,7 @@ def validate_projection_pack_manifest(bundle_manifest: dict, *, bundle_name: str
         check_path_exists(projected_root)
         if source_root.is_dir():
             if content_mode == "verbatim":
-                validate_tree_mirror(source_root, projected_root, canonical_name, bundle_name)
+                validate_tree_reconstruction(source_root, None, projected_root, canonical_name, bundle_name)
             else:
                 overlay_root = ROOT / adaptation_overlay_path  # type: ignore[arg-type]
                 validate_tree_reconstruction(source_root, overlay_root, projected_root, canonical_name, bundle_name)

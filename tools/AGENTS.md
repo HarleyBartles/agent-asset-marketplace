@@ -24,8 +24,9 @@ itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/sk
 Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply`,
 which deterministically installs/refreshes skills in `.agents/skills` based on
 plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
-In a linked worktree/shared checkout, pass `--apply --allow-shared-checkout` to
-approve the operation; `--allow-shared-checkout` alone is rejected.
+In the main shared checkout, pass `--apply --allow-shared-checkout` to
+approve the operation; linked worktrees do not need the flag.
+`--allow-shared-checkout` alone is rejected.
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
 manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
 and `PROJECTION.md` surfaces.
@@ -33,6 +34,9 @@ The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py --apply` (also accepts `--allow-shared-checkout`).
 Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
 or `bash scripts/ci-preflight.sh --check` as the CI convenience wrapper.
+The preflight and CI lint changed Python files with `py -3 tools/ruff_diff.py
+--changed-from origin/main`, which reports only ruff findings on added or
+modified lines.
 Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
 single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
 and `--skip-whitespace-check` omit steps from a full run.

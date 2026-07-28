@@ -17,42 +17,49 @@ def _stripped_env() -> dict[str, str]:
     return env
 
 
-def _git_dir(repo_root: Path) -> Path:
-    result = subprocess.run(
+def _is_main_worktree(repo_root: Path) -> bool:
+    """Return True if repo_root is the main git worktree (not a linked worktree).
+
+    Older Git versions do not support ``rev-parse --is-main-worktree``, so we
+    compare the resolved git directory to the resolved git common directory. In
+    the main worktree they are the same; in a linked worktree the git directory
+    is a ``worktrees/<name>`` subdirectory of the common directory.
+    """
+    git_dir = subprocess.run(
         ["git", "rev-parse", "--absolute-git-dir"],
         cwd=repo_root,
         capture_output=True,
         text=True,
         check=True,
         env=_stripped_env(),
-    )
-    return (repo_root / Path(result.stdout.strip())).resolve()
-
-
-def _git_common_dir(repo_root: Path) -> Path:
-    result = subprocess.run(
+    ).stdout.strip()
+    common_dir = subprocess.run(
         ["git", "rev-parse", "--git-common-dir"],
         cwd=repo_root,
         capture_output=True,
         text=True,
         check=True,
         env=_stripped_env(),
-    )
-    return (repo_root / Path(result.stdout.strip())).resolve()
+    ).stdout.strip()
+    return (repo_root / Path(git_dir)).resolve() == (repo_root / Path(common_dir)).resolve()
 
 
-def is_shared_checkout(repo_root: Path) -> bool:
-    """Return True if repo_root is a linked worktree or otherwise shared checkout."""
-    return _git_dir(repo_root) != _git_common_dir(repo_root)
+def is_main_shared_checkout(repo_root: Path) -> bool:
+    """Return True if repo_root is the main (shared) checkout that should be gated.
+
+    Linked worktrees are the intended mutation surface and are not treated as
+    shared for gating purposes.
+    """
+    return _is_main_worktree(repo_root)
 
 
 def prompt_for_approval(script_name: str) -> bool:
-    """Prompt an interactive user for shared-checkout approval."""
+    """Prompt an interactive user for main-worktree approval."""
     if not sys.stdin.isatty():
         return False
     try:
         response = input(
-            f"warning: this is a shared/git-worktree checkout. "
+            f"warning: this is the main shared checkout. "
             f"Allow {script_name} to apply changes? (y/N) "
         )
     except (EOFError, KeyboardInterrupt):
@@ -61,25 +68,25 @@ def prompt_for_approval(script_name: str) -> bool:
 
 
 def approve_mutation(repo_root: Path, script_name: str, flag_approved: bool) -> bool:
-    """Return True if mutation in a shared checkout is approved.
+    """Return True if mutation is approved.
 
-    - Normal checkout: always approved.
-    - --allow-shared-checkout passed: approved with a warning.
-    - Interactive terminal: prompt the user.
+    - Linked worktree: always approved.
+    - Main shared checkout with --allow-shared-checkout passed: approved with a warning.
+    - Main shared checkout with interactive terminal: prompt the user.
     - Otherwise: print an actionable error and return False.
     """
-    if not is_shared_checkout(repo_root):
+    if not is_main_shared_checkout(repo_root):
         return True
     if flag_approved:
         print(
-            f"warning: --allow-shared-checkout supplied; {script_name} will apply changes in a shared/git-worktree checkout",
+            f"warning: --allow-shared-checkout supplied; {script_name} will apply changes in the main shared checkout",
             file=sys.stderr,
         )
         return True
     if prompt_for_approval(script_name):
         return True
     print(
-        f"error: refusing to apply {script_name} in a shared checkout. "
+        f"error: refusing to apply {script_name} in the main shared checkout. "
         f"Pass --allow-shared-checkout if this is intentional, or run interactively to confirm.",
         file=sys.stderr,
     )

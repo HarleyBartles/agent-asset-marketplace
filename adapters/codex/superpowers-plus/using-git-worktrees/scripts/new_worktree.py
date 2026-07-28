@@ -265,33 +265,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve creating the new worktree and the child-script writes inside it. "
-             "A new worktree is a linked/shared checkout, so this flag (or an interactive approval) "
-             "is required whenever skill refresh is enabled, and also when invoked from a shared checkout.",
+        help="Forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
+             "so new-worktree itself does not require this flag.",
     )
     args = parser.parse_args(argv)
 
-    repo_root = _repo_root()
     _reject_submodule()
     main_repo_root = _main_repo_root()
     branch = _normalize_branch_name(args.branch)
 
-    # A new worktree is a linked worktree, so child scripts will see a shared checkout. Confirm once
-    # before we create anything, either via the explicit flag or an interactive prompt.
-    if not args.no_skill_refresh:
-        if args.allow_shared_checkout:
-            child_allow_shared = True
-        elif shared_checkout.prompt_for_approval("new-worktree"):
-            child_allow_shared = True
-        else:
-            print("error: new worktree requires --allow-shared-checkout in a shared checkout", file=sys.stderr)
-            return 1
-    else:
-        child_allow_shared = args.allow_shared_checkout
-
-    # If we are already running from a shared checkout, also confirm the parent operation.
-    if not shared_checkout.approve_mutation(repo_root, "new-worktree", child_allow_shared):
-        return 1
+    child_allow_shared = args.allow_shared_checkout
 
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)

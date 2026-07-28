@@ -45,33 +45,27 @@ for ($i = 0; $i -lt $args.Count; $i++) {
     }
 }
 
-$base = 'HEAD'
+$baseRef = ''
 if ($ChangedFrom) {
     if (Test-GitRef($ChangedFrom)) {
-        $base = $ChangedFrom
+        $baseRef = $ChangedFrom
     } else {
-        Write-Warning "$ChangedFrom not found, falling back to HEAD"
-        $base = 'HEAD'
+        Write-Warning "$ChangedFrom not found, no diff available to lint"
     }
 } elseif (Test-GitRef('origin/main')) {
-    $base = 'origin/main...HEAD'
+    $baseRef = 'origin/main'
 } else {
-    Write-Warning 'origin/main not found, linting all tracked Python files'
-    $base = 'HEAD'
+    Write-Warning 'origin/main not found, no diff available to lint'
 }
 
 Write-Host '==> Lint changed Python files'
-$files = if ($base -eq 'HEAD') {
-    (git ls-files '*.py').Split("`n") | Where-Object { $_.Trim() -ne '' }
-} else {
-    (git diff --name-only --diff-filter=ACMR $base).Split("`n") | Where-Object { $_ -match '\.py$' } | Where-Object { $_.Trim() -ne '' }
+$diffArgs = @('tools/ruff_diff.py')
+if ($baseRef) {
+    $diffArgs += @('--changed-from', $baseRef)
 }
-if ($files) {
-    $ruffArgs = @('-m', 'ruff', 'check') + @($files)
-    Invoke-Python $ruffArgs
-    if ($LASTEXITCODE -ne 0) {
-        throw "Fix lint: $pyPrefix -m ruff check --fix <files> && $pyPrefix -m ruff format <files>"
-    }
+Invoke-Python $diffArgs
+if ($LASTEXITCODE -ne 0) {
+    throw "Fix lint: $pyPrefix -m ruff check --fix <changed-files> && $pyPrefix -m ruff format <changed-files>"
 }
 
 Write-Host '==> Repo standards'

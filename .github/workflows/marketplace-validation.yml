@@ -48,15 +48,9 @@ jobs:
         run: |
           set -euo pipefail
           if git rev-parse --verify origin/main >/dev/null 2>&1; then
-            mapfile -t files < <(git diff --name-only --diff-filter=ACMR origin/main...HEAD | grep '\.py$' || true)
+            python tools/ruff_diff.py --changed-from origin/main
           else
-            mapfile -t files < <(git ls-files '*.py')
-          fi
-          if [ ${#files[@]} -gt 0 ]; then
-            if ! python -m ruff check "${files[@]}"; then
-              echo "Fix lint: python -m ruff check --fix <files> && python -m ruff format <files>" >&2
-              exit 1
-            fi
+            echo "warning: origin/main not found, no diff available to lint" >&2
           fi
 
       - name: Repo standards

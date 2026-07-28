@@ -26,6 +26,22 @@ def _make_repo(tmp_path: Path, name: str) -> Path:
     return repo
 
 
+def _copy_shared_checkout_into_skill(skill_root: Path) -> None:
+    """Place a copy of the canonical shared_checkout.py next to skill scripts that need it."""
+    scripts = skill_root / "scripts"
+    if not scripts.is_dir():
+        return
+    canonical = REPO_ROOT / "tools" / "shared_checkout.py"
+    target = scripts / "shared_checkout.py"
+    needs = any(
+        p.suffix == ".py" and p.name != "shared_checkout.py" and "shared_checkout" in p.read_text(encoding="utf-8")
+        for p in scripts.iterdir()
+        if p.is_file()
+    )
+    if needs:
+        shutil.copy2(canonical, target)
+
+
 def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     """Create a fake repo with enough marketplace structure for new-worktree to auto-refresh skills."""
     repo = _make_repo(tmp_path, name)
@@ -35,6 +51,8 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
     shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
     shutil.copytree(source_mesh, pack / "generating-agent-mesh")
+    _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
+    _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
     (repo / ".agents" / "plugins").mkdir(parents=True)
     marketplace = {
         "plugins": [
@@ -62,6 +80,8 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
     source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
     shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
     shutil.copytree(source_mesh, pack / "generating-agent-mesh")
+    _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
+    _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
 
     # Replace the refresh script with one that writes a marker and exits non-zero.
     fake_refresh = pack / "refreshing-installed-skills" / "scripts" / "refresh_installed_skills.py"
@@ -363,8 +383,8 @@ def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Pat
     assert str(worktree_root) not in list_result.stdout
 
 
-def test_new_worktree_from_linked_worktree_requires_flag(tmp_path: Path) -> None:
-    """When invoked from a linked worktree without --allow-shared-checkout, new_worktree must refuse."""
+def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path) -> None:
+    """new_worktree can be invoked from a linked worktree without --allow-shared-checkout."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "linked-src-repo")
     linked_root = tmp_path / "_agent-worktrees" / "linked-src-repo" / "linked"
     subprocess.run(
@@ -382,16 +402,9 @@ def test_new_worktree_from_linked_worktree_requires_flag(tmp_path: Path) -> None
         capture_output=True,
         text=True,
     )
-    assert result.returncode != 0, result.stdout
-    assert "Pass --allow-shared-checkout" in result.stderr or "requires --allow-shared-checkout" in result.stderr
-    list_result = subprocess.run(
-        ["git", "worktree", "list", "--porcelain"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert str(target_root) not in list_result.stdout
+    assert result.returncode == 0, result.stderr
+    assert target_root.is_dir()
+    assert "Worktree ready" in result.stdout
 
 
 def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
@@ -417,8 +430,8 @@ def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
     assert "feature" not in branch_result.stdout
 
 
-def test_new_worktree_from_main_in_non_tty_requires_flag(tmp_path: Path) -> None:
-    """In non-TTY with skill refresh enabled, new_worktree must refuse without the flag."""
+def test_new_worktree_from_main_succeeds_without_flag(tmp_path: Path) -> None:
+    """new_worktree does not require --allow-shared-checkout even from the main checkout."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "main-non-tty-repo")
     target_root = tmp_path / "_agent-worktrees" / "main-non-tty-repo" / "feature"
     # stdin is not a TTY because capture_output=True and no stdin is piped.
@@ -429,9 +442,9 @@ def test_new_worktree_from_main_in_non_tty_requires_flag(tmp_path: Path) -> None
         capture_output=True,
         text=True,
     )
-    assert result.returncode != 0, result.stdout
-    assert "requires --allow-shared-checkout" in result.stderr
-    assert not target_root.exists()
+    assert result.returncode == 0, result.stderr
+    assert target_root.is_dir()
+    assert "Worktree ready" in result.stdout
 
 
 def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:

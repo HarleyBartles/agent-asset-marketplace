@@ -3,7 +3,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = REPO_ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts"
@@ -551,7 +550,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force"],
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -592,15 +591,14 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
 
 
 def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path) -> None:
-    """repo_standards --apply --allow-shared-checkout works in a shared checkout."""
+    """repo_standards --apply --allow-shared-checkout works in the main shared checkout."""
     repo = tmp_path / "allow-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
-    worktree = _create_worktree(repo, "feature")
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
-        cwd=worktree,
+        cwd=repo,
         env=_stripped_env(),
         capture_output=True,
         text=True,
@@ -647,16 +645,15 @@ def test_repo_standards_allow_shared_checkout_alone_requires_apply(tmp_path: Pat
     assert "--allow-shared-checkout requires --apply" in combined
 
 
-def test_repo_standards_apply_in_shared_checkout_requires_approval(tmp_path: Path) -> None:
-    """repo_standards --apply in a shared checkout fails without --allow-shared-checkout."""
-    repo = tmp_path / "shared-no-approval"
+def test_repo_standards_apply_in_main_shared_checkout_requires_approval(tmp_path: Path) -> None:
+    """repo_standards --apply in the main shared checkout fails without --allow-shared-checkout."""
+    repo = tmp_path / "main-no-approval"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
-    worktree = _create_worktree(repo, "feature")
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes"],
-        cwd=worktree,
+        cwd=repo,
         env=_stripped_env(),
         capture_output=True,
         text=True,

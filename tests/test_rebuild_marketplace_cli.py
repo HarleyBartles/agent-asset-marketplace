@@ -64,7 +64,7 @@ def test_rebuild_cli_rejects_apply_and_check():
 
 def test_rebuild_refuses_apply_in_shared_checkout_without_flag(monkeypatch, capsys) -> None:
     """In a shared checkout, --apply must be paired with --allow-shared-checkout."""
-    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "is_main_shared_checkout", lambda _root: True)
     monkeypatch.setattr(rebuild_marketplace.shared_checkout, "prompt_for_approval", lambda _name: False)
     monkeypatch.setattr(sys, "argv", ["rebuild_marketplace.py", "--apply", "--phase", "inventory"])
 
@@ -77,7 +77,7 @@ def test_rebuild_refuses_apply_in_shared_checkout_without_flag(monkeypatch, caps
 def test_rebuild_interactive_approval_forwards_allow_shared_checkout(monkeypatch) -> None:
     """If the user interactively approves a shared checkout, child skill scripts receive --allow-shared-checkout."""
     calls: list[tuple[str, ...]] = []
-    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(rebuild_marketplace.shared_checkout, "is_main_shared_checkout", lambda _root: True)
     monkeypatch.setattr(rebuild_marketplace.shared_checkout, "prompt_for_approval", lambda _name: True)
     monkeypatch.setattr(sys, "argv", ["rebuild_marketplace.py", "--apply", "--phase", "project"])
 

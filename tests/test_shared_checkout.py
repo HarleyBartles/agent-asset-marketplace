@@ -30,41 +30,41 @@ def _make_fake_run(git_dir: Path, common_dir: Path | None = None) -> object:
     return fake_run
 
 
-def test_is_shared_checkout_false_for_main_worktree(monkeypatch, tmp_path: Path) -> None:
+def test_is_main_shared_checkout_true_for_main_worktree(monkeypatch, tmp_path: Path) -> None:
     git_dir = _fake_git_dir(tmp_path)
     monkeypatch.setattr(shared_checkout.subprocess, "run", _make_fake_run(git_dir, git_dir))
-    assert not shared_checkout.is_shared_checkout(tmp_path)
+    assert shared_checkout.is_main_shared_checkout(tmp_path)
 
 
-def test_is_shared_checkout_true_for_linked_worktree(monkeypatch, tmp_path: Path) -> None:
+def test_is_main_shared_checkout_false_for_linked_worktree(monkeypatch, tmp_path: Path) -> None:
     git_dir = tmp_path / ".git" / "worktrees" / "feature"
     git_dir.mkdir(parents=True)
     (git_dir / "info").mkdir(parents=True)
     common_dir = tmp_path / ".git"
     monkeypatch.setattr(shared_checkout.subprocess, "run", _make_fake_run(git_dir, common_dir))
-    assert shared_checkout.is_shared_checkout(tmp_path)
+    assert not shared_checkout.is_main_shared_checkout(tmp_path)
 
 
 def test_approve_mutation_allowed_in_normal_checkout(monkeypatch, tmp_path: Path) -> None:
-    monkeypatch.setattr(shared_checkout, "is_shared_checkout", lambda _root: False)
+    monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: False)
     assert shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
 
 
 def test_approve_mutation_allowed_with_flag_in_shared_checkout(monkeypatch, tmp_path: Path, capsys) -> None:
-    monkeypatch.setattr(shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
     assert shared_checkout.approve_mutation(tmp_path, "test", flag_approved=True)
     captured = capsys.readouterr()
     assert "--allow-shared-checkout supplied" in captured.err
 
 
 def test_approve_mutation_prompts_in_shared_checkout_and_approves(monkeypatch, tmp_path: Path) -> None:
-    monkeypatch.setattr(shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
     monkeypatch.setattr(shared_checkout, "prompt_for_approval", lambda _name: True)
     assert shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
 
 
 def test_approve_mutation_denies_when_prompt_rejects(monkeypatch, tmp_path: Path, capsys) -> None:
-    monkeypatch.setattr(shared_checkout, "is_shared_checkout", lambda _root: True)
+    monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
     monkeypatch.setattr(shared_checkout, "prompt_for_approval", lambda _name: False)
     assert not shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
     captured = capsys.readouterr()
