@@ -111,7 +111,10 @@ def _run_ruff(files: list[Path], ctx: Ctx, *, fix: bool = False) -> None:
         check_cmd.append("--fix")
     check_cmd.extend(file_args)
     _run(check_cmd, ctx)
-    fmt_cmd = [sys.executable, "-m", "ruff", "format", *file_args]
+    fmt_cmd = [sys.executable, "-m", "ruff", "format"]
+    if not fix:
+        fmt_cmd.append("--check")
+    fmt_cmd.extend(file_args)
     _run(fmt_cmd, ctx)
 
 
@@ -291,10 +294,6 @@ def _apply_mesh(ctx: Ctx) -> None:
         cmd.append("--allow-shared-checkout")
     _run(cmd, ctx)
     _run(
-        [sys.executable, ".agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py", "--check"],
-        ctx,
-    )
-    _run(
         [
             sys.executable,
             ".agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py",
@@ -325,7 +324,6 @@ def _check_mesh(ctx: Ctx) -> None:
 
 def _apply_catalog(ctx: Ctx) -> None:
     _run([sys.executable, "tools/generate_first_party_skill_catalog.py"], ctx)
-    _run([sys.executable, "tools/generate_first_party_skill_catalog.py", "--check"], ctx)
 
 
 def _check_catalog(ctx: Ctx) -> None:
@@ -447,22 +445,6 @@ _TASKS: dict[str, Task] = {
     ),
 }
 
-_TARGET_ORDER = (
-    "lint",
-    "repo-standards",
-    "inventory",
-    "heal",
-    "project",
-    "installed-skills",
-    "repo-index",
-    "mesh",
-    "catalog",
-    "validate",
-    "marketplace",
-    "ci",
-    "all",
-)
-
 
 def resolve_targets(requested: list[str]) -> list[str]:
     if not requested:
@@ -491,7 +473,7 @@ def resolve_targets(requested: list[str]) -> list[str]:
     for name in requested:
         visit(name)
 
-    return sorted(order, key=lambda n: _TARGET_ORDER.index(n))
+    return order
 
 
 def _lint_fix(ctx: Ctx) -> str:
@@ -512,7 +494,7 @@ def run_targets(targets: list[str], ctx: Ctx) -> None:
         for step in steps:
             try:
                 step(ctx)
-            except subprocess.CalledProcessError as exc:
+            except Exception as exc:
                 fix = _lint_fix(ctx) if target == "lint" else task.fix
                 raise RunnerError(target, fix, exc) from exc
 

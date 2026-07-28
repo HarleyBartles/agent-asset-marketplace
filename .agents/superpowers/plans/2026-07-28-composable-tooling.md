@@ -45,9 +45,9 @@ tools/run.ps1 <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared
 **Files:** create `tools/run.py`
 **Produces:** `main`, `resolve_targets`, `run_targets`, `Ctx`, `RunnerError`, `_TASKS`.
 
-- [ ] Step 1: Write `tools/run.py` with the following content.
-- [ ] Step 2: Run `python tools/run.py --help` and verify it exits 0.
-- [ ] Step 3: Commit.
+- [x] Step 1: Write `tools/run.py` with the following content.
+- [x] Step 2: Run `python tools/run.py --help` and verify it exits 0.
+- [x] Step 3: Commit.
 
 ```python
 #!/usr/bin/env python3
@@ -661,11 +661,11 @@ forwarding, and concrete Fix: messages on failure.
 
 **Files:** create `tools/run`, `tools/run.ps1`
 
-- [ ] Step 1: Write `tools/run` with the following content.
-- [ ] Step 2: Make `tools/run` executable.
-- [ ] Step 3: Write `tools/run.ps1` with the following content.
-- [ ] Step 4: Test `./tools/run --help` (or `bash tools/run --help` on Windows) and `.\tools\run.ps1 --help` in PowerShell and verify both print help.
-- [ ] Step 5: Commit.
+- [x] Step 1: Write `tools/run` with the following content.
+- [x] Step 2: Make `tools/run` executable.
+- [x] Step 3: Write `tools/run.ps1` with the following content.
+- [x] Step 4: Test `./tools/run --help` (or `bash tools/run --help` on Windows) and `.\tools\run.ps1 --help` in PowerShell and verify both print help.
+- [x] Step 5: Commit.
 
 ```bash
 #!/usr/bin/env bash
@@ -727,9 +727,9 @@ feat(tools): add executable tools/run and tools/run.ps1 wrappers
 
 **Files:** create `tests/test_run_cli.py`, delete `tests/test_rebuild_marketplace_cli.py` (Task 4).
 
-- [ ] Step 1: Write `tests/test_run_cli.py` with the following content.
-- [ ] Step 2: Run `py -3 -m pytest tests/test_run_cli.py -v`. Fix any failures.
-- [ ] Step 3: Commit.
+- [x] Step 1: Write `tests/test_run_cli.py` with the following content.
+- [x] Step 2: Run `py -3 -m pytest tests/test_run_cli.py -v`. Fix any failures.
+- [x] Step 3: Commit.
 
 ```python
 from __future__ import annotations
@@ -885,8 +885,8 @@ Replaces tests/test_rebuild_marketplace_cli.py with tests/test_run_cli.py.
 
 **Files:** delete `tools/rebuild_marketplace.py`, `scripts/ci-preflight.sh`, `scripts/ci-preflight.ps1`, `tests/test_rebuild_marketplace_cli.py`.
 
-- [ ] Step 1: Delete the four files.
-- [ ] Step 2: Remove the `rebuild_marketplace.py` line from `tools/INDEX.md`.
+- [x] Step 1: Delete the four files.
+- [x] Step 2: Remove the `rebuild_marketplace.py` line from `tools/INDEX.md`.
 
 Old block in `tools/INDEX.md`:
 ```markdown
@@ -904,7 +904,7 @@ New block:
 - [ruff_diff.py](tools/ruff_diff.py)
 ```
 
-- [ ] Step 3: Commit.
+- [x] Step 3: Commit.
 
 Commit message:
 ```text
@@ -917,9 +917,9 @@ chore(tools): remove obsolete rebuild_marketplace.py and ci-preflight scripts
 
 **Files:** overwrite `tools/update_skill_artifacts.py`
 
-- [ ] Step 1: Replace the entire file with the following content.
-- [ ] Step 2: Run `py -3 tools/update_skill_artifacts.py --help` and `py -3 tools/update_skill_artifacts.py --check` (read-only; should exit 0 if marketplace is current, otherwise it reports drift).
-- [ ] Step 3: Commit.
+- [x] Step 1: Replace the entire file with the following content.
+- [x] Step 2: Run `py -3 tools/update_skill_artifacts.py --help` and `py -3 tools/update_skill_artifacts.py --check` (read-only; should exit 0 if marketplace is current, otherwise it reports drift).
+- [x] Step 3: Commit.
 
 ```python
 #!/usr/bin/env python3
@@ -1095,8 +1095,8 @@ New block:
         raise ValueError("repo-index skill_zips_full_regeneration command mismatch")
 ```
 
-- [ ] Step 1: Apply the four edits above.
-- [ ] Step 2: Commit.
+- [x] Step 1: Apply the four edits above.
+- [x] Step 2: Commit.
 
 Commit message:
 ```text
@@ -1206,9 +1206,9 @@ New block:
 - `pre-commit-hook` — local hook now calls `tools/run ci --check`; repo-standards should not overwrite it.
 ```
 
-- [ ] Step 1: Apply 7a, 7b, and 7c.
-- [ ] Step 2: Verify the workflow YAML is valid (`python -c "import yaml; yaml.safe_load(open('.github/workflows/marketplace-validation.yml'))"` if PyYAML is installed).
-- [ ] Step 3: Commit.
+- [x] Step 1: Apply 7a, 7b, and 7c.
+- [x] Step 2: Verify the workflow YAML is valid (`python -c "import yaml; yaml.safe_load(open('.github/workflows/marketplace-validation.yml'))"` if PyYAML is installed).
+- [x] Step 3: Commit.
 
 Commit message:
 ```text
@@ -1472,10 +1472,10 @@ for path in FILES:
 
 After running it, inspect `git diff` and `tools/run ci --check` output.
 
-- [ ] Step 1: Write `tools/AGENTS.md`, `tools/README.md`, update `tools/INDEX.md`.
-- [ ] Step 2: Run the doc-sweep script.
-- [ ] Step 3: Review the diff for obviously broken replacements.
-- [ ] Step 4: Commit.
+- [x] Step 1: Write `tools/AGENTS.md`, `tools/README.md`, update `tools/INDEX.md`.
+- [x] Step 2: Run the doc-sweep script.
+- [x] Step 3: Review the diff for obviously broken replacements.
+- [x] Step 4: Commit.
 
 Commit message:
 ```text
@@ -1486,30 +1486,30 @@ docs(tools): document tools/run and retire rebuild_marketplace/ci-preflight refe
 
 ## Task 9: Final regeneration and verification
 
-- [ ] Step 1: Run lint apply to fix any ruff issues in the new files.
+- [x] Step 1: Run lint apply to fix any ruff issues in the new files.
   ```bash
   tools/run lint --apply
   ```
-- [ ] Step 2: Regenerate the full marketplace.
+- [x] Step 2: Regenerate the full marketplace.
   ```bash
   tools/run marketplace --apply --allow-shared-checkout
   ```
-- [ ] Step 3: Stage and commit the generated drift.
+- [x] Step 3: Stage and commit the generated drift.
   ```bash
   git add -A
   git commit -m "chore: regenerate marketplace with tools/run"
   ```
-- [ ] Step 4: Run the CI gate.
+- [x] Step 4: Run the CI gate.
   ```bash
   tools/run ci --check
   ```
-- [ ] Step 5: Run the focused and full test suites.
+- [x] Step 5: Run the focused and full test suites.
   ```bash
   py -3 -m pytest tests/test_run_cli.py -v
   py -3 -m pytest
   ```
-- [ ] Step 6: If any step fails, fix the underlying source (not the generated outputs) and repeat from Step 2.
-- [ ] Step 7: Commit any final fixes and report completion.
+- [x] Step 6: If any step fails, fix the underlying source (not the generated outputs) and repeat from Step 2.
+- [x] Step 7: Commit any final fixes and report completion.
 
 ---
 

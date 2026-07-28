@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -142,3 +143,70 @@ def test_lint_fix_command_used_in_apply(monkeypatch):
     assert "--fix" in check_cmd[0]
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
+
+
+def test_lint_check_mode_does_not_format_files(monkeypatch):
+    files = [Path("tools/run.py")]
+    monkeypatch.setattr(run, "_all_tracked_python_files", lambda: files)
+
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    run.run_targets(["lint"], ctx)
+
+    fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
+    assert fmt_cmd
+    assert "--check" in fmt_cmd[0]
+
+
+def test_base_ref_forwards_to_ruff_diff(monkeypatch):
+    files = [Path("tools/run.py")]
+    monkeypatch.setattr(run, "_changed_python_files", lambda base: files)
+
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+
+    ctx = run.Ctx(mode="check", base_ref="custom/base", allow_shared=False, verbose=False)
+    run.run_targets(["lint"], ctx)
+
+    diff_cmd = [c for c in calls if "tools/ruff_diff.py" in " ".join(c)]
+    assert diff_cmd
+    assert "--changed-from" in diff_cmd[0]
+    assert "custom/base" in diff_cmd[0]
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
+def test_bash_wrapper_delegates_to_runpy():
+    result = subprocess.run(
+        ["bash", str(ROOT / "tools" / "run"), "--help"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "--check" in result.stdout
+    assert "--apply" in result.stdout
+
+
+@pytest.mark.skipif(
+    shutil.which("powershell") is None and shutil.which("pwsh") is None,
+    reason="PowerShell not available",
+)
+def test_powershell_wrapper_delegates_to_runpy():
+    ps = shutil.which("pwsh") or shutil.which("powershell")
+    result = subprocess.run(
+        [ps, "-ExecutionPolicy", "Bypass", "-File", str(ROOT / "tools" / "run.ps1"), "--help"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "--check" in result.stdout
+    assert "--apply" in result.stdout

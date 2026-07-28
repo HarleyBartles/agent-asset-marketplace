@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: marketplace-validation-${{ github.ref }}}
+  group: marketplace-validation-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
