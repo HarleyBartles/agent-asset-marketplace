@@ -131,6 +131,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     base_ref = _resolve_base_ref(args)
+    if base_ref is None:
+        return 0
     files = _changed_python_files(base_ref)
     if not files:
         print("No changed Python files to lint.")
@@ -138,8 +140,6 @@ def main(argv: list[str] | None = None) -> int:
 
     all_findings: list[str] = []
     for path in files:
-        if base_ref is None:
-            continue
         all_findings.extend(_lint_file(base_ref, path))
 
     if all_findings:
