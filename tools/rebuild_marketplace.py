@@ -302,7 +302,7 @@ def main() -> int:
     # If mutation was approved in the main shared checkout (interactively or via
     # --allow-shared-checkout), propagate that approval to child scripts so they
     # do not re-prompt.
-    if args.apply and shared_checkout.is_shared_checkout(ROOT):
+    if args.apply and shared_checkout.is_main_shared_checkout(ROOT):
         args.allow_shared_checkout = True
 
     phase_runners = {

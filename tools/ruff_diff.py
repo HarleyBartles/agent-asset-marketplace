@@ -33,11 +33,8 @@ def _resolve_base_ref(args: argparse.Namespace) -> str | None:
     if args.changed_from:
         if _run(["git", "rev-parse", "--verify", args.changed_from]).returncode == 0:
             return args.changed_from
-        print(
-            f"warning: {args.changed_from} not found, linting all changed files from HEAD",
-            file=sys.stderr,
-        )
-        return "HEAD"
+        print(f"warning: {args.changed_from} not found, no diff available to lint", file=sys.stderr)
+        return None
     if _run(["git", "rev-parse", "--verify", "origin/main"]).returncode == 0:
         return "origin/main"
     print("warning: origin/main not found, no diff available to lint", file=sys.stderr)
@@ -73,7 +70,7 @@ def _added_line_numbers(base_ref: str, path: Path) -> set[int]:
             continue
         if line.startswith("---") or line.startswith("+++"):
             continue
-        if line.startswith(r"+\ No newline"):
+        if line.startswith(r"\ No newline"):
             continue
         if line.startswith("+"):
             added.add(new_line)
@@ -100,6 +97,9 @@ def _lint_file(base_ref: str, path: Path) -> list[str]:
     result = _run(
         [sys.executable, "-m", "ruff", "check", "--output-format=json", str(path)]
     )
+    if result.returncode not in (0, 1):
+        print(result.stderr, file=sys.stderr)
+        return [f"error: ruff failed on {path} (exit {result.returncode})"]
     if not result.stdout.strip():
         return []
     diagnostics = json.loads(result.stdout)

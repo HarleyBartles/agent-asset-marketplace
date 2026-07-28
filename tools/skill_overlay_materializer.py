@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import tempfile
 from pathlib import Path
@@ -45,7 +46,12 @@ def _add_shared_checkout_companion(staged_root: Path) -> None:
         for script in scripts_dir.iterdir():
             if script.suffix == ".py" and script.name != "shared_checkout.py" and script.is_file():
                 text = script.read_text(encoding="utf-8")
-                if "shared_checkout" in text:
+                needs = any(
+                    re.match(r"^\s*import\s+shared_checkout\b", line)
+                    or re.match(r"^\s*from\s+shared_checkout\b", line)
+                    for line in text.splitlines()
+                )
+                if needs:
                     shutil.copy2(_as_windows_long_path(SHARED_CHECKOUT_HELPER), _as_windows_long_path(target))
                     break
 

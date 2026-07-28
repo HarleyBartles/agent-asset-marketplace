@@ -44,7 +44,7 @@ def _is_main_worktree(repo_root: Path) -> bool:
     return (repo_root / Path(git_dir)).resolve() == (repo_root / Path(common_dir)).resolve()
 
 
-def is_shared_checkout(repo_root: Path) -> bool:
+def is_main_shared_checkout(repo_root: Path) -> bool:
     """Return True if repo_root is the main (shared) checkout that should be gated.
 
     Linked worktrees are the intended mutation surface and are not treated as
@@ -75,7 +75,7 @@ def approve_mutation(repo_root: Path, script_name: str, flag_approved: bool) -> 
     - Main shared checkout with interactive terminal: prompt the user.
     - Otherwise: print an actionable error and return False.
     """
-    if not is_shared_checkout(repo_root):
+    if not is_main_shared_checkout(repo_root):
         return True
     if flag_approved:
         print(

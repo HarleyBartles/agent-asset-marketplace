@@ -34,6 +34,9 @@ The canonical full rebuild and validation entrypoint is
 `py -3 tools/rebuild_marketplace.py --apply` (also accepts `--allow-shared-checkout`).
 Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
 or `bash scripts/ci-preflight.sh --check` as the CI convenience wrapper.
+The preflight and CI lint changed Python files with `py -3 tools/ruff_diff.py
+--changed-from origin/main`, which reports only ruff findings on added or
+modified lines.
 Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
 single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
 and `--skip-whitespace-check` omit steps from a full run.
