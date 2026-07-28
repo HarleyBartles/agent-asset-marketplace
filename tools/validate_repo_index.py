@@ -115,9 +115,9 @@ def validate_repo_index() -> dict:
         raise ValueError("repo-index repo_index_generate command mismatch")
     if validation.get("repo_index_check") != "py -3 tools/generate_repo_index.py --check":
         raise ValueError("repo-index repo_index_check command mismatch")
-    if validation.get("skill_zips_update") != "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>":
+    if validation.get("skill_zips_update") != "tools/run project --apply":
         raise ValueError("repo-index skill_zips_update command mismatch")
-    if validation.get("skill_zips_full_regeneration") != "py -3 tools/update_skill_artifacts.py --all":
+    if validation.get("skill_zips_full_regeneration") != "tools/run marketplace --apply":
         raise ValueError("repo-index skill_zips_full_regeneration command mismatch")
     if validation.get("skill_zips_check") != "py -3 tools/validate_skill_zips.py":
         raise ValueError("repo-index skill_zips_check command mismatch")
