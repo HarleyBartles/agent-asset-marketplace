@@ -1,6 +1,6 @@
 # asking-clarifying-questions Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add the `asking-clarifying-questions` first-party marketplace skill, project it into `house-skills` (mega-pack) and `repo-worker-pack`, and validate it with a contract test plus a manual subagent pressure scenario.
 
@@ -27,7 +27,7 @@
 - Consumes: none
 - Produces: `tests/test_asking_clarifying_questions_contract.py`
 
-- [ ] **Step 1: Write the test file**
+- [x] **Step 1: Write the test file**
 
 Create `tests/test_asking_clarifying_questions_contract.py` with the following content:
 
@@ -137,7 +137,7 @@ def test_projected_and_installed_skill_trees_match_source():
             assert hashlib.sha256(projection_bytes).digest() == hashlib.sha256(source_bytes).digest(), relative_path
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 ```text
 $env:PYTHONPATH = 'tools'
@@ -146,7 +146,7 @@ py -3 -m pytest tests/test_asking_clarifying_questions_contract.py -v
 
 Expected: FAIL. The source skill directory and `agents/openai.yaml` do not exist yet.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```text
 git add tests/test_asking_clarifying_questions_contract.py
@@ -164,13 +164,13 @@ git commit -m 'test: add contract test for asking-clarifying-questions skill' -m
 - Consumes: none
 - Produces: canonical first-party skill source
 
-- [ ] **Step 1: Scaffold the source directory**
+- [x] **Step 1: Scaffold the source directory**
 
 ```text
 py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name asking-clarifying-questions --custody marketplace --lane first_party
 ```
 
-- [ ] **Step 2: Read the scaffold SKILL.md and overwrite it**
+- [x] **Step 2: Read the scaffold SKILL.md and overwrite it**
 
 Read `sources/first_party/skills/asking-clarifying-questions/SKILL.md`, then use `write` to replace it with the following exact content:
 
@@ -245,7 +245,7 @@ Ask one narrow question that your human partner can answer when a single unresol
 - `asking-clarifying-questions` handles the 'interactive'/'amber' outcome where a single human answer is the lawful next step.
 ```
 
-- [ ] **Step 3: Create agents/openai.yaml**
+- [x] **Step 3: Create agents/openai.yaml**
 
 Create `sources/first_party/skills/asking-clarifying-questions/agents/openai.yaml` with the following content:
 
@@ -268,7 +268,7 @@ policy:
   allow_implicit_invocation: true
 ```
 
-- [ ] **Step 4: Run the source-level tests**
+- [x] **Step 4: Run the source-level tests**
 
 ```text
 $env:PYTHONPATH = 'tools'
@@ -277,7 +277,7 @@ py -3 -m pytest tests/test_asking_clarifying_questions_contract.py -k 'source or
 
 Expected: PASS. The registry and projection tests still fail at this point; that is expected and fixed in Task 3.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```text
 git add sources/first_party/skills/asking-clarifying-questions/
@@ -293,7 +293,7 @@ git commit -m 'feat: add asking-clarifying-questions first-party skill source' -
 - Consumes: canonical source from Task 2
 - Produces: `repo-worker-pack` projection, `house-skills` projection, installed skill in `.agents/skills/asking-clarifying-questions`
 
-- [ ] **Step 1: Create a temporary registry update script**
+- [x] **Step 1: Create a temporary registry update script**
 
 Create `update_registry.py` in the repo root with the following content:
 
@@ -325,7 +325,7 @@ if not any(e.get('canonical_name') == 'asking-clarifying-questions' for e in pac
 p.write_text(json.dumps(registry, indent=2) + chr(10), encoding='utf-8', newline='\n')
 ```
 
-- [ ] **Step 2: Run the script and remove it**
+- [x] **Step 2: Run the script and remove it**
 
 ```text
 py -3 update_registry.py
@@ -334,7 +334,7 @@ Remove-Item update_registry.py
 
 Expected: `codex-marketplace/custody-pack-registry.json` now contains the new `repo-worker-pack` entry and source ledger item.
 
-- [ ] **Step 3: Run the full marketplace rebuild**
+- [x] **Step 3: Run the full marketplace rebuild**
 
 ```text
 py -3 tools/rebuild_marketplace.py --apply
@@ -342,7 +342,7 @@ py -3 tools/rebuild_marketplace.py --apply
 
 Expected: all phases complete and print `OK` for inventory, heal, project, index, catalog, and validate.
 
-- [ ] **Step 4: Run the full contract test**
+- [x] **Step 4: Run the full contract test**
 
 ```text
 $env:PYTHONPATH = 'tools'
@@ -351,7 +351,7 @@ py -3 -m pytest tests/test_asking_clarifying_questions_contract.py -v
 
 Expected: all tests PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```text
 git add codex-marketplace/custody-pack-registry.json
@@ -372,7 +372,7 @@ git commit -m 'feat: project asking-clarifying-questions into house-skills and r
 - Consumes: installed `asking-clarifying-questions` skill and related `brainstorming`/`risk-gates` skills
 - Produces: behavior validation report and green preflight
 
-- [ ] **Step 1: Run a manual subagent pressure scenario**
+- [x] **Step 1: Run a manual subagent pressure scenario**
 
 Use `run_subagent` with the `subagent_explore` profile and the following prompt. Save the response in `.agents/superpowers/sdd/2026-07-28-asking-clarifying-questions/pressure-test-report.md`.
 
@@ -392,7 +392,7 @@ Expected response checklist (record PASS/FAIL in the report):
 - Response contains exactly one question.
 - Response does not call brainstorming or risk-gates and does not perform the rename.
 
-- [ ] **Step 2: Run full CI preflight**
+- [x] **Step 2: Run full CI preflight**
 
 ```text
 bash scripts/ci-preflight.sh --check
@@ -400,7 +400,7 @@ bash scripts/ci-preflight.sh --check
 
 Expected: All preflight checks pass. If the pressure test produced a FAIL, fix the skill body and re-run this step.
 
-- [ ] **Step 3: Fix and push only if preflight or the pressure test fails**
+- [x] **Step 3: Fix and push only if preflight or the pressure test fails**
 
 If `bash scripts/ci-preflight.sh --check` or the pressure test produced a FAIL, fix the skill body or source, re-run the failing checks, then stage the changed files shown by `git status --short` and commit:
 

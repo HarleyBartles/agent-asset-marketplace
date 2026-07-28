@@ -600,8 +600,13 @@
           "source_family": "first_party",
           "canonical_source_path": "sources/first_party/skills/asking-clarifying-questions",
           "local_path": "skills/asking-clarifying-questions",
-          "provenance_note": "Projected verbatim from the first-party asking-clarifying-questions skill. Any-time clarifying-question skill for single ambiguities.",
-          "copy_expectation": "byte_identical"
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/asking-clarifying-questions/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
         }
       ]
     },
