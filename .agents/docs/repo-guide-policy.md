@@ -32,3 +32,6 @@ Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union o
 ## Exceptions
 
 - `marketplace-source-submodule` — this repo is the marketplace source and does not vendor itself as a submodule.
+- `ci-preflight-sh` — replaced by the `tools/run` bash wrapper.
+- `ci-preflight-ps1` — replaced by the `tools/run.ps1` PowerShell wrapper.
+- `pre-commit-hook` — this worktree's pre-commit hook is wired to `tools/run ci --check` instead of the repo-standards template.
