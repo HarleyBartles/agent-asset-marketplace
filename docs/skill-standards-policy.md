@@ -227,7 +227,7 @@ Before deploying a skill, verify:
 3. **Metadata completeness** — canonical identity fields stable and correct.
 4. **Word count** — body under 500 words excluding frontmatter.
 5. **Content review** — accurate, actionable, scoped.
-6. **Installation test** — skill installs via `py -3 tools/rebuild_marketplace.py`.
+6. **Installation test** — skill installs via `tools/run marketplace --apply`.
 7. **Invocation test** — skill triggers on the right conditions and provides expected guidance.
 
 ## Compliance status

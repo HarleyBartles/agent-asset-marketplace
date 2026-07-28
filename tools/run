@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+PYTHON=""
+for bin in python3 python; do
+    if command -v "$bin" >/dev/null 2>&1; then
+        PYTHON="$bin"
+        break
+    fi
+done
+
+if [ -z "$PYTHON" ]; then
+    echo "No Python interpreter found" >&2
+    exit 1
+fi
+
+exec "$PYTHON" "$REPO_ROOT/tools/run.py" "$@"

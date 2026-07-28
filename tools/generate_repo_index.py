@@ -24,8 +24,8 @@ DEFAULT_REPO_INDEX = {
     "validation": {
         "marketplace": "py -3 tools/validate_marketplace.py",
         "repo_index": "py -3 tools/validate_repo_index.py",
-        "skill_zips_update": "py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>",
-        "skill_zips_full_regeneration": "py -3 tools/update_skill_artifacts.py --all",
+        "skill_zips_update": "tools/run project --apply",
+        "skill_zips_full_regeneration": "tools/run marketplace --apply",
         "skill_zips_check": "py -3 tools/validate_skill_zips.py",
         "repo_index_generate": "py -3 tools/generate_repo_index.py",
         "marketplace_generate": "py -3 tools/generate_marketplace.py",
@@ -404,6 +404,8 @@ def build_repo_index() -> dict:
     validation["marketplace_check"] = "py -3 tools/generate_marketplace.py --check"
     validation["repo_index_generate"] = "py -3 tools/generate_repo_index.py"
     validation["repo_index_check"] = "py -3 tools/generate_repo_index.py --check"
+    validation["skill_zips_update"] = "tools/run project --apply"
+    validation["skill_zips_full_regeneration"] = "tools/run marketplace --apply"
     validation["skill_zips_check"] = "py -3 tools/validate_skill_zips.py"
     validation.pop("generated_drift", None)
 

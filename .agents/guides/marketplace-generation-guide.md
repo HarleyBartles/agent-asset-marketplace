@@ -11,7 +11,7 @@ Use this reference when working with marketplace generation, validation, and reg
 
 ### Local Rebuild (Write Mode)
 ```bash
-py -3 tools/rebuild_marketplace.py --apply
+tools/run marketplace --apply
 ```
 
 In a shared or git-worktree checkout, also pass `--allow-shared-checkout` to approve writes.
@@ -24,9 +24,9 @@ This is the canonical local rebuild and validation entrypoint. It:
 
 Use this when you have made changes to source custody, adapter files, projection plugin shapes, bundle manifests, source maps, provenance maps, or generated zips.
 
-### What `rebuild_marketplace.py` does
+### What `tools/run` does
 
-`rebuild_marketplace.py` is the canonical **local full reconciliation** command. It writes derived marketplace surfaces and then validates them. Think of it as the single "refresh marketplace" call.
+`tools/run` is the canonical **local full reconciliation** command. It writes derived marketplace surfaces and then validates them. Think of it as the single "refresh marketplace" call.
 
 #### Editable inputs (do not edit the derived surfaces by hand)
 
@@ -87,7 +87,7 @@ Run the same command again after fixing the underlying source; do not hand-edit 
 
 ### CI Check (Read-Only Mode)
 ```bash
-bash scripts/ci-preflight.sh --check
+tools/run ci --check
 ```
 
 This is the canonical non-mutating CI gate. It:
@@ -100,7 +100,7 @@ Use this in CI to verify the committed state is current.
 
 ### Skills Installation
 ```bash
-py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
+tools/run installed-skills --apply
 ```
 
 In a shared or git-worktree checkout, also pass `--allow-shared-checkout`.
@@ -112,12 +112,12 @@ Refreshes installed skills from marketplace plugins. Use this when:
 
 Check mode:
 ```bash
-py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
+tools/run installed-skills --check
 ```
 
 ### Index Mesh Generation
 ```bash
-py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply
+tools/run mesh --apply
 ```
 
 In a shared or git-worktree checkout, also pass `--allow-shared-checkout`.
@@ -129,12 +129,12 @@ Regenerates the repo-wide INDEX.md mesh. Use this when:
 
 Check mode:
 ```bash
-py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check
+tools/run mesh --check
 ```
 
 ## When to Regenerate
 
-You must run the full marketplace regeneration (`rebuild_marketplace.py --apply`) after any change to:
+You must run the full marketplace regeneration (`tools/run marketplace --apply`) after any change to:
 
 - Source custody under `sources/first_party/` or `sources/third_party/`
 - Codex adapter/overlay files under `adapters/codex/`
@@ -149,7 +149,7 @@ Partial regeneration is a fallback-only repair path and should not be used as a 
 
 After regeneration, verify:
 
-1. **All validation checks pass** — `rebuild_marketplace.py --apply` runs validation automatically
+1. **All validation checks pass** — `tools/run marketplace --apply` runs validation automatically
 2. **No git diff errors** — whitespace and formatting checks pass
 3. **Installed skills are current** — `refresh_installed_skills.py --check` passes
 4. **Index mesh is current** — `sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check` passes

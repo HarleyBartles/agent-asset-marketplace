@@ -7,49 +7,77 @@ This scope covers repository validation and generation scripts.
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
 
-The skill-update path is now worker-facing through
-`py -3 tools/update_skill_artifacts.py --all` for a full regeneration. The
-`--skill` and `--pack` flags remain as backwards-compatible aliases that also
-run the full pipeline. The root inventory that drives marketplace plugin
-ownership is `codex-marketplace/plugin-roots.json`.
-The marketplace freshness proof is `py -3 tools/generate_marketplace.py --check`
-for `.agents/plugins/marketplace.json` and
-`codex-marketplace/manifest.json`, plus `py -3 tools/generate_repo_index.py
---check` for `repo-index/repo-index.json`. Projection-lane and flat skill-zip
-freshness are proven by `py -3 tools/project_skills.py --check`, and the selected
-pack bundle-manifest surfaces are proven by `py -3 tools/generate_pack_manifests.py
---check`. `validate_repo_index.py` checks metadata alignment, not freshness by
-itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py
---check`, and mesh law lives in `../.agents/docs/mesh-policy.md`.
-Agent skills installation is handled by `py -3 sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply`,
-which deterministically installs/refreshes skills in `.agents/skills` based on
-plugins with `INSTALLED_BY_DEFAULT` policy in `.agents/plugins/marketplace.json`.
-In the main shared checkout, pass `--apply --allow-shared-checkout` to
-approve the operation; linked worktrees do not need the flag.
-`--allow-shared-checkout` alone is rejected.
+The canonical task runner is `tools/run`. It composes the individual
+generator and validator scripts into a dependency-aware task graph.
+
+- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the full non-mutating CI gate (lint, repo-standards, marketplace).
+- `./tools/run marketplace --apply` (or `.\tools\run.ps1 marketplace --apply` on Windows PowerShell) is the canonical local full regeneration and validation entrypoint.
+- `tools/run <target> --apply` / `tools/run.ps1 <target> --apply` regenerates only the named target and its prerequisites.
+- `tools/run <target> --check` / `tools/run.ps1 <target> --check` validates only the named target and its prerequisites without writing.
+- `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
+- `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
+
+Targets are: `inventory`, `heal`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
+
+The underlying scripts are implementation details:
+
+- `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` from the local plugin bundle and source ledger, and `--check` compares both files without writing.
+- `update_skill_artifacts.py` is the canonical generator orchestrator for full regeneration. Use `--all` to regenerate every installable skill artifact, or `--check` to validate without writing.
+- `project_skills.py` stages overlays, materializes plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`, and writes flat deterministic `generated/skill-zips/<skill>.zip` archives. `--check` validates projected trees and zip shape without writing.
+- `validate_skill_zips.py` checks the canonical flat `skill.zip` surface and fails on stale, missing, or malformed artifacts.
+- `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, local path references, projection materialization, and selected pack bundle-manifest freshness for the protected marketplace shape.
+- `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces, but it is not the freshness proof for `repo-index/repo-index.json`.
+- `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
+- `generate_pack_manifests.py` regenerates the selected pack bundle-manifest surfaces and `--check` compares them without writing.
+- `heal_overlays.py` adjusts `overlay.yaml` line-edit entries when source normalization shifts line numbers or whitespace. It runs in the `heal` target.
+- `normalize_first_party_skill_sources.py` normalizes first-party `SKILL.md` and `agents/openai.yaml` content.
+- `generate_first_party_skill_catalog.py` regenerates `provenance/first-party-skills.md`.
+- `tools/ruff_diff.py` reports ruff findings only on added or modified lines when given `--changed-from <ref>`.
+- `tools/run` uses `ruff_diff.py` for `lint --check` and runs `ruff check --fix` / `ruff format` for `lint --apply`.
+- `python .agents/skills/repo-standards/scripts/repo_standards.py --check` checks repo shape; `python .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes` applies missing surfaces.
+- `python .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply` refreshes skills in `.agents/skills` based on plugins with `INSTALLED_BY_DEFAULT` policy. In the main shared checkout, pass `--apply --allow-shared-checkout` to approve; linked worktrees do not need the flag.
+- `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply` regenerates repo-wide `INDEX.md` files; `--check` validates them.
+- `python .agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py --check` validates mesh link reachability and doctrine.
+
+Codex plugin first; generated GPT-safe skill zips second.
+
+Current scope note: `generated/skill-zips/` is the flat GPT-ready export surface
+for skill zips. It is a deterministic copy of the staged Codex projection.
+
+Common worker commands:
+
+```bash
+# Full local regeneration and validation (Linux/macOS/WSL/Git Bash)
+./tools/run marketplace --apply
+
+# Full CI gate (read-only) (Linux/macOS/WSL/Git Bash)
+./tools/run ci --check
+
+# Regenerate only the mesh (Linux/macOS/WSL/Git Bash)
+./tools/run mesh --apply
+```
+
+```powershell
+# Full local regeneration and validation (Windows PowerShell)
+.\tools\run.ps1 marketplace --apply
+
+# Full CI gate (read-only) (Windows PowerShell)
+.\tools\run.ps1 ci --check
+
+# Regenerate only the mesh (Windows PowerShell)
+.\tools\run.ps1 mesh --apply
+```
+
+Use `--check` to validate the current generated surface without rewriting it.
+`--allow-shared-checkout` is approved once by `tools/run` and forwarded to child
+scripts that require explicit approval to write in the main shared checkout
+(`generate_index_mesh.py`, `refresh_installed_skills.py`, `repo_standards.py`).
+It is not needed in a linked worktree. `--allow-shared-checkout` alone is
+rejected by those scripts.
+
 `py -3 tools/generate_pack_manifests.py --check` also verifies any
-manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`,
+manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md`
 and `PROJECTION.md` surfaces.
-The canonical full rebuild and validation entrypoint is
-`py -3 tools/rebuild_marketplace.py --apply` (also accepts `--allow-shared-checkout`).
-Use `py -3 tools/rebuild_marketplace.py --check` for a non-mutating check,
-or `bash scripts/ci-preflight.sh --check` as the CI convenience wrapper.
-The preflight and CI lint changed Python files with `py -3 tools/ruff_diff.py
---changed-from origin/main`, which reports only ruff findings on added or
-modified lines.
-Use `--phase <inventory|heal|project|index|catalog|validate|all>` to run a
-single logical phase; `--skip-install`, `--skip-index`, `--skip-validate`,
-and `--skip-whitespace-check` omit steps from a full run.
-Partial validation is available with `py -3 tools/validate_marketplace.py --phase <inventory|project|index>`.
-`py -3 tools/validate_authority_assets.py` is a non-mutating authority-shape
-check. It does not perform freshness networking and does not fail because a
-remote source has changed; it only validates recorded local evidence.
-Overlay self-healing is handled by `py -3 tools/heal_overlays.py`, which
-adjusts `overlay.yaml` line-edit entries when source normalization (CRLF→LF,
-trailing whitespace stripping) shifts line numbers or whitespace. It runs
-automatically in write mode during `rebuild_marketplace.py --apply` and in check mode
-during `scripts/ci-preflight.sh --check`. If `heal_overlays.py --check` fails, run
-`py -3 tools/rebuild_marketplace.py --apply` to auto-heal stale overlays.
 
 ## Routing pointers
 
@@ -67,8 +95,8 @@ Policy for agent work:
 - The canonical completion path is the full regeneration stack, not a partial refresh.
 - Partial regeneration paths are fallback-only repair tools and should not be
   advertised as a normal completion route.
-- The expected local green-path proof is `py -3 tools/rebuild_marketplace.py --apply`.
-- The expected CI green-path proof is `bash scripts/ci-preflight.sh --check`.
+- The expected local green-path proof is `tools/run marketplace --apply`.
+- The expected CI green-path proof is `tools/run ci --check`.
 - Both commands must be aligned so check mode fails if regeneration would be
   needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of
@@ -131,5 +159,5 @@ This file must stay aligned with the repo's validation and generation tooling.
 When tooling paths change, new validation scripts are added, or worker-facing
 commands evolve, review and update this file to reflect current expectations.
 The skill-update path, marketplace inventory source, and drift validation
-references must stay accurate—when those change, this file should be updated to
-prevent drift.
+references must stay accurate—when those change, this file should be updated
+to prevent drift.

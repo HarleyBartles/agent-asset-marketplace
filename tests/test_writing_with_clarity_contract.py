@@ -2,9 +2,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
 
-from tree_canonicalization import canonicalize_tree_bytes
+ROOT = Path(__file__).resolve().parents[1]
+TOOLS = ROOT / "tools"
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
+
+from tree_canonicalization import canonicalize_tree_bytes  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]

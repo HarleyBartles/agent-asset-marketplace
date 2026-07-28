@@ -30,8 +30,8 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
 
 - Work in an isolated worktree on a task branch.
 - Run the relevant validation before pushing:
-  - Marketplace changes: `py -3 tools/rebuild_marketplace.py` then `bash scripts/ci-preflight.sh --check`.
-  - Structural changes: `py -3 tools/generate_index_mesh.py`.
+  - Marketplace changes: `tools/run marketplace --apply` then `tools/run ci --check`.
+  - Structural changes: `tools/run mesh --apply`.
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.
 - Push the branch and open a **draft** PR into `main` unless direct-main work is explicitly authorized.
 - A valid repo-work return must include one of:

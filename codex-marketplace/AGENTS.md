@@ -27,7 +27,7 @@ Use `py -3 tools/generate_marketplace.py --check` to prove
 current, and `py -3 tools/generate_repo_index.py --check` to prove
 `repo-index/repo-index.json` is current. `validate_repo_index.py` remains
 alignment validation, not the freshness proof. Use
-`py -3 tools/generate_index_mesh.py --check` for the repo-wide navigation mesh.
+`tools/run mesh --check` for the repo-wide navigation mesh.
 
 Deterministic pack rule: the editable registry file
 `codex-marketplace/custody-pack-registry.json` is the source of truth for
@@ -56,11 +56,11 @@ projection is:
 1. **Edit `codex-marketplace/custody-pack-registry.json`** — add, remove, or
    move the entry between pack `entries` arrays. Update `lane` and
    `provenance_note` to reflect the new pack context.
-2. **Run `py -3 tools/rebuild_marketplace.py --apply`** — this regenerates all
+2. **Run `tools/run marketplace --apply`** — this regenerates all
    derived surfaces: plugin projection trees under
    `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, source maps,
    provenance maps, skill zips, the marketplace manifest, and the index mesh.
-3. **Run `bash scripts/ci-preflight.sh --check`** — CI gate proves all surfaces
+3. **Run `tools/run ci --check`** — CI gate proves all surfaces
    are current.
 
 Do not hand-edit the derived surfaces (`bundle-manifest.json`,

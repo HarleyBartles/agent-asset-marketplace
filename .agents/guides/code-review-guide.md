@@ -10,7 +10,7 @@ Apply three core lenses to every review.
 
 **Principal Architect** — architectural alignment, marketplace structure conformance, source custody discipline, projection correctness. Does the work respect the established patterns? Does it follow custody and projection doctrine? Are skills properly structured with correct metadata? Does the work leak implementation details into source custody?
 
-**Senior QA Engineer** — validation adequacy, test quality, edge cases, regression risk. Are the right validation commands used (scripts/ci-preflight.sh --check, rebuild_marketplace.py)? Do validation steps assert on observable behavior? Are edge cases covered? Does the diff introduce unvalidated changes?
+**Senior QA Engineer** — validation adequacy, test quality, edge cases, regression risk. Are the right validation commands used (tools/run ci --check, tools/run marketplace --apply)? Do validation steps assert on observable behavior? Are edge cases covered? Does the diff introduce unvalidated changes?
 
 **Senior Software Engineer** — code quality, naming, error handling, DRY without premature abstraction, YAGNI, existing pattern conformance, file organization. Are names accurate? Is error handling at the right boundary? Does each file have one clear responsibility? Is the work following the file structure from the plan?
 
@@ -23,7 +23,7 @@ Reviewers must invoke the architecture skills before reviewing work that touches
 
 Reviewers must check the repo's architectural choices in `docs/custody-and-projection-doctrine.md` and assess work against alignment with those standards. The skills and documentation are the authority, not the repo's current code — if code and skills disagree, the skills win.
 
-**Manifest freshness check:** If the work changes marketplace configuration or source custody, the marketplace must be regenerated via `py -3 tools/rebuild_marketplace.py` and validated via `bash scripts/ci-preflight.sh --check`.
+**Manifest freshness check:** If the work changes marketplace configuration or source custody, the marketplace must be regenerated via `tools/run marketplace --apply` and validated via `tools/run ci --check`.
 
 ## 3. Marketplace Review
 
@@ -44,7 +44,7 @@ Reviewers must ensure that anything important for future agents to understand is
 - If the work introduces a new pattern, convention, or gotcha that future agents would trip over without knowing, it should be documented in AGENTS.md or a doctrine document
 - If the work changes the build/test workflow, update the relevant AGENTS.md section
 - If the work discovers a tooling issue, it must be recorded in durable guidance so future agents don't trip over it
-- INDEX.md files must be regenerated if files were added/removed (via `py -3 tools/generate_index_mesh.py`)
+- INDEX.md files must be regenerated if files were added/removed (via `tools/run mesh --apply`)
 
 Durable agent guidance is for "agents will trip over this if they don't know." Deferred work is NOT durable agent guidance — it belongs in Linear issues (see section 7).
 
@@ -76,10 +76,10 @@ The test is not "is the repo better in the abstract" — it's three concrete que
 Reviewers must verify that the work is adequately validated. The validation standards are documented in [`tools/AGENTS.md`](../../tools/AGENTS.md) — reviewers should read that section and check the diff against each applicable standard.
 
 Key validation checks:
-- **Marketplace regeneration:** Did the work include `py -3 tools/rebuild_marketplace.py` when source custody changed?
-- **CI validation:** Did the work pass `bash scripts/ci-preflight.sh --check`?
-- **Skill installation:** Did the work refresh installed skills via `py -3 tools/install_agent_skills.py` when skills changed?
-- **Index mesh:** Did the work regenerate the index mesh via `py -3 tools/generate_index_mesh.py` when files were added/removed?
+- **Marketplace regeneration:** Did the work include `tools/run marketplace --apply` when source custody changed?
+- **CI validation:** Did the work pass `tools/run ci --check`?
+- **Skill installation:** Did the work refresh installed skills via `tools/run installed-skills --apply` when skills changed?
+- **Index mesh:** Did the work regenerate the index mesh via `tools/run mesh --apply` when files were added/removed?
 - **Published vendored output:** If the PR claims to update a vendored asset or projection, verify the generated or installed vendored output changed on the PR head. An overlay, generator tweak, or manifest edit is not sufficient by itself if the published asset still matches the stale behavior.
 
 ## 9. Publication Proof

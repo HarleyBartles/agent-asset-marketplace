@@ -287,10 +287,10 @@ def _regen(allow_shared_checkout: bool) -> None:
         for issue in issues:
             print(f"- {issue}")
         raise SystemExit(2)
-    rebuild_args = [sys.executable, str(ROOT / "tools" / "rebuild_marketplace.py"), "--apply"]
+    regen_args = [sys.executable, str(ROOT / "tools" / "run.py"), "marketplace", "--apply"]
     if allow_shared_checkout:
-        rebuild_args.append("--allow-shared-checkout")
-    _run(*rebuild_args)
+        regen_args.append("--allow-shared-checkout")
+    _run(*regen_args)
 
 
 def _parse_args() -> argparse.Namespace:
