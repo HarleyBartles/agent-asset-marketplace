@@ -50,7 +50,7 @@ framed as separate surfaces even though they run the same checks.
    `tools/run ci --check` or the same target sequence.
 9. Update `tools/AGENTS.md`, `tools/README.md`, and the relevant guides to
    document `tools/run`.
-10. Add `tools/test_run_cli.py` covering target resolution, dependency order,
+10. Add `tests/test_run_cli.py` covering target resolution, dependency order,
     failure messages, and the `ci` meta-target.
 
 ## Non-goals
@@ -69,7 +69,7 @@ framed as separate surfaces even though they run the same checks.
 
 - One public entrypoint: `tools/run`.
 - Pre-commit and CI are peers that consume the same target set (`ci`).
-- Every failure prints the fix command.
+- Every failure prints a fix command.
 - Targets are small and composable; meta-targets group them.
 - Existing generator/validator scripts become implementation details invoked by
   the runner.
@@ -82,22 +82,25 @@ framed as separate surfaces even though they run the same checks.
 |---|---|---|---|
 | `lint` | `python -m ruff check --fix <changed-files> && python -m ruff format <changed-files>` | `tools/ruff_diff.py --changed-from <base>` | same ruff command |
 | `repo-standards` | `python .agents/skills/repo-standards/scripts/repo_standards.py --apply --yes` | `bash .agents/skills/repo-standards/scripts/repo-standards.sh --check` | `tools/run repo-standards --apply` |
-| `agent-mesh` | `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply` | `bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check` | `tools/run agent-mesh --apply` |
 | `inventory` | `tools/generate_plugin_root_inventory.py` | `tools/generate_plugin_root_inventory.py --check` | `tools/run inventory --apply` |
 | `heal` | `tools/heal_overlays.py` | `tools/heal_overlays.py --check` | `tools/run heal --apply` |
 | `project` | `tools/update_skill_artifacts.py --all`, `tools/normalize_first_party_skill_sources.py`, `tools/project_skills.py` (write) | `tools/update_skill_artifacts.py --check`, `tools/normalize_first_party_skill_sources.py --check`, `tools/project_skills.py` (write=False) | `tools/run project --apply` |
 | `installed-skills` | `python .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply` | same script in `--check` mode | `tools/run installed-skills --apply` |
 | `repo-index` | `tools/generate_repo_index.py` | `tools/generate_repo_index.py --check` | `tools/run repo-index --apply` |
-| `mesh` | `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply` | `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check` | `tools/run mesh --apply` |
+| `mesh` | `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply`, then `bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check` | `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check`, then `bash .agents/skills/generating-agent-mesh/scripts/validate-agent-mesh.sh --check` | `tools/run mesh --apply` |
 | `catalog` | `tools/generate_first_party_skill_catalog.py` | `tools/generate_first_party_skill_catalog.py --check` | `tools/run catalog --apply` |
-| `validate` | `tools/validate_authority_assets.py` and `git diff --check` on changed paths | same non-mutating checks | run the failing prerequisite target with `--apply`, then re-run `tools/run validate --check` |
+| `validate` | `tools/validate_authority_assets.py` and `git diff --check` on changed paths | same non-mutating checks | `tools/run marketplace --apply` (or repair the failure reported by the sub-check) |
+
+The exact commands in `project` will be verified against `tools/rebuild_marketplace.py`
+during implementation; they may be split into smaller, more focused targets if the
+existing scripts already expose finer-grained flags.
 
 ### Meta-targets
 
 | Target | Dependencies |
 |---|---|
 | `marketplace` | `inventory → heal → project → installed-skills → repo-index → mesh → catalog → validate` |
-| `ci` | `lint → repo-standards → agent-mesh → marketplace` |
+| `ci` | `lint → repo-standards → marketplace` |
 | `all` | alias for `ci` |
 
 The exact edge list will be verified against `tools/rebuild_marketplace.py` and
@@ -109,11 +112,17 @@ is introduced.
 ### Usage
 
 ```bash
-tools/run <target> [<target>...] [--check | --apply] [--verbose]
+tools/run <target> [<target>...] [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]
 ```
 
 - If neither `--check` nor `--apply` is passed, default to `--check`.
 - Multiple targets are resolved and deduplicated; dependencies run once.
+- `--base-ref` sets the comparison ref for the `lint` target. Defaults to
+  `origin/main` if available; otherwise all tracked `.py` files are linted with
+  a warning.
+- `--allow-shared-checkout` is forwarded to child scripts that require explicit
+  approval to write in the main shared checkout (`generate_index_mesh.py`,
+  `refresh_installed_skills.py`, etc.). It is not needed in a linked worktree.
 - `--verbose` prints each sub-command before executing it.
 
 ### Examples
@@ -130,6 +139,9 @@ tools/run installed-skills mesh --apply
 
 # Regenerate the full marketplace
 tools/run marketplace --apply
+
+# Apply in the main shared checkout
+tools/run marketplace --apply --allow-shared-checkout
 ```
 
 ### Failure output
@@ -143,8 +155,8 @@ Fix: <command>
 
 For most targets the `<command>` is `tools/run <name> --apply`.
 For `lint` it is the concrete ruff command.
-For `validate` it is the failing prerequisite's `--apply` command, because
-`validate` itself only checks.
+For `validate` it is `tools/run marketplace --apply` because `validate` is a
+final check-only gate; the underlying sub-check output shows the precise failure.
 
 ## Pre-commit and CI unification
 
@@ -184,6 +196,9 @@ TASKS: dict[str, Task] = {
 - A resolver expands requested targets topologically and fails on cycles.
 - A runner executes each task in order, aborting on the first failure.
 - Failure handling looks up the target's `fix` message and prints it.
+- In `--apply` mode the runner also calls `shared_checkout.approve_mutation`
+  with the `--allow-shared-checkout` value before executing any writer, so the
+  same gating behavior as `tools/rebuild_marketplace.py` is preserved.
 
 The registry stays in `tools/run` itself so the command, the dependency graph,
 and the failure messages live in one file that is easy to review and diff.
@@ -194,7 +209,7 @@ and the failure messages live in one file that is easy to review and diff.
 - Run `tools/run ci --apply` and confirm generated surfaces update.
 - Run `tools/run installed-skills mesh --apply` and confirm only those targets
   and their dependencies execute.
-- Run `py -3 -m pytest tools/test_run_cli.py` to confirm target resolution,
+- Run `py -3 -m pytest tests/test_run_cli.py` to confirm target resolution,
   dependency order, and failure-message behavior.
 - Regenerate the marketplace with `tools/run marketplace --apply` and confirm
   `tools/run ci --check` passes.
@@ -207,9 +222,14 @@ and the failure messages live in one file that is easy to review and diff.
    a way that works on Windows (PowerShell) and Linux/macOS (bash). Concrete
    shell scripts are replaced with Python `subprocess` calls.
 3. **First version is not incremental.** It composes better but still runs the
-   full dependency chain. `--since` or dirty-detection can be a follow-up.
+   full dependency chain for a target. `--since` or dirty-detection can be a
+   follow-up.
 4. **Docs churn.** Many guides mention `rebuild_marketplace.py` and
    `ci-preflight.sh`; they must be updated in the same PR.
 5. **Lint target base ref.** `ruff_diff.py` needs a base ref. The `lint`
    target defaults to `origin/main` if available, else warns and lints all
    tracked `.py` files. This matches the current `ci-preflight.sh` behavior.
+6. **`project` target still heavy.** `tools/update_skill_artifacts.py --all` is a
+   coarse wrapper. Composing `installed-skills` and `mesh` still drags in
+   `project` because of real dependencies. Finer-grained targets can be split
+   out in a follow-up if the underlying scripts expose smaller commands.
