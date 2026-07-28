@@ -33,34 +33,24 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# Determine the base ref for changed-file linting.
-BASE=""
+# Determine the base ref for changed-line linting.
+BASE_REF=""
 if [ -n "$CHANGED_FROM" ]; then
     if git rev-parse --verify "$CHANGED_FROM" >/dev/null 2>&1; then
-        BASE="$CHANGED_FROM"
+        BASE_REF="$CHANGED_FROM"
     else
-        echo "warning: $CHANGED_FROM not found, falling back to HEAD" >&2
-        BASE="HEAD"
+        echo "warning: $CHANGED_FROM not found, no diff available to lint" >&2
     fi
 elif git rev-parse --verify origin/main >/dev/null 2>&1; then
-    BASE="origin/main...HEAD"
+    BASE_REF="origin/main"
 else
-    echo "warning: origin/main not found, linting all tracked Python files" >&2
-    BASE="HEAD"
+    echo "warning: origin/main not found, no diff available to lint" >&2
 fi
 
 echo "==> Lint changed Python files"
-files=()
-if [ "$BASE" = "HEAD" ]; then
-    mapfile -t files < <(git ls-files '*.py')
-else
-    mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$BASE" | grep '\.py$' || true)
-fi
-if [ ${#files[@]} -gt 0 ]; then
-    if ! "$PYTHON" -m ruff check "${files[@]}"; then
-        echo "Fix lint: $PYTHON -m ruff check --fix <files> && $PYTHON -m ruff format <files>" >&2
-        exit 1
-    fi
+if ! "$PYTHON" tools/ruff_diff.py --changed-from "$BASE_REF"; then
+    echo "Fix lint: $PYTHON -m ruff check --fix <changed-files> && $PYTHON -m ruff format <changed-files>" >&2
+    exit 1
 fi
 
 echo "==> Repo standards"
