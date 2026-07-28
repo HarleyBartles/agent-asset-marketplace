@@ -122,7 +122,7 @@ def test_pressure_test_report_exists_and_passes():
     assert results.is_file()
     results_text = results.read_text(encoding='utf-8')
     assert 'Verdict:' in results_text
-    assert 'Expected pass' in results_text
+    assert 'PASS' in results_text
 
 
 def test_projected_and_installed_skill_trees_match_source():

@@ -1,6 +1,6 @@
 # Baseline ambiguous instruction
 
-You are an agent operating in the repo root `Z:\_agent-worktrees\agent-asset-marketplace\feature\asking-clarifying-questions`.
+You are an agent operating in the repo root `<repo-root>`.
 
 Read the skill at `sources/first_party/skills/asking-clarifying-questions/SKILL.md` and the related skills at `sources/first_party/skills/brainstorming/SKILL.md` and `sources/first_party/skills/risk-gates/SKILL.md`.
 

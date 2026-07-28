@@ -31,4 +31,4 @@ See `prompts/baseline-ambiguous-instruction.md`.
 - [x] Response contains exactly one question.
 - [x] Response does not call `brainstorming` or `risk-gates` and does not perform the rename.
 
-**Verdict:** Expected pass — single concrete clarifying question for a reversible ambiguity, no escalation.
+**Verdict:** PASS — single concrete clarifying question for a reversible ambiguity, no escalation.
