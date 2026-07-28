@@ -5,6 +5,7 @@ import json
 import re
 from pathlib import Path
 
+import yaml
 from tree_canonicalization import canonicalize_tree_bytes
 
 
@@ -27,6 +28,14 @@ def _canonical_bytes(path: Path) -> bytes:
     return raw
 
 
+def _skill_frontmatter() -> dict:
+    text = SKILL.read_text(encoding='utf-8')
+    parts = text.split('---')
+    if len(parts) < 3:
+        raise ValueError('SKILL.md must have opening and closing frontmatter delimiters')
+    return yaml.safe_load(parts[1]) or {}
+
+
 def _skill_body() -> str:
     text = SKILL.read_text(encoding='utf-8')
     parts = text.split('---')
@@ -42,17 +51,18 @@ def test_source_skill_has_required_files():
 
 
 def test_skill_frontmatter_has_required_fields():
-    text = SKILL.read_text(encoding='utf-8')
-    assert 'name: asking-clarifying-questions' in text
-    assert 'description:' in text
-    assert 'metadata:' in text
-    assert 'source-id: asking-clarifying-questions' in text
-    assert 'source-path: sources/first_party/skills/asking-clarifying-questions/SKILL.md' in text
-    assert 'source-category: first_party' in text
-    assert 'status: active' in text
-    assert 'use_when:' in text
-    assert 'do_not_use_when:' in text
-    assert 'license: MIT' in text
+    frontmatter = _skill_frontmatter()
+    assert frontmatter.get('name') == 'asking-clarifying-questions'
+    assert frontmatter.get('description')
+    assert frontmatter.get('license') == 'MIT'
+
+    metadata = frontmatter.get('metadata') or {}
+    assert metadata.get('source-id') == 'asking-clarifying-questions'
+    assert metadata.get('source-path') == 'sources/first_party/skills/asking-clarifying-questions/SKILL.md'
+    assert metadata.get('source-category') == 'first_party'
+    assert metadata.get('status') == 'active'
+    assert isinstance(metadata.get('use_when'), list)
+    assert isinstance(metadata.get('do_not_use_when'), list)
 
 
 def test_skill_body_is_under_500_words():
@@ -61,14 +71,26 @@ def test_skill_body_is_under_500_words():
     assert len(words) < 500, f'body is {len(words)} words'
 
 
+def test_skill_body_contains_clarifying_question_pattern():
+    body = _skill_body().lower()
+    assert 'next action' in body
+    assert 'ambiguity' in body
+    assert 'risk of guessing' in body
+    assert 'recommendation' in body
+    assert 'question' in body
+    assert 'brainstorming' in body
+    assert 'risk-gates' in body
+
+
 def test_agents_openai_yaml_has_required_fields():
-    text = AGENTS.read_text(encoding='utf-8')
-    assert 'version: 1' in text
-    assert 'skill_name: asking-clarifying-questions' in text
-    assert 'display_name: Asking Clarifying Questions' in text
-    assert 'short_description:' in text
-    assert 'default_prompt:' in text
-    assert 'allow_implicit_invocation: true' in text
+    data = yaml.safe_load(AGENTS.read_text(encoding='utf-8'))
+    assert data.get('version') == 1
+    assert data.get('metadata', {}).get('skill_name') == 'asking-clarifying-questions'
+    interface = data.get('interface') or {}
+    assert interface.get('display_name') == 'Asking Clarifying Questions'
+    assert interface.get('short_description')
+    assert interface.get('default_prompt')
+    assert data.get('policy', {}).get('allow_implicit_invocation') is True
 
 
 def test_repo_worker_pack_registry_contains_entry():
@@ -82,8 +104,25 @@ def test_repo_worker_pack_registry_contains_entry():
     assert entry['source_family'] == 'first_party'
     assert entry['canonical_source_path'] == 'sources/first_party/skills/asking-clarifying-questions'
     assert entry['local_path'] == 'skills/asking-clarifying-questions'
+    assert entry.get('lane') == 'Worker'
+    assert entry.get('source_path') == 'sources/first_party/skills/asking-clarifying-questions/SKILL.md'
+    assert entry.get('source_author') == 'Harley Bartles'
+    assert entry.get('source_license') == 'MIT'
+    assert entry.get('source_repo') == 'https://github.com/HarleyBartles/agent-asset-marketplace'
     assert entry['copy_expectation'] == 'byte_identical'
     assert 'provenance_note' in entry
+
+
+def test_pressure_test_report_exists_and_passes():
+    pressure_dir = ROOT / 'tests' / 'pressure' / 'asking-clarifying-questions'
+    assert pressure_dir.is_dir()
+    prompt = pressure_dir / 'prompts' / 'baseline-ambiguous-instruction.md'
+    assert prompt.is_file()
+    results = pressure_dir / 'results.md'
+    assert results.is_file()
+    results_text = results.read_text(encoding='utf-8')
+    assert 'Verdict:' in results_text
+    assert 'Expected pass' in results_text
 
 
 def test_projected_and_installed_skill_trees_match_source():
