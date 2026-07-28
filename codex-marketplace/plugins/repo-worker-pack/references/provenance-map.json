@@ -1,6 +1,13 @@
 {
   "source_backed_projections": [
     {
+      "canonical_name": "asking-clarifying-questions",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/asking-clarifying-questions",
+      "local_path": "skills/asking-clarifying-questions"
+    },
+    {
       "canonical_name": "base-doctrine",
       "source_category": "first_party",
       "content_mode": "verbatim",

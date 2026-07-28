@@ -20,6 +20,16 @@
   "plugin_license": "MIT",
   "entries": [
     {
+      "canonical_name": "asking-clarifying-questions",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/asking-clarifying-questions",
+      "local_path": "skills/asking-clarifying-questions",
+      "provenance_note": "Projected verbatim from the first-party asking-clarifying-questions skill. Any-time clarifying-question skill for single ambiguities.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "base-doctrine",
       "source_category": "first_party",
       "content_mode": "verbatim",
