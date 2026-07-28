@@ -404,7 +404,8 @@
         "sources/first_party/skills/subagent-model-routing",
         "sources/first_party/skills/repo-standards",
         "sources/first_party/skills/refreshing-installed-skills",
-        "sources/first_party/skills/generating-agent-mesh"
+        "sources/first_party/skills/generating-agent-mesh",
+        "sources/first_party/skills/asking-clarifying-questions"
       ],
       "provenance_refs": [
         "provenance/repo-worker-pack.md",
@@ -591,6 +592,21 @@
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
           "copy_expectation": "byte_identical",
           "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
+        },
+        {
+          "canonical_name": "asking-clarifying-questions",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/asking-clarifying-questions",
+          "local_path": "skills/asking-clarifying-questions",
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/asking-clarifying-questions/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
         }
       ]
     },

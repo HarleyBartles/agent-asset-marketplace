@@ -5,6 +5,7 @@ This plugin projects the first-party repo worker baseline skills.
 <!-- BEGIN GENERATED: pack-inventory -->
 ## Source custody
 ### First Party custody
+- `sources/first_party/skills/asking-clarifying-questions/`
 - `sources/first_party/skills/base-doctrine/`
 - `sources/first_party/skills/cleanup-custody/`
 - `sources/first_party/skills/connector-safety/`
@@ -26,6 +27,7 @@ This plugin projects the first-party repo worker baseline skills.
 - Codex plugin root: `codex-marketplace/plugins/repo-worker-pack/`
 - Skill root: `codex-marketplace/plugins/repo-worker-pack/skills/`
 - Skill roots:
+  - `codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/`
@@ -44,6 +46,7 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
 
 ## Generated install units
+- `generated/skill-zips/asking-clarifying-questions.zip`
 - `generated/skill-zips/base-doctrine.zip`
 - `generated/skill-zips/cleanup-custody.zip`
 - `generated/skill-zips/connector-safety.zip`

@@ -5,6 +5,7 @@ This bundle projects the first-party repo worker baseline skills.
 ## Bundle contents
 <!-- BEGIN GENERATED: bundle-contents -->
 ### First Party skills
+- `asking-clarifying-questions`
 - `base-doctrine`
 - `cleanup-custody`
 - `connector-safety`
@@ -22,7 +23,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 16.
+Manifest entry count: 17.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation
