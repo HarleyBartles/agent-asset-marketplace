@@ -1,7 +1,8 @@
 # This script is repo-owned. The repo-standards skill only provides a starting
-# scaffold. Edit it to call the same read-only checks that your CI runs.
+# scaffold. By default it regenerates the repo-wide INDEX.md mesh; pass --check
+# to validate without writing.
 #
-# Available read-only helpers from repo-standards:
+# Available helpers from repo-standards:
 #   . .agents/skills/repo-standards/scripts/repo-standards.ps1 --check
 #   . .agents/skills/repo-standards/scripts/scaffold-all.ps1 --check
 #   . .agents/skills/generating-agent-mesh/scripts/generate-index-mesh.ps1 --check
@@ -19,5 +20,12 @@
 # See repo-standards/references/ci-validation-pipeline.md for the full contract.
 $ErrorActionPreference = 'Stop'
 
-# Compose your repo's CI checks below. The template exits cleanly by default.
-exit 0
+$repoRoot = (git rev-parse --show-toplevel)
+$mode = "--apply"
+$allow = "--allow-shared-checkout"
+if ($args -contains "--check") {
+    $mode = "--check"
+    & "$repoRoot/.agents/skills/generating-agent-mesh/scripts/generate-index-mesh.ps1" $mode
+} else {
+    & "$repoRoot/.agents/skills/generating-agent-mesh/scripts/generate-index-mesh.ps1" $mode $allow
+}

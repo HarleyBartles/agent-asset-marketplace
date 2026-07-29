@@ -49,8 +49,16 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     pack.mkdir(parents=True)
     source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
     source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
-    shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
-    shutil.copytree(source_mesh, pack / "generating-agent-mesh")
+    shutil.copytree(
+        source_refresh,
+        pack / "refreshing-installed-skills",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
+    shutil.copytree(
+        source_mesh,
+        pack / "generating-agent-mesh",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
     _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
     _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
     (repo / ".agents" / "plugins").mkdir(parents=True)
@@ -78,8 +86,16 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
     pack.mkdir(parents=True)
     source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
     source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
-    shutil.copytree(source_refresh, pack / "refreshing-installed-skills")
-    shutil.copytree(source_mesh, pack / "generating-agent-mesh")
+    shutil.copytree(
+        source_refresh,
+        pack / "refreshing-installed-skills",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
+    shutil.copytree(
+        source_mesh,
+        pack / "generating-agent-mesh",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
     _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
     _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
 
@@ -108,6 +124,73 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
     )
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "add failing refresh"], cwd=repo, check=True, capture_output=True)
+    return repo
+
+
+def _make_repo_with_marketplace_source_submodule(tmp_path: Path, name: str) -> Path:
+    """Create a repo whose skills include one from a marketplace-source submodule.
+
+    The pre-existing skill in ``.agents/skills/`` must survive a new worktree when
+    the submodule is initialized before ``refreshing-installed-skills`` runs.
+    """
+    repo = _make_repo_with_bundled_refresh(tmp_path, name)
+
+    # Build a bare repository to act as the marketplace-source remote.
+    submod_bare = (tmp_path / f"{name}-submodule-bare").resolve()
+    submod_bare.mkdir()
+    subprocess.run(["git", "init", "--bare"], cwd=submod_bare, check=True, capture_output=True)
+
+    # Create the submodule content in a temporary clone, then push to the bare remote.
+    submod_work = tmp_path / f"{name}-submodule-work"
+    subprocess.run(["git", "clone", str(submod_bare), str(submod_work)], check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=submod_work, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=submod_work, check=True, capture_output=True)
+    pack = submod_work / "codex-marketplace" / "plugins" / "remote-pack" / "skills"
+    pack.mkdir(parents=True)
+    skill = pack / "submod-skill"
+    skill.mkdir()
+    (skill / "SKILL.md").write_text("---\nname: submod-skill\n---\n", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=submod_work, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add submod-skill"], cwd=submod_work, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", "HEAD:main"], cwd=submod_work, check=True, capture_output=True)
+
+    # Add the bare repo as a submodule at the canonical marketplace-source path.
+    # The file:// URI and -b main are needed for the bare test remote; the
+    # calling test sets GIT_CONFIG_GLOBAL to allow the file protocol.
+    subprocess.run(
+        ["git", "submodule", "add", "-b", "main", submod_bare.as_uri(), ".agents/plugins/marketplace-source"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(["git", "submodule", "update", "--init"], cwd=repo, check=True, capture_output=True)
+
+    # Update the marketplace to include the remote plugin and commit the pre-existing skill.
+    marketplace = json.loads((repo / ".agents" / "plugins" / "marketplace.json").read_text(encoding="utf-8"))
+    marketplace["plugins"].append(
+        {
+            "name": "remote-pack",
+            "source": {
+                "source": "github",
+                "owner": "test",
+                "repo": "test",
+                "path": "codex-marketplace/plugins/remote-pack",
+            },
+            "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
+        }
+    )
+    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
+        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
+    )
+
+    skill_dir = repo / ".agents" / "skills" / "submod-skill"
+    skill_dir.mkdir(parents=True)
+    (skill_dir / "SKILL.md").write_text("---\nname: submod-skill\n---\n", encoding="utf-8")
+
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "add marketplace-source and skill"], cwd=repo, check=True, capture_output=True
+    )
     return repo
 
 
@@ -360,6 +443,43 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     assert "index mesh" in result.stdout
 
 
+def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monkeypatch) -> None:
+    """A new worktree must initialize submodules before refreshing skills.
+
+    If the marketplace-source submodule is not populated, ``refreshing-installed-skills``
+    cannot find the skills declared by ``github`` plugins and removes them as orphans.
+    """
+    gitconfig = tmp_path / "gitconfig"
+    gitconfig.write_text('[protocol "file"]\n\tallow = always\n', encoding="utf-8")
+    monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(gitconfig))
+
+    repo = _make_repo_with_marketplace_source_submodule(tmp_path, "sub")
+    worktree_root = tmp_path / "_agent-worktrees" / "sub" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert "Worktree ready" in result.stdout
+    assert (worktree_root / ".agents" / "plugins" / "marketplace-source").is_dir()
+    assert (
+        worktree_root
+        / ".agents"
+        / "plugins"
+        / "marketplace-source"
+        / "codex-marketplace"
+        / "plugins"
+        / "remote-pack"
+        / "skills"
+        / "submod-skill"
+    ).is_dir()
+    assert (worktree_root / ".agents" / "skills" / "submod-skill").is_dir()
+
+
 def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Path) -> None:
     """A failed post-creation refresh must leave no registered worktree behind."""
     repo = _make_repo_with_failing_refresh(tmp_path, "failing-refresh-repo")
@@ -507,10 +627,7 @@ def test_new_worktree_rejects_path_traversal(tmp_path: Path) -> None:
             text=True,
         )
         assert result.returncode != 0, branch
-        assert any(
-            word in result.stderr.lower()
-            for word in ["canonical", "outside", "invalid branch"]
-        ), branch
+        assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"]), branch
 
 
 def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
@@ -524,10 +641,7 @@ def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode != 0
-    assert any(
-        word in result.stderr.lower()
-        for word in ["canonical", "outside", "invalid branch"]
-    )
+    assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"])
 
 
 def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
