@@ -201,6 +201,32 @@ def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> 
     )
 
 
+def _init_submodules(worktree_root: Path) -> int:
+    """Initialize and update submodules in the new worktree.
+
+    A linked worktree does not automatically populate submodule checkouts,
+    so any skill source that lives in a submodule (e.g. ``marketplace-source``)
+    would be missing when ``refreshing-installed-skills`` runs and its skills
+    would be deleted as orphans. Run ``git submodule update --init --recursive``
+    before the refresh to avoid that.
+    """
+    gitmodules = worktree_root / ".gitmodules"
+    if not gitmodules.is_file():
+        return 0
+
+    result = subprocess.run(
+        ["git", "submodule", "update", "--init", "--recursive"],
+        cwd=worktree_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"error: failed to initialize submodules in {worktree_root}: {result.stderr.strip()}", file=sys.stderr)
+        return result.returncode
+    return 0
+
+
 def _configure_worktree(
     worktree_root: Path,
     main_repo_root: Path,
@@ -213,6 +239,10 @@ def _configure_worktree(
     when this returns non-zero.
     """
     if not args.no_skill_refresh:
+        exit_code = _init_submodules(worktree_root)
+        if exit_code != 0:
+            return exit_code
+
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
             if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
