@@ -91,7 +91,7 @@ def _normalize_branch_name(branch: str) -> str:
     """Strip a leading refs/heads/ prefix so full refs can be used as branch names."""
     prefix = "refs/heads/"
     if branch.startswith(prefix):
-        branch = branch[len(prefix):]
+        branch = branch[len(prefix) :]
     return branch
 
 
@@ -115,9 +115,7 @@ def _validate_worktree_root(main_repo_root: Path, branch: str) -> Path:
     try:
         worktree_root.relative_to(canonical_root.resolve())
     except ValueError as exc:
-        raise ValueError(
-            f"branch {branch!r} would place worktree outside the canonical root {canonical_root}"
-        ) from exc
+        raise ValueError(f"branch {branch!r} would place worktree outside the canonical root {canonical_root}") from exc
     if worktree_root == canonical_root.resolve():
         raise ValueError(f"branch {branch!r} resolves to the canonical worktree root")
     return worktree_root
@@ -296,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
         "--allow-shared-checkout",
         action="store_true",
         help="Forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
-             "so new-worktree itself does not require this flag.",
+        "so new-worktree itself does not require this flag.",
     )
     args = parser.parse_args(argv)
 

@@ -188,7 +188,9 @@ def _make_repo_with_marketplace_source_submodule(tmp_path: Path, name: str) -> P
     (skill_dir / "SKILL.md").write_text("---\nname: submod-skill\n---\n", encoding="utf-8")
 
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add marketplace-source and skill"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "add marketplace-source and skill"], cwd=repo, check=True, capture_output=True
+    )
     return repo
 
 
@@ -448,7 +450,7 @@ def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monk
     cannot find the skills declared by ``github`` plugins and removes them as orphans.
     """
     gitconfig = tmp_path / "gitconfig"
-    gitconfig.write_text("[protocol \"file\"]\n\tallow = always\n", encoding="utf-8")
+    gitconfig.write_text('[protocol "file"]\n\tallow = always\n', encoding="utf-8")
     monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(gitconfig))
 
     repo = _make_repo_with_marketplace_source_submodule(tmp_path, "sub")
@@ -625,10 +627,7 @@ def test_new_worktree_rejects_path_traversal(tmp_path: Path) -> None:
             text=True,
         )
         assert result.returncode != 0, branch
-        assert any(
-            word in result.stderr.lower()
-            for word in ["canonical", "outside", "invalid branch"]
-        ), branch
+        assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"]), branch
 
 
 def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
@@ -642,10 +641,7 @@ def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode != 0
-    assert any(
-        word in result.stderr.lower()
-        for word in ["canonical", "outside", "invalid branch"]
-    )
+    assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"])
 
 
 def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
