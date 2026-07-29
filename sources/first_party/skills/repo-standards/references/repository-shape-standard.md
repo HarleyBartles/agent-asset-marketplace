@@ -7,7 +7,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
 - `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` - a required, repo-owned preflight script. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
-- `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh`.
+- `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh --check`.
 - `.agents/docs/repo-guide-policy.md` mapping the repo to `repo-standards`.
 - `REVIEW.md` at the repo root pointing to the review guide and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.

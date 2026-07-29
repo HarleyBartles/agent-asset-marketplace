@@ -741,3 +741,50 @@ def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> N
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "OK" in result.stdout
+
+
+def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
+    """repo-standards installs a pre-commit hook that runs ci-preflight --check."""
+    repo = tmp_path / "precommit-check"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- ci-preflight-ps1\n"
+        "- ci-preflight-sh\n"
+        "- repo-guide-policy\n"
+        "- guides-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-guide-policy.md").write_text(
+        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_STANDARDS),
+            "--apply",
+            "--yes",
+            "--allow-shared-checkout",
+        ],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    hook = repo / ".git" / "hooks" / "pre-commit"
+    assert hook.is_file(), "pre-commit hook was not installed"
+    text = hook.read_text(encoding="utf-8")
+    assert text.rstrip().endswith(" --check"), text
