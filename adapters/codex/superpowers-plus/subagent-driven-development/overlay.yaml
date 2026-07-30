@@ -107,6 +107,38 @@ edits:
   - '  profile: reviewer'
   - '  title: "Review Task N (spec + quality)"'
   - '  task: |'
+- path: task-reviewer-prompt.md
+  op: replace
+  start_line: 169
+  end_line: 169
+  expected_lines:
+  - '- `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection'
+  replace_lines:
+  - '- `[MODEL]` — not used; the `reviewer` profile declares its own model in `AGENT.md`'
+- path: re-review-prompt.md
+  op: replace
+  start_line: 11
+  end_line: 15
+  expected_lines:
+  - 'Subagent (general-purpose):'
+  - '  description: "Re-review Task N fix round R"'
+  - '  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted'
+  - '         model silently inherits the session''s most expensive one]'
+  - '  prompt: |'
+  replace_lines:
+  - 'run_subagent (Devin Desktop):'
+  - '  profile: reviewer'
+  - '  title: "Re-review Task N fix round R"'
+  - '  task: |'
+- path: re-review-prompt.md
+  op: replace
+  start_line: 95
+  end_line: 96
+  expected_lines:
+  - '- `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection; scoped'
+  - '  re-reviews of small fix diffs take a cheap-to-mid tier'
+  replace_lines:
+  - '- `[MODEL]` — not used; the `reviewer` profile declares its own model in `AGENT.md`'
 - path: SKILL.md
   op: replace
   start_line: 74
@@ -131,3 +163,25 @@ edits:
   - '    "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
   replace_lines:
   - '    "Invoke /review-branch-diff for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
+- path: SKILL.md
+  op: replace
+  start_line: 398
+  end_line: 402
+  expected_lines:
+  - 'on the most capable available model (see Model Selection), using'
+  - 'superpowers:requesting-code-review''s'
+  - '[code-reviewer.md](../requesting-code-review/code-reviewer.md). Point it at'
+  - 'the ledger''s deferred-minor and parked lines so it can triage which must be'
+  - 'fixed before merge.'
+  replace_lines:
+  - 'using `/review-branch-diff` (or `run_subagent profile: branch-reviewer`).'
+  - 'Point it at the ledger''s deferred-minor and parked lines so it can triage'
+  - 'which must be fixed before merge.'
+- path: SKILL.md
+  op: replace
+  start_line: 497
+  end_line: 497
+  expected_lines:
+  - '[Run review-package PLAN_FILE MERGE_BASE HEAD; dispatch final code-reviewer, most capable model]'
+  replace_lines:
+  - '[Run review-package PLAN_FILE MERGE_BASE HEAD; invoke /review-branch-diff for final whole-branch review]'
