@@ -156,6 +156,17 @@ license: MIT
 - Move detailed reference material to separate files under `references/`.
 - Keep inline code patterns under 50 lines.
 
+### Scope notes
+
+When a first-party skill has real but non-primary boundary cases, move the expanded guidance to `references/scope-notes.md` and keep `SKILL.md` focused on the primary lanes.
+
+- Do not create an empty `references/scope-notes.md` just because the convention exists.
+- Wire the reference through three surfaces:
+  1. The `do_not_use_when` frontmatter item, ending with `(see references/scope-notes.md for <case>)`.
+  2. A short `## Boundary cases` or `## When this skill is not what you need` call-out near the bottom of `SKILL.md`.
+  3. `assets/authority/source-map.yaml`, if the skill has one, with `load_when` conditions that match the body call-out.
+- Keep `references/scope-notes.md` short. If it exceeds one screen, split it into topical files under `references/` instead of one long catch-all.
+
 ### Recommended structure
 
 ```markdown

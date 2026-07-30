@@ -14,7 +14,7 @@ metadata:
   - Use when a plan is ready to move from writing-plans to execution.
   - Use when completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - Do not use when the artifact is not clearly at a stage boundary.
+  - Do not use when the artifact is not clearly at a stage boundary. (see references/scope-notes.md for boundary cases)
   - Do not use as a substitute for risk-gates when the question is pre-action risk.
   related_skills:
   - risk-gates
@@ -69,12 +69,23 @@ For completion-readiness, 9/10 means high confidence the work passes code review
 
 When the `plan-readiness` lane is for a `subagent-driven-development` (SDD) plan, rate the artifact against these items. A plan that fails any item should be strengthened before handoff.
 
-- [ ] **Task ordering.** All source and adapter/overlay edits are scheduled before any `tools/run * --apply` regeneration step.
+- [ ] **Dependency-order coherence.** For each task, the `Consumes` block names only outputs from tasks that appear earlier in the plan. No task may consume an output from a task scheduled later. If a later task's output is needed earlier, either move the producer earlier, split an intermediate step, or add an explicit bridge/proxy.
+
+- [ ] **Task ordering.** The general rule is that producers come before consumers. In this repo, that means all source and adapter/overlay edits are scheduled before any `tools/run * --apply` regeneration step.
+
 - [ ] **Overlay health gate.** `tools/run heal --check` is scheduled after overlay edits and before `marketplace`/`project`/`installed-skills` regeneration.
+
 - [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
+
 - [ ] **Clean CI gate.** `tools/run ci --check` is not scheduled on an uncommitted working tree; the plan commits and lets the pre-commit hook run it, or commits with `--no-verify` and then runs it.
+
 - [ ] **Explicit verification.** Each regeneration or projection task names the exact `tools/run <target> --apply` command and any follow-up `ci --check`.
+
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
+
+## Boundary cases
+
+If the artifact is intentionally thin, depends on an external blocker, or the handoff touches `verification-before-completion` or `requesting-code-review`, load `references/scope-notes.md` and follow its guidance. Only proceed when the reference gives a green path.
 
 ## Common Mistakes
 
