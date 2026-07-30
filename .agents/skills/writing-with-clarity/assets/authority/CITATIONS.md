@@ -2,8 +2,8 @@
 
 ## Scholarly citation
 
-- Strunk, William Jr. *The Elements of Style*. 1918. Public domain. Canonical source: Project Gutenberg EBook #37134, https://www.gutenberg.org/ebooks/37134 . Vendored snapshot: `assets/authority/reference-source/elements-of-style-1918/elements-of-style-1918.txt`.
-- Downloaded mirror: http://www.mirrorservice.org/sites/gutenberg.org/3/7/1/3/37134/37134.txt
+- Strunk, William Jr. *The Elements of Style*. 1918. Public domain. Canonical source: Project Gutenberg EBook #37134, https://www.gutenberg.org/ebooks/37134. Vendored snapshot: `assets/authority/reference-source/elements-of-style-1918/elements-of-style-1918.txt`.
+- Downloaded mirror: https://gutenberg.org/files/37134/37134.txt
 - The canonical `.txt` is split into chapter Markdown files under `assets/authority/reference-source/elements-of-style-1918/` for easier reference by heading.
 
 ## Derivation boundary

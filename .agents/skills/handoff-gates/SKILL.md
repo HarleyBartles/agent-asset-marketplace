@@ -14,7 +14,7 @@ metadata:
   - Use when a plan is ready to move from writing-plans to execution.
   - Use when completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - Do not use when the artifact is not clearly at a stage boundary. (see references/scope-notes.md for boundary cases)
+  - Do not use when the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases).
   - Do not use as a substitute for risk-gates when the question is pre-action risk.
   related_skills:
   - risk-gates
@@ -71,15 +71,13 @@ When the `plan-readiness` lane is for a `subagent-driven-development` (SDD) plan
 
 - [ ] **Dependency-order coherence.** For each task, the `Consumes` block names only outputs from tasks that appear earlier in the plan. No task may consume an output from a task scheduled later. If a later task's output is needed earlier, either move the producer earlier, split an intermediate step, or add an explicit bridge/proxy.
 
-- [ ] **Task ordering.** The general rule is that producers come before consumers. In this repo, that means all source and adapter/overlay edits are scheduled before any `tools/run * --apply` regeneration step.
-
-- [ ] **Overlay health gate.** `tools/run heal --check` is scheduled after overlay edits and before `marketplace`/`project`/`installed-skills` regeneration.
+- [ ] **Task ordering.** Producers come before consumers. In this repo, all source and adapter/overlay edits are scheduled before any source-regeneration or CI step. In a consumer repo, use the repo's canonical regeneration and preflight commands instead of hardcoding `tools/run * --apply`.
 
 - [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
 
-- [ ] **Clean CI gate.** `tools/run ci --check` is not scheduled on an uncommitted working tree; the plan commits and lets the pre-commit hook run it, or commits with `--no-verify` and then runs it.
+- [ ] **Clean CI gate.** The repo's canonical CI command is not scheduled on an uncommitted working tree; the plan commits and lets the pre-commit hook run it, or commits with `--no-verify` and then runs it. In this repo use `tools/run ci --check`; in consumer repos use the equivalent preflight.
 
-- [ ] **Explicit verification.** Each regeneration or projection task names the exact `tools/run <target> --apply` command and any follow-up `ci --check`.
+- [ ] **Explicit verification.** Each regeneration or projection task names the exact consumer command and any follow-up CI check. Do not assume a `tools/run` target exists in every repo.
 
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
 

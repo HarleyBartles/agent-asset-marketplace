@@ -70,7 +70,7 @@ In `--check` mode the script must report errors and exit non-zero if invalid. In
 
 It also records:
 
-- `localSkills`: the names of any skills installed from the consumer repo's local `localSkillsPath`.
+- `localSkills`: the names of any skills installed from the consumer repo's local skill source (declared by `repo.local_skill_prefixes`).
 - `localPlugins`: the names of any plugins whose skills were installed from a `local` source.
 - `marketplace`: the source repository and source path used for the marketplace.
 - `marketplaceFile`: the path to `.agents/plugins/marketplace.json`.

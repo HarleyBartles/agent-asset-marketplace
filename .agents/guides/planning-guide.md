@@ -54,6 +54,13 @@ Before executing a plan, run through this checklist. Each item is a general prin
 8. **Interim state documentation.** Are temporary validation failures between tasks documented so the implementer knows they're expected? An interim validation failure that's fixed by a later task is acceptable if documented.
 9. **Task independence.** Can each task be executed independently without shared mutable state between tasks? SDD parallel execution requires independence.
 
+### Cross-repo consumer assumptions
+
+If the plan touches vendored skills, prompts, or scripts that install into other repos, verify:
+- the plan does not hardcode this repo's `tools/run *` targets or paths that consumers do not share;
+- the plan names the consumer's canonical commands (e.g. `tools/run ci --check` in this repo, `scripts/ci-preflight.ps1 -Check` in Rooms-Mostly, or the consumer's `tools/run skills --apply`);
+- each SDD task prompt is reviewed for repo-specific assumptions before handoff.
+
 ## Execution Confidence Assessment (required before reporting ready)
 
 Before reporting a plan as ready for execution, the planner must honestly assess the plan's execution confidence. This is not a formality — it is a verification step that catches gaps the planner would otherwise discover too late.

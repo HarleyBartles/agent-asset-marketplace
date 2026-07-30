@@ -14,7 +14,7 @@ metadata:
   - Use when the human frames a request as a large or epic goal.
   - Use when continuing an existing epic roadmap.
   do_not_use_when:
-  - Do not use when the goal fits a single tight writing-plans plan. (see references/scope-notes.md when the boundary between one plan and a new epic is unclear)
+  - Do not use when the goal fits a single tight writing-plans plan (see references/scope-notes.md for the one-plan-vs-epic boundary).
   - Do not use as a substitute for writing-plans on small, well-defined tasks.
   related_skills:
   - handoff-gates
