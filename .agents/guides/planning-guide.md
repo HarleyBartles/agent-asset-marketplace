@@ -40,8 +40,9 @@ Do not create loose files at repo root. Do not place agent-generated artifacts u
 Before executing a plan, run through this checklist. Each item is a general principle — the examples are illustrative, not exhaustive.
 
 ### Structural integrity
-1. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
-2. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
+1. **SDD task ordering.** For plans executed with `subagent-driven-development`, source and adapter/overlay edits must be complete before any `tools/run * --apply` regeneration step. `tools/run heal --check` must appear after overlay edits and before regeneration. `tools/run ci --check` must not run on an uncommitted working tree; the plan should commit and let the pre-commit hook run it, or commit with `--no-verify` and then run it. Each task should include a final sub-step for the implementer to mark the task's own plan steps `[x]`.
+2. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
+3. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
 3. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.
 
 ### Test infrastructure

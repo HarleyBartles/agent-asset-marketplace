@@ -182,8 +182,9 @@ conflicts that only emerge from implementation.
 ## Model Selection
 
 Devin Desktop uses custom subagent profiles (`implementer`, `reviewer`,
-`branch-reviewer`) whose `model:` is declared in their `AGENT.md`. Do not
-pass `model:` to `run_subagent` — the profile selects the model.
+`branch-reviewer`). Specify the `run_subagent` `profile:` explicitly;
+each profile's `AGENT.md` declares its own `model:`, so do not pass
+`model:` to `run_subagent`.
 
 ## The Task Loop
 

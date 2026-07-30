@@ -89,9 +89,10 @@ edits:
   replace_lines:
   - '## Model Selection'
   - ''
-  - Devin Desktop uses custom subagent profiles (`implementer`, `reviewer`,
-  - '`branch-reviewer`) whose `model:` is declared in their `AGENT.md`. Do not'
-  - pass `model:` to `run_subagent` — the profile selects the model.
+  - "Devin Desktop uses custom subagent profiles (`implementer`, `reviewer`,"
+  - "`branch-reviewer`). Specify the `run_subagent` `profile:` explicitly;"
+  - "each profile's `AGENT.md` declares its own `model:`, so do not pass"
+  - "`model:` to `run_subagent`."
 - path: SKILL.md
   op: replace
   start_line: 124
@@ -240,4 +241,5 @@ edits:
   - '    6. Report back'
   replace_lines:
   - '    6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`'
-  - '    7. Report back'
+  - '    7. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree.'
+  - '    8. Report back'

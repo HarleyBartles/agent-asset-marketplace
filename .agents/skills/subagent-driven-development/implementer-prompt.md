@@ -37,7 +37,8 @@ run_subagent (Devin Desktop):
     4. Commit your work
     5. Self-review (see below)
     6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`
-    7. Report back
+    7. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree.
+    8. Report back
 
     Work from: [directory]
 
