@@ -405,7 +405,8 @@
         "sources/first_party/skills/repo-standards",
         "sources/first_party/skills/refreshing-installed-skills",
         "sources/first_party/skills/generating-agent-mesh",
-        "sources/first_party/skills/asking-clarifying-questions"
+        "sources/first_party/skills/asking-clarifying-questions",
+        "sources/first_party/skills/review-branch-diff"
       ],
       "provenance_refs": [
         "provenance/repo-worker-pack.md",
@@ -607,6 +608,16 @@
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
           "copy_expectation": "byte_identical",
           "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
+        },
+        {
+          "canonical_name": "review-branch-diff",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/review-branch-diff",
+          "local_path": "skills/review-branch-diff",
+          "provenance_note": "First-party branch-diff review skill projected verbatim into the repo-worker-pack.",
+          "copy_expectation": "byte_identical"
         }
       ]
     },
