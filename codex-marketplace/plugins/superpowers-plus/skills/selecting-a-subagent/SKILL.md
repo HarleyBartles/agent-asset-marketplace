@@ -33,7 +33,7 @@ metadata:
   - inspecting-the-environment
 license: MIT
 ---
-# Subagent Model Routing
+# Selecting a Subagent
 
 Use this skill before choosing a child subagent route. Detect the live dispatch
 contract, load the shared policy and exactly one matching environment profile,

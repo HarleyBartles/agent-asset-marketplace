@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT / "sources/first_party/skills/subagent-model-routing"
+SKILL_ROOT = ROOT / "sources/first_party/skills/selecting-a-subagent"
 SKILL = SKILL_ROOT / "SKILL.md"
 V1_PROFILE = SKILL_ROOT / "references/codex-multi-agent-v1-profile.md"
 V2_PROFILE = SKILL_ROOT / "references/codex-multi-agent-v2-profile.md"

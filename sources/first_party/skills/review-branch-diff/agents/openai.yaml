@@ -5,6 +5,6 @@ metadata:
 interface:
   display_name: Review Branch Diff
   short_description: Use when a branch is complete and a whole-branch diff review against main is needed.
-  default_prompt: Use review-branch-diff when a branch is complete and a whole-branch diff review against main is needed.
+  default_prompt: Use /review-branch-diff when a branch is complete and a whole-branch diff review against main is needed.
 policy:
   allow_implicit_invocation: false

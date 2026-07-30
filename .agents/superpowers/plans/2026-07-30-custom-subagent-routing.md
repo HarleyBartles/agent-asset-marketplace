@@ -6,7 +6,7 @@
 
 **Goal:** Update the `agent-asset-marketplace` repo to support Devin Desktop custom subagent profiles, vend a `review-branch-diff` repo-worker-pack skill, and adapt the `subagent-driven-development` overlay to dispatch `implementer`, `reviewer`, and `branch-reviewer`.
 
-**Architecture:** Add `review-branch-diff` as a first-party skill in `sources/first_party/skills/`, register it in `codex-marketplace/custody-pack-registry.json`, and let `tools/run marketplace --apply` project it. Update the `subagent-model-routing` reference doc and the `subagent-driven-development` adapter overlay. All changes are validated with `tools/run ci --check`.
+**Architecture:** Add `review-branch-diff` as a first-party skill in `sources/first_party/skills/`, register it in `codex-marketplace/custody-pack-registry.json`, and let `tools/run marketplace --apply` project it. Update the `selecting-a-subagent` reference doc and the `subagent-driven-development` adapter overlay. All changes are validated with `tools/run ci --check`.
 
 **Tech Stack:** Markdown, YAML, JSON, Python (tooling), `tools/run`.
 
@@ -180,10 +180,10 @@ git commit --no-verify -m "chore: register review-branch-diff in repo-worker-pac
 
 ---
 
-### Task 3: Update `subagent-model-routing` Devin Desktop reference
+### Task 3: Update `selecting-a-subagent` Devin Desktop reference
 
 **Files:**
-- Modify: `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md`
+- Modify: `sources/first_party/skills/selecting-a-subagent/references/devin-desktop-profile.md`
 
 **Interfaces:**
 - Consumes: the existing reference doc and the spike findings in the spec.
@@ -191,7 +191,7 @@ git commit --no-verify -m "chore: register review-branch-diff in repo-worker-pac
 
 - [x] **Step 1: Insert the custom-profiles section before `### What not to do`**
 
-In `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md`, locate the `### What not to do` heading and insert the following block immediately before it:
+In `sources/first_party/skills/selecting-a-subagent/references/devin-desktop-profile.md`, locate the `### What not to do` heading and insert the following block immediately before it:
 
 ```markdown
 ### Custom subagent profiles
@@ -214,8 +214,8 @@ Custom subagents are not granted the `write` tool, even if listed in their `allo
 - [x] **Step 2: Commit the reference doc update**
 
 ```bash
-git add sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md
-git commit --no-verify -m "docs: document Devin Desktop custom subagent profiles in subagent-model-routing"
+git add sources/first_party/skills/selecting-a-subagent/references/devin-desktop-profile.md
+git commit --no-verify -m "docs: document Devin Desktop custom subagent profiles in selecting-a-subagent"
 ```
 
 ---
@@ -364,7 +364,7 @@ Expected: all checks pass. If `INDEX.md` or marketplace checks fail, run the cor
 - [x] **Step 5: Commit the generated changes**
 
 ```bash
-git add codex-marketplace/ .agents/skills/review-branch-diff .agents/skills/subagent-driven-development .agents/skills/subagent-model-routing .agents/superpowers/specs/INDEX.md
+git add codex-marketplace/ .agents/skills/review-branch-diff .agents/skills/subagent-driven-development .agents/skills/selecting-a-subagent .agents/superpowers/specs/INDEX.md
 git commit --no-verify -m "chore: regenerate marketplace and installed skill surfaces"
 ```
 
@@ -446,7 +446,7 @@ gh pr create --base main --title "feat: custom Devin Desktop subagent routing an
 ```
 
 Fill in every section of the template, including:
-- **What this changes:** `subagent-model-routing` reference doc, `subagent-driven-development` overlay, new `review-branch-diff` skill bundled in `repo-worker-pack`.
+- **What this changes:** `selecting-a-subagent` reference doc, `subagent-driven-development` overlay, new `review-branch-diff` skill bundled in `repo-worker-pack`.
 - **Why:** the spike proved Devin Desktop custom subagents work; this makes the repo guidance and SDD workflow accurate.
 - **Test evidence:** `tools/run ci --check` passed and the manual end-to-end test ran.
 - **Co-Authored-By:** Generated with Devin.

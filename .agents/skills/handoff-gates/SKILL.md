@@ -27,7 +27,6 @@ metadata:
   - brainstorming
   - writing-plans
   - executing-plans
-  - subagent-driven-development
   use_before:
   - writing-plans
   - executing-plans
