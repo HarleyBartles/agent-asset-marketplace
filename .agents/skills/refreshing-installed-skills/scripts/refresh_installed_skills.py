@@ -688,7 +688,10 @@ def main(argv: list[str] | None = None) -> int:
     if not args.force and existing_provenance and not provenance_needs_update:
         if _marketplace_skill_inventory_is_current(installed_plugins, prefixes):
             print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
-            print(f"Synced skills: {existing_provenance.get('syncedSkills')} from {existing_provenance.get('syncedPlugins')} plugins.")
+            print(
+                f"Synced skills: {existing_provenance.get('syncedSkills')} from "
+                f"{existing_provenance.get('syncedPlugins')} plugins."
+            )
             return 0
 
     print(f"Found {len(installed_plugins)} installed plugin(s)")
@@ -716,7 +719,12 @@ def main(argv: list[str] | None = None) -> int:
 
     # Clean orphan skills
     print("\nChecking for orphan skills...")
-    if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names, prefixes=prefixes):
+    if _clean_orphan_skills(
+        installed_plugins,
+        check_mode=args.check,
+        synced_skill_names=synced_skill_names,
+        prefixes=prefixes,
+    ):
         changes_made = True
 
     # Provenance metadata drift (plugin list, local skills, manifest SHA) is also

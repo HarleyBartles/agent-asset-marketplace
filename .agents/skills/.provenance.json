@@ -1,5 +1,5 @@
 {
-  "manifestSha": "83566a6ddeb1873ac9933bbc9ee51dfa028c2d65",
+  "manifestSha": "77af168d4f7beb548333e981a592bcb5ab2d81fc",
   "syncedPlugins": [
     "superpowers-plus",
     "repo-worker-pack"
@@ -25,5 +25,5 @@
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
-  "syncedAt": "2026-07-30T06:15:20.473929"
+  "syncedAt": "2026-07-30T06:22:04.206007"
 }
