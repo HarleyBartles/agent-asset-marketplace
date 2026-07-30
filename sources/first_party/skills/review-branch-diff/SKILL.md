@@ -1,25 +1,32 @@
 ---
 name: review-branch-diff
-description: Review the current branch diff against main for correctness, style, consistency, and risk. Use when a branch is complete and a whole-branch diff review is needed before merge.
-license: MIT
+description: Use when the current branch is complete and a whole-branch diff review
+  against main is needed.
 metadata:
   source-id: review-branch-diff
-  source-path: sources/first_party/skills/review-branch-diff
+  source-path: sources/first_party/skills/review-branch-diff/SKILL.md
   provenance-name: Review Branch Diff first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
+  scope: Use when the current branch is complete and a whole-branch diff review against
+    main is needed.
   use_when:
-    - Use when a feature branch is complete and a whole-branch diff review is needed.
-    - Use when the user asks to review the current branch diff against main.
+  - Use when a feature branch is complete and a whole-branch diff review is needed.
+  - Use when the user asks to review the current branch diff against main.
   do_not_use_when:
-    - Do not use when the current branch has no commits ahead of main.
-    - Do not use when only a single file or small diff needs review; use a file-level reviewer instead.
-  related_skills: [subagent-driven-development, finishing-a-development-branch, requesting-code-review]
+  - Do not use when the current branch has no commits ahead of main.
+  - Do not use when only a single file or small diff needs review; use a file-level
+    reviewer instead.
+  related_skills:
+  - subagent-driven-development
+  - finishing-a-development-branch
+  - requesting-code-review
+license: MIT
 agent: branch-reviewer
 triggers:
-  - user
-  - model
+- user
+- model
 ---
 
 # Review Branch Diff
