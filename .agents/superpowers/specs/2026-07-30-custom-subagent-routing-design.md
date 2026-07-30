@@ -73,7 +73,7 @@ The repo currently treats `subagent_explore` and `subagent_general` as the only 
   - `SKILL.md` with `agent: branch-reviewer`, no arguments.
   - `assets/branch-reviewer/AGENT.md` — a static fallback copy of the global `branch-reviewer` profile. It is not loaded by default; an agent can use it if the global profile is missing.
   - `agents/openai.yaml` per the marketplace contract.
-- Bundled into `codex-marketplace/plugins/repo-worker-pack/`.
+- Bundled into `repo-worker-pack` by adding an entry to the `entries` array in `codex-marketplace/custody-pack-registry.json` and updating the `source_ledger` to include `sources/first_party/skills/review-branch-diff`. `tools/run marketplace --apply` then projects the skill into `codex-marketplace/plugins/repo-worker-pack/` and regenerates `references/bundle-manifest.json` and `references/source-map.md`.
 - Installed to `.agents/skills/review-branch-diff/` via `tools/run installed-skills --apply`.
 - Body: determine base ref (`main` or `origin/main`), run `git diff --no-color <base>...HEAD`, review for correctness, style, consistency, and risk. Cite files and line numbers.
 
@@ -108,6 +108,7 @@ Add `edits` to `adapters/codex/superpowers-plus/subagent-driven-development/over
 
 - `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md`
 - `adapters/codex/superpowers-plus/subagent-driven-development/overlay.yaml`
+- `codex-marketplace/custody-pack-registry.json`
 - `sources/first_party/skills/review-branch-diff/SKILL.md` (new)
 - `sources/first_party/skills/review-branch-diff/agents/openai.yaml` (new)
 - `sources/first_party/skills/review-branch-diff/assets/branch-reviewer/AGENT.md` (new)
