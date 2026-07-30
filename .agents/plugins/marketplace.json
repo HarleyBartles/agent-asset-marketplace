@@ -137,18 +137,6 @@
       "category": "Productivity"
     },
     {
-      "name": "rooms-project-pack",
-      "source": {
-        "source": "local",
-        "path": "./codex-marketplace/plugins/rooms-project-pack"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "feature-sliced-design",
       "source": {
         "source": "local",

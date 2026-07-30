@@ -9,15 +9,6 @@
       "scope": "cleanup-custody"
     },
     {
-      "issue": "MARK-23",
-      "source_id": "rooms-image-sidecars-v0.1",
-      "source_path": "sources/first_party/skills/rooms-image-sidecars",
-      "public_name": "rooms-image-sidecars",
-      "provenance_name": "MARK-23 prep payload for Rooms House Skills survivor import",
-      "scope": "Rooms image sidecar preparation",
-      "import_state": "imported"
-    },
-    {
       "issue": "MARK-30",
       "source_id": "base-doctrine-v1.1",
       "source_path": "sources/first_party/skills/base-doctrine",
@@ -130,33 +121,6 @@
       "notes": "Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping."
     },
     {
-      "issue": "MARK-30",
-      "source_id": "rooms-project-doctrine-v1",
-      "source_path": "sources/first_party/skills/rooms-project-doctrine",
-      "public_name": "rooms-project-doctrine",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms shared project doctrine",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-character-investigation-v1",
-      "source_path": "sources/first_party/skills/rooms-character-investigation",
-      "public_name": "rooms-character-investigation",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms character investigation",
-      "import_state": "imported"
-    },
-    {
-      "issue": "MARK-30",
-      "source_id": "rooms-sheet-creator-v1",
-      "source_path": "sources/first_party/skills/rooms-sheet-creator",
-      "public_name": "rooms-sheet-creator",
-      "provenance_name": "MARK-9 chunk ledger ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Rooms",
-      "scope": "Rooms sheet creation from durable packets",
-      "import_state": "imported"
-    },
-    {
       "issue": "MARK-109",
       "source_id": "asset-market-v1",
       "source_path": "sources/first_party/skills/asset-market",
@@ -184,16 +148,6 @@
       "scope": "large text write safety, bounded composition, and atomic replacement",
       "import_state": "imported",
       "notes": "First-party Harley-owned source custody for context-safe large text writes. The canonical source is a directory-level skill spec with SKILL.md and agents/openai.yaml, and it teaches bounded composition, safe staging, and atomic replacement for large writes."
-    },
-
-    {
-      "issue": "MARK-334",
-      "source_id": "rooms-risk-gates",
-      "source_path": "sources/first_party/skills/rooms-risk-gates",
-      "public_name": "rooms-risk-gates",
-      "provenance_name": "Rooms risk gates overlay skill",
-      "scope": "Rooms-specific risk gate profiles composing with risk-gates",
-      "import_state": "imported"
     }
   ]
 }

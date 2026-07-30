@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -119,6 +120,32 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
     return invalid
 
 
+def _discover_local_skills(prefixes: list[str]) -> list[str]:
+    """Return sorted, valid repo-local skill directory names."""
+    if not AGENTS_SKILLS_PATH.is_dir():
+        return []
+
+    local_skills: list[str] = []
+    for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
+        if not _is_local_skill_dir(skill_dir, prefixes):
+            continue
+        try:
+            if _frontmatter_name(skill_dir) != skill_dir.name:
+                continue
+        except (
+            FileNotFoundError,
+            UnicodeDecodeError,
+            ValueError,
+            AttributeError,
+            TypeError,
+            yaml.YAMLError,
+        ):
+            continue
+        local_skills.append(skill_dir.name)
+
+    return sorted(local_skills)
+
+
 def _powershell_cmd() -> list[str]:
     for name in ("pwsh", "powershell"):
         if shutil.which(name):
@@ -229,7 +256,8 @@ def _get_marketplace_manifest_sha() -> str:
 
     When the marketplace-source submodule is present, track its HEAD so the
     provenance reflects the version of the marketplace that was installed.
-    Otherwise fall back to the consumer repo's HEAD.
+    Otherwise fall back to a stable content hash of the effective marketplace
+    configuration (`.agents/plugins/marketplace.json`).
     """
     submodule = _marketplace_source_path(ROOT)
     if submodule.is_dir() and (submodule / ".git").exists():
@@ -246,19 +274,11 @@ def _get_marketplace_manifest_sha() -> str:
         except subprocess.CalledProcessError:
             pass
 
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            check=True,
-            env=_stripped_env(),
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError:
-        # Fallback: use marketplace.json modification time
-        return datetime.fromtimestamp(MARKETPLACE_PATH.stat().st_mtime).isoformat()
+    if MARKETPLACE_PATH.is_file():
+        return hashlib.sha256(MARKETPLACE_PATH.read_bytes()).hexdigest()
+
+    # Fallback: use marketplace.json modification time
+    return datetime.fromtimestamp(MARKETPLACE_PATH.stat().st_mtime).isoformat()
 
 
 def _load_provenance() -> dict[str, Any] | None:
@@ -473,16 +493,18 @@ def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bo
     return cleaned_any
 
 
-def _write_provenance(manifest_sha: str, installed_plugins: list[dict[str, Any]], synced_skill_count: int) -> None:
-    """Write provenance data.
-
-    Distinguishes marketplace-derived plugins from repo-local plugins so the
-    provenance file does not falsely attribute local plugins to the marketplace.
-    """
+def _provenance_state(
+    manifest_sha: str,
+    installed_plugins: list[dict[str, Any]],
+    synced_skill_count: int,
+    local_skills: list[str],
+) -> dict[str, Any]:
+    """Return the non-temporal provenance fields for comparison and writing."""
     synced_plugins = [
         plugin.get("name", "unknown") if isinstance(plugin.get("name"), str) else "unknown"
         for plugin in installed_plugins
     ]
+
     local_plugins: list[dict[str, Any]] = []
     for plugin in installed_plugins:
         source = plugin.get("source", {}) if isinstance(plugin.get("source"), dict) else {}
@@ -490,30 +512,67 @@ def _write_provenance(manifest_sha: str, installed_plugins: list[dict[str, Any]]
             name = plugin.get("name", "unknown")
             if not isinstance(name, str):
                 name = "unknown"
-            local_plugins.append({
-                "name": name,
-                "path": source.get("path"),
-                "source": "local",
-            })
+            local_plugins.append(
+                {
+                    "name": name,
+                    "path": source.get("path"),
+                    "source": "local",
+                }
+            )
 
-    provenance = {
+    return {
         "manifestSha": manifest_sha,
-        "syncedAt": datetime.now().isoformat(),
         "syncedPlugins": synced_plugins,
         "syncedSkills": synced_skill_count,
+        "localSkills": local_skills,
         "marketplace": {
             "source": "HarleyBartles/agent-asset-marketplace",
             "sourcePath": "codex-marketplace/plugins",
         },
         "localPlugins": local_plugins,
-        "marketplaceFile": ".agents/plugins/marketplace.json"
+        "marketplaceFile": ".agents/plugins/marketplace.json",
     }
+
+
+def _provenance_needs_update(
+    existing: dict[str, Any] | None, new_state: dict[str, Any]
+) -> bool:
+    """Return True if any non-temporal provenance field has changed."""
+    if not existing:
+        return True
+    existing_durable = {
+        key: value for key, value in existing.items() if key != "syncedAt"
+    }
+    return existing_durable != new_state
+
+
+def _write_provenance(
+    manifest_sha: str,
+    installed_plugins: list[dict[str, Any]],
+    synced_skill_count: int,
+    local_skills: list[str],
+) -> None:
+    """Write provenance data.
+
+    Distinguishes marketplace-derived plugins from repo-local plugins so the
+    provenance file does not falsely attribute local plugins to the marketplace,
+    and records repo-local skills under localSkills.
+    """
+    provenance = _provenance_state(manifest_sha, installed_plugins, synced_skill_count, local_skills)
+    provenance["syncedAt"] = datetime.now().isoformat()
+
     with PROVENANCE_PATH.open("w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(provenance, indent=2) + "\n")
 
 
 def _is_submodule(repo_root: Path) -> bool:
-    result = subprocess.run(["git", "rev-parse", "--show-superproject-working-tree"], cwd=repo_root, capture_output=True, text=True, env=_stripped_env())
+    result = subprocess.run(
+        ["git", "rev-parse", "--show-superproject-working-tree"],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
     return result.returncode == 0 and result.stdout.strip()
 
 
@@ -605,6 +664,10 @@ def main(argv: list[str] | None = None) -> int:
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
 
+    local_skills = _discover_local_skills(prefixes)
+    expected_skills = _expected_marketplace_skill_inventory(installed_plugins, prefixes)
+    synced_skill_count = len(expected_skills)
+
     collisions = _reserved_marketplace_skill_collisions(installed_plugins, prefixes)
     if collisions:
         for plugin_name, skill_name in collisions:
@@ -619,12 +682,17 @@ def main(argv: list[str] | None = None) -> int:
     current_manifest_sha = _get_marketplace_manifest_sha()
 
     # Check if refresh is needed based on provenance
-    if not args.force and existing_provenance:
-        if existing_provenance.get("manifestSha") == current_manifest_sha:
-            if _marketplace_skill_inventory_is_current(installed_plugins, prefixes):
-                print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
-                print(f"Synced skills: {existing_provenance.get('syncedSkills')} from {existing_provenance.get('syncedPlugins')} plugins.")
-                return 0
+    new_state = _provenance_state(current_manifest_sha, installed_plugins, synced_skill_count, local_skills)
+    provenance_needs_update = _provenance_needs_update(existing_provenance, new_state)
+
+    if not args.force and existing_provenance and not provenance_needs_update:
+        if _marketplace_skill_inventory_is_current(installed_plugins, prefixes):
+            print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
+            print(
+                f"Synced skills: {existing_provenance.get('syncedSkills')} from "
+                f"{existing_provenance.get('syncedPlugins')} plugins."
+            )
+            return 0
 
     print(f"Found {len(installed_plugins)} installed plugin(s)")
 
@@ -651,13 +719,22 @@ def main(argv: list[str] | None = None) -> int:
 
     # Clean orphan skills
     print("\nChecking for orphan skills...")
-    if _clean_orphan_skills(installed_plugins, check_mode=args.check, synced_skill_names=synced_skill_names, prefixes=prefixes):
+    if _clean_orphan_skills(
+        installed_plugins,
+        check_mode=args.check,
+        synced_skill_names=synced_skill_names,
+        prefixes=prefixes,
+    ):
         changes_made = True
 
-    # Write provenance only when the installed skill tree changed. A forced
+    # Provenance metadata drift (plugin list, local skills, manifest SHA) is also
+    # a change worth reporting and writing.
+    changes_made = changes_made or provenance_needs_update
+
+    # Write provenance when the skill tree or provenance state changed. A forced
     # byte-identical refresh must remain a no-diff operation.
     if not args.check and changes_made:
-        _write_provenance(current_manifest_sha, installed_plugins, len(synced_skill_names))
+        _write_provenance(current_manifest_sha, installed_plugins, synced_skill_count, local_skills)
         print(f"\nProvenance: {current_manifest_sha} -> {PROVENANCE_PATH}")
 
     if args.check:

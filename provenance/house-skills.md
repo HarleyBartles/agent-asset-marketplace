@@ -57,23 +57,6 @@
 - Scope: first-turn bootstrap routing and request classification
 - Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping.
 
-## rooms-image-sidecars
-
-- Source path: `sources/first_party/skills/rooms-image-sidecars/v0.1/rooms-image-sidecars-v0.1/SKILL.md`
-- Public identity: `rooms-image-sidecars`
-- Provenance/history only: MARK-23 prep payload for Rooms House Skills survivor import
-- Scope: Rooms image sidecar preparation
-- Notes: Imported as the primary Rooms survivor. Provides GPT-side starter packet guidance for image evidence before Albert/Pit ingestion. No standalone GitHub mechanics, canon busters, or adjacent Rooms residue were imported.
-
-## rooms-canon-buster
-
-- Source path: `sources/first_party/skills/rooms-canon-buster` (retired 2026-07-16)
-- Public identity: `rooms-canon-buster`
-- Provenance/history only: MARK-97 attached rooms canon buster zip update (retired)
-- Ownership: Harley-authored first-party House skill
-- Scope: Rooms canon pressure checks and lawful canon/item adjustment
-- Notes: Retired as part of the buster framework consolidation. The Rooms canon gate function now lives in `rooms-risk-gates` under `references/rooms-canon-gate.md`. This record exists only for provenance audit of the retired source path.
-
 ## asset-market
 
 - Source path: `sources/first_party/skills/asset-market`
@@ -147,8 +130,8 @@
 - Public identity: `risk-gates`
 - Provenance/history: 2026-07-16 buster framework consolidation
 - Ownership: Harley-owned first-party House skill
-- Scope: consolidated pre-action risk gate router with generic and Rooms-specific gate references
-- Notes: Imported as the consolidated risk-gates skill that retires and replaces the six MARK-19 core generic buster source records (buster-framework, ambiguity-buster, boring-buster, invariant-buster, analogy-buster, canon-buster) plus the Rooms gate overlays (rooms-ambiguity-buster, rooms-analogy-buster, rooms-canon-buster, rooms-zoom-outs-buster), crew/crew-buster, boring-loop, and session-buster/session-buster-ingress. Generic gate references live under `references/gates/`; Rooms-specific gate profiles live in `rooms-risk-gates/references/`.
+- Scope: consolidated pre-action risk gate router with generic gate references; Rooms-specific gate profiles were retired and moved to the Rooms project as local repo skills on 2026-07-30.
+- Notes: Imported as the consolidated risk-gates skill that retires and replaces the six MARK-19 core generic buster source records (buster-framework, ambiguity-buster, boring-buster, invariant-buster, analogy-buster, canon-buster), crew/crew-buster, boring-loop, and session-buster/session-buster-ingress. Generic gate references live under `references/gates/`.
 
 ## skill-handoff
 
@@ -166,13 +149,6 @@
 - Scope: skill installation handoff orchestration
 - Notes: Retired legacy skill helper. Skill installation is now handled by `tools/install_agent_skills.py` and the deterministic marketplace pipeline. This record exists only for provenance audit of the retired source path.
 
-## rooms-bootstrap
-
-- Source path: `sources/first_party/skills/rooms-bootstrap` (retired 2026-07-16)
-- Public identity: `rooms-bootstrap`
-- Provenance/history: MARK-97 rooms bootstrap zip update
-- Scope: Rooms first-read router
-- Notes: Retired as part of MARK-334. The Rooms first-read router function was merged into `rooms-project-doctrine`. This record exists only for provenance audit of the retired source path.
 ## Wild Bunch skills (retired)
 
 - Source paths: `sources/first_party/skills/wild-bunch-browser-game`, `sources/first_party/skills/wild-bunch-domain-modeling`, `sources/first_party/skills/wild-bunch-dotnet-architecture`, `sources/first_party/skills/wild-bunch-project-doctrine`, `sources/first_party/skills/wild-bunch-worker-verification`
@@ -211,8 +187,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane, Rooms, and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `using-github` GitHub surface router skill, the `risk-gates` consolidated pre-action risk gate router, the `rooms-risk-gates` Rooms-specific gate overlay, and the hydrated Wild Bunch first-party roots. The Adventures project pack and Don Logan boundary are retired and excluded from this projection.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `using-github` is projected here as the generic GitHub surface router skill, `risk-gates` is projected here as the consolidated pre-action risk gate router, and `rooms-risk-gates` is projected here as the Rooms-specific gate overlay.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `using-github` GitHub surface router skill, and the `risk-gates` consolidated pre-action risk gate router. The Adventures project pack, Don Logan boundary, and Rooms skills are retired and excluded from this projection.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `using-github` is projected here as the generic GitHub surface router skill, and `risk-gates` is projected here as the consolidated pre-action risk gate router.
 
 ## Active imports
 
@@ -223,13 +199,6 @@
 - `linear-issue-shaping-v1` - `sources/first_party/skills/linear-issue-shaping`
 - `using-linear-v1` - `sources/first_party/skills/using-linear`
 - `risk-gates` - `sources/first_party/skills/risk-gates/SKILL.md`
-
-### Rooms
-
-- `rooms-project-doctrine-v1` - `sources/first_party/skills/rooms-project-doctrine/v1/rooms-project-doctrine-v1/SKILL.md`
-- `rooms-risk-gates` - `sources/first_party/skills/rooms-risk-gates/SKILL.md`
-- `rooms-character-investigation-v1` - `sources/first_party/skills/rooms-character-investigation/v1/rooms-character-investigation-v1/SKILL.md`
-- `rooms-sheet-creator-v1` - `sources/first_party/skills/rooms-sheet-creator/v1/rooms-sheet-creator-v1/SKILL.md`
 
 ## Retired imports (history only)
 

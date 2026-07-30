@@ -66,4 +66,15 @@ In `--check` mode the script must report errors and exit non-zero if invalid. In
 
 ## Provenance
 
-`.agents/skills/.provenance.json` records the marketplace-source version that was installed. When the `marketplace-source` submodule is present, `manifestSha` tracks the submodule HEAD; otherwise it falls back to the consumer repo HEAD. `syncedPlugins` lists every plugin configured as `INSTALLED_BY_DEFAULT`, in order, regardless of whether its skills needed copying on this run.
+`.agents/skills/.provenance.json` records the marketplace-source version that was installed. When the `marketplace-source` submodule is present, `manifestSha` tracks the submodule HEAD; otherwise it falls back to a SHA-256 content hash of the effective marketplace configuration (`.agents/plugins/marketplace.json`). `syncedPlugins` lists every plugin configured as `INSTALLED_BY_DEFAULT`, in order, regardless of whether its skills needed copying on this run.
+
+It also records:
+
+- `localSkills`: the names of any skills installed from the consumer repo's local `localSkillsPath`.
+- `localPlugins`: the names of any plugins whose skills were installed from a `local` source.
+- `marketplace`: the source repository and source path used for the marketplace.
+- `marketplaceFile`: the path to `.agents/plugins/marketplace.json`.
+- `syncedSkills`: the count of skills copied from marketplace plugins.
+- `syncedAt`: the timestamp of the last refresh.
+
+Provenance is now rewritten when the installed plugin list, the local skill inventory, or the marketplace metadata changes, even if no marketplace skill files were copied. Because of this, `--check` may report a stale provenance file and `--apply` will update it without unnecessary skill copying.

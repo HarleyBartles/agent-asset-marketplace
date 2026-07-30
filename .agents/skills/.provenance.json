@@ -1,11 +1,13 @@
 {
-  "manifestSha": "cd0a3d8c71e97717135801c61611584b18a492be",
-  "syncedAt": "2026-07-29T16:24:13.477844",
+  "manifestSha": "15de781924bfa1e174586e0aba4d61566a9e6dcbfe2f60b690364daacfdf5d3c",
   "syncedPlugins": [
     "superpowers-plus",
     "repo-worker-pack"
   ],
   "syncedSkills": 34,
+  "localSkills": [
+    "mark-skill-authoring"
+  ],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
     "sourcePath": "codex-marketplace/plugins"
@@ -22,5 +24,6 @@
       "source": "local"
     }
   ],
-  "marketplaceFile": ".agents/plugins/marketplace.json"
+  "marketplaceFile": ".agents/plugins/marketplace.json",
+  "syncedAt": "2026-07-30T08:20:20.440550"
 }
