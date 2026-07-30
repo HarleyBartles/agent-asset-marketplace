@@ -77,7 +77,9 @@ PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
 
 def _local_skill_prefixes(config: dict[str, Any]) -> list[str]:
     repo = config.get("repo") or {}
-    prefixes = repo.get("local_skill_prefixes") or ["mark-"]
+    prefixes = repo.get("local_skill_prefixes")
+    if prefixes is None:
+        prefixes = []
     return [str(p) for p in prefixes]
 
 
@@ -462,7 +464,7 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
     return installed_any
 
 
-def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bool = False, synced_skill_names: set[str] | None = None, prefixes: list[str] | None = None) -> bool:
+def _clean_orphan_skills(check_mode: bool = False, synced_skill_names: set[str] | None = None, prefixes: list[str] | None = None) -> bool:
     """Remove skills that don't belong to any installed plugin."""
     if not AGENTS_SKILLS_PATH.exists():
         return False
@@ -720,7 +722,6 @@ def main(argv: list[str] | None = None) -> int:
     # Clean orphan skills
     print("\nChecking for orphan skills...")
     if _clean_orphan_skills(
-        installed_plugins,
         check_mode=args.check,
         synced_skill_names=synced_skill_names,
         prefixes=prefixes,

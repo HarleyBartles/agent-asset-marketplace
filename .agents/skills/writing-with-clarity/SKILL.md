@@ -38,9 +38,7 @@ Do not load every reference by default. The short references are the normal
 operational guidance and include source-basis pointers for the historical
 material.
 
-Do not read the chapter files under `assets/authority/reference-source/elements-of-style-1918/` during ordinary use.
-Read only the relevant chapter file when a shorter reference leaves an unresolved
-question about an exception, rationale, or original example. Use
+Do not read the whole source tree during ordinary use; read only the relevant chapter file when a shorter reference leaves an unresolved question about an exception, rationale, or original example. Use
 `assets/authority/source-map.yaml` to locate the chapter file and heading. Each
 `source_sections` entry is formatted as `<chapter-file>: <heading>`. The
 historical source is context and provenance, not current style authority.
