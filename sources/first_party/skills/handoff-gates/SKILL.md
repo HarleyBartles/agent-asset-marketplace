@@ -21,7 +21,6 @@ metadata:
   - writing-plans
   - executing-plans
   - subagent-driven-development
-  - review-branch-diff
   - working-with-epics
   use_after:
   - brainstorming
@@ -31,7 +30,6 @@ metadata:
   - writing-plans
   - executing-plans
   - subagent-driven-development
-  - review-branch-diff
   - finishing-a-development-branch
   - requesting-code-review
 license: MIT

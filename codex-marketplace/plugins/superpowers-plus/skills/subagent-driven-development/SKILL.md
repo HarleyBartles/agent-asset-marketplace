@@ -23,9 +23,9 @@ metadata:
     - "Do not use without a written plan."
     - "Do not use when tasks are tightly coupled; use executing-plans instead."
   use_after: [writing-plans, handoff-gates]
-  use_before: [review-branch-diff, finishing-a-development-branch]
+  use_before: [finishing-a-development-branch]
   use_with: [dispatching-parallel-agents]
-  related_skills: [writing-plans, executing-plans, selecting-a-subagent, review-branch-diff, finishing-a-development-branch, dispatching-parallel-agents]
+  related_skills: [writing-plans, executing-plans, selecting-a-subagent, finishing-a-development-branch, dispatching-parallel-agents]
 ---
 
 # Subagent-Driven Development
