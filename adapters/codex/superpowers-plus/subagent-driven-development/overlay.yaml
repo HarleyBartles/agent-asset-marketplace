@@ -225,8 +225,8 @@ edits:
   - fixed before merge.
   replace_lines:
   - using `/review-branch-diff`.
-  - Point it at the ledger's deferred-minor and parked lines so it can triage
-  - which must be fixed before merge.
+  - The skill reviews the full branch diff and reports findings; no additional
+  - review package is needed.
 - path: SKILL.md
   op: replace
   start_line: 497
@@ -234,7 +234,7 @@ edits:
   expected_lines:
   - '[Run review-package PLAN_FILE MERGE_BASE HEAD; dispatch final code-reviewer, most capable model]'
   replace_lines:
-  - '[Run review-package PLAN_FILE MERGE_BASE HEAD; invoke /review-branch-diff for final whole-branch review]'
+  - '[Invoke /review-branch-diff for final whole-branch review]'
 - path: implementer-prompt.md
   op: replace
   start_line: 40
@@ -243,5 +243,5 @@ edits:
   - '    6. Report back'
   replace_lines:
   - '    6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`'
-  - '    7. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree.'
+  - '    7. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree. If the hook is unavailable, commit with `--no-verify` and then run `tools/run ci --check` separately.'
   - '    8. Report back'

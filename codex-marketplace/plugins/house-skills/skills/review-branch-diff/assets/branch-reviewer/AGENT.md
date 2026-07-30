@@ -5,7 +5,6 @@ model: swe-1-7
 allowed-tools:
   - read
   - grep
-  - find_file_by_name
   - exec
 ---
 

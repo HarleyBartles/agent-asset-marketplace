@@ -35,12 +35,13 @@ Review the current branch diff against `main` (or `origin/main`) for correctness
 
 The `branch-reviewer` subagent profile contains the full review procedure; this skill dispatches it.
 
-1. If the global `branch-reviewer` subagent profile is not available, install `assets/branch-reviewer/AGENT.md` from this skill as `~/.config/devin/agents/branch-reviewer/AGENT.md`.
+1. If the global `branch-reviewer` subagent profile is not available, install `assets/branch-reviewer/AGENT.md` from this skill as `~/.config/devin/agents/branch-reviewer/AGENT.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer\AGENT.md` (Windows).
 2. Dispatch the subagent:
 
 ```
 run_subagent profile: branch-reviewer
   title: "Review branch diff"
+  task: "Review the current branch diff against main for correctness, style, consistency, and risk."
 ```
 
 3. Report the findings returned by the subagent.
