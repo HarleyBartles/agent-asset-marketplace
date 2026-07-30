@@ -4,7 +4,7 @@
     "superpowers-plus",
     "repo-worker-pack"
   ],
-  "syncedSkills": 34,
+  "syncedSkills": 35,
   "localSkills": [
     "mark-skill-authoring"
   ],
@@ -25,5 +25,5 @@
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
-  "syncedAt": "2026-07-30T08:20:20.440550"
+  "syncedAt": "2026-07-30T12:00:47.592516"
 }

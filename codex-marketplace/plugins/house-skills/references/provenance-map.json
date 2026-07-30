@@ -274,6 +274,13 @@
       "local_path": "skills/research-ops"
     },
     {
+      "canonical_name": "review-branch-diff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/review-branch-diff",
+      "local_path": "skills/review-branch-diff"
+    },
+    {
       "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",

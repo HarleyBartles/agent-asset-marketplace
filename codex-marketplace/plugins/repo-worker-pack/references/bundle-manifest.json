@@ -135,6 +135,16 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "review-branch-diff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/review-branch-diff",
+      "local_path": "skills/review-branch-diff",
+      "provenance_note": "First-party branch-diff review skill projected verbatim into the repo-worker-pack.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",

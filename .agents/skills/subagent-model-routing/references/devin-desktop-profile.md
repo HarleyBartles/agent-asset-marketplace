@@ -37,6 +37,22 @@ A task that mixes read-heavy exploration with mutation is normally `subagent_gen
 
 The shared policy's free/included/metered and cost-preference rules do not apply in Devin Desktop because the runtime does not expose paid or metered choices. Route by capability and access need only.
 
+### Custom subagent profiles
+
+Devin Desktop supports custom subagent profiles under `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows). Each profile is a directory containing an `AGENT.md` file: `reviewer/`, `implementer/`, `branch-reviewer/`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
+
+| Task | Dispatch |
+|---|---|
+| Review / architecture challenge | `run_subagent profile: reviewer` |
+| Bounded implementation / bugfix | `run_subagent profile: implementer` |
+| Branch diff review | `run_subagent profile: branch-reviewer` or invoke `/review-branch-diff` |
+| Broad read-only exploration | `subagent_explore` |
+| Broad mixed work | `subagent_general` |
+
+Custom profiles may declare `model:` in their `AGENT.md`. The runtime honors that model when the subagent is launched. Do not pass a `model:` argument to `run_subagent`; the tool has no such parameter.
+
+Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
+
 ### What not to do
 
 - Do not specify a model name, version, reasoning level, context tier, or paid route. The tool has no such parameters.
