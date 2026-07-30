@@ -1,5 +1,7 @@
 # Custom Subagent Routing Implementation Plan
 
+> **Status:** In progress. Tasks 1–5 are complete and committed; the final-review feedback fix is applied. Tasks 6–7 (manual end-to-end test and PR publication) remain open.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Update the `agent-asset-marketplace` repo to support Devin Desktop custom subagent profiles, vend a `review-branch-diff` repo-worker-pack skill, and adapt the `subagent-driven-development` overlay to dispatch `implementer`, `reviewer`, and `branch-reviewer`.
@@ -30,7 +32,7 @@
 - Consumes: spec `2026-07-30-custom-subagent-routing-design.md` and the global `~/.config/devin/agents/branch-reviewer/AGENT.md` as the fallback asset reference.
 - Produces: source tree for the `review-branch-diff` marketplace skill.
 
-- [ ] **Step 1: Create the skill directory**
+- [x] **Step 1: Create the skill directory**
 
 Run:
 ```powershell
@@ -38,7 +40,7 @@ New-Item -ItemType Directory -Path "Z:\agent-asset-marketplace\sources\first_par
 New-Item -ItemType Directory -Path "Z:\agent-asset-marketplace\sources\first_party\skills\review-branch-diff\assets\branch-reviewer" -Force
 ```
 
-- [ ] **Step 2: Write `sources/first_party/skills/review-branch-diff/SKILL.md`**
+- [x] **Step 2: Write `sources/first_party/skills/review-branch-diff/SKILL.md`**
 
 ```markdown
 ---
@@ -78,7 +80,7 @@ Review the current branch diff against `main` (or `origin/main`) for correctness
 **Fallback:** If the global `branch-reviewer` subagent profile is not available, an agent can install `assets/branch-reviewer/AGENT.md` from this skill as `~/.config/devin/agents/branch-reviewer/AGENT.md` before invoking this skill.
 ```
 
-- [ ] **Step 3: Write `sources/first_party/skills/review-branch-diff/agents/openai.yaml`**
+- [x] **Step 3: Write `sources/first_party/skills/review-branch-diff/agents/openai.yaml`**
 
 ```yaml
 version: 1
@@ -93,7 +95,7 @@ policy:
   allow_implicit_invocation: false
 ```
 
-- [ ] **Step 4: Write `sources/first_party/skills/review-branch-diff/assets/branch-reviewer/AGENT.md`**
+- [x] **Step 4: Write `sources/first_party/skills/review-branch-diff/assets/branch-reviewer/AGENT.md`**
 
 ```markdown
 ---
@@ -117,7 +119,7 @@ Rules:
 - If the diff is large, start with `git diff --stat` and review files in batches.
 ```
 
-- [ ] **Step 5: Verify the skill directory shape**
+- [x] **Step 5: Verify the skill directory shape**
 
 Run:
 ```powershell
@@ -126,7 +128,7 @@ Set-Location "Z:\agent-asset-marketplace"; Get-ChildItem -Recurse sources\first_
 
 Expected output: `SKILL.md`, `agents/openai.yaml`, and `assets/branch-reviewer/AGENT.md` are present.
 
-- [ ] **Step 6: Commit the new skill source**
+- [x] **Step 6: Commit the new skill source**
 
 ```bash
 git add sources/first_party/skills/review-branch-diff
@@ -144,7 +146,7 @@ git commit --no-verify -m "feat: add review-branch-diff first-party skill source
 - Consumes: the new `sources/first_party/skills/review-branch-diff` tree from Task 1.
 - Produces: updated registry that the marketplace generator uses to project `review-branch-diff` into `repo-worker-pack`.
 
-- [ ] **Step 1: Add `sources/first_party/skills/review-branch-diff` to the `repo-worker-pack` `source_ledger`**
+- [x] **Step 1: Add `sources/first_party/skills/review-branch-diff` to the `repo-worker-pack` `source_ledger`**
 
 In `codex-marketplace/custody-pack-registry.json`, find the `repo-worker-pack` bundle's `source_ledger` array and append:
 
@@ -152,7 +154,7 @@ In `codex-marketplace/custody-pack-registry.json`, find the `repo-worker-pack` b
         "sources/first_party/skills/review-branch-diff",
 ```
 
-- [ ] **Step 2: Add an `entries` object for `review-branch-diff` in the `repo-worker-pack` `entries` array**
+- [x] **Step 2: Add an `entries` object for `review-branch-diff` in the `repo-worker-pack` `entries` array**
 
 Append the following JSON object to the `entries` array of the `repo-worker-pack` bundle:
 
@@ -169,7 +171,7 @@ Append the following JSON object to the `entries` array of the `repo-worker-pack
         }
 ```
 
-- [ ] **Step 3: Commit the registry change**
+- [x] **Step 3: Commit the registry change**
 
 ```bash
 git add codex-marketplace/custody-pack-registry.json
@@ -187,7 +189,7 @@ git commit --no-verify -m "chore: register review-branch-diff in repo-worker-pac
 - Consumes: the existing reference doc and the spike findings in the spec.
 - Produces: updated reference doc that documents custom subagent profiles, `model:` inheritance, and the `write` limitation.
 
-- [ ] **Step 1: Insert the custom-profiles section before `### What not to do`**
+- [x] **Step 1: Insert the custom-profiles section before `### What not to do`**
 
 In `sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md`, locate the `### What not to do` heading and insert the following block immediately before it:
 
@@ -209,7 +211,7 @@ Custom profiles may declare `model:` in their `AGENT.md`. The runtime honors tha
 Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
 ```
 
-- [ ] **Step 2: Commit the reference doc update**
+- [x] **Step 2: Commit the reference doc update**
 
 ```bash
 git add sources/first_party/skills/subagent-model-routing/references/devin-desktop-profile.md
@@ -227,7 +229,7 @@ git commit --no-verify -m "docs: document Devin Desktop custom subagent profiles
 - Consumes: the upstream `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/*` files and the custom profile names.
 - Produces: overlay edits that turn the generic subagent templates into Devin Desktop `run_subagent profile:` calls and a `/review-branch-diff` final review.
 
-- [ ] **Step 1: Add an edit to `implementer-prompt.md`**
+- [x] **Step 1: Add an edit to `implementer-prompt.md`**
 
 Add the following `edits` entry to the `adapters/codex/superpowers-plus/subagent-driven-development/overlay.yaml` `edits` list:
 
@@ -249,7 +251,7 @@ Add the following `edits` entry to the `adapters/codex/superpowers-plus/subagent
   - '  task: |'
 ```
 
-- [ ] **Step 2: Add an edit to `task-reviewer-prompt.md`**
+- [x] **Step 2: Add an edit to `task-reviewer-prompt.md`**
 
 Add the following `edits` entry:
 
@@ -271,7 +273,7 @@ Add the following `edits` entry:
   - '  task: |'
 ```
 
-- [ ] **Step 3: Add edits to `SKILL.md` to use `/review-branch-diff` for the final review**
+- [x] **Step 3: Add edits to `SKILL.md` to use `/review-branch-diff` for the final review**
 
 Add these three `edits` entries to the `overlay.yaml` `edits` list:
 
@@ -302,7 +304,7 @@ Add these three `edits` entries to the `overlay.yaml` `edits` list:
   - '    "Invoke /review-branch-diff for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
 ```
 
-- [ ] **Step 4: Commit the overlay changes**
+- [x] **Step 4: Commit the overlay changes**
 
 ```bash
 git add adapters/codex/superpowers-plus/subagent-driven-development/overlay.yaml
@@ -323,7 +325,7 @@ git commit --no-verify -m "feat: route SDD to custom implementer/reviewer/branch
 - Consumes: the source edits from Tasks 1–4.
 - Produces: projected and installed skill surfaces ready for use.
 
-- [ ] **Step 1: Regenerate the repo mesh**
+- [x] **Step 1: Regenerate the repo mesh**
 
 Run:
 ```bash
@@ -332,7 +334,7 @@ tools/run mesh --apply
 
 Expected: `INDEX.md` files are updated. Check that `codex-marketplace/plugins/repo-worker-pack/INDEX.md` and `.agents/superpowers/specs/INDEX.md` include the new spec and skill.
 
-- [ ] **Step 2: Regenerate the marketplace projection**
+- [x] **Step 2: Regenerate the marketplace projection**
 
 Run:
 ```bash
@@ -341,7 +343,7 @@ tools/run marketplace --apply
 
 Expected: `codex-marketplace/plugins/repo-worker-pack/skills/review-branch-diff/` is created, `references/bundle-manifest.json` is updated, and `provenance/repo-worker-pack.md` and `references/source-map.md` are regenerated.
 
-- [ ] **Step 3: Refresh installed skills**
+- [x] **Step 3: Refresh installed skills**
 
 Run:
 ```bash
@@ -350,7 +352,7 @@ tools/run installed-skills --apply
 
 Expected: `.agents/skills/review-branch-diff/` is created or updated.
 
-- [ ] **Step 4: Run the CI check**
+- [x] **Step 4: Run the CI check**
 
 Run:
 ```bash
@@ -359,7 +361,7 @@ tools/run ci --check
 
 Expected: all checks pass. If `INDEX.md` or marketplace checks fail, run the corresponding `--apply` command from the error message and re-check.
 
-- [ ] **Step 5: Commit the generated changes**
+- [x] **Step 5: Commit the generated changes**
 
 ```bash
 git add codex-marketplace/ .agents/skills/review-branch-diff .agents/skills/subagent-driven-development .agents/skills/subagent-model-routing .agents/superpowers/specs/INDEX.md
@@ -455,10 +457,10 @@ Fill in every section of the template, including:
 
 Before handing off for execution, verify the plan against the spec:
 
-- [ ] Task 1 creates the `review-branch-diff` source with `SKILL.md`, `agents/openai.yaml`, and the `branch-reviewer` fallback asset.
-- [ ] Task 2 adds the skill to `repo-worker-pack` through `custody-pack-registry.json`.
-- [ ] Task 3 updates `devin-desktop-profile.md` with custom profiles, `model:` behavior, and `write` limitation.
-- [ ] Task 4 updates the SDD overlay with `run_subagent profile: implementer`, `run_subagent profile: reviewer`, and `/review-branch-diff` for the final review.
-- [ ] Task 5 regenerates surfaces and runs `tools/run ci --check`.
+- [x] Task 1 creates the `review-branch-diff` source with `SKILL.md`, `agents/openai.yaml`, and the `branch-reviewer` fallback asset.
+- [x] Task 2 adds the skill to `repo-worker-pack` through `custody-pack-registry.json`.
+- [x] Task 3 updates `devin-desktop-profile.md` with custom profiles, `model:` behavior, and `write` limitation.
+- [x] Task 4 updates the SDD overlay with `run_subagent profile: implementer`, `run_subagent profile: reviewer`, and `/review-branch-diff` for the final review.
+- [x] Task 5 regenerates surfaces and runs `tools/run ci --check`.
 - [ ] Task 6 manually tests the new skill and SDD dispatch.
 - [ ] Task 7 publishes the PR.

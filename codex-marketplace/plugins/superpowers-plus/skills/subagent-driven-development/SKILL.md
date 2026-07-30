@@ -13,7 +13,7 @@ metadata:
   source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/SKILL.md"
   content_mode: "adapted"
   adapted_author: "Harley Bartles"
-  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, and normalized marketplace frontmatter metadata."
+  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/review-branch-diff`."
   use_when:
     - "Use when executing an implementation plan with independent tasks and subagent support is available."
     - "Use when tasks can be delegated to fresh implementer subagents in the same session."
@@ -23,9 +23,9 @@ metadata:
     - "Do not use without a written plan."
     - "Do not use when tasks are tightly coupled; use executing-plans instead."
   use_after: [writing-plans, handoff-gates]
-  use_before: [requesting-code-review, finishing-a-development-branch]
+  use_before: [review-branch-diff, finishing-a-development-branch]
   use_with: [dispatching-parallel-agents]
-  related_skills: [writing-plans, executing-plans, requesting-code-review, finishing-a-development-branch, dispatching-parallel-agents]
+  related_skills: [writing-plans, executing-plans, review-branch-diff, finishing-a-development-branch, dispatching-parallel-agents]
 ---
 
 # Subagent-Driven Development
@@ -181,40 +181,9 @@ conflicts that only emerge from implementation.
 
 ## Model Selection
 
-Use the least powerful model that can handle each role to conserve cost and increase speed.
-
-**Mechanical implementation tasks** (isolated functions, clear specs, 1-2 files): use a fast, cheap model. Most implementation tasks are mechanical when the plan is well-specified.
-
-**Integration and judgment tasks** (multi-file coordination, pattern matching, debugging): use a standard model.
-
-**Architecture and design tasks**: use the most capable available model.
-The final whole-branch review is one of these — dispatch it on the most
-capable available model, not the session default.
-
-**Review tasks**: choose the model with the same judgment, scaled to the
-diff's size, complexity, and risk. A small mechanical diff does not need the
-most capable model; a subtle concurrency change does. Scoped re-reviews of
-small fix diffs take a cheap-to-mid tier.
-
-**Fix-loop escalation (rounds 4-5)**: use a model at least one tier above
-the implementer that got stuck.
-
-**Always specify the model explicitly when dispatching a subagent.** An
-omitted model inherits your session's model — often the most capable and
-most expensive — which silently defeats this section.
-
-**Turn count beats token price.** Wall-clock and context cost scale with how
-many turns a subagent takes, and the cheapest models routinely take 2-3× the
-turns on multi-step work — costing more overall. Use a mid-tier model as the
-floor for reviewers and for implementers working from prose descriptions.
-When the task's plan text contains the complete code to write, the
-implementation is transcription plus testing: use the cheapest tier for
-that implementer. Single-file mechanical fixes also take the cheapest tier.
-
-**Task complexity signals (implementation tasks):**
-- Touches 1-2 files with a complete spec → cheap model
-- Touches multiple files with integration concerns → standard model
-- Requires design judgment or broad codebase understanding → most capable model
+Devin Desktop uses custom subagent profiles (`implementer`, `reviewer`,
+`branch-reviewer`) whose `model:` is declared in their `AGENT.md`. Do not
+pass `model:` to `run_subagent` — the profile selects the model.
 
 ## The Task Loop
 
@@ -420,7 +389,7 @@ The final whole-branch review gets a package too: run
 branch started from, e.g. `git merge-base main HEAD`) and include the
 printed path in the final review dispatch, so the final reviewer reads
 one file instead of re-deriving the branch diff with git commands. Dispatch
-using `/review-branch-diff` (or `run_subagent profile: branch-reviewer`).
+using `/review-branch-diff`.
 Point it at the ledger's deferred-minor and parked lines so it can triage
 which must be fixed before merge.
 

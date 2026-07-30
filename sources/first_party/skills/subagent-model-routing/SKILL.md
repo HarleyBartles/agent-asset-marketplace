@@ -1,7 +1,6 @@
 ---
 name: subagent-model-routing
-description: Use when choosing a child subagent model, reasoning level, or context mode,
-  or when retrying failed work by changing model, reasoning, or context.
+description: Use when choosing which Devin subagent profile to dispatch for a task.
 metadata:
   source-id: subagent-model-routing
   source-path: sources/first_party/skills/subagent-model-routing/SKILL.md

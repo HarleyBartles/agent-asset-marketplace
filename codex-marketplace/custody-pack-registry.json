@@ -616,8 +616,13 @@
           "source_family": "first_party",
           "canonical_source_path": "sources/first_party/skills/review-branch-diff",
           "local_path": "skills/review-branch-diff",
-          "provenance_note": "First-party branch-diff review skill projected verbatim into the repo-worker-pack.",
-          "copy_expectation": "byte_identical"
+          "lane": "Worker",
+          "source_path": "sources/first_party/skills/review-branch-diff/SKILL.md",
+          "source_author": "Harley Bartles",
+          "source_license": "MIT",
+          "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
+          "copy_expectation": "byte_identical",
+          "provenance_note": "First-party branch-diff review skill projected verbatim into the repo-worker-pack."
         }
       ]
     },

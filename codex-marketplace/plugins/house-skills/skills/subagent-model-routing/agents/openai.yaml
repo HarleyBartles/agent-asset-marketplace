@@ -6,7 +6,7 @@ metadata:
   projection_plugin: house-skills
 interface:
   display_name: Subagent Model Routing
-  short_description: Use when choosing a child subagent model, reasoning level, or context mode.
-  default_prompt: Use /subagent-model-routing before choosing a child subagent model, reasoning level, or context mode. Detect the live dispatch contract, load the shared policy and exactly one matching profile, then choose the least escalated exposed route.
+  short_description: Use when choosing which Devin subagent profile to dispatch for a task.
+  default_prompt: Use /subagent-model-routing before dispatching a Devin subagent. Detect the live dispatch contract, load the shared policy and exactly one matching profile, then choose the least escalated exposed route.
 policy:
   allow_implicit_invocation: true
