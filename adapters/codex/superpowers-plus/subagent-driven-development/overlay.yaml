@@ -89,10 +89,10 @@ edits:
   replace_lines:
   - '## Model Selection'
   - ''
-  - "Invoke `/selecting-a-subagent` to select the right subagent profile or"
-  - "model for the current environment. In Devin Desktop, that means dispatching"
-  - "`run_subagent` with a `profile:` (`implementer`, `reviewer`, `branch-reviewer`);"
-  - "the profile's `AGENT.md` declares its own `model:`, so do not pass `model:`"
+  - "Invoke `/selecting-a-subagent` to select the right subagent profile for the"
+  - "current task and environment. In Devin Desktop, that means choosing a"
+  - "`profile:` value and then dispatching `run_subagent` with that `profile:`."
+  - "The profile's `AGENT.md` declares its own `model:`, so do not pass `model:`"
   - "to `run_subagent`."
 
 - path: SKILL.md
@@ -139,7 +139,7 @@ edits:
   - '  prompt: |'
   replace_lines:
   - 'run_subagent (Devin Desktop):'
-  - '  profile: implementer'
+  - '  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate implementer profile for this task]'
   - '  title: "Implement Task N: [task name]"'
   - '  task: |'
 - path: task-reviewer-prompt.md
@@ -154,7 +154,7 @@ edits:
   - '  prompt: |'
   replace_lines:
   - 'run_subagent (Devin Desktop):'
-  - '  profile: reviewer'
+  - '  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this task]'
   - '  title: "Review Task N (spec + quality)"'
   - '  task: |'
 - path: task-reviewer-prompt.md
@@ -177,7 +177,7 @@ edits:
   - '  prompt: |'
   replace_lines:
   - 'run_subagent (Devin Desktop):'
-  - '  profile: reviewer'
+  - '  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this re-review]'
   - '  title: "Re-review Task N fix round R"'
   - '  task: |'
 - path: re-review-prompt.md

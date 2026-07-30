@@ -9,7 +9,7 @@ more, nothing less) and is well-built (clean, tested, maintainable)
 
 ```
 run_subagent (Devin Desktop):
-  profile: reviewer
+  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this task]
   title: "Review Task N (spec + quality)"
   task: |
     You are reviewing one task's implementation: first whether it matches its

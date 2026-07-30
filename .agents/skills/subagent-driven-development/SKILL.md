@@ -181,10 +181,10 @@ conflicts that only emerge from implementation.
 
 ## Model Selection
 
-Invoke `/selecting-a-subagent` to select the right subagent profile or
-model for the current environment. In Devin Desktop, that means dispatching
-`run_subagent` with a `profile:` (`implementer`, `reviewer`, `branch-reviewer`);
-the profile's `AGENT.md` declares its own `model:`, so do not pass `model:`
+Invoke `/selecting-a-subagent` to select the right subagent profile for the
+current task and environment. In Devin Desktop, that means choosing a
+`profile:` value and then dispatching `run_subagent` with that `profile:`.
+The profile's `AGENT.md` declares its own `model:`, so do not pass `model:`
 to `run_subagent`.
 
 ## The Task Loop

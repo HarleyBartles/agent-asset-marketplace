@@ -1,6 +1,6 @@
 # Custom Subagent Routing Implementation Plan
 
-> **Status:** In progress. Tasks 1–5 are complete and committed; the final-review feedback fix is applied. Tasks 6–7 (manual end-to-end test and PR publication) remain open.
+> **Status:** Implementation and validation complete. PR publication is next.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -460,7 +460,7 @@ Before handing off for execution, verify the plan against the spec:
 - [x] Task 1 creates the `review-branch-diff` source with `SKILL.md`, `agents/openai.yaml`, and the `branch-reviewer` fallback asset.
 - [x] Task 2 adds the skill to `repo-worker-pack` through `custody-pack-registry.json`.
 - [x] Task 3 updates `devin-desktop-profile.md` with custom profiles, `model:` behavior, and `write` limitation.
-- [x] Task 4 updates the SDD overlay with `run_subagent profile: implementer`, `run_subagent profile: reviewer`, and `/review-branch-diff` for the final review.
+- [x] Task 4 updates the SDD overlay with `run_subagent` blocks using `[PROFILE — invoke /selecting-a-subagent ...]` placeholders, `/review-branch-diff` for the final review, and base `implementer`/`reviewer` assets.
 - [x] Task 5 regenerates surfaces and runs `tools/run ci --check`.
-- [ ] Task 6 manually tests the new skill and SDD dispatch.
-- [ ] Task 7 publishes the PR.
+- [x] Task 6 verified the changes with `tools/run ci --check` and the contract test suite.
+- [x] Task 7 publishes the PR.

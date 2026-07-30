@@ -4,7 +4,7 @@ Use this template when dispatching an implementer subagent.
 
 ```
 run_subagent (Devin Desktop):
-  profile: implementer
+  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate implementer profile for this task]
   title: "Implement Task N: [task name]"
   task: |
     You are implementing Task N: [task name]

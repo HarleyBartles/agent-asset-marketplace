@@ -9,7 +9,7 @@ that the fix itself broke nothing.
 
 ```
 run_subagent (Devin Desktop):
-  profile: reviewer
+  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this re-review]
   title: "Re-review Task N fix round R"
   task: |
     You are re-reviewing one task's fix round. A previous review produced
