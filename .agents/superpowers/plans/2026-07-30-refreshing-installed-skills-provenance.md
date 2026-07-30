@@ -358,10 +358,10 @@ def _provenance_needs_update(
     """Return True if any non-temporal provenance field has changed."""
     if not existing:
         return True
-    for key, value in new_state.items():
-        if existing.get(key) != value:
-            return True
-    return False
+    existing_durable = {
+        key: value for key, value in existing.items() if key != "syncedAt"
+    }
+    return existing_durable != new_state
 ```
 
 - [ ] **Step 3: Update `_write_provenance` to use `_provenance_state` and accept `local_skills`**
