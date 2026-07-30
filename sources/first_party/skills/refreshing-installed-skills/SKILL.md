@@ -66,7 +66,7 @@ In `--check` mode the script must report errors and exit non-zero if invalid. In
 
 ## Provenance
 
-`.agents/skills/.provenance.json` records the marketplace-source version that was installed. When the `marketplace-source` submodule is present, `manifestSha` tracks the submodule HEAD; otherwise it falls back to the consumer repo HEAD. `syncedPlugins` lists every plugin configured as `INSTALLED_BY_DEFAULT`, in order, regardless of whether its skills needed copying on this run.
+`.agents/skills/.provenance.json` records the marketplace-source version that was installed. When the `marketplace-source` submodule is present, `manifestSha` tracks the submodule HEAD; otherwise it falls back to a SHA-256 content hash of the effective marketplace configuration (`.agents/plugins/marketplace.json`). `syncedPlugins` lists every plugin configured as `INSTALLED_BY_DEFAULT`, in order, regardless of whether its skills needed copying on this run.
 
 It also records:
 

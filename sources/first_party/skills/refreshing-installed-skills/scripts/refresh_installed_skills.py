@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -255,7 +256,8 @@ def _get_marketplace_manifest_sha() -> str:
 
     When the marketplace-source submodule is present, track its HEAD so the
     provenance reflects the version of the marketplace that was installed.
-    Otherwise fall back to the consumer repo's HEAD.
+    Otherwise fall back to a stable content hash of the effective marketplace
+    configuration (`.agents/plugins/marketplace.json`).
     """
     submodule = _marketplace_source_path(ROOT)
     if submodule.is_dir() and (submodule / ".git").exists():
@@ -272,19 +274,11 @@ def _get_marketplace_manifest_sha() -> str:
         except subprocess.CalledProcessError:
             pass
 
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            check=True,
-            env=_stripped_env(),
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError:
-        # Fallback: use marketplace.json modification time
-        return datetime.fromtimestamp(MARKETPLACE_PATH.stat().st_mtime).isoformat()
+    if MARKETPLACE_PATH.is_file():
+        return hashlib.sha256(MARKETPLACE_PATH.read_bytes()).hexdigest()
+
+    # Fallback: use marketplace.json modification time
+    return datetime.fromtimestamp(MARKETPLACE_PATH.stat().st_mtime).isoformat()
 
 
 def _load_provenance() -> dict[str, Any] | None:
@@ -572,7 +566,13 @@ def _write_provenance(
 
 
 def _is_submodule(repo_root: Path) -> bool:
-    result = subprocess.run(["git", "rev-parse", "--show-superproject-working-tree"], cwd=repo_root, capture_output=True, text=True, env=_stripped_env())
+    result = subprocess.run(
+        ["git", "rev-parse", "--show-superproject-working-tree"],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
+    )
     return result.returncode == 0 and result.stdout.strip()
 
 

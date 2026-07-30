@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -390,7 +391,7 @@ def test_get_marketplace_manifest_sha_returns_submodule_head(tmp_path: Path) -> 
     assert sha == expected
 
 
-def test_get_marketplace_manifest_sha_falls_back_to_consumer_head(tmp_path: Path) -> None:
+def test_get_marketplace_manifest_sha_falls_back_to_content_hash(tmp_path: Path) -> None:
     consumer = tmp_path / "consumer"
     consumer.mkdir()
     _git_init_and_commit(consumer)
@@ -404,9 +405,7 @@ def test_get_marketplace_manifest_sha_falls_back_to_consumer_head(tmp_path: Path
     ):
         sha = refresh_installed_skills._get_marketplace_manifest_sha()
 
-    expected = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=consumer, capture_output=True, text=True, check=True
-    ).stdout.strip()
+    expected = hashlib.sha256(marketplace_json.read_bytes()).hexdigest()
     assert sha == expected
 
 
@@ -845,3 +844,58 @@ def test_check_fails_when_provenance_plugin_list_stale(tmp_path: Path, capsys) -
 
     assert result == 1
     assert "CHECK: Changes would be made" in capsys.readouterr().out
+
+
+def test_provenance_rewritten_when_local_skill_added(tmp_path: Path) -> None:
+    skills_path = tmp_path / "installed"
+    skills_path.mkdir()
+    (skills_path / "marketplace-example").mkdir()
+    (skills_path / "marketplace-example" / "SKILL.md").write_text(
+        "source\n", encoding="utf-8"
+    )
+    provenance_path = skills_path / ".provenance.json"
+    provenance_path.write_text(
+        json.dumps(
+            {
+                "manifestSha": "current",
+                "syncedAt": "2026-07-20T00:00:00",
+                "syncedPlugins": ["repo-worker-pack"],
+                "syncedSkills": 1,
+                "localSkills": [],
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    source_skills = tmp_path / "source" / "skills"
+    source_skills.mkdir(parents=True)
+    (source_skills / "marketplace-example").mkdir()
+    (source_skills / "marketplace-example" / "SKILL.md").write_text(
+        "source\n", encoding="utf-8"
+    )
+
+    # Add a local skill after provenance was last written
+    local_skill = skills_path / "mark-local"
+    local_skill.mkdir()
+    (local_skill / "SKILL.md").write_text(
+        "---\nname: mark-local\n---\n\n# Local\n",
+        encoding="utf-8",
+    )
+
+    plugin = {"name": "repo-worker-pack"}
+
+    with (
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
+        patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
+        patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    assert provenance["localSkills"] == ["mark-local"]
