@@ -119,6 +119,32 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
     return invalid
 
 
+def _discover_local_skills(prefixes: list[str]) -> list[str]:
+    """Return sorted, valid repo-local skill directory names."""
+    if not AGENTS_SKILLS_PATH.is_dir():
+        return []
+
+    local_skills: list[str] = []
+    for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
+        if not _is_local_skill_dir(skill_dir, prefixes):
+            continue
+        try:
+            if _frontmatter_name(skill_dir) != skill_dir.name:
+                continue
+        except (
+            FileNotFoundError,
+            UnicodeDecodeError,
+            ValueError,
+            AttributeError,
+            TypeError,
+            yaml.YAMLError,
+        ):
+            continue
+        local_skills.append(skill_dir.name)
+
+    return sorted(local_skills)
+
+
 def _powershell_cmd() -> list[str]:
     for name in ("pwsh", "powershell"):
         if shutil.which(name):
