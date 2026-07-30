@@ -14,7 +14,7 @@ Make first-party skill boundaries actionable and document the pattern, while con
 ## Non-goals
 
 - No implementation code.
-- No skill-zip or `generated/skill-zips/` work.
+- No hand-editing of `generated/skill-zips/`; they may update as a side effect of marketplace regeneration.
 - No broad audit of other `assets/authority/reference-source/` files.
 - No changes to `skill-frontmatter.md` schema.
 

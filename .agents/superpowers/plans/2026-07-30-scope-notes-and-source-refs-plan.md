@@ -12,7 +12,7 @@
 
 - Keep `SKILL.md` bodies under 500 words where possible.
 - Do not modify `skill-frontmatter.md` schema.
-- Do not touch `generated/skill-zips/`.
+- Do not hand-edit `generated/skill-zips/`; they will update automatically as a side effect of marketplace regeneration.
 - Record provenance for any new source text in `assets/authority/CITATIONS.md` and `authority.yaml`.
 - Do not use double quotes in frontmatter strings to keep `normalize_first_party_skill_sources.py` safe.
 
@@ -257,7 +257,7 @@ Expected chapter files (adjust slugs to match the source if it uses different he
 - `elementary-principles-of-composition.md`
 - `a-few-matters-of-form.md`
 - `words-and-expressions-commonly-misused.md`
-- `words-commonly-misspelled.md`
+- `spelling.md`
 
 Steps:
 
@@ -293,7 +293,7 @@ Update `assets/authority/source-map.yaml` so the first-party reference files map
 ```yaml
   - path: references/sentence-mechanics.md
     source_sections:
-      - elementary-rules-of-usage.md: Rules 1-7
+      - elementary-rules-of-usage.md: II. Elementary Rules Of Usage
     content_mode: licensed_adaptation
     load_when:
       - Use when correcting sentence-level mechanics.
@@ -303,17 +303,17 @@ Map all existing references to the correct chapter file and heading. If the exac
 
 Update `CITATIONS.md` to record the new source format, the public-domain URL, and the chapter file list.
 
-Recompute the SHA-256 of the updated `CITATIONS.md` and update the `content_sha256` in `authority.yaml` and the `reconciled_against` values in `authority.yaml` and `source-map.yaml`. Use:
+Recompute the SHA-256 of the upstream `.txt` source and use it for the `content_sha256` in `authority.yaml` and the `reconciled_against` values in `authority.yaml` and `source-map.yaml`. Use:
 
 ```powershell
 # PowerShell
-Get-FileHash -Path sources/first_party/skills/writing-with-clarity/assets/authority/CITATIONS.md -Algorithm SHA256
+Get-FileHash -Path sources/first_party/skills/writing-with-clarity/assets/authority/reference-source/elements-of-style-1918/elements-of-style-1918.txt -Algorithm SHA256
 ```
 
 or:
 
 ```bash
-sha256sum sources/first_party/skills/writing-with-clarity/assets/authority/CITATIONS.md
+sha256sum sources/first_party/skills/writing-with-clarity/assets/authority/reference-source/elements-of-style-1918/elements-of-style-1918.txt
 ```
 
 - [x] Update `SKILL.md`.
@@ -348,3 +348,14 @@ sha256sum sources/first_party/skills/writing-with-clarity/assets/authority/CITAT
 - [x] Push the branch `feature/handoff-gates-dependency-order` to origin.
 - [x] Open a PR using `gh pr create` with the repo's PR template.
 - [x] Mark completed.
+
+---
+
+## Amendments and out-of-scope work
+
+The review pass added the following work that was not in the original plan:
+
+- `refreshing-installed-skills` and `repo-standards`: clarified that `localSkills` come from `repo.local_skill_prefixes`, kept `mark-*` as the repo-default local-skill prefix, and fixed `scaffold_marketplace_json.py` to treat an explicit empty `local_skill_prefixes` as valid.
+- `subagent-driven-development` overlay: genericized the implementer commit/validate step, re-dispatched stuck implementers to `implementer-strong`, and removed leftover `[MODEL]` placeholders from review prompts.
+- Canonical guides: added cross-repo consumer checks to the design, planning, implementation, and code-review guides so future agents consider sister repos that install vendored skills.
+- Generated `skill.zip` files and plugin projections updated as a side effect of `tools/run marketplace --apply`; no hand-editing occurred.
