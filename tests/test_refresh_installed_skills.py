@@ -25,6 +25,12 @@ def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Pa
         "syncedPlugins": ["superpowers-plus", "repo-worker-pack"],
         "syncedSkills": 0,
         "localSkills": [],
+        "marketplace": {
+            "source": "HarleyBartles/agent-asset-marketplace",
+            "sourcePath": "codex-marketplace/plugins",
+        },
+        "localPlugins": [],
+        "marketplaceFile": ".agents/plugins/marketplace.json",
     }
     provenance_path.write_text(json.dumps(original, indent=2) + "\n", encoding="utf-8")
 
