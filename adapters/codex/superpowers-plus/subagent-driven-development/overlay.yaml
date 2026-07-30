@@ -96,6 +96,21 @@ edits:
   - "to `run_subagent`."
 - path: SKILL.md
   op: replace
+  start_line: 194
+  end_line: 194
+  expected_lines:
+  - '## The Task Loop'
+  replace_lines:
+  - '## The Task Loop'
+  - ''
+  - 'Regenerate, commit, then validate. After all source and overlay edits are'
+  - 'complete, run the appropriate `tools/run <target> --apply` command, stage all'
+  - 'generated changes, and commit. Do not run `tools/run ci --check` on an'
+  - 'uncommitted working tree; the pre-commit hook will run it on the staged tree.'
+  - 'If the pre-commit hook is not available, commit with `--no-verify` and then'
+  - 'run `tools/run ci --check` separately.'
+- path: SKILL.md
+  op: replace
   start_line: 124
   end_line: 124
   expected_lines:
