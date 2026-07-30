@@ -7,11 +7,10 @@ import argparse
 import json
 import os
 import subprocess
-import sys
 from pathlib import Path
 
 
-DEFAULT_PREFIXES = ["mark-"]
+DEFAULT_PREFIXES = []
 MINIMAL = {"repo": {"local_skill_prefixes": DEFAULT_PREFIXES}, "plugins": []}
 
 
@@ -101,7 +100,7 @@ def _check(path: Path) -> list[str]:
         return findings
     normalized = _migrate(data)
     repo_block = normalized.get("repo")
-    if not isinstance(repo_block, dict) or not repo_block.get("local_skill_prefixes"):
+    if not isinstance(repo_block, dict) or repo_block.get("local_skill_prefixes") is None:
         findings.append("marketplace.json missing repo.local_skill_prefixes")
     return findings
 

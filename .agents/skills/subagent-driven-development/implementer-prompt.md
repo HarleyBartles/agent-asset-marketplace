@@ -36,7 +36,7 @@ run_subagent (Devin Desktop):
     3. Verify implementation works
     4. Commit your work
     5. Self-review (see below)
-    6. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree. If the hook is unavailable, commit with `--no-verify` and then run `tools/run ci --check` separately.
+    6. Commit and validate: if the task changed generated or projected surfaces, run the consumer's canonical source-regeneration command (e.g. `tools/run <target> --apply` here, or `tools/run skills --apply`/`scripts/ci-preflight.ps1 -Check` in a consumer repo), stage all changes, then commit. Do not run the consumer's CI command on an uncommitted working tree — let the pre-commit hook run it, or commit with `--no-verify` and then run it separately.
     7. Report back
 
     Work from: [directory]
@@ -74,7 +74,7 @@ run_subagent (Devin Desktop):
 
     **How to escalate:** Report back with status BLOCKED or NEEDS_CONTEXT. Describe
     specifically what you're stuck on, what you've tried, and what kind of help you need.
-    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`),
+    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong`),
     or break the task into smaller pieces.
 
     ## Before Reporting Back: Self-Review

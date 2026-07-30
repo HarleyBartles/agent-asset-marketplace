@@ -14,6 +14,14 @@ Apply three core lenses to every review.
 
 **Senior Software Engineer** — code quality, naming, error handling, DRY without premature abstraction, YAGNI, existing pattern conformance, file organization. Are names accurate? Is error handling at the right boundary? Does each file have one clear responsibility? Is the work following the file structure from the plan?
 
+### Cross-repo consumer lens (every review for vendored skills)
+
+When the diff touches vendored skills, prompts, or scripts that install into other repos (especially sister repos under `Z:\`), verify:
+- the change does not hardcode this repo's paths, command names, or file layouts;
+- examples use consumer-canonical commands (`tools/run ci --check` here, `scripts/ci-preflight.ps1 -Check` elsewhere, etc.) where a consumer would run them;
+- the change does not assume a `tools/run` target exists in every repo;
+- new prompts or guidance are safe when a consumer's agent reads them without this repo's context.
+
 ## 2. Architecture Review
 
 Reviewers must invoke the architecture skills before reviewing work that touches marketplace generation, validation, or tooling:

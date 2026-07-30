@@ -24,21 +24,15 @@ def _stripped_env():
 
 def _init_git_repo(path: Path) -> None:
     subprocess.run(["git", "init"], cwd=path, check=True, capture_output=True)
-    subprocess.run(
-        ["git", "config", "user.email", "test@test"], cwd=path, check=True, capture_output=True
-    )
-    subprocess.run(
-        ["git", "config", "user.name", "Test"], cwd=path, check=True, capture_output=True
-    )
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=path, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=path, check=True, capture_output=True)
 
 
 def _init_git_repo_with_commit(path: Path) -> None:
     _init_git_repo(path)
     (path / "initial.txt").write_text("initial\n", encoding="utf-8", newline="\n")
     subprocess.run(["git", "add", "initial.txt"], cwd=path, check=True, capture_output=True)
-    subprocess.run(
-        ["git", "commit", "-m", "initial"], cwd=path, check=True, capture_output=True
-    )
+    subprocess.run(["git", "commit", "-m", "initial"], cwd=path, check=True, capture_output=True)
 
 
 def _create_worktree(repo: Path, name: str) -> Path:
@@ -240,7 +234,7 @@ def test_scaffold_marketplace_json_creates_minimal(tmp_path: Path) -> None:
 
     data = json.loads(marketplace.read_text(encoding="utf-8"))
     assert "repo" in data
-    assert data["repo"]["local_skill_prefixes"] == ["mark-"]
+    assert data["repo"]["local_skill_prefixes"] == []
 
 
 def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:

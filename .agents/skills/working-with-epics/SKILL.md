@@ -14,7 +14,7 @@ metadata:
   - Use when the human frames a request as a large or epic goal.
   - Use when continuing an existing epic roadmap.
   do_not_use_when:
-  - Do not use when the goal fits a single tight writing-plans plan.
+  - Do not use when the goal fits a single tight writing-plans plan (see references/scope-notes.md for the one-plan-vs-epic boundary)
   - Do not use as a substitute for writing-plans on small, well-defined tasks.
   related_skills:
   - handoff-gates
@@ -72,6 +72,10 @@ If a plan is stuck below 8/10 and cannot be strengthened autonomously, ask the h
 ## Scope Changes
 
 The roadmap is a live look-ahead document. Edit it inline as decisions change the forward path and document the change in `Handoff Notes`. Major structural changes may trigger a quick re-plan via `brainstorming`.
+
+## Boundary cases
+
+If a roadmap item should split into a new epic, a scope change invalidates multiple pending plans, or you are choosing between asking the human and escalating through `risk-gates`, load `references/scope-notes.md` and follow its guidance.
 
 ## Common Mistakes
 

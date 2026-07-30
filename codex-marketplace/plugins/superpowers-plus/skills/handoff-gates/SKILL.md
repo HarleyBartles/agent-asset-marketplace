@@ -14,7 +14,7 @@ metadata:
   - Use when a plan is ready to move from writing-plans to execution.
   - Use when completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - Do not use when the artifact is not clearly at a stage boundary.
+  - Do not use when the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
   - Do not use as a substitute for risk-gates when the question is pre-action risk.
   related_skills:
   - risk-gates
@@ -53,9 +53,7 @@ Rate stage-boundary artifacts for execution confidence. Never hand off below 8/1
 
 - **< 8:** Identify gaps, strengthen, re-rate. Never proceed below 8.
 - **8–8.9:** Try one bounded strengthening pass to reach 9+.
-- **≥ 9:** Proceed to handoff. Report the final rating in the handoff and record it in the roadmap.
-
-For completion-readiness, 9/10 means high confidence the work passes code review with no findings or only minor nits.
+- **≥ 9:** Proceed to handoff. Report the final rating and record it in the roadmap.
 
 ## How to Use
 
@@ -67,16 +65,25 @@ For completion-readiness, 9/10 means high confidence the work passes code review
 
 ## Plan-Readiness Checklist
 
-When the `plan-readiness` lane is for a `subagent-driven-development` (SDD) plan, rate the artifact against these items. A plan that fails any item should be strengthened before handoff.
+For SDD `plan-readiness`, rate the artifact against these items. Strengthen any that fail before handoff.
 
-- [ ] **Task ordering.** All source and adapter/overlay edits are scheduled before any `tools/run * --apply` regeneration step.
-- [ ] **Overlay health gate.** `tools/run heal --check` is scheduled after overlay edits and before `marketplace`/`project`/`installed-skills` regeneration.
+- [ ] **Dependency-order coherence.** Each task's `Consumes` block only references earlier tasks. If a later output is needed earlier, move the producer, split a step, or add a bridge.
+
+- [ ] **Task ordering.** Schedule producers before consumers. In this repo, source and overlay edits precede regeneration and CI. In consumer repos, use the consumer's canonical regeneration and preflight commands.
+
 - [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
-- [ ] **Clean CI gate.** `tools/run ci --check` is not scheduled on an uncommitted working tree; the plan commits and lets the pre-commit hook run it, or commits with `--no-verify` and then runs it.
-- [ ] **Explicit verification.** Each regeneration or projection task names the exact `tools/run <target> --apply` command and any follow-up `ci --check`.
+
+- [ ] **Clean CI gate.** Do not run the repo's canonical CI on an uncommitted tree; commit and let the pre-commit hook run it, or commit with `--no-verify` and then run it. Use `tools/run ci --check` here; consumer repos use their preflight.
+
+- [ ] **Explicit verification.** Each regeneration or projection task names the exact consumer command and any follow-up CI check. Do not assume a `tools/run` target exists in every repo.
+
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
+
+## Boundary cases
+
+If the artifact is intentionally thin, blocked externally, or touches `verification-before-completion` or `requesting-code-review`, load `references/scope-notes.md` and only proceed on a green path.
 
 ## Common Mistakes
 
-- Rushing to hand off at 7/10 because the plan is "good enough." → Scores below 8 are blocked.
-- Chasing a 10 forever. → One bounded strengthening pass from 8–8.9 is enough.
+- Handing off at 7/10 because the plan is "good enough." → Scores below 8 are blocked.
+- Chasing a 10 forever. → One strengthening pass from 8–8.9 is enough.
