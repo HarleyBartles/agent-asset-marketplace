@@ -189,13 +189,6 @@ to `run_subagent`.
 
 ## The Task Loop
 
-Regenerate, commit, then validate. After all source and overlay edits are
-complete, run the appropriate `tools/run <target> --apply` command, stage all
-generated changes, and commit. Do not run `tools/run ci --check` on an
-uncommitted working tree; the pre-commit hook will run it on the staged tree.
-If the pre-commit hook is not available, commit with `--no-verify` and then
-run `tools/run ci --check` separately.
-
 Everything you paste into a dispatch prompt — and everything a subagent
 prints back — stays resident in your context for the rest of the session
 and is re-read on every later turn. Hand artifacts over as files.
