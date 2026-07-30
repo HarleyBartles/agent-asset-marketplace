@@ -8,6 +8,9 @@ publication rules.
 - Agents must check off completed plan steps before publishing a completed
   plan.
 - Use `[x]` in place of `[ ]` for completed steps.
+- Every task should include a final sub-step instructing the implementer to
+  mark the task's own plan steps `[x]` before reporting back. If a task omits
+  it, the implementer must still do so and the orchestrator must verify it.
 - If a plan is intentionally incomplete or left open, say why inside the plan
   itself.
 - This is local worker guidance, not a future PR-blocker doctrine.

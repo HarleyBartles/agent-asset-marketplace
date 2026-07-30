@@ -36,7 +36,8 @@ run_subagent (Devin Desktop):
     3. Verify implementation works
     4. Commit your work
     5. Self-review (see below)
-    6. Report back
+    6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`
+    7. Report back
 
     Work from: [directory]
 

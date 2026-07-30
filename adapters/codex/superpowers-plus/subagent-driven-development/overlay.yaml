@@ -232,3 +232,12 @@ edits:
   - '[Run review-package PLAN_FILE MERGE_BASE HEAD; dispatch final code-reviewer, most capable model]'
   replace_lines:
   - '[Run review-package PLAN_FILE MERGE_BASE HEAD; invoke /review-branch-diff for final whole-branch review]'
+- path: implementer-prompt.md
+  op: replace
+  start_line: 40
+  end_line: 40
+  expected_lines:
+  - '    6. Report back'
+  replace_lines:
+  - '    6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`'
+  - '    7. Report back'
