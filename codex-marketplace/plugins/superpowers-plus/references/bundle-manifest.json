@@ -6,7 +6,6 @@
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
   "is_mega_pack": false,
   "source_families": [
-    "first_party",
     "house-skills",
     "superpowers"
   ],
@@ -163,12 +162,16 @@
       "canonical_name": "selecting-a-subagent",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "source_family": "first_party",
+      "source_family": "house-skills",
       "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
       "local_path": "skills/selecting-a-subagent",
       "import_status": "imported",
-      "provenance_note": "Projected verbatim from the first-party selecting-a-subagent skill.",
-      "copy_expectation": "byte_identical"
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/selecting-a-subagent/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
       "canonical_name": "subagent-driven-development",

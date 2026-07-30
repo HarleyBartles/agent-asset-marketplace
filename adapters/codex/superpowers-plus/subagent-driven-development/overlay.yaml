@@ -275,6 +275,14 @@ edits:
   - '    "Finding conflicts with plan text?" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile" [label="no"];'
 - path: SKILL.md
   op: replace
+  start_line: 91
+  end_line: 91
+  expected_lines:
+  - '    "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable model" -> "Dispatch scoped re-review (./re-review-prompt.md)";'
+  replace_lines:
+  - '    "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile" -> "Dispatch scoped re-review (./re-review-prompt.md)";'
+- path: SKILL.md
+  op: replace
   start_line: 95
   end_line: 95
   expected_lines:
@@ -305,3 +313,19 @@ edits:
   - '    The controller can provide more context, re-dispatch with a more capable model,'
   replace_lines:
   - '    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`),'
+- path: SKILL.md
+  op: replace
+  start_line: 245
+  end_line: 245
+  expected_lines:
+  - '1. If it''s a context problem, provide more context and re-dispatch with the same model'
+  replace_lines:
+  - '1. If it''s a context problem, provide more context and re-dispatch with the same profile'
+- path: SKILL.md
+  op: replace
+  start_line: 250
+  end_line: 250
+  expected_lines:
+  - '**Never** ignore an escalation or force the same model to retry without changes. If the implementer said it''s stuck, something needs to change.'
+  replace_lines:
+  - '**Never** ignore an escalation or force the same profile to retry without changes. If the implementer said it''s stuck, something needs to change.'

@@ -61,6 +61,19 @@ task, environment, and repository rules before calling a child-dispatch tool.
 | Devin Desktop | `references/devin-desktop-profile.md` |
 | Unknown or non-Codex runtime | `references/generic-free-first-profile.md` |
 
+## Installing the strong profiles
+
+If you want to use the `implementer-strong` or `reviewer-strong` custom profiles, install
+the corresponding `AGENT.md` asset from this skill into a Devin Desktop profile search
+path:
+
+- macOS/Linux: `~/.config/devin/agents/<profile>/AGENT.md`
+- Windows: `%APPDATA%\devin\agents\<profile>\AGENT.md`
+
+For example, copy `assets/implementer-strong/AGENT.md` to
+`~/.config/devin/agents/implementer-strong/AGENT.md` and `assets/reviewer-strong/AGENT.md`
+to `~/.config/devin/agents/reviewer-strong/AGENT.md`.
+
 ## Common pressure
 
 When the obvious choice is unclear or contested, read `references/pressure-scenarios.md` first.
