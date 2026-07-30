@@ -424,7 +424,7 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
         synced_skill_names = set()
 
     if prefixes is None:
-        prefixes = ["mark-"]
+        prefixes = []
 
     installed_any = False
     for skill_dir in sorted(skills_path.iterdir()):
@@ -471,7 +471,7 @@ def _clean_orphan_skills(installed_plugins: list[dict[str, Any]], check_mode: bo
         synced_skill_names = set()
 
     if prefixes is None:
-        prefixes = ["mark-"]
+        prefixes = []
 
     cleaned_any = False
     for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):

@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 
-DEFAULT_PREFIXES = ["mark-"]
+DEFAULT_PREFIXES = []
 MINIMAL = {"repo": {"local_skill_prefixes": DEFAULT_PREFIXES}, "plugins": []}
 
 

@@ -43,7 +43,7 @@ def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Pa
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins, "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=skills_path),
@@ -66,7 +66,7 @@ def test_clean_orphan_skills_preserves_mark_skill(tmp_path: Path) -> None:
     )
 
     with patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path):
-        assert refresh_installed_skills._clean_orphan_skills([], synced_skill_names=set()) is False
+        assert refresh_installed_skills._clean_orphan_skills([], synced_skill_names=set(), prefixes=["mark-"]) is False
 
     assert local_skill.is_dir()
 
@@ -92,7 +92,7 @@ def test_main_rejects_malformed_mark_skill_frontmatter(tmp_path: Path, capsys) -
 
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
         patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]),
     ):
@@ -134,7 +134,7 @@ def test_main_rejects_marketplace_reserved_mark_skill_before_mutation(tmp_path: 
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", installed_skills),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(
-            refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}]}
+            refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}], "repo": {"local_skill_prefixes": ["mark-"]}}
         ),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[{"name": "example"}]),
         patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]),
@@ -155,7 +155,7 @@ def test_main_check_rejects_marketplace_reserved_mark_skill_before_mutation(tmp_
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", tmp_path / "installed"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(
-            refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}]}
+            refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [{"name": "example"}], "repo": {"local_skill_prefixes": ["mark-"]}}
         ),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[{"name": "example"}]),
         patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
@@ -179,7 +179,7 @@ def test_matching_provenance_with_missing_marketplace_skill_continues_sync(tmp_p
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
@@ -213,7 +213,7 @@ def test_matching_provenance_with_stale_marketplace_skill_continues_sync(tmp_pat
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", skills_path / ".provenance.json"),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
@@ -249,7 +249,7 @@ def test_matching_provenance_with_extra_marketplace_orphan_continues_sync(tmp_pa
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", skills_path / ".provenance.json"),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
@@ -426,7 +426,7 @@ def test_provenance_synced_plugins_lists_all_installed_plugins(tmp_path: Path) -
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins, "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="new-sha"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
@@ -478,7 +478,7 @@ def test_validate_local_skills_extra_hook_invoked(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "ROOT", tmp_path),
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
         patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
         patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
@@ -513,7 +513,7 @@ def test_validate_local_skills_extra_hook_failure_fails_run(tmp_path: Path, caps
         patch.object(refresh_installed_skills, "ROOT", tmp_path),
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": []}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
         patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
         patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
@@ -558,7 +558,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
         patch.object(refresh_installed_skills, "ROOT", tmp_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins, "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="pinned-sha"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
@@ -744,7 +744,7 @@ def test_provenance_rewritten_on_plugin_list_only_change(tmp_path: Path) -> None
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins, "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
@@ -784,7 +784,7 @@ def test_provenance_records_local_skills(tmp_path: Path) -> None:
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
@@ -834,7 +834,7 @@ def test_check_fails_when_provenance_plugin_list_stale(tmp_path: Path, capsys) -
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": plugins, "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=plugins),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),
@@ -888,7 +888,7 @@ def test_provenance_rewritten_when_local_skill_added(tmp_path: Path) -> None:
     with (
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
         patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
-        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin]}),
+        patch.object(refresh_installed_skills, "_load_marketplace_config", return_value={"plugins": [plugin], "repo": {"local_skill_prefixes": ["mark-"]}}),
         patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[plugin]),
         patch.object(refresh_installed_skills, "_get_marketplace_manifest_sha", return_value="current"),
         patch.object(refresh_installed_skills, "_get_plugin_skills_path", return_value=source_skills),

@@ -240,7 +240,7 @@ def test_scaffold_marketplace_json_creates_minimal(tmp_path: Path) -> None:
 
     data = json.loads(marketplace.read_text(encoding="utf-8"))
     assert "repo" in data
-    assert data["repo"]["local_skill_prefixes"] == ["mark-"]
+    assert data["repo"]["local_skill_prefixes"] == []
 
 
 def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:
