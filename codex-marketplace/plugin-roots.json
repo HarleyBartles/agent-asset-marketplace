@@ -112,15 +112,6 @@
     },
     {
       "order": 12,
-      "name": "rooms-project-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/rooms-project-pack",
-      "plugin_root": "codex-marketplace/plugins/rooms-project-pack",
-      "manifest_path": "codex-marketplace/plugins/rooms-project-pack/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 13,
       "name": "feature-sliced-design",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
@@ -129,7 +120,7 @@
       "enabled": true
     },
     {
-      "order": 14,
+      "order": 13,
       "name": "agentic-workflows",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/agentic-workflows",
@@ -138,7 +129,7 @@
       "enabled": true
     },
     {
-      "order": 15,
+      "order": 14,
       "name": "agentic-evaluation",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
@@ -147,7 +138,7 @@
       "enabled": true
     },
     {
-      "order": 16,
+      "order": 15,
       "name": "research-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/research-pack",
@@ -156,7 +147,7 @@
       "enabled": true
     },
     {
-      "order": 17,
+      "order": 16,
       "name": "engineering-pack",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/engineering-pack",

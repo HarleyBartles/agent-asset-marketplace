@@ -69,7 +69,7 @@ roots are actively projected:
 
 - **`house-skills`** — first-party mega-pack. Every first-party skill stays
   in `house-skills` AND wherever else it is bundled. A topical projection-lane
-  pack (such as `repo-worker-pack` or `rooms-project-pack`) is additional
+  pack (such as `repo-worker-pack` or `architecture-pack`) is additional
   exposure, not a replacement home; the skill must also remain in
   `house-skills`. Removing a skill from `house-skills` while it remains in a
   topical pack is a doctrine violation and will fail
