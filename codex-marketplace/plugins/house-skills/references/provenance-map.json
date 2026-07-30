@@ -295,11 +295,11 @@
       "local_path": "skills/secure-development"
     },
     {
-      "canonical_name": "subagent-model-routing",
+      "canonical_name": "selecting-a-subagent",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/subagent-model-routing",
-      "local_path": "skills/subagent-model-routing"
+      "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
+      "local_path": "skills/selecting-a-subagent"
     },
     {
       "canonical_name": "typescript",

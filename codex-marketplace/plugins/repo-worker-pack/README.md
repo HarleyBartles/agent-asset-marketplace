@@ -17,14 +17,13 @@ This bundle projects the first-party repo worker baseline skills.
 - `repo-worker-base`
 - `review-branch-diff`
 - `risk-gates`
-- `subagent-model-routing`
 - `unslop-profiles`
 - `using-github`
 - `using-linear`
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 18.
+Manifest entry count: 17.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

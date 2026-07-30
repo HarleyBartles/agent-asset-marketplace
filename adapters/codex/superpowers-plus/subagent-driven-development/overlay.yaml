@@ -43,7 +43,7 @@ edits:
   - '  use_after: [writing-plans, handoff-gates]'
   - '  use_before: [review-branch-diff, finishing-a-development-branch]'
   - '  use_with: [dispatching-parallel-agents]'
-  - '  related_skills: [writing-plans, executing-plans, review-branch-diff, finishing-a-development-branch, dispatching-parallel-agents]'
+  - '  related_skills: [writing-plans, executing-plans, selecting-a-subagent, review-branch-diff, finishing-a-development-branch, dispatching-parallel-agents]'
   - '---'
 - path: SKILL.md
   op: replace
@@ -89,7 +89,7 @@ edits:
   replace_lines:
   - '## Model Selection'
   - ''
-  - "Invoke `/subagent-model-routing` to select the right subagent profile or"
+  - "Invoke `/selecting-a-subagent` to select the right subagent profile or"
   - "model for the current environment. In Devin Desktop, that means dispatching"
   - "`run_subagent` with a `profile:` (`implementer`, `reviewer`, `branch-reviewer`);"
   - "the profile's `AGENT.md` declares its own `model:`, so do not pass `model:`"
@@ -215,18 +215,23 @@ edits:
   - '    "Invoke /review-branch-diff for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
 - path: SKILL.md
   op: replace
-  start_line: 398
+  start_line: 393
   end_line: 402
   expected_lines:
+  - 'The final whole-branch review gets a package too: run'
+  - '`scripts/review-package PLAN_FILE MERGE_BASE HEAD` (MERGE_BASE = the commit the'
+  - branch started from, e.g. `git merge-base main HEAD`) and include the
+  - printed path in the final review dispatch, so the final reviewer reads
+  - one file instead of re-deriving the branch diff with git commands. Dispatch
   - on the most capable available model (see Model Selection), using
   - superpowers:requesting-code-review's
   - '[code-reviewer.md](../requesting-code-review/code-reviewer.md). Point it at'
   - the ledger's deferred-minor and parked lines so it can triage which must be
   - fixed before merge.
   replace_lines:
-  - using `/review-branch-diff`.
-  - The skill reviews the full branch diff and reports findings; no additional
-  - review package is needed.
+  - The final whole-branch review is handled by `/review-branch-diff`. Dispatch the
+  - skill once all task-level reviews are complete. The skill reviews the full branch
+  - diff and reports findings; no additional review package is needed.
 - path: SKILL.md
   op: replace
   start_line: 497
@@ -245,3 +250,59 @@ edits:
   - '    6. Update the implementation plan: mark every completed step from this task with `[x]` in `.agents/superpowers/plans/<PLAN_FILE>`'
   - '    7. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree. If the hook is unavailable, commit with `--no-verify` and then run `tools/run ci --check` separately.'
   - '    8. Report back'
+- path: SKILL.md
+  op: replace
+  start_line: 61
+  end_line: 61
+  expected_lines:
+  - '        "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable model" [shape=box];'
+  replace_lines:
+  - '        "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile" [shape=box];'
+- path: SKILL.md
+  op: replace
+  start_line: 89
+  end_line: 89
+  expected_lines:
+  - '    "Ask human partner which governs" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable model";'
+  replace_lines:
+  - '    "Ask human partner which governs" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile";'
+- path: SKILL.md
+  op: replace
+  start_line: 90
+  end_line: 90
+  expected_lines:
+  - '    "Finding conflicts with plan text?" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable model" [label="no"];'
+  replace_lines:
+  - '    "Finding conflicts with plan text?" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile" [label="no"];'
+- path: SKILL.md
+  op: replace
+  start_line: 95
+  end_line: 95
+  expected_lines:
+  - '    "R = 5?" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable model" [label="no - next round"];'
+  replace_lines:
+  - '    "R = 5?" -> "Fix round R of 5: R≤3 resume implementer; R≥4 fresh implementer, more capable profile" [label="no - next round"];'
+- path: SKILL.md
+  op: replace
+  start_line: 246
+  end_line: 246
+  expected_lines:
+  - '2. If the task requires more reasoning, re-dispatch with a more capable model'
+  replace_lines:
+  - '2. If the task requires more reasoning, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`).'
+- path: SKILL.md
+  op: replace
+  start_line: 328
+  end_line: 328
+  expected_lines:
+  - '**Rounds 4-5 — dispatch a fresh implementer on a more capable model** (per'
+  replace_lines:
+  - '**Rounds 4-5 — dispatch a fresh implementer on a more capable profile** (per'
+- path: implementer-prompt.md
+  op: replace
+  start_line: 77
+  end_line: 77
+  expected_lines:
+  - '    The controller can provide more context, re-dispatch with a more capable model,'
+  replace_lines:
+  - '    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`),'

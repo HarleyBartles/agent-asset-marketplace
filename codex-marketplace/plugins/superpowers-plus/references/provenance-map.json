@@ -15,6 +15,13 @@
       "local_path": "skills/inspecting-the-environment"
     },
     {
+      "canonical_name": "selecting-a-subagent",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
+      "local_path": "skills/selecting-a-subagent"
+    },
+    {
       "canonical_name": "working-with-epics",
       "source_category": "first_party",
       "content_mode": "verbatim",

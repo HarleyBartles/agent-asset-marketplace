@@ -165,17 +165,6 @@
       "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
     },
     {
-      "canonical_name": "subagent-model-routing",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/subagent-model-routing",
-      "local_path": "skills/subagent-model-routing",
-      "import_status": "imported",
-      "provenance_note": "Projected verbatim from the first-party subagent-model-routing skill.",
-      "copy_expectation": "byte_identical"
-    },
-    {
       "canonical_name": "unslop-profiles",
       "source_category": "first_party",
       "content_mode": "verbatim",

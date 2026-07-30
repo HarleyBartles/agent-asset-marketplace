@@ -1,11 +1,11 @@
 version: 1
 metadata:
-  skill_name: subagent-model-routing
+  skill_name: selecting-a-subagent
   source_category: first_party
 
 interface:
   display_name: Subagent Model Routing
   short_description: Use when choosing a child subagent profile, model, reasoning level, or context mode for a task.
-  default_prompt: Use /subagent-model-routing before dispatching a subagent. Detect the live dispatch contract, load the shared policy and exactly one matching profile, then choose the least escalated exposed route.
+  default_prompt: Use /selecting-a-subagent before dispatching a subagent. Detect the live dispatch contract, load the shared policy and exactly one matching profile, then choose the least escalated exposed route.
 policy:
   allow_implicit_invocation: true

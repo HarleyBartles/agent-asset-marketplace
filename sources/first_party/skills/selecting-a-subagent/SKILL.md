@@ -1,20 +1,23 @@
 ---
-name: subagent-model-routing
-description: Use when choosing a child subagent profile, model, reasoning level, or context mode for a task.
+name: selecting-a-subagent
+description: Use when choosing a child subagent profile, model, reasoning level, or
+  context mode for a task.
 metadata:
-  source-id: subagent-model-routing
-  source-path: sources/first_party/skills/subagent-model-routing/SKILL.md
-  provenance-name: Subagent Model Routing first-party skill
+  source-id: selecting-a-subagent
+  source-path: sources/first_party/skills/selecting-a-subagent/SKILL.md
+  provenance-name: Selecting A Subagent first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when choosing a child subagent model, reasoning level, or context mode,
-    or when retrying failed work by changing model, reasoning, or context.
+  scope: Use when choosing a child subagent profile, model, reasoning level, or context
+    mode, or when retrying failed work by changing profile, model, reasoning, or context.
   use_when:
   - Use before calling `spawn_agent` or an equivalent subagent tool.
   - Use when creating or selecting a named subagent configuration.
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
+  - Use when choosing a custom subagent profile such as `implementer`, `reviewer`,
+    `branch-reviewer`, `implementer-strong`, or `reviewer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
