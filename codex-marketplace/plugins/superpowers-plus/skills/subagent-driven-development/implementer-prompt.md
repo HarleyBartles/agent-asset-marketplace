@@ -3,11 +3,10 @@
 Use this template when dispatching an implementer subagent.
 
 ```
-Subagent (general-purpose):
-  description: "Implement Task N: [task name]"
-  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted
-         model silently inherits the session's most expensive one]
-  prompt: |
+run_subagent (Devin Desktop):
+  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate implementer profile for this task]
+  title: "Implement Task N: [task name]"
+  task: |
     You are implementing Task N: [task name]
 
     ## Task Description
@@ -37,7 +36,8 @@ Subagent (general-purpose):
     3. Verify implementation works
     4. Commit your work
     5. Self-review (see below)
-    6. Report back
+    6. Commit and validate: if the task changed generated or projected surfaces, run the appropriate `tools/run <target> --apply` command, stage all changes, then commit. Do not run `tools/run ci --check` on an uncommitted working tree — the pre-commit hook will run it on the staged tree. If the hook is unavailable, commit with `--no-verify` and then run `tools/run ci --check` separately.
+    7. Report back
 
     Work from: [directory]
 
@@ -74,7 +74,7 @@ Subagent (general-purpose):
 
     **How to escalate:** Report back with status BLOCKED or NEEDS_CONTEXT. Describe
     specifically what you're stuck on, what you've tried, and what kind of help you need.
-    The controller can provide more context, re-dispatch with a more capable model,
+    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`),
     or break the task into smaller pieces.
 
     ## Before Reporting Back: Self-Review

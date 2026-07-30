@@ -97,6 +97,12 @@ Policy for agent work:
   advertised as a normal completion route.
 - The expected local green-path proof is `tools/run marketplace --apply`.
 - The expected CI green-path proof is `tools/run ci --check`.
+- `tools/run ci --check` must not be run on an uncommitted working tree. It is a
+  CI gate for the committed (or staged-after-commit) tree. After editing source,
+  run the appropriate `tools/run <target> --apply` command, stage all generated
+  changes, and commit. The pre-commit hook runs `ci --check` on the staged tree.
+  If the hook is not available, commit with `--no-verify` and then run
+  `tools/run ci --check` separately.
 - Both commands must be aligned so check mode fails if regeneration would be
   needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of

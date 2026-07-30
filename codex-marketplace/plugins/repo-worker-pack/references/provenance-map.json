@@ -71,18 +71,18 @@
       "local_path": "skills/repo-worker-base"
     },
     {
+      "canonical_name": "review-branch-diff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/review-branch-diff",
+      "local_path": "skills/review-branch-diff"
+    },
+    {
       "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "canonical_source_path": "sources/first_party/skills/risk-gates",
       "local_path": "skills/risk-gates"
-    },
-    {
-      "canonical_name": "subagent-model-routing",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/subagent-model-routing",
-      "local_path": "skills/subagent-model-routing"
     },
     {
       "canonical_name": "unslop-profiles",

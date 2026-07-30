@@ -8,6 +8,17 @@ publication rules.
 - Agents must check off completed plan steps before publishing a completed
   plan.
 - Use `[x]` in place of `[ ]` for completed steps.
+- Every task should include a final sub-step instructing the implementer to
+  mark the task's own plan steps `[x]` before reporting back. If a task omits
+  it, the implementer must still do so and the orchestrator must verify it.
+- Order implementation tasks so that all source and adapter/overlay edits are
+  complete before any `tools/run * --apply` regeneration step. Run
+  `tools/run heal --check` after overlay edits and before regeneration to catch
+  line-number drift early.
+- Do not run `tools/run ci --check` on an uncommitted working tree. Regenerate
+  surfaces, stage all changes, commit, and let the pre-commit hook run the CI
+  preflight. If the hook must be bypassed, commit first and then run
+  `tools/run ci --check` separately.
 - If a plan is intentionally incomplete or left open, say why inside the plan
   itself.
 - This is local worker guidance, not a future PR-blocker doctrine.

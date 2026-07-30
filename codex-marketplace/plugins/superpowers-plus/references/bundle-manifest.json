@@ -6,6 +6,7 @@
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
   "is_mega_pack": false,
   "source_families": [
+    "first_party",
     "house-skills",
     "superpowers"
   ],
@@ -157,6 +158,36 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
+    },
+    {
+      "canonical_name": "review-branch-diff",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/review-branch-diff",
+      "local_path": "skills/review-branch-diff",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party branch-diff review skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/review-branch-diff/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
+      "canonical_name": "selecting-a-subagent",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
+      "local_path": "skills/selecting-a-subagent",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/selecting-a-subagent/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
       "canonical_name": "subagent-driven-development",

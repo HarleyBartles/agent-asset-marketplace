@@ -20,6 +20,7 @@ metadata:
   - risk-gates
   - writing-plans
   - executing-plans
+  - subagent-driven-development
   - working-with-epics
   use_after:
   - brainstorming
@@ -28,6 +29,7 @@ metadata:
   use_before:
   - writing-plans
   - executing-plans
+  - subagent-driven-development
   - finishing-a-development-branch
   - requesting-code-review
 license: MIT
@@ -62,6 +64,17 @@ For completion-readiness, 9/10 means high confidence the work passes code review
 3. Score the artifact against the lane question.
 4. Strengthen gaps until the score is ≥ 8 (target ≥ 9).
 5. Report the final rating and hand off to the next stage.
+
+## Plan-Readiness Checklist
+
+When the `plan-readiness` lane is for a `subagent-driven-development` (SDD) plan, rate the artifact against these items. A plan that fails any item should be strengthened before handoff.
+
+- [ ] **Task ordering.** All source and adapter/overlay edits are scheduled before any `tools/run * --apply` regeneration step.
+- [ ] **Overlay health gate.** `tools/run heal --check` is scheduled after overlay edits and before `marketplace`/`project`/`installed-skills` regeneration.
+- [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
+- [ ] **Clean CI gate.** `tools/run ci --check` is not scheduled on an uncommitted working tree; the plan commits and lets the pre-commit hook run it, or commits with `--no-verify` and then runs it.
+- [ ] **Explicit verification.** Each regeneration or projection task names the exact `tools/run <target> --apply` command and any follow-up `ci --check`.
+- [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
 
 ## Common Mistakes
 

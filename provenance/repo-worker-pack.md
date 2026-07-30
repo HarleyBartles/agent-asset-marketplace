@@ -51,3 +51,6 @@
   source at `sources/first_party/skills/writing-with-clarity/`; its compact
   references route human-facing prose tasks while the bundled 1918 HTML remains
   a reference-only fallback with its upstream custody record.
+- `review-branch-diff` is projected here from the canonical first-party
+  source at `sources/first_party/skills/review-branch-diff/` so branch-diff
+  review against main is available on the repo-facing worker surface.

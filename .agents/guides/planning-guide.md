@@ -40,18 +40,19 @@ Do not create loose files at repo root. Do not place agent-generated artifacts u
 Before executing a plan, run through this checklist. Each item is a general principle — the examples are illustrative, not exhaustive.
 
 ### Structural integrity
-1. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
-2. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
-3. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.
+1. **SDD task ordering.** For plans executed with `subagent-driven-development`, source and adapter/overlay edits must be complete before any `tools/run * --apply` regeneration step. `tools/run heal --check` must appear after overlay edits and before regeneration. `tools/run ci --check` must not run on an uncommitted working tree; the plan should commit and let the pre-commit hook run it, or commit with `--no-verify` and then run it. Each task should include a final sub-step for the implementer to mark the task's own plan steps `[x]`.
+2. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
+3. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
+4. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.
 
 ### Test infrastructure
-4. **Validation isolation.** Do the validation steps run independently without requiring external state? Marketplace validation should work in a clean checkout.
-5. **Artifact placement.** Are generated artifacts (skill zips, manifests, source maps) placed in the correct derived locations, not hand-edited?
-6. **Validation kind selection.** Is the right validation approach used? Marketplace changes require full regeneration and validation, not partial refresh.
+5. **Validation isolation.** Do the validation steps run independently without requiring external state? Marketplace validation should work in a clean checkout.
+6. **Artifact placement.** Are generated artifacts (skill zips, manifests, source maps) placed in the correct derived locations, not hand-edited?
+7. **Validation kind selection.** Is the right validation approach used? Marketplace changes require full regeneration and validation, not partial refresh.
 
 ### Execution safety
-7. **Interim state documentation.** Are temporary validation failures between tasks documented so the implementer knows they're expected? An interim validation failure that's fixed by a later task is acceptable if documented.
-8. **Task independence.** Can each task be executed independently without shared mutable state between tasks? SDD parallel execution requires independence.
+8. **Interim state documentation.** Are temporary validation failures between tasks documented so the implementer knows they're expected? An interim validation failure that's fixed by a later task is acceptable if documented.
+9. **Task independence.** Can each task be executed independently without shared mutable state between tasks? SDD parallel execution requires independence.
 
 ## Execution Confidence Assessment (required before reporting ready)
 

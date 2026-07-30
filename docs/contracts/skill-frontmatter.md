@@ -40,6 +40,9 @@ metadata:
 ## Notes
 
 - `metadata` is the canonical place for provenance and adaptation notes.
+- Devin-specific dispatch keys (`agent`, `triggers`, `argument-hint`) are
+  allowed at the top level for skills that dispatch to a custom subagent.
+  They are preserved verbatim by the first-party skill normalizer.
 - `metadata.content_mode`, when present, must be one of `verbatim`,
   `normalised`, or `adapted`. `verbatim` means the skill body is copied
   unchanged from upstream. `normalised` means minimal compliance adaptation

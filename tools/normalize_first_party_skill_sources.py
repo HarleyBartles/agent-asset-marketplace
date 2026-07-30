@@ -297,6 +297,12 @@ def _normalize_skill(skill_md: Path, *, write: bool) -> bool:
         "license": frontmatter.get("license", "MIT"),
     }
 
+    # Preserve Devin-specific dispatch keys when present so skills that
+    # dispatch to a custom subagent keep their routing metadata.
+    for key in ("agent", "triggers", "argument-hint"):
+        if key in frontmatter and frontmatter.get(key) is not None:
+            normalized_frontmatter[key] = frontmatter[key]
+
     changed = normalized_frontmatter != frontmatter
     if write and changed:
         _write_frontmatter(skill_md, normalized_frontmatter, body)

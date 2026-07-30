@@ -502,7 +502,14 @@ def run_targets(targets: list[str], ctx: Ctx) -> None:
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Dependency-aware task runner for the agent-asset-marketplace",
-        epilog=f"Targets: {', '.join(_TASKS.keys())}",
+        epilog=(
+            "Targets: "
+            + ", ".join(_TASKS.keys())
+            + "\n"
+            "ci --check is the post-commit CI gate; do not run it on an uncommitted "
+            "working tree. Edit, run the relevant <target> --apply, stage, commit, "
+            "and let the pre-commit hook run ci --check. See tools/AGENTS.md."
+        ),
     )
     parser.add_argument(
         "targets",
