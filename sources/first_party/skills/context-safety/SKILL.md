@@ -29,7 +29,7 @@ license: MIT
 
 Use this skill when a text write may be large enough to make a normal editor write path brittle, or when inline composition would risk exhausting the remaining session context.
 Use when a document may exceed the safe threshold or when the main session should not carry the whole composition inline.
-target 200 lines per chunk. absolute red limit max 400 lines per chunk.
+target 2,000 lines per chunk. absolute red limit max 4,000 lines per chunk.
 
 ## Core rule
 
@@ -55,32 +55,32 @@ Do not treat `/compact` as a universal rescue button. If compaction is needed in
 
 ## Pre-composition context pressure
 
-Before composing a large document, decide whether the composition itself will exceed the session's remaining context budget.
+Before composing a large document, decide whether the composition itself will exceed the safe threshold.
 
 Treat a write as context-risky when either of these is true:
 
-- the output is likely to exceed about 200 lines;
-- the session has already accumulated significant subagent output, research, or file reads in context.
+- the output is likely to exceed about 2,000 lines;
+- the output is likely to exceed about 1 MB of UTF-8 text.
 
 When context-risky:
 
 1. Do not compose the whole document as one inline string in the main session.
 2. Prefer a clean-context worker/subagent write with only the required inputs.
-3. Or generate the document in bounded sections with sequential append calls, keeping each section near the 200-line target and well below the 400-line ceiling.
+3. Or generate the document in bounded sections with sequential append calls, keeping each section near the 2,000-line target and well below the 4,000-line ceiling.
 4. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
 
-If the output is expected to hit the 300 line cutoff or more, split it into smaller chunks before starting so the chunks stay under the target and comfortably below the limit.
+If the output is expected to land around 1,500 lines or more, split it into smaller chunks before starting so the chunks stay under the target and comfortably below the limit.
 
 ## Large-write threshold
 
 Treat a write as large when either of these is true:
 
-- more than 200 lines;
-- more than 256 KB of UTF-8 text.
+- more than 2,000 lines;
+- more than 1 MB of UTF-8 text.
 
-If a chunk would exceed 400 lines, split it before writing.
+If a chunk would exceed 4,000 lines, split it before writing.
 
-If a write is expected to land around 300 lines or more, split it into smaller chunks before starting so the chunks come in under the 200-line target and stay well under the hard limit.
+If a write is expected to land around 1,500 lines or more, split it into smaller chunks before starting so the chunks come in under the 2,000-line target and stay well under the hard limit.
 
 ## Safe sequence
 
