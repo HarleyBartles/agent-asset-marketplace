@@ -501,7 +501,7 @@ git commit -m "refactor: declare superpowers-plus skills as first-party verbatim
 **Interfaces:**
 - Produces: provenance prose that reflects the first-party authorship model.
 
-- [ ] **Step 1: Rewrite the `Marketplace projection` section and pack statement.**
+- [x] **Step 1: Rewrite the `Marketplace projection` section and pack statement.**
 
 Replace the contents of `provenance/superpowers-plus.md` with:
 
@@ -554,7 +554,7 @@ Those surfaces remain source evidence for the upstream package boundary and are
 not part of the Codex install surface on this pass.
 ```
 
-- [ ] **Step 2: Verify.**
+- [x] **Step 2: Verify.**
 
 ```powershell
 if (-not (Test-Path "provenance/superpowers-plus.md")) { throw "File missing" }
@@ -562,7 +562,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 3: Commit.**
+- [x] **Step 3: Commit.**
 
 ```powershell
 git add provenance/superpowers-plus.md
