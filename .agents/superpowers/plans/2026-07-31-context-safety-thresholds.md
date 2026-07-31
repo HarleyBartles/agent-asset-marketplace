@@ -270,7 +270,7 @@ metadata:
 interface:
   display_name: Context Safety
   short_description: Use when a text write is expected to exceed the safe threshold, when a document is very large or context-heavy, or when a normal editor write path would be brittle.
-  default_prompt: Use /context-safety when a text write is expected to exceed the safe threshold, when inline composition itself would risk consuming the remaining context, or when tool-call boundaries should be used as checkpoints. Estimate line count and byte size before writing, treat 2,000 lines per chunk as the target and 4,000 lines per chunk as the absolute red limit, split writes expected to land around 1,500 lines or more into smaller chunks before composing, preserve durable state before `/compact`, use a clean-context worker/subagent or bounded append path for risky writes, validate the completed temp file, and atomically replace the target only after validation.
+  default_prompt: Use /context-safety when a text write is expected to exceed the safe threshold, when inline composition itself would risk consuming the remaining context, or when tool-call boundaries should be used as checkpoints. Estimate line count and byte size before writing, treat 2,000 lines per chunk as the target and 4,000 lines per chunk as the absolute red limit, and 1 MB of UTF-8 text as the byte ceiling, split writes expected to land around 1,500 lines or more into smaller chunks before composing, preserve durable state before `/compact`, use a clean-context worker/subagent or bounded append path for risky writes, validate the completed temp file, and atomically replace the target only after validation.
 policy:
   products:
   - chatgpt
@@ -339,9 +339,7 @@ Expected: only generated surfaces related to `context-safety` and `repo-worker-p
 git add .
 git commit -m "Regenerate projections and mesh for context-safety threshold update"
 ```
-Expected: the pre-commit hook runs `.	ools
-un.ps1 ci --check` and the commit succeeds. If the hook is not present or is bypassed, run `.	ools
-un.ps1 ci --check` immediately after the commit.
+Expected: the pre-commit hook runs `py -3 tools/run.py ci --check` and the commit succeeds. If the hook is not present or is bypassed, run `py -3 tools/run.py ci --check` immediately after the commit.
 
 - [x] **Step 5: Run the CI gate manually if the pre-commit hook did not run it**
 
