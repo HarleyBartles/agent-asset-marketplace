@@ -317,15 +317,15 @@ git commit -m "feat: migrate using-git-worktrees to first-party source"
 - Produces: first-party `using-superpowers-plus` source root.
 - Consumes: the projected `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers/` content, with all `using-superpowers` references renamed.
 
-- [ ] **Step 1: Create `sources/first_party/skills/using-superpowers-plus/SKILL.md`.**
+- [x] **Step 1: Create `sources/first_party/skills/using-superpowers-plus/SKILL.md`.**
 
 Use the canonical frontmatter with `name: using-superpowers-plus`, `provenance-name: Using Superpowers Plus first-party skill`, and `source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md`. Copy the body from `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers/SKILL.md` (after its frontmatter), then replace every occurrence of `using-superpowers` with `using-superpowers-plus` and every `@using-superpowers` with `@using-superpowers-plus`. Prepend the provenance block with `original-skill-name` set to `using-superpowers`.
 
-- [ ] **Step 2: Create `sources/first_party/skills/using-superpowers-plus/agents/openai.yaml`.**
+- [x] **Step 2: Create `sources/first_party/skills/using-superpowers-plus/agents/openai.yaml`.**
 
 Use the canonical shape with `skill_name: using-superpowers-plus`, `display_name: Using Superpowers Plus`, `short_description` and `default_prompt` referencing `using-superpowers-plus`.
 
-- [ ] **Step 3: Verify.**
+- [x] **Step 3: Verify.**
 
 ```powershell
 $expected = @("SKILL.md", "agents/openai.yaml")
@@ -335,7 +335,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
 ```powershell
 git add sources/first_party/skills/using-superpowers-plus
