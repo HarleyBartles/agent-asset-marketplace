@@ -277,18 +277,18 @@ git commit -m "feat: migrate systematic-debugging to first-party source"
 **Interfaces:**
 - Produces: first-party `using-git-worktrees` source root.
 
-- [ ] **Step 1: Create `SKILL.md` and `agents/openai.yaml`.**
+- [x] **Step 1: Create `SKILL.md` and `agents/openai.yaml`.**
 
 Use the canonical shapes. `name: using-git-worktrees`, `provenance-name: Using Git Worktrees first-party skill`.
 
-- [ ] **Step 2: Copy the adapter scripts.**
+- [x] **Step 2: Copy the adapter scripts.**
 
 ```powershell
 New-Item -ItemType Directory -Path "sources/first_party/skills/using-git-worktrees/scripts" -Force
 Get-ChildItem -Path "adapters/codex/superpowers-plus/using-git-worktrees/scripts" | Copy-Item -Destination "sources/first_party/skills/using-git-worktrees/scripts/"
 ```
 
-- [ ] **Step 3: Verify.**
+- [x] **Step 3: Verify.**
 
 ```powershell
 $expected = @("SKILL.md", "agents/openai.yaml", "scripts/new-worktree.ps1", "scripts/new-worktree.sh", "scripts/new_worktree.py", "scripts/remove-worktree.ps1", "scripts/remove-worktree.sh", "scripts/remove_worktree.py")
@@ -297,7 +297,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
 ```powershell
 git add sources/first_party/skills/using-git-worktrees
