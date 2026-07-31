@@ -19,7 +19,6 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/unslop-profiles/`
 - `sources/first_party/skills/using-github/`
 - `sources/first_party/skills/using-linear/`
-- `sources/first_party/skills/work-mode-router/`
 - `sources/first_party/skills/writing-with-clarity/`
 
 ## Projection surfaces
@@ -40,7 +39,6 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-github/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/work-mode-router/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
 <!-- END GENERATED: pack-inventory -->
 

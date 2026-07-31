@@ -30,7 +30,6 @@ metadata:
   - verification-before-completion
   - finishing-a-development-branch
   - requesting-code-review
-  - handoff-gates
   - working-with-epics
   related_skills:
   - brainstorming
@@ -45,8 +44,10 @@ metadata:
   - requesting-code-review
   - receiving-code-review
   - writing-skills
-  - handoff-gates
   - working-with-epics
+  - repo-worker-base
+  - base-doctrine
+  - inspecting-the-environment
 license: MIT
 ---
 
@@ -100,6 +101,59 @@ These thoughts mean STOP—you're rationalizing:
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
 | "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
 
+## Bootstrap order
+
+This skill is the generic workflow router for any repo that installs the
+superpowers-plus skill pack. At session start, resume, or when the next action
+is unclear, run these steps in order and then hand off.
+
+1. **The invocation rule.** If a skill applies to the request, invoke it before
+   any response or action. You do not have a choice if a skill matches.
+2. **Inspect the environment.** Invoke `/inspecting-the-environment` if the
+   current environment is unknown or may have changed. Record the shell, repo,
+   branch, worktree, and available connectors. Do not route until the
+   environment is known.
+3. **Load doctrine.** Invoke `/base-doctrine` for cross-runtime invariants.
+   Base doctrine loads the repo's local doctrine surface (`.agents/doctrine/`
+   and scoped `AGENTS.md` files) as a thin delta. Do not apply base rules where
+   the repo's local doctrine explicitly overrides them.
+4. **Classify the request.** Pick the smallest sufficient mode from the table
+   below.
+5. **Route and stop.** Hand off to the owning skill. Do not load additional
+   skills unless the current skill leaves a decision unresolved and the
+   candidate skill directly owns it.
+
+## Request classification
+
+| Mode | When | Route to |
+|---|---|---|
+| `ordinary_chat` | Acknowledgement, ping, preference, or side chat with no source evidence | Answer directly |
+| `continuity_ingress` | Resume packet, inherited worktree, or next-session block | `/using-git-worktrees` for state; then `/repo-worker-base` if there is repo work to continue |
+| `repo_worker` | Coding, repo-backed worker, issue handoff, PR gate, or source-truth claims | `/repo-worker-base` |
+| `github_proof` | PR/branch/commit/review/merge/main verification after a GitHub artifact exists | `/using-github` |
+| `linear_control` | Linear issue/project/comment/document mechanics | `/using-linear` |
+| `artifact_work` | Document, spreadsheet, slide, PDF, image, package, receipt | The artifact skill the repo declares, or `/writing-with-clarity` for prose |
+| `verification_or_reporting` | QA, closeout posture, validation, review-feedback, or report writing | `/verification-before-completion` and `/writing-with-clarity` |
+| `skill_work` | Create, update, validate, package, install, or troubleshoot skills | `/writing-skills` |
+| `legacy_plan_b` | Non-Linear worker handoff only after the normal route is unavailable or rejected | Compact legacy stack |
+
+## Repo-backed work handoff
+
+For repo-backed work, the mandatory handoff is:
+
+```
+using-superpowers-plus -> repo-worker-base -> matching baseline reference + local guide -> stage skill
+```
+
+`repo-worker-base` owns the portable repo hygiene, worktree, source, and
+publication boundaries. It reads the matching baseline and the repo's
+`.agents/guides/` guide, then routes to the stage skill (`brainstorming`,
+`writing-plans`, `executing-plans`, `subagent-driven-development`,
+`requesting-code-review`).
+
+Do not invoke a stage skill directly for repo work without the `repo-worker-base`
+handoff.
+
 ## Platform Adaptation
 
 If your harness appears here, read its reference file for special instructions:
@@ -107,13 +161,17 @@ If your harness appears here, read its reference file for special instructions:
 - Codex: `references/codex-tools.md`
 - Pi: `references/pi-tools.md`
 - Antigravity: `references/antigravity-tools.md`
+- Gemini: `references/gemini-tools.md`
 
-## Asset Marketplace Routing
+## User Instructions and Local Doctrine
 
-- Environment inspection before action when constraints matter: use `inspecting-the-environment`.
-- Stage-boundary artifact (spec, plan, completed work) needs a readiness check: use `handoff-gates`.
-- Goal is too large for one writing-plans plan: use `working-with-epics` to create a sequenced roadmap.
+User instructions (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, direct requests),
+repo-local doctrine (`.agents/doctrine/`, scoped `AGENTS.md`), and this skill
+all shape routing. If they explicitly conflict, follow this priority:
 
-## User Instructions
+1. Explicit human instruction.
+2. Repo-local doctrine and `AGENTS.md`.
+3. This skill and the skill it routes to.
+4. Default behavior.
 
-User instructions (CLAUDE.md, AGENTS.md, GEMINI.md, etc, direct requests) take precedence over skills, which in turn override default behavior. Only skip skill workflows or instructions when your human partner has explicitly told you to.
+Only skip a skill workflow when your human partner has explicitly told you to.

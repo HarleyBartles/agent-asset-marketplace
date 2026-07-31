@@ -18,9 +18,9 @@ function Get-PlanStem {
   return ($stem -replace '[\\/:*?"<>|]', '-')
 }
 
-# Resolve the repo root. If an absolute plan file is provided, use its working
-# tree so a worktree plan uses the worktree root instead of the main checkout
-# root. Otherwise resolve relative to the current directory's repo.
+# Resolve repo root and branch. If an absolute plan file is provided, use its
+# working tree so a worktree plan uses the worktree root instead of the main
+# checkout root. Otherwise resolve relative to the current directory's repo.
 $resolvedPlan = ''
 if (-not [string]::IsNullOrWhiteSpace($PlanFile)) {
   $testPath = $PlanFile
@@ -47,9 +47,11 @@ else {
 
 $PlanFile = $resolvedPlan
 
-$workspaceRoot = Join-Path $root '.agents/superpowers/sdd'
+$branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
+$branch = $branch -replace '[\\:*?"<>|]', '-'
+$parent = (Get-Item (Join-Path $root '..')).FullName
+$workspaceRoot = Join-Path $parent "_agents-scratch" $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
-[System.IO.File]::WriteAllText((Join-Path $workspaceRoot '.gitignore'), "*`n", [System.Text.UTF8Encoding]::new($false))
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'
 $planStem = ''

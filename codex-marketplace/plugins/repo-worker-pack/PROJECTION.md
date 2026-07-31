@@ -26,7 +26,7 @@ The split is deliberate:
 - `repo-worker-pack` is the first-party plugin projection with core repo worker
   skills and its compositional entrypoint.
 <!-- BEGIN GENERATED: projection-contract -->
-- Active manifest entries (16):
+- Active manifest entries (15):
   - `asking-clarifying-questions`
   - `base-doctrine`
   - `cleanup-custody`
@@ -41,7 +41,6 @@ The split is deliberate:
   - `unslop-profiles`
   - `using-github`
   - `using-linear`
-  - `work-mode-router`
   - `writing-with-clarity`
 <!-- END GENERATED: projection-contract -->
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.

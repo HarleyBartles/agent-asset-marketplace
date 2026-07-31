@@ -19,10 +19,9 @@ This bundle projects the first-party repo worker baseline skills.
 - `unslop-profiles`
 - `using-github`
 - `using-linear`
-- `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 16.
+Manifest entry count: 15.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

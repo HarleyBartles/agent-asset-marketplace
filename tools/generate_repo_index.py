@@ -316,6 +316,17 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
             normalized_zones.append(updated_zone)
             continue
+        if zone.get("name") == "superpowers-plans":
+            updated_zone = dict(zone)
+            updated_zone["path"] = ".agents/plans"
+            updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "superpowers-specs":
+            updated_zone = dict(zone)
+            updated_zone["path"] = ".agents/specs"
+            normalized_zones.append(updated_zone)
+            continue
         if zone.get("name") == "third-party-custody":
             updated_zone = dict(zone)
             updated_zone["purpose"] = (
