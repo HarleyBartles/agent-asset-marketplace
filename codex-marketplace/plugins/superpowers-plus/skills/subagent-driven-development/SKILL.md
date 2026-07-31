@@ -13,7 +13,7 @@ metadata:
   source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/SKILL.md"
   content_mode: "adapted"
   adapted_author: "Harley Bartles"
-  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/requesting-branch-review`."
+  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `.md` profile files, and replaced the final whole-branch review with `/requesting-branch-review`."
   use_when:
     - "Use when executing an implementation plan with independent tasks and subagent support is available."
     - "Use when tasks can be delegated to fresh implementer subagents in the same session."
@@ -184,7 +184,7 @@ conflicts that only emerge from implementation.
 Invoke `/selecting-a-subagent` to select the right subagent profile for the
 current task and environment. In Devin Desktop, that means choosing a
 `profile:` value and then dispatching `run_subagent` with that `profile:`.
-The profile's `AGENT.md` declares its own `model:`, so do not pass `model:`
+The profile's `.md` profile file declares its own `model:`, so do not pass `model:`
 to `run_subagent`.
 
 ## The Task Loop

@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "sources/first_party/skills/requesting-branch-review"
 SKILL = SOURCE / "SKILL.md"
 AGENTS = SOURCE / "agents" / "openai.yaml"
-ASSET = SOURCE / "assets" / "branch-reviewer" / "AGENT.md"
+ASSET = SOURCE / "assets" / "branch-reviewer.md"
 
 
 def _skill_frontmatter() -> dict:
@@ -55,9 +55,14 @@ def test_branch_reviewer_asset_is_swe_1_7():
     text = ASSET.read_text(encoding="utf-8")
     parts = text.split("---")
     if len(parts) < 3:
-        raise ValueError("AGENT.md must have opening and closing frontmatter delimiters")
+        raise ValueError("branch-reviewer.md must have opening and closing frontmatter delimiters")
     asset = yaml.safe_load(parts[1]) or {}
     assert asset.get("name") == "branch-reviewer"
     assert asset.get("model") == "swe-1-7"
     assert isinstance(asset.get("allowed-tools"), list)
     assert "read" in asset["allowed-tools"]
+    assert "mcp_list_servers" in asset["allowed-tools"]
+    assert "mcp_list_tools" in asset["allowed-tools"]
+    assert "mcp_call_tool" in asset["allowed-tools"]
+    assert "write" not in asset["allowed-tools"]
+    assert "edit" not in asset["allowed-tools"]
