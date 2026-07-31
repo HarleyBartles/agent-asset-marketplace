@@ -232,18 +232,18 @@ git commit -m "feat: migrate subagent-driven-development to first-party source"
 **Interfaces:**
 - Produces: first-party `systematic-debugging` source root.
 
-- [ ] **Step 1: Create `SKILL.md` and `agents/openai.yaml`.**
+- [x] **Step 1: Create `SKILL.md` and `agents/openai.yaml`.**
 
 Use the canonical shapes. `name: systematic-debugging`, `provenance-name: Systematic Debugging first-party skill`.
 
-- [ ] **Step 2: Copy the adapter script.**
+- [x] **Step 2: Copy the adapter script.**
 
 ```powershell
 New-Item -ItemType Directory -Path "sources/first_party/skills/systematic-debugging/scripts" -Force
 Copy-Item -Path "adapters/codex/superpowers-plus/systematic-debugging/scripts/find-polluter.ps1" -Destination "sources/first_party/skills/systematic-debugging/scripts/find-polluter.ps1"
 ```
 
-- [ ] **Step 3: Verify.**
+- [x] **Step 3: Verify.**
 
 ```powershell
 $expected = @("SKILL.md", "agents/openai.yaml", "scripts/find-polluter.ps1")
@@ -252,7 +252,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
 ```powershell
 git add sources/first_party/skills/systematic-debugging
