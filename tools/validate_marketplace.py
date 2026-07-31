@@ -655,9 +655,16 @@ def normalize_superpowers_projection_text(text: str) -> str:
 def _expected_superpowers_projected_plugin(source_plugin: dict) -> dict:
     projected_plugin = json.loads(json.dumps(source_plugin))
     projected_plugin["name"] = "superpowers-plus"
+    # The projected plugin.json is the first-party Superpowers+ bundle surface,
+    # not the upstream obra/superpowers snapshot. Align version and author with
+    # the first-party bundle manifest; upstream provenance stays in SOURCE.md
+    # and provenance/superpowers-plus.md.
+    projected_plugin["version"] = "1.0.0"
+    projected_plugin["author"] = {"name": "Harley Bartles"}
     interface = projected_plugin.get("interface")
     if isinstance(interface, dict):
         interface["displayName"] = "Superpowers+"
+        interface["developerName"] = "Harley Bartles"
     return projected_plugin
 
 
