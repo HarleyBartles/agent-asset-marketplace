@@ -405,7 +405,7 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
     def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            skill_root = temp_root / "using-superpowers-plus"
+            skill_root = temp_root / "sources" / "first_party" / "skills" / "using-superpowers-plus"
             skill_md = skill_root / "SKILL.md"
 
             _write(

@@ -204,23 +204,6 @@ def _update_provenance_and_source_md(
     _replace_text(SUPERPOWERS_PROVENANCE_PATH, provenance_replacements)
 
 
-def _adapter_staleness() -> list[str]:
-    """Adapter staleness check retained as a no-op stub.
-
-    The superpowers-plus Codex adapter overlay tree was retired when the
-    bundle became first-party authored. There is no adapter surface to
-    drift, so this always returns an empty list. The function is kept so
-    callers that imported it continue to work without code churn.
-    """
-    return []
-
-
-def _print_adapter_guidance() -> None:
-    # The superpowers-plus Codex adapter overlay tree was retired; there is
-    # no adapter surface to update before regeneration.
-    return
-
-
 def _prepare(tag: str) -> None:
     bundle_manifest = load_superpowers_bundle_manifest()
     old_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
@@ -256,25 +239,10 @@ def _prepare(tag: str) -> None:
         new_commit=commit,
         new_tag_object=tag_object,
     )
-    _print_adapter_guidance()
-
-    issues = _adapter_staleness()
-    if issues:
-        print("Adapter drift detected before regeneration:")
-        for issue in issues:
-            print(f"- {issue}")
-        print("Update the adapter manually, then rerun this script with --regen.")
-    else:
-        print("Adapter surfaces are already aligned with the new upstream version.")
+    print("Adapter overlay tree is retired; no adapter surface to update.")
 
 
 def _regen(allow_shared_checkout: bool) -> None:
-    issues = _adapter_staleness()
-    if issues:
-        print("Adapter drift detected; regenerate is blocked until the adapter is updated:")
-        for issue in issues:
-            print(f"- {issue}")
-        raise SystemExit(2)
     regen_args = [sys.executable, str(ROOT / "tools" / "run.py"), "marketplace", "--apply"]
     if allow_shared_checkout:
         regen_args.append("--allow-shared-checkout")

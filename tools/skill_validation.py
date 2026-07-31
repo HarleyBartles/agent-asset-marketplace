@@ -12,11 +12,6 @@ from marketplace_utils import as_windows_long_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {"using-superpowers-plus"}
-
-
-def _projected_skill_requires_metadata(skill_root: Path) -> bool:
-    return skill_root.name in PROJECTED_SKILL_METADATA_REQUIRED_NAMES
 
 
 def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
@@ -74,8 +69,17 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         raise ValueError(f"{skill_md} frontmatter must include nonblank name")
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
+    parts = skill_root.parts
+    is_source_first_party = any(
+        tuple(parts[i : i + 3]) == ("sources", "first_party", "skills")
+        for i in range(len(parts) - 2)
+    )
+
     metadata = parsed_frontmatter.get("metadata")
-    if _projected_skill_requires_metadata(skill_root) and not isinstance(metadata, dict):
+    is_first_party = is_source_first_party or (
+        isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
+    )
+    if is_first_party and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
     if metadata is not None and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
