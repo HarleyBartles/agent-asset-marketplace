@@ -413,7 +413,7 @@ git commit -m "fix: update first-party references from @using-superpowers to @us
 - Consumes: the new first-party source roots.
 - Produces: registry entries that point projection at first-party `verbatim` custody.
 
-- [ ] **Step 1: Transform the 14 adapted entries to first-party `verbatim`.**
+- [x] **Step 1: Transform the 14 adapted entries to first-party `verbatim`.**
 
 For each of these canonical names in the `superpowers-plus` pack:
 
@@ -438,7 +438,7 @@ For `using-superpowers` use `canonical_name: using-superpowers-plus`, `canonical
 
 Remove the following obsolete fields from each of those 14 entries: `import_status`, `adaptation_overlay_path`, `adapted_author`, `adaptation_note`, `source_path`, `source_author`, `source_license`, `source_repo`. Keep `source_family` set to `first_party`.
 
-- [ ] **Step 2: Update the pack-level `notes`.**
+- [x] **Step 2: Update the pack-level `notes`.**
 
 Set the `superpowers-plus` pack `notes` array to:
 
@@ -448,7 +448,7 @@ Set the `superpowers-plus` pack `notes` array to:
 ]
 ```
 
-- [ ] **Step 3: Update the pack `source_ledger`.**
+- [x] **Step 3: Update the pack `source_ledger`.**
 
 Replace the `superpowers-plus` pack `source_ledger` array with the list of all first-party source roots it projects:
 
@@ -476,7 +476,7 @@ Replace the `superpowers-plus` pack `source_ledger` array with the list of all f
 ]
 ```
 
-- [ ] **Step 4: Verify the registry is valid JSON and matches the intended entries.**
+- [x] **Step 4: Verify the registry is valid JSON and matches the intended entries.**
 
 ```powershell
 py -3 -c "import json; json.load(open('codex-marketplace/custody-pack-registry.json'))"
@@ -484,7 +484,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
 ```powershell
 git add codex-marketplace/custody-pack-registry.json
