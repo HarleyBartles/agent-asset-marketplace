@@ -46,6 +46,12 @@ into `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environme
 so the Superpowers plugin surface retains the environment-inspection helper
 without introducing second editable source roots.
 
+It also projects the first-party `requesting-branch-review` skill from
+`sources/first_party/skills/requesting-branch-review/`
+into `codex-marketplace/plugins/superpowers-plus/skills/requesting-branch-review/`
+so the Superpowers workflow surface can dispatch a `branch-reviewer` subagent
+for an explicitly named branch and worktree against main.
+
 ## Excluded from the active projection
 
 - `.claude-plugin/`
