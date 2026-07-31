@@ -208,6 +208,11 @@
       "copy_expectation": "byte_identical"
     }
   ],
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md",
+    "PROJECTION.md"
+  ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
     "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",

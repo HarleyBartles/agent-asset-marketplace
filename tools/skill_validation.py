@@ -12,7 +12,7 @@ from marketplace_utils import as_windows_long_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {"using-superpowers"}
+PROJECTED_SKILL_METADATA_REQUIRED_NAMES = {"using-superpowers-plus"}
 
 
 def _projected_skill_requires_metadata(skill_root: Path) -> bool:

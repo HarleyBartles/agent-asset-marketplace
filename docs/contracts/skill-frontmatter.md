@@ -1,21 +1,22 @@
 # Skill Frontmatter Contract
 
 This contract applies to installable `SKILL.md` surfaces in the Codex
-marketplace projection, including Superpowers adaptations.
+marketplace projection, including first-party Superpowers+ skills.
 
 ## Canonical Shape
 
 ```yaml
 ---
-name: using-superpowers
+name: using-superpowers-plus
 description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
 metadata:
-  source_category: third_party
-  upstream_name: using-superpowers
-  upstream_version: v5.1.0
-  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers
-  projection_plugin: superpowers
-  license: "MIT"
+  source-id: using-superpowers-plus
+  source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md
+  provenance-name: Superpowers+ first-party workflow-selection entrypoint
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+license: "MIT"
 ---
 ```
 

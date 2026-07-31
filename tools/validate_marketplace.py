@@ -736,9 +736,9 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
     )
     for needle in (
         "source custody -> projection layer -> installation/export layer",
-        "Source custody keeps the retained third-party snapshot verbatim.",
+        "Source custody keeps the first-party skills in `sources/first_party/skills/<name>/`.",
         "Projection layer holds the source-controlled marketplace copy",
-        "Installation/export layer is derived from the projection plus overlays",
+        "Installation/export layer is derived from the projection and is produced only by canonical tooling",
         "docs/contracts/skill-frontmatter.md",
         "docs/contracts/openai-agent-yaml.md",
     ):
@@ -746,8 +746,8 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers PROJECTION.md is missing the three-layer model text: {needle}")
     for needle in (
         "lives only in the projection layer",
-        "Source custody remains a verbatim upstream snapshot",
-        "Installation and export artifacts are derived from the projection layer plus overlays",
+        "Source custody remains a verbatim retained upstream snapshot for reference",
+        "Installation and export artifacts are derived from the projection layer",
         "docs/contracts/skill-frontmatter.md",
         "docs/contracts/openai-agent-yaml.md",
     ):

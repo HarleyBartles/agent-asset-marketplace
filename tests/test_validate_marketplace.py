@@ -16,7 +16,7 @@ if str(TOOLS) not in sys.path:
 
 # Superpowers upstream snapshot constants. Update these when the vendored
 # superpowers source is refreshed to avoid hardcoding the version across tests.
-SUPERPOWERS_VERSION = "v6.1.0"
+SUPERPOWERS_VERSION = "v6.2.0"
 SUPERPOWERS_COMMIT = "f2cbfbefebbfef77321e4c9abc9e949826bea9d7"
 SUPERPOWERS_TAG_OBJECT = "ecbd610fce16d5faabcea997f17031129589b572"
 
@@ -94,7 +94,7 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
 
     provenance_map = {
         "bundle_name": "superpowers-plus",
-        "bundle_version": "6.1.0",
+        "bundle_version": "1.0.0",
         "upstream": {
             "repository": "https://github.com/obra/superpowers",
             "release_tag": SUPERPOWERS_VERSION,
@@ -130,8 +130,12 @@ def _write_superpowers_provenance_map(plugin_root: Path, bundle_manifest: dict) 
             {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},
         ],
         "notes": [
-            "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
-            "The active projection adapts the using-superpowers and finishing-a-development-branch workflows for Codex marketplace precedence and publication rules, and adds the source-backed House Skills inspecting-the-environment skill to the core Superpowers set.",
+            "The source custody root stays verbatim, the projection layer carries the "
+            "Codex-marketplace adaptations, and the installation/export layer is "
+            "regenerated from the projection.",
+            "The active projection projects the first-party using-superpowers-plus "
+            "workflow-selection entrypoint plus the compositional helper skills from "
+            "first-party source custody.",
             "The harness-specific surfaces remain preserved in third-party source custody.",
             "The retained snapshot keeps the broader package boundary for provenance and review.",
         ],
@@ -152,22 +156,19 @@ def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) ->
 
 SUPERPOWERS_PROJECTION_DOC = """# Projection
 
-This root is the Codex-facing marketplace projection of `obra/superpowers`
-`{SUPERPOWERS_VERSION}`, plus the source-backed House Skills
-`inspecting-the-environment` skill.
+This root is the Codex-facing marketplace projection of the first-party
+Superpowers+ workflow skills, including the `using-superpowers-plus`
+workflow-selection entrypoint.
 
 ## Layer Model
 
-This repository uses three distinct layers for the Superpowers bundle:
+This repository uses two distinct layers for the Superpowers+ bundle:
 
-- Source custody keeps the retained third-party snapshot verbatim.
-- Projection layer holds the source-controlled marketplace copy and any
-  Codex-marketplace adaptations.
-- Installation/export layer is derived from the projection plus overlays and
-  is produced only by canonical tooling.
+- Source custody keeps the first-party skills in `sources/first_party/skills/<name>/`.
+- Projection layer holds the source-controlled marketplace copy.
+- Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
-- The adapted Superpowers skills are materialized from source custody plus
-  `adapters/codex/superpowers-plus/...`.
+- The projected skills are materialized from `sources/first_party/skills/...`.
 - Frontmatter contract: docs/contracts/skill-frontmatter.md
 - OpenAI agent contract: docs/contracts/openai-agent-yaml.md
 """
@@ -176,9 +177,11 @@ SUPERPOWERS_COMPATIBILITY_DOC = """# Codex Marketplace Compatibility
 
 ## Projection contract
 
-- The repo-specific adaptation for `using-superpowers` and `finishing-a-development-branch` lives only in the projection layer and is source-controlled in `adapters/codex/superpowers-plus/...`.
-- Source custody remains a verbatim upstream snapshot.
-- Installation and export artifacts are derived from the projection layer plus overlays.
+- The repo-specific adaptation text lives only in the projection layer; the
+  first-party source custody root is the editable surface and is not folded
+  into the retained upstream snapshot.
+- Source custody remains a verbatim retained upstream snapshot for reference.
+- Installation and export artifacts are derived from the projection layer.
 - Frontmatter contract: docs/contracts/skill-frontmatter.md
 - OpenAI agent contract: docs/contracts/openai-agent-yaml.md
 """
@@ -219,16 +222,16 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_superpowers_bundle_accepts_first_party_inspecting_the_environment_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
-            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "inspecting-the-environment"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.2.0"
+            source_skill_root = temp_root / "sources" / "first_party" / "skills" / "using-superpowers-plus"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
 
-            projected_skill_root = plugin_root / "skills" / "inspecting-the-environment"
+            projected_skill_root = plugin_root / "skills" / "using-superpowers-plus"
             skill_md = _first_party_projection_frontmatter(
-                "inspecting-the-environment",
-                "sources/first_party/skills/inspecting-the-environment/SKILL.md",
-                "MARK-324 retained House Skills environment inspection skill",
-                "Use when environment constraints, auth, connectors, or workspace state must be discovered before action.",
+                "using-superpowers-plus",
+                "sources/first_party/skills/using-superpowers-plus/SKILL.md",
+                "Superpowers+ first-party workflow-selection entrypoint",
+                "Use when starting workflow-sensitive work that may need a Superpowers workflow skill.",
             )
             _touch(
                 source_skill_root / "SKILL.md",
@@ -285,28 +288,32 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "6.1.0",
+                "bundle_version": "1.0.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-                "source_tag": "v6.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
+                "source_tag": "v6.2.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
-                "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
+                "projection_policy": (
+                    "Project only the Codex-facing plugin surface. Keep the upstream "
+                    "harness-specific metadata, docs, scripts, and hooks in third-party "
+                    "source custody."
+                ),
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/package.json",
                 ],
                 "repo_index": {
                     "source_ledger": [
-                        "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
-                        "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
+                        "sources/third_party/superpowers/obra-superpowers/v6.2.0/package.json",
+                        "sources/third_party/superpowers/obra-superpowers/v6.2.0/README.md",
                     ],
                     "provenance_refs": [
                         "provenance/superpowers-plus.md",
@@ -323,11 +330,11 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "blocked_count": 0,
                 "entries": [
                     {
-                        "canonical_name": "inspecting-the-environment",
+                        "canonical_name": "using-superpowers-plus",
                         "source_category": "first_party",
                         "content_mode": "verbatim",
-                        "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
-                        "local_path": "skills/inspecting-the-environment",
+                        "canonical_source_path": "sources/first_party/skills/using-superpowers-plus",
+                        "local_path": "skills/using-superpowers-plus",
                         "import_status": "imported",
                         "copy_expectation": "byte_identical",
                         "provenance_note": "Projected from the canonical first-party source.",
@@ -527,16 +534,20 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_validate_projection_entry_provenance_accepts_content_mode_matrix(self) -> None:
         _validate_projection_entry_provenance(
             {
-                "canonical_name": "using-superpowers",
+                "canonical_name": "using-superpowers-plus",
                 "source_category": "third_party",
                 "content_mode": "adapted",
-                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
-                "local_path": "skills/using-superpowers",
-                "source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md",
+                "canonical_source_path": (
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                ),
+                "local_path": "skills/using-superpowers-plus",
+                "source_path": (
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers/SKILL.md"
+                ),
                 "source_author": "obra",
                 "source_license": "MIT",
                 "source_repo": "https://github.com/obra/superpowers",
-                "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
+                "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers-plus",
                 "adapted_author": "Harley Bartles",
                 "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
                 "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
@@ -566,12 +577,14 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             _validate_projection_entry_provenance(
                 {
-                    "canonical_name": "using-superpowers",
+                    "canonical_name": "using-superpowers-plus",
                     "source_category": "third_party",
                     "content_mode": "adapted",
-                    "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
-                    "local_path": "skills/using-superpowers",
-                    "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers",
+                    "canonical_source_path": (
+                        "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                    ),
+                    "local_path": "skills/using-superpowers-plus",
+                    "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers-plus",
                     "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
                     "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
                 },
@@ -614,10 +627,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            projected_skill_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "using-superpowers"
+            projected_skill_root = (
+                temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
+                / "skills" / "using-superpowers-plus"
+            )
             _touch(
                 projected_skill_root / "SKILL.md",
-                "---\nname: using-superpowers\ndescription: Use when workflow-sensitive work needs Superpowers guidance.\n---\nBody.\n",
+                "---\nname: using-superpowers-plus\ndescription: Use when workflow-sensitive work needs Superpowers guidance.\n---\nBody.\n",  # noqa: E501
             )
 
             with patch("skill_validation.ROOT", temp_root):
@@ -628,12 +644,12 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 projected_skill_root / "SKILL.md",
                 (
                     "---\n"
-                    "name: using-superpowers\n"
+                    "name: using-superpowers-plus\n"
                     "description: Use when workflow-sensitive work needs Superpowers guidance.\n"
                     "metadata:\n"
-                    "  source-id: using-superpowers\n"
-                    "  source-path: sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers/SKILL.md\n"
-                    "  provenance-name: MARK-143 GitHub Superpowers compositional skill\n"
+                    "  source-id: using-superpowers-plus\n"
+                    "  source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md\n"
+                    "  provenance-name: Superpowers+ first-party workflow-selection entrypoint\n"
                     'license: "MIT"\n'
                     "---\n"
                     "Body.\n"
@@ -668,24 +684,30 @@ class ValidateMarketplaceTests(unittest.TestCase):
     def test_superpowers_bundle_rejects_adapted_third_party_entry_without_overlay_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.1.0"
+            source_root = temp_root / "sources" / "third_party" / "superpowers" / "obra-superpowers" / "v6.2.0"
             source_skill_root = source_root / "skills" / "using-superpowers"
             plugin_root = temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
-            projected_skill_root = plugin_root / "skills" / "using-superpowers"
+            projected_skill_root = plugin_root / "skills" / "using-superpowers-plus"
 
             skill_md = _third_party_projection_frontmatter(
+                "using-superpowers-plus",
                 "using-superpowers",
-                "using-superpowers",
-                "adapters/codex/superpowers-plus/using-superpowers",
+                "adapters/codex/superpowers-plus/using-superpowers-plus",
                 "Use when workflow-sensitive work needs Superpowers guidance.",
             )
             _touch(
                 source_skill_root / "SKILL.md",
                 skill_md,
             )
-            _touch(source_skill_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: using-superpowers}\n")
+            _touch(
+                source_skill_root / "agents" / "openai.yaml",
+                "version: 1\nmetadata: {skill_name: using-superpowers-plus}\n",
+            )
             _touch(projected_skill_root / "SKILL.md", skill_md)
-            _touch(projected_skill_root / "agents" / "openai.yaml", "version: 1\nmetadata: {skill_name: using-superpowers}\n")
+            _touch(
+                projected_skill_root / "agents" / "openai.yaml",
+                "version: 1\nmetadata: {skill_name: using-superpowers-plus}\n",
+            )
 
             for rel_path in (
                 "LICENSE",
@@ -731,23 +753,27 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             bundle_manifest = {
                 "bundle_name": "superpowers-plus",
-                "bundle_version": "6.1.0",
+                "bundle_version": "1.0.0",
                 "bundle_type": "third-party-codex-plugin-projection",
                 "marketplace_root": ".agents/plugins/marketplace.json",
                 "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-                "source_tag": "v6.1.0",
+                "canonical_source_root": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
+                "source_tag": "v6.2.0",
                 "source_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                 "license": "MIT",
                 "plugin_author": "Harley Bartles",
                 "plugin_license": "MIT",
-                "projection_policy": "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody.",
+                "projection_policy": (
+                    "Project only the Codex-facing plugin surface. Keep the upstream "
+                    "harness-specific metadata, docs, scripts, and hooks in third-party "
+                    "source custody."
+                ),
                 "source_of_truth": [
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/.codex-plugin/plugin.json",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/LICENSE",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/README.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/AGENTS.md",
-                    "sources/third_party/superpowers/obra-superpowers/v6.1.0/package.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/.codex-plugin/plugin.json",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/LICENSE",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/README.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/AGENTS.md",
+                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/package.json",
                 ],
                 "candidate_count": 1,
                 "imported_count": 1,
@@ -755,11 +781,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 "blocked_count": 0,
                 "entries": [
                     {
-                        "canonical_name": "using-superpowers",
+                        "canonical_name": "using-superpowers-plus",
                         "source_category": "third_party",
                         "content_mode": "adapted",
-                        "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
-                        "local_path": "skills/using-superpowers",
+                        "canonical_source_path": (
+                            "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                        ),
+                        "local_path": "skills/using-superpowers-plus",
                         "import_status": "imported",
                         "copy_expectation": "adapted_from_source",
                         "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
@@ -768,13 +796,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
                     }
                 ],
                 "excluded": [
-                    {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},
-                    {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},
+                    {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},  # noqa: E501
+                    {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},  # noqa: E501
                     {"path": ".opencode", "reason": "OpenCode harness metadata stays in third-party source custody."},
                     {"path": "gemini-extension.json", "reason": "Gemini harness metadata stays in third-party source custody."},
                     {"path": "CLAUDE.md", "reason": "Claude instructions stay in third-party source custody."},
                     {"path": "GEMINI.md", "reason": "Gemini instructions stay in third-party source custody."},
-                    {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},
+                    {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},  # noqa: E501
                 ],
             }
             _touch(
@@ -782,15 +810,15 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 json.dumps(
                     {
                         "bundle_name": "superpowers-plus",
-                        "bundle_version": "6.1.0",
+                        "bundle_version": "1.0.0",
                         "upstream": {
                             "repository": "https://github.com/obra/superpowers",
-                            "release_tag": "v6.1.0",
+                            "release_tag": "v6.2.0",
                             "release_commit": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
                             "tag_object": "ecbd610fce16d5faabcea997f17031129589b572",
                             "license": "MIT",
                         },
-                        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
+                        "source_custody_root": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
                         "active_projection_root": "codex-marketplace/plugins/superpowers-plus",
                         "codex_surface": {
                             "plugin_manifest": ".codex-plugin/plugin.json",
@@ -809,11 +837,15 @@ class ValidateMarketplaceTests(unittest.TestCase):
                         "source_backed_projections": [],
                         "adapted_projections": [
                             {
-                                "canonical_name": "using-superpowers",
+                                "canonical_name": "using-superpowers-plus",
                                 "source_category": "third_party",
                                 "content_mode": "adapted",
-                                "canonical_source_path": "sources/third_party/superpowers/obra-superpowers/v6.1.0/skills/using-superpowers",
-                                "local_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers",
+                                "canonical_source_path": (
+                                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                                ),
+                                "local_path": (
+                                    "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus"
+                                ),
                                 "copy_expectation": "adapted_from_source",
                                 "provenance_note": "Adapted to remove any claim that Superpowers skills override system, developer, runtime, or repo instructions.",
                                 "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
@@ -821,16 +853,18 @@ class ValidateMarketplaceTests(unittest.TestCase):
                             }
                         ],
                         "source_only_surfaces": [
-                            {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},
-                            {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},
-                            {"path": ".opencode", "reason": "OpenCode harness metadata stays in third-party source custody."},
-                            {"path": "gemini-extension.json", "reason": "Gemini harness metadata stays in third-party source custody."},
+                            {"path": ".claude-plugin", "reason": "Claude harness metadata stays in third-party source custody."},  # noqa: E501
+                            {"path": ".cursor-plugin", "reason": "Cursor harness metadata stays in third-party source custody."},  # noqa: E501
+                            {"path": ".opencode", "reason": "OpenCode harness metadata stays in third-party source custody."},  # noqa: E501
+                            {"path": "gemini-extension.json", "reason": "Gemini harness metadata stays in third-party source custody."},  # noqa: E501
                             {"path": "CLAUDE.md", "reason": "Claude instructions stay in third-party source custody."},
                             {"path": "GEMINI.md", "reason": "Gemini instructions stay in third-party source custody."},
-                            {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},
+                            {"path": "hooks", "reason": "Hook definitions are source-only until Codex compatibility is proven."},  # noqa: E501
                         ],
                         "notes": [
-                            "The source custody root stays verbatim, the projection layer carries the Codex-marketplace adaptations, and the installation/export layer is regenerated from the projection plus overlays.",
+                            "The source custody root stays verbatim, the projection "
+                            "layer carries the Codex-marketplace adaptations, and the "
+                            "installation/export layer is regenerated from the projection.",
                         ],
                     },
                     indent=2,
@@ -841,7 +875,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 with self.assertRaisesRegex(
                     ValueError,
-                    r"superpowers-plus adapted entry using-superpowers needs an adaptation_overlay_path",
+                    r"superpowers-plus adapted entry using-superpowers-plus needs an adaptation_overlay_path",
                 ):
                     validate_superpowers_bundle_manifest(bundle_manifest, plugin_root="codex-marketplace/plugins/superpowers-plus")
 

@@ -30,7 +30,7 @@ For each workflow phase, route to the corresponding superpowers skill:
 
 ## General Routing Guidance
 
-For general guidance on which Superpowers workflow to route a piece of work to, first establish the `repo-worker-base` + matching baseline + local guide pairing, then use `/using-superpowers` for the appropriate lane. Superpowers does not replace the base handoff.
+For general guidance on which Superpowers workflow to route a piece of work to, first establish the `repo-worker-base` + matching baseline + local guide pairing, then use `/using-superpowers-plus` for the appropriate lane. Superpowers does not replace the base handoff.
 
 
 ## Repo Guide Integration

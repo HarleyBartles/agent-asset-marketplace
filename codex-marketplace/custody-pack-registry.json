@@ -82,6 +82,11 @@
         "provenance/superpowers-plus.md",
         "codex-marketplace/plugins/superpowers-plus/references/source-map.md"
       ],
+      "generated_doc_surfaces": [
+        "README.md",
+        "SOURCE.md",
+        "PROJECTION.md"
+      ],
       "entries": [
         {
           "canonical_name": "brainstorming",

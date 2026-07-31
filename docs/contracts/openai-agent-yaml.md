@@ -10,13 +10,14 @@ Two repository patterns are currently in use:
 ```yaml
 version: 1
 metadata:
-  skill_name: using-superpowers
-  plugin: superpowers
-  source_category: third_party
-  upstream_name: using-superpowers
-  upstream_version: v5.1.0
-  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers
-  projection_plugin: superpowers-plus
+  skill_name: using-superpowers-plus
+  source_category: first_party
+interface:
+  display_name: Using Superpowers+
+  short_description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
+  default_prompt: Use /using-superpowers-plus to find and invoke the right skill at the right time.
+policy:
+  allow_implicit_invocation: true
 ```
 
 ## Rules
