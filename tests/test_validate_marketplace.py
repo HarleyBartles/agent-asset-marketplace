@@ -150,7 +150,18 @@ def _write_superpowers_plugin_manifests(source_root: Path, plugin_root: Path) ->
     )
     _touch(
         plugin_root / ".codex-plugin" / "plugin.json",
-        json.dumps({"name": "superpowers-plus", "interface": {"displayName": "Superpowers+"}}, indent=2),
+        json.dumps(
+            {
+                "name": "superpowers-plus",
+                "version": "1.0.0",
+                "author": {"name": "Harley Bartles"},
+                "interface": {
+                    "displayName": "Superpowers+",
+                    "developerName": "Harley Bartles",
+                },
+            },
+            indent=2,
+        ),
     )
 
 
