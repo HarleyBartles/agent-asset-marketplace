@@ -1,32 +1,36 @@
 ---
 name: systematic-debugging
-description: "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes"
+description: Use when encountering any bug, test failure, or unexpected behavior,
+  before proposing fixes
 metadata:
-  source_category: "third_party"
-  upstream_name: "systematic-debugging"
-  upstream_version: "v6.2.0"
-  adaptation_overlay: "adapters/codex/superpowers-plus/systematic-debugging"
-  projection_plugin: "superpowers-plus"
-  source_author: "obra"
-  source_license: "MIT"
-  source_repo: "https://github.com/obra/superpowers"
-  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/systematic-debugging/SKILL.md"
-  content_mode: "adapted"
-  adapted_author: "Harley Bartles"
-  adaptation_note: "Kept the bash helper as the primary surface, added a sibling PowerShell version, and normalized marketplace frontmatter metadata."
+  source-id: systematic-debugging
+  source-path: sources/first_party/skills/systematic-debugging/SKILL.md
+  provenance-name: Systematic Debugging first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when encountering any bug, test failure, or unexpected behavior, before
+    proposing fixes
   use_when:
-    - "Use when encountering a bug, test failure, or unexpected behavior before proposing fixes."
-    - "Use when the root cause is unknown."
-    - "Use especially when time pressure makes guessing tempting."
+  - Use when encountering a bug, test failure, or unexpected behavior before proposing
+    fixes.
+  - Use when the root cause is unknown.
+  - Use when use especially when time pressure makes guessing tempting.
   do_not_use_when:
-    - "Do not use when the fix is already verified."
-    - "Do not use as a substitute for testing or verification."
-    - "Do not use to justify a pre-selected fix."
-  use_after: [using-superpowers]
-  use_before: [executing-plans, subagent-driven-development, test-driven-development]
-  use_with: [test-driven-development]
-  related_skills: [test-driven-development, executing-plans, subagent-driven-development, using-superpowers]
+  - Do not use when the fix is already verified.
+  - Do not use as a substitute for testing or verification.
+  - Do not use to justify a pre-selected fix.
+  related_skills:
+  - test-driven-development
+  - executing-plans
+  - subagent-driven-development
+  - using-superpowers-plus
+license: MIT
 ---
+
+## Provenance
+
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/systematic-debugging/` for reference.
 
 # Systematic Debugging
 
@@ -84,7 +88,7 @@ You MUST complete each phase before proceeding to the next.
    - Can you trigger it reliably?
    - What are the exact steps?
    - Does it happen every time?
-   - If not reproducible → gather more data, don't guess
+   - If not reproducible â†’ gather more data, don't guess
 
 3. **Check Recent Changes**
    - What changed that could cause this?
@@ -94,7 +98,7 @@ You MUST complete each phase before proceeding to the next.
 
 4. **Gather Evidence in Multi-Component Systems**
 
-   **WHEN system has multiple components (CI → build → signing, API → service → database):**
+   **WHEN system has multiple components (CI â†’ build â†’ signing, API â†’ service â†’ database):**
 
    **BEFORE proposing fixes, add diagnostic instrumentation:**
    ```
@@ -128,7 +132,7 @@ You MUST complete each phase before proceeding to the next.
    codesign --sign "$IDENTITY" --verbose=4 "$APP"
    ```
 
-   **This reveals:** Which layer fails (secrets → workflow ✓, workflow → build ✗)
+   **This reveals:** Which layer fails (secrets â†’ workflow âœ“, workflow â†’ build âœ—)
 
 5. **Trace Data Flow**
 
@@ -180,7 +184,7 @@ You MUST complete each phase before proceeding to the next.
    - Don't fix multiple things at once
 
 3. **Verify Before Continuing**
-   - Did it work? Yes → Phase 4
+   - Did it work? Yes â†’ Phase 4
    - Didn't work? Form NEW hypothesis
    - DON'T add more fixes on top
 
@@ -217,7 +221,7 @@ You MUST complete each phase before proceeding to the next.
    - STOP
    - Count: How many fixes have you tried?
    - If < 3: Return to Phase 1, re-analyze with new information
-   - **If ≥ 3: STOP and question the architecture (step 5 below)**
+   - **If â‰¥ 3: STOP and question the architecture (step 5 below)**
    - DON'T attempt Fix #4 without architectural discussion
 
 5. **If 3+ Fixes Failed: Question Architecture**
@@ -276,7 +280,7 @@ If you catch yourself thinking:
 | "I'll write test after confirming fix works" | Untested fixes don't stick. Test first proves it. |
 | "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
 | "Reference too long, I'll adapt the pattern" | Partial understanding guarantees bugs. Read it completely. |
-| "I see the problem, let me fix it" | Seeing symptoms ≠ understanding root cause. |
+| "I see the problem, let me fix it" | Seeing symptoms â‰  understanding root cause. |
 | "One more fix attempt" (after 2+ failures) | 3+ failures = architectural problem. Question pattern, don't fix again. |
 
 ## Quick Reference

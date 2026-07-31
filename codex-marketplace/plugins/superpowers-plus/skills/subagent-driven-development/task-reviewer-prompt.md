@@ -8,10 +8,11 @@ code quality.
 more, nothing less) and is well-built (clean, tested, maintainable)
 
 ```
-run_subagent (Devin Desktop):
-  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this task]
-  title: "Review Task N (spec + quality)"
-  task: |
+Subagent (general-purpose):
+  description: "Review Task N (spec + quality)"
+  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted
+         model silently inherits the session's most expensive one]
+  prompt: |
     You are reviewing one task's implementation: first whether it matches its
     requirements, then whether it is well-built. This is a task-scoped gate,
     not a merge review — a broad whole-branch review happens separately after
@@ -165,6 +166,7 @@ run_subagent (Devin Desktop):
 ```
 
 **Placeholders:**
+- `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection
 - `[BRIEF_FILE]` — REQUIRED: the task brief file (`scripts/task-brief PLAN N`
   prints the path; same file the implementer worked from)
 - `[GLOBAL_CONSTRAINTS]` — the binding requirements copied verbatim from

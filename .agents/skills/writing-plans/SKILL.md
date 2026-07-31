@@ -1,32 +1,36 @@
 ---
 name: writing-plans
-description: "Use when you have a spec or requirements for a multi-step task, before touching code"
+description: Use when you have a spec or requirements for a multi-step task, before
+  touching code
 metadata:
-  source_category: "third_party"
-  upstream_name: "writing-plans"
-  upstream_version: "v6.2.0"
-  adaptation_overlay: "adapters/codex/superpowers-plus/writing-plans"
-  projection_plugin: "superpowers-plus"
-  source_author: "obra"
-  source_license: "MIT"
-  source_repo: "https://github.com/obra/superpowers"
-  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-plans/SKILL.md"
-  content_mode: "adapted"
-  adapted_author: "Harley Bartles"
-  adaptation_note: "Adjusted plan-path guidance to the repo-local `.agents/superpowers/plans/` convention for Codex projections and normalized marketplace frontmatter metadata."
+  source-id: writing-plans
+  source-path: sources/first_party/skills/writing-plans/SKILL.md
+  provenance-name: Writing Plans first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when you have a spec or requirements for a multi-step task, before touching
+    code
   use_when:
-    - "Use when an approved spec exists for a multi-step task."
-    - "Use when the goal fits a single tight implementation plan."
-    - "Use before touching implementation code."
+  - Use when an approved spec exists for a multi-step task.
+  - Use when the goal fits a single tight implementation plan.
+  - Use before touching implementation code.
   do_not_use_when:
-    - "Do not use when the spec covers multiple independent subsystems; invoke working-with-epics to create a roadmap before writing plans."
-    - "Do not use when implementation has already started."
-    - "Do not use as a substitute for brainstorming."
-  use_after: [brainstorming, handoff-gates, working-with-epics]
-  use_before: [handoff-gates, executing-plans, subagent-driven-development]
-  use_with: [handoff-gates, working-with-epics]
-  related_skills: [brainstorming, handoff-gates, executing-plans, subagent-driven-development, working-with-epics]
+  - Do not use when the spec covers multiple independent subsystems; invoke working-with-epics
+    to create a roadmap before writing plans.
+  - Do not use when implementation has already started.
+  - Do not use as a substitute for brainstorming.
+  related_skills:
+  - brainstorming
+  - handoff-gates
+  - executing-plans
+  - subagent-driven-development
+  - working-with-epics
+license: MIT
 ---
+## Provenance
+
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/writing-plans/` for reference.
 
 # Writing Plans
 

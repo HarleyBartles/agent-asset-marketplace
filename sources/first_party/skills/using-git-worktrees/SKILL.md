@@ -22,7 +22,7 @@ metadata:
   - Do not use when the user declines a worktree.
   - Do not use when native tools already manage isolation.
   related_skills:
-  - using-superpowers
+  - using-superpowers-plus
   - refreshing-installed-skills
   - executing-plans
   - subagent-driven-development

@@ -20,7 +20,7 @@ metadata:
   - Do not use as a substitute for writing-plans or executing-plans.
   - Do not use when the task is pure execution without design decisions.
   related_skills:
-  - using-superpowers
+  - using-superpowers-plus
   - handoff-gates
   - writing-plans
   - working-with-epics

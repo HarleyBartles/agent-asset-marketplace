@@ -8,10 +8,11 @@ new breakage. It is not a fresh review — the full review already happened.
 that the fix itself broke nothing.
 
 ```
-run_subagent (Devin Desktop):
-  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate reviewer profile for this re-review]
-  title: "Re-review Task N fix round R"
-  task: |
+Subagent (general-purpose):
+  description: "Re-review Task N fix round R"
+  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted
+         model silently inherits the session's most expensive one]
+  prompt: |
     You are re-reviewing one task's fix round. A previous review produced
     findings; an implementer has attempted to fix them. Your job is to
     verdict each finding and inspect the fix diff — nothing else.
@@ -91,6 +92,8 @@ run_subagent (Devin Desktop):
 ```
 
 **Placeholders:**
+- `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection; scoped
+  re-reviews of small fix diffs take a cheap-to-mid tier
 - `[BRIEF_FILE]` — the task brief file (same file the implementer worked from)
 - `[FINDINGS]` — the Critical/Important findings and spec gaps from the
   previous review, copied verbatim, one per bullet

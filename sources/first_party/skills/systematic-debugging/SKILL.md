@@ -24,7 +24,7 @@ metadata:
   - test-driven-development
   - executing-plans
   - subagent-driven-development
-  - using-superpowers
+  - using-superpowers-plus
 license: MIT
 ---
 
