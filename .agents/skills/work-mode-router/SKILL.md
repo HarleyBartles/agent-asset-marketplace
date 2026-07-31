@@ -24,10 +24,10 @@ metadata:
   - Do not use for repo hygiene, source inspection, or connector work
   - Do not use for executing project work
   - Do not use as a doctrine store
-  - Do not use as a replacement for repo-worker-base or using-superpowers
+  - Do not use as a replacement for repo-worker-base or using-superpowers-plus
   - Do not use as a replacement for project doctrine skills
   related_skills:
-  - using-superpowers
+  - using-superpowers-plus
   - repo-worker-base
   - using-git-worktrees
   - inspecting-the-environment
@@ -56,7 +56,7 @@ Do not use when a more specific skill owns the task, after classification has al
 
 1. Classify the request into the smallest sufficient mode.
 2. For repo-backed work, classify durable route state from Linear/repo evidence.
-3. Hand off to `repo-worker-base` + matching baseline + local guide, then `/using-superpowers` for the lane.
+3. Hand off to `repo-worker-base` + matching baseline + local guide, then `/using-superpowers-plus` for the lane.
 4. Stop at sign-off gates.
 5. Do not invoke this router recursively after classification.
 

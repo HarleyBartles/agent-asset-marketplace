@@ -66,7 +66,7 @@ For ordinary worker issues, keep the safe default as `assignee: me`, with `deleg
 When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
 
 ```text
-work-mode-router -> /using-superpowers -> linear-issue-shaping -> verification-before-completion
+work-mode-router -> /using-superpowers-plus -> linear-issue-shaping -> verification-before-completion
 ```
 
 Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.

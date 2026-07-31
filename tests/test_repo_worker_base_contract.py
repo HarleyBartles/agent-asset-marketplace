@@ -171,12 +171,20 @@ def test_router_route_states_cannot_bypass_repo_worker_base():
         "worktree_isolation_needed": "repo-worker-base` -> `worktree-and-branch-policy.md` -> local repository policy -> `/using-git-worktrees`",
         "design_needed": "repo-worker-base` -> `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
         "planning_needed": "repo-worker-base` -> `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/writing-plans`",
-        "approved_plan_execution_ready": "repo-worker-base` -> matching baseline + local `.agents/guides/` guide -> `/using-superpowers`",
+        "approved_plan_execution_ready": (
+            "repo-worker-base` -> matching baseline + local `.agents/guides/` guide -> `/using-superpowers-plus`"
+        ),
         "implementation_in_progress": "repo-worker-base` -> `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> implementing lane skills",
         "code_review_needed": "repo-worker-base` -> `code-review-baseline.md` + local `.agents/guides/code-review-guide.md` -> `/requesting-code-review`",
-        "preflight_needed": "repo-worker-base` -> `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/using-superpowers`",
+        "preflight_needed": (
+            "repo-worker-base` -> `planning-baseline.md` + local "
+            "`.agents/guides/planning-guide.md` -> `/using-superpowers-plus`"
+        ),
         "preflight_complete_pending_approval": "repo-worker-base` verifies the planning baseline and local `.agents/guides/planning-guide.md`",
-        "stale_plan_repair_needed": "repo-worker-base` -> `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> `/using-superpowers`",
+        "stale_plan_repair_needed": (
+            "repo-worker-base` -> `implementation-baseline.md` + local "
+            "`.agents/guides/implementing-guide.md` -> `/using-superpowers-plus`"
+        ),
     }
     for route_name, handoff in route_expectations.items():
         route_lines = [line for line in text.splitlines() if line.startswith(f"| `{route_name}` |")]
@@ -190,10 +198,14 @@ def test_router_routing_map_cannot_bypass_repo_worker_base():
         "worktree_isolation_needed": "repo-worker-base` + worktree policy/local repository policy -> `/using-git-worktrees`",
         "design_needed": "repo-worker-base` + `design-baseline.md` + local `.agents/guides/design-guide.md` -> `/brainstorming`",
         "planning_needed": "repo-worker-base` + `planning-baseline.md` + local `.agents/guides/planning-guide.md` -> `/writing-plans`",
-        "approved_plan_execution_ready": "repo-worker-base` + matching baseline/local guide -> `/using-superpowers`",
+        "approved_plan_execution_ready": (
+            "repo-worker-base` + matching baseline/local guide -> `/using-superpowers-plus`"
+        ),
         "implementation_in_progress": "repo-worker-base` + `implementation-baseline.md` + local `.agents/guides/implementing-guide.md` -> `/executing-plans`",
         "code_review_needed": "repo-worker-base` + `code-review-baseline.md` + local `.agents/guides/code-review-guide.md` -> `/requesting-code-review`",
-        "repo_worker_coding": "repo-worker-base` + matching baseline/local guide -> `/using-superpowers`",
+        "repo_worker_coding": (
+            "repo-worker-base` + matching baseline/local guide -> `/using-superpowers-plus`"
+        ),
         "repo_or_source_evidence": "repo-worker-base` + baseline for the active stage/local guide -> the evidence or implementation lane",
     }
     for route_name, handoff in route_expectations.items():

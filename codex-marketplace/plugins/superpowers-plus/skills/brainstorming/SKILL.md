@@ -1,32 +1,34 @@
 ---
 name: brainstorming
-description: "Use when starting any creative work such as creating features, building components, adding functionality, or modifying behavior."
+description: Use when starting any creative work such as creating features, building
+  components, adding functionality, or modifying behavior.
 metadata:
-  source_category: "third_party"
-  upstream_name: "brainstorming"
-  upstream_version: "v6.2.0"
-  adaptation_overlay: "adapters/codex/superpowers-plus/brainstorming"
-  projection_plugin: "superpowers-plus"
-  source_author: "obra"
-  source_license: "MIT"
-  source_repo: "https://github.com/obra/superpowers"
-  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming/SKILL.md"
-  content_mode: "adapted"
-  adapted_author: "Harley Bartles"
-  adaptation_note: "Repointed Superpowers path references to the `.agents/superpowers/` convention, added spec-readiness and epic-scope handoff gates, and normalized marketplace frontmatter metadata."
+  source-id: brainstorming
+  source-path: sources/first_party/skills/brainstorming/SKILL.md
+  provenance-name: Brainstorming first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when starting any creative work such as creating features, building components,
+    adding functionality, or modifying behavior.
   use_when:
-    - "Use when starting any new feature, component, or modification."
-    - "Use when the human frames a creative or build goal and no approved spec exists."
-    - "Use when a project needs intent, constraints, and approach clarified before implementation."
+  - Use when starting any new feature, component, or modification.
+  - Use when the human frames a creative or build goal and no approved spec exists.
+  - Use when a project needs intent, constraints, and approach clarified before implementation.
   do_not_use_when:
-    - "Do not use when an approved spec or plan already exists and is ready for execution."
-    - "Do not use as a substitute for writing-plans or executing-plans."
-    - "Do not use when the task is pure execution without design decisions."
-  use_after: [using-superpowers]
-  use_before: [handoff-gates, working-with-epics, writing-plans]
-  use_with: [working-with-epics]
-  related_skills: [using-superpowers, handoff-gates, writing-plans, working-with-epics]
+  - Do not use when an approved spec or plan already exists and is ready for execution.
+  - Do not use as a substitute for writing-plans or executing-plans.
+  - Do not use when the task is pure execution without design decisions.
+  related_skills:
+  - using-superpowers-plus
+  - handoff-gates
+  - writing-plans
+  - working-with-epics
+license: MIT
 ---
+## Provenance
+
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming/` for reference.
 
 # Brainstorming Ideas Into Designs
 

@@ -1,32 +1,37 @@
 ---
 name: subagent-driven-development
-description: "Use when executing implementation plans with independent tasks in the current session"
+description: Use when executing implementation plans with independent tasks in the
+  current session
 metadata:
-  source_category: "third_party"
-  upstream_name: "subagent-driven-development"
-  upstream_version: "v6.2.0"
-  adaptation_overlay: "adapters/codex/superpowers-plus/subagent-driven-development"
-  projection_plugin: "superpowers-plus"
-  source_author: "obra"
-  source_license: "MIT"
-  source_repo: "https://github.com/obra/superpowers"
-  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/SKILL.md"
-  content_mode: "adapted"
-  adapted_author: "Harley Bartles"
-  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `.md` profile files, and replaced the final whole-branch review with `/requesting-branch-review`."
+  source-id: subagent-driven-development
+  source-path: sources/first_party/skills/subagent-driven-development/SKILL.md
+  provenance-name: Subagent Driven Development first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when executing implementation plans with independent tasks in the current
+    session
   use_when:
-    - "Use when executing an implementation plan with independent tasks and subagent support is available."
-    - "Use when tasks can be delegated to fresh implementer subagents in the same session."
-    - "Use when per-task review and a final whole-branch review are appropriate."
+  - Use when executing an implementation plan with independent tasks and subagent
+    support is available.
+  - Use when tasks can be delegated to fresh implementer subagents in the same session.
+  - Use when per-task review and a final whole-branch review are appropriate.
   do_not_use_when:
-    - "Do not use when subagents are unavailable."
-    - "Do not use without a written plan."
-    - "Do not use when tasks are tightly coupled; use executing-plans instead."
-  use_after: [writing-plans, handoff-gates]
-  use_before: [finishing-a-development-branch]
-  use_with: [dispatching-parallel-agents]
-  related_skills: [writing-plans, executing-plans, selecting-a-subagent, finishing-a-development-branch, dispatching-parallel-agents]
+  - Do not use when subagents are unavailable.
+  - Do not use without a written plan.
+  - Do not use when tasks are tightly coupled; use executing-plans instead.
+  related_skills:
+  - writing-plans
+  - executing-plans
+  - selecting-a-subagent
+  - finishing-a-development-branch
+  - dispatching-parallel-agents
+license: MIT
 ---
+
+## Provenance
+
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/` for reference.
 
 # Subagent-Driven Development
 

@@ -3,10 +3,11 @@
 Use this template when dispatching an implementer subagent.
 
 ```
-run_subagent (Devin Desktop):
-  profile: [PROFILE — invoke /selecting-a-subagent to choose the least-capable adequate implementer profile for this task]
-  title: "Implement Task N: [task name]"
-  task: |
+Subagent (general-purpose):
+  description: "Implement Task N: [task name]"
+  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted
+         model silently inherits the session's most expensive one]
+  prompt: |
     You are implementing Task N: [task name]
 
     ## Task Description
@@ -36,8 +37,7 @@ run_subagent (Devin Desktop):
     3. Verify implementation works
     4. Commit your work
     5. Self-review (see below)
-    6. Commit and validate: if the task changed generated or projected surfaces, run the consumer's canonical source-regeneration command (e.g. `tools/run <target> --apply` here, or `tools/run skills --apply`/`scripts/ci-preflight.ps1 -Check` in a consumer repo), stage all changes, then commit. Do not run the consumer's CI command on an uncommitted working tree — let the pre-commit hook run it, or commit with `--no-verify` and then run it separately.
-    7. Report back
+    6. Report back
 
     Work from: [directory]
 
@@ -74,7 +74,7 @@ run_subagent (Devin Desktop):
 
     **How to escalate:** Report back with status BLOCKED or NEEDS_CONTEXT. Describe
     specifically what you're stuck on, what you've tried, and what kind of help you need.
-    The controller can provide more context, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong`),
+    The controller can provide more context, re-dispatch with a more capable model,
     or break the task into smaller pieces.
 
     ## Before Reporting Back: Self-Review

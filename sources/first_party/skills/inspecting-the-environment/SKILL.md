@@ -104,7 +104,7 @@ tested the relevant surface. Otherwise preserve uncertainty.
 
 ## Composition
 
-Start with `@using-superpowers` as the workflow-selection entrypoint.
+Start with `@using-superpowers-plus` as the workflow-selection entrypoint.
 
 Use `@connector-safety` before any mutation or blocked-write recovery,
 including GitHub writes, Linear writes, file mutations, or other high-risk

@@ -12,12 +12,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-import yaml
-
 from superpowers_source import (
     ROOT,
-    SUPERPOWERS_ADAPTER_OPENAI_PATH,
-    SUPERPOWERS_ADAPTER_OVERLAY_PATH,
     SUPERPOWERS_BUNDLE_MANIFEST_PATH,
     SUPERPOWERS_CUSTODY_REGISTRY_PATH,
     SUPERPOWERS_FAMILY_ROOT,
@@ -208,31 +204,6 @@ def _update_provenance_and_source_md(
     _replace_text(SUPERPOWERS_PROVENANCE_PATH, provenance_replacements)
 
 
-def _adapter_staleness() -> list[str]:
-    issues: list[str] = []
-    bundle_manifest = load_superpowers_bundle_manifest()
-    target_version = superpowers_source_tag(bundle_manifest)
-    target_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
-
-    overlay_text = SUPERPOWERS_ADAPTER_OVERLAY_PATH.read_text(encoding="utf-8")
-    openai_doc = yaml.safe_load(SUPERPOWERS_ADAPTER_OPENAI_PATH.read_text(encoding="utf-8"))
-    if f"upstream_version: {target_version}" not in overlay_text:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream version")
-    if target_root not in overlay_text:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still references an older source root")
-    if not re.search(rf"source_repo:\s*['\"]?{re.escape(UPSTREAM_REPO)}['\"]?", overlay_text):
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream repository")
-    if not isinstance(openai_doc, dict) or openai_doc.get("metadata", {}).get("upstream_version") != target_version:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} still points at an older upstream version")
-    return issues
-
-
-def _print_adapter_guidance() -> None:
-    print("Adapter guidance:")
-    print(f"- If {SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} exists, update it before regen when the upstream version changes.")
-    print(f"- If {SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} exists, keep its upstream_version in lockstep with the overlay.")
-
-
 def _prepare(tag: str) -> None:
     bundle_manifest = load_superpowers_bundle_manifest()
     old_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
@@ -268,25 +239,10 @@ def _prepare(tag: str) -> None:
         new_commit=commit,
         new_tag_object=tag_object,
     )
-    _print_adapter_guidance()
-
-    issues = _adapter_staleness()
-    if issues:
-        print("Adapter drift detected before regeneration:")
-        for issue in issues:
-            print(f"- {issue}")
-        print("Update the adapter manually, then rerun this script with --regen.")
-    else:
-        print("Adapter surfaces are already aligned with the new upstream version.")
+    print("Adapter overlay tree is retired; no adapter surface to update.")
 
 
 def _regen(allow_shared_checkout: bool) -> None:
-    issues = _adapter_staleness()
-    if issues:
-        print("Adapter drift detected; regenerate is blocked until the adapter is updated:")
-        for issue in issues:
-            print(f"- {issue}")
-        raise SystemExit(2)
     regen_args = [sys.executable, str(ROOT / "tools" / "run.py"), "marketplace", "--apply"]
     if allow_shared_checkout:
         regen_args.append("--allow-shared-checkout")
@@ -295,7 +251,7 @@ def _regen(allow_shared_checkout: bool) -> None:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Update the retained upstream superpowers snapshot")
-    parser.add_argument("--tag", required=True, help="upstream release tag to retain, for example v6.1.0")
+    parser.add_argument("--tag", required=True, help="upstream release tag to retain, for example v6.2.0")
     parser.add_argument("--prepare", action="store_true", help="refresh source custody and supporting source docs")
     parser.add_argument("--regen", action="store_true", help="run the canonical marketplace rebuild after the adapter is updated")
     parser.add_argument(

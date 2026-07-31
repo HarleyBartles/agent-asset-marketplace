@@ -50,7 +50,7 @@ def test_allow_shared_checkout_requires_apply():
 def test_resolve_ci_order():
     targets = run.resolve_targets(["ci"])
     assert targets.index("lint") < targets.index("repo-standards") < targets.index("marketplace")
-    assert targets.index("inventory") < targets.index("heal") < targets.index("project")
+    assert targets.index("inventory") < targets.index("project")
     assert targets.index("project") < targets.index("installed-skills")
     assert targets.index("installed-skills") < targets.index("repo-index")
     assert targets.index("repo-index") < targets.index("mesh")

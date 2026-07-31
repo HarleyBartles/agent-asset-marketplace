@@ -16,8 +16,6 @@ SUPERPOWERS_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/superpowers
 SUPERPOWERS_CUSTODY_REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 SUPERPOWERS_PROVENANCE_PATH = ROOT / "provenance/superpowers-plus.md"
 SUPERPOWERS_SOURCE_MD_PATH = ROOT / "codex-marketplace/plugins/superpowers-plus/SOURCE.md"
-SUPERPOWERS_ADAPTER_OVERLAY_PATH = ROOT / "adapters/codex/superpowers-plus/using-superpowers/overlay.yaml"
-SUPERPOWERS_ADAPTER_OPENAI_PATH = ROOT / "adapters/codex/superpowers-plus/using-superpowers/agents/openai.yaml"
 
 
 def load_superpowers_bundle_manifest() -> dict[str, Any]:
@@ -38,7 +36,41 @@ def superpowers_custody_root_from_registry() -> str:
             custody_root = mapping.get("custody_root")
             if isinstance(custody_root, str) and custody_root.strip():
                 return custody_root
-    raise ValueError("could not determine superpowers custody root from registry")
+    # First-party projection-lane fallback: the superpowers-plus bundle no
+    # longer declares a mega-pack custody root, but the upstream
+    # obra/superpowers snapshot is still retained as immutable third-party
+    # custody. Resolve the retained version directory from the provenance
+    # anchor (or the single retained version directory on disk).
+    return _retained_upstream_custody_root()
+
+
+def _retained_upstream_custody_root() -> str:
+    release_tag = _release_tag_from_provenance()
+    candidate_dirs = [
+        child for child in SUPERPOWERS_FAMILY_ROOT.iterdir() if child.is_dir()
+    ]
+    if release_tag is not None:
+        for child in candidate_dirs:
+            if child.name == release_tag:
+                return child.relative_to(ROOT).as_posix()
+    if len(candidate_dirs) == 1:
+        return candidate_dirs[0].relative_to(ROOT).as_posix()
+    raise ValueError(
+        "could not determine retained superpowers upstream custody root; "
+        f"found {len(candidate_dirs)} version directories under "
+        f"{SUPERPOWERS_FAMILY_ROOT.relative_to(ROOT).as_posix()} and no "
+        "matching release tag in provenance"
+    )
+
+
+def _release_tag_from_provenance() -> str | None:
+    if not SUPERPOWERS_PROVENANCE_PATH.exists():
+        return None
+    match = re.search(
+        r"Release tag:\s*`([^`]+)`",
+        SUPERPOWERS_PROVENANCE_PATH.read_text(encoding="utf-8"),
+    )
+    return match.group(1) if match else None
 
 
 def _bundle_manifest_source_root(bundle_manifest: dict[str, Any]) -> str | None:

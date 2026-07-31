@@ -1,32 +1,38 @@
 ---
 name: using-git-worktrees
-description: "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via native tools or git worktree fallback"
+description: Use when starting feature work that needs isolation from current
+  workspace or before executing implementation plans - ensures an isolated
+  workspace exists via native tools or git worktree fallback
 metadata:
-  source_category: "third_party"
-  upstream_name: "using-git-worktrees"
-  upstream_version: "v6.2.0"
-  adaptation_overlay: "adapters/codex/superpowers-plus/using-git-worktrees"
-  projection_plugin: "superpowers-plus"
-  source_author: "obra"
-  source_license: "MIT"
-  source_repo: "https://github.com/obra/superpowers"
-  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-git-worktrees/SKILL.md"
-  content_mode: "adapted"
-  adapted_author: "Harley Bartles"
-  adaptation_note: "Bundled `new-worktree`/`remove-worktree` scripts place worktrees at the repo-declared canonical sibling-folder root and auto-run `refreshing-installed-skills` after creation; otherwise honored canonical worktree roots before falling back to project-local directories. Normalized marketplace frontmatter metadata."
+  source-id: using-git-worktrees
+  source-path: sources/first_party/skills/using-git-worktrees/SKILL.md
+  provenance-name: Using Git Worktrees first-party skill
+  source-category: first_party
+  status: active
+  owner: Harley Bartles
+  scope: Use when starting feature work that needs isolation from current workspace
+    or before executing implementation plans - ensures an isolated workspace exists
+    via native tools or git worktree fallback
   use_when:
-    - "Use when starting feature work that needs isolation from the current workspace."
-    - "Use before executing implementation plans if no isolated workspace exists."
-    - "Use when the repo declares or expects a canonical sibling-folder worktree root."
+  - Use when starting feature work that needs isolation from the current workspace.
+  - Use before executing implementation plans if no isolated workspace exists.
+  - Use when the repo declares or expects a canonical sibling-folder worktree root.
   do_not_use_when:
-    - "Do not use when already in an isolated workspace."
-    - "Do not use when the user declines a worktree."
-    - "Do not use when native tools already manage isolation."
-  use_after: [using-superpowers]
-  use_before: [brainstorming, writing-plans, executing-plans, subagent-driven-development]
-  use_with: [using-superpowers]
-  related_skills: [using-superpowers, refreshing-installed-skills, executing-plans, subagent-driven-development, finishing-a-development-branch]
+  - Do not use when already in an isolated workspace.
+  - Do not use when the user declines a worktree.
+  - Do not use when native tools already manage isolation.
+  related_skills:
+  - using-superpowers-plus
+  - refreshing-installed-skills
+  - executing-plans
+  - subagent-driven-development
+  - finishing-a-development-branch
+license: MIT
 ---
+
+## Provenance
+
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-git-worktrees/` for reference.
 
 # Using Git Worktrees
 

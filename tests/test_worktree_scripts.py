@@ -7,10 +7,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 NEW_WORKTREE = (
-    REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "new_worktree.py"
+    REPO_ROOT / "sources" / "first_party" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
 )
 REMOVE_WORKTREE = (
-    REPO_ROOT / "adapters" / "codex" / "superpowers-plus" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
+    REPO_ROOT / "sources" / "first_party" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
 )
 
 
