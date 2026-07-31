@@ -29,7 +29,7 @@
 - Consumes: the spec's proposed final frontmatter
 - Produces: a `SKILL.md` frontmatter that no longer mentions 200-line chunking
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Run:
 ```powershell
@@ -37,7 +37,7 @@ python -c "import pathlib; text = pathlib.Path('sources/first_party/skills/conte
 ```
 Expected: FAIL
 
-- [ ] **Step 2: Update the frontmatter fields**
+- [x] **Step 2: Update the frontmatter fields**
 
 Replace the top-level `description` and these three `metadata` fields in `sources/first_party/skills/context-safety/SKILL.md`, leaving the canonical identity fields and `license` unchanged:
 
@@ -58,11 +58,11 @@ do_not_use_when:
 
 The `description` key is at the top level of the YAML frontmatter; `scope`, `use_when`, and `do_not_use_when` belong under `metadata:`.
 
-- [ ] **Step 3: Run the test to verify it passes**
+- [x] **Step 3: Run the test to verify it passes**
 
 Same command as Step 1. Expected: PASS.
 
-- [ ] **Step 4: Normalize the source**
+- [x] **Step 4: Normalize the source**
 
 Run:
 ```powershell
@@ -70,7 +70,7 @@ py -3 tools/normalize_first_party_skill_sources.py
 ```
 Expected: clean exit (it may rewrite the file with canonical field ordering/whitespace; if so, review the diff).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add sources/first_party/skills/context-safety/SKILL.md
@@ -93,7 +93,7 @@ In `.agents/superpowers/plans/2026-07-31-context-safety-thresholds.md`, replace 
 - Consumes: the new frontmatter (Task 1)
 - Produces: a `SKILL.md` body that uses the new thresholds and only size-based triggers
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Run:
 ```powershell
@@ -101,7 +101,7 @@ python -c "import pathlib; text = pathlib.Path('sources/first_party/skills/conte
 ```
 Expected: FAIL
 
-- [ ] **Step 2: Update the threshold text**
+- [x] **Step 2: Update the threshold text**
 
 Make the following in-place edits in `SKILL.md`:
 
@@ -137,11 +137,11 @@ If the output is expected to land around 1,500 lines or more, split it into smal
 
 4. Update the rest of the body to replace `400` hard-ceiling, `300` early-split, and `256 KB` references with `4,000`, `1,500`, and `1 MB` respectively.
 
-- [ ] **Step 3: Run the test to verify it passes**
+- [x] **Step 3: Run the test to verify it passes**
 
 Same command as Step 1. Expected: PASS.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```powershell
 git add sources/first_party/skills/context-safety/SKILL.md
@@ -164,7 +164,7 @@ In `.agents/superpowers/plans/2026-07-31-context-safety-thresholds.md`, replace 
 - Consumes: the new body thresholds (Task 2)
 - Produces: a `SKILL.md` Python example that reflects the new constants
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Run:
 ```powershell
@@ -172,7 +172,7 @@ python -c "import pathlib; text = pathlib.Path('sources/first_party/skills/conte
 ```
 Expected: FAIL
 
-- [ ] **Step 2: Replace the Python pattern**
+- [x] **Step 2: Replace the Python pattern**
 
 Replace the existing `## Python pattern` block with:
 
@@ -222,11 +222,11 @@ def write_large_text(target: Path, text: str) -> None:
     tmp.replace(target)
 ```
 
-- [ ] **Step 3: Run the test to verify it passes**
+- [x] **Step 3: Run the test to verify it passes**
 
 Same command as Step 1. Expected: PASS.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```powershell
 git add sources/first_party/skills/context-safety/SKILL.md
@@ -249,7 +249,7 @@ In `.agents/superpowers/plans/2026-07-31-context-safety-thresholds.md`, replace 
 - Consumes: the new `SKILL.md` frontmatter (Task 1)
 - Produces: the Codex-facing wrapper aligned with the new thresholds
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Run:
 ```powershell
@@ -257,7 +257,7 @@ python -c "import pathlib; text = pathlib.Path('sources/first_party/skills/conte
 ```
 Expected: FAIL
 
-- [ ] **Step 2: Replace the file contents**
+- [x] **Step 2: Replace the file contents**
 
 Write the full new `sources/first_party/skills/context-safety/agents/openai.yaml`:
 
@@ -282,11 +282,11 @@ dependencies:
   tools: []
 ```
 
-- [ ] **Step 3: Run the test to verify it passes**
+- [x] **Step 3: Run the test to verify it passes**
 
 Same command as Step 1. Expected: PASS.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```powershell
 git add sources/first_party/skills/context-safety/agents/openai.yaml
