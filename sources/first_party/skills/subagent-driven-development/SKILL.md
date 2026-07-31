@@ -150,8 +150,8 @@ sequences — the single most expensive failure observed. Track progress in
 a ledger file, not only in todos.
 
 - Each plan owns a workspace: at skill start, run this skill's
-  `scripts/sdd-workspace PLAN_FILE` — it prints the plan's git-ignored
-  directory (`<repo-root>/.agents/superpowers/sdd/<plan-basename>/`), home to
+  `scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
+  directory (`<repo-root>/../_agents-scratch/<branch>/<plan-basename>/`), home to
   every artifact for THIS plan: ledger, briefs, reports, review packages.
   Another plan's directory is never yours to read or write.
 - Check for this plan's ledger at `<workspace>/progress.md`. If its first
@@ -159,15 +159,16 @@ a ledger file, not only in todos.
   — do not re-dispatch them; resume at the first task without one. A task
   whose last line is a fix round is mid-loop: resume the loop at the next
   round. A ledger whose first line names a different plan file — or a stray
-  ledger at the old flat path `.agents/superpowers/sdd/progress.md` — is another
-  plan's progress: leave it in place and start your own, fresh.
+  ledger at the old flat path `../_agents-scratch/<branch>/progress.md` — is another
+  plan's progress: leave it in place and start your own, fresh. The
+  off-repo scratch survives `git clean` and is never committed.
 - Create the ledger with its identity as the first line:
   `# SDD ledger — plan: <plan file path>`.
 - The ledger is your recovery map: the commits it names exist in git even
   when your context no longer remembers creating them. After compaction,
   trust the ledger and `git log` over your own recollection.
-- `git clean -fdx` will destroy the workspace (it's git-ignored scratch); if
-  that happens, recover from `git log`.
+- `git clean -fdx` will not touch the workspace (it lives outside the repo);
+  recover from `git log` if a plan's scratch is removed manually.
 
 Read the plan once, note its context and Global Constraints, and create a
 todo per task.
