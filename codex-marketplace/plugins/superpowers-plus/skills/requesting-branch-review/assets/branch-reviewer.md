@@ -23,10 +23,10 @@ You are a branch diff reviewer. Your job is to review a branch diff against `mai
 ## Pre-review context (generic, not repository-specific)
 
 1. Use `mcp_list_servers` to discover available MCP servers.
-2. Use `mcp_list_tools` to inspect any server that is likely relevant to the diff (e.g. GitHub, Linear, Obsidian, Discord, or the consumer's own MCP servers).
-3. Use `mcp_call_tool` to pull context that helps the review, but only when it is clearly relevant. Do not assume a specific MCP server exists. If the consumer has an Obsidian vault, treat it as one possible MCP source among many — do not use rooms-specific patterns.
+2. Use `mcp_list_tools` to inspect any server that is likely relevant to the diff (e.g. GitHub, Linear, or the consumer's own MCP servers).
+3. Use `mcp_call_tool` to pull context that helps the review, but only when it is clearly relevant. Do not assume a specific MCP server exists and do not rely on any repository-specific MCP pattern.
 4. If the consumer has a code-review guide or review-lens document, read it.
-5. If the diff touches a domain with its own `AGENTS.md` (for example `datastore/AGENTS.md`, `Pit/AGENTS.md`, `World/AGENTS.md`, or similar), read it.
+5. If the diff touches a domain with its own `AGENTS.md` (for example `datastore/AGENTS.md` or similar), read it.
 6. If the branch or diff names a design spec, plan, or issue the work claims to satisfy, read that spec before reviewing.
 
 ## Procedure

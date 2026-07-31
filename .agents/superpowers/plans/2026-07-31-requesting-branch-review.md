@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - `requesting-branch-review/SKILL.md` must have **no `agent:`** frontmatter; it runs on the main agent.
-- `assets/branch-reviewer/AGENT.md` remains read-only and restricts `exec` to git commands.
+- `assets/branch-reviewer.md` remains read-only and restricts `exec` to git commands.
 - Edit only `sources/`, `adapters/`, and `codex-marketplace/custody-pack-registry.json`; generated surfaces under `codex-marketplace/plugins/`, `.agents/skills/`, `generated/skill-zips/`, and indexes are downstream.
 - All text files use LF only; `core.autocrlf` is `false`.
 - Canonical local green proof: `tools/run marketplace --apply` then `tools/run ci --check`.
@@ -24,11 +24,11 @@
 **Files:**
 - Create: `sources/first_party/skills/requesting-branch-review/SKILL.md`
 - Create: `sources/first_party/skills/requesting-branch-review/agents/openai.yaml`
-- Create: `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer/AGENT.md`
+- Create: `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md`
 - Delete: `sources/first_party/skills/review-branch-diff/`
 
 **Interfaces:**
-- Produces: `requesting-branch-review` source tree with `SKILL.md`, `agents/openai.yaml`, and `assets/branch-reviewer/AGENT.md`.
+- Produces: `requesting-branch-review` source tree with `SKILL.md`, `agents/openai.yaml`, and `assets/branch-reviewer.md`.
 
 - [x] **Step 1: Create `sources/first_party/skills/requesting-branch-review/SKILL.md`**
 
@@ -75,7 +75,7 @@ Use the `branch-reviewer` subagent to review a branch diff for a specific branch
 2. Verify the branch exists: run `git rev-parse --verify <branch>` (or `git rev-parse --verify refs/heads/<branch>`). If it does not exist, stop and report.
 3. Verify the worktree exists: check that `<worktree>` is a directory and contains a `.git` directory or file. If it does not exist, stop and report.
 4. Determine the base ref. In the worktree, run `git rev-parse --verify main` and, if that fails, `git rev-parse --verify origin/main`. Use the first one that succeeds as `<base>`.
-5. If the global `branch-reviewer` subagent profile is missing or does not match the bundled `assets/branch-reviewer/AGENT.md`, install or overwrite it by copying `assets/branch-reviewer/AGENT.md` to `~/.config/devin/agents/branch-reviewer/AGENT.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer\AGENT.md` (Windows).
+5. If the global `branch-reviewer` subagent profile is missing or does not match the bundled `assets/branch-reviewer.md`, install or overwrite it by copying `assets/branch-reviewer.md` to `~/.config/devin/agents/branch-reviewer.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer.md` (Windows).
 6. Dispatch the subagent:
 
 ```
@@ -102,7 +102,7 @@ policy:
   allow_implicit_invocation: false
 ```
 
-- [x] **Step 3: Create `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer/AGENT.md`**
+- [x] **Step 3: Create `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md`**
 
 ```markdown
 ---
@@ -146,12 +146,12 @@ You are a branch diff reviewer. Your job is to review a branch diff against `mai
 - [x] **Step 4: Install the updated `branch-reviewer` profile to the global agents directory**
 
 ```powershell
-$globalDir = "$env:APPDATA\devin\agents\branch-reviewer"
+$globalDir = "$env:APPDATA\devin\agents"
 New-Item -ItemType Directory -Path $globalDir -Force
-Copy-Item -Path "sources/first_party/skills/requesting-branch-review/assets/branch-reviewer/AGENT.md" -Destination "$globalDir\AGENT.md" -Force
+Copy-Item -Path "sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md" -Destination "$globalDir\branch-reviewer.md" -Force
 ```
 
-On macOS/Linux, use `mkdir -p ~/.config/devin/agents/branch-reviewer && cp sources/first_party/skills/requesting-branch-review/assets/branch-reviewer/AGENT.md ~/.config/devin/agents/branch-reviewer/AGENT.md`.
+On macOS/Linux, use `mkdir -p ~/.config/devin/agents && cp sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md ~/.config/devin/agents/branch-reviewer.md`.
 
 - [x] **Step 5: Remove the old source tree**
 
@@ -165,12 +165,12 @@ Remove-Item -Recurse -Force sources/first_party/skills/review-branch-diff
 if (Test-Path sources/first_party/skills/review-branch-diff) { throw 'old path still exists' }
 if (-not (Test-Path sources/first_party/skills/requesting-branch-review/SKILL.md)) { throw 'new SKILL.md missing' }
 if (-not (Test-Path sources/first_party/skills/requesting-branch-review/agents/openai.yaml)) { throw 'new openai.yaml missing' }
-if (-not (Test-Path sources/first_party/skills/requesting-branch-review/assets/branch-reviewer/AGENT.md)) { throw 'new AGENT.md missing' }
-if (-not (Test-Path "$env:APPDATA\devin\agents\branch-reviewer\AGENT.md")) { throw 'global branch-reviewer profile not installed' }
+if (-not (Test-Path sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md)) { throw 'new branch-reviewer.md missing' }
+if (-not (Test-Path "$env:APPDATA\devin\agents\branch-reviewer.md")) { throw 'global branch-reviewer profile not installed' }
 Write-Host 'source tree and global profile ok'
 ```
 
-On macOS/Linux, adjust the global profile path to `~/.config/devin/agents/branch-reviewer/AGENT.md`.
+On macOS/Linux, adjust the global profile path to `~/.config/devin/agents/branch-reviewer.md`.
 
 - [x] **Step 7: Mark all Task 1 steps `[x]` in this plan file**
 
@@ -390,7 +390,7 @@ Use the `edit` tool to update the checkboxes in Task 5 from `[ ]` to `[x]`.
    - Rename source tree — Task 1.
    - Rewrite `SKILL.md` without `agent:` — Task 1.
    - Update `agents/openai.yaml` — Task 1.
-   - Keep `assets/branch-reviewer/AGENT.md` — Task 1.
+   - Keep `assets/branch-reviewer.md` — Task 1.
    - Update `custody-pack-registry.json` — Task 2.
    - Update SDD overlay and `selecting-a-subagent` — Task 2.
    - Heal overlays before regeneration — Task 3.

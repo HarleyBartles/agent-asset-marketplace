@@ -64,3 +64,5 @@ def test_branch_reviewer_asset_is_swe_1_7():
     assert "mcp_list_servers" in asset["allowed-tools"]
     assert "mcp_list_tools" in asset["allowed-tools"]
     assert "mcp_call_tool" in asset["allowed-tools"]
+    assert "write" not in asset["allowed-tools"]
+    assert "edit" not in asset["allowed-tools"]

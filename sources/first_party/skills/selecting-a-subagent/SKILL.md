@@ -64,13 +64,13 @@ task, environment, and repository rules before calling a child-dispatch tool.
 ## Installing the custom profiles
 
 If you want to use the custom profiles this skill can recommend, install the
-corresponding `AGENT.md` assets into a Devin Desktop profile search path:
+corresponding `.md` profile assets into a Devin Desktop profile search path:
 
-- macOS/Linux: `~/.config/devin/agents/<profile>/AGENT.md`
-- Windows: `%APPDATA%\devin\agents\<profile>\AGENT.md`
+- macOS/Linux: `~/.config/devin/agents/<profile>.md`
+- Windows: `%APPDATA%\devin\agents\<profile>.md`
 
-For example, copy `assets/implementer/AGENT.md` to
-`~/.config/devin/agents/implementer/AGENT.md`, and do the same for `reviewer`,
+For example, copy `assets/implementer.md` to
+`~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
 `implementer-strong`, and `reviewer-strong`. The `branch-reviewer` profile is
 shipped with the `requesting-branch-review` skill.
 
