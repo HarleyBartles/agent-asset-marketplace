@@ -115,7 +115,7 @@ For `using-superpowers-plus`, set `skill_name: using-superpowers-plus`, `display
 **Interfaces:**
 - Produces: 10 first-party skill source roots with canonical `SKILL.md` and `agents/openai.yaml`.
 
-- [ ] **Step 1: Create the 10 first-party directories.**
+- [x] **Step 1: Create the 10 first-party directories.**
 
 ```powershell
 $names = @("brainstorming", "dispatching-parallel-agents", "executing-plans", "finishing-a-development-branch", "receiving-code-review", "requesting-code-review", "test-driven-development", "verification-before-completion", "writing-plans", "writing-skills")
@@ -125,7 +125,7 @@ New-Item -ItemType Directory -Path "sources/first_party/skills/brainstorming/scr
 New-Item -ItemType Directory -Path "sources/first_party/skills/brainstorming/references" -Force
 ```
 
-- [ ] **Step 2: For each of the 10 skills, write `sources/first_party/skills/<name>/SKILL.md`.**
+- [x] **Step 2: For each of the 10 skills, write `sources/first_party/skills/<name>/SKILL.md`.**
 
 For each skill:
 1. Read `codex-marketplace/plugins/superpowers-plus/skills/<name>/SKILL.md`.
@@ -134,11 +134,11 @@ For each skill:
 4. Prepend the `## Provenance` block.
 5. Append the projected body.
 
-- [ ] **Step 3: For each of the 10 skills, create `sources/first_party/skills/<name>/agents/openai.yaml`.**
+- [x] **Step 3: For each of the 10 skills, create `sources/first_party/skills/<name>/agents/openai.yaml`.**
 
 Use the canonical `agents/openai.yaml` shape. Set `display_name` to the kebab-case name converted to title case (e.g. `Dispatching Parallel Agents`), `short_description` to the `description`, and `default_prompt` to `Use /<skill-name> to <description>.`.
 
-- [ ] **Step 4: Migrate `brainstorming` scripts.**
+- [x] **Step 4: Migrate `brainstorming` scripts.**
 
 ```powershell
 Copy-Item -Path "adapters/codex/superpowers-plus/brainstorming/scripts/start-server.ps1" -Destination "sources/first_party/skills/brainstorming/scripts/start-server.ps1"
@@ -147,7 +147,7 @@ Copy-Item -Path "adapters/codex/superpowers-plus/brainstorming/scripts/stop-serv
 
 If `script-shell-selection.md` is still referenced in the `brainstorming` body, copy it to `sources/first_party/skills/brainstorming/references/script-shell-selection.md`; otherwise delete it.
 
-- [ ] **Step 5: Verify the new roots.**
+- [x] **Step 5: Verify the new roots.**
 
 ```powershell
 $names = @("brainstorming", "dispatching-parallel-agents", "executing-plans", "finishing-a-development-branch", "receiving-code-review", "requesting-code-review", "test-driven-development", "verification-before-completion", "writing-plans", "writing-skills")
@@ -163,7 +163,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 6: Commit.**
+- [x] **Step 6: Commit.**
 
 ```powershell
 git add sources/first_party/skills
