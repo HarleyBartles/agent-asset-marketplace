@@ -396,7 +396,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 plugin_root="codex-marketplace/plugins/superpowers-plus",
             )
 
-    def test_context_safety_skill_requires_target_200_and_limit_400(self) -> None:
+    def test_context_safety_skill_requires_target_2000_and_limit_4000(self) -> None:
         source_skill = ROOT / "sources" / "first_party" / "skills" / "context-safety" / "SKILL.md"
         projected_skill = (
             ROOT
@@ -421,15 +421,15 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
         for skill_path in (source_skill, projected_skill):
             text = skill_path.read_text(encoding="utf-8")
-            self.assertIn("target 200 lines per chunk", text)
-            self.assertIn("absolute red limit max 400 lines per chunk", text)
-            self.assertIn("300 line cutoff", text)
+            self.assertIn("target 2,000 lines per chunk", text)
+            self.assertIn("absolute red limit max 4,000 lines per chunk", text)
+            self.assertIn("1,500 lines or more", text)
 
         for agent_path in (source_agent, projected_agent):
             text = agent_path.read_text(encoding="utf-8")
-            self.assertIn("200 lines per chunk as the target", text)
-            self.assertIn("400 lines per chunk as the absolute red limit", text)
-            self.assertIn("writes expected to land around 300 lines or more", text)
+            self.assertIn("2,000 lines per chunk as the target", text)
+            self.assertIn("4,000 lines per chunk as the absolute red limit", text)
+            self.assertIn("1,500 lines or more", text)
 
     def test_superpowers_script_adapters_project_scripts_at_the_skill_root(self) -> None:
         cases = {
@@ -447,8 +447,8 @@ class ValidateMarketplaceTests(unittest.TestCase):
         }
 
         for skill_name, expected_files in cases.items():
-            adapter_script_root = (
-                ROOT / "adapters" / "codex" / "superpowers-plus" / skill_name / "scripts"
+            source_script_root = (
+                ROOT / "sources" / "first_party" / "skills" / skill_name / "scripts"
             )
             projected_skill_root = (
                 ROOT
@@ -460,13 +460,13 @@ class ValidateMarketplaceTests(unittest.TestCase):
             )
             projected_script_root = projected_skill_root / "scripts"
 
-            self.assertTrue(adapter_script_root.is_dir(), skill_name)
+            self.assertTrue(source_script_root.is_dir(), skill_name)
             self.assertTrue(projected_script_root.is_dir(), skill_name)
-            self.assertFalse((adapter_script_root / "skills").exists(), skill_name)
+            self.assertFalse((source_script_root / "skills").exists(), skill_name)
             self.assertFalse((projected_skill_root / "skills").exists(), skill_name)
 
             for rel_path in expected_files:
-                self.assertTrue((adapter_script_root / rel_path).is_file(), f"{skill_name}/{rel_path}")
+                self.assertTrue((source_script_root / rel_path).is_file(), f"{skill_name}/{rel_path}")
                 self.assertTrue((projected_script_root / rel_path).is_file(), f"{skill_name}/{rel_path}")
 
     def test_validate_skill_bundle_manifest_normalizes_line_endings_for_verbatim_entries(self) -> None:
@@ -842,7 +842,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
             with patch("validate_marketplace.ROOT", temp_root), patch("superpowers_source.ROOT", temp_root):
                 with self.assertRaisesRegex(
                     ValueError,
-                    r"superpowers-plus adapted entry using-superpowers needs adapters/codex/superpowers-plus/using-superpowers",
+                    r"superpowers-plus adapted entry using-superpowers needs an adaptation_overlay_path",
                 ):
                     validate_superpowers_bundle_manifest(bundle_manifest, plugin_root="codex-marketplace/plugins/superpowers-plus")
 

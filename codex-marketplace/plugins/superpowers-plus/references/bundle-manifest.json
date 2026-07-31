@@ -64,7 +64,7 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/handoff-gates",
       "local_path": "skills/handoff-gates",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -74,7 +74,7 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
       "local_path": "skills/inspecting-the-environment",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -94,7 +94,7 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/requesting-branch-review",
       "local_path": "skills/requesting-branch-review",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -114,7 +114,7 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
       "local_path": "skills/selecting-a-subagent",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -184,7 +184,7 @@
       "source_family": "first_party",
       "canonical_source_path": "sources/first_party/skills/working-with-epics",
       "local_path": "skills/working-with-epics",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {

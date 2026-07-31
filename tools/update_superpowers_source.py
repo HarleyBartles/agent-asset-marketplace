@@ -12,12 +12,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-import yaml
-
 from superpowers_source import (
     ROOT,
-    SUPERPOWERS_ADAPTER_OPENAI_PATH,
-    SUPERPOWERS_ADAPTER_OVERLAY_PATH,
     SUPERPOWERS_BUNDLE_MANIFEST_PATH,
     SUPERPOWERS_CUSTODY_REGISTRY_PATH,
     SUPERPOWERS_FAMILY_ROOT,
@@ -209,28 +205,20 @@ def _update_provenance_and_source_md(
 
 
 def _adapter_staleness() -> list[str]:
-    issues: list[str] = []
-    bundle_manifest = load_superpowers_bundle_manifest()
-    target_version = superpowers_source_tag(bundle_manifest)
-    target_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
+    """Adapter staleness check retained as a no-op stub.
 
-    overlay_text = SUPERPOWERS_ADAPTER_OVERLAY_PATH.read_text(encoding="utf-8")
-    openai_doc = yaml.safe_load(SUPERPOWERS_ADAPTER_OPENAI_PATH.read_text(encoding="utf-8"))
-    if f"upstream_version: {target_version}" not in overlay_text:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream version")
-    if target_root not in overlay_text:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still references an older source root")
-    if not re.search(rf"source_repo:\s*['\"]?{re.escape(UPSTREAM_REPO)}['\"]?", overlay_text):
-        issues.append(f"{SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} still points at an older upstream repository")
-    if not isinstance(openai_doc, dict) or openai_doc.get("metadata", {}).get("upstream_version") != target_version:
-        issues.append(f"{SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} still points at an older upstream version")
-    return issues
+    The superpowers-plus Codex adapter overlay tree was retired when the
+    bundle became first-party authored. There is no adapter surface to
+    drift, so this always returns an empty list. The function is kept so
+    callers that imported it continue to work without code churn.
+    """
+    return []
 
 
 def _print_adapter_guidance() -> None:
-    print("Adapter guidance:")
-    print(f"- If {SUPERPOWERS_ADAPTER_OVERLAY_PATH.relative_to(ROOT)} exists, update it before regen when the upstream version changes.")
-    print(f"- If {SUPERPOWERS_ADAPTER_OPENAI_PATH.relative_to(ROOT)} exists, keep its upstream_version in lockstep with the overlay.")
+    # The superpowers-plus Codex adapter overlay tree was retired; there is
+    # no adapter surface to update before regeneration.
+    return
 
 
 def _prepare(tag: str) -> None:

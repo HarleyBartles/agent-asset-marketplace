@@ -806,10 +806,14 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
         adaptation_overlay_path = entry.get("adaptation_overlay_path")
         if source_category == "third_party" and content_mode in ("adapted", "normalised"):
-            expected_overlay_path = f"adapters/codex/superpowers-plus/{canonical_name}"
-            if adaptation_overlay_path != expected_overlay_path:
-                raise ValueError(f"superpowers-plus {content_mode} entry {canonical_name} needs {expected_overlay_path}")
-            check_path_exists(ROOT / expected_overlay_path)
+            # The superpowers-plus Codex adapter overlay tree was retired when
+            # the bundle became first-party authored. Future adapted/normalised
+            # entries may still declare an explicit adaptation_overlay_path,
+            # but no hard-coded adapter location is enforced. Require only that
+            # the declared overlay path exists when present.
+            if not isinstance(adaptation_overlay_path, str) or not adaptation_overlay_path:
+                raise ValueError(f"superpowers-plus {content_mode} entry {canonical_name} needs an adaptation_overlay_path")
+            check_path_exists(ROOT / adaptation_overlay_path)
         elif adaptation_overlay_path is not None:
             raise ValueError(f"superpowers-plus verbatim entry {canonical_name} must not declare adaptation_overlay_path")
 

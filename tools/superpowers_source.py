@@ -16,8 +16,6 @@ SUPERPOWERS_BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/superpowers
 SUPERPOWERS_CUSTODY_REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
 SUPERPOWERS_PROVENANCE_PATH = ROOT / "provenance/superpowers-plus.md"
 SUPERPOWERS_SOURCE_MD_PATH = ROOT / "codex-marketplace/plugins/superpowers-plus/SOURCE.md"
-SUPERPOWERS_ADAPTER_OVERLAY_PATH = ROOT / "adapters/codex/superpowers-plus/using-superpowers/overlay.yaml"
-SUPERPOWERS_ADAPTER_OPENAI_PATH = ROOT / "adapters/codex/superpowers-plus/using-superpowers/agents/openai.yaml"
 
 
 def load_superpowers_bundle_manifest() -> dict[str, Any]:
