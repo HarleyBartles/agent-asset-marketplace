@@ -579,20 +579,20 @@ git commit -m "docs: update superpowers-plus provenance for first-party authorsh
 **Interfaces:**
 - Consumes: the migrated adapter assets now live in `sources/first_party/skills/`.
 
-- [ ] **Step 1: Delete the tree.**
+- [x] **Step 1: Delete the tree.**
 
 ```powershell
 Remove-Item -Recurse -Force "adapters/codex/superpowers-plus"
 ```
 
-- [ ] **Step 2: Verify nothing remains and `adapters/codex/` still houses other packs if needed.**
+- [x] **Step 2: Verify nothing remains and `adapters/codex/` still houses other packs if needed.**
 
 ```powershell
 if (Test-Path "adapters/codex/superpowers-plus") { throw "Overlay tree still present" }
 git status --short
 ```
 
-- [ ] **Step 3: Commit.**
+- [x] **Step 3: Commit.**
 
 ```powershell
 git add adapters/codex/superpowers-plus
