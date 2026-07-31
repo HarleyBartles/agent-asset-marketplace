@@ -812,10 +812,16 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
             # but no hard-coded adapter location is enforced. Require only that
             # the declared overlay path exists when present.
             if not isinstance(adaptation_overlay_path, str) or not adaptation_overlay_path:
-                raise ValueError(f"superpowers-plus {content_mode} entry {canonical_name} needs an adaptation_overlay_path")
+                raise ValueError(
+                    f"superpowers-plus {content_mode} entry {canonical_name} "
+                    "needs an adaptation_overlay_path"
+                )
             check_path_exists(ROOT / adaptation_overlay_path)
         elif adaptation_overlay_path is not None:
-            raise ValueError(f"superpowers-plus verbatim entry {canonical_name} must not declare adaptation_overlay_path")
+            raise ValueError(
+                f"superpowers-plus verbatim entry {canonical_name} "
+                "must not declare adaptation_overlay_path"
+            )
 
         local_path = entry.get("local_path")
         if not isinstance(canonical_source_path, str) or not canonical_source_path:

@@ -22,7 +22,6 @@ SUPERPOWERS_TAG_OBJECT = "ecbd610fce16d5faabcea997f17031129589b572"
 
 import validate_marketplace  # noqa: E402
 import superpowers_source  # noqa: E402
-import project_skills  # noqa: E402
 from skill_validation import validate_skill_markdown_frontmatter  # noqa: E402
 from validate_marketplace import (  # noqa: E402
     _validate_projection_entry_provenance,
