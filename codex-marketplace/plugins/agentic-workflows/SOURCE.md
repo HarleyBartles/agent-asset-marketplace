@@ -12,9 +12,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill root: `codex-marketplace/plugins/agentic-workflows/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/agentic-workflows/skills/agentic-harness/`
-
-## Generated install units
-- `generated/skill-zips/agentic-harness.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

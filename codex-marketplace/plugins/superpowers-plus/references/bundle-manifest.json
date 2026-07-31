@@ -4,10 +4,8 @@
   "bundle_type": "projection-lane",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-  "is_mega_pack": false,
   "source_families": [
     "first_party",
-    "house-skills",
     "superpowers"
   ],
   "notes": [
@@ -106,7 +104,7 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
+      "source_family": "first_party"
     },
     {
       "canonical_name": "inspecting-the-environment",
@@ -121,7 +119,7 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
+      "source_family": "first_party"
     },
     {
       "canonical_name": "receiving-code-review",
@@ -310,7 +308,7 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-      "source_family": "house-skills"
+      "source_family": "first_party"
     },
     {
       "canonical_name": "writing-plans",

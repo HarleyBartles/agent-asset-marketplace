@@ -18,12 +18,6 @@ This bundle projects first-party source custody into the Codex marketplace.
   - `codex-marketplace/plugins/security-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/security-pack/skills/secure-development/`
   - `codex-marketplace/plugins/security-pack/skills/web-identity/`
-
-## Generated install units
-- `generated/skill-zips/owasp-top-ten.zip`
-- `generated/skill-zips/risk-gates.zip`
-- `generated/skill-zips/secure-development.zip`
-- `generated/skill-zips/web-identity.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

@@ -35,10 +35,6 @@ The projected `unslop-engine` skill adapts the upstream idea (sample collection,
 - Skill roots:
   - `codex-marketplace/plugins/unslop-plus/skills/unslop-engine/`
   - `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/`
-
-## Generated install units
-- `generated/skill-zips/unslop-engine.zip`
-- `generated/skill-zips/unslop-profiles.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Marketplace Composition

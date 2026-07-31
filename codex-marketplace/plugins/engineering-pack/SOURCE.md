@@ -14,10 +14,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill roots:
   - `codex-marketplace/plugins/engineering-pack/skills/observability/`
   - `codex-marketplace/plugins/engineering-pack/skills/release-engineering/`
-
-## Generated install units
-- `generated/skill-zips/observability.zip`
-- `generated/skill-zips/release-engineering.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

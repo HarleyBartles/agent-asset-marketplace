@@ -18,12 +18,6 @@ This bundle projects first-party source custody into the Codex marketplace.
   - `codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming/`
   - `codex-marketplace/plugins/planning-pack/skills/release-engineering/`
   - `codex-marketplace/plugins/planning-pack/skills/requirements-elicitation/`
-
-## Generated install units
-- `generated/skill-zips/estimation.zip`
-- `generated/skill-zips/mermaid-diagramming.zip`
-- `generated/skill-zips/release-engineering.zip`
-- `generated/skill-zips/requirements-elicitation.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

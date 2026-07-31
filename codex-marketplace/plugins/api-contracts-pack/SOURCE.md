@@ -12,9 +12,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill root: `codex-marketplace/plugins/api-contracts-pack/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/api-contracts-pack/skills/api-design/`
-
-## Generated install units
-- `generated/skill-zips/api-design.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

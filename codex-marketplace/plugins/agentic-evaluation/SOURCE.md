@@ -12,9 +12,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill root: `codex-marketplace/plugins/agentic-evaluation/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/agentic-evaluation/skills/agent-evaluation/`
-
-## Generated install units
-- `generated/skill-zips/agent-evaluation.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

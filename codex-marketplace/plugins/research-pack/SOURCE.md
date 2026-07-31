@@ -12,9 +12,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill root: `codex-marketplace/plugins/research-pack/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/research-pack/skills/research-ops/`
-
-## Generated install units
-- `generated/skill-zips/research-ops.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

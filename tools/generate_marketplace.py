@@ -7,6 +7,7 @@ import argparse
 import json
 
 from marketplace_utils import (
+    ROOT,
     CODEX_MARKETPLACE_MANIFEST_PATH,
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
