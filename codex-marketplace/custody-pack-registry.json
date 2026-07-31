@@ -425,16 +425,6 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "work-mode-router",
-          "source_category": "first_party",
-          "content_mode": "verbatim",
-          "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/work-mode-router",
-          "local_path": "skills/work-mode-router",
-          "provenance_note": "Projected verbatim from the first-party work-mode-router skill.",
-          "copy_expectation": "byte_identical"
-        },
-        {
           "canonical_name": "writing-with-clarity",
           "source_category": "first_party",
           "content_mode": "verbatim",
