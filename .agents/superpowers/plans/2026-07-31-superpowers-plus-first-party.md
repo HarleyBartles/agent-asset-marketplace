@@ -188,22 +188,22 @@ git commit -m "feat: create first-party source roots for 10 lightweight superpow
 **Interfaces:**
 - Produces: first-party `subagent-driven-development` source root with scripts.
 
-- [ ] **Step 1: Create `sources/first_party/skills/subagent-driven-development/SKILL.md`.**
+- [x] **Step 1: Create `sources/first_party/skills/subagent-driven-development/SKILL.md`.**
 
 Use the canonical frontmatter with `name: subagent-driven-development` and `provenance-name: Subagent Driven Development first-party skill`. Copy the projected body from `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md` and prepend the provenance block.
 
-- [ ] **Step 2: Create `sources/first_party/skills/subagent-driven-development/agents/openai.yaml`.**
+- [x] **Step 2: Create `sources/first_party/skills/subagent-driven-development/agents/openai.yaml`.**
 
 Use the canonical `agents/openai.yaml` shape with `skill_name: subagent-driven-development`, `display_name: Subagent Driven Development`, and the short description / default prompt from the projected frontmatter.
 
-- [ ] **Step 3: Copy the adapter scripts into the first-party root.**
+- [x] **Step 3: Copy the adapter scripts into the first-party root.**
 
 ```powershell
 New-Item -ItemType Directory -Path "sources/first_party/skills/subagent-driven-development/scripts" -Force
 Get-ChildItem -Path "adapters/codex/superpowers-plus/subagent-driven-development/scripts" | Copy-Item -Destination "sources/first_party/skills/subagent-driven-development/scripts/"
 ```
 
-- [ ] **Step 4: Verify.**
+- [x] **Step 4: Verify.**
 
 ```powershell
 $expected = @("SKILL.md", "agents/openai.yaml", "scripts/review-package", "scripts/review-package.ps1", "scripts/sdd-workspace", "scripts/sdd-workspace.ps1", "scripts/task-brief", "scripts/task-brief.ps1")
@@ -212,7 +212,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
 ```powershell
 git add sources/first_party/skills/subagent-driven-development
