@@ -12,7 +12,7 @@ description: Use when starting workflow-sensitive work that may need a Superpowe
 metadata:
   source-id: using-superpowers-plus
   source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md
-  provenance-name: Superpowers+ first-party workflow-selection entrypoint
+  provenance-name: Using Superpowers Plus first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles

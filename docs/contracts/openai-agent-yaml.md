@@ -13,9 +13,11 @@ metadata:
   skill_name: using-superpowers-plus
   source_category: first_party
 interface:
-  display_name: Using Superpowers+
-  short_description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
-  default_prompt: Use /using-superpowers-plus to find and invoke the right skill at the right time.
+  display_name: Using Superpowers Plus
+  short_description: Use when starting any conversation to find and invoke the right
+    skill
+  default_prompt: Use /using-superpowers-plus to find and invoke the right skill at
+    the start of any conversation.
 policy:
   allow_implicit_invocation: true
 ```
