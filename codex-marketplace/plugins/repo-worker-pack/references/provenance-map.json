@@ -71,13 +71,6 @@
       "local_path": "skills/repo-worker-base"
     },
     {
-      "canonical_name": "requesting-branch-review",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/requesting-branch-review",
-      "local_path": "skills/requesting-branch-review"
-    },
-    {
       "canonical_name": "risk-gates",
       "source_category": "first_party",
       "content_mode": "verbatim",

@@ -15,7 +15,6 @@ This bundle projects the first-party repo worker baseline skills.
 - `refreshing-installed-skills`
 - `repo-standards`
 - `repo-worker-base`
-- `requesting-branch-review`
 - `risk-gates`
 - `unslop-profiles`
 - `using-github`
@@ -23,7 +22,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `work-mode-router`
 - `writing-with-clarity`
 
-Manifest entry count: 17.
+Manifest entry count: 16.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation

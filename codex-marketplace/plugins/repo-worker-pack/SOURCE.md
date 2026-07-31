@@ -15,7 +15,6 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/refreshing-installed-skills/`
 - `sources/first_party/skills/repo-standards/`
 - `sources/first_party/skills/repo-worker-base/`
-- `sources/first_party/skills/requesting-branch-review/`
 - `sources/first_party/skills/risk-gates/`
 - `sources/first_party/skills/unslop-profiles/`
 - `sources/first_party/skills/using-github/`
@@ -37,7 +36,6 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/requesting-branch-review/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-github/`
@@ -56,7 +54,6 @@ This plugin projects the first-party repo worker baseline skills.
 - `generated/skill-zips/refreshing-installed-skills.zip`
 - `generated/skill-zips/repo-standards.zip`
 - `generated/skill-zips/repo-worker-base.zip`
-- `generated/skill-zips/requesting-branch-review.zip`
 - `generated/skill-zips/risk-gates.zip`
 - `generated/skill-zips/unslop-profiles.zip`
 - `generated/skill-zips/using-github.zip`

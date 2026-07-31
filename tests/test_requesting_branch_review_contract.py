@@ -5,7 +5,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "sources/first_party/skills/review-branch-diff"
+SOURCE = ROOT / "sources/first_party/skills/requesting-branch-review"
 SKILL = SOURCE / "SKILL.md"
 AGENTS = SOURCE / "agents" / "openai.yaml"
 ASSET = SOURCE / "assets" / "branch-reviewer" / "AGENT.md"
@@ -27,13 +27,13 @@ def test_source_skill_has_required_files():
 
 def test_skill_frontmatter_has_required_fields():
     frontmatter = _skill_frontmatter()
-    assert frontmatter.get("name") == "review-branch-diff"
+    assert frontmatter.get("name") == "requesting-branch-review"
     assert frontmatter.get("description")
     assert frontmatter.get("license") == "MIT"
-    assert frontmatter.get("agent") == "branch-reviewer"
+    assert "agent" not in frontmatter
 
     metadata = frontmatter.get("metadata") or {}
-    assert metadata.get("source-id") == "review-branch-diff"
+    assert metadata.get("source-id") == "requesting-branch-review"
     assert metadata.get("source-category") == "first_party"
     assert metadata.get("status") == "active"
     assert isinstance(metadata.get("use_when"), list)
@@ -43,11 +43,11 @@ def test_skill_frontmatter_has_required_fields():
 def test_agents_openai_yaml_has_required_fields():
     data = yaml.safe_load(AGENTS.read_text(encoding="utf-8"))
     assert data.get("version") == 1
-    assert data.get("metadata", {}).get("skill_name") == "review-branch-diff"
+    assert data.get("metadata", {}).get("skill_name") == "requesting-branch-review"
     interface = data.get("interface") or {}
-    assert interface.get("display_name") == "Review Branch Diff"
+    assert interface.get("display_name") == "Requesting Branch Review"
     assert interface.get("short_description")
-    assert interface.get("default_prompt").startswith("Use /review-branch-diff")
+    assert interface.get("default_prompt").startswith("Use /requesting-branch-review")
     assert data.get("policy", {}).get("allow_implicit_invocation") is False
 
 
