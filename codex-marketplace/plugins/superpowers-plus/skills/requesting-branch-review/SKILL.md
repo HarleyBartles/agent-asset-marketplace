@@ -51,11 +51,11 @@ Use the `branch-reviewer` subagent to review a branch diff for a specific branch
       - If there are still multiple candidates, use the first directory in the search order as the tiebreaker.
    3. If you find a branch-local profile:
       - Ensure the global agents directory exists: `mkdir -p ~/.config/devin/agents` (macOS/Linux) or `New-Item -ItemType Directory -Path "$env:APPDATA\devin\agents" -Force` (Windows).
-      - If the global `branch-reviewer.md` does not exist, or is byte-identical to the branch-local one, copy the branch-local profile to `~/.config/devin/agents/branch-reviewer.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer.md` (Windows).
-      - If the global `branch-reviewer.md` exists and differs from the branch-local one, warn that the global profile will be overwritten and ask the user to confirm before copying. Do not overwrite a user-customized global profile silently.
+      - Copy the chosen repo-local profile to the global `branch-reviewer.md` path (`~/.config/devin/agents/branch-reviewer.md` on macOS/Linux, `%APPDATA%\devin\agents\branch-reviewer.md` on Windows), overwriting any existing global file. The repo's local profile is authoritative for this review; do not ask before copying it.
    4. If no branch-local profile exists:
-      - Ensure the global agents directory exists as above.
-      - If the global `branch-reviewer.md` does not exist, or differs from the bundled generic `assets/branch-reviewer.md`, install or update it at the same global path.
+      - If the global `branch-reviewer.md` exists and is byte-identical to the bundled generic `assets/branch-reviewer.md`, use it as-is.
+      - If the global `branch-reviewer.md` exists and differs from the bundled generic, ask the user whether to overwrite it with the bundled generic. If the user declines, use the existing global profile.
+      - If the global `branch-reviewer.md` does not exist, ensure the global agents directory exists and copy the bundled generic `assets/branch-reviewer.md` to the global `branch-reviewer.md` path.
 6. Dispatch the subagent:
 
 ```
