@@ -32,7 +32,6 @@ SHORT_REFERENCES = {
 FULL_SOURCE = SOURCE / "assets/authority/reference-source/elements-of-style-1918.html"
 PROJECTION_ROOTS = [
     ROOT / "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity",
-    ROOT / "codex-marketplace/plugins/house-skills/skills/writing-with-clarity",
     ROOT / ".agents/skills/writing-with-clarity",
 ]
 PACK_DOCS = [

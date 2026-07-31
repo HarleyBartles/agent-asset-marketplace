@@ -13,7 +13,6 @@ from pathlib import Path
 
 import yaml
 
-import project_skills
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
 from skill_validation import validate_skill_markdown_frontmatter
 from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
@@ -27,18 +26,11 @@ def _bootstrap_marketplace_dependencies() -> None:
     marketplace_utils = importlib.import_module("marketplace_utils")
     for name in (
         "CODEX_MARKETPLACE_MANIFEST_PATH",
-        "BUNDLE_MANIFEST_PATH",
         "EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES",
         "EXPECTED_MARKETPLACE",
         "MARKETPLACE_PATH",
         "MARKETPLACE_PLUGIN_SPECS",
         "PROTECTED_MARKETPLACE_PLUGIN_NAMES",
-        "PLUGIN_README_PATH",
-        "PLUGIN_SKILL_PATH",
-        "PROVENANCE_PATH",
-        "PLUGIN_BUNDLE_AGENTS_PATH",
-        "SOURCE_INTAKE_JSON_PATH",
-        "SOURCE_MAP_PATH",
         "PLUGIN_ROOT_INVENTORY_PATH",
         "REPO_INDEX_PATH",
         "REPO_INDEX_README_PATH",
@@ -1422,14 +1414,12 @@ def validate_inventory(*, skip_freshness: bool = False) -> None:
 
 def validate_project(*, skip_freshness: bool = False) -> None:
     _bootstrap_marketplace_dependencies()
-    intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_manifest = check_json(spec["manifest_path"])
         validate_plugin_manifest(plugin_manifest, spec)
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
-    bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
 
     validate_marketplace_registry(registry, plugin_manifests)
     if not skip_freshness:
@@ -1438,10 +1428,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
-    validate_bundle_manifest(bundle_manifest, intake)
     for spec in MARKETPLACE_PLUGIN_SPECS:
-        if spec["name"] == "house-skills":
-            continue
         plugin_root = ROOT / spec["plugin_root"]
         if spec["name"] == "superpowers-plus":
             for required in ("SOURCE.md", "PROJECTION.md", "LICENSE"):
@@ -1477,25 +1464,10 @@ def validate_project(*, skip_freshness: bool = False) -> None:
                     plugin_root=spec["plugin_root"],
                 )
 
-    source_map = check_text(SOURCE_MAP_PATH)
-    validate_source_map(source_map)
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(PLUGIN_README_PATH)
-    check_text(PLUGIN_SKILL_PATH)
-    check_text(PLUGIN_BUNDLE_AGENTS_PATH)
-    check_text(PROVENANCE_PATH)
     check_text(ROOT / "provenance/MARK-99-unslop.md")
     validate_no_legacy_manifest_shapes()
-    orphans = detect_first_party_orphans()
-    if orphans:
-        raise ValueError(
-            f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
-            f"Fix: add manifest entries for these skills and regenerate, or remove retired source custody that should not stay in the active first-party tree."
-        )
-    print(f"OK first-party orphan check: 0 orphans")
-    validate_mega_pack_inclusion()
-    validate_skill_zip_assertions()
     print("OK validate_marketplace: project")
 
 

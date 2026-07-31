@@ -18,11 +18,9 @@ marketplace manifests and registry surfaces.
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
 
-Treat these plugin roots as the canonical install surface. Generated
-`skill.zip` artifacts are downstream flat GPT-ready exports named
-`generated/skill-zips/<skill>.zip`. Everything else in this tree is support
-custody or historical source material, not part of the active marketplace
-inventory for the normalized root pass.
+Treat these plugin roots as the canonical install surface. Everything else
+in this tree is support custody or historical source material, not part of
+the active marketplace inventory for the normalized root pass.
 
 Deterministic pack rule: plugin-root membership must come from the central
 manifest and the checked-in generator/validator pipeline. Do not hand-edit
@@ -80,8 +78,8 @@ Bundle-manifest entries for imported or retained projection content must declare
   manifest, runtime registry, or repo index is not updated with it.
 - Flag unsupported changes to vendored plugin custody material unless the
   change has an explicit adaptation reason and provenance trail.
-- Flag any source-tree `skill.zip` file. Canonical install archives belong only
-  under `generated/skill-zips/`.
+- Flag any source-tree `skill.zip` file. Canonical install archives are
+  derived from the staged Codex projection, not committed by hand.
 
 ## Maintenance responsibility
 

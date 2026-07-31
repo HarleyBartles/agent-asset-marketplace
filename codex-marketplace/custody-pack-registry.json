@@ -2,21 +2,13 @@
   "schema_version": 1,
   "description": "Editable inventory for deterministic projection-lane and mega-pack generation.",
   "packs": [
-    {
-      "source_family": "first_party",
-      "custody_root": "sources/first_party/skills",
-      "mega_pack": "house-skills",
-      "mega_pack_root": "codex-marketplace/plugins/house-skills",
-      "category": "Productivity",
-      "is_mega_pack": true
-    },
+
     {
       "bundle_name": "unslop-plus",
       "plugin_root": "codex-marketplace/plugins/unslop-plus",
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Unslop+ is a first-party projection-lane bundle containing the unslop engine skill and the anti-slop profile router skill.",
         "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
@@ -62,7 +54,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Coding",
-      "is_mega_pack": false,
       "notes": [
         "Superpowers+ is the mixed projection-lane bundle for the retained Superpowers workflow skills.",
         "The bundle mixes first-party helpers, third-party verbatim skills, and adapter-backed projections."
@@ -163,7 +154,7 @@
           "source_author": "Harley Bartles",
           "source_license": "MIT",
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "source_family": "house-skills"
+          "source_family": "first_party"
         },
         {
           "canonical_name": "receiving-code-review",
@@ -388,7 +379,7 @@
           "source_author": "Harley Bartles",
           "source_license": "MIT",
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "source_family": "house-skills"
+          "source_family": "first_party"
         },
         {
           "canonical_name": "working-with-epics",
@@ -403,7 +394,7 @@
           "source_author": "Harley Bartles",
           "source_license": "MIT",
           "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
-          "source_family": "house-skills"
+          "source_family": "first_party"
         }
       ]
     },
@@ -413,7 +404,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Repo worker pack combines first-party repo hygiene skills into a compositional baseline.",
         "The bundle stays first-party only and keeps the repo-worker entrypoint thin and complementary."
@@ -635,7 +625,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         ".NET ecosystem pack projects the first-party dotnet skill."
       ],
@@ -671,7 +660,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Contract-design bundle projected from first-party source custody."
       ],
@@ -704,7 +692,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Architecture bundle projected from first-party source custody."
       ],
@@ -803,7 +790,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Language-patterns bundle projected from first-party source custody.",
         "Covers Python language, Python frameworks, and TypeScript."
@@ -859,7 +845,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Security pack projected from first-party source custody.",
         "risk-gates is projected verbatim with an expanded safety gate for destructive operations."
@@ -926,7 +911,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Frontend bundle projected from retained feature-sliced custody and first-party skills."
       ],
@@ -1018,7 +1002,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Data-platform bundle projected from the first-party database-engines skill."
       ],
@@ -1051,7 +1034,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Planning pack groups first-party skills for release engineering, requirements elicitation, estimation, and mermaid diagramming.",
         "release-engineering, requirements-elicitation, and estimation are projected verbatim from first-party sources.",
@@ -1121,7 +1103,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Coding",
-      "is_mega_pack": false,
       "notes": [
         "Standalone FSD v2.1 skill for frontend architecture with layers, slices, and segments.",
         "Vendored verbatim from feature-sliced/skills at commit 653e7f3187eac51311652bf787a72bcf56325eea.",
@@ -1158,7 +1139,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Coding",
-      "is_mega_pack": false,
       "notes": [
         "Agentic workflows pack now projects the first-party agentic-harness skill.",
         "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration."
@@ -1192,7 +1172,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Coding",
-      "is_mega_pack": false,
       "notes": [
         "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics."
       ],
@@ -1225,7 +1204,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Productivity",
-      "is_mega_pack": false,
       "notes": [
         "Research pack now projects the first-party research-ops skill.",
         "The pack covers evidence-first research workflows, source triage, synthesis, and citation."
@@ -1259,7 +1237,6 @@
       "bundle_version": "1.0.0",
       "bundle_type": "projection-lane",
       "category": "Coding",
-      "is_mega_pack": false,
       "notes": [
         "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home."
       ],

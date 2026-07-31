@@ -18,11 +18,8 @@ marketplace manifests and registry surfaces.
 Those roots are installable projections only. Their editable source custody
 lives under `sources/first_party/` and `sources/third_party/`.
 
-The marketplace plugin roots are the canonical install surface. Generated
-`skill.zip` files under `generated/skill-zips/` are downstream GPT-ready exports
-produced as flat, deterministic archives named `generated/skill-zips/<skill>.zip`.
-There is no per-pack subdirectory and no `registry.json`.
-Use `py -3 tools/generate_marketplace.py --check` to prove
+The marketplace plugin roots are the canonical install surface. Use
+`py -3 tools/generate_marketplace.py --check` to prove
 `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` are
 current, and `py -3 tools/generate_repo_index.py --check` to prove
 `repo-index/repo-index.json` is current. `validate_repo_index.py` remains
@@ -31,18 +28,11 @@ alignment validation, not the freshness proof. Use
 
 Deterministic pack rule: the editable registry file
 `codex-marketplace/custody-pack-registry.json` is the source of truth for
-which plugin roots are actively projected. Some nodes declare
-`is_mega_pack: true` when they belong to the mega-pack lane, but
-`superpowers-plus` remains the retained mixed projection-lane bundle rather
-than a maintained `superpowers-mega-pack` install surface. Regenerate the
+which plugin roots are actively projected. Regenerate the
 projection and export surfaces from the checked-in tooling. Do not hand-edit
-bundle manifests, projected skill trees, source maps, provenance maps, or zip
-artifacts, and do not introduce plugin-specific one-off scripts when the
+bundle manifests, projected skill trees, source maps, or provenance maps,
+and do not introduce plugin-specific one-off scripts when the
 existing pipeline can be extended or reused.
-
-MUST READ when changing any skill's projected plugin home (adding, removing,
-retiring, moving between packs, or touching a bundle manifest entry):
-`../docs/custody-and-projection-doctrine.md` Mega-packs section.
 
 ## Skill-to-pack assignment chain
 
@@ -59,12 +49,12 @@ projection is:
 2. **Run `tools/run marketplace --apply`** — this regenerates all
    derived surfaces: plugin projection trees under
    `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, source maps,
-   provenance maps, skill zips, the marketplace manifest, and the index mesh.
+   provenance maps, the marketplace manifest, and the index mesh.
 3. **Run `tools/run ci --check`** — CI gate proves all surfaces
    are current.
 
 Do not hand-edit the derived surfaces (`bundle-manifest.json`,
-`source-map.md`, `provenance-map.json`, projected skill trees, skill zips).
+`source-map.md`, `provenance-map.json`, projected skill trees).
 They are regenerated from the registry by the rebuild pipeline.
 
 The `codex-marketplace/plugin-roots.json` file defines which plugin roots
@@ -96,11 +86,7 @@ rules, and upstream-drain policy.
 - Flag generated-export mismatches that would let the bundle source drift
   silently from the tracked marketplace source tree or Codex overlay source.
 - Flag any `skill.zip` found inside a source skill tree; canonical install
-  archives belong only under `generated/skill-zips/` as flat `<skill>.zip`
-  files and must be written by `tools/project_skills.py`, not by hand.
-- Flag stale or unregistered canonical skill.zip artifacts under
-  `generated/skill-zips/`, including leftover per-pack subdirectories or
-  `registry.json`.
+  archives are derived from the staged Codex projection, not committed by hand.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
 
 ## Maintenance responsibility

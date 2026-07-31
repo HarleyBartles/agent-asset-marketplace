@@ -30,10 +30,6 @@ temp/
 !sources/first_party/**/assets/authority/reference-source/**/*.zip
 !codex-marketplace/plugins/**/assets/authority/reference-source/**/*.tar.gz
 !codex-marketplace/plugins/**/assets/authority/reference-source/**/*.zip
-!generated/skill-zips/
-!generated/skill-zips/**/
-!generated/skill-zips/**
-!generated/skill-zips/**/*.zip
 
 # OS and editor files
 .DS_Store

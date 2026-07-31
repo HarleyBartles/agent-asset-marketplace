@@ -2,8 +2,8 @@
 """Worker-facing entrypoint for deterministic skill artifact updates.
 
 This script orchestrates the core skill artifact pipeline:
-generate mega-packs, generate pack manifests, project skills into plugin
-trees and flat skill zips, and refresh the first-party skill catalog.
+generate pack manifests, project skills into plugin trees, and refresh the
+first-party skill catalog.
 
 Use `tools/run marketplace --apply` for the canonical full regeneration and
 validation gate. This script is an implementation detail invoked by the
@@ -17,7 +17,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from generate_mega_packs import generate_all_mega_packs
 from generate_pack_manifests import generate as generate_pack_manifests
 from generate_first_party_skill_catalog import generate as generate_first_party_skill_catalog
 from project_skills import project_skills
@@ -33,7 +32,6 @@ def _run_full_regeneration_checks() -> None:
     _run_tool("generate_marketplace.py", "--check")
     _run_tool("generate_repo_index.py", "--check")
     generate_pack_manifests(write=False)
-    generate_all_mega_packs(write=False)
     project_skills(write=False)
     _run_tool("generate_provenance_maps.py", "--check")
     _run_tool("generate_source_maps.py", "--check")
@@ -45,7 +43,6 @@ def _run_full_regeneration_writes() -> None:
     _run_tool("generate_marketplace.py")
     _run_tool("generate_repo_index.py")
     generate_pack_manifests(write=True)
-    generate_all_mega_packs(write=True)
     project_skills(write=True)
     _run_tool("generate_provenance_maps.py")
     _run_tool("generate_source_maps.py")

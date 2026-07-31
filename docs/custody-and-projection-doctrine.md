@@ -59,38 +59,14 @@ package mirrors. Harley curates which entries appear in which plugin.
   change the source and regenerate the projection. Do not edit plugin files
   directly to change skill behavior.
 
-## Mega-packs
+## Mega-packs (retired)
 
-Maintained mega-packs and a retained projection bundle carry the broad custody-root bundles. The
-editable pack registry in `codex-marketplace/custody-pack-registry.json`
-declares both projection-lane pack nodes and mega-pack nodes; mega-pack nodes
-set `is_mega_pack: true`, while the registry as a whole decides which plugin
-roots are actively projected:
+The `house-skills` mega-pack, `is_mega_pack` registry field, and
+`tools/generate_mega_packs.py` have been removed. First-party skills now
+project into topical packs directly; `superpowers-plus` remains the only
+mixed projection-lane bundle. This section is kept as a tombstone for
+historical context.
 
-- **`house-skills`** — first-party mega-pack. Every first-party skill stays
-  in `house-skills` AND wherever else it is bundled. A topical projection-lane
-  pack (such as `repo-worker-pack` or `architecture-pack`) is additional
-  exposure, not a replacement home; the skill must also remain in
-  `house-skills`. Removing a skill from `house-skills` while it remains in a
-  topical pack is a doctrine violation and will fail
-  `validate_mega_pack_inclusion`. When a first-party skill is retired, remove
-  it from `house-skills` and from every topical pack in the same change.
-- **`superpowers-plus`** — retained mixed projection-lane bundle over the
-  Superpowers source family. It also carries curated cross-family first-party
-  projections and is not a maintained mega-pack root.
-
-Mega-pack manifests are **generated**, not hand-edited. Run
-`py -3 tools/generate_mega_packs.py` to regenerate them. First-party mega-packs
-such as `house-skills` are rebuilt from active first-party source custody under
-`sources/first_party/skills/`, while non-first-party mega-packs are rebuilt from
-the union of selected plugin entries by custody root. The generator preserves
-curated cross-family entries where a retained projection-lane bundle mixes
-families, such as the first-party helper carried in `superpowers-plus`.
-
-Mega-packs are inclusion rules, not exclusion rules. A skill appearing in a
-mega-pack may also appear in other plugins. Validation
-(`validate_mega_pack_inclusion`) fails if a topical plugin entry is missing
-from its mega-pack.
 
 ## Projection layer model
 
@@ -100,17 +76,15 @@ The flow is:
 2. **Projection** — `codex-marketplace/plugins/` vendored bundles, generated
    from custody plus manifest entries.
 3. **Install / export** — `codex-marketplace/plugins/` is the canonical install
-   surface; `generated/skill-zips/<skill>.zip` is the derived flat GPT-ready
-   export corpus with no per-pack subdirectories and no registry file.
+   surface.
 
 Projection is generated, not hand-edited. The manifest is the edit surface that
 drives projection.
 
 Projection discovery shortcut: when a generated plugin projection needs to
 change, start at the source skill, then the plugin manifest, then the relevant
-validator, then the generated projection tree, then the zips and registry
-surfaces. If the source or manifest changes, regenerate the derived outputs
-instead of hand-editing the generated tree.
+validator, then the generated projection tree. If the source or manifest
+changes, regenerate the derived outputs instead of hand-editing the generated tree.
 
 When a change touches multiple generated surfaces, prefer regenerating the full
 market surface set before chasing validator failures one artifact at a time.
@@ -126,14 +100,8 @@ The business-as-usual target for adding or updating a skill is:
    `references/bundle-manifest.json` with `canonical_name`,
    `source_category`, `content_mode`, `source_family`,
    `canonical_source_path` (directory-level), and `local_path`.
-3. **Regenerate mega-packs** — run `py -3 tools/generate_mega_packs.py` so
-   the entry appears in its custody root's mega-pack automatically. For
-   first-party skill adds/removals, the first-party mega-pack is rebuilt from
-   `sources/first_party/skills/`; curated non-first-party mega-packs still
-   follow their selected-entry unions.
-4. **Run one tool** — regenerate the projection with the designated tooling
-   (`py -3 tools/update_skill_artifacts.py --all`), which also refreshes the
-   flat `generated/skill-zips/<skill>.zip` artifacts.
+3. **Run one tool** — regenerate the projection with the designated tooling
+   (`py -3 tools/update_skill_artifacts.py --all`).
 5. **Regenerate proof surfaces** — run
    `py -3 tools/generate_provenance_maps.py` and
    `py -3 tools/generate_source_maps.py`.

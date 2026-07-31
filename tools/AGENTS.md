@@ -23,8 +23,7 @@ The underlying scripts are implementation details:
 
 - `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` from the local plugin bundle and source ledger, and `--check` compares both files without writing.
 - `update_skill_artifacts.py` is the canonical generator orchestrator for full regeneration. Use `--all` to regenerate every installable skill artifact, or `--check` to validate without writing.
-- `project_skills.py` stages overlays, materializes plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`, and writes flat deterministic `generated/skill-zips/<skill>.zip` archives. `--check` validates projected trees and zip shape without writing.
-- `validate_skill_zips.py` checks the canonical flat `skill.zip` surface and fails on stale, missing, or malformed artifacts.
+- `project_skills.py` stages overlays and materializes plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`. `--check` validates projected tree shape without writing.
 - `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, local path references, projection materialization, and selected pack bundle-manifest freshness for the protected marketplace shape.
 - `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces, but it is not the freshness proof for `repo-index/repo-index.json`.
 - `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
@@ -39,10 +38,7 @@ The underlying scripts are implementation details:
 - `python .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply` regenerates repo-wide `INDEX.md` files; `--check` validates them.
 - `python .agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py --check` validates mesh link reachability and doctrine.
 
-Codex plugin first; generated GPT-safe skill zips second.
-
-Current scope note: `generated/skill-zips/` is the flat GPT-ready export surface
-for skill zips. It is a deterministic copy of the staged Codex projection.
+Codex plugin first.
 
 Common worker commands:
 
@@ -90,7 +86,7 @@ and `PROJECTION.md` surfaces.
 Policy for agent work:
 
 - Any change to source custody, adapter files, projection plugin shapes, bundle manifests,
-  source maps, provenance maps, or generated zips requires a full market regeneration
+  source maps, or provenance maps requires a full market regeneration
   followed by validation before a PR may be called green.
 - The canonical completion path is the full regeneration stack, not a partial refresh.
 - Partial regeneration paths are fallback-only repair tools and should not be
@@ -114,8 +110,8 @@ the standard update/check entrypoints. Do not paper over missing pipeline
 support with a pack-specific one-off script or a hand-edited output surface.
 The editable source custody for marketplace generation is the trio of source
 trees, adapters/overlays, and `codex-marketplace/custody-pack-registry.json`.
-Treat generated manifests, projection trees, source maps, provenance maps, and
-zip artifacts as derived outputs only. If a convention can be expressed in the
+Treat generated manifests, projection trees, source maps, and provenance maps
+as derived outputs only. If a convention can be expressed in the
 registry and generator, do that instead of hand-rolling per-pack output
 conventions in the generated surfaces.
 
@@ -156,8 +152,7 @@ write LF.
   and validation command documentation aligned.
 - Flag targeted skill-update helpers that rewrite unrelated generated state or
   that hide full-regeneration behavior behind an ordinary update path.
-- Flag flat skill.zip artifacts that do not match the staged Codex projection
-  or that contain stale adapter, gpt, or per-pack zip references.
+
 
 ## Maintenance responsibility
 

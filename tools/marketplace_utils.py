@@ -15,15 +15,7 @@ MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
 REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
-PLUGIN_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json"
-BUNDLE_MANIFEST_PATH = ROOT / "codex-marketplace/plugins/house-skills/references/bundle-manifest.json"
 REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "codex-marketplace/repo-local-marketplace-policy.json"
-SOURCE_MAP_PATH = ROOT / "codex-marketplace/plugins/house-skills/references/source-map.md"
-PLUGIN_README_PATH = ROOT / "codex-marketplace/plugins/house-skills/README.md"
-PLUGIN_SKILL_PATH = ROOT / "codex-marketplace/plugins/house-skills/skills/house-skills/SKILL.md"
-PLUGIN_BUNDLE_AGENTS_PATH = ROOT / "codex-marketplace/plugins/house-skills/AGENTS.md"
-SOURCE_INTAKE_JSON_PATH = ROOT / "sources/first_party/skills/house-skills/intake.json"
-PROVENANCE_PATH = ROOT / "provenance/house-skills.md"
 
 MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",
@@ -85,14 +77,7 @@ def _installation_policy_for_plugin(plugin_name: str) -> str:
         return "INSTALLED_BY_DEFAULT"
     return REPO_LOCAL_MARKETPLACE_POLICY["defaults"]["installation"]
 
-EXPECTED_PLUGIN_NAME = "house-skills"
-EXPECTED_PLUGIN_VERSION = "1.0.0"
-EXPECTED_PLUGIN_ROOT = "codex-marketplace/plugins/house-skills"
 EXPECTED_MARKETPLACE_ROOT = ".agents/plugins/marketplace.json"
-EXPECTED_SOURCE_OF_TRUTH = [
-    "sources/first_party/skills/house-skills/intake.json",
-    "provenance/house-skills.md",
-]
 
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
