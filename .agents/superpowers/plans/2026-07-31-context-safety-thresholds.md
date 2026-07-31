@@ -309,7 +309,7 @@ In `.agents/superpowers/plans/2026-07-31-context-safety-thresholds.md`, replace 
 - Consumes: the updated first-party source (Tasks 1-4)
 - Produces: a passing `ci --check` and an in-sync repo
 
-- [ ] **Step 1: Normalize first-party source**
+- [x] **Step 1: Normalize first-party source**
 
 Run:
 ```powershell
@@ -317,7 +317,7 @@ py -3 tools/normalize_first_party_skill_sources.py
 ```
 Expected: clean exit. Review the diff; if it made changes, commit them as a fixup to the same task before proceeding.
 
-- [ ] **Step 2: Regenerate all derived surfaces**
+- [x] **Step 2: Regenerate all derived surfaces**
 
 Run:
 ```powershell
@@ -325,7 +325,7 @@ Run:
 ```
 Expected: passes all targets and writes updated projections.
 
-- [ ] **Step 3: Inspect and stage generated changes**
+- [x] **Step 3: Inspect and stage generated changes**
 
 Run:
 ```powershell
@@ -333,7 +333,7 @@ git status --short
 ```
 Expected: only generated surfaces related to `context-safety` and `repo-worker-pack` are modified, plus any index/mesh files. If unrelated files are dirty, stop and investigate before committing.
 
-- [ ] **Step 4: Commit the regenerated surfaces (pre-commit hook will run `ci --check`)**
+- [x] **Step 4: Commit the regenerated surfaces (pre-commit hook will run `ci --check`)**
 
 ```powershell
 git add .
@@ -343,7 +343,7 @@ Expected: the pre-commit hook runs `.	ools
 un.ps1 ci --check` and the commit succeeds. If the hook is not present or is bypassed, run `.	ools
 un.ps1 ci --check` immediately after the commit.
 
-- [ ] **Step 5: Run the CI gate manually if the pre-commit hook did not run it**
+- [x] **Step 5: Run the CI gate manually if the pre-commit hook did not run it**
 
 Run:
 ```powershell
