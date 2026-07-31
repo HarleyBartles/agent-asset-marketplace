@@ -283,7 +283,7 @@ def _regen(allow_shared_checkout: bool) -> None:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Update the retained upstream superpowers snapshot")
-    parser.add_argument("--tag", required=True, help="upstream release tag to retain, for example v6.1.0")
+    parser.add_argument("--tag", required=True, help="upstream release tag to retain, for example v6.2.0")
     parser.add_argument("--prepare", action="store_true", help="refresh source custody and supporting source docs")
     parser.add_argument("--regen", action="store_true", help="run the canonical marketplace rebuild after the adapter is updated")
     parser.add_argument(

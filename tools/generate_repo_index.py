@@ -114,8 +114,13 @@ DEFAULT_REPO_INDEX = {
         },
         {
             "name": "superpowers-custody",
-            "path": "sources/third_party/superpowers/obra-superpowers/v6.1.0",
-            "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.1.0 release snapshot. The custody expectation is the upstream skill tree, with broader snapshot files kept only when the active projection or update tooling still requires them.",
+            "path": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
+            "purpose": (
+                "Retained third-party source custody for the upstream obra/superpowers v6.2.0 "
+                "release snapshot. The custody expectation is the upstream skill tree, with "
+                "broader snapshot files kept only when the active projection or update tooling "
+                "still requires them."
+            ),
             "surface_kind": "vendored",
             "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
             "guidance_scope": "repo-owned-guidance",
