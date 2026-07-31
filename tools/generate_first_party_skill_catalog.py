@@ -23,6 +23,10 @@ REFERENCE_SURFACES = (
     ROOT / "codex-marketplace/plugins/repo-worker-pack/references/source-map.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/references/provenance-map.json",
     ROOT / "provenance/repo-worker-pack.md",
+    ROOT / "codex-marketplace/plugins/superpowers-plus/README.md",
+    ROOT / "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+    ROOT / "codex-marketplace/plugins/superpowers-plus/PROJECTION.md",
+    ROOT / "provenance/superpowers-plus.md",
     ROOT / "repo-index/repo-index.json",
 )
 
