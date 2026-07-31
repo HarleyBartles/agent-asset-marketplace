@@ -4,7 +4,7 @@ Canonical source of truth for an agent/plugin asset marketplace.
 
 This repository represents an agent/plugin asset marketplace.
 
-Codex plugin first; generated GPT-safe skill zips second.
+Codex plugin first.
 
 Primary deliverables are market-consumable assets, especially Codex plugin-market
 assets where applicable. Supporting surfaces such as provenance, ledgers, indexes,
@@ -15,16 +15,6 @@ The repo-wide navigation mesh lives in [INDEX.md](INDEX.md) and the agent
 projection mesh lives in [.agents/AGENTS.md](.agents/AGENTS.md) with policy in
 [.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md).
 
-Canonical repo-resident `skill.zip` artifacts, when present, live as flat files
-under `generated/skill-zips/<skill-name>.zip`. The package tooling is the normal
-writer for that surface.
-
-That generated surface is the GPT-ready export surface. It is built as a
-deterministic copy of the staged Codex projection. Treat the marketplace plugin
-roots under `codex-marketplace/plugins/` as the canonical install surface.
-Treat `generated/skill-zips/` as a generated GPT export corpus, not canonical
-source.
-
 The active marketplace root inventory is editable at
 `codex-marketplace/plugin-roots.json`. Workers should update that inventory,
 the relevant source/projection files, and then run
@@ -32,7 +22,7 @@ the relevant source/projection files, and then run
 `--skill` and `--pack` flags remain as backwards-compatible aliases.
 Use `py -3 tools/generate_marketplace.py --check` and
 `py -3 tools/generate_repo_index.py --check` to prove the marketplace registry,
-Codex marketplace manifest, and repo index are current without mutating them.
+Codex marketplace manifest, and repo index are current without rewriting them.
 
 The boring goal for upstream drains is simple: take useful upstream plugin-market
 assets and put them into this repo's plugin market when rights and source shape
@@ -52,8 +42,8 @@ Deployment targets, exports, and runtime packaging outputs are downstream artifa
 
 Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
 For this normalized pass, the active plugin set is defined in
-`codex-marketplace/plugin-roots.json` and includes the protected mega-pack and
-projection-lane roots under `codex-marketplace/plugins/`.
+`codex-marketplace/plugin-roots.json` and includes the projection-lane roots
+under `codex-marketplace/plugins/`.
 
 Expected flow:
 
@@ -80,8 +70,8 @@ the active protected plugin inventory, including the Codex-facing
 `superpowers` projection.
 
 `sources/first_party/**` is for editable first-party source custody. The
-normalized House Skills source ledger lives at
-`sources/first_party/skills/house-skills/`.
+normalized first-party skill source ledger lives under
+`sources/first_party/skills/`.
 
 `sources/third_party/**` is for third-party source snapshots, references, and
 custody evidence that are still required by the retained marketplace roots.

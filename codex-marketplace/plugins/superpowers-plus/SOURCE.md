@@ -3,7 +3,7 @@
 This plugin projects the mixed Superpowers+ workflow and routing helpers.
 
 ## Source custody
-### House Skills custody
+### First-party custody
 - `sources/first_party/skills/inspecting-the-environment/`
 
 ### Superpowers custody
@@ -43,24 +43,10 @@ This plugin projects the mixed Superpowers+ workflow and routing helpers.
   - `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/`
 
 ## Generated install units
-- `generated/skill-zips/brainstorming.zip`
-- `generated/skill-zips/dispatching-parallel-agents.zip`
-- `generated/skill-zips/executing-plans.zip`
-- `generated/skill-zips/finishing-a-development-branch.zip`
-- `generated/skill-zips/inspecting-the-environment.zip`
-- `generated/skill-zips/receiving-code-review.zip`
-- `generated/skill-zips/requesting-code-review.zip`
-- `generated/skill-zips/subagent-driven-development.zip`
-- `generated/skill-zips/systematic-debugging.zip`
-- `generated/skill-zips/test-driven-development.zip`
-- `generated/skill-zips/using-git-worktrees.zip`
-- `generated/skill-zips/using-superpowers.zip`
-- `generated/skill-zips/verification-before-completion.zip`
-- `generated/skill-zips/writing-plans.zip`
-- `generated/skill-zips/writing-skills.zip`
+There are no generated flat skill zip exports. Skills install from the Codex plugin skill trees under `codex-marketplace/plugins/superpowers-plus/skills/`.
 
 ## Boundary
 - This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
 - `superpowers-plus` is the retained mixed projection-lane bundle for this source family.
 - `codex-marketplace/custody-pack-registry.json` determines whether any Superpowers-derived root is actively projected.
-- `superpowers-mega-pack` is not a maintained active marketplace bundle.
+- `superpowers-mega-pack` is retired and is not maintained as an active marketplace bundle.

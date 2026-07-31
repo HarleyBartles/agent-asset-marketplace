@@ -39,4 +39,4 @@ Manifest entry count: 16.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.
+Skills are installed from the Codex plugin roots under `codex-marketplace/plugins/<pack>/skills/<skill>/`.
