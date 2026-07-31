@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure the repo's SDD workspace is gitignored via its local .gitignore."""
+"""Ensure the repo's .gitignore is free of stale in-repo SDD rules."""
 
 from __future__ import annotations
 
@@ -9,9 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
-SDD_GITIGNORE_CONTENT = "*\n!.gitignore\n"
-SDD_GITIGNORE_PATH = Path(".agents") / "superpowers" / "sdd" / ".gitignore"
 
 STALE_RULE_PATTERNS = {
     ".agents/superpowers/sdd/**",
@@ -24,6 +21,8 @@ STALE_RULE_BLOCK = """# Superpowers sdd/ is a local-only session workspace.
 # plans/ and specs/ are fully repo resident and not governed by this block.
 .agents/superpowers/sdd/**
 !.agents/superpowers/sdd/.gitignore"""
+
+SDD_GITIGNORE_PATH = Path(".agents") / "superpowers" / "sdd" / ".gitignore"
 
 
 def _stripped_env() -> dict[str, str]:
@@ -45,23 +44,18 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
-def _sdd_gitignore_path(repo_root: Path) -> Path:
-    return repo_root / SDD_GITIGNORE_PATH
-
-
-def _has_sdd_rule(content: str) -> bool:
-    lines = {line.strip() for line in content.splitlines()}
-    return "*" in lines and "!.gitignore" in lines
-
-
 def _has_stale_root_rule(content: str) -> bool:
     lines = {line.strip() for line in content.splitlines()}
     return bool(STALE_RULE_PATTERNS & lines)
 
 
+def _has_stale_block(content: str) -> bool:
+    return STALE_RULE_BLOCK in content
+
+
 def _remove_stale_root_rule(content: str) -> str:
     # Remove the exact contiguous block the old scaffold used to append.
-    if STALE_RULE_BLOCK in content:
+    if _has_stale_block(content):
         content = content.replace(STALE_RULE_BLOCK, "")
     # Remove any remaining stale pattern lines that may have been added manually.
     lines = content.splitlines()
@@ -72,32 +66,50 @@ def _remove_stale_root_rule(content: str) -> str:
     return text
 
 
+def _stale_sdd_scaffold_exists(repo_root: Path) -> bool:
+    sdd_gitignore = repo_root / SDD_GITIGNORE_PATH
+    return sdd_gitignore.is_file() or (repo_root / ".agents" / "superpowers" / "sdd").is_dir()
+
+
+def _remove_stale_sdd_scaffold(repo_root: Path) -> list[str]:
+    sdd_dir = repo_root / ".agents" / "superpowers" / "sdd"
+    removed: list[str] = []
+    if not sdd_dir.exists():
+        return removed
+    sdd_gitignore = sdd_dir / ".gitignore"
+    if sdd_gitignore.is_file():
+        sdd_gitignore.unlink()
+        removed.append(sdd_gitignore.relative_to(repo_root).as_posix())
+    # Remove empty parent .agents/superpowers/sdd directory.
+    try:
+        sdd_dir.rmdir()
+        removed.append(sdd_dir.relative_to(repo_root).as_posix())
+    except OSError:
+        pass
+    return removed
+
+
 def main(argv: list[str] | None = None) -> int:
     epilog = """\
 examples:
-  %(prog)s --check               verify the sdd .gitignore rule
-  %(prog)s                       create the sdd .gitignore rule if missing
+  %(prog)s --check               verify the root .gitignore has no stale sdd rule
+  %(prog)s                       remove any stale sdd rule or in-repo sdd scaffold
   %(prog)s --force               same as without --force (accepted for uniform CLI)
 
-The SDD workspace is .agents/superpowers/sdd/. It must be ignored by a local
-.gitignore file containing:
+The SDD workspace now lives outside the repo at:
 
-  *
-  !.gitignore
+  <repo-root>/../_agents-scratch/<branch>/<plan-basename>/
 
-The root .gitignore must not contain the stale rule:
-
-  .agents/superpowers/sdd/**
-  !.agents/superpowers/sdd/.gitignore
-
-If the rule is already present, the script makes no changes. Other rules are
-preserved.
+This script only cleans up stale in-repo ignore rules. It removes any root
+.gitignore block that mentions .agents/superpowers/sdd and deletes any
+.agents/superpowers/sdd/.gitignore directory that still exists from an older
+layout.
 
 exit codes:
-  0  rule is present or was applied
+  0  no stale rules (or clean-up applied)
   1  drift detected or files could not be written"""
     parser = argparse.ArgumentParser(
-        description="Ensure the repo's SDD workspace is gitignored via its local .gitignore.",
+        description="Ensure the repo's .gitignore is free of stale in-repo SDD rules.",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -115,7 +127,6 @@ exit codes:
 
     repo_root = _repo_root()
     root_gitignore_path = repo_root / ".gitignore"
-    sdd_gitignore_path = _sdd_gitignore_path(repo_root)
 
     drift_messages: list[str] = []
 
@@ -126,22 +137,18 @@ exit codes:
         if _has_stale_root_rule(root_content):
             drift_messages.append("DRIFT: .gitignore contains stale sdd rule")
 
-    if not sdd_gitignore_path.is_file():
-        drift_messages.append(f"DRIFT: {SDD_GITIGNORE_PATH.as_posix()} missing")
-    else:
-        sdd_content = sdd_gitignore_path.read_text(encoding="utf-8")
-        if not _has_sdd_rule(sdd_content):
-            drift_messages.append(
-                f"DRIFT: {SDD_GITIGNORE_PATH.as_posix()} missing required rule(s)"
-            )
+    if _stale_sdd_scaffold_exists(repo_root):
+        drift_messages.append(f"DRIFT: stale {SDD_GITIGNORE_PATH.as_posix()} or .agents/superpowers/sdd/ present")
 
     if args.check:
         if drift_messages:
             for msg in drift_messages:
                 print(msg)
             return 1
-        print("OK .gitignore: sdd rule present")
+        print("OK .gitignore: no stale sdd rules")
         return 0
+
+    removed_files: list[str] = []
 
     if drift_messages:
         if not root_gitignore_path.is_file():
@@ -155,13 +162,15 @@ exit codes:
                     f.write(cleaned)
                 print(f"updated {root_gitignore_path.relative_to(repo_root).as_posix()}")
 
-        sdd_gitignore_path.parent.mkdir(parents=True, exist_ok=True)
-        if not sdd_gitignore_path.is_file() or sdd_gitignore_path.read_text(encoding="utf-8") != SDD_GITIGNORE_CONTENT:
-            sdd_gitignore_path.write_text(SDD_GITIGNORE_CONTENT, encoding="utf-8", newline="\n")
-            print(f"wrote {sdd_gitignore_path.relative_to(repo_root).as_posix()}")
+        removed_files.extend(_remove_stale_sdd_scaffold(repo_root))
+        if removed_files:
+            for p in removed_files:
+                print(f"removed {p}")
+
+    if drift_messages:
         return 0
 
-    print("OK .gitignore: sdd rule present")
+    print("OK .gitignore: no stale sdd rules")
     return 0
 
 
