@@ -42,10 +42,10 @@ Use the `branch-reviewer` subagent to review a branch diff for a specific branch
 4. Determine the base ref: if you are not already in `<worktree>`, run `cd "<worktree>"`. In the worktree, run `git rev-parse --verify main` and, if that fails, `git rev-parse --verify origin/main`. Use the first one that succeeds as `<base>`.
 5. Choose the `branch-reviewer` subagent profile, preferring a branch-local one over the bundled generic profile:
    1. Search the worktree for a branch-local `branch-reviewer` profile in this order:
-      - `<worktree>/.devin/agents/branch-reviewer/AGENT.md`
-      - `<worktree>/.agents/agents/branch-reviewer/AGENT.md`
-   2. If you find a branch-local profile, install or overwrite the global `branch-reviewer` profile by copying it to `~/.config/devin/agents/branch-reviewer/AGENT.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer\AGENT.md` (Windows).
-   3. If no branch-local profile exists, ensure the bundled generic `assets/branch-reviewer/AGENT.md` is installed or updated at the same global path.
+      - `<worktree>/.devin/agents/branch-reviewer.md`
+      - `<worktree>/.agents/agents/branch-reviewer.md`
+   2. If you find a branch-local profile, install or overwrite the global `branch-reviewer` profile by copying it to `~/.config/devin/agents/branch-reviewer.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer.md` (Windows).
+   3. If no branch-local profile exists, ensure the bundled generic `assets/branch-reviewer.md` is installed or updated at the same global path.
 6. Dispatch the subagent:
 
 ```
