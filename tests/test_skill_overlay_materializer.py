@@ -405,14 +405,14 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
     def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            skill_root = temp_root / "using-superpowers"
+            skill_root = temp_root / "using-superpowers-plus"
             skill_md = skill_root / "SKILL.md"
 
             _write(
                 skill_md,
                 (
                     "---\n"
-                    "name: using-superpowers\n"
+                    "name: using-superpowers-plus\n"
                     "description: route workflow-sensitive work\n"
                     "---\n"
                     "\n"
@@ -426,19 +426,15 @@ class SkillOverlayMaterializerTests(unittest.TestCase):
                 skill_md,
                 (
                     "---\n"
-                    "name: using-superpowers\n"
+                    "name: using-superpowers-plus\n"
                     "description: route workflow-sensitive work\n"
                     "metadata:\n"
-                    "  source_category: third_party\n"
-                    "  upstream_name: using-superpowers\n"
-                    "  upstream_version: v6.0.3\n"
-                    "  adaptation_overlay: adapters/codex/superpowers-plus/using-superpowers\n"
-                    "  projection_plugin: superpowers-plus\n"
-                    "  source_author: Obra AI\n"
-                    "  source_license: MIT\n"
-                    "  source_repo: https://github.com/obra-ai/obra-superpowers\n"
-                    "  content_mode: adapted\n"
-                    "  adapted_author: Harley Bartles\n"
+                    "  source-id: using-superpowers-plus\n"
+                    "  source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md\n"
+                    "  provenance-name: Using Superpowers Plus first-party skill\n"
+                    "  source-category: first_party\n"
+                    "  status: active\n"
+                    "  owner: Harley Bartles\n"
                     "---\n"
                     "\n"
                     "body\n"

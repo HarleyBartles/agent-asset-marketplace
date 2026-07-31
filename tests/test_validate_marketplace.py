@@ -17,8 +17,8 @@ if str(TOOLS) not in sys.path:
 # Superpowers upstream snapshot constants. Update these when the vendored
 # superpowers source is refreshed to avoid hardcoding the version across tests.
 SUPERPOWERS_VERSION = "v6.2.0"
-SUPERPOWERS_COMMIT = "f2cbfbefebbfef77321e4c9abc9e949826bea9d7"
-SUPERPOWERS_TAG_OBJECT = "ecbd610fce16d5faabcea997f17031129589b572"
+SUPERPOWERS_COMMIT = "3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9"
+SUPERPOWERS_TAG_OBJECT = "0e5cc50e782429b95f933e46443898435b8b37a8"
 
 import validate_marketplace  # noqa: E402
 import superpowers_source  # noqa: E402
@@ -535,22 +535,19 @@ class ValidateMarketplaceTests(unittest.TestCase):
         _validate_projection_entry_provenance(
             {
                 "canonical_name": "using-superpowers-plus",
-                "source_category": "third_party",
-                "content_mode": "adapted",
+                "source_category": "first_party",
+                "content_mode": "verbatim",
                 "canonical_source_path": (
-                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                    "sources/first_party/skills/using-superpowers-plus"
                 ),
                 "local_path": "skills/using-superpowers-plus",
                 "source_path": (
-                    "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers/SKILL.md"
+                    "sources/first_party/skills/using-superpowers-plus/SKILL.md"
                 ),
-                "source_author": "obra",
+                "source_author": "Harley Bartles",
                 "source_license": "MIT",
-                "source_repo": "https://github.com/obra/superpowers",
-                "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers-plus",
-                "adapted_author": "Harley Bartles",
-                "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
-                "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
+                "source_repo": "https://github.com/harley-bartles/agent-asset-marketplace",
+                "provenance_note": "First-party authored derivation of obra/superpowers v6.2.0.",
             },
             bundle_name="superpowers-plus",
         )
@@ -577,18 +574,18 @@ class ValidateMarketplaceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             _validate_projection_entry_provenance(
                 {
-                    "canonical_name": "using-superpowers-plus",
+                    "canonical_name": "sample-skill",
                     "source_category": "third_party",
                     "content_mode": "adapted",
                     "canonical_source_path": (
-                        "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers"
+                        "sources/third_party/game-studio/upstream/skills/sample-skill"
                     ),
-                    "local_path": "skills/using-superpowers-plus",
-                    "adaptation_overlay_path": "adapters/codex/superpowers-plus/using-superpowers-plus",
-                    "provenance_note": "Adapted to remove any claim that Superpowers skills override repo instructions.",
-                    "adaptation_note": "Reworded instruction priority for Codex marketplace compatibility.",
+                    "local_path": "skills/sample-skill",
+                    "adaptation_overlay_path": "adapters/codex/game-studio/sample-skill",
+                    "provenance_note": "Projected from the retained Game Studio sample skill.",
+                    "adaptation_note": "Moved examples into canonical references/ folders.",
                 },
-                bundle_name="superpowers-plus",
+                bundle_name="game-studio",
             )
 
     def test_validate_skill_markdown_frontmatter_accepts_simple_headers(self) -> None:
