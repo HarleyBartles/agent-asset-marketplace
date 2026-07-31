@@ -137,7 +137,7 @@ digraph brainstorming {
 
 **Documentation:**
 
-- Write the validated design (spec) to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design (spec) to `.agents/specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git

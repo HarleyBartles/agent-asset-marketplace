@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Scope: `.agents/superpowers/plans/`
+Scope: `.agents/plans/`
 
 Defer to the repository root [AGENTS.md](../../../AGENTS.md) for global repo and
 publication rules.
@@ -48,6 +48,6 @@ in-progress guidance.
 
 ## Historical reference
 
-Completed plans and the adjacent `.agents/superpowers/specs/` documents are
+Completed plans and the adjacent `.agents/specs/` documents are
 historical references. Agents may inspect them alongside git history to
 understand how the repo became what it is today via planned work.

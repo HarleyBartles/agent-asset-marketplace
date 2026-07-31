@@ -32,7 +32,7 @@ surface a single, well-homed owner.
   are repointed.
 - All marketplace and index regeneration must pass `tools/run ci --check`.
 - The new layout must not be locked in this spec until the move is actually done;
-  this design lives in the current `.agents/superpowers/specs/` path because that is
+  this design lives in the current `.agents/specs/` path because that is
   still the canonical location.
 
 ## New architecture
