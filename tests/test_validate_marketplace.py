@@ -621,24 +621,22 @@ class ValidateMarketplaceTests(unittest.TestCase):
 
             validate_skill_markdown_frontmatter(skill_root)
 
-    def test_validate_skill_markdown_frontmatter_requires_metadata_for_projected_skills(self) -> None:
+    def test_validate_skill_markdown_frontmatter_requires_metadata_for_first_party_skills(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
-            projected_skill_root = (
-                temp_root / "codex-marketplace" / "plugins" / "superpowers-plus"
-                / "skills" / "using-superpowers-plus"
+            source_skill_root = (
+                temp_root / "sources" / "first_party" / "skills" / "using-superpowers-plus"
             )
             _touch(
-                projected_skill_root / "SKILL.md",
+                source_skill_root / "SKILL.md",
                 "---\nname: using-superpowers-plus\ndescription: Use when workflow-sensitive work needs Superpowers guidance.\n---\nBody.\n",  # noqa: E501
             )
 
-            with patch("skill_validation.ROOT", temp_root):
-                with self.assertRaises(ValueError):
-                    validate_skill_markdown_frontmatter(projected_skill_root)
+            with self.assertRaises(ValueError):
+                validate_skill_markdown_frontmatter(source_skill_root)
 
             _touch(
-                projected_skill_root / "SKILL.md",
+                source_skill_root / "SKILL.md",
                 (
                     "---\n"
                     "name: using-superpowers-plus\n"
@@ -653,8 +651,7 @@ class ValidateMarketplaceTests(unittest.TestCase):
                 ),
             )
 
-            with patch("skill_validation.ROOT", temp_root):
-                validate_skill_markdown_frontmatter(projected_skill_root)
+            validate_skill_markdown_frontmatter(source_skill_root)
 
     def test_validate_skill_markdown_frontmatter_rejects_invalid_headers(self) -> None:
         cases = {
