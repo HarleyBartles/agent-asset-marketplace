@@ -12,9 +12,6 @@ This plugin projects the first-party `dotnet` skill into a Codex marketplace pac
 - Skill root: `codex-marketplace/plugins/dotnet-pack/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/dotnet-pack/skills/dotnet/`
-
-## Generated install units
-- `generated/skill-zips/dotnet.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

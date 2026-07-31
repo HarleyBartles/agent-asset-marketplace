@@ -3,8 +3,8 @@
 
 This tool writes the bundle-manifest.json surfaces for the selected pack set.
 The editable registry lives in `codex-marketplace/custody-pack-registry.json`
-so both projection-lane packs and mega packs can be regenerated from one
-source of truth instead of being hand-edited.
+so projection-lane packs can be regenerated from one source of truth instead
+of being hand-edited.
 """
 
 from __future__ import annotations
@@ -94,7 +94,7 @@ def load_pack_registry() -> list[dict[str, Any]]:
     return normalized
 
 
-PACKS = [pack for pack in load_pack_registry() if not pack.get("is_mega_pack")]
+PACKS = load_pack_registry()
 OPTIONAL_MANIFEST_FIELDS = (
     "marketplace_root",
     "canonical_source_roots",
@@ -122,7 +122,6 @@ def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
         "bundle_type": pack["bundle_type"],
         "marketplace_root": ".agents/plugins/marketplace.json",
         "plugin_root": pack["plugin_root"],
-        "is_mega_pack": pack["is_mega_pack"],
         "source_families": source_families,
         "notes": pack["notes"],
         "provenance_refs": pack["provenance_refs"],
@@ -134,12 +133,9 @@ def _bundle_manifest(pack: dict[str, Any]) -> dict[str, Any]:
         value = pack.get(field_name)
         if value is not None:
             manifest[field_name] = value
-    if not pack.get("is_mega_pack"):
-        manifest["repo_index"] = _repo_index(
-            pack["plugin_root"],
-        )
-    if pack.get("mega_pack_for") is not None:
-        manifest["mega_pack_for"] = pack["mega_pack_for"]
+    manifest["repo_index"] = _repo_index(
+        pack["plugin_root"],
+    )
     return manifest
 
 
@@ -183,11 +179,6 @@ def _render_generated_doc_block(pack: dict[str, Any], doc_name: str) -> str:
             ]
         )
         lines.extend(f"  - `{plugin_root}/{entry['local_path']}/`" for entry in entries)
-        lines.extend(["", "## Generated install units"])
-        lines.extend(
-            f"- `generated/skill-zips/{entry['canonical_name']}.zip`"
-            for entry in entries
-        )
         return "\n".join(lines).rstrip()
 
     if doc_name == "PROJECTION.md":

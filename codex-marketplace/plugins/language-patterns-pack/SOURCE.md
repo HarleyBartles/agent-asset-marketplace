@@ -16,11 +16,6 @@ This bundle projects first-party source custody into the Codex marketplace.
   - `codex-marketplace/plugins/language-patterns-pack/skills/python/`
   - `codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks/`
   - `codex-marketplace/plugins/language-patterns-pack/skills/typescript/`
-
-## Generated install units
-- `generated/skill-zips/python.zip`
-- `generated/skill-zips/python-frameworks.zip`
-- `generated/skill-zips/typescript.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

@@ -22,7 +22,6 @@ SKILL = SOURCE / 'SKILL.md'
 AGENTS = SOURCE / 'agents' / 'openai.yaml'
 REGISTRY = ROOT / 'codex-marketplace' / 'custody-pack-registry.json'
 PROJECTION_ROOTS = [
-    ROOT / 'codex-marketplace' / 'plugins' / 'house-skills' / 'skills' / 'asking-clarifying-questions',
     ROOT / 'codex-marketplace' / 'plugins' / 'repo-worker-pack' / 'skills' / 'asking-clarifying-questions',
     ROOT / '.agents' / 'skills' / 'asking-clarifying-questions',
 ]

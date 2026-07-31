@@ -16,7 +16,7 @@ This root is the Codex-facing marketplace projection of the mixed Superpowers+ w
 - The active plugin contains `brainstorming`, `dispatching-parallel-agents`, `executing-plans`, `finishing-a-development-branch`, `inspecting-the-environment`, `receiving-code-review`, `requesting-code-review`, `subagent-driven-development`, `systematic-debugging`, `test-driven-development`, `using-git-worktrees`, `using-superpowers`, `verification-before-completion`, `writing-plans`, and `writing-skills`.
 - `superpowers-plus` is the retained mixed projection-lane bundle for the Superpowers source family.
 - `codex-marketplace/custody-pack-registry.json` determines whether any Superpowers-derived root is actively projected.
-- `superpowers-mega-pack` is not a maintained active projection surface.
+- `superpowers-mega-pack` is retired and is not a maintained active projection surface.
 - Keep repo-specific overlay and adaptation text intact. Do not overwrite or reset the GPT-safe, Codex-marketplace-safe, or repo-policy-safe projection wording.
 
 ## Included in the active install surface
@@ -33,4 +33,4 @@ This root is the Codex-facing marketplace projection of the mixed Superpowers+ w
 ## Excluded from the active install surface
 
 - Upstream harness surfaces, tests, docs, and package metadata remain in source custody as support provenance and retained source custody.
-- No separate maintained `superpowers-mega-pack` root is part of the active install surface.
+- No separate `superpowers-mega-pack` root is part of the active install surface.

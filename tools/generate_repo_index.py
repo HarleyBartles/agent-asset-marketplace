@@ -24,9 +24,6 @@ DEFAULT_REPO_INDEX = {
     "validation": {
         "marketplace": "py -3 tools/validate_marketplace.py",
         "repo_index": "py -3 tools/validate_repo_index.py",
-        "skill_zips_update": "tools/run project --apply",
-        "skill_zips_full_regeneration": "tools/run marketplace --apply",
-        "skill_zips_check": "py -3 tools/validate_skill_zips.py",
         "repo_index_generate": "py -3 tools/generate_repo_index.py",
         "marketplace_generate": "py -3 tools/generate_marketplace.py",
         "marketplace_check": "py -3 tools/generate_marketplace.py --check",
@@ -101,27 +98,7 @@ DEFAULT_REPO_INDEX = {
                 "tools/project_skills.py",
             ],
         },
-        {
-            "name": "house-skills-bundle",
-            "path": "codex-marketplace/plugins/house-skills",
-            "purpose": "Repo-local marketplace projection of the reviewed House Skills bundle.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/house-skills/AGENTS.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
-        },
-        {
-            "name": "first-party-house-skills-ledger",
-            "path": "sources/first_party/skills/house-skills",
-            "purpose": "Editable House Skills source ledger and boundary records used to project the bundle.",
-            "surface_kind": "provenance",
-            "nearest_scoped_agents_md": None,
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-            ],
-        },
+
         {
             "name": "third-party-custody",
             "path": "sources/third_party",
@@ -404,18 +381,7 @@ def build_repo_index() -> dict:
     validation["marketplace_check"] = "py -3 tools/generate_marketplace.py --check"
     validation["repo_index_generate"] = "py -3 tools/generate_repo_index.py"
     validation["repo_index_check"] = "py -3 tools/generate_repo_index.py --check"
-    validation["skill_zips_update"] = "tools/run project --apply"
-    validation["skill_zips_full_regeneration"] = "tools/run marketplace --apply"
-    validation["skill_zips_check"] = "py -3 tools/validate_skill_zips.py"
     validation.pop("generated_drift", None)
-
-    for zone in repo_index.get("zones", []):
-        scripts = zone.get("key_validation_scripts", [])
-        if "tools/package_skill_zips.py" in scripts:
-            zone["key_validation_scripts"] = [
-                "tools/project_skills.py" if s == "tools/package_skill_zips.py" else s
-                for s in scripts
-            ]
 
     repo_index["validation"] = validation
     return repo_index

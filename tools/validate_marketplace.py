@@ -13,7 +13,6 @@ from pathlib import Path
 
 import yaml
 
-import project_skills
 from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
 from skill_validation import validate_skill_markdown_frontmatter
 from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
@@ -27,18 +26,11 @@ def _bootstrap_marketplace_dependencies() -> None:
     marketplace_utils = importlib.import_module("marketplace_utils")
     for name in (
         "CODEX_MARKETPLACE_MANIFEST_PATH",
-        "BUNDLE_MANIFEST_PATH",
         "EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES",
         "EXPECTED_MARKETPLACE",
         "MARKETPLACE_PATH",
         "MARKETPLACE_PLUGIN_SPECS",
         "PROTECTED_MARKETPLACE_PLUGIN_NAMES",
-        "PLUGIN_README_PATH",
-        "PLUGIN_SKILL_PATH",
-        "PROVENANCE_PATH",
-        "PLUGIN_BUNDLE_AGENTS_PATH",
-        "SOURCE_INTAKE_JSON_PATH",
-        "SOURCE_MAP_PATH",
         "PLUGIN_ROOT_INVENTORY_PATH",
         "REPO_INDEX_PATH",
         "REPO_INDEX_README_PATH",
@@ -541,87 +533,6 @@ def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
             raise ValueError(f"{plugin_root}/.codex-plugin/plugin.json skills path must be a string")
         check_path_exists(ROOT / plugin_root / skills_path)
 
-
-def validate_bundle_manifest(bundle_manifest: dict, intake: dict) -> None:
-    # Projection-lane manifests are validated by the materializer --check.
-    # Skip legacy field validation for the normalized shape.
-    if bundle_manifest.get("bundle_type") == "projection-lane":
-        return
-    if bundle_manifest.get("bundle_name") != "house-skills":
-        raise ValueError("bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError("bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/house-skills":
-        raise ValueError("bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("bundle_type") not in ("current-first-party-house-skills-plugin", "projection-lane"):
-        raise ValueError("bundle manifest bundle_type mismatch")
-
-    # The control_plane_skill field is only required for the legacy
-    # "current-first-party-house-skills-plugin" bundle_type.  Projection-lane
-    # manifests use standard entries[] instead.
-    if bundle_manifest.get("bundle_type") != "projection-lane":
-        control_plane = bundle_manifest.get("control_plane_skill")
-        if not isinstance(control_plane, dict):
-            raise ValueError("bundle manifest control_plane_skill mismatch")
-        if control_plane.get("name") != "house-skills":
-            raise ValueError("bundle manifest control plane name mismatch")
-        control_plane_path = control_plane.get("path")
-        if control_plane_path != "codex-marketplace/plugins/house-skills/skills/house-skills":
-            raise ValueError("bundle manifest control plane path mismatch")
-        control_plane_root = ROOT / control_plane_path
-        check_path_exists(control_plane_root)
-        check_path_exists(control_plane_root / "SKILL.md")
-        check_path_exists(control_plane_root / "agents" / "openai.yaml")
-
-    skill_dir = ROOT / "codex-marketplace/plugins/house-skills/skills"
-    current_skill_dirs = sorted(
-        path.name for path in skill_dir.iterdir() if path.is_dir()
-    )
-    if any(re.match(r"^v\d", path.name) for path in skill_dir.rglob("*") if path.is_dir()):
-        raise ValueError("house-skills plugin root still contains live versioned subdirectories")
-
-    entries = bundle_manifest.get("entries", [])
-    if not isinstance(entries, list):
-        raise ValueError("bundle manifest entries must be a list")
-
-    manifest_names: list[str] = []
-    for entry in entries:
-        if not isinstance(entry, dict):
-            raise ValueError("bundle manifest entries must contain objects")
-        name = entry.get("canonical_name")
-        lane = entry.get("lane")
-        source_path = entry.get("canonical_source_path")
-        local_path = entry.get("local_path")
-        if not name or not isinstance(name, str):
-            raise ValueError("bundle manifest entry is missing canonical_name")
-        if not lane or not isinstance(lane, str):
-            raise ValueError(f"bundle manifest entry {name} is missing a lane")
-        if not source_path or not isinstance(source_path, str):
-            raise ValueError(f"bundle manifest entry {name} is missing canonical_source_path")
-        if not local_path or not isinstance(local_path, str):
-            raise ValueError(f"bundle manifest entry {name} is missing local_path")
-        expected_lane = "Rooms" if name.startswith("rooms-") else "Base and control plane"
-        if lane != expected_lane:
-            raise ValueError(f"bundle manifest entry {name} lane mismatch")
-        check_path_exists(ROOT / source_path)
-        # local_path is relative to plugin root
-        projected_root = ROOT / "codex-marketplace/plugins/house-skills" / local_path
-        if projected_root.name != name:
-            raise ValueError(f"bundle manifest entry {name} local_path mismatch")
-        check_path_exists(projected_root / "SKILL.md")
-        check_path_exists(projected_root / "agents" / "openai.yaml")
-        manifest_names.append(name)
-
-    if sorted(manifest_names) != current_skill_dirs:
-        raise ValueError("bundle manifest entry inventory does not match the live plugin root")
-
-    archive_roots = bundle_manifest.get("archive_roots", [])
-    if archive_roots:
-        raise ValueError("bundle manifest archive_roots must be absent in the reduced marketplace")
-
-    notes = bundle_manifest.get("notes", [])
-    if not isinstance(notes, list) or len(notes) < 1:
-        raise ValueError("bundle manifest notes mismatch")
 
 
 def _load_skill_inventory(plugin_root: str) -> set[str]:
@@ -1265,94 +1176,7 @@ def validate_skill_bundle_manifest(
                 raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
 
-def validate_source_map(text: str) -> None:
-    for needle in (
-        "codex-marketplace/plugins/house-skills/skills/",
-        "codex-marketplace/plugins/house-skills/skills/house-skills",
-        "codex-marketplace/plugins/house-skills/references/bundle-manifest.json",
-        "Generated from `codex-marketplace/plugins/house-skills/references/bundle-manifest.json`.",
-    ):
-        if needle not in text:
-            raise ValueError(f"source map is missing {needle}")
 
-
-def detect_first_party_orphans() -> list[str]:
-    """Detect first-party skill dirs with SKILL.md that have no projection entry."""
-    skills_root = ROOT / "sources" / "first_party" / "skills"
-    if not skills_root.is_dir():
-        return []
-    custody_skills: set[str] = set()
-    for d in skills_root.iterdir():
-        if d.is_dir() and (d / "SKILL.md").exists():
-            custody_skills.add(d.name)
-    projected_names: set[str] = set()
-    for spec in MARKETPLACE_PLUGIN_SPECS:
-        plugin_root = ROOT / spec["plugin_root"]
-        manifest_path = plugin_root / "references" / "bundle-manifest.json"
-        if not manifest_path.exists():
-            continue
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        for entry in manifest.get("entries", []):
-            if isinstance(entry, dict) and entry.get("source_category") == "first_party":
-                name = entry.get("canonical_name")
-                if name:
-                    projected_names.add(name)
-    orphans = sorted(custody_skills - projected_names)
-    return orphans
-
-
-def validate_mega_pack_inclusion() -> None:
-    """Validate that every entry in a topical plugin also appears in its mega-pack."""
-    import sys
-    tools_dir = str(ROOT / "tools")
-    if tools_dir not in sys.path:
-        sys.path.insert(0, tools_dir)
-    from generate_mega_packs import _entry_matches_selection, collect_entries_by_family, load_mega_pack_registry, load_plugin_manifest
-
-    registry = load_mega_pack_registry()
-    mega_pack_names = {m["mega_pack"] for m in registry}
-    selection_by_family = {
-        mapping["source_family"]: mapping.get("entry_selection")
-        for mapping in registry
-        if mapping.get("entry_selection") is not None
-    }
-    plugin_manifests: list[dict] = []
-    for spec in MARKETPLACE_PLUGIN_SPECS:
-        plugin_root = ROOT / spec["plugin_root"]
-        manifest = load_plugin_manifest(plugin_root)
-        if manifest is None:
-            continue
-        if spec["name"] in mega_pack_names:
-            continue
-        plugin_manifests.append(manifest)
-
-    by_family = collect_entries_by_family(plugin_manifests, selection_by_family=selection_by_family)
-
-    for mapping in registry:
-        family = mapping["source_family"]
-        mega_name = mapping["mega_pack"]
-        mega_root = ROOT / mapping["mega_pack_root"]
-        mega_manifest_path = mega_root / "references" / "bundle-manifest.json"
-        if not mega_manifest_path.exists():
-            raise ValueError(f"mega-pack manifest missing for {family}: {mega_manifest_path}")
-        mega_manifest = check_json(mega_manifest_path)
-        mega_names_set = {
-            e.get("canonical_name") for e in mega_manifest.get("entries", [])
-            if isinstance(e, dict) and e.get("content_mode") not in ("blocked", "skipped")
-        }
-        topical_names_set = {
-            e.get("canonical_name") for e in by_family.get(family, [])
-            if isinstance(e, dict)
-            and e.get("canonical_name") is not None
-            and _entry_matches_selection(e, mapping.get("entry_selection"))
-        }
-        missing = sorted(topical_names_set - mega_names_set)
-        if missing:
-            raise ValueError(
-                f"mega-pack {mega_name} is missing entries that appear in topical plugins: {missing}\n"
-                f"Fix: run py -3 tools/generate_mega_packs.py"
-            )
-    print("OK mega-pack inclusion: all topical entries appear in their mega-packs")
 
 
 def validate_no_legacy_manifest_shapes() -> None:
@@ -1422,14 +1246,12 @@ def validate_inventory(*, skip_freshness: bool = False) -> None:
 
 def validate_project(*, skip_freshness: bool = False) -> None:
     _bootstrap_marketplace_dependencies()
-    intake = check_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_manifest = check_json(spec["manifest_path"])
         validate_plugin_manifest(plugin_manifest, spec)
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
-    bundle_manifest = check_json(BUNDLE_MANIFEST_PATH)
 
     validate_marketplace_registry(registry, plugin_manifests)
     if not skip_freshness:
@@ -1438,10 +1260,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
-    validate_bundle_manifest(bundle_manifest, intake)
     for spec in MARKETPLACE_PLUGIN_SPECS:
-        if spec["name"] == "house-skills":
-            continue
         plugin_root = ROOT / spec["plugin_root"]
         if spec["name"] == "superpowers-plus":
             for required in ("SOURCE.md", "PROJECTION.md", "LICENSE"):
@@ -1477,25 +1296,10 @@ def validate_project(*, skip_freshness: bool = False) -> None:
                     plugin_root=spec["plugin_root"],
                 )
 
-    source_map = check_text(SOURCE_MAP_PATH)
-    validate_source_map(source_map)
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(PLUGIN_README_PATH)
-    check_text(PLUGIN_SKILL_PATH)
-    check_text(PLUGIN_BUNDLE_AGENTS_PATH)
-    check_text(PROVENANCE_PATH)
     check_text(ROOT / "provenance/MARK-99-unslop.md")
     validate_no_legacy_manifest_shapes()
-    orphans = detect_first_party_orphans()
-    if orphans:
-        raise ValueError(
-            f"first-party orphan skills detected (have SKILL.md in custody but no projection entry): {orphans}\n"
-            f"Fix: add manifest entries for these skills and regenerate, or remove retired source custody that should not stay in the active first-party tree."
-        )
-    print(f"OK first-party orphan check: 0 orphans")
-    validate_mega_pack_inclusion()
-    validate_skill_zip_assertions()
     print("OK validate_marketplace: project")
 
 
@@ -1513,33 +1317,6 @@ def validate_all(*, skip_freshness: bool = False) -> None:
     validate_project(skip_freshness=skip_freshness)
     validate_index(skip_freshness=skip_freshness)
 
-
-def validate_skill_zip_assertions() -> None:
-    """Assert flat skill-zip invariants that are not covered elsewhere.
-
-    These checks previously lived in the standalone ``validate_skill_zips.py``
-    step. They are cheap metadata assertions (no zip materialization), so they
-    run regardless of ``--skip-freshness-checks``.
-    """
-    import zipfile
-
-    groups = project_skills._collect_skill_groups()
-    if "finishing-a-development-branch" not in groups:
-        raise AssertionError("expected finishing-a-development-branch projection")
-
-    worker_packs = {entry["pack_name"] for entry in groups.get("worker-verification", [])}
-    if "wild-bunch-project-pack" in worker_packs:
-        raise AssertionError("worker-verification must not be re-added to wild-bunch-project-pack")
-
-    finishing = project_skills.GENERATED_SKILL_ZIPS_ROOT / "finishing-a-development-branch.zip"
-    if not finishing.exists():
-        raise FileNotFoundError(f"expected flat zip: {finishing}")
-    with zipfile.ZipFile(finishing) as archive:
-        skill_md = archive.read("finishing-a-development-branch/SKILL.md").decode("utf-8")
-    if "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work" not in skill_md:
-        raise AssertionError("direct skill zip does not contain the retained upstream guidance")
-    if "Codex Marketplace Note" in skill_md:
-        raise AssertionError("direct skill zip still contains raw Codex-specific guidance")
 
 
 def main() -> int:

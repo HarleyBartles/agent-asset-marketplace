@@ -5,7 +5,7 @@ Scope: `codex-marketplace/plugins/`
 This scope covers the installable Codex plugin pack roots stored under the
 marketplace source tree.
 
-Codex plugin first; generated GPT-safe skill zips second.
+Codex plugin first.
 
 This scope is projection law, not source custody. Keep the plugin-root
 inventory, manifest exports, and generated navigation aligned, but do not add
@@ -18,11 +18,9 @@ marketplace manifests and registry surfaces.
 These are projection roots. Their source custody is normalized under
 `sources/first_party/` and `sources/third_party/`.
 
-Treat these plugin roots as the canonical install surface. Generated
-`skill.zip` artifacts are downstream flat GPT-ready exports named
-`generated/skill-zips/<skill>.zip`. Everything else in this tree is support
-custody or historical source material, not part of the active marketplace
-inventory for the normalized root pass.
+Treat these plugin roots as the canonical install surface. Everything else
+in this tree is support custody or historical source material, not part of
+the active marketplace inventory for the normalized root pass.
 
 Deterministic pack rule: plugin-root membership must come from the central
 manifest and the checked-in generator/validator pipeline. Do not hand-edit
@@ -36,7 +34,7 @@ bundle's `entries` array. See `../AGENTS.md` "Skill-to-pack assignment chain"
 for the edit-to-projection pipeline. Do not hand-edit
 `references/bundle-manifest.json` or `references/source-map.md` in plugin
 directories — they are regenerated from the registry by
-`py -3 tools/rebuild_marketplace.py`.
+`py -3 tools/run.py marketplace --apply`.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication
 rules, and upstream-drain policy.
@@ -80,8 +78,8 @@ Bundle-manifest entries for imported or retained projection content must declare
   manifest, runtime registry, or repo index is not updated with it.
 - Flag unsupported changes to vendored plugin custody material unless the
   change has an explicit adaptation reason and provenance trail.
-- Flag any source-tree `skill.zip` file. Canonical install archives belong only
-  under `generated/skill-zips/`.
+- Flag any source-tree install archive that is not a generated projection
+  artifact; canonical installs come from the staged Codex projection.
 
 ## Maintenance responsibility
 

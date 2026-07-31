@@ -3,7 +3,7 @@
 This bundle projects the mixed Superpowers+ workflow and routing helpers.
 
 ## Bundle contents
-### House Skills skills
+### First-party skills
 - `inspecting-the-environment`
 
 ### Superpowers skills
@@ -31,8 +31,8 @@ This bundle projects the mixed Superpowers+ workflow and routing helpers.
 - This bundle mixes first-party helpers, retained third-party Superpowers skills, and adapter-backed projections.
 - `superpowers-plus` is the retained mixed projection-lane bundle for this source family.
 - `codex-marketplace/custody-pack-registry.json` determines whether any Superpowers-derived root is actively projected.
-- `superpowers-mega-pack` is not a maintained active marketplace bundle.
+- `superpowers-mega-pack` is retired and is not a maintained active marketplace bundle.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.
+Skills are installed from the Codex plugin root under `codex-marketplace/plugins/superpowers-plus/skills/<skill>/`.

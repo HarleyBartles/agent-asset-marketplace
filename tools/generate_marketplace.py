@@ -12,7 +12,6 @@ from marketplace_utils import (
     EXPECTED_MARKETPLACE,
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
-    SOURCE_INTAKE_JSON_PATH,
     build_marketplace_manifest,
     load_json,
 )
@@ -35,11 +34,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="validate without writing")
     args = parser.parse_args()
 
-    intake = load_json(SOURCE_INTAKE_JSON_PATH)
     plugin_manifests = [load_json(spec["manifest_path"]) for spec in MARKETPLACE_PLUGIN_SPECS]
-
-    if not intake.get("imports"):
-        raise ValueError("sources/first_party/skills/house-skills/intake.json does not contain imports")
 
     expected = build_marketplace_manifest(plugin_manifests)
     if expected != EXPECTED_MARKETPLACE:

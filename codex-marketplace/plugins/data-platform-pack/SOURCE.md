@@ -12,9 +12,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 - Skill root: `codex-marketplace/plugins/data-platform-pack/skills/`
 - Skill roots:
   - `codex-marketplace/plugins/data-platform-pack/skills/database-engines/`
-
-## Generated install units
-- `generated/skill-zips/database-engines.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

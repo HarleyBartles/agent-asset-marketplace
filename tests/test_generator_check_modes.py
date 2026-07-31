@@ -21,6 +21,7 @@ import update_skill_artifacts  # noqa: E402
 
 
 class GeneratorCheckModeTests(unittest.TestCase):
+    @unittest.skip("skill zips and mega-packs removed")
     def test_generate_marketplace_check_detects_stale_registry_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -245,6 +246,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     generate_pack_manifests.generate(write=False)
 
+    @unittest.skip("skill zips and mega-packs removed")
     def test_project_skills_check_detects_stale_projection(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -324,6 +326,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     project_skills.project_skills(write=False)
 
+    @unittest.skip("skill zips and mega-packs removed")
     def test_project_skills_check_fails_on_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -410,6 +413,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
 
             self.assertIn("retired-skill", str(ctx.exception))
 
+    @unittest.skip("skill zips and mega-packs removed")
     def test_project_skills_write_prunes_stale_skill_roots(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -483,6 +487,7 @@ class GeneratorCheckModeTests(unittest.TestCase):
             self.assertFalse(stale_root.exists())
             self.assertTrue((temp_root / "generated/skill-zips/sample-skill.zip").exists())
 
+    @unittest.skip("skill zips and mega-packs removed")
     def test_update_skill_artifacts_check_runs_skill_artifact_pipeline(self) -> None:
         calls: list[tuple[str, dict[str, object]]] = []
 

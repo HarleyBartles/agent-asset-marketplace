@@ -15,22 +15,14 @@ from marketplace_utils import ROOT, load_json, load_text, parse_top_markdown_tab
 SOURCE_ROOT = ROOT / "sources/first_party/skills"
 CATALOG_PATH = ROOT / "provenance/first-party-skills.md"
 PLUGIN_MANIFESTS_ROOT = ROOT / "codex-marketplace/plugins"
-GENERATED_SKILL_ZIPS_ROOT = ROOT / "generated/skill-zips"
 
 REFERENCE_SURFACES = (
-    ROOT / "sources/first_party/skills/house-skills/intake.json",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/README.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/PROJECTION.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/references/source-map.md",
     ROOT / "codex-marketplace/plugins/repo-worker-pack/references/provenance-map.json",
-    ROOT / "codex-marketplace/plugins/house-skills/README.md",
-    ROOT / "codex-marketplace/plugins/house-skills/SOURCE.md",
-    ROOT / "codex-marketplace/plugins/house-skills/PROJECTION.md",
-    ROOT / "codex-marketplace/plugins/house-skills/references/source-map.md",
-    ROOT / "codex-marketplace/plugins/house-skills/references/provenance-map.json",
     ROOT / "provenance/repo-worker-pack.md",
-    ROOT / "provenance/house-skills.md",
     ROOT / "repo-index/repo-index.json",
 )
 
@@ -134,12 +126,8 @@ def _discover_projected_plugins(skill_name: str, source_root: str) -> tuple[str,
     return tuple(sorted(plugin_roots))
 
 
-def _discover_generated_refs(skill_name: str, projected_in: tuple[str, ...]) -> tuple[str, ...]:
+def _discover_generated_refs(projected_in: tuple[str, ...]) -> tuple[str, ...]:
     refs: set[str] = set()
-    zip_path = GENERATED_SKILL_ZIPS_ROOT / f"{skill_name}.zip"
-    if zip_path.exists():
-        refs.add(zip_path.relative_to(ROOT).as_posix())
-
     for plugin_root in projected_in:
         refs.add(f"{plugin_root}/references/bundle-manifest.json")
         refs.add(f"{plugin_root}/references/source-map.md")
@@ -176,7 +164,7 @@ def _build_entries() -> list[CatalogEntry]:
             raise ValueError(f"{skill_md.relative_to(ROOT)} metadata.source-path must be a nonblank string")
         source_root = _canonical_root_path(skill_root)
         projected_in = _discover_projected_plugins(skill_name, source_root)
-        generated_refs = _discover_generated_refs(skill_name, projected_in)
+        generated_refs = _discover_generated_refs(projected_in)
         repo_refs = _discover_repo_refs(skill_name, source_path, source_root)
         entries.append(
             CatalogEntry(

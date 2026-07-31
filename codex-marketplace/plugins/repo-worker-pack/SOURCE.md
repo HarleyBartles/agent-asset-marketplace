@@ -42,24 +42,6 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/work-mode-router/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
-
-## Generated install units
-- `generated/skill-zips/asking-clarifying-questions.zip`
-- `generated/skill-zips/base-doctrine.zip`
-- `generated/skill-zips/cleanup-custody.zip`
-- `generated/skill-zips/connector-safety.zip`
-- `generated/skill-zips/context-safety.zip`
-- `generated/skill-zips/generating-agent-mesh.zip`
-- `generated/skill-zips/linear-issue-shaping.zip`
-- `generated/skill-zips/refreshing-installed-skills.zip`
-- `generated/skill-zips/repo-standards.zip`
-- `generated/skill-zips/repo-worker-base.zip`
-- `generated/skill-zips/risk-gates.zip`
-- `generated/skill-zips/unslop-profiles.zip`
-- `generated/skill-zips/using-github.zip`
-- `generated/skill-zips/using-linear.zip`
-- `generated/skill-zips/work-mode-router.zip`
-- `generated/skill-zips/writing-with-clarity.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

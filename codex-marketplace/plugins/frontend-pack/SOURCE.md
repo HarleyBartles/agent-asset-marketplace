@@ -24,14 +24,6 @@ This bundle projects first-party and retained third-party source custody into th
   - `codex-marketplace/plugins/frontend-pack/skills/react/`
   - `codex-marketplace/plugins/frontend-pack/skills/wcag/`
   - `codex-marketplace/plugins/frontend-pack/skills/web-styling/`
-
-## Generated install units
-- `generated/skill-zips/feature-sliced-design.zip`
-- `generated/skill-zips/frontend-ux.zip`
-- `generated/skill-zips/playwright-testing.zip`
-- `generated/skill-zips/react.zip`
-- `generated/skill-zips/wcag.zip`
-- `generated/skill-zips/web-styling.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

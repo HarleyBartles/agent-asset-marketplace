@@ -24,15 +24,6 @@ This bundle projects first-party source custody into the Codex marketplace.
   - `codex-marketplace/plugins/architecture-pack/skills/event-driven-systems/`
   - `codex-marketplace/plugins/architecture-pack/skills/event-sourcing/`
   - `codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture/`
-
-## Generated install units
-- `generated/skill-zips/clean-architecture.zip`
-- `generated/skill-zips/cqrs.zip`
-- `generated/skill-zips/database-design-patterns.zip`
-- `generated/skill-zips/ddd.zip`
-- `generated/skill-zips/event-driven-systems.zip`
-- `generated/skill-zips/event-sourcing.zip`
-- `generated/skill-zips/hexagonal-architecture.zip`
 <!-- END GENERATED: pack-inventory -->
 
 ## Boundary

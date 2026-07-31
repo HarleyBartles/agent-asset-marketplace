@@ -4,15 +4,6 @@
   "roots": [
     {
       "order": 0,
-      "name": "house-skills",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/house-skills",
-      "plugin_root": "codex-marketplace/plugins/house-skills",
-      "manifest_path": "codex-marketplace/plugins/house-skills/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 1,
       "name": "unslop-plus",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/unslop-plus",
@@ -21,7 +12,7 @@
       "enabled": true
     },
     {
-      "order": 2,
+      "order": 1,
       "name": "superpowers-plus",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/superpowers-plus",
@@ -30,7 +21,7 @@
       "enabled": true
     },
     {
-      "order": 3,
+      "order": 2,
       "name": "repo-worker-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
@@ -39,7 +30,7 @@
       "enabled": true
     },
     {
-      "order": 4,
+      "order": 3,
       "name": "dotnet-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/dotnet-pack",
@@ -48,7 +39,7 @@
       "enabled": true
     },
     {
-      "order": 5,
+      "order": 4,
       "name": "api-contracts-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
@@ -57,7 +48,7 @@
       "enabled": true
     },
     {
-      "order": 6,
+      "order": 5,
       "name": "architecture-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/architecture-pack",
@@ -66,7 +57,7 @@
       "enabled": true
     },
     {
-      "order": 7,
+      "order": 6,
       "name": "language-patterns-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
@@ -75,7 +66,7 @@
       "enabled": true
     },
     {
-      "order": 8,
+      "order": 7,
       "name": "security-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/security-pack",
@@ -84,7 +75,7 @@
       "enabled": true
     },
     {
-      "order": 9,
+      "order": 8,
       "name": "frontend-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/frontend-pack",
@@ -93,7 +84,7 @@
       "enabled": true
     },
     {
-      "order": 10,
+      "order": 9,
       "name": "data-platform-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/data-platform-pack",
@@ -102,7 +93,7 @@
       "enabled": true
     },
     {
-      "order": 11,
+      "order": 10,
       "name": "planning-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/planning-pack",
@@ -111,7 +102,7 @@
       "enabled": true
     },
     {
-      "order": 12,
+      "order": 11,
       "name": "feature-sliced-design",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
@@ -120,7 +111,7 @@
       "enabled": true
     },
     {
-      "order": 13,
+      "order": 12,
       "name": "agentic-workflows",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/agentic-workflows",
@@ -129,7 +120,7 @@
       "enabled": true
     },
     {
-      "order": 14,
+      "order": 13,
       "name": "agentic-evaluation",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
@@ -138,7 +129,7 @@
       "enabled": true
     },
     {
-      "order": 15,
+      "order": 14,
       "name": "research-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/research-pack",
@@ -147,7 +138,7 @@
       "enabled": true
     },
     {
-      "order": 16,
+      "order": 15,
       "name": "engineering-pack",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/engineering-pack",
