@@ -232,14 +232,6 @@ def _check_inventory(ctx: Ctx) -> None:
     _validate_marketplace_phase_step("inventory", ctx)
 
 
-def _apply_heal(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/heal_overlays.py"], ctx)
-
-
-def _check_heal(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/heal_overlays.py", "--check"], ctx)
-
-
 def _apply_project(ctx: Ctx) -> None:
     _run([sys.executable, "tools/update_skill_artifacts.py", "--all"], ctx)
     _run([sys.executable, "tools/normalize_first_party_skill_sources.py"], ctx)
@@ -389,14 +381,8 @@ _TASKS: dict[str, Task] = {
         check=(_check_inventory,),
         fix="tools/run inventory --apply",
     ),
-    "heal": Task(
-        deps=("inventory",),
-        apply=(_apply_heal,),
-        check=(_check_heal,),
-        fix="tools/run heal --apply",
-    ),
     "project": Task(
-        deps=("heal",),
+        deps=("inventory",),
         apply=(_apply_project,),
         check=(_check_project,),
         fix="tools/run project --apply",

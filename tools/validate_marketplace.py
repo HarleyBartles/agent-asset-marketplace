@@ -13,7 +13,7 @@ from pathlib import Path
 
 import yaml
 
-from skill_overlay_materializer import stage_overlay_tree, validate_openai_agent_yaml
+from skill_projection_helpers import stage_source_tree, validate_openai_agent_yaml
 from skill_validation import validate_skill_markdown_frontmatter
 from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
 from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
@@ -128,12 +128,11 @@ def validate_tree_mirror(source_root: Path, local_root: Path, component_name: st
 
 def validate_tree_reconstruction(
     source_root: Path,
-    overlay_root: Path | None,
     local_root: Path,
     component_name: str,
     bundle_name: str,
 ) -> None:
-    expected_root, tempdir = stage_overlay_tree(source_root, overlay_root)
+    expected_root, tempdir = stage_source_tree(source_root)
     try:
         validate_tree_mirror(expected_root, local_root, component_name, bundle_name)
     finally:
@@ -633,10 +632,11 @@ def validate_projection_pack_manifest(bundle_manifest: dict, *, bundle_name: str
         check_path_exists(projected_root)
         if source_root.is_dir():
             if content_mode == "verbatim":
-                validate_tree_reconstruction(source_root, None, projected_root, canonical_name, bundle_name)
+                validate_tree_reconstruction(source_root, projected_root, canonical_name, bundle_name)
             else:
                 overlay_root = ROOT / adaptation_overlay_path  # type: ignore[arg-type]
-                validate_tree_reconstruction(source_root, overlay_root, projected_root, canonical_name, bundle_name)
+                check_path_exists(overlay_root)
+                validate_tree_reconstruction(source_root, projected_root, canonical_name, bundle_name)
         else:
             if not _files_match_canonicalized(source_root, projected_root):
                 raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
@@ -843,14 +843,14 @@ def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus normalised entry {canonical_name} needs an overlay path")
-                overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, "superpowers-plus")
+                check_path_exists(ROOT / adaptation_overlay_path)
+                validate_tree_reconstruction(source_path, local_full_path, canonical_name, "superpowers-plus")
             else:  # adapted
                 validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
                 if adaptation_overlay_path is None:
                     raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
-                overlay_root = ROOT / adaptation_overlay_path
-                validate_tree_reconstruction(source_path, overlay_root, local_full_path, canonical_name, "superpowers-plus")
+                check_path_exists(ROOT / adaptation_overlay_path)
+                validate_tree_reconstruction(source_path, local_full_path, canonical_name, "superpowers-plus")
         else:
             if content_mode == "verbatim" and not _files_match_canonicalized(source_path, local_full_path):
                 raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")

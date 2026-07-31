@@ -17,18 +17,17 @@ generator and validator scripts into a dependency-aware task graph.
 - `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
 - `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
-Targets are: `inventory`, `heal`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
+Targets are: `inventory`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
 
 The underlying scripts are implementation details:
 
 - `generate_marketplace.py` regenerates `.agents/plugins/marketplace.json` and `codex-marketplace/manifest.json` from the local plugin bundle and source ledger, and `--check` compares both files without writing.
 - `update_skill_artifacts.py` is the canonical generator orchestrator for full regeneration. Use `--all` to regenerate every installable skill artifact, or `--check` to validate without writing.
-- `project_skills.py` stages overlays and materializes plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`. `--check` validates projected tree shape without writing.
+- `project_skills.py` materializes plugin skill trees under `codex-marketplace/plugins/<pack>/skills/` from verbatim source custody. `--check` validates projected tree shape without writing.
 - `validate_marketplace.py` checks the marketplace export, plugin manifest, bundle manifest, source ledger, repo index, local path references, projection materialization, and selected pack bundle-manifest freshness for the protected marketplace shape.
 - `validate_repo_index.py` checks that the repo index stays aligned with the current marketplace and scoped guidance surfaces, but it is not the freshness proof for `repo-index/repo-index.json`.
 - `generate_repo_index.py` regenerates `repo-index/repo-index.json` and `--check` compares the rendered file without writing.
 - `generate_pack_manifests.py` regenerates the selected pack bundle-manifest surfaces and `--check` compares them without writing.
-- `heal_overlays.py` adjusts `overlay.yaml` line-edit entries when source normalization shifts line numbers or whitespace. It runs in the `heal` target.
 - `normalize_first_party_skill_sources.py` normalizes first-party `SKILL.md` and `agents/openai.yaml` content.
 - `generate_first_party_skill_catalog.py` regenerates `provenance/first-party-skills.md`.
 - `tools/ruff_diff.py` reports ruff findings only on added or modified lines when given `--changed-from <ref>`.
@@ -109,7 +108,7 @@ manifest-driven generator/validator path, add one to `tools/` and wire it into
 the standard update/check entrypoints. Do not paper over missing pipeline
 support with a pack-specific one-off script or a hand-edited output surface.
 The editable source custody for marketplace generation is the trio of source
-trees, adapters/overlays, and `codex-marketplace/custody-pack-registry.json`.
+trees, adapter surfaces, and `codex-marketplace/custody-pack-registry.json`.
 Treat generated manifests, projection trees, source maps, and provenance maps
 as derived outputs only. If a convention can be expressed in the
 registry and generator, do that instead of hand-rolling per-pack output

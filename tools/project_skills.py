@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from marketplace_utils import ROOT, as_windows_long_path, load_json, load_plugin_root_inventory
-from skill_overlay_materializer import _inject_plugin_identity, _strip_plugin_identity, stage_overlay_tree
+from skill_projection_helpers import _inject_plugin_identity, _strip_plugin_identity, stage_source_tree
 from tree_canonicalization import compare_trees_canonicalized
 
 
@@ -220,14 +220,12 @@ def project_skills(*, write: bool = True, plugin_name: str | None = None) -> Non
 
     for canonical_name, entries in sorted(groups.items()):
         source_path = entries[0]["canonical_source_path"]
-        overlay_path = entries[0].get("adaptation_overlay_path")
         source_root = ROOT / source_path
-        overlay_root = ROOT / overlay_path if overlay_path else None
 
         if not source_root.is_dir():
             raise ValueError(f"entry {canonical_name} canonical_source_path must be a directory: {source_root}")
 
-        staged_root, tempdir = stage_overlay_tree(source_root, overlay_root)
+        staged_root, tempdir = stage_source_tree(source_root)
         try:
             _packaged_files, forbidden_paths = scan_skill_tree(staged_root)
             if forbidden_paths:
