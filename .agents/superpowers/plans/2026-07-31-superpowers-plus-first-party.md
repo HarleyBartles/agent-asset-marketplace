@@ -353,7 +353,7 @@ git commit -m "feat: promote using-superpowers as using-superpowers-plus first-p
 **Interfaces:**
 - Consumes: the newly-created `using-superpowers-plus` skill.
 
-- [ ] **Step 1: Find all first-party references.**
+- [x] **Step 1: Find all first-party references.**
 
 ```powershell
 grep -R "@using-superpowers" sources/first_party
@@ -365,7 +365,7 @@ On Windows PowerShell without `grep`, use:
 Select-String -Path "sources/first_party/skills/*/SKILL.md" -Pattern "@using-superpowers" -SimpleMatch
 ```
 
-- [ ] **Step 2: Update `inspecting-the-environment/SKILL.md`.**
+- [x] **Step 2: Update `inspecting-the-environment/SKILL.md`.**
 
 On line 107, change:
 
@@ -379,9 +379,9 @@ to:
 Start with `@using-superpowers-plus` as the workflow-selection entrypoint.
 ```
 
-- [ ] **Step 3: Update any other matches found in Step 1 using the same `@using-superpowers-plus` replacement.**
+- [x] **Step 3: Update any other matches found in Step 1 using the same `@using-superpowers-plus` replacement.**
 
-- [ ] **Step 4: Verify.**
+- [x] **Step 4: Verify.**
 
 ```powershell
 grep -R "@using-superpowers" sources/first_party && throw "Unresolved @using-superpowers references remain"
@@ -395,7 +395,7 @@ git diff --check
 git diff --stat
 ```
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
 ```powershell
 git add sources/first_party/skills/inspecting-the-environment/SKILL.md
