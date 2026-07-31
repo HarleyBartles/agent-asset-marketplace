@@ -286,7 +286,7 @@ Use the `edit` tool to update the checkboxes in Task 2 from `[ ]` to `[x]`.
 - Consumes: source tree from Task 1 and registry/adapter edits from Task 2.
 - Produces: projected and installed skill copies, plus updated indexes and provenance.
 
-- [ ] **Step 1: Run the overlay healing check**
+- [x] **Step 1: Run the overlay healing check**
 
 ```powershell
 .\tools\run.ps1 heal --check
@@ -294,7 +294,7 @@ Use the `edit` tool to update the checkboxes in Task 2 from `[ ]` to `[x]`.
 
 Expected: no line-number drift in `adapters/codex/superpowers-plus/subagent-driven-development/overlay.yaml` or any other overlay.
 
-- [ ] **Step 2: Run the full local regeneration**
+- [x] **Step 2: Run the full local regeneration**
 
 ```powershell
 .\tools\run.ps1 marketplace --apply --allow-shared-checkout
@@ -302,7 +302,7 @@ Expected: no line-number drift in `adapters/codex/superpowers-plus/subagent-driv
 
 Expected: all targets pass and the command reports `Marketplace validation passed.` for inventory, project, installed-skills, repo-index, mesh, catalog, and validate.
 
-- [ ] **Step 3: Confirm the projected skill lacks the `agent:` frontmatter**
+- [x] **Step 3: Confirm the projected skill lacks the `agent:` frontmatter**
 
 ```powershell
 $agentLine = Select-String -Path 'codex-marketplace/plugins/repo-worker-pack/skills/requesting-branch-review/SKILL.md' -Pattern '^agent:'
@@ -310,7 +310,7 @@ if ($agentLine) { throw 'projected SKILL.md still has agent:' }
 Write-Host 'projected SKILL.md is main-agent ready'
 ```
 
-- [ ] **Step 4: Confirm the installed skill exists and is main-agent ready**
+- [x] **Step 4: Confirm the installed skill exists and is main-agent ready**
 
 ```powershell
 if (-not (Test-Path .agents/skills/requesting-branch-review/SKILL.md)) { throw 'installed skill missing' }
@@ -319,7 +319,7 @@ if ($agentLine) { throw 'installed SKILL.md still has agent:' }
 Write-Host 'installed skill is main-agent ready'
 ```
 
-- [ ] **Step 5: Mark all Task 3 steps `[x]` in this plan file**
+- [x] **Step 5: Mark all Task 3 steps `[x]` in this plan file**
 
 Use the `edit` tool to update the checkboxes in Task 3 from `[ ]` to `[x]`.
 

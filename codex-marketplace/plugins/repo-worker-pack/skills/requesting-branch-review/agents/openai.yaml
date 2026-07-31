@@ -1,0 +1,12 @@
+version: 1
+metadata:
+  skill_name: requesting-branch-review
+  source_category: first_party
+  plugin: repo-worker-pack
+  projection_plugin: repo-worker-pack
+interface:
+  display_name: Requesting Branch Review
+  short_description: Use when an agent should dispatch a whole-branch diff review for a specific branch and worktree against main.
+  default_prompt: Use /requesting-branch-review when an agent should dispatch a whole-branch diff review for a specific branch and worktree against main.
+policy:
+  allow_implicit_invocation: false

@@ -15,7 +15,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `refreshing-installed-skills`
 - `repo-standards`
 - `repo-worker-base`
-- `review-branch-diff`
+- `requesting-branch-review`
 - `risk-gates`
 - `unslop-profiles`
 - `using-github`

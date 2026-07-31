@@ -13,7 +13,7 @@ metadata:
   source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/SKILL.md"
   content_mode: "adapted"
   adapted_author: "Harley Bartles"
-  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/review-branch-diff`."
+  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/requesting-branch-review`."
   use_when:
     - "Use when executing an implementation plan with independent tasks and subagent support is available."
     - "Use when tasks can be delegated to fresh implementer subagents in the same session."
@@ -96,7 +96,7 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Invoke /review-branch-diff for final whole-branch review" [shape=box];
+    "Invoke /requesting-branch-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
     "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
@@ -125,8 +125,8 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Invoke /review-branch-diff for final whole-branch review" [label="no"];
-    "Invoke /review-branch-diff for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Invoke /requesting-branch-review for final whole-branch review" [label="no"];
+    "Invoke /requesting-branch-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
     "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
 }
@@ -386,7 +386,7 @@ parked-with-ruling at the cap.
 
 ## Final Review
 
-The final whole-branch review is handled by `/review-branch-diff`. Dispatch the
+The final whole-branch review is handled by `/requesting-branch-review`. Dispatch the
 skill once all task-level reviews are complete. The skill reviews the full branch
 diff and reports findings; no additional review package is needed.
 
@@ -483,7 +483,7 @@ Re-reviewer: Missing progress reporting — ADDRESSED (src/recovery.js:41).
 ...
 
 [After all tasks]
-[Invoke /review-branch-diff for final whole-branch review]
+[Invoke /requesting-branch-review for final whole-branch review]
 Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]

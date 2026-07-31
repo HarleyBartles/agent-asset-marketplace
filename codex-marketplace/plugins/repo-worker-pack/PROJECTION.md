@@ -37,7 +37,7 @@ The split is deliberate:
   - `refreshing-installed-skills`
   - `repo-standards`
   - `repo-worker-base`
-  - `review-branch-diff`
+  - `requesting-branch-review`
   - `risk-gates`
   - `unslop-profiles`
   - `using-github`

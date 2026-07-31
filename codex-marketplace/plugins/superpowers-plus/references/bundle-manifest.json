@@ -142,6 +142,21 @@
       "adaptation_note": "Added marketplace frontmatter metadata block and skill-routing triggers to the upstream skill without modifying the instruction body."
     },
     {
+      "canonical_name": "requesting-branch-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "sources/first_party/skills/requesting-branch-review",
+      "local_path": "skills/requesting-branch-review",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party requesting-branch-review skill projected verbatim into the Superpowers bundle.",
+      "source_path": "sources/first_party/skills/requesting-branch-review/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    {
       "canonical_name": "requesting-code-review",
       "source_category": "third_party",
       "content_mode": "adapted",
@@ -158,21 +173,6 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/obra/superpowers",
       "source_family": "superpowers"
-    },
-    {
-      "canonical_name": "review-branch-diff",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/review-branch-diff",
-      "local_path": "skills/review-branch-diff",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party branch-diff review skill projected verbatim into the Superpowers bundle.",
-      "source_path": "sources/first_party/skills/review-branch-diff/SKILL.md",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
     },
     {
       "canonical_name": "selecting-a-subagent",
