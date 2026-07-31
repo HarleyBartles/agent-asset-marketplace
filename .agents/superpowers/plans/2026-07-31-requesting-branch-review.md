@@ -4,7 +4,7 @@
 
 **Goal:** Replace the subagent-locked `review-branch-diff` skill with a main-agent `requesting-branch-review` skill that dispatches the `branch-reviewer` subagent for a specific branch and worktree.
 
-**Architecture:** Rename the first-party source tree, rewrite the `SKILL.md` without the `agent:` frontmatter, update all marketplace and adapter references, then run `tools/run marketplace --apply` to regenerate the Codex projection and installed skills. The `branch-reviewer` subagent profile and its `AGENT.md` stay unchanged.
+**Architecture:** Rename the first-party source tree, rewrite the `SKILL.md` without the `agent:` frontmatter, update all marketplace and adapter references, then run `tools/run marketplace --apply` to regenerate the Codex projection and installed skills. The `branch-reviewer` subagent profile and its `branch-reviewer.md` file stay unchanged.
 
 **Tech Stack:** Devin Desktop skill frontmatter, `run_subagent` dispatch, `tools/run` marketplace and CI, git.
 
@@ -342,7 +342,7 @@ git log --oneline -5
 
 ```powershell
 git add -A
-git commit -m "feat: replace review-branch-diff with requesting-branch-review" -m "requesting-branch-review is a main-agent dispatch skill that gathers a branch and worktree before launching the branch-reviewer subagent. The old review-branch-diff source is removed; the branch-reviewer profile and AGENT.md remain unchanged." -m "Generated with [Devin](https://devin.ai)" -m "Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
+git commit -m "feat: replace review-branch-diff with requesting-branch-review" -m "requesting-branch-review is a main-agent dispatch skill that gathers a branch and worktree before launching the branch-reviewer subagent. The old review-branch-diff source is removed; the branch-reviewer profile and branch-reviewer.md remain unchanged." -m "Generated with [Devin](https://devin.ai)" -m "Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
 ```
 
 Expected: the repo pre-commit hook runs `tools/run ci --check` and the commit succeeds only if the CI gate passes.

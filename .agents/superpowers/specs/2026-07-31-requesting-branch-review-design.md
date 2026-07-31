@@ -72,7 +72,11 @@ Source tree: `sources/first_party/skills/requesting-branch-review/`
     1. Determine the target branch and worktree (from the user, the current git state, or by asking).
     2. Verify the branch with `git rev-parse --verify <branch>` and the worktree with a path check.
     3. Determine the base ref (`main` or `origin/main`) in that worktree.
-    4. If the global `branch-reviewer` profile is not installed, copy `assets/branch-reviewer.md` to `~/.config/devin/agents/branch-reviewer.md` (or `%APPDATA%\devin\agents\branch-reviewer\AGENT.md` on Windows).
+    4. Choose the `branch-reviewer` subagent profile, preferring a branch-local one over the bundled generic profile:
+       1. Search `<worktree>/.devin/agents/` and `<worktree>/.agents/agents/` for files matching `*branch-reviewer.md`.
+       2. Prefer a prefixed file whose prefix matches the repo's canonical skill local prefix (e.g. `rooms-`, `mark-`), then any other prefixed file, then the unprefixed `branch-reviewer.md`.
+       3. If a branch-local profile is found, ensure the global `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\`) directory exists and copy it to `~/.config/devin/agents/branch-reviewer.md` (or `%APPDATA%\devin\agents\branch-reviewer.md`) if the global file is missing or identical; if the global file exists and differs, warn and ask before overwriting.
+       4. If no branch-local profile is found, install or update the bundled generic `assets/branch-reviewer.md` at the same global path.
     5. Dispatch the subagent:
        ```markdown
        run_subagent profile: branch-reviewer
@@ -101,7 +105,7 @@ Source tree: `sources/first_party/skills/requesting-branch-review/`
 
 - `sources/first_party/skills/review-branch-diff/SKILL.md` → `sources/first_party/skills/requesting-branch-review/SKILL.md` (rename + rewrite)
 - `sources/first_party/skills/review-branch-diff/agents/openai.yaml` → `sources/first_party/skills/requesting-branch-review/agents/openai.yaml` (rename + rewrite)
-- `sources/first_party/skills/review-branch-diff/assets/branch-reviewer.md` → `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md` (rename, unchanged content)
+- `sources/first_party/skills/review-branch-diff/assets/branch-reviewer/AGENT.md` → `sources/first_party/skills/requesting-branch-review/assets/branch-reviewer.md` (rename, flattened)
 - `codex-marketplace/custody-pack-registry.json` (rename registry entries)
 - `adapters/codex/superpowers-plus/subagent-driven-development/overlay.yaml` (slash command update)
 - `sources/first_party/skills/selecting-a-subagent/SKILL.md`

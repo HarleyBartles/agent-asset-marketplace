@@ -44,7 +44,11 @@ Use the `branch-reviewer` subagent to review a branch diff for a specific branch
    1. Search the worktree for a branch-local `branch-reviewer` profile. Repo-local profiles may be prefixed with the repository's canonical skill local prefix (e.g. `rooms-branch-reviewer.md`, `mark-branch-reviewer.md`) or be the unprefixed `branch-reviewer.md`. Search these directories in this order:
       - `<worktree>/.devin/agents/`
       - `<worktree>/.agents/agents/`
-   2. In each directory, list files matching `*branch-reviewer.md`. Prefer a prefixed file (`<prefix>-branch-reviewer.md`) over the unprefixed `branch-reviewer.md`; if the repo's local prefix is known, prefer that prefix. The first matching file found is the branch-local profile.
+   2. In each directory, list files matching `*branch-reviewer.md`. Do not stop at the first match; collect candidates from all searched directories. Then choose the branch-local profile in this order:
+      - A prefixed file whose prefix matches the repo's canonical skill local prefix (e.g. `rooms-`, `mark-`), if known.
+      - Any other prefixed file (`<prefix>-branch-reviewer.md`) over the unprefixed `branch-reviewer.md`.
+      - The unprefixed `branch-reviewer.md`, if no prefixed candidate exists.
+      - If there are still multiple candidates, use the first directory in the search order as the tiebreaker.
    3. If you find a branch-local profile:
       - Ensure the global agents directory exists: `mkdir -p ~/.config/devin/agents` (macOS/Linux) or `New-Item -ItemType Directory -Path "$env:APPDATA\devin\agents" -Force` (Windows).
       - If the global `branch-reviewer.md` does not exist, or is byte-identical to the branch-local one, copy the branch-local profile to `~/.config/devin/agents/branch-reviewer.md` (macOS/Linux) or `%APPDATA%\devin\agents\branch-reviewer.md` (Windows).

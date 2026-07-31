@@ -184,7 +184,7 @@ conflicts that only emerge from implementation.
 Invoke `/selecting-a-subagent` to select the right subagent profile for the
 current task and environment. In Devin Desktop, that means choosing a
 `profile:` value and then dispatching `run_subagent` with that `profile:`.
-The profile's `AGENT.md` declares its own `model:`, so do not pass `model:`
+The profile's `.md` profile file declares its own `model:`, so do not pass `model:`
 to `run_subagent`.
 
 ## The Task Loop
