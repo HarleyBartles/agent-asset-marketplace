@@ -1,9 +1,8 @@
 ---
 name: context-safety
-description: Use when large or context-heavy text writes need bounded composition,
-  200-line chunking, deliberate compaction boundaries, and atomic replacement. Use
-  when a write may exceed the safe threshold or when inline composition risks
-  exhausting context.
+description: Use when a text write is expected to exceed the safe threshold for the
+  remaining session context, when a document is very large or context-heavy, or when
+  a normal editor write path would be brittle.
 metadata:
   source-id: context-safety
   source-path: sources/first_party/skills/context-safety/SKILL.md
@@ -11,16 +10,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: large text write safety, bounded composition, compaction boundaries, and atomic replacement
+  scope: very large text write safety, bounded composition, compaction boundaries, and atomic replacement.
   use_when:
-  - Use when composing or editing large text files
-  - Use when inline composition would risk consuming the remaining context
-  - Use when tool-call boundaries are the right checkpoint for preserving durable state
-  - Use when `/compact` should happen only after durable state has been preserved
-  - Use when safe staging and atomic replacement are required
+  - Use when a text write is expected to exceed 2,000 lines or 1 MB of UTF-8 text.
+  - Use when inline composition would risk consuming the remaining session context.
+  - Use when safe staging and atomic replacement are required for a large text write.
+  - Use when `/compact` should happen only after durable state has been preserved.
   do_not_use_when:
-  - Do not use when the change is small and can be written directly
-  - Do not use when the task is unrelated to large or context-heavy text writes
+  - Do not use when the change is small and can be written directly.
+  - Do not use when the task is unrelated to large or context-heavy text writes.
   related_skills:
   - repo-worker-base
   - connector-safety
