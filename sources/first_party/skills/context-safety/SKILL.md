@@ -94,6 +94,8 @@ If a write is expected to land around 1,500 lines or more, split it into smaller
 ## Python pattern
 
 ```python
+from pathlib import Path
+
 TARGET_LINES = 2000
 HARD_LIMIT = 4000
 LARGE_BYTES = 1_000_000
