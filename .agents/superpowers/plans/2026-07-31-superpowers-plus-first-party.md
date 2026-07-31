@@ -611,13 +611,13 @@ git commit -m "chore: retire superpowers-plus codex overlay tree"
 - Consumes: the updated first-party source roots and registry.
 - Produces: the refreshed, deterministic marketplace projection.
 
-- [ ] **Step 1: Regenerate all marketplace and index surfaces.**
+- [x] **Step 1: Regenerate all marketplace and index surfaces.**
 
 ```powershell
 tools\run.ps1 marketplace --apply
 ```
 
-- [ ] **Step 2: Stage the generated changes.**
+- [x] **Step 2: Stage the generated changes.**
 
 ```powershell
 git add -A
@@ -625,13 +625,13 @@ git diff --check
 git diff --cached --stat
 ```
 
-- [ ] **Step 3: Commit the regenerated surfaces.**
+- [x] **Step 3: Commit the regenerated surfaces.**
 
 ```powershell
 git commit -m "regenerate: marketplace and index surfaces for superpowers-plus first-party conversion"
 ```
 
-- [ ] **Step 4: Run the CI gate.**
+- [x] **Step 4: Run the CI gate.**
 
 ```powershell
 tools\run.ps1 ci --check
