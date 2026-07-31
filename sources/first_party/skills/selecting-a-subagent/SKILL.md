@@ -72,7 +72,7 @@ corresponding `AGENT.md` assets into a Devin Desktop profile search path:
 For example, copy `assets/implementer/AGENT.md` to
 `~/.config/devin/agents/implementer/AGENT.md`, and do the same for `reviewer`,
 `implementer-strong`, and `reviewer-strong`. The `branch-reviewer` profile is
-shipped with the `review-branch-diff` skill.
+shipped with the `requesting-branch-review` skill.
 
 ## Common pressure
 

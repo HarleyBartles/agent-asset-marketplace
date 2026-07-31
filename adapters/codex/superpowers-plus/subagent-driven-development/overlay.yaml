@@ -31,7 +31,7 @@ edits:
   - '  source_path: "sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/SKILL.md"'
   - '  content_mode: "adapted"'
   - '  adapted_author: "Harley Bartles"'
-  - '  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/review-branch-diff`."'
+  - '  adaptation_note: "Kept bash helpers as the primary surface, added sibling PowerShell versions, scoped SDD output by plan, pointed plan-file reads at the repo-local `.agents/superpowers/plans/` convention, normalized marketplace frontmatter metadata, routed dispatches to Devin Desktop custom subagent profiles (`implementer`, `reviewer`, `branch-reviewer`) whose `model:` is declared in their `AGENT.md`, and replaced the final whole-branch review with `/requesting-branch-review`."'
   - '  use_when:'
   - '    - "Use when executing an implementation plan with independent tasks and subagent support is available."'
   - '    - "Use when tasks can be delegated to fresh implementer subagents in the same session."'
@@ -192,7 +192,7 @@ edits:
   expected_lines:
   - '    "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" [shape=box];'
   replace_lines:
-  - '    "Invoke /review-branch-diff for final whole-branch review" [shape=box];'
+  - '    "Invoke /requesting-branch-review for final whole-branch review" [shape=box];'
 - path: SKILL.md
   op: replace
   start_line: 103
@@ -200,7 +200,7 @@ edits:
   expected_lines:
   - '    "More tasks remain?" -> "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" [label="no"];'
   replace_lines:
-  - '    "More tasks remain?" -> "Invoke /review-branch-diff for final whole-branch review" [label="no"];'
+  - '    "More tasks remain?" -> "Invoke /requesting-branch-review for final whole-branch review" [label="no"];'
 - path: SKILL.md
   op: replace
   start_line: 104
@@ -208,7 +208,7 @@ edits:
   expected_lines:
   - '    "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
   replace_lines:
-  - '    "Invoke /review-branch-diff for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
+  - '    "Invoke /requesting-branch-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";'
 - path: SKILL.md
   op: replace
   start_line: 393
@@ -225,7 +225,7 @@ edits:
   - the ledger's deferred-minor and parked lines so it can triage which must be
   - fixed before merge.
   replace_lines:
-  - The final whole-branch review is handled by `/review-branch-diff`. Dispatch the
+  - The final whole-branch review is handled by `/requesting-branch-review`. Dispatch the
   - skill once all task-level reviews are complete. The skill reviews the full branch
   - diff and reports findings; no additional review package is needed.
 - path: SKILL.md
@@ -235,7 +235,7 @@ edits:
   expected_lines:
   - '[Run review-package PLAN_FILE MERGE_BASE HEAD; dispatch final code-reviewer, most capable model]'
   replace_lines:
-  - '[Invoke /review-branch-diff for final whole-branch review]'
+  - '[Invoke /requesting-branch-review for final whole-branch review]'
 - path: implementer-prompt.md
   op: replace
   start_line: 40
