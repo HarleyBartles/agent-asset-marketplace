@@ -38,14 +38,11 @@ def load_pack_registry() -> list[dict[str, Any]]:
 
 
 def _registry_root_record(pack: dict[str, Any], *, index: int) -> tuple[str, str, str]:
-    is_mega_pack = pack.get("is_mega_pack") is True
-    name_field = "mega_pack" if is_mega_pack else "bundle_name"
-    root_field = "mega_pack_root" if is_mega_pack else "plugin_root"
-    name = _require_nonblank_string(pack.get(name_field), path=PACK_REGISTRY_PATH, field_name=f"packs[{index}].{name_field}")
+    name = _require_nonblank_string(pack.get("bundle_name"), path=PACK_REGISTRY_PATH, field_name=f"packs[{index}].bundle_name")
     plugin_root = _require_nonblank_string(
-        pack.get(root_field),
+        pack.get("plugin_root"),
         path=PACK_REGISTRY_PATH,
-        field_name=f"packs[{index}].{root_field}",
+        field_name=f"packs[{index}].plugin_root",
     )
     category = _require_nonblank_string(
         pack.get("category"),

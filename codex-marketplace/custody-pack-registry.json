@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Editable inventory for deterministic projection-lane and mega-pack generation.",
+  "description": "Editable inventory for deterministic projection-lane generation.",
   "packs": [
 
     {

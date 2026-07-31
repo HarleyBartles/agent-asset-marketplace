@@ -5,7 +5,7 @@ Scope: `codex-marketplace/`
 This scope covers the Codex marketplace source root, including the marketplace
 manifest and the plugin source tree beneath it.
 
-Codex plugin first; generated GPT-safe skill zips second.
+Codex plugin first.
 
 Mesh-wise, this scope owns marketplace source/projection law, not repo-wide
 navigation. Keep `AGENTS.md` compact and let generated `INDEX.md` files carry
@@ -85,8 +85,8 @@ rules, and upstream-drain policy.
   plugin root claims to expose them.
 - Flag generated-export mismatches that would let the bundle source drift
   silently from the tracked marketplace source tree or Codex overlay source.
-- Flag any `skill.zip` found inside a source skill tree; canonical install
-  archives are derived from the staged Codex projection, not committed by hand.
+- Flag any source-tree install archive that is not a generated projection
+  artifact; canonical installs come from the staged Codex projection.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
 
 ## Maintenance responsibility

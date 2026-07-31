@@ -94,7 +94,7 @@ def load_pack_registry() -> list[dict[str, Any]]:
     return normalized
 
 
-PACKS = [pack for pack in load_pack_registry() if not pack.get("is_mega_pack")]
+PACKS = load_pack_registry()
 OPTIONAL_MANIFEST_FIELDS = (
     "marketplace_root",
     "canonical_source_roots",

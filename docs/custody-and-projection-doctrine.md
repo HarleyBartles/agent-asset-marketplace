@@ -96,24 +96,18 @@ The business-as-usual target for adding or updating a skill is:
 
 1. **Write source** — add or edit the skill under `sources/first_party/skills/`
    or snapshot it under `sources/third_party/`.
-2. **Add manifest entry** — declare the entry in the plugin's
-   `references/bundle-manifest.json` with `canonical_name`,
-   `source_category`, `content_mode`, `source_family`,
+2. **Add manifest entry** — declare the entry in the pack's
+   `codex-marketplace/custody-pack-registry.json` bundle `entries` with
+   `canonical_name`, `source_category`, `content_mode`, `source_family`,
    `canonical_source_path` (directory-level), and `local_path`.
-3. **Run one tool** — regenerate the projection with the designated tooling
-   (`py -3 tools/update_skill_artifacts.py --all`).
-5. **Regenerate proof surfaces** — run
-   `py -3 tools/generate_provenance_maps.py` and
-   `py -3 tools/generate_source_maps.py`.
-6. **Validate** — run `py -3 tools/validate_marketplace.py` and
-   `py -3 tools/project_skills.py --check` to confirm the projection and flat
-   zips match custody and manifest.
+3. **Regenerate projection** — run `tools/run marketplace --apply` to update
+   bundle manifests, source maps, provenance maps, projected skill trees, and
+   marketplace exports.
+4. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
 
-If a first-party skill is removed from a project pack but remains approved in
-`house-skills`, keep the source in custody and regenerate the projections so
-only the project pack loses the exposure. A skill may stay in `house-skills`
-while being absent from project-pack exposure unless the manifest explicitly
-justifies a project-specific appearance.
+If a first-party skill is removed from a project pack but remains in source
+custody, keep the source and regenerate the projections so only the pack loses
+the exposure. Retire a skill to provenance only when it is no longer supported.
 
 No Python edits for normal skill work. If the workflow requires editing Python
 to land a skill, that is a tooling gap to raise, not a step to silently absorb.
@@ -145,11 +139,8 @@ not hand-maintained. Run `py -3 tools/generate_provenance_maps.py` and
 `py -3 tools/generate_source_maps.py` to regenerate them. Both generators have
 `--check` mode that fails on drift.
 
-## Zip projection
+## Zip projection (retired)
 
-`generated/skill-zips/<skill>.zip` is a flat, deterministic archive of the
-staged Codex projection for each active `canonical_name`. The archive contains
-exactly one top-level folder named `<skill>/`, including `<skill>/SKILL.md`.
-There is no per-pack subdirectory and no `registry.json`. The projection is the
-same byte content installed into `codex-marketplace/plugins/<pack>/skills/<skill>/`;
-GPT-readiness is a property of the Codex projection itself, not a separate lane.
+Flat `skill.zip` exports under `generated/skill-zips/` and the `house-skills`
+mega-pack have been removed. The Codex plugin tree under
+`codex-marketplace/plugins/` is the canonical install surface.
