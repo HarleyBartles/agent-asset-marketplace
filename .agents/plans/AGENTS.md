@@ -16,9 +16,10 @@ publication rules.
   `tools/run heal --check` after overlay edits and before regeneration to catch
   line-number drift early.
 - Do not run `tools/run ci --check` on an uncommitted working tree. Regenerate
-  surfaces, stage all changes, commit, and let the pre-commit hook run the CI
-  preflight. If the hook must be bypassed, commit first and then run
-  `tools/run ci --check` separately.
+  surfaces, stage all changes, run `tools/run ci --check` on the staged tree
+  before committing, then commit and let the pre-commit hook re-run the CI
+  preflight. Only use `git commit --no-verify` if the hook is unavailable, with
+  a documented reason.
 - If a plan is intentionally incomplete or left open, say why inside the plan
   itself.
 - This is local worker guidance, not a future PR-blocker doctrine.
