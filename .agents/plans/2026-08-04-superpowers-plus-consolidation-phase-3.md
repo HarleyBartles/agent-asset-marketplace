@@ -76,7 +76,7 @@ The known first-party skill scripts are under these directories:
 - `unslop-engine/scripts/`
   - `unslop.py`, `validate_package.py`, `validate_unslop_output.py`
 
-- [ ] **Step 1: Verify the inventory and classify each script.**
+- [x] **Step 1: Verify the inventory and classify each script.**
 
   For every first-party skill script under `sources/first_party/skills/*/scripts/`, record:
   - Path and language (Python, PowerShell, shell).
@@ -87,13 +87,13 @@ The known first-party skill scripts are under these directories:
     - `mutating` — the script has an `--apply` mode that writes files or changes repo state.
     - `mixed` — the script supports both read-only (`--check`/`--help`) and mutating (`--apply`) paths; this is the standard shape for skill-bundled tools.
 
-- [ ] **Step 2: Produce the prioritized audit report.**
+- [x] **Step 2: Produce the prioritized audit report.**
 
   Write the report to `Z:\_agent-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md`. Do not commit the scratch file; it is planning input for Task 2.
 
   Priority for Task 2 is: scripts invoked from `SKILL.md` or other skills first, then scaffolders and utilities.
 
-- [ ] **Step 3: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 3: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -124,23 +124,23 @@ The "first set" is the scripts that are explicitly referenced by skill instructi
 
 Scaffolders and one-off utilities may be deferred if they are not invoked from active skills.
 
-- [ ] **Step 1: Refactor the highest-priority scripts first.**
+- [x] **Step 1: Refactor the highest-priority scripts first.**
 
   Add `argparse` with `--help`, `--check`, and `--apply`. Keep default behavior as `--check`. Classify every flag as `read-only` or `mutating` in help text. Add the `read-only`/`mutating`/`mixed` classification to the help header.
 
-- [ ] **Step 2: Add `SKILL.md` documentation for each updated script.**
+- [x] **Step 2: Add `SKILL.md` documentation for each updated script.**
 
   Under a new or existing "Bundled scripts" section, list each script, its purpose, and the canonical safe invocation (`<script> --check` or `<script> --help`).
 
-- [ ] **Step 3: Update `docs/skill-standards-policy.md`.**
+- [x] **Step 3: Update `docs/skill-standards-policy.md`.**
 
   Add the skill-bundled script CLI contract to the skill authoring standards. Reference the spec and `refresh_installed_skills.py` as the reference shape.
 
-- [ ] **Step 4: Commit the script and doc changes.**
+- [x] **Step 4: Commit the script and doc changes.**
 
   Keep each skill's script + doc changes in one commit per skill to keep the history reviewable.
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -165,7 +165,7 @@ Scaffolders and one-off utilities may be deferred if they are not invoked from a
 
 The validator is a new `repo-standards` script (`validate_skill_scripts.py`) that is invoked by `tools/run ci --check` as one of the standard preflight checks. It is not part of `tools/validate_marketplace.py`.
 
-- [ ] **Step 1: Design the validator.**
+- [x] **Step 1: Design the validator.**
 
   The validator should:
   - Walk `sources/first_party/skills/*/scripts/*`.
@@ -173,19 +173,19 @@ The validator is a new `repo-standards` script (`validate_skill_scripts.py`) tha
   - Run `<script> --check` and expect a meaningful exit code (`0` if no changes needed, non-zero if the script would need to act, `2` for unknown args).
   - Produce a machine-readable report of `OK` / `FAIL` per script.
 
-- [ ] **Step 2: Implement the validator as a `repo-standards` script.**
+- [x] **Step 2: Implement the validator as a `repo-standards` script.**
 
   Place it under `sources/first_party/skills/repo-standards/scripts/` and wire it into the `tools/run` target list so `ci --check` calls it. Name it consistently with other `repo-standards` scripts.
 
-- [ ] **Step 3: Update `repo-standards/SKILL.md`.**
+- [x] **Step 3: Update `repo-standards/SKILL.md`.**
 
   Add the validator to the "Read when" table and a "How to fix" note. Keep the skill body under the 500-word limit; move details to the new `references/skill-script-contract-validator.md`.
 
-- [ ] **Step 4: Run the validator in check mode and fix any regressions.**
+- [x] **Step 4: Run the validator in check mode and fix any regressions.**
 
   Run `tools/run repo-standards --check` (or the equivalent target) against the branch. Fix any newly discovered contract gaps in Task 2 scripts before committing. Add unit or integration tests for the validator in `tests/` if the repo has a testing convention for `repo-standards` scripts.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/repo-standards tools/run
@@ -193,7 +193,7 @@ The validator is a new `repo-standards` script (`validate_skill_scripts.py`) tha
   git commit -m "feat(repo-standards): add skill-bundled script CLI contract validator"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

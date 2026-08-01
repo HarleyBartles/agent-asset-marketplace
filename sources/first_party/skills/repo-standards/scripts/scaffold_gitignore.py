@@ -98,7 +98,7 @@ examples:
 
 The SDD workspace now lives outside the repo at:
 
-  <repo-root>/../_agents-scratch/<branch>/<plan-basename>/
+  <repo-root>/../_agent-scratch/<branch>/<plan-basename>/
 
 This script only cleans up stale in-repo ignore rules. It removes any root
 .gitignore block that mentions .agents/superpowers/sdd and deletes any

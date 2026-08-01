@@ -59,7 +59,7 @@ Each repo supplies its own `repo.local_skill_prefixes` in `.agents/plugins/marke
 The Superpowers+ SDD workspace lives outside the repo at:
 
 ```
-<repo-root>/../_agents-scratch/<branch>/<plan-basename>/
+<repo-root>/../_agent-scratch/<branch>/<plan-basename>/
 ```
 
 SDD outputs (task briefs, implementer reports, review packages, and progress
