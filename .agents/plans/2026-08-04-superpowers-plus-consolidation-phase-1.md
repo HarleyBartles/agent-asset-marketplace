@@ -299,6 +299,15 @@ following reviewer-profile and branch-review consolidation work in Phase 1:
   dispatching `reviewer` (or `reviewer-strong`) with the PR number and branch.
 - The `branch-reviewer` profile is no longer listed; all branch/PR diff review
   dispatches now route through `reviewer`/`reviewer-strong`.
+- `requesting-code-review/SKILL.md`, `reviewer.md`, `reviewer-fast.md`, and
+  `reviewer-strong.md` now require the orchestrator to provide a prepared
+  `<diff_path>` and optional `<pr_description>`; the reviewer subagent does not
+  resolve the diff itself. If the PR description references a design spec,
+  implementation plan, or epic roadmap, the reviewer reads those before the diff.
+- `tools/AGENTS.md` and `.agents/guides/pr-guide.md` now mandate the
+  preflight-before-commit workflow: regenerate, stage, run `tools/run ci --check`,
+  then commit. `git commit --no-verify` is a last-resort exception only when the
+  pre-commit hook is unavailable.
 
 Deferred to Phase 2 and beyond:
 

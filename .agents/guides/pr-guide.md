@@ -29,9 +29,11 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
 ## Repo-specific guidance
 
 - Work in an isolated worktree on a task branch.
-- Run the relevant validation before pushing:
-  - Marketplace changes: `tools/run marketplace --apply` then `tools/run ci --check`.
-  - Structural changes: `tools/run mesh --apply`.
+- Run the relevant validation before **every** commit:
+  - `tools/run marketplace --apply` (regenerates derived surfaces), then `git add`.
+  - `tools/run ci --check` (the preflight) on the staged tree before committing.
+  - If the pre-commit hook is not installed, run the preflight manually; only use
+    `git commit --no-verify` as a last resort and document the bypass.
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.
 - Push the branch and open a **draft** PR into `main` unless direct-main work is explicitly authorized.
 - A valid repo-work return must include one of:

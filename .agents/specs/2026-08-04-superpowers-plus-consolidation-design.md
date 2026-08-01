@@ -174,6 +174,14 @@ targets belong in the Plan 1 task list.
 - `.agents/superpowers/plans/` → `.agents/plans/`.
 - `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json` — regenerate after retirements.
 - `provenance/first-party-skills.md` — regenerate after retirements.
+- `sources/first_party/skills/selecting-a-subagent/assets/reviewer.md` — update to `model: GLM-5.2` and define a prepared-diff review contract.
+- `sources/first_party/skills/selecting-a-subagent/assets/reviewer-strong.md` — keep `model: swe-1-7` and the same prepared-diff contract.
+- `sources/first_party/skills/selecting-a-subagent/assets/reviewer-fast.md` — new `model: swe-1-6` fast re-review profile.
+- `sources/first_party/skills/selecting-a-subagent/SKILL.md` and `references/devin-desktop-profile.md` — add `reviewer-fast` dispatch guidance and the `<diff_path>` / `<pr_description>` contract.
+- `sources/first_party/skills/requesting-code-review/SKILL.md` — update branch/PR diff review lane to generate the diff and PR description before dispatching a reviewer subagent.
+- `sources/first_party/skills/requesting-branch-review/` — retire; the skill is deleted and removed from `codex-marketplace/custody-pack-registry.json`.
+- `tools/AGENTS.md` — clarify that `tools/run ci --check` is the preflight run on the staged tree before commit, not after a `--no-verify` commit.
+- `.agents/guides/pr-guide.md` — document the preflight-before-commit workflow and the draft-PR policy.
 
 ### Deferred to Phase 2 and beyond
 
