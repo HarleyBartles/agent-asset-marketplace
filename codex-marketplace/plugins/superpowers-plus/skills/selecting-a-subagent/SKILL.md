@@ -27,7 +27,6 @@ metadata:
   related_skills:
   - dispatching-parallel-agents
   - risk-gates
-  - work-mode-router
   - repo-worker-base
   use_after:
   - inspecting-the-environment

@@ -45,7 +45,7 @@ Break large goals into a roadmap of consecutive plans, execute them, and keep th
 
 1. Read the spec from brainstorming or the human.
 2. Run `handoff-gates` spec-readiness.
-3. Create `.agents/superpowers/roadmaps/YYYY-MM-DD-<epic-name>.md` with a plan sequence table.
+3. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
 4. Use `writing-plans` to write Plan 1 with roadmap context.
 5. Run `handoff-gates` plan-readiness.
 6. Hand off to `executing-plans` or `subagent-driven-development`.

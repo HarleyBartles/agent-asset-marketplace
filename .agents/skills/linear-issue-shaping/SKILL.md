@@ -66,7 +66,7 @@ For ordinary worker issues, keep the safe default as `assignee: me`, with `deleg
 When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
 
 ```text
-work-mode-router -> /using-superpowers-plus -> linear-issue-shaping -> verification-before-completion
+/using-superpowers-plus -> linear-issue-shaping -> verification-before-completion
 ```
 
 Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.
@@ -94,7 +94,7 @@ For worker-ready implementation issues, keep the issue body compact and treat it
 - goal and repo target stay in the issue body;
 - dense scope, implementation detail, validation, and return evidence move into attached Linear documents;
 - a compact route-state block is required for non-trivial repo/code issues to support workflow phase classification;
-- the route-state block contains workflow phase markers (design_needed, planning_needed, etc.) and is used by work-mode-router to classify the current phase;
+- the route-state block contains workflow phase markers (design_needed, planning_needed, etc.);
 - do not put the full implementation plan, validation matrix, or dense evidence dump into the route-state block;
 - do not use the route-state block as a readiness state or second plan;
 - do not keep a separate compactor trigger for normal worker issue shaping.

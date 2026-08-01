@@ -10,7 +10,7 @@ This guide is the contributor entry point for `agent-asset-marketplace`. It rout
 
 ## Contributor workflow
 
-1. **Start with `/work-mode-router`** to classify the request and route to the correct stage.
+1. **Start with `/using-superpowers-plus`** to classify the request and route to the correct stage.
 2. **Design** — read [`.agents/guides/design-guide.md`](./.agents/guides/design-guide.md) and invoke `/brainstorming` to produce a spec.
 3. **Planning** — read [`.agents/guides/planning-guide.md`](./.agents/guides/planning-guide.md) and invoke `/writing-plans` to produce an implementation plan.
 4. **Implementation** — read [`.agents/guides/implementing-guide.md`](./.agents/guides/implementing-guide.md) and invoke `/executing-plans` or `/subagent-driven-development`.
@@ -20,7 +20,7 @@ Always work in an isolated worktree. Local file changes are not repo completion;
 
 ## Routing to skills
 
-- `/work-mode-router` for workflow classification.
+- `/using-superpowers-plus` for workflow classification.
 - `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
 - `/repo-standards` for guide layout and workflow order.
 - Stage skills: `/brainstorming`, `/writing-plans`, `/executing-plans`, `/subagent-driven-development`, `/requesting-code-review`.
