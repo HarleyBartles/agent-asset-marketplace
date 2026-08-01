@@ -152,6 +152,8 @@ tooling — its CLI if one is available, or the creation URL most forges
 print when you push — following the repo's PR template and conventions if
 present, and report the URL to your human partner.
 
+Before opening the PR or flipping it out of draft, consult `.agents/guides/pr-guide.md` `## Draft PR policy` so the PR opens as draft and only flips to ready once the preflight passes.
+
 Keep the worktree — your human partner iterates on PR feedback there.
 
 ### Option 3: Keep As-Is

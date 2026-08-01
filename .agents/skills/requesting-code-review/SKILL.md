@@ -152,3 +152,5 @@ You: [Fix progress indicators]
 
 See templates at [code-reviewer.md](code-reviewer.md) for commit-range review and
 [reviewer-prompt.md](reviewer-prompt.md) for prepared branch/PR diff review.
+
+Before requesting review on a PR — or changing a PR's draft state to signal readiness — consult `.agents/guides/pr-guide.md` `## Draft PR policy` so the review request aligns with the repo's draft-to-ready transition.

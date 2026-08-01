@@ -252,15 +252,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The draft-PR policy is documented in `pr-guide.md` and referenced from review and closeout skills.
 - The policy covers when to open as draft, when to mark ready, and any repo-specific exceptions for this repo and for consumers.
 
-- [ ] **Step 1: Draft the policy.**
+- [x] **Step 1: Draft the policy.**
 
   Add a "Draft PR policy" section to `.agents/guides/pr-guide.md` with rules for this repo and a consumer-canonical variant. Cover: open as draft for WIP, mark ready when preflight passes, keep branch review/closeout skills aware of the policy.
 
-- [ ] **Step 2: Add policy triggers to relevant skills.**
+- [x] **Step 2: Add policy triggers to relevant skills.**
 
   Add one sentence to `using-github-mcp`, `requesting-code-review`, and `finishing-a-development-branch` that tells the agent to consult `pr-guide.md` before changing a PR's draft state.
 
-- [ ] **Step 3: Commit.**
+- [x] **Step 3: Commit.**
 
   ```bash
   git add .agents/guides/pr-guide.md sources/first_party/skills/using-github-mcp sources/first_party/skills/requesting-code-review sources/first_party/skills/finishing-a-development-branch
@@ -268,7 +268,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "docs: add cross-repo draft-PR policy"
   ```
 
-- [ ] **Step 4: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 4: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

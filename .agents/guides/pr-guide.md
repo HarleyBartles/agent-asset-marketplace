@@ -16,15 +16,24 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
 
 ## Draft PR policy
 
+This repo's rules:
+
 - Open pull requests as **draft**.
 - Keep a PR in draft while iterating, running local validation, and performing self-review.
 - Only flip a PR out of draft when:
   - self-review is complete,
-  - the relevant validation commands pass,
+  - the preflight (`tools/run ci --check` on the staged tree) passes,
   - the branch is ready for review or merge.
 - This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
 - After flipping a PR to ready, monitor CI and address failures before requesting human review.
 - The PR body must include publication proof per root `AGENTS.md`.
+
+Consumer-canonical variant:
+
+- Repos that adopt the `repo-standards` skill inherit the same policy from `sources/first_party/skills/repo-standards/templates/pr-guide.md`: open as draft for WIP, flip to ready only after self-review and a green preflight, and gate `pull_request` workflows so CI does not run on drafts.
+- Consumer repos substitute their own preflight command for `tools/run ci --check`; the lifecycle (draft while WIP, ready when preflight is green) is identical.
+- Consumer repos with no draft-aware CI should still follow the draft-while-iterating convention so reviewers are not notified until the author signals readiness.
+- The review (`/requesting-code-review`) and closeout (`/finishing-a-development-branch`) skills consult this policy before changing a PR's draft state.
 
 ## Repo-specific guidance
 
