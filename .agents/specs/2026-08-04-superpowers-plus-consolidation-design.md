@@ -111,7 +111,7 @@ to the right stage guide and skill.
 |---|---|---|
 | 1 | Layout and router cleanup | Remove visual companion, move `specs`/`plans`, off-repo SDD scratch, make `using-superpowers-plus` the sole bootstrap, retire `work-mode-router` and `bootstrap-router` |
 | 2 | Review and subagent cleanup | Merge `requesting-branch-review` into `requesting-code-review`, consolidate `selecting-a-subagent` profiles, move base code-review contract into `base-doctrine` |
-| 3 | Doctrine and guide thinning | Move `report-hygiene` to `writing-with-clarity`, thin `code-review-guide.md`, fold `mark-skill-authoring`, thin `skill-standards-policy.md` |
+| 3 | Skill script contracts, deployment ownership, and doctrine thinning | Standardize `--help`/`--check` on all skill-bundled scripts; add a `repo-standards` CLI-contract validator; move vendor profile deployment from `refreshing-installed-skills` to `repo-standards`; move `report-hygiene` to `writing-with-clarity`; thin `code-review-guide.md`; fold `mark-skill-authoring`; thin `skill-standards-policy.md` |
 | 4 | Validation and mesh refresh | Regenerate marketplace, refresh installed skills, update `INDEX.md`, run `tools/run ci --check` |
 
 ## Phase 1 scope
@@ -194,10 +194,15 @@ See `.agents/plans/2026-08-04-superpowers-plus-consolidation-phase-2.md` for the
 - Cross-repo draft-PR policy implementation.
 - Vendor profile installation and third-party profile packaging.
 
-Phase 3 and beyond:
+Phase 3 now also includes the work deferred from Phase 2:
 
-- Moving `report-hygiene`.
+- Skill-bundled script CLI contract (`--help`/`--check` standardization and validator).
+- Vendor profile deployment ownership moved to `repo-standards`.
+- Moving `report-hygiene` to `writing-with-clarity`.
 - Folding `mark-skill-authoring`.
+
+Phase 4 and beyond:
+
 - Renaming `using-superpowers-plus` (the name stays; the body changes).
 
 ## Risks and mitigations
