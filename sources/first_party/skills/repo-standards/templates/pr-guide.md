@@ -5,7 +5,7 @@ Use this guide for pull-request workflow and publication proof in this repo.
 ## Before you begin
 
 - Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
-- Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for validation commands.
+- Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for validation commands.
 - Invoke `/repo-worker-base`.
 
 ## When to use

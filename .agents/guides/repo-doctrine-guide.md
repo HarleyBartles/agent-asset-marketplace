@@ -1,6 +1,6 @@
 # Repo Doctrine Guide
 
-This guide contains the worker procedures and reference pointers that were previously in the root `AGENTS.md` and `tools/AGENTS.md`. It is a guide, not operative law; the root `AGENTS.md` and `.agents/docs/mesh-policy.md` remain the rule surfaces.
+This guide contains the worker procedures and reference pointers that were previously in the root `AGENTS.md` and `tools/AGENTS.md` (now `.devin/rules/tools.md`). It is a guide, not operative law; the root `AGENTS.md` and `.agents/docs/mesh-policy.md` remain the rule surfaces.
 
 ## Testing instructions
 
