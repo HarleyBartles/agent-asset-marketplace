@@ -427,7 +427,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - No `review-branch-diff` file, directory, or registry entry remains in repo source or projected surfaces.
 - The user-local skill is removed after explicit approval, or the blocker is recorded.
 
-- [ ] **Step 1: Remove any repo-owned copies.**
+- [x] **Step 1: Remove any repo-owned copies.**
 
   If the audit found `review-branch-diff` under `sources/first_party/skills/`, `.agents/skills/`, or `codex-marketplace/plugins/`, delete them with git tracking:
 
@@ -437,7 +437,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   Remove-Item -Recurse -Force codex-marketplace\plugins\*\skills\review-branch-diff -ErrorAction SilentlyContinue
   ```
 
-- [ ] **Step 2: Remove the user-local skill after approval.**
+- [x] **Step 2: Remove the user-local skill after approval.**
 
   If the repo owner approves the destructive user-local cleanup, run:
 
@@ -455,11 +455,11 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 
   If approval is withheld, record the blocker in the provenance note and proceed.
 
-- [ ] **Step 3: Clean any stale registry or provenance entries.**
+- [x] **Step 3: Clean any stale registry or provenance entries.**
 
   If the audit found `review-branch-diff` in `codex-marketplace/custody-pack-registry.json` or `.agents/skills/.provenance.json`, edit the files to remove the entries. Then run `py -3 tools/run.py installed-skills --apply` to resync the installed skill surface.
 
-- [ ] **Step 4: Verify the repo tree is clean of `review-branch-diff` files.**
+- [x] **Step 4: Verify the repo tree is clean of `review-branch-diff` files.**
 
   ```powershell
   Select-String -Path "codex-marketplace\custody-pack-registry.json" -Pattern "review-branch-diff"
@@ -467,7 +467,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   if (Test-Path "sources\first_party\skills\review-branch-diff") { throw 'repo source still exists' }
   ```
 
-- [ ] **Step 5: Write the provenance note.**
+- [x] **Step 5: Write the provenance note.**
 
   Create `provenance/2026-08-04-review-branch-diff-retired.md` with the following content:
 
@@ -507,7 +507,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   Branch diff review behavior is now owned by `sources/first_party/skills/requesting-code-review/` and `sources/first_party/skills/subagent-driven-development/`.
   ```
 
-- [ ] **Step 6: Commit the retirement and provenance.**
+- [x] **Step 6: Commit the retirement and provenance.**
 
   ```bash
   git add -A
@@ -522,7 +522,7 @@ Generated with [Devin](https://devin.ai)
 Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
   ```
 
-- [ ] **Step 7: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 7: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
