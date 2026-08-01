@@ -53,10 +53,9 @@ You MUST create a task for each of these items and complete them in order:
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — in sections scaled to their complexity, get user approval after each section
 5. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-7. **Spec readiness gate** — use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
-8. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+6. **Spec self-review & readiness gate** — quick inline check for placeholders, contradictions, ambiguity, scope; then use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
+7. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
+8. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -70,9 +69,8 @@ digraph brainstorming {
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
     "Write design doc" [shape=box];
-    "Spec self-review\n(fix inline)" [shape=box];
+    "Spec self-review &\nreadiness gate" [shape=box];
     "User reviews spec?" [shape=diamond];
-    "Spec readiness gate" [shape=box];
     "Invoke writing-plans skill" [shape=doublecircle];
 
     "Explore project context" -> "Scope too large for one spec?";
@@ -83,9 +81,9 @@ digraph brainstorming {
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
     "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Spec self-review\n(fix inline)";
-    "Spec self-review\n(fix inline)" -> "Spec readiness gate";
-    "Spec readiness gate" -> "User reviews spec?" [label="meets floor"];
+    "Write design doc" -> "Spec self-review &\nreadiness gate";
+    "Spec self-review &\nreadiness gate" -> "Spec self-review &\nreadiness gate" [label="fix inline"];
+    "Spec self-review &\nreadiness gate" -> "User reviews spec?" [label="meets floor"];
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
     "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
 }
