@@ -394,7 +394,7 @@ def _build_parser() -> argparse.ArgumentParser:
         description="Create a git worktree at the canonical sibling location. (mixed: supports --check and --apply)",
         epilog="Default mode is --check. Use --apply to create the worktree.",
     )
-    parser.add_argument("branch", help="branch name to create (read-only during --check)")
+    parser.add_argument("branch", nargs="?", default=None, help="branch name to create (read-only during --check)")
     parser.add_argument(
         "--base-ref",
         default=None,
@@ -435,6 +435,9 @@ def main(argv: list[str] | None = None) -> int:
     branch = _normalize_branch_name(args.branch)
 
     if args.apply:
+        if args.branch is None:
+            print("error: branch is required for --apply", file=sys.stderr)
+            return 2
         base_ref = args.base_ref
         if base_ref is None:
             base_ref, _ = _default_base_ref(main_repo_root)
@@ -447,6 +450,9 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     # Default / --check mode
+    if args.branch is None:
+        print("OK pass a branch to check a specific worktree")
+        return 0
     exit_code, summary, _ = _check_worktree(main_repo_root, branch, args.base_ref)
     print(summary)
     return exit_code

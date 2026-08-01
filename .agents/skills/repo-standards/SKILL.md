@@ -41,6 +41,7 @@ Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that ma
 | How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
 | The repo's local guide mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
+| Skill-bundled script CLI contract failures | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md) |
 
 ## Composition contract
 

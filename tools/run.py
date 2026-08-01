@@ -347,6 +347,17 @@ def _run_lint(ctx: Ctx) -> None:
         _run_ruff(files, ctx, fix=True)
 
 
+def _validate_skill_scripts(ctx: Ctx) -> None:
+    _run(
+        [
+            sys.executable,
+            "sources/first_party/skills/repo-standards/scripts/validate_skill_scripts.py",
+            "--check",
+        ],
+        ctx,
+    )
+
+
 def _run_repo_standards(ctx: Ctx) -> None:
     if ctx.mode == "check":
         _run(
@@ -357,6 +368,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
             ],
             ctx,
         )
+        _validate_skill_scripts(ctx)
     else:
         cmd = [
             sys.executable,

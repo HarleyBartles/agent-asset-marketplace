@@ -183,6 +183,8 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "target",
+        nargs="?",
+        default=None,
         help="branch name or absolute path of the worktree to remove (read-only during --check)",
     )
     parser.add_argument(
@@ -212,6 +214,9 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = _repo_root()
 
     if args.apply:
+        if args.target is None:
+            print("error: target is required for --apply", file=sys.stderr)
+            return 2
         try:
             worktree = _resolve_worktree(repo_root, args.target)
         except RuntimeError as exc:
@@ -219,6 +224,9 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         return _apply_remove(repo_root, worktree, args.force)
 
+    if args.target is None:
+        print("OK pass a target to check a specific worktree")
+        return 0
     exit_code, _, summary = _check_worktree(repo_root, args.target)
     print(summary)
     return exit_code
