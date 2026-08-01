@@ -92,7 +92,7 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
 
     runbooks = repo / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
-    guide_files = {
+    runbook_files = {
         "publication.md": "# Publication proof\n",
         "testing.md": "# Testing instructions\n",
         "code-style.md": "# Code style guidelines\n",
@@ -100,7 +100,7 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "pr.md": "# PR instructions\n",
         "security.md": "# Security considerations\n",
     }
-    for name, content in guide_files.items():
+    for name, content in runbook_files.items():
         (runbooks / name).write_text(content, encoding="utf-8", newline="\n")
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
 
@@ -311,7 +311,7 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
         "- repo-guide-policy\n"
-        "- guides-agents-md\n"
+        "- runbooks-agents-md\n"
         "- review-entry\n"
         "- contributing-entry\n"
         "- root-gitignore\n"
@@ -319,7 +319,7 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-guide-policy.md").write_text(
-        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
     )
@@ -370,7 +370,7 @@ def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Pa
 
     policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
     policy_path.parent.mkdir(parents=True)
-    policy_path.write_text("# Repo Guide Policy\n\nNo mapping.\n", encoding="utf-8", newline="\n")
+    policy_path.write_text("# Repo Runbook Policy\n\nNo mapping.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
         [sys.executable, str(SCAFFOLD_REPO_GUIDE_POLICY), "--check"],
@@ -507,7 +507,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
         "- repo-guide-policy\n"
-        "- guides-agents-md\n"
+        "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
         "- root-gitignore\n"
@@ -515,7 +515,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-guide-policy.md").write_text(
-        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
     )
@@ -546,7 +546,7 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
         "# Contributing\n\n"
         "Our own contributor process.\n\n"
         "## Required skill invocations\n\n"
-        "- `/repo-standards` for repo-shape and guide routing.\n"
+        "- `/repo-standards` for repo-shape and runbook routing.\n"
         "- `/repo-worker-base` for worktree, branch, validation, and publication boundaries.\n",
         encoding="utf-8",
         newline="\n",
@@ -649,7 +649,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
         "- repo-guide-policy\n"
-        "- guides-agents-md\n"
+        "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
         "- root-gitignore\n"
@@ -657,7 +657,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-guide-policy.md").write_text(
-        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
     )
@@ -694,10 +694,10 @@ def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> N
     policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
     policy_path.parent.mkdir(parents=True)
     policy_path.write_text(
-        "# Repo Guide Policy\n\n"
+        "# Repo Runbook Policy\n\n"
         "This repository uses repo-standards.\n\n"
         "## Standard-to-local mapping\n\n"
-        "| Standard guide | Local path |\n|---|---|\n"
+        "| Standard runbook | Local path |\n|---|---|\n"
         "| code-review.md | `.agents/runbooks/code-review.md` |\n\n"
         "## Exceptions\n\n"
         "None.\n",
@@ -728,7 +728,7 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
         "- ci-preflight-ps1\n"
         "- ci-preflight-sh\n"
         "- repo-guide-policy\n"
-        "- guides-agents-md\n"
+        "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
         "- contributing-entry\n"
@@ -737,7 +737,7 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-guide-policy.md").write_text(
-        f"# Repo guide policy\n\n## Exceptions\n\n{exceptions}",
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
     )

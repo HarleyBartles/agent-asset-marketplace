@@ -1,6 +1,6 @@
-# Testing Guide
+# Testing Runbook
 
-Use this guide for the test commands and conventions in `agent-asset-marketplace`.
+Use this runbook for the test commands and conventions in `agent-asset-marketplace`.
 
 ## Before you begin
 

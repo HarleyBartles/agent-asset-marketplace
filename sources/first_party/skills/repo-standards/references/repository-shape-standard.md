@@ -14,7 +14,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
 - `.agents/runbooks/<standard-runbook>.md` for the core and declared runbook set.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
-- `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-guides`).
+- `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
 
 ## Router AGENTS.md model
 
@@ -35,7 +35,7 @@ The `## Routing pointers` section must list resolvable links to the scoped surfa
 Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
 
 - `scaffold-repo-guide-policy` generates `.agents/docs/repo-guide-policy.md` from the standard template.
-- `scaffold-guides` generates missing `.agents/runbooks/*.md` files from `repo-guide-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
+- `scaffold-runbooks` generates missing `.agents/runbooks/*.md` files from `repo-guide-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
 - `scaffold-ci-preflight` generates `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1` from the skill templates.

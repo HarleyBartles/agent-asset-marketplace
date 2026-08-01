@@ -1,10 +1,10 @@
-# Repo Guide Policy
+# Repo Runbook Policy
 
 This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` first to route to the relevant stage skill, then invoke `/repo-standards` when the task touches repo shape, runbook layout, or scaffolds.
 
 ## Standard-to-local mapping
 
-| Standard guide | Local path | Status |
+| Standard runbook | Local path | Status |
 |---|---|---|
 | design.md | `.agents/runbooks/design.md` | required |
 | planning.md | `.agents/runbooks/planning.md` | required |
@@ -19,7 +19,7 @@ This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` f
 
 Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed guides/routed surfaces.
 
-## Additional repo-specific guides
+## Additional repo-specific runbooks
 
 - `marketplace-generation.md` — because this repo is an asset marketplace.
 - `skill-authoring.md` — because this repo authors skills.

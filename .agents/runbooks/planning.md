@@ -1,6 +1,6 @@
-# Planning Guide
+# Planning Runbook
 
-Use this reference when planning work in the agent-asset-marketplace repo — before writing an implementation plan, before touching code. This guide covers the planner workflow: what to read before planning, what skills to invoke, what a plan must contain, and where plan artifacts go.
+Use this reference when planning work in the agent-asset-marketplace repo — before writing an implementation plan, before touching code. This runbook covers the planner workflow: what to read before planning, what skills to invoke, what a plan must contain, and where plan artifacts go.
 
 ## Before You Begin: Read the Standards
 

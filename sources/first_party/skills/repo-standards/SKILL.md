@@ -1,6 +1,6 @@
 ---
 name: repo-standards
-description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, guide layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
+description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, runbook layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
 metadata:
   source-id: repo-standards
   source-path: sources/first_party/skills/repo-standards/SKILL.md
@@ -36,23 +36,23 @@ Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that ma
 
 | Need | Read |
 | --- | --- |
-| How a repo's guides should be laid out | [references/repository-guide-standard.md](references/repository-guide-standard.md) |
+| How a repo's runbooks should be laid out | [references/repository-runbook-standard.md](references/repository-runbook-standard.md) |
 | How a repo's shape should be checked/applied | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
 | How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
-| The repo's local guide mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
+| The repo's local runbook mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
 | Skill-bundled script CLI contract failures | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md) |
 | Vendor subagent profile deployment | [references/vendor-profile-deployment.md](references/vendor-profile-deployment.md) |
 
 ## Composition contract
 
-For any guide work, use:
+For any runbook work, use:
 
 ```text
-repo-standards -> repo-worker-base -> local guide -> selected Superpowers lane
+repo-standards -> repo-worker-base -> local runbook -> selected Superpowers lane
 ```
 
-`repo-standards` supplies the universal guide standard and workflow order. `repo-worker-base` supplies worktree, branch, validation, and publication boundaries. The local guide supplies repo-specific details. The Superpowers lane supplies stage technique.
+`repo-standards` supplies the universal runbook standard and workflow order. `repo-worker-base` supplies worktree, branch, validation, and publication boundaries. The local runbook supplies repo-specific details. The Superpowers lane supplies stage technique.
 
 ## Workflow order
 
@@ -70,7 +70,7 @@ After the owning Superpowers stage skill has routed you (e.g., `/writing-plans` 
 - the task involves scaffolds, runbook layout, or the `repository-shape-manifest.json`.
 
 The typical `repo-standards` workflow is:
-1. Read `references/repository-guide-standard.md` and `references/repository-shape-standard.md`.
+1. Read `references/repository-runbook-standard.md` and `references/repository-shape-standard.md`.
 2. Invoke `/repo-worker-base` if the work touches worktree, branch, validation, or publication.
 3. Read the repo's `.agents/docs/repo-guide-policy.md`.
 4. Apply or check the surfaces the stage skill needs.
@@ -82,4 +82,4 @@ The typical `repo-standards` workflow is:
 - Use `--force` to overwrite an existing scaffolded surface. Without `--force`, the scaffolds create missing files and leave existing ones alone.
 - `repo-standards` supports `--apply --yes` to create missing surfaces and `--apply --yes --force` to overwrite drifted surfaces.
 
-For the full list of required surfaces, guide set, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-guide-standard.md](references/repository-guide-standard.md).
+For the full list of required surfaces, runbook set, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-runbook-standard.md](references/repository-runbook-standard.md).

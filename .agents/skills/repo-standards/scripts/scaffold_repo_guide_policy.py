@@ -36,7 +36,7 @@ def _template_path() -> Path:
 def _has_required_boilerplate(content: str) -> bool:
     lines = [line.strip() for line in content.splitlines()]
     return (
-        "# Repo Guide Policy" in lines
+        "# Repo Runbook Policy" in lines
         and "## Standard-to-local mapping" in lines
         and "## Exceptions" in lines
     )
@@ -49,7 +49,7 @@ examples:
   %(prog)s                       write repo-guide-policy.md if it is missing
   %(prog)s --force               overwrite repo-guide-policy.md with the template
 
-This file maps the cross-repo guide standard to the repo's local paths and
+This file maps the cross-repo runbook standard to the repo's local paths and
 records any surface exceptions under ## Exceptions. The boilerplate check
 ensures the heading, standard mapping section, and exceptions section are
 present.

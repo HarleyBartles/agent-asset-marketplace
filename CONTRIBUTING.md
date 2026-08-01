@@ -1,6 +1,6 @@
 # Contributing
 
-This guide is the contributor entry point for `agent-asset-marketplace`. It routes to the stage guides and the relevant repo-worker-pack and Superpowers skills.
+This runbook is the contributor entry point for `agent-asset-marketplace`. It routes to the stage runbooks and the relevant repo-worker-pack and Superpowers skills.
 
 ## Before you begin
 

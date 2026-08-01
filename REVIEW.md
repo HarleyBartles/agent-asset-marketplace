@@ -5,7 +5,7 @@ This file is the repo's review entry point. Code-review agents discover it autom
 ## Pre-review reading
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
-- Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's mapping to the cross-repo guide standard.
+- Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's mapping to the cross-repo runbook standard.
 - Read [`.agents/runbooks/code-review.md`](./.agents/runbooks/code-review.md) for detailed review methodology.
 
 ## Required skill invocations

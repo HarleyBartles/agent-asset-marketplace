@@ -1,10 +1,10 @@
-# Repo Guide Policy
+# Repo Runbook Policy
 
 This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` first to route to the relevant stage skill, then invoke `/repo-standards` when the task touches repo shape, runbook layout, or scaffolds.
 
 ## Standard-to-local mapping
 
-| Standard guide | Local path | Status |
+| Standard runbook | Local path | Status |
 |---|---|---|
 | design.md | `.agents/runbooks/design.md` | required |
 | planning.md | `.agents/runbooks/planning.md` | required |
@@ -17,9 +17,9 @@ This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` f
 | pr.md | `.agents/runbooks/pr.md` | required |
 | code-style.md | `.agents/runbooks/code-style.md` |  |
 
-## Additional repo-specific guides
+## Additional repo-specific runbooks
 
-- <!-- list repo-specific guides here -->
+- <!-- list repo-specific runbooks here -->
 
 ## Root contributor and review surfaces
 

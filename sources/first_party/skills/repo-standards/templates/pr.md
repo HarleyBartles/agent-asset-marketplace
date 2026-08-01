@@ -1,6 +1,6 @@
-# Pull request guide
+# Pull request runbook
 
-Use this guide for pull-request workflow and publication proof in this repo.
+Use this runbook for pull-request workflow and publication proof in this repo.
 
 ## Before you begin
 

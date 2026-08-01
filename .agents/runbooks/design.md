@@ -1,4 +1,4 @@
-# Design Guide
+# Design Runbook
 
 Use this reference when turning an idea into a repo-ready design spec for the agent-asset-marketplace repo. This guide only adds repo-specific design and handoff rules. The general brainstorming workflow comes from `/brainstorming`.
 

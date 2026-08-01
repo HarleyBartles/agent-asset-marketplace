@@ -1,6 +1,6 @@
-# Marketplace Generation Guide
+# Marketplace Generation Runbook
 
-Use this reference when working with marketplace generation, validation, and regeneration in the agent-asset-marketplace repo. This guide covers the canonical tooling, when to regenerate, and what validation to run.
+Use this reference when working with marketplace generation, validation, and regeneration in the agent-asset-marketplace repo. This runbook covers the canonical tooling, when to regenerate, and what validation to run.
 
 ## Before You Begin: Read the Standards
 

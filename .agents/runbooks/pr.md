@@ -1,6 +1,6 @@
-# PR Guide
+# PR Runbook
 
-Use this guide for pull-request workflow and publication proof in `agent-asset-marketplace`.
+Use this runbook for pull-request workflow and publication proof in `agent-asset-marketplace`.
 
 ## Before you begin
 

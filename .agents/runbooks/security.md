@@ -1,6 +1,6 @@
-# Security Guide
+# Security Runbook
 
-Use this guide for repo-specific security posture when working in `agent-asset-marketplace`.
+Use this runbook for repo-specific security posture when working in `agent-asset-marketplace`.
 
 ## Before you begin
 

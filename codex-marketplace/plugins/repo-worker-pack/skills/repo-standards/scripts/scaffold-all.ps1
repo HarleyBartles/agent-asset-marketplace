@@ -11,7 +11,7 @@ foreach ($a in $args) {
 Usage: scaffold-all.ps1 [--check] [--force]
 
 Runs the standard repo-standards scaffolds in order:
-  scaffold-repo-guide-policy, scaffold-guides, scaffold-review,
+  scaffold-repo-guide-policy, scaffold-runbooks, scaffold-review,
   scaffold-contributing, scaffold-ci-preflight, scaffold-gitignore,
   scaffold-agents-md, scaffold-marketplace-json
 
@@ -27,7 +27,7 @@ with --help to learn what it writes and validates.
 }
 
 $ScriptDir = (Resolve-Path $PSScriptRoot).Path
-$scripts = @('scaffold-repo-guide-policy', 'scaffold-guides', 'scaffold-review', 'scaffold-contributing', 'scaffold-ci-preflight', 'scaffold-gitignore', 'scaffold-agents-md', 'scaffold-marketplace-json')
+$scripts = @('scaffold-repo-guide-policy', 'scaffold-runbooks', 'scaffold-review', 'scaffold-contributing', 'scaffold-ci-preflight', 'scaffold-gitignore', 'scaffold-agents-md', 'scaffold-marketplace-json')
 
 foreach ($name in $scripts) {
     Write-Host "==> running ${name}"
