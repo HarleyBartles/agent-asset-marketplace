@@ -337,6 +337,20 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             normalized_zones.append(updated_zone)
             continue
         normalized_zones.append(zone)
+    agents_md_replacements = {
+        "codex-marketplace/AGENTS.md": ".devin/rules/codex-marketplace.md",
+        "codex-marketplace/plugins/AGENTS.md": ".devin/rules/codex-plugins.md",
+        "sources/third_party/AGENTS.md": ".devin/rules/third-party.md",
+        "provenance/AGENTS.md": ".devin/rules/provenance.md",
+        "docs/AGENTS.md": ".devin/rules/docs.md",
+        ".agents/plans/AGENTS.md": ".devin/rules/plans.md",
+        "tools/AGENTS.md": ".devin/rules/tools.md",
+    }
+    for zone in normalized_zones:
+        if isinstance(zone, dict):
+            nearest = zone.get("nearest_scoped_agents_md")
+            if nearest in agents_md_replacements:
+                zone["nearest_scoped_agents_md"] = agents_md_replacements[nearest]
     return normalized_zones
 
 

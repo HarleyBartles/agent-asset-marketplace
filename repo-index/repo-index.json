@@ -30,7 +30,7 @@
       "path": "codex-marketplace",
       "purpose": "Codex marketplace source root and export manifest surface.",
       "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/codex-marketplace.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py"
@@ -52,7 +52,7 @@
       "path": "codex-marketplace/plugins",
       "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques.",
       "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py"
@@ -63,7 +63,7 @@
       "path": "codex-marketplace/plugins/frontend-pack",
       "purpose": "Browser frontend implementation guidance with shared architecture, DOM UI, React-hosted 3D, and frontend QA surfaces.",
       "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py"
@@ -74,7 +74,7 @@
       "path": "codex-marketplace/plugins/superpowers-plus",
       "purpose": "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+.",
       "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py",
@@ -86,7 +86,7 @@
       "path": "sources/third_party",
       "purpose": "Third-party source custody for the retained unslop, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
       "surface_kind": "vendored",
-      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/third-party.md",
       "guidance_scope": "repo-owned-guidance",
       "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
       "key_validation_scripts": [
@@ -99,7 +99,7 @@
       "path": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
       "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.2.0 release snapshot.",
       "surface_kind": "vendored",
-      "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/third-party.md",
       "guidance_scope": "repo-owned-guidance",
       "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
       "key_validation_scripts": [
@@ -112,7 +112,7 @@
       "path": "provenance",
       "purpose": "Retained provenance notes, trust records, and custody evidence.",
       "surface_kind": "provenance",
-      "nearest_scoped_agents_md": "provenance/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/provenance.md",
       "key_validation_scripts": [
         "tools/validate_repo_index.py"
       ]
@@ -122,7 +122,7 @@
       "path": "docs/unslop/profile.md",
       "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
       "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": "docs/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/docs.md",
       "key_validation_scripts": [
         "tools/validate_repo_index.py"
       ]
@@ -132,7 +132,7 @@
       "path": ".agents/plans",
       "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
       "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".agents/plans/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/plans.md",
       "key_validation_scripts": [
         "tools/validate_repo_index.py"
       ]
@@ -152,7 +152,7 @@
       "path": "tools",
       "purpose": "Repository validation and generation scripts.",
       "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": "tools/AGENTS.md",
+      "nearest_scoped_agents_md": ".devin/rules/tools.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py",
