@@ -5,7 +5,7 @@ Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
 ## Before you begin
 
 - Read [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md) for skill shape standards.
-- Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for tooling conventions.
+- Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for tooling conventions.
 
 ## When to use
 
