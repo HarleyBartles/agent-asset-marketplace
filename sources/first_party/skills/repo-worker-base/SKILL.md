@@ -58,7 +58,7 @@ own first step.
 - linear-issue-shaping owns the Linear control plane.
 - verification-before-completion owns evidence-before-assertions.
 - connector-safety owns sensitive or blocked connector writes.
-- using-github owns GitHub proof.
+- using-github-mcp owns GitHub proof.
 - base-doctrine owns cross-project source-truth and doctrine routing.
 
 Do not treat an installed skill, generated projection, local cache, or worker

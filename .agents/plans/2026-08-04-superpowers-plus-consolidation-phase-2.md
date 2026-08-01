@@ -166,21 +166,21 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The skill is named `using-github-mcp`, remains in `repo-worker-pack`, and teaches agents how to use the available GitHub MCP and `gh` tools.
 - All existing `/using-github` invocations in skills and guides become `/using-github-mcp`.
 
-- [ ] **Step 1: Rename the source directory.**
+- [x] **Step 1: Rename the source directory.**
 
   ```bash
   git mv sources/first_party/skills/using-github sources/first_party/skills/using-github-mcp
   ```
 
-- [ ] **Step 2: Update skill identity.**
+- [x] **Step 2: Update skill identity.**
 
   Update `name` and any `source-id`/`provenance-name` fields in `SKILL.md` and `agents/openai.yaml` to `using-github-mcp`. Update all prose that mentions the old name.
 
-- [ ] **Step 3: Update first-party references.**
+- [x] **Step 3: Update first-party references.**
 
   Use `grep` to find every `/using-github` and `using-github` reference in `sources/first_party/`, `.agents/guides/`, and `docs/`. Repoint to `using-github-mcp`.
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/using-github-mcp .agents/guides docs codex-marketplace/custody-pack-registry.json
@@ -188,7 +188,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "refactor: rename using-github to using-github-mcp"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

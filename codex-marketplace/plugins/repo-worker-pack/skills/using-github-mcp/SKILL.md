@@ -1,11 +1,11 @@
 ---
-name: using-github
+name: using-github-mcp
 description: Use when choosing the right GitHub or Git surface for a task, picking
   between the GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
 metadata:
-  source-id: using-github
-  source-path: sources/first_party/skills/using-github/SKILL.md
-  provenance-name: Using GitHub first-party skill
+  source-id: using-github-mcp
+  source-path: sources/first_party/skills/using-github-mcp/SKILL.md
+  provenance-name: Using GitHub Mcp first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
@@ -19,7 +19,7 @@ metadata:
 license: MIT
 ---
 
-# Using GitHub
+# Using GitHub MCP
 
 Use this skill to pick the right GitHub or Git surface from the task intent, then open the matching reference.
 

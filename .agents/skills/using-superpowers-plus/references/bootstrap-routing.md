@@ -11,7 +11,7 @@ skill.
 | `ordinary_chat` | Acknowledgement, ping, preference, or side chat with no source evidence | Answer directly |
 | `continuity_ingress` | Resume packet, inherited worktree, or next-session block | `/using-git-worktrees` for state; then `/repo-worker-base` if there is repo work to continue |
 | `repo_worker` | Coding, repo-backed worker, issue handoff, PR gate, or source-truth claims | `/repo-worker-base` |
-| `github_proof` | PR/branch/commit/review/merge/main verification after a GitHub artifact exists | `/using-github` |
+| `github_proof` | PR/branch/commit/review/merge/main verification after a GitHub artifact exists | `/using-github-mcp` |
 | `linear_control` | Linear issue/project/comment/document mechanics | `/using-linear` |
 | `artifact_work` | Document, spreadsheet, slide, PDF, image, package, receipt | The artifact skill the repo declares, or `/writing-with-clarity` for prose |
 | `verification_or_reporting` | QA, closeout posture, validation, review-feedback, or report writing | `/verification-before-completion` and `/writing-with-clarity` |

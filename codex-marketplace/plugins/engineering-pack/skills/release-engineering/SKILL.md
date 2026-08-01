@@ -18,7 +18,7 @@ metadata:
   - Do not use when another more specific skill owns the task.
   related_skills:
   - observability
-  - using-github
+  - using-github-mcp
   - secure-development
 license: MIT
 ---
