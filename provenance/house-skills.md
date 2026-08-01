@@ -165,7 +165,7 @@
 - Provenance/history only: MARK-30 base and control plane (retired)
 - Ownership: Harley-authored first-party House skill
 - Scope: producer-side report hygiene — partition reports, worker returns, Linear/Codex status notes, verification summaries, and continuity notes so claims do not become truth
-- Notes: Retired as part of the tps skill retirement. The report hygiene function now lives in `base-doctrine` under `references/report-hygiene.md`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired as part of the tps skill retirement. The report hygiene function now lives in `writing-with-clarity` under `references/report-hygiene-checklist.md`. This record exists only for provenance audit of the retired source path.
 
 ## tps-ingress
 

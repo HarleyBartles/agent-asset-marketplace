@@ -23,7 +23,17 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[5]
+def _repo_root() -> Path:
+    result = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return Path(result.stdout.strip())
+
+
+ROOT = _repo_root()
 SCRIPTS_GLOB = "sources/first_party/skills/*/scripts/*.py"
 
 # Scripts known to not yet support the contract, or that are the validator itself.

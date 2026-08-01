@@ -7,7 +7,8 @@ This script follows the skill-bundled CLI contract:
   `.agents/agents/` is already aligned with the installed plugin packs.
 - `--apply` copies missing profiles and removes orphan profiles.
 
-`repo-standards` owns the one-shot deployment of `codex-marketplace/plugins/*/assets/profiles/*.md` into `.agents/agents/`.
+`repo-standards` owns the one-shot deployment of `codex-marketplace/plugins/*/assets/profiles/*.md`
+into `.agents/agents/`.
 """
 
 from __future__ import annotations
@@ -72,7 +73,11 @@ def _load_marketplace_plugins(marketplace_path: Path) -> list[dict[str, Any]]:
     plugins = data.get("plugins", [])
     if not isinstance(plugins, list):
         return []
-    return [p for p in plugins if isinstance(p, dict) and p.get("policy", {}).get("installation") == "INSTALLED_BY_DEFAULT"]
+    return [
+        p
+        for p in plugins
+        if isinstance(p, dict) and p.get("policy", {}).get("installation") == "INSTALLED_BY_DEFAULT"
+    ]
 
 
 def _expected_profiles(repo_root: Path, installed_plugins: list[dict[str, Any]]) -> dict[str, Path]:
@@ -143,14 +148,16 @@ def _deploy(
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Deploy vendor subagent profiles from installed plugin packs. (mixed: supports --check and --apply)",
+        description=(
+            "Deploy vendor subagent profiles from installed plugin packs. "
+            "(mixed: supports --check and --apply)"
+        ),
         epilog="Default mode is --check. Use --apply to copy or remove profiles.",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--check",
         action="store_true",
-        default=True,
         help="report what the script would do and exit 0 if no deployment is needed (default, read-only)",
     )
     mode.add_argument(
@@ -164,6 +171,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
+    args.check = not args.apply
 
     repo_root = _repo_root()
     if _is_submodule(repo_root):
