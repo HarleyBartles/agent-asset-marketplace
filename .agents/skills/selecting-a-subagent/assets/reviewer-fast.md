@@ -33,7 +33,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 ## Procedure
 
 1. Read the prepared diff at `<diff_path>`.
-2. If `<pr_description>` is provided, read it first to understand intent and scope. Do not invent expectations that contradict the provided description.
+2. If `<pr_description>` is provided, read it first to understand intent and scope. If it references a design spec, implementation plan, or epic roadmap, read those before the diff. Do not invent expectations that contradict the provided description.
 3. Focus on the changed lines and their immediate context. Check for obvious correctness, style, and consistency issues.
 4. Do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
 5. Cite specific files and line numbers for findings.
