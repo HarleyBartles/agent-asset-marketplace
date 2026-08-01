@@ -167,7 +167,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--name")
     parser.add_argument("--custody", choices=sorted(CUSTODIES))
-    parser.add_argument("--lane", help="marketplace plugin pack name for marketplace custody; ignored for local custody")
+    parser.add_argument("--lane", help="marketplace plugin pack for marketplace custody; ignored for local")
     parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()
