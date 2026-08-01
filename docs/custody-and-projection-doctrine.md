@@ -9,12 +9,12 @@ projection is exported as GPT-ready zips. It is authoritative, not a tutorial.
 Source custody is the canonical home for asset content. Projection and export
 surfaces are derived from custody, never the reverse.
 
-- **Third-party pool** lives under `sources/third_party/`. These are verbatim
+- **Third-party pool** lives under `provenance/`. These are verbatim
   upstream snapshots pinned to a commit. Preserve upstream source, package
   payload, license, notice, and source-map evidence there. Do not edit
   third-party custody to adapt skill behavior; adapt at projection time and
   record the adaptation honestly.
-- **First-party authoring** lives under `sources/first_party/`. These are
+- **First-party authoring** lives under `codex-marketplace/plugins/<plugin>/`. These are
   Harley-authored skills. Edit the skill body here when the skill needs to
   change.
 - **MIT posture.** First-party source is MIT licensed. Third-party source
@@ -43,7 +43,7 @@ not per-plugin (see Plugin curation below).
 ### First-party is always verbatim in projection
 
 First-party skills are always `verbatim` in projection. If a first-party skill
-needs to change, fix the source under `sources/first_party/` and regenerate.
+needs to change, fix the source under `codex-marketplace/plugins/<plugin>/` and regenerate.
 Do not adapt first-party content at projection time. This keeps source custody
 as the single edit point for first-party work.
 
@@ -64,7 +64,7 @@ package mirrors. Harley curates which entries appear in which plugin.
 The `house-skills` mega-pack, `is_mega_pack` registry field, and
 `tools/generate_mega_packs.py` have been removed. First-party skills now
 project into topical packs directly; `superpowers-plus` remains the only
-mixed projection-lane bundle. This section is kept as a tombstone for
+mixed plugin bundle. This section is kept as a tombstone for
 historical context.
 
 
@@ -72,7 +72,7 @@ historical context.
 
 The flow is:
 
-1. **Source custody** — `sources/third_party/` and `sources/first_party/`.
+1. **Source custody** — `provenance/` and `codex-marketplace/plugins/<plugin>/`.
 2. **Projection** — `codex-marketplace/plugins/` vendored bundles, generated
    from custody plus manifest entries.
 3. **Install / export** — `codex-marketplace/plugins/` is the canonical install
@@ -94,8 +94,8 @@ The validator is a proof gate, not a replacement for regeneration.
 
 The business-as-usual target for adding or updating a skill is:
 
-1. **Write source** — add or edit the skill under `sources/first_party/skills/`
-   or snapshot it under `sources/third_party/`.
+1. **Write source** — add or edit the skill under `codex-marketplace/plugins/<plugin>/skills/`
+   or snapshot it under `provenance/`.
 2. **Add manifest entry** — declare the entry in the pack's
    `codex-marketplace/custody-pack-registry.json` bundle `entries` with
    `canonical_name`, `source_category`, `content_mode`, `source_family`,
@@ -112,32 +112,13 @@ the exposure. Retire a skill to provenance only when it is no longer supported.
 No Python edits for normal skill work. If the workflow requires editing Python
 to land a skill, that is a tooling gap to raise, not a step to silently absorb.
 
-## First-party orphan detection
-
-A first-party skill that exists in source custody but is missing from
-projection is an orphan. The validator (`detect_first_party_orphans` in
-`tools/validate_marketplace.py`) scans `sources/first_party/skills/` for
-directories with `SKILL.md` and checks that each one appears as a
-`first_party` entry in some plugin manifest. Orphans cause validation to
-fail with a clear list of the missing skills. MARK-295 removed the stale
-retired wrapper source along with its projection, so there is no
-retired-source exception to carry forward. For active skills, the fix is
-still to add the manifest entry and regenerate, not to delete the source.
-
 ## Manifest shape validation
 
-All 19 plugin manifests must use the directory-level `entries[]` projection-lane
+All 19 plugin manifests must use the directory-level `entries[]` plugin
 shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests
 with legacy shapes (`skills[]`, `components[]`, or file-level
 `canonical_source_path` ending in a file suffix). This ensures the materializer
 never silently skips a plugin.
-
-## Proof surface generation
-
-`provenance-map.json` and `source-map.md` are generated from bundle manifests,
-not hand-maintained. Run `py -3 tools/generate_provenance_maps.py` and
-`py -3 tools/generate_source_maps.py` to regenerate them. Both generators have
-`--check` mode that fails on drift.
 
 ## Zip projection (retired)
 

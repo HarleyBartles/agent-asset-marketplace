@@ -7,7 +7,6 @@ This bundle projects first-party and retained third-party source custody into th
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
-- canonical source mapping in `references/source-map.md`
 
 ## Boundary
 - The pack covers frontend application development, including React, accessibility, UX, testing, and Feature-Sliced Design.

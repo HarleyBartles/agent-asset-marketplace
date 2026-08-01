@@ -7,7 +7,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
-- canonical source mapping in `references/source-map.md`
 
 ## Boundary
 - The pack covers Python and TypeScript language, testing, async, performance, and framework guidance.

@@ -7,7 +7,6 @@ This bundle projects the first-party repo worker baseline skills.
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
-- canonical source mapping in `references/source-map.md`
 
 ## Boundary
 - The first-party repo worker skills stay projected alongside the
