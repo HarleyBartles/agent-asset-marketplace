@@ -310,7 +310,7 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
         "- ci-preflight-ps1\n"
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
-        "- repo-guide-policy\n"
+        "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
         "- review-entry\n"
         "- contributing-entry\n"
@@ -318,7 +318,7 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
     )
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
-    (policy_dir / "repo-guide-policy.md").write_text(
+    (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
@@ -368,7 +368,7 @@ def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Pa
     repo.mkdir()
     _init_git_repo(repo)
 
-    policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
+    policy_path = repo / ".agents" / "docs" / "repo-runbook-policy.md"
     policy_path.parent.mkdir(parents=True)
     policy_path.write_text("# Repo Runbook Policy\n\nNo mapping.\n", encoding="utf-8", newline="\n")
 
@@ -380,7 +380,7 @@ def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Pa
         text=True,
     )
     assert result.returncode != 0
-    assert "DRIFT: repo-guide-policy.md" in result.stdout
+    assert "DRIFT: repo-runbook-policy.md" in result.stdout
 
 
 def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
@@ -506,7 +506,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         "- ci-preflight-ps1\n"
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
-        "- repo-guide-policy\n"
+        "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
@@ -514,7 +514,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     )
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
-    (policy_dir / "repo-guide-policy.md").write_text(
+    (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
@@ -648,7 +648,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
         "- ci-preflight-ps1\n"
         "- ci-preflight-sh\n"
         "- pre-commit-hook\n"
-        "- repo-guide-policy\n"
+        "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
@@ -656,7 +656,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     )
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
-    (policy_dir / "repo-guide-policy.md").write_text(
+    (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
@@ -691,7 +691,7 @@ def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> N
     repo.mkdir()
     _init_git_repo(repo)
 
-    policy_path = repo / ".agents" / "docs" / "repo-guide-policy.md"
+    policy_path = repo / ".agents" / "docs" / "repo-runbook-policy.md"
     policy_path.parent.mkdir(parents=True)
     policy_path.write_text(
         "# Repo Runbook Policy\n\n"
@@ -727,7 +727,7 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
         "- marketplace-json\n"
         "- ci-preflight-ps1\n"
         "- ci-preflight-sh\n"
-        "- repo-guide-policy\n"
+        "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
         "- review-entry\n"
         "- root-agents-md\n"
@@ -736,7 +736,7 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
     )
     policy_dir = repo / ".agents" / "docs"
     policy_dir.mkdir(parents=True)
-    (policy_dir / "repo-guide-policy.md").write_text(
+    (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",

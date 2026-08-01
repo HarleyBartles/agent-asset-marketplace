@@ -21,3 +21,4 @@ Keep this scope short. It owns runbook-stage routing, not doctrine.
 - `testing.md` for test commands and TDD workflow
 - `pr.md` for pull-request workflow and publication proof
 - `code-style.md` for Python and Markdown conventions
+- `completing-plans.md` for completing and archiving a plan and its spec

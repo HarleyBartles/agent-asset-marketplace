@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Spec:** `.agents/specs/2026-08-04-superpowers-plus-consolidation-design.md`
+**Spec:** `.agents/specs/completed/2026-08-04-superpowers-plus-consolidation-design.md`
 
 **Goal:** Fold the new routing and baseline cleanup work into the original Phase 2 roadmap, then deliver the four deferred consumer surfaces: `asking-clarifying-questions` as an anytime escape hatch, `repo-worker-base` stripped of stage baselines, `publishing-source`, `using-github-mcp`, cross-repo draft-PR policy, and vendor profile packaging.
 

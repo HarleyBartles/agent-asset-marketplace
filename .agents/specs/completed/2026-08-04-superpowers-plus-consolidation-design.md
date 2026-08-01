@@ -185,7 +185,7 @@ targets belong in the Plan 1 task list.
 
 ### Deferred to Phase 2 and beyond
 
-See `.agents/plans/2026-08-04-superpowers-plus-consolidation-phase-2.md` for the full implementation plan. Phase 2 now covers:
+See `.agents/plans/completed/2026-08-04-superpowers-plus-consolidation-phase-2.md` for the full implementation plan. Phase 2 now covers:
 
 - `asking-clarifying-questions` as an anytime one-fact-per-turn escape hatch for stage skills.
 - `repo-worker-base` cleanup: remove the Superpowers composition table and the stage baselines, moving them to `using-superpowers-plus` and the relevant stage skills.

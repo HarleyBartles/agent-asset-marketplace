@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Spec:** `.agents/specs/2026-08-04-superpowers-plus-consolidation-design.md`
+**Spec:** `.agents/specs/completed/2026-08-04-superpowers-plus-consolidation-design.md`
 
 **Goal:** Close out the consolidation by (1) making `.agents/doctrine/` the canonical repo-local doctrine store and `.devin/rules/*.md` thin conditional rule triggers, (2) retiring the leftover `review-branch-diff` skill and recording provenance, and (3) running the full validation and mesh refresh so the regenerated marketplace, installed skills, indexes, and mesh all pass `tools/run ci --check`.
 

@@ -23,17 +23,25 @@ Move the complete work slice together:
 ## How to archive
 
 ```bash
-# Move the plan and spec together
+# 1. Move the plan and spec together
 git mv .agents/plans/<plan-name>.md .agents/plans/completed/
 git mv .agents/specs/<spec-name>.md .agents/specs/completed/
 
-# Regenerate the mesh so the new completed/ INDEX.md files are current
-py -3 .agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py --apply
+# 2. Update stale internal references
+# Search the moved files for cross-references that still use the old
+# .agents/plans/ or .agents/specs/ paths and rewrite them to include
+# the completed/ segment (e.g., .agents/plans/phase-2.md -> .agents/plans/completed/phase-2.md).
 
-# Verify the tree passes CI before committing
+grep -R "\.agents/\(plans\|specs\)/" .agents/plans/completed/ .agents/specs/completed/ || true
+
+# 3. Regenerate the mesh and marketplace surfaces
+py -3 tools/run.py mesh --apply
+py -3 tools/run.py marketplace --apply
+
+# 4. Verify the tree passes CI before committing
 py -3 tools/run.py ci --check
 
-# Commit and publish
+# 5. Commit and publish
 git add -A
 git commit -m "archive: complete <plan-name>"
 ```

@@ -4,7 +4,7 @@
 
 **Specs:**
 - `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`
-- `.agents/specs/2026-08-04-superpowers-plus-consolidation-design.md`
+- `.agents/specs/completed/2026-08-04-superpowers-plus-consolidation-design.md`
 
 **Goal:** In a single phase, deliver (1) the skill-bundled script CLI contract (`--help`, `--check`, safe-by-default) plus `repo-standards` validator and vendor profile deployment ownership, and (2) the doctrine and guide thinning work that the consolidation design spec already assigned to Phase 3.
 

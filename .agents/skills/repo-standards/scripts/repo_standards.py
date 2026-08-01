@@ -77,7 +77,7 @@ def _manifest_path() -> Path:
 
 def _load_exceptions(repo_root: Path) -> set[str]:
     exceptions: set[str] = set()
-    policy = repo_root / ".agents" / "docs" / "repo-guide-policy.md"
+    policy = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
     if not policy.is_file():
         return exceptions
     text = policy.read_text(encoding="utf-8")
@@ -274,7 +274,7 @@ exit codes:
   1  drift detected, apply aborted, or an error occurred
 
 The manifest is read from references/repository-shape-manifest.json inside the
-repo-standards skill. Exceptions declared in .agents/docs/repo-guide-policy.md
+repo-standards skill. Exceptions declared in .agents/docs/repo-runbook-policy.md
 under the ## Exceptions heading are skipped."""
     parser = argparse.ArgumentParser(
         description="Check or apply the repo-standards surface manifest.",

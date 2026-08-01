@@ -36,7 +36,7 @@ Make `repo-standards` (renamed from `repo-guide-standard`) the portable authorit
 - Rename source directory `sources/first_party/skills/repo-guide-standard/` to `sources/first_party/skills/repo-standards/`.
 - Rename skill frontmatter `name` to `repo-standards`; update `description`, `scope`, and `use_with` to include `inspecting-the-environment`.
 - Keep `references/repository-guide-standard.md` as the prose standard and add `references/repository-shape-manifest.json` as the checked source of truth.
-- Update `.agents/docs/repo-guide-policy.md` to reference `repo-standards` and list the shape manifest mapping (file may be renamed in a later pass if desired).
+- Update `.agents/docs/repo-runbook-policy.md` to reference `repo-standards` and list the shape manifest mapping (file may be renamed in a later pass if desired).
 - The core script `repo_standards.py` lives at `repo-standards/scripts/repo_standards.py`; wrappers are `repo-standards.sh` and `repo-standards.ps1`.
 - Modes:
   - `repo-standards check` — compare the current repo against `repository-shape-manifest.json`; report missing/extra/drift; exit non-zero when non-compliant.
@@ -121,7 +121,7 @@ Make `repo-standards` (renamed from `repo-guide-standard`) the portable authorit
 
 ## Tradeoffs and intentionally deferred decisions
 
-- **Rename churn.** Renaming `repo-guide-standard` to `repo-standards` touches source paths, plugin manifests, `repo-guide-policy.md`, and generated `INDEX.md` links. We accept the churn to match the expanded scope.
+- **Rename churn.** Renaming `repo-guide-standard` to `repo-standards` touches source paths, plugin manifests, `repo-runbook-policy.md`, and generated `INDEX.md` links. We accept the churn to match the expanded scope.
 - **Pre-commit hook on Windows.** The initial hook is a Bash script. A native Windows `.ps1` pre-commit hook is deferred; `core.hooksPath` or a `.githooks` directory can be introduced later.
 - **Mesh post-processing.** Repo-specific extras (e.g., `wild-bunch` ADR freshness) are out of scope. A follow-up spec will add a `mesh_post_processor` hook to `repo-standards`/`marketplace.json`.
 - **`marketplace.json` schema.** The `repo.local_skill_prefixes` key is added to the generated file. A later pass may promote it to `repo-local-marketplace-policy.json` if the source file already carries enough repo-local policy.
