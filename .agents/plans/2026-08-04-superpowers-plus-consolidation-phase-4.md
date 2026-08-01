@@ -316,7 +316,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - `base-doctrine` includes `.agents/doctrine/` in the source-truth hierarchy.
 - `repo-doctrine.md` correctly describes the priority of user instructions, `AGENTS.md`, mesh policy, `.agents/doctrine/`, `.devin/rules/`, and the active skill.
 
-- [ ] **Step 1: Update `using-superpowers-plus/SKILL.md` bootstrap step 3.**
+- [x] **Step 1: Update `using-superpowers-plus/SKILL.md` bootstrap step 3.**
 
   Replace the current step 3:
 
@@ -336,7 +336,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
      [`references/repo-doctrine.md`](references/repo-doctrine.md).
   ```
 
-- [ ] **Step 2: Rewrite `using-superpowers-plus/references/repo-doctrine.md`.**
+- [x] **Step 2: Rewrite `using-superpowers-plus/references/repo-doctrine.md`.**
 
   Replace the file content with:
 
@@ -362,7 +362,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   Only skip a skill workflow when your human partner has explicitly told you to.
   ```
 
-- [ ] **Step 3: Update `base-doctrine/references/durable-doctrine-routing.md`.**
+- [x] **Step 3: Update `base-doctrine/references/durable-doctrine-routing.md`.**
 
   In the source-truth hierarchy, find the line:
 
@@ -387,7 +387,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   - Canonical agent asset repo: versioned source truth for GPT-native skill sources...
   ```
 
-- [ ] **Step 4: Commit the skill updates.**
+- [x] **Step 4: Commit the skill updates.**
 
   ```bash
   git add sources/first_party/skills/using-superpowers-plus sources/first_party/skills/base-doctrine
@@ -402,7 +402,7 @@ Generated with [Devin](https://devin.ai)
 Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
