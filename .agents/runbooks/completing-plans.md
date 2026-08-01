@@ -8,9 +8,10 @@ Archive a plan and its related artifacts once:
 
 - the work described by the plan is merged to `main`;
 - the spec is fully realized in the merged implementation;
-- any roadmap or design notes tied to the same work slice are no longer active.
+- any roadmap or design notes tied to the same work slice are no longer active;
+- the plan is marked completed: every checkbox (`- [ ]`) is checked (`- [x]`), OR the plan records a merged implementation PR.
 
-Do not archive a plan while its work is still in an open branch, draft PR, or unresolved review.
+Do not archive a plan while its work is still in an open branch, draft PR, or unresolved review. Do not archive a plan whose checkboxes remain unchecked unless the completed work was merged under a different PR that is explicitly referenced in the plan.
 
 ## What to archive
 
