@@ -51,6 +51,19 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 If the spec covers multiple independent subsystems, invoke `working-with-epics` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.
 
+## When to stop and ask
+
+Before drafting a task, decide what to do when a plan item is missing scope or detail. Use this decision table:
+
+| Situation | Use |
+|---|---|
+| Plan item has no acceptance criteria and the answer is not in durable source or the spec | `/asking-clarifying-questions` |
+| The whole shape of the solution is unknown | `/brainstorming` to update the spec first |
+| Plan item has acceptance criteria but is large | Write the plan as a high-level draft and iterate |
+| Scope is in the spec but not yet broken into tasks | Write the plan, then review |
+
+If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+
 ## File Structure
 
 Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.

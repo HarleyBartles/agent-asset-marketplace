@@ -78,6 +78,8 @@ After all tasks complete and verified:
 
 **Ask for clarification rather than guessing.**
 
+If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+
 ## When to Revisit Earlier Steps
 
 **Return to Review (Step 1) when:**

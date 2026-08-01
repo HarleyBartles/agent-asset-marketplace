@@ -53,11 +53,11 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The skill explicitly supports multiple turns: one question per message, as many turns as needed.
 - `writing-plans` gains a missing-scope decision table that tells agents when to ask, brainstorm, or write a high-level draft.
 
-- [ ] **Step 1: Update `asking-clarifying-questions/SKILL.md`.**
+- [x] **Step 1: Update `asking-clarifying-questions/SKILL.md`.**
 
   Replace the "one question" framing with "one question per turn, as many turns as needed." Add the concrete trigger: "If a single missing fact blocks the next step of the current skill, invoke this skill, record the answer, and continue; repeat for the next missing fact." Keep the existing `do_not_use_when` for design and risk-gate escalation.
 
-- [ ] **Step 2: Add the missing-scope decision table to `writing-plans/SKILL.md`.**
+- [x] **Step 2: Add the missing-scope decision table to `writing-plans/SKILL.md`.**
 
   Under a new "When to stop and ask" section, add:
 
@@ -68,11 +68,11 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   | Plan item has acceptance criteria but is large | Write the plan as a high-level draft and iterate |
   | Scope is in the spec but not yet broken into tasks | Write the plan, then review |
 
-- [ ] **Step 3: Add `asking-clarifying-questions` triggers to each stage skill.**
+- [x] **Step 3: Add `asking-clarifying-questions` triggers to each stage skill.**
 
   Add one sentence to each of `brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`, and `risk-gates` at the point where a single missing fact can block the next step. The sentence must name the skill: "If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing."
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/asking-clarifying-questions sources/first_party/skills/brainstorming sources/first_party/skills/writing-plans sources/first_party/skills/executing-plans sources/first_party/skills/subagent-driven-development sources/first_party/skills/risk-gates
@@ -80,7 +80,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: reframe asking-clarifying-questions as one-fact-per-turn escape hatch"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

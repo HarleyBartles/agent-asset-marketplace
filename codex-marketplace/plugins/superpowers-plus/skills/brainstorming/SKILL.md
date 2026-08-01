@@ -101,6 +101,7 @@ digraph brainstorming {
 - For appropriately-scoped projects, ask questions one at a time to refine the idea
 - Prefer multiple choice questions when possible, but open-ended is fine too
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
+- If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
 - Focus on understanding: purpose, constraints, success criteria
 
 **Exploring approaches:**
