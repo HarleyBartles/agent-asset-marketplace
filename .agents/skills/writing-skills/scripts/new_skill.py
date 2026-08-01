@@ -58,12 +58,12 @@ def _metadata_for(name: str, custody: str, lane: str) -> str:
         f"  provenance-name: {json.dumps(f'{title} first-party skill')}\n"
         "  source-category: first_party\n"
         "  status: active\n"
-        "  owner: \"Harley Bartles\"\n"
+        '  owner: "Harley Bartles"\n'
         f"  scope: {json.dumps(description)}\n"
         "  use_when:\n"
         f"  - {json.dumps(description)}\n"
         "  do_not_use_when:\n"
-        "  - \"Do not use when another more specific skill owns this task.\""
+        '  - "Do not use when another more specific skill owns this task."'
     )
 
 
@@ -71,7 +71,10 @@ def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
     validate_request(name, custody, lane)
     files = {
         "SKILL.md": _template(
-            "skill/SKILL.md", name=name, custody=custody, lane=lane,
+            "skill/SKILL.md",
+            name=name,
+            custody=custody,
+            lane=lane,
             metadata=_metadata_for(name, custody, lane),
         )
     }
@@ -82,8 +85,12 @@ def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
         return files
     files.update(
         {
-            "assets/authority/authority.yaml": _template("authority/authority.yaml", name=name, custody=custody, lane=lane),
-            "assets/authority/source-map.yaml": _template("authority/source-map.yaml", name=name, custody=custody, lane=lane),
+            "assets/authority/authority.yaml": _template(
+                "authority/authority.yaml", name=name, custody=custody, lane=lane
+            ),
+            "assets/authority/source-map.yaml": _template(
+                "authority/source-map.yaml", name=name, custody=custody, lane=lane
+            ),
             "assets/authority/CITATIONS.md": _template("authority/CITATIONS.md", name=name, custody=custody, lane=lane),
         }
     )
@@ -93,9 +100,7 @@ def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
 
 
 def _git(repo_root: Path, *args: str) -> str:
-    result = subprocess.run(
-        ["git", *args], cwd=repo_root, check=True, capture_output=True, text=True
-    )
+    result = subprocess.run(["git", *args], cwd=repo_root, check=True, capture_output=True, text=True)
     return result.stdout.strip()
 
 
@@ -108,7 +113,11 @@ def _guard_write_checkout(repo_root: Path, allow_shared_checkout: bool) -> Path:
     common_dir = Path(_git(checkout_root, "rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
     if git_dir == common_dir:
         if not allow_shared_checkout:
-            raise ValueError("refusing to scaffold from a shared main checkout; use --allow-shared-checkout with current human approval")
+            raise ValueError(
+                "refusing to scaffold from a shared main checkout; "
+                "use --allow-shared-checkout "
+                "with current human approval"
+            )
         print("WARNING: --allow-shared-checkout is active; current human approval is required.")
     return checkout_root
 
@@ -179,12 +188,22 @@ def main() -> int:
     if args.check and not (args.name and args.custody and args.lane):
         print("No scaffold requested; --check requires --name, --custody, and --lane for a dry run.")
         return 0
-    missing = [arg for arg, value in (("--name", args.name), ("--custody", args.custody), ("--lane", args.lane)) if not value]
+    missing = [
+        arg
+        for arg, value in (
+            ("--name", args.name),
+            ("--custody", args.custody),
+            ("--lane", args.lane),
+        )
+        if not value
+    ]
     if missing:
         parser.error(f"required: {', '.join(missing)}")
     try:
         repo_root = _resolve_cli_repo_root(Path.cwd().resolve())
-        return scaffold(repo_root, args.name, args.custody, args.lane, args.check, allow_shared_checkout=args.allow_shared_checkout)
+        return scaffold(
+            repo_root, args.name, args.custody, args.lane, args.check, allow_shared_checkout=args.allow_shared_checkout
+        )
     except (OSError, subprocess.CalledProcessError, ValueError, FileExistsError) as error:
         parser.error(str(error))
     return 2
