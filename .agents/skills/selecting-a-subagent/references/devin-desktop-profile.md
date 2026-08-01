@@ -47,6 +47,8 @@ Devin Desktop supports custom subagent profiles. It searches the following locat
 | Full branch/PR diff review where the whole branch is in scope | `run_subagent profile: reviewer-strong` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `run_subagent profile: reviewer-fast` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |
+
+Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_description>` in the task; the reviewer subagent does not resolve the diff itself.
 | Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |

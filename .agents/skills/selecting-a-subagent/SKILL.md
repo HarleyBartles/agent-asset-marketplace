@@ -80,6 +80,9 @@ For example, copy `assets/implementer.md` to
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 
+The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
+reviewer profile. The reviewer subagent does not resolve the diff itself.
+
 ## Common pressure
 
 When the obvious choice is unclear or contested, read `references/pressure-scenarios.md` first.

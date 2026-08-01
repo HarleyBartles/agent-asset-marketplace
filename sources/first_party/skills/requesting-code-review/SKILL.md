@@ -74,11 +74,30 @@ Dispatch a `general-purpose` subagent, filling the template at [code-reviewer.md
 
 ## Branch or PR diff review
 
-When the code-review request is about a branch or PR diff, dispatch `reviewer` (or
-`reviewer-strong` for large or subtle diffs) with the PR number and branch. The
-subagent reviews the diff against the base ref with `git diff --no-color <base>...<branch>`,
-cites specific files and line numbers, and does not modify files. Use `reviewer-fast` only
-for targeted re-review of fixes after an initial review.
+When the code-review request is about a branch or PR diff, the orchestrator (this session)
+prepares the review inputs; the reviewer subagent only reads the prepared diff and
+description.
+
+1. Determine the base ref (`<base>`) and branch (`<branch>`).
+2. Generate the diff:
+   ```bash
+   git diff --no-color <base>...<branch> > <diff_path>
+   ```
+3. If the review object is a PR, capture the PR title and body into `<pr_description>`
+   (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
+4. Dispatch the reviewer subagent with the prepared inputs:
+   - `reviewer` for most reviews.
+   - `reviewer-strong` for full branch/PR reviews where the whole diff is in scope.
+   - `reviewer-fast` for small, tightly focused re-reviews of a single fix or a small
+     coherent diff.
+
+Inputs to pass to the subagent:
+- `<diff_path>` — the prepared diff file.
+- `<pr_description>` — the PR title/body and any linked issue/spec context (optional).
+- `<base>` and `<branch>` — the base and head refs (optional, for extra verification).
+
+The subagent reads the prepared diff, uses `<pr_description>` to understand intent and
+scope, cites specific files and line numbers, and does not modify files.
 
 ## Example
 
