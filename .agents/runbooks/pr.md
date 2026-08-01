@@ -4,7 +4,8 @@ Use this runbook for pull-request workflow and publication proof in `agent-asset
 
 ## Before you begin
 
-- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
+- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
+- Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for validation commands.
 - Invoke `/repo-worker-base`.
 
