@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scaffold the repo's .agents/docs/repo-guide-policy.md mapping file."""
+"""Scaffold the repo's .agents/docs/repo-runbook-policy.md mapping file."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def _repo_root() -> Path:
 
 
 def _template_path() -> Path:
-    return Path(__file__).resolve().parent.parent / "templates" / "repo-guide-policy.md"
+    return Path(__file__).resolve().parent.parent / "templates" / "repo-runbook-policy.md"
 
 
 def _has_required_boilerplate(content: str) -> bool:
@@ -45,9 +45,9 @@ def _has_required_boilerplate(content: str) -> bool:
 def main(argv: list[str] | None = None) -> int:
     epilog = """\
 examples:
-  %(prog)s --check               verify repo-guide-policy.md exists and contains boilerplate
-  %(prog)s                       write repo-guide-policy.md if it is missing
-  %(prog)s --force               overwrite repo-guide-policy.md with the template
+  %(prog)s --check               verify repo-runbook-policy.md exists and contains boilerplate
+  %(prog)s                       write repo-runbook-policy.md if it is missing
+  %(prog)s --force               overwrite repo-runbook-policy.md with the template
 
 This file maps the cross-repo runbook standard to the repo's local paths and
 records any surface exceptions under ## Exceptions. The boilerplate check
@@ -55,10 +55,10 @@ ensures the heading, standard mapping section, and exceptions section are
 present.
 
 exit codes:
-  0  repo-guide-policy.md is present/valid or was written
+  0  repo-runbook-policy.md is present/valid or was written
   1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's .agents/docs/repo-guide-policy.md mapping file.",
+        description="Scaffold the repo's .agents/docs/repo-runbook-policy.md mapping file.",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -70,12 +70,12 @@ exit codes:
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Overwrite an existing repo-guide-policy.md",
+        help="Overwrite an existing repo-runbook-policy.md",
     )
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
-    policy_path = repo_root / ".agents" / "docs" / "repo-guide-policy.md"
+    policy_path = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
     template = _template_path()
     if not template.is_file():
         print(f"ERROR: template not found: {template}", file=sys.stderr)
@@ -85,16 +85,16 @@ exit codes:
         if args.check:
             content = policy_path.read_text(encoding="utf-8")
             if not _has_required_boilerplate(content):
-                print("DRIFT: repo-guide-policy.md exists but is missing required boilerplate")
+                print("DRIFT: repo-runbook-policy.md exists but is missing required boilerplate")
                 return 1
-            print("OK repo-guide-policy.md: mapping file present")
+            print("OK repo-runbook-policy.md: mapping file present")
             return 0
         if not args.force:
-            print("repo-guide-policy.md already exists; use --force to overwrite")
+            print("repo-runbook-policy.md already exists; use --force to overwrite")
             return 0
 
     if args.check:
-        print("DRIFT: repo-guide-policy.md missing")
+        print("DRIFT: repo-runbook-policy.md missing")
         return 1
 
     policy_path.parent.mkdir(parents=True, exist_ok=True)

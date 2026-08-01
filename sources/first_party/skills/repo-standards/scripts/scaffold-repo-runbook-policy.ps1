@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-# Thin launcher for scaffold_repo_guide_policy.py. Run with --help to see usage.
+# Thin launcher for scaffold_repo_runbook_policy.py. Run with --help to see usage.
 [CmdletBinding()]
 param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)
 $ErrorActionPreference = 'Stop'
@@ -36,8 +36,8 @@ if (-not $python) {
 }
 
 if ($python -eq 'py') {
-    & py -3 "$scriptDir\scaffold_repo_guide_policy.py" @pyArgs
+    & py -3 "$scriptDir\scaffold_repo_runbook_policy.py" @pyArgs
 } else {
-    & $python "$scriptDir\scaffold_repo_guide_policy.py" @pyArgs
+    & $python "$scriptDir\scaffold_repo_runbook_policy.py" @pyArgs
 }
 exit $LASTEXITCODE

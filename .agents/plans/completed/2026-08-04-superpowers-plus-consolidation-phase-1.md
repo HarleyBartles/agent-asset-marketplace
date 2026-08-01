@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Spec:** `.agents/specs/2026-08-04-superpowers-plus-consolidation-design.md`
+**Spec:** `.agents/specs/completed/2026-08-04-superpowers-plus-consolidation-design.md`
 
 **Goal:** Remove the `superpowers/` working-surface residuals, make `using-superpowers-plus` the generic bootstrap router, and retire `work-mode-router` and `bootstrap-router`.
 
@@ -311,7 +311,7 @@ following reviewer-profile and branch-review consolidation work in Phase 1:
 
 Deferred to Phase 2 and beyond:
 
-See `.agents/plans/2026-08-04-superpowers-plus-consolidation-phase-2.md`.
+See `.agents/plans/completed/2026-08-04-superpowers-plus-consolidation-phase-2.md`.
 
 Phase 2:
 

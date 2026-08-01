@@ -62,7 +62,7 @@ Additional `<topic>.md` files may live in `.agents/runbooks/`. They must be thin
 
 ## Local overlay policy
 
-Each repo keeps `.agents/docs/repo-guide-policy.md`. It must:
+Each repo keeps `.agents/docs/repo-runbook-policy.md`. It must:
 
 - State that the repo follows `repo-standards`.
 - Map standard runbook names to local paths.
@@ -80,7 +80,7 @@ design -> planning -> implementing -> review
 At each stage:
 
 1. Read this standard.
-2. Read the repo's `.agents/docs/repo-guide-policy.md`.
+2. Read the repo's `.agents/docs/repo-runbook-policy.md`.
 3. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
 4. Read the repo-local runbook for the stage.
 5. Route to the matching Superpowers skill:

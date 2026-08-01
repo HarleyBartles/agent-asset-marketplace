@@ -16,7 +16,7 @@ That guidance is currently split across `base-doctrine`, `repo-worker-base`, loc
 
 ## 2. Goal
 
-Create a portable first-party skill, `repo-guide-standard`, that becomes the canonical home for cross-repo guide concerns. The skill is invoked whenever an agent reads, creates, or updates repo guides. It supplies the universal standard; each repo supplies a thin `.agents/docs/repo-guide-policy.md` overlay with local mappings.
+Create a portable first-party skill, `repo-guide-standard`, that becomes the canonical home for cross-repo guide concerns. The skill is invoked whenever an agent reads, creates, or updates repo guides. It supplies the universal standard; each repo supplies a thin `.agents/docs/repo-runbook-policy.md` overlay with local mappings.
 
 Then make `agent-asset-marketplace` the first fully-aligned exemplar by creating the missing guide docs and wiring the root surfaces to the skill.
 
@@ -32,7 +32,7 @@ Then make `agent-asset-marketplace` the first fully-aligned exemplar by creating
 
 ### 3.2 Local overlay
 
-- `.agents/docs/repo-guide-policy.md` in `agent-asset-marketplace` — the repo's local mapping and exceptions.
+- `.agents/docs/repo-runbook-policy.md` in `agent-asset-marketplace` — the repo's local mapping and exceptions.
 
 ### 3.3 Root discoverable surfaces
 
@@ -64,8 +64,8 @@ Additional guides to create:
 - `.agents/guides/AGENTS.md` — update to list all guides.
 - `.agents/guides/INDEX.md` — regenerate.
 - Root `INDEX.md` — regenerate.
-- `docs/AGENTS.md` — add pointer to `.agents/docs/repo-guide-policy.md`.
-- `.agents/docs/AGENTS.md` — add pointer to `repo-guide-policy.md`.
+- `docs/AGENTS.md` — add pointer to `.agents/docs/repo-runbook-policy.md`.
+- `.agents/docs/AGENTS.md` — add pointer to `repo-runbook-policy.md`.
 
 ### 3.6 Marketplace projection
 
@@ -88,7 +88,7 @@ Additional guides to create:
 - **do_not_use_when:** Generic repo hygiene (worktree, branch, source custody, publication) — defer to `repo-worker-base` for that.
 - **Instructions:**
   1. Read `references/repository-guide-standard.md`.
-  2. Locate the repo's `.agents/docs/repo-guide-policy.md` (or create it if missing and the task is to align the repo).
+  2. Locate the repo's `.agents/docs/repo-runbook-policy.md` (or create it if missing and the task is to align the repo).
   3. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
   4. Read the repo's specific local guide.
   5. Route to the correct Superpowers skill for the stage:
@@ -130,10 +130,10 @@ The canonical cross-repo standard. Contains:
    - Each stage handoff requires the portable baseline (`repo-guide-standard` for guide composition, `repo-worker-base` for repo hygiene), then the local guide, then the Superpowers lane.
 
 5. **Local overlay policy**
-   - Each repo keeps `.agents/docs/repo-guide-policy.md`.
+   - Each repo keeps `.agents/docs/repo-runbook-policy.md`.
    - It names the repo's existing guide files and any standard exceptions.
 
-### 5.3 `.agents/docs/repo-guide-policy.md`
+### 5.3 `.agents/docs/repo-runbook-policy.md`
 
 `agent-asset-marketplace` exemplar:
 
@@ -203,7 +203,7 @@ Local guides route to installed skills:
 
 - `interface.display_name: Repo Guide Standard`
 - `interface.short_description: Use when reading, creating, updating, or aligning repo guides and their workflow order.`
-- `interface.default_prompt`: Read `references/repository-guide-standard.md`, then the repo's `.agents/docs/repo-guide-policy.md`, then the specific local guide, then route to the matching Superpowers skill and `repo-worker-base` for hygiene.
+- `interface.default_prompt`: Read `references/repository-guide-standard.md`, then the repo's `.agents/docs/repo-runbook-policy.md`, then the specific local guide, then route to the matching Superpowers skill and `repo-worker-base` for hygiene.
 - `policy.allow_implicit_invocation: true`
 
 `sources/first_party/skills/repo-guide-standard/references/repository-guide-standard.md`:
@@ -213,12 +213,12 @@ Local guides route to installed skills:
 - `## Core guide set`: `design-guide.md`, `planning-guide.md`, `implementing-guide.md`, `code-review-guide.md`.
 - `## Allowed additional guides`: `<topic>-guide.md` in `.agents/guides/`; examples list.
 - `## Workflow order`: design -> planning -> implementing -> review; handoff requirements.
-- `## Local overlay policy`: each repo keeps `.agents/docs/repo-guide-policy.md`.
+- `## Local overlay policy`: each repo keeps `.agents/docs/repo-runbook-policy.md`.
 - `## Relationship to repo-worker-base`: `repo-guide-standard` owns guide composition; `repo-worker-base` owns repo hygiene and stage baselines.
 
 ### 6.2 Local overlay
 
-`.agents/docs/repo-guide-policy.md`:
+`.agents/docs/repo-runbook-policy.md`:
 
 - `# Repo Guide Policy`
 - States the repo follows `repo-guide-standard` and invokes `/repo-guide-standard` before guide work.
@@ -257,7 +257,7 @@ Each guide follows the same thin-overlay shape: `# <Topic> Guide`, `## When to u
 
 `## Routing pointers` moves below the canonical headings and adds:
 
-- `.agents/docs/repo-guide-policy.md` for repo-specific guide mappings.
+- `.agents/docs/repo-runbook-policy.md` for repo-specific guide mappings.
 
 ### 6.5 Marketplace and routing surfaces
 
@@ -269,7 +269,7 @@ Each guide follows the same thin-overlay shape: `# <Topic> Guide`, `## When to u
 - `.agents/guides/AGENTS.md`: update routing pointers to list all guides, including the five new ones.
 - `.agents/guides/INDEX.md`: regenerate.
 - Root `INDEX.md`: regenerate.
-- `docs/AGENTS.md` and `.agents/docs/AGENTS.md`: add pointer to `.agents/docs/repo-guide-policy.md`.
+- `docs/AGENTS.md` and `.agents/docs/AGENTS.md`: add pointer to `.agents/docs/repo-runbook-policy.md`.
 
 ## 7. Risks and mitigations
 
@@ -285,7 +285,7 @@ Each guide follows the same thin-overlay shape: `# <Topic> Guide`, `## When to u
 - `py -3 tools/rebuild_marketplace.py`
 - `py -3 tools/check_marketplace.py`
 - `py -3 tools/generate_index_mesh.py --check`
-- Manual review of `AGENTS.md`, `REVIEW.md`, `CONTRIBUTING.md`, `.agents/guides/INDEX.md`, and `.agents/docs/repo-guide-policy.md`.
+- Manual review of `AGENTS.md`, `REVIEW.md`, `CONTRIBUTING.md`, `.agents/guides/INDEX.md`, and `.agents/docs/repo-runbook-policy.md`.
 - `git status` and `git diff` review for unintended changes.
 
 ## 9. Handoff to planning
@@ -294,7 +294,7 @@ The implementation plan should include tasks for:
 
 1. Creating `sources/first_party/skills/repo-guide-standard/`.
 2. Updating `codex-marketplace/custody-pack-registry.json`.
-3. Creating `.agents/docs/repo-guide-policy.md`.
+3. Creating `.agents/docs/repo-runbook-policy.md`.
 4. Updating root `AGENTS.md` (reorder headings and routing pointers).
 5. Creating the five new `.agents/guides/*.md` files.
 6. Updating `.agents/guides/AGENTS.md`.

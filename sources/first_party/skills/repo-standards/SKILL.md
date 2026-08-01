@@ -30,7 +30,7 @@ license: MIT
 
 This skill is the portable baseline for repo-local runbooks and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, the `.agents/runbooks/` set, and the workflow order for each stage.
 
-Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that maps the standard to local files and records any exceptions. Local runbooks in `.agents/runbooks/` contain repo-specific paths, commands, exclusions, CI, and exceptions.
+Each repo supplies a thin overlay at `.agents/docs/repo-runbook-policy.md` that maps the standard to local files and records any exceptions. Local runbooks in `.agents/runbooks/` contain repo-specific paths, commands, exclusions, CI, and exceptions.
 
 ## Read when
 
@@ -39,7 +39,7 @@ Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that ma
 | How a repo's runbooks should be laid out | [references/repository-runbook-standard.md](references/repository-runbook-standard.md) |
 | How a repo's shape should be checked/applied | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
 | How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
-| The repo's local runbook mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
+| The repo's local runbook mappings | `.agents/docs/repo-runbook-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
 | Skill-bundled script CLI contract failures | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md) |
 | Vendor subagent profile deployment | [references/vendor-profile-deployment.md](references/vendor-profile-deployment.md) |
@@ -72,7 +72,7 @@ After the owning Superpowers stage skill has routed you (e.g., `/writing-plans` 
 The typical `repo-standards` workflow is:
 1. Read `references/repository-runbook-standard.md` and `references/repository-shape-standard.md`.
 2. Invoke `/repo-worker-base` if the work touches worktree, branch, validation, or publication.
-3. Read the repo's `.agents/docs/repo-guide-policy.md`.
+3. Read the repo's `.agents/docs/repo-runbook-policy.md`.
 4. Apply or check the surfaces the stage skill needs.
 
 ## Script usage notes

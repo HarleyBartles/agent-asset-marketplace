@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Scaffold the repo-local .agents/runbooks/ set.
 
-The script uses the mapping in .agents/docs/repo-guide-policy.md when present;
+The script uses the mapping in .agents/docs/repo-runbook-policy.md when present;
 otherwise it falls back to the standard runbook names under .agents/runbooks/.
 """
 
@@ -47,7 +47,7 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
-def _parse_repo_guide_policy(policy_path: Path) -> dict[str, Path] | None:
+def _parse_repo_runbook_policy(policy_path: Path) -> dict[str, Path] | None:
     if not policy_path.is_file():
         return None
     text = policy_path.read_text(encoding="utf-8")
@@ -89,7 +89,7 @@ examples:
   %(prog)s                       create any missing mapped runbooks
   %(prog)s --force               overwrite all mapped runbooks with scaffolds
 
-The runbook list is read from the table in .agents/docs/repo-guide-policy.md
+The runbook list is read from the table in .agents/docs/repo-runbook-policy.md
 under ## Standard-to-local mapping if it exists, otherwise the standard runbook
 set under .agents/runbooks/ is used.
 
@@ -114,8 +114,8 @@ exit codes:
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
-    policy_path = repo_root / ".agents" / "docs" / "repo-guide-policy.md"
-    mapping = _parse_repo_guide_policy(policy_path) or _default_mapping()
+    policy_path = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
+    mapping = _parse_repo_runbook_policy(policy_path) or _default_mapping()
 
     missing: list[str] = []
     written: list[str] = []

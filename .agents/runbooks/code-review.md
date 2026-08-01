@@ -47,6 +47,13 @@ Verify the work is validated. Key checks:
 
 Per the root `AGENTS.md`, the return must include a PR URL and head SHA, a verified direct-main commit SHA, or a concrete publication blocker. Local changes are not repo completion.
 
+## Plan Completion Check
+
+If the PR claims to implement a plan from `.agents/plans/`, verify the plan is marked completed before approving. The canonical rule is in [`completing-plans.md`](completing-plans.md):
+
+- All top-level checkboxes in the plan (`- [ ]`) must be checked off (`- [x]`), or the plan must record a merged implementation PR.
+- If the PR body claims the plan is "complete" but the plan is not fully checked off and does not record a merged PR, block completion until the author either checks off the delivered items or removes the completion claim.
+
 ## Clean Workspace
 
 No stray files, uncommitted debug artifacts, or phantom files in parent directories.

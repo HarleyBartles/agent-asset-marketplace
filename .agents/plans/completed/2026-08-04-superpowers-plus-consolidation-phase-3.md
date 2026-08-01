@@ -3,8 +3,8 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Specs:**
-- `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`
-- `.agents/specs/2026-08-04-superpowers-plus-consolidation-design.md`
+- `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`
+- `.agents/specs/completed/2026-08-04-superpowers-plus-consolidation-design.md`
 
 **Goal:** In a single phase, deliver (1) the skill-bundled script CLI contract (`--help`, `--check`, safe-by-default) plus `repo-standards` validator and vendor profile deployment ownership, and (2) the doctrine and guide thinning work that the consolidation design spec already assigned to Phase 3.
 
@@ -109,7 +109,7 @@ The known first-party skill scripts are under these directories:
 **Consumes:** Task 1 (audit list and prioritization).
 
 **Interfaces:**
-- Every updated script follows the contract from `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`.
+- Every updated script follows the contract from `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`.
 - Each script's `SKILL.md` references the script and its safe invocation.
 - `docs/skill-standards-policy.md` is updated to require the contract for all new skill scripts.
 

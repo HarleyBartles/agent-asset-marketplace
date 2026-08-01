@@ -83,7 +83,7 @@ See `docs/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 
-Every executable Python script bundled with a first-party skill must support the CLI contract in `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`:
+Every executable Python script bundled with a first-party skill must support the CLI contract in `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`:
 
 - `--help` prints usage, a one-line description, and the read-only or mutating classification for each flag.
 - `--check` is the default mode: report what the script would do and exit `0` when no mutation is needed.

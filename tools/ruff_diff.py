@@ -42,27 +42,36 @@ def _resolve_base_ref(args: argparse.Namespace) -> str | None:
 
 
 def _changed_python_files(base_ref: str | None) -> list[Path]:
-    """Return the list of .py files changed since the base ref."""
-    if base_ref is None:
-        return []
-    diff = _run(
-        ["git", "diff", "--name-only", "--diff-filter=ACMR", f"{base_ref}...HEAD"]
-    )
+    """Return the list of .py files changed since the base ref or staged in the worktree."""
+    seen: set[str] = set()
+
+    # Staged (the commit being prepared by the preflight)
+    diff = _run(["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"])
+    seen.update(diff.stdout.splitlines())
+
+    # Unstaged (local working changes before commit)
+    diff = _run(["git", "diff", "--name-only", "--diff-filter=ACMR"])
+    seen.update(diff.stdout.splitlines())
+
+    # Committed changes on the current branch
+    if base_ref is not None:
+        diff = _run(
+            ["git", "diff", "--name-only", "--diff-filter=ACMR", f"{base_ref}...HEAD"]
+        )
+        seen.update(diff.stdout.splitlines())
+
     return [
         Path(p)
-        for p in diff.stdout.splitlines()
+        for p in sorted(seen)
         if p.endswith(".py") and Path(p).is_file()
     ]
 
 
-def _added_line_numbers(base_ref: str, path: Path) -> set[int]:
-    """Return the set of new-file line numbers added or modified in `path`."""
-    diff = _run(
-        ["git", "diff", "--unified=0", f"{base_ref}...HEAD", "--", str(path)]
-    )
+def _added_lines_from_diff(diff: str) -> set[int]:
+    """Parse a unified diff into the set of new-file line numbers that were added."""
     added: set[int] = set()
     new_line = 0
-    for line in diff.stdout.splitlines():
+    for line in diff.splitlines():
         if line.startswith("@@"):
             match = _HUNK_RE.match(line)
             if match:
@@ -81,6 +90,32 @@ def _added_line_numbers(base_ref: str, path: Path) -> set[int]:
     return added
 
 
+def _added_line_numbers(base_ref: str | None, path: Path) -> set[int]:
+    """Return the set of new-file line numbers added or modified in `path`."""
+    added: set[int] = set()
+
+    # Staged
+    diff = _run(
+        ["git", "diff", "--unified=0", "--cached", "--", str(path)]
+    )
+    added.update(_added_lines_from_diff(diff.stdout))
+
+    # Unstaged
+    diff = _run(
+        ["git", "diff", "--unified=0", "--", str(path)]
+    )
+    added.update(_added_lines_from_diff(diff.stdout))
+
+    # Committed on branch
+    if base_ref is not None:
+        diff = _run(
+            ["git", "diff", "--unified=0", f"{base_ref}...HEAD", "--", str(path)]
+        )
+        added.update(_added_lines_from_diff(diff.stdout))
+
+    return added
+
+
 def _format_diagnostic(path: Path, diagnostic: dict[str, object]) -> str:
     location = diagnostic["location"]
     return (
@@ -89,7 +124,7 @@ def _format_diagnostic(path: Path, diagnostic: dict[str, object]) -> str:
     )
 
 
-def _lint_file(base_ref: str, path: Path) -> list[str]:
+def _lint_file(base_ref: str | None, path: Path) -> list[str]:
     """Return ruff findings in `path` that fall on changed lines only."""
     added_lines = _added_line_numbers(base_ref, path)
     if not added_lines:
@@ -131,8 +166,6 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     base_ref = _resolve_base_ref(args)
-    if base_ref is None:
-        return 0
     files = _changed_python_files(base_ref)
     if not files:
         print("No changed Python files to lint.")
