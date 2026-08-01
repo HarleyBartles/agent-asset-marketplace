@@ -110,15 +110,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `using-superpowers-plus` owns `superpowers-composition.md` and the bootstrap routing contract.
 - Each stage skill owns its own baseline reference and reads it as part of its own first step.
 
-- [ ] **Step 1: Move the references.**
+- [x] **Step 1: Move the references.**
 
   Use `git mv` for each file. The source custody moves; the content is otherwise unchanged unless a relative path inside the file needs updating.
 
-- [ ] **Step 2: Update `repo-worker-base/SKILL.md`.**
+- [x] **Step 2: Update `repo-worker-base/SKILL.md`.**
 
   Remove the `superpowers-composition.md` and all four baseline rows from the `Read when` table. Remove the "Composition contract" section that references `repo-worker-base -> matching baseline -> local guide -> selected Superpowers lane` and point instead to `using-superpowers-plus/references/bootstrap-routing.md` for composition.
 
-- [ ] **Step 3: Update `using-superpowers-plus/references/bootstrap-routing.md`.**
+- [x] **Step 3: Update `using-superpowers-plus/references/bootstrap-routing.md`.**
 
   Make the repo-backed handoff:
 
@@ -128,15 +128,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 
   Update the `superpowers-composition.md` link to point at `using-superpowers-plus/references/superpowers-composition.md`.
 
-- [ ] **Step 4: Update `repo-standards/references/repository-guide-standard.md`.**
+- [x] **Step 4: Update `repo-standards/references/repository-guide-standard.md`.**
 
   Change the relationship to: `repo-standards` owns guide layout, invocation, and workflow order; `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries; each stage skill owns its own baseline.
 
-- [ ] **Step 5: Add baseline loading to each stage skill.**
+- [x] **Step 5: Add baseline loading to each stage skill.**
 
   Add a first step to `brainstorming`, `writing-plans`, `executing-plans`, and `requesting-code-review` that says: "Read this skill's baseline (`references/<stage>-baseline.md`) and the repo's `.agents/guides/<stage>-guide.md` before executing the stage checklist."
 
-- [ ] **Step 6: Commit.**
+- [x] **Step 6: Commit.**
 
   ```bash
   git add sources/first_party/skills/repo-worker-base sources/first_party/skills/using-superpowers-plus sources/first_party/skills/brainstorming sources/first_party/skills/writing-plans sources/first_party/skills/executing-plans sources/first_party/skills/requesting-code-review sources/first_party/skills/repo-standards
@@ -144,7 +144,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "refactor: move stage baselines out of repo-worker-base"
   ```
 
-- [ ] **Step 7: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 7: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

@@ -11,19 +11,24 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = REPO_ROOT / "sources" / "first_party" / "skills"
 REPO_WORKER_BASE = SOURCE_ROOT / "repo-worker-base"
+USING_SUPERPOWERS_PLUS = SOURCE_ROOT / "using-superpowers-plus"
 
-REFERENCE_FILENAMES = (
+# repo-worker-base owns hygiene boundaries only; stage skills own their own
+# baselines and using-superpowers-plus owns the composition table.
+REPO_WORKER_BASE_REFERENCE_FILENAMES = (
     "worktree-and-branch-policy.md",
     "mutation-script-safety.md",
     "script-entrypoint-contract.md",
     "repository-layout-and-mesh.md",
     "stage-guide-contract.md",
-    "design-baseline.md",
-    "planning-baseline.md",
-    "implementation-baseline.md",
-    "code-review-baseline.md",
-    "superpowers-composition.md",
 )
+
+STAGE_BASELINE_OWNERS = {
+    "brainstorming": "design-baseline.md",
+    "writing-plans": "planning-baseline.md",
+    "executing-plans": "implementation-baseline.md",
+    "requesting-code-review": "code-review-baseline.md",
+}
 
 STAGE_GUIDES = (
     "design-guide.md",
@@ -105,8 +110,44 @@ def _assert_local_markdown_links_resolve(path: Path) -> None:
 
 def test_repo_worker_base_exposes_all_focused_references():
     references = REPO_WORKER_BASE / "references"
-    missing = [name for name in REFERENCE_FILENAMES if not (references / name).is_file()]
+    missing = [
+        name for name in REPO_WORKER_BASE_REFERENCE_FILENAMES
+        if not (references / name).is_file()
+    ]
     assert not missing, f"missing repo-worker-base references: {missing}"
+
+
+def test_repo_worker_base_no_longer_owns_stage_baselines_or_composition():
+    references = REPO_WORKER_BASE / "references"
+    leftover = [
+        name for name in (
+            "design-baseline.md",
+            "planning-baseline.md",
+            "implementation-baseline.md",
+            "code-review-baseline.md",
+            "superpowers-composition.md",
+        )
+        if (references / name).exists()
+    ]
+    assert not leftover, (
+        f"repo-worker-base must not own stage baselines or composition table: {leftover}"
+    )
+
+
+def test_stage_skills_own_their_baselines():
+    missing = [
+        f"{skill}/{name}"
+        for skill, name in STAGE_BASELINE_OWNERS.items()
+        if not (SOURCE_ROOT / skill / "references" / name).is_file()
+    ]
+    assert not missing, f"missing stage-owned baseline references: {missing}"
+
+
+def test_using_superpowers_plus_owns_composition_table():
+    composition = USING_SUPERPOWERS_PLUS / "references" / "superpowers-composition.md"
+    assert composition.is_file(), (
+        "using-superpowers-plus must own superpowers-composition.md"
+    )
 
 
 def test_repo_worker_base_source_has_no_machine_specific_drive_assumptions():
@@ -143,7 +184,9 @@ def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
 
 def test_worktree_policy_uses_git_anchored_absolute_resolution_and_preserves_gates():
     policy = (REPO_WORKER_BASE / "references" / "worktree-and-branch-policy.md").read_text(encoding="utf-8")
-    implementation = (REPO_WORKER_BASE / "references" / "implementation-baseline.md").read_text(encoding="utf-8")
+    implementation = (
+        SOURCE_ROOT / "executing-plans" / "references" / "implementation-baseline.md"
+    ).read_text(encoding="utf-8")
 
     for required in (
         "git -C <start-path> rev-parse --show-toplevel",

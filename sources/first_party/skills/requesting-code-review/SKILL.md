@@ -36,6 +36,8 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 
 **Core principle:** Review early, review often.
 
+**First step:** Read this skill's baseline (`references/code-review-baseline.md`) and the repo's `.agents/guides/code-review-guide.md` before executing the stage checklist.
+
 ## When to Request Review
 
 **Mandatory:**

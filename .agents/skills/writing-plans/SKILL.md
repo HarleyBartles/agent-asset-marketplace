@@ -42,6 +42,8 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
+**First step:** Read this skill's baseline (`references/planning-baseline.md`) and the repo's `.agents/guides/planning-guide.md` before executing the stage checklist.
+
 **Context:** If working in an isolated worktree, it should have been created via the `/using-git-worktrees` skill at execution time.
 
 **Save plans to:** `.agents/plans/YYYY-MM-DD-<feature-name>.md`

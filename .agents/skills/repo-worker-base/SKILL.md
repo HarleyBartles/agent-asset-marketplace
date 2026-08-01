@@ -1,6 +1,6 @@
 ---
 name: repo-worker-base
-description: Use when beginning or reviewing repo-backed work that needs portable worktree, source-custody, layout, validation, publication, or stage-composition guidance.
+description: Use when beginning or reviewing repo-backed work that needs portable worktree, source-custody, layout, validation, or publication guidance.
 metadata:
   source-id: repo-worker-base
   source-path: sources/first_party/skills/repo-worker-base/SKILL.md
@@ -8,10 +8,9 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Portable repo-worker routing, hygiene, stage composition, and publication boundaries.
+  scope: Portable repo-worker routing, hygiene, and publication boundaries.
   use_when:
   - Use when repo work needs worktree, branch, scratch, source, layout, validation, evidence, review, closeout, or publication guidance.
-  - Use when a repo-backed Superpowers lane needs its matching baseline and repository-local guide.
   do_not_use_when:
   - Do not use when work is not repo-backed or a repository-specific policy alone owns the decision.
   use_with:
@@ -27,9 +26,10 @@ license: MIT
 # Repo Worker Base
 
 This is the thin portable control plane for repo-backed work. It supplies
-repeatable hygiene and composition boundaries; the consuming repository owns
+repeatable hygiene and publication boundaries; the consuming repository owns
 its paths, commands, exclusions, CI, and exceptions through its local
-hygiene/layout policy and stage guides.
+hygiene/layout policy and stage guides. Superpowers lane composition is owned
+by `using-superpowers-plus`; each stage skill owns its own baseline.
 
 ## Read when
 
@@ -40,27 +40,17 @@ hygiene/layout policy and stage guides.
 | Creating an agent-facing script | [script-entrypoint-contract.md](references/script-entrypoint-contract.md) |
 | Changing README, AGENTS.md, INDEX.md, doctrine, docs, plans, or mesh | [repository-layout-and-mesh.md](references/repository-layout-and-mesh.md) |
 | Finding or creating a repository-local stage guide | [stage-guide-contract.md](references/stage-guide-contract.md) |
-| Repo-backed design | [design-baseline.md](references/design-baseline.md) |
-| Repo-backed planning | [planning-baseline.md](references/planning-baseline.md) |
-| Repo-backed implementation, evidence, closeout, or publication | [implementation-baseline.md](references/implementation-baseline.md) |
-| Repo-backed review | [code-review-baseline.md](references/code-review-baseline.md) |
-| Selecting a Superpowers lane for a repo-backed stage | [superpowers-composition.md](references/superpowers-composition.md) |
 
 Read the consuming repository's local hygiene/layout policy whenever it
 exists. That local policy is the authority for repository-specific paths,
 commands, exclusions, CI, and exceptions; this skill does not replace it.
 
-## Composition contract
-
-For repo-backed design, planning, implementation, or review, use:
-
-~~~text
-repo-worker-base -> matching baseline -> local guide -> selected Superpowers lane
-~~~
-
-The matching lanes are brainstorming, writing-plans, either executing-plans or
-subagent-driven-development, and requesting-code-review. Keep this entrypoint
-thin: it routes to those owners instead of duplicating their stage technique.
+For Superpowers lane composition and stage routing, see
+[`using-superpowers-plus/references/bootstrap-routing.md`](sources/first_party/skills/using-superpowers-plus/references/bootstrap-routing.md)
+and
+[`using-superpowers-plus/references/superpowers-composition.md`](sources/first_party/skills/using-superpowers-plus/references/superpowers-composition.md).
+Each stage skill owns its own baseline reference and reads it as part of its
+own first step.
 
 ## Supporting owners
 
