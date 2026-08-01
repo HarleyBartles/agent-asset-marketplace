@@ -5,17 +5,17 @@
 - Commit date: 2026-03-18
 - Upstream author shown by git: Matt Shumer
 - License: MIT (Copyright (c) 2026 Matt Shumer)
-- Source custody path: `sources/third_party/unslop/upstream/`
+- Source custody path: `provenance/MARK-99-unslop.md`
 - Upstream license notice: `LICENSE.upstream` (in this directory's parent)
 
 ## Engine Adaptation
 
 The upstream `unslop.py` is a Claude Code CLI tool that requires the `claude` binary, spawns `claude -p` subprocesses for sample generation and analysis, and includes an interactive terminal UI with spinners and progress bars. These runtime assumptions are not appropriate for a Codex/GPT skill package.
 
-The projected script in `scripts/unslop.py` is adapted from the upstream idea: it uses Python standard library text analysis on local sample files, removes the Claude Code CLI dependency, removes the interactive terminal UI, and only uses Playwright for visual dependencies when already present. The upstream MIT license and copyright are preserved in `LICENSE.upstream`.
+The distributed script in `scripts/unslop.py` is adapted from the upstream idea: it uses Python standard library text analysis on local sample files, removes the Claude Code CLI dependency, removes the interactive terminal UI, and only uses Playwright for visual dependencies when already present. The upstream MIT license and copyright are preserved in `LICENSE.upstream`.
 
-The upstream source remains retained verbatim in `sources/third_party/unslop/upstream/unslop.py` for provenance and comparison.
+The upstream source remains retained verbatim in `provenance/MARK-99-unslop.md` for provenance and comparison.
 
 ## First-Party Profiles
 
-The thirteen profiles are first-party portable profiles authored by your human partner Bartles (Asset Marketplace) under MIT license. They are projected verbatim from `sources/first_party/skills/unslop-profiles/profiles/` and are not derived from upstream content.
+The thirteen profiles are first-party portable profiles authored by your human partner Bartles (Asset Marketplace) under MIT license. They are contained in `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/profiles/` and are not derived from upstream content.

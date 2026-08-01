@@ -3,12 +3,6 @@
 This plugin bundle projects the first-party .NET ecosystem skill into an installable Codex marketplace pack.
 
 ## Bundle contents
-<!-- BEGIN GENERATED: bundle-contents -->
-### First Party skills
-- `dotnet`
-
-Manifest entry count: 1.
-<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`

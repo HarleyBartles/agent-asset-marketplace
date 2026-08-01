@@ -4,20 +4,6 @@ This bundle projects first-party and retained third-party source custody into th
 
 ## Bundle contents
 
-<!-- BEGIN GENERATED: bundle-contents -->
-### Feature Sliced skills
-- `feature-sliced-design`
-
-### First Party skills
-- `frontend-ux`
-- `playwright-testing`
-- `react`
-- `wcag`
-- `web-styling`
-
-Manifest entry count: 6.
-<!-- END GENERATED: bundle-contents -->
-
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`

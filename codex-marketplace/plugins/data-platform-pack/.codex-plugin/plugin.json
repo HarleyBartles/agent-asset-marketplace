@@ -8,7 +8,7 @@
     "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
     "license":  "MIT",
-    "rights":  "Contains first-party database-engines guidance with vendored PostgreSQL and SQLite documentation; see SOURCE.md and references/source-map.md for source custody and attribution.",
+    "rights":  "Contains first-party database-engines guidance with vendored PostgreSQL and SQLite documentation; see SOURCE.md and references/bundle-manifest.json for source custody and attribution.",
     "keywords":  [
                      "codex",
                      "marketplace",
@@ -36,7 +36,7 @@
                       "defaultPrompt":  [
                                             "Inspect the Data Platform Pack bundle and source map.",
                                             "Use the bundle to review the first-party database-engines skill projection.",
-                                            "Compare the bundle versioning against the first-party source custody in sources/first_party/skills/database-engines."
+                                            "Compare the bundle versioning against the first-party source custody in codex-marketplace/plugins/data-platform-pack/skills/database-engines."
                                         ],
                       "brandColor":  "#0D9488",
                       "composerIcon":  "./assets/icon.svg",

@@ -2,24 +2,6 @@
 
 This bundle projects first-party source custody into the Codex marketplace.
 
-<!-- BEGIN GENERATED: pack-inventory -->
-## Source custody
-### First Party custody
-- `sources/first_party/skills/owasp-top-ten/`
-- `sources/first_party/skills/risk-gates/`
-- `sources/first_party/skills/secure-development/`
-- `sources/first_party/skills/web-identity/`
-
-## Projection surfaces
-- Codex plugin root: `codex-marketplace/plugins/security-pack/`
-- Skill root: `codex-marketplace/plugins/security-pack/skills/`
-- Skill roots:
-  - `codex-marketplace/plugins/security-pack/skills/owasp-top-ten/`
-  - `codex-marketplace/plugins/security-pack/skills/risk-gates/`
-  - `codex-marketplace/plugins/security-pack/skills/secure-development/`
-  - `codex-marketplace/plugins/security-pack/skills/web-identity/`
-<!-- END GENERATED: pack-inventory -->
-
 ## Boundary
 - The pack covers secure coding, OWASP review, risk gates, security testing, threat modeling, cloud review, config validation, risk review, and web identity.
 - The pack does not absorb unrelated topical homes.

@@ -4,19 +4,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
 
-<!-- BEGIN GENERATED: bundle-contents -->
-### First Party skills
-- `clean-architecture`
-- `cqrs`
-- `database-design-patterns`
-- `ddd`
-- `event-driven-systems`
-- `event-sourcing`
-- `hexagonal-architecture`
-
-Manifest entry count: 7.
-<!-- END GENERATED: bundle-contents -->
-
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`

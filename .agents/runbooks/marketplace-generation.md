@@ -30,10 +30,9 @@ Use this when you have made changes to source custody, adapter files, projection
 
 #### Editable inputs (do not edit the derived surfaces by hand)
 
-- `codex-marketplace/custody-pack-registry.json` — which skills belong to which pack
 - `codex-marketplace/plugin-roots.json` — discovered active plugin roots
-- `sources/first_party/skills/<skill>/` — first-party skill source custody
-- `sources/third_party/<upstream>/` — retained upstream source custody
+- `codex-marketplace/plugins/<plugin>/skills/<skill>/` — first-party skill source custody
+- `provenance/<record>.md` — retained upstream source provenance
 - `adapters/codex/<pack>/<skill>/` — adaptation overlays for third-party skills
 
 #### Execution flow
@@ -136,7 +135,7 @@ tools/run mesh --check
 
 You must run the full marketplace regeneration (`tools/run marketplace --apply`) after any change to:
 
-- Source custody under `sources/first_party/` or `sources/third_party/`
+- Canonical plugin skills under `codex-marketplace/plugins/<plugin>/skills/` or retained upstream provenance under `provenance/`
 - Codex adapter/overlay files under `adapters/codex/`
 - Projection plugin shapes under `codex-marketplace/plugins/`
 - Bundle manifests in plugin references
@@ -152,7 +151,7 @@ After regeneration, verify:
 1. **All validation checks pass** — `tools/run marketplace --apply` runs validation automatically
 2. **No git diff errors** — whitespace and formatting checks pass
 3. **Installed skills are current** — `refresh_installed_skills.py --check` passes
-4. **Index mesh is current** — `sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check` passes
+4. **Index mesh is current** — `codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/scripts/generate_index_mesh.py --check` passes
 
 ## Deterministic Pack Rule
 

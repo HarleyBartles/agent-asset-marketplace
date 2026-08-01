@@ -2,7 +2,7 @@
   {
     "issue": "MARK-226",
     "source_id": "using-github-mcp-v1",
-    "source_path": "sources/first_party/skills/using-github-mcp",
+    "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-github-mcp",
     "public_name": "using-github-mcp",
     "provenance_name": "MARK-226 canonical first-party source for using-github-mcp",
     "import_state": "canonical",

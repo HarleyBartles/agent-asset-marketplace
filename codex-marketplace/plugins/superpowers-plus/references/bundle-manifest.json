@@ -8,7 +8,7 @@
     "first_party"
   ],
   "notes": [
-    "Superpowers+ is a first-party authored skill bundle. The upstream obra/superpowers v6.2.0 MIT snapshot is retained under sources/third_party/superpowers/ as reference."
+    "Superpowers+ is a first-party authored skill bundle. The upstream obra/superpowers v6.2.0 MIT snapshot is retained in provenance/superpowers-plus.md for reference."
   ],
   "provenance_refs": [
     "provenance/superpowers-plus.md"

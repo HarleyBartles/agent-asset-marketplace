@@ -19,7 +19,7 @@ Use this runbook for repo-specific security posture when working in `agent-asset
 - Do not commit secrets, API keys, connection strings, or credentials. Use environment variables or secret managers.
 - Do not log sensitive user data or secrets.
 - Validate all inputs in `tools/` scripts; prefer parameterized commands over shell string concatenation.
-- When modifying `sources/third_party/`, verify provenance and license before import.
+- When importing or retaining third-party source, verify provenance and license before merge.
 - Generated `skill.zip` files in `generated/skill-zips/` are downstream outputs, not canonical source. Do not hand-edit them to bypass source review.
 
 ## Routing to skills

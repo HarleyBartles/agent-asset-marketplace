@@ -3,26 +3,6 @@
 This bundle projects the first-party repo worker baseline skills.
 
 ## Bundle contents
-<!-- BEGIN GENERATED: bundle-contents -->
-### First Party skills
-- `asking-clarifying-questions`
-- `base-doctrine`
-- `cleanup-custody`
-- `connector-safety`
-- `context-safety`
-- `generating-agent-mesh`
-- `linear-issue-shaping`
-- `refreshing-installed-skills`
-- `repo-standards`
-- `repo-worker-base`
-- `risk-gates`
-- `unslop-profiles`
-- `using-github-mcp`
-- `using-linear`
-- `writing-with-clarity`
-
-Manifest entry count: 15.
-<!-- END GENERATED: bundle-contents -->
 
 ### Documentation
 - provenance and source mapping in `SOURCE.md`

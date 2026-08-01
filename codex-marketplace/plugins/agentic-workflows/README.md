@@ -4,13 +4,6 @@ This bundle projects first-party source custody into the Codex marketplace.
 
 ## Bundle contents
 
-<!-- BEGIN GENERATED: bundle-contents -->
-### First Party skills
-- `agentic-harness`
-
-Manifest entry count: 1.
-<!-- END GENERATED: bundle-contents -->
-
 ### Documentation
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
