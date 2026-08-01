@@ -72,6 +72,14 @@ Dispatch a `general-purpose` subagent, filling the template at [code-reviewer.md
 - Note Minor issues for later
 - Push back if reviewer is wrong (with reasoning)
 
+## Branch or PR diff review
+
+When the code-review request is about a branch or PR diff, dispatch `reviewer` (or
+`reviewer-strong` for large or subtle diffs) with the PR number and branch. The
+subagent reviews the diff against the base ref with `git diff --no-color <base>...<branch>`,
+cites specific files and line numbers, and does not modify files. Use `reviewer-fast` only
+for targeted re-review of fixes after an initial review.
+
 ## Example
 
 ```

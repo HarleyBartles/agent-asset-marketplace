@@ -39,10 +39,11 @@ The shared policy's free/included/metered and cost-preference rules do not apply
 
 ### Custom subagent profiles
 
-Devin Desktop supports custom subagent profiles. It searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
+Devin Desktop supports custom subagent profiles. It searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
 
 | Task | Dispatch |
 |---|---|
+| Reviewer re-check on fixes | `run_subagent profile: reviewer-fast` |
 | Review / architecture challenge | `run_subagent profile: reviewer` |
 | Review / architecture challenge that needs more reasoning | `run_subagent profile: reviewer-strong` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |

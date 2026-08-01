@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Read-only code and branch diff reviewer — checks correctness, style, consistency, and risk against the actual repository and cites specific files and line numbers.
-model: swe-1-7
+model: GLM-5.2
 allowed-tools:
   - read
   - grep

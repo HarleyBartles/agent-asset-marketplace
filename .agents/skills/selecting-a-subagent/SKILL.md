@@ -16,8 +16,8 @@ metadata:
   - Use when creating or selecting a named subagent configuration.
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
-  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-strong`,
-    `implementer`, or `implementer-strong`.
+  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
+    `reviewer-strong`, `implementer`, or `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -70,7 +70,16 @@ corresponding `.md` profile assets into a Devin Desktop profile search path:
 
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`reviewer-strong`, `implementer`, and `implementer-strong`.
+`reviewer-fast`, `reviewer-strong`, `implementer`, and `implementer-strong`.
+
+## Common custom subagent profile dispatch
+
+| Task | Profile |
+|---|---|
+| Reviewer re-check on fixes | `reviewer-fast` |
+| Review / architecture challenge | `reviewer` |
+| Review / architecture challenge that needs more reasoning | `reviewer-strong` |
+| Branch/PR diff review | `reviewer` (or `reviewer-strong` for large or subtle diffs) |
 
 ## Common pressure
 

@@ -83,11 +83,14 @@ to the right stage guide and skill.
 
 ### Review and subagent profiles
 
-- `selecting-a-subagent` owns four subagent profiles: `implementer`,
-  `implementer-strong`, `reviewer`, `reviewer-strong`.
+- `selecting-a-subagent` owns five subagent profiles: `implementer`,
+  `implementer-strong`, `reviewer`, `reviewer-fast`, `reviewer-strong`.
+- `reviewer-fast` uses `swe-1-6` and is the fast, targeted re-review profile;
+  `reviewer` uses `GLM-5.2`; `reviewer-strong` uses `swe-1-7`.
 - The `branch-reviewer.md` profile is deleted.
-- `requesting-code-review` owns both per-task and whole-branch review lanes,
-  dispatching `reviewer` or `reviewer-strong` with the appropriate diff range.
+- `requesting-code-review` owns per-task, branch, and PR diff review lanes,
+  dispatching `reviewer` (or `reviewer-strong` for large or subtle diffs) with the
+  appropriate diff range. `reviewer-fast` is used only for targeted re-review of fixes.
 - `base-doctrine` owns the base code-review contract; repo `.agents/guides/code-review-guide.md`
   is a thin delta.
 
@@ -115,7 +118,14 @@ to the right stage guide and skill.
 
 Phase 1 is the first implementation plan. It unlocks the rest by removing the
 `superpowers/` working surface and giving `using-superpowers-plus` a clean spin-up
-contract.
+contract. This update to the Phase 1 scope now also includes:
+
+1. The reviewer subagent profile split: `reviewer` (`GLM-5.2`), `reviewer-fast`
+   (`swe-1-6`), and `reviewer-strong` (`swe-1-7`).
+2. The retirement of `branch-reviewer` and `requesting-branch-review`, merging
+   branch diff review behavior into `requesting-code-review`.
+3. The PR-context branch diff review flow in `requesting-code-review` and the
+   `selecting-a-subagent` task-dispatch tables.
 
 In scope for Phase 1:
 
@@ -132,6 +142,10 @@ In scope for Phase 1:
   `using-superpowers-plus/references/` and retire both skills.
 - Update `repo-worker-base` to be the downstream repo-hygiene handoff, removing
   its own routing-classification language.
+- Split the reviewer subagent profiles in `selecting-a-subagent/assets/`: `reviewer`
+  (`GLM-5.2`), `reviewer-fast` (`swe-1-6`), and `reviewer-strong` (`swe-1-7`).
+- Merge `requesting-branch-review` into `requesting-code-review`, adding a branch/PR
+  diff review lane and removing `branch-reviewer` as a listed subagent profile.
 - Regenerate marketplace and run `tools/run ci --check`.
 
 ## Phase 1 file touch points
@@ -161,9 +175,14 @@ targets belong in the Plan 1 task list.
 - `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json` — regenerate after retirements.
 - `provenance/first-party-skills.md` — regenerate after retirements.
 
-Out of scope for Phase 1:
+### Deferred to Phase 2 and beyond
 
-- Merging `requesting-branch-review` (Phase 2).
+The following items are intentionally out of scope for Phase 1 and scheduled for later phases:
+
+- `publishing-source` skill design and implementation (Phase 2).
+- Pack placement of `using-github` (Phase 2).
+- Cross-repo draft-PR policy implementation (Phase 2).
+- Vendor profile installation and third-party profile packaging (Phase 2).
 - Moving `report-hygiene` (Phase 3).
 - Folding `mark-skill-authoring` (Phase 3).
 - Renaming `using-superpowers-plus` (the name stays; the body changes).

@@ -279,3 +279,31 @@ Wait for the result. If it fails, fix the source, regenerate, and re-commit befo
 - Push the `consolidate-superpowers-plus-residuals` branch to origin.
 - Open a PR with title "refactor: consolidate superpowers-plus residuals (phase 1)".
 - Attach the PR URL and head SHA as publication proof.
+
+## As-built / scope
+
+In addition to the original layout and router cleanup, this plan now carries the
+following reviewer-profile and branch-review consolidation work in Phase 1:
+
+- `selecting-a-subagent/assets/reviewer.md` now sets `model: GLM-5.2` and keeps the
+  read-only code and branch/PR diff review body.
+- `selecting-a-subagent/assets/reviewer-strong.md` keeps `model: swe-1-7`.
+- `selecting-a-subagent/assets/reviewer-fast.md` is a new `swe-1-6` fast re-review
+  profile with the same `allowed-tools` and a concise, targeted review body.
+- `selecting-a-subagent/SKILL.md` and `references/devin-desktop-profile.md` list
+  `reviewer-fast` in `use_when`, install examples, and the custom subagent dispatch
+  table.
+- `requesting-branch-review` is retired: its source directory is deleted and its
+  `codex-marketplace/custody-pack-registry.json` entry is removed.
+- `requesting-code-review/SKILL.md` now owns the branch/PR diff review lane,
+  dispatching `reviewer` (or `reviewer-strong`) with the PR number and branch.
+- The `branch-reviewer` profile is no longer listed; all branch/PR diff review
+  dispatches now route through `reviewer`/`reviewer-strong`.
+
+Deferred to Phase 2 and beyond:
+
+- `publishing-source` skill design and implementation.
+- Pack placement of `using-github`.
+- Cross-repo draft-PR policy implementation.
+- Vendor profile installation and third-party profile packaging.
+- `report-hygiene` move (Phase 3) and `mark-skill-authoring` fold (Phase 3).

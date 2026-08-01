@@ -101,7 +101,7 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Invoke /requesting-branch-review for final whole-branch review" [shape=box];
+    "Invoke /requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
     "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
@@ -130,8 +130,8 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Invoke /requesting-branch-review for final whole-branch review" [label="no"];
-    "Invoke /requesting-branch-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Invoke /requesting-code-review for final whole-branch review" [label="no"];
+    "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
     "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
 }
@@ -392,7 +392,7 @@ parked-with-ruling at the cap.
 
 ## Final Review
 
-The final whole-branch review is handled by `/requesting-branch-review`. Dispatch the
+The final whole-branch review is handled by `/requesting-code-review`. Dispatch the
 skill once all task-level reviews are complete. The skill reviews the full branch
 diff and reports findings; no additional review package is needed.
 
@@ -489,7 +489,7 @@ Re-reviewer: Missing progress reporting — ADDRESSED (src/recovery.js:41).
 ...
 
 [After all tasks]
-[Invoke /requesting-branch-review for final whole-branch review]
+[Invoke /requesting-code-review for final whole-branch review]
 Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
