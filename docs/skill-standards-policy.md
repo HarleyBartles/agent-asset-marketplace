@@ -229,6 +229,18 @@ policy:
 
 See `docs/contracts/openai-agent-yaml.md` for the full contract.
 
+## Bundled scripts
+
+Every executable Python script bundled with a first-party skill must support the CLI contract defined in `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`:
+
+- `--help` prints usage, a one-line description, and the read-only or mutating classification for each flag.
+- `--check` is the default mode. It reports what the script would do and exits `0` when no mutation is needed, otherwise a non-zero code.
+- `--apply` is the explicit mutating mode. It performs the script's primary action.
+- `read-only` scripts may exit `0` for `--check` and need no `--apply`.
+- `mixed` scripts (read-only `--check` and mutating `--apply`) must classify themselves as `mixed` in `--help`.
+
+Reference shape: `sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`.
+
 ## Testing
 
 Before deploying a skill, verify:

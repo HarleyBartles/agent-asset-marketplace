@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Create a git worktree at the canonical sibling location and refresh skills."""
+"""Create a git worktree at the canonical sibling location and refresh skills.
+
+This script follows the skill-bundled CLI contract:
+- `--help` prints usage and classifies each flag.
+- `--check` (the default) reports what the script would do and exits 0 when
+  the requested worktree already exists, otherwise 1.
+- `--apply` performs the creation and skill refresh.
+"""
 
 from __future__ import annotations
 
@@ -41,7 +48,7 @@ def _stripped_env() -> dict[str, str]:
 
 def _repo_root() -> Path:
     result = subprocess.run(
-        ["git", "rev-parse", "--show-toplevel"],
+        ["git", "rev-parse", "show-toplevel"],
         capture_output=True,
         text=True,
         check=True,
@@ -52,7 +59,7 @@ def _repo_root() -> Path:
 
 def _reject_submodule() -> None:
     result = subprocess.run(
-        ["git", "rev-parse", "--show-superproject-working-tree"],
+        ["git", "rev-parse", "show-superproject-working-tree"],
         capture_output=True,
         text=True,
         env=_stripped_env(),
@@ -228,7 +235,7 @@ def _init_submodules(worktree_root: Path) -> int:
 def _configure_worktree(
     worktree_root: Path,
     main_repo_root: Path,
-    args: argparse.Namespace,
+    no_skill_refresh: bool,
     allow_shared_checkout: bool,
 ) -> int:
     """Refresh skills and regenerate the index mesh inside the new worktree.
@@ -236,7 +243,7 @@ def _configure_worktree(
     Returns an exit code; the caller is responsible for removing the worktree
     when this returns non-zero.
     """
-    if not args.no_skill_refresh:
+    if not no_skill_refresh:
         exit_code = _init_submodules(worktree_root)
         if exit_code != 0:
             return exit_code
@@ -281,34 +288,79 @@ def _configure_worktree(
     return 0
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Create a git worktree at the canonical sibling location")
-    parser.add_argument("branch", help="branch name to create")
-    parser.add_argument("--base-ref", default=None, help="base ref for the new branch (default: origin/main)")
-    parser.add_argument(
-        "--no-skill-refresh",
-        action="store_true",
-        help="skip refreshing installed skills in the new worktree",
+def _default_base_ref(main_repo_root: Path) -> tuple[str, bool]:
+    """Return the base ref to use and whether it was resolved from origin."""
+    fetch = subprocess.run(
+        ["git", "fetch", "origin"],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
     )
-    parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="Forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
-        "so new-worktree itself does not require this flag.",
-    )
-    args = parser.parse_args(argv)
+    if fetch.returncode == 0:
+        return "origin/main", True
+    return "HEAD", False
 
-    _reject_submodule()
-    main_repo_root = _main_repo_root()
-    branch = _normalize_branch_name(args.branch)
 
-    child_allow_shared = args.allow_shared_checkout
+def _check_worktree(
+    main_repo_root: Path,
+    branch: str,
+    base_ref: str | None,
+) -> tuple[int, str, str]:
+    """Return (exit_code, human_summary, base_ref_to_use).
 
+    - 0 if the worktree already exists and no changes are needed.
+    - 1 if the worktree would be created (or the base ref is missing).
+    """
     try:
         worktree_root = _validate_worktree_root(main_repo_root, branch)
     except ValueError as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 1
+        return 1, f"error: {exc}", ""
+
+    resolved = worktree_root.resolve()
+    result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    for line in result.stdout.splitlines():
+        if line.startswith("worktree "):
+            existing = Path(line.split(" ", 1)[1]).resolve()
+            if existing == resolved:
+                return 0, f"OK worktree already exists at {resolved}", ""
+
+    if resolved.is_dir() or resolved.is_file():
+        return 1, f"Would fail: path already exists on disk but is not a registered worktree ({resolved})", ""
+
+    effective_base = base_ref
+    if effective_base is None:
+        effective_base, _ = _default_base_ref(main_repo_root)
+
+    if effective_base == "origin/main":
+        verify = subprocess.run(
+            ["git", "rev-parse", "--verify", "origin/main"],
+            cwd=main_repo_root,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        if verify.returncode != 0:
+            return 1, "Would fail: origin/main is not available (fetch from origin failed or ref is missing)", ""
+
+    return 1, f"Would create worktree {resolved} from {effective_base} (branch {branch})", effective_base
+
+
+def _apply_worktree(
+    main_repo_root: Path,
+    branch: str,
+    base_ref: str,
+    no_skill_refresh: bool,
+    allow_shared_checkout: bool,
+) -> int:
+    worktree_root = _validate_worktree_root(main_repo_root, branch)
+
     if worktree_root.is_file():
         print(f"error: worktree path is an existing file: {worktree_root}", file=sys.stderr)
         return 1
@@ -317,21 +369,6 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     worktree_root.parent.mkdir(parents=True, exist_ok=True)
-
-    base_ref = args.base_ref
-    if base_ref is None:
-        # Default to the latest origin/main so new worktrees do not start from a
-        # stale local HEAD. Fetch first, and fall back to HEAD when no remote exists.
-        fetch = subprocess.run(
-            ["git", "fetch", "origin"],
-            cwd=main_repo_root,
-            env=_stripped_env(),
-            capture_output=True,
-        )
-        if fetch.returncode == 0:
-            base_ref = "origin/main"
-        else:
-            base_ref = "HEAD"
 
     cmd = ["git", "worktree", "add", "--no-track", "-b", branch, str(worktree_root), base_ref]
 
@@ -342,7 +379,7 @@ def main(argv: list[str] | None = None) -> int:
         return result.returncode
 
     try:
-        exit_code = _configure_worktree(worktree_root, main_repo_root, args, child_allow_shared)
+        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh, allow_shared_checkout)
     except BaseException:
         _remove_worktree(worktree_root, main_repo_root, branch)
         raise
@@ -350,6 +387,69 @@ def main(argv: list[str] | None = None) -> int:
         _remove_worktree(worktree_root, main_repo_root, branch)
         return exit_code
     return 0
+
+
+def _build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Create a git worktree at the canonical sibling location. (mixed: supports --check and --apply)",
+        epilog="Default mode is --check. Use --apply to create the worktree.",
+    )
+    parser.add_argument("branch", help="branch name to create (read-only during --check)")
+    parser.add_argument(
+        "--base-ref",
+        default=None,
+        help="base ref for the new branch (default: origin/main, or HEAD if origin/main is unavailable; read-only during --check)",
+    )
+    parser.add_argument(
+        "--no-skill-refresh",
+        action="store_true",
+        help="skip refreshing installed skills in the new worktree (mutating, used with --apply)",
+    )
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
+        "so new-worktree itself does not require this flag. (mutating, used with --apply)",
+    )
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        default=True,
+        help="report what the script would do and exit 0 if no changes are needed (default, read-only)",
+    )
+    mode.add_argument(
+        "--apply",
+        action="store_true",
+        help="create the worktree and refresh skills (mutating)",
+    )
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = _build_parser()
+    args = parser.parse_args(argv)
+
+    _reject_submodule()
+    main_repo_root = _main_repo_root()
+    branch = _normalize_branch_name(args.branch)
+
+    if args.apply:
+        base_ref = args.base_ref
+        if base_ref is None:
+            base_ref, _ = _default_base_ref(main_repo_root)
+        return _apply_worktree(
+            main_repo_root,
+            branch,
+            base_ref,
+            args.no_skill_refresh,
+            args.allow_shared_checkout,
+        )
+
+    # Default / --check mode
+    exit_code, summary, _ = _check_worktree(main_repo_root, branch, args.base_ref)
+    print(summary)
+    return exit_code
 
 
 if __name__ == "__main__":
