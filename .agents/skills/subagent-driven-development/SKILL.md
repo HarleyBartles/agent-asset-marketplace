@@ -186,7 +186,8 @@ Present everything you find to your human partner as one batched question —
 each finding beside the plan text that mandates it, asking which governs —
 before execution begins, not one interrupt per discovery mid-plan. If the
 scan is clean, proceed without comment. The review loop remains the net for
-conflicts that only emerge from implementation.
+conflicts that only emerge from implementation. If a single missing fact
+blocks the next step, invoke `/asking-clarifying-questions` before guessing.
 
 ## Model Selection
 

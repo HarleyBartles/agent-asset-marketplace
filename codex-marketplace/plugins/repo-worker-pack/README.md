@@ -17,7 +17,7 @@ This bundle projects the first-party repo worker baseline skills.
 - `repo-worker-base`
 - `risk-gates`
 - `unslop-profiles`
-- `using-github`
+- `using-github-mcp`
 - `using-linear`
 - `writing-with-clarity`
 

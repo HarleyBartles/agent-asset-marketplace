@@ -42,6 +42,8 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
+**First step:** Read this skill's baseline (`references/planning-baseline.md`) and the repo's `.agents/guides/planning-guide.md` before executing the stage checklist.
+
 **Context:** If working in an isolated worktree, it should have been created via the `/using-git-worktrees` skill at execution time.
 
 **Save plans to:** `.agents/plans/YYYY-MM-DD-<feature-name>.md`
@@ -50,6 +52,19 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 ## Scope Check
 
 If the spec covers multiple independent subsystems, invoke `working-with-epics` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.
+
+## When to stop and ask
+
+Before drafting a task, decide what to do when a plan item is missing scope or detail. Use this decision table:
+
+| Situation | Use |
+|---|---|
+| Plan item has no acceptance criteria and the answer is not in durable source or the spec | `/asking-clarifying-questions` |
+| The whole shape of the solution is unknown | `/brainstorming` to update the spec first |
+| Plan item has acceptance criteria but is large | Write the plan as a high-level draft and iterate |
+| Scope is in the spec but not yet broken into tasks | Write the plan, then review |
+
+If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
 
 ## File Structure
 

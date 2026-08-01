@@ -85,11 +85,11 @@
       "local_path": "skills/unslop-profiles"
     },
     {
-      "canonical_name": "using-github",
+      "canonical_name": "using-github-mcp",
       "source_category": "first_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/first_party/skills/using-github",
-      "local_path": "skills/using-github"
+      "canonical_source_path": "sources/first_party/skills/using-github-mcp",
+      "local_path": "skills/using-github-mcp"
     },
     {
       "canonical_name": "using-linear",

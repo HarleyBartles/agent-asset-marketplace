@@ -48,14 +48,15 @@ Every project goes through this process. A todo list, a single-function utility,
 
 You MUST create a task for each of these items and complete them in order:
 
-1. **Explore project context** — check files, docs, recent commits
-2. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-3. **Propose 2-3 approaches** — with trade-offs and your recommendation
-4. **Present design** — in sections scaled to their complexity, get user approval after each section
-5. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Spec self-review & readiness gate** — quick inline check for placeholders, contradictions, ambiguity, scope; then use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
-7. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
-8. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+1. **Load baseline and local guide** — read this skill's baseline (`references/design-baseline.md`) and the repo's `.agents/guides/design-guide.md` before executing the stage checklist.
+2. **Explore project context** — check files, docs, recent commits
+3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
+4. **Propose 2-3 approaches** — with trade-offs and your recommendation
+5. **Present design** — in sections scaled to their complexity, get user approval after each section
+6. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
+7. **Spec self-review & readiness gate** — quick inline check for placeholders, contradictions, ambiguity, scope; then use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
+8. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
+9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -101,6 +102,7 @@ digraph brainstorming {
 - For appropriately-scoped projects, ask questions one at a time to refine the idea
 - Prefer multiple choice questions when possible, but open-ended is fine too
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
+- If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
 - Focus on understanding: purpose, constraints, success criteria
 
 **Exploring approaches:**

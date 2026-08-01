@@ -4,7 +4,7 @@
     "superpowers-plus",
     "repo-worker-pack"
   ],
-  "syncedSkills": 33,
+  "syncedSkills": 34,
   "localSkills": [
     "mark-skill-authoring"
   ],
@@ -25,5 +25,18 @@
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
-  "syncedAt": "2026-08-01T09:16:12.442080"
+  "vendorProfiles": [
+    {
+      "plugin": "repo-worker-pack",
+      "sourcePath": "codex-marketplace/plugins/repo-worker-pack/assets/profiles",
+      "profiles": [
+        "implementer-strong.md",
+        "implementer.md",
+        "reviewer-fast.md",
+        "reviewer-strong.md",
+        "reviewer.md"
+      ]
+    }
+  ],
+  "syncedAt": "2026-08-01T11:14:23.931792"
 }

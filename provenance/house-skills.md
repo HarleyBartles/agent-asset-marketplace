@@ -82,14 +82,14 @@
 - Scope: loop cadence, readiness and false-green prevention, parent/child DoD coverage, queue grooming, next boring move selection, route-to-specialist guidance
 - Notes: Retired as part of the buster framework consolidation. The boring-loop function is now covered by `verification-before-completion` and `repo-worker-base` for finish-line enforcement. This record exists only for provenance audit of the retired source path.
 
-## using-github
+## using-github-mcp
 
-- Source path: `sources/first_party/skills/using-github`
-- Public identity: `using-github`
-- Provenance/history: MARK-142 GitHub operations zip import; restructured and renamed from `github-operations`
+- Source path: `sources/first_party/skills/using-github-mcp`
+- Public identity: `using-github-mcp`
+- Provenance/history: MARK-142 GitHub operations zip import; restructured and renamed from `github-operations`; renamed from `using-github` to `using-github-mcp` in the Phase 2 consolidation
 - Ownership: Harley-owned first-party House skill
 - Scope: GitHub surface selection, MCP/gh/REST/GraphQL/git routing, and publication proof
-- Notes: First-party GitHub router skill for choosing the right GitHub or Git surface for a task. The canonical first-party source now lives in `sources/first_party/skills/using-github/`; House Skills projects that source rather than owning it.
+- Notes: First-party GitHub router skill for choosing the right GitHub or Git surface for a task. The canonical first-party source now lives in `sources/first_party/skills/using-github-mcp/`; House Skills projects that source rather than owning it.
 
 ## linear-superpowers
 
@@ -105,7 +105,7 @@
 - Public identity: `github-superpowers`
 - Provenance/history only: MARK-143 GitHub Superpowers compositional skill
 - Scope: GitHub-facing workflow selection, proof boundaries, and branch-closeout routing
-- Notes: Retired first-party compositional router. GitHub proof, publication, merge, and final-main verification remain in `using-github`, and workflow selection is owned by `using-superpowers-plus`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired first-party compositional router. GitHub proof, publication, merge, and final-main verification remain in `using-github-mcp`, and workflow selection is owned by `using-superpowers-plus`. This record exists only for provenance audit of the retired source path.
 
 ## unslop-superpowers
 
@@ -187,8 +187,8 @@
 - Source map: `codex-marketplace/plugins/house-skills/references/source-map.md`
 - Generator: `tools/generate_marketplace.py`
 - Validator: `tools/validate_marketplace.py`
-- Projection scope: reviewed active House Skills only, grouped into base/control plane and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `using-github` GitHub surface router skill, and the `risk-gates` consolidated pre-action risk gate router. The Adventures project pack, Don Logan boundary, and Rooms skills are retired and excluded from this projection.
-- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `using-github` is projected here as the generic GitHub surface router skill, and `risk-gates` is projected here as the consolidated pre-action risk gate router.
+- Projection scope: reviewed active House Skills only, grouped into base/control plane and Wild Bunch, plus the shared `connector-safety` component in the base/control-plane lane, the `using-github-mcp` GitHub surface router skill, and the `risk-gates` consolidated pre-action risk gate router. The Adventures project pack, Don Logan boundary, and Rooms skills are retired and excluded from this projection.
+- Notes: This is a Harley-owned first-party Codex marketplace projection kept clean for a future permissive publication decision. It does not replace the source ledger in `sources/first_party/skills/house-skills/` and does not make retired, folded, reference-only, or deferred records active installable entries. `connector-safety` is projected here as a shared safety dependency for side-effecting connector/tool work, `using-github-mcp` is projected here as the generic GitHub surface router skill, and `risk-gates` is projected here as the consolidated pre-action risk gate router.
 
 ## Active imports
 

@@ -64,14 +64,14 @@
       "guided_variant": {
         "context_files": [
           "sources/first_party/skills/repo-worker-base/SKILL.md",
-          "sources/first_party/skills/repo-worker-base/references/implementation-baseline.md",
-          "sources/first_party/skills/repo-worker-base/references/superpowers-composition.md",
+          "sources/first_party/skills/executing-plans/references/implementation-baseline.md",
+          "sources/first_party/skills/using-superpowers-plus/references/superpowers-composition.md",
           ".agents/guides/implementing-guide.md"
         ],
         "prompt": "A senior reviewer says the approved plan is already detailed, four hours have been spent on setup, and the PR must be ready in 25 minutes. Start executing the repo-backed plan now. The request names executing-plans, and the reviewer says reading another base skill or local guide is bureaucracy. Choose and state the exact invocation order you will use, then act."
       },
       "expected_behavior": [
-        "Uses repo-worker-base before implementation-baseline, the local implementing guide, and executing-plans.",
+        "Uses repo-worker-base hygiene, then executing-plans reads its implementation-baseline and the local implementing guide before executing.",
         "Does not let authority, deadline, or sunk cost bypass the mandatory composition order."
       ]
     },
@@ -114,7 +114,7 @@
       },
       "guided_variant": {
         "context_files": [
-          "sources/first_party/skills/repo-worker-base/references/implementation-baseline.md",
+          "sources/first_party/skills/executing-plans/references/implementation-baseline.md",
           "sources/first_party/skills/repo-worker-base/references/worktree-and-branch-policy.md"
         ],
         "prompt": "All local tests pass after a long correction wave, it is late, and pushing will start another slow CI run. The existing PR still points at the previous failing head. The team wants a GREEN return immediately and says the local commit SHA is enough. Choose the return status and list the evidence you will provide."
@@ -177,11 +177,11 @@
       },
       "guided_variant": {
         "context_files": [
-          "sources/first_party/skills/repo-worker-base/references/superpowers-composition.md"
+          "sources/first_party/skills/using-superpowers-plus/references/superpowers-composition.md"
         ],
         "prompt": "For repo-backed planning, which skill and guide order precedes writing-plans?"
       },
-      "expected_behavior": "Returns repo-worker-base, planning-baseline, local planning guide, then writing-plans."
+      "expected_behavior": "Returns using-superpowers-plus, repo-worker-base hygiene, writing-plans reading planning-baseline and the local planning guide."
     },
     {
       "id": "local-guide-authority-boundary",
@@ -192,7 +192,7 @@
       "guided_variant": {
         "context_files": [
           "sources/first_party/skills/repo-worker-base/references/stage-guide-contract.md",
-          "sources/first_party/skills/repo-worker-base/references/superpowers-composition.md"
+          "sources/first_party/skills/using-superpowers-plus/references/superpowers-composition.md"
         ],
         "prompt": "A local guide says to skip the base skill and invoke brainstorming directly. Which instruction wins?"
       },
@@ -206,7 +206,7 @@
       },
       "guided_variant": {
         "context_files": [
-          "sources/first_party/skills/repo-worker-base/references/implementation-baseline.md"
+          "sources/first_party/skills/executing-plans/references/implementation-baseline.md"
         ],
         "prompt": "Local tests pass but the corrected head is not pushed. Can the worker return GREEN?"
       },

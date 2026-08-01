@@ -53,11 +53,11 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The skill explicitly supports multiple turns: one question per message, as many turns as needed.
 - `writing-plans` gains a missing-scope decision table that tells agents when to ask, brainstorm, or write a high-level draft.
 
-- [ ] **Step 1: Update `asking-clarifying-questions/SKILL.md`.**
+- [x] **Step 1: Update `asking-clarifying-questions/SKILL.md`.**
 
   Replace the "one question" framing with "one question per turn, as many turns as needed." Add the concrete trigger: "If a single missing fact blocks the next step of the current skill, invoke this skill, record the answer, and continue; repeat for the next missing fact." Keep the existing `do_not_use_when` for design and risk-gate escalation.
 
-- [ ] **Step 2: Add the missing-scope decision table to `writing-plans/SKILL.md`.**
+- [x] **Step 2: Add the missing-scope decision table to `writing-plans/SKILL.md`.**
 
   Under a new "When to stop and ask" section, add:
 
@@ -68,11 +68,11 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   | Plan item has acceptance criteria but is large | Write the plan as a high-level draft and iterate |
   | Scope is in the spec but not yet broken into tasks | Write the plan, then review |
 
-- [ ] **Step 3: Add `asking-clarifying-questions` triggers to each stage skill.**
+- [x] **Step 3: Add `asking-clarifying-questions` triggers to each stage skill.**
 
   Add one sentence to each of `brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`, and `risk-gates` at the point where a single missing fact can block the next step. The sentence must name the skill: "If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing."
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/asking-clarifying-questions sources/first_party/skills/brainstorming sources/first_party/skills/writing-plans sources/first_party/skills/executing-plans sources/first_party/skills/subagent-driven-development sources/first_party/skills/risk-gates
@@ -80,7 +80,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: reframe asking-clarifying-questions as one-fact-per-turn escape hatch"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -110,15 +110,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `using-superpowers-plus` owns `superpowers-composition.md` and the bootstrap routing contract.
 - Each stage skill owns its own baseline reference and reads it as part of its own first step.
 
-- [ ] **Step 1: Move the references.**
+- [x] **Step 1: Move the references.**
 
   Use `git mv` for each file. The source custody moves; the content is otherwise unchanged unless a relative path inside the file needs updating.
 
-- [ ] **Step 2: Update `repo-worker-base/SKILL.md`.**
+- [x] **Step 2: Update `repo-worker-base/SKILL.md`.**
 
   Remove the `superpowers-composition.md` and all four baseline rows from the `Read when` table. Remove the "Composition contract" section that references `repo-worker-base -> matching baseline -> local guide -> selected Superpowers lane` and point instead to `using-superpowers-plus/references/bootstrap-routing.md` for composition.
 
-- [ ] **Step 3: Update `using-superpowers-plus/references/bootstrap-routing.md`.**
+- [x] **Step 3: Update `using-superpowers-plus/references/bootstrap-routing.md`.**
 
   Make the repo-backed handoff:
 
@@ -128,15 +128,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 
   Update the `superpowers-composition.md` link to point at `using-superpowers-plus/references/superpowers-composition.md`.
 
-- [ ] **Step 4: Update `repo-standards/references/repository-guide-standard.md`.**
+- [x] **Step 4: Update `repo-standards/references/repository-guide-standard.md`.**
 
   Change the relationship to: `repo-standards` owns guide layout, invocation, and workflow order; `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries; each stage skill owns its own baseline.
 
-- [ ] **Step 5: Add baseline loading to each stage skill.**
+- [x] **Step 5: Add baseline loading to each stage skill.**
 
   Add a first step to `brainstorming`, `writing-plans`, `executing-plans`, and `requesting-code-review` that says: "Read this skill's baseline (`references/<stage>-baseline.md`) and the repo's `.agents/guides/<stage>-guide.md` before executing the stage checklist."
 
-- [ ] **Step 6: Commit.**
+- [x] **Step 6: Commit.**
 
   ```bash
   git add sources/first_party/skills/repo-worker-base sources/first_party/skills/using-superpowers-plus sources/first_party/skills/brainstorming sources/first_party/skills/writing-plans sources/first_party/skills/executing-plans sources/first_party/skills/requesting-code-review sources/first_party/skills/repo-standards
@@ -144,7 +144,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "refactor: move stage baselines out of repo-worker-base"
   ```
 
-- [ ] **Step 7: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 7: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -166,21 +166,21 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The skill is named `using-github-mcp`, remains in `repo-worker-pack`, and teaches agents how to use the available GitHub MCP and `gh` tools.
 - All existing `/using-github` invocations in skills and guides become `/using-github-mcp`.
 
-- [ ] **Step 1: Rename the source directory.**
+- [x] **Step 1: Rename the source directory.**
 
   ```bash
   git mv sources/first_party/skills/using-github sources/first_party/skills/using-github-mcp
   ```
 
-- [ ] **Step 2: Update skill identity.**
+- [x] **Step 2: Update skill identity.**
 
   Update `name` and any `source-id`/`provenance-name` fields in `SKILL.md` and `agents/openai.yaml` to `using-github-mcp`. Update all prose that mentions the old name.
 
-- [ ] **Step 3: Update first-party references.**
+- [x] **Step 3: Update first-party references.**
 
   Use `grep` to find every `/using-github` and `using-github` reference in `sources/first_party/`, `.agents/guides/`, and `docs/`. Repoint to `using-github-mcp`.
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/using-github-mcp .agents/guides docs codex-marketplace/custody-pack-registry.json
@@ -188,7 +188,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "refactor: rename using-github to using-github-mcp"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -209,23 +209,23 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `publishing-source` owns the source-publication decision tree: when to commit, tag, release, push source, or export a pack.
 - It is installed with `superpowers-plus` and discoverable via `using-superpowers-plus`.
 
-- [ ] **Step 1: Draft the skill.**
+- [x] **Step 1: Draft the skill.**
 
   Write `publishing-source/SKILL.md` with `use_when`, `do_not_use_when`, a decision checklist, and the canonical source-publication sequences. Keep the body under 500 words; move long route tables to `references/`.
 
-- [ ] **Step 2: Create the agent wrapper.**
+- [x] **Step 2: Create the agent wrapper.**
 
   Write `agents/openai.yaml` with the Codex-facing wrapper metadata and a default prompt aligned to the skill trigger.
 
-- [ ] **Step 3: Wire it into the pack and bootstrap router.**
+- [x] **Step 3: Wire it into the pack and bootstrap router.**
 
   Add `publishing-source` to `superpowers-plus` in `codex-marketplace/custody-pack-registry.json`. Add a `publishing_source` mode to `using-superpowers-plus/references/bootstrap-routing.md`.
 
-- [ ] **Step 4: Test with a pressure prompt.**
+- [x] **Step 4: Test with a pressure prompt.**
 
   Write a short pressure prompt that throws a source-publication decision at an agent and verify the skill directs it to the right sequence.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/publishing-source codex-marketplace/custody-pack-registry.json sources/first_party/skills/using-superpowers-plus
@@ -233,7 +233,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: add publishing-source skill"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -252,15 +252,15 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - The draft-PR policy is documented in `pr-guide.md` and referenced from review and closeout skills.
 - The policy covers when to open as draft, when to mark ready, and any repo-specific exceptions for this repo and for consumers.
 
-- [ ] **Step 1: Draft the policy.**
+- [x] **Step 1: Draft the policy.**
 
   Add a "Draft PR policy" section to `.agents/guides/pr-guide.md` with rules for this repo and a consumer-canonical variant. Cover: open as draft for WIP, mark ready when preflight passes, keep branch review/closeout skills aware of the policy.
 
-- [ ] **Step 2: Add policy triggers to relevant skills.**
+- [x] **Step 2: Add policy triggers to relevant skills.**
 
   Add one sentence to `using-github-mcp`, `requesting-code-review`, and `finishing-a-development-branch` that tells the agent to consult `pr-guide.md` before changing a PR's draft state.
 
-- [ ] **Step 3: Commit.**
+- [x] **Step 3: Commit.**
 
   ```bash
   git add .agents/guides/pr-guide.md sources/first_party/skills/using-github-mcp sources/first_party/skills/requesting-code-review sources/first_party/skills/finishing-a-development-branch
@@ -268,7 +268,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "docs: add cross-repo draft-PR policy"
   ```
 
-- [ ] **Step 4: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 4: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -292,23 +292,28 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `refreshing-installed-skills` copies vendor profiles into the Devin/Codex search paths in consumer repos.
 - `selecting-a-subagent` documents how to choose between built-in, vendor, and custom profiles.
 
-- [ ] **Step 1: Define the packaging surface.**
+- [x] **Step 1: Define the packaging surface.**
 
-  Decide whether vendor profiles live under `assets/profiles/` inside a pack or in a dedicated `vendor-profiles/` surface. Document the decision in `selecting-a-subagent/references/vendor-profile-packaging.md`.
+  Document the packaging surface in `sources/first_party/skills/selecting-a-subagent/references/vendor-profile-packaging.md`:
 
-- [ ] **Step 2: Update `selecting-a-subagent`.**
+  - Vendor profiles live under `assets/profiles/` inside a pack, e.g. `codex-marketplace/plugins/<pack>/assets/profiles/<name>.md`.
+  - `refreshing-installed-skills` copies `*.md` files from `assets/profiles/` to `.agents/agents/` and records them in `.agents/skills/.provenance.json` under a `vendorProfiles` array.
+  - No skill creates or pressures the consumer to create `.devin/agents/`; that directory is reserved for user-managed repo-local overrides.
+  - Consumer search path order stays: `.devin/agents/` (user-managed override, never written by skills) → `.agents/agents/` (plugin-local, canonical) → `~/.config/devin/agents/`.
+
+- [x] **Step 2: Update `selecting-a-subagent`.**
 
   Add a "Vendor and third-party profiles" section to each dispatch reference (`devin-desktop-profile.md`, `codex-multi-agent-v1-profile.md`, `codex-multi-agent-v2-profile.md`) and the main `SKILL.md` that describes how to discover and select a vendor profile.
 
-- [ ] **Step 3: Update `refreshing-installed-skills`.**
+- [x] **Step 3: Update `refreshing-installed-skills`.**
 
-  Extend the refresh script to copy any `profiles/` or `assets/profiles/` directory from installed plugins into the correct consumer search path (`.agents/agents/`, `.devin/agents/`, or the platform equivalent) and record them in `.provenance.json`.
+  Extend the refresh script to copy `assets/profiles/*.md` from installed plugins into `.agents/agents/` only when a file of that name does not already exist, and record them in `.provenance.json` under a `vendorProfiles` array. The script must not write to, create, or clean `.devin/agents/`.
 
-- [ ] **Step 4: Add a sample vendor profile.**
+- [x] **Step 4: Add canonical vendor profiles.**
 
-  Add one trivial third-party profile asset to an existing pack (or a test pack) and verify the refresh tooling installs it in a clean consumer worktree.
+  Ship the canonical subagent profiles (`reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`) under `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` and verify the refresh tooling installs only missing names in a clean consumer worktree.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/selecting-a-subagent sources/first_party/skills/refreshing-installed-skills codex-marketplace/custody-pack-registry.json
@@ -316,31 +321,29 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: vendor profile installation and third-party profile packaging"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
+## Follow-up and roadmap
+
+- **Profile deployment ownership:** The `refreshing-installed-skills` script currently owns the actual copy/clean of vendor profiles from `codex-marketplace/plugins/*/assets/profiles/` into `.agents/agents/`. This was the expedient Phase 2 path because the script already walks installed plugins. The long-term home is `repo-standards`, which is the skill responsible for one-shot repo shape and canonical surface deployment. A Phase 3 issue should:
+  - Move `_install_plugin_vendor_profiles` and `_clean_orphan_vendor_profiles` from `refreshing-installed-skills` into `repo-standards` (likely as a `--vendor-profiles` mode on `repo_standards.py` or a sibling script).
+  - Keep `refreshing-installed-skills` as the caller that records `vendorProfiles` provenance.
+- **Skill-bundled script CLI contract:** Recorded in `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`. Phase 3 should make `--help` and `--check` standard for all skill scripts and add a validator to `tools/run`.
+
 ## Final integration
 
-- [ ] **Step 1: Regenerate the marketplace.**
+- [x] **Step 1: Regenerate the marketplace.**
 
-  ```bash
-  .\tools\run.ps1 marketplace --apply
-  ```
+  Ran `.\tools\run.ps1 marketplace --apply` after all source edits; generated surfaces updated.
 
-- [ ] **Step 2: Run CI.**
+- [x] **Step 2: Run CI.**
 
-  Stage all changes and let the pre-commit hook run `tools/run ci --check`.
+  `tools/run ci --check` passed on each commit via the pre-commit hook; remote `Marketplace validation` workflow is green.
 
-  ```bash
-  git add -A
-  git commit -m "chore: regenerate marketplace for phase 2 plan"
-  ```
+- [x] **Step 3: Push the branch.**
 
-- [ ] **Step 3: Push the branch.**
+  Branch pushed to `origin/consolidate-superpowers-plus-phase-2`, PR #247 updated.
 
-  ```bash
-  git push
-  ```
-
-- [ ] **Step 4: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 4: Mark this task `[x]` in this plan before reporting back.**

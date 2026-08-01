@@ -43,6 +43,13 @@
       "local_path": "skills/inspecting-the-environment"
     },
     {
+      "canonical_name": "publishing-source",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "canonical_source_path": "sources/first_party/skills/publishing-source",
+      "local_path": "skills/publishing-source"
+    },
+    {
       "canonical_name": "receiving-code-review",
       "source_category": "first_party",
       "content_mode": "verbatim",

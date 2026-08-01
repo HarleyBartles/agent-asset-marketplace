@@ -43,7 +43,9 @@ The `.md` profile assets under `assets/` are Devin Desktop custom profiles. They
 are not used by Codex; for Codex, use `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md`.
 
-Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
+Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for user/repo-local hand-authored overrides, and `.agents/agents/` for plugin-local profiles installed by marketplace packs. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
+
+The marketplace installer only writes to `.agents/agents/`. `.devin/agents/` is reserved for user-managed, repo-local overrides that should not be created, modified, or removed by any skill.
 
 | Task | Dispatch |
 |---|---|
@@ -63,6 +65,17 @@ Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_descrip
 Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched. Do not pass a `model:` argument to `run_subagent`; the tool has no such parameter.
 
 Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
+
+### Vendor and third-party profiles
+
+Marketplace packs can ship third-party subagent `.md` profile assets under
+`assets/profiles/`. The `refreshing-installed-skills` script copies those
+profiles into `.agents/agents/`, so they appear in the Devin Desktop search
+path documented above. A repo-local `.devin/agents/<name>.md` override wins
+over a vendor profile of the same name, but the installer does not create,
+modify, or remove `.devin/agents/`. A vendor profile wins over a built-in
+custom profile when no override exists. See `vendor-profile-packaging.md` for
+the packaging contract and the full consumer search-path order.
 
 ### What not to do
 

@@ -31,8 +31,8 @@
 - `connector-safety` is projected here from the canonical first-party source
   at `sources/first_party/skills/connector-safety/` so connector and tool
   writes stay narrow, auditable, and recoverable.
-- `using-github` is projected here from the canonical first-party source
-  at `sources/first_party/skills/using-github/` so GitHub surface selection,
+- `using-github-mcp` is projected here from the canonical first-party source
+  at `sources/first_party/skills/using-github-mcp/` so GitHub surface selection,
   publication proof, and merge/readiness checks have a canonical non-House-Skills
   home.
 - `unslop-profiles` is projected here from the canonical first-party source at

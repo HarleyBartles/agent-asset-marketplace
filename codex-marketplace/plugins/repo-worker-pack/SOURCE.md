@@ -17,7 +17,7 @@ This plugin projects the first-party repo worker baseline skills.
 - `sources/first_party/skills/repo-worker-base/`
 - `sources/first_party/skills/risk-gates/`
 - `sources/first_party/skills/unslop-profiles/`
-- `sources/first_party/skills/using-github/`
+- `sources/first_party/skills/using-github-mcp/`
 - `sources/first_party/skills/using-linear/`
 - `sources/first_party/skills/writing-with-clarity/`
 
@@ -37,7 +37,7 @@ This plugin projects the first-party repo worker baseline skills.
   - `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/`
-  - `codex-marketplace/plugins/repo-worker-pack/skills/using-github/`
+  - `codex-marketplace/plugins/repo-worker-pack/skills/using-github-mcp/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/`
   - `codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/`
 <!-- END GENERATED: pack-inventory -->

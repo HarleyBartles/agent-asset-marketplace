@@ -28,6 +28,7 @@ metadata:
   - using-git-worktrees
   - test-driven-development
   - verification-before-completion
+  - publishing-source
   - finishing-a-development-branch
   - requesting-code-review
   - working-with-epics
@@ -40,6 +41,7 @@ metadata:
   - using-git-worktrees
   - test-driven-development
   - verification-before-completion
+  - publishing-source
   - finishing-a-development-branch
   - requesting-code-review
   - receiving-code-review

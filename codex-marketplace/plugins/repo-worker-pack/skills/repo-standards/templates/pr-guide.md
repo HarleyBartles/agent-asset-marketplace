@@ -41,5 +41,5 @@ Use this guide for pull-request workflow and publication proof in this repo.
 ## Routing to skills
 
 - `/repo-worker-base` for worktree, branch, and publication boundaries.
-- `/using-github` for PR evidence and GitHub proof.
+- `/using-github-mcp` for PR evidence and GitHub proof.
 - `/verification-before-completion` before claiming the PR is green.

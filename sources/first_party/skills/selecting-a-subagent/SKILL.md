@@ -89,6 +89,33 @@ For example, copy `assets/implementer.md` to
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
 reviewer profile. The reviewer subagent does not resolve the diff itself.
 
+## Vendor and third-party profiles
+
+Marketplace packs can ship third-party subagent `.md` profile assets under
+`assets/profiles/`. The `refreshing-installed-skills` script copies those
+profiles into the consumer's agent search path at `.agents/agents/` only
+when a file of the same name does not already exist, and records them in
+`.agents/skills/.provenance.json` under a `vendorProfiles` array.
+
+When choosing a profile, apply this precedence:
+
+1. Repo-local override (a hand-authored `.agents/agents/<name>.md` or a
+   `.devin/agents/<name>.md` user-local override) wins.
+2. Vendor profile installed from a marketplace pack (`.agents/agents/`).
+3. Built-in custom profiles documented in
+   `references/devin-desktop-profile.md` and the dispatch profiles above.
+4. User-global profiles (`~/.config/devin/agents/` or
+   `%APPDATA%\devin\agents\` on Windows).
+
+No skill should create or pressure the consumer to create `.devin/agents/`.
+`.agents/agents/` is the canonical surface for plugin-installed profiles.
+
+Prefer a vendor profile when a pack ships one that matches the task role
+(e.g. a pack-provided `reviewer.md`) and no repo-local override exists. Prefer
+a repo-local override when the repo needs behavior the vendor profile does not
+capture. See `references/vendor-profile-packaging.md` for the packaging
+contract and the consumer search-path order.
+
 ## Common pressure
 
 When the obvious choice is unclear or contested, read `references/pressure-scenarios.md` first.

@@ -91,4 +91,4 @@ At each stage:
 
 ## Relationship to repo-worker-base
 
-`repo-standards` owns guide layout, invocation, and workflow order. `repo-worker-base` owns repo-worker hygiene, stage baselines, and publication boundaries. Use both together for every repo-backed stage.
+`repo-standards` owns guide layout, invocation, and workflow order. `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries. Each stage skill owns its own baseline reference and reads it as part of its own first step. Use both together for every repo-backed stage.

@@ -31,7 +31,9 @@ license: MIT
 
 # Asking Clarifying Questions
 
-Ask one narrow question that your human partner can answer when a single unresolved ambiguity blocks the immediate next step.
+Ask one narrow question per turn that your human partner can answer when a single unresolved ambiguity blocks the immediate next step. Use as many turns as needed: one fact per message, then continue.
+
+This is an anytime escape hatch. If a single missing fact blocks the next step of the current skill, invoke this skill, record the answer, and continue; repeat for the next missing fact. Do not bundle multiple facts into one message — ask the next one in the following turn.
 
 ## Core pattern
 
@@ -41,12 +43,14 @@ Ask one narrow question that your human partner can answer when a single unresol
 4. Give a concrete recommendation and the available options.
 5. Ask one question.
 6. Record the answer and continue.
+7. If another missing fact still blocks the next step, repeat from step 1 in the next turn.
 
 ## When to use
 
 - Internal resolution is exhausted (rules, source truth, non-goals, safe defaults).
 - A single missing decision separates the agent from the next action.
 - The cost of guessing is wasted motion or reversible rework, not a canon or authority mistake.
+- One fact is missing now; further missing facts can wait their own turn.
 
 ## When not to use
 
@@ -59,7 +63,7 @@ Ask one narrow question that your human partner can answer when a single unresol
 - Asking a vague question instead of a single decision.
 - Asking when the answer is already in durable source or policy.
 - Treating a clarifying question as a substitute for a missing design or risk gate.
-- Asking multiple questions in one turn.
+- Asking multiple questions in one turn — one fact per message, as many turns as needed.
 
 ## Relation to other skills
 

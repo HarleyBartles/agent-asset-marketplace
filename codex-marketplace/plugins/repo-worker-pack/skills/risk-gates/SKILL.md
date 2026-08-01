@@ -107,6 +107,8 @@ Rooms-specific gate profiles (canon pressure, ambiguity preservation, analogy va
 6. Surface only unresolved legitimate choices.
 7. Return green only when the next action has a lawful route, required authority, sufficient evidence, and the correct output surface.
 
+If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+
 ## Boundaries
 
 Do not use gates as broad planning, research, or execution workflows. Do not use a gate to create permission that the user, source surface, policy, project doctrine, or downstream skill has not granted. Do not import project-specific law into generic gate references. Do not read all gate reference docs by default — use the routing table to select only material gates.

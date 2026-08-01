@@ -64,6 +64,7 @@
         "sources/first_party/skills/finishing-a-development-branch",
         "sources/first_party/skills/handoff-gates",
         "sources/first_party/skills/inspecting-the-environment",
+        "sources/first_party/skills/publishing-source",
         "sources/first_party/skills/receiving-code-review",
         "sources/first_party/skills/requesting-code-review",
         "sources/first_party/skills/selecting-a-subagent",
@@ -144,6 +145,16 @@
           "source_family": "first_party",
           "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
           "local_path": "skills/inspecting-the-environment",
+          "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "publishing-source",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/publishing-source",
+          "local_path": "skills/publishing-source",
           "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
           "copy_expectation": "byte_identical"
         },
@@ -285,7 +296,7 @@
         "sources/first_party/skills/linear-issue-shaping",
         "sources/first_party/skills/using-linear",
         "sources/first_party/skills/connector-safety",
-        "sources/first_party/skills/using-github",
+        "sources/first_party/skills/using-github-mcp",
         "sources/first_party/skills/unslop-profiles",
         "sources/first_party/skills/context-safety",
         "sources/first_party/skills/cleanup-custody",
@@ -347,13 +358,13 @@
           "copy_expectation": "byte_identical"
         },
         {
-          "canonical_name": "using-github",
+          "canonical_name": "using-github-mcp",
           "source_category": "first_party",
           "content_mode": "verbatim",
           "source_family": "first_party",
-          "canonical_source_path": "sources/first_party/skills/using-github",
-          "local_path": "skills/using-github",
-          "provenance_note": "Projected verbatim from the first-party using-github skill.",
+          "canonical_source_path": "sources/first_party/skills/using-github-mcp",
+          "local_path": "skills/using-github-mcp",
+          "provenance_note": "Projected verbatim from the first-party using-github-mcp skill.",
           "copy_expectation": "byte_identical"
         },
         {
