@@ -212,7 +212,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - `.agents/doctrine/*.md` holds the full doctrine body.
 - `.devin/rules/*.md` keeps its frontmatter and becomes a thin trigger that points at `.agents/doctrine/<topic>.md`.
 
-- [ ] **Step 1: Run the migration script from the repo root.**
+- [x] **Step 1: Run the migration script from the repo root.**
 
   The migration script is a one-time, off-repo scratch tool. Do not commit it.
 
@@ -270,7 +270,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   print('Migration complete. Review the diff before committing.')
   ```
 
-- [ ] **Step 2: Inspect the generated files.**
+- [x] **Step 2: Inspect the generated files.**
 
   ```bash
   git diff --stat
@@ -282,7 +282,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
   - No `INDEX.md` was duplicated or deleted.
   - Line endings are LF: `python -c "from pathlib import Path; [print(p, 'has CRLF:', b'\r\n' in p.read_bytes()) for p in Path('.agents/doctrine').glob('*.md')]"`.
 
-- [ ] **Step 3: Commit the migration.**
+- [x] **Step 3: Commit the migration.**
 
   ```bash
   git add .devin/rules .agents/doctrine
@@ -297,7 +297,7 @@ Generated with [Devin](https://devin.ai)
 Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
   ```
 
-- [ ] **Step 4: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 4: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
