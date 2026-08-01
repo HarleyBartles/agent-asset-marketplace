@@ -22,11 +22,11 @@ Codex plugin first.
 
 Use `--check` to validate the current generated surface without rewriting it. `--allow-shared-checkout` is approved once by `tools/run` and forwarded to child scripts that require explicit approval to write in the main shared checkout. It is not needed in a linked worktree. `--allow-shared-checkout` alone is rejected by those scripts.
 
-`py -3 tools/generate_pack_manifests.py --check` also verifies any manifest-declared generated inventory blocks in pack `README.md`, `SOURCE.md` and `PROJECTION.md` surfaces.
+`py -3 tools/validate_marketplace.py` verifies the plugin manifest, bundle manifest, and referenced surfaces for each plugin. There is no `PROJECTION.md` surface.
 
 ## Policy for agent work
 
-- Any change to source custody, adapter files, projection plugin shapes, bundle manifests, source maps, or provenance maps requires a full market regeneration followed by validation before a PR may be called green.
+- Any change to canonical plugin skills, bundle manifests, adapter files, or plugin manifests requires a full market regeneration followed by validation before a PR may be called green.
 - The canonical completion path is the full regeneration stack, not a partial refresh.
 - Partial regeneration paths are fallback-only repair tools and should not be advertised as a normal completion route.
 - The expected local green-path proof is `tools/run marketplace --apply`.
@@ -36,7 +36,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 - Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
-Deterministic pack rule: if a skillset pack or projection lane lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for marketplace generation is the trio of source trees, adapter surfaces, and `codex-marketplace/custody-pack-registry.json`. Treat generated manifests, projection trees, source maps, and provenance maps as derived outputs only. If a convention can be expressed in the registry and generator, do that instead of hand-rolling per-pack output conventions in the generated surfaces.
+Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated marketplace manifests, bundle manifests, repo index, index mesh, and installed skill surfaces as derived outputs only. If a convention can be expressed in the plugin metadata and generator, do that instead of hand-rolling per-pack output conventions in the generated surfaces.
 
 ## Line-ending policy for generated files
 

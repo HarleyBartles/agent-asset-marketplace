@@ -1,34 +1,34 @@
 
 ## Scope
 
-`sources/third_party/`
+`provenance/`
 
-This scope covers third-party source custody, upstream snapshots, and the retained third-party evidence tree.
+This scope covers third-party source custody, upstream evidence, and the provenance notes that record retained upstream material.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication rules, and upstream-drain policy.
 
-Third-party custody is retained source, not repo doctrine. Keep any scoped guidance here limited to custody and evidence rules for the retained snapshot tree.
+Third-party custody is retained evidence, not repo doctrine. Keep any scoped guidance here limited to custody and evidence rules for the provenance tree.
 
-Default custody shape: retain the upstream skill tree only. Treat any extra upstream scaffolding at the root of a third-party snapshot as exceptional and remove it unless a live projection, validator, or adapter explicitly requires it.
+Default custody shape: record the upstream repo, pinned commit, license, and adaptation path in `provenance/<record>.md`. If a vendor snapshot is retained in-tree, place it under `codex-marketplace/plugins/<plugin>/skills/<skill>/` and mark it appropriately in the bundle manifest.
 
 ## Line-ending normalization exception
 
-In a one-time authorized pass, CRLF line endings were normalized to LF and trailing whitespace was stripped across all third-party source custody files. This was an explicit exception to the default immutability rule for third-party source, authorized to eliminate cross-platform line-ending inconsistency that was causing `git diff --check` failures and generator output drift. The immutability rule still holds for content changes — only line endings and trailing whitespace were affected, not skill content. Future agents should not treat this as precedent for editing third-party source content.
+In a one-time authorized pass, CRLF line endings were normalized to LF and trailing whitespace was stripped across all retained custody files. This was an explicit exception to the default immutability rule for third-party source, authorized to eliminate cross-platform line-ending inconsistency that was causing `git diff --check` failures and generator output drift. The immutability rule still holds for content changes — only line endings and trailing whitespace were affected, not skill content. Future agents should not treat this as precedent for editing third-party source content.
 
 ## Manifest guidance
 
-Where a retained third-party snapshot feeds a marketplace projection, the matching bundle manifest must declare `content_mode` for imported entries.
+Where a third-party skill is vendored into a Codex plugin, the matching bundle manifest must declare `content_mode` for imported entries.
 
-- `verbatim` means the retained snapshot and the projected plugin copy must remain byte/hash equivalent.
+- `verbatim` means the retained snapshot and the plugin copy must remain byte/hash equivalent.
 - `adapted` means equality is not expected, but the entry must carry an explicit adaptation note and a provenance trail.
-- Projection roots under `codex-marketplace/plugins/` are distribution surfaces, not canonical source custody. Keep them aligned with the retained source/provenance contract recorded in the manifest.
+- Plugin roots under `codex-marketplace/plugins/` are the canonical distribution and source custody surfaces. Keep them aligned with the retained source/provenance contract recorded in the bundle manifest.
 
 ## Review guidelines
 
-- Treat nested upstream `AGENTS.md` files inside third-party snapshots as vendored package instructions, not repository doctrine.
+- Treat nested upstream `AGENTS.md` files inside retained snapshots as vendored package instructions, not repository doctrine.
 - Flag third-party files that change without an explicit adaptation reason, source note, or license/notice update.
 - Flag false "copied verbatim" claims after any adaptation, repackaging, or normalization.
-- Flag license, notice, or source-map drift that breaks custody evidence.
+- Flag license, notice, or provenance drift that breaks custody evidence.
 - Flag source-root claims that do not match the pinned upstream snapshot or the actual third-party path recorded in provenance.
 
 ## Maintenance responsibility

@@ -1,15 +1,15 @@
 
 ## First-Party Skill Source Format
 
-This directory is the active source-custody surface for first-party skills.
+This scope covers first-party skills that live under `codex-marketplace/plugins/<plugin>/skills/<skill-name>/`.
 
-Use these rules when editing or adding a first-party skill under `sources/first_party/skills/<skill-name>/`.
+Use these rules when editing or adding a first-party skill in a Codex plugin.
 
 ## Canonical source shape
 
 - One current root per skill.
-- The current root is the source of truth; plugin projections and generated surfaces are derived from it.
-- Historical or retired names belong in provenance, archive, or history surfaces, not in active first-party source roots.
+- The current root is the source of truth; bundle manifests and generated surfaces are derived from it.
+- Historical or retired names belong in provenance, archive, or history surfaces, not in active first-party skill roots.
 
 ## `SKILL.md` frontmatter
 
@@ -31,7 +31,6 @@ Use these rules when editing or adding a first-party skill under `sources/first_
   - `do_not_use_when`
   - `related_skills`
   - `notes`
-- The `normalize_first_party_skill_sources.py` tool only preserves whitelisted metadata fields. When adding new metadata fields, update the whitelist in `tools/normalize_first_party_skill_sources.py` or the field will be silently stripped on the next rebuild.
 - Do not write projection-target state back into canonical source frontmatter; projection surfaces belong in catalog or generator outputs.
 
 ## `agents/openai.yaml`
@@ -44,8 +43,8 @@ Use these rules when editing or adding a first-party skill under `sources/first_
 
 ## Repo usage
 
-- The first-party source is edited directly.
-- Generators and projection tooling should read from this source, not from hand-maintained plugin duplicates.
+- The first-party source is edited directly in the Codex plugin skill tree.
+- Generators should read from this source, not from hand-maintained plugin duplicates.
 - Active generated surfaces must stay in sync with the canonical source.
 - If a historical name remains anywhere, it must be quarantined to provenance or archive material.
 - Skill-root `INDEX.md` files do not belong in this tree.

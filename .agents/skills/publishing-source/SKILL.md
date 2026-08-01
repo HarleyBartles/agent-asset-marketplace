@@ -43,9 +43,9 @@ Run these in order. Stop at the first row that matches the change.
 1. **Validated?** If `tools/run ci --check` is not green on the staged tree,
    stop and finish `verification-before-completion` first. Publication is not
    a substitute for validation.
-2. **Source custody edited?** If `sources/`, `adapters/`, or
-   `codex-marketplace/custody-pack-registry.json` changed, regenerate with
-   `tools/run marketplace --apply` before publishing.
+2. **Marketplace source edited?** If `codex-marketplace/plugins/<plugin>/` skill content,
+   `codex-marketplace/plugin-roots.json`, `provenance/`, `adapters/codex/`, or `references/bundle-manifest.json` changed,
+   regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
 3. **Pick the surface.** Choose the smallest sufficient surface from
    [`references/publishing-decisions.md`](references/publishing-decisions.md).
 4. **Publish.** Hand off to the owning skill for the mechanics

@@ -3,13 +3,13 @@
 
 `adapters/`
 
-This scope covers adapter surfaces that sit between source custody and the marketplace projection layer.
+This scope covers adapter surfaces that sit between upstream third-party source and the marketplace plugin shape.
 
 Defer to the repository root `AGENTS.md` for global repo doctrine.
 
-Adapters are source/projection boundaries, not source custody. Keep source truth in `sources/` and keep generated or mechanically synchronized outputs derived from that truth.
+Adapters are source/projection boundaries, not source custody. Keep source truth in `codex-marketplace/plugins/<plugin>/skills/` and provenance, and keep generated or mechanically synchronized outputs derived from that truth.
 
-The marketplace currently runs two lanes only: first-party source under `sources/first_party/**` (edited directly) and retained third-party source under `sources/third_party/**` (verbatim custody). The historical `overlay.yaml` adaptation machinery has been retired; do not reintroduce adapter overlays or `overlay.yaml` line-edit files. If a third-party skill needs adaptation, update the projection generator instead of adding an overlay surface.
+The marketplace currently runs two lanes only: first-party source under `codex-marketplace/plugins/<plugin>/skills/` (edited directly) and retained third-party material recorded in `provenance/` (verbatim custody with an adaptation path). The historical `overlay.yaml` adaptation machinery has been retired; do not reintroduce `overlay.yaml` line-edit files. If a third-party skill needs adaptation, update the plugin skill tree or the generator instead of adding an overlay surface.
 
 When an adapter needs both Bash and PowerShell script siblings, keep both implementations together in the adapter surface so agents can choose the runtime they have available.
 
