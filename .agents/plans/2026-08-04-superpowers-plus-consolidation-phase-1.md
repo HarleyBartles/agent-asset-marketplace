@@ -311,8 +311,17 @@ following reviewer-profile and branch-review consolidation work in Phase 1:
 
 Deferred to Phase 2 and beyond:
 
-- `publishing-source` skill design and implementation.
-- Pack placement of `using-github`.
+See `.agents/plans/2026-08-04-superpowers-plus-consolidation-phase-2.md`.
+
+Phase 2:
+
+- `asking-clarifying-questions` as an anytime one-fact-per-turn escape hatch for stage skills.
+- `repo-worker-base` cleanup: remove the Superpowers composition table and the stage baselines, moving them to `using-superpowers-plus` and the relevant stage skills.
+- `publishing-source` skill design and implementation in `superpowers-plus`.
+- Rename `using-github` to `using-github-mcp`, keeping it in `repo-worker-pack`.
 - Cross-repo draft-PR policy implementation.
 - Vendor profile installation and third-party profile packaging.
-- `report-hygiene` move (Phase 3) and `mark-skill-authoring` fold (Phase 3).
+
+Phase 3 and beyond:
+
+- `report-hygiene` move and `mark-skill-authoring` fold.

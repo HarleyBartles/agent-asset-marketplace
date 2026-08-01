@@ -185,14 +185,19 @@ targets belong in the Plan 1 task list.
 
 ### Deferred to Phase 2 and beyond
 
-The following items are intentionally out of scope for Phase 1 and scheduled for later phases:
+See `.agents/plans/2026-08-04-superpowers-plus-consolidation-phase-2.md` for the full implementation plan. Phase 2 now covers:
 
-- `publishing-source` skill design and implementation (Phase 2).
-- Pack placement of `using-github` (Phase 2).
-- Cross-repo draft-PR policy implementation (Phase 2).
-- Vendor profile installation and third-party profile packaging (Phase 2).
-- Moving `report-hygiene` (Phase 3).
-- Folding `mark-skill-authoring` (Phase 3).
+- `asking-clarifying-questions` as an anytime one-fact-per-turn escape hatch for stage skills.
+- `repo-worker-base` cleanup: remove the Superpowers composition table and the stage baselines, moving them to `using-superpowers-plus` and the relevant stage skills.
+- `publishing-source` skill design and implementation in `superpowers-plus`.
+- Rename `using-github` to `using-github-mcp`, keeping it in `repo-worker-pack`.
+- Cross-repo draft-PR policy implementation.
+- Vendor profile installation and third-party profile packaging.
+
+Phase 3 and beyond:
+
+- Moving `report-hygiene`.
+- Folding `mark-skill-authoring`.
 - Renaming `using-superpowers-plus` (the name stays; the body changes).
 
 ## Risks and mitigations
