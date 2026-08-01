@@ -44,7 +44,7 @@
       "path": ".agents/docs/repo-runbook-policy.md",
       "kind": "file",
       "source": null,
-      "scaffold": "scaffold_repo_guide_policy.py",
+      "scaffold": "scaffold_repo_runbook_policy.py",
       "optional": false
     },
     {

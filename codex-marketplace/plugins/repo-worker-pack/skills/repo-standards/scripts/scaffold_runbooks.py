@@ -47,7 +47,7 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
-def _parse_repo_guide_policy(policy_path: Path) -> dict[str, Path] | None:
+def _parse_repo_runbook_policy(policy_path: Path) -> dict[str, Path] | None:
     if not policy_path.is_file():
         return None
     text = policy_path.read_text(encoding="utf-8")
@@ -115,7 +115,7 @@ exit codes:
 
     repo_root = _repo_root()
     policy_path = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
-    mapping = _parse_repo_guide_policy(policy_path) or _default_mapping()
+    mapping = _parse_repo_runbook_policy(policy_path) or _default_mapping()
 
     missing: list[str] = []
     written: list[str] = []

@@ -16,6 +16,7 @@ This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` f
 | testing.md | `.agents/runbooks/testing.md` | exists |
 | pr.md | `.agents/runbooks/pr.md` | required |
 | code-style.md | `.agents/runbooks/code-style.md` | exists |
+| completing-plans.md | `.agents/runbooks/completing-plans.md` | exists |
 
 Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed runbooks/routed surfaces.
 

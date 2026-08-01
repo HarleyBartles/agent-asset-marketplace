@@ -10,7 +10,7 @@ SCAFFOLD_AGENTS_MD = SKILL_ROOT / "scaffold_agents_md.py"
 SCAFFOLD_CONTRIBUTING = SKILL_ROOT / "scaffold_contributing.py"
 SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
 SCAFFOLD_MARKETPLACE_JSON = SKILL_ROOT / "scaffold_marketplace_json.py"
-SCAFFOLD_REPO_GUIDE_POLICY = SKILL_ROOT / "scaffold_repo_guide_policy.py"
+SCAFFOLD_REPO_RUNBOOK_POLICY = SKILL_ROOT / "scaffold_repo_runbook_policy.py"
 REPO_STANDARDS = SKILL_ROOT / "repo_standards.py"
 
 
@@ -362,8 +362,8 @@ def test_scaffold_contributing_check_missing_boilerplate_fails(tmp_path: Path) -
     assert "DRIFT: CONTRIBUTING.md" in result.stdout
 
 
-def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Path) -> None:
-    """scaffold_repo_guide_policy --check fails when the file is missing required boilerplate."""
+def test_scaffold_repo_runbook_policy_check_missing_boilerplate_fails(tmp_path: Path) -> None:
+    """scaffold_repo_runbook_policy --check fails when the file is missing required boilerplate."""
     repo = tmp_path / "bad-policy"
     repo.mkdir()
     _init_git_repo(repo)
@@ -373,7 +373,7 @@ def test_scaffold_repo_guide_policy_check_missing_boilerplate_fails(tmp_path: Pa
     policy_path.write_text("# Repo Runbook Policy\n\nNo mapping.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(SCAFFOLD_REPO_GUIDE_POLICY), "--check"],
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -685,8 +685,8 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     assert "/repo-standards" in text
 
 
-def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> None:
-    """scaffold_repo_guide_policy --check passes when only the heading and required sections are kept."""
+def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) -> None:
+    """scaffold_repo_runbook_policy --check passes when only the heading and required sections are kept."""
     repo = tmp_path / "custom-policy"
     repo.mkdir()
     _init_git_repo(repo)
@@ -706,7 +706,7 @@ def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> N
     )
 
     result = subprocess.run(
-        [sys.executable, str(SCAFFOLD_REPO_GUIDE_POLICY), "--check"],
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,

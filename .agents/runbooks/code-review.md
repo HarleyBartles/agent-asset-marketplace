@@ -49,12 +49,10 @@ Per the root `AGENTS.md`, the return must include a PR URL and head SHA, a verif
 
 ## Plan Completion Check
 
-If the PR claims to implement a plan from `.agents/plans/`, verify the plan is marked completed before approving:
+If the PR claims to implement a plan from `.agents/plans/`, verify the plan is marked completed before approving. The canonical rule is in [`completing-plans.md`](completing-plans.md):
 
-- All checkboxes in the plan (`- [ ]`) must be checked off (`- [x]`).
-- OR the plan must contain a reference to a merged implementation PR.
-
-If the PR body claims the plan is "complete" but the plan is not fully checked off and does not record a merged PR, block completion until the author either checks off the delivered items or removes the completion claim.
+- All top-level checkboxes in the plan (`- [ ]`) must be checked off (`- [x]`), or the plan must record a merged implementation PR.
+- If the PR body claims the plan is "complete" but the plan is not fully checked off and does not record a merged PR, block completion until the author either checks off the delivered items or removes the completion claim.
 
 ## Clean Workspace
 

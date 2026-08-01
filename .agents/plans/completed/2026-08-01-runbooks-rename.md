@@ -840,7 +840,7 @@ If it fails, fix the drift, amend the commit (`git commit --amend`), and re-run 
 
 ## Execution Options
 
-Plan complete and saved to `.agents/plans/2026-08-02-runbooks-rename.md`. The plan-readiness rating is **9/10**.
+Plan complete and saved to `.agents/plans/completed/2026-08-01-runbooks-rename.md`. The plan-readiness rating is **9/10**.
 
 Two execution options:
 

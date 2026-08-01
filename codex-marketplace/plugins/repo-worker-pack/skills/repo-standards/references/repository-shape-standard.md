@@ -34,7 +34,7 @@ The `## Routing pointers` section must list resolvable links to the scoped surfa
 
 Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
 
-- `scaffold-repo-guide-policy` generates `.agents/docs/repo-runbook-policy.md` from the standard template.
+- `scaffold-repo-runbook-policy` generates `.agents/docs/repo-runbook-policy.md` from the standard template.
 - `scaffold-runbooks` generates missing `.agents/runbooks/*.md` files from `repo-runbook-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
@@ -45,6 +45,11 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-all` runs the above in sequence.
 
 `repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
+
+## Migration notes
+
+- **Guides → runbooks:** Repos implementing this standard must use `.agents/runbooks/` and the `repo-runbook-policy.md` mapping. The `.agents/guides/` directory and the `repo-guide-policy.md` name are retired. `repo-standards --check` treats a missing `.agents/runbooks/` or a stale `repo-guide-policy.md` as drift.
+- **Playbooks → runbooks:** If a repo still maintains playbooks under any path, it should migrate them to `.agents/runbooks/`. `.agents/runbooks/` is the one supported home for runbooks. `repo-standards` may emit a warning for a legacy `playbooks/` surface but does not fail the check.
 
 ## Exceptions
 
