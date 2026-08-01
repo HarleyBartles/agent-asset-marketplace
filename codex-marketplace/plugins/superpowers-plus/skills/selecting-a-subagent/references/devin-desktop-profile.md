@@ -43,12 +43,11 @@ Devin Desktop supports custom subagent profiles. It searches the following locat
 
 | Task | Dispatch |
 |---|---|
-| Reviewer re-check on fixes | `run_subagent profile: reviewer-fast` |
-| Review / architecture challenge | `run_subagent profile: reviewer` |
-| Review / architecture challenge that needs more reasoning | `run_subagent profile: reviewer-strong` |
+| Most reviews, architecture challenges, and focused re-reviews | `run_subagent profile: reviewer` |
+| Full branch/PR diff review where the whole branch is in scope | `run_subagent profile: reviewer-strong` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `run_subagent profile: reviewer-fast` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |
 | Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
-| Branch diff review | `run_subagent profile: reviewer` (or `reviewer-strong` for large or subtle diffs) |
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |
 

@@ -76,10 +76,9 @@ For example, copy `assets/implementer.md` to
 
 | Task | Profile |
 |---|---|
-| Reviewer re-check on fixes | `reviewer-fast` |
-| Review / architecture challenge | `reviewer` |
-| Review / architecture challenge that needs more reasoning | `reviewer-strong` |
-| Branch/PR diff review | `reviewer` (or `reviewer-strong` for large or subtle diffs) |
+| Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
+| Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 
 ## Common pressure
 
