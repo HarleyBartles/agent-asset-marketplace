@@ -13,7 +13,7 @@ Replace the flat `tools/rebuild_marketplace.py` and `scripts/ci-preflight` surfa
 - The runner executes each step with `subprocess.run`, forwards `--allow-shared-checkout` to scripts that require it, and prints a concrete repair command on failure.
 - A tiny `tools/run` bash wrapper makes the surface discoverable and executable.
 - The old entrypoints (`tools/rebuild_marketplace.py`, `scripts/ci-preflight.sh`, `scripts/ci-preflight.ps1`) and their test are deleted.
-- `.git/hooks/pre-commit`, `.github/workflows/marketplace-validation.yml`, `tools/AGENTS.md`, `tools/README.md`, `tools/INDEX.md`, and the `repo-guide-policy.md` exceptions are updated to point at `tools/run`.
+- `.git/hooks/pre-commit`, `.github/workflows/marketplace-validation.yml`, `tools/AGENTS.md`, `tools/README.md`, `tools/INDEX.md`, and the `repo-runbook-policy.md` exceptions are updated to point at `tools/run`.
 
 ## Public interface
 
@@ -35,7 +35,7 @@ tools/run.ps1 <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared
 - `tools/run` must be importable and lintable as `tools/run.py`; the `tools/run` wrapper must `exec` the Python file and pass through exit codes.
 - No external task runners (just/make/invoke).
 - `tools/rebuild_marketplace.py`, `scripts/ci-preflight.sh`, `scripts/ci-preflight.ps1`, and `tests/test_rebuild_marketplace_cli.py` are deleted.
-- `sources/first_party/skills/repo-standards/` and its generated marketplace projection are **not** modified; instead, `repo-guide-policy.md` exceptions are added for the removed surfaces.
+- `sources/first_party/skills/repo-standards/` and its generated marketplace projection are **not** modified; instead, `repo-runbook-policy.md` exceptions are added for the removed surfaces.
 - Do not rewrite historical specs/plans; only update active, tracked guidance that still advertises deleted canonical commands.
 
 ---
@@ -1105,9 +1105,9 @@ chore(tools): point tool callers and repo-index metadata at tools/run
 
 ---
 
-## Task 7: Update CI, pre-commit, and repo-guide-policy exceptions
+## Task 7: Update CI, pre-commit, and repo-runbook-policy exceptions
 
-**Files:** `.github/workflows/marketplace-validation.yml`, `.git/hooks/pre-commit` (create), `.agents/docs/repo-guide-policy.md`
+**Files:** `.github/workflows/marketplace-validation.yml`, `.git/hooks/pre-commit` (create), `.agents/docs/repo-runbook-policy.md`
 
 ### 7a. `.github/workflows/marketplace-validation.yml`
 
@@ -1187,7 +1187,7 @@ EOF
 chmod +x .git/hooks/pre-commit
 ```
 
-### 7c. `.agents/docs/repo-guide-policy.md`
+### 7c. `.agents/docs/repo-runbook-policy.md`
 
 Old block:
 ```markdown
@@ -1522,7 +1522,7 @@ docs(tools): document tools/run and retire rebuild_marketplace/ci-preflight refe
 | Dependency order | Target graph matches the spec: marketplace = inventory → heal → project → installed-skills → repo-index → mesh → catalog → validate; ci = lint → repo-standards → marketplace; all = ci. | Pass |
 | Validation alignment | `tools/run ci --check` runs lint, repo-standards, and marketplace checks; `marketplace --apply` regenerates; `marketplace --check` includes `git diff --exit-code`. | Pass |
 | Risk | The doc-sweep script may over-replace prose; the implementer must review `git diff` after running it. A fallback is to manually fix any awkward replacements. | Noted |
-| Deletion safety | `rebuild_marketplace.py`, `ci-preflight.sh/.ps1`, and `tests/test_rebuild_marketplace_cli.py` are removed; `repo-guide-policy.md` exceptions prevent `repo-standards` drift. | Pass |
+| Deletion safety | `rebuild_marketplace.py`, `ci-preflight.sh/.ps1`, and `tests/test_rebuild_marketplace_cli.py` are removed; `repo-runbook-policy.md` exceptions prevent `repo-standards` drift. | Pass |
 
 **Plan-readiness rating:** 9/10
 

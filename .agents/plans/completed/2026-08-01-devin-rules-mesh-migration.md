@@ -191,7 +191,7 @@
 ### Task 6: Update repo guides and routing
 
 **Files:**
-- Modify: `.agents/docs/repo-guide-policy.md`
+- Modify: `.agents/docs/repo-runbook-policy.md`
 - Modify or create: the `.agents/guides/` files named in the audit (for example, `.agents/guides/marketplace-tooling-guide.md`)
 
 **Interfaces:**

@@ -129,7 +129,7 @@ The routing pointer list will be rewritten to the new `*.md` names by the bulk s
 - Modify: `.agents/runbooks/AGENTS.md`
 - Modify: `REVIEW.md`
 - Modify: `CONTRIBUTING.md`
-- Modify: `.agents/docs/repo-guide-policy.md`
+- Modify: `.agents/docs/repo-runbook-policy.md`
 - Modify: `tools/validate_agents_md.py`
 - Modify: `tools/generate_repo_index.py`
 - Modify: `tests/test_repo_standards.py`
@@ -208,7 +208,7 @@ for rel in all_files:
         new_text = new_text.replace(old_path, new_path)
     # Directory references
     new_text = new_text.replace(OLD_DIR, NEW_DIR)
-    # Bare file-name rewrites for the table in repo-guide-policy, skill references, etc.
+    # Bare file-name rewrites for the table in repo-runbook-policy, skill references, etc.
     for old, new in FILE_RENAMES:
         new_text = new_text.replace(old, new)
 
@@ -228,7 +228,7 @@ py -3 "Z:\_agent-worktrees\agent-asset-marketplace\feat\runbooks-rename\_runbook
 Remove-Item "Z:\_agent-worktrees\agent-asset-marketplace\feat\runbooks-rename\_runbooks_rewrite.py"
 ```
 
-Expected: The script updates all tracked source files that reference the old directory, the old full paths, and the old `*-guide.md` bare file names, including `sources/first_party/skills/`, `tests/test_repo_standards.py`, `tools/`, `AGENTS.md`, `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, `.agents/runbooks/AGENTS.md`, `REVIEW.md`, `CONTRIBUTING.md`, and `.agents/docs/repo-guide-policy.md`, while skipping generated and historical surfaces.
+Expected: The script updates all tracked source files that reference the old directory, the old full paths, and the old `*-guide.md` bare file names, including `sources/first_party/skills/`, `tests/test_repo_standards.py`, `tools/`, `AGENTS.md`, `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, `.agents/runbooks/AGENTS.md`, `REVIEW.md`, `CONTRIBUTING.md`, and `.agents/docs/repo-runbook-policy.md`, while skipping generated and historical surfaces.
 
 - [ ] **Step 2: Fix the relative `AGENTS.md` routing pointers the bulk script missed**
 
@@ -512,7 +512,7 @@ Replace the `## Workflow order` paragraph (currently the single line at line 65)
 Old:
 
 ```markdown
-For each stage, invoke `/repo-standards`, read `references/repository-guide-standard.md`, invoke `/repo-worker-base`, read the repo's `.agents/docs/repo-guide-policy.md`, read the repo-local stage guide, and route to the matching Superpowers skill (`/brainstorming`, `/writing-plans`, `/executing-plans` or `/subagent-driven-development`, `/requesting-code-review`).
+For each stage, invoke `/repo-standards`, read `references/repository-guide-standard.md`, invoke `/repo-worker-base`, read the repo's `.agents/docs/repo-runbook-policy.md`, read the repo-local stage guide, and route to the matching Superpowers skill (`/brainstorming`, `/writing-plans`, `/executing-plans` or `/subagent-driven-development`, `/requesting-code-review`).
 ```
 
 New:
@@ -528,7 +528,7 @@ After the owning Superpowers stage skill has routed you (e.g., `/writing-plans` 
 The typical `repo-standards` workflow is:
 1. Read `references/repository-guide-standard.md` and `references/repository-shape-standard.md`.
 2. Invoke `/repo-worker-base` if the work touches worktree, branch, validation, or publication.
-3. Read the repo's `.agents/docs/repo-guide-policy.md`.
+3. Read the repo's `.agents/docs/repo-runbook-policy.md`.
 4. Apply or check the surfaces the stage skill needs.
 ```
 
@@ -598,8 +598,8 @@ At the start of any planning session, invoke `/using-superpowers-plus` to route 
 - Modify: `CONTRIBUTING.md`
 - Modify: `sources/first_party/skills/repo-standards/templates/REVIEW.md`
 - Modify: `sources/first_party/skills/repo-standards/templates/CONTRIBUTING.md`
-- Modify: `.agents/docs/repo-guide-policy.md`
-- Modify: `sources/first_party/skills/repo-standards/templates/repo-guide-policy.md`
+- Modify: `.agents/docs/repo-runbook-policy.md`
+- Modify: `sources/first_party/skills/repo-standards/templates/repo-runbook-policy.md`
 - Modify: `sources/first_party/skills/repo-standards/references/repository-guide-standard.md`
 - Modify: `sources/first_party/skills/repo-standards/references/repository-shape-standard.md`
 
@@ -632,7 +632,7 @@ Replace the `## Before you begin` section with:
 ## Before you begin
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
-- Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's mapping to the cross-repo runbook standard.
+- Read [`.agents/docs/repo-runbook-policy.md`](./.agents/docs/repo-runbook-policy.md) for this repo's mapping to the cross-repo runbook standard.
 - Invoke `/using-superpowers-plus` to classify the request and route to the correct stage.
 - The owning stage skill will tell you when to invoke `/repo-standards` (repo shape/runbook alignment) or `/repo-worker-base` (worktree, branch, validation, publication).
 ```
@@ -666,7 +666,7 @@ Keep the `Stage routing` section as-is after the bulk path rewrite; the `.agents
 
 - [ ] **Step 3: Update the repo guide policy opening**
 
-**File:** `.agents/docs/repo-guide-policy.md`
+**File:** `.agents/docs/repo-runbook-policy.md`
 
 Replace line 3:
 
@@ -682,7 +682,7 @@ New:
 This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` first to route to the relevant stage skill, then invoke `/repo-standards` when the task touches repo shape, runbook layout, or scaffolds.
 ```
 
-**File:** `sources/first_party/skills/repo-standards/templates/repo-guide-policy.md`
+**File:** `sources/first_party/skills/repo-standards/templates/repo-runbook-policy.md`
 
 Apply the same opening-line replacement.
 

@@ -32,7 +32,7 @@ git mv .agents/specs/<spec-name>.md .agents/specs/completed/
 # .agents/plans/ or .agents/specs/ paths and rewrite them to include
 # the completed/ segment (e.g., .agents/plans/phase-2.md -> .agents/plans/completed/phase-2.md).
 
-grep -R "\.agents/\(plans\|specs\)/" .agents/plans/completed/ .agents/specs/completed/ || true
+grep -ER "\.agents/\(plans\|specs\)/[^/]+\.md" .agents/plans/completed/ .agents/specs/completed/ || true
 
 # 3. Regenerate the mesh and marketplace surfaces
 py -3 tools/run.py mesh --apply

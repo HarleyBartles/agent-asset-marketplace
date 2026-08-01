@@ -5,7 +5,7 @@ This runbook is the contributor entry point for `agent-asset-marketplace`. It ro
 ## Before you begin
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
-- Read [`.agents/docs/repo-guide-policy.md`](./.agents/docs/repo-guide-policy.md) for this repo's mapping to the cross-repo runbook standard.
+- Read [`.agents/docs/repo-runbook-policy.md`](./.agents/docs/repo-runbook-policy.md) for this repo's mapping to the cross-repo runbook standard.
 - Invoke `/using-superpowers-plus` to classify the request and route to the correct stage.
 - The owning stage skill will tell you when to invoke `/repo-standards` (repo shape/runbook alignment) or `/repo-worker-base` (worktree, branch, validation, publication).
 
