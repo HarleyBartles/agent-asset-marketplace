@@ -14,7 +14,6 @@ from pathlib import Path
 from typing import Callable
 
 import shared_checkout
-from superpowers_source import load_superpowers_bundle_manifest, superpowers_source_root
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT_NAME = "tools/run"
@@ -148,31 +147,7 @@ def _prune_stale_projected_plugin_roots() -> None:
 
 
 def _retained_verbatim_paths() -> set[str]:
-    bundle_manifest = load_superpowers_bundle_manifest()
-    source_root = superpowers_source_root(bundle_manifest).relative_to(ROOT).as_posix()
-    skip_paths: set[str] = set()
-    for entry in bundle_manifest.get("entries", []):
-        if not isinstance(entry, dict):
-            continue
-        if entry.get("source_category") != "third_party" or entry.get("content_mode") != "verbatim":
-            continue
-        canonical_source_path = entry.get("canonical_source_path")
-        if isinstance(canonical_source_path, str) and canonical_source_path.strip():
-            skip_paths.add(canonical_source_path)
-            skip_paths.add(f"{canonical_source_path}/SKILL.md")
-        source_path = entry.get("source_path")
-        if isinstance(source_path, str) and source_path.strip():
-            skip_paths.add(source_path)
-        local_path = entry.get("local_path")
-        if isinstance(local_path, str) and local_path.strip():
-            skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}")
-            skip_paths.add(f"codex-marketplace/plugins/superpowers-plus/{local_path}/SKILL.md")
-            skill_name = local_path.split("/")[-1]
-            skip_paths.add(f".agents/skills/{skill_name}")
-            skip_paths.add(f".agents/skills/{skill_name}/SKILL.md")
-    skip_paths.add(source_root)
-    skip_paths.add(f"{source_root}/AGENTS.md")
-    return skip_paths
+    return set()
 
 
 def _git_diff_check(ctx: Ctx) -> None:
@@ -230,18 +205,6 @@ def _apply_inventory(ctx: Ctx) -> None:
 def _check_inventory(ctx: Ctx) -> None:
     _run([sys.executable, "tools/generate_plugin_root_inventory.py", "--check"], ctx)
     _validate_marketplace_phase_step("inventory", ctx)
-
-
-def _apply_project(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/update_skill_artifacts.py", "--all"], ctx)
-    _run([sys.executable, "tools/normalize_first_party_skill_sources.py"], ctx)
-    _validate_marketplace_phase_step("project", ctx)
-
-
-def _check_project(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/update_skill_artifacts.py", "--check"], ctx)
-    _run([sys.executable, "tools/normalize_first_party_skill_sources.py", "--check"], ctx)
-    _validate_marketplace_phase_step("project", ctx)
 
 
 def _apply_installed_skills(ctx: Ctx) -> None:
@@ -314,20 +277,22 @@ def _check_mesh(ctx: Ctx) -> None:
     )
 
 
-def _apply_catalog(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_first_party_skill_catalog.py"], ctx)
-
-
-def _check_catalog(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_first_party_skill_catalog.py", "--check"], ctx)
-
-
 def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _git_diff_check(ctx)
     if ctx.mode == "check":
         _git_diff_exit_code(ctx)
+
+
+def _apply_marketplace(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/generate_marketplace.py"], ctx)
+    _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
+
+
+def _check_marketplace(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/generate_marketplace.py", "--check"], ctx)
+    _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
 
 
 def _run_lint(ctx: Ctx) -> None:
@@ -352,7 +317,7 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            "sources/first_party/skills/repo-standards/scripts/validate_skill_scripts.py",
+            ".agents/skills/repo-standards/scripts/validate_skill_scripts.py",
             "--check",
         ],
         ctx,
@@ -394,14 +359,8 @@ _TASKS: dict[str, Task] = {
         check=(_check_inventory,),
         fix="tools/run inventory --apply",
     ),
-    "project": Task(
-        deps=("inventory",),
-        apply=(_apply_project,),
-        check=(_check_project,),
-        fix="tools/run project --apply",
-    ),
     "installed-skills": Task(
-        deps=("project",),
+        deps=("inventory",),
         apply=(_apply_installed_skills,),
         check=(_check_installed_skills,),
         fix="tools/run installed-skills --apply",
@@ -418,20 +377,16 @@ _TASKS: dict[str, Task] = {
         check=(_check_mesh,),
         fix="tools/run mesh --apply",
     ),
-    "catalog": Task(
-        deps=("mesh",),
-        apply=(_apply_catalog,),
-        check=(_check_catalog,),
-        fix="tools/run catalog --apply",
-    ),
     "validate": Task(
-        deps=("catalog",),
+        deps=("mesh",),
         apply=(_run_validate,),
         check=(_run_validate,),
         fix="tools/run marketplace --apply",
     ),
     "marketplace": Task(
         deps=("validate",),
+        apply=(_apply_marketplace,),
+        check=(_check_marketplace,),
         fix="tools/run marketplace --apply",
     ),
     "ci": Task(

@@ -1,8 +1,8 @@
 {
-  "manifestSha": "15de781924bfa1e174586e0aba4d61566a9e6dcbfe2f60b690364daacfdf5d3c",
+  "manifestSha": "5fef64f6e184113f3d5c0a21588e88d093f9f89d82464cc8e92a2cf50828af3f",
   "syncedPlugins": [
-    "superpowers-plus",
-    "repo-worker-pack"
+    "repo-worker-pack",
+    "superpowers-plus"
   ],
   "syncedSkills": 34,
   "localSkills": [],
@@ -12,13 +12,13 @@
   },
   "localPlugins": [
     {
-      "name": "superpowers-plus",
-      "path": "./codex-marketplace/plugins/superpowers-plus",
+      "name": "repo-worker-pack",
+      "path": "./codex-marketplace/plugins/repo-worker-pack",
       "source": "local"
     },
     {
-      "name": "repo-worker-pack",
-      "path": "./codex-marketplace/plugins/repo-worker-pack",
+      "name": "superpowers-plus",
+      "path": "./codex-marketplace/plugins/superpowers-plus",
       "source": "local"
     }
   ],
@@ -36,5 +36,5 @@
       ]
     }
   ],
-  "syncedAt": "2026-08-01T16:20:34.875911"
+  "syncedAt": "2026-08-01T16:58:49.874328"
 }

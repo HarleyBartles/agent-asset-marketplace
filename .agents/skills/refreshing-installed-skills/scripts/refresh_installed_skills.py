@@ -783,7 +783,7 @@ def main(argv: list[str] | None = None) -> int:
     # Delegate vendor profile deployment to repo-standards and capture whether
     # any work is needed. In --check mode this already reports drift.
     deploy_script = (
-        ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
+        ROOT / ".agents" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
     )
     deploy_check = subprocess.run(
         [sys.executable, str(deploy_script), "--check"],

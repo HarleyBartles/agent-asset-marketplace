@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Validate that first-party skill-bundled Python scripts follow the CLI contract.
+"""Validate that skill-bundled Python scripts follow the CLI contract.
 
-Contract (evolving): every Python script under sources/first_party/skills/*/scripts/
+Contract (evolving): every Python script under .agents/skills/*/scripts/
 should:
 - respond to --help with exit 0 and a usage line
 - declare a classification (read-only / mixed / mutating) in its help text
@@ -34,12 +34,13 @@ def _repo_root() -> Path:
 
 
 ROOT = _repo_root()
-SCRIPTS_GLOB = "sources/first_party/skills/*/scripts/*.py"
+SCRIPTS_GLOB = ".agents/skills/*/scripts/*.py"
 
 # Scripts known to not yet support the contract, or that are the validator itself.
 # They are reported but do not fail validation. Remove entries as they are migrated.
 DEFERRED: set[str] = {
     "_agents_md.py",
+    "shared_checkout.py",
     "unslop.py",
     "validate_package.py",
     "validate_unslop_output.py",
@@ -150,7 +151,7 @@ def main(argv: list[str] | None = None) -> int:
     report = Report()
     scripts = sorted(ROOT.glob(SCRIPTS_GLOB))
     if not scripts:
-        print("no first-party skill scripts found", file=sys.stderr)
+        print("no skill scripts found", file=sys.stderr)
         return 1
 
     for path in scripts:

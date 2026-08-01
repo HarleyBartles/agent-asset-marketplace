@@ -4,42 +4,24 @@
   "roots": [
     {
       "order": 0,
-      "name": "unslop-plus",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/unslop-plus",
-      "plugin_root": "codex-marketplace/plugins/unslop-plus",
-      "manifest_path": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
+      "name": "agentic-evaluation",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
+      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
+      "manifest_path": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
       "order": 1,
-      "name": "superpowers-plus",
+      "name": "agentic-workflows",
       "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/superpowers-plus",
-      "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-      "manifest_path": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
+      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
+      "manifest_path": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
       "order": 2,
-      "name": "repo-worker-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
-      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
-      "manifest_path": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 3,
-      "name": "dotnet-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/dotnet-pack",
-      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
-      "manifest_path": "codex-marketplace/plugins/dotnet-pack/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 4,
       "name": "api-contracts-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/api-contracts-pack",
@@ -48,7 +30,7 @@
       "enabled": true
     },
     {
-      "order": 5,
+      "order": 3,
       "name": "architecture-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/architecture-pack",
@@ -57,21 +39,39 @@
       "enabled": true
     },
     {
-      "order": 6,
-      "name": "language-patterns-pack",
+      "order": 4,
+      "name": "data-platform-pack",
       "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
-      "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
-      "manifest_path": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/data-platform-pack",
+      "plugin_root": "codex-marketplace/plugins/data-platform-pack",
+      "manifest_path": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 5,
+      "name": "dotnet-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/dotnet-pack",
+      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
+      "manifest_path": "codex-marketplace/plugins/dotnet-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 6,
+      "name": "engineering-pack",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/engineering-pack",
+      "plugin_root": "codex-marketplace/plugins/engineering-pack",
+      "manifest_path": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
       "order": 7,
-      "name": "security-pack",
-      "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/security-pack",
-      "plugin_root": "codex-marketplace/plugins/security-pack",
-      "manifest_path": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
+      "name": "feature-sliced-design",
+      "category": "Coding",
+      "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
+      "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
+      "manifest_path": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
@@ -85,11 +85,11 @@
     },
     {
       "order": 9,
-      "name": "data-platform-pack",
+      "name": "language-patterns-pack",
       "category": "Productivity",
-      "registry_path": "./codex-marketplace/plugins/data-platform-pack",
-      "plugin_root": "codex-marketplace/plugins/data-platform-pack",
-      "manifest_path": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
+      "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
+      "manifest_path": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
@@ -103,33 +103,15 @@
     },
     {
       "order": 11,
-      "name": "feature-sliced-design",
-      "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/feature-sliced-design",
-      "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
-      "manifest_path": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
+      "name": "repo-worker-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+      "manifest_path": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
       "enabled": true
     },
     {
       "order": 12,
-      "name": "agentic-workflows",
-      "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
-      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
-      "manifest_path": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 13,
-      "name": "agentic-evaluation",
-      "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
-      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
-      "manifest_path": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
-      "enabled": true
-    },
-    {
-      "order": 14,
       "name": "research-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/research-pack",
@@ -138,12 +120,30 @@
       "enabled": true
     },
     {
-      "order": 15,
-      "name": "engineering-pack",
+      "order": 13,
+      "name": "security-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/security-pack",
+      "plugin_root": "codex-marketplace/plugins/security-pack",
+      "manifest_path": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 14,
+      "name": "superpowers-plus",
       "category": "Coding",
-      "registry_path": "./codex-marketplace/plugins/engineering-pack",
-      "plugin_root": "codex-marketplace/plugins/engineering-pack",
-      "manifest_path": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
+      "registry_path": "./codex-marketplace/plugins/superpowers-plus",
+      "plugin_root": "codex-marketplace/plugins/superpowers-plus",
+      "manifest_path": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 15,
+      "name": "unslop-plus",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/unslop-plus",
+      "plugin_root": "codex-marketplace/plugins/unslop-plus",
+      "manifest_path": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
       "enabled": true
     }
   ]

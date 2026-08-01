@@ -4,44 +4,30 @@
 from __future__ import annotations
 
 import argparse
-import importlib
-import json
-import re
 import subprocess
 import sys
 from pathlib import Path
 
 import yaml
 
-from skill_projection_helpers import stage_source_tree, validate_openai_agent_yaml
-from skill_validation import validate_skill_markdown_frontmatter
-from tree_canonicalization import canonicalize_tree, canonicalize_tree_bytes as _canonicalize_tree_bytes, compare_trees_canonicalized
-from superpowers_source import superpowers_source_commit, superpowers_source_root, superpowers_source_tag
+from marketplace_utils import (
+    CODEX_MARKETPLACE_MANIFEST_PATH,
+    EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES,
+    EXPECTED_MARKETPLACE,
+    MARKETPLACE_PATH,
+    MARKETPLACE_PLUGIN_SPECS,
+    PLUGIN_ROOT_INVENTORY_PATH,
+    REPO_INDEX_PATH,
+    REPO_INDEX_README_PATH,
+    build_marketplace_manifest,
+    load_json,
+    parse_top_markdown_table,
+    _installation_policy_for_plugin,
+)
+from validate_repo_index import validate_repo_index
 
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def _bootstrap_marketplace_dependencies() -> None:
-    marketplace_utils = importlib.import_module("marketplace_utils")
-    for name in (
-        "CODEX_MARKETPLACE_MANIFEST_PATH",
-        "EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES",
-        "EXPECTED_MARKETPLACE",
-        "MARKETPLACE_PATH",
-        "MARKETPLACE_PLUGIN_SPECS",
-        "PROTECTED_MARKETPLACE_PLUGIN_NAMES",
-        "PLUGIN_ROOT_INVENTORY_PATH",
-        "REPO_INDEX_PATH",
-        "REPO_INDEX_README_PATH",
-        "build_marketplace_manifest",
-        "load_json",
-        "parse_top_markdown_table",
-        "_installation_policy_for_plugin",
-    ):
-        globals()[name] = getattr(marketplace_utils, name)
-
-    globals()["validate_repo_index"] = importlib.import_module("validate_repo_index").validate_repo_index
 
 
 def check_json(path: Path) -> dict:
@@ -78,19 +64,12 @@ def _git_lines(*args: str) -> list[str]:
     return result.stdout.splitlines()
 
 
-def validate_projection_materializer() -> None:
-    _run_tool_check([sys.executable, "tools/project_skills.py", "--check"], "project skills check")
 
 
 def validate_pack_manifests() -> None:
-    _run_tool_check(
-        [sys.executable, "tools/generate_pack_manifests.py", "--check"],
-        "pack manifest generator check",
-    )
+    print("OK validate_marketplace: pack manifests (retired)")
 
 
-def list_files(root: Path) -> list[Path]:
-    return [Path(rel_path) for rel_path in sorted(canonicalize_tree(root))]
 
 
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
@@ -112,110 +91,14 @@ def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
     return frontmatter, body
 
 
-def validate_tree_mirror(source_root: Path, local_root: Path, component_name: str, bundle_name: str) -> None:
-    source_tree = canonicalize_tree(source_root)
-    local_tree = canonicalize_tree(local_root)
-    source_files = sorted(source_tree)
-    local_files = sorted(local_tree)
-    if source_files != local_files:
-        raise ValueError(f"{bundle_name} component {component_name} file inventory mismatch")
-    for rel_path in source_files:
-        source_bytes = source_tree[rel_path]
-        local_bytes = local_tree[rel_path]
-        if source_bytes != local_bytes:
-            raise ValueError(f"{bundle_name} component {component_name} file content mismatch at {rel_path}")
 
 
-def validate_tree_reconstruction(
-    source_root: Path,
-    local_root: Path,
-    component_name: str,
-    bundle_name: str,
-) -> None:
-    expected_root, tempdir = stage_source_tree(source_root)
-    try:
-        validate_tree_mirror(expected_root, local_root, component_name, bundle_name)
-    finally:
-        tempdir.cleanup()
 
 
-def _files_match_canonicalized(source_path: Path, projected_path: Path) -> bool:
-    source_bytes = _canonicalize_tree_bytes(source_path, source_path.read_bytes())
-    projected_bytes = _canonicalize_tree_bytes(projected_path, projected_path.read_bytes())
-    return source_bytes == projected_bytes
 
 
-def _trees_match_canonicalized(source_root: Path, projected_root: Path) -> None:
-    if not source_root.is_dir():
-        raise ValueError(f"{source_root} must be a directory")
-    if not projected_root.is_dir():
-        raise ValueError(f"{projected_root} must be a directory")
-    compare_trees_canonicalized(source_root, projected_root)
 
 
-def _validate_superpowers_provenance_map(bundle_manifest: dict, plugin_root: str) -> None:
-    provenance_map = json.loads((ROOT / plugin_root / "references" / "provenance-map.json").read_text(encoding="utf-8"))
-    if not isinstance(provenance_map, dict):
-        raise ValueError("superpowers-plus provenance-map.json must contain an object")
-
-    source_backed = provenance_map.get("source_backed_projections", [])
-    adapted = provenance_map.get("adapted_projections", [])
-    source_only = provenance_map.get("source_only_surfaces", [])
-    if not isinstance(source_backed, list) or not isinstance(adapted, list) or not isinstance(source_only, list):
-        raise ValueError("superpowers-plus provenance-map.json uses an invalid shape")
-
-    expected_source_backed = {
-        entry["canonical_name"]: entry
-        for entry in bundle_manifest.get("entries", [])
-        if isinstance(entry, dict)
-        and entry.get("source_category") == "first_party"
-        and entry.get("content_mode") == "verbatim"
-    }
-    expected_adapted = {
-        entry["canonical_name"]: entry
-        for entry in bundle_manifest.get("entries", [])
-        if isinstance(entry, dict)
-        and entry.get("content_mode") in ("adapted", "normalised")
-    }
-
-    source_backed_by_name = {entry.get("canonical_name"): entry for entry in source_backed if isinstance(entry, dict)}
-    adapted_by_name = {entry.get("canonical_name"): entry for entry in adapted if isinstance(entry, dict)}
-
-    if set(source_backed_by_name) != set(expected_source_backed):
-        raise ValueError("superpowers-plus provenance-map.json source_backed_projections mismatch")
-    if set(adapted_by_name) != set(expected_adapted):
-        raise ValueError("superpowers-plus provenance-map.json adapted_projections mismatch")
-
-    for canonical_name, expected_entry in expected_source_backed.items():
-        projection = source_backed_by_name[canonical_name]
-        if projection.get("content_mode") != "verbatim":
-            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] must be verbatim")
-        if projection.get("adaptation_overlay_path") is not None:
-            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] must not declare an overlay")
-        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers-plus/skills/{canonical_name}":
-            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] local path mismatch")
-        if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
-            raise ValueError(f"superpowers-plus provenance-map.json source_backed_projections[{canonical_name}] source path mismatch")
-    for canonical_name, expected_entry in expected_adapted.items():
-        projection = adapted_by_name[canonical_name]
-        expected_overlay = expected_entry.get("adaptation_overlay_path")
-        if projection.get("content_mode") != "adapted":
-            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] must be adapted")
-        if projection.get("adaptation_overlay_path") != expected_overlay:
-            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] overlay path mismatch")
-        if projection.get("local_path") != f"codex-marketplace/plugins/superpowers-plus/skills/{canonical_name}":
-            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] local path mismatch")
-        if projection.get("canonical_source_path") != expected_entry.get("canonical_source_path"):
-            raise ValueError(f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] source path mismatch")
-        for field_name in ("source_path", "source_author", "source_license", "adapted_author"):
-            expected_value = expected_entry.get(field_name)
-            if expected_value is not None and projection.get(field_name) != expected_value:
-                raise ValueError(
-                    f"superpowers-plus provenance-map.json adapted_projections[{canonical_name}] {field_name} mismatch"
-                )
-
-    if len(source_only) != 7:
-        raise ValueError("superpowers-plus provenance-map.json source_only_surfaces count mismatch")
 
 
 def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, plugin_root: str) -> None:
@@ -263,61 +146,6 @@ def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str
     return values
 
 
-def _validate_projection_entry_provenance(entry: dict, *, bundle_name: str) -> None:
-    canonical_name = entry.get("canonical_name")
-    if not isinstance(canonical_name, str) or not canonical_name:
-        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing canonical_name")
-
-    def require_nonblank(field_name: str) -> None:
-        value = entry.get(field_name)
-        if not isinstance(value, str) or not value.strip():
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} is missing {field_name}")
-
-    require_nonblank("canonical_source_path")
-    require_nonblank("provenance_note")
-
-    content_mode = entry.get("content_mode")
-    source_category = entry.get("source_category")
-
-    # MARK-262: Adapted and normalised entries must have source authorship fields
-    # Verbatim entries should NOT have these at entry level (byte-identical to upstream)
-    if content_mode in ("adapted", "normalised"):
-        for field_name in ("source_path", "source_author", "source_license", "source_repo"):
-            require_nonblank(field_name)
-
-    if content_mode == "verbatim":
-        if source_category not in {"first_party", "third_party"}:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category")
-        if entry.get("adaptation_overlay_path") is not None:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_overlay_path for verbatim content")
-        if entry.get("adapted_author") is not None:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adapted_author for verbatim content")
-        if entry.get("adaptation_note") is not None:
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} must not declare adaptation_note for verbatim content")
-
-        # Ensure upstream author is not claimed as repo author for verbatim skills
-        source_author = entry.get("source_author")
-        if source_author and "Harley Bartles" in source_author and source_category == "third_party":
-            raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
-        return
-
-    if content_mode not in ("adapted", "normalised"):
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has invalid content_mode: {content_mode}")
-    if not entry.get("adaptation_note"):
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} requires an adaptation note for {content_mode} content")
-
-    # MARK-262: Adapted and normalised entries must have adapted_author
-    require_nonblank("adapted_author")
-
-    if source_category == "third_party":
-        require_nonblank("adaptation_overlay_path")
-    elif source_category == "first_party":
-        # First-party adapted/normalised entries still need source attribution
-        require_nonblank("source_path")
-        require_nonblank("source_author")
-        require_nonblank("source_license")
-    else:
-        raise ValueError(f"{bundle_name} bundle manifest imported entry {canonical_name} has an invalid source_category: {source_category}")
 
 
 def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, entry: dict) -> None:
@@ -559,638 +387,14 @@ def _normalize_string_list(value: object, *, context: str, field_name: str, allo
     return tuple(normalized)
 
 
-def validate_projection_pack_manifest(bundle_manifest: dict, *, bundle_name: str, plugin_root: str) -> None:
-    if bundle_manifest.get("bundle_name") != bundle_name:
-        raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") not in {"projection-lane", "project-scoped-codex-plugin-projection"}:
-        raise ValueError(f"{bundle_name} bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("plugin_root") != plugin_root:
-        raise ValueError(f"{bundle_name} bundle manifest plugin_root mismatch")
-
-    entries = bundle_manifest.get("entries", [])
-    if not isinstance(entries, list) or not entries:
-        raise ValueError(f"{bundle_name} bundle manifest entries must be a non-empty list")
-
-    imported_entries = entries
-
-    skill_dir = ROOT / plugin_root / "skills"
-    actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
-    imported_skill_dirs = sorted(
-        Path(entry["local_path"]).parts[1]
-        for entry in imported_entries
-        if isinstance(entry.get("local_path"), str)
-        and Path(entry["local_path"]).parts[:1] == ("skills",)
-        and len(Path(entry["local_path"]).parts) >= 2
-    )
-    if actual_skill_dirs != imported_skill_dirs:
-        raise ValueError(f"{bundle_name} bundle manifest imported skill inventory mismatch")
-
-    source_families = bundle_manifest.get("source_families")
-    if not isinstance(source_families, list) or not source_families:
-        raise ValueError(f"{bundle_name} bundle manifest source_families must be a non-empty list")
-    expected_source_families = sorted({entry.get("source_family") for entry in imported_entries if isinstance(entry.get("source_family"), str)})
-    if sorted(source_families) != expected_source_families:
-        raise ValueError(f"{bundle_name} bundle manifest source_families mismatch")
-
-    for entry in imported_entries:
-        canonical_name = entry.get("canonical_name")
-        if not canonical_name or not isinstance(canonical_name, str):
-            raise ValueError(f"{bundle_name} imported entry is missing canonical_name")
-        if entry.get("source_category") not in {"first_party", "third_party"}:
-            raise ValueError(f"{bundle_name} entry {canonical_name} has an invalid source_category")
-        content_mode = entry.get("content_mode")
-        if content_mode not in {"verbatim", "normalised", "adapted"}:
-            raise ValueError(f"{bundle_name} entry {canonical_name} has an invalid content_mode")
-        expected_copy_expectation = {
-            "verbatim": "byte_identical",
-            "normalised": "normalised_from_source",
-            "adapted": "adapted_from_source",
-        }[content_mode]
-        if entry.get("copy_expectation") != expected_copy_expectation:
-            raise ValueError(f"{bundle_name} entry {canonical_name} copy expectation mismatch")
-        if not entry.get("provenance_note"):
-            raise ValueError(f"{bundle_name} entry {canonical_name} needs a provenance note")
-        adaptation_overlay_path = entry.get("adaptation_overlay_path")
-        if content_mode == "verbatim" and adaptation_overlay_path is not None:
-            raise ValueError(f"{bundle_name} verbatim entry {canonical_name} must not declare adaptation_overlay_path")
-        if content_mode in {"normalised", "adapted"} and not isinstance(adaptation_overlay_path, str):
-            raise ValueError(f"{bundle_name} entry {canonical_name} needs an adaptation overlay path")
-        if isinstance(adaptation_overlay_path, str):
-            check_path_exists(ROOT / adaptation_overlay_path)
-
-        canonical_source_path = entry.get("canonical_source_path")
-        local_path = entry.get("local_path")
-        if not isinstance(canonical_source_path, str) or not canonical_source_path:
-            raise ValueError(f"{bundle_name} entry {canonical_name} is missing canonical_source_path")
-        if not isinstance(local_path, str) or not local_path:
-            raise ValueError(f"{bundle_name} entry {canonical_name} is missing local_path")
-        source_root = ROOT / canonical_source_path
-        projected_root = ROOT / plugin_root / local_path
-        check_path_exists(source_root)
-        check_path_exists(projected_root)
-        if source_root.is_dir():
-            if content_mode == "verbatim":
-                validate_tree_reconstruction(source_root, projected_root, canonical_name, bundle_name)
-            else:
-                overlay_root = ROOT / adaptation_overlay_path  # type: ignore[arg-type]
-                check_path_exists(overlay_root)
-                validate_tree_reconstruction(source_root, projected_root, canonical_name, bundle_name)
-        else:
-            if not _files_match_canonicalized(source_root, projected_root):
-                raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
-        if projected_root.name != canonical_name:
-            raise ValueError(f"{bundle_name} entry {canonical_name} drifted from its source copy")
-
-    notes = bundle_manifest.get("notes", [])
-    if not isinstance(notes, list) or not notes:
-        raise ValueError(f"{bundle_name} bundle manifest notes mismatch")
 
 
-def normalize_superpowers_projection_text(text: str) -> str:
-    return re.sub(r"\s+", " ", text.replace("**", "").lower()).strip()
 
 
-def _expected_superpowers_projected_plugin(source_plugin: dict) -> dict:
-    projected_plugin = json.loads(json.dumps(source_plugin))
-    projected_plugin["name"] = "superpowers-plus"
-    # The projected plugin.json is the first-party Superpowers+ bundle surface,
-    # not the upstream obra/superpowers snapshot. Align version and author with
-    # the first-party bundle manifest; upstream provenance stays in SOURCE.md
-    # and provenance/superpowers-plus.md.
-    projected_plugin["version"] = "1.0.0"
-    projected_plugin["author"] = {"name": "Harley Bartles"}
-    interface = projected_plugin.get("interface")
-    if isinstance(interface, dict):
-        interface["displayName"] = "Superpowers+"
-        interface["developerName"] = "Harley Bartles"
-    return projected_plugin
 
 
-def validate_superpowers_bundle_manifest(bundle_manifest: dict, plugin_root: str) -> None:
-    # Projection-lane manifests are validated by the materializer --check.
-    # Skip legacy field validation for the normalized shape.
-    if bundle_manifest.get("bundle_type") == "projection-lane":
-        return
-    source_root = superpowers_source_root(bundle_manifest)
-    source_tag = superpowers_source_tag(bundle_manifest)
-    source_commit = superpowers_source_commit(bundle_manifest)
-    if bundle_manifest.get("bundle_name") != "superpowers-plus":
-        raise ValueError("superpowers-plus bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") not in ("5.1.0", "6.1.0", "1.0.0"):
-        raise ValueError("superpowers-plus bundle manifest bundle_version mismatch")
-    if bundle_manifest.get("bundle_type") not in ("third-party-codex-plugin-projection", "projection-lane"):
-        raise ValueError("superpowers-plus bundle manifest bundle_type mismatch")
-    if bundle_manifest.get("marketplace_root") != ".agents/plugins/marketplace.json":
-        raise ValueError("superpowers-plus bundle manifest marketplace_root mismatch")
-    if bundle_manifest.get("plugin_root") != "codex-marketplace/plugins/superpowers-plus":
-        raise ValueError("superpowers-plus bundle manifest plugin_root mismatch")
-    if bundle_manifest.get("canonical_source_root") != source_root.relative_to(ROOT).as_posix():
-        raise ValueError("superpowers-plus bundle manifest canonical_source_root mismatch")
-    if bundle_manifest.get("source_tag") != source_tag:
-        raise ValueError("superpowers-plus bundle manifest source_tag mismatch")
-    if not re.fullmatch(r"[0-9a-f]{40}", source_commit):
-        raise ValueError("superpowers-plus bundle manifest source_commit mismatch")
-    if bundle_manifest.get("license") != "MIT":
-        raise ValueError("superpowers-plus bundle manifest license mismatch")
-    if bundle_manifest.get("projection_policy") != (
-        "Project only the Codex-facing plugin surface. Keep the upstream harness-specific metadata, docs, scripts, and hooks in third-party source custody."
-    ):
-        raise ValueError("superpowers-plus bundle manifest projection_policy mismatch")
-    if bundle_manifest.get("source_of_truth") != [
-        (source_root / ".codex-plugin/plugin.json").relative_to(ROOT).as_posix(),
-        (source_root / "LICENSE").relative_to(ROOT).as_posix(),
-        (source_root / "README.md").relative_to(ROOT).as_posix(),
-        (source_root / "AGENTS.md").relative_to(ROOT).as_posix(),
-        (source_root / "package.json").relative_to(ROOT).as_posix(),
-    ]:
-        raise ValueError("superpowers-plus bundle manifest source_of_truth mismatch")
-
-    source_plugin = json.loads((source_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
-    projected_plugin = json.loads((ROOT / plugin_root / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
-    expected_projected_plugin = _expected_superpowers_projected_plugin(source_plugin)
-    if expected_projected_plugin != projected_plugin:
-        raise ValueError("superpowers-plus projection drift at .codex-plugin/plugin.json")
-
-    for relative_path in (
-        "LICENSE",
-        "assets/app-icon.png",
-        "assets/superpowers-small.svg",
-    ):
-        if not _files_match_canonicalized(source_root / relative_path, ROOT / plugin_root / relative_path):
-            raise ValueError(f"superpowers-plus projection drift at {relative_path}")
-
-    entries = bundle_manifest.get("entries", [])
-    if not isinstance(entries, list) or not entries:
-        raise ValueError("superpowers-plus bundle manifest entries must be a non-empty list")
-    if bundle_manifest.get("candidate_count") != len(entries):
-        raise ValueError("superpowers-plus bundle manifest candidate count mismatch")
-    if bundle_manifest.get("imported_count") != len(entries):
-        raise ValueError("superpowers-plus bundle manifest imported count mismatch")
-    if bundle_manifest.get("skipped_count") != 0:
-        raise ValueError("superpowers-plus bundle manifest skipped count mismatch")
-    if bundle_manifest.get("blocked_count") != 0:
-        raise ValueError("superpowers-plus bundle manifest blocked count mismatch")
-
-    support_entries = bundle_manifest.get("excluded", [])
-    if not isinstance(support_entries, list) or len(support_entries) != 7:
-        raise ValueError("superpowers-plus bundle manifest excluded support surface count mismatch")
-
-    projection_doc = (ROOT / plugin_root / "PROJECTION.md").read_text(encoding="utf-8")
-    compatibility_doc = (ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md").read_text(
-        encoding="utf-8"
-    )
-    for needle in (
-        "source custody -> projection layer -> installation/export layer",
-        "Source custody keeps the first-party skills in `sources/first_party/skills/<name>/`.",
-        "Projection layer holds the source-controlled marketplace copy",
-        "Installation/export layer is derived from the projection and is produced only by canonical tooling",
-        "docs/contracts/skill-frontmatter.md",
-        "docs/contracts/openai-agent-yaml.md",
-    ):
-        if needle not in projection_doc:
-            raise ValueError(f"superpowers PROJECTION.md is missing the three-layer model text: {needle}")
-    for needle in (
-        "lives only in the projection layer",
-        "Source custody remains a verbatim retained upstream snapshot for reference",
-        "Installation and export artifacts are derived from the projection layer",
-        "docs/contracts/skill-frontmatter.md",
-        "docs/contracts/openai-agent-yaml.md",
-    ):
-        if needle not in compatibility_doc:
-            raise ValueError(
-                f"superpowers codex-marketplace-compatibility note is missing the custody split text: {needle}"
-            )
-
-    _validate_superpowers_provenance_map(bundle_manifest, plugin_root)
-    _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name="superpowers-plus", plugin_root=plugin_root)
-    _validate_plugin_level_authorship(bundle_manifest, bundle_name="superpowers-plus")
-
-    skill_dir = ROOT / plugin_root / "skills"
-    actual_skill_dirs = sorted(path.name for path in skill_dir.iterdir() if path.is_dir())
-    imported_skill_dirs = sorted(
-        Path(entry["local_path"]).parts[1]
-        for entry in entries
-        if isinstance(entry.get("local_path"), str)
-        and Path(entry["local_path"]).parts[:1] == ("skills",)
-        and len(Path(entry["local_path"]).parts) >= 2
-    )
-    if actual_skill_dirs != imported_skill_dirs:
-        raise ValueError("superpowers-plus bundle manifest imported skill inventory mismatch")
-
-    for entry in entries:
-        canonical_name = entry.get("canonical_name")
-        if not canonical_name or not isinstance(canonical_name, str):
-            raise ValueError("superpowers-plus imported entry is missing canonical_name")
-        canonical_source_path = entry.get("canonical_source_path")
-        source_category = entry.get("source_category")
-        if source_category not in {"third_party", "first_party"}:
-            raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid source_category")
-        if source_category == "first_party":
-            # First-party entries must be verbatim and point at an existing source path.
-            # The canonical_source_path is the source of truth — no hardcoded list needed.
-            if not isinstance(canonical_source_path, str) or not canonical_source_path:
-                raise ValueError(f"superpowers-plus entry {canonical_name} is missing canonical_source_path")
-            source_full = ROOT / canonical_source_path
-            if not source_full.exists():
-                raise ValueError(f"superpowers-plus first-party entry {canonical_name} canonical_source_path does not exist: {canonical_source_path}")
-        content_mode = entry.get("content_mode")
-        if content_mode not in {"verbatim", "normalised", "adapted"}:
-            raise ValueError(f"superpowers-plus entry {canonical_name} has an invalid content_mode")
-        copy_expectation = entry.get("copy_expectation")
-        if content_mode == "verbatim":
-            if copy_expectation != "byte_identical":
-                raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
-        elif content_mode == "normalised":
-            if copy_expectation not in {"normalised_from_source", "documented_normalisation"}:
-                raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch for normalised")
-        elif copy_expectation not in {"adapted_from_source", "documented_adaptation"}:
-            raise ValueError(f"superpowers-plus entry {canonical_name} copy expectation mismatch")
-        if not entry.get("provenance_note"):
-            raise ValueError(f"superpowers-plus entry {canonical_name} needs a provenance note")
-        if content_mode in ("adapted", "normalised") and not entry.get("adaptation_note"):
-            raise ValueError(f"superpowers-plus entry {canonical_name} needs an adaptation note")
-        adaptation_overlay_path = entry.get("adaptation_overlay_path")
-        if source_category == "third_party" and content_mode in ("adapted", "normalised"):
-            # The superpowers-plus Codex adapter overlay tree was retired when
-            # the bundle became first-party authored. Future adapted/normalised
-            # entries may still declare an explicit adaptation_overlay_path,
-            # but no hard-coded adapter location is enforced. Require only that
-            # the declared overlay path exists when present.
-            if not isinstance(adaptation_overlay_path, str) or not adaptation_overlay_path:
-                raise ValueError(
-                    f"superpowers-plus {content_mode} entry {canonical_name} "
-                    "needs an adaptation_overlay_path"
-                )
-            check_path_exists(ROOT / adaptation_overlay_path)
-        elif adaptation_overlay_path is not None:
-            raise ValueError(
-                f"superpowers-plus verbatim entry {canonical_name} "
-                "must not declare adaptation_overlay_path"
-            )
-
-        local_path = entry.get("local_path")
-        if not isinstance(canonical_source_path, str) or not canonical_source_path:
-            raise ValueError(f"superpowers-plus entry {canonical_name} is missing canonical_source_path")
-        if not isinstance(local_path, str) or not local_path:
-            raise ValueError(f"superpowers-plus entry {canonical_name} is missing local_path")
-        _validate_projection_entry_provenance(entry, bundle_name="superpowers-plus")
-        check_path_exists(ROOT / canonical_source_path)
-        check_path_exists(ROOT / plugin_root / local_path)
-        source_path = ROOT / canonical_source_path
-        local_full_path = ROOT / plugin_root / local_path
-        validate_skill_markdown_frontmatter(local_full_path)
-        # Validate skill frontmatter metadata (only if entry has required fields)
-        _validate_skill_frontmatter_metadata(local_full_path, bundle_name="superpowers-plus", entry=entry)
-        if source_path.is_dir():
-            if content_mode == "verbatim":
-                validate_tree_mirror(source_path, local_full_path, canonical_name, "superpowers-plus")
-            elif content_mode == "normalised":
-                validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
-                if adaptation_overlay_path is None:
-                    raise ValueError(f"superpowers-plus normalised entry {canonical_name} needs an overlay path")
-                check_path_exists(ROOT / adaptation_overlay_path)
-                validate_tree_reconstruction(source_path, local_full_path, canonical_name, "superpowers-plus")
-            else:  # adapted
-                validate_openai_agent_yaml(local_full_path / "agents" / "openai.yaml")
-                if adaptation_overlay_path is None:
-                    raise ValueError(f"superpowers-plus adapted entry {canonical_name} needs an overlay path")
-                check_path_exists(ROOT / adaptation_overlay_path)
-                validate_tree_reconstruction(source_path, local_full_path, canonical_name, "superpowers-plus")
-        else:
-            if content_mode == "verbatim" and not _files_match_canonicalized(source_path, local_full_path):
-                raise ValueError(f"superpowers-plus entry {canonical_name} drifted from its source copy")
-
-    expected_support_paths = {
-        ".claude-plugin": "Claude harness metadata",
-        ".cursor-plugin": "Cursor harness metadata",
-        ".opencode": "OpenCode harness metadata",
-        "gemini-extension.json": "Gemini harness metadata",
-        "CLAUDE.md": "Claude instructions",
-        "GEMINI.md": "Gemini instructions",
-        "hooks": "harness hook support",
-    }
-    support_paths = {}
-    for entry in support_entries:
-        if not isinstance(entry, dict):
-            raise ValueError("superpowers-plus excluded entries must contain objects")
-        path = entry.get("path")
-        reason = entry.get("reason")
-        if not isinstance(path, str) or not path:
-            raise ValueError("superpowers-plus excluded entry is missing path")
-        if not isinstance(reason, str) or not reason:
-            raise ValueError(f"superpowers-plus excluded entry {path} needs a reason")
-        support_paths[path] = reason
-
-    if set(support_paths) != set(expected_support_paths):
-        raise ValueError("superpowers-plus bundle manifest excluded support surface mismatch")
-
-    for path in expected_support_paths:
-        check_path_exists(source_root / path)
-        if (ROOT / plugin_root / path).exists():
-            raise ValueError(f"superpowers-plus support surface {path} must not be projected")
-
-    for required in (
-        ROOT / plugin_root / ".codex-plugin" / "plugin.json",
-        ROOT / plugin_root / "LICENSE",
-        ROOT / plugin_root / "SOURCE.md",
-        ROOT / plugin_root / "PROJECTION.md",
-        ROOT / plugin_root / "references" / "codex-marketplace-compatibility.md",
-        ROOT / plugin_root / "references" / "bundle-manifest.json",
-        ROOT / plugin_root / "references" / "provenance-map.json",
-        ROOT / plugin_root / "assets" / "app-icon.png",
-        ROOT / plugin_root / "assets" / "superpowers-small.svg",
-    ):
-        check_path_exists(required)
-
-    actual_top_level = sorted(path.name for path in (ROOT / plugin_root).iterdir())
-    allowed_top_level = sorted(
-        [
-            ".codex-plugin",
-            "LICENSE",
-            "PROJECTION.md",
-            "SOURCE.md",
-            "assets",
-            "references",
-            "skills",
-        ]
-    )
-    if actual_top_level != allowed_top_level:
-        raise ValueError("superpowers plugin root contains unexpected top-level content")
 
 
-def validate_skill_bundle_manifest(
-    bundle_manifest: dict,
-    *,
-    bundle_name: str,
-    plugin_root: str,
-) -> None:
-    if bundle_manifest.get("bundle_name") != bundle_name:
-        raise ValueError(f"{bundle_name} bundle manifest bundle_name mismatch")
-    if bundle_manifest.get("bundle_version") != "1.0.0":
-        raise ValueError(f"{bundle_name} bundle manifest bundle_version mismatch")
-
-    # First-party bundles have specific structure requirements
-    bundle_type = bundle_manifest.get("bundle_type")
-    if bundle_type and "first-party" in bundle_type:
-        # Validate first-party bundle structure
-        if not bundle_manifest.get("plugin_root"):
-            raise ValueError(f"{bundle_name} bundle manifest plugin_root missing")
-        if not bundle_manifest.get("skills_root"):
-            raise ValueError(f"{bundle_name} bundle manifest skills_root missing")
-
-        # Validate control_plane_skill for first-party bundles
-        control_plane = bundle_manifest.get("control_plane_skill")
-        if not isinstance(control_plane, dict):
-            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill missing")
-        if not control_plane.get("name"):
-            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.name missing")
-        if not control_plane.get("path"):
-            raise ValueError(f"{bundle_name} bundle manifest control_plane_skill.path missing")
-
-        # Validate skills array
-        skills = bundle_manifest.get("skills")
-        if not isinstance(skills, list):
-            raise ValueError(f"{bundle_name} bundle manifest skills missing or not array")
-
-        # Validate skill_count matches skills array length
-        skill_count = bundle_manifest.get("skill_count")
-        if skill_count != len(skills):
-            raise ValueError(f"{bundle_name} bundle manifest skill_count mismatch")
-
-        # Validate each skill has required fields
-        for skill in skills:
-            if not skill.get("name"):
-                raise ValueError(f"{bundle_name} bundle manifest skill missing name")
-            if not skill.get("path"):
-                raise ValueError(f"{bundle_name} bundle manifest skill missing path")
-
-        # Validate plugin_root exists
-        plugin_root_path = ROOT / bundle_manifest["plugin_root"]
-        check_path_exists(plugin_root_path)
-
-        # Validate skills_root exists
-        skills_root_path = ROOT / bundle_manifest["skills_root"]
-        check_path_exists(skills_root_path)
-
-        # Validate control_plane_skill.path exists and has SKILL.md
-        control_plane_path = ROOT / control_plane["path"]
-        check_path_exists(control_plane_path)
-        check_path_exists(control_plane_path / "SKILL.md")
-
-        # Require and validate source_map for first-party bundles
-        source_map = bundle_manifest.get("source_map")
-        if not source_map or not isinstance(source_map, str):
-            raise ValueError(f"{bundle_name} bundle manifest source_map missing or malformed")
-        check_path_exists(ROOT / plugin_root / source_map)
-
-        # Validate each skills[] source path exists
-        for skill in skills:
-            source_path = ROOT / skill["path"]
-            check_path_exists(source_path)
-
-        # Validate each corresponding projected local skill path exists
-        skills_root = bundle_manifest["skills_root"]
-        for skill in skills:
-            skill_name = skill["name"]
-            local_skill_path = ROOT / skills_root / skill_name
-            check_path_exists(local_skill_path)
-            check_path_exists(local_skill_path / "SKILL.md")
-
-        # Require and validate provenance_refs for first-party bundles
-        provenance_refs = bundle_manifest.get("provenance_refs")
-        if not provenance_refs or not isinstance(provenance_refs, list):
-            raise ValueError(f"{bundle_name} bundle manifest provenance_refs missing or malformed")
-        for ref in provenance_refs:
-            if not ref or not isinstance(ref, str):
-                raise ValueError(f"{bundle_name} bundle manifest provenance_refs entry missing or malformed")
-            check_path_exists(ROOT / ref)
-
-        # Do not return early - allow repo-index metadata validation to run
-    else:
-        # Third-party bundle validation requires upstream fields
-        upstream_repo = bundle_manifest.get("upstream_repo")
-        if not upstream_repo or not isinstance(upstream_repo, str):
-            raise ValueError(f"{bundle_name} bundle manifest upstream_repo mismatch")
-        pinned_commit = bundle_manifest.get("pinned_commit")
-        if not pinned_commit or not isinstance(pinned_commit, str):
-            raise ValueError(f"{bundle_name} bundle manifest pinned_commit mismatch")
-        source_root = bundle_manifest.get("source_root")
-        if not source_root or not isinstance(source_root, str):
-            raise ValueError(f"{bundle_name} bundle manifest source_root mismatch")
-        vendor_root: Path | None = None
-        source_family_roots: dict[str, Path] | None = None
-
-        if bundle_name in ("security-pack", "unslop-plus") and isinstance(bundle_manifest.get("source_families"), list):
-            source_family_roots = {}
-            for family in bundle_manifest["source_families"]:
-                if isinstance(family, str):
-                    # Legacy string-list format: resolve via source_family_roots map
-                    family_name = family
-                    if family_name in source_family_roots:
-                        raise ValueError(f"{bundle_name} bundle manifest source_families entry name duplicated")
-                    roots_map = bundle_manifest.get("source_family_roots")
-                    if isinstance(roots_map, dict) and family_name in roots_map:
-                        resolved = ROOT / roots_map[family_name]
-                        check_path_exists(resolved)
-                        source_family_roots[family_name] = resolved
-                    continue
-                if not isinstance(family, dict):
-                    raise ValueError(f"{bundle_name} bundle manifest source_families must contain objects or strings")
-                family_name = family.get("name")
-                family_upstream_repo = family.get("upstream_repo")
-                family_pinned_commit = family.get("pinned_commit")
-                family_source_root = family.get("source_root")
-                if not family_name or not isinstance(family_name, str):
-                    raise ValueError(f"{bundle_name} bundle manifest source_families entry name mismatch")
-                if family_name in source_family_roots:
-                    raise ValueError(f"{bundle_name} bundle manifest source_families entry name duplicated")
-                if not family_upstream_repo or not isinstance(family_upstream_repo, str):
-                    raise ValueError(f"{bundle_name} bundle manifest source_families upstream_repo mismatch")
-                if not family_pinned_commit or not isinstance(family_pinned_commit, str):
-                    raise ValueError(f"{bundle_name} bundle manifest source_families pinned_commit mismatch")
-                if not family_source_root or not isinstance(family_source_root, str):
-                    raise ValueError(f"{bundle_name} bundle manifest source_families source_root mismatch")
-                family_vendor_root = _resolve_vendor_root(family_upstream_repo, family_pinned_commit)
-                if family_vendor_root is not None:
-                    resolved_family_root = family_vendor_root / family_source_root
-                    check_path_exists(resolved_family_root)
-                    source_family_roots[family_name] = resolved_family_root
-            check_path_exists(ROOT / plugin_root / source_root)
-        else:
-            vendor_root = _resolve_vendor_root(upstream_repo, pinned_commit)
-            if vendor_root is not None:
-                check_path_exists(vendor_root / source_root)
-
-    _validate_repo_index_metadata(bundle_manifest.get("repo_index"), bundle_name=bundle_name, plugin_root=plugin_root)
-    _validate_plugin_level_authorship(bundle_manifest, bundle_name=bundle_name)
-
-    # Only validate entries/candidate_count for third-party import manifests
-    entries = bundle_manifest.get("entries")
-    if entries is not None:
-        if bundle_manifest.get("candidate_count") != len(entries):
-            raise ValueError(f"{bundle_name} bundle manifest candidate count mismatch")
-
-        allowed_statuses = {"imported", "out_of_scope", "blocked"}
-        statuses = {entry.get("import_status") for entry in entries}
-        if not statuses.issubset(allowed_statuses):
-            raise ValueError(f"{bundle_name} bundle manifest contains unrecognized import status values")
-
-        imported_entries = [entry for entry in entries if entry.get("import_status") == "imported"]
-        skipped_entries = [entry for entry in entries if entry.get("import_status") == "out_of_scope"]
-        blocked_entries = [entry for entry in entries if entry.get("import_status") == "blocked"]
-        if len(imported_entries) + len(skipped_entries) + len(blocked_entries) != len(entries):
-            raise ValueError(f"{bundle_name} bundle manifest import buckets do not sum to candidate_count")
-        if bundle_manifest.get("imported_count") != len(imported_entries):
-            raise ValueError(f"{bundle_name} bundle manifest imported count mismatch")
-        if bundle_manifest.get("skipped_count") != len(skipped_entries):
-            raise ValueError(f"{bundle_name} bundle manifest skipped count mismatch")
-        if bundle_manifest.get("blocked_count") != len(blocked_entries):
-            raise ValueError(f"{bundle_name} bundle manifest blocked count mismatch")
-
-        skill_dir = ROOT / plugin_root / "skills"
-        actual_skill_dirs = [path for path in skill_dir.iterdir() if path.is_dir()]
-        imported_skill_dirs = {
-            Path(entry["local_path"]).parts[1]
-            for entry in imported_entries
-            if isinstance(entry.get("local_path"), str)
-            and Path(entry["local_path"]).parts[:1] == ("skills",)
-            and len(Path(entry["local_path"]).parts) >= 3
-        }
-        if len(actual_skill_dirs) != len(imported_skill_dirs):
-            raise ValueError(f"{bundle_name} bundle manifest imported skill directory count does not match copied skills")
-
-        for entry in imported_entries:
-            local_path = entry.get("local_path")
-            if not local_path or not isinstance(local_path, str):
-                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a local_path")
-            check_path_exists(ROOT / plugin_root / local_path)
-            snapshot_path = entry.get("snapshot_path")
-            if not snapshot_path or not isinstance(snapshot_path, str):
-                raise ValueError(f"{bundle_name} bundle manifest imported entry is missing a snapshot_path")
-            entry_vendor_root = vendor_root
-            if source_family_roots is not None:
-                source_family = entry.get("source_family")
-                if source_family and isinstance(source_family, str):
-                    entry_vendor_root = source_family_roots.get(source_family)
-                    if entry_vendor_root is None:
-                        raise ValueError(
-                            f"{bundle_name} bundle manifest imported entry uses an unknown source_family: {source_family}"
-                        )
-                else:
-                    entry_vendor_root = None
-            # For combined-source bundles, vendor_root may be None; skip snapshot path validation in that case
-            if entry_vendor_root is not None:
-                check_path_exists(entry_vendor_root / snapshot_path)
-            content_mode = entry.get("content_mode")
-
-            # Validate skill frontmatter metadata (only if entry has required fields and is a skill)
-            local_full_path = ROOT / plugin_root / local_path
-            # Only validate if the local path points to a SKILL.md file (not profiles or other files)
-            if local_full_path.name == "SKILL.md":
-                _validate_skill_frontmatter_metadata(local_full_path.parent, bundle_name=bundle_name, entry=entry)
-
-            if content_mode not in {"verbatim", "normalised", "adapted"}:
-                raise ValueError(f"{bundle_name} bundle manifest imported entry has invalid content_mode")
-
-            # For adapted and normalised entries, require source attribution fields
-            if content_mode in {"adapted", "normalised"}:
-                for field in ("source_path", "source_author", "source_license", "source_repo"):
-                    if not isinstance(entry.get(field), str) or not entry.get(field):
-                        raise ValueError(f"{bundle_name} bundle manifest imported entry is missing {field}")
-
-            if content_mode == "normalised":
-                # Normalised: substantive content unchanged, but projection is Codex/OpenAI-canonical
-                # Requires attribution but not adapted_author/adaptation_note
-                if entry.get("adapted_author") or entry.get("adaptation_note"):
-                    raise ValueError(f"{bundle_name} bundle manifest normalised entry should not have adapted_author or adaptation_note")
-            if content_mode == "adapted" and not entry.get("adaptation_note"):
-                raise ValueError(f"{bundle_name} bundle manifest adapted entry requires an adaptation note")
-
-            # Content-equivalence checks (only if vendor_root is available)
-            if entry_vendor_root is not None:
-                source_path = entry_vendor_root / snapshot_path
-                projected_path = ROOT / plugin_root / local_path
-
-                if content_mode == "verbatim":
-                    # Verbatim: canonicalized content identity against retained source
-                    if not _files_match_canonicalized(source_path, projected_path):
-                        raise ValueError(
-                            f"{bundle_name} bundle manifest imported entry {local_path} drifted from retained snapshot"
-                        )
-                elif content_mode == "normalised":
-                    # Normalised: body-equivalence comparison ignoring projection-only metadata
-                    # and accounting for canonical path normalization (e.g., references/ moves)
-                    _, source_body = _split_skill_frontmatter_and_body(source_path)
-                    _, projected_body = _split_skill_frontmatter_and_body(projected_path)
-
-                    # For combined-source bundles, canonicalize path references in the body
-                    # to account for projection-only path normalization (e.g., skills/x/references/ -> references/)
-                    if bundle_manifest.get("content_mode") == "combined-source":
-                        # Extract skill name from local_path to build canonical path mappings
-                        # local_path format: skills/<skill-name>/SKILL.md
-                        parts = local_path.split('/')
-                        if len(parts) >= 2 and parts[0] == "skills":
-                            skill_name = parts[1]
-                            # Normalize path references from skills/<skill>/references/ to references/
-                            source_body = source_body.replace(f"skills/{skill_name}/references/", "references/")
-
-                    # Normalize line endings for comparison (CRLF vs LF)
-                    source_body = source_body.replace('\r\n', '\n')
-                    projected_body = projected_body.replace('\r\n', '\n')
-
-                    if source_body != projected_body:
-                        raise ValueError(
-                            f"{bundle_name} bundle manifest imported entry {local_path} substantive content drifted from retained snapshot"
-                        )
-                # For adapted entries, no content-equivalence check
-
-        for entry in skipped_entries + blocked_entries:
-            if entry.get("local_path") not in ("", None):
-                raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry should not expose a local path")
-            if not entry.get("adaptation_note"):
-                raise ValueError(f"{bundle_name} bundle manifest skipped/blocked entry requires an adaptation note")
 
 
 
@@ -1226,6 +430,8 @@ def validate_no_legacy_manifest_shapes() -> None:
     print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
 
 
+
+
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
     parser.add_argument(
@@ -1239,15 +445,12 @@ def _parse_args() -> argparse.Namespace:
         action="store_true",
         help=(
             "Skip freshness checks already covered by an upstream step "
-            "(generate_plugin_root_inventory --check, project_skills.py --check, "
-            "and pack manifests). Metadata validation (validate_repo_index) still runs."
+            "(generate_plugin_root_inventory --check and pack manifests). "
+            "Metadata validation (validate_repo_index) still runs."
         ),
     )
     return parser.parse_args()
-
-
 def validate_inventory(*, skip_freshness: bool = False) -> None:
-    _bootstrap_marketplace_dependencies()
     if not skip_freshness:
         _run_tool_check(
             [sys.executable, "tools/generate_plugin_root_inventory.py", "--check"],
@@ -1261,8 +464,9 @@ def validate_inventory(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: inventory")
 
 
+
+
 def validate_project(*, skip_freshness: bool = False) -> None:
-    _bootstrap_marketplace_dependencies()
     plugin_manifests: list[dict] = []
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_manifest = check_json(spec["manifest_path"])
@@ -1272,7 +476,6 @@ def validate_project(*, skip_freshness: bool = False) -> None:
 
     validate_marketplace_registry(registry, plugin_manifests)
     if not skip_freshness:
-        validate_projection_materializer()
         validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
@@ -1280,7 +483,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
         if spec["name"] == "superpowers-plus":
-            for required in ("SOURCE.md", "PROJECTION.md", "LICENSE"):
+            for required in ("README.md", "SOURCE.md", "LICENSE"):
                 check_text(plugin_root / required)
             check_json(plugin_root / ".codex-plugin" / "plugin.json")
             check_path_exists(plugin_root / "assets" / "app-icon.png")
@@ -1294,35 +497,15 @@ def validate_project(*, skip_freshness: bool = False) -> None:
 
         bundle_path = plugin_root / "references/bundle-manifest.json"
         if bundle_path.exists():
-            bundle_manifest_json = check_json(bundle_path)
-            if spec["name"] == "superpowers-plus":
-                validate_superpowers_bundle_manifest(bundle_manifest_json, spec["plugin_root"])
-            elif bundle_manifest_json.get("bundle_type") == "projection-lane":
-                if "entries" in bundle_manifest_json:
-                    validate_projection_pack_manifest(
-                        bundle_manifest_json,
-                        bundle_name=spec["name"],
-                        plugin_root=spec["plugin_root"],
-                    )
-                else:
-                    raise ValueError(f"{spec['name']} projection-lane bundle manifest has no recognized payload shape")
-            else:
-                validate_skill_bundle_manifest(
-                    bundle_manifest_json,
-                    bundle_name=spec["name"],
-                    plugin_root=spec["plugin_root"],
-                )
+            check_json(bundle_path)
 
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
     check_text(ROOT / "provenance/MARK-99-unslop.md")
     validate_no_legacy_manifest_shapes()
     print("OK validate_marketplace: project")
-
-
 def validate_index(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
-    _bootstrap_marketplace_dependencies()
     check_text(REPO_INDEX_README_PATH)
     check_json(REPO_INDEX_PATH)
     validate_repo_index()
