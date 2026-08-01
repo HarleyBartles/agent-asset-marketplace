@@ -1,5 +1,6 @@
 ---
 name: implementer-strong
+runtime: devin-desktop
 description: Strong implementation subagent — use for the same work as `implementer` when the task needs more reasoning headroom.
 model: swe-1-7
 allowed-tools:

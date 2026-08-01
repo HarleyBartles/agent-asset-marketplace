@@ -37,9 +37,13 @@ A task that mixes read-heavy exploration with mutation is normally `subagent_gen
 
 The shared policy's free/included/metered and cost-preference rules do not apply in Devin Desktop because the runtime does not expose paid or metered choices. Route by capability and access need only.
 
-### Custom subagent profiles
+### Custom subagent profiles (Devin Desktop only)
 
-Devin Desktop supports custom subagent profiles. It searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
+The `.md` profile assets under `assets/` are Devin Desktop custom profiles. They
+are not used by Codex; for Codex, use `references/codex-multi-agent-v1-profile.md`
+or `references/codex-multi-agent-v2-profile.md`.
+
+Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
 
 | Task | Dispatch |
 |---|---|
@@ -47,9 +51,9 @@ Devin Desktop supports custom subagent profiles. It searches the following locat
 | Full branch/PR diff review where the whole branch is in scope | `run_subagent profile: reviewer-strong` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `run_subagent profile: reviewer-fast` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |
+| Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
 
 Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_description>` in the task; the reviewer subagent does not resolve the diff itself.
-| Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |
 

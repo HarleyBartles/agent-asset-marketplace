@@ -105,7 +105,7 @@ digraph process {
     "Invoke /requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
-    "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use /finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Setup: worktree, ledger check, read plan, pre-flight review" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
@@ -136,14 +136,14 @@ digraph process {
     "Use /handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
     "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
-    "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
+    "Final review clean: delete this plan's workspace" -> "Use /finishing-a-development-branch";
 }
 ```
 
 ## Setup
 
 Ensure the work happens in an isolated workspace: use
-superpowers:using-git-worktrees to create one or verify the existing one.
+/using-git-worktrees to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
 partner's explicit consent.
 
@@ -191,10 +191,19 @@ conflicts that only emerge from implementation.
 ## Model Selection
 
 Invoke `/selecting-a-subagent` to select the right subagent profile for the
-current task and environment. In Devin Desktop, that means choosing a
-`profile:` value and then dispatching `run_subagent` with that `profile:`.
-The profile's `.md` profile file declares its own `model:`, so do not pass `model:`
-to `run_subagent`.
+current task and environment. This applies to both the **implementer** and the
+**task reviewer/re-reviewer**.
+
+- In **Devin Desktop**, choose a `profile:` value and dispatch `run_subagent`
+  with that `profile:`. Do not pass `model:` to `run_subagent`; the custom
+  profile's `.md` file declares its own `model:`.
+- In **Codex**, select the actual `model`, `reasoning_effort`, `fork_context`
+  or `fork_turns` from the matching Codex profile. Do not invent parameters the
+  live schema does not expose.
+
+Use the least escalated profile that is adequate for the task. Choose `reviewer`
+for ordinary task reviews, `reviewer-strong` when the diff is large or subtle,
+and `reviewer-fast` for small, targeted re-reviews.
 
 ## The Task Loop
 
@@ -265,6 +274,10 @@ final whole-branch review. Never skip the task review, and never accept a
 report missing either verdict — spec compliance AND task quality are both
 required. Implementer self-review never replaces the task review; both are
 needed.
+
+Before dispatching the task reviewer, invoke `/selecting-a-subagent` to pick the
+right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fast`)
+for the task diff.
 
 - Hand the reviewer its diff as a file: run this skill's
   `scripts/review-package PLAN_FILE BASE HEAD` and pass the reviewer the file path
@@ -395,9 +408,14 @@ parked-with-ruling at the cap.
 
 ## Final Review
 
-The final whole-branch review is handled by `/requesting-code-review`. Dispatch the
-skill once all task-level reviews are complete. The skill reviews the full branch
-diff and reports findings; no additional review package is needed.
+Once all task-level reviews are complete, run `/handoff-gates` `completion-readiness`
+against the completed work. Rate it against the plan and the repo's code review
+guide (8/10 floor, 9/10 target). Report the final rating and do not proceed
+below the floor.
+
+If the completion-readiness rating meets the floor, dispatch the final whole-branch
+review with `/requesting-code-review`. The skill reviews the full branch diff and
+reports findings; no additional review package is needed.
 
 If the final whole-branch review returns findings, dispatch ONE fix subagent
 with the complete findings list — not one fixer per finding.
@@ -418,7 +436,7 @@ delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.
 
-Use superpowers:finishing-a-development-branch.
+Use /finishing-a-development-branch.
 
 ## Common Rationalizations
 
@@ -497,5 +515,5 @@ Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
 
-Done! Using superpowers:finishing-a-development-branch.
+Done! Using /finishing-a-development-branch.
 ```

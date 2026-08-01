@@ -1,5 +1,6 @@
 ---
 name: reviewer-fast
+runtime: devin-desktop
 description: Fast read-only re-review and small-diff reviewer — use for targeted re-checks of fixes and quick regression scans over small, coherent diffs.
 model: swe-1-6
 allowed-tools:

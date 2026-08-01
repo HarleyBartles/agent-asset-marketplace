@@ -1,5 +1,6 @@
 ---
 name: implementer
+runtime: devin-desktop
 description: Generic implementation and bugfix subagent — edits existing files and runs shell commands, but does not create new files with the write tool.
 model: glm-5-2
 allowed-tools:

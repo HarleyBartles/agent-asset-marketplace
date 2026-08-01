@@ -1,7 +1,8 @@
 ---
 name: reviewer
+runtime: devin-desktop
 description: Read-only code and diff reviewer — checks correctness, style, consistency, and risk against a prepared diff and cites specific files and line numbers.
-model: GLM-5.2
+model: glm-5.2
 allowed-tools:
   - read
   - grep

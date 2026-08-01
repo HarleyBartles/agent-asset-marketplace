@@ -99,6 +99,8 @@ Inputs to pass to the subagent:
 The subagent reads the prepared diff, uses `<pr_description>` to understand intent and
 scope, cites specific files and line numbers, and does not modify files.
 
+Use the prepared-diff prompt template at [reviewer-prompt.md](reviewer-prompt.md).
+
 ## Example
 
 ```
@@ -146,4 +148,5 @@ You: [Fix progress indicators]
 - Show code/tests that prove it works
 - Request clarification
 
-See template at: [code-reviewer.md](code-reviewer.md)
+See templates at [code-reviewer.md](code-reviewer.md) for commit-range review and
+[reviewer-prompt.md](reviewer-prompt.md) for prepared branch/PR diff review.

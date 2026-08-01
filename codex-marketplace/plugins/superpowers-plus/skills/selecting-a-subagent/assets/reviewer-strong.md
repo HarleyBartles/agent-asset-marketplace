@@ -1,5 +1,6 @@
 ---
 name: reviewer-strong
+runtime: devin-desktop
 description: Strong read-only diff reviewer — use for large, subtle, or full-branch/PR reviews that need more reasoning and broader context.
 model: swe-1-7
 allowed-tools:

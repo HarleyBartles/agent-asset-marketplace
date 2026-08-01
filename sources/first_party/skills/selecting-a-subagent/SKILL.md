@@ -62,8 +62,12 @@ task, environment, and repository rules before calling a child-dispatch tool.
 
 ## Installing the custom profiles
 
-If you want to use the custom profiles this skill can recommend, install the
-corresponding `.md` profile assets into a Devin Desktop profile search path:
+The `.md` profile assets in `assets/` are Devin Desktop custom profiles. They are
+not used by Codex; for Codex, use the `references/codex-multi-agent-v1-profile.md`
+or `references/codex-multi-agent-v2-profile.md` mappings.
+
+If you want to use the Devin Desktop custom profiles, install the corresponding
+`.md` profile assets into a Devin Desktop profile search path:
 
 - macOS/Linux: `~/.config/devin/agents/<profile>.md`
 - Windows: `%APPDATA%\devin\agents\<profile>.md`
