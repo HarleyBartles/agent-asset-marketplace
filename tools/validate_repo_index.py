@@ -248,7 +248,7 @@ def validate_repo_index() -> dict:
     if [entry.get("name") for entry in marketplace_plugins] != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("repo-index marketplace plugin order does not match the protected marketplace shape")
 
-    third_party_agents = ROOT / ".devin/rules/third-party.md"
+    third_party_agents = ROOT / ".agents/doctrine/third-party.md"
     third_party_guidance = check_text(third_party_agents)
     normalized_third_party_guidance = " ".join(third_party_guidance.split())
     if (
@@ -256,7 +256,7 @@ def validate_repo_index() -> dict:
         or "not repository doctrine" not in normalized_third_party_guidance
     ):
         raise ValueError(
-            ".devin/rules/third-party.md must clearly distinguish repo-owned guidance from third-party instructions"
+            ".agents/doctrine/third-party.md must clearly distinguish repo-owned guidance from third-party instructions"
         )
 
     print("Repo index validation passed.")

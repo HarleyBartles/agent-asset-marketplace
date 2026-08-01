@@ -115,7 +115,9 @@ is unclear, run these steps in order and then hand off.
    current environment is unknown or may have changed. Record the shell, repo,
    branch, worktree, and available connectors. Do not route until the
    environment is known.
-3. **Load doctrine.** Invoke `/base-doctrine` for cross-runtime invariants.
+3. **Load doctrine.** Invoke `/base-doctrine` for cross-runtime invariants,
+   then load the repo-local doctrine from `.agents/doctrine/` by reading
+   `.agents/doctrine/AGENTS.md` for scope and the relevant topic files.
    For how local doctrine and user instructions shape routing, see
    [`references/repo-doctrine.md`](references/repo-doctrine.md).
 4. **Classify the request.** Pick the smallest sufficient mode from

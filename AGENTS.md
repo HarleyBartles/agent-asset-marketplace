@@ -43,7 +43,7 @@ Apply the `security-review` profile from `/unslop-profiles` to relevant work and
 ## Routing pointers
 
 - [Mesh policy](.agents/docs/mesh-policy.md)
-- Scoped law lives in `.devin/rules/*.md`
+- Scoped rule triggers live in `.devin/rules/*.md`; canonical repo-local doctrine lives in `.agents/doctrine/*.md`
 - [Worker guidance](.agents/guides/repo-doctrine-guide.md)
 - [Implementing workflow](.agents/guides/implementing-guide.md)
 - [Worktree and scratch policy](docs/non-repo-locations-policy.md)

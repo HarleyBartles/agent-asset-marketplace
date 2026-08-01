@@ -3,7 +3,8 @@ description: "Subagent script selection"
 trigger: glob
 globs: "**/scripts/**"
 ---
+## Scope
 
-Use the no-extension bash scripts by default when the environment has bash.
-If bash is unavailable, use the sibling `*.ps1` script with the same basename.
-For task-review diffs, pass the plan file to `review-package` so the output lands in `../_agent-scratch/<branch>/<plan_name>/`.
+For the canonical doctrine behind this rule, read `.agents/doctrine/sdd-scripts.md`.
+
+This file is a conditional rule trigger. It does not contain the doctrine; it only tells the runtime when to load the doctrine from `.agents/doctrine/`. Do not restate the doctrine here.

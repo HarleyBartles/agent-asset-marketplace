@@ -3,16 +3,8 @@ description: "Source custody rules"
 trigger: glob
 globs: "sources/**"
 ---
-
 ## Scope
 
-`sources/`
+For the canonical doctrine behind this rule, read `.agents/doctrine/sources.md`.
 
-This scope covers source custody under `sources/first_party/` and `sources/third_party/`.
-
-Defer to the repository root `AGENTS.md` for global repo doctrine.
-
-Source custody is not projection custody.
-First-party source is active current-root custody.
-Third-party source is retained upstream custody.
-Keep the two lanes distinct.
+This file is a conditional rule trigger. It does not contain the doctrine; it only tells the runtime when to load the doctrine from `.agents/doctrine/`. Do not restate the doctrine here.

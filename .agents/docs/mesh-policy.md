@@ -83,3 +83,19 @@ If whole-mesh regeneration does not produce a valid mesh, fix the generator,
 exclusion policy, or source inputs.
 Do not hand-edit individual generated `INDEX.md` files or regenerate only a
 subtree to satisfy CI.
+
+## 7. `.agents/doctrine/` doctrine content
+
+`.agents/doctrine/*.md` is the canonical repo-local doctrine content surface.
+It holds operative repository law that is too large, too scoped, or too dynamic
+for `AGENTS.md` or `.devin/rules/*.md` triggers.
+
+`.devin/rules/*.md` and `AGENTS.md` are routing/trigger surfaces; they must not
+restate the doctrine. They may carry a short `Scope` and a `MUST READ` pointer
+to the relevant `.agents/doctrine/<topic>.md` file.
+
+`using-superpowers-plus` and `base-doctrine` load the `.agents/doctrine/`
+delta after the cross-runtime `base-doctrine` invariants.
+
+Keep each doctrine file focused on one topic. Use `INDEX.md` (generated) for
+navigation; do not hand-maintain a parallel table of contents.
