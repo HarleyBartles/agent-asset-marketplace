@@ -6,7 +6,7 @@
 
 **Goal:** Remove the `superpowers/` working-surface residuals, make `using-superpowers-plus` the generic bootstrap router, and retire `work-mode-router` and `bootstrap-router`.
 
-**Architecture:** Move durable specs/plans to `.agents/specs/` and `.agents/plans/`, move SDD scratch to `../_agents-scratch/<branch>/<plan-basename>/`, delete the visual-companion runtime, rewrite `using-superpowers-plus` as a repo-agnostic spin-up router, and absorb the good parts of `work-mode-router` and `bootstrap-router` into `using-superpowers-plus/references/`. `repo-worker-base` becomes the downstream repo-hygiene and baseline handoff.
+**Architecture:** Move durable specs/plans to `.agents/specs/` and `.agents/plans/`, move SDD scratch to `../_agent-scratch/<branch>/<plan-basename>/`, delete the visual-companion runtime, rewrite `using-superpowers-plus` as a repo-agnostic spin-up router, and absorb the good parts of `work-mode-router` and `bootstrap-router` into `using-superpowers-plus/references/`. `repo-worker-base` becomes the downstream repo-hygiene and baseline handoff.
 
 **Tech Stack:** Markdown skill docs, YAML agent wrappers, git, `tools/run` deterministic build pipeline.
 
@@ -135,7 +135,7 @@ git commit -m "refactor: move specs and plans out of .agents/superpowers/"
 - Delete the git-ignored `.agents/superpowers/sdd/` directory if it still exists.
 
 **Interfaces:**
-- `sdd-workspace` now prints `../_agents-scratch/<branch>/<plan-basename>/`.
+- `sdd-workspace` now prints `../_agent-scratch/<branch>/<plan-basename>/`.
 - Subagent briefs, reports, and review packages write outside the repo tree.
 
 - [ ] **Step 1: Determine branch and plan-stem in `sdd-workspace`.**
@@ -144,7 +144,7 @@ The script must resolve the git branch and the plan file basename. Base the work
 
 - [ ] **Step 2: Update the Bash and PowerShell scripts.**
 
-Replace the `.agents/superpowers/sdd/<plan-stem>/` path with `../_agents-scratch/<branch>/<plan-stem>/`. Ensure the parent directories are created. Remove the in-repo `.gitignore` write; the scratch is not inside git.
+Replace the `.agents/superpowers/sdd/<plan-stem>/` path with `../_agent-scratch/<branch>/<plan-stem>/`. Ensure the parent directories are created. Remove the in-repo `.gitignore` write; the scratch is not inside git.
 
 - [ ] **Step 3: Update `subagent-driven-development/SKILL.md` references.**
 
@@ -152,7 +152,7 @@ Repoint all mentions of the old `.agents/superpowers/sdd/` workspace to the new 
 
 - [ ] **Step 4: Test the new `sdd-workspace` scripts.**
 
-Run both scripts with a sample plan path and verify the output directory is under `../_agents-scratch/`, not in the repo.
+Run both scripts with a sample plan path and verify the output directory is under `../_agent-scratch/`, not in the repo.
 
 - [ ] **Step 5: Commit.**
 

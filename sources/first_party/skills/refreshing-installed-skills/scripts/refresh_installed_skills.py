@@ -274,32 +274,6 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
     )
 
 
-def _vendor_profiles_are_current(installed_plugins: list[dict[str, Any]]) -> bool:
-    """Return True when every pack vendor profile is already present in `.agents/agents/`.
-
-    A profile is considered present if a file of the same name already exists in
-    the consumer tree. The installer never overwrites an existing file, because
-    the repo owns its own `.agents/agents/` contents once they exist. Repo-local
-    `.devin/agents/` overrides are user-managed and are never checked, written,
-    or removed by this script.
-    """
-    if not AGENTS_AGENTS_PATH.is_dir():
-        return False
-    expected: dict[str, Path] = {}
-    for plugin in installed_plugins:
-        profiles_dir = _vendor_profile_source_dir(plugin)
-        if profiles_dir is None:
-            continue
-        for profile_file in sorted(profiles_dir.iterdir()):
-            if _is_vendor_profile_file(profile_file):
-                expected.setdefault(profile_file.name, profile_file)
-    for name, src in expected.items():
-        dest = AGENTS_AGENTS_PATH / name
-        if not dest.exists():
-            return False
-    return True
-
-
 def _load_marketplace_config() -> dict[str, Any]:
     """Load the marketplace configuration."""
     if not MARKETPLACE_PATH.is_file():
@@ -562,11 +536,6 @@ def _clean_orphan_skills(check_mode: bool = False, synced_skill_names: set[str] 
     return cleaned_any
 
 
-AGENTS_AGENTS_PATH = ROOT / ".agents" / "agents"
-
-# Files that may share a directory with vendor profiles but are not profiles
-# themselves (e.g. generated mesh navigation). The installer and orphan cleaner
-# skip these.
 NON_PROFILE_MD_NAMES = {"INDEX.md"}
 
 
@@ -586,89 +555,6 @@ def _vendor_profile_source_dir(plugin: dict[str, Any]) -> Path | None:
         return None
     profiles_path = plugin_path / "assets" / "profiles"
     return profiles_path if profiles_path.is_dir() else None
-
-
-def _install_plugin_vendor_profiles(
-    plugin: dict[str, Any],
-    check_mode: bool = False,
-    installed_profiles: dict[str, list[str]] | None = None,
-) -> bool:
-    """Copy `assets/profiles/*.md` from a plugin into the consumer agent search path.
-
-    Profiles are copied to `.agents/agents/` only when a file of the same name
-    does not already exist there. Repo-local overrides in `.devin/agents/` are
-    user-managed and are never written or removed by this script.
-    """
-    profiles_dir = _vendor_profile_source_dir(plugin)
-    if profiles_dir is None:
-        return False
-
-    plugin_name = plugin.get("name", "unknown")
-    if not isinstance(plugin_name, str):
-        return False
-
-    if installed_profiles is None:
-        installed_profiles = {}
-
-    profile_files = sorted(
-        child for child in profiles_dir.iterdir() if _is_vendor_profile_file(child)
-    )
-    if not profile_files:
-        return False
-
-    installed_any = False
-    copied_names: list[str] = []
-
-    for profile_file in profile_files:
-        copied_names.append(profile_file.name)
-        dest_file = AGENTS_AGENTS_PATH / profile_file.name
-        if check_mode:
-            if not dest_file.exists():
-                print(f"CHECK: Would install vendor profile: {dest_file.relative_to(ROOT)}")
-                installed_any = True
-        else:
-            AGENTS_AGENTS_PATH.mkdir(parents=True, exist_ok=True)
-            if not dest_file.exists():
-                shutil.copy2(profile_file, dest_file)
-                print(f"Installed vendor profile: {dest_file.relative_to(ROOT)}")
-                installed_any = True
-
-    # Record the installed profile names for this plugin. The last plugin to
-    # contribute a given name wins in the consumer tree; provenance records the
-    # plugin that owns the asset, not the on-disk winner.
-    installed_profiles[plugin_name] = copied_names
-    return installed_any
-
-
-def _clean_orphan_vendor_profiles(
-    check_mode: bool = False,
-    installed_profile_names: set[str] | None = None,
-) -> bool:
-    """Remove vendor profiles in `.agents/agents/` that no longer belong to any installed plugin.
-
-    This cleaner only touches the `.agents/agents/` directory installed by this
-    script. Repo-local overrides in `.devin/agents/` are user-managed and are
-    never created, modified, or removed here.
-    """
-    if installed_profile_names is None:
-        installed_profile_names = set()
-
-    cleaned_any = False
-    if not AGENTS_AGENTS_PATH.is_dir():
-        return cleaned_any
-    for profile_file in sorted(AGENTS_AGENTS_PATH.iterdir()):
-            if not _is_vendor_profile_file(profile_file):
-                continue
-            if profile_file.name in installed_profile_names:
-                continue
-            if check_mode:
-                print(f"CHECK: Would remove orphan vendor profile: {profile_file.relative_to(ROOT)}")
-                cleaned_any = True
-            else:
-                profile_file.unlink()
-                print(f"Removed orphan vendor profile: {profile_file.relative_to(ROOT)}")
-                cleaned_any = True
-    return cleaned_any
 
 
 def _provenance_state(
@@ -872,7 +758,6 @@ def main(argv: list[str] | None = None) -> int:
     # from what got copied on this run, so provenance stays stable across
     # no-op refreshes.
     vendor_profile_records: list[dict[str, Any]] = []
-    installed_profile_names: set[str] = set()
     for plugin in installed_plugins:
         profiles_dir = _vendor_profile_source_dir(plugin)
         if profiles_dir is None:
@@ -894,7 +779,17 @@ def main(argv: list[str] | None = None) -> int:
                 "profiles": profile_names,
             }
         )
-        installed_profile_names.update(profile_names)
+
+    # Delegate vendor profile deployment to repo-standards and capture whether
+    # any work is needed. In --check mode this already reports drift.
+    deploy_script = (
+        ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
+    )
+    deploy_check = subprocess.run(
+        [sys.executable, str(deploy_script), "--check"],
+        cwd=ROOT,
+        env=_stripped_env(),
+    ).returncode
 
     # Get current provenance and manifest SHA
     existing_provenance = _load_provenance()
@@ -911,9 +806,7 @@ def main(argv: list[str] | None = None) -> int:
     provenance_needs_update = _provenance_needs_update(existing_provenance, new_state)
 
     if not args.force and existing_provenance and not provenance_needs_update:
-        if _marketplace_skill_inventory_is_current(installed_plugins, prefixes) and _vendor_profiles_are_current(
-            installed_plugins
-        ):
+        if _marketplace_skill_inventory_is_current(installed_plugins, prefixes) and deploy_check == 0:
             print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
             print(
                 f"Synced skills: {existing_provenance.get('syncedSkills')} from "
@@ -953,24 +846,20 @@ def main(argv: list[str] | None = None) -> int:
     ):
         changes_made = True
 
-    # Install vendor subagent profiles from pack assets/profiles/*.md
-    print("\nProcessing vendor profiles...")
-    installed_vendor_profiles: dict[str, list[str]] = {}
-    for plugin in installed_plugins:
-        if _install_plugin_vendor_profiles(
-            plugin,
-            check_mode=args.check,
-            installed_profiles=installed_vendor_profiles,
-        ):
+    # Vendor subagent profiles are owned by repo-standards. The refresh script
+    # already called deploy_vendor_profiles.py --check above, so here we only
+    # need to apply changes if the user requested it.
+    if args.apply:
+        deploy_apply = subprocess.run(
+            [sys.executable, str(deploy_script), "--apply"],
+            cwd=ROOT,
+            env=_stripped_env(),
+        )
+        if deploy_apply.returncode != 0:
             changes_made = True
-
-    # Clean orphan vendor profiles no longer contributed by any installed plugin
-    print("\nChecking for orphan vendor profiles...")
-    if _clean_orphan_vendor_profiles(
-        check_mode=args.check,
-        installed_profile_names=installed_profile_names,
-    ):
-        changes_made = True
+    else:
+        if deploy_check != 0:
+            changes_made = True
 
     # Provenance metadata drift (plugin list, local skills, manifest SHA) is also
     # a change worth reporting and writing.

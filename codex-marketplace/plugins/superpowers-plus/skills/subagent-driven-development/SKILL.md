@@ -154,7 +154,7 @@ a ledger file, not only in todos.
 
 - Each plan owns a workspace: at skill start, run this skill's
   `scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
-  directory (`<repo-root>/../_agents-scratch/<branch>/<plan-basename>/`), home to
+  directory (`<repo-root>/../_agent-scratch/<branch>/<plan-basename>/`), home to
   every artifact for THIS plan: ledger, briefs, reports, review packages.
   Another plan's directory is never yours to read or write.
 - Check for this plan's ledger at `<workspace>/progress.md`. If its first
@@ -162,7 +162,7 @@ a ledger file, not only in todos.
   — do not re-dispatch them; resume at the first task without one. A task
   whose last line is a fix round is mid-loop: resume the loop at the next
   round. A ledger whose first line names a different plan file — or a stray
-  ledger at the old flat path `../_agents-scratch/<branch>/progress.md` — is another
+  ledger at the old flat path `../_agent-scratch/<branch>/progress.md` — is another
   plan's progress: leave it in place and start your own, fresh. The
   off-repo scratch survives `git clean` and is never committed.
 - Create the ledger with its identity as the first line:

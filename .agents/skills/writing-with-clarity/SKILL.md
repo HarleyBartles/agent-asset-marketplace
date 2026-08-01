@@ -62,4 +62,5 @@ historical source is context and provenance, not current style authority.
 - Directness, specificity, and concision: `references/clarity-and-concision.md`
 - Word choice and usage: `references/usage-and-word-choice.md`
 - Markdown, UI, and structured copy: `references/format-and-markup.md`
+- Report and verification hygiene: `references/report-hygiene-checklist.md`
 - Final review: `references/final-edit.md`

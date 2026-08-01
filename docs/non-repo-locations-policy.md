@@ -19,7 +19,7 @@ Rules:
 ## Scratch files
 
 Scratch files (temporary scripts, commit message temp files, inspection
-scripts, debug output) go in `../_agents-scratch/<branch>/<plan-basename>/`,
+scripts, debug output) go in `../_agent-scratch/<branch>/<plan-basename>/`,
 not in the repo tree. The scratch directory is a sibling of the repo folder.
 
 Rules:

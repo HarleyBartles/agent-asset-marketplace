@@ -93,7 +93,7 @@ Only proceed to Step 1b if you have no native worktree tool available.
 
 Use the `new-worktree`/`remove-worktree` scripts bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helpers (for example, in a `scripts/` directory at the repo root), prefer the repo-specific ones. The bundled scripts are installed at `.agents/skills/using-git-worktrees/scripts/` and place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing.
 
-The bundled `new-worktree` script does not require `--allow-shared-checkout`; a new worktree is an isolated linked worktree, so child skill scripts can write inside it without the flag. Example: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py <branch>`.
+The bundled `new-worktree` script does not require `--allow-shared-checkout`; a new worktree is an isolated linked worktree, so child skill scripts can write inside it without the flag. Example: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --apply <branch>`. Preview with `--check <branch>` first.
 
 ### 1b. Git Worktree Fallback
 
@@ -180,6 +180,15 @@ Tests passing (<N> tests, 0 failures)
 Ready to implement <feature-name>
 ```
 
+## Bundled scripts
+
+| Script | Purpose | Safe invocation |
+|---|---|---|
+| `scripts/new_worktree.py` | Create a linked worktree at the canonical sibling root | `py -3 scripts/new_worktree.py --check <branch>` then `py -3 scripts/new_worktree.py --apply <branch>` |
+| `scripts/remove_worktree.py` | Remove a linked worktree | `py -3 scripts/remove_worktree.py --check <branch>` then `py -3 scripts/remove_worktree.py --apply <branch>` |
+
+All scripts support `--help` and classify each flag as `read-only` or `mutating`. `--check` is the default; `--apply` is required for any filesystem or git mutation.
+
 ## Quick Reference
 
 | Situation | Action |
@@ -217,10 +226,12 @@ When a feature branch is complete, remove the isolated worktree to avoid stale c
 
 1. Run the bundled `remove-worktree` script if available:
    ```bash
-   bash .agents/skills/using-git-worktrees/scripts/remove-worktree.sh <branch-name>
+   bash .agents/skills/using-git-worktrees/scripts/remove-worktree.sh --apply <branch-name>
    # or on Windows:
-   .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 <branch-name>
+   .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 --apply <branch-name>
    ```
+
+   Preview first with `--check <branch-name>`.
    If the script reports that the directory is locked, **stop immediately**. The git worktree is already deregistered; the locked on-disk folder can be deleted later once no process holds it.
 
 2. If no bundled script is available, use `git worktree remove` directly:

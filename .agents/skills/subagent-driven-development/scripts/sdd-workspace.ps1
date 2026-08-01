@@ -50,7 +50,7 @@ $PlanFile = $resolvedPlan
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\:*?"<>|]', '-'
 $parent = (Get-Item (Join-Path $root '..')).FullName
-$workspaceRoot = Join-Path $parent "_agents-scratch" $branch
+$workspaceRoot = Join-Path $parent "_agent-scratch" $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'

@@ -4,7 +4,7 @@
 # progress ledger. Print the directory's absolute path.
 #
 # The workspace lives outside the working tree at:
-#   <repo-root>/../_agents-scratch/<branch>/<plan-basename>/
+#   <repo-root>/../_agent-scratch/<branch>/<plan-basename>/
 # so it is never accidentally committed and survives `git clean`.
 #
 # Single source of truth for the workspace location, so task-brief and
@@ -29,7 +29,7 @@ fi
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
 branch=$(printf '%s' "$branch" | tr ':\?*"<>|\\' '-')
 parent=$(cd "$root/.." && pwd)
-dir="$parent/_agents-scratch/$branch"
+dir="$parent/_agent-scratch/$branch"
 mkdir -p "$dir"
 current_plan="$dir/current-plan.txt"
 plan_stem=""
