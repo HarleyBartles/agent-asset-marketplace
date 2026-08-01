@@ -51,11 +51,11 @@
 
 ## bootstrap-router
 
-- Source path: `sources/first_party/skills/bootstrap-router`
+- Source path: `sources/first_party/skills/bootstrap-router` (retired 2026-08)
 - Public identity: `bootstrap-router`
-- Provenance/history: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
+- Provenance/history only: MARK-161 bootstrap-router seed contract from the attached GPT bootstrap package
 - Scope: first-turn bootstrap routing and request classification
-- Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane so first-turn routing stays local, ordinary-chat keeps an escape hatch, and coding work routes through linear-issue-shaping.
+- Notes: Imported from the attached GPT bootstrap package and adapted to the House Skills lane. Retired as part of the superpowers-plus consolidation; first-turn bootstrap routing is now owned by `using-superpowers-plus`.
 
 ## asset-market
 
@@ -97,7 +97,7 @@
 - Public identity: `linear-superpowers`
 - Provenance/history only: MARK-139 Linear Superpowers compositional skill
 - Scope: Linear issue and track shaping with smallest-applicable workflow selection
-- Notes: Retired first-party compositional router. The active compact issue-shape doctrine and Linear routing now live in `linear-issue-shaping`, and the workflow-selection behavior is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired first-party compositional router. The active compact issue-shape doctrine and Linear routing now live in `linear-issue-shaping`, and the workflow-selection behavior is owned by `using-superpowers-plus`. This record exists only for provenance audit of the retired source path.
 
 ## github-superpowers
 
@@ -105,7 +105,7 @@
 - Public identity: `github-superpowers`
 - Provenance/history only: MARK-143 GitHub Superpowers compositional skill
 - Scope: GitHub-facing workflow selection, proof boundaries, and branch-closeout routing
-- Notes: Retired first-party compositional router. GitHub proof, publication, merge, and final-main verification remain in `using-github`, and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired first-party compositional router. GitHub proof, publication, merge, and final-main verification remain in `using-github`, and workflow selection is owned by `using-superpowers-plus`. This record exists only for provenance audit of the retired source path.
 
 ## unslop-superpowers
 
@@ -113,7 +113,7 @@
 - Public identity: `unslop-superpowers`
 - Provenance/history only: MARK-144 Unslop Superpowers compositional guard skill
 - Scope: repo-specific anti-slop controls, profile-aware workflow shaping, and the narrow direct-to-main escape hatch for profile-only updates
-- Notes: Retired first-party compositional guard. Repo-specific anti-slop profile work is now routed to `unslop-profiles` (or `unslop-engine` for new profile generation), and workflow selection is owned by `using-superpowers` and `work-mode-router`. This record exists only for provenance audit of the retired source path.
+- Notes: Retired first-party compositional guard. Repo-specific anti-slop profile work is now routed to `unslop-profiles` (or `unslop-engine` for new profile generation), and workflow selection is owned by `using-superpowers-plus`. This record exists only for provenance audit of the retired source path.
 
 ## context-safety
 
@@ -195,7 +195,6 @@
 ### Base and control plane
 
 - `base-doctrine` - `sources/first_party/skills/base-doctrine`
-- `work-mode-router-v1` - `sources/first_party/skills/work-mode-router/v1/work-mode-router-v1/SKILL.md`
 - `linear-issue-shaping-v1` - `sources/first_party/skills/linear-issue-shaping`
 - `using-linear-v1` - `sources/first_party/skills/using-linear`
 - `risk-gates` - `sources/first_party/skills/risk-gates/SKILL.md`
