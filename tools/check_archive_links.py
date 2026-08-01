@@ -3,7 +3,6 @@
 
 import argparse
 import re
-import sys
 from pathlib import Path
 
 
@@ -46,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Report stale links without changing files (default behavior).",
     )
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
 
     completed = _completed_files()
     active = _active_files()
