@@ -48,7 +48,7 @@ def _stripped_env() -> dict[str, str]:
 
 def _repo_root() -> Path:
     result = subprocess.run(
-        ["git", "rev-parse", "show-toplevel"],
+        ["git", "rev-parse", "--show-toplevel"],
         capture_output=True,
         text=True,
         check=True,
@@ -59,7 +59,7 @@ def _repo_root() -> Path:
 
 def _reject_submodule() -> None:
     result = subprocess.run(
-        ["git", "rev-parse", "show-superproject-working-tree"],
+        ["git", "rev-parse", "--show-superproject-working-tree"],
         capture_output=True,
         text=True,
         env=_stripped_env(),

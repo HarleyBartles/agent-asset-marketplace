@@ -1,6 +1,6 @@
-"""Create custody-aware skill scaffolds without overwriting authored files.
+"""(mixed: create custody-aware skill scaffolds; --check reports what would be written)
 
-mixed: default mode writes scaffold files; --check reports what would be written.
+Create custody-aware skill scaffolds without overwriting authored files.
 """
 
 from __future__ import annotations
@@ -173,6 +173,9 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()
+    if not (args.name or args.custody or args.lane or args.check):
+        parser.print_help()
+        return 0
     if args.check and not (args.name and args.custody and args.lane):
         print("No scaffold requested; --check requires --name, --custody, and --lane for a dry run.")
         return 0

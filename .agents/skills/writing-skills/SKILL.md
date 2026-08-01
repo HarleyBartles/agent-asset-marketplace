@@ -46,7 +46,7 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
 
-**Custody, lanes, and scaffolding:** For choosing between local and marketplace custody, understanding source-grounded authority, and the clean-room/redistribution boundary, see [references/local-and-marketplace-custody.md](references/local-and-marketplace-custody.md) and [references/source-grounded-authoring.md](references/source-grounded-authoring.md). To scaffold a new skill after choosing custody and lane, run `scripts/new_skill.py` (or `scripts/new-skill.sh` on bash).
+**Custody, lanes, and scaffolding:** For choosing between local and marketplace custody, understanding source-grounded authority, and the clean-room/redistribution boundary, see [references/local-and-marketplace-custody.md](references/local-and-marketplace-custody.md) and [references/source-grounded-authoring.md](references/source-grounded-authoring.md). Use [references/skill-authoring-checklist.md](references/skill-authoring-checklist.md) as a step-by-step authoring and review guide. To scaffold a new skill after choosing custody and lane, run `scripts/new_skill.py` (or `scripts/new-skill.sh` on bash).
 
 ## What is a Skill?
 

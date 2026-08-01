@@ -1,6 +1,6 @@
 # Superpowers Plus Consolidation — Phase 3: Skill Script Contracts, Deployment Ownership, and Doctrine Thinning
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Specs:**
 - `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`
@@ -220,11 +220,11 @@ The validator is a new `repo-standards` script (`validate_skill_scripts.py`) tha
 
 In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_are_current`, `def _is_vendor_profile_file`, `def _vendor_profile_source_dir`, `def _install_plugin_vendor_profiles`, and `def _clean_orphan_vendor_profiles`. Verify the exact line numbers and signatures before moving; the plan expects these names but treat them as a pointer to the current implementation, not a hard contract.
 
-- [ ] **Step 1: Extract the profile deployment logic from `refresh_installed_skills.py`.**
+- [x] **Step 1: Extract the profile deployment logic from `refresh_installed_skills.py`.**
 
   Move the vendor-profile discovery, install-if-missing, and orphan-cleanup logic out of `refresh_installed_skills.py`. Keep the call to the new `repo-standards` script so `refreshing-installed-skills` still triggers deployment and records provenance.
 
-- [ ] **Step 2: Create the `repo-standards` deployment script.**
+- [x] **Step 2: Create the `repo-standards` deployment script.**
 
   Add a script under `sources/first_party/skills/repo-standards/scripts/` (e.g., `deploy_vendor_profiles.py`) that:
   - Discovers `assets/profiles/*.md` in installed plugin packs.
@@ -232,15 +232,15 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   - Removes orphan profiles from `.agents/agents/` that no longer have a source in any pack.
   - Supports `--check` and `--apply`.
 
-- [ ] **Step 3: Update skill docs.**
+- [x] **Step 3: Update skill docs.**
 
   Update `refreshing-installed-skills/SKILL.md` and `repo-standards/SKILL.md` to state the new ownership. Keep `selecting-a-subagent/references/vendor-profile-packaging.md` accurate.
 
-- [ ] **Step 4: Test the new split.**
+- [x] **Step 4: Test the new split.**
 
   Run `tools/run installed-skills --check` and the new `repo-standards` check to ensure the profiles are still deployed correctly and provenance is recorded. Add a test or pressure scenario under `tests/pressure/` if appropriate.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/refreshing-installed-skills sources/first_party/skills/repo-standards sources/first_party/skills/selecting-a-subagent
@@ -248,7 +248,7 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   git commit -m "refactor: move vendor profile deployment ownership to repo-standards"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -272,19 +272,19 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
 - `writing-with-clarity` includes a "Hygiene" or "Before publishing" step that covers the same checks.
 - No first-party skill references `report-hygiene` after this task.
 
-- [ ] **Step 1: Read `report-hygiene` and extract its contract.**
+- [x] **Step 1: Read `report-hygiene` and extract its contract.**
 
   List the checks and triggers it provides. Keep the content minimal; do not copy the whole body.
 
-- [ ] **Step 2: Add a hygiene section to `writing-with-clarity/SKILL.md`.**
+- [x] **Step 2: Add a hygiene section to `writing-with-clarity/SKILL.md`.**
 
   Surface the same checks as a step in the writing/review flow. Move detailed guidance to `references/report-hygiene-checklist.md`.
 
-- [ ] **Step 3: Retire `report-hygiene` from the marketplace registry.**
+- [x] **Step 3: Retire `report-hygiene` from the marketplace registry.**
 
   Remove the skill from `codex-marketplace/custody-pack-registry.json` and add a provenance note documenting the retirement.
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/writing-with-clarity codex-marketplace/custody-pack-registry.json provenance
@@ -292,7 +292,7 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   git commit -m "refactor: fold report-hygiene into writing-with-clarity"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -316,19 +316,19 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
 - `writing-skills` owns the skill-authoring checklist and scaffolder guidance.
 - No first-party skill references `mark-skill-authoring` after this task.
 
-- [ ] **Step 1: Read `mark-skill-authoring` and extract its contract.**
+- [x] **Step 1: Read `mark-skill-authoring` and extract its contract.**
 
   Identify the authoring checklist and any scaffolder references. Keep the content minimal.
 
-- [ ] **Step 2: Add a skill-authoring section to `writing-skills/SKILL.md`.**
+- [x] **Step 2: Add a skill-authoring section to `writing-skills/SKILL.md`.**
 
   Surface the authoring workflow inside `writing-skills`. Move detailed guidance to `references/skill-authoring-checklist.md`.
 
-- [ ] **Step 3: Retire `mark-skill-authoring` from the marketplace registry.**
+- [x] **Step 3: Retire `mark-skill-authoring` from the marketplace registry.**
 
   Remove the skill from `codex-marketplace/custody-pack-registry.json` and add a provenance note documenting the retirement.
 
-- [ ] **Step 4: Commit.**
+- [x] **Step 4: Commit.**
 
   ```bash
   git add sources/first_party/skills/writing-skills codex-marketplace/custody-pack-registry.json provenance
@@ -336,7 +336,7 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   git commit -m "refactor: fold mark-skill-authoring into writing-skills"
   ```
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
@@ -358,23 +358,23 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
 - `docs/code-review-guide.md` and `docs/skill-standards-policy.md` are reduced to deltas from the root `AGENTS.md` and skill-specific references. Remove duplicated guidance; point to canonical skills instead.
 - No information is lost; it is moved to the appropriate skill `SKILL.md` or `references/` file.
 
-- [ ] **Step 1: Audit duplication in both guides.**
+- [x] **Step 1: Audit duplication in both guides.**
 
   Identify sections that are already stated in root `AGENTS.md`, `.agents/guides/code-review-guide.md`, or first-party skill references.
 
-- [ ] **Step 2: Thin `code-review-guide.md`.**
+- [x] **Step 2: Thin `code-review-guide.md`.**
 
   Remove duplicated content and replace with routing pointers. Keep only repo-local deltas.
 
-- [ ] **Step 3: Thin `skill-standards-policy.md`.**
+- [x] **Step 3: Thin `skill-standards-policy.md`.**
 
   Remove duplicated content and replace with routing pointers. Keep the script CLI contract (from Task 2) as the primary new content.
 
-- [ ] **Step 4: Update skill references.**
+- [x] **Step 4: Update skill references.**
 
   If `requesting-code-review/SKILL.md` or `writing-skills/SKILL.md` points to the old thinned sections, repoint them to the new canonical locations.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add docs sources/first_party/skills/requesting-code-review sources/first_party/skills/writing-skills
@@ -382,19 +382,19 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   git commit -m "docs: thin code-review-guide and skill-standards-policy to deltas"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 
 ## Final integration
 
-- [ ] **Step 1: Regenerate the marketplace.**
+- [x] **Step 1: Regenerate the marketplace.**
 
   ```bash
   .\tools\run.ps1 marketplace --apply
   ```
 
-- [ ] **Step 2: Run CI preflight on the staged tree.**
+- [x] **Step 2: Run CI preflight on the staged tree.**
 
   Stage all changes and commit. The pre-commit hook will run `tools/run ci --check`.
 
@@ -403,14 +403,20 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
   git commit -m "chore: regenerate marketplace for phase 3 plan"
   ```
 
-- [ ] **Step 3: Push the branch.**
+- [x] **Step 3: Push the branch.**
 
   ```bash
   git push
   ```
 
-- [ ] **Step 4: Ensure the PR remains in draft until human review.**
+- [x] **Step 4: Ensure the PR remains in draft until human review.**
 
   The PR at https://github.com/HarleyBartles/agent-asset-marketplace/pull/248 should stay draft until a human is ready to merge.
 
-- [ ] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 5: Mark this task `[x]` in this plan before reporting back.**
+
+---
+
+## Notes for the next consolidation phase
+
+- **Remove the `review-branch-diff` skill.** This skill is a leftover local review helper. The Phase 3 branch review was performed by a `subagent_explore`-based reviewer, not by invoking the skill, and the skill's local source is not part of the repo's first-party or marketplace custody. Plan its retirement, removal from installed skill surfaces, and a short provenance note in the next phase.
