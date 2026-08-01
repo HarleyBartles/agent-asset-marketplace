@@ -1,7 +1,7 @@
 {
   "bundle_name": "engineering-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/engineering-pack",
   "source_families": [
@@ -10,9 +10,7 @@
   "notes": [
     "Engineering pack groups first-party release-engineering and observability skills into a practical delivery home."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/engineering-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -21,7 +19,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/observability",
+      "canonical_source_path": "codex-marketplace/plugins/engineering-pack/skills/observability",
       "local_path": "skills/observability",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -32,7 +30,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "canonical_source_path": "codex-marketplace/plugins/engineering-pack/skills/release-engineering",
       "local_path": "skills/release-engineering",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

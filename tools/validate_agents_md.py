@@ -21,7 +21,6 @@ ALLOWED_AGENTS_MD = {
     ".agents/doctrine/AGENTS.md",
     ".agents/runbooks/AGENTS.md",
     ".agents/plugins/AGENTS.md",
-    "sources/third_party/superpowers/obra-superpowers/v6.2.0/AGENTS.md",
 }
 
 MAX_ROOT_LINES = 55

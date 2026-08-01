@@ -1,7 +1,7 @@
 {
   "bundle_name": "architecture-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/architecture-pack",
   "source_families": [
@@ -10,9 +10,7 @@
   "notes": [
     "Architecture bundle projected from first-party source custody."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/architecture-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -21,7 +19,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/clean-architecture",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/clean-architecture",
       "local_path": "skills/clean-architecture",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -32,7 +30,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/cqrs",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/cqrs",
       "local_path": "skills/cqrs",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -43,7 +41,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/database-design-patterns",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/database-design-patterns",
       "local_path": "skills/database-design-patterns",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -54,7 +52,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/ddd",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/ddd",
       "local_path": "skills/ddd",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -65,7 +63,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/event-driven-systems",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/event-driven-systems",
       "local_path": "skills/event-driven-systems",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -76,7 +74,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/event-sourcing",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/event-sourcing",
       "local_path": "skills/event-sourcing",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -87,7 +85,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/hexagonal-architecture",
+      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture",
       "local_path": "skills/hexagonal-architecture",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

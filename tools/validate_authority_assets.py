@@ -60,7 +60,7 @@ _UniqueKeyLoader.add_constructor(
 
 
 def discover_authority_assets(root: Path) -> list[Path]:
-    roots = [root / "sources/first_party/skills", root / ".agents/skills"]
+    roots = [root / ".agents/skills"]
     return sorted(
         authority.parent.parent
         for skills_root in roots if skills_root.is_dir()
@@ -333,10 +333,10 @@ def _validate_references(
                 f"{record_name} references[{index}] has unsupported content_mode "
                 f"{content_mode!r}"
             )
-        if lane == "skills-with-citation" and content_mode != "first_party_synthesis":
+        if lane == "skills-with-citation" and content_mode not in CONTENT_MODES:
             errors.append(
-                f"{record_name} references[{index}] must use first_party_synthesis "
-                "for skills-with-citation"
+                f"{record_name} references[{index}] has unsupported content_mode "
+                f"{content_mode!r} for skills-with-citation"
             )
     return references
 

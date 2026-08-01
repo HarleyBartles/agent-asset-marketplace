@@ -1,7 +1,7 @@
 {
   "bundle_name": "repo-worker-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
   "source_families": [
@@ -12,8 +12,7 @@
     "The bundle stays first-party only and keeps the repo-worker entrypoint thin and complementary."
   ],
   "provenance_refs": [
-    "provenance/repo-worker-pack.md",
-    "codex-marketplace/plugins/repo-worker-pack/references/source-map.md"
+    "provenance/repo-worker-pack.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -23,10 +22,10 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/asking-clarifying-questions",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions",
       "local_path": "skills/asking-clarifying-questions",
       "lane": "Worker",
-      "source_path": "sources/first_party/skills/asking-clarifying-questions/SKILL.md",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -38,7 +37,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/base-doctrine",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine",
       "local_path": "skills/base-doctrine",
       "provenance_note": "Projected verbatim from the first-party base-doctrine skill.",
       "copy_expectation": "byte_identical"
@@ -48,7 +47,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/cleanup-custody",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody",
       "local_path": "skills/cleanup-custody",
       "provenance_note": "Projected verbatim from the first-party cleanup-custody skill.",
       "copy_expectation": "byte_identical"
@@ -58,7 +57,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/connector-safety",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety",
       "local_path": "skills/connector-safety",
       "provenance_note": "Projected verbatim from the first-party connector-safety skill.",
       "copy_expectation": "byte_identical"
@@ -68,7 +67,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/context-safety",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/context-safety",
       "local_path": "skills/context-safety",
       "provenance_note": "Projected verbatim from the first-party context-safety skill.",
       "copy_expectation": "byte_identical"
@@ -78,10 +77,10 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/generating-agent-mesh",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh",
       "local_path": "skills/generating-agent-mesh",
       "lane": "Worker",
-      "source_path": "sources/first_party/skills/generating-agent-mesh/SKILL.md",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -93,7 +92,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/linear-issue-shaping",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping",
       "local_path": "skills/linear-issue-shaping",
       "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
       "copy_expectation": "byte_identical"
@@ -103,10 +102,10 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/refreshing-installed-skills",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills",
       "local_path": "skills/refreshing-installed-skills",
       "lane": "Worker",
-      "source_path": "sources/first_party/skills/refreshing-installed-skills/SKILL.md",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -118,7 +117,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/repo-standards",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards",
       "local_path": "skills/repo-standards",
       "provenance_note": "Projected verbatim from the first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order.",
       "copy_expectation": "byte_identical"
@@ -128,7 +127,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/repo-worker-base",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base",
       "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
       "copy_expectation": "byte_identical"
@@ -138,10 +137,10 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/risk-gates",
       "local_path": "skills/risk-gates",
       "lane": "Worker",
-      "source_path": "sources/first_party/skills/risk-gates/SKILL.md",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md",
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
@@ -153,7 +152,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles",
       "local_path": "skills/unslop-profiles",
       "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
       "copy_expectation": "byte_identical"
@@ -163,7 +162,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/using-github-mcp",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-github-mcp",
       "local_path": "skills/using-github-mcp",
       "provenance_note": "Projected verbatim from the first-party using-github-mcp skill.",
       "copy_expectation": "byte_identical"
@@ -173,7 +172,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/using-linear",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-linear",
       "local_path": "skills/using-linear",
       "provenance_note": "Projected verbatim from the first-party using-linear skill.",
       "copy_expectation": "byte_identical"
@@ -183,7 +182,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/writing-with-clarity",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity",
       "local_path": "skills/writing-with-clarity",
       "provenance_note": "Projected verbatim from the first-party writing-with-clarity skill.",
       "copy_expectation": "byte_identical"

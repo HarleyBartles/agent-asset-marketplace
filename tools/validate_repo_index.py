@@ -143,13 +143,6 @@ def validate_repo_index() -> dict:
         if agents_md is not None:
             agents_path = _resolved_path(agents_md)
             check_path_exists(agents_path)
-            if zone_path == "sources/third_party":
-                guidance_scope = zone.get("guidance_scope")
-                if guidance_scope != "repo-owned-guidance":
-                    raise ValueError(
-                        "sources/third_party zone must state that its scoped AGENTS guidance is repo-owned"
-                    )
-
         scripts = _validate_optional_list_field(zone, "key_validation_scripts")
         for script in scripts:
             check_path_exists(_resolved_path(script))

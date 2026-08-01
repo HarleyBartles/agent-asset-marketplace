@@ -1,7 +1,7 @@
 {
   "bundle_name": "security-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/security-pack",
   "source_families": [
@@ -11,9 +11,7 @@
     "Security pack projected from first-party source custody.",
     "risk-gates is projected verbatim with an expanded safety gate for destructive operations."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/security-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -22,7 +20,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/owasp-top-ten",
+      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/owasp-top-ten",
       "local_path": "skills/owasp-top-ten",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -33,7 +31,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/risk-gates",
+      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/risk-gates",
       "local_path": "skills/risk-gates",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -44,7 +42,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/secure-development",
+      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/secure-development",
       "local_path": "skills/secure-development",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -55,7 +53,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/web-identity",
+      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/web-identity",
       "local_path": "skills/web-identity",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

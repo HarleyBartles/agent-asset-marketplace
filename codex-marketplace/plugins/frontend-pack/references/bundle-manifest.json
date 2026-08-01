@@ -1,7 +1,7 @@
 {
   "bundle_name": "frontend-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/frontend-pack",
   "source_families": [
@@ -11,9 +11,7 @@
   "notes": [
     "Frontend bundle projected from retained feature-sliced custody and first-party skills."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/frontend-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -21,10 +19,10 @@
       "canonical_name": "feature-sliced-design",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design",
       "local_path": "skills/feature-sliced-design",
       "import_status": "imported",
-      "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+      "source_path": "codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design/SKILL.md",
       "source_author": "Feature-Sliced Design (feature-sliced/skills)",
       "source_license": "MIT",
       "source_repo": "https://github.com/feature-sliced/skills",
@@ -37,7 +35,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/frontend-ux",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/frontend-ux",
       "local_path": "skills/frontend-ux",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -48,7 +46,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/playwright-testing",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/playwright-testing",
       "local_path": "skills/playwright-testing",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -59,7 +57,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/react",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/react",
       "local_path": "skills/react",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -70,7 +68,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/wcag",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/wcag",
       "local_path": "skills/wcag",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -81,7 +79,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/web-styling",
+      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/web-styling",
       "local_path": "skills/web-styling",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

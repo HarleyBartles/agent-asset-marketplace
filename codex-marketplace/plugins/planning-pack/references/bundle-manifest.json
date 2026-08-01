@@ -1,7 +1,7 @@
 {
   "bundle_name": "planning-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/planning-pack",
   "source_families": [
@@ -13,8 +13,7 @@
     "mermaid-diagramming is projected from a first-party skill."
   ],
   "provenance_refs": [
-    "provenance/planning-pack.md",
-    "codex-marketplace/plugins/planning-pack/references/source-map.md"
+    "provenance/planning-pack.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -24,7 +23,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/estimation",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/estimation",
       "local_path": "skills/estimation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -35,7 +34,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming",
       "local_path": "skills/mermaid-diagramming",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -46,7 +45,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/release-engineering",
       "local_path": "skills/release-engineering",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
@@ -57,7 +56,7 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/requirements-elicitation",
       "local_path": "skills/requirements-elicitation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",

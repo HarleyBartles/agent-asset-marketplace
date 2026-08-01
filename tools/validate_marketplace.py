@@ -265,20 +265,6 @@ def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str
                     raise ValueError(f"{bundle_name} entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
 
 
-def _resolve_vendor_root(upstream_repo: str, pinned_commit: str) -> Path:
-    if upstream_repo == "mshumer/unslop":
-        if pinned_commit != "edcb62386d129c65e4395f0cfcc9168eb1ba2148":
-            raise ValueError("Unexpected pinned commit for mshumer/unslop vendor snapshot")
-        return ROOT / "sources/third_party/unslop/upstream"
-    if upstream_repo == "combined-source":
-        # Combined-source bundles aggregate from multiple upstreams; no single vendor root
-        return None
-    if upstream_repo == "first-party":
-        # First-party source custody under sources/first_party/
-        return ROOT / "sources/first_party"
-    raise ValueError(f"Unsupported upstream repo in bundle manifest: {upstream_repo}")
-
-
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
     expected = build_marketplace_manifest(plugin_manifests)
     if registry != expected:
@@ -427,7 +413,7 @@ def validate_no_legacy_manifest_shapes() -> None:
                 raise ValueError(
                     f"{spec['name']}: entry {i} canonical_source_path must be directory-level (legacy file-level path: {csp})"
                 )
-    print("OK manifest shape: all plugins use projection-lane directory-level entries[]")
+    print("OK manifest shape: all plugins use plugin-first directory-level entries[]")
 
 
 

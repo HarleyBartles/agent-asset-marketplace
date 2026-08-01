@@ -8,7 +8,7 @@ from pathlib import Path
 
 import yaml
 
-TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE", "SOURCE.md", "PROJECTION.md"}
+TEXT_FILENAMES = {"SKILL.md", "openai.yaml", "AGENTS.md", "README.md", "LICENSE", "SOURCE.md"}
 SKIP_DIR_NAMES = {
     ".git",
     ".hg",
@@ -71,11 +71,10 @@ def _is_text_file(path: Path, raw: bytes) -> bool:
 def canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
     """Normalize CRLF/CR to LF for text files. Binary files are returned as-is.
 
-    For Codex agent YAML, the ``metadata.plugin`` and
-    ``metadata.projection_plugin`` keys are projection-generated identity
-    fields; they are stripped before comparison so that the same source skill
-    can be projected into multiple plugin packs without breaking verbatim
-    mirror validation.
+    For Codex agent YAML, the ``metadata.plugin`` key is a
+    plugin-generated identity field; it is stripped before comparison so that
+    the same source skill can be installed into multiple plugin packs without
+    breaking verbatim mirror validation.
     """
     if not _is_text_file(path, raw):
         return raw
