@@ -101,6 +101,7 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
+    "Use /handoff-gates completion-readiness (self-review)" [shape=box];
     "Invoke /requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
@@ -130,7 +131,9 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Invoke /requesting-code-review for final whole-branch review" [label="no"];
+    "More tasks remain?" -> "Use /handoff-gates completion-readiness (self-review)" [label="no"];
+    "Use /handoff-gates completion-readiness (self-review)" -> "Invoke /requesting-code-review for final whole-branch review" [label="meets floor"];
+    "Use /handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
     "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
     "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
