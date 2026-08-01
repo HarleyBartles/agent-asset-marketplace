@@ -8,7 +8,7 @@ A plan that doesn't account for the repo's standards will produce implementation
 
 - **[`docs/custody-and-projection-doctrine.md`](../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`AGENTS.md`](../../AGENTS.md)** — repository source-of-truth and publication rules
-- **[`tools/AGENTS.md`](../../tools/AGENTS.md)** — marketplace generation and validation tooling
+- **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
 ## Skills to Invoke
 

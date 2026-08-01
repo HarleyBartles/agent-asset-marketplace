@@ -324,6 +324,7 @@ def _check_catalog(ctx: Ctx) -> None:
 
 def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
+    _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _git_diff_check(ctx)
     if ctx.mode == "check":
         _git_diff_exit_code(ctx)
@@ -506,7 +507,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             + "\n"
             "ci --check is the post-commit CI gate; do not run it on an uncommitted "
             "working tree. Edit, run the relevant <target> --apply, stage, commit, "
-            "and let the pre-commit hook run ci --check. See tools/AGENTS.md."
+            "and let the pre-commit hook run ci --check. See .devin/rules/tools.md."
         ),
     )
     parser.add_argument(

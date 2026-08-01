@@ -8,7 +8,7 @@ The primary durable output is market-consumable assets. Support surfaces such as
 
 Codex plugin first; generated GPT-safe skill zips second.
 
-The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/AGENTS.md` and `.agents/docs/mesh-policy.md` carry the repo-local mesh doctrine; docs-owned guidance lives under `docs/`; and generated `INDEX.md` files carry navigation only.
+The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/docs/mesh-policy.md` is the canonical mesh statement.
 
 ## Source-of-truth split
 
@@ -28,53 +28,26 @@ If repo files changed, the worker must publish the changes to GitHub before clai
 2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
 3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
-For ordinary worker execution, prefer a PR into `main`. The PR or direct-main commit is the publication surface that lets GPT verify changed files, diffs, and final main state. Local validation supports the return, but it does not substitute for GitHub-visible publication.
+For ordinary worker execution, prefer a PR into `main`.
 
 ## Build and test commands
 
-Canonical validation and regeneration commands live in [`tools/AGENTS.md`](tools/AGENTS.md).
-For the implementation verification workflow, see [`.agents/guides/implementing-guide.md`](.agents/guides/implementing-guide.md).
+Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`.
 
-## Testing instructions
-
-This repo uses test-driven development. See [`.agents/guides/testing-guide.md`](.agents/guides/testing-guide.md) and invoke `/test-driven-development` before writing implementation code.
-
-## Code style guidelines
-
-Skill and marketplace shape standards are in [`docs/skill-standards-policy.md`](docs/skill-standards-policy.md).
-General code style and writing conventions are in [`.agents/guides/code-style-guide.md`](.agents/guides/code-style-guide.md).
-
-## Review guidelines
-
-For Devin Review and the full review methodology, see [`REVIEW.md`](REVIEW.md) and [`.agents/guides/code-review-guide.md`](.agents/guides/code-review-guide.md).
-
-## PR instructions
-
-PRs must include publication proof per [Publication proof for repo work](#publication-proof-for-repo-work) above.
-For the PR workflow, see [`.agents/guides/pr-guide.md`](.agents/guides/pr-guide.md).
-For what reviewers check, see [`.agents/guides/code-review-guide.md`](.agents/guides/code-review-guide.md).
-
-## Contributing
-
-For the implementation and contribution workflow, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+For the full command matrix, see `.devin/rules/tools.md` after migration. For the implementation workflow, see `.agents/guides/implementing-guide.md`.
 
 ## Security considerations
 
-Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in [`.agents/guides/security-guide.md`](.agents/guides/security-guide.md).
+Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/guides/security-guide.md`.
 
 ## Routing pointers
 
-- Repo guide policy: [.agents/docs/repo-guide-policy.md](.agents/docs/repo-guide-policy.md)
-- Tracked agent doctrine: [.agents/AGENTS.md](.agents/AGENTS.md)
-- Mesh policy: [.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md)
-- Docs-owned guidance: [docs/AGENTS.md](docs/AGENTS.md)
-- Generators and validators: [tools/AGENTS.md](tools/AGENTS.md)
-- Marketplace source/projection law: [codex-marketplace/AGENTS.md](codex-marketplace/AGENTS.md)
-- Source custody: [sources/AGENTS.md](sources/AGENTS.md)
-- Adapter and overlay work: [adapters/AGENTS.md](adapters/AGENTS.md)
-- Provenance and trust evidence: [provenance/AGENTS.md](provenance/AGENTS.md)
-- Worktree and scratch-file policy: [docs/non-repo-locations-policy.md](docs/non-repo-locations-policy.md)
+- [Mesh policy](.agents/docs/mesh-policy.md)
+- Scoped law lives in `.devin/rules/*.md`
+- [Worker guidance](.agents/guides/repo-doctrine-guide.md)
+- [Implementing workflow](.agents/guides/implementing-guide.md)
+- [Worktree and scratch policy](docs/non-repo-locations-policy.md)
 
 ## Maintenance responsibility
 
-This file is the repository's primary worker doctrine. When repo conventions, marketplace structure, or publication rules change, this file must be updated to reflect the new expectations. Do not let this file become stale if agents are following patterns that contradict this document, either update the document or update the repo conventions to match.
+This file is the repository's primary worker doctrine. When repo conventions, marketplace structure, or publication rules change, this file must be updated to reflect the new expectations.

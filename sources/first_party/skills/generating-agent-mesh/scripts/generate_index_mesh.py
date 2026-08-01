@@ -232,20 +232,20 @@ def should_index(path: Path) -> bool:
     return not is_skill_root(path)
 
 
-def rel_link(target: Path, label: str | None = None) -> str:
-    rel = quote(target.relative_to(ROOT).as_posix(), safe="/#")
+def rel_link(current: Path, target: Path, label: str | None = None) -> str:
+    rel = quote(target.relative_to(current).as_posix(), safe="/#")
     return f"[{label or target.name}]({rel})"
 
 
 def dir_link(current: Path, child: Path) -> str | None:
     skill_md = child / "SKILL.md"
     if skill_md.exists():
-        target = quote(skill_md.relative_to(ROOT).as_posix(), safe="/#")
+        target = quote(skill_md.relative_to(current).as_posix(), safe="/#")
         return f"[{child.name}]({target})"
     if should_index(child):
-        target = quote(child.relative_to(ROOT).as_posix() + "/INDEX.md", safe="/#")
+        target = quote(child.relative_to(current).as_posix() + "/INDEX.md", safe="/#")
         return f"[{child.name}]({target})"
-    target = quote(child.relative_to(ROOT).as_posix() + "/", safe="/#")
+    target = quote(child.relative_to(current).as_posix() + "/", safe="/#")
     return f"[{child.name}]({target})"
 
 
@@ -289,7 +289,7 @@ def render_index(path: Path) -> str:
     if files:
         lines.append("## Files")
         for child in files:
-            lines.append(f"- {rel_link(child)}")
+            lines.append(f"- {rel_link(path, child)}")
         lines.append("")
 
     if not dirs and not files:

@@ -4,7 +4,7 @@ Use this guide for the test commands and conventions in `agent-asset-marketplace
 
 ## Before you begin
 
-- Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for the canonical validation commands.
+- Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for the canonical validation commands.
 - Read [`.agents/guides/implementing-guide.md`](./implementing-guide.md) for the TDD workflow.
 
 ## When to use

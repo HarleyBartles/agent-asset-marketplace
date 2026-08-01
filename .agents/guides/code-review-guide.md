@@ -22,7 +22,7 @@ If marketplace configuration or source custody changed, regenerate with `tools/r
 
 ## Marketplace and Validation
 
-- Marketplace standards live in `tools/AGENTS.md`.
+- Marketplace standards live in `.devin/rules/tools.md`.
 - Unslop profiles live in `/unslop-profiles`; apply the profile matching the work's domain.
 - Durable guidance belongs in `AGENTS.md` or doctrine documents. Deferred work belongs in Linear issues, not durable guidance.
 - Regenerate `INDEX.md` files via `tools/run mesh --apply` when files are added or removed.
