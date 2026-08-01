@@ -44,7 +44,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   - `tools/AGENTS.md`
   - `docs/skill-standards-policy.md`
 - Create:
-  - `Z:\_agent-worktrees\agent-asset-marketplace\_agents-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md` (off-repo scratch, not committed)
+  - `Z:\_agent-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md` (off-repo scratch, not committed)
 
 **Consumes:** none.
 
@@ -89,7 +89,7 @@ The known first-party skill scripts are under these directories:
 
 - [ ] **Step 2: Produce the prioritized audit report.**
 
-  Write the report to `Z:\_agent-worktrees\agent-asset-marketplace\_agents-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md`. Do not commit the scratch file; it is planning input for Task 2.
+  Write the report to `Z:\_agent-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md`. Do not commit the scratch file; it is planning input for Task 2.
 
   Priority for Task 2 is: scripts invoked from `SKILL.md` or other skills first, then scaffolders and utilities.
 
