@@ -39,7 +39,7 @@ The shared policy's free/included/metered and cost-preference rules do not apply
 
 ### Custom subagent profiles
 
-Devin Desktop supports custom subagent profiles. It searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `implementer.md`, `branch-reviewer.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
+Devin Desktop supports custom subagent profiles. It searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
 
 | Task | Dispatch |
 |---|---|
@@ -47,7 +47,7 @@ Devin Desktop supports custom subagent profiles. It searches the following locat
 | Review / architecture challenge that needs more reasoning | `run_subagent profile: reviewer-strong` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |
 | Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
-| Branch diff review | `run_subagent profile: branch-reviewer` or invoke `/requesting-branch-review` |
+| Branch diff review | `run_subagent profile: reviewer` (or `reviewer-strong` for large or subtle diffs) |
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |
 
