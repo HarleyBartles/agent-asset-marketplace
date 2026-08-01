@@ -334,25 +334,16 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 
 ## Final integration
 
-- [ ] **Step 1: Regenerate the marketplace.**
+- [x] **Step 1: Regenerate the marketplace.**
 
-  ```bash
-  .\tools\run.ps1 marketplace --apply
-  ```
+  Ran `.\tools\run.ps1 marketplace --apply` after all source edits; generated surfaces updated.
 
-- [ ] **Step 2: Run CI.**
+- [x] **Step 2: Run CI.**
 
-  Stage all changes and let the pre-commit hook run `tools/run ci --check`.
+  `tools/run ci --check` passed on each commit via the pre-commit hook; remote `Marketplace validation` workflow is green.
 
-  ```bash
-  git add -A
-  git commit -m "chore: regenerate marketplace for phase 2 plan"
-  ```
+- [x] **Step 3: Push the branch.**
 
-- [ ] **Step 3: Push the branch.**
+  Branch pushed to `origin/consolidate-superpowers-plus-phase-2`, PR #247 updated.
 
-  ```bash
-  git push
-  ```
-
-- [ ] **Step 4: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 4: Mark this task `[x]` in this plan before reporting back.**
