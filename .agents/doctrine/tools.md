@@ -16,7 +16,7 @@ The canonical task runner is `tools/run`. It composes the individual generator a
 - `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
 - `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
-Targets are: `inventory`, `project`, `installed-skills`, `repo-index`, `mesh`, `catalog`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
+Targets are: `inventory`, `installed-skills`, `repo-index`, `mesh`, `validate`, `marketplace`, `lint`, `repo-standards`, `ci`, `all`.
 
 Codex plugin first.
 

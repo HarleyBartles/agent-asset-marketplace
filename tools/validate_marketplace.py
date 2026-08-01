@@ -66,12 +66,6 @@ def _git_lines(*args: str) -> list[str]:
 
 
 
-def validate_pack_manifests() -> None:
-    print("OK validate_marketplace: pack manifests (retired)")
-
-
-
-
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
     text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
@@ -461,8 +455,6 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     registry = check_json(MARKETPLACE_PATH)
 
     validate_marketplace_registry(registry, plugin_manifests)
-    if not skip_freshness:
-        validate_pack_manifests()
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
