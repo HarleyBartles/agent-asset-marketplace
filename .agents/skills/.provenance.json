@@ -25,5 +25,14 @@
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
-  "syncedAt": "2026-08-01T10:35:25.217625"
+  "vendorProfiles": [
+    {
+      "plugin": "repo-worker-pack",
+      "sourcePath": "codex-marketplace/plugins/repo-worker-pack/assets/profiles",
+      "profiles": [
+        "sample-vendor-reviewer.md"
+      ]
+    }
+  ],
+  "syncedAt": "2026-08-01T10:52:12.025064"
 }

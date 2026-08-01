@@ -57,3 +57,13 @@ role.
 | `reviewer-fast` | `gpt-5.4` at `low` or `medium` |
 | `implementer` | `gpt-5.4` at `medium` |
 | `implementer-strong` | `gpt-5.6-terra` at `high` |
+
+## Vendor and third-party profiles
+
+Marketplace packs can ship third-party subagent `.md` profile assets under
+`assets/profiles/`. Codex MultiAgentV1 does not consume `.md` profile files
+directly; map a vendor profile name to the V1 route above using the shared
+role table. A repo-local override or a vendor profile that ships a Codex
+adapter note takes precedence over the default mapping. See
+`vendor-profile-packaging.md` for the packaging contract and the consumer
+search-path order.

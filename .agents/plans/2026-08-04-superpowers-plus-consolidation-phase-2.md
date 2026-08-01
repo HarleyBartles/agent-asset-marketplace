@@ -292,7 +292,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `refreshing-installed-skills` copies vendor profiles into the Devin/Codex search paths in consumer repos.
 - `selecting-a-subagent` documents how to choose between built-in, vendor, and custom profiles.
 
-- [ ] **Step 1: Define the packaging surface.**
+- [x] **Step 1: Define the packaging surface.**
 
   Document the packaging surface in `sources/first_party/skills/selecting-a-subagent/references/vendor-profile-packaging.md`:
 
@@ -300,19 +300,19 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   - `refreshing-installed-skills` copies `*.md` files from `assets/profiles/` to `.agents/agents/` (and, if applicable, `.devin/agents/` for repo-local overrides) and records them in `.agents/skills/.provenance.json` under a `vendorProfiles` array.
   - Consumer search path order stays: `.devin/agents/` → `.agents/agents/` → `~/.config/devin/agents/`.
 
-- [ ] **Step 2: Update `selecting-a-subagent`.**
+- [x] **Step 2: Update `selecting-a-subagent`.**
 
   Add a "Vendor and third-party profiles" section to each dispatch reference (`devin-desktop-profile.md`, `codex-multi-agent-v1-profile.md`, `codex-multi-agent-v2-profile.md`) and the main `SKILL.md` that describes how to discover and select a vendor profile.
 
-- [ ] **Step 3: Update `refreshing-installed-skills`.**
+- [x] **Step 3: Update `refreshing-installed-skills`.**
 
   Extend the refresh script to copy `assets/profiles/*.md` from installed plugins into the correct consumer search path (`.agents/agents/`, `.devin/agents/`, or the platform equivalent) and record them in `.provenance.json` under a `vendorProfiles` array.
 
-- [ ] **Step 4: Add a sample vendor profile.**
+- [x] **Step 4: Add a sample vendor profile.**
 
   Add one trivial third-party profile asset to an existing pack (or a test pack) and verify the refresh tooling installs it in a clean consumer worktree.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/selecting-a-subagent sources/first_party/skills/refreshing-installed-skills codex-marketplace/custody-pack-registry.json
@@ -320,7 +320,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: vendor profile installation and third-party profile packaging"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

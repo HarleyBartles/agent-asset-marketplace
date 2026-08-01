@@ -75,6 +75,16 @@ It also records:
 - `marketplace`: the source repository and source path used for the marketplace.
 - `marketplaceFile`: the path to `.agents/plugins/marketplace.json`.
 - `syncedSkills`: the count of skills copied from marketplace plugins.
+- `vendorProfiles`: an array of vendor subagent profiles installed from pack `assets/profiles/*.md`. Each entry records `plugin` (the pack name), `sourcePath` (the pack `assets/profiles` directory), and `profiles` (the list of installed `.md` profile file names).
 - `syncedAt`: the timestamp of the last refresh.
+
+## Vendor subagent profiles
+
+For each installed plugin, the core also looks for `assets/profiles/*.md` inside the plugin root and copies those profiles into the consumer's agent search path:
+
+- `.agents/agents/<profile>.md` — always written when profiles are present.
+- `.devin/agents/<profile>.md` — also written when `.devin/agents/` already exists, so the Devin Desktop search path documented in `selecting-a-subagent` finds them.
+
+Orphan vendor profiles (files in those directories that no installed plugin contributes) are removed on refresh, mirroring the orphan-skill cleanup. The `vendorProfiles` provenance array records which plugin installed which profiles, alongside the existing `localSkills` and `syncedPlugins` fields.
 
 Provenance is now rewritten when the installed plugin list, the local skill inventory, or the marketplace metadata changes, even if no marketplace skill files were copied. Because of this, `--check` may report a stale provenance file and `--apply` will update it without unnecessary skill copying.

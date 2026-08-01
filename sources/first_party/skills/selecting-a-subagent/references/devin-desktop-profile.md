@@ -64,6 +64,17 @@ Custom profiles may declare `model:` in their `.md` profile file. The runtime ho
 
 Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
 
+### Vendor and third-party profiles
+
+Marketplace packs can ship third-party subagent `.md` profile assets under
+`assets/profiles/`. The `refreshing-installed-skills` script copies those
+profiles into `.agents/agents/` (and `.devin/agents/` when the platform config
+supports it), so they appear in the Devin Desktop search path documented above.
+A repo-local `.devin/agents/<name>.md` override wins over a vendor profile of
+the same name; a vendor profile wins over a built-in custom profile when no
+override exists. See `vendor-profile-packaging.md` for the packaging contract
+and the full consumer search-path order.
+
 ### What not to do
 
 - Do not specify a model name, version, reasoning level, context tier, or paid route. The tool has no such parameters.
