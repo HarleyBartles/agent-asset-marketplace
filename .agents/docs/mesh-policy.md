@@ -2,29 +2,61 @@
 
 ## 1. `AGENTS.md` mesh
 
-`AGENTS.md` files are authored scoped law.
-The nearest scoped `AGENTS.md` applies naturally to the subtree an agent is
-working in, with root law inherited unless a nearer node adds a local delta.
+`AGENTS.md` files are authored law. In the Devin Local / Devin CLI runtime,
+any `AGENTS.md` that is discovered is loaded as an **always-on** rule for the
+remainder of the session. It is not scoped by working directory. Do not rely on
+sub-directory `AGENTS.md` for scoped rules.
+
+Root `AGENTS.md` should contain only the small set of rules that are genuinely
+always on for the whole repository. If a sub-directory `AGENTS.md` exists, it
+must be so short and safe that loading it always-on does not overwhelm the
+agent. If the law is not appropriate for every session, it does not belong in
+an `AGENTS.md`.
+
 `AGENTS.md` should explain rules, boundaries, and source/projection
-distinctions, not directory navigation.
-
-`AGENTS.md` files should stay slim. Their job is to tell agents what to read,
-when to read it, and where the next relevant surface lives.
-
-Do not restate doctrine in `AGENTS.md`. When a rule lives in a doctrine doc
-under `docs/` or `.agents/docs/`, the scoped `AGENTS.md` carries only a
+distinctions, not directory navigation. It is a routing surface, not a content
+surface. Do not restate doctrine in `AGENTS.md`. When a rule lives in a doctrine
+doc under `docs/` or `.agents/docs/`, the `AGENTS.md` carries only a
 MUST READ pointer with the trigger condition and the path to the doctrine
 doc. The doctrine doc is the canonical rule surface; `AGENTS.md` is the
 routing surface.
 
-## 2. `INDEX.md` mesh
+## 2. `.devin/rules/` and Devin Rules
+
+For scoped, conditional, or non-always-on rules, use the Devin Rules surface:
+`.devin/rules/*.md`. Each rule is a separate Markdown file with a `trigger`
+in its frontmatter that controls when the rule is loaded.
+
+Allowed `trigger` values in Devin Desktop / Local:
+
+- `always_on` — loaded in every message.
+- `glob` — loaded only when the agent works with files matching `globs:`.
+- `model_decision` — the model decides when to apply.
+- `manual` — only when invoked.
+
+Example:
+
+```markdown
+---
+description: "tools and marketplace generation"
+trigger: glob
+globs: "tools/**"
+---
+```
+
+Keep each rule under 12,000 characters.
+
+The repo does not support an `.agents/rules/` surface. Do not create it unless
+the runtime adds native support.
+
+## 3. `INDEX.md` mesh
 
 `INDEX.md` files are generated navigation and coverage surfaces.
 They tell agents and humans what exists in a subtree and where to go next.
 They must not carry operative law.
 They must not be inserted into skill roots or adapter overlay roots.
 
-## 3. `README.md` and docs-owned guidance
+## 4. `README.md` and docs-owned guidance
 
 `README.md` files are human-facing explanation only. They may point at agent
 law, but they are not the law.
@@ -32,7 +64,7 @@ law, but they are not the law.
 `docs/` files are docs-owned guidance and doctrine surfaces. They may carry
 durable guidance, but they are still separate from generated navigation.
 
-## 4. `.agents/` tree
+## 5. `.agents/` tree
 
 `.agents/` is the tracked repo-resident home for agent-facing doctrine, local
 plugin posture, agent work surfaces, and output/evidence conventions.
@@ -40,7 +72,7 @@ It is not disposable cache.
 It is not the home for ordinary product/source work unless that source is
 agent-facing infrastructure.
 
-## 5. Mesh self-healing
+## 6. Mesh self-healing
 
 If a worker finds stale or misleading authored mesh law (`AGENTS.md`,
 `README.md`, or other agent-facing doctrine docs), repair it in scope or return
