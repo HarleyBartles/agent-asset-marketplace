@@ -74,7 +74,6 @@ DEFAULT_REPO_INDEX = {
                 "tools/validate_repo_index.py",
             ],
         },
-
         {
             "name": "frontend-pack",
             "path": "codex-marketplace/plugins/frontend-pack",
@@ -98,7 +97,6 @@ DEFAULT_REPO_INDEX = {
                 "tools/project_skills.py",
             ],
         },
-
         {
             "name": "third-party-custody",
             "path": "sources/third_party",
@@ -194,6 +192,8 @@ DEFAULT_REPO_INDEX = {
         },
     ],
 }
+
+
 def _bundle_manifest_path(plugin_root: str) -> Path:
     return ROOT / plugin_root / "references" / "bundle-manifest.json"
 
@@ -239,8 +239,8 @@ def _metadata_driven_plugin_entry(
     entry["plugin_manifest"] = _plugin_manifest_path(plugin["manifest_path"])
     entry["source_md"] = repo_index.get("source_md") or entry.get("source_md") or f"{plugin_root}/SOURCE.md"
     entry["bundle_manifest"] = repo_index.get("bundle_manifest") or f"{plugin_root}/references/bundle-manifest.json"
-    entry["skills_path"] = repo_index.get("skills_path") or entry.get("skills_path") or _default_skills_path(
-        plugin_root, plugin_manifest
+    entry["skills_path"] = (
+        repo_index.get("skills_path") or entry.get("skills_path") or _default_skills_path(plugin_root, plugin_manifest)
     )
     entry["agents_md"] = repo_index.get("agents_md", entry.get("agents_md"))
     entry["registry_path"] = plugin["registry_path"]
@@ -268,7 +268,9 @@ def _synthetic_plugin_spec(name: str, *, current_entry: dict[str, Any], category
     }
 
 
-def _generic_plugin_entry(plugin: dict[str, Any], *, spec: dict[str, Any], current_entry: dict[str, Any] | None) -> dict[str, Any]:
+def _generic_plugin_entry(
+    plugin: dict[str, Any], *, spec: dict[str, Any], current_entry: dict[str, Any] | None
+) -> dict[str, Any]:
     plugin_root = spec["plugin_root"]
     manifest_path = _plugin_manifest_path(spec["manifest_path"])
     entry = dict(current_entry or {})
@@ -298,7 +300,9 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone = dict(zone)
             updated_zone["name"] = "superpowers-plus-marketplace"
             updated_zone["path"] = "codex-marketplace/plugins/superpowers-plus"
-            updated_zone["purpose"] = "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+."
+            updated_zone["purpose"] = (
+                "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+."
+            )
             normalized_zones.append(updated_zone)
             continue
         if zone.get("name") == "superpowers-custody":
@@ -374,7 +378,9 @@ def build_repo_index() -> dict:
         if name in current_plugins:
             spec = plugin_specs_by_name.get(name)
             if spec is None:
-                spec = _synthetic_plugin_spec(name, current_entry=current_plugins[name], category=plugin.get("category"))
+                spec = _synthetic_plugin_spec(
+                    name, current_entry=current_plugins[name], category=plugin.get("category")
+                )
             plugin_manifest = load_json(spec["manifest_path"])
             if not isinstance(plugin_manifest, dict):
                 raise ValueError(f"{spec['manifest_path']} must contain a JSON object")
@@ -385,11 +391,15 @@ def build_repo_index() -> dict:
                 plugin_manifest=plugin_manifest,
                 bundle_manifest=bundle_manifest,
             )
-            ordered_plugins.append(metadata_entry or _generic_plugin_entry(plugin, spec=spec, current_entry=current_plugins[name]))
+            ordered_plugins.append(
+                metadata_entry or _generic_plugin_entry(plugin, spec=spec, current_entry=current_plugins[name])
+            )
             continue
         spec = plugin_specs_by_name.get(name)
         if spec is None:
-            spec = _synthetic_plugin_spec(name, current_entry=current_plugins.get(name, {}), category=plugin.get("category"))
+            spec = _synthetic_plugin_spec(
+                name, current_entry=current_plugins.get(name, {}), category=plugin.get("category")
+            )
         plugin_manifest = load_json(spec["manifest_path"])
         if not isinstance(plugin_manifest, dict):
             raise ValueError(f"{spec['manifest_path']} must contain a JSON object")

@@ -324,6 +324,7 @@ def _check_catalog(ctx: Ctx) -> None:
 
 def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
+    _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _git_diff_check(ctx)
     if ctx.mode == "check":
         _git_diff_exit_code(ctx)

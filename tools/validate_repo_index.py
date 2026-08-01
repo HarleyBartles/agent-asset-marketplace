@@ -188,7 +188,11 @@ def validate_repo_index() -> dict:
         alignment_note = registry_alignment.get("note")
         if alignment_status not in {"aligned", "intentional-delta"}:
             raise ValueError(f"repo-index marketplace plugin {name} has an unsupported registry_alignment status")
-        if alignment_status == "intentional-delta" and not isinstance(alignment_note, str) and alignment_note is not None:
+        if (
+            alignment_status == "intentional-delta"
+            and not isinstance(alignment_note, str)
+            and alignment_note is not None
+        ):
             raise ValueError(f"repo-index marketplace plugin {name} needs a textual registry_alignment note")
         if alignment_status == "intentional-delta" and not alignment_note:
             raise ValueError(f"repo-index marketplace plugin {name} needs a registry_alignment note")
@@ -247,8 +251,13 @@ def validate_repo_index() -> dict:
     third_party_agents = ROOT / ".devin/rules/third-party.md"
     third_party_guidance = check_text(third_party_agents)
     normalized_third_party_guidance = " ".join(third_party_guidance.split())
-    if "third-party source custody" not in normalized_third_party_guidance or "not repository doctrine" not in normalized_third_party_guidance:
-        raise ValueError(".devin/rules/third-party.md must clearly distinguish repo-owned guidance from third-party instructions")
+    if (
+        "third-party source custody" not in normalized_third_party_guidance
+        or "not repository doctrine" not in normalized_third_party_guidance
+    ):
+        raise ValueError(
+            ".devin/rules/third-party.md must clearly distinguish repo-owned guidance from third-party instructions"
+        )
 
     print("Repo index validation passed.")
     return repo_index
