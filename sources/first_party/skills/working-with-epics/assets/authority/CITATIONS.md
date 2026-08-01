@@ -6,7 +6,7 @@ None. Clean-room first-party synthesis.
 
 ## Derivation boundary
 
-- Derived: the design conversation in `.agents/superpowers/specs/2026-07-25-working-with-epics-design.md`.
+- Derived: the design conversation in `.agents/specs/2026-07-25-working-with-epics-design.md`.
 - Outside scope: single-plan writing and execution (see writing-plans and executing-plans), risk assessment (see risk-gates).
 
 ## Attribution

@@ -30,7 +30,6 @@ metadata:
   - verification-before-completion
   - finishing-a-development-branch
   - requesting-code-review
-  - handoff-gates
   - working-with-epics
   related_skills:
   - brainstorming
@@ -45,8 +44,10 @@ metadata:
   - requesting-code-review
   - receiving-code-review
   - writing-skills
-  - handoff-gates
   - working-with-epics
+  - repo-worker-base
+  - base-doctrine
+  - inspecting-the-environment
 license: MIT
 ---
 
@@ -78,8 +79,8 @@ Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it h
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then implementation skills.
-- "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
+- "Let's build X" → /brainstorming first, then implementation skills.
+- "Fix this bug" → /systematic-debugging first, then domain skills.
 
 ## Red Flags
 
@@ -100,6 +101,27 @@ These thoughts mean STOP—you're rationalizing:
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
 | "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
 
+## Bootstrap order
+
+This skill is the generic workflow router for any repo that installs the
+superpowers-plus skill pack. At session start, resume, or when the next action
+is unclear, run these steps in order and then hand off.
+
+1. **The invocation rule.** If a skill applies to the request, invoke it before
+   any response or action. You do not have a choice if a skill matches.
+2. **Inspect the environment.** Invoke `/inspecting-the-environment` if the
+   current environment is unknown or may have changed. Record the shell, repo,
+   branch, worktree, and available connectors. Do not route until the
+   environment is known.
+3. **Load doctrine.** Invoke `/base-doctrine` for cross-runtime invariants.
+   For how local doctrine and user instructions shape routing, see
+   [`references/repo-doctrine.md`](references/repo-doctrine.md).
+4. **Classify the request.** Pick the smallest sufficient mode from
+   [`references/bootstrap-routing.md`](references/bootstrap-routing.md).
+5. **Route and stop.** Hand off to the owning skill. Do not load additional
+   skills unless the current skill leaves a decision unresolved and the
+   candidate skill directly owns it.
+
 ## Platform Adaptation
 
 If your harness appears here, read its reference file for special instructions:
@@ -107,13 +129,7 @@ If your harness appears here, read its reference file for special instructions:
 - Codex: `references/codex-tools.md`
 - Pi: `references/pi-tools.md`
 - Antigravity: `references/antigravity-tools.md`
+- Gemini: `references/gemini-tools.md`
 
-## Asset Marketplace Routing
-
-- Environment inspection before action when constraints matter: use `inspecting-the-environment`.
-- Stage-boundary artifact (spec, plan, completed work) needs a readiness check: use `handoff-gates`.
-- Goal is too large for one writing-plans plan: use `working-with-epics` to create a sequenced roadmap.
-
-## User Instructions
-
-User instructions (CLAUDE.md, AGENTS.md, GEMINI.md, etc, direct requests) take precedence over skills, which in turn override default behavior. Only skip skill workflows or instructions when your human partner has explicitly told you to.
+For the local-doctrine and user-instruction priority rules, see
+[`references/repo-doctrine.md`](references/repo-doctrine.md).

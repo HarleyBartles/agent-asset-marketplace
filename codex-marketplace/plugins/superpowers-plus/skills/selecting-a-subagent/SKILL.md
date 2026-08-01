@@ -16,8 +16,8 @@ metadata:
   - Use when creating or selecting a named subagent configuration.
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
-  - Use when choosing a custom subagent profile such as `implementer`, `reviewer`,
-    `branch-reviewer`, `implementer-strong`, or `reviewer-strong`.
+  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
+    `reviewer-strong`, `implementer`, or `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -27,7 +27,6 @@ metadata:
   related_skills:
   - dispatching-parallel-agents
   - risk-gates
-  - work-mode-router
   - repo-worker-base
   use_after:
   - inspecting-the-environment
@@ -63,16 +62,32 @@ task, environment, and repository rules before calling a child-dispatch tool.
 
 ## Installing the custom profiles
 
-If you want to use the custom profiles this skill can recommend, install the
-corresponding `.md` profile assets into a Devin Desktop profile search path:
+The `.md` profile assets in `assets/` are Devin Desktop custom profiles. They are
+not used by Codex; for Codex, use the `references/codex-multi-agent-v1-profile.md`
+or `references/codex-multi-agent-v2-profile.md` mappings.
+
+If you want to use the Devin Desktop custom profiles, install the corresponding
+`.md` profile assets into a Devin Desktop profile search path:
 
 - macOS/Linux: `~/.config/devin/agents/<profile>.md`
 - Windows: `%APPDATA%\devin\agents\<profile>.md`
 
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`implementer-strong`, and `reviewer-strong`. The `branch-reviewer` profile is
-shipped with the `requesting-branch-review` skill.
+`reviewer-fast`, `reviewer-strong`, `implementer`, and `implementer-strong`.
+
+## Common custom subagent profile dispatch
+
+| Task | Profile |
+|---|---|
+| Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
+| Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+| Bounded implementation / bugfix | `implementer` |
+| Implementation that needs more reasoning or broader context | `implementer-strong` |
+
+The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
+reviewer profile. The reviewer subagent does not resolve the diff itself.
 
 ## Common pressure
 

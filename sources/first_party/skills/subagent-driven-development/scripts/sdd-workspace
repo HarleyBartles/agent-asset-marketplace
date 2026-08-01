@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-# Resolve and ensure the working-tree directory SDD uses for its short-lived
+# Resolve and ensure the off-repo scratch directory SDD uses for short-lived
 # artifacts: task briefs, implementer reports, review packages, and the
 # progress ledger. Print the directory's absolute path.
 #
-# The workspace lives in the working tree (not under .git/) because Claude Code
-# treats .git/ as a protected path and denies agent writes there — which blocks
-# an implementer subagent from writing its report file. A self-ignoring
-# .gitignore keeps the workspace out of `git status` and out of accidental
-# commits without modifying any tracked file.
+# The workspace lives outside the working tree at:
+#   <repo-root>/../_agents-scratch/<branch>/<plan-basename>/
+# so it is never accidentally committed and survives `git clean`.
 #
 # Single source of truth for the workspace location, so task-brief and
 # review-package cannot drift to different directories.
@@ -17,9 +15,8 @@ set -euo pipefail
 
 plan_file=${1:-}
 
-# Resolve repo root. If an absolute plan file is given, use its working tree
-# (so a worktree plan uses the worktree root, not the main checkout root).
-# Otherwise resolve relative to the current directory's repo.
+# Resolve repo root and branch. If an absolute plan file is given, use its
+# working tree so a worktree plan uses the worktree root, not the main checkout.
 if [[ -n "$plan_file" && "$plan_file" == /* ]]; then
   root=$(cd "$(dirname "$plan_file")" && git rev-parse --show-toplevel)
 else
@@ -29,9 +26,11 @@ else
   fi
 fi
 
-dir="$root/.agents/superpowers/sdd"
+branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
+branch=$(printf '%s' "$branch" | tr ':\?*"<>|\\' '-')
+parent=$(cd "$root/.." && pwd)
+dir="$parent/_agents-scratch/$branch"
 mkdir -p "$dir"
-printf '*\n' > "$dir/.gitignore"
 current_plan="$dir/current-plan.txt"
 plan_stem=""
 

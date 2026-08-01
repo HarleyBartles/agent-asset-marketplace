@@ -16,9 +16,10 @@
 - `base-doctrine` is projected here from the canonical first-party source at
   `sources/first_party/skills/base-doctrine/` so cross-project doctrine,
   evidence honesty, and output-shape guards travel with the worker pack.
-- `work-mode-router` is projected here from the canonical first-party source at
-  `sources/first_party/skills/work-mode-router/` so durable worker route
-  classification stays on the repo-facing worker surface.
+- `work-mode-router` was previously projected here from the canonical first-party
+  source at `sources/first_party/skills/work-mode-router/` but was retired in
+  2026-08 as part of the superpowers-plus consolidation. Worker route
+  classification is now owned by `using-superpowers-plus`.
 - `linear-issue-shaping` is projected here from the canonical first-party
   source at `sources/first_party/skills/linear-issue-shaping/` so Linear worker
   readiness and route-state handling stay on the repo-facing worker surface.

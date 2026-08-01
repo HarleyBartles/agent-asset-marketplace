@@ -101,10 +101,11 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Invoke /requesting-branch-review for final whole-branch review" [shape=box];
+    "Use /handoff-gates completion-readiness (self-review)" [shape=box];
+    "Invoke /requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
-    "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use /finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Setup: worktree, ledger check, read plan, pre-flight review" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
@@ -130,17 +131,19 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Invoke /requesting-branch-review for final whole-branch review" [label="no"];
-    "Invoke /requesting-branch-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Use /handoff-gates completion-readiness (self-review)" [label="no"];
+    "Use /handoff-gates completion-readiness (self-review)" -> "Invoke /requesting-code-review for final whole-branch review" [label="meets floor"];
+    "Use /handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
+    "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
-    "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
+    "Final review clean: delete this plan's workspace" -> "Use /finishing-a-development-branch";
 }
 ```
 
 ## Setup
 
 Ensure the work happens in an isolated workspace: use
-superpowers:using-git-worktrees to create one or verify the existing one.
+/using-git-worktrees to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
 partner's explicit consent.
 
@@ -150,8 +153,8 @@ sequences — the single most expensive failure observed. Track progress in
 a ledger file, not only in todos.
 
 - Each plan owns a workspace: at skill start, run this skill's
-  `scripts/sdd-workspace PLAN_FILE` — it prints the plan's git-ignored
-  directory (`<repo-root>/.agents/superpowers/sdd/<plan-basename>/`), home to
+  `scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
+  directory (`<repo-root>/../_agents-scratch/<branch>/<plan-basename>/`), home to
   every artifact for THIS plan: ledger, briefs, reports, review packages.
   Another plan's directory is never yours to read or write.
 - Check for this plan's ledger at `<workspace>/progress.md`. If its first
@@ -159,15 +162,16 @@ a ledger file, not only in todos.
   — do not re-dispatch them; resume at the first task without one. A task
   whose last line is a fix round is mid-loop: resume the loop at the next
   round. A ledger whose first line names a different plan file — or a stray
-  ledger at the old flat path `.agents/superpowers/sdd/progress.md` — is another
-  plan's progress: leave it in place and start your own, fresh.
+  ledger at the old flat path `../_agents-scratch/<branch>/progress.md` — is another
+  plan's progress: leave it in place and start your own, fresh. The
+  off-repo scratch survives `git clean` and is never committed.
 - Create the ledger with its identity as the first line:
   `# SDD ledger — plan: <plan file path>`.
 - The ledger is your recovery map: the commits it names exist in git even
   when your context no longer remembers creating them. After compaction,
   trust the ledger and `git log` over your own recollection.
-- `git clean -fdx` will destroy the workspace (it's git-ignored scratch); if
-  that happens, recover from `git log`.
+- `git clean -fdx` will not touch the workspace (it lives outside the repo);
+  recover from `git log` if a plan's scratch is removed manually.
 
 Read the plan once, note its context and Global Constraints, and create a
 todo per task.
@@ -187,10 +191,19 @@ conflicts that only emerge from implementation.
 ## Model Selection
 
 Invoke `/selecting-a-subagent` to select the right subagent profile for the
-current task and environment. In Devin Desktop, that means choosing a
-`profile:` value and then dispatching `run_subagent` with that `profile:`.
-The profile's `.md` profile file declares its own `model:`, so do not pass `model:`
-to `run_subagent`.
+current task and environment. This applies to both the **implementer** and the
+**task reviewer/re-reviewer**.
+
+- In **Devin Desktop**, choose a `profile:` value and dispatch `run_subagent`
+  with that `profile:`. Do not pass `model:` to `run_subagent`; the custom
+  profile's `.md` file declares its own `model:`.
+- In **Codex**, select the actual `model`, `reasoning_effort`, `fork_context`
+  or `fork_turns` from the matching Codex profile. Do not invent parameters the
+  live schema does not expose.
+
+Use the least escalated profile that is adequate for the task. Choose `reviewer`
+for ordinary task reviews, `reviewer-strong` when the diff is large or subtle,
+and `reviewer-fast` for small, targeted re-reviews.
 
 ## The Task Loop
 
@@ -261,6 +274,10 @@ final whole-branch review. Never skip the task review, and never accept a
 report missing either verdict — spec compliance AND task quality are both
 required. Implementer self-review never replaces the task review; both are
 needed.
+
+Before dispatching the task reviewer, invoke `/selecting-a-subagent` to pick the
+right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fast`)
+for the task diff.
 
 - Hand the reviewer its diff as a file: run this skill's
   `scripts/review-package PLAN_FILE BASE HEAD` and pass the reviewer the file path
@@ -391,9 +408,14 @@ parked-with-ruling at the cap.
 
 ## Final Review
 
-The final whole-branch review is handled by `/requesting-branch-review`. Dispatch the
-skill once all task-level reviews are complete. The skill reviews the full branch
-diff and reports findings; no additional review package is needed.
+Once all task-level reviews are complete, run `/handoff-gates` `completion-readiness`
+against the completed work. Rate it against the plan and the repo's code review
+guide (8/10 floor, 9/10 target). Report the final rating and do not proceed
+below the floor.
+
+If the completion-readiness rating meets the floor, dispatch the final whole-branch
+review with `/requesting-code-review`. The skill reviews the full branch diff and
+reports findings; no additional review package is needed.
 
 If the final whole-branch review returns findings, dispatch ONE fix subagent
 with the complete findings list — not one fixer per finding.
@@ -414,7 +436,7 @@ delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.
 
-Use superpowers:finishing-a-development-branch.
+Use /finishing-a-development-branch.
 
 ## Common Rationalizations
 
@@ -435,8 +457,8 @@ Use superpowers:finishing-a-development-branch.
 You: I'm using Subagent-Driven Development to execute this plan.
 
 [Setup: worktree verified]
-[Read plan file once: .agents/superpowers/plans/feature-plan.md]
-[Resolve workspace: scripts/sdd-workspace .agents/superpowers/plans/feature-plan.md — no ledger inside, fresh start]
+[Read plan file once: .agents/plans/feature-plan.md]
+[Resolve workspace: scripts/sdd-workspace .agents/plans/feature-plan.md — no ledger inside, fresh start]
 [Create todos for all tasks]
 
 Task 1: Hook installation script
@@ -488,10 +510,10 @@ Re-reviewer: Missing progress reporting — ADDRESSED (src/recovery.js:41).
 ...
 
 [After all tasks]
-[Invoke /requesting-branch-review for final whole-branch review]
+[Invoke /requesting-code-review for final whole-branch review]
 Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
 
-Done! Using superpowers:finishing-a-development-branch.
+Done! Using /finishing-a-development-branch.
 ```

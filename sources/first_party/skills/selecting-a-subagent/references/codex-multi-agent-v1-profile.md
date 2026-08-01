@@ -43,3 +43,17 @@ justification. `ultra` is exposed but forbidden by shared policy.
 
 Fresh context is not model-family diversity. Name the review property honestly:
 fresh context, a different selected model, or deterministic verification.
+
+## Mapping to shared custom-profile roles
+
+These are the Codex MultiAgentV1 equivalents of the Devin Desktop custom
+profiles. Use them when a sibling skill says "use `/selecting-a-subagent`" for a
+role.
+
+| Shared role | Codex V1 route |
+|---|---|
+| `reviewer` | `gpt-5.6-terra` at `high` |
+| `reviewer-strong` | `gpt-5.6-sol` at `high` |
+| `reviewer-fast` | `gpt-5.4` at `low` or `medium` |
+| `implementer` | `gpt-5.4` at `medium` |
+| `implementer-strong` | `gpt-5.6-terra` at `high` |

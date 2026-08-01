@@ -48,6 +48,7 @@ Thumbs.db
 .codex/environments/environment.toml
 
 # .superpowers/ is the obra-superpowers upstream default output directory.
-# This repo standardizes on .agents/superpowers/; keep this ignore to avoid
+# This repo uses .agents/ for tracked agent-facing surfaces and external
+# scratch/worktree locations for local workspaces. Keep this ignore to avoid
 # accidentally tracking any stale .superpowers/ workspace that appears.
 .superpowers/

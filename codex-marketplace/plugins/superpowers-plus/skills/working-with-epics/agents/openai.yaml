@@ -7,7 +7,7 @@ metadata:
 interface:
   display_name: Working With Epics
   short_description: Use when a goal is too large for one writing-plans plan and requires a sequenced roadmap of consecutive plans.
-  default_prompt: Use /working-with-epics when a goal is too large for one writing-plans plan. Decompose the goal into a roadmap at `.agents/superpowers/roadmaps/YYYY-MM-DD-<epic-name>.md`, write plans just-in-time, run each plan through `handoff-gates` plan-readiness, and update the roadmap as you go.
+  default_prompt: Use /working-with-epics when a goal is too large for one writing-plans plan. Decompose the goal into a roadmap at `.agents/plans/<epic-name>/roadmap.md`, write plans just-in-time, run each plan through `handoff-gates` plan-readiness, and update the roadmap as you go.
 policy:
   products:
   - chatgpt

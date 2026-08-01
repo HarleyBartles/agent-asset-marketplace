@@ -152,17 +152,17 @@ DEFAULT_REPO_INDEX = {
         },
         {
             "name": "superpowers-plans",
-            "path": ".agents/superpowers/plans",
+            "path": ".agents/plans",
             "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".agents/superpowers/plans/AGENTS.md",
+            "nearest_scoped_agents_md": ".agents/plans/AGENTS.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],
         },
         {
             "name": "superpowers-specs",
-            "path": ".agents/superpowers/specs",
+            "path": ".agents/specs",
             "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
             "surface_kind": "hand-authored",
             "nearest_scoped_agents_md": ".agents/guides/design-guide.md",
@@ -312,8 +312,19 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
         if zone.get("name") == "docs-superpowers-plans":
             updated_zone = dict(zone)
             updated_zone["name"] = "superpowers-plans"
-            updated_zone["path"] = ".agents/superpowers/plans"
-            updated_zone["nearest_scoped_agents_md"] = ".agents/superpowers/plans/AGENTS.md"
+            updated_zone["path"] = ".agents/plans"
+            updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "superpowers-plans":
+            updated_zone = dict(zone)
+            updated_zone["path"] = ".agents/plans"
+            updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
+            normalized_zones.append(updated_zone)
+            continue
+        if zone.get("name") == "superpowers-specs":
+            updated_zone = dict(zone)
+            updated_zone["path"] = ".agents/specs"
             normalized_zones.append(updated_zone)
             continue
         if zone.get("name") == "third-party-custody":

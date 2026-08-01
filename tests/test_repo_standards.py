@@ -400,11 +400,13 @@ def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
     assert (repo / ".gitignore").is_file()
 
 
-def test_scaffold_gitignore_check_missing_sdd_gitignore_fails(tmp_path: Path) -> None:
-    """scaffold_gitignore --check fails when sdd/.gitignore is missing."""
-    repo = tmp_path / "no-sdd-gitignore"
+def test_scaffold_gitignore_check_no_stale_sdd_scaffold_passes(tmp_path: Path) -> None:
+    """scaffold_gitignore --check passes when there is no stale sdd scaffold."""
+    repo = tmp_path / "no-sdd-scaffold"
     repo.mkdir()
     _init_git_repo(repo)
+
+    (repo / ".gitignore").write_text("", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
         [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
@@ -413,15 +415,13 @@ def test_scaffold_gitignore_check_missing_sdd_gitignore_fails(tmp_path: Path) ->
         capture_output=True,
         text=True,
     )
-    assert result.returncode != 0
-    combined = result.stdout + result.stderr
-    assert "DRIFT:" in combined
-    assert ".agents/superpowers/sdd/.gitignore" in combined
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "OK" in result.stdout
 
 
-def test_scaffold_gitignore_check_incomplete_sdd_gitignore_fails(tmp_path: Path) -> None:
-    """scaffold_gitignore --check fails when sdd/.gitignore lacks !.gitignore."""
-    repo = tmp_path / "incomplete-sdd-gitignore"
+def test_scaffold_gitignore_check_stale_sdd_scaffold_fails(tmp_path: Path) -> None:
+    """scaffold_gitignore --check fails when a stale in-repo sdd .gitignore exists."""
+    repo = tmp_path / "stale-sdd-scaffold"
     repo.mkdir()
     _init_git_repo(repo)
 
@@ -442,11 +442,15 @@ def test_scaffold_gitignore_check_incomplete_sdd_gitignore_fails(tmp_path: Path)
     assert ".agents/superpowers/sdd/.gitignore" in combined
 
 
-def test_scaffold_gitignore_creates_sdd_gitignore(tmp_path: Path) -> None:
-    """scaffold_gitignore creates sdd/.gitignore with * and !.gitignore."""
-    repo = tmp_path / "create-sdd-gitignore"
+def test_scaffold_gitignore_removes_stale_sdd_scaffold(tmp_path: Path) -> None:
+    """scaffold_gitignore removes a stale in-repo sdd .gitignore and directory."""
+    repo = tmp_path / "remove-sdd-scaffold"
     repo.mkdir()
     _init_git_repo(repo)
+
+    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
+    sdd_gitignore.parent.mkdir(parents=True)
+    sdd_gitignore.write_text("*\n!.gitignore\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
         [sys.executable, str(SCAFFOLD_GITIGNORE)],
@@ -456,33 +460,8 @@ def test_scaffold_gitignore_creates_sdd_gitignore(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode == 0, result.stderr
-    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
-    assert sdd_gitignore.is_file()
-    content = sdd_gitignore.read_text(encoding="utf-8")
-    assert "*" in content
-    assert "!.gitignore" in content
-
-
-def test_scaffold_gitignore_check_valid_sdd_gitignore_passes(tmp_path: Path) -> None:
-    """scaffold_gitignore --check passes when sdd/.gitignore is valid."""
-    repo = tmp_path / "valid-sdd-gitignore"
-    repo.mkdir()
-    _init_git_repo(repo)
-
-    (repo / ".gitignore").write_text("", encoding="utf-8", newline="\n")
-    sdd_gitignore = repo / ".agents" / "superpowers" / "sdd" / ".gitignore"
-    sdd_gitignore.parent.mkdir(parents=True)
-    sdd_gitignore.write_text("*\n!.gitignore\n", encoding="utf-8", newline="\n")
-
-    result = subprocess.run(
-        [sys.executable, str(SCAFFOLD_GITIGNORE), "--check"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stdout + result.stderr
-    assert "OK" in result.stdout
+    assert not sdd_gitignore.is_file()
+    assert not sdd_gitignore.parent.is_dir()
 
 
 def test_scaffold_gitignore_check_stale_root_rule_fails(tmp_path: Path) -> None:

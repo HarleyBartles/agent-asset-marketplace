@@ -25,7 +25,7 @@ The split is deliberate:
 - `superpowers-plus` is the first-party projection-lane bundle for the Superpowers+ workflow skill family.
 - The retained `obra/superpowers` v6.2.0 MIT snapshot under `sources/third_party/superpowers/` is reference-only; it is not the editable surface and no adapter overlay is applied.
 <!-- BEGIN GENERATED: projection-contract -->
-- Active manifest entries (19):
+- Active manifest entries (18):
   - `brainstorming`
   - `dispatching-parallel-agents`
   - `executing-plans`
@@ -33,7 +33,6 @@ The split is deliberate:
   - `handoff-gates`
   - `inspecting-the-environment`
   - `receiving-code-review`
-  - `requesting-branch-review`
   - `requesting-code-review`
   - `selecting-a-subagent`
   - `subagent-driven-development`

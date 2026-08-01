@@ -18,7 +18,6 @@ metadata:
   use_with:
   - repo-worker-base
   - inspecting-the-environment
-  - work-mode-router
   - brainstorming
   - writing-plans
   - executing-plans

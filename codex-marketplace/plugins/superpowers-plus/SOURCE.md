@@ -23,7 +23,6 @@ This plugin projects the first-party Superpowers+ workflow skills, including the
 - `sources/first_party/skills/handoff-gates/`
 - `sources/first_party/skills/inspecting-the-environment/`
 - `sources/first_party/skills/receiving-code-review/`
-- `sources/first_party/skills/requesting-branch-review/`
 - `sources/first_party/skills/requesting-code-review/`
 - `sources/first_party/skills/selecting-a-subagent/`
 - `sources/first_party/skills/subagent-driven-development/`
@@ -47,7 +46,6 @@ This plugin projects the first-party Superpowers+ workflow skills, including the
   - `codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/`
   - `codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/`
   - `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/`
-  - `codex-marketplace/plugins/superpowers-plus/skills/requesting-branch-review/`
   - `codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/`
   - `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/`
   - `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/`

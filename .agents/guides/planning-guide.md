@@ -29,9 +29,11 @@ Every implementation plan in this repo must contain:
 
 ## Plan Artifact Placement
 
-Plans go in `.agents/superpowers/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`).
+Plans go in `.agents/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`).
 
-Session artifacts (task briefs, reports, review diffs) go in `.agents/superpowers/sdd/<plan-name>/`.
+Session artifacts (task briefs, reports, review diffs) go in the off-repo SDD
+scratch path (see `subagent-driven-development` for the current `sdd-workspace`
+path convention).
 
 Do not create loose files at repo root. Do not place agent-generated artifacts under `docs/` or product source folders.
 
@@ -40,7 +42,7 @@ Do not create loose files at repo root. Do not place agent-generated artifacts u
 Before executing a plan, run through this checklist. Each item is a general principle — the examples are illustrative, not exhaustive.
 
 ### Structural integrity
-1. **SDD task ordering.** For plans executed with `subagent-driven-development`, source and adapter/overlay edits must be complete before any `tools/run * --apply` regeneration step. `tools/run heal --check` must appear after overlay edits and before regeneration. `tools/run ci --check` must not run on an uncommitted working tree; the plan should commit and let the pre-commit hook run it, or commit with `--no-verify` and then run it. Each task should include a final sub-step for the implementer to mark the task's own plan steps `[x]`.
+1. **SDD task ordering.** For plans executed with `subagent-driven-development`, source and adapter/overlay edits must be complete before any `tools/run * --apply` regeneration step. `tools/run heal --check` must appear after overlay edits and before regeneration. `tools/run ci --check` must not run on an uncommitted working tree; the plan should run the preflight on the staged tree before committing, then commit and let the pre-commit hook re-run it. Only use `git commit --no-verify` if the hook is unavailable, with a documented reason. Each task should include a final sub-step for the implementer to mark the task's own plan steps `[x]`.
 2. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs.
 3. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild.
 4. **Tooling integration.** If the plan modifies tooling, verify the plan updates the relevant AGENTS.md files to reflect the new commands or workflows.

@@ -13,10 +13,10 @@ A design that ignores the repo's standards will produce specs that do not hand o
 ## Design Spec Expectations
 
 The design spec is the working record of the decision, not the implementation
-plan. Write the spec to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+plan. Write the spec to `.agents/specs/YYYY-MM-DD-<topic>-design.md`
 and commit it; the `specs/` surface is repo-resident and indexed.
 
-- Write the spec to `.agents/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
+- Write the spec to `.agents/specs/YYYY-MM-DD-<topic>-design.md`.
   Do not create design specs under `.agents/docs/design/` or another tracked
   docs directory.
 - Keep the design spec in the `specs/` surface while the design is being
@@ -44,14 +44,14 @@ If the spec fails any of those checks, fix it before proceeding.
 
 ## Cross-repo consumer check
 
-When the design produces a vendored asset, skill, or prompt that will be consumed by other repos (especially sister repos under `Z:\`), confirm the spec does not hardcode this repo's paths, commands, or conventions. Use consumer-canonical examples and avoid targets or file layouts that do not exist in the consumer's environment.
+When the design produces a vendored asset, skill, or prompt that will be consumed by other repos (especially sister or consumer repos installed from this marketplace), confirm the spec does not hardcode this repo's paths, commands, or conventions. Use consumer-canonical examples and avoid targets or file layouts that do not exist in the consumer's environment.
 
 ## Handoff to Planning
 
 Before handing the spec to a planning agent, assess whether it is already strong enough to avoid avoidable in-flight invention.
 
 Once the design is approved, write the implementation plan under the tracked
-`.agents/superpowers/plans/` surface. The plan is the task-ready handoff
+`.agents/plans/` surface. The plan is the task-ready handoff
 artifact; the committed design spec remains visible for provenance.
 
 - Rate the spec's handoff confidence honestly on a 0-10 scale

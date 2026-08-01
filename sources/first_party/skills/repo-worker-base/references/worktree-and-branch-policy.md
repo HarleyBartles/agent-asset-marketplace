@@ -19,7 +19,8 @@ checkout-git = git -C <current-checkout> rev-parse --path-format=absolute --git-
 main-checkout = parent(common-git)
 repository-name = basename(main-checkout)
 external-worktree-root = parent(main-checkout) / "_agent-worktrees" / repository-name
-external-scratch-root = parent(main-checkout) / "_agent-scratch" / repository-name / branch-name
+external-scratch-root = parent(main-checkout) / "_agents-scratch" / branch-name
+plan-scoped-scratch = external-scratch-root / <plan-basename>
 ~~~
 
 Run the superproject command first from the actual start path. Any non-empty

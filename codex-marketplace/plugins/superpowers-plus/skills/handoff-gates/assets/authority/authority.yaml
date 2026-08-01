@@ -8,11 +8,11 @@ authority:
   latest_check_url: https://github.com/HarleyBartles/agent-asset-marketplace
   revision: '2026-07-25'
   retrieved_at: '2026-07-25'
-  content_sha256: 82a1c050fdf69df1473f44ca07074e9af07b8890e6acd4b7e7992b0308e98b9a
+  content_sha256: ef713f8b71ffa9c971a8f1a4fca52effac5f24fcc10277355a024714cd7c326c
   license: MIT
   license_url: https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/LICENSE
 decomposition:
-  reconciled_against: 82a1c050fdf69df1473f44ca07074e9af07b8890e6acd4b7e7992b0308e98b9a
+  reconciled_against: ef713f8b71ffa9c971a8f1a4fca52effac5f24fcc10277355a024714cd7c326c
   references:
     - path: references/scope-notes.md
       source_sections:

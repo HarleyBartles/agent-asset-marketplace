@@ -11,7 +11,7 @@ This note applies to the active Codex projection of the first-party Superpowers+
 ## Projection contract
 
 - `superpowers-plus` is the first-party projection-lane bundle for the Superpowers+ workflow skill family.
-- The active plugin projects the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `requesting-branch-review`, `selecting-a-subagent`, `working-with-epics`).
+- The active plugin projects the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `requesting-code-review`, `selecting-a-subagent`, `working-with-epics`).
 - The retained `obra/superpowers` v6.2.0 MIT snapshot under `sources/third_party/superpowers/` is reference-only; it is not the editable surface and no adapter overlay is applied.
 - Editable custody lives in `sources/first_party/skills/<name>/`. When a Superpowers+ skill needs to change, edit the first-party source and regenerate the projection.
 - The repo-specific adaptation text lives only in the projection layer; the first-party source custody root is the editable surface and is not folded into the retained upstream snapshot.
