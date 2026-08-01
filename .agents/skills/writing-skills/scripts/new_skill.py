@@ -1,4 +1,7 @@
-"""Create custody-aware skill scaffolds without overwriting authored files."""
+"""Create custody-aware skill scaffolds without overwriting authored files.
+
+mixed: default mode writes scaffold files; --check reports what would be written.
+"""
 
 from __future__ import annotations
 
@@ -164,12 +167,18 @@ def scaffold(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--name", required=True)
-    parser.add_argument("--custody", required=True, choices=sorted(CUSTODIES))
-    parser.add_argument("--lane", required=True, choices=sorted(LANES))
-    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--name")
+    parser.add_argument("--custody", choices=sorted(CUSTODIES))
+    parser.add_argument("--lane", choices=sorted(LANES))
+    parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()
+    if args.check and not (args.name and args.custody and args.lane):
+        print("No scaffold requested; --check requires --name, --custody, and --lane for a dry run.")
+        return 0
+    missing = [arg for arg, value in (("--name", args.name), ("--custody", args.custody), ("--lane", args.lane)) if not value]
+    if missing:
+        parser.error(f"required: {', '.join(missing)}")
     try:
         repo_root = _resolve_cli_repo_root(Path.cwd().resolve())
         return scaffold(repo_root, args.name, args.custody, args.lane, args.check, allow_shared_checkout=args.allow_shared_checkout)

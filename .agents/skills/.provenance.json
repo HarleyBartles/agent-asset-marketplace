@@ -5,9 +5,7 @@
     "repo-worker-pack"
   ],
   "syncedSkills": 34,
-  "localSkills": [
-    "mark-skill-authoring"
-  ],
+  "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
     "sourcePath": "codex-marketplace/plugins"
@@ -38,5 +36,5 @@
       ]
     }
   ],
-  "syncedAt": "2026-08-01T13:22:18.151246"
+  "syncedAt": "2026-08-01T13:29:36.577347"
 }

@@ -6,21 +6,23 @@ publication handoff when authoring skills in the agent-asset-marketplace repo.
 ## Authoring route
 
 1. Use `writing-skills` for general skill TDD and discovery quality.
-2. Use `mark-skill-authoring` when the skill needs lane selection, custody
-   placement, source decomposition, scholarly citations, or scaffolding.
+2. Use `writing-skills/references/local-and-marketplace-custody.md` and
+   `writing-skills/references/source-grounded-authoring.md` when the skill needs
+   lane selection, custody placement, source decomposition, scholarly citations,
+   or scaffolding.
 3. Use this guide for repository paths, commands, generated-surface rules, and
    publication handoff.
 
 Scaffold a local skill with:
 
 ```text
-bash .agents/skills/mark-skill-authoring/scripts/new-skill.sh --name mark-example --custody local --lane first_party
+bash sources/first_party/skills/writing-skills/scripts/new-skill.sh --name mark-example --custody local --lane first_party
 ```
 
 Scaffold a marketplace-custodied source-backed skill with:
 
 ```text
-py -3 .agents/skills/mark-skill-authoring/scripts/new_skill.py --name ddd --custody marketplace --lane skills-with-source
+py -3 sources/first_party/skills/writing-skills/scripts/new_skill.py --name ddd --custody marketplace --lane skills-with-source
 ```
 
 ## Repository paths
