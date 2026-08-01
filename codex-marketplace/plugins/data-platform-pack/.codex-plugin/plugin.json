@@ -1,45 +1,44 @@
 {
-    "name":  "data-platform-pack",
-    "version":  "1.0.0",
-    "description":  "Codex marketplace bundle for first-party relational database engine guidance. Projects the database-engines skill with source-grounded PostgreSQL and SQLite documentation and selective MS-SQL guidance.",
-    "author":  {
-                   "name":  "Harley Bartles"
-               },
-    "homepage":  "https://github.com/HarleyBartles/agent-asset-marketplace",
-    "repository":  "https://github.com/HarleyBartles/agent-asset-marketplace",
-    "license":  "MIT",
-    "rights":  "Contains first-party database-engines guidance with vendored PostgreSQL and SQLite documentation; see SOURCE.md and references/bundle-manifest.json for source custody and attribution.",
-    "keywords":  [
-                     "codex",
-                     "marketplace",
-                     "data",
-                     "database",
-                     "platform",
-                     "postgresql",
-                     "sqlite",
-                     "mssql",
-                     "engines",
-                     "skills",
-                     "projection"
-                 ],
-    "skills":  "./skills/",
-    "interface":  {
-                      "displayName":  "Data Platform Pack",
-                      "shortDescription":  "Relational database engine guidance",
-                      "longDescription":  "A repo-local Codex plugin bundle that projects the first-party database-engines skill into an installable marketplace shape for PostgreSQL, SQLite, and selectable MS-SQL relational database guidance.",
-                      "developerName":  "Harley Bartles",
-                      "category":  "Productivity",
-                      "capabilities":  [
-                                           "Interactive",
-                                           "Write"
-                                       ],
-                      "defaultPrompt":  [
-                                            "Inspect the Data Platform Pack bundle and source map.",
-                                            "Use the bundle to review the first-party database-engines skill projection.",
-                                            "Compare the bundle versioning against the first-party source custody in codex-marketplace/plugins/data-platform-pack/skills/database-engines."
-                                        ],
-                      "brandColor":  "#0D9488",
-                      "composerIcon":  "./assets/icon.svg",
-                      "logo":  "./assets/icon.svg"
-                  }
+    "name": "data-platform-pack",
+    "version": "1.0.0",
+    "description": "Codex marketplace bundle for first-party relational database engine guidance. Projects the database-engines skill with source-grounded PostgreSQL and SQLite documentation and selective MS-SQL guidance.",
+    "author": {
+        "name": "Harley Bartles"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "rights": "Contains first-party database-engines guidance with vendored PostgreSQL and SQLite documentation; see SOURCE.md and references/bundle-manifest.json for source custody and attribution.",
+    "keywords": [
+        "codex",
+        "marketplace",
+        "data",
+        "database",
+        "platform",
+        "postgresql",
+        "sqlite",
+        "mssql",
+        "engines",
+        "skills"
+    ],
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Data Platform Pack",
+        "shortDescription": "Relational database engine guidance",
+        "longDescription": "A repo-local Codex plugin bundle that distributes the first-party database-engines skill into an installable marketplace shape for PostgreSQL, SQLite, and selectable MS-SQL relational database guidance.",
+        "developerName": "Harley Bartles",
+        "category": "Productivity",
+        "capabilities": [
+            "Interactive",
+            "Write"
+        ],
+        "defaultPrompt": [
+            "Inspect the Data Platform Pack bundle and bundle manifest.",
+            "Use the bundle to review the first-party database-engines skill plugin.",
+            "Compare the bundle versioning against the first-party source custody in codex-marketplace/plugins/data-platform-pack/skills/database-engines."
+        ],
+        "brandColor": "#0D9488",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+    }
 }

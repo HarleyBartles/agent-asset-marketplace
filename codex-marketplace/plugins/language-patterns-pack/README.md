@@ -15,4 +15,4 @@ This bundle projects first-party source custody into the Codex marketplace.
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip` and can be installed directly from those artifacts.
+Skills install directly from the Codex plugin root under this plugin.

@@ -1,39 +1,39 @@
 {
-  "name": "unslop-plus",
-  "version": "1.0.0",
-  "description": "Anti-slop engine and profile router for software development workflows.",
-  "author": {
-    "name": "Asset Marketplace",
-    "url": "https://github.com/HarleyBartles/agent-asset-marketplace"
-  },
-  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "license": "MIT",
-  "keywords": [
-    "skill",
-    "unslop-engine",
-    "unslop-profiles",
-    "profile",
-    "validation",
-    "code-review",
-    "debugging",
-    "testing",
-    "architecture"
-  ],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Unslop+",
-    "shortDescription": "Anti-slop engine and profile router for software development workflows.",
-    "longDescription": "Asset Marketplace-owned unslop-plus package. Use $unslop-engine to generate a domain-specific anti-slop profile, or $unslop-profiles to apply the right existing profile for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, or cleanup-custody workflows.",
-    "developerName": "Asset Marketplace",
-    "category": "Productivity",
-    "capabilities": [],
-    "websiteURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
-    "defaultPrompt": [
-      "Use $unslop-profiles to apply the right anti-slop profile for the current workflow, or $unslop-engine to generate a new domain-specific profile."
+    "name": "unslop-plus",
+    "version": "1.0.0",
+    "description": "Anti-slop engine and profile router for software development workflows.",
+    "author": {
+        "name": "Asset Marketplace",
+        "url": "https://github.com/HarleyBartles/agent-asset-marketplace"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "keywords": [
+        "skill",
+        "unslop-engine",
+        "unslop-profiles",
+        "profile",
+        "validation",
+        "code-review",
+        "debugging",
+        "testing",
+        "architecture"
     ],
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg",
-    "screenshots": []
-  }
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Unslop+",
+        "shortDescription": "Anti-slop engine and profile router for software development workflows.",
+        "longDescription": "Asset Marketplace-owned unslop-plus package. Use $unslop-engine to generate a domain-specific anti-slop profile, or $unslop-profiles to apply the right existing profile for writing, technical-writing, implementation-plans, code-review, worker-returns, debugging, frontend-react, frontend-ui, api-design, architecture, testing, security-review, or cleanup-custody workflows.",
+        "developerName": "Asset Marketplace",
+        "category": "Productivity",
+        "capabilities": [],
+        "websiteURL": "https://github.com/HarleyBartles/agent-asset-marketplace",
+        "defaultPrompt": [
+            "Use $unslop-profiles to apply the right anti-slop profile for the current workflow, or $unslop-engine to generate a new domain-specific profile."
+        ],
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg",
+        "screenshots": []
+    }
 }

@@ -1,42 +1,41 @@
 {
-  "name": "research-pack",
-  "version": "1.0.0",
-  "description": "First-party research-ops skill for Codex marketplace projection.",
-  "author": {
-    "name": "Harley Bartles"
-  },
-  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "license": "MIT",
-  "keywords": [
-    "codex",
-    "marketplace",
-    "research",
-    "evidence",
-    "source",
-    "synthesis",
-    "citation",
-    "skills",
-    "projection"
-  ],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Research Pack",
-    "shortDescription": "Evidence-first research workflows and citation practices.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects the first-party research-ops skill into a compact home for source-first research, evidence gathering, and reproducible synthesis.",
-    "developerName": "Harley Bartles",
-    "category": "Productivity",
-    "capabilities": [
-      "Interactive",
-      "Write"
+    "name": "research-pack",
+    "version": "1.0.0",
+    "description": "First-party research-ops skill for Codex marketplace plugin.",
+    "author": {
+        "name": "Harley Bartles"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "keywords": [
+        "codex",
+        "marketplace",
+        "research",
+        "evidence",
+        "source",
+        "synthesis",
+        "citation",
+        "skills"
     ],
-    "defaultPrompt": [
-      "Inspect the Research Pack bundle and source map.",
-      "Use the bundle to review the research-ops skill.",
-      "Compare the bundle against the first-party source custody."
-    ],
-    "brandColor": "#16A34A",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg"
-  }
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Research Pack",
+        "shortDescription": "Evidence-first research workflows and citation practices.",
+        "longDescription": "A repo-local Codex marketplace bundle that distributes the first-party research-ops skill into a compact home for source-first research, evidence gathering, and reproducible synthesis.",
+        "developerName": "Harley Bartles",
+        "category": "Productivity",
+        "capabilities": [
+            "Interactive",
+            "Write"
+        ],
+        "defaultPrompt": [
+            "Inspect the Research Pack bundle and bundle manifest.",
+            "Use the bundle to review the research-ops skill.",
+            "Compare the bundle against the first-party source custody."
+        ],
+        "brandColor": "#16A34A",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+    }
 }

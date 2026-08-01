@@ -14,4 +14,4 @@ This plugin bundle projects the first-party .NET ecosystem skill into an install
 
 ## Install shape
 
-The installable skill zips are generated under `generated/skill-zips/<skill-name>.zip`.
+Skills install directly from the Codex plugin root under this plugin.
