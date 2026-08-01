@@ -17,4 +17,4 @@ navigation.
 - `INDEX.md` for docs-owned doctrine surfaces
 - `repo-guide-policy.md` for this repo's mapping to the cross-repo guide standard
 - `../guides/AGENTS.md` for guide-stage routing
-- `../../docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
+- `../../.devin/rules/docs-contracts.md` for contract-doc routing when docs-owned contracts are the target

@@ -46,7 +46,7 @@ DEFAULT_REPO_INDEX = {
             "path": "codex-marketplace",
             "purpose": "Codex marketplace source root and export manifest surface.",
             "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/codex-marketplace.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
@@ -68,7 +68,7 @@ DEFAULT_REPO_INDEX = {
             "path": "codex-marketplace/plugins",
             "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques.",
             "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
@@ -79,7 +79,7 @@ DEFAULT_REPO_INDEX = {
             "path": "codex-marketplace/plugins/frontend-pack",
             "purpose": "Browser frontend implementation guidance with shared architecture, DOM UI, React-hosted 3D, and frontend QA surfaces.",
             "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
@@ -90,7 +90,7 @@ DEFAULT_REPO_INDEX = {
             "path": "codex-marketplace/plugins/superpowers-plus",
             "purpose": "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+.",
             "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": "codex-marketplace/plugins/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
@@ -102,7 +102,7 @@ DEFAULT_REPO_INDEX = {
             "path": "sources/third_party",
             "purpose": "Third-party source custody for the retained unslop, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
             "surface_kind": "vendored",
-            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/third-party.md",
             "guidance_scope": "repo-owned-guidance",
             "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
             "key_validation_scripts": [
@@ -120,7 +120,7 @@ DEFAULT_REPO_INDEX = {
                 "still requires them."
             ),
             "surface_kind": "vendored",
-            "nearest_scoped_agents_md": "sources/third_party/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/third-party.md",
             "guidance_scope": "repo-owned-guidance",
             "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
             "key_validation_scripts": [
@@ -133,7 +133,7 @@ DEFAULT_REPO_INDEX = {
             "path": "provenance",
             "purpose": "Retained provenance notes, trust records, and custody evidence.",
             "surface_kind": "provenance",
-            "nearest_scoped_agents_md": "provenance/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/provenance.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],
@@ -143,7 +143,7 @@ DEFAULT_REPO_INDEX = {
             "path": "docs/unslop/profile.md",
             "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": "docs/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/docs.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],
@@ -153,7 +153,7 @@ DEFAULT_REPO_INDEX = {
             "path": ".agents/plans",
             "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".agents/plans/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/plans.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],
@@ -173,7 +173,7 @@ DEFAULT_REPO_INDEX = {
             "path": "tools",
             "purpose": "Repository validation and generation scripts.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": "tools/AGENTS.md",
+            "nearest_scoped_agents_md": ".devin/rules/tools.md",
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
                 "tools/validate_repo_index.py",
@@ -317,13 +317,13 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             updated_zone = dict(zone)
             updated_zone["name"] = "superpowers-plans"
             updated_zone["path"] = ".agents/plans"
-            updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
+            updated_zone["nearest_scoped_agents_md"] = ".devin/rules/plans.md"
             normalized_zones.append(updated_zone)
             continue
         if zone.get("name") == "superpowers-plans":
             updated_zone = dict(zone)
             updated_zone["path"] = ".agents/plans"
-            updated_zone["nearest_scoped_agents_md"] = ".agents/plans/AGENTS.md"
+            updated_zone["nearest_scoped_agents_md"] = ".devin/rules/plans.md"
             normalized_zones.append(updated_zone)
             continue
         if zone.get("name") == "superpowers-specs":
@@ -341,20 +341,6 @@ def _normalize_zones(zones: list[dict]) -> list[dict]:
             normalized_zones.append(updated_zone)
             continue
         normalized_zones.append(zone)
-    agents_md_replacements = {
-        "codex-marketplace/AGENTS.md": ".devin/rules/codex-marketplace.md",
-        "codex-marketplace/plugins/AGENTS.md": ".devin/rules/codex-plugins.md",
-        "sources/third_party/AGENTS.md": ".devin/rules/third-party.md",
-        "provenance/AGENTS.md": ".devin/rules/provenance.md",
-        "docs/AGENTS.md": ".devin/rules/docs.md",
-        ".agents/plans/AGENTS.md": ".devin/rules/plans.md",
-        "tools/AGENTS.md": ".devin/rules/tools.md",
-    }
-    for zone in normalized_zones:
-        if isinstance(zone, dict):
-            nearest = zone.get("nearest_scoped_agents_md")
-            if nearest in agents_md_replacements:
-                zone["nearest_scoped_agents_md"] = agents_md_replacements[nearest]
     return normalized_zones
 
 

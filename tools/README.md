@@ -2,7 +2,7 @@
 
 Small helper scripts belong here.
 
-Agent-facing policy for this directory lives in [AGENTS.md](AGENTS.md).
+Agent-facing policy for this directory lives in [.devin/rules/tools.md](../.devin/rules/tools.md).
 
 Canonical task runner:
 

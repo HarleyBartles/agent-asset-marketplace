@@ -28,13 +28,15 @@ MAX_ROOT_LINES = 55
 
 def main() -> int:
     result = subprocess.run(
-        ["git", "ls-files", "AGENTS.md", "**/AGENTS.md"],
+        ["git", "ls-files", "-z"],
         cwd=ROOT,
         capture_output=True,
         text=True,
         check=True,
     )
-    agents_files = [line for line in result.stdout.splitlines() if line.strip()]
+    agents_files = [
+        p for p in result.stdout.split("\0") if p and p.endswith("AGENTS.md")
+    ]
 
     disallowed = [p for p in agents_files if p not in ALLOWED_AGENTS_MD]
     if disallowed:
