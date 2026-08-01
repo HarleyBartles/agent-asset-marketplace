@@ -42,6 +42,7 @@ Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that ma
 | The repo's local guide mappings | `.agents/docs/repo-guide-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
 | Skill-bundled script CLI contract failures | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md) |
+| Vendor subagent profile deployment | [references/vendor-profile-deployment.md](references/vendor-profile-deployment.md) |
 
 ## Composition contract
 

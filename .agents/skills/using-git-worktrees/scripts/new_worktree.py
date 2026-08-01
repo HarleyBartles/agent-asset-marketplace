@@ -398,7 +398,10 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--base-ref",
         default=None,
-        help="base ref for the new branch (default: origin/main, or HEAD if origin/main is unavailable; read-only during --check)",
+        help=(
+            "base ref for the new branch (default: origin/main, or HEAD if origin/main is unavailable; "
+            "read-only during --check)"
+        ),
     )
     parser.add_argument(
         "--no-skill-refresh",
