@@ -294,7 +294,11 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 
 - [ ] **Step 1: Define the packaging surface.**
 
-  Decide whether vendor profiles live under `assets/profiles/` inside a pack or in a dedicated `vendor-profiles/` surface. Document the decision in `selecting-a-subagent/references/vendor-profile-packaging.md`.
+  Document the packaging surface in `sources/first_party/skills/selecting-a-subagent/references/vendor-profile-packaging.md`:
+
+  - Vendor profiles live under `assets/profiles/` inside a pack, e.g. `codex-marketplace/plugins/<pack>/assets/profiles/<name>.md`.
+  - `refreshing-installed-skills` copies `*.md` files from `assets/profiles/` to `.agents/agents/` (and, if applicable, `.devin/agents/` for repo-local overrides) and records them in `.agents/skills/.provenance.json` under a `vendorProfiles` array.
+  - Consumer search path order stays: `.devin/agents/` → `.agents/agents/` → `~/.config/devin/agents/`.
 
 - [ ] **Step 2: Update `selecting-a-subagent`.**
 
@@ -302,7 +306,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 
 - [ ] **Step 3: Update `refreshing-installed-skills`.**
 
-  Extend the refresh script to copy any `profiles/` or `assets/profiles/` directory from installed plugins into the correct consumer search path (`.agents/agents/`, `.devin/agents/`, or the platform equivalent) and record them in `.provenance.json`.
+  Extend the refresh script to copy `assets/profiles/*.md` from installed plugins into the correct consumer search path (`.agents/agents/`, `.devin/agents/`, or the platform equivalent) and record them in `.provenance.json` under a `vendorProfiles` array.
 
 - [ ] **Step 4: Add a sample vendor profile.**
 
