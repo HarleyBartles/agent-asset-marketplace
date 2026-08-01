@@ -96,12 +96,12 @@ The business-as-usual target for adding or updating a skill is:
 
 1. **Write source** — add or edit the skill under `codex-marketplace/plugins/<plugin>/skills/`
    or snapshot it under `provenance/`.
-2. **Add manifest entry** — declare the entry in the pack's
-   `codex-marketplace/custody-pack-registry.json` bundle `entries` with
+2. **Add bundle entry** — declare the entry in the pack's
+   `references/bundle-manifest.json` `entries` with
    `canonical_name`, `source_category`, `content_mode`, `source_family`,
    `canonical_source_path` (directory-level), and `local_path`.
-3. **Regenerate projection** — run `tools/run marketplace --apply` to update
-   bundle manifests, source maps, provenance maps, projected skill trees, and
+3. **Regenerate plugin** — run `py -3 tools/run.py marketplace --apply` to update
+   bundle manifests, plugin manifests, installed skill trees, and
    marketplace exports.
 4. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
 
@@ -122,6 +122,6 @@ never silently skips a plugin.
 
 ## Zip projection (retired)
 
-Flat `skill.zip` exports under `generated/skill-zips/` and the `house-skills`
-mega-pack have been removed. The Codex plugin tree under
-`codex-marketplace/plugins/` is the canonical install surface.
+Flat skill zip exports and the `house-skills` mega-pack have been removed.
+The Codex plugin tree under `codex-marketplace/plugins/` is the canonical
+install surface.

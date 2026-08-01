@@ -11,7 +11,7 @@ The package adapts the upstream idea of sampling outputs, detecting repetitive A
 - Upstream repo: `mshumer/unslop`
 - Pinned commit: `edcb62386d129c65e4395f0cfcc9168eb1ba2148`
 - License: MIT
-- Retained source record: previously `sources/third_party/unslop/upstream/` (removed as live custody); upstream is now retained by provenance record and the adapted plugin.
+- Retained source record: previously the deleted third-party source tree `unslop/upstream/`` (removed as live custody); upstream is now retained by provenance record and the adapted plugin.
 - Marketplace package: `codex-marketplace/plugins/unslop-plus/`
 
 ## Adaptation Notes

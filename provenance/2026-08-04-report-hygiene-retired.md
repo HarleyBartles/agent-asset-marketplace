@@ -12,7 +12,7 @@ The `report-hygiene` reference was originally a `base-doctrine/references/report
 
 ## New canonical location
 
-`sources/first_party/skills/writing-with-clarity/references/report-hygiene-checklist.md`
+the deleted first-party skill tree `writing-with-clarity/references/report-hygiene-checklist.md``
 
 ## Updated routing
 

@@ -25,9 +25,7 @@ temp/
 *.tar
 *.tar.gz
 *.zip
-# Vendored first-party source snapshots are source custody, not build noise
-!sources/first_party/**/assets/authority/reference-source/**/*.tar.gz
-!sources/first_party/**/assets/authority/reference-source/**/*.zip
+# Vendored source snapshots in plugin authority are source custody, not build noise
 !codex-marketplace/plugins/**/assets/authority/reference-source/**/*.tar.gz
 !codex-marketplace/plugins/**/assets/authority/reference-source/**/*.zip
 
