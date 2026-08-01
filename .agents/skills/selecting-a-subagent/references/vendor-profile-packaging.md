@@ -32,9 +32,12 @@ parallel tree.
 A consumer worktree uses the same precedence documented in
 `devin-desktop-profile.md`:
 
-1. Repo-local override: `.devin/agents/`
-2. Plugin-local (from installed packs): `.agents/agents/`
+1. User/repo-local override: `.devin/agents/` (user-managed; never created by skills)
+2. Plugin-local (from installed packs): `.agents/agents/` (the canonical marketplace surface)
 3. User-global: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows)
+
+No skill should create or pressure a consumer to create `.devin/agents/`.
+That directory is reserved for repo-local user-managed overrides.
 
 ## Provenance
 

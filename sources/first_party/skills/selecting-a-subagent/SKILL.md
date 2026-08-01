@@ -93,19 +93,22 @@ reviewer profile. The reviewer subagent does not resolve the diff itself.
 
 Marketplace packs can ship third-party subagent `.md` profile assets under
 `assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into the consumer's agent search path (`.agents/agents/` and, when
-the platform config supports it, `.devin/agents/`) and records them in
-`.agents/skills/.provenance.json` under a `vendorProfiles` array.
+profiles into the consumer's agent search path at `.agents/agents/` and
+records them in `.agents/skills/.provenance.json` under a `vendorProfiles`
+array.
 
 When choosing a profile, apply this precedence:
 
-1. Repo-local override (`.devin/agents/` or a hand-authored `.agents/agents/`
-   file) wins.
+1. Repo-local override (a hand-authored `.agents/agents/<name>.md` or a
+   `.devin/agents/<name>.md` user-local override) wins.
 2. Vendor profile installed from a marketplace pack (`.agents/agents/`).
 3. Built-in custom profiles documented in
    `references/devin-desktop-profile.md` and the dispatch profiles above.
 4. User-global profiles (`~/.config/devin/agents/` or
    `%APPDATA%\devin\agents\` on Windows).
+
+No skill should create or pressure the consumer to create `.devin/agents/`.
+`.agents/agents/` is the canonical surface for plugin-installed profiles.
 
 Prefer a vendor profile when a pack ships one that matches the task role
 (e.g. a pack-provided `reviewer.md`) and no repo-local override exists. Prefer

@@ -80,11 +80,10 @@ It also records:
 
 ## Vendor subagent profiles
 
-For each installed plugin, the core also looks for `assets/profiles/*.md` inside the plugin root and copies those profiles into the consumer's agent search path:
+For each installed plugin, the core also looks for `assets/profiles/*.md` inside the plugin root and copies those profiles into the consumer's agent search path at `.agents/agents/<profile>.md`.
 
-- `.agents/agents/<profile>.md` — always written when profiles are present.
-- `.devin/agents/<profile>.md` — also written when `.devin/agents/` already exists, so the Devin Desktop search path documented in `selecting-a-subagent` finds them.
+Orphan vendor profiles (files in `.agents/agents/` that no installed plugin contributes) are removed on refresh, mirroring the orphan-skill cleanup. The `vendorProfiles` provenance array records which plugin installed which profiles, alongside the existing `localSkills` and `syncedPlugins` fields.
 
-Orphan vendor profiles (files in those directories that no installed plugin contributes) are removed on refresh, mirroring the orphan-skill cleanup. The `vendorProfiles` provenance array records which plugin installed which profiles, alongside the existing `localSkills` and `syncedPlugins` fields.
+This skill does not create, write, or remove `.devin/agents/`. That directory is for repo-local user-managed overrides and is outside the marketplace installer's scope.
 
 Provenance is now rewritten when the installed plugin list, the local skill inventory, or the marketplace metadata changes, even if no marketplace skill files were copied. Because of this, `--check` may report a stale provenance file and `--apply` will update it without unnecessary skill copying.

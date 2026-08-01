@@ -275,10 +275,10 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
 
 
 def _vendor_profiles_are_current(installed_plugins: list[dict[str, Any]]) -> bool:
-    """Return True when every pack vendor profile is installed and up to date.
+    """Return True when every pack vendor profile is installed in `.agents/agents/` and up to date.
 
-    Only `.agents/agents/` is checked here; `.devin/agents/` is a secondary
-    mirror that is only written when the directory already exists.
+    Repo-local `.devin/agents/` overrides are user-managed and are never
+    checked, written, or removed by this script.
     """
     if not AGENTS_AGENTS_PATH.is_dir():
         return False
@@ -563,7 +563,6 @@ def _clean_orphan_skills(check_mode: bool = False, synced_skill_names: set[str] 
 
 
 AGENTS_AGENTS_PATH = ROOT / ".agents" / "agents"
-DEVIN_AGENTS_PATH = ROOT / ".devin" / "agents"
 
 # Files that may share a directory with vendor profiles but are not profiles
 # themselves (e.g. generated mesh navigation). The installer and orphan cleaner
@@ -596,10 +595,9 @@ def _install_plugin_vendor_profiles(
 ) -> bool:
     """Copy `assets/profiles/*.md` from a plugin into the consumer agent search path.
 
-    Profiles are copied to `.agents/agents/`. When `.devin/agents/` already
-    exists (i.e. the consumer's platform config supports Devin Desktop
-    profiles), they are also copied there so the Devin Desktop search path
-    documented in `selecting-a-subagent` finds them.
+    Profiles are copied to `.agents/agents/`. Repo-local overrides in
+    `.devin/agents/` are user-managed and are never written or removed by this
+    script.
     """
     profiles_dir = _vendor_profile_source_dir(plugin)
     if profiles_dir is None:
@@ -618,27 +616,22 @@ def _install_plugin_vendor_profiles(
     if not profile_files:
         return False
 
-    dest_dirs = [AGENTS_AGENTS_PATH]
-    if DEVIN_AGENTS_PATH.is_dir():
-        dest_dirs.append(DEVIN_AGENTS_PATH)
-
     installed_any = False
     copied_names: list[str] = []
 
     for profile_file in profile_files:
         copied_names.append(profile_file.name)
-        for dest_dir in dest_dirs:
-            dest_file = dest_dir / profile_file.name
-            if check_mode:
-                if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
-                    print(f"CHECK: Would install vendor profile: {dest_file.relative_to(ROOT)}")
-                    installed_any = True
-            else:
-                dest_dir.mkdir(parents=True, exist_ok=True)
-                if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
-                    shutil.copy2(profile_file, dest_file)
-                    print(f"Installed vendor profile: {dest_file.relative_to(ROOT)}")
-                    installed_any = True
+        dest_file = AGENTS_AGENTS_PATH / profile_file.name
+        if check_mode:
+            if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
+                print(f"CHECK: Would install vendor profile: {dest_file.relative_to(ROOT)}")
+                installed_any = True
+        else:
+            AGENTS_AGENTS_PATH.mkdir(parents=True, exist_ok=True)
+            if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
+                shutil.copy2(profile_file, dest_file)
+                print(f"Installed vendor profile: {dest_file.relative_to(ROOT)}")
+                installed_any = True
 
     # Record the installed profile names for this plugin. The last plugin to
     # contribute a given name wins in the consumer tree; provenance records the
@@ -651,23 +644,19 @@ def _clean_orphan_vendor_profiles(
     check_mode: bool = False,
     installed_profile_names: set[str] | None = None,
 ) -> bool:
-    """Remove vendor profiles that no longer belong to any installed plugin.
+    """Remove vendor profiles in `.agents/agents/` that no longer belong to any installed plugin.
 
-    Only `.agents/agents/` and `.devin/agents/` files that this script would
-    own are considered. A repo-local override with the same name as a vendor
-    profile is treated as a vendor profile by this cleaner; consumers who need
-    a stable repo-local override should keep it under `.devin/agents/` only
-    and avoid installing the same name from a pack, or accept the overwrite
-    risk.
+    This cleaner only touches the `.agents/agents/` directory installed by this
+    script. Repo-local overrides in `.devin/agents/` are user-managed and are
+    never created, modified, or removed here.
     """
     if installed_profile_names is None:
         installed_profile_names = set()
 
     cleaned_any = False
-    for dest_dir in (AGENTS_AGENTS_PATH, DEVIN_AGENTS_PATH):
-        if not dest_dir.is_dir():
-            continue
-        for profile_file in sorted(dest_dir.iterdir()):
+    if not AGENTS_AGENTS_PATH.is_dir():
+        return cleaned_any
+    for profile_file in sorted(AGENTS_AGENTS_PATH.iterdir()):
             if not _is_vendor_profile_file(profile_file):
                 continue
             if profile_file.name in installed_profile_names:
