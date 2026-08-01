@@ -30,11 +30,11 @@ STAGE_BASELINE_OWNERS = {
     "requesting-code-review": "code-review-baseline.md",
 }
 
-STAGE_GUIDES = (
-    "design-guide.md",
-    "planning-guide.md",
-    "implementing-guide.md",
-    "code-review-guide.md",
+STAGE_RUNBOOKS = (
+    "design.md",
+    "planning.md",
+    "implementing.md",
+    "code-review.md",
 )
 
 MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
@@ -174,11 +174,11 @@ def test_worktree_policy_uses_portable_resolution_and_scratch_conventions():
 
 
 def test_consuming_repository_stage_guides_use_canonical_agents_guides_home():
-    canonical = REPO_ROOT / ".agents" / "guides"
+    canonical = REPO_ROOT / ".agents" / "runbooks"
     legacy = REPO_ROOT / ".agents" / "docs" / "guides"
 
     assert not legacy.exists(), "the retired .agents/docs/guides home must not remain"
-    missing = [name for name in STAGE_GUIDES if not (canonical / name).is_file()]
+    missing = [name for name in STAGE_RUNBOOKS if not (canonical / name).is_file()]
     assert not missing, f"missing canonical stage guides: {missing}"
 
 
@@ -277,14 +277,14 @@ def test_portable_resolution_rejects_submodule_even_with_shared_override(tmp_pat
 
 
 def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
-    guide_root = REPO_ROOT / ".agents" / "guides"
+    runbooks_root = REPO_ROOT / ".agents" / "runbooks"
     link_surfaces = [
-        *sorted(guide_root.glob("*.md")),
+        *sorted(runbooks_root.glob("*.md")),
         REPO_ROOT / ".agents" / "INDEX.md",
         REPO_ROOT / ".agents" / "AGENTS.md",
         REPO_ROOT / ".agents" / "docs" / "INDEX.md",
         REPO_ROOT / ".agents" / "docs" / "AGENTS.md",
-        guide_root / "AGENTS.md",
+        runbooks_root / "AGENTS.md",
         REPO_ROOT / "tools" / "AGENTS.md",
     ]
     for path in link_surfaces:
@@ -294,17 +294,17 @@ def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
         REPO_ROOT / ".agents" / "AGENTS.md": (
             REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
             REPO_ROOT / ".agents" / "docs" / "INDEX.md",
-            guide_root / "AGENTS.md",
+            runbooks_root / "AGENTS.md",
         ),
         REPO_ROOT / ".agents" / "docs" / "AGENTS.md": (
             REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
-            guide_root / "AGENTS.md",
+            runbooks_root / "AGENTS.md",
         ),
-        guide_root / "AGENTS.md": (
+        runbooks_root / "AGENTS.md": (
             REPO_ROOT / ".agents" / "docs" / "mesh-policy.md",
-            guide_root / "INDEX.md",
+            runbooks_root / "INDEX.md",
         ),
-        REPO_ROOT / "tools" / "AGENTS.md": tuple(guide_root / name for name in STAGE_GUIDES),
+        REPO_ROOT / "tools" / "AGENTS.md": tuple(runbooks_root / name for name in STAGE_RUNBOOKS),
     }
     for router, targets in routed_targets.items():
         assert router.is_file(), f"missing router: {router.relative_to(REPO_ROOT)}"
@@ -313,8 +313,8 @@ def test_moved_guides_and_mesh_agent_references_have_resolvable_local_targets():
 
 
 def test_marketplace_generation_guide_uses_supported_mesh_check_mode():
-    guide = REPO_ROOT / ".agents" / "guides" / "marketplace-generation-guide.md"
-    text = guide.read_text(encoding="utf-8")
+    runbook = REPO_ROOT / ".agents" / "runbooks" / "marketplace-generation.md"
+    text = runbook.read_text(encoding="utf-8")
     assert "generate_index_mesh.py --validate" not in text
     assert text.count("generate_index_mesh.py --check") >= 2
 

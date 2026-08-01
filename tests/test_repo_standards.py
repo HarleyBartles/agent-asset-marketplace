@@ -90,18 +90,18 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
     repo.mkdir()
     _init_git_repo(repo)
 
-    guides = repo / ".agents" / "guides"
-    guides.mkdir(parents=True)
+    runbooks = repo / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
     guide_files = {
-        "publication-guide.md": "# Publication proof\n",
-        "testing-guide.md": "# Testing instructions\n",
-        "code-style-guide.md": "# Code style guidelines\n",
-        "code-review-guide.md": "# Review guidelines\n",
-        "pr-guide.md": "# PR instructions\n",
-        "security-guide.md": "# Security considerations\n",
+        "publication.md": "# Publication proof\n",
+        "testing.md": "# Testing instructions\n",
+        "code-style.md": "# Code style guidelines\n",
+        "code-review.md": "# Review guidelines\n",
+        "pr.md": "# PR instructions\n",
+        "security.md": "# Security considerations\n",
     }
     for name, content in guide_files.items():
-        (guides / name).write_text(content, encoding="utf-8", newline="\n")
+        (runbooks / name).write_text(content, encoding="utf-8", newline="\n")
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
 
     agents = repo / "AGENTS.md"
@@ -113,14 +113,14 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "## Routing pointers\n\n"
         "- [Repository purpose](AGENTS.md)\n"
         "- [Source-of-truth split](AGENTS.md)\n"
-        "- [Publication proof](.agents/guides/publication-guide.md)\n"
+        "- [Publication proof](.agents/runbooks/publication.md)\n"
         "- [Build and test commands](AGENTS.md)\n"
-        "- [Testing instructions](.agents/guides/testing-guide.md)\n"
-        "- [Code style guidelines](.agents/guides/code-style-guide.md)\n"
-        "- [Review guidelines](.agents/guides/code-review-guide.md)\n"
-        "- [PR instructions](.agents/guides/pr-guide.md)\n"
+        "- [Testing instructions](.agents/runbooks/testing.md)\n"
+        "- [Code style guidelines](.agents/runbooks/code-style.md)\n"
+        "- [Review guidelines](.agents/runbooks/code-review.md)\n"
+        "- [PR instructions](.agents/runbooks/pr.md)\n"
         "- [Contributing](CONTRIBUTING.md)\n"
-        "- [Security considerations](.agents/guides/security-guide.md)\n"
+        "- [Security considerations](.agents/runbooks/security.md)\n"
         "- [Routing pointers](AGENTS.md)\n"
         "- [Maintenance responsibility](AGENTS.md)\n\n"
         "## Maintenance responsibility\n\nMaintainer.\n",
@@ -698,7 +698,7 @@ def test_scaffold_repo_guide_policy_check_customized_passes(tmp_path: Path) -> N
         "This repository uses repo-standards.\n\n"
         "## Standard-to-local mapping\n\n"
         "| Standard guide | Local path |\n|---|---|\n"
-        "| code-review-guide.md | `.agents/guides/code-review-guide.md` |\n\n"
+        "| code-review.md | `.agents/runbooks/code-review.md` |\n\n"
         "## Exceptions\n\n"
         "None.\n",
         encoding="utf-8",

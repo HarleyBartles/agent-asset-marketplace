@@ -62,20 +62,18 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 </SUBAGENT-STOP>
 
 <EXTREMELY-IMPORTANT>
-If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
+At the start of every conversation, invoke `/using-superpowers-plus` first. It is the sole first-turn router.
 
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
-
-This is not negotiable. You cannot rationalize your way out of this.
+Do not invoke other skills before `/using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow.
 </EXTREMELY-IMPORTANT>
 
 ## The Rule
 
-**Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it.
+**Invoke `/using-superpowers-plus` before any response or action.** — including clarifying questions, exploring the codebase, or checking files. It will resolve the owning skill for the request.
 
-**Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
+**Then announce "Using [skill] to [purpose]" and follow that skill exactly.** If it has a checklist, create a todo per item. Do not load additional skills unless the current skill explicitly leaves a decision unresolved and another skill directly owns it.
 
-Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
+**Before entering plan mode:** `/using-superpowers-plus` will route to `/brainstorming` if the request needs shaping, or directly to `/writing-plans` if an approved spec already exists.
 
 ## Skill Priority
 

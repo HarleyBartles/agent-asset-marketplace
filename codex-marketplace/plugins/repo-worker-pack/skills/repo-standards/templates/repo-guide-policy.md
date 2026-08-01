@@ -1,21 +1,21 @@
 # Repo Guide Policy
 
-This repo follows the `repo-standards` skill. Invoke `/repo-standards` before reading, creating, or updating any repo guide or repo-shape surface.
+This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` first to route to the relevant stage skill, then invoke `/repo-standards` when the task touches repo shape, runbook layout, or scaffolds.
 
 ## Standard-to-local mapping
 
 | Standard guide | Local path | Status |
 |---|---|---|
-| design-guide.md | `.agents/guides/design-guide.md` | required |
-| planning-guide.md | `.agents/guides/planning-guide.md` | required |
-| implementing-guide.md | `.agents/guides/implementing-guide.md` | required |
-| code-review-guide.md | `.agents/guides/code-review-guide.md` | required |
-| marketplace-generation-guide.md | `.agents/guides/marketplace-generation-guide.md` |  |
-| skill-authoring-guide.md | `.agents/guides/skill-authoring-guide.md` |  |
-| security-guide.md | `.agents/guides/security-guide.md` |  |
-| testing-guide.md | `.agents/guides/testing-guide.md` |  |
-| pr-guide.md | `.agents/guides/pr-guide.md` | required |
-| code-style-guide.md | `.agents/guides/code-style-guide.md` |  |
+| design.md | `.agents/runbooks/design.md` | required |
+| planning.md | `.agents/runbooks/planning.md` | required |
+| implementing.md | `.agents/runbooks/implementing.md` | required |
+| code-review.md | `.agents/runbooks/code-review.md` | required |
+| marketplace-generation.md | `.agents/runbooks/marketplace-generation.md` |  |
+| skill-authoring.md | `.agents/runbooks/skill-authoring.md` |  |
+| security.md | `.agents/runbooks/security.md` |  |
+| testing.md | `.agents/runbooks/testing.md` |  |
+| pr.md | `.agents/runbooks/pr.md` | required |
+| code-style.md | `.agents/runbooks/code-style.md` |  |
 
 ## Additional repo-specific guides
 

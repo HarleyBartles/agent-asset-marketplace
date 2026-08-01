@@ -8,11 +8,11 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Cross-repo guide layout, invocation, workflow order, and handoff requirements.
+  scope: Cross-repo runbook layout, invocation, workflow order, and handoff requirements.
   use_when:
-  - Use when reading, creating, updating, or aligning any repo-local guide.
+  - Use when reading, creating, updating, or aligning any repo-local runbook.
   - Use when determining the workflow order for repo-backed design, planning, implementation, or review.
-  - Use when a repo's guide set is missing or misaligned with the standard.
+  - Use when a repo's runbook set is missing or misaligned with the standard.
   do_not_use_when:
   - Do not use for generic repo hygiene such as worktree, branch, source custody, or publication boundaries — defer to repo-worker-base for those.
   use_with:
@@ -28,9 +28,9 @@ license: MIT
 
 # Repo Standards
 
-This skill is the portable baseline for repo-local guides and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, the `.agents/guides/` set, and the workflow order for each stage.
+This skill is the portable baseline for repo-local runbooks and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, the `.agents/runbooks/` set, and the workflow order for each stage.
 
-Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that maps the standard to local files and records any exceptions. Local guides in `.agents/guides/` contain repo-specific paths, commands, exclusions, CI, and exceptions.
+Each repo supplies a thin overlay at `.agents/docs/repo-guide-policy.md` that maps the standard to local files and records any exceptions. Local runbooks in `.agents/runbooks/` contain repo-specific paths, commands, exclusions, CI, and exceptions.
 
 ## Read when
 
@@ -62,7 +62,18 @@ The canonical repo-backed workflow is:
 design -> planning -> implementing -> review
 ```
 
-For each stage, invoke `/repo-standards`, read `references/repository-guide-standard.md`, invoke `/repo-worker-base`, read the repo's `.agents/docs/repo-guide-policy.md`, read the repo-local stage guide, and route to the matching Superpowers skill (`/brainstorming`, `/writing-plans`, `/executing-plans` or `/subagent-driven-development`, `/requesting-code-review`).
+`repo-standards` is a check-and-align tool for repo shape and runbook layout, not a first-turn router. Do not invoke it before `/using-superpowers-plus`.
+
+After the owning Superpowers stage skill has routed you (e.g., `/writing-plans` for planning), invoke `/repo-standards` when:
+- the stage skill explicitly tells you to verify or apply repo shape,
+- the repo's `AGENTS.md` or local runbook points you to `repo-standards`,
+- the task involves scaffolds, runbook layout, or the `repository-shape-manifest.json`.
+
+The typical `repo-standards` workflow is:
+1. Read `references/repository-guide-standard.md` and `references/repository-shape-standard.md`.
+2. Invoke `/repo-worker-base` if the work touches worktree, branch, validation, or publication.
+3. Read the repo's `.agents/docs/repo-guide-policy.md`.
+4. Apply or check the surfaces the stage skill needs.
 
 ## Script usage notes
 

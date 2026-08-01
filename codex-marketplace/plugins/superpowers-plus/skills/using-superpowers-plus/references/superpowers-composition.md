@@ -15,10 +15,10 @@ using-superpowers-plus -> repo-worker-base (hygiene) -> stage skill (reads its b
 
 | Stage | Baseline (owned by the stage skill) | Local guide | Lane |
 | --- | --- | --- | --- |
-| Design | brainstorming/references/design-baseline.md | .agents/guides/design-guide.md | brainstorming |
-| Planning | writing-plans/references/planning-baseline.md | .agents/guides/planning-guide.md | writing-plans |
-| Implementation | executing-plans/references/implementation-baseline.md | .agents/guides/implementing-guide.md | executing-plans or subagent-driven-development |
-| Review | requesting-code-review/references/code-review-baseline.md | .agents/guides/code-review-guide.md | requesting-code-review |
+| Design | brainstorming/references/design-baseline.md | .agents/runbooks/design.md | brainstorming |
+| Planning | writing-plans/references/planning-baseline.md | .agents/runbooks/planning.md | writing-plans |
+| Implementation | executing-plans/references/implementation-baseline.md | .agents/runbooks/implementing.md | executing-plans or subagent-driven-development |
+| Review | requesting-code-review/references/code-review-baseline.md | .agents/runbooks/code-review.md | requesting-code-review |
 
 The repository-local hygiene/layout policy remains the authority for local
 paths, commands, exclusions, CI, and exceptions. `repo-worker-base` supplies

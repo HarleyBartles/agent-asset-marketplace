@@ -42,4 +42,4 @@ Use this skill to pick the right GitHub or Git surface from the task intent, the
 
 If you need exact current repository state, prefer `gh api` or `gh api graphql`. If the intent is still unclear after the first pass, open `references/surface-map.md` and return to the use-case file that matches the object you are touching.
 
-Before changing a PR's draft state (opening, flipping to ready, or reopening), consult `.agents/guides/pr-guide.md` `## Draft PR policy` for the repo-specific and consumer-canonical rules.
+Before changing a PR's draft state (opening, flipping to ready, or reopening), consult `.agents/runbooks/pr.md` `## Draft PR policy` for the repo-specific and consumer-canonical rules.

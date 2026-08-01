@@ -46,7 +46,7 @@ Load plan, review critically, execute all tasks, report when complete.
 
 ### Step 0: Load baseline and local guide
 
-Read this skill's baseline (`references/implementation-baseline.md`) and the repo's `.agents/guides/implementing-guide.md` before executing the stage checklist.
+Read this skill's baseline (`references/implementation-baseline.md`) and the repo's `.agents/runbooks/implementing.md` before executing the stage checklist.
 
 ### Step 1: Load and Review Plan
 1. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one

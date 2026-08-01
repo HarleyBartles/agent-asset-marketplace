@@ -163,7 +163,7 @@ DEFAULT_REPO_INDEX = {
             "path": ".agents/specs",
             "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".agents/guides/design-guide.md",
+            "nearest_scoped_agents_md": ".agents/runbooks/design.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],

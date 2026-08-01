@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Scaffold the repo-local .agents/guides/ set.
+"""Scaffold the repo-local .agents/runbooks/ set.
 
 The script uses the mapping in .agents/docs/repo-guide-policy.md when present;
-otherwise it falls back to the standard guide names under .agents/guides/.
+otherwise it falls back to the standard guide names under .agents/runbooks/.
 """
 
 from __future__ import annotations
@@ -15,18 +15,18 @@ import sys
 from pathlib import Path
 
 
-GUIDE_TITLES: dict[str, str] = {
-    "design-guide.md": "Design guide",
-    "planning-guide.md": "Planning guide",
-    "implementing-guide.md": "Implementation guide",
-    "code-review-guide.md": "Code review guide",
-    "marketplace-generation-guide.md": "Marketplace generation guide",
-    "skill-authoring-guide.md": "Skill authoring guide",
-    "security-guide.md": "Security guide",
-    "testing-guide.md": "Testing guide",
-    "pr-guide.md": "Pull request guide",
-    "code-style-guide.md": "Code style guide",
-    "contributing-guide.md": "Contributing guide",
+RUNBOOK_TITLES: dict[str, str] = {
+    "design.md": "Design runbook",
+    "planning.md": "Planning runbook",
+    "implementing.md": "Implementation runbook",
+    "code-review.md": "Code review runbook",
+    "marketplace-generation.md": "Marketplace generation runbook",
+    "skill-authoring.md": "Skill authoring runbook",
+    "security.md": "Security runbook",
+    "testing.md": "Testing runbook",
+    "pr.md": "Pull request runbook",
+    "code-style.md": "Code style runbook",
+    "repo-doctrine.md": "Repo doctrine runbook",
 }
 
 
@@ -58,13 +58,13 @@ def _parse_repo_guide_policy(policy_path: Path) -> dict[str, Path] | None:
         if not line.strip().startswith("|"):
             continue
         parts = [p.strip().strip("`") for p in line.split("|") if p.strip() != ""]
-        if len(parts) >= 2 and parts[0] in GUIDE_TITLES:
+        if len(parts) >= 2 and parts[0] in RUNBOOK_TITLES:
             mapping[parts[0]] = Path(parts[1])
     return mapping if mapping else None
 
 
 def _default_mapping() -> dict[str, Path]:
-    return {name: Path(".agents/guides") / name for name in GUIDE_TITLES}
+    return {name: Path(".agents/runbooks") / name for name in RUNBOOK_TITLES}
 
 
 def _template_dir() -> Path:
@@ -75,7 +75,7 @@ def _guide_content(name: str) -> str:
     template = _template_dir() / name
     if template.is_file():
         return template.read_text(encoding="utf-8")
-    title = GUIDE_TITLES.get(name, name.replace("-", " ").title())
+    title = RUNBOOK_TITLES.get(name, name.replace("-", " ").title())
     return (
         f"# {title}\n\n"
         f"This is the repo-local {title.lower()}. "
@@ -93,13 +93,13 @@ examples:
 
 The guide list is read from the table in .agents/docs/repo-guide-policy.md
 under ## Standard-to-local mapping if it exists, otherwise the standard guide
-set under .agents/guides/ is used.
+set under .agents/runbooks/ is used.
 
 exit codes:
   0  all mapped guides are present or were written
   1  one or more mapped guides are missing"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo-local .agents/guides/ set.",
+        description="Scaffold the repo-local .agents/runbooks/ set.",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

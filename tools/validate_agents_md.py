@@ -19,7 +19,7 @@ ALLOWED_AGENTS_MD = {
     ".agents/AGENTS.md",
     ".agents/docs/AGENTS.md",
     ".agents/doctrine/AGENTS.md",
-    ".agents/guides/AGENTS.md",
+    ".agents/runbooks/AGENTS.md",
     ".agents/plugins/AGENTS.md",
     "sources/third_party/superpowers/obra-superpowers/v6.2.0/AGENTS.md",
 }
