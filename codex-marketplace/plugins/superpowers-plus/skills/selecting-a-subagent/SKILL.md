@@ -83,6 +83,8 @@ For example, copy `assets/implementer.md` to
 | Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+| Bounded implementation / bugfix | `implementer` |
+| Implementation that needs more reasoning or broader context | `implementer-strong` |
 
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
 reviewer profile. The reviewer subagent does not resolve the diff itself.

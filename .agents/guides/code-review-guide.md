@@ -16,7 +16,7 @@ Apply three core lenses to every review.
 
 ### Cross-repo consumer lens (every review for vendored skills)
 
-When the diff touches vendored skills, prompts, or scripts that install into other repos (especially sister repos under `Z:\`), verify:
+When the diff touches vendored skills, prompts, or scripts that install into other repos (especially sister or consumer repos that install from this marketplace), verify:
 - the change does not hardcode this repo's paths, command names, or file layouts;
 - examples use consumer-canonical commands (`tools/run ci --check` here, `scripts/ci-preflight.ps1 -Check` elsewhere, etc.) where a consumer would run them;
 - the change does not assume a `tools/run` target exists in every repo;

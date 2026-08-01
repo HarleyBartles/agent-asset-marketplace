@@ -43,7 +43,7 @@ The `.md` profile assets under `assets/` are Devin Desktop custom profiles. They
 are not used by Codex; for Codex, use `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md`.
 
-Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `agent:` frontmatter field.
+Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for repo-local profiles, and `.agents/agents/` for plugin-local profiles. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
 
 | Task | Dispatch |
 |---|---|
@@ -54,6 +54,9 @@ Devin Desktop searches the following locations, in order: `~/.config/devin/agent
 | Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
 
 Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_description>` in the task; the reviewer subagent does not resolve the diff itself.
+
+| Task | Dispatch |
+|---|---|
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |
 

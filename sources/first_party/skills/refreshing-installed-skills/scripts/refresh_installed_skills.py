@@ -65,6 +65,39 @@ def _marketplace_source_path(repo_root: Path) -> Path:
     return repo_root / ".agents" / "plugins" / "marketplace-source"
 
 
+def _marketplace_source_slug(repo_root: Path) -> str:
+    """Return the owner/repo slug for the marketplace source.
+
+    Prefer the marketplace-source submodule's origin when this repo is a
+    consumer with a submodule. If there is no submodule (this repo is the
+    marketplace itself), use the current repo's origin. Fall back to an empty
+    string only if git cannot identify an upstream.
+    """
+    candidates = [_marketplace_source_path(repo_root), repo_root]
+    for candidate in candidates:
+        try:
+            result = subprocess.run(
+                ["git", "-C", str(candidate), "remote", "get-url", "origin"],
+                capture_output=True,
+                text=True,
+                check=True,
+                env=_stripped_env(),
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+            continue
+        url = result.stdout.strip()
+        if not url:
+            continue
+        if url.endswith(".git"):
+            url = url[:-4]
+        if "github.com" in url:
+            parts = url.replace(":", "/").split("/")
+            if len(parts) >= 2:
+                return f"{parts[-2]}/{parts[-1]}"
+        return url
+    return ""
+
+
 def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -528,7 +561,7 @@ def _provenance_state(
         "syncedSkills": synced_skill_count,
         "localSkills": local_skills,
         "marketplace": {
-            "source": "HarleyBartles/agent-asset-marketplace",
+            "source": _marketplace_source_slug(ROOT),
             "sourcePath": "codex-marketplace/plugins",
         },
         "localPlugins": local_plugins,

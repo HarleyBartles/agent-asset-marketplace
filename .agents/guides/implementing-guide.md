@@ -40,7 +40,7 @@ Before claiming work is done, verify:
 - **INDEX.md regenerated:** If files were added or removed, run `tools/run mesh --apply`
 - **No secrets committed:** Check your diff for credentials, API keys, or connection strings
 - **Skills refreshed:** If skills were modified, run `tools/run installed-skills --apply` to refresh installed skills
-- **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or projection, confirm the change is safe for sister repos (e.g. under `Z:\`) that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
+- **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or projection, confirm the change is safe for sister or consumer repos that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
 
 ## PR, Linear, and Plan Honesty
 

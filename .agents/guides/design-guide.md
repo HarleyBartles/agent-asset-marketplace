@@ -44,7 +44,7 @@ If the spec fails any of those checks, fix it before proceeding.
 
 ## Cross-repo consumer check
 
-When the design produces a vendored asset, skill, or prompt that will be consumed by other repos (especially sister repos under `Z:\`), confirm the spec does not hardcode this repo's paths, commands, or conventions. Use consumer-canonical examples and avoid targets or file layouts that do not exist in the consumer's environment.
+When the design produces a vendored asset, skill, or prompt that will be consumed by other repos (especially sister or consumer repos installed from this marketplace), confirm the spec does not hardcode this repo's paths, commands, or conventions. Use consumer-canonical examples and avoid targets or file layouts that do not exist in the consumer's environment.
 
 ## Handoff to Planning
 
