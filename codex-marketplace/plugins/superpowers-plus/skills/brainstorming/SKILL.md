@@ -54,8 +54,8 @@ You MUST create a task for each of these items and complete them in order:
 4. **Present design** — in sections scaled to their complexity, get user approval after each section
 5. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
 6. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-7. **User reviews written spec** — ask user to review the spec file before proceeding
-8. **Spec readiness gate** — use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
+7. **Spec readiness gate** — use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
+8. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
@@ -84,10 +84,10 @@ digraph brainstorming {
     "User approves design?" -> "Present design sections" [label="no, revise"];
     "User approves design?" -> "Write design doc" [label="yes"];
     "Write design doc" -> "Spec self-review\n(fix inline)";
-    "Spec self-review\n(fix inline)" -> "User reviews spec?";
+    "Spec self-review\n(fix inline)" -> "Spec readiness gate";
+    "Spec readiness gate" -> "User reviews spec?" [label="meets floor"];
     "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Spec readiness gate" [label="approved"];
-    "Spec readiness gate" -> "Invoke writing-plans skill";
+    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
 }
 ```
 
