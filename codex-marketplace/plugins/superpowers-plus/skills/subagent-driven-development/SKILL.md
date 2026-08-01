@@ -4,7 +4,7 @@ description: Use when executing implementation plans with independent tasks in t
   current session
 metadata:
   source-id: subagent-driven-development
-  source-path: sources/first_party/skills/subagent-driven-development/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md
   provenance-name: Subagent Driven Development first-party skill
   source-category: first_party
   status: active

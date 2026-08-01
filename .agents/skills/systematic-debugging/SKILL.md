@@ -4,7 +4,7 @@ description: Use when encountering any bug, test failure, or unexpected behavior
   before proposing fixes
 metadata:
   source-id: systematic-debugging
-  source-path: sources/first_party/skills/systematic-debugging/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md
   provenance-name: Systematic Debugging first-party skill
   source-category: first_party
   status: active

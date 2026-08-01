@@ -4,7 +4,7 @@ description: Use when writing, reviewing, or debugging Python code and the task
   calls for idiomatic language patterns, concurrency, testing, or type-safety guidance.
 metadata:
   source-id: python
-  source-path: sources/first_party/skills/python/SKILL.md
+  source-path: codex-marketplace/plugins/language-patterns-pack/skills/python/SKILL.md
   provenance-name: Python first-party skill
   source-category: first_party
   status: active

@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: subagent-driven-development
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Subagent Driven Development
   short_description: Use when executing implementation plans with independent tasks in the current session

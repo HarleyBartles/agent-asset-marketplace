@@ -4,7 +4,7 @@ description: Use when completing tasks, implementing major features, or before m
   to verify work meets requirements
 metadata:
   source-id: requesting-code-review
-  source-path: sources/first_party/skills/requesting-code-review/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md
   provenance-name: Requesting Code Review first-party skill
   source-category: first_party
   status: active

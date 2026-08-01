@@ -3,7 +3,7 @@ name: agentic-harness
 description: Use when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
 metadata:
   source-id: agentic-harness
-  source-path: sources/first_party/skills/agentic-harness/SKILL.md
+  source-path: codex-marketplace/plugins/agentic-workflows/skills/agentic-harness/SKILL.md
   provenance-name: Agentic Harness first-party skill
   source-category: first_party
   status: active

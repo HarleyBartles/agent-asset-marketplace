@@ -4,7 +4,7 @@ description: Use when designing, writing, reviewing, or testing code and the tas
   calls for secure coding, security testing, threat modeling, or security review guidance.
 metadata:
   source-id: secure-development
-  source-path: sources/first_party/skills/secure-development/SKILL.md
+  source-path: codex-marketplace/plugins/security-pack/skills/secure-development/SKILL.md
   provenance-name: Secure Development first-party skill
   source-category: first_party
   status: active

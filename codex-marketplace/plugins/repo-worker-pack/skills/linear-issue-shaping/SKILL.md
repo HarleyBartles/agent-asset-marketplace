@@ -7,7 +7,7 @@ description: 'Use when Linear-backed issue, project, and document shaping: creat
   any execution lane; treat worker-ready as issue-ready only.'
 metadata:
   source-id: linear-issue-shaping
-  source-path: sources/first_party/skills/linear-issue-shaping/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/SKILL.md
   provenance-name: Linear Issue Shaping first-party skill
   source-category: first_party
   status: active

@@ -3,7 +3,7 @@ name: web-identity
 description: Use when selecting OAuth 2.0 / OIDC flows, validating tokens, or integrating identity providers. Do not use when the work is bespoke session management or platform-specific IAM policy.
 metadata:
   source-id: web-identity
-  source-path: sources/first_party/skills/web-identity/SKILL.md
+  source-path: codex-marketplace/plugins/security-pack/skills/web-identity/SKILL.md
   provenance-name: Web Identity first-party skill
   source-category: first_party
   status: active

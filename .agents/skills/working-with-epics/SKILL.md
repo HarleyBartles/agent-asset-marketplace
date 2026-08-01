@@ -3,7 +3,7 @@ name: working-with-epics
 description: Use when a goal is too large for one writing-plans plan and requires a sequenced roadmap of consecutive plans.
 metadata:
   source-id: working-with-epics
-  source-path: sources/first_party/skills/working-with-epics/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md
   provenance-name: Working With Epics first-party skill
   source-category: first_party
   status: active

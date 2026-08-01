@@ -4,7 +4,7 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 1. Choose custody and lane
 
-- [ ] Local `.agents/skills/mark-*` skill, or first-party `sources/first_party/skills/<name>/` source?
+- [ ] Local `.agents/skills/mark-*` skill, or marketplace `codex-marketplace/plugins/<lane>/skills/<name>/` source?
 - [ ] Lane: `first_party`, `skills-with-source`, `skills-with-citation`, or `skills-with-mixed-source`?
 - [ ] Read `local-and-marketplace-custody.md` if unsure.
 

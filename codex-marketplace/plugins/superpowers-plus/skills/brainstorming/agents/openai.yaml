@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: brainstorming
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Brainstorming
   short_description: Use when starting any creative work such as creating features, building components, adding functionality, or modifying behavior.

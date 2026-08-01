@@ -3,7 +3,7 @@ name: observability
 description: Use when building or reviewing OpenTelemetry instrumentation, trace/metric/log pipeline design, or observability architecture. Do not use when the work is vendor-specific backend configuration, incident response runbooks, or testing strategies owned by another skill.
 metadata:
   source-id: observability
-  source-path: sources/first_party/skills/observability/SKILL.md
+  source-path: codex-marketplace/plugins/engineering-pack/skills/observability/SKILL.md
   provenance-name: Observability first-party skill
   source-category: first_party
   status: active

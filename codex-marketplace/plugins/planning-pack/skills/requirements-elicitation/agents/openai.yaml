@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: requirements-elicitation
   source_category: first_party
-  plugin: planning-pack
-  projection_plugin: planning-pack
 interface:
   display_name: Requirements Elicitation
   short_description: Use when eliciting, validating, or documenting requirements, user stories, and acceptance criteria.

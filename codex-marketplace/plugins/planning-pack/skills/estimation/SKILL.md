@@ -3,7 +3,7 @@ name: estimation
 description: Use when estimating effort, risk, and uncertainty for sprints, milestones, or releases.
 metadata:
   source-id: estimation
-  source-path: sources/first_party/skills/estimation/SKILL.md
+  source-path: codex-marketplace/plugins/planning-pack/skills/estimation/SKILL.md
   provenance-name: Estimation first-party skill
   source-category: first_party
   status: active

@@ -4,7 +4,7 @@ description: Use when creating new skills, editing existing skills, or verifying
   work before deployment
 metadata:
   source-id: writing-skills
-  source-path: sources/first_party/skills/writing-skills/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md
   provenance-name: Writing Skills first-party skill
   source-category: first_party
   status: active

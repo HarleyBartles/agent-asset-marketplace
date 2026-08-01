@@ -5,7 +5,7 @@ description: Use when working with the Linear connector surface, choosing the ri
   or `update_*`.
 metadata:
   source-id: using-linear
-  source-path: sources/first_party/skills/using-linear/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/using-linear/SKILL.md
   provenance-name: Using Linear first-party skill
   source-category: first_party
   status: active

@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: dispatching-parallel-agents
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Dispatching Parallel Agents
   short_description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies

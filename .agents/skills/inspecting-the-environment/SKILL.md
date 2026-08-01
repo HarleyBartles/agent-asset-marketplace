@@ -6,7 +6,7 @@ description: Use when about to take action and environment constraints could cha
   proceeding.
 metadata:
   source-id: inspecting-the-environment
-  source-path: sources/first_party/skills/inspecting-the-environment/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md
   provenance-name: Inspecting The Environment first-party skill
   source-category: first_party
   status: active

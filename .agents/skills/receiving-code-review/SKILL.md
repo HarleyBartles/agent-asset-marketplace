@@ -5,7 +5,7 @@ description: Use when receiving code review feedback, before implementing sugges
   rigor and verification, not performative agreement or blind implementation
 metadata:
   source-id: receiving-code-review
-  source-path: sources/first_party/skills/receiving-code-review/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md
   provenance-name: Receiving Code Review first-party skill
   source-category: first_party
   status: active

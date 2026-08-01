@@ -4,7 +4,7 @@ description: Use when starting any conversation - establishes how to find and us
   requiring skill invocation before ANY response including clarifying questions
 metadata:
   source-id: using-superpowers-plus
-  source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
   provenance-name: Using Superpowers Plus first-party skill
   source-category: first_party
   status: active

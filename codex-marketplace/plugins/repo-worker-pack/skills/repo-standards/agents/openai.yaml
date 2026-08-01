@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: repo-standards
   source_category: first_party
-  plugin: repo-worker-pack
-  projection_plugin: repo-worker-pack
 interface:
   display_name: Repo Standards
   short_description: Use /repo-standards when reading, creating, updating, or aligning repo standards, enforcing the AGENTS.md router model, and migrating marketplace.json schema.

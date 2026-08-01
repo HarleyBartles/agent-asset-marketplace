@@ -3,7 +3,7 @@ name: generating-agent-mesh
 description: Use when the repo-wide INDEX.md mesh or agent-mesh validation is stale, or as a CI/pre-commit gate.
 metadata:
   source-id: generating-agent-mesh
-  source-path: sources/first_party/skills/generating-agent-mesh/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/SKILL.md
   provenance-name: Generating Agent Mesh first-party skill
   source-category: first_party
   status: active

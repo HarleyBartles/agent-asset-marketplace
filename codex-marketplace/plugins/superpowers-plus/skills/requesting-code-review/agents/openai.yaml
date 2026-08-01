@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: requesting-code-review
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Requesting Code Review
   short_description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements

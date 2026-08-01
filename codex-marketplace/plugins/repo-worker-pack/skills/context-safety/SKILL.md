@@ -5,7 +5,7 @@ description: Use when a text write is expected to exceed the safe threshold for 
   a normal editor write path would be brittle.
 metadata:
   source-id: context-safety
-  source-path: sources/first_party/skills/context-safety/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/context-safety/SKILL.md
   provenance-name: Context Safety first-party skill
   source-category: first_party
   status: active

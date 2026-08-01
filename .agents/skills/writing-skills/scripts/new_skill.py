@@ -37,10 +37,10 @@ def validate_request(name: str, custody: str, lane: str) -> None:
         raise ValueError("marketplace custody cannot use the mark- prefix")
 
 
-def destination_for(repo_root: Path, name: str, custody: str) -> Path:
+def destination_for(repo_root: Path, name: str, custody: str, lane: str) -> Path:
     if custody == "local":
         return repo_root / ".agents" / "skills" / name
-    return repo_root / "sources" / "first_party" / "skills" / name
+    return repo_root / "codex-marketplace" / "plugins" / lane / "skills" / name
 
 
 def _template(path: str, **values: str) -> str:
@@ -54,7 +54,7 @@ def _metadata_for(name: str, custody: str, lane: str) -> str:
     title = name.replace("-", " ").title()
     return (
         f"  source-id: {json.dumps(name)}\n"
-        f"  source-path: {json.dumps(f'sources/first_party/skills/{name}/SKILL.md')}\n"
+        f"  source-path: {json.dumps(f'codex-marketplace/plugins/{lane}/skills/{name}/SKILL.md')}\n"
         f"  provenance-name: {json.dumps(f'{title} first-party skill')}\n"
         "  source-category: first_party\n"
         "  status: active\n"
@@ -136,7 +136,7 @@ def scaffold(
     validate_request(name, custody, lane)
     if not check:
         repo_root = _guard_write_checkout(repo_root, allow_shared_checkout)
-    destination = destination_for(repo_root, name, custody)
+    destination = destination_for(repo_root, name, custody, lane)
     if destination.exists():
         raise FileExistsError(f"destination already exists: {destination}")
     files = render_scaffold(name, custody, lane)

@@ -4,7 +4,7 @@ description: Use when starting any creative work such as creating features, buil
   components, adding functionality, or modifying behavior.
 metadata:
   source-id: brainstorming
-  source-path: sources/first_party/skills/brainstorming/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md
   provenance-name: Brainstorming first-party skill
   source-category: first_party
   status: active

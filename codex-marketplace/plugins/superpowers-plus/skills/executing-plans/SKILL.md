@@ -4,7 +4,7 @@ description: Use when you have a written implementation plan to execute in a sep
   session with review checkpoints
 metadata:
   source-id: executing-plans
-  source-path: sources/first_party/skills/executing-plans/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md
   provenance-name: Executing Plans first-party skill
   source-category: first_party
   status: active

@@ -3,7 +3,7 @@ name: release-engineering
 description: Use when building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.
 metadata:
   source-id: release-engineering
-  source-path: sources/first_party/skills/release-engineering/SKILL.md
+  source-path: codex-marketplace/plugins/planning-pack/skills/release-engineering/SKILL.md
   provenance-name: Release Engineering first-party skill
   source-category: first_party
   status: active

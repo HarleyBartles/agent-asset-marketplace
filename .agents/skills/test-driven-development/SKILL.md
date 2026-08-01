@@ -4,7 +4,7 @@ description: Use when implementing any feature or bugfix, before writing impleme
   code
 metadata:
   source-id: test-driven-development
-  source-path: sources/first_party/skills/test-driven-development/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md
   provenance-name: Test Driven Development first-party skill
   source-category: first_party
   status: active

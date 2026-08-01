@@ -5,7 +5,7 @@ description: Use when about to claim work is complete, fixed, or passing, before
   making any success claims; evidence before assertions always
 metadata:
   source-id: verification-before-completion
-  source-path: sources/first_party/skills/verification-before-completion/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md
   provenance-name: Verification Before Completion first-party skill
   source-category: first_party
   status: active

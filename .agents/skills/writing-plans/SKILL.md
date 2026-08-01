@@ -4,7 +4,7 @@ description: Use when you have a spec or requirements for a multi-step task, bef
   touching code
 metadata:
   source-id: writing-plans
-  source-path: sources/first_party/skills/writing-plans/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md
   provenance-name: Writing Plans first-party skill
   source-category: first_party
   status: active

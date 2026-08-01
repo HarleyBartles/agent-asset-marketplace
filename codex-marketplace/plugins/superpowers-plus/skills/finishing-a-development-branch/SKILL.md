@@ -4,7 +4,7 @@ description: Use when implementation is complete, all tests pass, and you need t
   decide how to integrate the work
 metadata:
   source-id: finishing-a-development-branch
-  source-path: sources/first_party/skills/finishing-a-development-branch/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md
   provenance-name: Finishing A Development Branch first-party skill
   source-category: first_party
   status: active

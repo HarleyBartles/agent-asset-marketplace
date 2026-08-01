@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: publishing-source
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Publishing Source
   short_description: Use when deciding how to publish source work in this repo - whether to commit, tag, release, push source, or export a pack - and which publication sequence fits the change.

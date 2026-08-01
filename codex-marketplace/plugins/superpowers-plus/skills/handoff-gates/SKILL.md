@@ -3,7 +3,7 @@ name: handoff-gates
 description: Use when a stage-boundary artifact (spec, plan, or completed work) needs a readiness check before handoff.
 metadata:
   source-id: handoff-gates
-  source-path: sources/first_party/skills/handoff-gates/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md
   provenance-name: Handoff Gates first-party skill
   source-category: first_party
   status: active
