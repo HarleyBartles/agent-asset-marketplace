@@ -209,23 +209,23 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - `publishing-source` owns the source-publication decision tree: when to commit, tag, release, push source, or export a pack.
 - It is installed with `superpowers-plus` and discoverable via `using-superpowers-plus`.
 
-- [ ] **Step 1: Draft the skill.**
+- [x] **Step 1: Draft the skill.**
 
   Write `publishing-source/SKILL.md` with `use_when`, `do_not_use_when`, a decision checklist, and the canonical source-publication sequences. Keep the body under 500 words; move long route tables to `references/`.
 
-- [ ] **Step 2: Create the agent wrapper.**
+- [x] **Step 2: Create the agent wrapper.**
 
   Write `agents/openai.yaml` with the Codex-facing wrapper metadata and a default prompt aligned to the skill trigger.
 
-- [ ] **Step 3: Wire it into the pack and bootstrap router.**
+- [x] **Step 3: Wire it into the pack and bootstrap router.**
 
   Add `publishing-source` to `superpowers-plus` in `codex-marketplace/custody-pack-registry.json`. Add a `publishing_source` mode to `using-superpowers-plus/references/bootstrap-routing.md`.
 
-- [ ] **Step 4: Test with a pressure prompt.**
+- [x] **Step 4: Test with a pressure prompt.**
 
   Write a short pressure prompt that throws a source-publication decision at an agent and verify the skill directs it to the right sequence.
 
-- [ ] **Step 5: Commit.**
+- [x] **Step 5: Commit.**
 
   ```bash
   git add sources/first_party/skills/publishing-source codex-marketplace/custody-pack-registry.json sources/first_party/skills/using-superpowers-plus
@@ -233,7 +233,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
   git commit -m "feat: add publishing-source skill"
   ```
 
-- [ ] **Step 6: Mark this task `[x]` in this plan before reporting back.**
+- [x] **Step 6: Mark this task `[x]` in this plan before reporting back.**
 
 ---
 

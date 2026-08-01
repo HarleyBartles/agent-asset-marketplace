@@ -64,6 +64,7 @@
         "sources/first_party/skills/finishing-a-development-branch",
         "sources/first_party/skills/handoff-gates",
         "sources/first_party/skills/inspecting-the-environment",
+        "sources/first_party/skills/publishing-source",
         "sources/first_party/skills/receiving-code-review",
         "sources/first_party/skills/requesting-code-review",
         "sources/first_party/skills/selecting-a-subagent",
@@ -144,6 +145,16 @@
           "source_family": "first_party",
           "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
           "local_path": "skills/inspecting-the-environment",
+          "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+          "copy_expectation": "byte_identical"
+        },
+        {
+          "canonical_name": "publishing-source",
+          "source_category": "first_party",
+          "content_mode": "verbatim",
+          "source_family": "first_party",
+          "canonical_source_path": "sources/first_party/skills/publishing-source",
+          "local_path": "skills/publishing-source",
           "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
           "copy_expectation": "byte_identical"
         },

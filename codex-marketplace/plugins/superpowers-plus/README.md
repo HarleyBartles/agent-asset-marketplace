@@ -11,6 +11,7 @@ This bundle projects the first-party Superpowers+ workflow skills, including the
 - `finishing-a-development-branch`
 - `handoff-gates`
 - `inspecting-the-environment`
+- `publishing-source`
 - `receiving-code-review`
 - `requesting-code-review`
 - `selecting-a-subagent`
@@ -24,7 +25,7 @@ This bundle projects the first-party Superpowers+ workflow skills, including the
 - `writing-plans`
 - `writing-skills`
 
-Manifest entry count: 18.
+Manifest entry count: 19.
 <!-- END GENERATED: bundle-contents -->
 
 ### Documentation
