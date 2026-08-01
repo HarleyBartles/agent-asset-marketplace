@@ -23,17 +23,17 @@
 
 **Files:**
 - Read-only scan: `find_file_by_name "**/AGENTS.md"` in the repo root
-- Output: a table in this plan's working notes or in `provenance/<migration-audit>.md`
+- Output: a table saved to `provenance/2026-08-01-agents-md-migration-audit.md`
 
 **Interfaces:**
-- Consumes: the current list of `AGENTS.md` files (24+ at time of writing)
+- Consumes: the current list of `AGENTS.md` files (discovered by the audit)
 - Produces: a classification table mapping each `AGENTS.md` to one of:
   - `keep-thin` (genuinely always-on, keep as `AGENTS.md` but shorten)
-  - `devin-rule` (scoped/conditional law → `.devin/rules/<name>.md`)
-  - `guide` (reference/procedure → `.agents/guides/<topic>-guide.md`)
-  - `readme` (human discovery → `README.md`)
+  - `devin-rule` (scoped/conditional law, rewrite as `.devin/rules/*.md` with `trigger: glob`)
+  - `guide` (reference/procedure, rewrite as a `.agents/guides/` doc named after the source scope)
+  - `readme` (human discovery, rewrite as `README.md`)
   - `delete` (no longer useful)
-  - `regenerate-source` (generated `AGENTS.md` → remove by fixing source/generator)
+  - `regenerate-source` (generated `AGENTS.md`, remove by fixing source or generator)
 
 - [ ] **Step 1: List every `AGENTS.md` file**
 
@@ -42,14 +42,14 @@
 - [ ] **Step 2: Classify each file**
 
   For each file, decide its fate based on the four-question test:
-  1. Is it generated from a marketplace/source projection? → `regenerate-source`
-  2. Does it contain law that must be always-on for the whole repo? → `keep-thin`
-  3. Does it contain law that should only apply in a specific directory or file pattern? → `devin-rule`
-  4. Is it guidance, procedure, or reference? → `guide` or `readme`
+  1. Is it generated from a marketplace/source projection? -> `regenerate-source`
+  2. Does it contain law that must be always-on for the whole repo? -> `keep-thin`
+  3. Does it contain law that should only apply in a specific directory or file pattern? -> `devin-rule`
+  4. Is it guidance, procedure, or reference? -> `guide` or `readme`
 
 - [ ] **Step 3: Record the classification table**
 
-  Save the table to `provenance/agents-md-migration-audit.md` or in a temporary planning note. Include the full path and the chosen disposition for every file.
+  Save the table to `provenance/2026-08-01-agents-md-migration-audit.md`. Include the full path and the chosen disposition for every file.
 
 - [ ] **Step 4: Get review on the classification**
 
@@ -95,7 +95,7 @@
 
 **Interfaces:**
 - Consumes: current root `AGENTS.md`, updated `mesh-policy.md`
-- Produces: a root `AGENTS.md` that fits in ~30–50 lines and is safe to always load
+- Produces: a root `AGENTS.md` that fits in ~30-50 lines and is safe to always load
 
 - [ ] **Step 1: Remove detailed content that is not always-on**
 
@@ -118,7 +118,7 @@
 
 ### Task 4: Create `.devin/rules/*.md` for the first batch of scoped rules
 
-**Files (example set, to be confirmed by Task 1 audit):**
+**Files (example set based on the current AGENTS.md surface):**
 - Create: `.devin/rules/tools.md` from `tools/AGENTS.md`
 - Create: `.devin/rules/docs.md` from `docs/AGENTS.md`
 - Create: `.devin/rules/agents.md` from `.agents/AGENTS.md`
@@ -149,7 +149,7 @@
 
 - [ ] **Step 2: Move heavy procedure content to guides**
 
-  For each rule, if the content is over 100 lines or is mostly reference, create `.agents/guides/<topic>-guide.md` and make the rule a short pointer.
+  For each rule, if the content is over 100 lines or is mostly reference, create a `.agents/guides/` doc named after the source scope and make the rule a short pointer.
 
 - [ ] **Step 3: Validate character limits**
 
@@ -159,7 +159,7 @@
 
 ### Task 5: Delete or convert the sub-directory `AGENTS.md` files
 
-**Files (to be confirmed by Task 1 audit):**
+**Files (example set based on the current AGENTS.md surface):**
 - Delete: `tools/AGENTS.md`, `docs/AGENTS.md`, `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, `sources/AGENTS.md`, `provenance/AGENTS.md`, `adapters/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, and other authored sub-`AGENTS.md` files.
 - Modify source/generator for: `sources/first_party/skills/**/AGENTS.md`, `sources/third_party/**/AGENTS.md`, `codex-marketplace/plugins/**/AGENTS.md` (projected/generated copies)
 
@@ -192,7 +192,7 @@
 
 **Files:**
 - Modify: `.agents/docs/repo-guide-policy.md`
-- Modify or create: `.agents/guides/<topic>-guide.md` as needed
+- Modify or create: the `.agents/guides/` files named in the audit (for example, `.agents/guides/marketplace-tooling-guide.md`)
 
 **Interfaces:**
 - Consumes: the new rule surface and the deleted `AGENTS.md` files
@@ -204,7 +204,7 @@
 
 - [ ] **Step 2: Move long procedural content from `tools/AGENTS.md` to a guide**
 
-  Create `.agents/guides/marketplace-tooling-guide.md` (or similar) containing the full `tools/run` matrix, command details, and workflow notes.
+  Create `.agents/guides/marketplace-tooling-guide.md` containing the full `tools/run` matrix, command details, and workflow notes.
 
 - [ ] **Step 3: Move skill/worktree guidance from `.agents/skills/AGENTS.md` and `docs/AGENTS.md` to guides if needed**
 
@@ -215,27 +215,33 @@
 ### Task 7: Add a CI gate to prevent regression
 
 **Files:**
-- Modify: `tools/validate_agent_mesh.py` or the mesh validator
-- Or add: a new validator in `tools/`
+- Create: `tools/validate_agents_md.py`
+- Modify: `tools/run.py` and `tools/run.ps1` to run the new validator in the `mesh` target
 
 **Interfaces:**
 - Consumes: the new mesh policy and the list of allowed `AGENTS.md` files
 - Produces: a CI check that fails if the mesh policy is violated
 
-- [ ] **Step 1: Define the new allowed `AGENTS.md` list**
+- [ ] **Step 1: Define the allow-list of `AGENTS.md` files**
 
-  After migration, the only `AGENTS.md` files should be:
+  After migration, the allowed tracked `AGENTS.md` files are:
   - root `AGENTS.md`
+  - `.agents/AGENTS.md` if the audit confirms it is genuinely always-on
   - `AGENTS.local.md` (gitignored, not tracked)
-  - optionally one or two top-level support `AGENTS.md` files if explicitly approved
 
-- [ ] **Step 2: Add a validator that fails on new or unexpected sub-`AGENTS.md` files**
+  Any tracked `AGENTS.md` found outside this list causes the validator to fail and `tools/run ci --check` to return non-zero.
 
-  The validator should report any `AGENTS.md` found outside the allow-list and fail `tools/run ci --check`.
+- [ ] **Step 2: Implement `tools/validate_agents_md.py`**
 
-- [ ] **Step 3: Add a validator that checks `.devin/rules/*.md` shape**
+  The script must:
+  - Find every tracked `AGENTS.md` file (exclude `AGENTS.local.md` and untracked files).
+  - Compare it to the allow-list.
+  - Report the exact unexpected paths.
+  - Check every `.devin/rules/*.md` for a `trigger` and `description` in its frontmatter and fail if the file is over 12,000 characters.
 
-  Ensure every rule file has a `trigger` frontmatter value and a `description`, and that each is under 12,000 characters.
+- [ ] **Step 3: Wire the validator into `tools/run`**
+
+  Add `validate_agents_md.py --check` to the `mesh` target in `tools/run.py` (and `tools/run.ps1`) so it runs during `tools/run ci --check`.
 
 ---
 

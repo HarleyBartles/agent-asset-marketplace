@@ -27,12 +27,12 @@ For scoped, conditional, or non-always-on rules, use the Devin Rules surface:
 `.devin/rules/*.md`. Each rule is a separate Markdown file with a `trigger`
 in its frontmatter that controls when the rule is loaded.
 
-Allowed `trigger` values in Devin Desktop / Local:
+Allowed `trigger` values in Devin Local / Devin CLI:
 
-- `always_on` — loaded in every message.
-- `glob` — loaded only when the agent works with files matching `globs:`.
-- `model_decision` — the model decides when to apply.
-- `manual` — only when invoked.
+- `always_on` -- loaded in every message.
+- `glob` -- loaded only when the agent works with files matching `globs:`.
+- `model_decision` -- the model decides when to apply.
+- `manual` -- only when invoked.
 
 Example:
 
