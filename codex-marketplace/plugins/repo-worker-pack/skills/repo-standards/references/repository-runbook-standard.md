@@ -1,6 +1,6 @@
 # Repo Standards
 
-This file is the portable cross-repo standard for repo-local guides and agent-facing routing surfaces.
+This file is the portable cross-repo standard for repo-local runbooks and agent-facing routing surfaces.
 
 ## Required root surfaces
 
@@ -20,22 +20,22 @@ Every repo using this standard must have:
   11. `## Routing pointers` (repo-specific router table)
   12. `## Maintenance responsibility`
 
-- `REVIEW.md` — review entry point. It contains first-class review concerns and routes to `.agents/guides/code-review-guide.md` for detailed review methodology and to `/requesting-code-review` for execution.
-- `CONTRIBUTING.md` — contributor entry point. It routes to the design, planning, implementation, and review guides and to the relevant repo-worker-pack and Superpowers skills. It may be a thin pointer to `.agents/guides/contributing-guide.md` when the repo keeps detailed guidance there.
+- `REVIEW.md` — review entry point. It contains first-class review concerns and routes to `.agents/runbooks/code-review.md` for detailed review methodology and to `/requesting-code-review` for execution.
+- `CONTRIBUTING.md` — contributor entry point. It routes to the design, planning, implementation, and review runbooks and to the relevant repo-worker-pack and Superpowers skills. It may be a thin pointer to `.agents/runbooks/contributing.md` when the repo keeps detailed guidance there.
 
-## Core guide set
+## Core runbook set
 
-`.agents/guides/` must contain:
+`.agents/runbooks/` must contain:
 
-- `design-guide.md`
-- `planning-guide.md`
-- `implementing-guide.md`
-- `code-review-guide.md`
-- `pr-guide.md`
+- `design.md`
+- `planning.md`
+- `implementing.md`
+- `code-review.md`
+- `pr.md`
 
-## Pull request guide policy
+## Pull request runbook policy
 
-Every repo using this standard must define a PR workflow in `.agents/guides/pr-guide.md` that includes the following policy:
+Every repo using this standard must define a PR workflow in `.agents/runbooks/pr.md` that includes the following policy:
 
 - Open pull requests as **draft**.
 - Keep a PR in draft while iterating, running local validation, and performing self-review.
@@ -49,24 +49,24 @@ Every repo using this standard must define a PR workflow in `.agents/guides/pr-g
 
 This policy reduces wasted CI minutes while a branch is still being iterated on and ensures CI only runs on PRs the author believes are ready.
 
-## Allowed additional guides
+## Allowed additional runbooks
 
-Additional `<topic>-guide.md` files may live in `.agents/guides/`. They must be thin repo-specific overlays, not repeats of portable doctrine. Common additional guides include:
+Additional `<topic>.md` files may live in `.agents/runbooks/`. They must be thin repo-specific overlays, not repeats of portable doctrine. Common additional runbooks include:
 
-- `security-guide.md`
-- `testing-guide.md`
-- `contributing-guide.md`
-- `code-style-guide.md`
-- `marketplace-generation-guide.md`
-- `skill-authoring-guide.md`
+- `security.md`
+- `testing.md`
+- `contributing.md`
+- `code-style.md`
+- `marketplace-generation.md`
+- `skill-authoring.md`
 
 ## Local overlay policy
 
 Each repo keeps `.agents/docs/repo-guide-policy.md`. It must:
 
 - State that the repo follows `repo-standards`.
-- Map standard guide names to local paths.
-- List existing and missing guides.
+- Map standard runbook names to local paths.
+- List existing and missing runbooks.
 - Note any repo-specific exceptions.
 
 ## Workflow order
@@ -82,7 +82,7 @@ At each stage:
 1. Read this standard.
 2. Read the repo's `.agents/docs/repo-guide-policy.md`.
 3. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
-4. Read the repo-local guide for the stage.
+4. Read the repo-local runbook for the stage.
 5. Route to the matching Superpowers skill:
    - design -> `/brainstorming`
    - planning -> `/writing-plans`
@@ -91,4 +91,4 @@ At each stage:
 
 ## Relationship to repo-worker-base
 
-`repo-standards` owns guide layout, invocation, and workflow order. `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries. Each stage skill owns its own baseline reference and reads it as part of its own first step. Use both together for every repo-backed stage.
+`repo-standards` owns runbook layout, invocation, and workflow order. `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries. Each stage skill owns its own baseline reference and reads it as part of its own first step. Use both together for every repo-backed stage.

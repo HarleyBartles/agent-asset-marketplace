@@ -1,10 +1,10 @@
-# Security Guide
+# Security Runbook
 
-Use this guide for repo-specific security posture when working in `agent-asset-marketplace`.
+Use this runbook for repo-specific security posture when working in `agent-asset-marketplace`.
 
 ## Before you begin
 
-- Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/guides/code-review-guide.md`](./code-review-guide.md) for review expectations.
+- Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/runbooks/code-review.md`](./code-review.md) for review expectations.
 - Invoke `/unslop-profiles` with the `security-review` profile for concrete security analysis.
 
 ## When to use

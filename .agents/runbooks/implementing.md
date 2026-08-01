@@ -1,6 +1,6 @@
-# Implementing Guide
+# Implementing Runbook
 
-Use this reference when implementing work in the agent-asset-marketplace repo — whether as a direct implementer or as a controller dispatching implementer subagents. This guide covers the implementer workflow: what to read before starting, what skills to invoke, and what to verify before claiming done.
+Use this reference when implementing work in the agent-asset-marketplace repo — whether as a direct implementer or as a controller dispatching implementer subagents. This runbook covers the implementer workflow: what to read before starting, what skills to invoke, and what to verify before claiming done.
 
 ## Before You Begin: Read the Standards
 

@@ -56,8 +56,8 @@
       "optional": false
     },
     {
-      "id": "guides-agents-md",
-      "path": ".agents/guides/AGENTS.md",
+      "id": "runbooks-agents-md",
+      "path": ".agents/runbooks/AGENTS.md",
       "kind": "file",
       "source": null,
       "optional": true

@@ -1,6 +1,6 @@
-# Planning Guide
+# Planning Runbook
 
-Use this reference when planning work in the agent-asset-marketplace repo — before writing an implementation plan, before touching code. This guide covers the planner workflow: what to read before planning, what skills to invoke, what a plan must contain, and where plan artifacts go.
+Use this reference when planning work in the agent-asset-marketplace repo — before writing an implementation plan, before touching code. This runbook covers the planner workflow: what to read before planning, what skills to invoke, what a plan must contain, and where plan artifacts go.
 
 ## Before You Begin: Read the Standards
 
@@ -12,8 +12,12 @@ A plan that doesn't account for the repo's standards will produce implementation
 
 ## Skills to Invoke
 
-- Invoke `/brainstorming` before any creative work, then invoke `/writing-plans` once the spec is ready
-- Invoke `/repo-worker-base` before planning work that touches marketplace generation, validation, or tooling
+At the start of any planning session, invoke `/using-superpowers-plus` to route to the owning skill.
+
+- When the request is to write an implementation plan, `/using-superpowers-plus` will route to `/writing-plans`.
+- Invoke `/repo-worker-base` when the plan touches worktree, branch, validation, or publication boundaries.
+- Invoke `/repo-standards` when the plan touches repo shape, runbook layout, scaffolds, or standard alignment.
+- Invoke `/brainstorming` only when the spec is missing or the solution shape is unknown; otherwise it is not a first-turn skill.
 
 ## Plan Structure
 

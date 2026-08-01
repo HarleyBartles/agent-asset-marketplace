@@ -1,11 +1,11 @@
-# Testing Guide
+# Testing Runbook
 
-Use this guide for the test commands and conventions in `agent-asset-marketplace`.
+Use this runbook for the test commands and conventions in `agent-asset-marketplace`.
 
 ## Before you begin
 
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for the canonical validation commands.
-- Read [`.agents/guides/implementing-guide.md`](./implementing-guide.md) for the TDD workflow.
+- Read [`.agents/runbooks/implementing.md`](./implementing.md) for the TDD workflow.
 
 ## When to use
 

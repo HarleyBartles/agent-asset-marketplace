@@ -1,6 +1,6 @@
-# Code Style Guide
+# Code Style Runbook
 
-Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
+Use this runbook for Python and Markdown conventions in `agent-asset-marketplace`.
 
 ## Before you begin
 

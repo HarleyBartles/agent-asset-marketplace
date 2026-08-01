@@ -207,7 +207,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
 
     if scaffold is not None and scaffold.is_file():
         findings.extend(_run_scaffold_check(scaffold, repo_root))
-        if surf_id in ("root-agents-md", "guides-agents-md") and full.is_file():
+        if surf_id in ("root-agents-md", "runbooks-agents-md") and full.is_file():
             findings.extend(_agents_md.validate_agents_md(full, repo_root))
         return findings
 

@@ -30,7 +30,7 @@ using-superpowers-plus -> repo-worker-base (hygiene) -> stage skill (reads its b
 publication boundaries only; it no longer owns stage baselines or the
 Superpowers composition table. Each stage skill owns its own baseline
 reference (`references/<stage>-baseline.md`) and reads it together with the
-repo's `.agents/guides/<stage>-guide.md` as its own first step. For the
+repo's `.agents/runbooks/<stage>.md` as its own first step. For the
 ordered stage composition table, see
 [`superpowers-composition.md`](superpowers-composition.md).
 

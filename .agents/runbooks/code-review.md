@@ -1,4 +1,4 @@
-# Code Review Guide
+# Code Review Runbook
 
 Use this reference when reviewing work in the agent-asset-marketplace repo. This is a review methodology, not a merge checklist.
 

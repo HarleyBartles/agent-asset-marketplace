@@ -34,18 +34,18 @@ For ordinary worker execution, prefer a PR into `main`.
 
 Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`.
 
-For the full command matrix, see `.devin/rules/tools.md` after migration. For the implementation workflow, see `.agents/guides/implementing-guide.md`.
+For the full command matrix, see `.devin/rules/tools.md` after migration. For the implementation workflow, see `.agents/runbooks/implementing.md`.
 
 ## Security considerations
 
-Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/guides/security-guide.md`.
+Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/runbooks/security.md`.
 
 ## Routing pointers
 
 - [Mesh policy](.agents/docs/mesh-policy.md)
-- Scoped rule triggers live in `.devin/rules/*.md`; canonical repo-local doctrine lives in `.agents/doctrine/*.md`
-- [Worker guidance](.agents/guides/repo-doctrine-guide.md)
-- [Implementing workflow](.agents/guides/implementing-guide.md)
+- Scoped law lives in `.devin/rules/*.md`
+- [Worker guidance](.agents/runbooks/repo-doctrine.md)
+- [Implementing workflow](.agents/runbooks/implementing.md)
 - [Worktree and scratch policy](docs/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

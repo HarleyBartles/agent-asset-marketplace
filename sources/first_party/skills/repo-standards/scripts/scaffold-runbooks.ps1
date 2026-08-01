@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-# Thin launcher for scaffold_guides.py. Run with --help to see usage.
+# Thin launcher for scaffold_runbooks.py. Run with --help to see usage.
 [CmdletBinding()]
 param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)
 $ErrorActionPreference = 'Stop'
@@ -36,8 +36,8 @@ if (-not $python) {
 }
 
 if ($python -eq 'py') {
-    & py -3 "$scriptDir\scaffold_guides.py" @pyArgs
+    & py -3 "$scriptDir\scaffold_runbooks.py" @pyArgs
 } else {
-    & $python "$scriptDir\scaffold_guides.py" @pyArgs
+    & $python "$scriptDir\scaffold_runbooks.py" @pyArgs
 }
 exit $LASTEXITCODE
