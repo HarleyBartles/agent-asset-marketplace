@@ -71,6 +71,17 @@ and its projected copies) must:
 - Adding `--json` output in the first pass; keep output human-readable but
   structured enough to be greppable.
 
+## Related Phase 3 note: vendor profile deployment ownership
+
+Phase 2 placed the actual copy/clean of vendor subagent profiles in
+`refreshing-installed-skills` because that script already walks installed
+plugin packs. The long-term owner should be `repo-standards`, which is the
+skill that defines one-shot repo shape and canonical surface deployment. Phase
+3 should move the `assets/profiles/*.md` -> `.agents/agents/` deployment logic
+into a `repo-standards` script (either an extension of `repo_standards.py` or a
+sibling `deploy_vendor_profiles.py`) and leave `refreshing-installed-skills`
+to record the `vendorProfiles` provenance.
+
 ## References
 
 - `sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`

@@ -93,9 +93,9 @@ reviewer profile. The reviewer subagent does not resolve the diff itself.
 
 Marketplace packs can ship third-party subagent `.md` profile assets under
 `assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into the consumer's agent search path at `.agents/agents/` and
-records them in `.agents/skills/.provenance.json` under a `vendorProfiles`
-array.
+profiles into the consumer's agent search path at `.agents/agents/` only
+when a file of the same name does not already exist, and records them in
+`.agents/skills/.provenance.json` under a `vendorProfiles` array.
 
 When choosing a profile, apply this precedence:
 

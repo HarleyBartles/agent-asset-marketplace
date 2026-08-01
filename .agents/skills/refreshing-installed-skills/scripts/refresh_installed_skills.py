@@ -275,10 +275,13 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
 
 
 def _vendor_profiles_are_current(installed_plugins: list[dict[str, Any]]) -> bool:
-    """Return True when every pack vendor profile is installed in `.agents/agents/` and up to date.
+    """Return True when every pack vendor profile is already present in `.agents/agents/`.
 
-    Repo-local `.devin/agents/` overrides are user-managed and are never
-    checked, written, or removed by this script.
+    A profile is considered present if a file of the same name already exists in
+    the consumer tree. The installer never overwrites an existing file, because
+    the repo owns its own `.agents/agents/` contents once they exist. Repo-local
+    `.devin/agents/` overrides are user-managed and are never checked, written,
+    or removed by this script.
     """
     if not AGENTS_AGENTS_PATH.is_dir():
         return False
@@ -290,14 +293,11 @@ def _vendor_profiles_are_current(installed_plugins: list[dict[str, Any]]) -> boo
         for profile_file in sorted(profiles_dir.iterdir()):
             if _is_vendor_profile_file(profile_file):
                 expected.setdefault(profile_file.name, profile_file)
-    installed = {
-        profile_file.name
-        for profile_file in AGENTS_AGENTS_PATH.iterdir()
-        if _is_vendor_profile_file(profile_file)
-    }
-    if installed != set(expected):
-        return False
-    return all(_files_are_identical(src, AGENTS_AGENTS_PATH / name) for name, src in expected.items())
+    for name, src in expected.items():
+        dest = AGENTS_AGENTS_PATH / name
+        if not dest.exists():
+            return False
+    return True
 
 
 def _load_marketplace_config() -> dict[str, Any]:
@@ -595,9 +595,9 @@ def _install_plugin_vendor_profiles(
 ) -> bool:
     """Copy `assets/profiles/*.md` from a plugin into the consumer agent search path.
 
-    Profiles are copied to `.agents/agents/`. Repo-local overrides in
-    `.devin/agents/` are user-managed and are never written or removed by this
-    script.
+    Profiles are copied to `.agents/agents/` only when a file of the same name
+    does not already exist there. Repo-local overrides in `.devin/agents/` are
+    user-managed and are never written or removed by this script.
     """
     profiles_dir = _vendor_profile_source_dir(plugin)
     if profiles_dir is None:
@@ -623,12 +623,12 @@ def _install_plugin_vendor_profiles(
         copied_names.append(profile_file.name)
         dest_file = AGENTS_AGENTS_PATH / profile_file.name
         if check_mode:
-            if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
+            if not dest_file.exists():
                 print(f"CHECK: Would install vendor profile: {dest_file.relative_to(ROOT)}")
                 installed_any = True
         else:
             AGENTS_AGENTS_PATH.mkdir(parents=True, exist_ok=True)
-            if not dest_file.exists() or not _files_are_identical(profile_file, dest_file):
+            if not dest_file.exists():
                 shutil.copy2(profile_file, dest_file)
                 print(f"Installed vendor profile: {dest_file.relative_to(ROOT)}")
                 installed_any = True

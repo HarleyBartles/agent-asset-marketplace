@@ -80,9 +80,9 @@ It also records:
 
 ## Vendor subagent profiles
 
-For each installed plugin, the core also looks for `assets/profiles/*.md` inside the plugin root and copies those profiles into the consumer's agent search path at `.agents/agents/<profile>.md`.
+For each installed plugin, the core also looks for `assets/profiles/*.md` inside the plugin root and copies those profiles into the consumer's agent search path at `.agents/agents/<profile>.md` only when that file does not already exist. Existing files are never overwritten, so a repo that already has `reviewer.md`, `implementer.md`, etc. keeps its own copy.
 
-Orphan vendor profiles (files in `.agents/agents/` that no installed plugin contributes) are removed on refresh, mirroring the orphan-skill cleanup. The `vendorProfiles` provenance array records which plugin installed which profiles, alongside the existing `localSkills` and `syncedPlugins` fields.
+Orphan vendor profiles (files in `.agents/agents/` that no installed plugin contributes) are removed on refresh, mirroring the orphan-skill cleanup. The `vendorProfiles` provenance array records which plugin owns which profiles, alongside the existing `localSkills` and `syncedPlugins` fields.
 
 This skill does not create, write, or remove `.devin/agents/`. That directory is for repo-local user-managed overrides and is outside the marketplace installer's scope.
 

@@ -39,6 +39,14 @@ A consumer worktree uses the same precedence documented in
 No skill should create or pressure a consumer to create `.devin/agents/`.
 That directory is reserved for repo-local user-managed overrides.
 
+## Installation behavior
+
+A vendor profile is copied to `.agents/agents/` only when no file of the same
+name already exists. If the consumer repo already has `reviewer.md`, the pack's
+`reviewer.md` is not installed. This preserves repo-owned profiles while still
+enabling fresh consumer worktrees to receive a pack's default set. Marketplace
+profiles live in `.agents/agents/`; repo-local overrides live in `.devin/agents/`.
+
 ## Provenance
 
 `refresh_installed_skills` records installed vendor profiles in
