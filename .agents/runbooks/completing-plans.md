@@ -21,7 +21,12 @@ Move the complete work slice together. The set is deterministic:
 
 1. **The plan file** — `<plan-name>.md` from `.agents/plans/` to `.agents/plans/completed/`.
 2. **The spec file** — if the plan lists `**Spec:** <path>`, move that file from `.agents/specs/` to `.agents/specs/completed/`.
-3. **Any explicitly referenced `.agents/` artifact** — roadmap, research, or design files named in the plan body under `**Roadmap:**`, `**Research:**`, `**Design:**`, or a `Related` section. Move each to `.agents/plans/completed/` if it is a plan or roadmap, or to `.agents/specs/completed/` if it is a spec.
+3. **Any explicitly referenced `.agents/` artifact** — roadmap, research, design, or spec files the plan names. Use the following command to list every `.agents/` path and bare `2026-...md` name the plan mentions, then move each one that still lives in the active tree:
+
+   ```bash
+   py -3 -c "import re, pathlib; plan=pathlib.Path('.agents/plans/<plan-name>.md'); text=plan.read_text(encoding='utf-8'); paths=sorted(set(re.findall(r'\.agents/(?:plans|specs|roadmaps|research)/\d{4}-\d{2}-\d{2}-[a-zA-Z0-9_\-]+\.md', text))); bare=sorted(set(re.findall(r'\b\d{4}-\d{2}-\d{2}-[a-zA-Z0-9_\-]+\.md\b', text))); print('Explicit .agents/ references:'); [print('  '+p) for p in paths] or print('  (none)'); print('Bare date-marked references:'); [print('  '+b) for b in bare] or print('  (none)')"
+   ```
+
 4. **Epic folders** — if the plan is the parent of an epic and there is a folder under `.agents/plans/<epic-name>/` containing multiple plans and a roadmap, move the entire folder into `.agents/plans/completed/<epic-name>/` so the archive keeps the same structure.
 
 If a referenced file does not exist, note the missing file in the PR body rather than leaving it in the active tree.
@@ -36,11 +41,10 @@ git mv .agents/specs/<spec-name>.md .agents/specs/completed/    # if there is on
 # 2. Move any related .agents/ artifacts referenced by the plan
 #    (roadmaps, research, design files, epic sub-folders)
 
-# 3. Update stale internal references
-#    The following one-liner prints files that still reference active-plan or
-#    active-spec paths. Fix any output before committing.
-
-py -3 -c "import re, pathlib; pats=[r'\.agents/plans/[^/]+\.md', r'\.agents/specs/[^/]+\.md']; stale=[]; check=lambda f: any(re.search(p, f.read_text(encoding='utf-8')) for p in pats); [stale.append(str(f.relative_to('.'))) for d in ['.agents/plans/completed/', '.agents/specs/completed/'] for f in pathlib.Path(d).rglob('*.md') if check(f)]; (print('No stale references.') if not stale else [print(s) for s in stale])"
+# 3. Check for stale archive links in both directions
+#    - completed/ files should not reference active .agents/plans/ or .agents/specs/ paths
+#    - active files should not still reference the old active path of a completed file
+py -3 tools/check_archive_links.py
 
 # 4. Regenerate the mesh and marketplace surfaces
 py -3 tools/run.py mesh --apply

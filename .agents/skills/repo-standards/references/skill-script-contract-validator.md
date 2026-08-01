@@ -2,7 +2,7 @@
 
 ## What it checks
 
-`repo-standards/scripts/validate_skill_scripts.py` walks every first-party skill Python script under `sources/first_party/skills/*/scripts/*.py` and verifies the contract from `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`:
+`repo-standards/scripts/validate_skill_scripts.py` walks every first-party skill Python script under `sources/first_party/skills/*/scripts/*.py` and verifies the contract from `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`:
 
 - `--help` exits `0` and contains a `usage:` line.
 - `--help` declares the script classification: `read-only`, `mutating`, or `mixed`.

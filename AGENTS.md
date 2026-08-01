@@ -46,7 +46,7 @@ Apply the `security-review` profile from `/unslop-profiles` to relevant work and
 - Scoped law lives in `.devin/rules/*.md`
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
-- [Runbook stage routing](.agents/runbooks/AGENTS.md) and [completing plans](.agents/runbooks/completing-plans.md)
+- [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/docs/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
 - [Worktree and scratch policy](docs/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

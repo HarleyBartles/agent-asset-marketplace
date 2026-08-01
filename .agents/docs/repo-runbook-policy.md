@@ -24,7 +24,6 @@ Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union o
 
 - `marketplace-generation.md` — because this repo is an asset marketplace.
 - `skill-authoring.md` — because this repo authors skills.
-- `completing-plans.md` — because this repo archives delivered plans and specs to keep the active index focused.
 
 ## Root contributor and review surfaces
 

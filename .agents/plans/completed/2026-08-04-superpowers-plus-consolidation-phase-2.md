@@ -330,7 +330,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - **Profile deployment ownership:** The `refreshing-installed-skills` script currently owns the actual copy/clean of vendor profiles from `codex-marketplace/plugins/*/assets/profiles/` into `.agents/agents/`. This was the expedient Phase 2 path because the script already walks installed plugins. The long-term home is `repo-standards`, which is the skill responsible for one-shot repo shape and canonical surface deployment. A Phase 3 issue should:
   - Move `_install_plugin_vendor_profiles` and `_clean_orphan_vendor_profiles` from `refreshing-installed-skills` into `repo-standards` (likely as a `--vendor-profiles` mode on `repo_standards.py` or a sibling script).
   - Keep `refreshing-installed-skills` as the caller that records `vendorProfiles` provenance.
-- **Skill-bundled script CLI contract:** Recorded in `.agents/specs/2026-08-04-skill-script-cli-contract-design.md`. Phase 3 should make `--help` and `--check` standard for all skill scripts and add a validator to `tools/run`.
+- **Skill-bundled script CLI contract:** Recorded in `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`. Phase 3 should make `--help` and `--check` standard for all skill scripts and add a validator to `tools/run`.
 
 ## Final integration
 
