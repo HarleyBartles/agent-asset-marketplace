@@ -13,7 +13,7 @@ surface a single, well-homed owner.
 1. Remove the visual-companion runtime from `brainstorming`.
 2. Move durable work products out of `.agents/superpowers/` to
    `.agents/specs/`, `.agents/plans/`, and `.agents/plans/<epic>/`.
-3. Move transient SDD scratch out of the repo tree to `../_agents-scratch/`.
+3. Move transient SDD scratch out of the repo tree to `../_agent-scratch/`.
 4. Make `using-superpowers-plus` the single bootstrap router.
 5. Retire `work-mode-router` and `bootstrap-router` by folding their good content
    into `using-superpowers-plus`.
@@ -54,7 +54,7 @@ surface a single, well-homed owner.
 ### Transient scratch
 
 ```
-../_agents-scratch/<branch-name>/<plan-basename>/
+../_agent-scratch/<branch-name>/<plan-basename>/
   ledger.md
   briefs/
   review-packages/
@@ -133,7 +133,7 @@ In scope for Phase 1:
   and the companion mention in `brainstorming/SKILL.md`.
 - Move `.agents/superpowers/specs/` to `.agents/specs/` and `.agents/superpowers/plans/`
   to `.agents/plans/`, repointing every skill reference and `tools/generate_repo_index.py`.
-- Repoint `sdd-workspace` to `../_agents-scratch/<branch>/<plan-basename>/` and delete
+- Repoint `sdd-workspace` to `../_agent-scratch/<branch>/<plan-basename>/` and delete
   the `sdd` directory from the repo tree.
 - Rewrite `using-superpowers-plus/SKILL.md` as a generic bootstrap router: skill
   invocation contract, environment inspection, doctrine load, request classification,
