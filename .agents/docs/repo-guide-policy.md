@@ -17,7 +17,7 @@ This repo follows the `repo-standards` skill. Invoke `/using-superpowers-plus` f
 | pr.md | `.agents/runbooks/pr.md` | required |
 | code-style.md | `.agents/runbooks/code-style.md` | exists |
 
-Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed guides/routed surfaces.
+Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed runbooks/routed surfaces.
 
 ## Additional repo-specific runbooks
 
@@ -27,7 +27,7 @@ Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union o
 ## Root contributor and review surfaces
 
 - `REVIEW.md` is the review entry point. It contains first-class review concerns and routes to `.agents/runbooks/code-review.md` for detailed review methodology and to `/requesting-code-review` for execution.
-- `CONTRIBUTING.md` is the substantive contributor entry point. It routes to the design, planning, implementation, and review guides and to the relevant repo-worker-pack and Superpowers skills.
+- `CONTRIBUTING.md` is the substantive contributor entry point. It routes to the design, planning, implementation, and review runbooks and to the relevant repo-worker-pack and Superpowers skills.
 
 ## Exceptions
 

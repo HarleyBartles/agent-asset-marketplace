@@ -28,7 +28,7 @@ license: MIT
 This is the thin portable control plane for repo-backed work. It supplies
 repeatable hygiene and publication boundaries; the consuming repository owns
 its paths, commands, exclusions, CI, and exceptions through its local
-hygiene/layout policy and stage guides. Superpowers lane composition is owned
+hygiene/layout policy and stage runbooks. Superpowers lane composition is owned
 by `using-superpowers-plus`; each stage skill owns its own baseline.
 
 ## Read when
@@ -39,7 +39,7 @@ by `using-superpowers-plus`; each stage skill owns its own baseline.
 | Running or changing a mutation script | [mutation-script-safety.md](references/mutation-script-safety.md) |
 | Creating an agent-facing script | [script-entrypoint-contract.md](references/script-entrypoint-contract.md) |
 | Changing README, AGENTS.md, INDEX.md, doctrine, docs, plans, or mesh | [repository-layout-and-mesh.md](references/repository-layout-and-mesh.md) |
-| Finding or creating a repository-local stage guide | [stage-guide-contract.md](references/stage-guide-contract.md) |
+| Finding or creating a repository-local stage runbook | [stage-guide-contract.md](references/stage-guide-contract.md) |
 
 Read the consuming repository's local hygiene/layout policy whenever it
 exists. That local policy is the authority for repository-specific paths,
