@@ -14,6 +14,66 @@
 - No hand-editing of generated `codex-marketplace/plugins/<plugin>/skills/` trees; those are now the canonical source.
 - Delete a file rather than adapt it if its only purpose was to service the removed custody/projection pipeline.
 - Update `AGENTS.md` and runbook references in the same phase so doctrine does not drift.
+- Create a `git tag` backup before demolition (`git tag pre-remove-projection-layer`) so the old state is trivially inspectable.
+
+## Discovery findings (read-only pass, do not edit in this section)
+
+### File/classification inventory
+
+- `sources/first_party/` — 421 tracked references. The only non-generated/legitimate references are in `AGENTS.md`, `.agents/docs/AGENTS.md`, `docs/custody-and-projection-doctrine.md`, and the plan files. Everything else is generated or projection support.
+- `sources/third_party/` — 142 tracked references. Same pattern: generated maps, bundle manifests, validators, and historical provenance notes.
+- `codex-marketplace/custody-pack-registry.json` — 60 references. Referenced by `tools/generate_pack_manifests.py`, `tools/generate_plugin_root_inventory.py`, `tools/superpowers_source.py`, `tools/validate_marketplace.py`, several test files, and a handful of docs/runbooks.
+- `projection` — 414 references. The bulk are in the generated `references/provenance-map.json`, `references/source-map.md`, `agents/openai.yaml` (`projection_plugin` metadata field), and `tools/validate_marketplace.py`.
+
+### Tool fate
+
+**Delete without replacement:**
+- `tools/project_skills.py`
+- `tools/skill_projection_helpers.py`
+- `tools/generate_provenance_maps.py`
+- `tools/generate_source_maps.py`
+- `tools/update_skill_artifacts.py`
+- `tools/generate_first_party_skill_catalog.py`
+- `tools/normalize_first_party_skill_sources.py`
+- `tools/update_superpowers_source.py`
+- `tools/superpowers_source.py`
+- `tools/check_superpowers_output_paths.py`
+
+**Edit/retain:**
+- `tools/generate_pack_manifests.py` — remove `custody-pack-registry.json` read; generate pack bundle manifests by scanning each plugin's `skills/` tree.
+- `tools/generate_plugin_root_inventory.py` — remove `custody-pack-registry.json` read if present.
+- `tools/marketplace_utils.py` — remove registry constants but keep marketplace manifest helpers.
+- `tools/validate_marketplace.py` — delete the projection phase and all source-custody mirror checks (see function list in Task 4).
+- `tools/validate_repo_index.py` — remove the `sources/third_party` zone check.
+- `tools/validate_authority_assets.py` — remove `sources/first_party/skills` from discovery roots and `first_party_synthesis` from `CONTENT_MODES`.
+- `tools/skill_validation.py` — remove path-based first-party detection.
+- `tools/validate_agents_md.py` — remove the `sources/third_party/superpowers/obra-superpowers/v6.2.0/AGENTS.md` entry.
+- `tools/run.py` — remove the `project` target and its `marketplace`/`ci` dependencies.
+
+### `validate_marketplace.py` functions to remove
+
+- `validate_projection_materializer`
+- `validate_tree_mirror`
+- `validate_tree_reconstruction`
+- `_files_match_canonicalized`
+- `_trees_match_canonicalized`
+- `_validate_superpowers_provenance_map`
+- `validate_superpowers_bundle_manifest`
+- `validate_superpowers_projection`
+- `validate_first_party_tree_mirror`
+- `validate_third_party_tree_mirror`
+- `_validate_verbatim_entry`
+- `validate_verbatim_projections`
+- `validate_normalised_projections`
+- `validate_adapted_projections`
+- `_validate_adapted_entry`
+- `validate_projection_phase`
+
+Simplify `validate_pack_manifests` and `check_phase` to remove projection handling.
+
+### Skill copy verification
+
+The plugin skill copies are **functionally** the same as `sources/first_party/skills/<name>/`, but **not byte-identical** in `agents/openai.yaml` because the projection added `projection_plugin` and `plugin` metadata fields to the plugin copy. The plugin copy is the richer/canonical one once `sources/` is deleted, but the `projection_plugin` field becomes dead metadata and should be stripped (see Task 7).
 
 ---
 
@@ -100,18 +160,21 @@ They are no longer needed."
 
 ### Task 3: Delete projection-only tools
 
-**Files to inspect and delete if they only service the removed pipeline:**
-- `tools/generate_first_party_skill_catalog.py`
-- `tools/normalize_first_party_skill_sources.py`
+**Files to delete:**
+- `tools/project_skills.py`
 - `tools/skill_projection_helpers.py`
-- `tools/update_skill_artifacts.py`
-- `tools/update_superpowers_source.py`
 - `tools/generate_provenance_maps.py`
 - `tools/generate_source_maps.py`
+- `tools/update_skill_artifacts.py`
+- `tools/generate_first_party_skill_catalog.py`
+- `tools/normalize_first_party_skill_sources.py`
+- `tools/update_superpowers_source.py`
+- `tools/superpowers_source.py`
+- `tools/check_superpowers_output_paths.py`
 
 **Files to modify:**
 - `tools/INDEX.md` — remove deleted tool links
-- `tools/run.py` — remove tool invocation targets that no longer exist
+- `tools/run.py` — remove the `project` target and its call chain
 
 **Interfaces:**
 - Consumes: plugin manifests from `codex-marketplace/plugin-roots.json`
@@ -165,15 +228,34 @@ Look for:
 - `first_party`/`third_party` source-category validation
 - orphan detection
 
-- [ ] **Step 2: Remove or simplify those assertions**
+- [ ] **Step 2: Delete the projection functions**
 
-Change the validator to only check:
+Delete these functions in `tools/validate_marketplace.py`:
+
+```python
+validate_projection_materializer
+validate_tree_mirror
+validate_tree_reconstruction
+_files_match_canonicalized
+_trees_match_canonicalized
+_validate_superpowers_provenance_map
+validate_superpowers_bundle_manifest
+validate_superpowers_projection
+validate_first_party_tree_mirror
+validate_third_party_tree_mirror
+_validate_verbatim_entry
+validate_verbatim_projections
+validate_normalised_projections
+validate_adapted_projections
+_validate_adapted_entry
+validate_projection_phase
+```
+
+Simplify `validate_pack_manifests` and `check_phase` to only check:
 - each plugin has a valid `.codex-plugin/plugin.json`
 - each declared plugin root in `codex-marketplace/plugin-roots.json` exists
 - each `skills/<name>/SKILL.md` has valid YAML front matter
 - `source_category` and `content_mode` are allowed values
-
-Remove the `detect_first_party_orphans` and source-custody checks.
 
 - [ ] **Step 3: Commit**
 
@@ -247,7 +329,39 @@ vendored plugin trees are the canonical source."
 
 ---
 
-### Task 7: Regenerate the marketplace and repo index from plugin roots only
+### Task 7: Strip dead `projection_plugin` metadata from plugin skills
+
+**Files:**
+- Modify: `codex-marketplace/plugins/<plugin>/skills/<name>/agents/openai.yaml` (all)
+
+**Interfaces:**
+- Consumes: the canonical plugin skill tree
+- Produces: `openai.yaml` files that no longer reference the removed projection layer
+
+- [ ] **Step 1: Remove `projection_plugin` keys from every `agents/openai.yaml`**
+
+For each `openai.yaml` under `codex-marketplace/plugins/*/skills/`, delete the `projection_plugin` field. Keep the `plugin` field if it is used by consumers.
+
+```python
+import re
+from pathlib import Path
+
+for path in Path("codex-marketplace/plugins").glob("*/skills/*/agents/openai.yaml"):
+    text = path.read_text(encoding="utf-8")
+    text = re.sub(r"^\s*projection_plugin:.*\n", "", text, flags=re.MULTILINE)
+    path.write_text(text, encoding="utf-8", newline="\n")
+```
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add -A
+git commit -m "chore: strip projection_plugin metadata from plugin skills"
+```
+
+---
+
+### Task 8: Regenerate the marketplace and repo index from plugin roots only
 
 **Files:**
 - Modify: `tools/run.py` — keep only `marketplace`, `repo-index`, `mesh`, `catalog`, `lint`, `repo-standards`
@@ -289,6 +403,11 @@ all derived surfaces."
 
 ## SDD Confidence / Plan-Readiness Rating
 
-**Rating: 7/10**
+**Rating: 8/10**
 
-The demolition tasks are concrete, but the exact set of `tools/` scripts that can be deleted without breaking `tools/run.py` or `ci --check` can only be confirmed by reading each one in the implementation session. Task 4 and Task 5 may need small adjustments once the remaining validator behavior is tested. This plan is safe to start, but the implementer must run `py -3 tools/run.py ci --check` after every task and adjust if an unexpected dependency surfaces.
+The discovery pass produced an exact inventory of files to delete, the exact `tools/` scripts that are projection-only, and the exact `validate_marketplace.py` functions to remove. The two remaining uncertainties are:
+
+1. `tools/generate_pack_manifests.py` will need a small implementation (scan plugin `skills/` and emit `bundle-manifest.json` entries) rather than a one-line edit. The plan does not provide that implementation.
+2. `tools/validate_marketplace.py` deletions may leave unused helper imports; the implementer must run `py -3 tools/run.py ci --check` after each task to catch them.
+
+Both are manageable with the validation-first workflow, so the plan is ready for execution.
