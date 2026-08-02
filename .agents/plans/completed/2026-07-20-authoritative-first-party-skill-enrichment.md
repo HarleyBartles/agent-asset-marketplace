@@ -2548,6 +2548,3 @@ Return must include:
 2. `typescript` archive URL: verify the default branch is still `v2`; if `master` or `main` is now primary, update the `curl` URL.
 3. `dotnet` upstream license: confirm `dotnet/docs` and `AspNetCore.Docs` are still CC-BY-4.0 and that combined vendoring is acceptable.
 4. `ddd` source page is a single web page; if it is not curl-able or requires JavaScript, fall back to a citation-backed approach.
-
-
-
