@@ -1,6 +1,6 @@
 # AGENTS.md Migration Audit
 
-Plan: `.agents/plans/2026-08-01-devin-rules-mesh-migration.md`
+Plan: `2026-08-01-devin-rules-mesh-migration`
 
 ## Classification table
 
