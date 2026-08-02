@@ -32,7 +32,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 - The expected local green-path proof is `tools/run marketplace --apply`.
 - The expected CI green-path proof is `tools/run ci --check`.
 - After editing source, run the appropriate `tools/run <target> --apply` command to regenerate derived surfaces. Stage all changes. Then run the preflight (`tools/run ci --check`) on the staged tree before committing. The pre-commit hook also runs `ci --check` on the staged tree; if it is available, commit normally and it will re-run the same checks.
-- If, and only if, the pre-commit hook is not available in this environment, run `tools/run ci --check` on the staged tree and then commit the green tree with `--no-verify`, adding a note explaining that the hook was bypassed.
+- Run `tools/run ci --check` on the staged tree before committing. If the pre-commit hook is installed, commit normally and it will re-run the same checks. Do not use `--no-verify` to bypass the hook.
 - Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
