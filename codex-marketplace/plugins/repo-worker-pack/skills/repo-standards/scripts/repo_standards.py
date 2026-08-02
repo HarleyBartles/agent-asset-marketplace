@@ -172,7 +172,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     full = repo_root / rel
 
     if kind == "directory":
-        if not full.is_dir():
+        if not full.is_dir() and not optional:
             findings.append(f"missing directory: {rel}")
         return findings
 
@@ -235,10 +235,15 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     scaffold = _scaffold_script_path(surface)
     if kind == "directory":
         full = repo_root / rel
-        if full.is_dir() and not force:
-            print(f"skip {rel}: directory exists; use --force to ignore")
+        if full.is_dir():
+            print(f"skip {rel}: directory exists")
+            return False
+        if full.exists() and not full.is_dir():
+            print(f"error: cannot create directory {rel}: a non-directory file already exists", file=sys.stderr)
             return False
         full.mkdir(parents=True, exist_ok=True)
+        gitkeep = full / ".gitkeep"
+        gitkeep.write_text("# placeholder to keep this directory in git\n", encoding="utf-8")
         print(f"wrote {rel}")
         return True
 
