@@ -7,6 +7,6 @@
     "provenance_name": "MARK-226 canonical first-party source for using-github-mcp",
     "import_state": "canonical",
     "scope": "GitHub surface selection, MCP/gh/REST/GraphQL/git routing, and publication proof",
-    "notes": "Canonical first-party source for using-github-mcp. Renamed from github-operations and restructured as a router skill. Renamed from using-github to using-github-mcp in the Phase 2 consolidation. Projects into House Skills and repo-worker-pack; House Skills is a projection surface only."
+    "notes": "Canonical first-party source for using-github-mcp. Renamed from github-operations and restructured as a router skill. Renamed from using-github to using-github-mcp in the Phase 2 consolidation. Distributed in repo-worker-pack; the .agents/skills/ copy is generated."
   }
 ]
