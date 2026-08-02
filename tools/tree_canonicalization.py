@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared tree canonicalization helpers for projection and validation tools."""
+"""Shared tree canonicalization helpers for validation tools."""
 
 from __future__ import annotations
 
@@ -88,7 +88,6 @@ def canonicalize_tree_bytes(path: Path, raw: bytes) -> bytes:
             metadata = parsed.get("metadata")
             if isinstance(metadata, dict):
                 metadata.pop("plugin", None)
-                metadata.pop("projection_plugin", None)
                 if not metadata:
                     parsed.pop("metadata", None)
             rendered = yaml.safe_dump(

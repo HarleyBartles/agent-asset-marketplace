@@ -119,11 +119,12 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
             require_string(("adapted_author",))
             if "source_author" not in metadata or "source_license" not in metadata:
                 raise ValueError(
-                    f"{skill_md} frontmatter metadata adapted projections must declare source_author and source_license"
+                    f"{skill_md} frontmatter metadata for adapted skills must declare source_author and source_license"
                 )
             require_string(("source_author", "source_license"))
         elif metadata.get("content_mode") == "normalised":
             if metadata.get("adapted_author") or metadata.get("adaptation_note"):
                 raise ValueError(
-                    f"{skill_md} frontmatter metadata normalised projections must not declare adapted_author or adaptation_note"
+                    f"{skill_md} frontmatter: normalised skills must not "
+                    "declare adapted_author or adaptation_note"
                 )
