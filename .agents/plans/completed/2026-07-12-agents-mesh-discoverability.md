@@ -4,7 +4,7 @@
 
 **Goal:** Refresh the repo-wide agents mesh so documents are discoverable by agents at the right time. The implementation must keep `AGENTS.md` files slim routing surfaces, move durable guidance into the repo doctrine area, and add scoped `AGENTS.md` nodes where they materially improve routing.
 
-**Source design:** Agents Mesh Discoverability Design Receipt
+**Source design:** [Agents Mesh Discoverability Design Receipt](../specs/2026-07-12-agents-mesh-discoverability-design.md)
 
 **Scope boundary:** this work changes mesh policy, scoped routing nodes, and generated navigation only. It does not change marketplace content, skill behavior, or generated marketplace artifacts.
 

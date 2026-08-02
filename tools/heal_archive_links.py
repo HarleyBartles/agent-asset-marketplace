@@ -99,17 +99,27 @@ def _resolve_target(src_dir: Path, url: str) -> Path | None:
     return (src_dir / path).resolve()
 
 
+_FENCE_RE = re.compile(r"^\s*(```+|~~~+).*$")
+
+
 def _code_block_lines(text: str) -> set[int]:
     """Return 0-based line numbers that fall inside fenced code blocks."""
-    in_block = False
+    fence: str | None = None
+    fence_len: int = 0
     lines = text.splitlines()
     inside: set[int] = set()
     for i, line in enumerate(lines):
-        stripped = line.lstrip()
-        if stripped.startswith("```") or stripped.startswith("~~~"):
-            in_block = not in_block
+        m = _FENCE_RE.match(line)
+        if m:
+            run = m.group(1)
+            if fence is None:
+                fence = run[0]
+                fence_len = len(run)
+            elif run[0] == fence and len(run) >= fence_len:
+                fence = None
+                fence_len = 0
             continue
-        if in_block:
+        if fence is not None:
             inside.add(i)
     return inside
 
@@ -151,19 +161,7 @@ def _heal_file(src: Path, fix: bool) -> tuple[list[str], list[str]]:
         new_target = _map_completed(target)
 
         if not new_target.exists():
-            # Target does not exist in either active or completed trees.
-            # In apply mode, remove the link but keep regular link text.
-            repairs.append(f"{src.as_posix()}: {url} (missing) -> unlink")
-            start = m.start() + offset
-            end = m.end() + offset
-            if m.group(1) is not None:
-                # Image link with no target: drop it entirely.
-                replacement = ""
-            else:
-                # Regular link with no target: keep the visible text.
-                replacement = m.group(4)
-            new_text = new_text[:start] + replacement + new_text[end:]
-            offset += len(replacement) - len(m.group(0))
+            unresolved.append(f"{src.as_posix()}: {url}")
             continue
 
         # Compute the correct relative path from the new archived file
