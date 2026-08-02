@@ -29,11 +29,11 @@
 - Consumes: the design spec at `.agents/specs/2026-08-02-iterative-review-design.md`
 - Produces: the new `iterative-review` skill source, ready for bundling
 
-- [ ] **Step 1: Create the `iterative-review` directory**
+- [ ] **Step 1: Create the `iterative-review` directories**
 
   Run:
   ```powershell
-  New-Item -ItemType Directory -Path 'codex-marketplace/plugins/superpowers-plus/skills/iterative-review'
+  New-Item -ItemType Directory -Path 'codex-marketplace/plugins/superpowers-plus/skills/iterative-review', 'codex-marketplace/plugins/superpowers-plus/skills/iterative-review/agents'
   ```
 
 - [ ] **Step 2: Write `SKILL.md` with the exact content below**
@@ -42,7 +42,30 @@
   ---
   name: iterative-review
   description: Use when a draft PR is ready for subagent review before being marked ready for CI and human review.
+  metadata:
+    source-id: iterative-review
+    source-path: codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
+    provenance-name: Iterative Review first-party skill
+    source-category: first_party
+    status: active
+    owner: Harley Bartles
+    scope: Use when a draft PR is ready for subagent review before being marked ready for CI and human review.
+    use_when:
+    - Use when a draft PR is ready for subagent review before being marked ready for CI and human review.
+    do_not_use_when:
+    - Do not use when the PR has no changes to review.
+    - Do not use as a substitute for the repo's canonical CI preflight.
+    related_skills:
+    - requesting-code-review
+    - receiving-code-review
+    - handoff-gates
+    - selecting-a-subagent
+  license: MIT
   ---
+
+  ## Provenance
+
+  This skill is a first-party skill authored for this repository. It is not derived from an upstream snapshot.
 
   # Iterative Review
 
@@ -89,7 +112,7 @@
   ## Common Mistakes
 
   - Letting `reviewer-fast` drift into a full branch review. Keep the dispatch prompt and the fix diff tightly scoped.
-  - Blinding applying reviewer findings without verification. Use `receiving-code-review` for each finding.
+  - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
   - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
   ```
 
@@ -106,19 +129,20 @@
     default_prompt: Use /iterative-review when a draft PR is ready for subagent review before being marked ready for CI and human review.
   policy:
     products:
+    - chatgpt
     - codex
+    - api
+    - atlas
     allow_implicit_invocation: true
   ```
 
-- [ ] **Step 4: Stage the files and verify the skill shape**
+- [ ] **Step 4: Stage the skill files**
 
   Run:
   ```powershell
   git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
   git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/agents/openai.yaml
   ```
-
-  Do not commit yet. The pre-commit hook will run in Task 4 after all source edits are staged.
 
 ---
 
@@ -131,22 +155,41 @@
 - Consumes: the `iterative-review` design spec
 - Produces: the updated `reviewer-fast` source asset, regenerated into `.agents/agents/reviewer-fast.md`
 
-- [ ] **Step 1: Read the current `assets/reviewer-fast.md` to locate the insertion point**
+- [ ] **Step 1: Read the current `assets/reviewer-fast.md` to locate `## Inputs` and `## Procedure`**
 
-  The file currently has sections `## Invariants`, `## Inputs the orchestrator must provide`, and `## Procedure`. Insert the new section before `## Procedure`.
+- [ ] **Step 2: Append the fix re-review inputs to `## Inputs the orchestrator must provide`**
 
-- [ ] **Step 2: Insert the following exact section before `## Procedure`**
+  Add the following bullet after the existing optional inputs:
+
+  ```markdown
+  - For a fix re-review, the orchestrator must also provide:
+    - `<original_finding>` — the issue the fix is addressing.
+    - `<fix_diff_path>` — the prepared fix diff (`git diff <pre-fix-sha>...<post-fix-sha>` output written to a file).
+    - `<full_diff_slice_path>` — the relevant slices of the full branch diff that the fix touches.
+  ```
+
+- [ ] **Step 3: Replace `## Procedure` step 4 to distinguish the two modes**
+
+  Change the current step 4:
+
+  ```markdown
+  4. Do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
+  ```
+
+  To:
+
+  ```markdown
+  4. If this is a fix re-review, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
+  ```
+
+- [ ] **Step 4: Insert `## Fix re-review scope` before `## Procedure`**
 
   ```markdown
   ## Fix re-review scope
 
-  When this profile is used for a fix re-review, the orchestrator will provide:
+  When this profile is used for a fix re-review, the orchestrator will provide the original finding, the prepared fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`), and the relevant slices of the full branch diff the fix touches.
 
-  - the original finding being addressed,
-  - the prepared fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`),
-  - and the relevant slices of the full branch diff the fix touches.
-
-  Your job is to evaluate **only**:
+  Evaluate **only**:
 
   1. whether the fix diff resolves the listed finding,
   2. whether the fix introduces any obvious regressions in the code it touches,
@@ -155,7 +198,7 @@
   Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Keep findings brief, concrete, and actionable, with specific file and line citations.
   ```
 
-- [ ] **Step 3: Stage the modified file**
+- [ ] **Step 5: Stage the modified file**
 
   Run:
   ```powershell
@@ -173,7 +216,7 @@
 - Consumes: the `iterative-review` source tree
 - Produces: a bundle entry that projects the skill into `.agents/skills/iterative-review/`
 
-- [ ] **Step 1: Read the `bundle-manifest.json` `entries` array and insert the following exact object in alphabetical order by `canonical_name` (after `inspecting-the-environment`, before `publishing-source`)**
+- [ ] **Step 1: Insert the following object in the `bundle-manifest.json` `entries` array in alphabetical order by `canonical_name` (after `inspecting-the-environment`, before `publishing-source`)**
 
   ```json
   {
@@ -218,7 +261,17 @@
 
   **Expected interim state:** `tools/run.py marketplace --apply` should exit 0. If it fails, fix the source or manifest error before proceeding.
 
-- [ ] **Step 2: Run the CI preflight on the staged tree**
+- [ ] **Step 2: Spot-check the generated installed surfaces**
+
+  Run:
+  ```powershell
+  Select-String -Pattern "iterative-review" -Path .agents/skills/iterative-review/SKILL.md
+  Select-String -Pattern "Fix re-review scope" -Path .agents/agents/reviewer-fast.md
+  ```
+
+  **Expected result:** the first command finds the `iterative-review` name in the installed skill; the second finds `Fix re-review scope` in the installed agent profile.
+
+- [ ] **Step 3: Run the CI preflight on the staged tree**
 
   Run:
   ```powershell
@@ -227,7 +280,7 @@
 
   **Expected result:** all targets pass. If any fail, fix the source or derived files and re-run.
 
-- [ ] **Step 3: Commit the source and regenerated changes**
+- [ ] **Step 4: Commit the source and regenerated changes**
 
   Run:
   ```powershell
@@ -254,14 +307,14 @@
   git push origin spec-pr-review-iteration
   ```
 
-- [ ] **Step 2: Verify the PR head SHA**
+- [ ] **Step 2: Verify the PR for the current branch**
 
   Run:
   ```powershell
-  gh pr view 255 --json headRefOid,url,state,mergeable
+  gh pr view --json headRefOid,url,state,mergeable
   ```
 
-  **Expected result:** `headRefOid` matches the latest commit, `state` is `OPEN`, and `mergeable` is not `CONFLICTING`.
+  **Expected result:** `state` is `OPEN`, `mergeable` is `MERGEABLE`, and `headRefOid` matches the latest commit on `spec-pr-review-iteration`.
 
 - [ ] **Step 3: Confirm the PR remains draft**
 
@@ -271,4 +324,4 @@
 
 ## SDD Confidence Rating
 
-**9/10** — exact file paths, file contents, manifest entry, and validation commands are specified. The only judgement left to the implementer is the precise prose of the `SKILL.md` body, which is provided inline. The plan is straightforward source-add + regenerate + CI.
+**9/10** — exact file paths, file contents, manifest entry, and validation commands are specified. The `SKILL.md` frontmatter, `agents/openai.yaml`, and `reviewer-fast` input and scope updates are now concrete and transcribable.
