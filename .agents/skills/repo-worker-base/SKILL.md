@@ -46,9 +46,9 @@ exists. That local policy is the authority for repository-specific paths,
 commands, exclusions, CI, and exceptions; this skill does not replace it.
 
 For Superpowers lane composition and stage routing, see
-[`using-superpowers-plus/references/bootstrap-routing.md`](codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/bootstrap-routing.md)
+[`using-superpowers-plus/references/bootstrap-routing.md`](/.agents/skills/using-superpowers-plus/references/bootstrap-routing.md)
 and
-[`using-superpowers-plus/references/superpowers-composition.md`](codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/superpowers-composition.md).
+[`using-superpowers-plus/references/superpowers-composition.md`](/.agents/skills/using-superpowers-plus/references/superpowers-composition.md).
 Each stage skill owns its own baseline reference and reads it as part of its
 own first step.
 
