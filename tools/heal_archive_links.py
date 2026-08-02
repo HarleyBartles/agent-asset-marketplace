@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 
 
-_LINK_RE = re.compile(r"!?\[([^\]]*)\]\(([^) ]+)(?: \"[^\"]*\")?\)")
+_LINK_RE = re.compile(r"!\[([^\]]*)\]\(([^)\s]+)(?:\s+\"([^\"]*)\")?\)|\[([^\]]*)\]\(([^)\s]+)(?:\s+\"([^\"]*)\")?\)")
 _URL_RE = re.compile(r"^(?:[a-z]+://|mailto:|tel:|#)")
 
 _PLANS_COMPLETED = Path(".agents/plans/completed")
@@ -33,8 +33,11 @@ def _repo_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
+REPO_ROOT = _repo_root()
+
+
 def _completed_dirs() -> list[Path]:
-    return [d for d in (_PLANS_COMPLETED, _SPECS_COMPLETED) if d.is_dir()]
+    return [d for d in (REPO_ROOT / _PLANS_COMPLETED, REPO_ROOT / _SPECS_COMPLETED) if d.is_dir()]
 
 
 def _markdown_files() -> list[Path]:
@@ -46,28 +49,28 @@ def _markdown_files() -> list[Path]:
 
 def _old_src_dir(src: Path) -> Path:
     """Return the directory the archived file used to live in before completion."""
-    src = src.parent
+    src_dir = src.parent
     for completed, active in (
-        (_PLANS_COMPLETED, _PLANS_ACTIVE),
-        (_SPECS_COMPLETED, _SPECS_ACTIVE),
+        (REPO_ROOT / _PLANS_COMPLETED, REPO_ROOT / _PLANS_ACTIVE),
+        (REPO_ROOT / _SPECS_COMPLETED, REPO_ROOT / _SPECS_ACTIVE),
     ):
         try:
-            rel = src.relative_to(completed)
-            return _repo_root() / active / rel
+            rel = src_dir.relative_to(completed)
+            return active / rel
         except ValueError:
             continue
-    return src
+    return src_dir
 
 
 def _map_completed(target: Path) -> Path:
     """If a target is an active plan/spec, return its completed counterpart if it exists."""
     for active, completed in (
-        (_PLANS_ACTIVE, _PLANS_COMPLETED),
-        (_SPECS_ACTIVE, _SPECS_COMPLETED),
+        (REPO_ROOT / _PLANS_ACTIVE, REPO_ROOT / _PLANS_COMPLETED),
+        (REPO_ROOT / _SPECS_ACTIVE, REPO_ROOT / _SPECS_COMPLETED),
     ):
         try:
-            rel = target.relative_to(_repo_root() / active)
-            completed_target = _repo_root() / completed / rel
+            rel = target.relative_to(active)
+            completed_target = completed / rel
             if completed_target.exists():
                 return completed_target
         except ValueError:
@@ -92,21 +95,50 @@ def _resolve_target(src_dir: Path, url: str) -> Path | None:
         return None
     path = url.split("#", 1)[0]
     if path.startswith("/"):
-        return (_repo_root() / path.lstrip("/")).resolve()
+        return (REPO_ROOT / path.lstrip("/")).resolve()
     return (src_dir / path).resolve()
+
+
+def _code_block_lines(text: str) -> set[int]:
+    """Return 0-based line numbers that fall inside fenced code blocks."""
+    in_block = False
+    lines = text.splitlines()
+    inside: set[int] = set()
+    for i, line in enumerate(lines):
+        stripped = line.lstrip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            in_block = not in_block
+            continue
+        if in_block:
+            inside.add(i)
+    return inside
 
 
 def _heal_file(src: Path, fix: bool) -> tuple[list[str], list[str]]:
     text = src.read_text(encoding="utf-8", errors="replace")
-    old_src_dir = _old_src_dir(src.parent)
+    old_src_dir = _old_src_dir(src)
     repairs: list[str] = []
     unresolved: list[str] = []
     new_text = text
     offset = 0
+    code_lines = _code_block_lines(text)
 
     for m in _LINK_RE.finditer(text):
-        alt = m.group(1)
-        url = m.group(2)
+        # Skip links inside fenced code blocks.
+        line_no = text[: m.start()].count("\n")
+        if line_no in code_lines:
+            continue
+
+        # m.group(0) is the full link; group 2 is the URL for image links and
+        # group 5 is the URL for regular links.
+        url = m.group(2) if m.group(1) is not None else m.group(5)
+
+        # If the link already resolves from its archived location, leave it alone.
+        # This avoids false "unresolved" reports for links like "../../../AGENTS.md"
+        # that were originally broken but are correct once the file is archived.
+        current_target = _resolve_target(src.parent, url)
+        if current_target is not None and current_target.exists():
+            continue
 
         # Resolve the link as it would have resolved from the original active file
         target = _resolve_target(old_src_dir, url)
@@ -130,11 +162,19 @@ def _heal_file(src: Path, fix: bool) -> tuple[list[str], list[str]]:
         repairs.append(f"{src.as_posix()}: {url} -> {new_url}")
         start = m.start() + offset
         end = m.end() + offset
-        new_text = new_text[:start] + f"[{alt}]({new_url})" + new_text[end:]
-        offset += len(new_url) - len(url)
+
+        # Replace only the URL part of the link, preserving !, alt text and any title.
+        url_local_start = m.start(2) if m.group(1) is not None else m.start(5)
+        url_local_end = m.end(2) if m.group(1) is not None else m.end(5)
+        full = m.group(0)
+        replacement = full[: url_local_start - m.start()] + new_url + full[url_local_end - m.start() :]
+
+        new_text = new_text[:start] + replacement + new_text[end:]
+        offset += len(replacement) - len(m.group(0))
 
     if fix and new_text != text:
-        src.write_text(new_text, encoding="utf-8")
+        with src.open("w", encoding="utf-8", newline="\n") as f:
+            f.write(new_text)
 
     return repairs, unresolved
 
@@ -181,7 +221,11 @@ def main(argv: list[str] | None = None) -> int:
     if all_unresolved:
         return 1
     if all_repairs:
-        print(f"\nHealed {len(all_repairs)} link(s).")
+        if fix:
+            print(f"\nHealed {len(all_repairs)} link(s).")
+        else:
+            print(f"\nFound {len(all_repairs)} link(s) that would be healed; use --apply to fix.")
+            return 1
     else:
         print("\nNo stale archive links found.")
     return 0

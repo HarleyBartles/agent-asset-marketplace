@@ -347,6 +347,15 @@ def _run_repo_standards(ctx: Ctx) -> None:
         _run(cmd, ctx)
 
 
+def _check_archive_links(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/check_archive_links.py"], ctx)
+
+
+def _apply_archive_links(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/heal_archive_links.py", "--apply"], ctx)
+    _run([sys.executable, "tools/check_archive_links.py"], ctx)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -388,6 +397,11 @@ _TASKS: dict[str, Task] = {
         apply=(_apply_marketplace,),
         check=(_check_marketplace,),
         fix="tools/run marketplace --apply",
+    ),
+    "archive-links": Task(
+        apply=(_apply_archive_links,),
+        check=(_check_archive_links,),
+        fix="tools/run archive-links --apply",
     ),
     "ci": Task(
         deps=("lint", "repo-standards", "marketplace"),
