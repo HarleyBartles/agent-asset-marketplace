@@ -159,7 +159,7 @@
 
 - [ ] **Step 2: Append the fix re-review inputs to `## Inputs the orchestrator must provide`**
 
-  Add the following bullet after the existing optional inputs:
+  Add the following bullet at the end of the input list, before the closing paragraph "Do not generate the diff yourself.":
 
   ```markdown
   - For a fix re-review, the orchestrator must also provide:
@@ -179,7 +179,7 @@
   To:
 
   ```markdown
-  1. Determine the mode. If this is a fix re-review, read the prepared fix diff at `<fix_diff_path>` and the relevant full-branch slices at `<full_diff_slice_path>`; skip `<diff_path>`. If this is a general small re-review, read the prepared diff at `<diff_path>`.
+  1. Determine the mode. If this is a fix re-review, read the original finding at `<original_finding>`, then the prepared fix diff at `<fix_diff_path>` and the relevant full-branch slices at `<full_diff_slice_path>`; skip `<diff_path>`. If this is a general small re-review, read the prepared diff at `<diff_path>`.
   ```
 
   Then change the current step 4:
@@ -194,7 +194,7 @@
   4. If this is a fix re-review, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
   ```
 
-- [ ] **Step 4: Insert `## Fix re-review scope` before `## Procedure`**
+- [ ] **Step 4: Insert `## Fix re-review scope` after `## Procedure`**
 
   ```markdown
   ## Fix re-review scope
@@ -279,6 +279,8 @@
   ```powershell
   Select-String -Pattern "iterative-review" -Path .agents/skills/iterative-review/SKILL.md
   Select-String -Pattern "Fix re-review scope" -Path .agents/agents/reviewer-fast.md
+  Select-String -Pattern "fix_diff_path" -Path .agents/agents/reviewer-fast.md
+  Select-String -Pattern "full_diff_slice_path" -Path .agents/agents/reviewer-fast.md
   ```
 
   **Expected result:** the first command finds the `iterative-review` name in the installed skill; the second finds `Fix re-review scope` in the installed agent profile.
