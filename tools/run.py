@@ -404,7 +404,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run archive-links --apply",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "marketplace"),
+        deps=("lint", "repo-standards", "marketplace", "archive-links"),
         fix="tools/run ci --apply",
     ),
     "all": Task(

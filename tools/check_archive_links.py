@@ -32,7 +32,8 @@ def _active_files() -> list[Path]:
 def _old_active_path(completed: Path) -> Path | None:
     for d in _COMPLETED_DIRS:
         if completed.is_relative_to(d):
-            return d.parent / completed.name
+            rel = completed.relative_to(d)
+            return d.parent / rel
     return None
 
 
