@@ -168,9 +168,21 @@
     - `<full_diff_slice_path>` — the relevant slices of the full branch diff that the fix touches.
   ```
 
-- [ ] **Step 3: Replace `## Procedure` step 4 to distinguish the two modes**
+- [ ] **Step 3: Replace `## Procedure` steps 1 and 4 to match the two modes**
 
-  Change the current step 4:
+  Change the current step 1:
+
+  ```markdown
+  1. Read the prepared diff at `<diff_path>`.
+  ```
+
+  To:
+
+  ```markdown
+  1. Determine the mode. If this is a fix re-review, read the prepared fix diff at `<fix_diff_path>` and the relevant full-branch slices at `<full_diff_slice_path>`; skip `<diff_path>`. If this is a general small re-review, read the prepared diff at `<diff_path>`.
+  ```
+
+  Then change the current step 4:
 
   ```markdown
   4. Do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
