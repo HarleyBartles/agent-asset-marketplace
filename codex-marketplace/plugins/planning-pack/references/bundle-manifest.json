@@ -9,8 +9,8 @@
   ],
   "notes": [
     "Planning pack groups first-party skills for release engineering, requirements elicitation, estimation, and mermaid diagramming.",
-    "release-engineering, requirements-elicitation, and estimation are projected verbatim from first-party sources.",
-    "mermaid-diagramming is projected from a first-party skill."
+    "release-engineering, requirements-elicitation, and estimation are bundled verbatim from first-party sources.",
+    "mermaid-diagramming is bundled from a first-party skill."
   ],
   "provenance_refs": [
     "provenance/planning-pack.md"

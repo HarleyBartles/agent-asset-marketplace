@@ -30,7 +30,7 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
     },
     {
       "canonical_name": "base-doctrine",
@@ -85,7 +85,7 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
     },
     {
       "canonical_name": "linear-issue-shaping",
@@ -110,7 +110,7 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh."
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh."
     },
     {
       "canonical_name": "repo-standards",
@@ -145,7 +145,7 @@
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill projected verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
     },
     {
       "canonical_name": "unslop-profiles",

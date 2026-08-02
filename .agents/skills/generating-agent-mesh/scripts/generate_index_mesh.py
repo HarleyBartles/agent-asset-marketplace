@@ -28,7 +28,7 @@ def _repo_root() -> Path:
 
 
 # Allow importing the shared checkout helper from the script directory (so the
-# skill is self-contained when installed/projected) or from tools/ when running
+# skill is self-contained when installed/bundled) or from tools/ when running
 # from source.
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _SHARED_CHECKOUT_PATH: Path | None = None

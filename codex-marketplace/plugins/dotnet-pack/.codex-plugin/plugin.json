@@ -1,7 +1,7 @@
 {
     "name": "dotnet-pack",
     "version": "1.0.0",
-    "description": "First-party .NET ecosystem pack projected from the dotnet skill.",
+    "description": "First-party .NET ecosystem pack bundled from the dotnet skill.",
     "author": {
         "name": "Harley Bartles"
     },

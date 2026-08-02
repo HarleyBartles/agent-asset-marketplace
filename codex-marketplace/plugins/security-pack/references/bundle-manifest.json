@@ -8,8 +8,8 @@
     "first_party"
   ],
   "notes": [
-    "Security pack projected from first-party source custody.",
-    "risk-gates is projected verbatim with an expanded safety gate for destructive operations."
+    "Security pack bundled from first-party source custody.",
+    "risk-gates is bundled verbatim with an expanded safety gate for destructive operations."
   ],
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
