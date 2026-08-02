@@ -95,6 +95,8 @@ def _expected_profiles(repo_root: Path, installed_plugins: list[dict[str, Any]])
         plugin_path = Path(source_path)
         if not plugin_path.is_absolute():
             plugin_path = (repo_root / plugin_path).resolve()
+        if not plugin_path.is_dir():
+            plugin_path = (repo_root / ".agents" / "plugins" / "marketplace-source" / source_path).resolve()
         profiles_dir = plugin_path / "assets" / "profiles"
         if not profiles_dir.is_dir():
             continue
