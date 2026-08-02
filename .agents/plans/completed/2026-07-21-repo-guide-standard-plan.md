@@ -827,7 +827,7 @@ Use this guide for repo-specific security posture when working in `agent-asset-m
 
 ## Before you begin
 
-- Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/guides/code-review-guide.md`](./code-review-guide.md) for review expectations.
+- Read [`REVIEW.md`](../../../REVIEW.md) and [`.agents/guides/code-review-guide.md`](./code-review-guide.md) for review expectations.
 - Invoke `/unslop-plus` with the `security-review` profile for concrete security analysis.
 
 ## When to use
@@ -894,7 +894,7 @@ Use this guide for pull-request workflow and publication proof in `agent-asset-m
 
 ## Before you begin
 
-- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
+- Read root [`AGENTS.md`](../../../AGENTS.md) `## Publication proof for repo work`.
 - Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for validation commands.
 - Invoke `/repo-worker-base`.
 
@@ -933,7 +933,7 @@ Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
 
 ## Before you begin
 
-- Read [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md) for skill shape standards.
+- Read [`docs/skill-standards-policy.md`](../../../docs/skill-standards-policy.md) for skill shape standards.
 - Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for tooling conventions.
 
 ## When to use
