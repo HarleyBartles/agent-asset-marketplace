@@ -15,6 +15,9 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/runbooks/<standard-runbook>.md` for the core and declared runbook set.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
+- `.agents/plans/completed/` and `.agents/specs/completed/` as the historical archive for in-flight plans and specs that have been completed. `repo-standards --apply` creates these directories and places a `.gitkeep` placeholder in each so they survive a clean checkout.
+- `.agents/doctrine/completed-plans.md` stating that completed plans/specs are historical context, not live pattern sources.
+- `.devin/rules/completed-plans.md` as a conditional trigger on completed plan/spec files, routing to `.agents/doctrine/completed-plans.md`.
 
 ## Router AGENTS.md model
 

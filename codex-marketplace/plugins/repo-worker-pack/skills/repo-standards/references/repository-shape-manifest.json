@@ -85,6 +85,32 @@
       "source": null,
       "scaffold": "scaffold_gitignore.py",
       "optional": false
+    },
+    {
+      "id": "completed-plans-rule",
+      "path": ".devin/rules/completed-plans.md",
+      "kind": "file",
+      "source": "templates/completed-plans-rule.md",
+      "optional": false
+    },
+    {
+      "id": "completed-plans-doctrine",
+      "path": ".agents/doctrine/completed-plans.md",
+      "kind": "file",
+      "source": "templates/completed-plans.md",
+      "optional": false
+    },
+    {
+      "id": "plans-completed-dir",
+      "path": ".agents/plans/completed",
+      "kind": "directory",
+      "optional": false
+    },
+    {
+      "id": "specs-completed-dir",
+      "path": ".agents/specs/completed",
+      "kind": "directory",
+      "optional": false
     }
   ]
 }
