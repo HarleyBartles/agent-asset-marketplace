@@ -171,6 +171,11 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     scaffold = _scaffold_script_path(surface)
     full = repo_root / rel
 
+    if kind == "directory":
+        if not full.is_dir():
+            findings.append(f"missing directory: {rel}")
+        return findings
+
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
         if not gitmodules.is_file():
@@ -228,6 +233,15 @@ def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     scaffold = _scaffold_script_path(surface)
+    if kind == "directory":
+        full = repo_root / rel
+        if full.is_dir() and not force:
+            print(f"skip {rel}: directory exists; use --force to ignore")
+            return False
+        full.mkdir(parents=True, exist_ok=True)
+        print(f"wrote {rel}")
+        return True
+
     if kind in ("file", "hook") and template is not None:
         if kind == "hook":
             full = _git_hooks_dir(repo_root) / Path(rel).name
