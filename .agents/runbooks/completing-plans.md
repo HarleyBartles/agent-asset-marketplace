@@ -41,9 +41,13 @@ git mv .agents/specs/<spec-name>.md .agents/specs/completed/    # if there is on
 # 2. Move any related .agents/ artifacts referenced by the plan
 #    (roadmaps, research, design files, epic sub-folders)
 
-# 3. Check for stale archive links in both directions
-#    - completed/ files should not reference active .agents/plans/ or .agents/specs/ paths
-#    - active files should not still reference the old active path of a completed file
+# 3. Heal in-boundary archive links, then verify the remaining stale links
+#    - heal_archive_links.py rewrites relative links inside completed/ files
+#      to point at completed/ counterparts.
+#    - check_archive_links.py reports any remaining active .agents/plans/ or
+#      .agents/specs/ references in completed/ files, or active files that still
+#      reference an old active path of a completed file.
+py -3 tools/heal_archive_links.py --apply
 py -3 tools/check_archive_links.py
 
 # 4. Regenerate the mesh and marketplace surfaces

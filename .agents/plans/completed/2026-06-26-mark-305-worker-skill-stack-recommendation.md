@@ -255,7 +255,7 @@ The install phase must not become a raw folder dump. Every installed local folde
 
 - [x] **Step 4: Leave worker-facing guidance in the repo**
 
-`.agents/INDEX.md` should point workers to the local skill surface. `.agents/skills/INDEX.md` should enumerate the approved skill folders and point to the `SKILL.md` inside each folder. `.agents/skills/AGENTS.md` should explain how to use the installed skills, how to keep them aligned when the matching vendored market skills change, and how the local skill surface composes with the repository root [AGENTS.md](../../AGENTS.md).
+`.agents/INDEX.md` should point workers to the local skill surface. `.agents/skills/INDEX.md` should enumerate the approved skill folders and point to the `SKILL.md` inside each folder. `.agents/skills/AGENTS.md` should explain how to use the installed skills, how to keep them aligned when the matching vendored market skills change, and how the local skill surface composes with the repository root [AGENTS.md](../../../AGENTS.md).
 
 ### Task 4: Add validation for the local projection surface
 

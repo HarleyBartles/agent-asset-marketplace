@@ -4,7 +4,7 @@
 
 | # | Title | Status | Plan File | Commit | PR | Rating | Notes |
 |---|-------|--------|-----------|--------|----|--------|-------|
-| 1 | Demolition pass: delete `sources/` and the custody registry | writing | `.agents/plans/2026-08-01-remove-projection-layer.md` | — | — | — | First concrete plan |
+| 1 | Demolition pass: delete `sources/` and the custody registry | writing | `.agents/plans/remove-projection-layer/2026-08-01-remove-projection-layer.md` | — | — | — | First concrete plan |
 | 2 | Retool marketplace validation and `tools/run` | pending | — | — | — | — | Keep only the plugin-root manifest flow |
 | 3 | Rewrite or delete custody/projection doctrine | pending | — | — | — | — | Docs and runbook updates |
 | 4 | Final green CI and mesh regeneration | pending | — | — | — | — | `tools/run ci --check` and push |

@@ -143,4 +143,3 @@ rg -n "codex-repo-receipts|codex-receipts-superpowers" codex-marketplace sources
 ```
 
 - [x] **Step 4: Summarize the exact files removed, files edited, generated artifacts changed, and any intentional residual references**
-

@@ -42,8 +42,7 @@ Consumer-canonical variant:
 - Run the relevant validation before **every** commit:
   - `tools/run marketplace --apply` (regenerates derived surfaces), then `git add`.
   - `tools/run ci --check` (the preflight) on the staged tree before committing.
-  - If the pre-commit hook is not installed, run the preflight manually; only use
-    `git commit --no-verify` as a last resort and document the bypass.
+  - Run the preflight manually before committing; if the pre-commit hook is installed it will re-run the same checks. Do not use `git commit --no-verify` to bypass the hook.
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.
 - Push the branch and open a **draft** PR into `main` unless direct-main work is explicitly authorized.
 - A valid repo-work return must include one of:

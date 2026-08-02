@@ -2416,5 +2416,3 @@ These can be squashed into a single PR or kept as a logical sequence for easier 
 - [ ] Execute tasks 1-8
 - [ ] Run full validation and regenerate surfaces
 - [ ] Open PR with publication proof
-
-
