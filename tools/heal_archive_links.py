@@ -151,7 +151,19 @@ def _heal_file(src: Path, fix: bool) -> tuple[list[str], list[str]]:
         new_target = _map_completed(target)
 
         if not new_target.exists():
-            unresolved.append(f"{src.as_posix()}: {url}")
+            # Target does not exist in either active or completed trees.
+            # In apply mode, remove the link but keep regular link text.
+            repairs.append(f"{src.as_posix()}: {url} (missing) -> unlink")
+            start = m.start() + offset
+            end = m.end() + offset
+            if m.group(1) is not None:
+                # Image link with no target: drop it entirely.
+                replacement = ""
+            else:
+                # Regular link with no target: keep the visible text.
+                replacement = m.group(4)
+            new_text = new_text[:start] + replacement + new_text[end:]
+            offset += len(replacement) - len(m.group(0))
             continue
 
         # Compute the correct relative path from the new archived file
