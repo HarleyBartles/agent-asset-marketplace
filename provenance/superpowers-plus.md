@@ -9,7 +9,7 @@
 
 ## Retention note
 
-The `obra/superpowers` v6.2.0 MIT snapshot was previously retained under the deleted third-party source tree `superpowers/obra-superpowers/v6.2.0/`. The source custody tree has been removed as part of the projection-layer retirement. The upstream snapshot is no longer kept as a live file tree; the canonical source for the Superpowers+ plugin is now `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
+The `obra/superpowers` v6.2.0 MIT snapshot was previously retained under the deleted third-party source tree `superpowers/obra-superpowers/v6.2.0/`. The source custody tree has been removed as part of the `sources/` layer retirement. The upstream snapshot is no longer kept as a live file tree; the canonical source for the Superpowers+ plugin is now `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
 
 ## Plugin custody
 
