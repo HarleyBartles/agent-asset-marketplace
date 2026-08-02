@@ -123,13 +123,20 @@ def _deploy(
 
     for name, src in sorted(expected.items()):
         dest = agents_agents_path / name
-        if not dest.exists():
+        needs_copy = not dest.exists()
+        if not needs_copy and dest.read_text(encoding='utf-8') != src.read_text(encoding='utf-8'):
+            needs_copy = True
+        if needs_copy:
             if apply:
                 agents_agents_path.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, dest)
-                print(f"Installed vendor profile: {dest.relative_to(repo_root)}")
+                action = "Installed" if not dest.exists() else "Updated"
+                print(f"{action} vendor profile: {dest.relative_to(repo_root)}")
             else:
-                print(f"CHECK: Would install vendor profile: {dest.relative_to(repo_root)}")
+                if not dest.exists():
+                    print(f"CHECK: Would install vendor profile: {dest.relative_to(repo_root)}")
+                else:
+                    print(f"CHECK: Would update vendor profile: {dest.relative_to(repo_root)}")
             changes = True
 
     for name in sorted(existing):
