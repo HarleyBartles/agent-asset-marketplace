@@ -135,7 +135,7 @@ def _load_active_plugin_root_names() -> set[str]:
     return active_names
 
 
-def _prune_stale_projected_plugin_roots() -> None:
+def _prune_stale_plugin_roots() -> None:
     active_names = _load_active_plugin_root_names()
     for child in sorted(PLUGIN_ROOTS_PATH.iterdir(), key=lambda path: path.name):
         if not child.is_dir() or child.name in active_names:
@@ -143,7 +143,7 @@ def _prune_stale_projected_plugin_roots() -> None:
         if not (child / ".codex-plugin" / "plugin.json").is_file():
             continue
         shutil.rmtree(child)
-        print(f"Pruned stale projected plugin root {child.relative_to(ROOT)}")
+        print(f"Pruned stale plugin root {child.relative_to(ROOT)}")
 
 
 def _retained_verbatim_paths() -> set[str]:
@@ -198,7 +198,7 @@ def _validate_marketplace_phase_step(phase: str, ctx: Ctx) -> None:
 
 def _apply_inventory(ctx: Ctx) -> None:
     _run([sys.executable, "tools/generate_plugin_root_inventory.py"], ctx)
-    _prune_stale_projected_plugin_roots()
+    _prune_stale_plugin_roots()
     _validate_marketplace_phase_step("inventory", ctx)
 
 
