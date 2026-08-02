@@ -6,8 +6,17 @@ import re
 from pathlib import Path
 
 
-_COMPLETED_DIRS = [Path(".agents/plans/completed"), Path(".agents/specs/completed")]
-_ACTIVE_DIRS = [Path(".agents/plans"), Path(".agents/specs"), Path(".agents/runbooks"), Path("docs")]
+REPO_ROOT = Path(__file__).resolve().parent.parent
+_COMPLETED_DIRS = [
+    REPO_ROOT / ".agents/plans/completed",
+    REPO_ROOT / ".agents/specs/completed",
+]
+_ACTIVE_DIRS = [
+    REPO_ROOT / ".agents/plans",
+    REPO_ROOT / ".agents/specs",
+    REPO_ROOT / ".agents/runbooks",
+    REPO_ROOT / "docs",
+]
 
 # Active .agents/plans/ or .agents/specs/ path that is not inside completed/
 _STALE_ACTIVE_RE = re.compile(
@@ -35,7 +44,7 @@ def _old_active_path(completed: Path) -> Path | None:
     for d in _COMPLETED_DIRS:
         if completed.is_relative_to(d):
             rel = completed.relative_to(d)
-            return d.parent / rel
+            return d.parent.relative_to(REPO_ROOT) / rel
     return None
 
 
@@ -64,7 +73,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if old_paths:
         pattern = re.compile(
-            r"(?<![\w/])(" + "|".join(re.escape(p) for p in sorted(old_paths)) + r")(?![\w/])"
+            r"(?<![\w.])(" + "|".join(re.escape(p) for p in sorted(old_paths)) + r")(?![\w/])"
         )
         for a in active:
             text = a.read_text(encoding="utf-8", errors="replace")
