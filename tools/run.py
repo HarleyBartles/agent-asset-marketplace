@@ -348,6 +348,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
 
 
 def _check_archive_links(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/heal_archive_links.py", "--check"], ctx)
     _run([sys.executable, "tools/check_archive_links.py"], ctx)
 
 

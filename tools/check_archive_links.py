@@ -10,7 +10,9 @@ _COMPLETED_DIRS = [Path(".agents/plans/completed"), Path(".agents/specs/complete
 _ACTIVE_DIRS = [Path(".agents/plans"), Path(".agents/specs"), Path(".agents/runbooks"), Path("docs")]
 
 # Active .agents/plans/ or .agents/specs/ path that is not inside completed/
-_STALE_ACTIVE_RE = re.compile(r"\.agents/(?:plans|specs)/\d{4}-\d{2}-\d{2}-[a-zA-Z0-9_\-]+\.md")
+_STALE_ACTIVE_RE = re.compile(
+    r"\.agents/(?:plans|specs)/(?!completed/)(?:[A-Za-z0-9_\-]+/)*\d{4}-\d{2}-\d{2}-[A-Za-z0-9_\-]+\.md"
+)
 
 
 def _completed_files() -> list[Path]:
@@ -40,11 +42,6 @@ def _old_active_path(completed: Path) -> Path | None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Check for stale archive links after moving plans and specs to completed/.",
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Report stale links without changing files (default behavior).",
     )
     parser.parse_args(argv)
 

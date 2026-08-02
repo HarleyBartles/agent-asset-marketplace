@@ -9,7 +9,7 @@ Defer to the repository root `AGENTS.md` for global doctrine, publication rules,
 
 The canonical task runner is `tools/run`. It composes the individual generator and validator scripts into a dependency-aware task graph.
 
-- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the full non-mutating CI gate (lint, repo-standards, marketplace).
+- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the full non-mutating CI gate (lint, repo-standards, marketplace, archive-links).
 - `./tools/run marketplace --apply` (or `.\tools\run.ps1 marketplace --apply` on Windows PowerShell) is the canonical local full regeneration and validation entrypoint.
 - `tools/run <target> --apply` / `tools/run.ps1 <target> --apply` regenerates only the named target and its prerequisites.
 - `tools/run <target> --check` / `tools/run.ps1 <target> --check` validates only the named target and its prerequisites without writing.
