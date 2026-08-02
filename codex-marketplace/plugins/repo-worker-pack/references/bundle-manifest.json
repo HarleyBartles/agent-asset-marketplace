@@ -39,7 +39,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine",
       "local_path": "skills/base-doctrine",
-      "provenance_note": "Projected verbatim from the first-party base-doctrine skill.",
+      "provenance_note": "Canonical first-party base-doctrine skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -49,7 +49,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody",
       "local_path": "skills/cleanup-custody",
-      "provenance_note": "Projected verbatim from the first-party cleanup-custody skill.",
+      "provenance_note": "Canonical first-party cleanup-custody skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -59,7 +59,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety",
       "local_path": "skills/connector-safety",
-      "provenance_note": "Projected verbatim from the first-party connector-safety skill.",
+      "provenance_note": "Canonical first-party connector-safety skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -69,7 +69,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/context-safety",
       "local_path": "skills/context-safety",
-      "provenance_note": "Projected verbatim from the first-party context-safety skill.",
+      "provenance_note": "Canonical first-party context-safety skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -94,7 +94,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping",
       "local_path": "skills/linear-issue-shaping",
-      "provenance_note": "Projected verbatim from the first-party linear-issue-shaping skill.",
+      "provenance_note": "Canonical first-party linear-issue-shaping skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -119,7 +119,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards",
       "local_path": "skills/repo-standards",
-      "provenance_note": "Projected verbatim from the first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order.",
+      "provenance_note": "Canonical first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -129,7 +129,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base",
-      "provenance_note": "Projected verbatim from the first-party repo worker base skill.",
+      "provenance_note": "Canonical first-party repo worker base skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -154,7 +154,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles",
       "local_path": "skills/unslop-profiles",
-      "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
+      "provenance_note": "Canonical first-party unslop-profiles skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -164,7 +164,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-github-mcp",
       "local_path": "skills/using-github-mcp",
-      "provenance_note": "Projected verbatim from the first-party using-github-mcp skill.",
+      "provenance_note": "Canonical first-party using-github-mcp skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -174,7 +174,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/using-linear",
       "local_path": "skills/using-linear",
-      "provenance_note": "Projected verbatim from the first-party using-linear skill.",
+      "provenance_note": "Canonical first-party using-linear skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -184,7 +184,7 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity",
       "local_path": "skills/writing-with-clarity",
-      "provenance_note": "Projected verbatim from the first-party writing-with-clarity skill.",
+      "provenance_note": "Canonical first-party writing-with-clarity skill.",
       "copy_expectation": "byte_identical"
     }
   ],
