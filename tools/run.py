@@ -475,7 +475,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "Targets: "
             + ", ".join(_TASKS.keys())
             + "\n"
-            "ci --check is the post-commit CI gate; do not run it on an uncommitted "
+            "ci --check is the full non-mutating CI gate; do not run it on an uncommitted "
             "working tree. Edit, run the relevant <target> --apply, stage, commit, "
             "and let the pre-commit hook run ci --check. See .devin/rules/tools.md."
         ),
