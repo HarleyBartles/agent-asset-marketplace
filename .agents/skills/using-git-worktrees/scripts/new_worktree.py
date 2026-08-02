@@ -232,6 +232,85 @@ def _init_submodules(worktree_root: Path) -> int:
     return 0
 
 
+def _submodule_paths(worktree_root: Path) -> list[str]:
+    """Return the list of submodule paths declared in .gitmodules."""
+    result = subprocess.run(
+        ["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.path$"],
+        cwd=worktree_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return []
+    paths: list[str] = []
+    for line in result.stdout.splitlines():
+        parts = line.strip().split(maxsplit=1)
+        if len(parts) == 2:
+            paths.append(parts[1])
+    return paths
+
+
+def _roll_submodules_to_origin_main(worktree_root: Path) -> int:
+    """Roll each initialized submodule to origin/main.
+
+    ``git submodule update --init`` populates the checkout, but it does not
+    advance to the latest upstream commit. Fetch origin inside each submodule
+    and hard-reset to ``origin/main`` so the new worktree starts from the
+    latest marketplace source before refreshing skills.
+    """
+    for path in _submodule_paths(worktree_root):
+        submodule = worktree_root / path
+        if not (submodule / ".git").exists() and not (submodule / ".git").is_file():
+            # not yet initialized; skip silently
+            continue
+
+        fetch = subprocess.run(
+            ["git", "-C", str(submodule), "fetch", "origin"],
+            cwd=worktree_root,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        if fetch.returncode != 0:
+            print(
+                f"error: failed to fetch origin in submodule {path}: {fetch.stderr.strip()}",
+                file=sys.stderr,
+            )
+            return fetch.returncode
+
+        verify = subprocess.run(
+            ["git", "-C", str(submodule), "rev-parse", "--verify", "origin/main"],
+            cwd=worktree_root,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        if verify.returncode != 0:
+            print(
+                f"error: submodule {path} does not have origin/main; cannot roll forward",
+                file=sys.stderr,
+            )
+            return 1
+
+        reset = subprocess.run(
+            ["git", "-C", str(submodule), "reset", "--hard", "origin/main"],
+            cwd=worktree_root,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        if reset.returncode != 0:
+            print(
+                f"error: failed to reset {path} to origin/main: {reset.stderr.strip()}",
+                file=sys.stderr,
+            )
+            return reset.returncode
+
+        print(f"Rolled submodule {path} to origin/main")
+    return 0
+
+
 def _configure_worktree(
     worktree_root: Path,
     main_repo_root: Path,
@@ -245,6 +324,10 @@ def _configure_worktree(
     """
     if not no_skill_refresh:
         exit_code = _init_submodules(worktree_root)
+        if exit_code != 0:
+            return exit_code
+
+        exit_code = _roll_submodules_to_origin_main(worktree_root)
         if exit_code != 0:
             return exit_code
 
