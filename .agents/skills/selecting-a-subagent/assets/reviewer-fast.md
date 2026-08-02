@@ -44,6 +44,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 4. If this is a fix re-review, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
 5. Cite specific files and line numbers for findings.
 6. If the diff is clean within its stated scope, say so explicitly.
+
 ## Fix re-review scope
 
 When this profile is used for a fix re-review, the orchestrator will provide the original finding, the prepared fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`), and the relevant slices of the full branch diff the fix touches.

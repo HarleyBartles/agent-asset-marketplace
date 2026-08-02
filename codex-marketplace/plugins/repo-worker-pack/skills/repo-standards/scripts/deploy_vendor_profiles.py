@@ -5,7 +5,7 @@ This script follows the skill-bundled CLI contract:
 - `--help` prints usage and classifies each flag.
 - `--check` (the default) reports what the script would do and exits 0 when
   `.agents/agents/` is already aligned with the installed plugin packs.
-- `--apply` copies missing profiles and removes orphan profiles.
+- `--apply` copies missing or changed profiles and removes orphan profiles.
 
 `repo-standards` owns the one-shot deployment of `codex-marketplace/plugins/*/assets/profiles/*.md`
 into `.agents/agents/`.
@@ -160,7 +160,7 @@ def _build_parser() -> argparse.ArgumentParser:
             "Deploy vendor subagent profiles from installed plugin packs. "
             "(mixed: supports --check and --apply)"
         ),
-        epilog="Default mode is --check. Use --apply to copy or remove profiles.",
+        epilog="Default mode is --check. Use --apply to copy or remove changed or missing profiles.",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
@@ -171,7 +171,7 @@ def _build_parser() -> argparse.ArgumentParser:
     mode.add_argument(
         "--apply",
         action="store_true",
-        help="copy missing and remove orphan vendor profiles (mutating)",
+        help="copy missing or changed and remove orphan vendor profiles (mutating)",
     )
     return parser
 
