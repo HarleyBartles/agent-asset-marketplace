@@ -31,6 +31,7 @@ metadata:
   - publishing-source
   - finishing-a-development-branch
   - requesting-code-review
+  - iterative-review
   - working-with-epics
   related_skills:
   - brainstorming
@@ -45,6 +46,7 @@ metadata:
   - finishing-a-development-branch
   - requesting-code-review
   - receiving-code-review
+  - iterative-review
   - writing-skills
   - working-with-epics
   - repo-worker-base

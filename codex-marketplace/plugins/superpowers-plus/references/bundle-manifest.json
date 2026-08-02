@@ -77,6 +77,16 @@
       "copy_expectation": "byte_identical"
     },
     {
+      "canonical_name": "iterative-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review",
+      "local_path": "skills/iterative-review",
+      "provenance_note": "First-party helper skill bundled verbatim.",
+      "copy_expectation": "byte_identical"
+    },
+    {
       "canonical_name": "publishing-source",
       "source_category": "first_party",
       "content_mode": "verbatim",

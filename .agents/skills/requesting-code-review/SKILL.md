@@ -21,6 +21,7 @@ metadata:
   - Do not use as a substitute for self-review.
   related_skills:
   - receiving-code-review
+  - iterative-review
   - finishing-a-development-branch
   - subagent-driven-development
   - executing-plans
