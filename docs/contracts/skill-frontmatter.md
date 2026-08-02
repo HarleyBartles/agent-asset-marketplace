@@ -1,7 +1,7 @@
 # Skill Frontmatter Contract
 
 This contract applies to installable `SKILL.md` surfaces in the Codex
-marketplace projection, including first-party Superpowers+ skills.
+marketplace bundle, including first-party Superpowers+ skills.
 
 ## Canonical Shape
 
@@ -29,12 +29,12 @@ license: "MIT"
 - The frontmatter must be a top-level mapping.
 - `name` is required and must be a nonblank string.
 - `description` is required and must be a nonblank string.
-- `metadata` is required for all skills projected via a bundle-manifest entry, and must be a mapping.
-- `metadata` is optional for non-projected source custody surfaces, but if present it must be a mapping.
+- `metadata` is required for all skills bundled via a bundle-manifest entry, and must be a mapping.
+- `metadata` is optional for non-bundled source custody surfaces, but if present it must be a mapping.
 - Duplicate keys are rejected.
 - Frontmatter should not contain execution instructions.
 - Descriptions should say when to use the skill, not just what it is.
-- Projected skills are expected to keep provenance, license, and projection
+- Bundled skills are expected to keep provenance, license, and marketplace bundle
   identity in structured `metadata` fields instead of scattering those facts
   across loose top-level YAML keys.
 
@@ -52,4 +52,4 @@ license: "MIT"
   staying with the upstream author. `adapted` means substantive editorial
   adaptation beyond normalisation.
 - This contract is narrow: it covers the Superpowers adaptation seam and the
-  installable skill projection shape, not every historical source snapshot.
+  installable skill marketplace bundle shape, not every historical source snapshot.

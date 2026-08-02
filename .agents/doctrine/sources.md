@@ -3,7 +3,7 @@
 
 `sources/` (retired)
 
-This scope is retired. The old first-party and third-party custody trees under the `sources/` directory were removed as part of the projection-layer retirement.
+This scope is retired. The old first-party and third-party custody trees under the `sources/` directory were removed.
 
 Canonical first-party skill custody now lives under `codex-marketplace/plugins/<plugin>/skills/`. Third-party upstream provenance is recorded under `provenance/`. Adaptation overlays live under `adapters/codex/`.
 

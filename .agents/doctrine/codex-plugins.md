@@ -15,9 +15,9 @@ These are the canonical installable plugin roots. First-party source custody liv
 
 Treat these plugin roots as the canonical install surface. Everything else in this tree is support custody or historical provenance, not part of the active marketplace inventory.
 
-Deterministic pack rule: plugin-root membership must come from the central manifest and the checked-in generator/validator pipeline. Do not hand-edit projected skill trees, bundle-manifest membership lists, or bundle manifests, and do not create plugin-specific one-off scripts when the existing deterministic path can be extended instead.
+Deterministic pack rule: plugin-root membership must come from the central manifest and the checked-in generator/validator pipeline. Do not hand-edit bundled skill trees, bundle-manifest membership lists, or bundle manifests, and do not create plugin-specific one-off scripts when the existing deterministic path can be extended instead.
 
-Skill-to-pack assignments (which skills appear in which plugin pack) are authored in `codex-marketplace/plugins/<pack>/references/bundle-manifest.json` under the `entries` array. See `codex-marketplace.md` for the edit-to-projection pipeline. Do not hand-edit `references/bundle-manifest.json` in plugin directories — it is regenerated from the canonical plugin source by `py -3 tools/run.py marketplace --apply`.
+Skill-to-pack assignments (which skills appear in which plugin pack) are authored in `codex-marketplace/plugins/<pack>/references/bundle-manifest.json` under the `entries` array. See `codex-marketplace.md` for the edit-to-marketplace pipeline. Do not hand-edit `references/bundle-manifest.json` in plugin directories — it is regenerated from the canonical plugin source by `py -3 tools/run.py marketplace --apply`.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication rules, and upstream-drain policy.
 

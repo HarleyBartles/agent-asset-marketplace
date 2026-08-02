@@ -9,7 +9,7 @@ closeout, or publication before invoking the selected execution lane.
 
 Work from the dedicated checkout described by the worktree policy, then read
 the local implementation guide. Edit canonical authored source, not generated
-projections, installed trees, or caches. Regenerate and verify downstream
+marketplace bundles, installed trees, or caches. Regenerate and verify downstream
 surfaces only through their owners. Keep temporary artifacts in external
 scratch custody and keep runtime behavior separate from authored guidance.
 

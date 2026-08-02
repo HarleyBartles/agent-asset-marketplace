@@ -27,7 +27,7 @@
       "local_path": "skills/estimation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party estimation skill."
+      "provenance_note": "Copied verbatim from the first-party estimation skill."
     },
     {
       "canonical_name": "mermaid-diagramming",
@@ -38,7 +38,7 @@
       "local_path": "skills/mermaid-diagramming",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party mermaid-diagramming skill."
+      "provenance_note": "Copied verbatim from the first-party mermaid-diagramming skill."
     },
     {
       "canonical_name": "release-engineering",
@@ -49,7 +49,7 @@
       "local_path": "skills/release-engineering",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party release-engineering skill."
+      "provenance_note": "Copied verbatim from the first-party release-engineering skill."
     },
     {
       "canonical_name": "requirements-elicitation",
@@ -60,7 +60,7 @@
       "local_path": "skills/requirements-elicitation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party requirements-elicitation skill."
+      "provenance_note": "Copied verbatim from the first-party requirements-elicitation skill."
     }
   ],
   "generated_doc_surfaces": [

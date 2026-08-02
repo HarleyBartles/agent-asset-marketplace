@@ -24,7 +24,7 @@
       "local_path": "skills/python",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party python skill."
+      "provenance_note": "Copied verbatim from the first-party python skill."
     },
     {
       "canonical_name": "python-frameworks",
@@ -35,7 +35,7 @@
       "local_path": "skills/python-frameworks",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party python-frameworks skill."
+      "provenance_note": "Copied verbatim from the first-party python-frameworks skill."
     },
     {
       "canonical_name": "typescript",
@@ -46,7 +46,7 @@
       "local_path": "skills/typescript",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party typescript skill."
+      "provenance_note": "Copied verbatim from the first-party typescript skill."
     }
   ],
   "generated_doc_surfaces": [

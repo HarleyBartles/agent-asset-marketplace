@@ -19,7 +19,7 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
 - Run a single test file with `py -3 -m pytest tests/<file>.py -v`.
 - This repo uses test-driven development. Write a failing test before implementation code, then make it pass.
 - Contract tests live under `tests/`. Marketplace generation correctness is proven by `tools/run marketplace --apply` and `tools/run ci --check`.
-- After changing source custody, adapters, projection plugin shapes, bundle manifests, source maps, provenance maps, or generated zips, run the full marketplace rebuild as the green-path proof.
+- After changing source custody, adapters, plugin shapes, bundle manifests, source maps, provenance maps, or generated zips, run the full marketplace rebuild as the green-path proof.
 
 ## Routing to skills
 

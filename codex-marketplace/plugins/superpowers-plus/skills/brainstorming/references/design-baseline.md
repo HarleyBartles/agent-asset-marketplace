@@ -7,7 +7,7 @@ the selected design lane.
 
 ## Baseline
 
-Establish the observable problem, affected source and projection seams,
+Establish the observable problem, affected source and marketplace bundle seams,
 repository doctrine, and local design guide. Separate durable source evidence
 from issue or report context. State non-goals, decisions requiring human
 authority, expected validation, and the handoff artifact for planning.

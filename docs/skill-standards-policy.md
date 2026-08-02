@@ -17,7 +17,7 @@ For third-party skill adaptation and overlay adapter triggers, see `docs/overlay
 - `superpowers-plus:writing-skills`
 - `docs/contracts/skill-frontmatter.md`
 - `docs/contracts/openai-agent-yaml.md`
-- `docs/custody-and-projection-doctrine.md`
+- `docs/custody-and-marketplace-doctrine.md`
 
 ## Directory structure
 
@@ -71,7 +71,7 @@ Move real but non-primary boundary cases to `references/scope-notes.md`. Wire th
 
 ## agents/openai.yaml
 
-Required for skills projected into a Codex marketplace plugin.
+Required for skills bundled into a Codex marketplace plugin.
 
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.

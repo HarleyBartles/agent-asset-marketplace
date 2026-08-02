@@ -33,7 +33,7 @@ py -3 codex-marketplace/plugins/superpowers-plus/skills/writing-skills/scripts/n
   do not edit them directly.
 
 See [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md)
-for marketplace standards and projection metadata, and
+for marketplace standards and marketplace metadata, and
 [`docs/overlay-adapter-policy.md`](../../docs/overlay-adapter-policy.md) for
 third-party overlay and adapter triggers.
 

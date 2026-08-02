@@ -23,7 +23,7 @@
       "local_path": "skills/clean-architecture",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party clean-architecture skill."
+      "provenance_note": "Copied verbatim from the first-party clean-architecture skill."
     },
     {
       "canonical_name": "cqrs",
@@ -34,7 +34,7 @@
       "local_path": "skills/cqrs",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party cqrs skill."
+      "provenance_note": "Copied verbatim from the first-party cqrs skill."
     },
     {
       "canonical_name": "database-design-patterns",
@@ -45,7 +45,7 @@
       "local_path": "skills/database-design-patterns",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party database-design-patterns skill."
+      "provenance_note": "Copied verbatim from the first-party database-design-patterns skill."
     },
     {
       "canonical_name": "ddd",
@@ -56,7 +56,7 @@
       "local_path": "skills/ddd",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party ddd skill."
+      "provenance_note": "Copied verbatim from the first-party ddd skill."
     },
     {
       "canonical_name": "event-driven-systems",
@@ -67,7 +67,7 @@
       "local_path": "skills/event-driven-systems",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party event-driven-systems skill."
+      "provenance_note": "Copied verbatim from the first-party event-driven-systems skill."
     },
     {
       "canonical_name": "event-sourcing",
@@ -78,7 +78,7 @@
       "local_path": "skills/event-sourcing",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party event-sourcing skill."
+      "provenance_note": "Copied verbatim from the first-party event-sourcing skill."
     },
     {
       "canonical_name": "hexagonal-architecture",
@@ -89,7 +89,7 @@
       "local_path": "skills/hexagonal-architecture",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party hexagonal-architecture skill."
+      "provenance_note": "Copied verbatim from the first-party hexagonal-architecture skill."
     }
   ],
   "generated_doc_surfaces": [

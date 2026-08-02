@@ -61,7 +61,7 @@ own first step.
 - using-github-mcp owns GitHub proof.
 - base-doctrine owns cross-project source-truth and doctrine routing.
 
-Do not treat an installed skill, generated projection, local cache, or worker
+Do not treat an installed skill, generated bundle, local cache, or worker
 report as authored source custody. Use the first-party source and the
 repository's declared local policy, then regenerate or install through their
 respective owners.

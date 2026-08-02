@@ -15,7 +15,7 @@ The canonical skill source lives under `codex-marketplace/plugins/<plugin>/skill
 
 The marketplace plugin roots are the canonical install surface. Use `py -3 tools/run.py marketplace --apply` to regenerate all derived surfaces, `py -3 tools/run.py marketplace --check` to verify freshness, and `py -3 tools/run.py ci --check` as the non-mutating CI gate. `py -3 tools/run.py mesh --check` proves the repo-wide navigation mesh is current.
 
-Deterministic pack rule: the editable pack metadata is `codex-marketplace/plugins/<plugin>/.codex-plugin/plugin.json` and the pack bundle manifest is `codex-marketplace/plugins/<plugin>/references/bundle-manifest.json`. Do not hand-edit bundle manifests, projected skill trees, or installed skill surfaces; regenerate them from the canonical tooling.
+Deterministic pack rule: the editable pack metadata is `codex-marketplace/plugins/<plugin>/.codex-plugin/plugin.json` and the pack bundle manifest is `codex-marketplace/plugins/<plugin>/references/bundle-manifest.json`. Do not hand-edit bundle manifests, bundled skill trees, or installed skill surfaces; regenerate them from the canonical tooling.
 
 ## Skill-to-pack assignment chain
 
@@ -38,7 +38,7 @@ Defer to the repository root `AGENTS.md` for global doctrine, publication rules,
 - Flag broken plugin root paths, missing `.codex-plugin/plugin.json` files, and category or install-policy drift in the marketplace manifest.
 - Flag missing `SOURCE.md`, `LICENSE`, or bundle-manifest references when a plugin root claims to expose them.
 - Flag generated-export mismatches that would let the bundle source drift silently from the tracked marketplace source tree or Codex overlay source.
-- Flag any source-tree install archive that is not a generated projection artifact; canonical installs come from the staged Codex plugin.
+- Flag any source-tree install archive that is not a generated marketplace artifact; canonical installs come from the staged Codex plugin.
 - Prefer serious packaging and discoverability issues over stylistic concerns.
 
 ## Maintenance responsibility

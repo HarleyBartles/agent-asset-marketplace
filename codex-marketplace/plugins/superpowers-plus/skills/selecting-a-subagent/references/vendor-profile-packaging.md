@@ -23,9 +23,9 @@ parallel tree.
   `assets/app-icon.png`, etc.). Profiles are pack-level assets, not skill bodies.
 - The Devin Desktop search paths already expect `.md` profile assets under
   `assets/` (see `devin-desktop-profile.md`).
-- Marketplace regeneration already copies `assets/` into the projected plugin
+- Marketplace regeneration already copies `assets/` into the bundled plugin
   tree; extending `refreshing-installed-skills` to copy `assets/profiles/*.md` is
-  a narrow addition rather than a new projection lane.
+  a narrow addition rather than a new marketplace bundle lane.
 
 ## Consumer search paths
 

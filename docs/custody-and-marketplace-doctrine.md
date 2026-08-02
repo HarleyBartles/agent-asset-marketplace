@@ -1,34 +1,34 @@
-# Custody and projection doctrine
+# Custody and marketplace doctrine
 
 This document is required reading for agents working in this repo. It defines
-where source lives, how it is projected into the marketplace, and how the
-projection is exported as GPT-ready zips. It is authoritative, not a tutorial.
+where source lives, how it is bundled into Codex plugins, and how the
+marketplace manifests are exported. It is authoritative, not a tutorial.
 
 ## Source custody
 
-Source custody is the canonical home for asset content. Projection and export
+Source custody is the canonical home for asset content. Marketplace and export
 surfaces are derived from custody, never the reverse.
 
 - **Third-party pool** lives under `provenance/`. These are verbatim
   upstream snapshots pinned to a commit. Preserve upstream source, package
   payload, license, notice, and source-map evidence there. Do not edit
-  third-party custody to adapt skill behavior; adapt at projection time and
+  third-party custody to adapt skill behavior; adapt at bundle time and
   record the adaptation honestly.
 - **First-party authoring** lives under `codex-marketplace/plugins/<plugin>/`. These are
   Harley-authored skills. Edit the skill body here when the skill needs to
   change.
 - **MIT posture.** First-party source is MIT licensed. Third-party source
-  retains its upstream license; projection must preserve attribution and
+  retains its upstream license; the marketplace bundle must preserve attribution and
   license evidence.
 
 ## Provenance modes
 
-Every projected entry carries one provenance mode. Provenance is per-entry,
+Every bundled entry carries one provenance mode. Provenance is per-entry,
 not per-plugin (see Plugin curation below).
 
-- **`verbatim`** — the projection is byte-identical to source custody. No
+- **`verbatim`** — the bundled skill is byte-identical to source custody. No
   transformation, no metadata enrichment beyond what source already carries.
-  Example: a first-party skill projected straight into a plugin with no
+  Example: a first-party skill copied straight into a plugin with no
   changes.
 - **`normalised`** — minimal compliance adaptation only: codex-safe shape,
   openai-spec compliance, rich metadata, and repointing of moved-file links.
@@ -36,15 +36,15 @@ not per-plugin (see Plugin curation below).
   upstream author. Example: a third-party skill whose YAML front matter is
   normalized to marketplace schema but whose instructions body is untouched.
 - **`adapted`** — substantive skill body changes beyond compliance. The
-  projection must be honest about what changed and why. Example: a third-party
+  bundle must be honest about what changed and why. Example: a third-party
   skill whose instruction body was rewritten for marketplace voice or merged
   with first-party guidance.
 
-### First-party is always verbatim in projection
+### First-party is always verbatim in the bundle
 
-First-party skills are always `verbatim` in projection. If a first-party skill
+First-party skills are always `verbatim` in the bundle. If a first-party skill
 needs to change, fix the source under `codex-marketplace/plugins/<plugin>/` and regenerate.
-Do not adapt first-party content at projection time. This keeps source custody
+Do not adapt first-party content at bundle time. This keeps source custody
 as the single edit point for first-party work.
 
 ## Plugin curation
@@ -56,34 +56,33 @@ package mirrors. Harley curates which entries appear in which plugin.
   `verbatim`, `normalised`, and `adapted` entries. Each entry's manifest record
   declares its own mode.
 - **Plugins are not source custody.** If an entry's content needs to change,
-  change the source and regenerate the projection. Do not edit plugin files
+  change the source and regenerate the bundle. Do not edit plugin files
   directly to change skill behavior.
 
 ## Mega-packs (retired)
 
 The `house-skills` mega-pack, `is_mega_pack` registry field, and
 `tools/generate_mega_packs.py` have been removed. First-party skills now
-project into topical packs directly; `superpowers-plus` remains the only
+bundle into topical packs directly; `superpowers-plus` remains the only
 mixed plugin bundle. This section is kept as a tombstone for
 historical context.
 
-
-## Projection layer model
+## Marketplace bundle model
 
 The flow is:
 
 1. **Source custody** — `provenance/` and `codex-marketplace/plugins/<plugin>/`.
-2. **Projection** — `codex-marketplace/plugins/` vendored bundles, generated
+2. **Bundle** — `codex-marketplace/plugins/` vendored bundles, generated
    from custody plus manifest entries.
 3. **Install / export** — `codex-marketplace/plugins/` is the canonical install
    surface.
 
-Projection is generated, not hand-edited. The manifest is the edit surface that
-drives projection.
+The bundle tree is generated, not hand-edited. The manifest is the edit surface that
+drives the bundle.
 
-Projection discovery shortcut: when a generated plugin projection needs to
+Bundle discovery shortcut: when a generated plugin bundle needs to
 change, start at the source skill, then the plugin manifest, then the relevant
-validator, then the generated projection tree. If the source or manifest
+validator, then the generated bundle tree. If the source or manifest
 changes, regenerate the derived outputs instead of hand-editing the generated tree.
 
 When a change touches multiple generated surfaces, prefer regenerating the full
@@ -106,7 +105,7 @@ The business-as-usual target for adding or updating a skill is:
 4. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
 
 If a first-party skill is removed from a project pack but remains in source
-custody, keep the source and regenerate the projections so only the pack loses
+custody, keep the source and regenerate the bundles so only the pack loses
 the exposure. Retire a skill to provenance only when it is no longer supported.
 
 No Python edits for normal skill work. If the workflow requires editing Python
@@ -120,7 +119,7 @@ with legacy shapes (`skills[]`, `components[]`, or file-level
 `canonical_source_path` ending in a file suffix). This ensures the materializer
 never silently skips a plugin.
 
-## Zip projection (retired)
+## Zip exports (retired)
 
 Flat skill zip exports and the `house-skills` mega-pack have been removed.
 The Codex plugin tree under `codex-marketplace/plugins/` is the canonical

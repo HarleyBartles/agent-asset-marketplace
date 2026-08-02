@@ -28,7 +28,7 @@
       "source_repo": "https://github.com/feature-sliced/skills",
       "source_family": "feature-sliced",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex plugin."
     },
     {
       "canonical_name": "frontend-ux",
@@ -39,7 +39,7 @@
       "local_path": "skills/frontend-ux",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party frontend-ux skill."
+      "provenance_note": "Copied verbatim from the first-party frontend-ux skill."
     },
     {
       "canonical_name": "playwright-testing",
@@ -50,7 +50,7 @@
       "local_path": "skills/playwright-testing",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party playwright-testing skill."
+      "provenance_note": "Copied verbatim from the first-party playwright-testing skill."
     },
     {
       "canonical_name": "react",
@@ -61,7 +61,7 @@
       "local_path": "skills/react",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party react skill."
+      "provenance_note": "Copied verbatim from the first-party react skill."
     },
     {
       "canonical_name": "wcag",
@@ -72,7 +72,7 @@
       "local_path": "skills/wcag",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party wcag skill."
+      "provenance_note": "Copied verbatim from the first-party wcag skill."
     },
     {
       "canonical_name": "web-styling",
@@ -83,7 +83,7 @@
       "local_path": "skills/web-styling",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party web-styling skill."
+      "provenance_note": "Copied verbatim from the first-party web-styling skill."
     }
   ],
   "generated_doc_surfaces": [

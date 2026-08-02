@@ -7,7 +7,7 @@ This scope covers adapter surfaces that sit between upstream third-party source 
 
 Defer to the repository root `AGENTS.md` for global repo doctrine.
 
-Adapters are source/projection boundaries, not source custody. Keep source truth in `codex-marketplace/plugins/<plugin>/skills/` and provenance, and keep generated or mechanically synchronized outputs derived from that truth.
+Adapters are source/marketplace boundaries, not source custody. Keep source truth in `codex-marketplace/plugins/<plugin>/skills/` and provenance, and keep generated or mechanically synchronized outputs derived from that truth.
 
 The marketplace currently runs two lanes only: first-party source under `codex-marketplace/plugins/<plugin>/skills/` (edited directly) and retained third-party material recorded in `provenance/` (verbatim custody with an adaptation path). The historical `overlay.yaml` adaptation machinery has been retired; do not reintroduce `overlay.yaml` line-edit files. If a third-party skill needs adaptation, update the plugin skill tree or the generator instead of adding an overlay surface.
 

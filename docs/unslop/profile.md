@@ -11,7 +11,7 @@ This file is the repo-specific anti-slop guard for `HarleyBartles/agent-asset-ma
 
 - Codex marketplace source is plugin-first.
 - Canonical skill identity is `plugin_name:skill_name`.
-- `adapters/codex/` describes Codex projection behavior, not source doctrine.
+- `adapters/codex/` describes Codex plugin behavior, not source doctrine.
 - Installed skill surfaces under `.agents/skills/` are repo-resident outputs, not canonical source.
 - Regenerate installed skills through tooling. Do not hand-edit them.
 

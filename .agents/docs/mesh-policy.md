@@ -13,7 +13,7 @@ must be so short and safe that loading it always-on does not overwhelm the
 agent. If the law is not appropriate for every session, it does not belong in
 an `AGENTS.md`.
 
-`AGENTS.md` should explain rules, boundaries, and source/projection
+`AGENTS.md` should explain rules, boundaries, and source/marketplace
 distinctions, not directory navigation. It is a routing surface, not a content
 surface. Do not restate doctrine in `AGENTS.md`. When a rule lives in a doctrine
 doc under `docs/` or `.agents/docs/`, the `AGENTS.md` carries only a

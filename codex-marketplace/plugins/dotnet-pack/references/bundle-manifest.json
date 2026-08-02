@@ -24,7 +24,7 @@
       "canonical_source_path": "codex-marketplace/plugins/dotnet-pack/skills/dotnet",
       "local_path": "skills/dotnet",
       "import_status": "imported",
-      "provenance_note": "Projected verbatim from the first-party dotnet ecosystem skill.",
+      "provenance_note": "Copied verbatim from the first-party dotnet ecosystem skill.",
       "copy_expectation": "byte_identical"
     }
   ],

@@ -10,7 +10,7 @@ Use `$unslop-engine` to generate a new domain-specific anti-slop profile from sa
 
 ## Provenance
 
-- Engine: Adapted from `mshumer/unslop` (MIT license, Copyright (c) 2026 Matt Shumer). The upstream script is a Claude Code CLI tool; the projected `unslop-engine` skill is adapted for Codex/GPT skill use with Python standard library text analysis. See `SOURCE.md` for the adaptation rationale.
+- Engine: Adapted from `mshumer/unslop` (MIT license, Copyright (c) 2026 Matt Shumer). The upstream script is a Claude Code CLI tool; the bundled `unslop-engine` skill is adapted for Codex/GPT skill use with Python standard library text analysis. See `SOURCE.md` for the adaptation rationale.
 - Profiles: First-party portable profiles by Asset Marketplace (MIT license).
 - Upstream source custody: `provenance/MARK-99-unslop.md` (retained verbatim).
 - First-party profile custody: `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/profiles/`.

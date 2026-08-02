@@ -31,7 +31,7 @@ Use these rules when editing or adding a first-party skill in a Codex plugin.
   - `do_not_use_when`
   - `related_skills`
   - `notes`
-- Do not write projection-target state back into canonical source frontmatter; projection surfaces belong in catalog or generator outputs.
+- Do not write marketplace bundle-target state back into canonical source frontmatter; marketplace bundle surfaces belong in catalog or generator outputs.
 
 ## `agents/openai.yaml`
 

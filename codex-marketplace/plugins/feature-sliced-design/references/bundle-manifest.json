@@ -29,7 +29,7 @@
       "source_repo": "https://github.com/feature-sliced/skills",
       "source_family": "feature-sliced",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex plugin."
     }
   ],
   "repo_index": {

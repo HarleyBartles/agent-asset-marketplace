@@ -75,7 +75,7 @@ For SDD `plan-readiness`, rate the artifact against these items. Strengthen any 
 
 - [ ] **Clean CI gate.** Do not run the repo's canonical CI on an uncommitted tree. Regenerate any generated surfaces, stage all changes, run the canonical CI check on the staged tree, then commit. Use `tools/run ci --check` here; consumer repos use their preflight. Use `--no-verify` only when the pre-commit hook is unavailable.
 
-- [ ] **Explicit verification.** Each regeneration or projection task names the exact consumer command and any follow-up CI check. Do not assume a `tools/run` target exists in every repo.
+- [ ] **Explicit verification.** Each regeneration or distribution task names the exact consumer command and any follow-up CI check. Do not assume a `tools/run` target exists in every repo.
 
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
 

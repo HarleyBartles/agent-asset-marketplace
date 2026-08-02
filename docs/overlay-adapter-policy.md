@@ -8,7 +8,7 @@ For first-party skill authoring standards, see `docs/skill-standards-policy.md`.
 
 ## External references
 
-- `docs/custody-and-projection-doctrine.md` — custody and export doctrine
+- `docs/custody-and-marketplace-doctrine.md` — custody and export doctrine
 - `docs/contracts/skill-frontmatter.md` — frontmatter contract
 
 ## Default: do not edit third-party source

@@ -6,7 +6,7 @@ Use this reference when implementing work in the agent-asset-marketplace repo �
 
 Read these standards documents before writing any code:
 
-- **[`docs/custody-and-projection-doctrine.md`](../../docs/custody-and-projection-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
 ## Skills to Invoke
@@ -33,14 +33,14 @@ Before claiming work is done, verify:
 
 - **All validation passes:** `tools/run ci --check` for CI validation
 - **Marketplace regeneration succeeds:** `tools/run marketplace --apply` for local rebuild
-- **Vendored output changed as intended:** If the task claims to update a vendored asset or projection, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
+- **Vendored output changed as intended:** If the task claims to update a vendored asset or marketplace bundle, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
 - **Build succeeds:** All Python scripts run without errors
 - **No flaky tests:** Run validation multiple times to ensure consistent results
 - **Workspace clean:** No phantom files, no stray debug artifacts, no uncommitted scratch files
 - **INDEX.md regenerated:** If files were added or removed, run `tools/run mesh --apply`
 - **No secrets committed:** Check your diff for credentials, API keys, or connection strings
 - **Skills refreshed:** If skills were modified, run `tools/run installed-skills --apply` to refresh installed skills
-- **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or projection, confirm the change is safe for sister or consumer repos that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
+- **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or marketplace bundle, confirm the change is safe for sister or consumer repos that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
 
 ## PR, Linear, and Plan Honesty
 

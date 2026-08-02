@@ -9,7 +9,7 @@ planning lane.
 
 Plan from current repository evidence, doctrine, the local planning guide, and
 the selected source seams. Name source-custody changes separately from
-generator-owned projections, define validation and publication proof, and
+generator-owned marketplace bundles, define validation and publication proof, and
 preserve explicit scope, exclusions, and authority gates. Include cleanup only
 when source, generated proof, and runtime consumers remain safe.
 

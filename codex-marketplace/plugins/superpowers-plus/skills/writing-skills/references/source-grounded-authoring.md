@@ -18,7 +18,7 @@ For any source-backed lane, decompose the authority into operational files under
 `skills-with-mixed-source` prefixes `source_sections` with the source label when
 a reference is derived from a vendored source (for example,
 `postgresql: Server Administration`). Keep the two records reconciled: the
-source map is the operational projection of `authority.yaml`'s decomposition,
+source map is the operational marketplace bundle of `authority.yaml`'s decomposition,
 not a second authority manifest.
 
 `skills-with-source` and `skills-with-mixed-source` require legal redistribution approval before a source is copied. Put approved cold material in
