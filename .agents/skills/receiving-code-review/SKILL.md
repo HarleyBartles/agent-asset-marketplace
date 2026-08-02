@@ -23,6 +23,7 @@ metadata:
   - Do not use to implement suggestions blindly.
   related_skills:
   - requesting-code-review
+  - iterative-review
   - executing-plans
   - subagent-driven-development
   - finishing-a-development-branch
