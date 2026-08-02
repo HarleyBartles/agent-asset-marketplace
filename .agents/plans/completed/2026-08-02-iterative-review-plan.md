@@ -17,7 +17,7 @@
 - `iterative-review` does not modify files or PR state. It prepares review inputs, dispatches `reviewer-strong` and `reviewer-fast`, and reports "reviewer-clean" with any minor/deferred items.
 - The PR stays in draft until the CI preflight (`py -3 tools/run.py ci --check`) passes.
 - New skill must follow the existing `superpowers-plus` `SKILL.md` + `agents/openai.yaml` shape.
-- `.agents/plans/2026-08-02-iterative-review-plan.md` and `.agents/specs/2026-08-02-iterative-review-design.md` are the provenance for this work.
+- `.agents/plans/completed/2026-08-02-iterative-review-plan.md` and `.agents/specs/completed/2026-08-02-iterative-review-design.md` are the provenance for this work.
 
 ---
 
@@ -28,7 +28,7 @@
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/agents/openai.yaml`
 
 **Interfaces:**
-- Consumes: the design spec at `.agents/specs/2026-08-02-iterative-review-design.md`
+- Consumes: the design spec at `.agents/specs/completed/2026-08-02-iterative-review-design.md`
 - Produces: the new `iterative-review` skill source, ready for bundling
 
 - [x] **Step 1: Create the `iterative-review` directories**
