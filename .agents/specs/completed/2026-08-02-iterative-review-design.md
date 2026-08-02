@@ -1,5 +1,7 @@
 # Iterative Review — PR Review Loop Design
 
+> **Status:** Completed — implemented and merged via PR #255 (https://github.com/HarleyBartles/agent-asset-marketplace/pull/255), head SHA `46a2ece5`.
+
 > Spec for adding an `iterative-review` skill to `superpowers-plus` that runs a multi-round subagent review loop on a draft PR, and for tightening the `reviewer-fast` profile so it becomes a focused fix re-reviewer.
 
 ## Problem
@@ -137,3 +139,10 @@ Source file: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-suba
 - `py -3 tools/run.py marketplace --apply`
 - `py -3 tools/run.py ci --check`
 - Spot-check the installed `.agents/skills/iterative-review/SKILL.md` and `.agents/agents/reviewer-fast.md` for the new content.
+
+## Completion Notes
+
+- PR #255 created from `spec-pr-review-iteration` and merged to `main`.
+- All five goals above were met.
+- `py -3 tools/run.py ci --check` passed before merge.
+- This spec was moved to `.agents/specs/completed/` on `main`.

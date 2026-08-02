@@ -1,6 +1,8 @@
 # Iterative Review Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Status:** Completed — implemented and merged via PR #255 (https://github.com/HarleyBartles/agent-asset-marketplace/pull/255).
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Create the `iterative-review` skill, update the `reviewer-fast` profile to a focused fix re-reviewer, wire both into the `superpowers-plus` bundle, and prove them with the repo's canonical marketplace and CI validation.
 
@@ -29,14 +31,14 @@
 - Consumes: the design spec at `.agents/specs/2026-08-02-iterative-review-design.md`
 - Produces: the new `iterative-review` skill source, ready for bundling
 
-- [ ] **Step 1: Create the `iterative-review` directories**
+- [x] **Step 1: Create the `iterative-review` directories**
 
   Run:
   ```powershell
   New-Item -ItemType Directory -Path 'codex-marketplace/plugins/superpowers-plus/skills/iterative-review', 'codex-marketplace/plugins/superpowers-plus/skills/iterative-review/agents'
   ```
 
-- [ ] **Step 2: Write `SKILL.md` with the exact content below**
+- [x] **Step 2: Write `SKILL.md` with the exact content below**
 
   ```markdown
   ---
@@ -116,7 +118,7 @@
   - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
   ```
 
-- [ ] **Step 3: Write `agents/openai.yaml` with the exact content below**
+- [x] **Step 3: Write `agents/openai.yaml` with the exact content below**
 
   ```yaml
   version: 1
@@ -136,7 +138,7 @@
     allow_implicit_invocation: true
   ```
 
-- [ ] **Step 4: Stage the skill files**
+- [x] **Step 4: Stage the skill files**
 
   Run:
   ```powershell
@@ -155,9 +157,9 @@
 - Consumes: the `iterative-review` design spec
 - Produces: the updated `reviewer-fast` source asset, regenerated into `.agents/agents/reviewer-fast.md`
 
-- [ ] **Step 1: Read the current `assets/reviewer-fast.md` to locate `## Inputs` and `## Procedure`**
+- [x] **Step 1: Read the current `assets/reviewer-fast.md` to locate `## Inputs` and `## Procedure`**
 
-- [ ] **Step 2: Append the fix re-review inputs to `## Inputs the orchestrator must provide`**
+- [x] **Step 2: Append the fix re-review inputs to `## Inputs the orchestrator must provide`**
 
   Add the following bullet at the end of the input list, before the closing paragraph "Do not generate the diff yourself.":
 
@@ -168,7 +170,7 @@
     - `<full_diff_slice_path>` — the relevant slices of the full branch diff that the fix touches.
   ```
 
-- [ ] **Step 3: Replace `## Procedure` steps 1 and 4 to match the two modes**
+- [x] **Step 3: Replace `## Procedure` steps 1 and 4 to match the two modes**
 
   Change the current step 1:
 
@@ -194,7 +196,7 @@
   4. If this is a fix re-review, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
   ```
 
-- [ ] **Step 4: Insert `## Fix re-review scope` after `## Procedure`**
+- [x] **Step 4: Insert `## Fix re-review scope` after `## Procedure`**
 
   ```markdown
   ## Fix re-review scope
@@ -210,7 +212,7 @@
   Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Keep findings brief, concrete, and actionable, with specific file and line citations.
   ```
 
-- [ ] **Step 5: Stage the modified file**
+- [x] **Step 5: Stage the modified file**
 
   Run:
   ```powershell
@@ -228,7 +230,7 @@
 - Consumes: the `iterative-review` source tree
 - Produces: a bundle entry that projects the skill into `.agents/skills/iterative-review/`
 
-- [ ] **Step 1: Insert the following object in the `bundle-manifest.json` `entries` array in alphabetical order by `canonical_name` (after `inspecting-the-environment`, before `publishing-source`)**
+- [x] **Step 1: Insert the following object in the `bundle-manifest.json` `entries` array in alphabetical order by `canonical_name` (after `inspecting-the-environment`, before `publishing-source`)**
 
   ```json
   {
@@ -243,7 +245,7 @@
   }
   ```
 
-- [ ] **Step 2: Stage the modified manifest**
+- [x] **Step 2: Stage the modified manifest**
 
   Run:
   ```powershell
@@ -261,7 +263,7 @@
 - Consumes: staged source edits and manifest entry
 - Produces: a clean CI preflight and regenerated installed surfaces
 
-- [ ] **Step 1: Run marketplace generation to project source into installed surfaces**
+- [x] **Step 1: Run marketplace generation to project source into installed surfaces**
 
   Run:
   ```powershell
@@ -273,7 +275,7 @@
 
   **Expected interim state:** `tools/run.py marketplace --apply` should exit 0. If it fails, fix the source or manifest error before proceeding.
 
-- [ ] **Step 2: Spot-check the generated installed surfaces**
+- [x] **Step 2: Spot-check the generated installed surfaces**
 
   Run:
   ```powershell
@@ -285,7 +287,7 @@
 
   **Expected result:** the first command finds the `iterative-review` name in the installed skill; the second finds `Fix re-review scope` in the installed agent profile.
 
-- [ ] **Step 3: Run the CI preflight on the staged tree**
+- [x] **Step 3: Run the CI preflight on the staged tree**
 
   Run:
   ```powershell
@@ -294,7 +296,7 @@
 
   **Expected result:** all targets pass. If any fail, fix the source or derived files and re-run.
 
-- [ ] **Step 4: Commit the source and regenerated changes**
+- [x] **Step 4: Commit the source and regenerated changes**
 
   Run:
   ```powershell
@@ -314,14 +316,14 @@
 - Consumes: the local commit on `spec-pr-review-iteration`
 - Produces: an updated draft PR with the new commit
 
-- [ ] **Step 1: Push the branch**
+- [x] **Step 1: Push the branch**
 
   Run:
   ```powershell
   git push origin spec-pr-review-iteration
   ```
 
-- [ ] **Step 2: Verify the PR for the current branch**
+- [x] **Step 2: Verify the PR for the current branch**
 
   Run:
   ```powershell
@@ -330,7 +332,7 @@
 
   **Expected result:** `state` is `OPEN`, `mergeable` is `MERGEABLE`, and `headRefOid` matches the latest commit on `spec-pr-review-iteration`.
 
-- [ ] **Step 3: Confirm the PR remains draft**
+- [x] **Step 3: Confirm the PR remains draft**
 
   The PR is intentionally left in draft. Flip to ready only after self-review and a green preflight. It is already green, but final draft/ready decision is the author's.
 
@@ -339,3 +341,12 @@
 ## SDD Confidence Rating
 
 **9/10** — exact file paths, file contents, manifest entry, and validation commands are specified. The `SKILL.md` frontmatter, `agents/openai.yaml`, and `reviewer-fast` input and scope updates are now concrete and transcribable.
+
+---
+
+## Completion Notes
+
+- PR #255 was created from branch `spec-pr-review-iteration` and merged to `main`.
+- Head SHA at merge: `46a2ece5`.
+- All CI preflight checks (`py -3 tools/run.py ci --check`) passed before merge.
+- This plan was moved to `.agents/plans/completed/` on `main`.
