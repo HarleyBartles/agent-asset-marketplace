@@ -5,7 +5,7 @@ description: Use when about to claim work is complete, fixed, or passing, before
   making any success claims; evidence before assertions always
 metadata:
   source-id: verification-before-completion
-  source-path: sources/first_party/skills/verification-before-completion/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md
   provenance-name: Verification Before Completion first-party skill
   source-category: first_party
   status: active
@@ -32,7 +32,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/verification-before-completion/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/` for reference.
 
 # Verification Before Completion
 

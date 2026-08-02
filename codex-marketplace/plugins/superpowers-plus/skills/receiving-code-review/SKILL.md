@@ -5,7 +5,7 @@ description: Use when receiving code review feedback, before implementing sugges
   rigor and verification, not performative agreement or blind implementation
 metadata:
   source-id: receiving-code-review
-  source-path: sources/first_party/skills/receiving-code-review/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md
   provenance-name: Receiving Code Review first-party skill
   source-category: first_party
   status: active
@@ -30,7 +30,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/receiving-code-review/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/` for reference.
 
 # Code Review Reception
 

@@ -6,7 +6,7 @@ description: Use when a pre-action risk gate is needed before a mutation, dispat
   docs based on the action and project context.
 metadata:
   source-id: risk-gates
-  source-path: sources/first_party/skills/risk-gates/SKILL.md
+  source-path: codex-marketplace/plugins/security-pack/skills/risk-gates/SKILL.md
   provenance-name: Risk Gates first-party skill
   source-category: first_party
   status: active

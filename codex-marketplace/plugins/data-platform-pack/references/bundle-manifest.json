@@ -1,18 +1,16 @@
 {
   "bundle_name": "data-platform-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/data-platform-pack",
   "source_families": [
     "first_party"
   ],
   "notes": [
-    "Data-platform bundle projected from the first-party database-engines skill."
+    "Data-platform bundle bundled from the first-party database-engines skill."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/data-platform-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -21,17 +19,16 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/database-engines",
+      "canonical_source_path": "codex-marketplace/plugins/data-platform-pack/skills/database-engines",
       "local_path": "skills/database-engines",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party database-engines skill."
+      "provenance_note": "Copied verbatim from the first-party database-engines skill."
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",

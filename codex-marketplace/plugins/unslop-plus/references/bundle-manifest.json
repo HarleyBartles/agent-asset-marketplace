@@ -1,19 +1,18 @@
 {
   "bundle_name": "unslop-plus",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/unslop-plus",
   "source_families": [
     "first_party"
   ],
   "notes": [
-    "Unslop+ is a first-party projection-lane bundle containing the unslop engine skill and the anti-slop profile router skill.",
+    "Unslop+ is a first-party plugin bundle containing the unslop engine skill and the anti-slop profile router skill.",
     "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
   ],
   "provenance_refs": [
-    "provenance/unslop.md",
-    "codex-marketplace/plugins/unslop-plus/references/source-map.md"
+    "provenance/MARK-99-unslop.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -23,9 +22,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/unslop-engine",
+      "canonical_source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-engine",
       "local_path": "skills/unslop-engine",
-      "provenance_note": "Projected verbatim from the first-party unslop-engine skill.",
+      "provenance_note": "Copied verbatim from the first-party unslop-engine skill.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -33,9 +32,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/unslop-profiles",
+      "canonical_source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-profiles",
       "local_path": "skills/unslop-profiles",
-      "provenance_note": "Projected verbatim from the first-party unslop-profiles skill.",
+      "provenance_note": "Copied verbatim from the first-party unslop-profiles skill.",
       "copy_expectation": "byte_identical"
     }
   ],

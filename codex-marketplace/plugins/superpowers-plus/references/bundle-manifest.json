@@ -1,18 +1,17 @@
 {
   "bundle_name": "superpowers-plus",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/superpowers-plus",
   "source_families": [
     "first_party"
   ],
   "notes": [
-    "Superpowers+ is a first-party authored skill bundle. The upstream obra/superpowers v6.2.0 MIT snapshot is retained under sources/third_party/superpowers/ as reference."
+    "Superpowers+ is a first-party authored skill bundle. The upstream obra/superpowers v6.2.0 MIT snapshot is retained in provenance/superpowers-plus.md for reference."
   ],
   "provenance_refs": [
-    "provenance/superpowers-plus.md",
-    "codex-marketplace/plugins/superpowers-plus/references/source-map.md"
+    "provenance/superpowers-plus.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -22,9 +21,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/brainstorming",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming",
       "local_path": "skills/brainstorming",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -32,9 +31,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/dispatching-parallel-agents",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents",
       "local_path": "skills/dispatching-parallel-agents",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -42,9 +41,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/executing-plans",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans",
       "local_path": "skills/executing-plans",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -52,9 +51,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/finishing-a-development-branch",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -62,9 +61,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/handoff-gates",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates",
       "local_path": "skills/handoff-gates",
-      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -72,9 +71,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/inspecting-the-environment",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment",
       "local_path": "skills/inspecting-the-environment",
-      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -82,9 +81,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/publishing-source",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source",
       "local_path": "skills/publishing-source",
-      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -92,9 +91,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/receiving-code-review",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review",
       "local_path": "skills/receiving-code-review",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -102,9 +101,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/requesting-code-review",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review",
       "local_path": "skills/requesting-code-review",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -112,9 +111,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/selecting-a-subagent",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent",
       "local_path": "skills/selecting-a-subagent",
-      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -122,9 +121,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/subagent-driven-development",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "local_path": "skills/subagent-driven-development",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -132,9 +131,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/systematic-debugging",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -142,9 +141,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/test-driven-development",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development",
       "local_path": "skills/test-driven-development",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -152,9 +151,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/using-git-worktrees",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
       "local_path": "skills/using-git-worktrees",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -162,9 +161,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/using-superpowers-plus",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus",
       "local_path": "skills/using-superpowers-plus",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -172,9 +171,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/verification-before-completion",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -182,9 +181,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/working-with-epics",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics",
       "local_path": "skills/working-with-epics",
-      "provenance_note": "First-party helper skill projected verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -192,9 +191,9 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/writing-plans",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans",
       "local_path": "skills/writing-plans",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     },
     {
@@ -202,16 +201,15 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/writing-skills",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills",
       "local_path": "skills/writing-skills",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in third-party source custody.",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical"
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",

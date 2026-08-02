@@ -3,7 +3,7 @@ name: repo-standards
 description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, runbook layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
 metadata:
   source-id: repo-standards
-  source-path: sources/first_party/skills/repo-standards/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md
   provenance-name: Repo Standards first-party skill
   source-category: first_party
   status: active

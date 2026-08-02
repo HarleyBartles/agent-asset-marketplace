@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reconcile the editable plugin-root inventory against the pack registry."""
+"""Reconcile the editable plugin-root inventory against the plugin tree."""
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACK_REGISTRY_PATH = ROOT / "codex-marketplace/custody-pack-registry.json"
-PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
+PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace" / "plugins"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace" / "plugin-roots.json"
 
 
 def load_json(path: Path) -> Any:
@@ -25,59 +25,47 @@ def _require_nonblank_string(value: Any, *, path: Path, field_name: str) -> str:
     return value
 
 
-def load_pack_registry() -> list[dict[str, Any]]:
-    registry = load_json(PACK_REGISTRY_PATH)
-    if registry.get("schema_version") != 1:
-        raise ValueError(f"{PACK_REGISTRY_PATH}: schema_version must be 1")
-    packs = registry.get("packs")
-    if not isinstance(packs, list) or not packs:
-        raise ValueError(f"{PACK_REGISTRY_PATH}: packs must be a non-empty list")
-    if any(not isinstance(pack, dict) for pack in packs):
-        raise ValueError(f"{PACK_REGISTRY_PATH}: packs must contain only objects")
-    return packs
-
-
-def _registry_root_record(pack: dict[str, Any], *, index: int) -> tuple[str, str, str]:
-    name = _require_nonblank_string(
-        pack.get("bundle_name"), path=PACK_REGISTRY_PATH, field_name=f"packs[{index}].bundle_name"
-    )
-    plugin_root = _require_nonblank_string(
-        pack.get("plugin_root"),
-        path=PACK_REGISTRY_PATH,
-        field_name=f"packs[{index}].plugin_root",
-    )
-    category = _require_nonblank_string(
-        pack.get("category"),
-        path=PACK_REGISTRY_PATH,
-        field_name=f"packs[{index}].category",
-    )
-    return name, plugin_root, category
-
-
-def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
+def _scan_plugin_roots() -> list[dict[str, Any]]:
     roots: list[dict[str, Any]] = []
     seen_names: set[str] = set()
     seen_plugin_roots: set[str] = set()
-    for index, pack in enumerate(load_pack_registry()):
-        name, plugin_root, category = _registry_root_record(pack, index=index)
+    plugin_dirs = sorted(p for p in PLUGIN_ROOTS_PATH.iterdir() if p.is_dir())
+    for index, plugin_path in enumerate(plugin_dirs):
+        manifest_path = plugin_path / ".codex-plugin" / "plugin.json"
+        if not manifest_path.is_file():
+            continue
+        manifest = load_json(manifest_path)
+        name = _require_nonblank_string(
+            manifest.get("name"),
+            path=manifest_path,
+            field_name="name",
+        )
+        category = _require_nonblank_string(
+            manifest.get("interface", {}).get("category"),
+            path=manifest_path,
+            field_name="interface.category",
+        )
+        plugin_root = f"codex-marketplace/plugins/{plugin_path.name}"
         if name in seen_names:
-            raise ValueError(f"{PACK_REGISTRY_PATH}: duplicate active root name {name}")
+            raise ValueError(f"{manifest_path}: duplicate active root name {name}")
         if plugin_root in seen_plugin_roots:
-            raise ValueError(f"{PACK_REGISTRY_PATH}: duplicate active plugin root {plugin_root}")
+            raise ValueError(f"{manifest_path}: duplicate active plugin root {plugin_root}")
         seen_names.add(name)
         seen_plugin_roots.add(plugin_root)
-        roots.append(
-            {
-                "order": index,
-                "name": name,
-                "category": category,
-                "registry_path": f"./{plugin_root}",
-                "plugin_root": plugin_root,
-                "manifest_path": f"{plugin_root}/.codex-plugin/plugin.json",
-                "enabled": True,
-            }
-        )
+        roots.append({
+            "order": index,
+            "name": name,
+            "category": category,
+            "registry_path": f"./{plugin_root}",
+            "plugin_root": plugin_root,
+            "manifest_path": f"{plugin_root}/.codex-plugin/plugin.json",
+            "enabled": True,
+        })
     return roots
+
+
+def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
+    return _scan_plugin_roots()
 
 
 def _render_inventory(roots: list[dict[str, Any]]) -> dict[str, Any]:

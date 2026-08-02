@@ -12,7 +12,7 @@
 | Old path | New state |
 | --- | --- |
 | `~/.config/devin/skills/review-branch-diff/SKILL.md` (or `%APPDATA%\devin\skills\review-branch-diff\SKILL.md`) | deleted |
-| `sources/first_party/skills/review-branch-diff/` | not in repo custody; confirmed absent |
+| the deleted first-party skill tree `review-branch-diff/`` | not in repo custody; confirmed absent |
 | `codex-marketplace/plugins/*/skills/review-branch-diff/` | not projected; confirmed absent |
 | `.agents/skills/review-branch-diff/` | not installed; confirmed absent |
 
@@ -30,4 +30,4 @@
 
 ## Source of truth
 
-Branch diff review behavior is now owned by `sources/first_party/skills/requesting-code-review/` and `sources/first_party/skills/subagent-driven-development/`.
+Branch diff review behavior is now owned by the deleted first-party skill tree `requesting-code-review/`` and the deleted first-party skill tree `subagent-driven-development/``.

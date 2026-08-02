@@ -1,42 +1,41 @@
 {
-  "name": "engineering-pack",
-  "version": "1.0.0",
-  "description": "First-party engineering delivery, release, and observability skills for the Codex marketplace.",
-  "author": {
-    "name": "Harley Bartles"
-  },
-  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "license": "MIT",
-  "keywords": [
-    "codex",
-    "marketplace",
-    "engineering",
-    "delivery",
-    "release",
-    "release-engineering",
-    "observability",
-    "skills",
-    "projection"
-  ],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Engineering Pack",
-    "shortDescription": "Engineering delivery, release, and observability workflows.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects first-party engineering skills into a practical home for implementation, release, and operational support. Includes release-engineering and observability.",
-    "developerName": "Harley Bartles",
-    "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Write"
+    "name": "engineering-pack",
+    "version": "1.0.0",
+    "description": "First-party engineering delivery, release, and observability skills for the Codex marketplace.",
+    "author": {
+        "name": "Harley Bartles"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "keywords": [
+        "codex",
+        "marketplace",
+        "engineering",
+        "delivery",
+        "release",
+        "release-engineering",
+        "observability",
+        "skills"
     ],
-    "defaultPrompt": [
-      "Inspect the Engineering Pack bundle and source map.",
-      "Use the bundle to review the engineering skills (release-engineering, observability).",
-      "Compare the bundle against its source custody surfaces."
-    ],
-    "brandColor": "#EA580C",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg"
-  }
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Engineering Pack",
+        "shortDescription": "Engineering delivery, release, and observability workflows.",
+        "longDescription": "A repo-local Codex marketplace bundle that projects first-party engineering skills into a practical home for implementation, release, and operational support. Includes release-engineering and observability.",
+        "developerName": "Harley Bartles",
+        "category": "Coding",
+        "capabilities": [
+            "Interactive",
+            "Write"
+        ],
+        "defaultPrompt": [
+            "Inspect the Engineering Pack bundle and bundle manifest.",
+            "Use the bundle to review the engineering skills (release-engineering, observability).",
+            "Compare the bundle against its source custody surfaces."
+        ],
+        "brandColor": "#EA580C",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+    }
 }

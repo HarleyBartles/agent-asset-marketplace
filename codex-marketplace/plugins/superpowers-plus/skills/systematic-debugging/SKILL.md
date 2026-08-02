@@ -4,7 +4,7 @@ description: Use when encountering any bug, test failure, or unexpected behavior
   before proposing fixes
 metadata:
   source-id: systematic-debugging
-  source-path: sources/first_party/skills/systematic-debugging/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md
   provenance-name: Systematic Debugging first-party skill
   source-category: first_party
   status: active
@@ -30,7 +30,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/systematic-debugging/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/` for reference.
 
 # Systematic Debugging
 

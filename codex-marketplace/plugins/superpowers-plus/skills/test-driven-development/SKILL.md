@@ -4,7 +4,7 @@ description: Use when implementing any feature or bugfix, before writing impleme
   code
 metadata:
   source-id: test-driven-development
-  source-path: sources/first_party/skills/test-driven-development/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md
   provenance-name: Test Driven Development first-party skill
   source-category: first_party
   status: active
@@ -29,7 +29,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/test-driven-development/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/` for reference.
 
 # Test-Driven Development (TDD)
 

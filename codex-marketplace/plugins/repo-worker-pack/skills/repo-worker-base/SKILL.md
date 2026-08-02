@@ -3,7 +3,7 @@ name: repo-worker-base
 description: Use when beginning or reviewing repo-backed work that needs portable worktree, source-custody, layout, validation, or publication guidance.
 metadata:
   source-id: repo-worker-base
-  source-path: sources/first_party/skills/repo-worker-base/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
   provenance-name: Repo Worker Base first-party skill
   source-category: first_party
   status: active
@@ -46,9 +46,9 @@ exists. That local policy is the authority for repository-specific paths,
 commands, exclusions, CI, and exceptions; this skill does not replace it.
 
 For Superpowers lane composition and stage routing, see
-[`using-superpowers-plus/references/bootstrap-routing.md`](sources/first_party/skills/using-superpowers-plus/references/bootstrap-routing.md)
+[`using-superpowers-plus/references/bootstrap-routing.md`](/.agents/skills/using-superpowers-plus/references/bootstrap-routing.md)
 and
-[`using-superpowers-plus/references/superpowers-composition.md`](sources/first_party/skills/using-superpowers-plus/references/superpowers-composition.md).
+[`using-superpowers-plus/references/superpowers-composition.md`](/.agents/skills/using-superpowers-plus/references/superpowers-composition.md).
 Each stage skill owns its own baseline reference and reads it as part of its
 own first step.
 
@@ -61,7 +61,7 @@ own first step.
 - using-github-mcp owns GitHub proof.
 - base-doctrine owns cross-project source-truth and doctrine routing.
 
-Do not treat an installed skill, generated projection, local cache, or worker
+Do not treat an installed skill, generated bundle, local cache, or worker
 report as authored source custody. Use the first-party source and the
 repository's declared local policy, then regenerate or install through their
 respective owners.

@@ -16,8 +16,8 @@
 ## Safe invocation
 
 ```bash
-py -3 sources/first_party/skills/repo-standards/scripts/deploy_vendor_profiles.py --check
-py -3 sources/first_party/skills/repo-standards/scripts/deploy_vendor_profiles.py --apply
+py -3 codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/deploy_vendor_profiles.py --check
+py -3 codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/deploy_vendor_profiles.py --apply
 ```
 
 `refreshing-installed-skills` calls the script automatically; do not run it directly unless you are testing or debugging.

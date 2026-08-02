@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: test-driven-development
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Test Driven Development
   short_description: Use when implementing any feature or bugfix, before writing implementation code

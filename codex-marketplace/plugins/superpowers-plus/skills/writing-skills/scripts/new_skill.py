@@ -14,7 +14,6 @@ import subprocess
 from typing import Final
 
 
-LANES: Final = {"first_party", "skills-with-source", "skills-with-citation"}
 CUSTODIES: Final = {"local", "marketplace"}
 LOCAL_PREFIX: Final = "mark-"
 NAME_PATTERN: Final = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -22,25 +21,30 @@ SCRIPT_ROOT = Path(__file__).resolve().parent
 TEMPLATE_ROOT = SCRIPT_ROOT.parent / "templates"
 
 
-def validate_request(name: str, custody: str, lane: str) -> None:
+def _marketplace_plugins(repo_root: Path) -> set[str]:
+    plugins_dir = repo_root / "codex-marketplace" / "plugins"
+    if not plugins_dir.is_dir():
+        return set()
+    return {p.name for p in plugins_dir.iterdir() if p.is_dir()}
+
+
+def validate_request(name: str, custody: str, lane: str, plugins: set[str]) -> None:
     if custody not in CUSTODIES:
         raise ValueError(f"unsupported custody: {custody}")
-    if lane not in LANES:
-        raise ValueError(f"unsupported lane: {lane}")
     if len(name) > 64 or not NAME_PATTERN.fullmatch(name):
         raise ValueError("skill name must use lowercase letters, numbers, and single hyphens (64 characters maximum)")
     if custody == "local" and not name.startswith(LOCAL_PREFIX):
         raise ValueError("local custody requires the mark- prefix")
-    if custody == "local" and lane != "first_party":
-        raise ValueError("local custody requires the first_party lane")
+    if custody == "marketplace" and lane not in plugins:
+        raise ValueError(f"--lane must be a marketplace plugin pack; got {lane!r}")
     if custody == "marketplace" and name.startswith(LOCAL_PREFIX):
         raise ValueError("marketplace custody cannot use the mark- prefix")
 
 
-def destination_for(repo_root: Path, name: str, custody: str) -> Path:
+def destination_for(repo_root: Path, name: str, custody: str, lane: str) -> Path:
     if custody == "local":
         return repo_root / ".agents" / "skills" / name
-    return repo_root / "sources" / "first_party" / "skills" / name
+    return repo_root / "codex-marketplace" / "plugins" / lane / "skills" / name
 
 
 def _template(path: str, **values: str) -> str:
@@ -54,7 +58,7 @@ def _metadata_for(name: str, custody: str, lane: str) -> str:
     title = name.replace("-", " ").title()
     return (
         f"  source-id: {json.dumps(name)}\n"
-        f"  source-path: {json.dumps(f'sources/first_party/skills/{name}/SKILL.md')}\n"
+        f"  source-path: {json.dumps(f'codex-marketplace/plugins/{lane}/skills/{name}/SKILL.md')}\n"
         f"  provenance-name: {json.dumps(f'{title} first-party skill')}\n"
         "  source-category: first_party\n"
         "  status: active\n"
@@ -68,8 +72,7 @@ def _metadata_for(name: str, custody: str, lane: str) -> str:
 
 
 def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
-    validate_request(name, custody, lane)
-    files = {
+    files: dict[str, str] = {
         "SKILL.md": _template(
             "skill/SKILL.md",
             name=name,
@@ -81,21 +84,6 @@ def render_scaffold(name: str, custody: str, lane: str) -> dict[str, str]:
     if custody == "local":
         return files
     files["references/.gitkeep"] = "\n"
-    if lane == "first_party":
-        return files
-    files.update(
-        {
-            "assets/authority/authority.yaml": _template(
-                "authority/authority.yaml", name=name, custody=custody, lane=lane
-            ),
-            "assets/authority/source-map.yaml": _template(
-                "authority/source-map.yaml", name=name, custody=custody, lane=lane
-            ),
-            "assets/authority/CITATIONS.md": _template("authority/CITATIONS.md", name=name, custody=custody, lane=lane),
-        }
-    )
-    if lane == "skills-with-source":
-        files["assets/authority/reference-source/.gitkeep"] = "\n"
     return files
 
 
@@ -133,10 +121,11 @@ def _resolve_cli_repo_root(start_directory: Path) -> Path:
 def scaffold(
     repo_root: Path, name: str, custody: str, lane: str, check: bool, *, allow_shared_checkout: bool = False
 ) -> int:
-    validate_request(name, custody, lane)
+    plugins = _marketplace_plugins(repo_root)
+    validate_request(name, custody, lane, plugins)
     if not check:
         repo_root = _guard_write_checkout(repo_root, allow_shared_checkout)
-    destination = destination_for(repo_root, name, custody)
+    destination = destination_for(repo_root, name, custody, lane)
     if destination.exists():
         raise FileExistsError(f"destination already exists: {destination}")
     files = render_scaffold(name, custody, lane)
@@ -178,7 +167,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--name")
     parser.add_argument("--custody", choices=sorted(CUSTODIES))
-    parser.add_argument("--lane", choices=sorted(LANES))
+    parser.add_argument("--lane", help="marketplace plugin pack for marketplace custody; ignored for local")
     parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()

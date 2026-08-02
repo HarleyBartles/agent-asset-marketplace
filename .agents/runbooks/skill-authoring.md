@@ -16,24 +16,24 @@ publication handoff when authoring skills in the agent-asset-marketplace repo.
 Scaffold a local skill with:
 
 ```text
-bash sources/first_party/skills/writing-skills/scripts/new-skill.sh --name mark-example --custody local --lane first_party
+bash codex-marketplace/plugins/superpowers-plus/skills/writing-skills/scripts/new-skill.sh --name mark-example --custody local --lane first_party
 ```
 
 Scaffold a marketplace-custodied source-backed skill with:
 
 ```text
-py -3 sources/first_party/skills/writing-skills/scripts/new_skill.py --name ddd --custody marketplace --lane skills-with-source
+py -3 codex-marketplace/plugins/superpowers-plus/skills/writing-skills/scripts/new_skill.py --name ddd --custody marketplace --lane superpowers-plus
 ```
 
 ## Repository paths
 
 - Local skills: `.agents/skills/mark-<skill-name>/`
-- Marketplace-custodied sources: `sources/first_party/skills/<skill-name>/`
+- Marketplace-custodied sources: `codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/`
 - Generated marketplace and installed skill surfaces are downstream outputs;
   do not edit them directly.
 
 See [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md)
-for marketplace standards and projection metadata, and
+for marketplace standards and marketplace metadata, and
 [`docs/overlay-adapter-policy.md`](../../docs/overlay-adapter-policy.md) for
 third-party overlay and adapter triggers.
 

@@ -44,7 +44,7 @@ When marketplace plugins are updated, run the full marketplace rebuild to refres
 tools/run marketplace --apply
 ```
 
-This will regenerate marketplace projections and refresh installed skills automatically.
+This will regenerate marketplace bundles and refresh installed skills automatically.
 
 ## Manual Refresh
 

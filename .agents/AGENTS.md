@@ -26,7 +26,5 @@ Navigation stays in generated `INDEX.md` files.
   self-describing through generated indexes and scoped law.
 - Flag mesh-law drift when a `.agents/` file starts repeating root doctrine
   instead of stating the local delta.
-- Treat `sources/first_party/**` as mutable source custody: edit the source
-  directly when the skill or asset changes, then regenerate projections.
-- Treat `sources/third_party/**` as immutable custody: do not edit it directly;
-  express behavior changes through `adapters/**` and regenerate the projection.
+- Treat `codex-marketplace/plugins/**` as the canonical product custody for
+  plugins and skills; edit the source directly when the skill or asset changes.

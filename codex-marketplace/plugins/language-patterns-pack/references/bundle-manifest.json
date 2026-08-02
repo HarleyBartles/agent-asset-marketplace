@@ -1,19 +1,17 @@
 {
   "bundle_name": "language-patterns-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
   "source_families": [
     "first_party"
   ],
   "notes": [
-    "Language-patterns bundle projected from first-party source custody.",
+    "Language-patterns bundle bundled from first-party source custody.",
     "Covers Python language, Python frameworks, and TypeScript."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/language-patterns-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -22,39 +20,38 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/python",
+      "canonical_source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python",
       "local_path": "skills/python",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party python skill."
+      "provenance_note": "Copied verbatim from the first-party python skill."
     },
     {
       "canonical_name": "python-frameworks",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/python-frameworks",
+      "canonical_source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks",
       "local_path": "skills/python-frameworks",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party python-frameworks skill."
+      "provenance_note": "Copied verbatim from the first-party python-frameworks skill."
     },
     {
       "canonical_name": "typescript",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/typescript",
+      "canonical_source_path": "codex-marketplace/plugins/language-patterns-pack/skills/typescript",
       "local_path": "skills/typescript",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party typescript skill."
+      "provenance_note": "Copied verbatim from the first-party typescript skill."
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",

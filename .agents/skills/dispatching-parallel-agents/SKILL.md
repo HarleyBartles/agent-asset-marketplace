@@ -4,7 +4,7 @@ description: Use when facing 2+ independent tasks that can be worked on without 
   state or sequential dependencies
 metadata:
   source-id: dispatching-parallel-agents
-  source-path: sources/first_party/skills/dispatching-parallel-agents/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md
   provenance-name: Dispatching Parallel Agents first-party skill
   source-category: first_party
   status: active
@@ -29,7 +29,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/dispatching-parallel-agents/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/` for reference.
 
 # Dispatching Parallel Agents
 

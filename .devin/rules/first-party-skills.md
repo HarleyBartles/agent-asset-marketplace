@@ -1,7 +1,7 @@
 ---
 description: "First-party skill format"
 trigger: glob
-globs: "sources/first_party/skills/**"
+globs: "codex-marketplace/plugins/*/skills/**"
 ---
 ## Scope
 

@@ -1,5 +1,5 @@
 ---
-description: "Marketplace projection law"
+description: "Marketplace marketplace bundle law"
 trigger: glob
 globs: "codex-marketplace/**"
 ---

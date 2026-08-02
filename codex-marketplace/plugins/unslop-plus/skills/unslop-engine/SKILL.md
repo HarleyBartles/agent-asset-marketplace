@@ -4,7 +4,7 @@ description: Use when observed AI output defaults in a domain are repetitive and
   you need a durable anti-slop profile to counter them.
 metadata:
   source-id: unslop-engine
-  source-path: sources/first_party/skills/unslop-engine/SKILL.md
+  source-path: codex-marketplace/plugins/unslop-plus/skills/unslop-engine/SKILL.md
   provenance-name: Unslop Engine first-party skill
   source-category: first_party
   status: active

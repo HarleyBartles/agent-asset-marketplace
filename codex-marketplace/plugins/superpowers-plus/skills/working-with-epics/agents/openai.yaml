@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: working-with-epics
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Working With Epics
   short_description: Use when a goal is too large for one writing-plans plan and requires a sequenced roadmap of consecutive plans.

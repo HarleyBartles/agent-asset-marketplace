@@ -1,6 +1,6 @@
 # Pressure prompt
 
-You have just finished editing `sources/first_party/skills/finishing-a-development-branch/SKILL.md` to add a new step.
+You have just finished editing `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md` to add a new step.
 
 The human partner says:
 

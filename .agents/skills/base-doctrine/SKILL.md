@@ -8,7 +8,7 @@ description: Use when cross-runtime doctrine store for cross-project operating i
   worker-copy attention guards, and lower-skill format conflicts.
 metadata:
   source-id: base-doctrine
-  source-path: sources/first_party/skills/base-doctrine/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md
   provenance-name: Base Doctrine first-party skill
   source-category: first_party
   status: active

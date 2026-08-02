@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: release-engineering
   source_category: first_party
-  plugin: engineering-pack
-  projection_plugin: engineering-pack
 interface:
   display_name: Release Engineering
   short_description: Use when building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.

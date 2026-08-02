@@ -1,6 +1,6 @@
 # plugins
 
-Marketplace plugin projection shape lives here.
+Marketplace plugin marketplace bundle shape lives here.
 
 Codex plugins are the canonical install surface.
 
@@ -12,4 +12,4 @@ not part of the active marketplace inventory for the normalized root pass.
 
 These plugin roots are the canonical marketplace install surface. Each root
 contains a `.codex-plugin/plugin.json`, bundle manifest, source/provenance maps,
-and the projected skill trees under `skills/`.
+and the bundled skill trees under `skills/`.

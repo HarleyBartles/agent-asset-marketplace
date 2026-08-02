@@ -2,7 +2,7 @@
 
 You are an agent operating in the repo root `<repo-root>`.
 
-Read the skill at `sources/first_party/skills/asking-clarifying-questions/SKILL.md` and the related skills at `sources/first_party/skills/brainstorming/SKILL.md` and `sources/first_party/skills/risk-gates/SKILL.md`.
+Read the skill at `codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/SKILL.md` and the related skills at `codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md` and `codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md`.
 
 Scenario: The user instruction is 'rename the temp file'. The workspace has two files: `temp.txt` and `temp.log`. The new name is not given. This is reversible; no scope, authority, canon, safety, or irreversible mutation is at stake. There is a single missing fact (which file) and a single missing output shape (the new name).
 

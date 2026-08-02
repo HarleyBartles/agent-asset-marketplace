@@ -5,7 +5,7 @@ description: Use when starting feature work that needs isolation from current
   workspace exists via native tools or git worktree fallback
 metadata:
   source-id: using-git-worktrees
-  source-path: sources/first_party/skills/using-git-worktrees/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md
   provenance-name: Using Git Worktrees first-party skill
   source-category: first_party
   status: active
@@ -32,7 +32,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-git-worktrees/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/` for reference.
 
 # Using Git Worktrees
 

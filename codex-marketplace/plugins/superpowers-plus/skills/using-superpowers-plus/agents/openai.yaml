@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: using-superpowers-plus
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Using Superpowers Plus
   short_description: Use when starting any conversation to find and invoke the right skill

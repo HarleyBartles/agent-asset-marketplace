@@ -5,7 +5,7 @@ description: Use when reviewing web application security risks, mapping controls
   is pen-testing execution or vendor tool selection.
 metadata:
   source-id: owasp-top-ten
-  source-path: sources/first_party/skills/owasp-top-ten/SKILL.md
+  source-path: codex-marketplace/plugins/security-pack/skills/owasp-top-ten/SKILL.md
   provenance-name: Owasp Top Ten first-party skill
   source-category: first_party
   status: active

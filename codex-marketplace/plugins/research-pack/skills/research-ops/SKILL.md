@@ -3,7 +3,7 @@ name: research-ops
 description: Use when planning research, triaging sources, synthesizing evidence, or managing citations.
 metadata:
   source-id: research-ops
-  source-path: sources/first_party/skills/research-ops/SKILL.md
+  source-path: codex-marketplace/plugins/research-pack/skills/research-ops/SKILL.md
   provenance-name: Research Ops first-party skill
   source-category: first_party
   status: active

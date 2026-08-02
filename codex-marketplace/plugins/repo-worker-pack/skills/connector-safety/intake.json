@@ -1,7 +1,7 @@
 {
   "issue": "MARK-226",
   "skill": "connector-safety",
-  "canonical_source_path": "sources/first_party/skills/connector-safety",
+  "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety",
   "public_name": "connector-safety",
   "provenance_name": "MARK-226 canonical first-party source for connector-safety",
   "scope": [
@@ -15,9 +15,9 @@
     "safe-action reporting"
   ],
   "projected_paths": [
-    "sources/first_party/skills/connector-safety",
-    "sources/first_party/skills/connector-safety"
+    "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety",
+    "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety"
   ],
   "gpt_overlay": "direct export by default",
-  "notes": "House Skills and repo-worker-pack are projection surfaces only."
+  "notes": "repo-worker-pack is the canonical install surface; the .agents/skills/ copy is generated."
 }

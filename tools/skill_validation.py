@@ -69,14 +69,8 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         raise ValueError(f"{skill_md} frontmatter must include nonblank name")
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
-    parts = skill_root.parts
-    is_source_first_party = any(
-        tuple(parts[i : i + 3]) == ("sources", "first_party", "skills")
-        for i in range(len(parts) - 2)
-    )
-
     metadata = parsed_frontmatter.get("metadata")
-    is_first_party = is_source_first_party or (
+    is_first_party = (
         isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
     )
     if is_first_party and not isinstance(metadata, dict):
@@ -101,7 +95,6 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
                 "upstream_name",
                 "upstream_version",
                 "adaptation_overlay",
-                "projection_plugin",
                 "source-id",
                 "source_path",
                 "source-path",
@@ -120,17 +113,18 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         if metadata.get("content_mode") and metadata["content_mode"] not in {"verbatim", "normalised", "adapted"}:
             raise ValueError(f"{skill_md} frontmatter metadata content_mode must be verbatim, normalised, or adapted")
         if metadata.get("source_category") == "third_party":
-            for field_name in ("upstream_name", "upstream_version", "adaptation_overlay", "projection_plugin"):
+            for field_name in ("upstream_name", "upstream_version", "adaptation_overlay"):
                 require_string((field_name,))
         if metadata.get("content_mode") == "adapted":
             require_string(("adapted_author",))
             if "source_author" not in metadata or "source_license" not in metadata:
                 raise ValueError(
-                    f"{skill_md} frontmatter metadata adapted projections must declare source_author and source_license"
+                    f"{skill_md} frontmatter metadata for adapted skills must declare source_author and source_license"
                 )
             require_string(("source_author", "source_license"))
         elif metadata.get("content_mode") == "normalised":
             if metadata.get("adapted_author") or metadata.get("adaptation_note"):
                 raise ValueError(
-                    f"{skill_md} frontmatter metadata normalised projections must not declare adapted_author or adaptation_note"
+                    f"{skill_md} frontmatter: normalised skills must not "
+                    "declare adapted_author or adaptation_note"
                 )

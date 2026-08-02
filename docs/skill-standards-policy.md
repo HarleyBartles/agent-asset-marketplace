@@ -5,9 +5,9 @@ This policy defines the standards for first-party skills in the agent-asset-mark
 This policy is stricter than upstream sources where noted; otherwise the upstream sources apply.
 
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base `SKILL.md` frontmatter format.
-- The installed `superpowers-plus:writing-skills` projection defines the TDD-based approach to skill creation and discovery optimization.
+- The installed `superpowers-plus:writing-skills` plugin skill defines the TDD-based approach to skill creation and discovery optimization.
 
-Use the first-party [`writing-skills`](../../sources/first_party/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
+Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
 For third-party skill adaptation and overlay adapter triggers, see `docs/overlay-adapter-policy.md`.
 
@@ -17,12 +17,12 @@ For third-party skill adaptation and overlay adapter triggers, see `docs/overlay
 - `superpowers-plus:writing-skills`
 - `docs/contracts/skill-frontmatter.md`
 - `docs/contracts/openai-agent-yaml.md`
-- `docs/custody-and-projection-doctrine.md`
+- `docs/custody-and-marketplace-doctrine.md`
 
 ## Directory structure
 
 ```
-sources/first_party/skills/<skill-name>/
+codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/
 ├── SKILL.md              # Required: metadata + instructions
 ├── agents/               # Optional: agent configuration
 ├── references/           # Optional: supporting documentation
@@ -71,7 +71,7 @@ Move real but non-primary boundary cases to `references/scope-notes.md`. Wire th
 
 ## agents/openai.yaml
 
-Required for skills projected into a Codex marketplace plugin.
+Required for skills bundled into a Codex marketplace plugin.
 
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.

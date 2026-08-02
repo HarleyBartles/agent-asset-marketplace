@@ -1,7 +1,7 @@
 ---
 description: "Third-party source custody"
 trigger: glob
-globs: "sources/third_party/**"
+globs: "provenance/**"
 ---
 ## Scope
 

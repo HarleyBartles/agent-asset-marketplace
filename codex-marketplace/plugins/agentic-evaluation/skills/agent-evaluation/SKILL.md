@@ -3,7 +3,7 @@ name: agent-evaluation
 description: Use when evaluating agent outputs, designing benchmarks, or building self-evaluation rubrics.
 metadata:
   source-id: agent-evaluation
-  source-path: sources/first_party/skills/agent-evaluation/SKILL.md
+  source-path: codex-marketplace/plugins/agentic-evaluation/skills/agent-evaluation/SKILL.md
   provenance-name: Agent Evaluation first-party skill
   source-category: first_party
   status: active

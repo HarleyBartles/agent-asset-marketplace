@@ -50,58 +50,9 @@
     {
       "name": "codex-marketplace-plugins",
       "path": "codex-marketplace/plugins",
-      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata, including the api-contracts-pack projection for api-design-patterns and openapi-specification plus the security-pack projection for secure-coding-practices, owasp-top-10, security-testing-patterns, and threat-modeling-techniques.",
+      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
       "surface_kind": "runtime-facing",
       "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "frontend-pack",
-      "path": "codex-marketplace/plugins/frontend-pack",
-      "purpose": "Browser frontend implementation guidance with shared architecture, DOM UI, React-hosted 3D, and frontend QA surfaces.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "superpowers-plus-marketplace",
-      "path": "codex-marketplace/plugins/superpowers-plus",
-      "purpose": "Codex-facing projection of the upstream Superpowers release snapshot, renamed to Superpowers+.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py",
-        "tools/project_skills.py"
-      ]
-    },
-    {
-      "name": "third-party-custody",
-      "path": "sources/third_party",
-      "purpose": "Third-party source custody for the retained unslop, superpowers, and feature-sliced upstream snapshots. The custody expectation is the upstream skill tree only; non-skill upstream scaffolding stays out unless a projection or validator explicitly requires it. The unslop engine is projected into the unslop-plus combined-source plugin.",
-      "surface_kind": "vendored",
-      "nearest_scoped_agents_md": ".devin/rules/third-party.md",
-      "guidance_scope": "repo-owned-guidance",
-      "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py",
-        "tools/validate_marketplace.py"
-      ]
-    },
-    {
-      "name": "superpowers-custody",
-      "path": "sources/third_party/superpowers/obra-superpowers/v6.2.0",
-      "purpose": "Retained third-party source custody for the upstream obra/superpowers v6.2.0 release snapshot.",
-      "surface_kind": "vendored",
-      "nearest_scoped_agents_md": ".devin/rules/third-party.md",
-      "guidance_scope": "repo-owned-guidance",
-      "notes": "Nested upstream AGENTS.md files remain third-party package instructions, not repository doctrine.",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py"
@@ -130,7 +81,7 @@
     {
       "name": "superpowers-plans",
       "path": ".agents/plans",
-      "purpose": "Superpowers plan drafts and execution plans. Local guidance here reminds workers to check off completed steps before final publication and to explain intentionally open plans inside the plan itself.",
+      "purpose": "Superpowers plan drafts and execution plans.",
       "surface_kind": "hand-authored",
       "nearest_scoped_agents_md": ".devin/rules/plans.md",
       "key_validation_scripts": [
@@ -155,73 +106,36 @@
       "nearest_scoped_agents_md": ".devin/rules/tools.md",
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py",
-        "tools/generate_marketplace.py"
-      ]
-    },
-    {
-      "name": "repo-index",
-      "path": "repo-index",
-      "purpose": "Navigation metadata for repo traversal and future corpus preparation.",
-      "surface_kind": "generated",
-      "nearest_scoped_agents_md": null,
-      "key_validation_scripts": [
         "tools/validate_repo_index.py"
       ]
     }
   ],
   "marketplace_plugins": [
     {
-      "name": "unslop-plus",
-      "plugin_root": "codex-marketplace/plugins/unslop-plus",
-      "plugin_manifest": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/unslop-plus/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/unslop-plus/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/unslop-plus/skills",
+      "name": "agentic-evaluation",
+      "category": "Coding",
+      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
+      "plugin_manifest": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/agentic-evaluation/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/agentic-evaluation/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/agentic-evaluation/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/unslop-plus",
+      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "superpowers-plus",
-      "plugin_root": "codex-marketplace/plugins/superpowers-plus",
-      "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+      "name": "agentic-workflows",
+      "category": "Coding",
+      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
+      "plugin_manifest": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/agentic-workflows/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/agentic-workflows/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/superpowers-plus",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "repo-worker-pack",
-      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
-      "plugin_manifest": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/repo-worker-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/repo-worker-pack/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "dotnet-pack",
-      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
-      "plugin_manifest": "codex-marketplace/plugins/dotnet-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/dotnet-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/dotnet-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/dotnet-pack/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/dotnet-pack",
+      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -229,6 +143,7 @@
     },
     {
       "name": "api-contracts-pack",
+      "category": "Productivity",
       "plugin_root": "codex-marketplace/plugins/api-contracts-pack",
       "plugin_manifest": "codex-marketplace/plugins/api-contracts-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/api-contracts-pack/SOURCE.md",
@@ -243,6 +158,7 @@
     },
     {
       "name": "architecture-pack",
+      "category": "Productivity",
       "plugin_root": "codex-marketplace/plugins/architecture-pack",
       "plugin_manifest": "codex-marketplace/plugins/architecture-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/architecture-pack/SOURCE.md",
@@ -256,49 +172,8 @@
       }
     },
     {
-      "name": "language-patterns-pack",
-      "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
-      "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "security-pack",
-      "plugin_root": "codex-marketplace/plugins/security-pack",
-      "plugin_manifest": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/security-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/security-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/security-pack/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/security-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
-      "name": "frontend-pack",
-      "plugin_root": "codex-marketplace/plugins/frontend-pack",
-      "plugin_manifest": "codex-marketplace/plugins/frontend-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/frontend-pack/skills",
-      "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/frontend-pack",
-      "registry_alignment": {
-        "status": "aligned",
-        "note": null
-      }
-    },
-    {
       "name": "data-platform-pack",
+      "category": "Productivity",
       "plugin_root": "codex-marketplace/plugins/data-platform-pack",
       "plugin_manifest": "codex-marketplace/plugins/data-platform-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/data-platform-pack/SOURCE.md",
@@ -312,14 +187,30 @@
       }
     },
     {
-      "name": "planning-pack",
-      "plugin_root": "codex-marketplace/plugins/planning-pack",
-      "plugin_manifest": "codex-marketplace/plugins/planning-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/planning-pack/skills",
+      "name": "dotnet-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/dotnet-pack",
+      "plugin_manifest": "codex-marketplace/plugins/dotnet-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/dotnet-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/dotnet-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/dotnet-pack/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/planning-pack",
+      "registry_path": "./codex-marketplace/plugins/dotnet-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "engineering-pack",
+      "category": "Coding",
+      "plugin_root": "codex-marketplace/plugins/engineering-pack",
+      "plugin_manifest": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/engineering-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/engineering-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/engineering-pack/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/engineering-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -327,6 +218,7 @@
     },
     {
       "name": "feature-sliced-design",
+      "category": "Coding",
       "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
       "plugin_manifest": "codex-marketplace/plugins/feature-sliced-design/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/feature-sliced-design/SOURCE.md",
@@ -340,28 +232,60 @@
       }
     },
     {
-      "name": "agentic-workflows",
-      "plugin_root": "codex-marketplace/plugins/agentic-workflows",
-      "plugin_manifest": "codex-marketplace/plugins/agentic-workflows/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/agentic-workflows/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/agentic-workflows/skills",
+      "name": "frontend-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/frontend-pack",
+      "plugin_manifest": "codex-marketplace/plugins/frontend-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/frontend-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/frontend-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/frontend-pack/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/agentic-workflows",
+      "registry_path": "./codex-marketplace/plugins/frontend-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
       }
     },
     {
-      "name": "agentic-evaluation",
-      "plugin_root": "codex-marketplace/plugins/agentic-evaluation",
-      "plugin_manifest": "codex-marketplace/plugins/agentic-evaluation/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/agentic-evaluation/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/agentic-evaluation/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/agentic-evaluation/skills",
+      "name": "language-patterns-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/language-patterns-pack",
+      "plugin_manifest": "codex-marketplace/plugins/language-patterns-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/language-patterns-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/language-patterns-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/language-patterns-pack/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/agentic-evaluation",
+      "registry_path": "./codex-marketplace/plugins/language-patterns-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "planning-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/planning-pack",
+      "plugin_manifest": "codex-marketplace/plugins/planning-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/planning-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/planning-pack/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/planning-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "repo-worker-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/repo-worker-pack",
+      "plugin_manifest": "codex-marketplace/plugins/repo-worker-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/repo-worker-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/repo-worker-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/repo-worker-pack/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
       "registry_alignment": {
         "status": "aligned",
         "note": null
@@ -369,6 +293,7 @@
     },
     {
       "name": "research-pack",
+      "category": "Productivity",
       "plugin_root": "codex-marketplace/plugins/research-pack",
       "plugin_manifest": "codex-marketplace/plugins/research-pack/.codex-plugin/plugin.json",
       "source_md": "codex-marketplace/plugins/research-pack/SOURCE.md",
@@ -382,14 +307,45 @@
       }
     },
     {
-      "name": "engineering-pack",
-      "plugin_root": "codex-marketplace/plugins/engineering-pack",
-      "plugin_manifest": "codex-marketplace/plugins/engineering-pack/.codex-plugin/plugin.json",
-      "source_md": "codex-marketplace/plugins/engineering-pack/SOURCE.md",
-      "bundle_manifest": "codex-marketplace/plugins/engineering-pack/references/bundle-manifest.json",
-      "skills_path": "codex-marketplace/plugins/engineering-pack/skills",
+      "name": "security-pack",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/security-pack",
+      "plugin_manifest": "codex-marketplace/plugins/security-pack/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/security-pack/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/security-pack/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/security-pack/skills",
       "agents_md": null,
-      "registry_path": "./codex-marketplace/plugins/engineering-pack",
+      "registry_path": "./codex-marketplace/plugins/security-pack",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "superpowers-plus",
+      "category": "Coding",
+      "plugin_root": "codex-marketplace/plugins/superpowers-plus",
+      "plugin_manifest": "codex-marketplace/plugins/superpowers-plus/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/superpowers-plus/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/superpowers-plus/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/superpowers-plus",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
+    },
+    {
+      "name": "unslop-plus",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/unslop-plus",
+      "plugin_manifest": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/unslop-plus/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/unslop-plus/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/unslop-plus/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/unslop-plus",
       "registry_alignment": {
         "status": "aligned",
         "note": null

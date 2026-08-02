@@ -60,13 +60,18 @@ _UniqueKeyLoader.add_constructor(
 
 
 def discover_authority_assets(root: Path) -> list[Path]:
-    roots = [root / "sources/first_party/skills", root / ".agents/skills"]
-    return sorted(
-        authority.parent.parent
-        for skills_root in roots if skills_root.is_dir()
-        for authority in skills_root.glob("*/assets/authority")
-        if authority.is_dir()
-    )
+    roots = [root / ".agents/skills", root / "codex-marketplace" / "plugins"]
+    found: set[Path] = set()
+    for skills_root in roots:
+        if not skills_root.is_dir():
+            continue
+        for authority in skills_root.glob("*/assets/authority"):
+            if authority.is_dir():
+                found.add(authority.parent.parent)
+        for authority in skills_root.glob("*/skills/*/assets/authority"):
+            if authority.is_dir():
+                found.add(authority.parent.parent)
+    return sorted(found)
 
 
 def _load_mapping(path: Path, errors: list[str]) -> dict[object, object] | None:
@@ -333,10 +338,10 @@ def _validate_references(
                 f"{record_name} references[{index}] has unsupported content_mode "
                 f"{content_mode!r}"
             )
-        if lane == "skills-with-citation" and content_mode != "first_party_synthesis":
+        if lane == "skills-with-citation" and content_mode not in CONTENT_MODES:
             errors.append(
-                f"{record_name} references[{index}] must use first_party_synthesis "
-                "for skills-with-citation"
+                f"{record_name} references[{index}] has unsupported content_mode "
+                f"{content_mode!r} for skills-with-citation"
             )
     return references
 

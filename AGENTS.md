@@ -9,7 +9,6 @@ The primary durable output is market-consumable assets. Support surfaces such as
 Codex plugin first; generated GPT-safe skill zips second.
 
 The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/docs/mesh-policy.md` is the canonical mesh statement.
-
 ## Source-of-truth split
 
 GitHub and the repository tree prove file state, landed assets, manifests, source snapshots, provenance notes, validation scripts, and playbooks.
@@ -29,21 +28,20 @@ If repo files changed, the worker must publish the changes to GitHub before clai
 3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
 For ordinary worker execution, prefer a PR into `main`.
-
+## Draft PR policy
+Open pull requests as **draft**; keep them in draft while iterating and validating. Flip to ready for review only after self-review is complete and `py -3 tools/run.py ci --check` passes. See `.agents/runbooks/pr.md` and `.devin/rules/pr.md`.
 ## Build and test commands
 
 Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`.
 
 For the full command matrix, see `.devin/rules/tools.md` after migration. For the implementation workflow, see `.agents/runbooks/implementing.md`.
-
 ## Security considerations
 
 Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/runbooks/security.md`.
-
 ## Routing pointers
 
 - [Mesh policy](.agents/docs/mesh-policy.md)
-- Scoped law lives in `.devin/rules/*.md`
+- Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
 - [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/docs/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)

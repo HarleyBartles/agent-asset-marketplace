@@ -15,7 +15,7 @@ Keep this scope short. It owns runbook-stage routing, not doctrine.
 - `planning.md` for multi-step planning work
 - `implementing.md` for implementation work
 - `code-review.md` for review work
-- `marketplace-generation.md` for marketplace generation or projection work
+- `marketplace-generation.md` for marketplace generation or marketplace bundle work
 - `skill-authoring.md` for skill or document authoring work
 - `security.md` for security posture and review
 - `testing.md` for test commands and TDD workflow

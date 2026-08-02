@@ -3,7 +3,7 @@
 
 `docs/contracts/`
 
-This scope covers the docs-owned contract surfaces that define markdown and YAML contracts for the marketplace and skill projections.
+This scope covers the docs-owned contract surfaces that define markdown and YAML contracts for the marketplace and skill marketplace bundles.
 
 Defer to `docs.md` for the broader docs-routing context and to `.agents/docs/mesh-policy.md` for mesh-specific law.
 

@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: web-identity
   source_category: first_party
-  plugin: security-pack
-  projection_plugin: security-pack
 interface:
   display_name: Web Identity
   short_description: Use when selecting OAuth 2.0 / OIDC flows, validating tokens, or integrating identity providers.

@@ -4,7 +4,7 @@ description: Use when starting any creative work such as creating features, buil
   components, adding functionality, or modifying behavior.
 metadata:
   source-id: brainstorming
-  source-path: sources/first_party/skills/brainstorming/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md
   provenance-name: Brainstorming first-party skill
   source-category: first_party
   status: active
@@ -28,7 +28,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/brainstorming/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/brainstorming/` for reference.
 
 # Brainstorming Ideas Into Designs
 

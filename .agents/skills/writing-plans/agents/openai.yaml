@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: writing-plans
   source_category: first_party
-  plugin: superpowers-plus
-  projection_plugin: superpowers-plus
 interface:
   display_name: Writing Plans
   short_description: Use when you have a spec or requirements for a multi-step task, before touching code

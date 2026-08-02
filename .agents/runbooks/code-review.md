@@ -6,7 +6,7 @@ Use this reference when reviewing work in the agent-asset-marketplace repo. This
 
 Apply three core lenses to every review:
 
-1. **Principal Architect** — alignment with marketplace structure, source custody discipline, projection correctness, and skill metadata.
+1. **Principal Architect** — alignment with marketplace structure, source custody discipline, marketplace correctness, and skill metadata.
 2. **Senior QA Engineer** — validation adequacy, test quality, edge cases, and regression risk. Prefer observable assertions over claims.
 3. **Senior Software Engineer** — code quality, naming, error handling, DRY without premature abstraction, YAGNI, and pattern conformance.
 
@@ -16,7 +16,7 @@ When the diff touches vendored skills, prompts, or scripts that install into oth
 
 ## Architecture and Doctrine
 
-Reviewers must check the repo's architectural choices in `docs/custody-and-projection-doctrine.md`. If code and skills disagree, the skills win. Invoke `/repo-worker-base` and `/base-doctrine` when the work touches marketplace generation, validation, or tooling.
+Reviewers must check the repo's architectural choices in `docs/custody-and-marketplace-doctrine.md`. If code and skills disagree, the skills win. Invoke `/repo-worker-base` and `/base-doctrine` when the work touches marketplace generation, validation, or tooling.
 
 If marketplace configuration or source custody changed, regenerate with `tools/run marketplace --apply` and validate with `tools/run ci --check`.
 

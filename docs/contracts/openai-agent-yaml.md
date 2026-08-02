@@ -1,7 +1,7 @@
 # OpenAI Agent YAML Contract
 
 This contract documents the `agents/openai.yaml` surfaces used by the current
-Codex marketplace projections.
+Codex marketplace bundles.
 
 ## Canonical Shape
 
@@ -29,12 +29,12 @@ policy:
 - The top level must be a mapping.
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
-- All skills projected via a bundle-manifest entry must include `metadata`; source-custody snapshots can omit it.
+- All skills bundled via a bundle-manifest entry must include `metadata`; source-custody snapshots can omit it.
 - When present, provenance keys such as `skill_name`, `plugin`,
   `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`,
-  `projection_plugin`, `source-id`, `source-path`, `provenance-name`, `origin`,
+  `source-id`, `source-path`, `provenance-name`, `origin`,
   `content_mode`, `source_author`, `source_license`, `source_repo`, and
-  `adapted_author` must be nonblank strings.
+  `adapted_author` must be nonblank strings. (`plugin` and `marketplace bundle_plugin` are retired.)
 - `interface`, when present, must be a mapping with nonblank `display_name`
   and `short_description`.
 - `policy`, when present, must be a mapping, and `allow_implicit_invocation`
@@ -52,4 +52,4 @@ policy:
 ## Notes
 
 - Keep this file boring and additive. It is a contract for the repo's current
-  Codex skill projections, not a general agent-manifest standard.
+  Codex skill marketplace bundles, not a general agent-manifest standard.

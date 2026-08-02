@@ -4,7 +4,7 @@ description: Use when executing implementation plans with independent tasks in t
   current session
 metadata:
   source-id: subagent-driven-development
-  source-path: sources/first_party/skills/subagent-driven-development/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md
   provenance-name: Subagent Driven Development first-party skill
   source-category: first_party
   status: active
@@ -31,7 +31,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/subagent-driven-development/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/` for reference.
 
 # Subagent-Driven Development
 

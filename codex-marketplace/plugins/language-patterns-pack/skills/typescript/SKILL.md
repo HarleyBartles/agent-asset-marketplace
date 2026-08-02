@@ -5,7 +5,7 @@ description: Use when writing or reviewing TypeScript type design, generics, mod
   debugging or framework-specific UI composition.
 metadata:
   source-id: typescript
-  source-path: sources/first_party/skills/typescript/SKILL.md
+  source-path: codex-marketplace/plugins/language-patterns-pack/skills/typescript/SKILL.md
   provenance-name: Typescript first-party skill
   source-category: first_party
   status: active

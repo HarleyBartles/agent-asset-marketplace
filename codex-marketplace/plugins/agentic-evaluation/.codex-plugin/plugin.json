@@ -1,42 +1,41 @@
 {
-  "name": "agentic-evaluation",
-  "version": "1.0.0",
-  "description": "First-party agent evaluation skill for Codex marketplace projection.",
-  "author": {
-    "name": "Harley Bartles"
-  },
-  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
-  "license": "MIT",
-  "keywords": [
-    "codex",
-    "marketplace",
-    "agentic",
-    "evaluation",
-    "benchmark",
-    "scoring",
-    "rubric",
-    "skills",
-    "projection"
-  ],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Agentic Evaluation",
-    "shortDescription": "Benchmark design, scoring, and self-evaluation rubrics.",
-    "longDescription": "A repo-local Codex marketplace bundle that projects the first-party agent-evaluation skill into a focused home for benchmark design, rubric-driven review, and agent assessment.",
-    "developerName": "Harley Bartles",
-    "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Write"
+    "name": "agentic-evaluation",
+    "version": "1.0.0",
+    "description": "First-party agent evaluation skill for Codex marketplace plugin.",
+    "author": {
+        "name": "Harley Bartles"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "keywords": [
+        "codex",
+        "marketplace",
+        "agentic",
+        "evaluation",
+        "benchmark",
+        "scoring",
+        "rubric",
+        "skills"
     ],
-    "defaultPrompt": [
-      "Inspect the Agentic Evaluation bundle and source map.",
-      "Use the bundle to review the agent-evaluation skill.",
-      "Compare the bundle against the first-party source custody."
-    ],
-    "brandColor": "#2563EB",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg"
-  }
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Agentic Evaluation",
+        "shortDescription": "Benchmark design, scoring, and self-evaluation rubrics.",
+        "longDescription": "A repo-local Codex marketplace bundle that distributes the first-party agent-evaluation skill into a focused home for benchmark design, rubric-driven review, and agent assessment.",
+        "developerName": "Harley Bartles",
+        "category": "Coding",
+        "capabilities": [
+            "Interactive",
+            "Write"
+        ],
+        "defaultPrompt": [
+            "Inspect the Agentic Evaluation bundle and bundle manifest.",
+            "Use the bundle to review the agent-evaluation skill.",
+            "Compare the bundle against the first-party source custody."
+        ],
+        "brandColor": "#2563EB",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+    }
 }

@@ -4,7 +4,7 @@ description: Use when starting any conversation - establishes how to find and us
   requiring skill invocation before ANY response including clarifying questions
 metadata:
   source-id: using-superpowers-plus
-  source-path: sources/first_party/skills/using-superpowers-plus/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
   provenance-name: Using Superpowers Plus first-party skill
   source-category: first_party
   status: active
@@ -55,7 +55,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/using-superpowers/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/` for reference.
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill.

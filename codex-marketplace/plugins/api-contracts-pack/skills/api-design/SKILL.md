@@ -4,7 +4,7 @@ description: Use when designing, reviewing, or versioning an HTTP API contract, 
   resource naming, or mapping OpenAPI structures to implementation boundaries.
 metadata:
   source-id: api-design
-  source-path: sources/first_party/skills/api-design/SKILL.md
+  source-path: codex-marketplace/plugins/api-contracts-pack/skills/api-design/SKILL.md
   provenance-name: Api Design first-party skill
   source-category: first_party
   status: active

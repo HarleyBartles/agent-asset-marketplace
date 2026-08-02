@@ -1,7 +1,7 @@
 {
   "bundle_name": "research-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/research-pack",
   "source_families": [
@@ -11,9 +11,7 @@
     "Research pack now projects the first-party research-ops skill.",
     "The pack covers evidence-first research workflows, source triage, synthesis, and citation."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/research-pack/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -22,17 +20,16 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/research-ops",
+      "canonical_source_path": "codex-marketplace/plugins/research-pack/skills/research-ops",
       "local_path": "skills/research-ops",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party research-ops skill."
+      "provenance_note": "Copied verbatim from the first-party research-ops skill."
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/research-pack/SOURCE.md",

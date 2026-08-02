@@ -4,7 +4,7 @@ description: Use when implementation is complete, all tests pass, and you need t
   decide how to integrate the work
 metadata:
   source-id: finishing-a-development-branch
-  source-path: sources/first_party/skills/finishing-a-development-branch/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md
   provenance-name: Finishing A Development Branch first-party skill
   source-category: first_party
   status: active
@@ -30,7 +30,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `sources/third_party/superpowers/obra-superpowers/v6.2.0/skills/finishing-a-development-branch/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/` for reference.
 
 # Finishing a Development Branch
 

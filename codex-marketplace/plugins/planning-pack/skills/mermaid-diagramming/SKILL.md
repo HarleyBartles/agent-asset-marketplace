@@ -3,7 +3,7 @@ name: mermaid-diagramming
 description: Use when selecting, writing, or reviewing Mermaid diagrams for technical documentation.
 metadata:
   source-id: mermaid-diagramming
-  source-path: sources/first_party/skills/mermaid-diagramming/SKILL.md
+  source-path: codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming/SKILL.md
   provenance-name: Mermaid Diagramming first-party skill
   source-category: first_party
   status: active

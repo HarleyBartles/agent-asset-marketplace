@@ -1,7 +1,7 @@
 {
   "bundle_name": "agentic-workflows",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/agentic-workflows",
   "source_families": [
@@ -11,9 +11,7 @@
     "Agentic workflows pack now projects the first-party agentic-harness skill.",
     "The pack covers harness design, agent loops, tool/action spaces, and multi-agent orchestration."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/agentic-workflows/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -22,17 +20,16 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/agentic-harness",
+      "canonical_source_path": "codex-marketplace/plugins/agentic-workflows/skills/agentic-harness",
       "local_path": "skills/agentic-harness",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party agentic-harness skill."
+      "provenance_note": "Copied verbatim from the first-party agentic-harness skill."
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/agentic-workflows/SOURCE.md",

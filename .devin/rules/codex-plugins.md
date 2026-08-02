@@ -1,5 +1,5 @@
 ---
-description: "Plugin projection law"
+description: "Plugin marketplace bundle law"
 trigger: glob
 globs: "codex-marketplace/plugins/**"
 ---

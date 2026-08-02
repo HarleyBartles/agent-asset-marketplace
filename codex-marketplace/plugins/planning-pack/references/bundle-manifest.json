@@ -1,7 +1,7 @@
 {
   "bundle_name": "planning-pack",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/planning-pack",
   "source_families": [
@@ -9,12 +9,11 @@
   ],
   "notes": [
     "Planning pack groups first-party skills for release engineering, requirements elicitation, estimation, and mermaid diagramming.",
-    "release-engineering, requirements-elicitation, and estimation are projected verbatim from first-party sources.",
-    "mermaid-diagramming is projected from a first-party skill."
+    "release-engineering, requirements-elicitation, and estimation are bundled verbatim from first-party sources.",
+    "mermaid-diagramming is bundled from a first-party skill."
   ],
   "provenance_refs": [
-    "provenance/planning-pack.md",
-    "codex-marketplace/plugins/planning-pack/references/source-map.md"
+    "provenance/planning-pack.md"
   ],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
@@ -24,50 +23,49 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/estimation",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/estimation",
       "local_path": "skills/estimation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party estimation skill."
+      "provenance_note": "Copied verbatim from the first-party estimation skill."
     },
     {
       "canonical_name": "mermaid-diagramming",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/mermaid-diagramming",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming",
       "local_path": "skills/mermaid-diagramming",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party mermaid-diagramming skill."
+      "provenance_note": "Copied verbatim from the first-party mermaid-diagramming skill."
     },
     {
       "canonical_name": "release-engineering",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/release-engineering",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/release-engineering",
       "local_path": "skills/release-engineering",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party release-engineering skill."
+      "provenance_note": "Copied verbatim from the first-party release-engineering skill."
     },
     {
       "canonical_name": "requirements-elicitation",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "sources/first_party/skills/requirements-elicitation",
+      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/requirements-elicitation",
       "local_path": "skills/requirements-elicitation",
       "import_status": "imported",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Projected verbatim from the first-party requirements-elicitation skill."
+      "provenance_note": "Copied verbatim from the first-party requirements-elicitation skill."
     }
   ],
   "generated_doc_surfaces": [
     "README.md",
-    "SOURCE.md",
-    "PROJECTION.md"
+    "SOURCE.md"
   ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/planning-pack/SOURCE.md",

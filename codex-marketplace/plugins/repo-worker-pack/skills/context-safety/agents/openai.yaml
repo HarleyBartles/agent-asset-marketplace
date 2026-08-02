@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: context-safety
   source_category: first_party
-  plugin: repo-worker-pack
-  projection_plugin: repo-worker-pack
 interface:
   display_name: Context Safety
   short_description: Use when a text write is expected to exceed the safe threshold, when a document is very large or context-heavy, or when a normal editor write path would be brittle.

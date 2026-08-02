@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: using-github-mcp
   source_category: first_party
-  plugin: repo-worker-pack
-  projection_plugin: repo-worker-pack
 interface:
   display_name: Using Github MCP
   short_description: Pick the right GitHub or Git surface from the task intent.

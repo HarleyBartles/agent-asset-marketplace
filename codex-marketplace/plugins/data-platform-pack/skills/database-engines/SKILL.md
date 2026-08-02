@@ -5,7 +5,7 @@ description: Use when choosing, connecting to, querying, or operating a relation
   engine-agnostic data modeling.
 metadata:
   source-id: database-engines
-  source-path: sources/first_party/skills/database-engines/SKILL.md
+  source-path: codex-marketplace/plugins/data-platform-pack/skills/database-engines/SKILL.md
   provenance-name: Database Engines first-party skill
   source-category: first_party
   status: active

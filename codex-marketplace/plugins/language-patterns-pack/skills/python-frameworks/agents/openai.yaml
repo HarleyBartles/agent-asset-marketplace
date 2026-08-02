@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: python-frameworks
   source_category: first_party
-  plugin: language-patterns-pack
-  projection_plugin: language-patterns-pack
 interface:
   display_name: Python Frameworks
   short_description: Use when building, reviewing, or choosing Python web or task frameworks.

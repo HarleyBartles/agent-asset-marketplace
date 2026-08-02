@@ -4,7 +4,7 @@ description: Use when building, reviewing, or choosing Python web or task framew
   and the task calls for Django, FastAPI, or Celery patterns.
 metadata:
   source-id: python-frameworks
-  source-path: sources/first_party/skills/python-frameworks/SKILL.md
+  source-path: codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks/SKILL.md
   provenance-name: Python Frameworks first-party skill
   source-category: first_party
   status: active

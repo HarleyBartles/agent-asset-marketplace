@@ -13,7 +13,7 @@ change, then hand off to the owning skill for the mechanics.
 | Branch closeout after PR review | Merge + branch delete | `finishing-a-development-branch` | Merge commit SHA or PR URL |
 | Versioned release of merged source | Tag + GitHub release | `release-engineering` + `using-github-mcp` | Tag URL + release URL |
 | Marketplace pack change (sources/, adapters/, registry) | Regenerate + PR | `publishing-source` decides; `repo-worker-base` hygiene | PR URL + regenerated-surface commit SHA |
-| Pack export artifact (installable archive) | Export archive from regenerated projection | `release-engineering` | Export artifact hash + source commit SHA |
+| Pack export artifact (installable archive) | Export archive from regenerated bundle | `release-engineering` | Export artifact hash + source commit SHA |
 
 ## Selection rules
 
@@ -21,7 +21,7 @@ change, then hand off to the owning skill for the mechanics.
   commit only when direct-main work is explicitly authorized.
 - A tag or release always follows a merged source change, never a local
   branch. Tag the merged commit, not the working tree.
-- A pack export must be built from a regenerated, validated projection. Record
+- A pack export must be built from a regenerated, validated marketplace bundle. Record
   both the export artifact and the source commit it was built from.
 - Publication proof is required for any repo-work return. Local commit hashes,
   local validation output, or an unpublished branch alone are not proof.

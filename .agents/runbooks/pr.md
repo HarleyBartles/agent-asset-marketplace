@@ -4,7 +4,8 @@ Use this runbook for pull-request workflow and publication proof in `agent-asset
 
 ## Before you begin
 
-- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
+- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
+- Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for validation commands.
 - Invoke `/repo-worker-base`.
 
@@ -30,7 +31,7 @@ This repo's rules:
 
 Consumer-canonical variant:
 
-- Repos that adopt the `repo-standards` skill inherit the same policy from `sources/first_party/skills/repo-standards/templates/pr.md`: open as draft for WIP, flip to ready only after self-review and a green preflight, and gate `pull_request` workflows so CI does not run on drafts.
+- Repos that adopt the `repo-standards` skill inherit the same policy from `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/pr.md`: open as draft for WIP, flip to ready only after self-review and a green preflight, and gate `pull_request` workflows so CI does not run on drafts.
 - Consumer repos substitute their own preflight command for `tools/run ci --check`; the lifecycle (draft while WIP, ready when preflight is green) is identical.
 - Consumer repos with no draft-aware CI should still follow the draft-while-iterating convention so reviewers are not notified until the author signals readiness.
 - The review (`/requesting-code-review`) and closeout (`/finishing-a-development-branch`) skills consult this policy before changing a PR's draft state.

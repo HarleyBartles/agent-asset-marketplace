@@ -4,7 +4,7 @@ description: Use when choosing the right GitHub or Git surface for a task, picki
   between the GitHub MCP server, gh CLI, REST API, GraphQL, or plain git commands.
 metadata:
   source-id: using-github-mcp
-  source-path: sources/first_party/skills/using-github-mcp/SKILL.md
+  source-path: codex-marketplace/plugins/repo-worker-pack/skills/using-github-mcp/SKILL.md
   provenance-name: Using GitHub Mcp first-party skill
   source-category: first_party
   status: active

@@ -1,7 +1,7 @@
 {
   "bundle_name": "feature-sliced-design",
   "bundle_version": "1.0.0",
-  "bundle_type": "projection-lane",
+  "bundle_type": "plugin-pack",
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
   "source_families": [
@@ -12,9 +12,7 @@
     "Vendored verbatim from feature-sliced/skills at commit 653e7f3187eac51311652bf787a72bcf56325eea.",
     "Added as part of MARK-290."
   ],
-  "provenance_refs": [
-    "codex-marketplace/plugins/feature-sliced-design/references/source-map.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
@@ -22,16 +20,16 @@
       "canonical_name": "feature-sliced-design",
       "source_category": "third_party",
       "content_mode": "verbatim",
-      "canonical_source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design",
+      "canonical_source_path": "codex-marketplace/plugins/feature-sliced-design/skills/feature-sliced-design",
       "local_path": "skills/feature-sliced-design",
       "import_status": "imported",
-      "source_path": "sources/third_party/feature-sliced/upstream/skills/feature-sliced-design/SKILL.md",
+      "source_path": "codex-marketplace/plugins/feature-sliced-design/skills/feature-sliced-design/SKILL.md",
       "source_author": "Feature-Sliced Design (feature-sliced/skills)",
       "source_license": "MIT",
       "source_repo": "https://github.com/feature-sliced/skills",
       "source_family": "feature-sliced",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex projection."
+      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex plugin."
     }
   ],
   "repo_index": {

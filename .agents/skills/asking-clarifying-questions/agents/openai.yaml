@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: asking-clarifying-questions
   source_category: first_party
-  plugin: repo-worker-pack
-  projection_plugin: repo-worker-pack
 interface:
   display_name: Asking Clarifying Questions
   short_description: Use when an ambiguity remains after safe internal resolution and a single answer from your human partner would unblock the next action, without needing a full design session or a pre-action risk gate.

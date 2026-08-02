@@ -36,8 +36,7 @@ This plugin vendors the `feature-sliced-design` skill from the upstream
 
 ## Notes
 
-The retained upstream snapshot lives under:
-- `sources/third_party/feature-sliced/upstream/`
+The retained upstream snapshot is no longer kept as a live custody tree; see this `SOURCE.md` and `references/bundle-manifest.json` for attribution.
 
 The project keeps the source-custody record separate from the installable
 marketplace root so the bundle can be regenerated from live source bytes.

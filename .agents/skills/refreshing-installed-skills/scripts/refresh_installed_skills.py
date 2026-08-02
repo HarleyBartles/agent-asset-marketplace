@@ -37,7 +37,7 @@ def _repo_root() -> Path:
 
 
 # Allow importing the shared checkout helper from the script directory (so the
-# skill is self-contained when installed/projected) or from tools/ when running
+# skill is self-contained when installed/bundled) or from tools/ when running
 # from source.
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _SHARED_CHECKOUT_PATH: Path | None = None
@@ -783,7 +783,7 @@ def main(argv: list[str] | None = None) -> int:
     # Delegate vendor profile deployment to repo-standards and capture whether
     # any work is needed. In --check mode this already reports drift.
     deploy_script = (
-        ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
+        ROOT / ".agents" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
     )
     deploy_check = subprocess.run(
         [sys.executable, str(deploy_script), "--check"],

@@ -3,7 +3,7 @@ name: requirements-elicitation
 description: Use when eliciting, validating, or documenting requirements, user stories, and acceptance criteria.
 metadata:
   source-id: requirements-elicitation
-  source-path: sources/first_party/skills/requirements-elicitation/SKILL.md
+  source-path: codex-marketplace/plugins/planning-pack/skills/requirements-elicitation/SKILL.md
   provenance-name: Requirements Elicitation first-party skill
   source-category: first_party
   status: active

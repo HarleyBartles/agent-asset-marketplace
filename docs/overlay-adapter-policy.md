@@ -2,27 +2,26 @@
 
 This policy defines when and how to adapt third-party skills for the agent-asset-marketplace repo. It covers provenance modes, overlay adapter triggers, and the normalisation exception for third-party source.
 
-Use this policy when projecting third-party skills, adding overlay adapters, or deciding whether a skill needs adaptation.
+Use this policy when adapting third-party skills, adding overlay adapters, or deciding whether a skill needs adaptation.
 
 For first-party skill authoring standards, see `docs/skill-standards-policy.md`.
 
 ## External references
 
-- `docs/custody-and-projection-doctrine.md` — custody, projection, and export doctrine
-- `docs/contracts/skill-frontmatter.md` — projection frontmatter contract
-- `sources/third_party/AGENTS.md` — third-party source custody rules
+- `docs/custody-and-marketplace-doctrine.md` — custody and export doctrine
+- `docs/contracts/skill-frontmatter.md` — frontmatter contract
 
 ## Default: do not edit third-party source
 
-Third-party skills live under `sources/third_party/` as verbatim upstream snapshots. Do not edit third-party source to adapt skill behavior. Adaptation happens at projection time through overlay adapters.
+Third-party skills are retained as provenance records or reference snapshots. Do not edit third-party source to adapt skill behavior. Adaptation happens through overlay adapters at plugin build time.
 
 ## Provenance modes
 
-Every projected entry carries one provenance mode:
+Every marketplace entry carries one provenance mode:
 
 - **`verbatim`** — byte-identical to source custody. No transformation.
 - **`normalised`** — minimal compliance adaptation only: codex-safe shape, openai-spec compliance, rich metadata, repointing moved-file links. The skill body is unchanged beyond link repointing. Ownership stays with the upstream author.
-- **`adapted`** — substantive skill body changes beyond compliance. The projection must record what changed and why.
+- **`adapted`** — substantive skill body changes beyond compliance. The plugin distribution must record what changed and why.
 
 ## Normalisation exception (editing third-party source)
 
@@ -32,7 +31,7 @@ If a third-party skill needs a content change, the path is:
 1. Add a Codex overlay adapter under `adapters/codex/<plugin>/<skill>/`.
 2. Set `content_mode` to `normalised` or `adapted` in the bundle manifest.
 3. Record the adaptation note in the manifest entry.
-4. Regenerate the projection.
+4. Regenerate the plugin distribution with `py -3 tools/run.py marketplace --apply`.
 
 Do not edit the third-party source tree to fix a skill. Edit at the adapter layer.
 
@@ -46,11 +45,10 @@ This is the `normalised` mode. The skill body stays unchanged beyond link repoin
 
 ## When NOT to add an overlay adapter
 
-**Usually, do not add an overlay.** The flat `generated/skill-zips/<skill>.zip` is
-exactly the staged Codex projection. If a skill is not suitable as a raw GPT
-package, it should not be projected at all (set `import_status` or
+**Usually, do not add an overlay.** If a skill is not suitable as a raw GPT
+package, it should not be distributed at all (set `import_status` or
 `content_mode` to `skipped`/`blocked` in the bundle manifest).
 
-## First-party is always verbatim in projection
+## First-party is always verbatim in distribution
 
-First-party skills are always `verbatim` in projection. If a first-party skill needs to change, fix the source under `sources/first_party/skills/` and regenerate. Do not adapt first-party content at projection time. See `docs/skill-standards-policy.md` for first-party authoring standards.
+First-party skills are always `verbatim` in distribution. If a first-party skill needs to change, fix the canonical source under `codex-marketplace/plugins/<plugin>/skills/<name>/` and run `py -3 tools/run.py marketplace --apply`. Do not adapt first-party content at distribution time. See `docs/skill-standards-policy.md` for first-party authoring standards.

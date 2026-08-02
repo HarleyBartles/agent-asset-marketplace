@@ -2,8 +2,6 @@ version: 1
 metadata:
   skill_name: python
   source_category: first_party
-  plugin: language-patterns-pack
-  projection_plugin: language-patterns-pack
 interface:
   display_name: Python
   short_description: Use when writing, reviewing, or debugging Python code.
