@@ -37,10 +37,12 @@
         "implementer-strong.md",
         "implementer.md",
         "reviewer-fast.md",
+        "reviewer-references.md",
+        "reviewer-security.md",
         "reviewer-strong.md",
         "reviewer.md"
       ]
     }
   ],
-  "syncedAt": "2026-08-03T09:58:50.633728"
+  "syncedAt": "2026-08-03T10:01:35.931132"
 }
