@@ -94,6 +94,15 @@
     },
     {
       "order": 10,
+      "name": "mcp-usage-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/mcp-usage-pack",
+      "plugin_root": "codex-marketplace/plugins/mcp-usage-pack",
+      "manifest_path": "codex-marketplace/plugins/mcp-usage-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 11,
       "name": "planning-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/planning-pack",
@@ -102,7 +111,7 @@
       "enabled": true
     },
     {
-      "order": 11,
+      "order": 12,
       "name": "repo-worker-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/repo-worker-pack",
@@ -111,7 +120,7 @@
       "enabled": true
     },
     {
-      "order": 12,
+      "order": 13,
       "name": "research-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/research-pack",
@@ -120,7 +129,7 @@
       "enabled": true
     },
     {
-      "order": 13,
+      "order": 14,
       "name": "security-pack",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/security-pack",
@@ -129,7 +138,7 @@
       "enabled": true
     },
     {
-      "order": 14,
+      "order": 15,
       "name": "superpowers-plus",
       "category": "Coding",
       "registry_path": "./codex-marketplace/plugins/superpowers-plus",
@@ -138,7 +147,7 @@
       "enabled": true
     },
     {
-      "order": 15,
+      "order": 16,
       "name": "unslop-plus",
       "category": "Productivity",
       "registry_path": "./codex-marketplace/plugins/unslop-plus",

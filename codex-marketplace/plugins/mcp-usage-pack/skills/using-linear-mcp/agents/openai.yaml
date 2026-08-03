@@ -1,6 +1,6 @@
 version: 1
 metadata:
-  skill_name: using-linear
+  skill_name: using-linear-mcp
   source_category: first_party
 interface:
   display_name: Using Linear

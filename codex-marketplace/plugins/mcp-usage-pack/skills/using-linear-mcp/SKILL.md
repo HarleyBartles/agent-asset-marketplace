@@ -1,12 +1,12 @@
 ---
-name: using-linear
+name: using-linear-mcp
 description: Use when working with the Linear connector surface, choosing the right
   tool call, or finding create/update tools exposed under `save_*` rather than `create_*`
   or `update_*`.
 metadata:
-  source-id: using-linear
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/using-linear/SKILL.md
-  provenance-name: Using Linear first-party skill
+  source-id: using-linear-mcp
+  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp/SKILL.md
+  provenance-name: Using Linear MCP first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
@@ -20,7 +20,7 @@ metadata:
   - Do not use when another more specific skill owns this task.
 license: MIT
 ---
-# Using Linear
+# Using Linear MCP
 
 Use this skill to pick the right Linear connector surface from the task intent, then open the matching reference.
 

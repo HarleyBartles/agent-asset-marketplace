@@ -8,6 +8,7 @@ Usage:
     py -3 tools/new_plugin.py --check <pack-name>
     py -3 tools/new_plugin.py --apply <pack-name>
 """
+
 from __future__ import annotations
 
 import argparse
@@ -16,7 +17,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from typing import Final
+from typing import Any, Final
+
+import yaml
 
 
 REPO_ROOT: Final[Path] = Path(__file__).resolve().parent.parent
@@ -156,7 +159,7 @@ Skills are installed from the Codex plugin roots under `codex-marketplace/plugin
 
 
 def _source(name: str) -> str:
-    display = _title_case(name)
+    _title_case(name)
     return f"""# Source
 
 This plugin projects the first-party {name} skills.
@@ -214,8 +217,14 @@ def _bundle_manifest(name: str) -> str:
 
 
 def _icon_svg() -> str:
-    return """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-"""
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"'
+        ' stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>'
+        '<line x1="12" y1="8" x2="12" y2="16"></line>'
+        '<line x1="8" y1="12" x2="16" y2="12"></line>'
+        "</svg>"
+    )
 
 
 def _scaffold(name: str, pack_dir: Path) -> None:
@@ -245,15 +254,17 @@ def _register_root(name: str) -> None:
         data = json.load(f)
 
     max_order = max((r.get("order", 0) for r in data.get("roots", [])), default=-1)
-    data["roots"].append({
-        "order": max_order + 1,
-        "name": name,
-        "category": "Productivity",
-        "registry_path": f"./codex-marketplace/plugins/{name}",
-        "plugin_root": f"codex-marketplace/plugins/{name}",
-        "manifest_path": f"codex-marketplace/plugins/{name}/.codex-plugin/plugin.json",
-        "enabled": True,
-    })
+    data["roots"].append(
+        {
+            "order": max_order + 1,
+            "name": name,
+            "category": "Productivity",
+            "registry_path": f"./codex-marketplace/plugins/{name}",
+            "plugin_root": f"codex-marketplace/plugins/{name}",
+            "manifest_path": f"codex-marketplace/plugins/{name}/.codex-plugin/plugin.json",
+            "enabled": True,
+        }
+    )
 
     data["roots"].sort(key=lambda r: r["order"])
 
@@ -262,11 +273,94 @@ def _register_root(name: str) -> None:
         f.write("\n")
 
 
+def _read_skill_frontmatter(skill_path: Path) -> dict[str, Any] | None:
+    text = skill_path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    if not lines or lines[0] != "---":
+        return None
+    try:
+        end = lines.index("---", 1)
+    except ValueError:
+        return None
+    try:
+        return yaml.safe_load("\n".join(lines[1:end])) or {}
+    except yaml.YAMLError:
+        return None
+
+
+def _skill_bundle_entry(skill_dir: Path, pack_name: str) -> dict[str, Any] | None:
+    skill_md = skill_dir / "SKILL.md"
+    if not skill_md.is_file():
+        return None
+
+    front = _read_skill_frontmatter(skill_md)
+    if not front:
+        return None
+
+    name = front.get("name")
+    if not isinstance(name, str) or not name.strip():
+        return None
+
+    metadata = front.get("metadata") or {}
+    source_category = metadata.get("source-category") or metadata.get("source_category") or "first_party"
+    content_mode = metadata.get("content_mode") or "verbatim"
+    source_path = (
+        metadata.get("source-path")
+        or metadata.get("source_path")
+        or f"codex-marketplace/plugins/{pack_name}/skills/{name}/SKILL.md"
+    )
+    provenance_name = metadata.get("provenance-name") or metadata.get("provenance_name") or f"{name} first-party skill"
+
+    return {
+        "canonical_name": name,
+        "source_category": source_category,
+        "content_mode": content_mode,
+        "source_family": source_category if source_category in {"first_party", "third_party"} else "first_party",
+        "canonical_source_path": f"codex-marketplace/plugins/{pack_name}/skills/{name}",
+        "local_path": f"skills/{name}",
+        "source_path": source_path,
+        "copy_expectation": "byte_identical",
+        "provenance_note": f"Canonical first-party {name} skill. ({provenance_name})",
+    }
+
+
+def _sync_bundle_manifest(pack_name: str) -> None:
+    pack_dir = PLUGINS_DIR / pack_name
+    bundle_path = pack_dir / "references" / "bundle-manifest.json"
+    if not bundle_path.is_file():
+        raise FileNotFoundError(bundle_path)
+
+    with bundle_path.open("r", encoding="utf-8") as f:
+        bundle = json.load(f)
+
+    entries: list[dict[str, Any]] = []
+    skills_dir = pack_dir / "skills"
+    if skills_dir.is_dir():
+        for child in sorted(skills_dir.iterdir()):
+            if child.is_dir() and not child.name.startswith("."):
+                entry = _skill_bundle_entry(child, pack_name)
+                if entry:
+                    entries.append(entry)
+
+    bundle["entries"] = entries
+
+    with bundle_path.open("w", encoding="utf-8") as f:
+        json.dump(bundle, f, indent=2)
+        f.write("\n")
+
+    print(f"Synced bundle manifest for {pack_name}: {len(entries)} skill(s)")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Scaffold a new Codex marketplace plugin pack.")
     parser.add_argument("name", help="Pack name, e.g. 'mcp-usage-pack'")
-    parser.add_argument("--check", action="store_true", help="Dry-run report only")
-    parser.add_argument("--allow-shared-checkout", action="store_true", help="Allow scaffolding from a shared main checkout")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--check", action="store_true", help="Dry-run report only")
+    group.add_argument("--apply", action="store_true", help="Actually create the pack and register it")
+    group.add_argument("--sync", action="store_true", help="Regenerate references/bundle-manifest.json from skills/")
+    parser.add_argument(
+        "--allow-shared-checkout", action="store_true", help="Allow scaffolding from a shared main checkout"
+    )
     args = parser.parse_args()
 
     if not args.allow_shared_checkout:
@@ -285,7 +379,19 @@ def main() -> int:
             git_dir = git_common = Path(REPO_ROOT / ".git").resolve()
 
         if git_dir == git_common:
-            print("error: refusing to scaffold from a shared main checkout; use --allow-shared-checkout with current human approval", file=sys.stderr)
+            print(
+                "error: refusing to scaffold from a shared main checkout; "
+                "use --allow-shared-checkout with current human approval",
+                file=sys.stderr,
+            )
+            return 1
+
+    if args.sync:
+        try:
+            _sync_bundle_manifest(args.name)
+            return 0
+        except FileNotFoundError as e:
+            print(f"error: pack not found: {e}", file=sys.stderr)
             return 1
 
     result = _validate(args.name, args.check)

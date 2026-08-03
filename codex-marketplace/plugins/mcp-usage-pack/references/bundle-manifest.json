@@ -1,0 +1,62 @@
+{
+  "bundle_name": "mcp-usage-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/mcp-usage-pack",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "mcp-usage-pack combines first-party MCP-usage skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "using-discord-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp",
+      "local_path": "skills/using-discord-mcp",
+      "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-discord-mcp skill. (Using Discord MCP first-party skill)"
+    },
+    {
+      "canonical_name": "using-github-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-github-mcp",
+      "local_path": "skills/using-github-mcp",
+      "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-github-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-github-mcp skill. (Using GitHub Mcp first-party skill)"
+    },
+    {
+      "canonical_name": "using-linear-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp",
+      "local_path": "skills/using-linear-mcp",
+      "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-linear-mcp skill. (Using Linear MCP first-party skill)"
+    },
+    {
+      "canonical_name": "using-playwright-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp",
+      "local_path": "skills/using-playwright-mcp",
+      "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-playwright-mcp skill. (Using Playwright MCP first-party skill)"
+    }
+  ]
+}

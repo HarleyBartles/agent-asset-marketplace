@@ -8,7 +8,8 @@
   },
   "install_defaults": [
     "repo-worker-pack",
-    "superpowers-plus"
+    "superpowers-plus",
+    "mcp-usage-pack"
   ],
   "category_overrides": {},
   "exclusions": []

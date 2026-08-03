@@ -1,16 +1,22 @@
 {
-  "manifestSha": "5fef64f6e184113f3d5c0a21588e88d093f9f89d82464cc8e92a2cf50828af3f",
+  "manifestSha": "0b13082fc8dbefd144c369b03c3e32329d297096f51011577baa4096c888d9e9",
   "syncedPlugins": [
+    "mcp-usage-pack",
     "repo-worker-pack",
     "superpowers-plus"
   ],
-  "syncedSkills": 36,
+  "syncedSkills": 37,
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
     "sourcePath": "codex-marketplace/plugins"
   },
   "localPlugins": [
+    {
+      "name": "mcp-usage-pack",
+      "path": "./codex-marketplace/plugins/mcp-usage-pack",
+      "source": "local"
+    },
     {
       "name": "repo-worker-pack",
       "path": "./codex-marketplace/plugins/repo-worker-pack",
@@ -36,5 +42,5 @@
       ]
     }
   ],
-  "syncedAt": "2026-08-03T07:27:00.390188"
+  "syncedAt": "2026-08-03T07:34:18.046616"
 }
