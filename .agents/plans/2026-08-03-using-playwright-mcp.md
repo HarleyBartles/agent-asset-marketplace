@@ -136,13 +136,13 @@ git commit -m "Add using-playwright-mcp skill"
 
 ---
 
-### Task 2: Vendor `using-discord-mcp` into `repo-worker-pack`
+### Task 2: Vendor `using-discord-mcp` into `mcp-usage-pack`
 
 **Files:**
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/SKILL.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/agents/openai.yaml`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/references/authed-tool-map.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/references/tool-map.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/SKILL.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/agents/openai.yaml`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/references/authed-tool-map.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/references/tool-map.md`
 
 **Step 1: Copy `<devin-skills-dir>\using-discord-mcp` files (e.g. `%USERPROFILE%\AppData\Roaming\devin\skills\using-discord-mcp` on Windows or `~/.config/devin/skills/using-discord-mcp` elsewhere) into the new skill directory.**
 
@@ -151,7 +151,7 @@ git commit -m "Add using-playwright-mcp skill"
 Change `source-path`, `provenance-name`, and `source-category` to:
 
 ```yaml
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/SKILL.md
+  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/SKILL.md
   provenance-name: Using Discord MCP first-party skill
   source-category: first_party
 ```
@@ -179,16 +179,16 @@ policy:
 **Step 4: Stage and commit:**
 
 ```text
-git add codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp
-git commit -m "Vendor using-discord-mcp into repo-worker-pack"
+git add codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp
+git commit -m "Vendor using-discord-mcp into mcp-usage-pack"
 ```
 
 ---
 
-### Task 3: Rename `using-linear` to `using-linear-mcp`
+### Task 3: Rename `using-linear` to `using-linear-mcp` and move it to `mcp-usage-pack`
 
 **Files:**
-- Move: `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/` to `codex-marketplace/plugins/repo-worker-pack/skills/using-linear-mcp/`
+- Move: `codex-marketplace/plugins/repo-worker-pack/skills/using-linear/` to `codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp/`
 - Modify: `SKILL.md` frontmatter `name`, `source-path`, `source-id`
 - Modify: `agents/openai.yaml`
 - Delete: the old `using-playwright` scaffold if it still exists
@@ -196,7 +196,7 @@ git commit -m "Vendor using-discord-mcp into repo-worker-pack"
 **Step 1: Rename the directory and update source references:**
 
 ```text
-git mv codex-marketplace/plugins/repo-worker-pack/skills/using-linear codex-marketplace/plugins/repo-worker-pack/skills/using-linear-mcp
+git mv codex-marketplace/plugins/repo-worker-pack/skills/using-linear codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp
 ```
 
 **Step 2: Update `SKILL.md` frontmatter so `name` is `using-linear-mcp`, `source-id` is `using-linear-mcp`, and `source-path` ends with `using-linear-mcp/SKILL.md`.**

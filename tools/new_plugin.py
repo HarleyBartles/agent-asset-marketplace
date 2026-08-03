@@ -15,10 +15,10 @@ import argparse
 import json
 from pathlib import Path
 import shutil
-import subprocess
 import sys
 from typing import Any, Final
 
+import shared_checkout
 import yaml
 
 
@@ -226,7 +226,7 @@ def _icon_svg() -> str:
     )
 
 
-def _scaffold(name: str, pack_dir: Path) -> None:
+def _scaffold(pack_dir: Path, name: str) -> None:
     pack_dir.mkdir(parents=True, exist_ok=False)
     (pack_dir / ".codex-plugin").mkdir()
     (pack_dir / "assets").mkdir()
@@ -238,7 +238,6 @@ def _scaffold(name: str, pack_dir: Path) -> None:
     (pack_dir / "README.md").write_text(_readme(name), encoding="utf-8")
     (pack_dir / "SOURCE.md").write_text(_source(name), encoding="utf-8")
     (pack_dir / "LICENSE").write_text(_license(), encoding="utf-8")
-    (pack_dir / "assets" / "icon.svg").write_text(_icon_svg(), encoding="utf-8")
     (pack_dir / "references" / "bundle-manifest.json").write_text(_bundle_manifest(name), encoding="utf-8")
     (pack_dir / "skills" / ".gitkeep").write_text("", encoding="utf-8")
     (pack_dir / "references" / ".gitkeep").write_text("", encoding="utf-8")
@@ -246,6 +245,8 @@ def _scaffold(name: str, pack_dir: Path) -> None:
     template_icon = PLUGINS_DIR / TEMPLATE_PACK / "assets" / "icon.svg"
     if template_icon.is_file():
         shutil.copy(template_icon, pack_dir / "assets" / "icon.svg")
+    else:
+        (pack_dir / "assets" / "icon.svg").write_text(_icon_svg(), encoding="utf-8")
 
 
 def _register_root(name: str) -> None:
@@ -352,7 +353,9 @@ def _sync_bundle_manifest(pack_name: str) -> None:
                     continue
                 old = existing_entries.get(entry["canonical_name"], {})
                 provenance = old.get("provenance_note", entry["provenance_note"])
-                entry = {**old, **entry, "provenance_note": provenance}
+                # Preserve maintainer overrides for any field while still adding
+                # newly discovered skills and derived defaults.
+                entry = {**entry, **old, "provenance_note": provenance}
                 entries.append(entry)
 
     bundle["entries"] = entries
@@ -376,28 +379,10 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.apply and not args.allow_shared_checkout:
-        try:
-            git_dir = Path(
-                subprocess.run(
-                    ["git", "rev-parse", "--git-dir"], cwd=REPO_ROOT, check=True, capture_output=True, text=True
-                ).stdout.strip()
-            ).resolve()
-            git_common = Path(
-                subprocess.run(
-                    ["git", "rev-parse", "--git-common-dir"], cwd=REPO_ROOT, check=True, capture_output=True, text=True
-                ).stdout.strip()
-            ).resolve()
-        except (OSError, subprocess.CalledProcessError):
-            git_dir = git_common = Path(REPO_ROOT / ".git").resolve()
-
-        if git_dir == git_common:
-            print(
-                "error: refusing to scaffold from a shared main checkout; "
-                "use --allow-shared-checkout with current human approval",
-                file=sys.stderr,
-            )
-            return 1
+    if (args.apply or args.sync) and not shared_checkout.approve_mutation(
+        REPO_ROOT, "new_plugin.py", args.allow_shared_checkout
+    ):
+        return 1
 
     if args.sync:
         try:
@@ -414,7 +399,7 @@ def main() -> int:
         return 0
 
     pack_dir, _ = result
-    _scaffold(args.name, pack_dir)
+    _scaffold(pack_dir, args.name)
     _register_root(args.name)
     print(f"Created pack at {pack_dir}")
     return 0

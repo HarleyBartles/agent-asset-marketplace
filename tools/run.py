@@ -413,9 +413,8 @@ _TASKS: dict[str, Task] = {
         fix="tools/run archive-links --apply",
     ),
     "review-preflight": Task(
-        apply=(_check_review_preflight,),
         check=(_check_review_preflight,),
-        fix="tools/run review-preflight --check",
+        fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
     ),
     "ci": Task(
         deps=("lint", "repo-standards", "validate", "archive-links"),

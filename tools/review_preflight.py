@@ -99,9 +99,8 @@ def _scan_security(path: Path, content: str, findings: list[str]) -> None:
                 # *or* require the file is in a references/ directory.
                 span = match.span()
                 context_window = depl[max(0, span[0] - 80) : min(len(depl), span[1] + 80)]
-                in_references = "references" in path.parts
                 has_context = _SNOWFLAKE_CONTEXT.search(context_window) is not None
-                if in_references or has_context:
+                if has_context:
                     _warn(
                         findings,
                         path,
