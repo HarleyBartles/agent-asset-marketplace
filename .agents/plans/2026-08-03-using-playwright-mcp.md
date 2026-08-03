@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a `using-playwright-mcp` skill to `repo-worker-pack`, vendor the existing `using-discord-mcp` user skill into the same pack, rename `using-linear` to `using-linear-mcp`, and record the MCP-wrapper pattern in `.agents/runbooks/skill-authoring.md`.
+**Goal:** Add a `using-playwright-mcp` skill to `mcp-usage-pack`, vendor the existing `using-discord-mcp` user skill into the same pack, rename `using-linear` to `using-linear-mcp`, and record the MCP-wrapper pattern in `.agents/runbooks/skill-authoring.md`.
 
 **Actual executed scope (expanded):** The branch also codified pressure-testing standards in `docs/skill-standards-policy.md` and `tests/pressure/README.md`, cleaned up stale `intake.json`/`decisions.md` files in `mcp-usage-pack` and `repo-worker-pack`, fixed `sdd-workspace` canonical scratch resolution to `Z:\_agent-scratch`, and extracted a new `subagent-workspace` skill from `subagent-driven-development` so that both `subagent-driven-development` and `iterative-review` reference a single workspace source of truth.
 
@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Source custody is `codex-marketplace/plugins/repo-worker-pack/skills/<name>/`; do not hand-edit `.agents/skills/` installed surfaces.
+- Source custody is `codex-marketplace/plugins/mcp-usage-pack/skills/<name>/`; do not hand-edit `.agents/skills/` installed surfaces.
 - All new skills need `SKILL.md`, `agents/openai.yaml`, and a `references/` directory.
 - Commit only the focused source changes; `tools/run.py marketplace --apply` regenerates downstream indexes and bundles.
 - Do not run `git commit --no-verify`; the pre-commit hook runs `py -3 tools/run.py ci --check`.
@@ -22,14 +22,14 @@
 ### Task 1: Scaffold `using-playwright-mcp`
 
 **Files:**
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/SKILL.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/agents/openai.yaml`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/surface-map.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/navigation-and-discovery.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/interactions.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/inspection.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/tabs-and-lifecycle.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/references/other-playwright-tools.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/SKILL.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/agents/openai.yaml`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/surface-map.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/navigation-and-discovery.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/interactions.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/inspection.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/tabs-and-lifecycle.md`
+- Create: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/other-playwright-tools.md`
 
 **Step 1: Create `SKILL.md` with this content:**
 
@@ -39,7 +39,7 @@ name: using-playwright-mcp
 description: Use when working with the Playwright MCP server, choosing the right browser tool call, or falling back to non-MCP Playwright surfaces when the MCP does not cover the task.
 metadata:
   source-id: using-playwright-mcp
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/SKILL.md
+  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/SKILL.md
   provenance-name: Using Playwright MCP first-party skill
   source-category: first_party
   status: active
@@ -130,7 +130,7 @@ Before using any fallback, record why the MCP did not cover the task and the res
 **Step 6: Stage and commit with this command:**
 
 ```text
-git add codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp
+git add codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp
 git commit -m "Add using-playwright-mcp skill"
 ```
 

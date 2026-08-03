@@ -75,4 +75,4 @@ py -3 tools/run.py ci --check
 ## References
 
 - `docs/skill-standards-policy.md` — policy and advisory.
-- `superpowers-plus:writing-skills:testing-skills-with-subagents.md` — RED/GREEN methodology.
+- `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md` — RED/GREEN methodology.

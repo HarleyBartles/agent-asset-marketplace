@@ -9,7 +9,7 @@ Agents need to choose the right Playwright surface for browser automation or web
 
 ## Goal
 
-Create a `using-playwright-mcp` skill in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/` that:
+Create a `using-playwright-mcp` skill in `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/` that:
 
 1. Mirrors the `using-linear` pattern: a short `SKILL.md` router plus use-case reference files.
 2. Teaches the `mcp-playwright` tool surface as the default.
@@ -58,7 +58,7 @@ The `SKILL.md` router table maps common intents to the correct reference file, j
 
 ## Source and custody
 
-- Source skill lives in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/` (canonical product custody per `.agents/AGENTS.md`).
+- Source skill lives in `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/` (canonical product custody per `.agents/AGENTS.md`).
 - Generated mesh indexes are downstream outputs; do not hand-edit.
 
 ## Handoff confidence

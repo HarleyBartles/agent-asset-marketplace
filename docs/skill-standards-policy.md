@@ -127,7 +127,7 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 - Modified skills: if the change affects routing, decisions, or tool selection, re-examine whether a pressure test is now warranted or needs updating.
 - Existing skills: backfill pressure tests opportunistically; do not block current work on full backfill.
 
-See `tests/pressure/README.md` for the generic subagent pressure-test runbook and `superpowers-plus:writing-skills:testing-skills-with-subagents.md` for the RED/GREEN methodology.
+See `tests/pressure/README.md` for the generic subagent pressure-test runbook and `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md` for the RED/GREEN methodology.
 
 ## Compliance status
 
