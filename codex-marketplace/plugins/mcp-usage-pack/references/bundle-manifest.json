@@ -34,7 +34,7 @@
       "local_path": "skills/using-github-mcp",
       "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-github-mcp/SKILL.md",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party using-github-mcp skill. (Using GitHub Mcp first-party skill)"
+      "provenance_note": "Canonical first-party using-github-mcp skill. (Using GitHub MCP first-party skill)"
     },
     {
       "canonical_name": "using-linear-mcp",

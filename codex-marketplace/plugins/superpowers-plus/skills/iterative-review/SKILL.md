@@ -41,20 +41,24 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
 ## Procedure
 
 1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
-2. Materialize inputs as files the subagents can read:
+2. Resolve the SDD off-repo scratch workspace by running the plan workspace helper with no plan file:
+   - Bash: `bash .agents/skills/subagent-driven-development/scripts/sdd-workspace`
+   - PowerShell: `powershell .agents/skills/subagent-driven-development/scripts/sdd-workspace.ps1`
+   This prints a path like `<repo-root>/../_agent-scratch/<branch>/`. Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
+3. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
    - `<diff_path>`: the full branch diff (`git diff --no-color <base>...<branch>`) written to a file.
    - `<pr_description>`: the PR title, body, and any linked issue/spec context written to a file.
    - Optional `<issue_context>`: Linear/GitHub issue or spec text if linked, written to a file.
-3. Round 1 — dispatch `reviewer-strong` with the full diff, PR description, and any issue context. Capture its findings in a `review-log.md` with severity and file/line citations.
-4. For each finding, the orchestrator verifies it, fixes it, and commits. Then materialize the fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`) and update `review-log.md`.
-5. Round 2 — dispatch `reviewer-fast` with:
+4. Round 1 — dispatch `reviewer-strong` with the full diff, PR description, and any issue context. Capture its findings in a `review-log.md` with severity and file/line citations.
+5. For each finding, the orchestrator verifies it, fixes it, and commits. Then materialize the fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`) in the same off-repo `iterative-review-<pr_number>` directory and update `review-log.md`.
+6. Round 2 — dispatch `reviewer-fast` with:
    - the original finding,
    - the prepared fix diff,
    - relevant slices of the full diff that the fix touches.
    Its job is to confirm the fix resolves the finding and catch regressions in the touched area only.
-6. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 5.
-7. When `reviewer-fast` is clean, re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the `review-log.md` of earlier issues and fixes. Its job is a full branch review with added context of what was already addressed.
-8. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
+7. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 6.
+8. When `reviewer-fast` is clean, re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the `review-log.md` of earlier issues and fixes. Its job is a full branch review with added context of what was already addressed.
+9. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
 
 ## Inputs the orchestrator must provide
 
@@ -66,6 +70,7 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
 
 - This skill does not modify files or PR state.
 - The orchestrator owns all fixes and the final decision to flip the PR to ready.
+- All review inputs, logs, and fix-diffs are written to the SDD off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
 ## Common Mistakes
