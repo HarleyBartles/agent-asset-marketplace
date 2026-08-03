@@ -173,9 +173,10 @@ a ledger file, not only in todos.
   recover from `git log` if a plan's scratch is removed manually.
 
 Read the repo's `.agents/runbooks/implementing.md` before dispatching the first
-implementer subagent. The implementer subagent is responsible for the plan-completion,
-TDD, and pre-completion-verification requirements in that runbook. Do not hand
-off to review with an unchecked plan.
+implementer subagent. The controller (this agent) is responsible for enforcing the
+plan-completion, TDD, and pre-completion-verification requirements in that
+runbook before handing off to review. Do not hand off to review with an unchecked
+or partially completed plan; that is a controller failure, not a reviewer catch.
 
 Read the plan once, note its context and Global Constraints, and create a
 todo per task.
