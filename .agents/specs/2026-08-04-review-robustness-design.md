@@ -40,13 +40,14 @@ Reduce the number of Devin auto-review and `iterative-review` cycles by moving t
   - (preflight, deterministic) The scaffolder does not write a literal `enabled: True` default that is immediately overwritten (default `enabled: True` enablement check).
   - (lens-only, `reviewer-marketplace`) No unused parameters in `new_plugin.py` helper functions.
 - **`tools/run.py` task contract:**
+  - `review-preflight` is an existing, read-only `tools/run.py` task already registered in `_TASKS`.
   - Read-only tasks do not advertise `--apply` fix hints.
   - `ci` includes `review-preflight` as a hard dependency so preflight findings block `ci --check`.
 - **SKILL.md frontmatter `metadata` block:** guard against malformed `metadata` values (`metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}`) so the parser does not crash and the error message points at the file. A missing `metadata:` key is allowed; it is not flagged.
 - **Canonical `py -3` invocation:** the preflight regex `r"(?:\bpython(?:3)? -m |\bpy -m )"` flags `python -m`, `python3 -m`, and `py -m` where `py -3 -m` is canonical.
 - **Cross-skill script paths in `SKILL.md` and reference files:** verify that every backtick path starting with `subagent-workspace/scripts/` or `.agents/skills/` resolves to an existing installed or source skill file.
 
-These checks run under `tools/run.py review-preflight --check` and, once `_TASKS["ci"].deps` in `tools/run.py` is updated to include `"review-preflight"`, inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.
+These checks run under the existing `tools/run.py review-preflight --check` task and, once `_TASKS["ci"].deps` is updated to include `"review-preflight"` (Task 2, Step 5), inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.
 
 ### 2. Lens re-jig
 

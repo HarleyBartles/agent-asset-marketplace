@@ -158,13 +158,17 @@ git commit -m "Add review_preflight unit-test fixtures"
 
 **Files:**
 - Modify: `tools/review_preflight.py`
-- Modify: `tools/run.py` (if a new `review-preflight` task contract is needed)
+- Modify: `tools/run.py` (verify the existing `review-preflight` `_TASKS` entry is present; create it if missing)
 - Create: `tests/test_review_preflight_extensions.py`
 - Modify: `tests/test_run_cli.py`
 
 **Interfaces:**
 - Consumes: task list from `tools/run.py` `_TASKS`.
 - Produces: an extended `_scan_*` set, the corresponding extension test fixtures, and an updated `review-preflight` `tools/run.py` task contract.
+
+- [ ] **Step 0: Ensure `review-preflight` is already registered in `tools/run.py`**
+
+Before modifying `tools/review_preflight.py`, verify that `tools/run.py` already has a `review-preflight` `_TASKS` entry and that it is wired to a `check` callable. If the entry does not exist, create the read-only task contract with no `--apply` fix hint.
 
 - [ ] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
 
@@ -740,7 +744,7 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
 
 4. **Post-fix re-preflight.**
    - After each fix, re-run `py -3 tools/run.py ci --check`.
-   - Prepare a new fix diff and re-run the relevant lens as `reviewer-fast`.
+   - Prepare a new fix diff and re-run the relevant lens (e.g., `reviewer-skills` for a skill-fix re-review, `reviewer-marketplace` for a marketplace fix, or `reviewer-strong` for a scope/design re-review).
 
 5. **Ready to review.**
    - Only flip the PR out of draft when:
@@ -751,7 +755,7 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
 ## Common mistakes
 
 - Running `iterative-review` on a red preflight.
-- Letting `reviewer-fast` drift into a full-branch review.
+- Letting a targeted re-review lens drift into a full-branch review.
 - Skipping re-preflight after a fix.
 - Flipping to ready before a final clean `ci --check`.
 ```
