@@ -34,7 +34,7 @@ $resolvedPlan = (Resolve-Path -LiteralPath $resolvedPlan).Path
 
 $scriptDir = Split-Path -Parent $PSCommandPath
 if ([string]::IsNullOrWhiteSpace($OutFile)) {
-  $workspace = & (Join-Path $scriptDir 'sdd-workspace.ps1') $resolvedPlan
+  $workspace = & ([System.IO.Path]::Combine((Split-Path -Parent (Split-Path -Parent $scriptDir)), 'subagent-workspace', 'scripts', 'sdd-workspace.ps1')) $resolvedPlan
   $OutFile = Join-Path $workspace "task-$TaskNumber-brief.md"
 }
 

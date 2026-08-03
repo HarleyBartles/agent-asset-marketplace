@@ -152,8 +152,7 @@ controllers that lost their place have re-dispatched entire completed task
 sequences — the single most expensive failure observed. Track progress in
 a ledger file, not only in todos.
 
-- Each plan owns a workspace: at skill start, run this skill's
-  `scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
+- Each plan owns a workspace: at skill start, run `subagent-workspace/scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
   directory (`<main-checkout>/../_agent-scratch/<branch>/<plan-basename>/`), home to
   every artifact for THIS plan: ledger, briefs, reports, review packages.
   Another plan's directory is never yours to read or write.
@@ -459,7 +458,7 @@ You: I'm using Subagent-Driven Development to execute this plan.
 
 [Setup: worktree verified]
 [Read plan file once: .agents/plans/feature-plan.md]
-[Resolve workspace: scripts/sdd-workspace .agents/plans/feature-plan.md — no ledger inside, fresh start]
+[Resolve workspace: subagent-workspace/scripts/sdd-workspace .agents/plans/feature-plan.md — no ledger inside, fresh start]
 [Create todos for all tasks]
 
 Task 1: Hook installation script

@@ -5,7 +5,7 @@
     "repo-worker-pack",
     "superpowers-plus"
   ],
-  "syncedSkills": 37,
+  "syncedSkills": 38,
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
@@ -42,5 +42,5 @@
       ]
     }
   ],
-  "syncedAt": "2026-08-03T08:17:43.608887"
+  "syncedAt": "2026-08-03T08:21:49.239133"
 }

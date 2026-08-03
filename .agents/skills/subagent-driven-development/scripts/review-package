@@ -33,7 +33,7 @@ script_dir="$(cd "$(dirname "$0")" && pwd)"
 if [ $# -eq 4 ]; then
   out=$4
 else
-  dir="$("$script_dir/sdd-workspace" "$plan")"
+  dir="$("$script_dir/../../subagent-workspace/scripts/sdd-workspace" "$plan")"
   out="$dir/review-$(git -C "$repo_root" rev-parse --short "$base")..$(git -C "$repo_root" rev-parse --short "$head").diff"
 fi
 

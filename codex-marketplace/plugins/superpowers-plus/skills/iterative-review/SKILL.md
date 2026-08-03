@@ -41,9 +41,9 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
 ## Procedure
 
 1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
-2. Resolve the SDD off-repo scratch workspace by running the plan workspace helper with no plan file:
-   - Bash: `bash .agents/skills/subagent-driven-development/scripts/sdd-workspace`
-   - PowerShell: `powershell .agents/skills/subagent-driven-development/scripts/sdd-workspace.ps1`
+2. Resolve the off-repo scratch workspace by running `subagent-workspace/scripts/sdd-workspace` with no plan file:
+   - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
+   - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
    This prints a path like `<main-checkout>/../_agent-scratch/<branch>/` (on Windows, `Z:\_agent-scratch\<branch>\`). Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
 3. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
    - `<diff_path>`: the full branch diff (`git diff --no-color <base>...<branch>`) written to a file.
