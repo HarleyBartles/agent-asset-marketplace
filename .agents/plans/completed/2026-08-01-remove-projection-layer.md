@@ -1,5 +1,7 @@
 # Remove the projection layer — Phase 1: Demolition
 
+> **Status:** Executed and merged in PR #253 (`feat/remove-projection-layer`, `417e7f97b80803437f2d1a9966200874291d0021`) on 2026-08-01. This plan is now a historical record and lives in `.agents/plans/completed/`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Delete the `sources/` custody tree, the custody-pack registry, and the tooling that exists only to project from custody into plugins. After this phase, `codex-marketplace/plugins/<plugin>/skills/<name>/` is the only canonical home for a skill.
