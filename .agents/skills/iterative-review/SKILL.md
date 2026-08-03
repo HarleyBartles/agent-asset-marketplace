@@ -19,6 +19,7 @@ metadata:
   - receiving-code-review
   - handoff-gates
   - selecting-a-subagent
+  - dispatching-parallel-agents
 license: MIT
 ---
 
@@ -36,12 +37,12 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Strong review of the full branch, then a fast re-review of each fix, then a final strong re-review of the full branch with knowledge of earlier issues and fixes. The orchestrator applies all fixes and uses its own judgement on when the branch is green enough.
+Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch design pass, then targeted `reviewer-fast` re-reviews of each fix, then a final `reviewer-strong` pass with all logs. The orchestrator applies all fixes and uses its own judgement on when the branch is green enough.
 
 ## Procedure
 
 1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
-2. **Scope-honesty preflight.** Before the reviewer sees the code, compare the actual branch diff to the plan, any linked spec, and the PR title/body. If the implemented scope has expanded beyond what those documents describe, update them to match the real diff. Commit and push the scope-honesty update. The reviewer should read an honest description of scope, not discover scope creep line-by-line in the code.
+2. **Scope-honesty preflight.** Before the reviewers see the code, compare the actual branch diff to the plan, any linked spec, and the PR title/body. If the implemented scope has expanded beyond what those documents describe, update them to match the real diff. Commit and push the scope-honesty update. The reviewers should read an honest description of scope, not discover scope creep line-by-line in the code.
 3. Resolve the off-repo scratch workspace by running `subagent-workspace/scripts/sdd-workspace` with no plan file:
    - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
    - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
@@ -53,17 +54,18 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
    - `<scan_findings>` (optional but strongly recommended): the output of the consumer repo's canonical preflight, written to a file. Do not hardcode the preflight command; use the command(s) named in the consumer repo's `AGENTS.md` or `.devin/rules`. Examples:
      - In this repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` followed by `py -3 tools/run.py ci --check`.
      - In rooms-mostly: `scripts/ci-preflight.ps1 -Check` and the checks listed in its `AGENTS.md`.
-     Capture the output so `reviewer-strong` can cross-check rather than rediscover the findings.
-5. Round 1 — dispatch `reviewer-strong` with the full diff, PR description, any issue context, the preflight findings, and the known-patterns reference `selecting-a-subagent/assets/reviewer-known-findings.md`. Capture its findings in a `review-log.md` with severity and file/line citations.
-6. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update `review-log.md` with any new preflight hits.
-7. Round 2 — dispatch `reviewer-fast` with:
-   - the original finding,
-   - the prepared fix diff,
-   - relevant slices of the full diff that the fix touches.
-   Its job is to confirm the fix resolves the finding and catch regressions in the touched area only.
-8. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 7.
-9. When `reviewer-fast` is clean, re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the `review-log.md` of earlier issues and fixes. Its job is a full branch review with added context of what was already addressed.
-10. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
+     Capture the output so the lens reviewers can cross-check rather than rediscover the findings.
+5. **Round 1 — parallel lens review.** Dispatch the three lens reviewers in parallel, each with the full diff, PR description, and `scan_findings`:
+   - `reviewer-security` writes `review-log-security.md`.
+   - `reviewer-marketplace` writes `review-log-marketplace.md`.
+   - `reviewer-references` writes `review-log-references.md`.
+6. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, and the three `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
+7. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
+8. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
+9. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.
+10. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 9.
+11. **Round 4 — final `reviewer-strong` re-review.** Re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the updated `review-log-*.md` files. Its job is a full branch review with added context of what was already addressed. It writes `review-log-strong-2.md`.
+12. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
 
 ## Inputs the orchestrator must provide
 
@@ -80,7 +82,8 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
 
 ## Common Mistakes
 
-- Naming subagent dispatch prompts `final`, `final final`, `final final final`, etc. Use `Round N` for every round, including the last one (e.g., `Round 3 — strong re-review of full branch`).
+- Naming subagent dispatch prompts `final`, `final final`, `final final final`, etc. Use `Round N` for every round, including the last one (e.g., `Round 4 — strong re-review of full branch`).
 - Letting `reviewer-fast` drift into a full branch review. Keep the dispatch prompt and the fix diff tightly scoped.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
+- Forgetting to re-run the consumer's preflight after each fix. A fix can re-introduce a pattern the preflight catches.

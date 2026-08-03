@@ -17,7 +17,8 @@ metadata:
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
   - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
-    `reviewer-strong`, `implementer`, or `implementer-strong`.
+    `reviewer-strong`, `reviewer-security`, `reviewer-marketplace`, `reviewer-references`,
+    `implementer`, or `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -82,6 +83,9 @@ For example, copy `assets/implementer.md` to
 |---|---|
 | Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
+| Security and PII lens in a full-branch/PR diff | `reviewer-security` |
+| Marketplace, scaffolder, and generated-surface lens | `reviewer-marketplace` |
+| SKILL.md, reference-file, markdown, and prompt-robustness lens | `reviewer-references` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
