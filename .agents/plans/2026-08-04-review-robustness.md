@@ -404,6 +404,16 @@ def test_skill_metadata_null_is_flagged():
     assert any("present but null/empty" in f for f in findings)
 
 
+def test_skill_metadata_empty_string_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: \n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("present but null/empty" in f for f in findings)
+
+
 def test_skill_metadata_tilde_is_flagged():
     path, content = _fixture(
         "skills/using-foo/SKILL.md",
@@ -724,6 +734,8 @@ git commit -m "Tag reviewer-known-findings with title, severity, preflight owner
 - Produces: an orchestrator runbook.
 
 - [ ] **Step 1: Create the runbook**
+
+`.agents/runbooks/` is the tracked canonical source for runbooks; create the runbook there and do not maintain a separate plugin source for it.
 
 ```markdown
 # Review Robustness Runbook

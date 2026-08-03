@@ -9,7 +9,7 @@ These patterns are repository-agnostic. Marketplace-specific examples (e.g. `too
 - **Title:** Secrets / real identifiers in source
 - **Severity:** blocking
 - **Owner preflight:** `tools/review_preflight.py` (`_scan_security`).
-- **Owner lens:** `reviewer-security` for judgment calls, `reviewer-skills` for references.
+- **Owner lens:** `reviewer-security`.
 - **Portable:** yes (concept; examples are repo-local).
 
 - A real Discord guild, server, channel, or user snowflake ID in a `.md` reference file. These are 17–20 digit numbers, often paired with words like `guild_id`, `server_id`, `channel_id`, `user_id`, or a specific server name.
