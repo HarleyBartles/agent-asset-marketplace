@@ -30,7 +30,10 @@ fi
 
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
 branch=$(printf '%s' "$branch" | tr ':\?*"<>|/\\' '-')
-common_git=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir)
+common_git=$(git -C "$root" rev-parse --git-common-dir)
+if [[ "$common_git" != /* ]]; then
+  common_git="$root/$common_git"
+fi
 main_checkout=$(cd "$(dirname "$common_git")" && pwd)
 scratch_parent=$(cd "$main_checkout/.." && pwd)
 dir="$scratch_parent/_agent-scratch/$branch"
