@@ -1,4 +1,4 @@
-﻿---
+---
 name: reviewer-skills
 runtime: devin-desktop
 description: Portable skill-and-reference lens — SKILL.md frontmatter, markdown tables, reference hygiene, and prompt robustness.
@@ -44,7 +44,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
      - `license`, `name`, and `description` must be top-level keys; `license` must not be nested under `metadata`.
      - `metadata` block hygiene: a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` values, and any unexpected keys; only the skill-policy keys listed in section 9 are permitted.
    - Malformed markdown table rows (rows containing `|` that do not end with `|`).
-   - Examples that omit the `py -3` convention or use `python -m`, `python3 -m`, or `py -m `.
+   - Examples that use `python`, `python3`, or `py` to invoke a module without the `py -3` qualifier.
    - PowerShell/Bash scripts that `Push-Location` or `cd` and then write to a relative path without resolving it first.
    - Read-only subagent prompts that force the subagent to run `git` or `exec` to recreate a missing diff, or to mutate files.
 6. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.

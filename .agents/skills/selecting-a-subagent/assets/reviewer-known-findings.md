@@ -105,3 +105,6 @@ These patterns are repository-agnostic. Marketplace-specific examples (e.g. `too
 - **Owner lens:** `reviewer-skills`.
 - **Portable:** yes (all `SKILL.md` files carry this schema).
 - **Permitted `metadata` keys:** `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.
+- A missing `metadata:` key is allowed.
+- Reject present `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` values.
+- Reject any unexpected keys inside `metadata`; only the permitted skill-policy keys listed above are allowed.
