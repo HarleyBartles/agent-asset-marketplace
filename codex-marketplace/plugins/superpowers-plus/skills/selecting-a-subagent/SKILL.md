@@ -17,7 +17,7 @@ metadata:
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
   - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
-    `reviewer-strong`, `reviewer-security`, `reviewer-references`,
+    `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-marketplace`,
     `implementer`, or `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
@@ -75,8 +75,8 @@ If you want to use the Devin Desktop custom profiles, install the corresponding
 
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-references`,
-`implementer`, and `implementer-strong`.
+`reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`,
+`reviewer-marketplace`, `implementer`, and `implementer-strong`.
 
 ## Common custom subagent profile dispatch
 
@@ -85,7 +85,8 @@ For example, copy `assets/implementer.md` to
 | Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
 | Security and PII lens in a full-branch/PR diff | `reviewer-security` |
-| SKILL.md, reference-file, markdown, and prompt-robustness lens | `reviewer-references` |
+| `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
+| `codex-marketplace`/tooling/scaffolder lens | `reviewer-marketplace` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 | Repo-specific lens (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
@@ -107,8 +108,10 @@ different consumer might add `reviewer-domains.md` for domain canon, or `reviewe
 for a test harness.
 
 When `iterative-review` runs, it should dispatch all portable lenses
-(`reviewer-security`, `reviewer-references`) plus any `.agents/agents/reviewer-*.md`
-profiles that the repo's `AGENTS.md` declares as active.
+(`reviewer-security`, `reviewer-skills`) plus any `.agents/agents/reviewer-*.md`
+profiles that the repo's `AGENTS.md` declares as active. `reviewer-references` is
+deprecated and split into `reviewer-skills` (portable) and `reviewer-marketplace`
+(repo-local).
 
 ## Vendor and third-party profiles
 

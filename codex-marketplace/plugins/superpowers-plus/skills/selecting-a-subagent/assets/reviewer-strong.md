@@ -30,7 +30,7 @@ You are `reviewer-strong`, a strong read-only review subagent. Behave like `revi
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context if the review object is a PR.
 - `<base>` and `<branch>` (optional) — the base and head refs, for additional verification.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-*>` (optional) — the lens-review logs from the parallel `reviewer-security`, `reviewer-references`, and any repo-specific `.agents/agents/reviewer-*.md` lens (e.g. `reviewer-marketplace`). When present, use them as the primary finding set rather than rediscovering the same issues.
+- `<review-log-*>` (optional) — the lens-review logs from the parallel `reviewer-security`, `reviewer-skills`, `reviewer-marketplace`, and any other repo-specific `.agents/agents/reviewer-*.md` lens. When present, use them as the primary finding set rather than rediscovering the same issues.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation so you can focus on review.
 
@@ -52,13 +52,13 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 Apply these on every full-branch/PR review. Cite at least one file:line for every hit. If the repository does not contain the relevant surface (e.g. no `SKILL.md`, `codex-marketplace`, or `new_plugin.py`), mark that lens `n/a` and do not invent failures.
 
 - **Security / secrets exposure (CWE-200).** Scan for real identifiers or secrets that should not be in source: numeric IDs that look like Discord guild/channel/server IDs (17–20 digit snowflakes), tokens, API keys, email addresses, private IP addresses, or any value redacted elsewhere. References that need a server/guild/tenant ID should use `<PLACEHOLDER>` or an env-var instruction, not a real value.
-- **SKILL.md frontmatter schema.** In every changed `SKILL.md` or `authority.yaml`/`intake.json`, `license` must be a top-level frontmatter field, not nested under `metadata`; `name` and `description` must be top-level; metadata must not silently swallow fields.
-- **Skill-to-skill path consistency.** Any instruction that points at a helper script must use the canonical current path (e.g. `subagent-workspace/scripts/...`). Watch for stale cross-skill references to files that no longer exist.
-- **Marketplace tooling correctness.** For `tools/new_plugin.py` and similar: validate exit codes (errors return non-zero; `--check` returns zero on success); manifest/bundle regeneration preserves existing top-level author/license/notes/provenance fields; new packs are not default-enabled unless the PR explicitly says so; `--sync`/`--check` do not refuse to run in a normal clone.
-- **Generated/index surfaces.** When `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, or `.agents/plugins/marketplace.json` are touched, confirm the scaffolder and the generator produce the same shape/order and that no fields are erased.
-- **Reference file hygiene.** Markdown tables must have a closing `|` on every row and consistent column counts. Use `py -3` for Python commands. Avoid real IDs in examples and maps.
+- **SKILL.md frontmatter schema.** (reviewer-skills) In every changed `SKILL.md` or `authority.yaml`/`intake.json`, `license` must be a top-level frontmatter field, not nested under `metadata`; `name` and `description` must be top-level; metadata must not silently swallow fields.
+- **Skill-to-skill path consistency.** (reviewer-skills) Any instruction that points at a helper script must use the canonical current path (e.g. `subagent-workspace/scripts/...`). Watch for stale cross-skill references to files that no longer exist.
+- **Marketplace tooling correctness.** (reviewer-marketplace) For `tools/new_plugin.py` and similar: validate exit codes (errors return non-zero; `--check` returns zero on success); manifest/bundle regeneration preserves existing top-level author/license/notes/provenance fields; new packs are not default-enabled unless the PR explicitly says so; `--sync`/`--check` do not refuse to run in a normal clone.
+- **Generated/index surfaces.** (reviewer-marketplace) When `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, or `.agents/plugins/marketplace.json` are touched, confirm the scaffolder and the generator produce the same shape/order and that no fields are erased.
+- **Reference file hygiene.** (reviewer-skills) Markdown tables must have a closing `|` on every row and consistent column counts. Use `py -3` for Python commands. Avoid real IDs in examples and maps.
 - **Spec/plan drift.** If the PR description or `issue_context` references a plan, spec, or epic, confirm the diff implements what those documents describe and does not introduce unscoped packs or features.
-- **Prompt and script robustness.** Read-only prompts should not tell a subagent to run `git`, `exec`, or `find_file_by_name` to fetch missing packages; they should report the missing package and stop. Scripts that change location (e.g. `Push-Location`) must resolve output paths to absolute before doing so.
+- **Prompt and script robustness.** (reviewer-skills) Read-only prompts should not tell a subagent to run `git`, `exec`, or `find_file_by_name` to fetch missing packages; they should report the missing package and stop. Scripts that change location (e.g. `Push-Location`) must resolve output paths to absolute before doing so.
 
 ## Output format
 
