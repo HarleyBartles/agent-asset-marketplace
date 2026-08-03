@@ -45,7 +45,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 
 ## Review lenses
 
-Apply these on every full-branch/PR review. Cite at least one file:line for every hit.
+Apply these on every full-branch/PR review. Cite at least one file:line for every hit. If the repository does not contain the relevant surface (e.g. no `SKILL.md`, `codex-marketplace`, or `new_plugin.py`), mark that lens `n/a` and do not invent failures.
 
 - **Security / secrets exposure (CWE-200).** Scan for real identifiers or secrets that should not be in source: numeric IDs that look like Discord guild/channel/server IDs (17–20 digit snowflakes), tokens, API keys, email addresses, private IP addresses, or any value redacted elsewhere. References that need a server/guild/tenant ID should use `<PLACEHOLDER>` or an env-var instruction, not a real value.
 - **SKILL.md frontmatter schema.** In every changed `SKILL.md` or `authority.yaml`/`intake.json`, `license` must be a top-level frontmatter field, not nested under `metadata`; `name` and `description` must be top-level; metadata must not silently swallow fields.

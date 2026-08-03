@@ -2,6 +2,8 @@
 
 Read this at the start of every full-branch/PR review. It lists the concrete bug classes that Devin auto review tends to catch and that `reviewer-strong` should therefore explicitly look for.
 
+These patterns are repository-agnostic. Marketplace-specific examples (e.g. `tools/new_plugin.py`, `codex-marketplace`) are concrete instances from the authoring repo; in a different consumer repo, map them to the analogous surfaces the PR touches.
+
 ## 1. Secrets / real identifiers in source (CWE-200)
 
 - A real Discord guild, server, channel, or user snowflake ID in a `.md` reference file. These are 17–20 digit numbers, often paired with words like `guild_id`, `server_id`, `channel_id`, `user_id`, or a specific server name.
@@ -30,7 +32,7 @@ Read this at the start of every full-branch/PR review. It lists the concrete bug
 ## 5. Reference file hygiene
 
 - Markdown table rows must begin and end with `|`. A line with `|` that does not end with `|` is a malformed table row.
-- Prefer the repo's `py -3` convention in runnable examples (`py -3 -m playwright`, not `py -m playwright`).
+- Prefer the repo's `py -3` convention in runnable examples (e.g. `py -3 -m playwright`). Do not omit the `-3` qualifier.
 - No real IDs or secrets in examples or maps.
 
 ## 6. Script path safety
