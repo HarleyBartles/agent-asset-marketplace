@@ -112,6 +112,22 @@ def _installed_profile_names(agents_agents_path: Path) -> set[str]:
     return {child.name for child in agents_agents_path.iterdir() if _is_vendor_profile_file(child)}
 
 
+def _is_git_tracked(repo_root: Path, path: Path) -> bool:
+    """Return True if a file is tracked by git (a repo-local profile)."""
+    try:
+        rel = path.relative_to(repo_root)
+    except ValueError:
+        return False
+    result = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", str(rel)],
+        capture_output=True,
+        text=True,
+        cwd=repo_root,
+        env=_stripped_env(),
+    )
+    return result.returncode == 0
+
+
 def _deploy(
     repo_root: Path,
     installed_plugins: list[dict[str, Any]],
@@ -146,6 +162,9 @@ def _deploy(
         if name in expected:
             continue
         orphan = agents_agents_path / name
+        if _is_git_tracked(repo_root, orphan):
+            # Repo-local override; do not treat as orphan.
+            continue
         if apply:
             orphan.unlink()
             print(f"Removed orphan vendor profile: {orphan.relative_to(repo_root)}")

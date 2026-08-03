@@ -55,11 +55,11 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
      - In this repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` followed by `py -3 tools/run.py ci --check`.
      - In rooms-mostly: `scripts/ci-preflight.ps1 -Check` and the checks listed in its `AGENTS.md`.
      Capture the output so the lens reviewers can cross-check rather than rediscover the findings.
-5. **Round 1 — parallel lens review.** Dispatch the three lens reviewers in parallel, each with the full diff, PR description, and `scan_findings`:
+5. **Round 1 — parallel lens review.** Dispatch the portable lens reviewers in parallel, each with the full diff, PR description, and `scan_findings`:
    - `reviewer-security` writes `review-log-security.md`.
-   - `reviewer-marketplace` writes `review-log-marketplace.md`.
    - `reviewer-references` writes `review-log-references.md`.
-6. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, and the three `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
+   - Any repo-specific lens profiles declared in the consumer's `AGENTS.md` or found as `.agents/agents/reviewer-*.md` overrides (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) write `review-log-<lens>.md`.
+6. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, and all `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
 7. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
 8. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
 9. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.

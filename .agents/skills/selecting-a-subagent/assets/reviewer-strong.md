@@ -30,7 +30,7 @@ You are `reviewer-strong`, a strong read-only review subagent. Behave like `revi
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context if the review object is a PR.
 - `<base>` and `<branch>` (optional) — the base and head refs, for additional verification.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-security>`, `<review-log-marketplace>`, `<review-log-references>` (optional) — the lens-review logs from the parallel `reviewer-security`, `reviewer-marketplace`, and `reviewer-references` pass. When present, use them as the primary finding set rather than rediscovering the same issues.
+- `<review-log-*>` (optional) — the lens-review logs from the parallel `reviewer-security`, `reviewer-references`, and any repo-specific `.agents/agents/reviewer-*.md` lens (e.g. `reviewer-marketplace`). When present, use them as the primary finding set rather than rediscovering the same issues.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation so you can focus on review.
 
