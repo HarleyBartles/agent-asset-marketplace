@@ -102,6 +102,33 @@ Before deploying a skill, verify:
 6. The skill installs via `tools/run marketplace --apply`.
 7. The skill triggers on the right conditions and provides the expected guidance.
 
+## Pressure testing
+
+When creating or modifying a skill, consider whether a RED/GREEN pressure test scenario would prove the skill's value.
+
+Pressure tests are **advisory**, not mandatory. They are most valuable when:
+
+- The skill prevents a common failure mode (e.g., truncated tool lists, wrong defaults, unsafe shortcuts).
+- The skill routes the agent to a specific, non-obvious action.
+- The cost of the agent making the wrong choice is high (rework, token waste, destructive operations).
+
+Pure reference skills (syntax guides, API docs) and skills without a concrete failure mode to avoid usually do not need pressure tests.
+
+### Required artifacts when pressure testing
+
+1. **Scenario file in the skill:** Add `references/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused.
+2. **Recorded RED/GREEN runs:** Run the scenario once without the skill (RED) and once with the skill (GREEN) using subagents. Record the results in `provenance/` or `tests/pressure/<skill-name>/`.
+3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
+4. **Cross-reference:** Link to the scenario from `references/pressure-tests.md` and, where relevant, from the skill body.
+
+### Policy expectations
+
+- New skills: consider a pressure test during authoring; add it if the failure mode is clear.
+- Modified skills: if the change affects routing, decisions, or tool selection, re-examine whether a pressure test is now warranted or needs updating.
+- Existing skills: backfill pressure tests opportunistically; do not block current work on full backfill.
+
+See `tests/pressure/README.md` for the generic subagent pressure-test runbook and `superpowers-plus:writing-skills:testing-skills-with-subagents.md` for the RED/GREEN methodology.
+
 ## Compliance status
 
 This policy is the target standard. Use it to audit existing skills, bring them up to standard incrementally, and validate new skills before landing. Hold new skills to the full spec from the start; do not block on full compliance for existing skills.
