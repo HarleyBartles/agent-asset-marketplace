@@ -185,7 +185,7 @@ def test_skill_metadata_empty_dict_is_flagged():
 def test_skill_metadata_valid_is_not_flagged():
     path, content = _fixture(
         "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\nmetadata:\n  default_model: best\n  portable: true\n---\n",
+        "---\nname: using-foo\nmetadata:\n  source-id: using-foo\n  source-path: skills/using-foo/SKILL.md\n  status: active\n---\n",
     )
     findings = []
     review_preflight._scan_skill_metadata(path, content, findings)
@@ -664,7 +664,7 @@ git push origin feat/review-robustness
 
 - [ ] **Step 3: Update the PR body with the final SHA**
 
-Use `gh pr edit 259 --body-file <path>` or `gh pr edit 259 --body "..."` with the updated head SHA. Also update `Z:/_agent-scratch/review-robustness-review/pr_description.txt` to match.
+Use `gh pr edit 259 --body-file <path>` or `gh pr edit 259 --body "..."` with the updated head SHA.
 
 ---
 
