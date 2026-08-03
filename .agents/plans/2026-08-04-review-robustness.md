@@ -1,6 +1,6 @@
 # Pre-emptive Review Robustness Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Move deterministic Devin/iterative-review finding classes into fast local preflights, re-shape the lens profiles so they match what is portable and what is repo-local, and document the new review order in a runbook.
 
@@ -28,7 +28,7 @@
 - Consumes: existing `tools/review_preflight.py` scanners (`_scan_security`, `_scan_skill_frontmatter`, `_scan_stale_paths`, `_scan_markdown_tables`, `_scan_py3_convention`, `_scan_new_plugin`) and the `ROOT` constant.
 - Produces: a set of `pytest` test functions that exercise the existing scanners plus the `importlib` module-loading harness.
 
-- [ ] **Step 1: Create `tests/test_review_preflight.py`**
+- [x] **Step 1: Create `tests/test_review_preflight.py`**
 
 ```python
 from pathlib import Path
@@ -133,11 +133,11 @@ def test_new_plugin_bogus_return_is_flagged():
 
 ```
 
-- [ ] **Step 2: Confirm no `tools/review_preflight.py` changes in this task**
+- [x] **Step 2: Confirm no `tools/review_preflight.py` changes in this task**
 
 Task 1 only creates `tests/test_review_preflight.py`. The test file uses `importlib.util` to load `tools/review_preflight.py` as a module; no import-harness changes are required.
 
-- [ ] **Step 3: Run the new tests for the existing scanners and the module-loading harness**
+- [x] **Step 3: Run the new tests for the existing scanners and the module-loading harness**
 
 ```bash
 py -3 -m pytest tests/test_review_preflight.py -v
@@ -145,7 +145,7 @@ py -3 -m pytest tests/test_review_preflight.py -v
 
 Expected: all tests for the existing scanners should pass. The module-loading harness must import `tools/review_preflight.py` without errors. Any failure in a known-existing scanner should be fixed before moving to Task 2; do not skip or remove the corresponding fixture.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add tests/test_review_preflight.py
@@ -166,11 +166,11 @@ git commit -m "Add review_preflight unit-test fixtures"
 - Consumes: task list from `tools/run.py` `_TASKS`.
 - Produces: an extended `_scan_*` set, the corresponding extension test fixtures, and an updated `review-preflight` `tools/run.py` task contract.
 
-- [ ] **Step 0: Ensure `review-preflight` is already registered in `tools/run.py`**
+- [x] **Step 0: Ensure `review-preflight` is already registered in `tools/run.py`**
 
 Before modifying `tools/review_preflight.py`, verify that `tools/run.py` already has a `review-preflight` `_TASKS` entry and that it is wired to a `check` callable. If the entry does not exist, create the read-only task contract with no `--apply` fix hint.
 
-- [ ] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
+- [x] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
 
 Consolidate `SKILL.md` frontmatter parsing between `_scan_skill_frontmatter` and `_scan_skill_metadata` by extracting a `_load_skill_frontmatter` helper. `_scan_skill_metadata` then only validates the `metadata` block and explicitly handles `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` without crashing.
 
@@ -225,7 +225,7 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     _scan_skill_metadata(path, content, findings)  # add this call
 ```
 
-- [ ] **Step 2: Add stale path and canonical path checks to `tools/review_preflight.py`**
+- [x] **Step 2: Add stale path and canonical path checks to `tools/review_preflight.py`**
 
 First, keep the existing `_scan_stale_paths` scanner (it already flags any `subagent-driven-development/scripts` string and is exercised by `test_stale_subagent_path_is_flagged` in Task 1). Then add a scanner that flags any backtick path starting with `.agents/skills/` or `subagent-workspace/scripts/` that does not resolve to an installed or source file:
 
@@ -304,11 +304,11 @@ def _scan_py3_convention(path: Path, content: str, findings: list[str]) -> None:
 
 Call all new scanners from `_scan_file`.
 
-- [ ] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
+- [x] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
 
 The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case in `tests/test_review_preflight_extensions.py` (Task 2). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. Keep the `test_snowflake_in_code_block_is_not_flagged` fixture.
 
-- [ ] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
+- [x] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
 
 Extend `_scan_new_plugin` to cover the four design contract checks explicitly, mapping each to a deterministic pattern or to the `reviewer-marketplace` lens:
 
@@ -321,7 +321,7 @@ Extend `_scan_new_plugin` to cover the four design contract checks explicitly, m
 4. Helper functions have no unused `name` parameter.
    - Lens-only check under `reviewer-marketplace`; do not add a preflight fixture.
 
-- [ ] **Step 5: Wire `review-preflight` into `ci` and add the `tools/run.py` task-semantic test**
+- [x] **Step 5: Wire `review-preflight` into `ci` and add the `tools/run.py` task-semantic test**
 
 In `tools/run.py`, update `_TASKS["ci"].deps` to include `"review-preflight"`:
 
@@ -355,7 +355,7 @@ def test_read_only_tasks_do_not_advertise_apply():
             )
 ```
 
-- [ ] **Step 6: Create `tests/test_review_preflight_extensions.py` with the new scanner fixtures**
+- [x] **Step 6: Create `tests/test_review_preflight_extensions.py` with the new scanner fixtures**
 
 ```python
 from pathlib import Path
@@ -472,7 +472,7 @@ def test_python_m_without_3_is_flagged():
         assert any("py -3 -m" in f for f in findings)
 ```
 
-- [ ] **Step 7: Run the new tests to confirm they pass**
+- [x] **Step 7: Run the new tests to confirm they pass**
 
 ```bash
 py -3 -m pytest tests/test_review_preflight.py tests/test_review_preflight_extensions.py tests/test_run_cli.py -v
@@ -480,7 +480,7 @@ py -3 tools/run.py review-preflight --check
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add tools/review_preflight.py tools/run.py tests/test_review_preflight_extensions.py
@@ -500,7 +500,7 @@ git commit -m "Extend review_preflight with metadata, canonical path, new_plugin
 - Consumes: current `reviewer-references` dispatch call sites.
 - Produces: updated skill source text that routes `SKILL.md`/reference/prompt work to `reviewer-skills` and marketplace/tooling work to `reviewer-marketplace`, and deprecates `reviewer-references`.
 
-- [ ] **Step 1: Update `selecting-a-subagent/SKILL.md`**
+- [x] **Step 1: Update `selecting-a-subagent/SKILL.md`**
 
 Replace every dispatch of `reviewer-references` with `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local):
 
@@ -513,19 +513,19 @@ Replace every dispatch of `reviewer-references` with `reviewer-skills` (portable
 
 - In the **Repo-specific lens profiles** paragraph, list the portable lenses as `reviewer-security` and `reviewer-skills`; explicitly state that `reviewer-references` is deprecated and split.
 
-- [ ] **Step 2: Update `selecting-a-subagent/assets/reviewer-strong.md`**
+- [x] **Step 2: Update `selecting-a-subagent/assets/reviewer-strong.md`**
 
 - Update the `<review-log-*>` input description to list `reviewer-skills` and `reviewer-marketplace` in place of `reviewer-references`.
 - In the **Review lenses** list, tag frontmatter/markdown/table/py3/prompt-hygiene items as `reviewer-skills` and scaffolder/manifest/new_plugin/tool items as `reviewer-marketplace`.
 
-- [ ] **Step 3: Update `iterative-review/SKILL.md`**
+- [x] **Step 3: Update `iterative-review/SKILL.md`**
 
 In **Round 1 — parallel lens review**, replace the `reviewer-references` bullet with:
 
 - `reviewer-skills` (portable) writes `review-log-skills.md`.
 - `reviewer-marketplace` (repo-local) writes `review-log-marketplace.md`.
 
-- [ ] **Step 4: Commit the source dispatch changes**
+- [x] **Step 4: Commit the source dispatch changes**
 
 Do not run `marketplace --apply` yet; Task 4 will run it after the new profile source is created.
 
@@ -550,7 +550,7 @@ git commit -m "Route reviewer-references work to reviewer-skills and reviewer-ma
 - Consumes: current `reviewer-references.md`, `reviewer-marketplace.md`, `reviewer-known-findings.md`.
 - Produces: two focused lens profiles and a clean `reviewer-known-findings.md`.
 
-- [ ] **Step 1: Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` from the portable subset of `reviewer-references.md`**
+- [x] **Step 1: Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` from the portable subset of `reviewer-references.md`**
 
 ```markdown
 ---
@@ -617,7 +617,7 @@ For each issue:
 Do not include non-skill findings.
 ```
 
-- [ ] **Step 2: Update `.agents/agents/reviewer-marketplace.md` to absorb repo-local checks**
+- [x] **Step 2: Update `.agents/agents/reviewer-marketplace.md` to absorb repo-local checks**
 
 Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.json` / bundle checks):
 
@@ -632,7 +632,7 @@ Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.js
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
 ```
 
-- [ ] **Step 3: Remove `reviewer-references.md` source and generated copy**
+- [x] **Step 3: Remove `reviewer-references.md` source and generated copy**
 
 `selecting-a-subagent` and `iterative-review` dispatch are already updated in Task 3. Remove the source profile so `marketplace --apply` no longer installs it:
 
@@ -642,11 +642,11 @@ git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-refer
 
 If a generated `.agents/agents/reviewer-references.md` copy is still present, remove it with `git rm .agents/agents/reviewer-references.md` as well.
 
-- [ ] **Step 4: Update the source `INDEX.md`**
+- [x] **Step 4: Update the source `INDEX.md`**
 
 Edit `codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md` to remove `reviewer-references.md` and add `reviewer-skills.md` only. `reviewer-marketplace.md` is a tracked `.agents/agents/` override, not a portable product source, and must not be added to the source index. After `marketplace --apply` in the next step, verify that the installed `.agents/agents/INDEX.md` adds `reviewer-skills.md` and keeps the existing `reviewer-marketplace.md` override.
 
-- [ ] **Step 5: Regenerate the marketplace**
+- [x] **Step 5: Regenerate the marketplace**
 
 ```bash
 py -3 tools/run.py marketplace --apply
@@ -674,7 +674,7 @@ git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 - Consumes: `reviewer-known-findings.md` current text.
 - Produces: a tagged catalog.
 
-- [ ] **Step 1: Update each finding with owner and portability tags**
+- [x] **Step 1: Update each finding with owner and portability tags**
 
 For each of the 8 (or more) sections in the existing file, add a `title` and `severity` field plus three owner/portability tags at the top of the section. For section 9 (`SKILL.md` `metadata` block), also include the list of permitted `metadata` keys because the `reviewer-skills` procedure and `_scan_skill_metadata` refer to the same allowed-key set.
 
@@ -700,7 +700,7 @@ Example for section 3:
 - **Portable:** no (this repo's tooling).
 ```
 
-- [ ] **Step 2: Add section 9 — `SKILL.md` `metadata` block**
+- [x] **Step 2: Add section 9 — `SKILL.md` `metadata` block**
 
 ```markdown
 ## 9. `SKILL.md` `metadata` block
@@ -713,7 +713,7 @@ Example for section 3:
 - **Permitted `metadata` keys:** `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md
@@ -733,7 +733,7 @@ git commit -m "Tag reviewer-known-findings with title, severity, preflight owner
 - Consumes: `iterative-review` skill, `review-preflight` task, `tools/run.py ci`.
 - Produces: an orchestrator runbook.
 
-- [ ] **Step 1: Create the runbook**
+- [x] **Step 1: Create the runbook**
 
 `.agents/runbooks/` is the tracked canonical source for runbooks; create the runbook there and do not maintain a separate plugin source for it.
 
@@ -783,7 +783,7 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
 - Flipping to ready before a final clean `ci --check`.
 ```
 
-- [ ] **Step 2: Add the runbook to the runbook INDEX if one exists**
+- [x] **Step 2: Add the runbook to the runbook INDEX if one exists**
 
 Regenerate indexes:
 
@@ -806,25 +806,32 @@ git commit -m "Add review-robustness runbook"
 - Consumes: all prior task outputs.
 - Produces: a green draft PR ready for implementation.
 
-- [ ] **Step 1: Run full preflight on the staged tree**
+- [x] **Step 1: Run full preflight on the staged tree**
 
 ```bash
 git add -A
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 2: Commit any final fixups and push**
+- [x] **Step 2: Commit any final fixups and push**
 
 ```bash
 git commit -m "Review-robustness: preflight, lens profiles, and runbook"
 git push origin feat/review-robustness
 ```
 
-- [ ] **Step 3: Update the PR body with the final SHA**
+- [x] **Step 3: Update the PR body with the final SHA**
 
 Use `gh pr edit 259 --body-file <path>` or `gh pr edit 259 --body "..."` with the updated head SHA.
 
 ---
+
+## Completion
+
+- Implementation PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/259
+- Head SHA: 4761eb5f
+- Remote CI: `marketplace-validation` passed.
+- Note: The separate `.agents/runbooks/review-robustness.md` was folded into `.agents/runbooks/pr.md` and `.agents/runbooks/code-review.md` during final review to avoid documentation duplication; the procedure and reviewer lens are preserved.
 
 ## SDD Confidence Rating
 
