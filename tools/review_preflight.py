@@ -51,7 +51,78 @@ _PRIVATE_IP = re.compile(
 _STALE_SCRIPT_PATH = re.compile(r"subagent-driven-development/scripts")
 
 # py -m without the repo's py -3 convention.
-_PY_M = re.compile(r"\bpy -m ")
+_PY_M = re.compile(r"(?:\bpython(?:3)? -m |\bpy -m )")
+
+_SOURCE_PATHS: set[str] | None = None
+
+
+def _source_paths() -> set[str]:
+    global _SOURCE_PATHS
+    if _SOURCE_PATHS is not None:
+        return _SOURCE_PATHS
+    _SOURCE_PATHS = set()
+    plugins = ROOT / "codex-marketplace/plugins"
+    for plugin_dir in plugins.iterdir():
+        if not plugin_dir.is_dir():
+            continue
+        for sub in ("skills", "assets/profiles"):
+            base = plugin_dir / sub
+            if not base.is_dir():
+                continue
+            for p in base.rglob("*"):
+                if p.is_file() and p.suffix in {".md", ".ps1"}:
+                    _SOURCE_PATHS.add(p.relative_to(base).as_posix())
+        # Include extensionless helper scripts and their .ps1 twins from the
+        # subagent workspace; docs may reference either form.
+        sw = plugin_dir / "skills" / "subagent-workspace" / "scripts"
+        if sw.is_dir():
+            for p in sw.iterdir():
+                if p.is_file():
+                    rel = p.relative_to(sw).as_posix()
+                    _SOURCE_PATHS.add(rel)
+                    if p.suffix == ".ps1":
+                        _SOURCE_PATHS.add(rel[:-4])
+    return _SOURCE_PATHS
+
+
+_CANONICAL_PATHS = re.compile(
+    r"`(?:\.agents/skills/([^`\s]+)|subagent-workspace/scripts/([^`\s]+))`"
+)
+
+
+def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None:
+    if path.suffix != ".md":
+        return
+    in_code_block = False
+    for line_no, line in enumerate(content.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
+        for match in _CANONICAL_PATHS.finditer(line):
+            rel = match.group(1) or match.group(2)
+            if not rel or "..." in rel:
+                continue
+            if match.group(1):
+                prefix = ".agents/skills/"
+                target = ROOT / ".agents/skills" / rel
+            else:
+                prefix = "subagent-workspace/scripts/"
+                target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
+            if (
+                target.is_file()
+                or target.with_suffix(".ps1").is_file()
+                or target.with_suffix(".sh").is_file()
+            ):
+                continue
+            # Fall back to the source plugin tree for paths not yet installed.
+            source = _source_paths()
+            if rel in source or f"{rel}.ps1" in source or f"{rel}.sh" in source:
+                continue
+            _warn(findings, path, line_no, f"referenced path `{prefix}{rel}` does not exist")
+
 
 # Known buggy new_plugin.py return pattern.
 _NEW_PLUGIN_BOGUS_RETURN = re.compile(r"return 0 if result is None or args\.check else 1")
@@ -87,7 +158,15 @@ def _warn(findings: list[str], path: Path, line_no: int, message: str) -> None:
 
 
 def _scan_security(path: Path, content: str, findings: list[str]) -> None:
+    in_code_block = False
     for line_no, line in enumerate(content.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
+
         # Strip placeholders so <DISCORD_GUILD_ID> does not trip the numeric scan.
         depl = _PLACEHOLDER.sub("", line)
 
@@ -127,22 +206,25 @@ def _scan_security(path: Path, content: str, findings: list[str]) -> None:
             )
 
 
-def _scan_skill_frontmatter(path: Path, content: str, findings: list[str]) -> None:
-    if path.name != "SKILL.md":
-        return
+def _load_skill_frontmatter(path: Path, content: str) -> dict | None:
     if not content.startswith("---"):
-        return
+        return None
     parts = content.split("---", 2)
     if len(parts) < 3:
-        return
+        return None
     try:
         front = yaml.safe_load(parts[1]) or {}
     except yaml.YAMLError:
-        return
+        return None
+    return front if isinstance(front, dict) else None
 
-    if not isinstance(front, dict):
-        return
 
+def _scan_skill_frontmatter(path: Path, content: str, findings: list[str]) -> None:
+    if path.name != "SKILL.md":
+        return
+    front = _load_skill_frontmatter(path, content)
+    if front is None:
+        return
     metadata = front.get("metadata") or {}
     if "license" in metadata:
         _warn(findings, path, 1, "`license` is nested under `metadata`; move it to a top-level frontmatter field")
@@ -151,15 +233,59 @@ def _scan_skill_frontmatter(path: Path, content: str, findings: list[str]) -> No
         _warn(findings, path, 1, "top-level `license` frontmatter field is missing")
 
 
+def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
+    if path.name != "SKILL.md":
+        return
+    front = _load_skill_frontmatter(path, content)
+    if front is None:
+        return
+    if "metadata" not in front:
+        return  # `metadata:` is optional; a missing key is not flagged
+    metadata = front["metadata"]
+    if metadata is None or metadata == "":
+        _warn(findings, path, 1, "`metadata` is present but null/empty")
+        return
+    if not isinstance(metadata, dict):
+        _warn(findings, path, 1, "`metadata` is malformed")
+        return
+    if metadata == {}:
+        _warn(findings, path, 1, "`metadata` block is empty (`metadata: {}`); add the skill-policy fields")
+        return
+    allowed = {
+        "source-id",
+        "source-path",
+        "provenance-name",
+        "source-category",
+        "status",
+        "owner",
+        "scope",
+        "use_when",
+        "do_not_use_when",
+        "related_skills",
+    }
+    for key in metadata:
+        if key not in allowed:
+            _warn(findings, path, 1, f"`metadata` contains unexpected key `{key}`")
+
+
 _SKIP_STALE_PATHS = {
     "reviewer-known-findings.md",
+    "2026-08-04-review-robustness.md",
+    "2026-08-04-review-robustness-design.md",
 }
 
 
 def _scan_stale_paths(path: Path, content: str, findings: list[str]) -> None:
     if path.suffix not in {".md", ".ps1"} or path.name in _SKIP_STALE_PATHS:
         return
+    in_code_block = False
     for line_no, line in enumerate(content.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
         if _STALE_SCRIPT_PATH.search(line):
             _warn(
                 findings,
@@ -192,9 +318,16 @@ def _scan_markdown_tables(path: Path, content: str, findings: list[str]) -> None
 def _scan_py3_convention(path: Path, content: str, findings: list[str]) -> None:
     if path.suffix != ".md":
         return
+    in_code_block = False
     for line_no, line in enumerate(content.splitlines(), start=1):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
         if _PY_M.search(line):
-            _warn(findings, path, line_no, "use `py -3 -m` instead of `py -m` per repo convention")
+            _warn(findings, path, line_no, "use `py -3 -m ...` instead of `python -m`, `python3 -m`, or `py -m`")
 
 
 def _scan_new_plugin(path: Path, content: str, findings: list[str]) -> None:
@@ -210,6 +343,10 @@ def _scan_new_plugin(path: Path, content: str, findings: list[str]) -> None:
 
 
 def _scan_file(path: Path, findings: list[str]) -> None:
+    # The test fixtures intentionally contain the patterns the preflight flags;
+    # do not scan the preflight's own test files.
+    if "tests" in path.parts:
+        return
     try:
         content = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
@@ -217,7 +354,9 @@ def _scan_file(path: Path, findings: list[str]) -> None:
 
     _scan_security(path, content, findings)
     _scan_skill_frontmatter(path, content, findings)
+    _scan_skill_metadata(path, content, findings)
     _scan_stale_paths(path, content, findings)
+    _scan_canonical_paths(path, content, findings)
     _scan_markdown_tables(path, content, findings)
     _scan_py3_convention(path, content, findings)
     _scan_new_plugin(path, content, findings)

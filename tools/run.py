@@ -417,7 +417,7 @@ _TASKS: dict[str, Task] = {
         fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "validate", "archive-links"),
+        deps=("lint", "repo-standards", "review-preflight", "validate", "archive-links"),
         fix="tools/run ci --apply",
     ),
     "all": Task(
