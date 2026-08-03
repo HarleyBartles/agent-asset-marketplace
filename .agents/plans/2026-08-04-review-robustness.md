@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - All Python changes must pass `py -3 tools/run.py ci --check`.
-- Lens profiles live in `.agents/agents/` (e.g. `reviewer-skills.md` and `reviewer-marketplace.md`; the generated `reviewer-references.md` copy is removed). The `reviewer-references.md` source in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` is retained as a one-cycle redirect/deprecation notice.
+- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; keep `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md` and `reviewer-marketplace.md` into `.agents/agents/reviewer-marketplace.md`.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - Generated `.agents/` skill and agent copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill or profile source.
 - No `git commit --no-verify`.
@@ -23,11 +23,10 @@
 
 **Files:**
 - Create: `tests/test_review_preflight.py`
-- Modify: `tools/review_preflight.py` (move scanner functions to allow unit import)
 
 **Interfaces:**
-- Consumes: existing `tools/review_preflight.py` scanners and `ROOT` constant.
-- Produces: a set of `pytest` test functions that exercise the scanners against fixture contents.
+- Consumes: existing `tools/review_preflight.py` scanners (`_scan_security`, `_scan_skill_frontmatter`, `_scan_stale_paths`, `_scan_markdown_tables`, `_scan_py3_convention`, `_scan_new_plugin`) and the `ROOT` constant.
+- Produces: a set of `pytest` test functions that exercise the existing scanners plus the `importlib` module-loading harness.
 
 - [ ] **Step 1: Create `tests/test_review_preflight.py`**
 
@@ -62,16 +61,6 @@ def test_snowflake_without_context_is_not_flagged():
     path, content = _fixture(
         "README.md",
         "The count is 123456789012345678.\n",
-    )
-    findings = []
-    review_preflight._scan_security(path, content, findings)
-    assert not findings
-
-
-def test_snowflake_in_code_block_is_not_flagged():
-    path, content = _fixture(
-        "README.md",
-        "```\nguild_id 123456789012345678\n```\n",
     )
     findings = []
     review_preflight._scan_security(path, content, findings)
@@ -142,87 +131,19 @@ def test_new_plugin_bogus_return_is_flagged():
     assert any("dry-run and validation-error exit codes" in f for f in findings)
 
 
-def test_skill_metadata_missing_is_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\n---\n",
-    )
-    findings = []
-    review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("metadata block is missing" in f for f in findings)
-
-
-def test_skill_metadata_null_is_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\nmetadata: null\n---\n",
-    )
-    findings = []
-    review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("malformed" in f for f in findings)
-
-
-def test_skill_metadata_tilde_is_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\nmetadata: ~\n---\n",
-    )
-    findings = []
-    review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("malformed" in f for f in findings)
-
-
-def test_skill_metadata_empty_dict_is_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\nmetadata: {}\n---\n",
-    )
-    findings = []
-    review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("metadata: {}" in f for f in findings)
-
-
-def test_skill_metadata_valid_is_not_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "---\nname: using-foo\nmetadata:\n  source-id: using-foo\n  source-path: skills/using-foo/SKILL.md\n  status: active\n---\n",
-    )
-    findings = []
-    review_preflight._scan_skill_metadata(path, content, findings)
-    assert not findings
-
-
-def test_canonical_path_missing_is_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "Run `subagent-workspace/scripts/does-not-exist`.\n",
-    )
-    findings = []
-    review_preflight._scan_canonical_paths(path, content, findings)
-    assert any("does not exist" in f for f in findings)
-
-
-def test_canonical_path_present_is_not_flagged():
-    path, content = _fixture(
-        "skills/using-foo/SKILL.md",
-        "Run `subagent-workspace/scripts/sdd-workspace`.\n",
-    )
-    findings = []
-    review_preflight._scan_canonical_paths(path, content, findings)
-    assert not findings
 ```
 
-- [ ] **Step 2: Make `tools/review_preflight.py` functions importable for tests**
+- [ ] **Step 2: Confirm no `tools/review_preflight.py` changes in this task**
 
-No `tools/review_preflight.py` import-harness changes are needed; the test file uses `importlib.util` to load `tools/review_preflight.py` as a module.
+Task 1 only creates `tests/test_review_preflight.py`. The test file uses `importlib.util` to load `tools/review_preflight.py` as a module; no import-harness changes are required.
 
-- [ ] **Step 3: Run the new tests to confirm they fail against the current scanner**
+- [ ] **Step 3: Run the new tests for the existing scanners and the module-loading harness**
 
 ```bash
 py -3 -m pytest tests/test_review_preflight.py -v
 ```
 
-Expected: failures only for checks not yet implemented. `test_snowflake_without_context_is_not_flagged` should pass because the number has no `guild|server|...` context; the fenced-code fixture tests the same scanner on a non-exempt `README.md`. Note that `_scan_security` skips all `references/` paths, so these snowflake heuristics are exercised in non-exempt files.
+Expected: all tests for the existing scanners should pass. The module-loading harness must import `tools/review_preflight.py` without errors. Any failure in a known-existing scanner should be fixed before moving to Task 2; do not skip or remove the corresponding fixture.
 
 - [ ] **Step 4: Commit**
 
@@ -238,10 +159,11 @@ git commit -m "Add review_preflight unit-test fixtures"
 **Files:**
 - Modify: `tools/review_preflight.py`
 - Modify: `tools/run.py` (if a new `review-preflight` task contract is needed)
+- Create: `tests/test_review_preflight_extensions.py`
 
 **Interfaces:**
 - Consumes: task list from `tools/run.py` `_TASKS`.
-- Produces: an extended `_scan_*` set and updated `review-preflight` `tools/run.py` task contract.
+- Produces: an extended `_scan_*` set, the corresponding extension test fixtures, and an updated `review-preflight` `tools/run.py` task contract.
 
 - [ ] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
 
@@ -328,7 +250,7 @@ Call it from `_scan_file`.
 
 - [ ] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
 
-The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case (see Task 1). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. If a robust fenced-block parser would significantly expand scope, defer this to the `reviewer-security` lens and remove the `test_snowflake_in_code_block_is_not_flagged` fixture for now.
+The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case in `tests/test_review_preflight_extensions.py` (Task 2). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. If a robust fenced-block parser would significantly expand scope, defer this to the `reviewer-security` lens and remove the `test_snowflake_in_code_block_is_not_flagged` fixture from `tests/test_review_preflight_extensions.py`.
 
 - [ ] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
 
@@ -377,28 +299,176 @@ def test_read_only_tasks_do_not_advertise_apply():
             )
 ```
 
-- [ ] **Step 6: Run the new tests to confirm they pass**
+- [ ] **Step 6: Create `tests/test_review_preflight_extensions.py` with the new scanner fixtures**
+
+```python
+from pathlib import Path
+import importlib.util
+
+import pytest
+
+SPEC = importlib.util.spec_from_file_location(
+    "review_preflight", str(Path("tools/review_preflight.py").resolve())
+)
+review_preflight = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(review_preflight)
+
+
+def _fixture(path: str, content: str):
+    return Path(path), content
+
+
+def test_snowflake_in_code_block_is_not_flagged():
+    path, content = _fixture(
+        "README.md",
+        "```\nguild_id 123456789012345678\n```\n",
+    )
+    findings = []
+    review_preflight._scan_security(path, content, findings)
+    assert not findings
+
+
+def test_skill_metadata_missing_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("metadata block is missing" in f for f in findings)
+
+
+def test_skill_metadata_null_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: null\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("malformed" in f for f in findings)
+
+
+def test_skill_metadata_tilde_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: ~\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("malformed" in f for f in findings)
+
+
+def test_skill_metadata_empty_dict_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: {}\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("metadata: {}" in f for f in findings)
+
+
+def test_skill_metadata_valid_is_not_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata:\n  source-id: using-foo\n  source-path: skills/using-foo/SKILL.md\n  status: active\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert not findings
+
+
+def test_canonical_path_missing_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "Run `subagent-workspace/scripts/does-not-exist`.\n",
+    )
+    findings = []
+    review_preflight._scan_canonical_paths(path, content, findings)
+    assert any("does not exist" in f for f in findings)
+
+
+def test_canonical_path_present_is_not_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "Run `subagent-workspace/scripts/sdd-workspace`.\n",
+    )
+    findings = []
+    review_preflight._scan_canonical_paths(path, content, findings)
+    assert not findings
+```
+
+- [ ] **Step 7: Run the new tests to confirm they pass**
 
 ```bash
-py -3 -m pytest tests/test_review_preflight.py tests/test_run_cli.py -v
+py -3 -m pytest tests/test_review_preflight.py tests/test_review_preflight_extensions.py tests/test_run_cli.py -v
 py -3 tools/run.py review-preflight --check
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
-git add tools/review_preflight.py tools/run.py
+git add tools/review_preflight.py tools/run.py tests/test_review_preflight_extensions.py
 git commit -m "Extend review_preflight with metadata, canonical path, new_plugin, and ci wiring"
 ```
 
 ---
 
-## Task 3: Re-shape lens profiles
+## Task 3: Update skill dispatch references
 
 **Files:**
-- Create: `.agents/agents/reviewer-skills.md`
-- Modify: `.agents/agents/reviewer-marketplace.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
+
+**Interfaces:**
+- Consumes: current `reviewer-references` dispatch call sites.
+- Produces: updated skill source text that routes `SKILL.md`/reference/prompt work to `reviewer-skills` and marketplace/tooling work to `reviewer-marketplace`, and deprecates `reviewer-references`.
+
+- [ ] **Step 1: Update `selecting-a-subagent/SKILL.md`**
+
+Replace every dispatch of `reviewer-references` with `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local):
+
+- In the `use_when` bullet list, replace `reviewer-references` with `reviewer-skills` and `reviewer-marketplace` as appropriate.
+- In the **Installing the custom profiles** section, replace the copy example list with `reviewer-skills` and `reviewer-marketplace`; remove `reviewer-references`.
+- In the **Common custom subagent profile dispatch** table, replace the single `reviewer-references` row with:
+
+  | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
+  | `codex-marketplace`/tooling/scaffolder lens | `reviewer-marketplace` |
+
+- In the **Repo-specific lens profiles** paragraph, list the portable lenses as `reviewer-security` and `reviewer-skills`; explicitly state that `reviewer-references` is deprecated and split.
+
+- [ ] **Step 2: Update `selecting-a-subagent/assets/reviewer-strong.md`**
+
+- Update the `<review-log-*>` input description to list `reviewer-skills` and `reviewer-marketplace` in place of `reviewer-references`.
+- In the **Review lenses** list, tag frontmatter/markdown/table/py3/prompt-hygiene items as `reviewer-skills` and scaffolder/manifest/new_plugin/tool items as `reviewer-marketplace`.
+
+- [ ] **Step 3: Update `iterative-review/SKILL.md`**
+
+In **Round 1 — parallel lens review**, replace the `reviewer-references` bullet with:
+
+- `reviewer-skills` (portable) writes `review-log-skills.md`.
+- `reviewer-marketplace` (repo-local) writes `review-log-marketplace.md`.
+
+- [ ] **Step 4: Commit the source dispatch changes**
+
+Do not run `marketplace --apply` yet; Task 4 will run it after the new profile source is created.
+
+```bash
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md \
+      codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md \
+      codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
+git commit -m "Route reviewer-references work to reviewer-skills and reviewer-marketplace"
+```
+
+---
+
+## Task 4: Re-shape lens profiles
+
+**Files:**
+- Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` (portable source)
+- Modify: `.agents/agents/reviewer-marketplace.md` (repo-local override)
 - Deprecate: `.agents/agents/reviewer-references.md` (remove the generated copy). Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice.
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
 
@@ -406,7 +476,7 @@ git commit -m "Extend review_preflight with metadata, canonical path, new_plugin
 - Consumes: current `reviewer-references.md`, `reviewer-marketplace.md`, `reviewer-known-findings.md`.
 - Produces: two focused lens profiles and a clean `reviewer-known-findings.md`.
 
-- [ ] **Step 1: Create `reviewer-skills.md` from the portable subset of `reviewer-references.md`**
+- [ ] **Step 1: Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` from the portable subset of `reviewer-references.md`**
 
 ```markdown
 ---
@@ -498,20 +568,27 @@ Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/revi
 This profile has been split into `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local).
 ```
 
-Remove only the generated `.agents/agents/reviewer-references.md` copy with `git rm .agents/agents/reviewer-references.md`. Do not `git rm` the source file this cycle; it remains as the redirect for one cycle to avoid breaking external links.
+Run `py -3 tools/run.py marketplace --apply` in Step 4 first. Because the dispatch logic in Task 3 no longer references `reviewer-references`, the generated `.agents/agents/reviewer-references.md` copy should not be installed. If a copy is still present after the apply, remove it explicitly with `git rm .agents/agents/reviewer-references.md`. Do not `git rm` the source file this cycle; it remains as the redirect for one cycle to avoid breaking external links.
 
 - [ ] **Step 4: Regenerate the marketplace**
 
 ```bash
 py -3 tools/run.py marketplace --apply
-git add .
+```
+
+Verify that `.agents/agents/reviewer-skills.md` is now installed, `.agents/agents/reviewer-marketplace.md` is present, and `.agents/agents/reviewer-references.md` is absent. If the generated `reviewer-references.md` copy was not removed, run `git rm .agents/agents/reviewer-references.md` before committing.
+
+```bash
+git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md \
+      codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md \
+      .agents/agents/ .agents/skills/
 py -3 tools/run.py ci --check
 git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 ```
 
 ---
 
-## Task 4: Overhaul `reviewer-known-findings.md`
+## Task 5: Overhaul `reviewer-known-findings.md`
 
 **Files:**
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source)
@@ -568,7 +645,7 @@ git commit -m "Tag reviewer-known-findings with title, severity, preflight owner
 
 ---
 
-## Task 5: Create `.agents/runbooks/review-robustness.md`
+## Task 6: Create `.agents/runbooks/review-robustness.md`
 
 **Files:**
 - Create: `.agents/runbooks/review-robustness.md`
@@ -638,7 +715,7 @@ git commit -m "Add review-robustness runbook"
 
 ---
 
-## Task 6: Final validation and PR update
+## Task 7: Final validation and PR update
 
 **Files:**
 - Modify: `.agents/specs/2026-08-04-review-robustness-design.md` if the plan changed the design.

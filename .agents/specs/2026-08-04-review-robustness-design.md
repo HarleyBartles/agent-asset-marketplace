@@ -61,7 +61,7 @@ The current `reviewer-references` mixes portable skill-reference concerns with t
   - Scaffolder and generator behavior (`new_plugin.py`, `tools/run.py`, `plugin-roots.json`, bundle manifests, `repo-index.json`).
   - This-repo canonical path drift (`subagent-workspace/scripts/...` vs stale `subagent-driven-development/scripts/...`) and `repo-local-marketplace-policy.json` `install_defaults`.
   - `--check` vs `--apply` semantics and shared-checkout gating.
-- **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy is removed, its source is retained as a one-cycle redirect/deprecation notice, and its portable content moves to `reviewer-skills` (new source in `.agents/agents/`) while its repo-local content moves to `reviewer-marketplace`.
+- **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy is removed, its source is retained as a one-cycle redirect/deprecation notice in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`, and its portable content moves to `reviewer-skills` (new source in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md`) while its repo-local content moves to `reviewer-marketplace`. Update `selecting-a-subagent` and `iterative-review` dispatch logic to route `SKILL.md`/reference work to `reviewer-skills` and marketplace/tooling work to `reviewer-marketplace`.
 
 `reviewer-known-findings.md` is updated to list each class with:
 
@@ -91,7 +91,7 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 ## Source and custody
 
 - Tooling changes live in `tools/review_preflight.py` and `tools/run.py`.
-- Lens profiles live in `.agents/agents/`. The new `reviewer-skills.md` source lives there. The `reviewer-references.md` source is retained as a one-cycle redirect/deprecation notice in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/`; the generated `.agents/agents/reviewer-references.md` copy is removed.
+- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; keep `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md` and `reviewer-marketplace.md` into `.agents/agents/reviewer-marketplace.md`.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - The new runbook lives in `.agents/runbooks/review-robustness.md`.
 - Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `py -3 tools/run.py marketplace --apply`.
