@@ -16,6 +16,8 @@ prompt: |
   ## Invariants
 
   - You are read-only. Do not modify files, create files, or run build/install/write commands.
+  - You may use `exec` for non-mutating `git` queries and canonical verification commands, and `mcp_call_tool` for non-mutating lookups. Use these only to resolve refs or confirm state — not to generate the diff, not to fetch a missing package, and not to install/change anything.
+  - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
   - Cite specific files and line numbers for every issue you find.
   - If you cannot verify something, say so clearly rather than guessing.
   - Keep feedback focused, concrete, and actionable.

@@ -357,6 +357,13 @@ def _apply_archive_links(ctx: Ctx) -> None:
     _run([sys.executable, "tools/check_archive_links.py"], ctx)
 
 
+def _check_review_preflight(ctx: Ctx) -> None:
+    cmd = [sys.executable, "tools/review_preflight.py", "--check"]
+    if ctx.base_ref:
+        cmd.extend(["--base-ref", ctx.base_ref])
+    _run(cmd, ctx)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -404,8 +411,12 @@ _TASKS: dict[str, Task] = {
         check=(_check_archive_links,),
         fix="tools/run archive-links --apply",
     ),
+    "review-preflight": Task(
+        check=(_check_review_preflight,),
+        fix="tools/run review-preflight --check",
+    ),
     "ci": Task(
-        deps=("lint", "repo-standards", "marketplace", "archive-links"),
+        deps=("lint", "repo-standards", "marketplace", "archive-links", "review-preflight"),
         fix="tools/run ci --apply",
     ),
     "all": Task(
@@ -472,9 +483,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Dependency-aware task runner for the agent-asset-marketplace",
         epilog=(
-            "Targets: "
-            + ", ".join(_TASKS.keys())
-            + "\n"
+            "Targets: " + ", ".join(_TASKS.keys()) + "\n"
             "ci --check is the full non-mutating CI gate; do not run it on an uncommitted "
             "working tree. Edit, run the relevant <target> --apply, stage, commit, "
             "and let the pre-commit hook run ci --check. See .devin/rules/tools.md."

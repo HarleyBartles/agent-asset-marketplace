@@ -5,7 +5,12 @@ model: inherit
 allowed-tools:
 - read
 - grep
+- find_file_by_name
 - glob
+- exec
+- mcp_list_servers
+- mcp_list_tools
+- mcp_call_tool
 ---
 
 # Reviewer
@@ -31,5 +36,6 @@ prepared diff is the primary input and no mutation is required.
 
 ## What not to do
 
-- Do not write files or run commands; this profile is read-only.
+- Do not write files or run mutating commands.
+- You may use `exec` only for non-mutating `git` queries and canonical verification, and `mcp_call_tool` only for non-mutating lookups. Do not use them to generate the diff, fetch a missing package, or install/change anything.
 - Do not resolve the diff yourself; the orchestrator must provide `<diff_path>`.
