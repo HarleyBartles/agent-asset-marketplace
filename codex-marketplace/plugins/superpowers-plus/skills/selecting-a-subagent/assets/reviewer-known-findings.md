@@ -48,3 +48,12 @@ These patterns are repository-agnostic. Marketplace-specific examples (e.g. `too
 
 - Read-only review prompts should not instruct the subagent to run `git` commands or `find_file_by_name` to recreate a missing diff package. The prompt should say: if the package is missing, report it and stop.
 - Subagent prompts should not ask a read-only profile to install, write, or mutate files.
+
+## 9. `SKILL.md` `metadata` block
+
+- **Title:** SKILL.md metadata block
+- **Severity:** important
+- **Owner preflight:** `tools/review_preflight.py` (`_scan_skill_metadata`).
+- **Owner lens:** `reviewer-skills`.
+- **Portable:** yes (all `SKILL.md` files carry this schema).
+- **Permitted `metadata` keys:** `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.

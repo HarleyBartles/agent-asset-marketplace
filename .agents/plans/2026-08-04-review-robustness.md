@@ -251,6 +251,16 @@ def _source_paths() -> set[str]:
             for p in base.rglob("*"):
                 if p.is_file() and p.suffix in {".md", ".ps1"}:
                     _SOURCE_PATHS.add(p.relative_to(base).as_posix())
+    # Include extensionless helper scripts and their .ps1 twins from the
+    # subagent workspace; docs may reference either form.
+    scripts = ROOT / "subagent-workspace/scripts"
+    if scripts.is_dir():
+        for p in scripts.iterdir():
+            if p.is_file():
+                rel = p.relative_to(scripts).as_posix()
+                _SOURCE_PATHS.add(rel)
+                if p.suffix == ".ps1":
+                    _SOURCE_PATHS.add(rel[:-4])
     return _SOURCE_PATHS
 
 
@@ -624,7 +634,7 @@ If a generated `.agents/agents/reviewer-references.md` copy is still present, re
 
 - [ ] **Step 4: Update the source `INDEX.md`**
 
-Edit `codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md` to remove `reviewer-references.md` and add `reviewer-skills.md` and `reviewer-marketplace.md`. After `marketplace --apply` in the next step, verify that the installed `.agents/agents/INDEX.md` reflects the same list.
+Edit `codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md` to remove `reviewer-references.md` and add `reviewer-skills.md` only. `reviewer-marketplace.md` is a tracked `.agents/agents/` override, not a portable product source, and must not be added to the source index. After `marketplace --apply` in the next step, verify that the installed `.agents/agents/INDEX.md` adds `reviewer-skills.md` and keeps the existing `reviewer-marketplace.md` override.
 
 - [ ] **Step 5: Regenerate the marketplace**
 
@@ -656,7 +666,7 @@ git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 
 - [ ] **Step 1: Update each finding with owner and portability tags**
 
-For each of the 8 (or more) sections in the existing file, add a `title` and `severity` field plus three owner/portability tags at the top of the section:
+For each of the 8 (or more) sections in the existing file, add a `title` and `severity` field plus three owner/portability tags at the top of the section. For section 9 (`SKILL.md` `metadata` block), also include the list of permitted `metadata` keys because the `reviewer-skills` procedure and `_scan_skill_metadata` refer to the same allowed-key set.
 
 ```markdown
 ## 1. Secrets / real identifiers in source (CWE-200)
@@ -690,6 +700,7 @@ Example for section 3:
 - **Owner preflight:** `tools/review_preflight.py` (`_scan_skill_metadata`).
 - **Owner lens:** `reviewer-skills`.
 - **Portable:** yes (all `SKILL.md` files carry this schema).
+- **Permitted `metadata` keys:** `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.
 ```
 
 - [ ] **Step 3: Commit**
