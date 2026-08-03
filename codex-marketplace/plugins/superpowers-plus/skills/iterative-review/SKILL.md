@@ -76,6 +76,7 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
 
 ## Common Mistakes
 
+- Naming subagent dispatch prompts `final`, `final final`, `final final final`, etc. Use `Round N` for every round, including the last one (e.g., `Round 3 — strong re-review of full branch`).
 - Letting `reviewer-fast` drift into a full branch review. Keep the dispatch prompt and the fix diff tightly scoped.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
