@@ -43,6 +43,7 @@ Reduce the number of Devin auto-review and `iterative-review` cycles by moving t
   - Read-only tasks do not advertise `--apply` fix hints.
   - `ci` includes `review-preflight` as a hard dependency so preflight findings block `ci --check`.
 - **SKILL.md frontmatter `metadata` block:** guard against malformed `metadata` values (`metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}`) so the parser does not crash and the error message points at the file. A missing `metadata:` key is allowed; it is not flagged.
+- **Canonical `py -3` invocation:** the preflight regex `r"(?:\bpython(?:3)? -m |\bpy -m )"` flags `python -m`, `python3 -m`, and `py -m` where `py -3 -m` is canonical.
 - **Cross-skill script paths in `SKILL.md` and reference files:** verify that every backtick path starting with `subagent-workspace/scripts/` or `.agents/skills/` resolves to an existing installed or source skill file.
 
 These checks run under `tools/run.py review-preflight --check` and, once `_TASKS["ci"].deps` in `tools/run.py` is updated to include `"review-preflight"`, inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.

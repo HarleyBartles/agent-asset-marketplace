@@ -160,6 +160,7 @@ git commit -m "Add review_preflight unit-test fixtures"
 - Modify: `tools/review_preflight.py`
 - Modify: `tools/run.py` (if a new `review-preflight` task contract is needed)
 - Create: `tests/test_review_preflight_extensions.py`
+- Modify: `tests/test_run_cli.py`
 
 **Interfaces:**
 - Consumes: task list from `tools/run.py` `_TASKS`.
@@ -167,7 +168,7 @@ git commit -m "Add review_preflight unit-test fixtures"
 
 - [ ] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
 
-Consolidate `SKILL.md` frontmatter parsing between `_scan_skill_frontmatter` and `_scan_skill_metadata` by extracting a `_load_skill_frontmatter` helper. `_scan_skill_metadata` then only validates the `metadata` block and explicitly handles `metadata: null`, `metadata: ~`, and `metadata: {}` without crashing.
+Consolidate `SKILL.md` frontmatter parsing between `_scan_skill_frontmatter` and `_scan_skill_metadata` by extracting a `_load_skill_frontmatter` helper. `_scan_skill_metadata` then only validates the `metadata` block and explicitly handles `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` without crashing.
 
 ```python
 
@@ -190,25 +191,29 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
     front = _load_skill_frontmatter(path, content)
     if front is None:
         return
-    metadata = front.get("metadata")
-    if metadata is None:
-        return  # `metadata:` is optional; only malformed values are flagged
-    elif metadata == {}:
+    if "metadata" not in front:
+        return  # `metadata:` is optional; a missing key is not flagged
+    metadata = front["metadata"]
+    if metadata is None or metadata == "":
+        _warn(findings, path, 1, "`metadata` is present but null/empty")
+        return
+    if not isinstance(metadata, dict):
+        _warn(findings, path, 1, "`metadata` is malformed")
+        return
+    if metadata == {}:
         _warn(findings, path, 1, "`metadata` block is empty (`metadata: {}`); add the skill-policy fields")
-    elif not isinstance(metadata, dict):
-        _warn(findings, path, 1, "`metadata` block is malformed (`null`, `~`, or non-dict); it must be a mapping of skill-policy fields")
-    else:
-        allowed = {
-            "source-id", "source-path", "provenance-name", "source-category",
-            "status", "owner", "scope", "use_when", "do_not_use_when",
-            "related_skills",
-        }
-        for key in metadata:
-            if key not in allowed:
-                _warn(findings, path, 1, f"`metadata` contains unexpected key `{key}`")
+        return
+    allowed = {
+        "source-id", "source-path", "provenance-name", "source-category",
+        "status", "owner", "scope", "use_when", "do_not_use_when",
+        "related_skills",
+    }
+    for key in metadata:
+        if key not in allowed:
+            _warn(findings, path, 1, f"`metadata` contains unexpected key `{key}`")
 ```
 
-Call it from `_scan_file`:
+Then update `_scan_skill_frontmatter` to call `_load_skill_frontmatter` instead of duplicating the frontmatter parsing logic. Call `_load_skill_frontmatter` from `_scan_file` as well:
 
 ```python
 def _scan_file(path: Path, findings: list[str]) -> None:
@@ -242,11 +247,29 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             else:
                 prefix = "subagent-workspace/scripts/"
                 target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
-            if not target.is_file():
+            if target.is_file():
+                continue
+            # Fall back to the source plugin tree for paths not yet installed.
+            source_match = any(
+                p.is_file() and p.as_posix().endswith("/" + rel)
+                for p in (ROOT / "codex-marketplace/plugins").rglob("*")
+            )
+            if not source_match:
                 _warn(findings, path, line_no, f"referenced path `{prefix}{rel}` does not exist")
+
+
+_PY_M = re.compile(r"(?:\bpython(?:3)? -m |\bpy -m )")
+
+
+def _scan_py3_convention(path: Path, content: str, findings: list[str]) -> None:
+    if path.suffix != ".md":
+        return
+    for line_no, line in enumerate(content.splitlines(), start=1):
+        if _PY_M.search(line):
+            _warn(findings, path, line_no, "use `py -3 -m ...` instead of `python -m`, `python3 -m`, or `py -m`")
 ```
 
-Call it from `_scan_file`.
+Call all new scanners from `_scan_file`.
 
 - [ ] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
 
@@ -345,7 +368,7 @@ def test_skill_metadata_null_is_flagged():
     )
     findings = []
     review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("malformed" in f for f in findings)
+    assert any("present but null/empty" in f for f in findings)
 
 
 def test_skill_metadata_tilde_is_flagged():
@@ -355,7 +378,7 @@ def test_skill_metadata_tilde_is_flagged():
     )
     findings = []
     review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("malformed" in f for f in findings)
+    assert any("present but null/empty" in f for f in findings)
 
 
 def test_skill_metadata_empty_dict_is_flagged():
@@ -396,6 +419,14 @@ def test_canonical_path_present_is_not_flagged():
     findings = []
     review_preflight._scan_canonical_paths(path, content, findings)
     assert not findings
+
+
+def test_python_m_without_3_is_flagged():
+    for command in ("python -m pytest", "python3 -m pytest"):
+        path, content = _fixture("README.md", f"Run `{command}`.\n")
+        findings = []
+        review_preflight._scan_py3_convention(path, content, findings)
+        assert any("py -3 -m" in f for f in findings)
 ```
 
 - [ ] **Step 7: Run the new tests to confirm they pass**
@@ -523,7 +554,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 5. Inspect the diff for:
    - Changed `SKILL.md` files:
      - `license`, `name`, and `description` must be top-level keys; `license` must not be nested under `metadata`.
-     - `metadata` block hygiene: reject `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}`; only the skill-policy keys listed in section 9 are permitted.
+     - `metadata` block hygiene: a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` values, and any unexpected keys; only the skill-policy keys listed in section 9 are permitted.
    - Malformed markdown table rows (rows containing `|` that do not end with `|`).
    - Examples that omit the `py -3` convention or use `python -m`, `python3 -m`, or `py -m `.
    - PowerShell/Bash scripts that `Push-Location` or `cd` and then write to a relative path without resolving it first.
@@ -705,7 +736,7 @@ Regenerate indexes:
 
 ```bash
 py -3 tools/run.py marketplace --apply
-git add .
+git add .agents/runbooks/review-robustness.md .agents/runbooks/INDEX.md
 py -3 tools/run.py ci --check
 git commit -m "Add review-robustness runbook"
 ```
