@@ -40,10 +40,12 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 4. Read `<diff_path>`.
 5. Inspect the diff for:
    - `tools/new_plugin.py` exit-code and default-enablement logic.
-   - `tools/run.py` target wiring and `ci` dependency correctness.
+   - `tools/run.py` target wiring, `mutating` tags, and `ci` dependency correctness.
    - `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, and `.agents/plugins/marketplace.json` changes.
    - Any scaffolder or generator that overwrites existing top-level metadata when it re-runs.
    - `--check` vs `--apply` semantics and read-only/mutating command classification.
+   - Stale or wrong cross-skill script paths in `SKILL.md` or reference files that use this repo's canonical `subagent-workspace/scripts/` or `.agents/skills/` path list. Verify the path exists; if not, the preflight should catch it and you should confirm it did.
+   - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
 6. Run `grep` and `find_file_by_name` to cross-check that scaffolder output and generator output stay in sync.
 7. Report only marketplace/tooling issues. Cite `file:line`, severity, and remediation.
 8. End with `reviewer-marketplace: N issue(s)` or `reviewer-marketplace: clean`.

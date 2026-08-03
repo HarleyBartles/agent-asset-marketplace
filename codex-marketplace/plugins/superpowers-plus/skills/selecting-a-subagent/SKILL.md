@@ -29,7 +29,6 @@ metadata:
   - dispatching-parallel-agents
   - risk-gates
   - repo-worker-base
-  use_after:
   - inspecting-the-environment
 license: MIT
 ---
