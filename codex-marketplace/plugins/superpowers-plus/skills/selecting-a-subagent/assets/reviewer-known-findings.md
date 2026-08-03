@@ -46,11 +46,11 @@ These patterns are repository-agnostic. Marketplace-specific examples (e.g. `too
 
 - **Title:** Cross-skill script paths
 - **Severity:** important
-- **Owner preflight:** `tools/review_preflight.py` (`_scan_stale_paths`).
+- **Owner preflight:** `tools/review_preflight.py` (`_scan_stale_paths`, `_scan_canonical_paths`).
 - **Owner lens:** `reviewer-marketplace`.
 - **Portable:** no (paths are repo-local conventions).
 
-- References to helper scripts must use the current canonical path. In this repo that is `subagent-workspace/scripts/` for `sdd-workspace`, `task-brief`, and `review-package`.
+- References to helper scripts and skill assets must use the current canonical path. In this repo, use `.agents/skills/...` for skill assets and `subagent-workspace/scripts/...` for workspace helpers such as `sdd-workspace`, `task-brief`, and `review-package`.
 - Watch for stale `subagent-driven-development/scripts/...` paths in prompts and `SKILL.md` files.
 
 ## 5. Reference file hygiene

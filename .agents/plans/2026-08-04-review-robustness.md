@@ -282,7 +282,7 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
                 target = ROOT / ".agents/skills" / rel
             else:
                 prefix = "subagent-workspace/scripts/"
-                target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
+                target = ROOT / "subagent-workspace/scripts" / rel
             if target.is_file():
                 continue
             # Fall back to the source plugin tree for paths not yet installed.
@@ -558,7 +558,7 @@ allowed-tools:
   - mcp_call_tool
 ---
 
-You are `reviewer-skills`, a focused read-only reviewer for `SKILL.md` and reference files. Inspect the prepared diff for frontmatter schema, markdown tables, cross-skill script paths, repo conventions, and prompt robustness. Do not broaden to marketplace tooling or secrets; those are handled by other lens reviewers.
+You are `reviewer-skills`, a focused read-only reviewer for `SKILL.md` and reference files. Inspect the prepared diff for frontmatter schema, markdown tables, repo conventions, and prompt robustness. Do not broaden to marketplace tooling or secrets; those are handled by other lens reviewers.
 
 ## Invariants
 
@@ -580,7 +580,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **4. Cross-skill script paths**, **5. Reference file hygiene**, **6. Script path safety**, **8. Prompt robustness**, and **9. `SKILL.md` `metadata` block**.
+1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **5. Reference file hygiene**, **6. Script path safety**, **8. Prompt robustness**, and **9. `SKILL.md` `metadata` block**.
 2. If `<scan_findings>` is provided, read it first and do not duplicate its findings; instead, verify the preflight caught the pattern in the right place.
 3. If `<pr_description>` is provided, read it for scope.
 4. Read `<diff_path>`.
