@@ -64,3 +64,17 @@ The `SKILL.md` router table maps common intents to the correct reference file, j
 ## Handoff confidence
 
 9/10 — the design is small, the `using-linear` pattern is already established, and the MCP tool surface has been discovered.
+
+## Pattern: MCP wrapper skills
+
+This skill follows a reusable pattern for agent-facing MCP wrappers:
+
+1. **Start with the MCP.** The skill's default and primary coverage is the MCP server tool surface.
+2. **Use-case references.** Break the tool list into use-case files, not alphabetical lists. `SKILL.md` routes by intent.
+3. **Soft escape hatch.** Include a reference file that teaches agents how to fall back to non-MCP tools that do the same job (REST API, Node library, CLI, native Devin tools), but only after confirming the MCP does not cover the task.
+4. **Environment check.** Before using an installable fallback, run `/inspecting-the-environment` to confirm it is present.
+5. **Naming convention as guide, not rule.** `using-<x>` is a useful convention but not a hard requirement; other names may fit.
+
+Examples: `using-linear`, `using-github-mcp`, and `using-playwright`.
+
+This pattern should be recorded in `.agents/runbooks/skill-authoring.md` so future MCP-wrapper skills follow it consistently.
