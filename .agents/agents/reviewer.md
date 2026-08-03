@@ -22,6 +22,13 @@ prepared diff is the primary input and no mutation is required.
 - `<diff_path>`: path to the prepared diff to review.
 - `<pr_description>` (optional): the pull-request description for context.
 
+## How to review
+
+- Start by reading `<diff_path>` and `<pr_description>` directly. The paths are provided; do not enumerate the repository.
+- `read` truncates long files and returns a `<truncation_notice>` with an overflow file path. Continue by reading the overflow file or by re-reading the same file with `offset` and `limit`.
+- Use `grep` to locate file boundaries (e.g., `^diff --git`) or specific patterns before reading a chunk.
+- `glob` may be used only for targeted pattern confirmation. Do not use broad `glob` patterns to list the whole repository.
+
 ## What not to do
 
 - Do not write files or run commands; this profile is read-only.
