@@ -59,7 +59,7 @@ The current `reviewer-references` mixes portable skill-reference concerns with t
   - In consumer repos this lens applies to skills installed from this marketplace and local skills; it also checks that the agent does not hand-edit installed skills (those are generated outputs).
 - **`reviewer-marketplace`** (repo-local, already exists, expanded):
   - Scaffolder and generator behavior (`new_plugin.py`, `tools/run.py`, `plugin-roots.json`, bundle manifests, `repo-index.json`).
-  - This-repo canonical path drift (`subagent-workspace/scripts/...` vs stale `subagent-driven-development/scripts/...`, `py -3` convention, `repo-local-marketplace-policy.json` `install_defaults`).
+  - This-repo canonical path drift (`subagent-workspace/scripts/...` vs stale `subagent-driven-development/scripts/...`) and `repo-local-marketplace-policy.json` `install_defaults`.
   - `--check` vs `--apply` semantics and shared-checkout gating.
 - **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy is removed, its source is retained as a one-cycle redirect/deprecation notice, and its portable content moves to `reviewer-skills` (new source in `.agents/agents/`) while its repo-local content moves to `reviewer-marketplace`.
 

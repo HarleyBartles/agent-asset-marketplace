@@ -434,6 +434,7 @@ You are `reviewer-skills`, a focused read-only reviewer for `SKILL.md` and refer
 - Cite specific files and line numbers for every issue you find.
 - If you cannot verify something, say so clearly rather than guessing.
 - Keep feedback focused, concrete, and actionable.
+- In consumer repos, flag any hand-edit to installed `.agents/skills/` files; these are generated outputs and should not be modified directly.
 
 ## Inputs the orchestrator must provide
 
@@ -445,15 +446,16 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **4. Cross-skill script paths**, **5. Reference file hygiene**, **6. Script path safety**, and **8. Prompt robustness**.
+1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **4. Cross-skill script paths**, **5. Reference file hygiene**, **6. Script path safety**, **8. Prompt robustness**, and **9. `SKILL.md` `metadata` block**.
 2. If `<scan_findings>` is provided, read it first and do not duplicate its findings; instead, verify the preflight caught the pattern in the right place.
 3. If `<pr_description>` is provided, read it for scope.
 4. Read `<diff_path>`.
 5. Inspect the diff for:
-   - Changed `SKILL.md` files: `license` must be top-level, not nested under `metadata`; `name` and `description` top-level.
-   - Stale cross-skill script paths (old `subagent-driven-development/scripts` where `subagent-workspace/scripts` is now canonical).
+   - Changed `SKILL.md` files:
+     - `license`, `name`, and `description` must be top-level keys; `license` must not be nested under `metadata`.
+     - `metadata` block hygiene: reject `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}`; only the skill-policy keys listed in section 9 are permitted.
    - Malformed markdown table rows (rows containing `|` that do not end with `|`).
-   - Examples that use `python -m` or omit the `-3` qualifier in `py -3 -m`.
+   - Examples that omit the `py -3` convention or use `python -m`, `python3 -m`, or `py -m `.
    - PowerShell/Bash scripts that `Push-Location` or `cd` and then write to a relative path without resolving it first.
    - Read-only subagent prompts that force the subagent to run `git` or `exec` to recreate a missing diff, or to mutate files.
 6. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
@@ -482,8 +484,7 @@ Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.js
    - `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, and `.agents/plugins/marketplace.json` changes.
    - Any scaffolder or generator that overwrites existing top-level metadata when it re-runs.
    - `--check` vs `--apply` semantics and read-only/mutating command classification.
-   - Cross-skill script paths in `SKILL.md` or reference files that use this repo's canonical `subagent-workspace/scripts/` or `.agents/skills/` path list. Verify the path exists; if not, it is a stale or wrong reference (the preflight should have caught this; confirm it did).
-   - `py -3` qualifier in runnable examples; flag `python -m`, `python3 -m`, or `py -m `.
+   - Stale or wrong cross-skill script paths in `SKILL.md` or reference files that use this repo's canonical `subagent-workspace/scripts/` or `.agents/skills/` path list. Verify the path exists; if not, the preflight should catch it and you should confirm it did.
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
 ```
 
@@ -663,7 +664,7 @@ git push origin feat/review-robustness
 
 - [ ] **Step 3: Update the PR body with the final SHA**
 
-Use `gh pr edit 259 --body-file` with the updated head SHA.
+Use `gh pr edit 259 --body-file <path>` or `gh pr edit 259 --body "..."` with the updated head SHA. Also update `Z:/_agent-scratch/review-robustness-review/pr_description.txt` to match.
 
 ---
 
