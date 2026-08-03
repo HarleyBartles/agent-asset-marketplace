@@ -310,16 +310,24 @@ def _skill_bundle_entry(skill_dir: Path, pack_name: str) -> dict[str, Any] | Non
     )
     provenance_name = metadata.get("provenance-name") or metadata.get("provenance_name") or f"{name} first-party skill"
 
+    source_family = source_category if source_category in {"first_party", "third_party"} else "first_party"
+    family_display = "first-party" if source_family == "first_party" else "third-party"
+    provenance_note = (
+        metadata.get("provenance-note")
+        or metadata.get("provenance_note")
+        or f"Canonical {family_display} {name} skill. ({provenance_name})"
+    )
+
     return {
         "canonical_name": name,
         "source_category": source_category,
         "content_mode": content_mode,
-        "source_family": source_category if source_category in {"first_party", "third_party"} else "first_party",
+        "source_family": source_family,
         "canonical_source_path": f"codex-marketplace/plugins/{pack_name}/skills/{name}",
         "local_path": f"skills/{name}",
         "source_path": source_path,
         "copy_expectation": "byte_identical",
-        "provenance_note": f"Canonical first-party {name} skill. ({provenance_name})",
+        "provenance_note": provenance_note,
     }
 
 
@@ -332,14 +340,24 @@ def _sync_bundle_manifest(pack_name: str) -> None:
     with bundle_path.open("r", encoding="utf-8") as f:
         bundle = json.load(f)
 
+    existing_entries = {
+        e["canonical_name"]: e
+        for e in bundle.get("entries", [])
+        if "canonical_name" in e
+    }
+
     entries: list[dict[str, Any]] = []
     skills_dir = pack_dir / "skills"
     if skills_dir.is_dir():
         for child in sorted(skills_dir.iterdir()):
             if child.is_dir() and not child.name.startswith("."):
                 entry = _skill_bundle_entry(child, pack_name)
-                if entry:
-                    entries.append(entry)
+                if not entry:
+                    continue
+                old = existing_entries.get(entry["canonical_name"], {})
+                provenance = old.get("provenance_note", entry["provenance_note"])
+                entry = {**old, **entry, "provenance_note": provenance}
+                entries.append(entry)
 
     bundle["entries"] = entries
 
