@@ -1,8 +1,6 @@
 ﻿from pathlib import Path
 import importlib.util
 
-import pytest
-
 SPEC = importlib.util.spec_from_file_location(
     "review_preflight", str(Path("tools/review_preflight.py").resolve())
 )
