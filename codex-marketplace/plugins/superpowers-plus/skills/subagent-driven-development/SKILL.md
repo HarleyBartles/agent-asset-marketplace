@@ -172,6 +172,11 @@ a ledger file, not only in todos.
 - `git clean -fdx` will not touch the workspace (it lives outside the repo);
   recover from `git log` if a plan's scratch is removed manually.
 
+Read the repo's `.agents/runbooks/implementing.md` before dispatching the first
+implementer subagent. The implementer subagent is responsible for the plan-completion,
+TDD, and pre-completion-verification requirements in that runbook. Do not hand
+off to review with an unchecked plan.
+
 Read the plan once, note its context and Global Constraints, and create a
 todo per task.
 
