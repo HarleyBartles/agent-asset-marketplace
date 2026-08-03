@@ -1,7 +1,7 @@
-# Design: `using-playwright` skill
+# Design: `using-playwright-mcp` skill
 
 Date: 2026-08-03
-Worktree: `Z:\_agent-worktrees\agent-asset-marketplace\spec\using-playwright`
+Worktree: `Z:\_agent-worktrees\agent-asset-marketplace\spec\using-playwright-mcp`
 
 ## Problem
 
@@ -9,7 +9,7 @@ Agents need to choose the right Playwright surface for browser automation or web
 
 ## Goal
 
-Create a `using-playwright` skill in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright/` that:
+Create a `using-playwright-mcp` skill in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/` that:
 
 1. Mirrors the `using-linear` pattern: a short `SKILL.md` router plus use-case reference files.
 2. Teaches the `mcp-playwright` tool surface as the default.
@@ -58,7 +58,7 @@ The `SKILL.md` router table maps common intents to the correct reference file, j
 
 ## Source and custody
 
-- Source skill lives in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright/` (canonical product custody per `.agents/AGENTS.md`).
+- Source skill lives in `codex-marketplace/plugins/repo-worker-pack/skills/using-playwright-mcp/` (canonical product custody per `.agents/AGENTS.md`).
 - Generated mesh indexes are downstream outputs; do not hand-edit.
 
 ## Handoff confidence
@@ -75,6 +75,6 @@ This skill follows a reusable pattern for agent-facing MCP wrappers:
 4. **Environment check.** Before using an installable fallback, run `/inspecting-the-environment` to confirm it is present.
 5. **Naming convention as guide, not rule.** `using-<x>` is a useful convention but not a hard requirement; other names may fit.
 
-Examples: `using-linear`, `using-github-mcp`, and `using-playwright`.
+Examples: `using-linear-mcp` (renamed from `using-linear`), `using-github-mcp`, and `using-playwright-mcp`.
 
-This pattern should be recorded in `.agents/runbooks/skill-authoring.md` so future MCP-wrapper skills follow it consistently.
+This pattern should be recorded in `.agents/runbooks/skill-authoring.md` so future MCP-wrapper skills follow it consistently. As part of this work, the existing `using-linear` skill will be renamed `using-linear-mcp` to align with the convention.
