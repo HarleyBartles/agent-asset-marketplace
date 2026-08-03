@@ -22,7 +22,7 @@
 | `browser_network_request` | Inspect a specific network request | `id` | `filename` | — |
 | `browser_take_screenshot` | Capture a screenshot | — | `filename`, `fullPage` | — |
 | `browser_tabs` | List or switch browser tabs | — | `action`, `tabId` | — |
-| `browser_wait_for` | Wait for an event, text, or timeout | `time` | `selector`, `text`, `textGone` | Provide exactly one of `selector`, `text`, or `textGone` along with `time`.
+| `browser_wait_for` | Wait for an event, text, or timeout | `time` | `selector`, `text`, `textGone` | Provide exactly one of `selector`, `text`, or `textGone` along with `time`. |
 | `browser_close` | Close the browser/page | — | — | Destructive; run when done. |
 
 Always check the live `mcp_list_tools` output for the authoritative list and schemas; this map is a routing guide, not a schema dump.

@@ -261,7 +261,7 @@ def _register_root(name: str) -> None:
             "registry_path": f"./codex-marketplace/plugins/{name}",
             "plugin_root": f"codex-marketplace/plugins/{name}",
             "manifest_path": f"codex-marketplace/plugins/{name}/.codex-plugin/plugin.json",
-            "enabled": True,
+            "enabled": False,
         }
     )
 
@@ -362,7 +362,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if not args.allow_shared_checkout:
+    if args.apply and not args.allow_shared_checkout:
         try:
             git_dir = Path(
                 subprocess.run(

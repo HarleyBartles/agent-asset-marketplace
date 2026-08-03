@@ -1,6 +1,7 @@
 ---
 name: subagent-workspace
 description: Use when resolving the off-repo scratch workspace for subagent tasks and placing short-lived subagent inputs and outputs.
+license: MIT
 metadata:
   source-id: subagent-workspace
   source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/SKILL.md
@@ -20,7 +21,6 @@ metadata:
   - subagent-driven-development
   - iterative-review
   - selecting-a-subagent
-  license: MIT
 ---
 
 ## Provenance

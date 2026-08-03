@@ -42,6 +42,10 @@ else {
   $repoRoot = (git -C (Split-Path -Parent $resolvedPlan) rev-parse --show-toplevel).Trim()
 }
 
+if (-not [string]::IsNullOrWhiteSpace($OutFile)) {
+  $OutFile = [System.IO.Path]::GetFullPath($OutFile)
+}
+
 Push-Location $repoRoot
 try {
   & git rev-parse --verify --quiet $Base *> $null

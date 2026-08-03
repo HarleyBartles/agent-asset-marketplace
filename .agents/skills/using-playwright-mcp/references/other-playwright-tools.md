@@ -14,6 +14,6 @@ Use this reference when the Playwright MCP surface does not cover the task.
 2. Run `/inspecting-the-environment` to confirm Playwright is installed.
 3. Choose the right non-MCP surface:
    - **Browser preview** (`browser_preview`) for live interaction.
-   - **`py -m playwright` / `npx playwright`** for CLI-only tasks.
+   - **`py -3 -m playwright` / `npx playwright`** for CLI-only tasks.
    - **A temporary Python/Node script** for complex flows.
 4. Keep the script near the task; clean it up after use.

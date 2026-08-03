@@ -35,7 +35,7 @@ These are the `discord` MCP tools that work with the bot's current read-only per
 
 ### Read messages from a text channel
 
-1. Use `discord_list_channels` or `discord_find_channel_by_name` with the default `guild_id` `1499133830773346424`.
+1. Use `discord_list_channels` or `discord_find_channel_by_name` with the guild ID from the `DISCORD_GUILD_ID` environment variable (or call `discord_list_guilds` to discover the target server).
 2. Call `discord_read_messages` with `channel_id` and `limit`.
 3. If a message has attachments, use `discord_download_attachment` with `attachments[].url`.
 
