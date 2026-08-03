@@ -50,7 +50,7 @@ def _fixture(path: str, content: str):
 
 def test_snowflake_with_context_is_flagged():
     path, content = _fixture(
-        "references/guild-map.md",
+        "skills/test/SKILL.md",
         "The main guild has guild_id 123456789012345678.\n",
     )
     findings = []
@@ -60,7 +60,7 @@ def test_snowflake_with_context_is_flagged():
 
 def test_snowflake_without_context_is_not_flagged():
     path, content = _fixture(
-        "references/tally.md",
+        "README.md",
         "The count is 123456789012345678.\n",
     )
     findings = []
@@ -70,7 +70,7 @@ def test_snowflake_without_context_is_not_flagged():
 
 def test_snowflake_in_code_block_is_not_flagged():
     path, content = _fixture(
-        "references/example.md",
+        "README.md",
         "```\nguild_id 123456789012345678\n```\n",
     )
     findings = []
@@ -152,7 +152,7 @@ No `tools/review_preflight.py` import-harness changes are needed; the test file 
 py -3 -m pytest tests/test_review_preflight.py -v
 ```
 
-Expected: failures only for checks not yet implemented; the `test_snowflake_without_context_is_not_flagged` case should already pass because `references/` files are exempt.
+Expected: failures only for checks not yet implemented. `test_snowflake_without_context_is_not_flagged` should pass because the number has no `guild|server|...` context; the fenced-code fixture tests the same scanner on a non-exempt `README.md`. Note that `_scan_security` skips all `references/` paths, so these snowflake heuristics are exercised in non-exempt files.
 
 - [ ] **Step 4: Commit**
 
@@ -224,9 +224,9 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     review_preflight._scan_skill_metadata(path, content, findings)  # add this call
 ```
 
-- [ ] **Step 2: Add `SKILL.md` and reference file canonical path check to `tools/review_preflight.py`**
+- [ ] **Step 2: Add stale path and canonical path checks to `tools/review_preflight.py`**
 
-Add a scanner that flags any backtick path starting with `.agents/skills/` or `subagent-workspace/scripts/` that does not resolve to an installed or source file:
+First, keep the existing `_scan_stale_paths` scanner (it already flags any `subagent-driven-development/scripts` string and is exercised by `test_stale_subagent_path_is_flagged` in Task 1). Then add a scanner that flags any backtick path starting with `.agents/skills/` or `subagent-workspace/scripts/` that does not resolve to an installed or source file:
 
 ```python
 import re
@@ -258,7 +258,16 @@ The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit 
 
 - [ ] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
 
-Extend `_scan_new_plugin` to cover all four design contract checks: both `--sync` and `--apply` honor `shared_checkout.approve_mutation`, `--sync` preserves existing top-level bundle-manifest fields, the scaffolder does not write a default icon and immediately overwrite it, and helper functions have no unused `name` parameter. Add a positive and a negative fixture in `tests/test_review_preflight.py` for each. If any check cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
+Extend `_scan_new_plugin` to cover the four design contract checks explicitly, mapping each to a deterministic pattern or to the `reviewer-marketplace` lens:
+
+1. `--sync` and `--apply` both honor `shared_checkout.approve_mutation`.
+   - Deterministic hook: the `test_new_plugin_bogus_return_is_flagged` fixture added in Task 1 flags the conflated `return 0 if result is None or args.check else 1` pattern.
+2. `--sync` preserves existing top-level bundle-manifest fields.
+   - Add a positive and a negative fixture in `tests/test_review_preflight.py`. If this cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
+3. The scaffolder does not write a default icon and immediately overwrite it.
+   - Deterministic hook: the `test_new_plugin_default_enabled_true_is_flagged` fixture added in Task 1 flags a literal `    "enabled": True` default.
+4. Helper functions have no unused `name` parameter.
+   - Add a positive and a negative fixture in `tests/test_review_preflight.py`. If this cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
 
 - [ ] **Step 5: Wire `review-preflight` into `ci` and add the `tools/run.py` task-semantic test**
 
@@ -275,7 +284,15 @@ Then add the following test in `tests/test_run_cli.py` to ensure read-only tasks
 
 ```python
 def test_read_only_tasks_do_not_advertise_apply():
-    from tools import run
+    from pathlib import Path
+    import importlib.util
+
+    RUN_SPEC = importlib.util.spec_from_file_location(
+        "run", str(Path("tools/run.py").resolve())
+    )
+    run = importlib.util.module_from_spec(RUN_SPEC)
+    RUN_SPEC.loader.exec_module(run)
+
     aggregators = {"ci", "all"}
     for name, task in run._TASKS.items():
         if name in aggregators:
@@ -396,9 +413,9 @@ Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.js
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
 ```
 
-- [ ] **Step 3: Remove or archive `reviewer-references.md`**
+- [ ] **Step 3: Deprecate `reviewer-references.md`**
 
-If `reviewer-references.md` is referenced by other files, keep `.agents/agents/reviewer-references.md` as a one-line redirect file for one cycle:
+Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-line redirect for one cycle:
 
 ```markdown
 # Deprecated
@@ -406,7 +423,7 @@ If `reviewer-references.md` is referenced by other files, keep `.agents/agents/r
 This profile has been split into `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local).
 ```
 
-If nothing references it, `git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` and remove the generated `.agents/agents/reviewer-references.md` by running `py -3 tools/run.py marketplace --apply`.
+Remove only the generated `.agents/agents/reviewer-references.md` copy with `git rm .agents/agents/reviewer-references.md`. Do not `git rm` the source file this cycle; it remains as the redirect for one cycle to avoid breaking external links.
 
 - [ ] **Step 4: Regenerate the marketplace**
 
