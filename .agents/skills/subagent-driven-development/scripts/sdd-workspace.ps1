@@ -1,6 +1,4 @@
-#!/usr/bin/env pwsh
 param(
-  [Parameter(Position = 0)]
   [string]$PlanFile = ''
 )
 
@@ -48,9 +46,11 @@ else {
 $PlanFile = $resolvedPlan
 
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
-$branch = $branch -replace '[\\:*?"<>|]', '-'
-$parent = (Get-Item (Join-Path $root '..')).FullName
-$workspaceRoot = Join-Path $parent "_agent-scratch" $branch
+$branch = $branch -replace '[\\/:*?"<>|]', '-'
+$commonGit = (git -C "$root" rev-parse --path-format=absolute --git-common-dir).Trim()
+$mainCheckout = Split-Path -Parent $commonGit
+$scratchParent = Split-Path -Parent $mainCheckout
+$workspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'
