@@ -205,7 +205,7 @@ def _bundle_manifest(name: str) -> str:
     "first_party"
   ],
   "notes": [
-    "{name} combines first-party MCP-usage skills."
+    "{name} combines first-party {name} skills."
   ],
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
@@ -394,8 +394,10 @@ def main() -> int:
             return 1
 
     result = _validate(args.name, args.check)
-    if args.check or result is None:
-        return 0 if result is None or args.check else 1
+    if args.check:
+        return 0
+    if result is None:
+        return 1
 
     pack_dir, _ = result
     _scaffold(args.name, pack_dir)

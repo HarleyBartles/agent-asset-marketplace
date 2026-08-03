@@ -60,7 +60,8 @@ $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'
 $planStem = ''
 if (-not [string]::IsNullOrWhiteSpace($PlanFile)) {
   $planStem = Get-PlanStem -Path $PlanFile
-  Set-Content -LiteralPath $currentPlanMarker -Value $planStem -Encoding utf8
+  $encoding = New-Object System.Text.UTF8Encoding($false)
+  [System.IO.File]::WriteAllText($currentPlanMarker, $planStem, $encoding)
 }
 elseif (Test-Path -LiteralPath $currentPlanMarker) {
   $planStem = (Get-Content -LiteralPath $currentPlanMarker -Raw).Trim()
