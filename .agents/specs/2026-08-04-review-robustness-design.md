@@ -87,7 +87,7 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 
 - `py -3 tools/run.py ci --check` passes after the preflight changes.
 - `py -3 tools/run.py marketplace --apply` installs the updated lens profiles and runbook.
-- A synthetic bad diff (e.g., `metadata: ` in a `SKILL.md`, stale `subagent-driven-development/scripts` path, unused parameters in `new_plugin.py`) is caught by `review-preflight` before `iterative-review` is invoked.
+- A synthetic bad diff (e.g., `metadata: ` in a `SKILL.md`, stale `subagent-driven-development/scripts` path) is caught by `review-preflight` before `iterative-review` is invoked.
 
 ## Source and custody
 

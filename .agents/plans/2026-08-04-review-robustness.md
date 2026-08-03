@@ -218,7 +218,7 @@ Then update `_scan_skill_frontmatter` to call `_load_skill_frontmatter` instead 
 ```python
 def _scan_file(path: Path, findings: list[str]) -> None:
     ...
-    review_preflight._scan_skill_metadata(path, content, findings)  # add this call
+    _scan_skill_metadata(path, content, findings)  # add this call
 ```
 
 - [ ] **Step 2: Add stale path and canonical path checks to `tools/review_preflight.py`**
@@ -227,6 +227,28 @@ First, keep the existing `_scan_stale_paths` scanner (it already flags any `suba
 
 ```python
 import re
+
+_SOURCE_PATHS: set[str] | None = None
+
+
+def _source_paths() -> set[str]:
+    global _SOURCE_PATHS
+    if _SOURCE_PATHS is not None:
+        return _SOURCE_PATHS
+    _SOURCE_PATHS = set()
+    plugins = ROOT / "codex-marketplace/plugins"
+    for plugin_dir in plugins.iterdir():
+        if not plugin_dir.is_dir():
+            continue
+        for sub in ("skills", "assets/profiles"):
+            base = plugin_dir / sub
+            if not base.is_dir():
+                continue
+            for p in base.rglob("*"):
+                if p.is_file() and p.suffix in {".md", ".ps1"}:
+                    _SOURCE_PATHS.add(p.relative_to(base).as_posix())
+    return _SOURCE_PATHS
+
 
 _CANONICAL_PATHS = re.compile(
     r"`(?:\.agents/skills/([^`\s]+)|subagent-workspace/scripts/([^`\s]+))`"
@@ -250,10 +272,7 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             if target.is_file():
                 continue
             # Fall back to the source plugin tree for paths not yet installed.
-            source_match = any(
-                p.is_file() and p.as_posix().endswith("/" + rel)
-                for p in (ROOT / "codex-marketplace/plugins").rglob("*")
-            )
+            source_match = rel in _source_paths()
             if not source_match:
                 _warn(findings, path, line_no, f"referenced path `{prefix}{rel}` does not exist")
 
@@ -599,7 +618,11 @@ git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-refer
 
 If a generated `.agents/agents/reviewer-references.md` copy is still present, remove it with `git rm .agents/agents/reviewer-references.md` as well.
 
-- [ ] **Step 4: Regenerate the marketplace**
+- [ ] **Step 4: Update the source `INDEX.md`**
+
+Edit `codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md` to remove `reviewer-references.md` and add `reviewer-skills.md` and `reviewer-marketplace.md`. After `marketplace --apply` in the next step, verify that the installed `.agents/agents/INDEX.md` reflects the same list.
+
+- [ ] **Step 5: Regenerate the marketplace**
 
 ```bash
 py -3 tools/run.py marketplace --apply
@@ -608,7 +631,8 @@ py -3 tools/run.py marketplace --apply
 Verify that `.agents/agents/reviewer-skills.md` is now installed, `.agents/agents/reviewer-marketplace.md` is present, and `.agents/agents/reviewer-references.md` is absent.
 
 ```bash
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md \
+git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md \
+      codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md \
       .agents/agents/ .agents/skills/
 py -3 tools/run.py ci --check
 git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
@@ -657,6 +681,8 @@ Example for section 3:
 ```markdown
 ## 9. `SKILL.md` `metadata` block
 
+- **Title:** SKILL.md metadata block
+- **Severity:** important
 - **Owner preflight:** `tools/review_preflight.py` (`_scan_skill_metadata`).
 - **Owner lens:** `reviewer-skills`.
 - **Portable:** yes (all `SKILL.md` files carry this schema).
