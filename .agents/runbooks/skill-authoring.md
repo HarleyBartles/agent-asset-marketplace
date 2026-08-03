@@ -48,20 +48,36 @@ py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>
 For marketplace-wide source or structure changes, run:
 
 ```bash
-tools/run marketplace --apply
+py -3 tools/run.py marketplace --apply
 ```
 
 Install refreshed skills to the local agent surface with:
 
 ```bash
-tools/run installed-skills --apply
+py -3 tools/run.py installed-skills --apply
 ```
 
 Check the resulting marketplace state with:
 
 ```bash
-tools/run ci --check
+py -3 tools/run.py ci --check
 ```
+
+## MCP wrapper skills
+
+MCP-usage skills follow the `using-<x>-mcp` naming convention and live in the `mcp-usage-pack` plugin pack. When adding or moving one:
+
+1. Name the skill `using-<x>-mcp` and place it in `codex-marketplace/plugins/mcp-usage-pack/skills/<name>/`.
+2. Provide `SKILL.md` with a router table that maps common intents to `references/*.md` files.
+3. Provide `agents/openai.yaml` with `skill_name`, `source_category: first_party`, `display_name`, `short_description`, `default_prompt`, and `allow_implicit_invocation: true`.
+4. Provide `assets/icon.svg` and a `references/` directory with `surface-map.md` covering the key MCP tools, use-case files, and a fallback reference file for non-MCP or alternative surfaces relevant to that skill's domain (e.g., `other-playwright-tools.md` for a Playwright skill, `other-github-surfaces.md` for a GitHub skill, `other-rest-apis.md` for a connector skill).
+5. After adding or moving skills, regenerate the pack's `references/bundle-manifest.json` with:
+
+```bash
+py -3 tools/new_plugin.py --sync mcp-usage-pack
+```
+
+6. Apply marketplace and installed-skills changes with `py -3 tools/run.py marketplace --apply`.
 
 ## Publication handoff
 

@@ -288,6 +288,7 @@ def _run_validate(ctx: Ctx) -> None:
 def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/generate_marketplace.py"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
+    _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -357,6 +358,13 @@ def _apply_archive_links(ctx: Ctx) -> None:
     _run([sys.executable, "tools/check_archive_links.py"], ctx)
 
 
+def _check_review_preflight(ctx: Ctx) -> None:
+    cmd = [sys.executable, "tools/review_preflight.py", "--check"]
+    if ctx.base_ref:
+        cmd.extend(["--base-ref", ctx.base_ref])
+    _run(cmd, ctx)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -369,8 +377,14 @@ _TASKS: dict[str, Task] = {
         check=(_check_inventory,),
         fix="tools/run inventory --apply",
     ),
-    "installed-skills": Task(
+    "marketplace": Task(
         deps=("inventory",),
+        apply=(_apply_marketplace,),
+        check=(_check_marketplace,),
+        fix="tools/run marketplace --apply",
+    ),
+    "installed-skills": Task(
+        deps=("marketplace",),
         apply=(_apply_installed_skills,),
         check=(_check_installed_skills,),
         fix="tools/run installed-skills --apply",
@@ -393,19 +407,17 @@ _TASKS: dict[str, Task] = {
         check=(_run_validate,),
         fix="tools/run marketplace --apply",
     ),
-    "marketplace": Task(
-        deps=("validate",),
-        apply=(_apply_marketplace,),
-        check=(_check_marketplace,),
-        fix="tools/run marketplace --apply",
-    ),
     "archive-links": Task(
         apply=(_apply_archive_links,),
         check=(_check_archive_links,),
         fix="tools/run archive-links --apply",
     ),
+    "review-preflight": Task(
+        check=(_check_review_preflight,),
+        fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
+    ),
     "ci": Task(
-        deps=("lint", "repo-standards", "marketplace", "archive-links"),
+        deps=("lint", "repo-standards", "validate", "archive-links"),
         fix="tools/run ci --apply",
     ),
     "all": Task(
@@ -472,9 +484,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Dependency-aware task runner for the agent-asset-marketplace",
         epilog=(
-            "Targets: "
-            + ", ".join(_TASKS.keys())
-            + "\n"
+            "Targets: " + ", ".join(_TASKS.keys()) + "\n"
             "ci --check is the full non-mutating CI gate; do not run it on an uncommitted "
             "working tree. Edit, run the relevant <target> --apply, stage, commit, "
             "and let the pre-commit hook run ci --check. See .devin/rules/tools.md."

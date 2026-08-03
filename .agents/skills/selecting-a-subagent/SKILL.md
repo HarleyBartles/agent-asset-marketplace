@@ -17,7 +17,8 @@ metadata:
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
   - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
-    `reviewer-strong`, `implementer`, or `implementer-strong`.
+    `reviewer-strong`, `reviewer-security`, `reviewer-references`,
+    `implementer`, or `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -74,7 +75,8 @@ If you want to use the Devin Desktop custom profiles, install the corresponding
 
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`reviewer-fast`, `reviewer-strong`, `implementer`, and `implementer-strong`.
+`reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-references`,
+`implementer`, and `implementer-strong`.
 
 ## Common custom subagent profile dispatch
 
@@ -82,12 +84,31 @@ For example, copy `assets/implementer.md` to
 |---|---|
 | Most review tasks, focused re-reviews, and architecture challenges | `reviewer` |
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
+| Security and PII lens in a full-branch/PR diff | `reviewer-security` |
+| SKILL.md, reference-file, markdown, and prompt-robustness lens | `reviewer-references` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+| Repo-specific lens (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
 reviewer profile. The reviewer subagent does not resolve the diff itself.
+
+## Repo-specific lens profiles
+
+A consumer repo can extend the portable lens set by authoring a hand-edited
+`.agents/agents/reviewer-<lens>.md` override. These are not installed by the
+marketplace; they are repo-local and take precedence over vendor profiles.
+
+Use this when the repo has domain-specific surfaces that a generic lens cannot
+cover. For example, `agent-asset-marketplace` provides `.agents/agents/reviewer-marketplace.md`
+to review `codex-marketplace`, `new_plugin.py`, and scaffolder surfaces. A
+different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
+for a test harness.
+
+When `iterative-review` runs, it should dispatch all portable lenses
+(`reviewer-security`, `reviewer-references`) plus any `.agents/agents/reviewer-*.md`
+profiles that the repo's `AGENTS.md` declares as active.
 
 ## Vendor and third-party profiles
 

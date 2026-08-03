@@ -847,8 +847,11 @@ def main(argv: list[str] | None = None) -> int:
         changes_made = True
 
     # Vendor subagent profiles are owned by repo-standards. The refresh script
-    # already called deploy_vendor_profiles.py --check above, so here we only
-    # need to apply changes if the user requested it.
+    # already called deploy_vendor_profiles.py --check above, so use that result
+    # to decide whether the vendor profile surface changed.
+    if deploy_check != 0:
+        changes_made = True
+
     if args.apply:
         deploy_apply = subprocess.run(
             [sys.executable, str(deploy_script), "--apply"],
@@ -856,10 +859,7 @@ def main(argv: list[str] | None = None) -> int:
             env=_stripped_env(),
         )
         if deploy_apply.returncode != 0:
-            changes_made = True
-    else:
-        if deploy_check != 0:
-            changes_made = True
+            return deploy_apply.returncode
 
     # Provenance metadata drift (plugin list, local skills, manifest SHA) is also
     # a change worth reporting and writing.
