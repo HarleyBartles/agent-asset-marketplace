@@ -159,7 +159,6 @@ Skills are installed from the Codex plugin roots under `codex-marketplace/plugin
 
 
 def _source(name: str) -> str:
-    _title_case(name)
     return f"""# Source
 
 This plugin projects the first-party {name} skills.

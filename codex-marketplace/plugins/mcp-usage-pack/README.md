@@ -1,4 +1,4 @@
-# Mcp Usage Pack
+# MCP Usage Pack
 
 This bundle projects the first-party mcp-usage-pack skills.
 

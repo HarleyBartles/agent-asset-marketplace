@@ -1,7 +1,7 @@
 {
     "name": "mcp-usage-pack",
     "version": "1.0.0",
-    "description": "Mcp Usage Pack for Codex.",
+    "description": "MCP Usage Pack for Codex.",
     "author": {
         "name": "Harley Bartles"
     },
@@ -15,13 +15,13 @@
     ],
     "skills": "./skills/",
     "interface": {
-        "displayName": "Mcp Usage Pack",
-        "shortDescription": "Mcp Usage Pack for Codex.",
+        "displayName": "MCP Usage Pack",
+        "shortDescription": "MCP Usage Pack for Codex.",
         "longDescription": "First-party Codex marketplace plugin for mcp-usage-pack.",
         "developerName": "Harley Bartles",
         "category": "Productivity",
         "capabilities": [],
-        "defaultPrompt": "Use Mcp Usage Pack when the task is covered by the mcp-usage-pack skills.",
+        "defaultPrompt": "Use MCP Usage Pack when the task is covered by the mcp-usage-pack skills.",
         "brandColor": "#111827",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"

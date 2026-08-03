@@ -26,7 +26,7 @@ Use this skill to pick the right `discord` MCP tool and to stay inside the bot's
 
 - **MCP server name:** `discord`
 - **Package:** `@rayenking/discord-mcp@1.0.2`
-- **Default server (guild) ID:** `1499133830773346424`
+- **Default server (guild) ID:** `<your-guild-id>`
 - **Current permissions:** View Channels, Read Message History, Message Content Intent, Server Members Intent, Presence Intent.
 - **The bot is not an admin.** It cannot send messages, manage messages/channels/roles, kick/ban, create invites, or perform any other write or moderation action unless your human partner explicitly widens its permissions.
 
@@ -34,7 +34,7 @@ Use this skill to pick the right `discord` MCP tool and to stay inside the bot's
 
 1. **Read is safe; write is not.** If a tool only inspects data, the bot can run it. If a tool creates, updates, deletes, sends, or manages anything, stop and ask your human partner to add the Discord permission first.
 2. **Use IDs, not names.** Discord tools accept snowflake IDs (`guild_id`, `channel_id`, `message_id`). Use `discord_list_channels` or `discord_find_channel_by_name` to resolve a channel name to an ID.
-3. **The default `guild_id` is `1499133830773346424`.** Use it for any tool that requires `guild_id` unless your human partner gives you a different one.
+3. **The default `guild_id` is `<your-guild-id>`.** Use it for any tool that requires `guild_id` unless your human partner gives you a different one.
 
 ## Router
 
@@ -46,7 +46,7 @@ Use this skill to pick the right `discord` MCP tool and to stay inside the bot's
 
 ## Reading pattern
 
-1. If you do not already have a `channel_id`, use `discord_list_channels` or `discord_find_channel_by_name` with `guild_id` `1499133830773346424`.
+1. If you do not already have a `channel_id`, use `discord_list_channels` or `discord_find_channel_by_name` with `guild_id` `<your-guild-id>`.
 2. Call `discord_read_messages` with `channel_id` and a small `limit`.
 3. For each message, inspect `attachments[].url`. If a message contains an image or file, call `discord_download_attachment` with that URL to save it locally.
 

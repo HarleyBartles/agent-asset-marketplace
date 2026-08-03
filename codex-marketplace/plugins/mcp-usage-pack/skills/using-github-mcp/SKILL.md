@@ -5,7 +5,7 @@ description: Use when choosing the right GitHub or Git surface for a task, picki
 metadata:
   source-id: using-github-mcp
   source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-github-mcp/SKILL.md
-  provenance-name: Using GitHub Mcp first-party skill
+  provenance-name: Using GitHub MCP first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
