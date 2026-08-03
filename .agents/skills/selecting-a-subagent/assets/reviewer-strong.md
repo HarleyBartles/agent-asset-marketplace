@@ -36,7 +36,6 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 
 ## Procedure
 
-0. Read `selecting-a-subagent/assets/reviewer-known-findings.md` (`.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` in the installed copy) to load the concrete bug patterns this review should catch.
 1. If the lens-review logs are provided, read them first. Note the findings, their severities, and the patterns they cover.
 2. If `<scan_findings>` is provided, read it next.
 3. If `<pr_description>` is provided, read it to understand intent and scope. If it references a design spec, implementation plan, or epic roadmap, read those before the diff. Do not invent expectations that contradict the provided description.

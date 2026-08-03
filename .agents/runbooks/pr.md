@@ -50,7 +50,7 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
 3. **Orchestrator pre-emptive review.**
-   - Do not dispatch reviewers to catch what you can see yourself. Before `iterative-review`, the orchestrating agent reads the branch diff, `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`, and the relevant lens profiles.
+   - Do not dispatch reviewers to catch what you can see yourself. Before `iterative-review`, the orchestrating agent reads the branch diff and the relevant `.agents/agents/reviewer-*.md` lens profiles. The profile is the checklist for both the orchestrator and the subagent reviewer.
    - For each lens, ask: *What would this lens flag that I can fix with high confidence?* Apply those fixes now.
    - If a finding class is not in the preflight but is clearly present in the diff, fix it pre-emptively. Do not waste a reviewer round on an obvious defect.
    - Record the predicted and pre-emptively fixed classes so `iterative-review` can focus on judgment calls and uncertain areas.

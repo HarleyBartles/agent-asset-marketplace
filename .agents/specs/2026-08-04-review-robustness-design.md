@@ -94,7 +94,7 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 
 - Tooling changes live in `tools/review_preflight.py` and `tools/run.py`.
 - Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; remove `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` after dispatch is updated. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md`; `reviewer-marketplace.md` remains the tracked repo-local override in `.agents/agents/`.
-- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
+- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is reviewer-known-findings.md (removed in implementation; each reviewer profile now owns its own checklist).
 - The new runbook lives in `.agents/runbooks/review-robustness.md`.
 - Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `py -3 tools/run.py marketplace --apply`.
 

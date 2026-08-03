@@ -34,11 +34,10 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on section **3. Marketplace tooling (`tools/new_plugin.py`, `tools/run.py`, scaffolders)**.
-2. If `<scan_findings>` is provided, read it first.
-3. If `<pr_description>` is provided, read it for scope.
-4. Read `<diff_path>`.
-5. Inspect the diff for:
+1. If `<scan_findings>` is provided, read it first.
+2. If `<pr_description>` is provided, read it for scope.
+3. Read `<diff_path>`.
+4. Inspect the diff for:
    - `tools/new_plugin.py` exit-code and default-enablement logic.
    - `tools/run.py` target wiring, `mutating` tags, and `ci` dependency correctness.
    - `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, and `.agents/plugins/marketplace.json` changes.
@@ -46,9 +45,9 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
    - `--check` vs `--apply` semantics and read-only/mutating command classification.
    - Stale or wrong cross-skill script paths in `SKILL.md` or reference files that use this repo's canonical `subagent-workspace/scripts/` or `.agents/skills/` path list. Verify the path exists; if not, the preflight should catch it and you should confirm it did.
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
-6. Run `grep` and `find_file_by_name` to cross-check that scaffolder output and generator output stay in sync.
-7. Report only marketplace/tooling issues. Cite `file:line`, severity, and remediation.
-8. End with `reviewer-marketplace: N issue(s)` or `reviewer-marketplace: clean`.
+5. Run `grep` and `find_file_by_name` to cross-check that scaffolder output and generator output stay in sync.
+6. Report only marketplace/tooling issues. Cite `file:line`, severity, and remediation.
+7. End with `reviewer-marketplace: N issue(s)` or `reviewer-marketplace: clean`.
 
 ## Output format
 

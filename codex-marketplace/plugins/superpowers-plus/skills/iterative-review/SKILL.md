@@ -56,7 +56,7 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
      - In rooms-mostly: `scripts/ci-preflight.ps1 -Check` and the checks listed in its `AGENTS.md`.
      Capture the output so the lens reviewers can cross-check rather than rediscover the findings.
 5. **Round 0 — orchestrator pre-emptive review.** Before dispatching subagent reviewers, the orchestrator performs a self-review of the full diff against the known-finding classes and lens profiles:
-   - Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (or the consumer repo's equivalent known-findings catalog) and the relevant `.agents/agents/reviewer-*.md` lens profiles.
+   - Read the relevant `.agents/agents/reviewer-*.md` lens profiles. Each profile is its own checklist; the orchestrator uses the same profiles for prediction that the subagent reviewers use for execution.
    - For each lens, scan the diff and ask: *What would this lens flag that I can fix now with high confidence?*
    - Apply the predictable fixes and commit them. Record the predicted/fixed classes and the rationale in `review-log-orchestrator-prediction.md` in the off-repo scratch; this log is an input to the lens reviewers.
    - Re-run the consumer's canonical preflight and update `scan_findings` so the fixed classes are no longer in the report.

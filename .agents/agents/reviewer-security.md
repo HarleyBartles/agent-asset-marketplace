@@ -34,19 +34,18 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on section **1. Secrets / real identifiers in source (CWE-200)**. Also keep section **6. Script path safety** in mind for any side-effect that could leak state or overwrite files unexpectedly.
-2. If `<scan_findings>` is provided, read it first and use it as a starting point.
-3. If `<pr_description>` is provided, read it to understand scope. Do not invent expectations that contradict it.
-4. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.
-5. Use `grep` to find likely secrets and identifiers in the diff and the touched files:
+1. If `<scan_findings>` is provided, read it first and use it as a starting point.
+2. If `<pr_description>` is provided, read it to understand scope. Do not invent expectations that contradict it.
+3. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.
+4. Use `grep` to find likely secrets and identifiers in the diff and the touched files:
    - 17–20 digit Discord/Slack/Matrix snowflake IDs, especially next to `guild_id`, `server_id`, `channel_id`, `user_id`, `tenant_id`, `discord`.
    - `api_key`, `token`, `secret`, `password`, `private_key`, `credential` with a value.
    - Email addresses.
    - Private IP addresses (`10.x`, `172.16-31.x`, `192.168.x`, `127.x`).
    - Any value that was redacted in one file but appears in another.
-6. For each finding, decide whether it is a real secret/identifier or an acceptable placeholder. If in doubt, report it.
-7. Report only security/PII issues. Cite `file:line`, severity, and remediation.
-8. End with `reviewer-security: N issue(s)` or `reviewer-security: clean`.
+5. For each finding, decide whether it is a real secret/identifier or an acceptable placeholder. If in doubt, report it.
+6. Report only security/PII issues. Cite `file:line`, severity, and remediation.
+7. End with `reviewer-security: N issue(s)` or `reviewer-security: clean`.
 
 ## Output format
 

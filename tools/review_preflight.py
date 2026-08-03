@@ -269,7 +269,6 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
 
 
 _SKIP_STALE_PATHS = {
-    "reviewer-known-findings.md",
     "2026-08-04-review-robustness.md",
     "2026-08-04-review-robustness-design.md",
 }

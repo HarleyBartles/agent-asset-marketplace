@@ -12,7 +12,7 @@
 
 - All Python changes must pass `py -3 tools/run.py ci --check`.
 - Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; remove `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` after dispatch is updated. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md`; `reviewer-marketplace.md` remains the tracked repo-local override in `.agents/agents/`.
-- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
+- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is reviewer-known-findings.md (removed in implementation; each reviewer profile now owns its own checklist).
 - Generated `.agents/` skill and agent copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill or profile source.
 - No `git commit --no-verify`.
 - Pre-commit hook re-runs `ci --check`; stage all changes before committing.
@@ -544,7 +544,7 @@ git commit -m "Route reviewer-references work to reviewer-skills and reviewer-ma
 - Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` (portable source)
 - Modify: `.agents/agents/reviewer-marketplace.md` (repo-local override)
 - Remove: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` (source) and its generated `.agents/agents/reviewer-references.md` copy.
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate reviewer-known-findings.md (removed in implementation; each reviewer profile now owns its own checklist)
 
 **Interfaces:**
 - Consumes: current `reviewer-references.md`, `reviewer-marketplace.md`, `reviewer-known-findings.md`.
@@ -590,7 +590,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **5. Reference file hygiene**, **6. Script path safety**, **8. Prompt robustness**, and **9. `SKILL.md` `metadata` block**.
+1. Read reviewer-known-findings.md (removed in implementation; each reviewer profile now owns its own checklist) and focus on sections **2. `SKILL.md` frontmatter schema**, **5. Reference file hygiene**, **6. Script path safety**, **8. Prompt robustness**, and **9. `SKILL.md` `metadata` block**.
 2. If `<scan_findings>` is provided, read it first and do not duplicate its findings; instead, verify the preflight caught the pattern in the right place.
 3. If `<pr_description>` is provided, read it for scope.
 4. Read `<diff_path>`.
@@ -668,7 +668,7 @@ git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 
 **Files:**
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source)
-- Regenerate: `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` with `py -3 tools/run.py marketplace --apply`
+- Regenerate: reviewer-known-findings.md (removed in implementation; each reviewer profile now owns its own checklist) with `py -3 tools/run.py marketplace --apply`
 
 **Interfaces:**
 - Consumes: `reviewer-known-findings.md` current text.
