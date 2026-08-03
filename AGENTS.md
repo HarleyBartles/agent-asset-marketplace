@@ -4,11 +4,7 @@
 
 This repository is the source of truth for agent-facing assets. It is an agent asset marketplace, not just a research ledger.
 
-The primary durable output is market-consumable assets. Support surfaces such as provenance, catalogs, ledgers, reports, doctrine notes, indexes, and discovery records exist to support those assets. They do not substitute for them.
-
-Codex plugin first; generated GPT-safe skill zips second.
-
-The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/docs/mesh-policy.md` is the canonical mesh statement.
+The primary durable output is market-consumable assets; support surfaces exist to help them, not substitute for them. Codex plugin first; generated GPT-safe skill zips second. The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/docs/mesh-policy.md` is the canonical mesh statement.
 ## Source-of-truth split
 
 GitHub and the repository tree prove file state, landed assets, manifests, source snapshots, provenance notes, validation scripts, and playbooks.
@@ -17,6 +13,8 @@ Linear remains the control plane for issue state, worker state, review posture, 
 
 Generated artifacts are downstream outputs unless the repo explicitly says otherwise.
 
+## Cross-repo standards alignment
+This repo ships portable skills and runbooks to consumer repos under `.agents/skills/`. Ask: *Is this change a repo-local fix or a standard consumer repos will inherit?* If the latter, update the source skill or reference, not only the installed copy.
 ## Publication proof for repo work
 
 Local file changes are not repo completion. A worker must not return GREEN, claim repo work is done, or ask for issue closure from local paths, local commit hashes, local validation output, or an unpublished branch alone.

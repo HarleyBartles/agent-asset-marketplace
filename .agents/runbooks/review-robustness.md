@@ -35,12 +35,13 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
      - `iterative-review` reports no blocking or important issues,
      - the PR body and spec/plan are honest about the final scope.
 
-6. **Wait for PR CI.**
-   - GitHub Actions does not run on draft PRs in this repo. As soon as the PR is marked ready, it will queue `marketplace-validation`.
-   - After flipping to ready and pushing, wait for the run and verify it passes:
+6. **Wait for remote CI.**
+   - GitHub Actions are configured so CI does not run on draft PRs. As soon as the PR is marked ready, it will queue the repo's remote gate (here, `marketplace-validation`).
+   - After flipping to ready and pushing, wait for the remote run and verify it passes:
      - `gh pr checks <number>`
      - `gh run view <run-id>`
-   - Do not report the PR as reviewed or green until the GitHub CI is actually passing. A green `ci --check` locally does not prove the remote gate passes.
+   - Do not report the PR as reviewed or green until the remote CI is actually passing. A green `ci --check` locally does not prove the remote gate passes.
+   - In a consumer repo, map this step to the equivalent remote CI check defined in that repo's `.agents/runbooks/pr.md`.
 
 ## Common mistakes
 

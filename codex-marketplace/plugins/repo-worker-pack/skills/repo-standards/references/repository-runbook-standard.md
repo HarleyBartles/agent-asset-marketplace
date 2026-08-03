@@ -44,8 +44,9 @@ Every repo using this standard must define a PR workflow in `.agents/runbooks/pr
   - the relevant validation commands pass,
   - the branch is ready for review or merge.
 - The repo's CI must not run on draft pull requests. For GitHub Actions, gate `pull_request` workflows so they run only when `github.event.pull_request.draft == false` or on `ready_for_review` activity.
-- After flipping a PR to ready, monitor CI and address failures before requesting human review.
+- After flipping a PR to ready, wait for the remote CI run to finish and pass. Do not report the PR as green or ready based only on a passing local `ci --check`. Address remote failures before requesting human review.
 - The PR body must include publication proof per the repo's `AGENTS.md`.
+- Each repo's `.agents/runbooks/pr.md` must map this policy to the repo's specific remote CI command (e.g., `gh pr checks`, the repository's status check API, or an external build link).
 
 This policy reduces wasted CI minutes while a branch is still being iterated on and ensures CI only runs on PRs the author believes are ready.
 
