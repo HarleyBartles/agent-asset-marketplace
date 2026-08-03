@@ -35,9 +35,17 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
      - `iterative-review` reports no blocking or important issues,
      - the PR body and spec/plan are honest about the final scope.
 
+6. **Wait for PR CI.**
+   - GitHub Actions does not run on draft PRs in this repo. As soon as the PR is marked ready, it will queue `marketplace-validation`.
+   - After flipping to ready and pushing, wait for the run and verify it passes:
+     - `gh pr checks <number>`
+     - `gh run view <run-id>`
+   - Do not report the PR as reviewed or green until the GitHub CI is actually passing. A green `ci --check` locally does not prove the remote gate passes.
+
 ## Common mistakes
 
 - Running `iterative-review` on a red preflight.
 - Letting a targeted re-review lens drift into a full-branch review.
 - Skipping re-preflight after a fix.
 - Flipping to ready before a final clean `ci --check`.
+- Reporting the PR as green/ready based on local `ci --check` without waiting for the GitHub Actions `marketplace-validation` run.

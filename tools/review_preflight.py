@@ -342,6 +342,50 @@ def _scan_new_plugin(path: Path, content: str, findings: list[str]) -> None:
             )
 
 
+def _git_index_flag_output() -> str:
+    result = subprocess.run(
+        ["git", "ls-files", "-v"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return result.stdout
+
+
+def _scan_git_index_flags(findings: list[str], output: str | None = None) -> None:
+    """Flag tracked files with git assume-unchanged or skip-worktree bits set.
+
+    These bits hide working-tree changes from `git status`, which lets generated
+    installed-skill copies drift from their canonical source without being
+    committed.
+    """
+    if output is None:
+        output = _git_index_flag_output()
+    for line in output.splitlines():
+        if not line:
+            continue
+        if " " not in line:
+            continue
+        flag, path = line[0], line[2:]
+        rel = ROOT / path
+        if flag == "h":
+            _warn(
+                findings,
+                rel,
+                1,
+                f"tracked file has `assume-unchanged` bit set; "
+                f"clear with `git update-index --no-assume-unchanged {path}`",
+            )
+        elif flag == "S":
+            _warn(
+                findings,
+                rel,
+                1,
+                f"tracked file has `skip-worktree` bit set; clear with `git update-index --no-skip-worktree {path}`",
+            )
+
+
 def _scan_file(path: Path, findings: list[str]) -> None:
     # The test fixtures intentionally contain the patterns the preflight flags;
     # do not scan the preflight's own test files.
@@ -388,6 +432,7 @@ def _main() -> int:
 
     files = _changed_files(base_ref)
     findings: list[str] = []
+    _scan_git_index_flags(findings)
     for path in files:
         _scan_file(path, findings)
 

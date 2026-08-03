@@ -114,3 +114,30 @@ def test_python_m_without_3_is_flagged():
         findings = []
         review_preflight._scan_py3_convention(path, content, findings)
         assert any("py -3 -m" in f for f in findings)
+
+
+def test_assume_unchanged_flag_is_flagged():
+    findings = []
+    review_preflight._scan_git_index_flags(
+        findings,
+        output="h .agents/skills/selecting-a-subagent/SKILL.md\n",
+    )
+    assert any("assume-unchanged" in f for f in findings)
+
+
+def test_skip_worktree_flag_is_flagged():
+    findings = []
+    review_preflight._scan_git_index_flags(
+        findings,
+        output="S .agents/agents/reviewer-skills.md\n",
+    )
+    assert any("skip-worktree" in f for f in findings)
+
+
+def test_normal_index_flag_is_not_flagged():
+    findings = []
+    review_preflight._scan_git_index_flags(
+        findings,
+        output="H .agents/skills/selecting-a-subagent/SKILL.md\n",
+    )
+    assert not findings

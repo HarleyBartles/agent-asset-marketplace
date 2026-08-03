@@ -108,3 +108,14 @@ These patterns are repository-agnostic. Marketplace-specific examples (e.g. `too
 - A missing `metadata:` key is allowed.
 - Reject present `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` values.
 - Reject any unexpected keys inside `metadata`; only the permitted skill-policy keys listed above are allowed.
+
+## 10. Git index flags (assume-unchanged / skip-worktree)
+
+- **Title:** Git index flags hide uncommitted changes
+- **Severity:** blocking
+- **Owner preflight:** `tools/review_preflight.py` (`_scan_git_index_flags`).
+- **Owner lens:** `reviewer-marketplace`.
+- **Portable:** yes (all git-tracked repos).
+
+- `git update-index --assume-unchanged` and `--skip-worktree` tell git to stop reporting working-tree changes on a tracked file. This is dangerous for generated surfaces such as `.agents/skills/` and `.agents/agents/` because the local copy can drift from its canonical source without being committed.
+- A preflight or pre-commit check must scan `git ls-files -v` and fail on any `h` (assume-unchanged) or `S` (skip-worktree) flag on tracked files in generated paths. Prefer `git update-index --no-assume-unchanged <path>` and re-run the canonical generator instead.
