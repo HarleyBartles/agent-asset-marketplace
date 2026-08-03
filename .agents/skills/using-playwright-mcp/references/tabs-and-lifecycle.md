@@ -6,7 +6,7 @@ Use these `mcp-playwright` tools to manage the browser session, tabs, and viewpo
 | --- | --- | --- | --- |
 | `browser_resize` | Set viewport size | `width`, `height` | — |
 | `browser_tabs` | List or switch tabs | — | `action`, `tabId` |
-| `browser_wait_for` | Wait for an event or timeout | `time` or `selector` | — |
+| `browser_wait_for` | Wait for an event, text, or timeout | `time` | `selector`, `text`, `textGone` |
 | `browser_close` | Close the page | — | — |
 
 ## Fast rules

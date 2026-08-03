@@ -28,7 +28,7 @@ The task is a classic "wait for an element/text to disappear after an action" sc
   - `text` — wait for text to appear
   - `textGone` — wait for text to disappear
   - `time` — wait time in seconds
-- `references/pressure-tests.md` (line 20-25) explicitly shows the GREEN path for this scenario: call `browser_wait_for` with `textGone: "Saving..."` and a `time` value.
+- `assets/pressure-tests.md` (line 20-25) explicitly shows the GREEN path for this scenario: call `browser_wait_for` with `textGone: "Saving..."` and a `time` value.
 
 Using `textGone: "Saving..."` makes the tool wait until the label is no longer present in the page snapshot, instead of polling with `browser_find` or writing JavaScript loops.
 

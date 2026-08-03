@@ -20,14 +20,14 @@ Write the pressure scenario as a realistic task where an agent is likely to choo
 
 ### 2. Prepare the scenario file
 
-Add `references/pressure-tests.md` to the skill. It should include:
+Add `assets/pressure-tests.md` to the skill. It should include:
 
 - A short task description.
 - A **RED** path: what an agent without the skill is likely to do.
 - A **GREEN** path: what an agent with the skill does.
 - The exact tool, inputs, and reasoning that prove the skill's value.
 
-Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/references/pressure-tests.md`
+Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/assets/pressure-tests.md`
 
 ### 3. Run RED and GREEN subagents
 

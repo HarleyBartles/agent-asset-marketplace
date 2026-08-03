@@ -21,7 +21,7 @@ Both agents wrote their own reports:
 Both agents eventually chose `browser_wait_for` with `textGone: "Saving..."`.
 
 - **RED path:** The tool list returned by `mcp_list_tools` was truncated, so the agent had to locate the saved overflow dump, search it for wait-related `browser_*` names, and read the `browser_wait_for` schema. It chose correctly but spent extra reasoning and context on tool discovery.
-- **GREEN path:** The skill routed the intent to `references/tabs-and-lifecycle.md`, confirmed `browser_wait_for` in `references/surface-map.md`, and the exact scenario was already described in `references/pressure-tests.md`. The choice was mechanical, accurate, and fast.
+- **GREEN path:** The skill routed the intent to `references/tabs-and-lifecycle.md`, confirmed `browser_wait_for` in `references/surface-map.md`, and the exact scenario was already described in `assets/pressure-tests.md`. The choice was mechanical, accurate, and fast.
 
 ## Conclusion
 
