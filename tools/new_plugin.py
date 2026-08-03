@@ -340,11 +340,7 @@ def _sync_bundle_manifest(pack_name: str) -> None:
     with bundle_path.open("r", encoding="utf-8") as f:
         bundle = json.load(f)
 
-    existing_entries = {
-        e["canonical_name"]: e
-        for e in bundle.get("entries", [])
-        if "canonical_name" in e
-    }
+    existing_entries = {e["canonical_name"]: e for e in bundle.get("entries", []) if "canonical_name" in e}
 
     entries: list[dict[str, Any]] = []
     skills_dir = pack_dir / "skills"

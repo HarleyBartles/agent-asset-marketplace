@@ -43,12 +43,12 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
 
 1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
 2. **Scope-honesty preflight.** Before the reviewers see the code, compare the actual branch diff to the plan, any linked spec, and the PR title/body. If the implemented scope has expanded beyond what those documents describe, update them to match the real diff. Commit and push the scope-honesty update. The reviewers should read an honest description of scope, not discover scope creep line-by-line in the code.
-3. Resolve the off-repo scratch workspace by running `subagent-workspace/scripts/sdd-workspace` with no plan file:
-   - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
-   - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
+3. Resolve the off-repo scratch workspace by running `.agents/skills/subagent-workspace/scripts/sdd-workspace` with no plan file:
+   - Bash: `bash .agents/skills/.agents/skills/subagent-workspace/scripts/sdd-workspace`
+   - PowerShell: `powershell .agents/skills/.agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
    This prints a path like `<main-checkout>/../_agent-scratch/<branch>/` (on Windows, `Z:\_agent-scratch\<branch>\`). Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
 4. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
-   - `<diff_path>`: the review package from `subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` (use `-` for no plan file). The script writes it as UTF-8 with no BOM.
+   - `<diff_path>`: the review package from `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` (use `-` for no plan file). The script writes it as UTF-8 with no BOM.
    - `<pr_description>`: the PR title, body, and any linked issue/spec context written to a file as UTF-8.
    - Optional `<issue_context>`: Linear/GitHub issue or spec text if linked, written to a file as UTF-8.
    - `<scan_findings>` (optional but strongly recommended): the output of the consumer repo's canonical preflight, written to a file. Do not hardcode the preflight command; use the command(s) named in the consumer repo's `AGENTS.md` or `.devin/rules`. Examples:
@@ -61,7 +61,7 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
    - Any repo-specific lens profiles declared in the consumer's `AGENTS.md` or found as `.agents/agents/reviewer-*.md` overrides (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) write `review-log-<lens>.md`.
 6. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, and all `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
 7. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
-8. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
+8. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`.agents/skills/subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
 9. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.
 10. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 9.
 11. **Round 4 — final `reviewer-strong` re-review.** Re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the updated `review-log-*.md` files. Its job is a full branch review with added context of what was already addressed. It writes `review-log-strong-2.md`.

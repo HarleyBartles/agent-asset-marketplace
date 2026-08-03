@@ -47,12 +47,7 @@ $PlanFile = $resolvedPlan
 
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\/:*?"<>|]', '-'
-$commonGit = (git -C "$root" rev-parse --git-common-dir).Trim()
-if (-not [System.IO.Path]::IsPathRooted($commonGit)) {
-  $commonGit = [System.IO.Path]::Combine($root, $commonGit)
-}
-$mainCheckout = Split-Path -Parent $commonGit
-$scratchParent = Split-Path -Parent $mainCheckout
+$scratchParent = Split-Path -Parent $root
 $workspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 

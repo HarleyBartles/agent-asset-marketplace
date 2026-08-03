@@ -288,6 +288,7 @@ def _run_validate(ctx: Ctx) -> None:
 def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/generate_marketplace.py"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
+    _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -376,8 +377,14 @@ _TASKS: dict[str, Task] = {
         check=(_check_inventory,),
         fix="tools/run inventory --apply",
     ),
-    "installed-skills": Task(
+    "marketplace": Task(
         deps=("inventory",),
+        apply=(_apply_marketplace,),
+        check=(_check_marketplace,),
+        fix="tools/run marketplace --apply",
+    ),
+    "installed-skills": Task(
+        deps=("marketplace",),
         apply=(_apply_installed_skills,),
         check=(_check_installed_skills,),
         fix="tools/run installed-skills --apply",
@@ -400,12 +407,6 @@ _TASKS: dict[str, Task] = {
         check=(_run_validate,),
         fix="tools/run marketplace --apply",
     ),
-    "marketplace": Task(
-        deps=("validate",),
-        apply=(_apply_marketplace,),
-        check=(_check_marketplace,),
-        fix="tools/run marketplace --apply",
-    ),
     "archive-links": Task(
         apply=(_apply_archive_links,),
         check=(_check_archive_links,),
@@ -417,7 +418,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run review-preflight --check",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "marketplace", "archive-links", "review-preflight"),
+        deps=("lint", "repo-standards", "validate", "archive-links"),
         fix="tools/run ci --apply",
     ),
     "all": Task(

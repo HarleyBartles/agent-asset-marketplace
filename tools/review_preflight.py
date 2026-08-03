@@ -144,7 +144,8 @@ def _scan_skill_frontmatter(path: Path, content: str, findings: list[str]) -> No
     if not isinstance(front, dict):
         return
 
-    if "license" in front.get("metadata", {}):
+    metadata = front.get("metadata") or {}
+    if "license" in metadata:
         _warn(findings, path, 1, "`license` is nested under `metadata`; move it to a top-level frontmatter field")
 
     if "license" not in front:

@@ -43,7 +43,9 @@ else {
 }
 
 if (-not [string]::IsNullOrWhiteSpace($OutFile)) {
-  $OutFile = [System.IO.Path]::GetFullPath($OutFile)
+  if (-not [System.IO.Path]::IsPathRooted($OutFile)) {
+    $OutFile = Join-Path $repoRoot $OutFile
+  }
 }
 
 Push-Location $repoRoot

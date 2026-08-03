@@ -83,8 +83,8 @@ description.
 
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
 2. Generate the review package as UTF-8 without a BOM:
-   - Bash: `subagent-workspace/scripts/review-package - <base> <branch> <diff_path>` (use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote).
-   - PowerShell: `subagent-workspace/scripts/review-package.ps1 - <base> <branch> <diff_path>`
+   - Bash: `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> <diff_path>` (use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote).
+   - PowerShell: `.agents/skills/subagent-workspace/scripts/review-package.ps1 - <base> <branch> <diff_path>`
 3. If the review object is a PR, capture the PR title and body into `<pr_description>`
    (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
 4. Dispatch the reviewer subagent with the prepared inputs:

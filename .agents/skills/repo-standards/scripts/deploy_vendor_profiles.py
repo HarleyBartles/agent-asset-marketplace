@@ -57,11 +57,7 @@ def _is_submodule(repo_root: Path) -> bool:
 
 
 def _is_vendor_profile_file(path: Path) -> bool:
-    return (
-        path.is_file()
-        and path.suffix.lower() == ".md"
-        and path.name not in NON_PROFILE_MD_NAMES
-    )
+    return path.is_file() and path.suffix.lower() == ".md" and path.name not in NON_PROFILE_MD_NAMES
 
 
 def _load_marketplace_plugins(marketplace_path: Path) -> list[dict[str, Any]]:
@@ -74,9 +70,7 @@ def _load_marketplace_plugins(marketplace_path: Path) -> list[dict[str, Any]]:
     if not isinstance(plugins, list):
         return []
     return [
-        p
-        for p in plugins
-        if isinstance(p, dict) and p.get("policy", {}).get("installation") == "INSTALLED_BY_DEFAULT"
+        p for p in plugins if isinstance(p, dict) and p.get("policy", {}).get("installation") == "INSTALLED_BY_DEFAULT"
     ]
 
 
@@ -143,7 +137,7 @@ def _deploy(
         dest = agents_agents_path / name
         is_new = not dest.exists()
         needs_copy = is_new
-        if not needs_copy and dest.read_text(encoding='utf-8') != src.read_text(encoding='utf-8'):
+        if not needs_copy and dest.read_text(encoding="utf-8") != src.read_text(encoding="utf-8"):
             needs_copy = True
         if needs_copy:
             if apply:
@@ -172,14 +166,15 @@ def _deploy(
             print(f"CHECK: Would remove orphan vendor profile: {orphan.relative_to(repo_root)}")
         changes = True
 
+    if apply:
+        return 0
     return 1 if changes else 0
 
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Deploy vendor subagent profiles from installed plugin packs. "
-            "(mixed: supports --check and --apply)"
+            "Deploy vendor subagent profiles from installed plugin packs. (mixed: supports --check and --apply)"
         ),
         epilog="Default mode is --check. Use --apply to copy or remove changed or missing profiles.",
     )
