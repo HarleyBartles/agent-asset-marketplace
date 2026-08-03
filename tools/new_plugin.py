@@ -57,7 +57,6 @@ def _validate(name: str, check: bool) -> tuple[Path, Path] | None:
 
     if check:
         print(f"Would create pack {name!r} at {pack_dir}")
-        return None
 
     return pack_dir, PLUGIN_ROOTS
 

@@ -40,4 +40,5 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - Do not write files or run mutating commands.
 - You may use `exec` only for non-mutating `git` queries and canonical verification, and `mcp_call_tool` only for non-mutating lookups. Do not use them to generate the diff, fetch a missing package, or install/change anything.
 - Do not resolve the diff yourself; the orchestrator must provide `<diff_path>`.
+- If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
 - Do not use `glob` to enumerate files; it can produce large, unhelpful overflow output and is unnecessary when paths are supplied.
