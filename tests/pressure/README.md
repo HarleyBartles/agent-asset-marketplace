@@ -20,7 +20,7 @@ Write the pressure scenario as a realistic task where an agent is likely to choo
 
 ### 2. Prepare the scenario file
 
-Add `assets/pressure-tests.md` to the skill. It should include:
+Add `assets/pressure-tests.md` to the skill. This scenario file ships with the skill so any consumer can run the test; proof records do not ship with the skill. It should include:
 
 - A short task description.
 - A **RED** path: what an agent without the skill is likely to do.
@@ -34,7 +34,7 @@ Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/a
 Launch two `subagent_general` runs in parallel:
 
 - **RED:** The subagent may not read the skill files. It can call MCP tools (e.g., `mcp_list_tools`) and use general reasoning.
-- **GREEN:** The subagent reads the skill's `SKILL.md` and `references/` files and applies them as if it had invoked the skill.
+- **GREEN:** The subagent reads the skill's `SKILL.md`, `references/`, and `assets/pressure-tests.md` files and applies them as if it had invoked the skill.
 
 Subagents cannot invoke skills directly, but they can read skill files from disk and act on them. They may also call any tools they have access to, including MCP tools.
 

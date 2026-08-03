@@ -116,8 +116,8 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 
 ### Required artifacts when pressure testing
 
-1. **Scenario file in the skill:** Add `assets/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused.
-2. **Recorded RED/GREEN runs:** Run the scenario once without the skill (RED) and once with the skill (GREEN) using subagents. Record the results in `provenance/` or `tests/pressure/<skill-name>/`.
+1. **Scenario file in the skill:** Add `assets/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused. The scenario ships with the skill so any consumer can run it.
+2. **Recorded RED/GREEN runs:** Run the scenario once without the skill (RED) and once with the skill (GREEN) using subagents. Record the results in `provenance/` or `tests/pressure/<skill-name>/`. These proof records are consumer-specific and do not ship with the skill.
 3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
 4. **Cross-reference:** Link to the scenario from `assets/pressure-tests.md` and, where relevant, from the skill body.
 
