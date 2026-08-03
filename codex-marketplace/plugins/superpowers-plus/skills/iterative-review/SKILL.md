@@ -44,8 +44,8 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
 1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
 2. **Scope-honesty preflight.** Before the reviewers see the code, compare the actual branch diff to the plan, any linked spec, and the PR title/body. If the implemented scope has expanded beyond what those documents describe, update them to match the real diff. Commit and push the scope-honesty update. The reviewers should read an honest description of scope, not discover scope creep line-by-line in the code.
 3. Resolve the off-repo scratch workspace by running `.agents/skills/subagent-workspace/scripts/sdd-workspace` with no plan file:
-   - Bash: `bash .agents/skills/.agents/skills/subagent-workspace/scripts/sdd-workspace`
-   - PowerShell: `powershell .agents/skills/.agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
+   - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
+   - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
    This prints a path like `<main-checkout>/../_agent-scratch/<branch>/` (on Windows, `Z:\_agent-scratch\<branch>\`). Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
 4. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
    - `<diff_path>`: the review package from `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` (use `-` for no plan file). The script writes it as UTF-8 with no BOM.

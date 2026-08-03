@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 import importlib.util
 
 SPEC = importlib.util.spec_from_file_location(
