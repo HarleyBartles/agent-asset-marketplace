@@ -23,9 +23,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming",
       "local_path": "skills/brainstorming",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party brainstorming skill. (Brainstorming first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md"
     },
     {
       "canonical_name": "dispatching-parallel-agents",
@@ -34,9 +34,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents",
       "local_path": "skills/dispatching-parallel-agents",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party dispatching-parallel-agents skill. (Dispatching Parallel Agents first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md"
     },
     {
       "canonical_name": "executing-plans",
@@ -45,9 +45,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans",
       "local_path": "skills/executing-plans",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party executing-plans skill. (Executing Plans first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md"
     },
     {
       "canonical_name": "finishing-a-development-branch",
@@ -56,9 +56,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch",
       "local_path": "skills/finishing-a-development-branch",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party finishing-a-development-branch skill. (Finishing A Development Branch first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md"
     },
     {
       "canonical_name": "handoff-gates",
@@ -67,9 +67,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates",
       "local_path": "skills/handoff-gates",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party handoff-gates skill. (Handoff Gates first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md"
     },
     {
       "canonical_name": "inspecting-the-environment",
@@ -78,9 +78,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment",
       "local_path": "skills/inspecting-the-environment",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party inspecting-the-environment skill. (Inspecting The Environment first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md"
     },
     {
       "canonical_name": "iterative-review",
@@ -89,9 +89,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review",
       "local_path": "skills/iterative-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party iterative-review skill. (Iterative Review first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md"
     },
     {
       "canonical_name": "publishing-source",
@@ -100,9 +100,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source",
       "local_path": "skills/publishing-source",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party publishing-source skill. (Publishing Source first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md"
     },
     {
       "canonical_name": "receiving-code-review",
@@ -111,9 +111,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review",
       "local_path": "skills/receiving-code-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party receiving-code-review skill. (Receiving Code Review first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md"
     },
     {
       "canonical_name": "requesting-code-review",
@@ -122,9 +122,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review",
       "local_path": "skills/requesting-code-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party requesting-code-review skill. (Requesting Code Review first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md"
     },
     {
       "canonical_name": "selecting-a-subagent",
@@ -133,9 +133,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent",
       "local_path": "skills/selecting-a-subagent",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party selecting-a-subagent skill. (Selecting A Subagent first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md"
     },
     {
       "canonical_name": "subagent-driven-development",
@@ -144,9 +144,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
       "local_path": "skills/subagent-driven-development",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party subagent-driven-development skill. (Subagent Driven Development first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md"
     },
     {
       "canonical_name": "subagent-workspace",
@@ -166,9 +166,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging",
       "local_path": "skills/systematic-debugging",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party systematic-debugging skill. (Systematic Debugging first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md"
     },
     {
       "canonical_name": "test-driven-development",
@@ -177,9 +177,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development",
       "local_path": "skills/test-driven-development",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party test-driven-development skill. (Test Driven Development first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md"
     },
     {
       "canonical_name": "using-git-worktrees",
@@ -188,9 +188,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
       "local_path": "skills/using-git-worktrees",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party using-git-worktrees skill. (Using Git Worktrees first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md"
     },
     {
       "canonical_name": "using-superpowers-plus",
@@ -199,9 +199,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus",
       "local_path": "skills/using-superpowers-plus",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party using-superpowers-plus skill. (Using Superpowers Plus first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md"
     },
     {
       "canonical_name": "verification-before-completion",
@@ -210,9 +210,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion",
       "local_path": "skills/verification-before-completion",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party verification-before-completion skill. (Verification Before Completion first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md"
     },
     {
       "canonical_name": "working-with-epics",
@@ -221,9 +221,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics",
       "local_path": "skills/working-with-epics",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party working-with-epics skill. (Working With Epics first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md"
     },
     {
       "canonical_name": "writing-plans",
@@ -232,9 +232,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans",
       "local_path": "skills/writing-plans",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party writing-plans skill. (Writing Plans first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md"
     },
     {
       "canonical_name": "writing-skills",
@@ -243,9 +243,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills",
       "local_path": "skills/writing-skills",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.2.0 MIT upstream snapshot retained in `provenance/superpowers-plus.md`.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party writing-skills skill. (Writing Skills first-party skill)"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md"
     }
   ],
   "generated_doc_surfaces": [

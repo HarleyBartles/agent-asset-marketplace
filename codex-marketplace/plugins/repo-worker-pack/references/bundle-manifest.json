@@ -24,9 +24,13 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions",
       "local_path": "skills/asking-clarifying-questions",
+      "lane": "Worker",
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party asking-clarifying-questions skill. (Asking Clarifying Questions first-party skill)"
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities."
     },
     {
       "canonical_name": "base-doctrine",
@@ -35,9 +39,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine",
       "local_path": "skills/base-doctrine",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md",
+      "provenance_note": "Canonical first-party base-doctrine skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party base-doctrine skill. (Base Doctrine first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md"
     },
     {
       "canonical_name": "cleanup-custody",
@@ -46,9 +50,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody",
       "local_path": "skills/cleanup-custody",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/SKILL.md",
+      "provenance_note": "Canonical first-party cleanup-custody skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party cleanup-custody skill. (Cleanup Custody first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/SKILL.md"
     },
     {
       "canonical_name": "connector-safety",
@@ -57,9 +61,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety",
       "local_path": "skills/connector-safety",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/SKILL.md",
+      "provenance_note": "Canonical first-party connector-safety skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party connector-safety skill. (Connector Safety first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/SKILL.md"
     },
     {
       "canonical_name": "context-safety",
@@ -68,9 +72,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/context-safety",
       "local_path": "skills/context-safety",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/context-safety/SKILL.md",
+      "provenance_note": "Canonical first-party context-safety skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party context-safety skill. (Context Safety first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/context-safety/SKILL.md"
     },
     {
       "canonical_name": "generating-agent-mesh",
@@ -79,9 +83,13 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh",
       "local_path": "skills/generating-agent-mesh",
+      "lane": "Worker",
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party generating-agent-mesh skill. (Generating Agent Mesh first-party skill)"
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command."
     },
     {
       "canonical_name": "linear-issue-shaping",
@@ -90,9 +98,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping",
       "local_path": "skills/linear-issue-shaping",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/SKILL.md",
+      "provenance_note": "Canonical first-party linear-issue-shaping skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party linear-issue-shaping skill. (Linear Issue Shaping first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/SKILL.md"
     },
     {
       "canonical_name": "refreshing-installed-skills",
@@ -101,9 +109,13 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills",
       "local_path": "skills/refreshing-installed-skills",
+      "lane": "Worker",
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party refreshing-installed-skills skill. (Refreshing Installed Skills first-party skill)"
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh."
     },
     {
       "canonical_name": "repo-standards",
@@ -112,9 +124,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards",
       "local_path": "skills/repo-standards",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md",
+      "provenance_note": "Canonical first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party repo-standards skill. (Repo Standards first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md"
     },
     {
       "canonical_name": "repo-worker-base",
@@ -123,9 +135,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base",
       "local_path": "skills/repo-worker-base",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md",
+      "provenance_note": "Canonical first-party repo worker base skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party repo-worker-base skill. (Repo Worker Base first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md"
     },
     {
       "canonical_name": "risk-gates",
@@ -134,9 +146,13 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/risk-gates",
       "local_path": "skills/risk-gates",
+      "lane": "Worker",
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md",
+      "source_author": "Harley Bartles",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party risk-gates skill. (Risk Gates first-party skill)"
+      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates."
     },
     {
       "canonical_name": "unslop-profiles",
@@ -145,9 +161,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles",
       "local_path": "skills/unslop-profiles",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/SKILL.md",
+      "provenance_note": "Canonical first-party unslop-profiles skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party unslop-profiles skill. (Unslop Profiles first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/SKILL.md"
     },
     {
       "canonical_name": "writing-with-clarity",
@@ -156,9 +172,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity",
       "local_path": "skills/writing-with-clarity",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/SKILL.md",
+      "provenance_note": "Canonical first-party writing-with-clarity skill.",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party writing-with-clarity skill. (Writing With Clarity first-party skill)"
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/SKILL.md"
     }
   ],
   "generated_doc_surfaces": [

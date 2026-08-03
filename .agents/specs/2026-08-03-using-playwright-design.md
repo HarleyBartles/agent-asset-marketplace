@@ -1,7 +1,7 @@
 # Design: `using-playwright-mcp` skill
 
 Date: 2026-08-03
-Worktree: `Z:\_agent-worktrees\agent-asset-marketplace\spec\using-playwright-mcp`
+Worktree: `<worktree-path>`
 
 ## Problem
 
