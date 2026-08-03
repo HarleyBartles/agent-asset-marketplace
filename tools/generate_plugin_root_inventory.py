@@ -65,7 +65,17 @@ def _scan_plugin_roots() -> list[dict[str, Any]]:
 
 
 def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
-    return _scan_plugin_roots()
+    scanned = _scan_plugin_roots()
+    existing: dict[str, dict[str, Any]] = {}
+    if PLUGIN_ROOT_INVENTORY_PATH.exists():
+        current = load_json(PLUGIN_ROOT_INVENTORY_PATH)
+        for root in current.get("roots", []):
+            existing[root.get("name")] = root
+    for root in scanned:
+        if root["name"] in existing:
+            root["enabled"] = existing[root["name"]].get("enabled", root["enabled"])
+            root["order"] = existing[root["name"]].get("order", root["order"])
+    return scanned
 
 
 def _render_inventory(roots: list[dict[str, Any]]) -> dict[str, Any]:

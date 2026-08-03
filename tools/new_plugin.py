@@ -394,10 +394,10 @@ def main() -> int:
             return 1
 
     result = _validate(args.name, args.check)
-    if args.check:
-        return 0
     if result is None:
         return 1
+    if args.check:
+        return 0
 
     pack_dir, _ = result
     _scaffold(args.name, pack_dir)

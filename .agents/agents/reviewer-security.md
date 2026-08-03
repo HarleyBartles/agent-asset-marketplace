@@ -34,7 +34,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `selecting-a-subagent/assets/reviewer-known-findings.md` and focus on section **1. Secrets / real identifiers in source (CWE-200)**. Also keep section **6. Script path safety** in mind for any side-effect that could leak state or overwrite files unexpectedly.
+1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on section **1. Secrets / real identifiers in source (CWE-200)**. Also keep section **6. Script path safety** in mind for any side-effect that could leak state or overwrite files unexpectedly.
 2. If `<scan_findings>` is provided, read it first and use it as a starting point.
 3. If `<pr_description>` is provided, read it to understand scope. Do not invent expectations that contradict it.
 4. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.

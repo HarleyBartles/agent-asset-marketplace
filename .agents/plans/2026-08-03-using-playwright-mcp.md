@@ -144,7 +144,7 @@ git commit -m "Add using-playwright-mcp skill"
 - Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/references/authed-tool-map.md`
 - Create: `codex-marketplace/plugins/repo-worker-pack/skills/using-discord-mcp/references/tool-map.md`
 
-**Step 1: Copy `C:\Users\hbart\AppData\Roaming\devin\skills\using-discord-mcp` files into the new skill directory.**
+**Step 1: Copy `<devin-skills-dir>\using-discord-mcp` files (e.g. `%USERPROFILE%\AppData\Roaming\devin\skills\using-discord-mcp` on Windows or `~/.config/devin/skills/using-discord-mcp` elsewhere) into the new skill directory.**
 
 **Step 2: Update the frontmatter in `SKILL.md` to first-party pack custody.**
 

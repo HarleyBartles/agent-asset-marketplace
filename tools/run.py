@@ -412,6 +412,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run archive-links --apply",
     ),
     "review-preflight": Task(
+        apply=(_check_review_preflight,),
         check=(_check_review_preflight,),
         fix="tools/run review-preflight --check",
     ),

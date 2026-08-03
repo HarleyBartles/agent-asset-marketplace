@@ -34,7 +34,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## Procedure
 
-1. Read `selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **4. Cross-skill script paths**, **5. Reference file hygiene**, **6. Script path safety**, and **8. Prompt robustness**.
+1. Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` and focus on sections **2. `SKILL.md` frontmatter schema**, **4. Cross-skill script paths**, **5. Reference file hygiene**, **6. Script path safety**, and **8. Prompt robustness**.
 2. If `<scan_findings>` is provided, read it first.
 3. If `<pr_description>` is provided, read it for scope.
 4. Read `<diff_path>`.
