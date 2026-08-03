@@ -148,7 +148,7 @@ This bundle projects the first-party {name} skills.
 - bundle inventory in `references/bundle-manifest.json`
 
 ## Boundary
-- The first-party {name} skills stay bundled together as a focused MCP-usage set.
+- The first-party {name} skills stay bundled together as a focused {display} set.
 - The bundle stays first-party only and does not absorb unrelated workflow packs.
 
 ## Install shape
@@ -158,12 +158,13 @@ Skills are installed from the Codex plugin roots under `codex-marketplace/plugin
 
 
 def _source(name: str) -> str:
+    display = _title_case(name)
     return f"""# Source
 
 This plugin projects the first-party {name} skills.
 
 ## Boundary
-- The first-party {name} skills stay bundled together as a focused MCP-usage set.
+- The first-party {name} skills stay bundled together as a focused {display} set.
 - The bundle stays first-party only and aligns to the current marketplace manifest.
 """
 

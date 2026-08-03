@@ -14,7 +14,7 @@
 
 - Source custody is `codex-marketplace/plugins/mcp-usage-pack/skills/<name>/`; do not hand-edit `.agents/skills/` installed surfaces.
 - All new skills need `SKILL.md`, `agents/openai.yaml`, and a `references/` directory.
-- Commit only the focused source changes; `tools/run.py marketplace --apply` regenerates downstream indexes and bundles.
+- Commit only the focused source changes; `py -3 tools/run.py marketplace --apply` regenerates downstream indexes and bundles.
 - Do not run `git commit --no-verify`; the pre-commit hook runs `py -3 tools/run.py ci --check`.
 
 ---

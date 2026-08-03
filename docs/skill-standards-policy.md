@@ -99,7 +99,7 @@ Before deploying a skill, verify:
 3. Canonical identity metadata is stable and correct.
 4. The body is under 500 words excluding frontmatter.
 5. Content is accurate, actionable, and scoped.
-6. The skill installs via `tools/run marketplace --apply`.
+6. The skill installs via `py -3 tools/run.py marketplace --apply`.
 7. The skill triggers on the right conditions and provides the expected guidance.
 
 ## Pressure testing

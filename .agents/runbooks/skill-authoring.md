@@ -48,19 +48,19 @@ py -3 tools/update_skill_artifacts.py --skill <pack>/<skill>
 For marketplace-wide source or structure changes, run:
 
 ```bash
-tools/run marketplace --apply
+py -3 tools/run.py marketplace --apply
 ```
 
 Install refreshed skills to the local agent surface with:
 
 ```bash
-tools/run installed-skills --apply
+py -3 tools/run.py installed-skills --apply
 ```
 
 Check the resulting marketplace state with:
 
 ```bash
-tools/run ci --check
+py -3 tools/run.py ci --check
 ```
 
 ## MCP wrapper skills
