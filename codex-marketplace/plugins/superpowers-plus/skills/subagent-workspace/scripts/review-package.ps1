@@ -15,26 +15,32 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Resolve relative plan paths against the current directory's repo root, then
-# determine the target repo/worktree root from the plan file's location.
-$resolvedPlan = $PlanFile
-if (-not ([System.IO.Path]::IsPathRooted($resolvedPlan))) {
-  try {
-    $cwdRoot = (git rev-parse --show-toplevel).Trim()
-    $resolvedPlan = Join-Path $cwdRoot $resolvedPlan
-  }
-  catch {
-    # Current directory is not inside a git repo; leave relative and fail below
-  }
+# Resolve the repo/worktree root. $PlanFile can be `-` to mean "no plan; use
+# the current directory's repo and the plan-less workspace from sdd-workspace".
+if ($PlanFile -eq '-') {
+  $resolvedPlan = $null
+  $repoRoot = (git rev-parse --show-toplevel).Trim()
 }
+else {
+  $resolvedPlan = $PlanFile
+  if (-not ([System.IO.Path]::IsPathRooted($resolvedPlan))) {
+    try {
+      $cwdRoot = (git rev-parse --show-toplevel).Trim()
+      $resolvedPlan = Join-Path $cwdRoot $resolvedPlan
+    }
+    catch {
+      # Current directory is not inside a git repo; leave relative and fail below
+    }
+  }
 
-if (-not (Test-Path -LiteralPath $resolvedPlan)) {
-  Write-Error "bad PLAN_FILE: $resolvedPlan"
-  exit 2
+  if (-not (Test-Path -LiteralPath $resolvedPlan)) {
+    Write-Error "bad PLAN_FILE: $resolvedPlan"
+    exit 2
+  }
+
+  $resolvedPlan = (Resolve-Path -LiteralPath $resolvedPlan).Path
+  $repoRoot = (git -C (Split-Path -Parent $resolvedPlan) rev-parse --show-toplevel).Trim()
 }
-
-$resolvedPlan = (Resolve-Path -LiteralPath $resolvedPlan).Path
-$repoRoot = (git -C (Split-Path -Parent $resolvedPlan) rev-parse --show-toplevel).Trim()
 
 Push-Location $repoRoot
 try {
@@ -52,7 +58,12 @@ try {
 
   $scriptDir = Split-Path -Parent $PSCommandPath
   if ([string]::IsNullOrWhiteSpace($OutFile)) {
-    $workspace = & ([System.IO.Path]::Combine((Split-Path -Parent (Split-Path -Parent $scriptDir)), 'subagent-workspace', 'scripts', 'sdd-workspace.ps1')) $resolvedPlan
+    if ($resolvedPlan) {
+      $workspace = & ([System.IO.Path]::Combine($scriptDir, 'sdd-workspace.ps1')) $resolvedPlan
+    }
+    else {
+      $workspace = & ([System.IO.Path]::Combine($scriptDir, 'sdd-workspace.ps1'))
+    }
     $baseShort = (& git rev-parse --short $Base).Trim()
     $headShort = (& git rev-parse --short $Head).Trim()
     $OutFile = Join-Path $workspace ("review-{0}..{1}.diff" -f $baseShort, $headShort)
@@ -75,7 +86,8 @@ try {
     "## Diff"
   ) + @(& git diff -U10 "$Base..$Head")
 
-  Set-Content -LiteralPath $OutFile -Value $content -Encoding utf8
+  $encoding = New-Object System.Text.UTF8Encoding($false)
+  [System.IO.File]::WriteAllLines($OutFile, $content, $encoding)
 
   $commits = [int](& git rev-list --count "$Base..$Head")
   $bytes = (Get-Item -LiteralPath $OutFile).Length

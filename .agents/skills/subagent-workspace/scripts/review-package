@@ -17,23 +17,31 @@ plan=$1
 base=$2
 head=$3
 
-# Resolve relative plan paths against the current directory's repo root, then
-# determine the target repo/worktree root from the plan file's location.
-if [[ "$plan" != /* ]]; then
-  root=$(git rev-parse --show-toplevel)
-  plan="$root/$plan"
+# Resolve the repo/worktree root. PLAN_FILE can be `-` to mean "no plan; use
+# the current directory's repo and the plan-less workspace from sdd-workspace".
+if [ "$plan" = "-" ]; then
+  repo_root=$(git rev-parse --show-toplevel)
+else
+  if [[ "$plan" != /* ]]; then
+    root=$(git rev-parse --show-toplevel)
+    plan="$root/$plan"
+  fi
+  repo_root=$(cd "$(dirname "$plan")" && git rev-parse --show-toplevel)
+  [ -f "$plan" ] || { echo "bad PLAN_FILE: $plan" >&2; exit 2; }
 fi
-repo_root=$(cd "$(dirname "$plan")" && git rev-parse --show-toplevel)
 
 git -C "$repo_root" rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
 git -C "$repo_root" rev-parse --verify --quiet "$head" >/dev/null || { echo "bad HEAD: $head" >&2; exit 2; }
-[ -f "$plan" ] || { echo "bad PLAN_FILE: $plan" >&2; exit 2; }
 
 script_dir="$(cd "$(dirname "$0")" && pwd)"
 if [ $# -eq 4 ]; then
   out=$4
 else
-  dir="$("$script_dir/../../subagent-workspace/scripts/sdd-workspace" "$plan")"
+  if [ "$plan" = "-" ]; then
+    dir="$("$script_dir/sdd-workspace")"
+  else
+    dir="$("$script_dir/sdd-workspace" "$plan")"
+  fi
   out="$dir/review-$(git -C "$repo_root" rev-parse --short "$base")..$(git -C "$repo_root" rev-parse --short "$head").diff"
 fi
 

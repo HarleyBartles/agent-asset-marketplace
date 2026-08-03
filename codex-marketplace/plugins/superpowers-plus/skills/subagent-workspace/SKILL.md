@@ -39,22 +39,28 @@ The workspace lives at `<main-checkout>/../_agent-scratch/<branch>/<plan-basenam
 
 - `scripts/sdd-workspace [PLAN_FILE]` — bash workspace resolver.
 - `scripts/sdd-workspace.ps1 [PLAN_FILE]` — PowerShell workspace resolver.
+- `scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]` — bash task-brief extractor.
+- `scripts/task-brief.ps1 PLAN_FILE TASK_NUMBER [OUTFILE]` — PowerShell task-brief extractor.
+- `scripts/review-package PLAN_FILE BASE HEAD [OUTFILE]` — bash review-package builder; `PLAN_FILE` can be `-` for no plan.
+- `scripts/review-package.ps1 PLAN_FILE BASE HEAD [OUTFILE]` — PowerShell review-package builder; `PLAN_FILE` can be `-` for no plan.
 
-Both print the absolute workspace directory and create it if it does not exist.
+All scripts print the absolute output path. They write UTF-8 without a BOM so subagent `read` can open the files.
 
 ## Usage
 
 For subagent-driven plans:
 
 1. Run `scripts/sdd-workspace PLAN_FILE` and capture the printed path.
-2. Write the task brief, subagent prompt, and report under that path.
-3. When the task is done, the scratch directory can be discarded.
+2. Run `scripts/task-brief PLAN_FILE <task-number>` to produce the task brief.
+3. Run `scripts/review-package PLAN_FILE BASE HEAD` to produce the review package.
+4. Write the subagent prompt and report under the same workspace.
+5. When the task is done, the scratch directory can be discarded.
 
 For iterative review:
 
-1. Run `scripts/sdd-workspace` with no plan file.
-2. Create an `iterative-review-<pr_number>` subdirectory.
-3. Write `diff.txt`, `pr.json`, `review-log.md`, and fix diffs there.
+1. Run `scripts/sdd-workspace` with no plan file and capture the workspace path.
+2. Run `scripts/review-package - <base> <head> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` to produce the UTF-8 diff package.
+3. Write `pr.json` and `review-log.md` under the same `iterative-review-<pr_number>` directory.
 
 ## Rules
 

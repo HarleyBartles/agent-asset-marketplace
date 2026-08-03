@@ -47,11 +47,11 @@ Strong review of the full branch, then a fast re-review of each fix, then a fina
    - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
    This prints a path like `<main-checkout>/../_agent-scratch/<branch>/` (on Windows, `Z:\_agent-scratch\<branch>\`). Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
 4. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
-   - `<diff_path>`: the full branch diff (`git diff --no-color <base>...<branch>`) written to a file. Write it as UTF-8. On PowerShell, the `>` operator can emit UTF-16; pipe through `Out-File -Encoding utf8NoBOM` or a Python one-liner to keep the file UTF-8 so `read` can open it.
-   - `<pr_description>`: the PR title, body, and any linked issue/spec context written to a file.
-   - Optional `<issue_context>`: Linear/GitHub issue or spec text if linked, written to a file.
+   - `<diff_path>`: the review package from `subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` (use `-` for no plan file). The script writes it as UTF-8 with no BOM.
+   - `<pr_description>`: the PR title, body, and any linked issue/spec context written to a file as UTF-8.
+   - Optional `<issue_context>`: Linear/GitHub issue or spec text if linked, written to a file as UTF-8.
 5. Round 1 — dispatch `reviewer-strong` with the full diff, PR description, and any issue context. Capture its findings in a `review-log.md` with severity and file/line citations.
-6. For each finding, the orchestrator verifies it, fixes it, and commits. Then materialize the fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`) in the same off-repo `iterative-review-<pr_number>` directory and update `review-log.md`.
+6. For each finding, the orchestrator verifies it, fixes it, and commits. Then materialize the fix review package (`subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`) and update `review-log.md`.
 7. Round 2 — dispatch `reviewer-fast` with:
    - the original finding,
    - the prepared fix diff,

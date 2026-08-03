@@ -34,7 +34,7 @@ $resolvedPlan = (Resolve-Path -LiteralPath $resolvedPlan).Path
 
 $scriptDir = Split-Path -Parent $PSCommandPath
 if ([string]::IsNullOrWhiteSpace($OutFile)) {
-  $workspace = & ([System.IO.Path]::Combine((Split-Path -Parent (Split-Path -Parent $scriptDir)), 'subagent-workspace', 'scripts', 'sdd-workspace.ps1')) $resolvedPlan
+  $workspace = & ([System.IO.Path]::Combine($scriptDir, 'sdd-workspace.ps1')) $resolvedPlan
   $OutFile = Join-Path $workspace "task-$TaskNumber-brief.md"
 }
 
@@ -64,5 +64,6 @@ if (-not [string]::IsNullOrWhiteSpace($outParent)) {
   New-Item -ItemType Directory -Force -Path $outParent | Out-Null
 }
 
-Set-Content -LiteralPath $OutFile -Value $selectedLines -Encoding utf8
+$encoding = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllLines($OutFile, $selectedLines, $encoding)
 Write-Output ("wrote {0}: {1} lines" -f $OutFile, $selectedLines.Count)
