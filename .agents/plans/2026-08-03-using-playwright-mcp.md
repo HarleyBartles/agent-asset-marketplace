@@ -4,6 +4,8 @@
 
 **Goal:** Add a `using-playwright-mcp` skill to `repo-worker-pack`, vendor the existing `using-discord-mcp` user skill into the same pack, rename `using-linear` to `using-linear-mcp`, and record the MCP-wrapper pattern in `.agents/runbooks/skill-authoring.md`.
 
+**Actual executed scope (expanded):** The branch also codified pressure-testing standards in `docs/skill-standards-policy.md` and `tests/pressure/README.md`, cleaned up stale `intake.json`/`decisions.md` files in `mcp-usage-pack` and `repo-worker-pack`, fixed `sdd-workspace` canonical scratch resolution to `Z:\_agent-scratch`, and extracted a new `subagent-workspace` skill from `subagent-driven-development` so that both `subagent-driven-development` and `iterative-review` reference a single workspace source of truth.
+
 **Architecture:** Follow the `using-linear` / `using-github-mcp` router-reference pattern. Each skill has a short `SKILL.md` with frontmatter, a router table, and use-case reference files. The `using-playwright-mcp` references are built from the `mcp-playwright` tool surface plus a `references/other-playwright-tools.md` soft-escape hatch.
 
 **Tech Stack:** Markdown skill files, YAML `agents/openai.yaml` pack metadata, `py -3 tools/run.py` for validation.
@@ -276,6 +278,12 @@ git push -u origin spec/using-playwright
 ```
 
 **Step 2: Create a draft PR into `main` with the branch name and head SHA in the body, per `.devin/rules/pr.md`.**
+
+## Notes on executed scope
+
+- Tasks 1-4 reflect the original MCP-pack work.
+- The branch also carried: pressure-test policy (`docs/skill-standards-policy.md`, `tests/pressure/README.md`), `intake.json`/`decisions.md` cleanup in `mcp-usage-pack` and `repo-worker-pack`, `sdd-workspace` canonical scratch resolution, and `subagent-workspace` extraction.
+- `subagent-workspace` is now the single source of truth for off-repo scratch resolution and owns the `sdd-workspace` scripts.
 
 ## Plan-readiness rating
 
