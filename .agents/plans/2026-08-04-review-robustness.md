@@ -11,8 +11,9 @@
 ## Global Constraints
 
 - All Python changes must pass `py -3 tools/run.py ci --check`.
-- Lens profiles and skills live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` and `codex-marketplace/plugins/superpowers-plus/skills/.../` source custody.
-- Generated `.agents/` skill copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill source.
+- Lens profiles live in `.agents/agents/` (e.g. `reviewer-skills.md`, `reviewer-marketplace.md`, and `reviewer-references.md` to deprecate). `reviewer-references.md` also exists in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` as the source copy.
+- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
+- Generated `.agents/` skill and agent copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill or profile source.
 - No `git commit --no-verify`.
 - Pre-commit hook re-runs `ci --check`; stage all changes before committing.
 
@@ -32,10 +33,15 @@
 
 ```python
 from pathlib import Path
+import importlib.util
 
 import pytest
 
-from tools import review_preflight
+SPEC = importlib.util.spec_from_file_location(
+    "review_preflight", str(Path("tools/review_preflight.py").resolve())
+)
+review_preflight = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(review_preflight)
 
 
 def _fixture(path: str, content: str):
@@ -119,7 +125,7 @@ def test_py_m_without_3_is_flagged():
 def test_new_plugin_default_enabled_true_is_flagged():
     path, content = _fixture(
         "tools/new_plugin.py",
-        '    manifest["enabled"] = True\n',
+        '    "enabled": True\n',
     )
     findings = []
     review_preflight._scan_new_plugin(path, content, findings)
@@ -138,14 +144,7 @@ def test_new_plugin_bogus_return_is_flagged():
 
 - [ ] **Step 2: Make `tools/review_preflight.py` functions importable for tests**
 
-At the bottom of `tools/review_preflight.py`, ensure `review_preflight` can be imported as a module from the repo root. If `tools/` is not a package, use a top-level import guard or adjust `sys.path` in the test. No code change if the test already uses `importlib` to load it. If the test cannot import `tools.review_preflight`, change the test to use:
-
-```python
-import importlib.util
-spec = importlib.util.spec_from_file_location("review_preflight", "tools/review_preflight.py")
-review_preflight = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(review_preflight)
-```
+No `tools/review_preflight.py` import-harness changes are needed; the test file uses `importlib.util` to load `tools/review_preflight.py` as a module.
 
 - [ ] **Step 3: Run the new tests to confirm they fail against the current scanner**
 
@@ -153,7 +152,7 @@ spec.loader.exec_module(review_preflight)
 py -3 -m pytest tests/test_review_preflight.py -v
 ```
 
-Expected: failures for `test_snowflake_without_context_is_not_flagged` and any checks not yet implemented.
+Expected: failures only for checks not yet implemented; the `test_snowflake_without_context_is_not_flagged` case should already pass because `references/` files are exempt.
 
 - [ ] **Step 4: Commit**
 
@@ -176,29 +175,36 @@ git commit -m "Add review_preflight unit-test fixtures"
 
 - [ ] **Step 1: Add `metadata` frontmatter check to `tools/review_preflight.py`**
 
-Add a scanner for `SKILL.md` `metadata` block anomalies:
+Consolidate `SKILL.md` frontmatter parsing between `_scan_skill_frontmatter` and `_scan_skill_metadata` by extracting a `_load_skill_frontmatter` helper. `_scan_skill_metadata` then only validates the `metadata` block and explicitly handles `metadata: null`, `metadata: ~`, and `metadata: {}` without crashing.
 
 ```python
+
+def _load_skill_frontmatter(path: Path, content: str) -> dict | None:
+    if not content.startswith("---"):
+        return None
+    parts = content.split("---", 2)
+    if len(parts) < 3:
+        return None
+    try:
+        front = yaml.safe_load(parts[1]) or {}
+    except yaml.YAMLError:
+        return None
+    return front if isinstance(front, dict) else None
+
 
 def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
     if path.name != "SKILL.md":
         return
-    if not content.startswith("---"):
-        return
-    parts = content.split("---", 2)
-    if len(parts) < 3:
-        return
-    try:
-        front = yaml.safe_load(parts[1]) or {}
-    except yaml.YAMLError:
-        return
-    if not isinstance(front, dict):
+    front = _load_skill_frontmatter(path, content)
+    if front is None:
         return
     metadata = front.get("metadata")
     if metadata is None:
         _warn(findings, path, 1, "`metadata` block is missing; add the skill-policy fields")
-    elif not isinstance(metadata, dict) or not metadata:
-        _warn(findings, path, 1, "`metadata` block is empty or malformed; it must contain skill-policy fields")
+    elif metadata == {}:
+        _warn(findings, path, 1, "`metadata` block is empty (`metadata: {}`); add the skill-policy fields")
+    elif not isinstance(metadata, dict):
+        _warn(findings, path, 1, "`metadata` block is malformed (`null`, `~`, or non-dict); it must be a mapping of skill-policy fields")
     else:
         allowed = {
             "source-id", "source-path", "provenance-name", "source-category",
@@ -246,38 +252,53 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
 
 Call it from `_scan_file`.
 
-- [ ] **Step 3: Ensure snowflake scanner ignores plain 17–20 digit numbers without context**
+- [ ] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
 
-The existing code already does this via `_SNOWFLAKE_CONTEXT`; add a test fixture to prove the negative case (see Task 1) and adjust the regex or context window if the test fails.
+The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case (see Task 1). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. If a robust fenced-block parser would significantly expand scope, defer this to the `reviewer-security` lens and remove the `test_snowflake_in_code_block_is_not_flagged` fixture for now.
 
-- [ ] **Step 4: Add `tools/run.py` task-semantic test in `tests/test_run_cli.py`**
+- [ ] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
 
-Open `tools/run.py` and find the `Task` namedtuple. Add a test that fails if a `Task` with an `apply` callable is missing a `mutating: True` tag, and that a `Task` with only `check` is not tagged `mutating`:
+Extend `_scan_new_plugin` to cover all four design contract checks: both `--sync` and `--apply` honor `shared_checkout.approve_mutation`, `--sync` preserves existing top-level bundle-manifest fields, the scaffolder does not write a default icon and immediately overwrite it, and helper functions have no unused `name` parameter. Add a positive and a negative fixture in `tests/test_review_preflight.py` for each. If any check cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
+
+- [ ] **Step 5: Wire `review-preflight` into `ci` and add the `tools/run.py` task-semantic test**
+
+In `tools/run.py`, update `_TASKS["ci"].deps` to include `"review-preflight"`:
 
 ```python
-def test_task_mutating_tags_match_apply_check():
+"ci": Task(
+    deps=("lint", "repo-standards", "review-preflight", "validate", "archive-links"),
+    fix="tools/run ci --apply",
+),
+```
+
+Then add the following test in `tests/test_run_cli.py` to ensure read-only tasks do not advertise an `--apply` fix:
+
+```python
+def test_read_only_tasks_do_not_advertise_apply():
     from tools import run
+    aggregators = {"ci", "all"}
     for name, task in run._TASKS.items():
-        if task.apply:
-            assert getattr(task, "mutating", None) is True, f"{name} has apply= but is not tagged mutating"
-        if not task.apply and task.check:
-            assert getattr(task, "mutating", None) is not True, f"{name} is read-only but is tagged mutating"
+        if name in aggregators:
+            continue
+        if not getattr(task, "apply", None):
+            assert f"tools/run {name} --apply" not in task.fix, (
+                f"{name} is read-only but its fix advertises tools/run {name} --apply"
+            )
 ```
 
-Update the `Task` namedtuple in `tools/run.py` to carry a `mutating` field and tag `review-preflight` and any other read-only tasks `mutating=False`.
-
-- [ ] **Step 5: Run the new tests to confirm they pass**
+- [ ] **Step 6: Run the new tests to confirm they pass**
 
 ```bash
-py -3 -m pytest tests/test_review_preflight.py -v
+py -3 -m pytest tests/test_review_preflight.py tests/test_run_cli.py -v
 py -3 tools/run.py review-preflight --check
+py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add tools/review_preflight.py
-git commit -m "Extend review_preflight with metadata, canonical path, and new_plugin checks"
+git add tools/review_preflight.py tools/run.py
+git commit -m "Extend review_preflight with metadata, canonical path, new_plugin, and ci wiring"
 ```
 
 ---
@@ -285,10 +306,10 @@ git commit -m "Extend review_preflight with metadata, canonical path, and new_pl
 ## Task 3: Re-shape lens profiles
 
 **Files:**
-- Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md`
-- Modify: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-marketplace.md` (already exists as `.agents/agents/reviewer-marketplace.md`)
-- Delete (or archive): `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`
-- Modify: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/INDEX.md` if one exists
+- Create: `.agents/agents/reviewer-skills.md`
+- Modify: `.agents/agents/reviewer-marketplace.md`
+- Deprecate: `.agents/agents/reviewer-references.md` (and its source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`)
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
 
 **Interfaces:**
 - Consumes: current `reviewer-references.md`, `reviewer-marketplace.md`, `reviewer-known-findings.md`.
@@ -359,7 +380,7 @@ For each issue:
 Do not include non-skill findings.
 ```
 
-- [ ] **Step 2: Update `reviewer-marketplace.md` to absorb repo-local checks**
+- [ ] **Step 2: Update `.agents/agents/reviewer-marketplace.md` to absorb repo-local checks**
 
 Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.json` / bundle checks):
 
@@ -377,7 +398,7 @@ Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.js
 
 - [ ] **Step 3: Remove or archive `reviewer-references.md`**
 
-If `reviewer-references.md` is referenced by other files, keep it as a one-line redirect file for one cycle:
+If `reviewer-references.md` is referenced by other files, keep `.agents/agents/reviewer-references.md` as a one-line redirect file for one cycle:
 
 ```markdown
 # Deprecated
@@ -385,7 +406,7 @@ If `reviewer-references.md` is referenced by other files, keep it as a one-line 
 This profile has been split into `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local).
 ```
 
-If nothing references it, `git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`.
+If nothing references it, `git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` and remove the generated `.agents/agents/reviewer-references.md` by running `py -3 tools/run.py marketplace --apply`.
 
 - [ ] **Step 4: Regenerate the marketplace**
 
@@ -401,8 +422,8 @@ git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 ## Task 4: Overhaul `reviewer-known-findings.md`
 
 **Files:**
-- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source)
+- Regenerate: `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` with `py -3 tools/run.py marketplace --apply`
 
 **Interfaces:**
 - Consumes: `reviewer-known-findings.md` current text.
@@ -410,11 +431,13 @@ git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
 
 - [ ] **Step 1: Update each finding with owner and portability tags**
 
-For each of the 8 (or more) sections in the existing file, add two tags at the top of the section:
+For each of the 8 (or more) sections in the existing file, add a `title` and `severity` field plus three owner/portability tags at the top of the section:
 
 ```markdown
 ## 1. Secrets / real identifiers in source (CWE-200)
 
+- **Title:** Secrets / real identifiers in source
+- **Severity:** blocking
 - **Owner preflight:** `tools/review_preflight.py` (`_scan_security`).
 - **Owner lens:** `reviewer-security` for judgment calls, `reviewer-skills` for references.
 - **Portable:** yes (concept; examples are repo-local).
@@ -425,6 +448,8 @@ Example for section 3:
 ```markdown
 ## 3. Marketplace tooling (`tools/new_plugin.py`, `tools/run.py`, scaffolders)
 
+- **Title:** Marketplace tooling
+- **Severity:** important
 - **Owner preflight:** `tools/review_preflight.py` (`_scan_new_plugin`).
 - **Owner lens:** `reviewer-marketplace`.
 - **Portable:** no (this repo's tooling).
@@ -443,9 +468,10 @@ Example for section 3:
 - [ ] **Step 3: Commit**
 
 ```bash
-git add codex-marketplace/plugins/repo-worker-pack/skills/selecting-a-subagent/assets/reviewer-known-findings.md
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md
-git commit -m "Tag reviewer-known-findings with preflight owner, lens owner, and portability"
+py -3 tools/run.py marketplace --apply
+git add .agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md
+git commit -m "Tag reviewer-known-findings with title, severity, preflight owner, lens owner, and portability"
 ```
 
 ---

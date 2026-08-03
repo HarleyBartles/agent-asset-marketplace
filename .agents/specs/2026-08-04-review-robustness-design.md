@@ -41,11 +41,11 @@ Reduce the number of Devin auto-review and `iterative-review` cycles by moving t
   - No unused parameters in `new_plugin.py` helper functions.
 - **`tools/run.py` task contract:**
   - Read-only tasks do not advertise `--apply` fix hints.
-  - `ci` dependencies do not include a read-only-only task as a hard dependency.
+  - `ci` includes `review-preflight` as a hard dependency so preflight findings block `ci --check`.
 - **SKILL.md frontmatter `metadata` block:** guard against `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` so the parser does not crash and the error message points at the file.
 - **Cross-skill script paths in `SKILL.md` and reference files:** verify that every backtick path starting with `subagent-workspace/scripts/` or `.agents/skills/` resolves to an existing installed or source skill file.
 
-These checks run under `tools/run.py review-preflight --check` and therefore inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.
+These checks run under `tools/run.py review-preflight --check` and, once `_TASKS["ci"].deps` in `tools/run.py` is updated to include `"review-preflight"`, inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.
 
 ### 2. Lens re-jig
 
@@ -91,10 +91,10 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 ## Source and custody
 
 - Tooling changes live in `tools/review_preflight.py` and `tools/run.py`.
-- Lens profiles live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (source custody).
-- `reviewer-known-findings.md` lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` and `codex-marketplace/plugins/repo-worker-pack/skills/selecting-a-subagent/assets/`.
+- Lens profiles live in `.agents/agents/`. `reviewer-references.md` source remains in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/`.
+- `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - The new runbook lives in `.agents/runbooks/review-robustness.md`.
-- Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `marketplace --apply`.
+- Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `py -3 tools/run.py marketplace --apply`.
 
 ## Handoff confidence
 
