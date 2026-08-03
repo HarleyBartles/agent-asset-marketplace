@@ -37,12 +37,12 @@ Reduce the number of Devin auto-review and `iterative-review` cycles by moving t
 - **`new_plugin.py` contract checks:**
   - (preflight, deterministic) `--sync` and `--apply` both honor `shared_checkout.approve_mutation` (exit-code check).
   - (lens-only, `reviewer-marketplace`) `--sync` preserves existing top-level bundle-manifest fields while still adding newly discovered skills.
-  - (preflight, deterministic) The scaffolder does not write a default icon and then immediately overwrite it (default-enablement check).
+  - (preflight, deterministic) The scaffolder does not write a literal `enabled: True` default that is immediately overwritten (default `enabled: True` enablement check).
   - (lens-only, `reviewer-marketplace`) No unused parameters in `new_plugin.py` helper functions.
 - **`tools/run.py` task contract:**
   - Read-only tasks do not advertise `--apply` fix hints.
   - `ci` includes `review-preflight` as a hard dependency so preflight findings block `ci --check`.
-- **SKILL.md frontmatter `metadata` block:** guard against `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` so the parser does not crash and the error message points at the file.
+- **SKILL.md frontmatter `metadata` block:** guard against malformed `metadata` values (`metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}`) so the parser does not crash and the error message points at the file. A missing `metadata:` key is allowed; it is not flagged.
 - **Cross-skill script paths in `SKILL.md` and reference files:** verify that every backtick path starting with `subagent-workspace/scripts/` or `.agents/skills/` resolves to an existing installed or source skill file.
 
 These checks run under `tools/run.py review-preflight --check` and, once `_TASKS["ci"].deps` in `tools/run.py` is updated to include `"review-preflight"`, inside `tools/run.py ci --check`. They should fail fast with a concrete file/line message, not a subagent summary.
@@ -61,7 +61,7 @@ The current `reviewer-references` mixes portable skill-reference concerns with t
   - Scaffolder and generator behavior (`new_plugin.py`, `tools/run.py`, `plugin-roots.json`, bundle manifests, `repo-index.json`).
   - This-repo canonical path drift (`subagent-workspace/scripts/...` vs stale `subagent-driven-development/scripts/...`) and `repo-local-marketplace-policy.json` `install_defaults`.
   - `--check` vs `--apply` semantics and shared-checkout gating.
-- **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy is removed, its source is retained as a one-cycle redirect/deprecation notice in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`, and its portable content moves to `reviewer-skills` (new source in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md`) while its repo-local content moves to `reviewer-marketplace`. Update `selecting-a-subagent` and `iterative-review` dispatch logic to route `SKILL.md`/reference work to `reviewer-skills` and marketplace/tooling work to `reviewer-marketplace`.
+- **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy and its source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` are removed after `selecting-a-subagent` and `iterative-review` dispatch logic is updated. Its portable content moves to `reviewer-skills` (new source in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md`) while its repo-local content moves to `reviewer-marketplace`. Update `selecting-a-subagent` and `iterative-review` dispatch logic to route `SKILL.md`/reference work to `reviewer-skills` and marketplace/tooling work to `reviewer-marketplace`.
 
 `reviewer-known-findings.md` is updated to list each class with:
 
@@ -86,12 +86,12 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 
 - `py -3 tools/run.py ci --check` passes after the preflight changes.
 - `py -3 tools/run.py marketplace --apply` installs the updated lens profiles and runbook.
-- A synthetic bad diff (e.g., `metadata: ` in a `SKILL.md`, stale `subagent-driven-development/scripts` path, unused `subprocess` import in `new_plugin.py`) is caught by `review-preflight` before `iterative-review` is invoked.
+- A synthetic bad diff (e.g., `metadata: ` in a `SKILL.md`, stale `subagent-driven-development/scripts` path, unused parameters in `new_plugin.py`) is caught by `review-preflight` before `iterative-review` is invoked.
 
 ## Source and custody
 
 - Tooling changes live in `tools/review_preflight.py` and `tools/run.py`.
-- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; keep `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md` and `reviewer-marketplace.md` into `.agents/agents/reviewer-marketplace.md`.
+- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; remove `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` after dispatch is updated. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md`; `reviewer-marketplace.md` remains the tracked repo-local override in `.agents/agents/`.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - The new runbook lives in `.agents/runbooks/review-robustness.md`.
 - Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `py -3 tools/run.py marketplace --apply`.

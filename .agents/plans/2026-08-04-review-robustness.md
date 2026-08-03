@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - All Python changes must pass `py -3 tools/run.py ci --check`.
-- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; keep `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md` and `reviewer-marketplace.md` into `.agents/agents/reviewer-marketplace.md`.
+- Portable lens profile sources live in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (canonical product source per `.agents/AGENTS.md`); `.agents/agents/` is the installed/override surface. Create `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` there; remove `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` after dispatch is updated. Run `py -3 tools/run.py marketplace --apply` to install `reviewer-skills.md` into `.agents/agents/reviewer-skills.md`; `reviewer-marketplace.md` remains the tracked repo-local override in `.agents/agents/`.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - Generated `.agents/` skill and agent copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill or profile source.
 - No `git commit --no-verify`.
@@ -192,7 +192,7 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
         return
     metadata = front.get("metadata")
     if metadata is None:
-        _warn(findings, path, 1, "`metadata` block is missing; add the skill-policy fields")
+        return  # `metadata:` is optional; only malformed values are flagged
     elif metadata == {}:
         _warn(findings, path, 1, "`metadata` block is empty (`metadata: {}`); add the skill-policy fields")
     elif not isinstance(metadata, dict):
@@ -250,7 +250,7 @@ Call it from `_scan_file`.
 
 - [ ] **Step 3: Ensure the snowflake scanner ignores numbers without context and inside fenced code blocks**
 
-The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case in `tests/test_review_preflight_extensions.py` (Task 2). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. If a robust fenced-block parser would significantly expand scope, defer this to the `reviewer-security` lens and remove the `test_snowflake_in_code_block_is_not_flagged` fixture from `tests/test_review_preflight_extensions.py`.
+The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit numbers; add a test fixture to prove the negative case in `tests/test_review_preflight_extensions.py` (Task 2). Update `_scan_security` to skip fenced code blocks (`` ```...``` ``) so numbers inside code examples are not flagged. Keep the `test_snowflake_in_code_block_is_not_flagged` fixture.
 
 - [ ] **Step 4: Add the remaining `new_plugin.py` contract checks to `tools/review_preflight.py`**
 
@@ -260,8 +260,8 @@ Extend `_scan_new_plugin` to cover the four design contract checks explicitly, m
    - Deterministic preflight hook: the `test_new_plugin_bogus_return_is_flagged` fixture added in Task 1 flags the conflated `return 0 if result is None or args.check else 1` pattern.
 2. `--sync` preserves existing top-level bundle-manifest fields.
    - Lens-only check under `reviewer-marketplace`; do not add a preflight fixture.
-3. The scaffolder does not write a default icon and immediately overwrite it.
-   - Deterministic preflight hook: the `test_new_plugin_default_enabled_true_is_flagged` fixture added in Task 1 flags a literal `    "enabled": True` default.
+3. The scaffolder does not write a literal `    "enabled": True` default that is immediately overwritten.
+   - Deterministic preflight hook: the `test_new_plugin_default_enabled_true_is_flagged` fixture added in Task 1 flags that default.
 4. Helper functions have no unused `name` parameter.
    - Lens-only check under `reviewer-marketplace`; do not add a preflight fixture.
 
@@ -328,14 +328,14 @@ def test_snowflake_in_code_block_is_not_flagged():
     assert not findings
 
 
-def test_skill_metadata_missing_is_flagged():
+def test_skill_metadata_missing_is_not_flagged():
     path, content = _fixture(
         "skills/using-foo/SKILL.md",
         "---\nname: using-foo\n---\n",
     )
     findings = []
     review_preflight._scan_skill_metadata(path, content, findings)
-    assert any("metadata block is missing" in f for f in findings)
+    assert not findings
 
 
 def test_skill_metadata_null_is_flagged():
@@ -469,7 +469,7 @@ git commit -m "Route reviewer-references work to reviewer-skills and reviewer-ma
 **Files:**
 - Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md` (portable source)
 - Modify: `.agents/agents/reviewer-marketplace.md` (repo-local override)
-- Deprecate: `.agents/agents/reviewer-references.md` (remove the generated copy). Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice.
+- Remove: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` (source) and its generated `.agents/agents/reviewer-references.md` copy.
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
 
 **Interfaces:**
@@ -558,17 +558,15 @@ Add to the existing `reviewer-marketplace` procedure (after the `plugin-roots.js
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
 ```
 
-- [ ] **Step 3: Deprecate `reviewer-references.md`**
+- [ ] **Step 3: Remove `reviewer-references.md` source and generated copy**
 
-Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-line redirect for one cycle:
+`selecting-a-subagent` and `iterative-review` dispatch are already updated in Task 3. Remove the source profile so `marketplace --apply` no longer installs it:
 
-```markdown
-# Deprecated
-
-This profile has been split into `reviewer-skills` (portable) and `reviewer-marketplace` (repo-local).
+```bash
+git rm codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md
 ```
 
-Run `py -3 tools/run.py marketplace --apply` in Step 4 first. Because the dispatch logic in Task 3 no longer references `reviewer-references`, the generated `.agents/agents/reviewer-references.md` copy should not be installed. If a copy is still present after the apply, remove it explicitly with `git rm .agents/agents/reviewer-references.md`. Do not `git rm` the source file this cycle; it remains as the redirect for one cycle to avoid breaking external links.
+If a generated `.agents/agents/reviewer-references.md` copy is still present, remove it with `git rm .agents/agents/reviewer-references.md` as well.
 
 - [ ] **Step 4: Regenerate the marketplace**
 
@@ -576,11 +574,10 @@ Run `py -3 tools/run.py marketplace --apply` in Step 4 first. Because the dispat
 py -3 tools/run.py marketplace --apply
 ```
 
-Verify that `.agents/agents/reviewer-skills.md` is now installed, `.agents/agents/reviewer-marketplace.md` is present, and `.agents/agents/reviewer-references.md` is absent. If the generated `reviewer-references.md` copy was not removed, run `git rm .agents/agents/reviewer-references.md` before committing.
+Verify that `.agents/agents/reviewer-skills.md` is now installed, `.agents/agents/reviewer-marketplace.md` is present, and `.agents/agents/reviewer-references.md` is absent.
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md \
-      codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md \
       .agents/agents/ .agents/skills/
 py -3 tools/run.py ci --check
 git commit -m "Re-shape lens profiles: reviewer-skills + reviewer-marketplace"
