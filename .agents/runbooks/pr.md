@@ -49,25 +49,31 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
    - Compare the branch diff to the PR description, the linked spec, and any linked plan.
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
-3. **Iterative review.**
-   - Only after preflight is green, run `iterative-review` with the relevant lens profiles:
+3. **Orchestrator pre-emptive review.**
+   - Do not dispatch reviewers to catch what you can see yourself. Before `iterative-review`, the orchestrating agent reads the branch diff, `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`, and the relevant lens profiles.
+   - For each lens, ask: *What would this lens flag that I can fix with high confidence?* Apply those fixes now.
+   - If a finding class is not in the preflight but is clearly present in the diff, fix it pre-emptively. Do not waste a reviewer round on an obvious defect.
+   - Record the predicted and pre-emptively fixed classes so `iterative-review` can focus on judgment calls and uncertain areas.
+
+4. **Iterative review.**
+   - Only after preflight is green and pre-emptive fixes are committed, run `iterative-review` with the relevant lens profiles:
      - `reviewer-skills` for SKILL.md, reference files, and prompt robustness.
      - `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
      - `reviewer-security` for secrets and real identifiers.
      - `reviewer-strong` for whole-branch design and scope.
    - For each finding, use `receiving-code-review` before applying.
 
-4. **Post-fix re-preflight.**
+5. **Post-fix re-preflight.**
    - After each fix, re-run `py -3 tools/run.py ci --check`.
    - Re-run the relevant lens (e.g., `reviewer-skills` for a skill fix, `reviewer-marketplace` for a marketplace fix, `reviewer-strong` for a scope/design fix).
 
-5. **Ready to review.**
+6. **Ready to review.**
    - Only flip the PR out of draft when:
      - `ci --check` is green on the staged tree,
      - `iterative-review` reports no blocking or important issues,
      - the PR body and spec/plan are honest about the final scope.
 
-6. **Wait for remote CI.**
+7. **Wait for remote CI.**
    - GitHub Actions are configured so CI does not run on draft PRs. As soon as the PR is marked ready, it queues the repo's remote gate (here, `marketplace-validation`).
    - After flipping to ready and pushing, wait for the remote run and verify it passes:
      - `gh pr checks <number>`

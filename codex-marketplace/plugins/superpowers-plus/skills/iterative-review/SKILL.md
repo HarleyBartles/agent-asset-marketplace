@@ -55,18 +55,25 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
      - In this repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` followed by `py -3 tools/run.py ci --check`.
      - In rooms-mostly: `scripts/ci-preflight.ps1 -Check` and the checks listed in its `AGENTS.md`.
      Capture the output so the lens reviewers can cross-check rather than rediscover the findings.
-5. **Round 1 — parallel lens review.** Dispatch the lens reviewers in parallel, each with the full diff, PR description, and `scan_findings`:
+5. **Round 0 — orchestrator pre-emptive review.** Before dispatching subagent reviewers, the orchestrator performs a self-review of the full diff against the known-finding classes and lens profiles:
+   - Read `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (or the consumer repo's equivalent known-findings catalog) and the relevant `.agents/agents/reviewer-*.md` lens profiles.
+   - For each lens, scan the diff and ask: *What would this lens flag that I can fix now with high confidence?*
+   - Apply the predictable fixes and commit them. Record the predicted/fixed classes and the rationale in `review-log-orchestrator-prediction.md` in the off-repo scratch; this log is an input to the lens reviewers.
+   - Re-run the consumer's canonical preflight and update `scan_findings` so the fixed classes are no longer in the report.
+   - If no uncertain issues remain, the orchestrator may skip Round 1 and proceed directly to `handoff-gates` or CI. Otherwise, dispatch reviewers only for the classes the orchestrator could not resolve.
+6. **Round 1 — parallel lens review.** Dispatch the lens reviewers in parallel, each with the full diff, PR description, `scan_findings`, and `review-log-orchestrator-prediction.md`:
    - `reviewer-security` writes `review-log-security.md`.
    - `reviewer-skills` (portable) writes `review-log-skills.md`.
    - `reviewer-marketplace` (repo-local) writes `review-log-marketplace.md`.
    - Any repo-specific lens profiles declared in the consumer's `AGENTS.md` or found as `.agents/agents/reviewer-*.md` overrides write `review-log-<lens>.md`.
-6. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, and all `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
-7. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
-8. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`.agents/skills/subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
-9. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.
-10. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 9.
-11. **Round 4 — final `reviewer-strong` re-review.** Re-dispatch `reviewer-strong` with the whole branch diff, PR description, and the updated `review-log-*.md` files. Its job is a full branch review with added context of what was already addressed. It writes `review-log-strong-2.md`.
-12. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
+   - In their prompts, explicitly instruct the reviewers to respect the `review-log-orchestrator-prediction.md` and not re-flag classes the orchestrator has already fixed; their value is in the classes the orchestrator marked as uncertain.
+8. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
+9. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
+10. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`.agents/skills/subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
+11. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.
+12. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 11.
+13. **Round 4 — final `reviewer-strong` re-review.** Re-dispatch `reviewer-strong` with the whole branch diff, PR description, `review-log-orchestrator-prediction.md`, and the updated `review-log-*.md` files. Its job is a full branch review with added context of what was already addressed. It writes `review-log-strong-2.md`.
+14. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
 
 ## Inputs the orchestrator must provide
 
