@@ -35,10 +35,10 @@ Reduce the number of Devin auto-review and `iterative-review` cycles by moving t
 
 - **Snowflake / real-identifier context:** the existing 17–20 digit scanner already requires `guild|server|channel|user|tenant|discord` context. This spec validates the heuristic against a set of known-good and known-bad reference fixtures and documents the expected behavior.
 - **`new_plugin.py` contract checks:**
-  - `--sync` and `--apply` both honor `shared_checkout.approve_mutation`.
-  - `--sync` preserves existing top-level bundle-manifest fields while still adding newly discovered skills.
-  - The scaffolder does not write a default icon and then immediately overwrite it.
-  - No unused parameters in `new_plugin.py` helper functions.
+  - (preflight, deterministic) `--sync` and `--apply` both honor `shared_checkout.approve_mutation` (exit-code check).
+  - (lens-only, `reviewer-marketplace`) `--sync` preserves existing top-level bundle-manifest fields while still adding newly discovered skills.
+  - (preflight, deterministic) The scaffolder does not write a default icon and then immediately overwrite it (default-enablement check).
+  - (lens-only, `reviewer-marketplace`) No unused parameters in `new_plugin.py` helper functions.
 - **`tools/run.py` task contract:**
   - Read-only tasks do not advertise `--apply` fix hints.
   - `ci` includes `review-preflight` as a hard dependency so preflight findings block `ci --check`.
@@ -61,7 +61,7 @@ The current `reviewer-references` mixes portable skill-reference concerns with t
   - Scaffolder and generator behavior (`new_plugin.py`, `tools/run.py`, `plugin-roots.json`, bundle manifests, `repo-index.json`).
   - This-repo canonical path drift (`subagent-workspace/scripts/...` vs stale `subagent-driven-development/scripts/...`, `py -3` convention, `repo-local-marketplace-policy.json` `install_defaults`).
   - `--check` vs `--apply` semantics and shared-checkout gating.
-- **`reviewer-references`** is deprecated/removed; its portable content moves to `reviewer-skills` and its repo-local content moves to `reviewer-marketplace`.
+- **`reviewer-references`** is deprecated; its generated `.agents/agents/reviewer-references.md` copy is removed, its source is retained as a one-cycle redirect/deprecation notice, and its portable content moves to `reviewer-skills` (new source in `.agents/agents/`) while its repo-local content moves to `reviewer-marketplace`.
 
 `reviewer-known-findings.md` is updated to list each class with:
 
@@ -91,7 +91,7 @@ This runbook is the process artifact that prevents short-circuiting the new fast
 ## Source and custody
 
 - Tooling changes live in `tools/review_preflight.py` and `tools/run.py`.
-- Lens profiles live in `.agents/agents/`. `reviewer-references.md` source remains in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/`.
+- Lens profiles live in `.agents/agents/`. The new `reviewer-skills.md` source lives there. The `reviewer-references.md` source is retained as a one-cycle redirect/deprecation notice in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/`; the generated `.agents/agents/reviewer-references.md` copy is removed.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - The new runbook lives in `.agents/runbooks/review-robustness.md`.
 - Generated `.agents/agents/`, `.agents/skills/`, and index surfaces are downstream outputs; regenerate with `py -3 tools/run.py marketplace --apply`.

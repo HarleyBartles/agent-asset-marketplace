@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - All Python changes must pass `py -3 tools/run.py ci --check`.
-- Lens profiles live in `.agents/agents/` (e.g. `reviewer-skills.md`, `reviewer-marketplace.md`, and `reviewer-references.md` to deprecate). `reviewer-references.md` also exists in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` as the source copy.
+- Lens profiles live in `.agents/agents/` (e.g. `reviewer-skills.md` and `reviewer-marketplace.md`; the generated `reviewer-references.md` copy is removed). The `reviewer-references.md` source in `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` is retained as a one-cycle redirect/deprecation notice.
 - `reviewer-known-findings.md` source lives in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md`; the installed copy is `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`.
 - Generated `.agents/` skill and agent copies are downstream; run `py -3 tools/run.py marketplace --apply` after editing skill or profile source.
 - No `git commit --no-verify`.
@@ -140,6 +140,76 @@ def test_new_plugin_bogus_return_is_flagged():
     findings = []
     review_preflight._scan_new_plugin(path, content, findings)
     assert any("dry-run and validation-error exit codes" in f for f in findings)
+
+
+def test_skill_metadata_missing_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("metadata block is missing" in f for f in findings)
+
+
+def test_skill_metadata_null_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: null\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("malformed" in f for f in findings)
+
+
+def test_skill_metadata_tilde_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: ~\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("malformed" in f for f in findings)
+
+
+def test_skill_metadata_empty_dict_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata: {}\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert any("metadata: {}" in f for f in findings)
+
+
+def test_skill_metadata_valid_is_not_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "---\nname: using-foo\nmetadata:\n  default_model: best\n  portable: true\n---\n",
+    )
+    findings = []
+    review_preflight._scan_skill_metadata(path, content, findings)
+    assert not findings
+
+
+def test_canonical_path_missing_is_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "Run `subagent-workspace/scripts/does-not-exist`.\n",
+    )
+    findings = []
+    review_preflight._scan_canonical_paths(path, content, findings)
+    assert any("does not exist" in f for f in findings)
+
+
+def test_canonical_path_present_is_not_flagged():
+    path, content = _fixture(
+        "skills/using-foo/SKILL.md",
+        "Run `subagent-workspace/scripts/sdd-workspace`.\n",
+    )
+    findings = []
+    review_preflight._scan_canonical_paths(path, content, findings)
+    assert not findings
 ```
 
 - [ ] **Step 2: Make `tools/review_preflight.py` functions importable for tests**
@@ -244,8 +314,12 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             rel = match.group(1) or match.group(2)
             if not rel:
                 continue
-            prefix = ".agents/skills/" if match.group(1) else "subagent-workspace/scripts/"
-            target = ROOT / prefix / rel
+            if match.group(1):
+                prefix = ".agents/skills/"
+                target = ROOT / ".agents/skills" / rel
+            else:
+                prefix = "subagent-workspace/scripts/"
+                target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
             if not target.is_file():
                 _warn(findings, path, line_no, f"referenced path `{prefix}{rel}` does not exist")
 ```
@@ -261,13 +335,13 @@ The existing code already requires `_SNOWFLAKE_CONTEXT` for plain 17–20 digit 
 Extend `_scan_new_plugin` to cover the four design contract checks explicitly, mapping each to a deterministic pattern or to the `reviewer-marketplace` lens:
 
 1. `--sync` and `--apply` both honor `shared_checkout.approve_mutation`.
-   - Deterministic hook: the `test_new_plugin_bogus_return_is_flagged` fixture added in Task 1 flags the conflated `return 0 if result is None or args.check else 1` pattern.
+   - Deterministic preflight hook: the `test_new_plugin_bogus_return_is_flagged` fixture added in Task 1 flags the conflated `return 0 if result is None or args.check else 1` pattern.
 2. `--sync` preserves existing top-level bundle-manifest fields.
-   - Add a positive and a negative fixture in `tests/test_review_preflight.py`. If this cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
+   - Lens-only check under `reviewer-marketplace`; do not add a preflight fixture.
 3. The scaffolder does not write a default icon and immediately overwrite it.
-   - Deterministic hook: the `test_new_plugin_default_enabled_true_is_flagged` fixture added in Task 1 flags a literal `    "enabled": True` default.
+   - Deterministic preflight hook: the `test_new_plugin_default_enabled_true_is_flagged` fixture added in Task 1 flags a literal `    "enabled": True` default.
 4. Helper functions have no unused `name` parameter.
-   - Add a positive and a negative fixture in `tests/test_review_preflight.py`. If this cannot be written as a deterministic pattern, assign it to the `reviewer-marketplace` lens and update the spec to note that it is lens-only.
+   - Lens-only check under `reviewer-marketplace`; do not add a preflight fixture.
 
 - [ ] **Step 5: Wire `review-preflight` into `ci` and add the `tools/run.py` task-semantic test**
 
@@ -325,7 +399,7 @@ git commit -m "Extend review_preflight with metadata, canonical path, new_plugin
 **Files:**
 - Create: `.agents/agents/reviewer-skills.md`
 - Modify: `.agents/agents/reviewer-marketplace.md`
-- Deprecate: `.agents/agents/reviewer-references.md` (and its source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md`)
+- Deprecate: `.agents/agents/reviewer-references.md` (remove the generated copy). Keep the source `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-references.md` as a one-cycle redirect/deprecation notice.
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-known-findings.md` (source); regenerate `.agents/skills/selecting-a-subagent/assets/reviewer-known-findings.md`
 
 **Interfaces:**
