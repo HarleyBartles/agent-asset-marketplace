@@ -155,4 +155,18 @@ Proceed to `lens-dispatch` and dispatch the relevant lens reviewers. A clean pre
 {"orchestrator_predict_findings_fixed": 0, "orchestrator_predict_items_uncertain": 0}
 ```
 
-```
+## Review artifacts
+
+The orchestrator writes all review inputs and logs to the off-repo `iterative-review-<pr_number>` directory. The canonical file names are:
+
+- `review-<base7>..<head7>.diff`
+- `pr_description.txt`
+- `review-log-orchestrator-prediction.md`
+- `review-log-skills.md`
+- `review-log-marketplace.md`
+- `review-log-security.md`
+- `review-log-strong.md`
+- `review-log-<lens>-<round>.md` for re-review rounds
+- `review-metrics.json`
+
+These files are never committed. They are the review proto-memory: later reviewers and the orchestrator read them to avoid re-deriving earlier work, to verify claimed fixes, and to detect regressions.
