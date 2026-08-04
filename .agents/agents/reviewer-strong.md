@@ -40,19 +40,30 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
+- `<review-log-orchestrator-prediction>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
+- `<review-log-skills>`, `<review-log-marketplace>`, `<review-log-security>` (required for `lens-dispatch` or `regression-scan`): the lens review reports. These are the primary finding set for their scopes.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
+
+## How to dispatch this reviewer
+
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory. The first `strong-review` needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
 
 ## How to review
 
-- Start by reading `<diff_path>` and `<pr_description>` directly. Do not enumerate the repository or the scratch directory; the paths are provided.
+- Start by reading all provided `review-log-*.md` files and `<review-log-orchestrator-prediction>`. Treat the lens reports as the primary finding set for their scopes. Do not re-derive those findings unless you disagree with a conclusion or need to verify a citation.
+- Then read `<diff_path>` and `<pr_description>`. Focus on: gaps the lenses missed, contradictions between lens findings, contradictions between the diff and the PR description/spec/plan, and design/scope issues no single lens can see.
 - `read` truncates long files and returns a `<truncation_notice>` with an overflow file path. If this happens, continue by reading the overflow file or by re-reading the same file with `offset` and `limit` to page through it.
 - Use `grep` to locate file boundaries (e.g., `^diff --git`) or specific patterns before reading a chunk. This keeps the review focused and avoids loading the entire diff into context at once.
 - Review the whole branch by moving through the diff in chunks, not by trying to read it in a single call.
 - `glob` may be used only for targeted pattern confirmation (e.g., a single known filename). Do not use broad `glob` patterns to list the whole repository.
 
+## What to write
+
+Write `review-log-strong.md` in the off-repo scratch. Begin with `## Inputs` and `## Per-lens sign-off` sections, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-strong: N issue(s)` or `reviewer-strong: clean`.
+
 ## What not to do
 
-- Do not write files or run mutating commands.
+- Do not modify repo files or run mutating commands. You may write the off-repo `review-log-strong.md` report.
 - You may use `exec` only for non-mutating `git` queries and canonical verification, and `mcp_call_tool` only for non-mutating lookups. Do not use them to generate the diff, fetch a missing package, or install/change anything.
 - Do not resolve the diff yourself; the orchestrator must provide `<diff_path>`.
 - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.

@@ -111,7 +111,7 @@ This node is mandatory. Dispatch `reviewer-strong` with the full diff, PR descri
 
 Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
 
-If `reviewer-strong` reports `reviewer-clean` and the preflight is clean, proceed to `ready`. Otherwise, proceed to `metrics-track`.
+If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, proceed to `ready`. Otherwise, proceed to `metrics-track`.
 
 If you cannot run `reviewer-strong` or any lens did not complete, this is `blocked`; do not proceed to `ready`.
 
@@ -144,7 +144,7 @@ Dispatch `reviewer-strong` with the fix diff and immediate surrounding area. Its
 
 ### `ready`
 
-When `strong-review` reports `reviewer-clean` and the preflight is clean, run `py -3 tools/run.py ci --check` (or the consumer's equivalent) and flip the PR to ready after a clean CI pass.
+When `strong-review` reports `reviewer-strong: clean` and the preflight is clean, run `py -3 tools/run.py ci --check` (or the consumer's equivalent) and flip the PR to ready after a clean CI pass.
 
 ### `blocked`
 

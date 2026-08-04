@@ -29,7 +29,7 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 
 ## Invariants
 
-- You are read-only. Do not modify files, create files, or run build/install/write commands.
+- You are read-only. Do not modify repo files or run build/install/write commands. You may write the off-repo `review-log-skills.md` report.
 - You may use `exec` for non-mutating `git` queries and canonical verification commands, and `mcp_call_tool` for non-mutating lookups. Use these only to resolve refs or confirm state — not to generate the diff, not to fetch a missing package, and not to install/change anything.
 - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
 - Cite specific files and line numbers for every issue you find.
@@ -42,9 +42,18 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<diff_path>` — path to a prepared diff file (e.g. `git diff --no-color <base>...<branch>` output written to a file).
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
+- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log. Read it and use it as a checklist; do not duplicate items the orchestrator already fixed.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`. When provided, scan this diff and the immediately touched files, not the full branch.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
+
+## How to dispatch this reviewer
+
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+
+## What to write
+
+Write `review-log-skills.md` in the off-repo scratch. Begin with a brief `## Inputs` section, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-skills: N issue(s)` or `reviewer-skills: clean`.
 
 ## Procedure
 

@@ -58,7 +58,7 @@ flowchart TD
 | `scope-honesty` | `orchestrator-predict` | Drift corrected or no drift. |
 | `orchestrator-predict` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
 | `lens-dispatch` | `strong-review` | All lens logs are available. |
-| `strong-review` | `ready` | `reviewer-strong` reports `reviewer-clean`. |
+| `strong-review` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
