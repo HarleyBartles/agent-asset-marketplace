@@ -145,7 +145,7 @@ Forces explicit choice.
 
 1. **Concrete options** - Force A/B/C choice, not open-ended
 2. **Real constraints** - Specific times, actual consequences
-3. **Real file paths** - `/tmp/payment-system` not "a project"
+3. **Real file paths** - run `subagent-workspace/scripts/sdd-workspace` (or `sdd-workspace.ps1` on Windows) to get the off-repo scratch, then use `<scratch>/payment-system` not "a project"
 4. **Make agent act** - "What do you do?" not "What should you do?"
 5. **No easy outs** - Can't defer to "I'd ask your human partner" without choosing
 

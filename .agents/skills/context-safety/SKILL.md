@@ -106,7 +106,8 @@ def iter_line_chunks(lines: list[str], chunk_lines: int = TARGET_LINES):
         yield lines[start:start + chunk_lines]
 
 
-def write_large_text(target: Path, text: str) -> None:
+def write_large_text(target: Path, text: str, scratch_root: Path) -> None:
+
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     lines = text.splitlines()
     byte_size = len(text.encode("utf-8"))
@@ -114,7 +115,7 @@ def write_large_text(target: Path, text: str) -> None:
     chunk_lines = 1500 if len(lines) >= 3000 else TARGET_LINES if len(lines) > TARGET_LINES else len(lines)
     is_large = len(lines) > TARGET_LINES or byte_size > LARGE_BYTES
 
-    tmp = target.with_suffix(target.suffix + ".tmp")
+    tmp = scratch_root / f"{target.name}.tmp"
 
     if is_large:
         with tmp.open("w", encoding="utf-8", newline="\n") as handle:
@@ -143,7 +144,7 @@ def write_large_text(target: Path, text: str) -> None:
 
 ## Windows notes
 
-- Keep temp files on the same volume as the target so `Path.replace()` stays atomic.
+- Keep temp files on the same volume as the target so `Path.replace()` stays atomic. `sdd-workspace` produces an off-repo scratch that is a sibling of the main checkout, which is normally on the same volume.
 - Prefer explicit `encoding="utf-8"` and `newline="\n"` for text generation.
 - If a tool or editor has trouble with a very large file, route through a script instead of the interactive editor.
 - If the repo has a safer existing helper for batch writes, use that helper instead of inventing a second path.
@@ -156,11 +157,11 @@ If you would be tempted to compose a large document inline in the main session c
 
 ## Scratch folder for large temporary outputs
 
-For large temporary outputs that don't need to be committed, consider using the centralized scratch folder instead of bounded composition.
+For large temporary outputs that don't need to be committed, use the centralized off-repo scratch provided by `subagent-workspace/scripts/sdd-workspace` (or `sdd-workspace.ps1` on Windows). It resolves `<main-checkout>/../_agent-scratch/<branch>/<plan-basename>/`, which is always outside the repo tree and on the same volume as the working tree.
 
 ### When to use scratch folder vs. bounded composition
 
-Use the scratch folder (`../_agent-scratch/<repo-name>/<branch-name>`) when:
+Use the scratch folder when:
 
 - The output is temporary and will be discarded after the session
 - The output is large intermediate data (logs, temporary analysis results, intermediate artifacts)
@@ -179,21 +180,16 @@ Use bounded composition when:
 - **Disposable**: Not persistent beyond the agent's session
 - **Outside repo**: Prevents accidental commits
 - **Per-branch**: Matches worktree/branch name for isolation
+- **Same volume as repo**: Staging files there keeps `Path.replace()` atomic
 - **Auto-cleanup**: Agents must clean up scratch folder when cleaning up worktree
 - **Not for durable work**: Use the repo for persistent changes
 
-### Scratch folder structure
-
-- **Scratch root**: `../_agent-scratch/`
-- **Per-repo**: `../_agent-scratch/<repo-name>/`
-- **Per-branch**: `../_agent-scratch/<repo-name>/<branch-name>/`
-
 ### Usage pattern
 
-1. Create scratch folder when needed: `../_agent-scratch/<repo-name>/<branch-name>/`
-2. Write large temporary outputs to scratch folder
-3. Use the temporary outputs as needed during the session
-4. Clean up scratch folder when work is complete (when cleaning up worktree)
+1. Resolve the scratch folder: run `subagent-workspace/scripts/sdd-workspace` with no plan file and capture the printed path.
+2. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
+3. Use the temporary outputs as needed during the session.
+4. Clean up the scratch folder when work is complete (when cleaning up worktree).
 
 ### Cleanup guidance
 
