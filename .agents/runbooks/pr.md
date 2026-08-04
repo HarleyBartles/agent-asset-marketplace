@@ -38,36 +38,36 @@ Consumer-canonical variant:
 
 ## Pre-flip robustness procedure
 
-Run the fastest, cheapest checks first so that `iterative-review` and Devin auto-review only see issues that require judgment, not pattern classes the repo can catch deterministically.
+Run the fastest, cheapest checks first so that `iterative-review` and Devin auto-review only see issues that require judgment, not pattern classes the repo can catch deterministically. This runbook follows the `iterative-review` graph in `.agents/skills/iterative-review/references/review-state-graph.md`.
 
-1. **Fast preflight first.**
+1. **Fast preflight first (`preflight` node).**
    - `py -3 tools/run.py review-preflight --check`
    - `py -3 tools/run.py ci --check`
-   - If either is red, fix the findings and re-run. Do not dispatch `iterative-review` while preflight is red.
+   - If either is red, fix the findings and re-run. Do not proceed past `preflight` while it is red.
 
-2. **Scope honesty.**
+2. **Scope honesty (`scope-honesty` node).**
    - Compare the branch diff to the PR description, the linked spec, and any linked plan.
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
-3. **Orchestrator pre-emptive review.**
-   - Do not dispatch reviewers to catch what you can see yourself. Before `iterative-review`, the orchestrating agent reads the branch diff and the relevant `.agents/agents/reviewer-*.md` lens profiles. The profile is the checklist for both the orchestrator and the subagent reviewer.
+3. **Orchestrator pre-emptive review (`orchestrator-predict` node).**
+   - Do not dispatch reviewers to catch what you can see yourself. Before `lens-dispatch`, the orchestrating agent reads the branch diff and the relevant `.agents/agents/reviewer-*.md` `## Checklist`. The profile is the checklist for both the orchestrator and the subagent reviewer.
    - For each lens, ask: *What would this lens flag that I can fix with high confidence?* Apply those fixes now.
-   - If a finding class is not in the preflight but is clearly present in the diff, fix it pre-emptively. Do not waste a reviewer round on an obvious defect.
-   - Record the predicted and pre-emptively fixed classes so `iterative-review` can focus on judgment calls and uncertain areas.
+   - Record the predicted and pre-emptively fixed classes in `review-log-orchestrator-prediction.md` in the off-repo scratch.
+   - If no uncertain items remain and the preflight is clean, the branch may be ready to go.
 
-4. **Iterative review.**
-   - Only after preflight is green and pre-emptive fixes are committed, run `iterative-review` with the relevant lens profiles:
+4. **Iterative review graph (`lens-dispatch` and `strong-review` nodes).**
+   - Only after preflight is green and pre-emptive fixes are committed, run the review graph:
      - `reviewer-skills` for SKILL.md, reference files, and prompt robustness.
      - `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
      - `reviewer-security` for secrets and real identifiers.
-     - `reviewer-strong` for whole-branch design and scope.
+     - `reviewer-strong` for whole-branch design, scope, and gaps in the lens logs.
    - For each finding, use `receiving-code-review` before applying.
 
-5. **Post-fix re-preflight.**
+5. **Fix and re-preflight (`re-preflight` node).**
    - After each fix, re-run `py -3 tools/run.py ci --check`.
-   - Re-run the relevant lens (e.g., `reviewer-skills` for a skill fix, `reviewer-marketplace` for a marketplace fix, `reviewer-strong` for a scope/design fix).
+   - Re-run the relevant lens (`targeted-re-review`) and, for non-trivial fixes, `reviewer-strong` on the touched area (`regression-scan`).
 
-6. **Ready to review.**
+6. **Ready to review (`ready` node).**
    - Only flip the PR out of draft when:
      - `ci --check` is green on the staged tree,
      - `iterative-review` reports no blocking or important issues,

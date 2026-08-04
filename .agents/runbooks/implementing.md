@@ -41,6 +41,7 @@ Before claiming work is done, verify:
 - **No secrets committed:** Check your diff for credentials, API keys, or connection strings
 - **Skills refreshed:** If skills were modified, run `tools/run installed-skills --apply` to refresh installed skills
 - **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or marketplace bundle, confirm the change is safe for sister or consumer repos that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
+- **Self-review against lens checklists:** Before handoff, read the relevant `.agents/agents/reviewer-*.md` `## Checklist` profiles (at minimum `reviewer-skills`, `reviewer-marketplace`, and `reviewer-security` for the surfaces you touched). Run the checklist mechanically against your diff and fix anything you can. The goal is to make the reviewer loop a mechanical verification, not a bug-hunting exercise.
 
 ## PR, Linear, and Plan Honesty
 

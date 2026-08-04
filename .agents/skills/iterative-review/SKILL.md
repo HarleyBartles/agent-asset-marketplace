@@ -29,7 +29,7 @@ This skill is a first-party skill authored for this repository. It is not derive
 
 # Iterative Review
 
-Run a multi-round subagent review loop on a draft PR before it is marked ready for CI and human review.
+Run the review state graph on a draft PR before it is marked ready for CI and human review.
 
 ## When to Use
 
@@ -37,43 +37,115 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch design pass, then targeted `reviewer-fast` re-reviews of each fix, then a final `reviewer-strong` pass with all logs. The orchestrator applies all fixes and uses its own judgement on when the branch is green enough.
+Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, orchestrator prediction, parallel lens review, `reviewer-strong` whole-branch review, fix, re-preflight, targeted re-review, and conditional regression-scan. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
 
-## Procedure
+## Required reading
 
-1. Determine the base ref (`<base>`) and the branch/head (`<branch>` or `<head_sha>`) for the draft PR.
-2. **Scope-honesty preflight.** Before the reviewers see the code, compare the actual branch diff to the plan, any linked spec, and the PR title/body. If the implemented scope has expanded beyond what those documents describe, update them to match the real diff. Commit and push the scope-honesty update. The reviewers should read an honest description of scope, not discover scope creep line-by-line in the code.
-3. Resolve the off-repo scratch workspace by running `.agents/skills/subagent-workspace/scripts/sdd-workspace` with no plan file:
+- `selecting-a-subagent` skill for choosing lens profiles.
+- `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
+- `references/review-metrics-schema.json` for the metrics to collect.
+- `references/review-log-orchestrator-prediction.md` for the prediction log template.
+- The relevant `.agents/agents/reviewer-*.md` lens profiles for the current repository.
+
+## Setup
+
+1. Determine `<base>` and `<branch>` (or `<head_sha>`) for the draft PR.
+2. Resolve the off-repo scratch workspace by running `.agents/skills/subagent-workspace/scripts/sdd-workspace` with no plan file:
    - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
    - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
-   This prints a path like `<main-checkout>/../_agent-scratch/<branch>/` (on Windows, `Z:\_agent-scratch\<branch>\`). Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live in that off-repo directory so they are never committed.
-4. Materialize inputs as files the subagents can read in the off-repo `iterative-review-<pr_number>` directory:
-   - `<diff_path>`: the review package from `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` (use `-` for no plan file). The script writes it as UTF-8 with no BOM.
-   - `<pr_description>`: the PR title, body, and any linked issue/spec context written to a file as UTF-8.
-   - Optional `<issue_context>`: Linear/GitHub issue or spec text if linked, written to a file as UTF-8.
-   - `<scan_findings>` (optional but strongly recommended): the output of the consumer repo's canonical preflight, written to a file. Do not hardcode the preflight command; use the command(s) named in the consumer repo's `AGENTS.md` or `.devin/rules`. Examples:
-     - In this repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` followed by `py -3 tools/run.py ci --check`.
-     - In rooms-mostly: `scripts/ci-preflight.ps1 -Check` and the checks listed in its `AGENTS.md`.
-     Capture the output so the lens reviewers can cross-check rather than rediscover the findings.
-5. **Round 0 — orchestrator pre-emptive review.** Before dispatching subagent reviewers, the orchestrator performs a self-review of the full diff against the known-finding classes and lens profiles:
-   - Read the relevant `.agents/agents/reviewer-*.md` lens profiles. Each profile is its own checklist; the orchestrator uses the same profiles for prediction that the subagent reviewers use for execution.
-   - For each lens, scan the diff and ask: *What would this lens flag that I can fix now with high confidence?*
-   - Apply the predictable fixes and commit them. Record the predicted/fixed classes and the rationale in `review-log-orchestrator-prediction.md` in the off-repo scratch; this log is an input to the lens reviewers.
-   - Re-run the consumer's canonical preflight and update `scan_findings` so the fixed classes are no longer in the report.
-   - If no uncertain issues remain, the orchestrator may skip Round 1 and proceed directly to `handoff-gates` or CI. Otherwise, dispatch reviewers only for the classes the orchestrator could not resolve.
-6. **Round 1 — parallel lens review.** Dispatch the lens reviewers in parallel, each with the full diff, PR description, `scan_findings`, and `review-log-orchestrator-prediction.md`:
-   - `reviewer-security` writes `review-log-security.md`.
-   - `reviewer-skills` (portable) writes `review-log-skills.md`.
-   - `reviewer-marketplace` (repo-local) writes `review-log-marketplace.md`.
-   - Any repo-specific lens profiles declared in the consumer's `AGENTS.md` or found as `.agents/agents/reviewer-*.md` overrides write `review-log-<lens>.md`.
-   - In their prompts, explicitly instruct the reviewers to respect the `review-log-orchestrator-prediction.md` and not re-flag classes the orchestrator has already fixed; their value is in the classes the orchestrator marked as uncertain.
-8. **Round 2 — `reviewer-strong` whole-branch pass.** Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. It should combine the lens findings, look for gaps or contradictions, and review design/scope. It writes `review-log-strong-1.md`.
-9. Merge the lens and strong logs into a single `review-log.md` with severity and file/line citations.
-10. For each finding, the orchestrator verifies it, fixes it, and commits. Then re-run the consumer repo's canonical preflight over the post-fix range, materialize the fix review package (`.agents/skills/subagent-workspace/scripts/review-package - <pre-fix-sha> <post-fix-sha> "$workspace/iterative-review-<pr_number>/review-<pre-fix7>..<post-fix7>.diff"`), and update the relevant `review-log-*.md` with any new preflight hits.
-11. **Round 3 — `reviewer-fast` re-review of the fix.** For each lens that raised the finding, dispatch `reviewer-fast` with the original finding, the prepared fix diff, and relevant slices of the full branch diff that the fix touches. Confirm the fix resolves the finding and catch regressions in the touched area only.
-12. If `reviewer-fast` raises new issues, the orchestrator fixes them and returns to step 11.
-13. **Round 4 — final `reviewer-strong` re-review.** Re-dispatch `reviewer-strong` with the whole branch diff, PR description, `review-log-orchestrator-prediction.md`, and the updated `review-log-*.md` files. Its job is a full branch review with added context of what was already addressed. It writes `review-log-strong-2.md`.
-14. If the final `reviewer-strong` reports no blocking or important issues, the skill reports "reviewer-clean" and lists any minor/deferred items. The orchestrator then runs the repo's canonical CI preflight (`py -3 tools/run.py ci --check` here, or the consumer's equivalent) and flips the PR to ready only after a clean CI pass.
+   This prints a path like `<main-checkout>/../_agent-scratch/<branch>/`. Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live off-repo.
+3. Materialize inputs in the off-repo `iterative-review-<pr_number>` directory:
+   - `<diff_path>`: the full branch diff via `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"`.
+   - `<pr_description>`: the PR title, body, and linked issue/spec context as a UTF-8 file.
+   - Optional `<issue_context>`: Linear/GitHub issue or spec text as a UTF-8 file.
+   - `<scan_findings>`: the consumer repo's canonical preflight output as a file. Use the command named in `AGENTS.md` or `.devin/rules`:
+     - This repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` then `py -3 tools/run.py ci --check`.
+     - `rooms-mostly`: `scripts/ci-preflight.ps1 -Check` and its `AGENTS.md` checks.
+
+## Following the graph
+
+Read `references/review-state-graph.md` and execute the graph. This section is an annotated walkthrough, not a replacement for the graph.
+
+### `setup`
+
+Collect the inputs above. The orchestrator owns the workspace.
+
+### `preflight`
+
+Run the consumer's canonical preflight on the branch. Do not proceed until `ci --check` or its equivalent is clean or its findings are converted to a `fast-fix` and re-checked.
+
+### `fast-fix`
+
+If the preflight reports deterministic findings, fix them and return to `preflight`. Preflight findings are the cheapest to catch and the cheapest to fix.
+
+### `scope-honesty`
+
+Compare the branch diff to the plan, spec, PR body, and linked issues. If the implemented scope has drifted, update the documents to match the real diff or fix the diff to match the documents. Commit the scope-honesty update. Reviewers must read an honest description of scope, not discover scope creep line-by-line.
+
+### `orchestrator-predict`
+
+This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and apply it to the full diff mechanically. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-prediction.md` in the off-repo scratch. Update `scan_findings` after the fixes.
+
+If no uncertain items remain and the preflight is clean, you may proceed to `ready` for trivial PRs. In practice, most PRs still benefit from a mechanical lens pass.
+
+### `lens-dispatch`
+
+Dispatch the relevant lens reviewers in parallel, each with:
+- the full branch `<diff_path>`,
+- `<pr_description>`,
+- `<scan_findings>`,
+- `review-log-orchestrator-prediction.md`.
+
+Lens reviewers should use the prediction log as the primary checklist and not re-flag what the orchestrator already fixed. Each lens writes `review-log-<lens>.md`.
+
+### `strong-review`
+
+Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
+
+If `reviewer-strong` reports `reviewer-clean`, proceed to `ready`. Otherwise, proceed to `metrics-track`.
+
+### `metrics-track`
+
+For each finding, record the node that discovered it, the round, the lens, and the severity in `review-metrics.json`. This is an evidence checkpoint, not a gate. It does not block.
+
+### `finding-fix`
+
+For each finding, use `receiving-code-review` to verify it, then fix it. Commit the fix. The fix should be narrow.
+
+### `re-preflight`
+
+Re-run the consumer's canonical preflight over the post-fix range. If it reports new deterministic issues, go to `fast-fix`. If it is clean, go to `targeted-re-review`.
+
+### `targeted-re-review`
+
+Dispatch the originating lens (or `reviewer-fast` if the lens has a `reviewer-fast` variant) with:
+- the original finding,
+- the fix diff,
+- the relevant slice of the full branch diff.
+
+Confirm the original finding is resolved. Then:
+- If the fix is trivial (single file, same concern, no cross-cutting impact), go to `strong-review`.
+- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change), go to `regression-scan`.
+
+### `regression-scan`
+
+Dispatch `reviewer-strong` with the fix diff and immediate surrounding area. Its job is to catch new issues the fix introduced. If a new issue appears, return to `metrics-track` so it is recorded as a regression. If clean, return to `strong-review` for a final whole-branch pass.
+
+### `ready`
+
+When `strong-review` reports `reviewer-clean` and the preflight is clean, run `py -3 tools/run.py ci --check` (or the consumer's equivalent) and flip the PR to ready after a clean CI pass.
+
+### `blocked`
+
+Use only when the orchestrator cannot resolve a contested or load-bearing finding. Record the blocker in `review-metrics.json` and hand to a human. The human may say "carry on"; if so, resume from `metrics-track`.
+
+## Recording `review-metrics.json`
+
+At every `metrics-track` and at `ready` or `blocked`, write or update `review-metrics.json` in the off-repo scratch. The schema is in `references/review-metrics-schema.json`. This file is evidence for:
+
+- **Fast catch**: `findings_by_node.preflight` should dominate.
+- **Early catch**: most lens/strong findings should appear at low `discovered_at_round` values.
+- **No sloppy fixes**: `regressions` should be low relative to `rounds_per_finding`.
 
 ## Inputs the orchestrator must provide
 
@@ -83,15 +155,18 @@ Parallel lens reviews of the full branch, then a `reviewer-strong` whole-branch 
 
 ## Invariants
 
+- Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
 - The orchestrator owns the scope-honesty preflight, all fixes, and the final decision to flip the PR to ready.
-- All review inputs, logs, and fix-diffs are written to the SDD off-repo scratch directory; they are never committed to the repo.
+- All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
 ## Common Mistakes
 
-- Naming subagent dispatch prompts `final`, `final final`, `final final final`, etc. Use `Round N` for every round, including the last one (e.g., `Round 4 — strong re-review of full branch`).
-- Letting `reviewer-fast` drift into a full branch review. Keep the dispatch prompt and the fix diff tightly scoped.
+- Treating the skill as a fixed list of rounds. Use the graph.
+- Skipping `orchestrator-predict` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
+- Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
+- Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.
+- Letting `reviewer-fast` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
-- Forgetting to re-run the consumer's preflight after each fix. A fix can re-introduce a pattern the preflight catches.

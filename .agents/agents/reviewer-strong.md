@@ -18,6 +18,20 @@ allowed-tools:
 A vendor-provided subagent profile for full branch or PR diff review where the
 whole branch is in scope.
 
+## Checklist
+
+Use this checklist during `orchestrator-predict` and as the core of the review:
+
+1. **Security / secrets exposure (CWE-200).** Scan for real identifiers or secrets that should not be in source: 17–20 digit snowflake IDs, tokens, API keys, email addresses, private IP addresses, or any value redacted elsewhere. Use `<PLACEHOLDER>` or env-var instructions.
+2. **SKILL.md frontmatter schema.** `license` must be a top-level field; `name` and `description` must be top-level; `metadata` must not silently swallow fields or contain unexpected keys.
+3. **Skill-to-skill path consistency.** Any instruction pointing at a helper script must use the canonical current path. Watch for stale cross-skill references.
+4. **Marketplace tooling correctness.** `new_plugin.py` and `tools/run.py` have correct exit codes, `mutating` tags, and `--check`/`--apply` semantics.
+5. **Generated/index surfaces.** `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and `.agents/plugins/marketplace.json` are consistent and do not lose fields.
+6. **Reference file hygiene.** Markdown table rows have a closing `|`. Examples use `py -3`. No real IDs in examples or maps.
+7. **Spec/plan drift.** The diff implements the linked plan/spec and does not introduce unscoped packs or features.
+8. **Prompt and script robustness.** Read-only prompts do not force `git`/`exec`/`find_file_by_name` to fetch missing packages; they report missing packages and stop. Scripts that change location resolve output paths to absolute before doing so.
+9. **Gaps and contradictions in lens logs.** If lens logs are provided, use them as the primary finding set. Report missing findings from the diff, conflicts, and design issues the lenses cannot see.
+
 ## When to use
 
 Use when the review must consider the entire branch or a large, multi-file diff.
@@ -26,6 +40,7 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
+- `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
 ## How to review
 
