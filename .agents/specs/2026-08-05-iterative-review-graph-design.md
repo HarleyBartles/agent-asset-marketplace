@@ -41,13 +41,12 @@ The graph is a directed control-flow graph. Each node is a step; each edge is a 
 | `re-preflight` | `tools/run.py ci --check` on the post-fix range | Ensure the fix did not introduce deterministic issues. |
 | `targeted-re-review` | `reviewer-fast` or full lens | Confirm the original finding is resolved. |
 | `regression-scan` | `reviewer-strong` on the touched area | Check for new issues caused by the fix. Conditional on non-trivial fixes. |
-| `ready` | orchestrator | Final `ci --check`; mark PR ready. |
-| `remote-ci` | GitHub Actions | Consumer `marketplace-validation` or equivalent. |
+| `ready` | orchestrator | Final `ci --check` and wait for consumer remote CI; mark PR ready. |
 | `blocked` | orchestrator | Human escalation when the orchestrator cannot resolve a contested or load-bearing finding. |
 
 **Conditional edges**
 
-- `orchestrator-predict` may route directly to `ready` if the orchestrator can assert nothing uncertain remains.
+- `orchestrator-predict` always routes to `lens-dispatch`. A clean prediction is not a substitute for lens review.
 - `strong-review` routes to `metrics-track` when findings exist; to `ready` when clean.
 - `re-preflight` routes back to `fast-fix` on red, forward to `targeted-re-review` on green.
 - `targeted-re-review` routes to `regression-scan` for non-trivial fixes (multi-file, generated surfaces, security/tooling boundary) or `strong-review` for trivial fixes.

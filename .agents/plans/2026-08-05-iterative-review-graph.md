@@ -130,11 +130,11 @@ Replace the `iterative-review` round list with a state graph that routes the orc
 
 ## Completion
 
-- [ ] Task 1: `review-state-graph.md` reference
-- [ ] Task 2: `iterative-review/SKILL.md` graph rewrite
-- [ ] Task 3: Metrics and log templates
-- [ ] Task 4: `reviewer-*.md` checklists and regression inputs
-- [ ] Task 5: `pr.md` graph reference
-- [ ] Task 6: Implementer self-review
-- [ ] Task 7: Regenerate installed surfaces
-- [ ] Task 8: Validation and publication
+- [x] Task 1: `review-state-graph.md` reference
+- [x] Task 2: `iterative-review/SKILL.md` graph rewrite
+- [x] Task 3: Metrics and log templates
+- [x] Task 4: `reviewer-*.md` checklists and regression inputs
+- [x] Task 5: `pr.md` graph reference
+- [x] Task 6: Implementer self-review
+- [x] Task 7: Regenerate installed surfaces
+- [x] Task 8: Validation and publication

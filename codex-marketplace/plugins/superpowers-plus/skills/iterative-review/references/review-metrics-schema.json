@@ -39,6 +39,7 @@
           "discovered_at_round": {"type": "integer", "minimum": 1},
           "resolved_at_node": {"type": "string"},
           "resolved_at_round": {"type": "integer", "minimum": 1},
+          "regression_of": {"type": "string"},
           "severity": {"type": "string", "enum": ["blocking", "important", "minor"]}
         }
       }

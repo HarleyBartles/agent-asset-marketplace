@@ -44,7 +44,7 @@ flowchart TD
 | `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
 | `targeted-re-review` | `reviewer-fast` or the originating lens | Confirm the original finding is resolved. |
 | `regression-scan` | `reviewer-strong` on the touched area | Check for new issues the fix introduced. Conditional on non-trivial fixes. |
-| `ready` | orchestrator | Final `ci --check`; mark the PR ready. |
+| `ready` | orchestrator | Final `ci --check`; wait for remote CI to pass; mark the PR ready. |
 | `blocked` | orchestrator | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
 
 ## Edges
