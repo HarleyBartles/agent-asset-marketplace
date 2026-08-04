@@ -11,6 +11,7 @@ allowed-tools:
 - mcp_list_servers
 - mcp_list_tools
 - mcp_call_tool
+- write
 ---
 
 # Reviewer Strong

@@ -268,14 +268,12 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
             _warn(findings, path, 1, f"`metadata` contains unexpected key `{key}`")
 
 
-_SKIP_STALE_PATHS = {
-    "2026-08-04-review-robustness.md",
-    "2026-08-04-review-robustness-design.md",
-}
-
-
 def _scan_stale_paths(path: Path, content: str, findings: list[str]) -> None:
-    if path.suffix not in {".md", ".ps1"} or path.name in _SKIP_STALE_PATHS:
+    if path.suffix not in {".md", ".ps1"}:
+        return
+    if "plans" in path.parts or "specs" in path.parts:
+        # Plans and specs are historical/design documents; references to paths that
+        # have since moved are expected and not a source-of-truth problem.
         return
     in_code_block = False
     for line_no, line in enumerate(content.splitlines(), start=1):
