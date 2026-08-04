@@ -13,8 +13,7 @@ flowchart TD
     fast-fix --> preflight
     preflight -->|green| scope-honesty
     scope-honesty --> orchestrator-predict
-    orchestrator-predict -->|nothing uncertain| ready
-    orchestrator-predict -->|uncertain items| lens-dispatch
+    orchestrator-predict --> lens-dispatch
     lens-dispatch --> strong-review
     strong-review -->|clean| ready
     strong-review -->|findings| metrics-track
@@ -38,7 +37,7 @@ flowchart TD
 | `fast-fix` | orchestrator | Fix a deterministic preflight finding. |
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
 | `orchestrator-predict` | orchestrator | Apply each relevant `.agents/agents/reviewer-*.md` `## Checklist` to the diff; fix predictable items; record uncertain items in `review-log-orchestrator-prediction.md`. |
-| `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. |
+| `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-predict was clean. |
 | `strong-review` | `reviewer-strong` | Whole-branch pass that combines lens logs, finds gaps, contradictions, and design issues. |
 | `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, and the node where it resolves. This node does not block. |
 | `finding-fix` | orchestrator + implementer subagent | Resolve one finding and commit the fix. |
@@ -57,8 +56,7 @@ flowchart TD
 | `fast-fix` | `preflight` | Always; re-run preflight after the fix. |
 | `preflight` | `scope-honesty` | `ci --check` passes. |
 | `scope-honesty` | `orchestrator-predict` | Drift corrected or no drift. |
-| `orchestrator-predict` | `ready` | The orchestrator can assert that no uncertain items remain and all predictable findings are fixed. |
-| `orchestrator-predict` | `lens-dispatch` | Uncertain items remain that a lens should review. |
+| `orchestrator-predict` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
 | `lens-dispatch` | `strong-review` | All lens logs are available. |
 | `strong-review` | `ready` | `reviewer-strong` reports `reviewer-clean`. |
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
@@ -146,6 +144,10 @@ and fix, and what it left for the lens reviewers.
 | Checklist item | Lens | Why uncertain |
 |---|---|---|
 | ... | ... | ... |
+
+## Next node
+
+Proceed to `lens-dispatch` and dispatch the relevant lens reviewers. A clean prediction log does not bypass this node.
 
 ## Metrics snapshot
 

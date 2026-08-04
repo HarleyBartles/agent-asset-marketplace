@@ -86,23 +86,34 @@ Compare the branch diff to the plan, spec, PR body, and linked issues. If the im
 
 This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and apply it to the full diff mechanically. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-prediction.md` in the off-repo scratch. Update `scan_findings` after the fixes.
 
-If no uncertain items remain and the preflight is clean, you may proceed to `ready` for trivial PRs. In practice, most PRs still benefit from a mechanical lens pass.
+**`orchestrator-predict` is not a pass.** A clean orchestrator-predict means the predictable issues are already fixed and the remaining known-unknowns are documented. It does **not** mean the PR is ready. Always proceed to `lens-dispatch` unless the PR has zero changed files or the consumer's CI preflight alone is the required gate for that PR.
 
 ### `lens-dispatch`
 
-Dispatch the relevant lens reviewers in parallel, each with:
+This node is mandatory. Dispatch the relevant lens reviewers in parallel, each with:
 - the full branch `<diff_path>`,
 - `<pr_description>`,
 - `<scan_findings>`,
 - `review-log-orchestrator-prediction.md`.
 
+Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
+- `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
+- `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
+- `reviewer-security` for secrets and real identifiers.
+
+If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.
+
 Lens reviewers should use the prediction log as the primary checklist and not re-flag what the orchestrator already fixed. Each lens writes `review-log-<lens>.md`.
 
 ### `strong-review`
 
-Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
+This node is mandatory. Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
 
-If `reviewer-strong` reports `reviewer-clean`, proceed to `ready`. Otherwise, proceed to `metrics-track`.
+Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
+
+If `reviewer-strong` reports `reviewer-clean` and the preflight is clean, proceed to `ready`. Otherwise, proceed to `metrics-track`.
+
+If you cannot run `reviewer-strong` or any lens did not complete, this is `blocked`; do not proceed to `ready`.
 
 ### `metrics-track`
 
@@ -165,6 +176,8 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 
 - Treating the skill as a fixed list of rounds. Use the graph.
 - Skipping `orchestrator-predict` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
+- Using a clean `orchestrator-predict` as an excuse to skip `lens-dispatch` or `strong-review`. It is not a pass.
+- Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `strong-review`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.
 - Letting `reviewer-fast` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
