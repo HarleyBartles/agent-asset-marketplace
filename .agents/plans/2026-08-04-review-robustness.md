@@ -828,10 +828,10 @@ Use `gh pr edit 259 --body-file <path>` or `gh pr edit 259 --body "..."` with th
 
 ## Completion
 
-- Implementation PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/259
-- Head SHA: 4761eb5f
+- Implementation PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/260 (supersedes #259)
+- Head SHA: 5674f550
 - Remote CI: `marketplace-validation` passed.
-- Note: The separate `.agents/runbooks/review-robustness.md` was folded into `.agents/runbooks/pr.md` and `.agents/runbooks/code-review.md` during final review to avoid documentation duplication; the procedure and reviewer lens are preserved.
+- Note: The separate `.agents/runbooks/review-robustness.md` was folded into `.agents/runbooks/pr.md` and `.agents/runbooks/code-review.md` during final review to avoid documentation duplication; the procedure and reviewer lens are preserved. The `feat/review-robustness` changes were merged via this PR because `feat/review-iterative-graph` was built on top of that branch.
 
 ## SDD Confidence Rating
 
