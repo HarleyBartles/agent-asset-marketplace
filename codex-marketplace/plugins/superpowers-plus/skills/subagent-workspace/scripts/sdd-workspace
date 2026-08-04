@@ -28,9 +28,12 @@ else
   fi
 fi
 
+# Use the main checkout's sibling for scratch, even from a linked worktree.
+common_dir=$(git -C "$root" rev-parse --git-common-dir)
+main_checkout=$(cd "$common_dir/.." && pwd)
+scratch_parent=$(cd "$main_checkout/.." && pwd)
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
 branch=$(printf '%s' "$branch" | tr ':\?*"<>|/\\' '-')
-scratch_parent=$(cd "$root/.." && pwd)
 dir="$scratch_parent/_agent-scratch/$branch"
 mkdir -p "$dir"
 current_plan="$dir/current-plan.txt"
