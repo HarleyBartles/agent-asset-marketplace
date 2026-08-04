@@ -45,9 +45,12 @@ else {
 
 $PlanFile = $resolvedPlan
 
+# Use the main checkout's sibling for scratch, even from a linked worktree.
+$commonDir = (git -C "$root" rev-parse --git-common-dir).Trim()
+$mainCheckout = Split-Path -Parent $commonDir
+$scratchParent = Split-Path -Parent $mainCheckout
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\/:*?"<>|]', '-'
-$scratchParent = Split-Path -Parent $root
 $workspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 

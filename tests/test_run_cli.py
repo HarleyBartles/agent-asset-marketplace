@@ -210,3 +210,23 @@ def test_powershell_wrapper_delegates_to_runpy():
     assert result.returncode == 0
     assert "--check" in result.stdout
     assert "--apply" in result.stdout
+
+
+def test_read_only_tasks_do_not_advertise_apply():
+    from pathlib import Path
+    import importlib.util
+
+    RUN_SPEC = importlib.util.spec_from_file_location(
+        "run", str(Path("tools/run.py").resolve())
+    )
+    run = importlib.util.module_from_spec(RUN_SPEC)
+    RUN_SPEC.loader.exec_module(run)
+
+    aggregators = {"ci", "all"}
+    for name, task in run._TASKS.items():
+        if name in aggregators:
+            continue
+        if not getattr(task, "apply", None):
+            assert f"tools/run {name} --apply" not in task.fix, (
+                f"{name} is read-only but its fix advertises tools/run {name} --apply"
+            )

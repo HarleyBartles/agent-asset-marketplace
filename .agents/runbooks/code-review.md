@@ -54,6 +54,11 @@ If the PR claims to implement a plan from `.agents/plans/`, verify the plan is m
 - All top-level checkboxes in the plan (`- [ ]`) must be checked off (`- [x]`), or the plan must record a merged implementation PR.
 - If the PR body claims the plan is "complete" but the plan is not fully checked off and does not record a merged PR, block completion until the author either checks off the delivered items or removes the completion claim.
 
+## Documentation and surface hygiene
+
+- No unjustified documentation duplication. If two runbooks, guides, or reference files cover the same concern, either merge them or split them by a logical boundary (e.g., author vs reviewer, local vs consumer, setup vs operation). Do not keep near-identical parallel documents because the names differ.
+- A new document must justify why it cannot live in an existing canonical surface. Prefer extending `pr.md`, `code-review.md`, `AGENTS.md`, or `.devin/rules/*.md` over adding a new `.agents/runbooks/<topic>.md`.
+
 ## Clean Workspace
 
 No stray files, uncommitted debug artifacts, or phantom files in parent directories.
