@@ -1,6 +1,6 @@
 # Reviewer lens expansion — implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
@@ -33,17 +33,17 @@
 - Consumes: current lens profiles and skill sources.
 - Produces: confirmed paths for edits in later tasks.
 
-- [ ] **Step 0.1: Confirm the source skill paths**
+- [x] **Step 0.1: Confirm the source skill paths**
 
 Run: `Get-ChildItem 'codex-marketplace\plugins\superpowers-plus\skills\' | Select-Object -ExpandProperty Name`
 Expected: `selecting-a-subagent` and `iterative-review` directories are present.
 
-- [ ] **Step 0.2: Confirm the pack profile source path**
+- [x] **Step 0.2: Confirm the pack profile source path**
 
 Run: `Get-ChildItem 'codex-marketplace\plugins\repo-worker-pack\assets\profiles\' | Select-Object -ExpandProperty Name`
 Expected: Existing profiles (`reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `reviewer-security.md`, `reviewer-skills.md`, `reviewer-marketplace.md`) are present.
 
-- [ ] **Step 0.3: Commit the baseline verification**
+- [x] **Step 0.3: Commit the baseline verification**
 
 Run: `git status --short`
 Expected: No unexpected modifications other than the plan/spec files and the completed/ moves from this branch.
@@ -64,14 +64,14 @@ git commit -m "Verify baseline for reviewer lens expansion work"
 - Consumes: spec `Contract and file targets` for `reviewer-plans`.
 - Produces: a portable `reviewer-plans` lens profile.
 
-- [ ] **Step 1.1: Write the file with the following exact content**
+- [x] **Step 1.1: Write the file with the following exact content**
 
 ```markdown
 ---
 name: reviewer-plans
 runtime: devin-desktop
 description: Portable plan/spec/roadmap lens — reviews plans in isolation and PR compliance against declared governing documents.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep
@@ -176,7 +176,7 @@ For each issue:
 Do not include non-plan findings.
 ```
 
-- [ ] **Step 1.2: Add `reviewer-plans.md` to the repo-worker-pack profile source**
+- [x] **Step 1.2: Add `reviewer-plans.md` to the repo-worker-pack profile source**
 
 If the pack at `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` is the source of truth for `.agents/agents/` runtime profiles, copy the file you just created into that directory:
 
@@ -184,7 +184,7 @@ If the pack at `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` is 
 cp ".agents\agents\reviewer-plans.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-plans.md"
 ```
 
-- [ ] **Step 1.3: Commit the new profile**
+- [x] **Step 1.3: Commit the new profile**
 
 Run: `git status --short`
 Expected: `reviewer-plans.md` is staged.
@@ -206,14 +206,14 @@ git commit -m "Add portable reviewer-plans lens profile"
 - Consumes: spec `Contract and file targets` for `reviewer-mesh`.
 - Produces: a portable `reviewer-mesh` lens profile.
 
-- [ ] **Step 2.1: Write the file with the following exact content**
+- [x] **Step 2.1: Write the file with the following exact content**
 
 ```markdown
 ---
 name: reviewer-mesh
 runtime: devin-desktop
 description: Portable scaffolder and mesh lens — generated INDEX.md, scaffolder output, and repo-standards surface hygiene.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep
@@ -305,13 +305,13 @@ For each issue:
 Do not include non-scaffolder findings.
 ```
 
-- [ ] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
+- [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
 
 ```bash
 cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-mesh.md"
 ```
 
-- [ ] **Step 2.3: Commit the new profile**
+- [x] **Step 2.3: Commit the new profile**
 
 ```bash
 git add .agents/agents/reviewer-mesh.md
@@ -331,7 +331,7 @@ git commit -m "Add portable reviewer-mesh lens profile"
 - Consumes: spec `Contract and file targets` for `reviewer-scripts`.
 - Produces: a portable `reviewer-scripts` lens profile that reviews new or changed scripts and CLI tooling.
 
-- [ ] **Step 2.5.1: Write the portable `reviewer-scripts.md` pack source**
+- [x] **Step 2.5.1: Write the portable `reviewer-scripts.md` pack source**
 
 Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md` and `reviewer-mesh.md`. The profile must:
 - Declare `## Applies to` with `globs` for `**/scripts/**`, `**/tools/**`, `**/*.py`, `**/*.sh`, `**/*.ps1`, and `**/*.bash`.
@@ -339,11 +339,11 @@ Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md`
 - Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-prediction>` inputs.
 - Write `review-log-scripts.md` to the off-repo scratch.
 
-- [ ] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
+- [x] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
 
 Expected: `.agents/agents/reviewer-scripts.md` is installed from the pack source and `.provenance.json` is updated.
 
-- [ ] **Step 2.5.3: Commit the new profile**
+- [x] **Step 2.5.3: Commit the new profile**
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md
@@ -364,7 +364,7 @@ git commit -m "Add portable reviewer-scripts lens profile"
 - Consumes: current lens profiles.
 - Produces: profiles with `## Applies to` for `iterative-review` dispatch.
 
-- [ ] **Step 3.1: Update `reviewer-skills.md`**
+- [x] **Step 3.1: Update `reviewer-skills.md`**
 
 Insert `## Applies to` immediately after the frontmatter `---` and before `## Checklist`. Use the `edit` tool with the following `old_string` / `new_string`:
 
@@ -395,7 +395,7 @@ new_string: |
   ## Checklist
 ```
 
-- [ ] **Step 3.2: Update `reviewer-security.md`**
+- [x] **Step 3.2: Update `reviewer-security.md`**
 
 Insert `## Applies to` immediately after the frontmatter `---` and before `## Checklist`:
 
@@ -426,7 +426,7 @@ new_string: |
   ## Checklist
 ```
 
-- [ ] **Step 3.3: Update `reviewer-marketplace.md`**
+- [x] **Step 3.3: Update `reviewer-marketplace.md`**
 
 Insert `## Applies to` immediately after the frontmatter `---` and before `## Checklist`:
 
@@ -464,7 +464,7 @@ new_string: |
   ## Checklist
 ```
 
-- [ ] **Step 3.4: Copy the updated profiles to the pack source**
+- [x] **Step 3.4: Copy the updated profiles to the pack source**
 
 ```bash
 cp ".agents\agents\reviewer-skills.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-skills.md"
@@ -472,7 +472,7 @@ cp ".agents\agents\reviewer-security.md" "codex-marketplace\plugins\repo-worker-
 cp ".agents\agents\reviewer-marketplace.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-marketplace.md"
 ```
 
-- [ ] **Step 3.5: Commit the applies-to updates**
+- [x] **Step 3.5: Commit the applies-to updates**
 
 ```bash
 git add .agents/agents/reviewer-skills.md
@@ -495,7 +495,7 @@ git commit -m "Add Applies to dispatch rules to existing lens profiles"
 - Consumes: current dispatch table.
 - Produces: dispatch table with `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, and `## Applies to` documentation.
 
-- [ ] **Step 4.1: Add the new profiles to the dispatch table**
+- [x] **Step 4.1: Add the new profiles to the dispatch table**
 
 Use `edit` to replace the `reviewer-marketplace` row with the same row plus the two new ones:
 
@@ -513,7 +513,7 @@ new_string: |
   | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 ```
 
-- [ ] **Step 4.2: Document the `## Applies to` contract**
+- [x] **Step 4.2: Document the `## Applies to` contract**
 
 Add a new short section after the dispatch table. Replace the paragraph that begins "The orchestrator must provide a `<diff_path>`" with the following:
 
@@ -536,7 +536,7 @@ new_string: |
   ## Repo-specific lens profiles
 ```
 
-- [ ] **Step 4.3: Commit the skill update**
+- [x] **Step 4.3: Commit the skill update**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md
@@ -554,7 +554,7 @@ git commit -m "Update selecting-a-subagent dispatch table for reviewer-plans, re
 - Consumes: current `lens-dispatch` node text.
 - Produces: a dynamic `lens-dispatch` node that reads `## Applies to`.
 
-- [ ] **Step 5.1: Update `orchestrator-predict` to read `## Applies to`**
+- [x] **Step 5.1: Update `orchestrator-predict` to read `## Applies to`**
 
 Locate the `orchestrator-predict` node. Replace the sentence that says it should only read `## Checklist` with one that also reads `## Applies to`:
 
@@ -565,7 +565,7 @@ new_string: |
   This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns.
 ```
 
-- [ ] **Step 5.2: Replace the `lens-dispatch` node with dynamic selection**
+- [x] **Step 5.2: Replace the `lens-dispatch` node with dynamic selection**
 
 Replace the entire `### `lens-dispatch`` subsection. Use `edit` with the following `old_string` (match from the start of the heading) and `new_string`:
 
@@ -608,7 +608,7 @@ new_string: |
   Lens reviewers should use the prediction log as the primary checklist and not re-flag what the orchestrator already fixed. Each lens writes `review-log-<lens>.md`.
 ```
 
-- [ ] **Step 5.3: Commit the skill update**
+- [x] **Step 5.3: Commit the skill update**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
@@ -629,22 +629,22 @@ git commit -m "Make iterative-review lens dispatch dynamic with Applies to rules
 - Consumes: source edits under `codex-marketplace/plugins/`.
 - Produces: installed `.agents/` copies and updated `INDEX.md` files.
 
-- [ ] **Step 6.1: Run marketplace regeneration**
+- [x] **Step 6.1: Run marketplace regeneration**
 
 Run: `py -3 tools/run.py marketplace --apply`
 Expected: New `.agents/agents/reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` appear (or are confirmed up to date) and the `.agents/skills/selecting-a-subagent/SKILL.md` and `.agents/skills/iterative-review/SKILL.md` are updated to match the `codex-marketplace` source.
 
-- [ ] **Step 6.2: Run mesh regeneration**
+- [x] **Step 6.2: Run mesh regeneration**
 
 Run: `py -3 tools/run.py mesh --apply`
 Expected: `INDEX.md` files in `.agents/plans/`, `.agents/specs/`, and other mesh directories are updated to reflect the completed/ moves and any new plan/spec.
 
-- [ ] **Step 6.3: Inspect the diff**
+- [x] **Step 6.3: Inspect the diff**
 
 Run: `git status --short` and `git diff --stat`
 Expected: Source files, installed copies, pack assets, and generated `INDEX.md` are all staged or changed as expected. No `reviewer-known-findings.md` is created or referenced.
 
-- [ ] **Step 6.4: Commit the generated surfaces**
+- [x] **Step 6.4: Commit the generated surfaces**
 
 ```bash
 git add -A
@@ -662,12 +662,12 @@ git commit -m "Regenerate installed skills and mesh"
 - Consumes: all committed changes.
 - Produces: a green or red CI result.
 
-- [ ] **Step 7.1: Run the CI check**
+- [x] **Step 7.1: Run the CI check**
 
 Run: `py -3 tools/run.py ci --check`
 Expected: Passes. If it fails, fix the cause, re-run the relevant `--apply` targets, and re-run `ci --check`.
 
-- [ ] **Step 7.2: Smoke-test lens selection**
+- [x] **Step 7.2: Smoke-test lens selection**
 
 Create an off-repo scratch diff that touches `.agents/specs/` but not `tools/` or `codex-marketplace/`. Run a local `iterative-review` dry-run that reads the updated `lens-dispatch` rules (or manually invoke the selection logic) and confirm:
 - `reviewer-plans` is selected because the diff touches `.agents/specs/`.
@@ -675,7 +675,7 @@ Create an off-repo scratch diff that touches `.agents/specs/` but not `tools/` o
 - `reviewer-marketplace` is **not** selected for a docs-only PR.
 - `reviewer-strong` is always selected.
 
-- [ ] **Step 7.3: Commit any fixes**
+- [x] **Step 7.3: Commit any fixes**
 
 If the smoke test or CI exposed fixes, commit them as separate fix commits. Otherwise, no extra commit is needed.
 
@@ -690,17 +690,17 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 - Consumes: green `ci --check`.
 - Produces: open draft PR URL.
 
-- [ ] **Step 8.1: Push the branch**
+- [x] **Step 8.1: Push the branch**
 
 ```bash
 git push -u origin feat/reviewer-lens-expansion
 ```
 
-- [ ] **Step 8.2: Open a draft PR**
+- [x] **Step 8.2: Open a draft PR**
 
 Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, scaffolders, dynamic dispatch)` and a body that lists the spec, plan, and completed plan/spec moves.
 
-- [ ] **Step 8.3: Record publication proof**
+- [x] **Step 8.3: Record publication proof**
 
 Capture the PR URL and the head SHA. Return them as the publication proof for this work.
 
