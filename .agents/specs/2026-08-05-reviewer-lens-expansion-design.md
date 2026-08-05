@@ -184,6 +184,14 @@ To make the shipped `.md` files discoverable in consumer repos, add `scripts/ins
 
 As part of the source consolidation, the `implementer.md` and `implementer-strong.md` profiles move from `repo-worker-pack` to `selecting-a-subagent/assets/` and are restored to their vendor baselines; this is not a functional scope change.
 
+### UTF-8 artifact contract
+
+All iterative-review inputs, reports, and metrics live in the off-repo scratch. They must be plain UTF-8 (no BOM) so that downstream subagents can `read` and `grep` them reliably.
+
+- The `iterative-review` skill ships `scripts/normalize_review_inputs.py`. The orchestrator must run it with `--apply` on the scratch directory after `setup` (to normalize `scan_findings`, `pr_description`, `issue_context`, etc.) and again after `lens-dispatch` (to normalize `review-log-*.md` files) before dispatching `reviewer-strong`.
+- The helper rewrites UTF-16LE/BE and UTF-8-with-BOM files in place; `--check` reports drift without writing.
+- The canonical `reviewer-*.md` profiles carry a hard contract in `## Stop condition and loop breaker` requiring subagents to use the `write` tool and forbidding PowerShell `Tee-Object`, `Out-File` without `-Encoding utf8`, and any shell redirect that can emit UTF-16.
+
 ## Cross-repo consumer considerations
 
 - `rooms-mostly` consumes the portable `reviewer`, `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, and now `reviewer-plans` and `reviewer-mesh`. Its repo-local set is currently empty; it may add `reviewer-obsidian` later.

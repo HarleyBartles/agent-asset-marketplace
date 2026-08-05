@@ -697,7 +697,7 @@ Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, mes
 
 Capture the PR URL and the head SHA. Return them as the publication proof for this work.
 
-- [ ] **Step 10.4: Archive the completed plan and spec before marking ready**
+- [ ] **Step 11.4: Archive the completed plan and spec before marking ready**
 
 After `iterative-review` is green and `py -3 tools/run.py ci --check` passes, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md`:
 
@@ -705,6 +705,35 @@ After `iterative-review` is green and `py -3 tools/run.py ci --check` passes, ar
 git mv .agents/plans/2026-08-05-reviewer-lens-expansion.md .agents/plans/completed/
 git mv .agents/specs/2026-08-05-reviewer-lens-expansion-design.md .agents/specs/completed/
 py -3 tools/heal_archive_links.py --apply
+
+---
+
+### Task 12: Enforce UTF-8 for iterative-review artifacts
+
+**Files:**
+- Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/normalize_review_inputs.py`
+- Edit: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
+- Edit: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md`
+- Edit: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-*.md`
+
+**Interfaces:**
+- Consumes: the off-repo review workspace; any lens report or preflight output.
+- Produces: plain UTF-8 (no BOM) files that downstream subagents can `read` and `grep` reliably.
+
+- [x] **Step 12.1: Create `normalize_review_inputs.py`**
+
+Run: implement a helper that detects UTF-16LE/BE and UTF-8-with-BOM and rewrites files in place as plain UTF-8. Add `--help`, `--check`, and `--apply`; classify the script as `mixed`.
+Expected: `py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --help` and `--check` respond, and `--apply` converts a test UTF-16 file.
+
+- [x] **Step 12.2: Add `normalize-inputs` nodes to the review graph and skill**
+
+Run: update `review-state-graph.md` to include `normalize-inputs` between `setup` and `preflight` and between `lens-dispatch` and `strong-review`. Update `iterative-review/SKILL.md` to document the `py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>` invocations.
+Expected: `py -3 tools/run.py ci --check` passes.
+
+- [x] **Step 12.3: Add UTF-8 report contract to the canonical reviewer profiles**
+
+Run: add a contract to each `reviewer-*.md` `## Stop condition and loop breaker` section: write the off-repo log as plain UTF-8 (no BOM) using the `write` tool; do not use `Tee-Object`, `Out-File` without `-Encoding utf8`, or shell redirects that can emit UTF-16. Regenerate the marketplace and install the updated profiles into `.agents/agents/`.
+Expected: `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` lands the profiles and `py -3 tools/run.py ci --check` passes.
 py -3 tools/run.py mesh --apply
 py -3 tools/run.py marketplace --apply
 py -3 tools/run.py ci --check
