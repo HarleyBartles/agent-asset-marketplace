@@ -694,4 +694,4 @@ Then commit the archive and only then flip the PR from draft to ready.
 3. **Type consistency:** Each profile uses the same `review-log-<lens>.md` naming and `file:line` severity format.
 4. **Validation:** `py -3 tools/run.py ci --check` and a smoke test are included.
 
-**Plan-readiness rating:** 10/10. Task 0.2 confirmed `repo-worker-pack` as the active pack source, the `.provenance.json` diff records the new profiles, and all tasks are checked.
+**Plan-readiness rating:** 10/10. Tasks 0.1-10.3 are checked. Task 0.2 confirmed `repo-worker-pack` as the active pack source and the `.provenance.json` diff records the new profiles. Step 10.4 (archive before flipping to ready) is intentionally deferred until `iterative-review` is green and `ci --check` passes.

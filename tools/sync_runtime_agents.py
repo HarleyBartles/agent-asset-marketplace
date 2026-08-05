@@ -166,9 +166,11 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
     source_profiles = _profile_paths(source_dir)
     target_profiles = _profile_paths(target_dir)
     target_by_name = {p.name: p for p in target_profiles}
+    source_by_name = {p.name: p for p in source_profiles}
 
     changed: list[Path] = []
     added: list[Path] = []
+    removed: list[Path] = []
     untouched: list[Path] = []
 
     for source in source_profiles:
@@ -188,13 +190,23 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
         else:
             untouched.append(source)
 
+    stale = [p for p in target_profiles if p.name not in source_by_name]
+    for target in stale:
+        if apply:
+            target.unlink()
+            removed.append(target)
+        else:
+            removed.append(target)
+
     if not apply:
-        if not changed and not added:
+        if not changed and not added and not removed:
             print("OK runtime agents: main checkout is in sync with worktree.")
             return 0
         print("error: main checkout is missing or out of sync with the following profiles:", file=sys.stderr)
         for p in added:
             print(f"  missing: {p.name}", file=sys.stderr)
+        for p in removed:
+            print(f"  stale: {p.name}", file=sys.stderr)
         for p in changed:
             print(f"  out of sync: {p.name}", file=sys.stderr)
             print(_format_diff(p, target_dir / p.name), file=sys.stderr)
@@ -206,7 +218,7 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
         )
         return 1
 
-    if not changed and not added:
+    if not changed and not added and not removed:
         print("OK runtime agents: nothing to sync.")
         return 0
 
@@ -214,6 +226,8 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
         print(f"Added {target.relative_to(main)}")
     for target in changed:
         print(f"Updated {target.relative_to(main)}")
+    for target in removed:
+        print(f"Removed {target.relative_to(main)}")
     print("\nNOTE: an IDE restart is required before the runtime will pick up new or changed subagent profiles.")
     return 0
 

@@ -105,7 +105,7 @@ Narrow to this repo's `codex-marketplace` and marketplace tooling:
 
 Remove generic scaffolder / mesh checks that now belong to `reviewer-mesh`.
 
-### `## Applies to` contract in every `reviewer-*.md`
+### `## Applies to` contract in every lens profile
 
 Each lens profile must declare an `## Applies to` section containing:
 
