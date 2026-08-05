@@ -103,15 +103,9 @@ Before dispatching, decide which lenses are relevant by reading each `reviewer-*
 
 1. Glob match: if any changed file in `<diff_path>` matches a glob under `## Applies to` for that lens, dispatch the lens.
 2. Keyword match: if the PR title/body or `<pr_description>` contains a keyword listed under `## Applies to`, dispatch the lens.
-3. Always dispatch `reviewer-security` for any PR with new files, test data, examples, configuration, or secrets-adjacent changes.
+3. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
 
-In this repo, the canonical lenses include:
-- `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
-- `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
-- `reviewer-plans` for `.agents/plans`, `.agents/specs`, and roadmap documents.
-- `reviewer-mesh` for `INDEX.md`, `repo-index/`, generated mesh, and `repo-standards` surfaces.
-- `reviewer-scripts` for `tools/`, shebangs, and script `--check`/`--apply` classification.
-- `reviewer-security` for secrets and real identifiers.
+`reviewer-strong` always runs after the dispatched lenses.
 
 If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.
 

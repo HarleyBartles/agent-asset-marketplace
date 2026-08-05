@@ -4,7 +4,7 @@
 
 **Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
-**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist` and `## Applies to` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`.
+**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist`, `## Applies to`, and `## Stop condition and loop breaker` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`. `reviewer-scaffolders` is a pre-existing scaffolder/mesh lens kept for backward compatibility and may co-dispatch with `reviewer-mesh`; it receives only the model pin and the shared stop-condition/loop-breaker update in this phase.
 
 **Tech Stack:** Devin Desktop custom subagent `.md` profiles, `codex-marketplace` plugin source, `py -3 tools/run.py` for regeneration/validation.
 
@@ -174,6 +174,8 @@ For each issue:
 - How to fix.
 
 Do not include non-plan findings.
+
+Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
 ```
 
 - [x] **Step 1.2: Add `reviewer-plans.md` to the repo-worker-pack profile source**
@@ -303,6 +305,8 @@ For each issue:
 - How to fix.
 
 Do not include non-scaffolder findings.
+
+Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
 ```
 
 - [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
@@ -338,6 +342,7 @@ Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md`
 - Declare `## Checklist` covering CLI flag contracts, read-only/mutating/mixed classification, exit-code hygiene, shebang/invocation, path safety, and cross-skill script path existence.
 - Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-prediction>` inputs.
 - Write `review-log-scripts.md` to the off-repo scratch.
+- Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
 
 - [x] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
 
@@ -713,6 +718,39 @@ Expected: `py -3 tools/run.py ci --check` passes and the staging command is docu
 
 Run: add the `Reviewer model tier pinning` and `Runtime staging tool` contract sections to `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md`.
 Expected: The spec ratifies the model changes and the staging tool's behavior.
+
+---
+
+### Task 7.6: Add the shared `## Stop condition and loop breaker` to every reviewer profile
+
+**Files:**
+- Edit: all `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-*.md`
+- Edit: `.agents/agents/reviewer-*.md` via `marketplace --apply`
+
+**Interfaces:**
+- Consumes: the stop-condition contract in the spec.
+- Produces: every reviewer profile uses the same termination rules and single-line final response contract.
+
+- [x] **Step 7.6.1: Apply the shared section to each profile**
+
+Append the following to every `reviewer-*.md` profile (and include it in the Task 1.1 / 2.1 / 2.5.1 exact-content blocks for new profiles):
+
+```markdown
+## Stop condition and loop breaker
+
+You are a reviewer, not a ledger. Do not count tool calls. Read the items that your checklist and the diff require, then stop.
+
+- The final step is to use `write` to produce the off-repo report (`review-log-<lens>.md`) in the scratch workspace.
+- After the report is written, your final response must be exactly one line: `<profile>: N issue(s)` or `<profile>: clean`. Do not output the report body or any other text.
+- If you are about to make the same `read`, `grep`, or `find_file_by_name` call again without a new question it can answer, write the report immediately.
+- If the last two tool calls produced no new findings, write the report immediately.
+- As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
+
+A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.
+```
+
+Run: `py -3 tools/run.py marketplace --apply`
+Expected: installed `.agents/agents/reviewer-*.md` copies match the pack source and include the stop-condition section.
 
 ---
 

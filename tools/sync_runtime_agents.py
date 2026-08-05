@@ -199,8 +199,9 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
             print(f"  out of sync: {p.name}", file=sys.stderr)
             print(_format_diff(p, target_dir / p.name), file=sys.stderr)
         print(
-            f"Run `py -3 {Path(__file__).relative_to(ROOT)} --apply` to sync, "
-            "then restart the IDE so the runtime picks up the new profiles.",
+            f"Run `py -3 {Path(__file__).relative_to(ROOT)} --apply --allow-shared-checkout` to sync, "
+            "or `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout`. "
+            "Then restart the IDE so the runtime picks up the new profiles.",
             file=sys.stderr,
         )
         return 1

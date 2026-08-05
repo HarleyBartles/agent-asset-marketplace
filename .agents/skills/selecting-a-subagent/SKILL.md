@@ -132,11 +132,11 @@ to review `codex-marketplace`, `new_plugin.py`, and scaffolder surfaces. A
 different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
 for a test harness.
 
-When `iterative-review` runs, it should dispatch all portable lenses
-(`reviewer-security`, `reviewer-skills`) plus any `.agents/agents/reviewer-*.md`
-profiles that the repo's `AGENTS.md` declares as active. `reviewer-references` is
-deprecated and split into `reviewer-skills` (portable) and `reviewer-marketplace`
-(repo-local).
+When `iterative-review` runs, it should read each `.agents/agents/reviewer-*.md`
+profile, evaluate the `## Applies to` section against the diff, PR description, and
+any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
+`reviewer-references` is deprecated and split into `reviewer-skills` (portable)
+and `reviewer-marketplace` (repo-local).
 
 ## Vendor and third-party profiles
 
