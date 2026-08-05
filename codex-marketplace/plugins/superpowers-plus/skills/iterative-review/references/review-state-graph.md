@@ -45,8 +45,8 @@ flowchart TD
 | `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, and the node where it resolves. This node does not block. |
 | `finding-fix` | orchestrator + implementer subagent | Resolve one finding and commit the fix. |
 | `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
-| `targeted-re-review` | `reviewer-fast` | Cheap gate to confirm the original finding is resolved on the fix diff before a whole-branch `reviewer-strong`. |
-| `regression-scan` | `reviewer-fast` on the touched area, then `reviewer-strong` on the touched area only if the fast pass finds a new issue | Check for new issues a non-trivial fix introduced. The initial fast pass keeps this node cheap. |
+| `targeted-re-review` | `reviewer-fixes` | Cheap gate to confirm the original finding is resolved on the fix diff before a whole-branch `reviewer-strong`. |
+| `regression-scan` | `reviewer-fixes` on the touched area, then `reviewer-strong` on the touched area only if the fast pass finds a new issue | Check for new issues a non-trivial fix introduced. The initial fast pass keeps this node cheap. |
 | `ready` | orchestrator | Final `ci --check`; wait for remote CI to pass; mark the PR ready. |
 | `blocked` | orchestrator | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
 
@@ -69,15 +69,15 @@ flowchart TD
 | `finding-fix` | `re-preflight` | Fix is committed. |
 | `re-preflight` | `fast-fix` | A new deterministic issue appears. |
 | `re-preflight` | `targeted-re-review` | `ci --check` passes. |
-| `targeted-re-review` | `strong-review` | The fix is trivial and the cheap `reviewer-fast` pass on the fix diff is clean. |
-| `targeted-re-review` | `regression-scan` | The fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, or changes a public interface) or `reviewer-fast` finds a new issue. |
+| `targeted-re-review` | `strong-review` | The fix is trivial and the cheap `reviewer-fixes` pass on the fix diff is clean. |
+| `targeted-re-review` | `regression-scan` | The fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, or changes a public interface) or `reviewer-fixes` finds a new issue. |
 | `regression-scan` | `metrics-track` | `reviewer-strong` on the touched area confirms a new issue introduced by the fix. |
-| `regression-scan` | `strong-review` | The widened `reviewer-fast` pass on the touched area is clean. |
+| `regression-scan` | `strong-review` | The widened `reviewer-fixes` pass on the touched area is clean. |
 | `strong-review` | `blocked` | A finding is contested or load-bearing and the orchestrator cannot resolve it. |
 
 ## Round counting
 
-A "round" is one complete traversal through `lens-dispatch` or `strong-review` that produces findings. `orchestrator-self-review` and cheap `reviewer-fast` gates (`targeted-re-review` and the fast phase of `regression-scan`) are not rounds because they are cheap gates. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` that confirms a new issue with `reviewer-strong` starts a new round at `metrics-track`.
+A "round" is one complete traversal through `lens-dispatch` or `strong-review` that produces findings. `orchestrator-self-review` and cheap `reviewer-fixes` gates (`targeted-re-review` and the fast phase of `regression-scan`) are not rounds because they are cheap gates. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` that confirms a new issue with `reviewer-strong` starts a new round at `metrics-track`.
 
 ## `review-metrics.json` schema
 

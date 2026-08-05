@@ -101,7 +101,7 @@ This is the cheapest non-deterministic review. For each relevant `reviewer-*.md`
 
 This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR, plus the mandatory `reviewer-strong` whole-branch pass.
 
-1. Discover every `reviewer-*.md` file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `reviewer-*.md` overrides.
+1. Discover every `reviewer-*.md` file in the Devin Desktop agents search path (`~/.config/devin/agents/` / `%APPDATA%\devin\agents\`, `.devin/agents/`, and `.agents/agents/`). This set is the portable profiles shipped by the marketplace pack plus any user or repo-local `reviewer-*.md` overrides.
 2. For each lens profile, read its `## Applies to` section. Match the rules in this order:
    - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
    - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
@@ -146,21 +146,21 @@ Re-run the consumer's canonical preflight over the post-fix range. If it reports
 
 ### `targeted-re-review`
 
-Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fast` with a tight scope and a concrete `<log_path>` (e.g. `$scratch/review-log-fast.md`):
+Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fixes` with a tight scope and a concrete `<log_path>` (e.g. `$scratch/review-log-fixes.md`):
 - the original finding,
 - the fix diff (e.g. `HEAD~N..HEAD` or `origin/main..HEAD` if the fixes are the latest commits),
 - the relevant slice of the full branch diff,
-- `<log_path>` where `reviewer-fast` must use the `write` tool to write its report.
+- `<log_path>` where `reviewer-fixes` must use the `write` tool to write its report.
 
-Use `reviewer-fast` to verify the original finding is resolved and to look for obvious new issues in the fix. Do not broaden into a whole-branch review here.
+Use `reviewer-fixes` to verify the original finding is resolved and to look for obvious new issues in the fix. Do not broaden into a whole-branch review here.
 
 Confirm the original finding is resolved. Then:
-- If the fix is trivial (single file, same concern, no cross-cutting impact) and `reviewer-fast` is clean, go to `strong-review`.
-- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change) or `reviewer-fast` finds any new issue, go to `regression-scan`.
+- If the fix is trivial (single file, same concern, no cross-cutting impact) and `reviewer-fixes` is clean, go to `strong-review`.
+- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change) or `reviewer-fixes` finds any new issue, go to `regression-scan`.
 
 ### `regression-scan`
 
-Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fast` on that widened diff, with `<log_path>` set to `$scratch/review-log-fast.md`, to catch cheap regressions. If `reviewer-fast` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fast` finds a new issue, dispatch `reviewer-strong` on the touched area, with its own `<log_path>` (e.g. `$scratch/review-log-strong.md`), to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
+Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fixes` on that widened diff, with `<log_path>` set to `$scratch/review-log-fixes.md`, to catch cheap regressions. If `reviewer-fixes` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fixes` finds a new issue, dispatch `reviewer-strong` on the touched area, with its own `<log_path>` (e.g. `$scratch/review-log-strong.md`), to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
 
 ### `ready`
 
@@ -210,7 +210,7 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 - Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `strong-review`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.
-- Letting `reviewer-fast` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
+- Letting `reviewer-fixes` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
 - Flipping a PR to ready without archiving the completed plan/spec/roadmap it implements. The ready state should represent the completed plan, including the moved planning artifacts.

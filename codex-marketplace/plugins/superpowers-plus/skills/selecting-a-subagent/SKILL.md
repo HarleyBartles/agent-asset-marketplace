@@ -16,7 +16,7 @@ metadata:
   - Use when creating or selecting a named subagent configuration.
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
-  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
+  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`,
     `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`,
     `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
     `implementer-strong`.
@@ -98,7 +98,7 @@ own domain-specific surfaces.
 | Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans` |
 | `INDEX.md`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
 | Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
-| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` |
 | Repo-specific lens for surfaces not covered by the portable set | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
