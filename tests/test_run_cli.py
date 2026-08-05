@@ -212,9 +212,7 @@ def test_read_only_tasks_do_not_advertise_apply():
     from pathlib import Path
     import importlib.util
 
-    RUN_SPEC = importlib.util.spec_from_file_location(
-        "run", str(Path("tools/run.py").resolve())
-    )
+    RUN_SPEC = importlib.util.spec_from_file_location("run", str(Path("tools/run.py").resolve()))
     run = importlib.util.module_from_spec(RUN_SPEC)
     RUN_SPEC.loader.exec_module(run)
 
