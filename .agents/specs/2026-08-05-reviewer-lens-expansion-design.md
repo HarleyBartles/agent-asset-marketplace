@@ -161,7 +161,7 @@ Document that each profile's `## Checklist` and `## Applies to` sections are the
 
 Update the `lens-dispatch` node:
 
-1. Discover all `.agents/agents/reviewer-*.md` files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
+1. Discover all `reviewer-*.md profiles in the Devin Desktop agents search path` files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
 2. For each profile, read its `## Applies to` section and its `## Checklist`.
 3. Match the diff, `pr_description`, and any provided plan / spec / roadmap paths against the `globs`, `keywords`, and `inputs` rules.
 4. Dispatch the matching lenses in parallel. `reviewer-strong` remains mandatory and always runs with the collected logs.

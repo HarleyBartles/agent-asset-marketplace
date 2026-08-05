@@ -108,7 +108,7 @@ reviewer profile. The reviewer subagent does not resolve the diff itself.
 
 ## Lens dispatch from `## Applies to`
 
-Every lens profile in `.agents/agents/reviewer-*.md` (portable or repo-local)
+Every lens profile in `reviewer-*.md profiles in the Devin Desktop agents search path` (portable or repo-local)
 should include a `## Applies to` section with:
 
 - `inputs:` — required and optional `run_subagent` placeholders.

@@ -209,7 +209,7 @@ current task and environment. This applies to both the **implementer** and the
 
 Use the least escalated profile that is adequate for the task. Choose `reviewer`
 for ordinary task reviews, `reviewer-strong` when the diff is large or subtle,
-and `reviewer-fast` for small, targeted re-reviews.
+and `reviewer-fixes` for small, targeted re-reviews.
 
 ## The Task Loop
 
@@ -282,7 +282,7 @@ required. Implementer self-review never replaces the task review; both are
 needed.
 
 Before dispatching the task reviewer, invoke `/selecting-a-subagent` to pick the
-right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fast`)
+right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fixes`)
 for the task diff.
 
 - Hand the reviewer its diff as a file: run this skill's

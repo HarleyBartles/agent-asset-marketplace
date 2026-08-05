@@ -43,7 +43,7 @@ role.
 |---|---|
 | `reviewer` | `gpt-5.6-terra` at `high` with `fork_turns: "none"` |
 | `reviewer-strong` | `gpt-5.6-sol` at `high` or `xhigh` with `fork_turns: "none"` |
-| `reviewer-fast` | `gpt-5.6-terra` at `medium` with `fork_turns: "none"` |
+| `reviewer-fixes` | `gpt-5.6-terra` at `medium` with `fork_turns: "none"` |
 | `implementer` | `gpt-5.6-terra` at `medium` |
 | `implementer-strong` | `gpt-5.6-terra` at `high` or `gpt-5.6-sol` at `high` |
 

@@ -50,7 +50,7 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
 3. **Orchestrator pre-emptive review (`orchestrator-self-review` node).**
-   - Do not dispatch reviewers to catch what you can see yourself. Before `lens-dispatch`, the orchestrating agent reads the branch diff and the relevant `.agents/agents/reviewer-*.md` `## Checklist`. The profile is the checklist for both the orchestrator and the subagent reviewer.
+   - Do not dispatch reviewers to catch what you can see yourself. Before `lens-dispatch`, the orchestrating agent reads the branch diff and the relevant `reviewer-*.md profiles in the Devin Desktop agents search path` `## Checklist`. The profile is the checklist for both the orchestrator and the subagent reviewer.
    - For each lens, ask: *What would this lens flag that I can fix with high confidence?* Apply those fixes now.
    - Record the predicted and pre-emptively fixed classes in `review-log-orchestrator-self-review.md` in the off-repo scratch.
    - A clean `orchestrator-self-review` is not a pass. You must still run `lens-dispatch` and `strong-review`.

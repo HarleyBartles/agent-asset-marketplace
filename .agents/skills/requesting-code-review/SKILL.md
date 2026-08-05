@@ -90,7 +90,7 @@ description.
 4. Dispatch the reviewer subagent with the prepared inputs:
    - `reviewer` for most reviews.
    - `reviewer-strong` for full branch/PR reviews where the whole diff is in scope.
-   - `reviewer-fast` for small, tightly focused re-reviews of a single fix or a small
+   - `reviewer-fixes` for small, tightly focused re-reviews of a single fix or a small
      coherent diff.
 
 Inputs to pass to the subagent:
