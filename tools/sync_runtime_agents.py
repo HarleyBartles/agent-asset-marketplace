@@ -263,6 +263,9 @@ def main(argv: list[str] | None = None) -> int:
     except subprocess.CalledProcessError as exc:
         print(f"error: git command failed: {exc}", file=sys.stderr)
         return 1
+    except RuntimeError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

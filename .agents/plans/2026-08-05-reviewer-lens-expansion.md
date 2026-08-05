@@ -323,19 +323,7 @@ git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-mesh
 git commit -m "Add portable reviewer-mesh lens profile"
 ```
 
----
-
-### Task 2.5: Create `.agents/agents/reviewer-scripts.md`
-
-**Files:**
-- Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md`
-- Create (after `marketplace --apply`): `.agents/agents/reviewer-scripts.md`
-
-**Interfaces:**
-- Consumes: spec `Contract and file targets` for `reviewer-scripts`.
-- Produces: a portable `reviewer-scripts` lens profile that reviews new or changed scripts and CLI tooling.
-
-- [x] **Step 2.5.1: Write the portable `reviewer-scripts.md` pack source**
+- [x] **Step 2.4: Write the portable `reviewer-scripts.md` pack source**
 
 Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md` and `reviewer-mesh.md`. The profile must:
 - Declare `## Applies to` with `globs` for `**/scripts/**`, `**/tools/**`, `**/*.py`, `**/*.sh`, `**/*.ps1`, and `**/*.bash`.
@@ -344,11 +332,11 @@ Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md`
 - Write `review-log-scripts.md` to the off-repo scratch.
 - Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
 
-- [x] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
+- [x] **Step 2.5: Run `py -3 tools/run.py marketplace --apply`**
 
 Expected: `.agents/agents/reviewer-scripts.md` is installed from the pack source and `.provenance.json` is updated.
 
-- [x] **Step 2.5.3: Commit the new profile**
+- [x] **Step 2.6: Commit the new profile**
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md
@@ -699,22 +687,22 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 - Consumes: the custom reviewer profiles and the need to test new/updated subagent profiles from a linked worktree.
 - Produces: explicit model values per profile and a manual `runtime-agents` staging task.
 
-- [x] **Step 7.5.1: Replace `inherit` and pin reviewer models**
+- [x] **Step 8.1: Replace `inherit` and pin reviewer models**
 
 Run: edit the frontmatter `model:` of every `reviewer-*.md` pack-source profile.
 Expected: `reviewer-fast` uses `swe-1-6`; `reviewer` uses `glm-5-2`; `reviewer-strong` uses `swe-1-7`; all lens profiles use `glm-5-2`.
 
-- [x] **Step 7.5.2: Add `tools/sync_runtime_agents.py`**
+- [x] **Step 8.2: Add `tools/sync_runtime_agents.py`**
 
 Run: create the script with `--check` and `--apply` semantics, `--allow-shared-checkout` gating, exact `refs/heads/main` worktree selection, and a dirty-state preview from the target main checkout.
 Expected: `py -3 tools/run.py runtime-agents --check` reports drift without writing; `--apply --allow-shared-checkout` copies profiles after confirmation.
 
-- [x] **Step 7.5.3: Wire `runtime-agents` into `tools/run.py` and docs**
+- [x] **Step 8.3: Wire `runtime-agents` into `tools/run.py` and docs**
 
 Run: add the `runtime-agents` target; update `AGENTS.md`, `.agents/runbooks/implementing.md`, and `docs/non-repo-locations-policy.md` to document the staging flow.
 Expected: `py -3 tools/run.py ci --check` passes and the staging command is documented.
 
-- [x] **Step 7.5.4: Update the design spec**
+- [x] **Step 8.4: Update the design spec**
 
 Run: add the `Reviewer model tier pinning` and `Runtime staging tool` contract sections to `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md`.
 Expected: The spec ratifies the model changes and the staging tool's behavior.
@@ -731,7 +719,7 @@ Expected: The spec ratifies the model changes and the staging tool's behavior.
 - Consumes: the stop-condition contract in the spec.
 - Produces: every reviewer profile uses the same termination rules and single-line final response contract.
 
-- [x] **Step 7.6.1: Apply the shared section to each profile**
+- [x] **Step 9.1: Apply the shared section to each profile**
 
 Append the following to every `reviewer-*.md` profile (and include it in the Task 1.1 / 2.1 / 2.5.1 exact-content blocks for new profiles):
 
@@ -763,17 +751,17 @@ Expected: installed `.agents/agents/reviewer-*.md` copies match the pack source 
 - Consumes: green `ci --check`.
 - Produces: open draft PR URL.
 
-- [x] **Step 8.1: Push the branch**
+- [x] **Step 10.1: Push the branch**
 
 ```bash
 git push -u origin feat/reviewer-lens-expansion
 ```
 
-- [x] **Step 8.2: Open a draft PR**
+- [x] **Step 10.2: Open a draft PR**
 
 Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, scaffolders, dynamic dispatch)` and a body that lists the spec, plan, and completed plan/spec moves.
 
-- [x] **Step 8.3: Record publication proof**
+- [x] **Step 10.3: Record publication proof**
 
 Capture the PR URL and the head SHA. Return them as the publication proof for this work.
 
@@ -786,4 +774,4 @@ Capture the PR URL and the head SHA. Return them as the publication proof for th
 3. **Type consistency:** Each profile uses the same `review-log-<lens>.md` naming and `file:line` severity format.
 4. **Validation:** `py -3 tools/run.py ci --check` and a smoke test are included.
 
-**Plan-readiness rating:** 9/10. The only acknowledged uncertainty is whether `repo-worker-pack` is the active pack source for `.agents/agents/`; Task 0.2 confirms this and the plan adjusts accordingly.
+**Plan-readiness rating:** 10/10. Task 0.2 confirmed `repo-worker-pack` as the active pack source, the `.provenance.json` diff records the new profiles, and all tasks are checked.

@@ -76,7 +76,8 @@ If you want to use the Devin Desktop custom profiles, install the corresponding
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
 `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`,
-`reviewer-marketplace`, `implementer`, and `implementer-strong`.
+`reviewer-marketplace`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`,
+`implementer`, and `implementer-strong`.
 
 ## Common custom subagent profile dispatch
 
@@ -128,7 +129,7 @@ marketplace; they are repo-local and take precedence over vendor profiles.
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot
 cover. For example, `agent-asset-marketplace` provides `.agents/agents/reviewer-marketplace.md`
-to review `codex-marketplace`, `new_plugin.py`, and scaffolder surfaces. A
+to review `codex-marketplace`, `new_plugin.py`, and pack-generation surfaces. A
 different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
 for a test harness.
 

@@ -139,6 +139,17 @@ To make model selection explicit and remove the `inherit` model, every custom re
 
 `reviewer-scaffolders` is a pre-existing scaffolder/mesh lens kept for backward compatibility. The new `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, and `repo-standards` surfaces. Both may be dispatched for the same PR; `reviewer-scaffolders` additionally emphasizes cross-skill script path existence and scaffolder output conventions.
 
+### Reviewer stop condition / loop breaker
+
+Every `reviewer-*.md` profile must end with a `## Stop condition and loop breaker` section that:
+
+- Instructs the subagent not to count tool calls.
+- Makes the final step `write` of the off-repo `review-log-<lens>.md` report.
+- Requires the final response to be exactly one line: `<profile>: N issue(s)` or `<profile>: clean`.
+- Breaks the review if the same `read`/`grep`/`find_file_by_name` call is about to be repeated without a new question it can answer.
+- Breaks the review if the last two tool calls produced no new findings.
+- Uses a hard backstop of no more than 50 total tool calls after loading inputs.
+
 ### `selecting-a-subagent/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`)
 
 Add to the dispatch table:
@@ -173,16 +184,7 @@ The portable runtime profiles live in `.agents/agents/` after installation. Thei
 - `reviewer-mesh` must not hard-code `agent-asset-marketplace` paths. Its `globs` / `keywords` must use generic patterns (`**/*scaffold*`, `**/*mesh*`, `**/INDEX.md`, `**/repo-standards/**`) that also match `rooms-mostly`.
 - `reviewer-plans` must not hard-code the `agent-asset-marketplace` plan directory. It accepts arbitrary plan / spec / roadmap paths.
 
-### Reviewer stop condition / loop breaker
 
-Every `reviewer-*.md` profile must end with a `## Stop condition and loop breaker` section that:
-
-- Instructs the subagent not to count tool calls.
-- Makes the final step `write` of the off-repo `review-log-<lens>.md` report.
-- Requires the final response to be exactly one line: `<profile>: N issue(s)` or `<profile>: clean`.
-- Breaks the review if the same `read`/`grep`/`find_file_by_name` call is about to be repeated without a new question.
-- Breaks the review if the last two tool calls produced no new findings.
-- Uses a hard backstop of no more than 50 total tool calls after loading inputs.
 
 ## Validation
 
