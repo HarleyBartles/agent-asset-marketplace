@@ -24,11 +24,9 @@ Use this section to decide whether `reviewer-mesh` should be dispatched for a PR
   - `**/INDEX.md`
   - `**/*mesh*`
   - `**/*scaffold*`
+  - `**/generating-agent-mesh/**`
   - `**/repo-standards/**`
-  - `repo-index/**`
-  - `codex-marketplace/**/bundle-manifest.json`
-  - `codex-marketplace/**/plugin-roots.json`
-
+  - `.agents/INDEX.md`
 - keywords:
   - mesh
   - INDEX.md

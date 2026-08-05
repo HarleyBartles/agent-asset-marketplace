@@ -24,7 +24,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 ## Non-goals (out of scope for this phase)
 
 - New repo-local lenses for `adventures-of-patch`, `portfolio`, or `wild-bunch` (PPTX, frontend, .NET, game, assets).
-- Changing the `reviewer`, `reviewer-fast`, `reviewer-strong`, or `reviewer-security` profiles beyond dispatch selection.
+- Adding new repo-local or portable lens profiles beyond `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, and the explicit model-tier pinning listed below.
 - A fully machine-parseable YAML schema for `applies_to`. The first version is a documented `## Applies to` section in each profile that `iterative-review` reads and matches with `grep` / `glob`.
 - Reintroducing `reviewer-known-findings.md` or any other shared findings ledger.
 
@@ -112,6 +112,32 @@ Each lens profile must declare an `## Applies to` section containing:
 - `globs`: a list of glob patterns evaluated against changed files in the diff.
 - `keywords`: a list of path/keyword strings; presence in the diff or PR description indicates relevance.
 - `inputs`: named inputs whose presence forces dispatch (e.g. `reviewer-plans` dispatches if `<plan_path>` is provided even when the diff alone does not match the globs).
+
+### Reviewer model tier pinning
+
+To make model selection explicit and remove the `inherit` model, every custom reviewer profile is pinned to a single three-tier model value:
+
+- `reviewer-fast`: `swe-1-6`
+- `reviewer`: `glm-5-2`
+- `reviewer-strong`: `swe-1-7`
+- `reviewer-security`, `reviewer-marketplace`, `reviewer-skills`, `reviewer-scaffolders`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`: `glm-5-2`
+
+### Runtime staging tool
+
+`tools/sync_runtime_agents.py` copies the current worktree's `.agents/agents/*.md` profiles to the main checkout so the Devin Desktop runtime can resolve new or changed profiles while the feature branch is in progress.
+
+**Semantics:**
+
+- Default mode is `--check` (read-only drift detection).
+- `--apply` is only permitted when `--allow-shared-checkout` is also passed.
+- The main worktree is selected by exact `refs/heads/main` branch match, with a fallback to the worktree whose git directory matches the common git directory.
+- Dirty-state preview is reported from the target main checkout, not the current worktree.
+- No directory is created in `--check` mode; the main checkout is only mutated when `--apply` is approved.
+- `tools/run.py runtime-agents` maps `ctx.allow_shared` to the script's `--allow-shared-checkout` and `--yes` flags.
+
+### `reviewer-scaffolders` relationship
+
+`reviewer-scaffolders` is a pre-existing scaffolder/mesh lens kept for backward compatibility. The new `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, and `repo-standards` surfaces. Both may be dispatched for the same PR; `reviewer-scaffolders` additionally emphasizes cross-skill script path existence and scaffolder output conventions.
 
 ### `selecting-a-subagent/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`)
 

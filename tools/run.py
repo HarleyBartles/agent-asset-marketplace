@@ -370,7 +370,7 @@ def _apply_runtime_agents(ctx: Ctx) -> None:
         "--apply",
     ]
     if ctx.allow_shared:
-        cmd.append("--yes")
+        cmd.extend(["--allow-shared-checkout", "--yes"])
     _run(cmd, ctx)
 
 

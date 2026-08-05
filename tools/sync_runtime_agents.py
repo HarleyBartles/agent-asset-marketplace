@@ -26,10 +26,10 @@ ROOT = Path(__file__).resolve().parent.parent
 AGENTS_DIR = ROOT / ".agents" / "agents"
 
 
-def _git(*args: str) -> str:
+def _git(*args: str, cwd: Path | None = None) -> str:
     result = subprocess.run(
         ["git", *args],
-        cwd=ROOT,
+        cwd=cwd or ROOT,
         capture_output=True,
         text=True,
         check=True,
@@ -62,7 +62,7 @@ def _find_main_worktree() -> Path:
         if entry.get("bare"):
             continue
         branch = entry.get("branch", "")
-        if branch == "refs/heads/main" or branch.endswith("main"):
+        if branch == "refs/heads/main":
             return Path(entry["worktree"]).resolve()
 
     # Fallback: the worktree whose git directory is the common git directory.
@@ -96,16 +96,23 @@ def _profile_paths(agents_dir: Path) -> list[Path]:
 def _main_worktree_preview(main: Path) -> str:
     """Return a short, human-readable preview of the main worktree for prompts."""
     try:
-        status = _git("status", "--short")
+        status = _git("status", "--short", cwd=main)
         dirty = " (dirty)" if status.strip() else ""
     except subprocess.CalledProcessError:
         dirty = ""
     return f"{main}{dirty}"
 
 
-def _approve(apply: bool, yes: bool, main: Path) -> bool:
+def _approve(apply: bool, yes: bool, main: Path, allow_shared: bool) -> bool:
     if not apply:
         return True
+    if not allow_shared:
+        print(
+            "error: applying without --allow-shared-checkout is not allowed; "
+            "pass --allow-shared-checkout to write to the main checkout.",
+            file=sys.stderr,
+        )
+        return False
     if yes:
         return True
     try:
@@ -140,7 +147,7 @@ def _format_diff(source: Path, target: Path) -> str:
     )
 
 
-def _sync_profiles(apply: bool, yes: bool) -> int:
+def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
     main = _find_main_worktree()
     source_dir = AGENTS_DIR
     target_dir = main / ".agents" / "agents"
@@ -149,11 +156,12 @@ def _sync_profiles(apply: bool, yes: bool) -> int:
         print(f"error: source directory does not exist: {source_dir}", file=sys.stderr)
         return 1
 
-    target_dir.mkdir(parents=True, exist_ok=True)
-
-    if not _approve(apply, yes, main):
+    if not _approve(apply, yes, main, allow_shared):
         print("Aborted.", file=sys.stderr)
         return 1
+
+    if apply:
+        target_dir.mkdir(parents=True, exist_ok=True)
 
     source_profiles = _profile_paths(source_dir)
     target_profiles = _profile_paths(target_dir)
@@ -225,6 +233,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="report drift without modifying the main checkout (default)",
     )
     parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="allow applying changes to the main (shared) checkout",
+    )
+    parser.add_argument(
         "--yes",
         action="store_true",
         help="skip the interactive confirmation when applying changes",
@@ -240,7 +253,8 @@ def main(argv: list[str] | None = None) -> int:
     apply = args.apply
     if not apply and not args.check:
         args.check = True
-    return _sync_profiles(apply, args.yes)
+    allow_shared = getattr(args, "allow_shared_checkout", False)
+    return _sync_profiles(apply, allow_shared, args.yes)
 
 
 if __name__ == "__main__":
