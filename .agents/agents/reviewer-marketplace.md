@@ -2,7 +2,7 @@
 name: reviewer-marketplace
 runtime: devin-desktop
 description: Repo-local lens reviewer for the agent-asset-marketplace — focused on scaffolders, generated surfaces, and CI tooling.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep

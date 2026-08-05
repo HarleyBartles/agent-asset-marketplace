@@ -2,7 +2,7 @@
 name: reviewer-scaffolders
 runtime: devin-desktop
 description: Portable scaffolder and mesh lens — generated INDEX.md, scaffolder output, and repo-standards surface hygiene.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep

@@ -2,7 +2,7 @@
 name: reviewer-skills
 runtime: devin-desktop
 description: Portable skill-and-reference lens — SKILL.md frontmatter, markdown tables, reference hygiene, and prompt robustness.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep

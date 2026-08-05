@@ -2,7 +2,7 @@
 name: reviewer-security
 runtime: devin-desktop
 description: Security/PII lens reviewer — focused on secrets, real identifiers, and exposure in a prepared diff.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep

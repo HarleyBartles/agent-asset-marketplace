@@ -1,7 +1,7 @@
 ---
 name: reviewer-fast
 description: Vendor-provided subagent profile for small, tightly focused reviews or fix re-reviews.
-model: inherit
+model: swe-1-6
 allowed-tools:
 - read
 - grep

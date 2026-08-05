@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Vendor-provided subagent profile for focused, read-only code review.
-model: inherit
+model: glm-5-2
 allowed-tools:
 - read
 - grep

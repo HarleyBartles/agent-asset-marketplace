@@ -1,7 +1,7 @@
 ---
 name: reviewer-strong
 description: Vendor-provided subagent profile for full branch or PR diff review.
-model: inherit
+model: swe-1-7
 allowed-tools:
 - read
 - grep

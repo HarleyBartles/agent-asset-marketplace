@@ -2,7 +2,7 @@
 name: reviewer-mesh
 runtime: devin-desktop
 description: Portable generated-mesh and scaffolder lens — reviews INDEX.md files, generated mesh, scaffolder output, and repo-standards surfaces.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep
@@ -28,7 +28,7 @@ Use this section to decide whether `reviewer-mesh` should be dispatched for a PR
   - `repo-index/**`
   - `codex-marketplace/**/bundle-manifest.json`
   - `codex-marketplace/**/plugin-roots.json`
-  - `.agents/skills/**/INDEX.md`
+
 - keywords:
   - mesh
   - INDEX.md

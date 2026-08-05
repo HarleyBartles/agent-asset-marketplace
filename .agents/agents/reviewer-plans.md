@@ -2,7 +2,7 @@
 name: reviewer-plans
 runtime: devin-desktop
 description: Portable plan/spec/roadmap lens — reviews plans in isolation and PR compliance against declared governing documents.
-model: swe-1-6
+model: glm-5-2
 allowed-tools:
   - read
   - grep
