@@ -429,6 +429,9 @@ _TASKS: dict[str, Task] = {
         check=(_check_review_preflight,),
         fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
     ),
+    # runtime-agents is intentionally excluded from the `ci` deps because it
+    # stages files into the main checkout, which is a local, mutating
+    # operation. It remains available for repo-local profile staging only.
     "runtime-agents": Task(
         apply=(_apply_runtime_agents,),
         check=(_check_runtime_agents,),
