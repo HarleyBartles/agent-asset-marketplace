@@ -1,6 +1,6 @@
 # Reviewer lens expansion — design spec
 
-> Scope: first phase. Add `reviewer-plans` and `reviewer-scaffolders` as portable subagent profiles, narrow `reviewer-marketplace` to this repo, and make `iterative-review` dispatch only the lenses that apply to a given PR.
+> Scope: first phase. Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` as portable subagent profiles, narrow `reviewer-marketplace` to this repo, and make `iterative-review` dispatch only the lenses that apply to a given PR.
 > Date: 2026-08-05
 
 ## Problem
@@ -15,10 +15,11 @@ The `iterative-review` skill now routes through a state graph. It still describe
 ## Goals
 
 1. Add `reviewer-plans`: a portable subagent profile that reviews a spec/plan in isolation and reviews a PR for compliance with its declared plan/spec/roadmap.
-2. Add `reviewer-scaffolders`: a portable subagent profile that reviews generated mesh, scaffolder output, `INDEX.md` files, and the `repo-standards` / `generating-agent-mesh` surfaces common to `agent-asset-marketplace` and `rooms-mostly`.
+2. Add `reviewer-mesh`: a portable subagent profile that reviews generated mesh, scaffolder output, `INDEX.md` files, and the `repo-standards` / `generating-agent-mesh` surfaces common to `agent-asset-marketplace` and `rooms-mostly`.
 3. Narrow `reviewer-marketplace` to its actual repo-local concern: `codex-marketplace` pack generation, `tools/new_plugin.py`, `tools/run.py`, and this repo's marketplace-specific generated files.
 4. Make `iterative-review` discover and dispatch only the lenses whose applicability rules match the current PR. No lens is mandatory unless the diff and inputs say it applies.
 5. Wire `selecting-a-subagent` to know about the new profiles and the `## Applies to` contract that lives inside each lens profile.
+6. Add `reviewer-scripts`: a portable subagent profile that reviews new or changed scripts for CLI flag hygiene, dry-run semantics, shebang/invocation conventions, exit-code correctness, path safety, and cross-skill references.
 
 ## Non-goals (out of scope for this phase)
 
@@ -58,7 +59,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 **Output:** `review-log-plans.md` with `file:line`, severity, description, and remediation. End with `reviewer-plans: N issue(s)` or `reviewer-plans: clean`.
 
-### New portable profile: `.agents/agents/reviewer-scaffolders.md`
+### New portable profile: `.agents/agents/reviewer-mesh.md`
 
 **Inputs**
 
@@ -69,13 +70,29 @@ The `iterative-review` skill now routes through a state graph. It still describe
 **Checklist**
 
 - Generated `INDEX.md`, mesh, and scaffolder output (e.g. `scripts/scaffold_*`, `generating-agent-mesh` output) are not hand-edited.
-- Scaffolder scripts preserve existing top-level fields and do not lose provenance / author / license data.
-- `--check` / `--apply` / `--sync` semantics are respected; dry-run exit codes are correct.
-- Canonical path conventions (e.g. `py -3`, `subagent-workspace/scripts`) are followed in scaffolder source.
+- Scaffolder and mesh generators preserve existing top-level fields and do not lose provenance / author / license data.
+- `--check` / `--apply` / `--sync` semantics for the `INDEX.md` / mesh / `repo-standards` generators are respected; dry-run exit codes are correct.
 - No generated file is modified directly in `.agents/skills/` (installed copies) or in generated `INDEX.md` trees.
+
+**Output:** `review-log-mesh.md` with the same `file:line`, severity, description, and remediation format.
+
+### New portable profile: `.agents/agents/reviewer-scripts.md`
+
+**Inputs**
+
+- `<diff_path>`
+- `<pr_description>` (optional)
+- `<scan_findings>` (optional)
+
+**Checklist**
+
+- `--help` is documented and returns `0`; `--check` / `--apply` / `--sync` are classified as read-only, mutating, or mixed and have correct exit codes.
+- Scripts use portable shebangs and the consumer's canonical interpreter (e.g. `py -3` on Windows, `python3` elsewhere).
+- Scripts resolve output paths to absolute values before `Push-Location` / `cd` and restore the original directory.
+- Read-only subagent prompts do not force the script to recreate missing packages or mutate repo state.
 - Cross-skill script paths in `SKILL.md` and references point to existing installed or source files.
 
-**Output:** `review-log-scaffolders.md` with the same `file:line`, severity, description, and remediation format.
+**Output:** `review-log-scripts.md` with the same `file:line`, severity, description, and remediation format.
 
 ### Updated repo-local profile: `.agents/agents/reviewer-marketplace.md`
 
@@ -86,7 +103,7 @@ Narrow to this repo's `codex-marketplace` and marketplace tooling:
 - `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`.
 - Scaffolder or generator that overwrites existing top-level metadata.
 
-Remove generic scaffolder / mesh checks that now belong to `reviewer-scaffolders`.
+Remove generic scaffolder / mesh checks that now belong to `reviewer-mesh`.
 
 ### `## Applies to` contract in every `reviewer-*.md`
 
@@ -101,7 +118,8 @@ Each lens profile must declare an `## Applies to` section containing:
 Add to the dispatch table:
 
 - `reviewer-plans` — plan/spec review and PR compliance.
-- `reviewer-scaffolders` — scaffolder / mesh / repo-standards lens.
+- `reviewer-mesh` — scaffolder / mesh / repo-standards lens.
+- `reviewer-scripts` — script / CLI safety and compliance lens.
 
 Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-predict` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
 
@@ -121,12 +139,12 @@ Remove the current hard-coded "In this repo, the canonical lenses are..." list. 
 
 ### Marketplace pack (if applicable)
 
-The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` per the 2026-08-04 review-robustness design. Add `reviewer-plans.md` and `reviewer-scaffolders.md` there if that pack is still the source of truth for `.agents/agents/` copies, then regenerate with `py -3 tools/run.py marketplace --apply` before publishing. The implementation plan must verify whether the pack needs an update.
+The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` per the 2026-08-04 review-robustness design. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there if that pack is still the source of truth for `.agents/agents/` copies, then regenerate with `py -3 tools/run.py marketplace --apply` before publishing. The implementation plan must verify whether the pack needs an update.
 
 ## Cross-repo consumer considerations
 
-- `rooms-mostly` consumes the portable `reviewer`, `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, and now `reviewer-plans` and `reviewer-scaffolders`. Its repo-local set is currently empty; it may add `reviewer-obsidian` later.
-- `reviewer-scaffolders` must not hard-code `agent-asset-marketplace` paths. Its `globs` / `keywords` must use generic patterns (`**/*scaffold*`, `**/*mesh*`, `**/INDEX.md`, `**/repo-standards/**`) that also match `rooms-mostly`.
+- `rooms-mostly` consumes the portable `reviewer`, `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, and now `reviewer-plans` and `reviewer-mesh`. Its repo-local set is currently empty; it may add `reviewer-obsidian` later.
+- `reviewer-mesh` must not hard-code `agent-asset-marketplace` paths. Its `globs` / `keywords` must use generic patterns (`**/*scaffold*`, `**/*mesh*`, `**/INDEX.md`, `**/repo-standards/**`) that also match `rooms-mostly`.
 - `reviewer-plans` must not hard-code the `agent-asset-marketplace` plan directory. It accepts arbitrary plan / spec / roadmap paths.
 
 ## Validation
@@ -136,11 +154,11 @@ The portable runtime profiles live in `.agents/agents/` after installation. Thei
 - Implementation will be validated by:
   - `py -3 tools/run.py ci --check` passing.
   - `py -3 tools/run.py marketplace --apply` if any `codex-marketplace` source or pack asset changed.
-  - A sample `iterative-review` dry-run that correctly selects `reviewer-plans` when a PR touches a plan, `reviewer-scaffolders` when a PR touches `INDEX.md`, and skips `reviewer-marketplace` in `rooms-mostly`.
+  - A sample `iterative-review` dry-run that correctly selects `reviewer-plans` when a PR touches a plan, `reviewer-mesh` when a PR touches `INDEX.md`, and skips `reviewer-marketplace` in `rooms-mostly`.
 
 ## Risks and tradeoffs
 
-- `reviewer-scaffolders` may overlap with `reviewer-skills` on markdown hygiene. The split is: `reviewer-skills` owns `SKILL.md` and prompt/reference hygiene; `reviewer-scaffolders` owns generated and scaffolder outputs. Each lens's `## Checklist` makes the split explicit.
+- `reviewer-mesh` may overlap with `reviewer-skills` on markdown hygiene. The split is: `reviewer-skills` owns `SKILL.md` and prompt/reference hygiene; `reviewer-mesh` owns generated and scaffolder outputs. Each lens's `## Checklist` makes the split explicit.
 - The `## Applies to` section is human-readable in the first version. If the orchestrator cannot parse it reliably, the first implementation may use a simpler heuristic (read the lens and ask it to self-report applicability) rather than strict parsing. This can be tightened later.
 - Dynamic dispatch means `iterative-review` needs to `read` every `reviewer-*.md` before dispatch. This is a small cost but must be documented in the plan.
 
