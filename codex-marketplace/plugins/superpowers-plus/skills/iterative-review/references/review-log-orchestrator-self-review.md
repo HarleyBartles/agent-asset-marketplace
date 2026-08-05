@@ -1,4 +1,4 @@
-# Orchestrator prediction log
+# Orchestrator self-review log
 
 Use this off-repo scratch file during the `orchestrator-self-review` node. Record
 which `.agents/agents/reviewer-*.md` profiles were checked, which predictable
@@ -11,6 +11,9 @@ reviewers.
 - [ ] `.agents/agents/reviewer-skills.md` (or the consumer repo's equivalent)
 - [ ] `.agents/agents/reviewer-marketplace.md` (or the consumer repo's equivalent)
 - [ ] `.agents/agents/reviewer-strong.md` (or the consumer repo's equivalent)
+- [ ] `.agents/agents/reviewer-plans.md` (or the consumer repo's equivalent)
+- [ ] `.agents/agents/reviewer-mesh.md` (or the consumer repo's equivalent)
+- [ ] `.agents/agents/reviewer-scripts.md` (or the consumer repo's equivalent)
 
 ## Predicted and fixed
 

@@ -67,8 +67,19 @@ The `.md` profile assets in `assets/` are Devin Desktop custom profiles. They ar
 not used by Codex; for Codex, use the `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md` mappings.
 
-If you want to use the Devin Desktop custom profiles, install the corresponding
-`.md` profile assets into a Devin Desktop profile search path:
+If you want to use the Devin Desktop custom profiles in a consumer repository,
+run the helper to install the shipped `.md` assets into that repository's
+`.agents/agents/` directory:
+
+```
+py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
+```
+
+The helper overwrites shipped profiles only when they have changed and leaves any
+locally managed profiles in `.agents/agents/` untouched.
+
+To install them as global Devin Desktop custom profiles instead, copy the
+individual `.md` files manually to the runtime search path:
 
 - macOS/Linux: `~/.config/devin/agents/<profile>.md`
 - Windows: `%APPDATA%\devin\agents\<profile>.md`

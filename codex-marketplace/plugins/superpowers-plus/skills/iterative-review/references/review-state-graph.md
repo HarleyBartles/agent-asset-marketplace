@@ -127,7 +127,7 @@ Use this off-repo scratch file to record what the orchestrator could predict
 and fix, and what it left for the lens reviewers.
 
 ```markdown
-# Orchestrator prediction log
+# Orchestrator self-review log
 
 ## Reviewed lens profiles
 
@@ -135,6 +135,9 @@ and fix, and what it left for the lens reviewers.
 - [ ] `reviewer-skills.md`
 - [ ] `reviewer-marketplace.md`
 - [ ] `reviewer-strong.md`
+- [ ] `reviewer-plans.md`
+- [ ] `reviewer-mesh.md`
+- [ ] `reviewer-scripts.md`
 
 ## Predicted and fixed
 
@@ -155,7 +158,7 @@ Proceed to `lens-dispatch` and dispatch the relevant lens reviewers. A clean pre
 ## Metrics snapshot
 
 ```json
-{"orchestrator_predict_findings_fixed": 0, "orchestrator_predict_items_uncertain": 0}
+{"orchestrator_self_review_findings_fixed": 0, "orchestrator_self_review_items_uncertain": 0}
 ```
 
 ## Review artifacts

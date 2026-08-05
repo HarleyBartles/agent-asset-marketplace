@@ -29,24 +29,6 @@
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
-  "vendorProfiles": [
-    {
-      "plugin": "repo-worker-pack",
-      "sourcePath": "codex-marketplace/plugins/repo-worker-pack/assets/profiles",
-      "profiles": [
-        "implementer-strong.md",
-        "implementer.md",
-        "reviewer-fast.md",
-        "reviewer-marketplace.md",
-        "reviewer-mesh.md",
-        "reviewer-plans.md",
-        "reviewer-scripts.md",
-        "reviewer-security.md",
-        "reviewer-skills.md",
-        "reviewer-strong.md",
-        "reviewer.md"
-      ]
-    }
-  ],
-  "syncedAt": "2026-08-05T18:24:43.048946"
+  "vendorProfiles": [],
+  "syncedAt": "2026-08-05T19:23:47.309009"
 }
