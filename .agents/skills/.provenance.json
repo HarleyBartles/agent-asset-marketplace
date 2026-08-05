@@ -37,7 +37,9 @@
         "implementer-strong.md",
         "implementer.md",
         "reviewer-fast.md",
+        "reviewer-mesh.md",
         "reviewer-plans.md",
+        "reviewer-scaffolders.md",
         "reviewer-security.md",
         "reviewer-skills.md",
         "reviewer-strong.md",
@@ -45,5 +47,5 @@
       ]
     }
   ],
-  "syncedAt": "2026-08-05T12:55:40.385578"
+  "syncedAt": "2026-08-05T12:57:18.011320"
 }
