@@ -1,6 +1,6 @@
 # Reviewer lens expansion — implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
@@ -55,7 +55,7 @@ git commit -m "Verify baseline for reviewer lens expansion work"
 
 ---
 
-### Task 1: Create `.agents/agents/reviewer-plans.md`
+### Task 1: Create or update `.agents/agents/reviewer-plans.md`
 
 **Files:**
 - Create: `.agents/agents/reviewer-plans.md`
@@ -175,7 +175,7 @@ For each issue:
 
 Do not include non-plan findings.
 
-Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
+Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
 ```
 
 - [x] **Step 1.2: Add `reviewer-plans.md` to the repo-worker-pack profile source**
@@ -306,7 +306,7 @@ For each issue:
 
 Do not include non-scaffolder findings.
 
-Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
+Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
 ```
 
 - [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
@@ -342,7 +342,7 @@ Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md`
 - Declare `## Checklist` covering CLI flag contracts, read-only/mutating/mixed classification, exit-code hygiene, shebang/invocation, path safety, and cross-skill script path existence.
 - Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-prediction>` inputs.
 - Write `review-log-scripts.md` to the off-repo scratch.
-- Append the `## Stop condition and loop breaker` section from Task 7.6 to the end of the file.
+- Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
 
 - [x] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
 
@@ -686,7 +686,7 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 
 ---
 
-### Task 7.5: Pin reviewer model tiers and add runtime staging tool
+### Task 8: Pin reviewer model tiers and add runtime staging tool
 
 **Files:**
 - Edit: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-*.md`
@@ -721,7 +721,7 @@ Expected: The spec ratifies the model changes and the staging tool's behavior.
 
 ---
 
-### Task 7.6: Add the shared `## Stop condition and loop breaker` to every reviewer profile
+### Task 9: Add the shared `## Stop condition and loop breaker` to every reviewer profile
 
 **Files:**
 - Edit: all `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-*.md`
@@ -754,7 +754,7 @@ Expected: installed `.agents/agents/reviewer-*.md` copies match the pack source 
 
 ---
 
-### Task 8: Publish the branch as a draft PR
+### Task 10: Publish the branch as a draft PR
 
 **Files:**
 - Publish: branch `feat/reviewer-lens-expansion`.

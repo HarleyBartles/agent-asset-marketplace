@@ -247,15 +247,22 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = _parse_args(argv)
-    if args.apply and args.check:
-        print("error: --apply and --check are mutually exclusive", file=sys.stderr)
+    try:
+        args = _parse_args(argv)
+        if args.apply and args.check:
+            print("error: --apply and --check are mutually exclusive", file=sys.stderr)
+            return 1
+        apply = args.apply
+        if not apply and not args.check:
+            args.check = True
+        allow_shared = getattr(args, "allow_shared_checkout", False)
+        return _sync_profiles(apply, allow_shared, args.yes)
+    except FileNotFoundError as exc:
+        print(f"error: required command or path not found: {exc}", file=sys.stderr)
         return 1
-    apply = args.apply
-    if not apply and not args.check:
-        args.check = True
-    allow_shared = getattr(args, "allow_shared_checkout", False)
-    return _sync_profiles(apply, allow_shared, args.yes)
+    except subprocess.CalledProcessError as exc:
+        print(f"error: git command failed: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
