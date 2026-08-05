@@ -39,7 +39,7 @@ flowchart TD
 | `preflight` | `tools/run.py ci --check` | Run deterministic pattern checks on the branch before any subagent. |
 | `fast-fix` | orchestrator | Fix a deterministic preflight finding. |
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
-| `orchestrator-self-review` | orchestrator | Apply each relevant `.agents/agents/reviewer-*.md` `## Checklist` to the diff; fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
+| `orchestrator-self-review` | orchestrator | Apply each relevant `reviewer-*.md` profile's `## Checklist` to the diff (resolving each name through the Devin Desktop agents search path); fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
 | `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
 | `strong-review` | `reviewer-strong` | Whole-branch pass that combines lens logs, finds gaps, contradictions, and design issues. |
 | `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, and the node where it resolves. This node does not block. |

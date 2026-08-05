@@ -45,7 +45,7 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
 - `references/review-metrics-schema.json` for the metrics to collect.
 - `references/review-log-orchestrator-self-review.md` for the prediction log template.
-- The relevant `.agents/agents/reviewer-*.md` lens profiles for the current repository.
+- The relevant `reviewer-*.md profiles from the Devin Desktop agents search path (user-global, `.devin/agents/`, and `.agents/agents/`)` lens profiles for the current repository.
 
 ## Setup
 
@@ -91,7 +91,7 @@ Compare the branch diff to the plan, spec, PR body, and linked issues. If the im
 
 ### `orchestrator-self-review`
 
-This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch. Update `scan_findings` after the fixes.
+This is the cheapest non-deterministic review. For each relevant `reviewer-*.md profiles from the Devin Desktop agents search path (user-global, `.devin/agents/`, and `.agents/agents/`)` profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch. Update `scan_findings` after the fixes.
 
 **`orchestrator-self-review` is not a pass.** A clean orchestrator-self-review means the predictable issues are already fixed and the remaining known-unknowns are documented. It does **not** mean the PR is ready. Always proceed to `lens-dispatch` unless the PR has zero changed files or the consumer's CI preflight alone is the required gate for that PR.
 
@@ -99,13 +99,13 @@ This is the cheapest non-deterministic review. For each relevant `.agents/agents
 
 This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR, plus the mandatory `reviewer-strong` whole-branch pass.
 
-1. Discover every `.agents/agents/reviewer-*.md` file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `.agents/agents/reviewer-*.md` overrides.
+1. Discover every `reviewer-*.md profiles from the Devin Desktop agents search path (user-global, `.devin/agents/`, and `.agents/agents/`)` file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `reviewer-*.md profiles from the Devin Desktop agents search path (user-global, `.devin/agents/`, and `.agents/agents/`)` overrides.
 2. For each lens profile, read its `## Applies to` section. Match the rules in this order:
    - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
    - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
    - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
 3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`). Assign each lens a concrete `<log_path>` such as `$scratch/review-log-<lens>.md`.
-4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Pass the `<log_path>` in the subagent `task` so the reviewer writes to that exact file. Set the off-repo workspace as the subagent's working directory.
+4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `reviewer-*.md profiles from the Devin Desktop agents search path (user-global, `.devin/agents/`, and `.agents/agents/`)` profile and use its content as the subagent task. Pass the `<log_path>` in the subagent `task` so the reviewer writes to that exact file. Set the off-repo workspace as the subagent's working directory.
 5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, all `review-log-<lens>.md` files, and its own `<log_path>` (e.g. `$scratch/review-log-strong.md`).
 
 If no lens matches the PR, still dispatch `reviewer-strong` for the whole-branch pass.

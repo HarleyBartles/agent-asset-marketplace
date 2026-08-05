@@ -1,19 +1,19 @@
 # Orchestrator self-review log
 
 Use this off-repo scratch file during the `orchestrator-self-review` node. Record
-which `.agents/agents/reviewer-*.md` profiles were checked, which predictable
+which `reviewer-*.md profiles in the Devin Desktop agents search path` profiles were checked, which predictable
 findings were fixed, and which uncertain items are being sent to the lens
 reviewers.
 
 ## Reviewed lens profiles
 
-- [ ] `.agents/agents/reviewer-security.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-skills.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-marketplace.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-strong.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-plans.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-mesh.md` (or the consumer repo's equivalent)
-- [ ] `.agents/agents/reviewer-scripts.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-security.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-skills.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-marketplace.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-strong.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-plans.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-mesh.md` (or the consumer repo's equivalent)
+- [ ] `reviewer-scripts.md` (or the consumer repo's equivalent)
 
 ## Predicted and fixed
 
