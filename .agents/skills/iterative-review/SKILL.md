@@ -144,18 +144,20 @@ Re-run the consumer's canonical preflight over the post-fix range. If it reports
 
 ### `targeted-re-review`
 
-Dispatch the originating lens (or `reviewer-fast` if the lens has a `reviewer-fast` variant) with:
+Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fast` with a tight scope:
 - the original finding,
-- the fix diff,
+- the fix diff (e.g. `HEAD~N..HEAD` or `origin/main..HEAD` if the fixes are the latest commits),
 - the relevant slice of the full branch diff.
 
+Use `reviewer-fast` to verify the original finding is resolved and to look for obvious new issues in the fix. Do not broaden into a whole-branch review here.
+
 Confirm the original finding is resolved. Then:
-- If the fix is trivial (single file, same concern, no cross-cutting impact), go to `strong-review`.
-- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change), go to `regression-scan`.
+- If the fix is trivial (single file, same concern, no cross-cutting impact) and `reviewer-fast` is clean, go to `strong-review`.
+- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change) or `reviewer-fast` finds any new issue, go to `regression-scan`.
 
 ### `regression-scan`
 
-Dispatch `reviewer-strong` with the fix diff and immediate surrounding area. Its job is to catch new issues the fix introduced. If a new issue appears, return to `metrics-track` so it is recorded as a regression. If clean, return to `strong-review` for a final whole-branch pass.
+Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fast` on that widened diff to catch cheap regressions. If `reviewer-fast` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fast` finds a new issue, dispatch `reviewer-strong` on the touched area to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
 
 ### `ready`
 
