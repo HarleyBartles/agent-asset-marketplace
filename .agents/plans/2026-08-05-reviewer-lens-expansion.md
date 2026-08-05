@@ -10,7 +10,7 @@
 
 **Global Constraints**
 - Portable skill sources are edited under `codex-marketplace/plugins/superpowers-plus/skills/`; `.agents/skills/` are generated installed copies.
-- `.agents/agents/reviewer-*.md` runtime profiles are the consumer-visible surface; their canonical product source is `codex-marketplace/plugins/repo-worker-pack/assets/profiles/`.
+- `.agents/agents/reviewer-*.md` runtime profiles are the consumer-visible surface; their canonical product source is `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
 - Do not reintroduce `reviewer-known-findings.md` or any shared findings ledger; each lens owns its own `## Checklist`.
 - This branch already moves completed plans/specs to `.agents/plans/completed/` and `.agents/specs/completed/`; do not modify those historical files.
 
@@ -27,7 +27,7 @@
 - Read: `.agents/agents/reviewer-marketplace.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
-- Read: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` (list the directory)
+- Read: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` (list the directory)
 
 **Interfaces:**
 - Consumes: current lens profiles and skill sources.
@@ -180,7 +180,7 @@ Append the `## Stop condition and loop breaker` section from Task 9 to the end o
 
 - [x] **Step 1.2: Add `reviewer-plans.md` to the repo-worker-pack profile source**
 
-If the pack at `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` is the source of truth for `.agents/agents/` runtime profiles, copy the file you just created into that directory:
+If the pack at `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` is the source of truth for `.agents/agents/` runtime profiles, copy the file you just created into that directory:
 
 ```bash
 cp ".agents\agents\reviewer-plans.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-plans.md"
@@ -193,7 +193,7 @@ Expected: `reviewer-plans.md` is staged.
 
 ```bash
 git add .agents/agents/reviewer-plans.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-plans.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md
 git commit -m "Add portable reviewer-plans lens profile"
 ```
 
@@ -210,7 +210,7 @@ git commit -m "Add portable reviewer-plans lens profile"
 
 - [x] **Step 2.1: Copy the `reviewer-mesh` profile from the pack source**
 
-Use the pack source at `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-mesh.md`.
+Use the pack source at `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`.
 It is the canonical scaffolder/mesh lens and absorbs the old `reviewer-scaffolders` responsibilities; do not hand-edit `.agents/agents/reviewer-mesh.md`.
 
 
@@ -224,7 +224,7 @@ cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\repo-worker-pack
 
 ```bash
 git add .agents/agents/reviewer-mesh.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-mesh.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md
 git commit -m "Add portable reviewer-mesh lens profile"
 ```
 
@@ -244,7 +244,7 @@ Expected: `.agents/agents/reviewer-scripts.md` is installed from the pack source
 - [x] **Step 2.6: Commit the new profile**
 
 ```bash
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md
 git add .agents/agents/reviewer-scripts.md
 git commit -m "Add portable reviewer-scripts lens profile"
 ```
@@ -376,9 +376,9 @@ cp ".agents\agents\reviewer-marketplace.md" "codex-marketplace\plugins\repo-work
 git add .agents/agents/reviewer-skills.md
 git add .agents/agents/reviewer-security.md
 git add .agents/agents/reviewer-marketplace.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-skills.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-security.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-marketplace.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-skills.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-security.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-marketplace.md
 git commit -m "Add Applies to dispatch rules to existing lens profiles"
 ```
 
@@ -582,7 +582,7 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 ### Task 8: Pin reviewer model tiers and add runtime staging tool
 
 **Files:**
-- Edit: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-*.md`
+- Edit: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-*.md`
 - Edit: `tools/sync_runtime_agents.py`
 - Edit: `tools/run.py`
 - Edit: `AGENTS.md`, `.agents/runbooks/implementing.md`, `docs/non-repo-locations-policy.md`
@@ -617,7 +617,7 @@ Expected: The spec ratifies the model changes and the staging tool's behavior.
 ### Task 9: Add the shared `## Stop condition and loop breaker` to every reviewer profile
 
 **Files:**
-- Edit: all `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-*.md`
+- Edit: all `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-*.md`
 - Edit: `.agents/agents/reviewer-*.md` via `marketplace --apply`
 
 **Interfaces:**
@@ -647,7 +647,29 @@ Expected: installed `.agents/agents/reviewer-*.md` copies match the pack source 
 
 ---
 
-### Task 10: Publish the branch as a draft PR
+### Task 10: Add `selecting-a-subagent/scripts/install_profiles.py`
+
+**Files:**
+- Create: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/scripts/install_profiles.py`
+- Edit: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`
+
+**Interfaces:**
+- Consumes: the profile `.md` assets now in `selecting-a-subagent/assets/`.
+- Produces: a consumer helper that installs the shipped profiles into the repo's `.agents/agents/` directory without touching locally managed profiles.
+
+- [x] **Step 10.1: Create `install_profiles.py`**
+
+Run: implement `--source` and `--target` with a default target of `.agents/agents/`, a read-only drift preview by default, and `--apply` to overwrite changed shipped profiles. Leave any files in the target that are not in the source untouched.
+Expected: `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --help` and `--check` respond (0), and `--apply` lands files in `.agents/agents/`.
+
+- [x] **Step 10.2: Update `selecting-a-subagent/SKILL.md` installation instructions**
+
+Run: replace the manual-copy-only instructions with the helper command and keep the global Devin Desktop path as an alternative.
+Expected: `py -3 tools/run.py ci --check` passes.
+
+---
+
+### Task 11: Publish the branch as a draft PR
 
 **Files:**
 - Publish: branch `feat/reviewer-lens-expansion`.
