@@ -2,7 +2,6 @@
 name: reviewer-fast
 description: Vendor-provided subagent profile for small, tightly focused reviews or fix re-reviews.
 model: swe-1-6
-# Do not change the length of this list; keep it at six entries so the write tool is surfaced.
 allowed-tools:
 - write
 - exec

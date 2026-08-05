@@ -2,7 +2,6 @@
 name: reviewer-strong
 description: Vendor-provided subagent profile for full branch or PR diff review.
 model: swe-1-7
-# Do not change the length of this list; keep it at six entries so the write tool is surfaced.
 allowed-tools:
 - write
 - exec
