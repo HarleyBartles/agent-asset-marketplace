@@ -117,23 +117,18 @@ Each lens profile must declare an `## Applies to` section containing:
 
 To make model selection explicit and remove the `inherit` model, every custom reviewer profile is pinned to a single three-tier model value:
 
-- `reviewer-fast`: `swe-1-6`
+- `reviewer-fast`: `swe-1-6` (grants `write`/`exec`)
 - `reviewer`: `glm-5-2`
-- `reviewer-strong`: `swe-1-7`
+- `reviewer-strong`: `glm-5-2` (keeps `write`/`exec` for the off-repo review report)
 - `reviewer-security`, `reviewer-marketplace`, `reviewer-skills`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`: `glm-5-2`
 
-### Runtime staging tool
+`reviewer-strong` was moved off `swe-1-7` because the `swe-1-7` subagent base tool set does not include `write`, even when `allowed-tools` lists it. `glm-5-2` and `swe-1-6` include `write`/`exec` by default.
 
-`tools/sync_runtime_agents.py` copies the current worktree's `.agents/agents/*.md` profiles to the main checkout so the Devin Desktop runtime can resolve new or changed profiles while the feature branch is in progress.
+### Runtime staging tool (deprecated for portable profiles)
 
-**Semantics:**
+`tools/sync_runtime_agents.py` originally copied the current worktree's `.agents/agents/*.md` profiles to the main checkout so the Devin Desktop runtime could resolve new or changed profiles while the feature branch was in progress. Because the shared portable profiles now live in the user-global agents directory, this staging step is no longer required for `reviewer*.md` assets; the user-global copy is available to all sessions immediately after `install_profiles.py --apply`.
 
-- Default mode is `--check` (read-only drift detection).
-- `--apply` is only permitted when `--allow-shared-checkout` is also passed.
-- The main worktree is selected by exact `refs/heads/main` branch match, with a fallback to the worktree whose git directory matches the common git directory.
-- Dirty-state preview is reported from the target main checkout, not the current worktree.
-- No directory is created in `--check` mode; the main checkout is only mutated when `--apply` is approved.
-- `tools/run.py runtime-agents` maps `ctx.allow_shared` to the script's `--allow-shared-checkout` and `--yes` flags.
+The script remains in the repo for any future repo-local profile staging needs, but the standard workflow for the portable lens set is `install_profiles.py --apply` to the global directory.
 
 
 
@@ -183,9 +178,11 @@ Remove the current hard-coded "In this repo, the canonical lenses are..." list. 
 
 ### Marketplace pack (if applicable)
 
-The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is now the `selecting-a-subagent` skill: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` ships the `.md` profile assets. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there (and remove the now-deprecated `reviewer-scaffolders` profile), then regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
+The portable runtime profiles are installed into the Devin Desktop user-global agents directory (`~/.config/devin/agents` on macOS/Linux, `%APPDATA%\devin\agents` on Windows). Devin Desktop searches this path first, before `.devin/agents/` and `.agents/agents/`. Their canonical product source is the `selecting-a-subagent` skill: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` ships the `.md` profile assets.
 
-To make the shipped `.md` files discoverable in consumer repos, add `scripts/install_profiles.py` to the `selecting-a-subagent` skill. The helper installs the shipped profiles into the consumer repo's `.agents/agents/` directory, overwriting only changed shipped profiles and leaving any locally managed `.agents/agents/reviewer-*.md` files untouched. `reviewer-marketplace.md` is repo-local and must not be installed by the helper; consumers author their own `reviewer-marketplace.md` or omit it. Update `selecting-a-subagent/SKILL.md` to document the helper and keep the manual global Devin Desktop profile path as an alternative.
+To make the shipped `.md` files discoverable in consumer repos, `scripts/install_profiles.py` is provided in the `selecting-a-subagent` skill. The helper installs the shipped profiles into the user-global agents directory by default, overwriting only changed shipped profiles and leaving any other files in the target directory untouched. Use `--target` to install into a different directory, such as a consumer repo's `.agents/agents/` directory. `reviewer-marketplace.md` is repo-local and must not be installed by the helper; consumers author their own `reviewer-marketplace.md` or omit it. Update `selecting-a-subagent/SKILL.md` and `references/devin-desktop-profile.md` to document the new default target.
+
+`.agents/agents/` is reserved for repo-local lens profiles and overrides; the shared portable profiles are not copied there by the marketplace installer.
 
 As part of the source consolidation, the `implementer.md` and `implementer-strong.md` profiles move from `repo-worker-pack` to `selecting-a-subagent/assets/` and are restored to their vendor baselines; this is not a functional scope change.
 

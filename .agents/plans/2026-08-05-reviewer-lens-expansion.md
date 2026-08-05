@@ -17,6 +17,8 @@
 **Spec:** `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md`
 **Spec handoff rating:** 9/10
 
+> **In-session pivot (2026-08-05):** While validating the new lens profiles, we discovered that `swe-1-7` subagents do not expose the `write` tool even when it is listed in `allowed-tools`. To make the reviewer profiles usable immediately, the shared portable `.md` profiles are now installed into the Devin Desktop user-global agents directory (`~/.config/devin/agents` / `%APPDATA%\devin\agents`) rather than each repo's `.agents/agents/`. `reviewer-strong` is pinned to `glm-5-2` so it retains `write`/`exec`. The per-repo `runtime-agents` sync to main is no longer required for portable profiles.
+
 ---
 
 ### Task 0: Verify the existing lens profiles and source-of-truth locations
