@@ -97,9 +97,20 @@ This node is mandatory. Dispatch the relevant lens reviewers in parallel, each w
 - `<scan_findings>`,
 - `review-log-orchestrator-prediction.md`.
 
-Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
+Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
+
+Before dispatching, decide which lenses are relevant by reading each `reviewer-*.md` file and checking its `## Applies to` section against the PR:
+
+1. Glob match: if any changed file in `<diff_path>` matches a glob under `## Applies to` for that lens, dispatch the lens.
+2. Keyword match: if the PR title/body or `<pr_description>` contains a keyword listed under `## Applies to`, dispatch the lens.
+3. Always dispatch `reviewer-security` for any PR with new files, test data, examples, configuration, or secrets-adjacent changes.
+
+In this repo, the canonical lenses include:
 - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
 - `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
+- `reviewer-plans` for `.agents/plans`, `.agents/specs`, and roadmap documents.
+- `reviewer-mesh` for `INDEX.md`, `repo-index/`, generated mesh, and `repo-standards` surfaces.
+- `reviewer-scripts` for `tools/`, shebangs, and script `--check`/`--apply` classification.
 - `reviewer-security` for secrets and real identifiers.
 
 If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.

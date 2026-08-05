@@ -18,7 +18,8 @@ metadata:
   - Use when retrying failed work by changing model, reasoning, or context.
   - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
     `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-marketplace`,
-    `implementer`, or `implementer-strong`.
+    `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
+    `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -86,6 +87,9 @@ For example, copy `assets/implementer.md` to
 | Security and PII lens in a full-branch/PR diff | `reviewer-security` |
 | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
 | `codex-marketplace`/tooling/scaffolder lens | `reviewer-marketplace` |
+| Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans` |
+| `INDEX.md`, `repo-index/`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
+| Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 | Repo-specific lens (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
@@ -93,6 +97,28 @@ For example, copy `assets/implementer.md` to
 
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
 reviewer profile. The reviewer subagent does not resolve the diff itself.
+
+## Lens dispatch from `## Applies to`
+
+Every lens profile in `.agents/agents/reviewer-*.md` (portable or repo-local)
+should include a `## Applies to` section with:
+
+- `globs:` — path globs that, if matched in the diff, make the lens relevant.
+- `keywords:` — keyword triggers that make the lens relevant.
+- `inputs:` — required and optional `run_subagent` placeholders.
+
+When selecting one or more lenses for a PR or a branch diff, read the relevant
+profile files and match them in this order:
+
+1. Glob match: if any changed file matches a glob, the lens applies.
+2. Keyword match: if the PR title/body or diff summary contains a keyword, the
+   lens applies.
+3. Default dispatch: if neither the diff nor the PR description triggers a lens,
+   fall back to the portable `reviewer` for focused tasks and `reviewer-strong`
+   for full-branch reviews.
+
+Prefer the least escalated lens that covers the diff. For broad, multi-surface
+branches, include all matching lenses rather than a single generalist.
 
 ## Repo-specific lens profiles
 
