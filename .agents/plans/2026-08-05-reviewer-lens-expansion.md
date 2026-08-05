@@ -43,7 +43,7 @@ Expected: `selecting-a-subagent` and `iterative-review` directories are present.
 - [x] **Step 0.2: Confirm the pack profile source path**
 
 Run: `Get-ChildItem 'codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\' | Select-Object -ExpandProperty Name`
-Expected: Existing portable profiles (`reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `reviewer-security.md`, `reviewer-skills.md`) are present; `reviewer-marketplace.md` is repo-local and lives in `.agents/agents/`.
+Expected: Existing portable profiles (`reviewer.md`, `reviewer-fixes.md`, `reviewer-strong.md`, `reviewer-security.md`, `reviewer-skills.md`) are present; `reviewer-marketplace.md` is repo-local and lives in `.agents/agents/`.
 
 - [x] **Step 0.3: Commit the baseline verification**
 
@@ -403,14 +403,14 @@ Use `edit` to replace the `reviewer-marketplace` row with the same row plus the 
 old_string: |
   | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
   | `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
-  | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+  | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` |
 new_string: |
   | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
   | Scaffolder/mesh/`INDEX.md` lens | `reviewer-mesh` |
   | New or changed scripts / CLI tooling | `reviewer-scripts` |
   | `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
   | Plan/spec/roadmap review and PR compliance | `reviewer-plans` |
-  | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
+  | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` |
 ```
 
 - [x] **Step 4.2: Document the `## Applies to` contract**
@@ -515,12 +515,12 @@ git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL
 git commit -m "Make iterative-review lens dispatch dynamic with Applies to rules"
 ```
 
-- [x] **Step 5.4: Add `reviewer-fast` as the cheap fix-re-review gate**
+- [x] **Step 5.4: Add `reviewer-fixes` as the cheap fix-re-review gate**
 
 Locate the `targeted-re-review` and `regression-scan` subsections in `iterative-review/SKILL.md` and the matching edges/nodes in `references/review-state-graph.md`. Change them so:
-- `targeted-re-review` runs `reviewer-fast` on the fix diff before a whole-branch `reviewer-strong`.
-- `regression-scan` begins with a widened `reviewer-fast` pass on the touched area, and only escalates to `reviewer-strong` on that area if `reviewer-fast` finds a new issue.
-- Round counting does not treat the cheap `reviewer-fast` passes as rounds.
+- `targeted-re-review` runs `reviewer-fixes` on the fix diff before a whole-branch `reviewer-strong`.
+- `regression-scan` begins with a widened `reviewer-fixes` pass on the touched area, and only escalates to `reviewer-strong` on that area if `reviewer-fixes` finds a new issue.
+- Round counting does not treat the cheap `reviewer-fixes` passes as rounds.
 
 Commit the update.
 
@@ -606,7 +606,7 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 - [x] **Step 8.1: Replace `inherit` and pin reviewer models**
 
 Run: edit the frontmatter `model:` of every `reviewer-*.md` pack-source profile.
-Expected: `reviewer-fast` uses `swe-1-6`; `reviewer` uses `glm-5-2`; `reviewer-strong` uses `swe-1-7`; all lens profiles use `glm-5-2`.
+Expected: `reviewer-fixes` uses `swe-1-6`; `reviewer` uses `glm-5-2`; `reviewer-strong` uses `swe-1-7`; all lens profiles use `glm-5-2`.
 
 - [x] **Step 8.2: Add `tools/sync_runtime_agents.py`**
 

@@ -5,10 +5,9 @@ model: inherit
 allowed-tools:
 - read
 - grep
-- glob
+- find_file_by_name
 - exec
 - edit
-- write
 ---
 
 # Implementer Strong
