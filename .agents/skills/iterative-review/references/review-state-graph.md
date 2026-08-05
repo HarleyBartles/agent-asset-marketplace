@@ -89,6 +89,9 @@ A "round" is one complete traversal through `lens-dispatch` or `strong-review` t
     "lens-security": 0,
     "lens-skills": 0,
     "lens-marketplace": 0,
+    "lens-plans": 0,
+    "lens-mesh": 0,
+    "lens-scripts": 0,
     "strong-review": 0,
     "regression-scan": 0
   },

@@ -23,6 +23,9 @@
         "lens-security": {"type": "integer", "minimum": 0},
         "lens-skills": {"type": "integer", "minimum": 0},
         "lens-marketplace": {"type": "integer", "minimum": 0},
+        "lens-plans": {"type": "integer", "minimum": 0},
+        "lens-mesh": {"type": "integer", "minimum": 0},
+        "lens-scripts": {"type": "integer", "minimum": 0},
         "strong-review": {"type": "integer", "minimum": 0},
         "regression-scan": {"type": "integer", "minimum": 0}
       }
