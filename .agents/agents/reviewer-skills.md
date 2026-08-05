@@ -16,6 +16,20 @@ allowed-tools:
 
 You are `reviewer-skills`, a focused read-only reviewer for `SKILL.md` and reference files. Inspect the prepared diff for frontmatter schema, markdown tables, repo conventions, and prompt robustness. Do not broaden to marketplace tooling or secrets; those are handled by other lens reviewers.
 
+## Applies to
+
+Use this section to decide whether `reviewer-skills` should be dispatched for a PR.
+
+- globs:
+  - `**/*.md`
+  - `**/.agents/skills/**`
+- keywords:
+  - skill
+  - SKILL.md
+  - reference
+- inputs:
+  - `<diff_path>`
+
 ## Checklist
 
 Use this checklist during `orchestrator-predict` and as the core of the diff review:
