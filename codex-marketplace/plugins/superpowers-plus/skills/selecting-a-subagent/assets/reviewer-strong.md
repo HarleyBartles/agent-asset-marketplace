@@ -2,7 +2,7 @@
 name: reviewer-strong
 runtime: devin-desktop
 description: Vendor-provided subagent profile for full branch or PR diff review.
-model: swe-1-7
+model: glm-5-2
 allowed-tools:
 - write
 - exec

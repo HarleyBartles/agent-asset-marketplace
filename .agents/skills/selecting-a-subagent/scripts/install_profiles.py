@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""Install the selecting-a-subagent shipped profiles into the local .agents/agents dir.
+r"""Install the selecting-a-subagent shipped profiles into the user-global Devin Desktop agents directory.
 
 The profile `.md` assets in the skill's `assets/` directory are the canonical,
-shipped copies. This script copies them to the consumer repository's runtime
-`.agents/agents/` directory. Profiles that already exist in the target are
-overwritten only if the shipped copy differs. Any other (locally managed) files
-in the target are left untouched and are never removed.
+shipped copies. This script copies them to the Devin Desktop user-global agents
+directory (macOS/Linux: `~/.config/devin/agents`, Windows: `%APPDATA%\devin\agents`).
+Profiles that already exist in the target are overwritten only if the shipped
+copy differs. Any other files in the target are left untouched and are never
+removed.
 """
 
 from __future__ import annotations
 
 import argparse
 import difflib
+import os
 import sys
 from pathlib import Path
 
@@ -25,7 +27,9 @@ def _default_source() -> Path:
 
 
 def _default_target() -> Path:
-    return _skill_root().parents[1] / "agents"
+    if os.name == "nt":
+        return Path(os.environ.get("APPDATA", Path.home())) / "devin" / "agents"
+    return Path.home() / ".config" / "devin" / "agents"
 
 
 def _profile_paths(directory: Path) -> list[Path]:
@@ -103,7 +107,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Install the selecting-a-subagent shipped .md profile assets into "
-            "the consumer repository's .agents/agents directory."
+            "the Devin Desktop user-global agents directory."
         ),
         epilog=("(mixed: default is a read-only preview; --apply writes to --target.)"),
     )
@@ -117,7 +121,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--target",
         type=Path,
         default=_default_target(),
-        help="consumer .agents/agents directory to install the profiles into",
+        help="Devin Desktop agents directory to install the profiles into (default: user-global)",
     )
     parser.add_argument(
         "--apply",

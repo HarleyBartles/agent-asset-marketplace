@@ -67,30 +67,23 @@ The `.md` profile assets in `assets/` are Devin Desktop custom profiles. They ar
 not used by Codex; for Codex, use the `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md` mappings.
 
-If you want to use the Devin Desktop custom profiles in a consumer repository,
-run the helper to install the shipped `.md` assets into that repository's
-`.agents/agents/` directory:
+If you want to use the Devin Desktop custom profiles, run the helper to install
+the shipped `.md` assets into the user-global Devin Desktop agents directory:
 
 ```
 py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
 ```
 
 The helper overwrites shipped profiles only when they have changed and leaves any
-locally managed profiles in `.agents/agents/` untouched.
+other files in the target directory untouched. The default target is:
 
-To install them as global Devin Desktop custom profiles instead, copy the
-individual `.md` files manually to the runtime search path:
+- macOS/Linux: `~/.config/devin/agents/`
+- Windows: `%APPDATA%\devin\agents\`
 
-- macOS/Linux: `~/.config/devin/agents/<profile>.md`
-- Windows: `%APPDATA%\devin\agents\<profile>.md`
+Use `--target` to install to a different directory, such as a consumer
+repository's `.agents/agents/` directory.
 
-For example, copy `assets/implementer.md` to
-`~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`,
-`reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, `implementer`, and
-`implementer-strong`.
-
-Do not copy repo-local `<lens>.md` profiles from the pack. The consumer repo
+Do not install repo-local `<lens>.md` profiles from the pack. The consumer repo
 authors its own `.agents/agents/reviewer-<lens>.md` files (or omits them) for its
 own domain-specific surfaces.
 

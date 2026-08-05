@@ -45,7 +45,11 @@ or `references/codex-multi-agent-v2-profile.md`.
 
 Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for user/repo-local hand-authored overrides, and `.agents/agents/` for plugin-local profiles installed by marketplace packs. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
 
-The marketplace installer only writes to `.agents/agents/`. `.devin/agents/` is reserved for user-managed, repo-local overrides that should not be created, modified, or removed by any skill.
+The `selecting-a-subagent` helper installs shipped profiles to the user-global
+agents directory by default. `.devin/agents/` is reserved for user-managed,
+repo-local overrides that should not be created, modified, or removed by any
+skill; `.agents/agents/` remains available for plugin-local profiles installed
+by other marketplace tooling.
 
 | Task | Dispatch |
 |---|---|
