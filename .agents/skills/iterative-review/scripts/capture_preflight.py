@@ -33,9 +33,10 @@ def _capture(worktree: Path, output: Path) -> int:
 
     output.parent.mkdir(parents=True, exist_ok=True)
 
+    python = sys.executable
     text = ""
-    text += _run(worktree, ["py", "-3", "tools/run.py", "review-preflight", "--check"])
-    text += _run(worktree, ["py", "-3", "tools/run.py", "ci", "--check"])
+    text += _run(worktree, [python, "tools/run.py", "review-preflight", "--check"])
+    text += _run(worktree, [python, "tools/run.py", "ci", "--check"])
 
     output.write_text(text, encoding="utf-8")
     print(f"wrote {output}")
@@ -45,9 +46,9 @@ def _capture(worktree: Path, output: Path) -> int:
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "(read-only) Capture the consumer's canonical preflight/CI output "
-            "and write it as UTF-8 for an iterative-review run."
+            "Capture the consumer's canonical preflight/CI output and write it as UTF-8 for an iterative-review run."
         ),
+        epilog=("(mixed: --check is read-only; default capture writes to --output.)"),
     )
     parser.add_argument(
         "--check",

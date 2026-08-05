@@ -92,7 +92,7 @@ For example, copy `assets/implementer.md` to
 | `INDEX.md`, `repo-index/`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
 | Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
-| Repo-specific lens (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) | `.agents/agents/reviewer-<lens>.md` (see below) |
+| Repo-specific lens (e.g. `reviewer-marketplace` in `<consumer_repo>`) | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
@@ -128,7 +128,7 @@ A consumer repo can extend the portable lens set by authoring a hand-edited
 marketplace; they are repo-local and take precedence over vendor profiles.
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot
-cover. For example, `agent-asset-marketplace` provides `.agents/agents/reviewer-marketplace.md`
+cover. For example, `<consumer_repo>` provides `.agents/agents/reviewer-marketplace.md`
 to review `codex-marketplace`, `new_plugin.py`, and pack-generation surfaces. A
 different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
 for a test harness.
